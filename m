@@ -1,67 +1,116 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] relax delta selection filtering in pack-objects
-Date: Tue, 21 Feb 2006 20:39:25 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602212034180.5606@localhost.localdomain>
+Subject: [PATCH] diff-delta: fold two special tests into one plus cleanups
+Date: Tue, 21 Feb 2006 20:41:41 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602212039350.5606@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 22 02:39:34 2006
+X-From: git-owner@vger.kernel.org Wed Feb 22 02:42:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBiyZ-0001Dq-WA
-	for gcvg-git@gmane.org; Wed, 22 Feb 2006 02:39:32 +0100
+	id 1FBj17-0001gt-Tp
+	for gcvg-git@gmane.org; Wed, 22 Feb 2006 02:42:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932324AbWBVBj3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 20:39:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbWBVBj3
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 20:39:29 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:45773 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932324AbWBVBj2
+	id S932472AbWBVBln (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 20:41:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932483AbWBVBln
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 20:41:43 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:38356 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932472AbWBVBlm
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2006 20:39:28 -0500
+	Tue, 21 Feb 2006 20:41:42 -0500
 Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV20030CF9PX030@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 21 Feb 2006 20:39:25 -0500 (EST)
+ with ESMTP id <0IV200J1AFDHAH80@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 21 Feb 2006 20:41:42 -0500 (EST)
 X-X-Sender: nico@localhost.localdomain
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16580>
 
 
-This change provides a 8% saving on the pack size with a 4% CPU time 
-increase for git-repack -a on the current git archive.
+Testing for realloc and size limit can be done with only one test per 
+loop. Make it so and fix a theoretical off-by-one comparison error in 
+the process.
+
+The output buffer memory allocation is also bounded by max_size when 
+specified.
+
+Finally make some variable unsigned to allow the handling of files up to 
+4GB in size instead of 2GB.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 
 ---
 
- pack-objects.c |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+ diff-delta.c |   24 ++++++++++++++----------
+ 1 files changed, 14 insertions(+), 10 deletions(-)
 
-2aed7126f9b44d9ef953e8a1cbeab34356410842
-diff --git a/pack-objects.c b/pack-objects.c
-index ceb107f..4f8814d 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -748,11 +748,10 @@ static int try_delta(struct unpacked *cu
- 	}
+95c1d1f82a8e36ab1e46b8186ecb34f441914961
+diff --git a/diff-delta.c b/diff-delta.c
+index c2f656a..ac992e2 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -148,16 +148,20 @@ static void delta_cleanup(bdfile_t *bdf)
+ 	cha_free(&bdf->cha);
+ }
  
- 	size = cur_entry->size;
--	if (size < 50)
--		return -1;
- 	oldsize = old_entry->size;
- 	sizediff = oldsize > size ? oldsize - size : size - oldsize;
--	if (sizediff > size / 8)
++/* provide the size of the copy opcode given the block offset and size */
+ #define COPYOP_SIZE(o, s) \
+     (!!(o & 0xff) + !!(o & 0xff00) + !!(o & 0xff0000) + !!(o & 0xff000000) + \
+      !!(s & 0xff) + !!(s & 0xff00) + 1)
+ 
++/* the maximum size for any opcode */
++#define MAX_OP_SIZE COPYOP_SIZE(0xffffffff, 0xffffffff)
 +
-+	if (size < 50)
- 		return -1;
- 	if (old_entry->depth >= max_depth)
- 		return 0;
+ void *diff_delta(void *from_buf, unsigned long from_size,
+ 		 void *to_buf, unsigned long to_size,
+ 		 unsigned long *delta_size,
+ 		 unsigned long max_size)
+ {
+-	int i, outpos, outsize, inscnt, csize, msize, moff;
++	unsigned int i, outpos, outsize, inscnt, csize, msize, moff;
+ 	unsigned int fp;
+ 	const unsigned char *ref_data, *ref_top, *data, *top, *ptr1, *ptr2;
+ 	unsigned char *out, *orig;
+@@ -169,6 +173,8 @@ void *diff_delta(void *from_buf, unsigne
+ 	
+ 	outpos = 0;
+ 	outsize = 8192;
++	if (max_size && outsize >= max_size)
++		outsize = max_size + MAX_OP_SIZE + 1;
+ 	out = malloc(outsize);
+ 	if (!out) {
+ 		delta_cleanup(&bdf);
+@@ -259,17 +265,15 @@ void *diff_delta(void *from_buf, unsigne
+ 			*orig = i;
+ 		}
+ 
+-		if (max_size && outpos > max_size) {
+-			free(out);
+-			delta_cleanup(&bdf);
+-			return NULL;
+-		}
+-
+-		/* next time around the largest possible output is 1 + 4 + 3 */
+-		if (outpos > outsize - 8) {
++		if (outpos >= outsize - MAX_OP_SIZE) {
+ 			void *tmp = out;
+ 			outsize = outsize * 3 / 2;
+-			out = realloc(out, outsize);
++			if (max_size && outsize >= max_size)
++				outsize = max_size + MAX_OP_SIZE + 1;
++			if (max_size && outpos > max_size)
++				out = NULL;
++			else
++				out = realloc(out, outsize);
+ 			if (!out) {
+ 				free(tmp);
+ 				delta_cleanup(&bdf);
 -- 
 1.2.2.g6643-dirty
