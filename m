@@ -1,73 +1,67 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: Re: How to not download objects more than needed?
-Date: Tue, 21 Feb 2006 20:13:38 -0500
-Message-ID: <20060222011338.GL5000@delft.aura.cs.cmu.edu>
-References: <43FB6C42.5000208@gorzow.mm.pl> <BAYC1-PASMTP03A58A4F389365AC85DA68AEFC0@CEZ.ICE> <Pine.LNX.4.64.0602211635450.30245@g5.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] relax delta selection filtering in pack-objects
+Date: Tue, 21 Feb 2006 20:39:25 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602212034180.5606@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Feb 22 02:13:59 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 02:39:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBiZk-00052m-Db
-	for gcvg-git@gmane.org; Wed, 22 Feb 2006 02:13:52 +0100
+	id 1FBiyZ-0001Dq-WA
+	for gcvg-git@gmane.org; Wed, 22 Feb 2006 02:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161073AbWBVBNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Feb 2006 20:13:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161099AbWBVBNj
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 20:13:39 -0500
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:19866 "EHLO
-	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S1161073AbWBVBNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2006 20:13:38 -0500
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
-	id 1FBiZW-0002HL-00
-	for <git@vger.kernel.org>; Tue, 21 Feb 2006 20:13:38 -0500
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0602211635450.30245@g5.osdl.org>
-User-Agent: Mutt/1.5.11
+	id S932324AbWBVBj3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Feb 2006 20:39:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbWBVBj3
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Feb 2006 20:39:29 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:45773 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932324AbWBVBj2
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2006 20:39:28 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IV20030CF9PX030@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 21 Feb 2006 20:39:25 -0500 (EST)
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16578>
-
-On Tue, Feb 21, 2006 at 04:42:34PM -0800, Linus Torvalds wrote:
-> 
-> 	git pull git://git.kernel.org/....
-> 
-> and the automatic tag following kicks in, it will first have fetched the 
-> objects once, and then when it tries to fetch the tag objects, it will 
-> fetch the objects it already fetched _again_ (plus the tags), because it 
-> will do the same object pull, but the temporary branch (to be merged) will 
-> never have been written as a branch head.
-
-Isn't this easily avoided by fetching the tags first?
-
-Jan
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16579>
 
 
-diff --git a/git-fetch.sh b/git-fetch.sh
-index b4325d9..9c6748f 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -363,8 +363,6 @@ fetch_main () {
+This change provides a 8% saving on the pack size with a 4% CPU time 
+increase for git-repack -a on the current git archive.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+
+---
+
+ pack-objects.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+2aed7126f9b44d9ef953e8a1cbeab34356410842
+diff --git a/pack-objects.c b/pack-objects.c
+index ceb107f..4f8814d 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -748,11 +748,10 @@ static int try_delta(struct unpacked *cu
+ 	}
  
- }
- 
--fetch_main "$reflist"
--
- # automated tag following
- case "$no_tags$tags" in
- '')
-@@ -389,6 +387,8 @@ case "$no_tags$tags" in
- 	esac
- esac
- 
-+fetch_main "$reflist"
+ 	size = cur_entry->size;
+-	if (size < 50)
+-		return -1;
+ 	oldsize = old_entry->size;
+ 	sizediff = oldsize > size ? oldsize - size : size - oldsize;
+-	if (sizediff > size / 8)
 +
- # If the original head was empty (i.e. no "master" yet), or
- # if we were told not to worry, we do not have to check.
- case ",$update_head_ok,$orig_head," in
++	if (size < 50)
+ 		return -1;
+ 	if (old_entry->depth >= max_depth)
+ 		return 0;
+-- 
+1.2.2.g6643-dirty
