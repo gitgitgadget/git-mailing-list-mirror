@@ -1,71 +1,111 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] relax delta selection filtering in pack-objects
-Date: Wed, 22 Feb 2006 11:04:21 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602221058320.5606@localhost.localdomain>
-References: <Pine.LNX.4.64.0602212034180.5606@localhost.localdomain>
- <7vpslgrkr0.fsf@assigned-by-dhcp.cox.net>
- <7vhd6rsvqd.fsf@assigned-by-dhcp.cox.net>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: gitview: Use monospace font to draw the branch and tag name
+Date: Wed, 22 Feb 2006 21:36:10 +0530
+Message-ID: <43FC8BF2.60205@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 22 17:05:39 2006
+Content-Type: multipart/mixed;
+ boundary="------------010908070209050106050601"
+X-From: git-owner@vger.kernel.org Wed Feb 22 17:07:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FBwU0-00018E-SE
-	for gcvg-git@gmane.org; Wed, 22 Feb 2006 17:04:54 +0100
+	id 1FBwVY-0001Wa-RS
+	for gcvg-git@gmane.org; Wed, 22 Feb 2006 17:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932248AbWBVQEX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Feb 2006 11:04:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWBVQEW
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 11:04:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:52939 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932248AbWBVQEW
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2006 11:04:22 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV3009TGJB9I420@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 22 Feb 2006 11:04:21 -0500 (EST)
-In-reply-to: <7vhd6rsvqd.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S932288AbWBVQGT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Feb 2006 11:06:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbWBVQGT
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Feb 2006 11:06:19 -0500
+Received: from pproxy.gmail.com ([64.233.166.182]:42611 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932288AbWBVQGS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2006 11:06:18 -0500
+Received: by pproxy.gmail.com with SMTP id z59so1793989pyg
+        for <git@vger.kernel.org>; Wed, 22 Feb 2006 08:06:17 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
+        b=CEhQeS94rC/qCwu9NaEhTCwc8uzXh49/GwpZKUNG5cBxcBru43sRXdHi3VO2sKbbro/l9JX/5UMQA0Tm1d9iVL/LDyNG6kXLmqgWiafoeq52X3wMXzYf6hWxjmtFbg4PUHzGAt86yN7rQJxq16/4DU0iKIcJvXBlt7kqbhHIXi8=
+Received: by 10.35.127.7 with SMTP id e7mr674207pyn;
+        Wed, 22 Feb 2006 08:06:17 -0800 (PST)
+Received: from ?192.168.2.11? ( [59.92.206.254])
+        by mx.gmail.com with ESMTP id i72sm172483pye.2006.02.22.08.06.14;
+        Wed, 22 Feb 2006 08:06:17 -0800 (PST)
+User-Agent: Mail/News 1.5 (X11/20060213)
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	aneesh.kumar@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16600>
 
-On Tue, 21 Feb 2006, Junio C Hamano wrote:
-
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > I haven't dug into the issue yet, but these four delta series
-> > seem to break the testsuite.
-> 
-> I bisected.  It is the adler32 one -- since it makes the
-> generated delta much smaller, it is understandable that it would
-> interact with the break/rename heuristics.  It is not strictly
-> breakage in that sense -- we just need to readjust the
-> heuristics thresholds for those algorithms.
-
-I had a quick look and that code rather looks like black magic to me atm.
-I however found a memory leak in diffcore-rename.c:estimate_similarity():
-
-        delta = diff_delta(src->data, src->size,
-                           dst->data, dst->size,
-                           &delta_size, delta_limit);
-        if (!delta)
-                /* If delta_limit is exceeded, we have too much differences */
-                return 0;
-
-        /* A delta that has a lot of literal additions would have
-         * big delta_size no matter what else it does.
-         */
-        if (base_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
-                return 0;
-                   \________ delta memory is leaked.
+This is a multi-part message in MIME format.
+--------------010908070209050106050601
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-Nicolas
+--------------010908070209050106050601
+Content-Type: text/plain;
+ name*0="0001-gitview-Use-monospace-font-to-draw-the-branch-and-tag-name.";
+ name*1="txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename*0="0001-gitview-Use-monospace-font-to-draw-the-branch-and-tag-n";
+ filename*1="ame.txt"
+
+
+This patch address the below:
+Use monospace font to draw branch and tag name
+set the font size to 13.
+Make the graph column resizable. This helps to accommodate large tag names
+
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+
+---
+
+ contrib/gitview/gitview |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
+
+725c7d29cbe4efd0a7f7d9f218dc12e36f5920de
+diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
+index 5862fcc..0e52c78 100755
+--- a/contrib/gitview/gitview
++++ b/contrib/gitview/gitview
+@@ -174,9 +174,9 @@ class CellRendererGraph(gtk.GenericCellR
+ 		names_len = 0
+ 		if (len(names) != 0):
+ 			for item in names:
+-				names_len += len(item)/3
++				names_len += len(item)
+ 
+-		width = box_size * (cols + 1 + names_len )
++		width = box_size * (cols + 1 ) + names_len 
+ 		height = box_size
+ 
+ 		# FIXME I have no idea how to use cell_area properly
+@@ -258,6 +258,8 @@ class CellRendererGraph(gtk.GenericCellR
+ 			for item in names:
+ 				name = name + item + " "
+ 
++			ctx.select_font_face("Monospace")
++			ctx.set_font_size(13)
+ 			ctx.text_path(name)
+ 
+ 		self.set_colour(ctx, colour, 0.0, 0.5)
+@@ -537,8 +539,8 @@ class GitView:
+ 
+ 		cell = CellRendererGraph()
+ 		column = gtk.TreeViewColumn()
+-		column.set_resizable(False)
+-		column.pack_start(cell, expand=False)
++		column.set_resizable(True)
++		column.pack_start(cell, expand=True)
+ 		column.add_attribute(cell, "node", 1)
+ 		column.add_attribute(cell, "in-lines", 2)
+ 		column.add_attribute(cell, "out-lines", 3)
+-- 
+1.2.0-dirty
+
+
+--------------010908070209050106050601--
