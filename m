@@ -1,65 +1,253 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Thu, 23 Feb 2006 14:29:48 +0100
-Message-ID: <43FDB8CC.5000503@op5.se>
-References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>	 <20060221215742.GA5948@steel.home> <43FB9656.8050308@vilain.net>	 <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>	 <Pine.LNX.4.63.0602222259480.6682@wbgn013.biozentrum.uni-wuerzburg.de>	 <81b0412b0602230000t58a88af6na1aa7e323dc0179d@mail.gmail.com>	 <7vwtfmihts.fsf@assigned-by-dhcp.cox.net>	 <81b0412b0602230135w472aa6f3v72980f6f63bb355f@mail.gmail.com>	 <81b0412b0602230141g46dbfaev6baa5083dee2d42@mail.gmail.com>	 <43FD84EB.3040704@op5.se> <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Port git-annotate to qx{} syntax, and make default output
+ more like CVS
+Date: Thu, 23 Feb 2006 14:53:26 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602231442390.24946@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 14:30:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Feb 23 14:53:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCGXZ-000441-9D
-	for gcvg-git@gmane.org; Thu, 23 Feb 2006 14:29:53 +0100
+	id 1FCGuS-0000yn-LS
+	for gcvg-git@gmane.org; Thu, 23 Feb 2006 14:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373AbWBWN3u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Feb 2006 08:29:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbWBWN3u
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Feb 2006 08:29:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:41857 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751373AbWBWN3t
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2006 08:29:49 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 4FB2C6BCBE; Thu, 23 Feb 2006 14:29:48 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com>
+	id S1751182AbWBWNx3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Feb 2006 08:53:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbWBWNx3
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Feb 2006 08:53:29 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:27795 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751182AbWBWNx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2006 08:53:28 -0500
+Received: from virusscan.mail (mail04.mail [172.25.1.103])
+	by mailrelay.mail (Postfix) with ESMTP id 8E3CB14EA;
+	Thu, 23 Feb 2006 14:53:26 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 81281116C;
+	Thu, 23 Feb 2006 14:53:26 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 6A4ACA0C;
+	Thu, 23 Feb 2006 14:53:26 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16645>
-
-Alex Riesen wrote:
-> On 2/23/06, Andreas Ericsson <ae@op5.se> wrote:
-> 
->>Not to be unhelpful or anything, but activestate perl seems to be quite
->>a lot of bother. Is it worth supporting it?
-> 
-> 
-> It's not activestate perl actually. It's only one platform it also
-> _has_ to support.
-> Is it worth supporting Windows?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16646>
 
 
-With or without cygwin? With cygwin, I'd say "yes, unless it makes 
-things terribly difficult to maintain and so long as we don't take 
-performance hits on unices". Without cygwin, I'd say "What? It runs on 
-windows?".
+This uses the qx{} syntax Alex digged up, and it makes output without "-l"
+quite similar to CVS's annotate output.
 
-If we claim to support windows but do a poor job of it, no-one else will 
-start working on a windows-port. If we don't claim to support windows 
-but say that "it's known to work with cygwin, although be aware of these 
-performance penalties...", eventually someone will come along with their 
-shiny Visual Express and hack up support for it, even if some tools will 
-be missing and others unnecessarily complicated.
+Oh, and it ignores a dirty work file. In fact, it even ignores a clean 
+work file, but fetches a clean version from the repository.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+ git-annotate.perl |   82 +++++++++++++++++++++++++----------------------------
+ 1 files changed, 38 insertions(+), 44 deletions(-)
+
+diff --git a/git-annotate.perl b/git-annotate.perl
+index 3800c46..e9e5a3d 100755
+--- a/git-annotate.perl
++++ b/git-annotate.perl
+@@ -37,14 +37,14 @@ my @stack = (
+ 
+ our (@lineoffsets, @pendinglineoffsets);
+ our @filelines = ();
+-open(F,"<",$filename)
+-	or die "Failed to open filename: $!";
+ 
+-while(<F>) {
++our $blob_sha1 = qx{git-ls-tree HEAD "$filename"};
++$blob_sha1 =~ s/^.*blob (\S*).*$/$1/;
++foreach (qx{git-cat-file blob $blob_sha1}) {
+ 	chomp;
+ 	push @filelines, $_;
+ }
+-close(F);
++!$? or exit $?;
+ our $leftover_lines = @filelines;
+ our %revs;
+ our @revqueue;
+@@ -91,13 +91,12 @@ foreach my $l (@filelines) {
+ 		if (!$opt_l && length($rev) > 8) {
+ 			$rev = substr($rev,0,8);
+ 		}
++		printf("%s\t(%10s\t%s):%s\n", $rev, $committer,
++			format_date($date), $output);
+ 	} else {
+-		$output = $l;
+-		($rev, $committer, $date) = ('unknown', 'unknown', 'unknown');
++		printf("%s\t(%10s\t%10s\t%d)%s\n", $rev, $committer,
++			format_date($date), $i++, $output);
+ 	}
+-
+-	printf("%s\t(%10s\t%10s\t%d)%s\n", $rev, $committer,
+-		format_date($date), $i++, $output);
+ }
+ 
+ sub init_claim {
+@@ -143,20 +142,24 @@ sub handle_rev {
+ sub git_rev_list {
+ 	my ($rev, $file) = @_;
+ 
++	my @revs;
+ 	if ($opt_S) {
+ 		open(P, '<' . $opt_S);
++		while(my $line = <P>) {
++			chomp $line;
++			my ($rev, @parents) = split /\s+/, $line;
++			push @revs, [ $rev, @parents ];
++		}
++		close(P);
+ 	} else {
+-		open(P,"-|","git-rev-list","--parents","--remove-empty",$rev,"--",$file)
+-			or die "Failed to exec git-rev-list: $!";
+-	}
+-
+-	my @revs;
+-	while(my $line = <P>) {
+-		chomp $line;
+-		my ($rev, @parents) = split /\s+/, $line;
+-		push @revs, [ $rev, @parents ];
++		foreach (qx{git-rev-list --parents --remove-empty $rev -- $file}
++) {
++			chomp $_;
++			my ($rev, @parents) = split /\s+/, $_;
++			push @revs, [ $rev, @parents ];
++		}
++		!$? or exit $?;
+ 	}
+-	close(P);
+ 
+ 	printf("0 revs found for rev %s (%s)\n", $rev, $file) if (@revs == 0);
+ 	return @revs;
+@@ -165,13 +168,11 @@ sub git_rev_list {
+ sub find_parent_renames {
+ 	my ($rev, $file) = @_;
+ 
+-	open(P,"-|","git-diff-tree", "-M50", "-r","--name-status", "-z","$rev")
+-		or die "Failed to exec git-diff: $!";
+-
+ 	local $/ = "\0";
+ 	my %bound;
+ 	my $junk = <P>;
+-	while (my $change = <P>) {
++	foreach (qx{git-diff-tree -M50 -r --name-status -z $rev}) {
++		my $change = $_;
+ 		chomp $change;
+ 		my $filename = <P>;
+ 		chomp $filename;
+@@ -189,7 +190,7 @@ sub find_parent_renames {
+ 			}
+ 		}
+ 	}
+-	close(P);
++	!$? or exit $?;
+ 
+ 	return \%bound;
+ }
+@@ -198,15 +199,12 @@ sub find_parent_renames {
+ sub git_find_parent {
+ 	my ($rev, $filename) = @_;
+ 
+-	open(REVPARENT,"-|","git-rev-list","--remove-empty", "--parents","--max-count=1","$rev","--",$filename)
+-		or die "Failed to open git-rev-list to find a single parent: $!";
++	my $parentline = qx{git-rev-list --remove-empty --parents --max-count=1 $rev -- $filename};
++	!$? or die "Failed to open git-rev-list to find a single parent: $!";
+ 
+-	my $parentline = <REVPARENT>;
+ 	chomp $parentline;
+ 	my ($revfound,$parent) = split m/\s+/, $parentline;
+ 
+-	close(REVPARENT);
+-
+ 	return $parent;
+ }
+ 
+@@ -217,17 +215,13 @@ sub git_diff_parse {
+ 	my ($parent, $rev, %revinfo) = @_;
+ 
+ 	my ($ri, $pi) = (0,0);
+-	open(DIFF,"-|","git-diff-tree","-M","-p",$rev,$parent,"--",
+-			$revs{$rev}{'filename'}, $revs{$parent}{'filename'})
+-		or die "Failed to call git-diff for annotation: $!";
+-
+ 	my $slines = $revs{$rev}{'lines'};
+ 	my @plines;
+ 
+ 	my $gotheader = 0;
+ 	my ($remstart, $remlength, $addstart, $addlength);
+ 	my ($hunk_start, $hunk_index, $hunk_adds);
+-	while(<DIFF>) {
++	foreach (qx{git-diff-tree -M -p $rev $parent -- $revs{$rev}{'filename'} $revs{$parent}{'filename'}}) {
+ 		chomp;
+ 		if (m/^@@ -(\d+),(\d+) \+(\d+),(\d+)/) {
+ 			($remstart, $remlength, $addstart, $addlength) = ($1, $2, $3, $4);
+@@ -279,7 +273,7 @@ sub git_diff_parse {
+ 		}
+ 		$hunk_index++;
+ 	}
+-	close(DIFF);
++	!$? or exit $?;
+ 	for (my $i = $ri; $i < @{$slines} ; $i++) {
+ 		push @plines, $slines->[$ri++];
+ 	}
+@@ -300,15 +294,12 @@ sub git_cat_file {
+ 	my $blobline = `git-ls-tree $parent $filename`;
+ 	my ($mode, $type, $blob, $tfilename) = split(/\s+/, $blobline, 4);
+ 
+-	open(C,"-|","git-cat-file", "blob", $blob)
+-		or die "Failed to git-cat-file blob $blob (rev $parent, file $filename): " . $!;
+-
+ 	my @lines;
+-	while(<C>) {
++	foreach (qx{git-cat-file blob $blob}) {
+ 		chomp;
+ 		push @lines, $_;
+ 	}
+-	close(C);
++	!$? or die "Failed to git-cat-file blob $blob (rev $parent, file $filename).";
+ 
+ 	return @lines;
+ }
+@@ -325,11 +316,9 @@ sub claim_line {
+ 
+ sub git_commit_info {
+ 	my ($rev) = @_;
+-	open(COMMIT, "-|","git-cat-file", "commit", $rev)
+-		or die "Failed to call git-cat-file: $!";
+ 
+ 	my %info;
+-	while(<COMMIT>) {
++	foreach (qx{git-cat-file commit $rev}) {
+ 		chomp;
+ 		last if (length $_ == 0);
+ 
+@@ -343,7 +332,7 @@ sub git_commit_info {
+ 			$info{'committer_date'} = $3;
+ 		}
+ 	}
+-	close(COMMIT);
++	!$? or exit $?;
+ 
+ 	return %info;
+ }
+@@ -351,6 +340,11 @@ sub git_commit_info {
+ sub format_date {
+ 	my ($timestamp, $timezone) = split(' ', $_[0]);
+ 
++	if (!$opt_l) {
++		return strftime("%Y-%b-%d", gmtime($timestamp));
++	}
++
+ 	return strftime("%Y-%m-%d %H:%M:%S " . $timezone, gmtime($timestamp));
+ }
+ 
++
