@@ -1,74 +1,160 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Thu, 23 Feb 2006 22:43:53 +0100
-Message-ID: <20060223214353.GC5827@steel.home>
-References: <Pine.LNX.4.63.0602222259480.6682@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0602230000t58a88af6na1aa7e323dc0179d@mail.gmail.com> <7vwtfmihts.fsf@assigned-by-dhcp.cox.net> <81b0412b0602230135w472aa6f3v72980f6f63bb355f@mail.gmail.com> <81b0412b0602230141g46dbfaev6baa5083dee2d42@mail.gmail.com> <43FD84EB.3040704@op5.se> <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com> <43FDB8CC.5000503@op5.se> <81b0412b0602230607n22146a77k36929f0ad9e44d53@mail.gmail.com> <Pine.LNX.4.64.0602230911410.3771@g5.osdl.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] Add git-annotate, a tool for assigning blame.
+Date: Thu, 23 Feb 2006 17:10:49 -0500
+Message-ID: <20060223221048.GA6423@mythryan2.michonline.com>
+References: <11404323692193-git-send-email-ryan@michonline.com> <20060220234054.GA7903@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 22:44:18 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 23 23:12:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCOFu-0003SG-O4
-	for gcvg-git@gmane.org; Thu, 23 Feb 2006 22:44:11 +0100
+	id 1FCOh4-0001b5-4i
+	for gcvg-git@gmane.org; Thu, 23 Feb 2006 23:12:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751304AbWBWVoH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Feb 2006 16:44:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbWBWVoH
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Feb 2006 16:44:07 -0500
-Received: from devrace.com ([198.63.210.113]:7437 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1751304AbWBWVoF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2006 16:44:05 -0500
-Received: from tigra.home (p54A06B17.dip.t-dialin.net [84.160.107.23])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k1NLhtU4034180;
-	Thu, 23 Feb 2006 15:43:56 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1FCOFd-0000tp-00; Thu, 23 Feb 2006 22:43:54 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FCOFd-0002DM-U1; Thu, 23 Feb 2006 22:43:53 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751789AbWBWWMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Feb 2006 17:12:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbWBWWMJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Feb 2006 17:12:09 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:55507 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1751789AbWBWWMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2006 17:12:08 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1FCOgu-0003Kw-HX; Thu, 23 Feb 2006 17:12:05 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FCOgn-0005dr-1o; Thu, 23 Feb 2006 17:11:57 -0500
+Received: from ryan by mythical with local (Exim 4.60)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1FCOgE-00044e-OM; Thu, 23 Feb 2006 17:11:22 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0602230911410.3771@g5.osdl.org>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+In-Reply-To: <20060220234054.GA7903@c165.ib.student.liu.se>
+User-Agent: Mutt/1.5.9i
+X-h4x0r5.com-MailScanner: Found to be clean
+X-h4x0r5.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16670>
 
-Linus Torvalds, Thu, Feb 23, 2006 18:13:43 +0100:
-> > Someday we'll have to start dropping features on Windows or restrict them
-> > beyond their usefullness.
-> 
-> One thing that would help a bit would be to avoid shell.
-> 
-> There are many portable interpreters out there, and I don't mean perl. And 
-> writing a small "specialized for git" one isn't even that hard. In fact, 
-> most of the shell (and bash) hackery we do now would be unnecessary if we 
-> just made a small "git interpreter" that ran "git scripts".
-> 
-> The fact that it would also help portability is just an added advantage.
-> 
+(Biased critique since I have the other tool in the tree, but still...)
 
-I actually was dreaming about taking a vacation and rewrite at least
-the most important scripts in C, but without cygwin. Implement the
-needed subset of POSIX in compat/, workaround fork.
+On Tue, Feb 21, 2006 at 12:40:54AM +0100, Fredrik Kuivinen wrote:
+> diff --git a/blame.c b/blame.c
+> new file mode 100644
+> index 0000000..d4a2fad
+> --- /dev/null
+> +++ b/blame.c
+> @@ -0,0 +1,444 @@
+> +#include <assert.h>
+> +
+> +#include "cache.h"
+> +#include "refs.h"
+> +#include "tag.h"
+> +#include "commit.h"
+> +#include "tree.h"
+> +#include "blob.h"
+> +#include "epoch.h"
+> +#include "diff.h"
+> +
+> +#define DEBUG 0
+> +
+> +struct commit** blame_lines;
+> +int num_blame_lines;
+> +
+> +struct util_info
+> +{
+> +    int* line_map;
+> +    int num_lines;
+> +    unsigned char sha1[20]; /* blob sha, not commit! */
+> +    char* buf;
+> +    unsigned long size;
+> +//    const char* path;
+> +};
+> +
+> +struct chunk
+> +{
+> +    int off1, len1; // ---
+> +    int off2, len2; // +++
+> +};
+> +
+> +struct patch
+> +{
+> +    struct chunk* chunks;
+> +    int num;
+> +};
+> +
+> +static void get_blob(struct commit* commit);
+> +
+> +int num_get_patch = 0;
+> +int num_commits = 0;
+> +
+> +struct patch* get_patch(struct commit* commit, struct commit* other)
+> +{
+> +    struct patch* ret = xmalloc(sizeof(struct patch));
+> +    ret->chunks = NULL;
+> +    ret->num = 0;
+> +
+> +    struct util_info* info_c = (struct util_info*) commit->object.util;
+> +    struct util_info* info_o = (struct util_info*) other->object.util;
+> +
+> +    if(!memcmp(info_c->sha1, info_o->sha1, 20))
+> +        return ret;
+> +
+> +    get_blob(commit);
+> +    get_blob(other);
+> +
+> +    FILE* fout = fopen("/tmp/git-blame-tmp1", "w");
 
-That'd help me to present git to my collegues without requiring them
-to install cygwin, perl and python first. It is a real problem to
-explain why a new tool is better than the old one if the problem start
-right from installation, and it probably wont matter how bad the old
-tool is (it is, they know that too, but it has windows, doors and a
-mostly running man for busy-waiting cursor).
+Probably should be using something like mkstemp (mkstmp?) here, so if
+someone is runnign things as root or with a malicous user around, things
+don't collide.
 
-A gits own interpreter would be more than, of course.
+Hell, so on a multi-user machine this doesn't blow up on you.
+
+But, read down for a related comment.
+
+> +    if(!fout)
+> +        die("fopen tmp1 failed: %s", strerror(errno));
+> +
+> +    if(fwrite(info_c->buf, info_c->size, 1, fout) != 1)
+> +        die("fwrite 1 failed: %s", strerror(errno));
+> +    fclose(fout);
+> +
+> +    fout = fopen("/tmp/git-blame-tmp2", "w");
+> +    if(!fout)
+> +        die("fopen tmp2 failed: %s", strerror(errno));
+> +
+> +    if(fwrite(info_o->buf, info_o->size, 1, fout) != 1)
+> +        die("fwrite 2 failed: %s", strerror(errno));
+> +    fclose(fout);
+> +
+> +    FILE* fin = popen("diff -u0 /tmp/git-blame-tmp1 /tmp/git-blame-tmp2", "r");
+> +    if(!fin)
+> +        die("popen failed: %s", strerror(errno));
+
+Can't git-diff-tree do this sufficiently, anyway?  See my Perl script
+for an example, you just need both commit IDs and both filenames and the
+appropriate -M and you get the right results.
+
+(It's possible that's part of where the performance differences are,
+though, not really sure at the moment.)
+
+I'm going to stop there for the moment, I'm not really confident in my
+understanding of git-internals to say much more just yet.
+
+This could probably benefit a *LOT* from the libification project, I
+think, though.
+
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
