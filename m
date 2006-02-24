@@ -1,73 +1,80 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Convert open("-|") to qx{} calls
-Date: Fri, 24 Feb 2006 16:25:47 +0100
-Message-ID: <81b0412b0602240725r38360ca4yf90dcb827ffeccfb@mail.gmail.com>
-References: <Pine.LNX.4.63.0602231532470.29635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <86hd6qgit5.fsf@blue.stonehenge.com>
-	 <7v1wxuhsgw.fsf@assigned-by-dhcp.cox.net>
-	 <863bi9hq6u.fsf@blue.stonehenge.com>
-	 <Pine.LNX.4.63.0602232039160.30630@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <86lkw1g647.fsf@blue.stonehenge.com>
-	 <20060223211403.GB5827@steel.home> <43FE9771.4030206@dawes.za.net>
-	 <81b0412b0602240527v5d617111sc33e627ff3e1641c@mail.gmail.com>
-	 <43FF185C.1080909@dawes.za.net>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: git-annotate efficiency
+Date: Fri, 24 Feb 2006 10:37:10 -0500
+Message-ID: <118833cc0602240737i42acdc90sb8f93dde1a1bc035@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 16:27:20 2006
+X-From: git-owner@vger.kernel.org Fri Feb 24 16:37:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCepM-0008Jj-UQ
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 16:25:54 +0100
+	id 1FCf0O-0003HA-8i
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 16:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbWBXPZt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 10:25:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbWBXPZt
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 10:25:49 -0500
-Received: from nproxy.gmail.com ([64.233.182.197]:33752 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932258AbWBXPZs convert rfc822-to-8bit
+	id S932275AbWBXPhM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 10:37:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbWBXPhM
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 10:37:12 -0500
+Received: from pproxy.gmail.com ([64.233.166.181]:52811 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932275AbWBXPhL convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 10:25:48 -0500
-Received: by nproxy.gmail.com with SMTP id c31so228815nfb
-        for <git@vger.kernel.org>; Fri, 24 Feb 2006 07:25:47 -0800 (PST)
+	Fri, 24 Feb 2006 10:37:11 -0500
+Received: by pproxy.gmail.com with SMTP id n25so407960pyg
+        for <git@vger.kernel.org>; Fri, 24 Feb 2006 07:37:10 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GhNCHvDAodtzCje2aScqBhhWuoyrEBRQIU6CaUZM/kTMz0MQXmj2tOq9NVUOWWKQWkhXhfFa+53m4FBzjvVaFF2KA1P6ktuVIifnZ3cdsfkUbh9NamF/L/N9NuGMOmT9ZfoK4RymHxilkA06YHchKwn+aX0T0KshfY4WL4jGX0I=
-Received: by 10.48.244.12 with SMTP id r12mr2808273nfh;
-        Fri, 24 Feb 2006 07:25:47 -0800 (PST)
-Received: by 10.49.88.16 with HTTP; Fri, 24 Feb 2006 07:25:47 -0800 (PST)
-To: "Rogan Dawes" <discard@dawes.za.net>
-In-Reply-To: <43FF185C.1080909@dawes.za.net>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=sGAMtNk1RLcStIZrzX35FFKMLM6RiAb+GhOceKw98kRk4a3P3UStT+p0eZAOZumngQUZt7N+uSqlGjL6H31bnYwXDG7jGX3A2RR0v1dJYT4otQXd707uCc1u+timZF+jeeq3IBC2Vdlg8h7NHhBMlZty6Q1dmEcbeuH3NvWkS6E=
+Received: by 10.35.91.10 with SMTP id t10mr227465pyl;
+        Fri, 24 Feb 2006 07:37:10 -0800 (PST)
+Received: by 10.35.39.13 with HTTP; Fri, 24 Feb 2006 07:37:10 -0800 (PST)
+To: "GIT Mailing List" <git@vger.kernel.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16708>
 
-On 2/24/06, Rogan Dawes <discard@dawes.za.net> wrote:
-> Interesting. I tried to do that one-liner at a DOS prompt (not cygwin,
-> which I assume you are using), and I was unable to do so.
+So I wanted to give git-annotate a spin and typed...
 
-Yes, it was from cygwin's bash.
+    git annotate Makefile
 
-> Do you get the same results if you run it from a DOS prompt? and via a file?
+Bad idea.  It's been ten minutes and no output yet.  While the script only
+appears to use ~20% of cpu according to top, an strace shows that it
+spins off a huge number of very short-lived subprocesses.
 
-Microsoft Windows 2000 [Version 5.00.2195]
-(C) Copyright 1985-2000 Microsoft Corp.
+Morten
 
-C:\>perl -e 'print qx{echo joe & echo joe}'
-Can't find string terminator "'" anywhere before EOF at -e line 1.
-joe}'
 
-C:\>perl -e "print qx{echo joe & echo joe}"
-joe & echo joe
 
-C:\>perl x.pl
-joe & echo joe
 
-C:\>
+...
+rt_sigaction(SIGQUIT, {SIG_IGN}, {SIG_DFL}, 8) = 0
+waitpid(1539, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0) = 1539
+--- SIGCHLD (Child exited) @ 0 (0) ---
+rt_sigaction(SIGHUP, {SIG_DFL}, NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL}, NULL, 8) = 0
+rt_sigaction(SIGQUIT, {SIG_DFL}, NULL, 8) = 0
+pipe([3, 4])                            = 0
+pipe([5, 6])                            = 0
+clone(child_stack=0,
+flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD,
+child_tidptr=0x401db708) = 1540
+close(6)                                = 0
+close(4)                                = 0
+read(5, "", 4)                          = 0
+close(5)                                = 0
+ioctl(3, SNDCTL_TMR_TIMEBASE or TCGETS, 0xbfffc718) = -1 EINVAL
+(Invalid argument)
+_llseek(3, 0, 0xbfffc760, SEEK_CUR)     = -1 ESPIPE (Illegal seek)
+fcntl64(3, F_SETFD, FD_CLOEXEC)         = 0
+read(3, "diff --git a/Makefile b/Makefile"..., 4096) = 63
+read(3, "--- a/Makefile\n+++ b/Makefile\n@@"..., 4096) = 203
+--- SIGCHLD (Child exited) @ 0 (0) ---
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+rt_sigaction(SIGHUP, {SIG_IGN}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGINT, {SIG_IGN}, {SIG_DFL}, 8) = 0
+...
