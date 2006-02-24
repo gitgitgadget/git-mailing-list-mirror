@@ -1,62 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 16:48:54 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602241647250.31162@localhost.localdomain>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
- <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
- <20060224174422.GA13367@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
- <20060224183554.GA31247@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
- <20060224192354.GC387@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
- <7vpslc8oni.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] New git-seek command with documentation and test.
+Date: Fri, 24 Feb 2006 22:48:46 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602242246430.11479@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <43F20532.5000609@iaglans.de> <Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>
+ <87k6bxvmj6.wl%cworth@cworth.org> <Pine.LNX.4.64.0602141026570.3691@g5.osdl.org>
+ <87fymlvgzv.wl%cworth@cworth.org> <Pine.LNX.4.64.0602141224110.3691@g5.osdl.org>
+ <87d5hpvc8p.wl%cworth@cworth.org> <7vu0b1pntl.fsf@assigned-by-dhcp.cox.net>
+ <87zmkhrf4y.wl%cworth@cworth.org> <43FED93D.1000601@op5.se>
+ <87oe0wrg29.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Carl Baldwin <cnb@fc.hp.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 22:49:11 2006
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Feb 24 22:49:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCkoD-0008Fs-Na
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 22:49:06 +0100
+	id 1FCkoC-0008Fs-Hs
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 22:49:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932578AbWBXVs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 16:48:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932583AbWBXVs4
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 16:48:56 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:22425 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932578AbWBXVsz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 16:48:55 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV7004ECOLIEK60@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 24 Feb 2006 16:48:54 -0500 (EST)
-In-reply-to: <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S932577AbWBXVst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 16:48:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbWBXVst
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 16:48:49 -0500
+Received: from mail.gmx.de ([213.165.64.20]:61059 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932577AbWBXVss (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 16:48:48 -0500
+Received: (qmail invoked by alias); 24 Feb 2006 21:48:47 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp033) with SMTP; 24 Feb 2006 22:48:47 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87oe0wrg29.wl%cworth@cworth.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16743>
 
-On Fri, 24 Feb 2006, Nicolas Pitre wrote:
+Hi,
 
-> If blocks are hashed evenly the cost of  producing a delta is at most 
-> O(n+m) where n and m are the size of the reference and target files 
-> respectively.  In other words, with good data set the cost is linear.
+On Fri, 24 Feb 2006, Carl Worth wrote:
+
+> On Fri, 24 Feb 2006 11:00:29 +0100, Andreas Ericsson wrote:
+> > 
+> > I've said it before, and I'll say it again. This tool provides less 
+> > flexibility and much less power than "git checkout -b branch 
+> > <commit-ish>"
 > 
-> But if many blocks from the reference buffer do hash to the same bucket 
-> then for each block in the target file many blocks from the reference 
-> buffer have to be tested against, making it tend towards O(n^m) which is 
-> pretty highly exponential.
+> Yes, that's by design. It's not intended to be a replacement for git
+> checkout -b.
 
-Well, actually this is rather O(n*m) not O(n^m), but bad nevertheless.
+I do not really understand why.
 
+git-seek shares so many characteristics with git-seek, you could make 
+git-seek just another command line option to checkout (like "--temporary" 
+and "--go-back").
 
-Nicolas
+Hth,
+Dscho
