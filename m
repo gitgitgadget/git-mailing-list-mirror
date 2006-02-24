@@ -1,72 +1,66 @@
 From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 13:57:20 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
+Date: Fri, 24 Feb 2006 14:03:29 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602241358070.31162@localhost.localdomain>
 References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
  <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
  <20060224174422.GA13367@hpsvcnb.fc.hp.com>
  <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
- <20060224183554.GA31247@hpsvcnb.fc.hp.com>
+ <20060224184934.GA387@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 19:58:02 2006
+X-From: git-owner@vger.kernel.org Fri Feb 24 20:03:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCi8E-0001Nv-FY
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 19:57:35 +0100
+	id 1FCiE1-000346-JS
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 20:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932151AbWBXS5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 13:57:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932186AbWBXS5b
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 13:57:31 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15766 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932151AbWBXS5a
+	id S932258AbWBXTDa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 14:03:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932420AbWBXTDa
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 14:03:30 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:29877 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932258AbWBXTDa
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 13:57:30 -0500
+	Fri, 24 Feb 2006 14:03:30 -0500
 Received: from xanadu.home ([24.202.136.67]) by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV700JVUGNKN3F0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 24 Feb 2006 13:57:20 -0500 (EST)
-In-reply-to: <20060224183554.GA31247@hpsvcnb.fc.hp.com>
+ with ESMTP id <0IV700J3LGXTN7G0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 24 Feb 2006 14:03:29 -0500 (EST)
+In-reply-to: <20060224184934.GA387@hpsvcnb.fc.hp.com>
 X-X-Sender: nico@localhost.localdomain
 To: Carl Baldwin <cnb@fc.hp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16727>
 
 On Fri, 24 Feb 2006, Carl Baldwin wrote:
 
-> My version is 1.2.1.  I have not been following your work.  When was
-> pack data reuse introduced?
+> I've updated to a very current master branch.  This seems to include the
+> pack data reuse stuff.  I've not made an attempt yet to apply your delta
+> patches.
+> 
+> git-repack quickly gets up to 5% (2/36) and hangs there.  I'll let it
+> run for a while just to see how far it claims to get.  I'm not hopeful.
 
-Try out version 1.2.3.
+It should complete sometimes, probably after the same amount of time 
+needed by your previous clone attempt.  But after that any clone 
+operation should be quick.  This is clearly unacceptable but at least 
+with the pack data reuse you should suffer only once for the initial 
+repack.
 
-> From where can I obtain your delta patches?
+> Maybe your patches can help?
 
-Forget them for now -- they won't help you.
+No.  They actually make things worse performance wise, much worse in 
+some special cases.
 
-> There is really no opportunity for pack-data reuse in this case.  The
-> repository had never been packed or cloned in the first place.  As I
-> said, I do not intend to pack these binary files at all since there is
-> no benefit in this case.
-
-Yes there is, as long as you have version 1.2.3.  The clone logic will 
-simply reuse already packed data without attempting to recompute it.
-
-> The delta patches may help but I can't say for sure since I don't know
-> anything about them.
-
-They (actually the last one) might help reduce the size of resulting 
-packs but it currently has performance problems with some patological 
-data sets.
-
-I think you really should try git version 1.2.3 with a packed 
-repository.  It might handle your special case just fine.
+Is it possible for me to have access to 2 consecutive versions of your 
+big binary file?
 
 
 Nicolas
