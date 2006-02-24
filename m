@@ -1,85 +1,101 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 13:40:22 -0700
-Organization: Hewlett Packard
-Message-ID: <20060224204022.GA15962@hpsvcnb.fc.hp.com>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain> <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net> <20060224174422.GA13367@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain> <20060224183554.GA31247@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain> <20060224192354.GC387@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241438521.31162@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-mailinfo doesn't get installed any more
+Date: Fri, 24 Feb 2006 12:42:04 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602241224130.22647@g5.osdl.org>
+References: <12c511ca0602241206jaea9f75pce4ca687f5b2fd3c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 21:40:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 24 21:42:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCjjo-0001be-1H
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 21:40:28 +0100
+	id 1FCjlU-0001zh-5n
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 21:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbWBXUkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 15:40:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbWBXUkY
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 15:40:24 -0500
-Received: from atlrel8.hp.com ([156.153.255.206]:2735 "EHLO atlrel8.hp.com")
-	by vger.kernel.org with ESMTP id S1751089AbWBXUkX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 15:40:23 -0500
-Received: from smtp1.fc.hp.com (smtp.fc.hp.com [15.15.136.127])
-	by atlrel8.hp.com (Postfix) with ESMTP id 01F2E34769;
-	Fri, 24 Feb 2006 15:40:22 -0500 (EST)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp1.fc.hp.com (Postfix) with ESMTP id CA27C6EA8;
-	Fri, 24 Feb 2006 20:40:22 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id B355DBFA3; Fri, 24 Feb 2006 13:40:22 -0700 (MST)
-To: Nicolas Pitre <nico@cam.org>
-Mail-Followup-To: Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0602241438521.31162@localhost.localdomain>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1751086AbWBXUmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 15:42:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbWBXUmI
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 15:42:08 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:8141 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751086AbWBXUmH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 15:42:07 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1OKg4DZ013983
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Feb 2006 12:42:05 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1OKg4Km006593;
+	Fri, 24 Feb 2006 12:42:04 -0800
+To: Tony Luck <tony.luck@intel.com>
+In-Reply-To: <12c511ca0602241206jaea9f75pce4ca687f5b2fd3c@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16737>
 
-On Fri, Feb 24, 2006 at 03:02:07PM -0500, Nicolas Pitre wrote:
-> Well that is probably a bit tight.  Ideally it should be linear with the 
-> size of the data set to process.  If you have 10 files 10MB each it 
-> should take about the same time to pack than 10000 files of 10KB each.  
-> Of course incrementally packing one additional 10MB file might take more 
-> than a second although it is only one file.
 
-Well, I might not have been fair here.  I tried an experiment where I
-packed each of the twelve large blob objects explicitly one-by-one using
-git-pack-objects.  Incrementally packing each single object was very
-fast.  Well under a second per object on my machine.
 
-After the twelve large objects were packed into individual packs the
-rest of the packing went very quickly and git v1.2.3's date reuse worked
-very well.  This was sort of my attempt at simulating how things would
-be if git avoided deltification of each of these large files. I'm sorry
-to have been so harsh earlier I just didn't understand that
-incrementally packing one-by-one was going to help this much.
+On Fri, 24 Feb 2006, Tony Luck wrote:
+> 
+> 2) What's the cute 1-line git way to see when this was broken. I'm
+> guessing that it involves using a --pickaxe.
 
-This gives me hope that if somehow git were to not attempt to deltify
-these objects then performance would be much better than acceptible.
+You've actually found an interesting misfeature in git. There's a merge 
+error, and you can't see it in the diffs by default because it wasn't due 
+to a _clashing_ content thing, but two edits that were far enough away 
+from each other.
 
-[snip]
-> However, if you could let me play with two samples of your big file I'd 
-> be grateful.  If so I'd like to make git work well with your data set 
-> too which is not that uncommon after all.
+That "git-mailinfo" thing is there in rev 2a3763ef, but it's not there in 
+the current Makefile. And doing a
 
-I would be happy to do this.  I will probably need to scrub a bit and
-make sure that the result shows the same characteristics.  How would you
-like me to deliver these files to you?  They are about 25 MB deflated.
+	git-whatchanged -p 2a3763ef.. | grep git-mailinfo
 
-Carl
+results in nothing. Which is not good.
 
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        RADCAD (R&D CAD)
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Anyway, the way to handle that is to do "git bisect" (and use "grep 
+git-mailinfo Makefile" in between bisection points to see if git-mailinfo 
+is still part of the list of programs):
+
+	git-bisect start
+	# bad: [20d23f554d6cd40ffa0d41ccc9416bca867667e0] gitview: Bump the rev
+	git-bisect bad 20d23f554d6cd40ffa0d41ccc9416bca867667e0
+	# good: [2a3763ef3d26eb38c0a47997b8e5fd2a7c5214cc] avoid makefile override warning
+	git-bisect good 2a3763ef3d26eb38c0a47997b8e5fd2a7c5214cc
+	# bad: [ee072260dbff6914c24d956bcc2d46882831f1a0] Merge branch 'jc/nostat'
+	git-bisect bad ee072260dbff6914c24d956bcc2d46882831f1a0
+	# good: [551ce28fe1f2777eee7dd9c02bd44f55f4b32361] git-svn: 0.9.1: add --version and copyright/license (GPL v2+) information
+	git-bisect good 551ce28fe1f2777eee7dd9c02bd44f55f4b32361
+	# good: [5508a616631fb41531b638f744bd92c701727014] New test to verify that when git-clone fails it cleans up the new directory.
+	git-bisect good 5508a616631fb41531b638f744bd92c701727014
+	# bad: [712b1dd389ad5bcdbaab0279641f0970702fc1f1] Merge branch 'js/portable'
+	git-bisect bad 712b1dd389ad5bcdbaab0279641f0970702fc1f1
+	# good: [d800795613a710fb18353af53730e75185861f41] gitview: Use monospace font to draw the branch and tag name
+	git-bisect good d800795613a710fb18353af53730e75185861f41
+	# good: [b992933853ccffac85f7e40310167ef7b8f0432e] Fix "gmake -j"
+	git-bisect good b992933853ccffac85f7e40310167ef7b8f0432e
+
+resulting in:
+
+	712b1dd389ad5bcdbaab0279641f0970702fc1f1 is first bad commit
+
+which shows that there was a bad merge by Junio.
+
+You can use
+
+	git show -c -p 712b1dd389ad5bcdbaab0279641f0970702fc1f1
+
+to see why. It merged the thing perfectly fine, but sadly, incorrectly. 
+
+Somebody should probably look at whether we could have done things better, 
+but I suspect that merge errors are inevitable with any automated process.
+
+Anyway, it might be worth remembering that 712b1dd3 merge for future 
+testing. Make a test-case out of it.
+
+		Linus
