@@ -1,127 +1,94 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 15:50:23 -0700
-Organization: Hewlett Packard
-Message-ID: <20060224225023.GA28538@hpsvcnb.fc.hp.com>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain> <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net> <20060224174422.GA13367@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain> <20060224183554.GA31247@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain> <20060224192354.GC387@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241438521.31162@localhost.localdomain> <20060224204022.GA15962@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241544270.31162@localhost.localdomain>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Add missing programs to ignore list
+Date: Fri, 24 Feb 2006 17:51:15 -0500
+Message-ID: <20060224225115.GA30609@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 23:51:20 2006
+X-From: git-owner@vger.kernel.org Fri Feb 24 23:51:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FClmF-0005Cu-Bx
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 23:51:07 +0100
+	id 1FClmT-0005Gc-RV
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 23:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932626AbWBXWuu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 17:50:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932627AbWBXWuu
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 17:50:50 -0500
-Received: from atlrel8.hp.com ([156.153.255.206]:7603 "EHLO atlrel8.hp.com")
-	by vger.kernel.org with ESMTP id S932626AbWBXWuu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 17:50:50 -0500
-Received: from smtp1.fc.hp.com (smtp.fc.hp.com [15.15.136.127])
-	by atlrel8.hp.com (Postfix) with ESMTP id 5C80A3556E;
-	Fri, 24 Feb 2006 17:50:49 -0500 (EST)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp1.fc.hp.com (Postfix) with ESMTP id 836D31D00;
-	Fri, 24 Feb 2006 22:50:23 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 550F5BFA3; Fri, 24 Feb 2006 15:50:23 -0700 (MST)
-To: Nicolas Pitre <nico@cam.org>
-Mail-Followup-To: Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	id S932627AbWBXWvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 17:51:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932628AbWBXWvT
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 17:51:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:63645 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932627AbWBXWvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 17:51:18 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FClmH-0006D9-0H
+	for git@vger.kernel.org; Fri, 24 Feb 2006 17:51:09 -0500
+Received: by asimov.spearce.org (Postfix, from userid 1000)
+	id 8673E20FBA0; Fri, 24 Feb 2006 17:51:15 -0500 (EST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0602241544270.31162@localhost.localdomain>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16747>
 
-On Fri, Feb 24, 2006 at 04:12:14PM -0500, Nicolas Pitre wrote:
-> On Fri, 24 Feb 2006, Carl Baldwin wrote:
-> > After the twelve large objects were packed into individual packs the
-> > rest of the packing went very quickly and git v1.2.3's date reuse worked
-> > very well.  This was sort of my attempt at simulating how things would
-> > be if git avoided deltification of each of these large files. I'm sorry
-> > to have been so harsh earlier I just didn't understand that
-> > incrementally packing one-by-one was going to help this much.
-> 
-> Hmmmmmmm....
-> 
-> I don't think I understand what is going on here.
-> 
-> You say that, if you add those big files and incrementally repack after 
-> each commit using git repack with no option, then it requires only about 
-> one second each time.  Right?
+Added recently added programs to the default exclude list.
 
-Well, actually I was packing them individually by calling
-git-pack-objects directly on each blob.
+---
+ I found these were missing in master.  pg won't let me work in a
+ directory if there are untracked files laying around which aren't
+ excluded by an ignore pattern.
 
-I'll try doing it exactly as you describe...
+ .gitignore |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Ok, I tried it.  Basically I do the following.
-
-% mkdir test
-% cd test
-% git init-db
-% cp ../files/binfile.1 binfile
-% time git add binfile
-
-real    0m2.459s
-user    0m2.443s
-sys     0m0.019s
-% git commit -a -m "Rev 1"
-% time git repack
-[snip]
-
-real    0m1.111s
-user    0m1.046s
-sys     0m0.061s
-% for i in $(seq 2 12); do
-    cp ../files/binfile.$i binfile
-    time git commit -a -m "Rev $i"
-    time git repack
-done
-
-Each commit takes around 2.8-3.5 seconds and each repack takes about
-1.2-1.5 seconds.  These are prettly reasonable.
-
-Now, I try 'git repack -a -f' (or even without -f) and it goes out to
-lunch.  I think it would take on the order of a day to actually finish
-because it wasn't very far after an hour.
-
-[snip]
-> How many files besides those 12 big blobs do you have?
-
-This repository has been completely stripped to the 12 revisions of the
-one file.  So, there are 36 objects.
-
-12 blobs.
-12 trees.
-12 commits.
-
-That is all.
-
-[snip]
-> If you can add them into a single .tgz with instructions on how 
-> to reproduce the issue and provide me with an URL where I can fetch it 
-> that'd be perfect.
-
-I will do this in an email off of the list because these files really
-shouldn't be available on a public list.
-
-Carl
-
+base 809da5f8a21a10112eece4ee9be55fe64371ce68
+last 9752e066a00144fc1b7657e6d54569e9d9764092
+diff --git a/.gitignore b/.gitignore
+index 94f66d5a1ef9d1e2bec2c14b392565ee5bf98dd6..5be239a4aa95f78cb09e4921459e1678b9f3c36e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,6 +2,7 @@ GIT-VERSION-FILE
+ git
+ git-add
+ git-am
++git-annotate
+ git-apply
+ git-applymbox
+ git-applypatch
+@@ -22,6 +23,7 @@ git-convert-objects
+ git-count-objects
+ git-cvsexportcommit
+ git-cvsimport
++git-cvsserver
+ git-daemon
+ git-diff
+ git-diff-files
+@@ -53,6 +55,7 @@ git-mailsplit
+ git-merge
+ git-merge-base
+ git-merge-index
++git-merge-tree
+ git-merge-octopus
+ git-merge-one-file
+ git-merge-ours
+@@ -60,6 +63,7 @@ git-merge-recursive
+ git-merge-resolve
+ git-merge-stupid
+ git-mktag
++git-mktree
+ git-name-rev
+ git-mv
+ git-pack-redundant
 -- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        RADCAD (R&D CAD)
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1.2.3.g809d
