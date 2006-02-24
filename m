@@ -1,76 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 12:56:04 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
- <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
- <20060224174422.GA13367@hpsvcnb.fc.hp.com>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: git-annotate efficiency
+Date: Fri, 24 Feb 2006 13:00:24 -0500
+Message-ID: <118833cc0602241000p4e4c8017u3e3afe76fbbd75a4@mail.gmail.com>
+References: <118833cc0602240737i42acdc90sb8f93dde1a1bc035@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 18:57:26 2006
+X-From: git-owner@vger.kernel.org Fri Feb 24 19:00:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FChBN-0001Ev-DI
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 18:56:48 +0100
+	id 1FChEz-0002BD-TM
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 19:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402AbWBXR4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 12:56:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932405AbWBXR4H
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 12:56:07 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15506 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932402AbWBXR4G
+	id S932406AbWBXSA0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 13:00:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932407AbWBXSA0
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 13:00:26 -0500
+Received: from pproxy.gmail.com ([64.233.166.181]:47905 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932406AbWBXSA0 convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 12:56:06 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV70081QDTG0270@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 24 Feb 2006 12:56:05 -0500 (EST)
-In-reply-to: <20060224174422.GA13367@hpsvcnb.fc.hp.com>
-X-X-Sender: nico@localhost.localdomain
-To: Carl Baldwin <cnb@fc.hp.com>
+	Fri, 24 Feb 2006 13:00:26 -0500
+Received: by pproxy.gmail.com with SMTP id e30so438294pya
+        for <git@vger.kernel.org>; Fri, 24 Feb 2006 10:00:24 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JfuGO34wQT54QgY8WFnJy1VpJki/OM+xbP+3E5NNFgkgE+ZeBcfddi+ovj5lSdUKGw1nY9a7sXiBaDOHLRvmyWatpNVyHTCK5EoL7OojAJzin4AavIuw3+IQ/XY+b5xBcNIpuuQ3umjv5TEHGnAwZ27FgevYNIb3aL+ebOA5vBQ=
+Received: by 10.35.18.4 with SMTP id v4mr334710pyi;
+        Fri, 24 Feb 2006 10:00:24 -0800 (PST)
+Received: by 10.35.39.13 with HTTP; Fri, 24 Feb 2006 10:00:24 -0800 (PST)
+To: "GIT Mailing List" <git@vger.kernel.org>
+In-Reply-To: <118833cc0602240737i42acdc90sb8f93dde1a1bc035@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16721>
 
-On Fri, 24 Feb 2006, Carl Baldwin wrote:
+It looks like handle_rev is seeing the same revisions over and over again.
+I don't know why that would be, but the following patch just skips dups.
+I have no idea if it is right, though.
 
-> Junio,
-> 
-> This message came to me at exactly the right time.  Yesterday I was
-> exploring using git as the content storage back-end for some binary
-> files.  Up until now I've only used it for software projects.
-> 
-> I found the largest RCS file that we had in our current back-end.  It
-> contained twelve versions of a binary file.  Each version averaged about
-> 20 MB.  The ,v file from RCS was about 250MB.  I did some experiments on
-> these binary files.
-> 
-> First, gzip consistantly is able to compress these files to about 10%
-> their original size.  So, they are quite inflated.  Second, xdelta would
-> produce a delta between two neighboring revisions of about 2.5MB in size
-> that would compress down to about 2MB.  (about the same size as the next
-> revision compressed without deltification so packing is ineffective
-> here).
-> 
-> I added these 12 revisions to several version control back-ends
-> including subversion and git.  Git produced a much smaller repository
-> size than the others simply due to the compression that it applies to
-> objects.  It also was at least as fast as the others.
-> 
-> The problem came when I tried to clone this repository.
-> git-pack-objects chewed on these 12 revisions for over an hour before I
-> finally interrupted it.  As far as I could tell, it hadn't made much
-> progress.
-
-I must ask if you had applied my latest delta patches?
-
-Also did you use a recent version of git that implements pack data 
-reuse?
+Morten
 
 
-Nicolas
+diff --git a/git-annotate.perl b/git-annotate.perl
+index 3800c46..a5e2d86 100755
+--- a/git-annotate.perl
++++ b/git-annotate.perl
+@@ -117,7 +117,10 @@ sub init_claim {
+
+ sub handle_rev {
+        my $i = 0;
++       my %seen = ();
+        while (my $rev = shift @revqueue) {
++               next if $seen{$rev};
++               $seen{$rev} = 1;
+
+                my %revinfo = git_commit_info($rev);
