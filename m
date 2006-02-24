@@ -1,89 +1,131 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Fri, 24 Feb 2006 04:02:25 -0800
-Message-ID: <20060224120225.GE12309@localdomain>
-References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de> <20060220191011.GA18085@hand.yhbt.net> <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net> <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com> <43FB79E2.1040307@vilain.net> <20060221215742.GA5948@steel.home> <43FB9656.8050308@vilain.net> <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: FYI: git-am allows creation of empty commits.
+Date: Fri, 24 Feb 2006 04:04:43 -0800
+Message-ID: <7vy8019d44.fsf@assigned-by-dhcp.cox.net>
+References: <m1slqahyxt.fsf@ebiederm.dsl.xmission.com>
+	<7v1wxtgv02.fsf@assigned-by-dhcp.cox.net>
+	<m18xs1dmp3.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam@vilain.net>, Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 13:02:36 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 24 13:04:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCbeZ-0007fi-Or
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 13:02:32 +0100
+	id 1FCbgn-0008HK-Gy
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 13:04:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750796AbWBXMC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 07:02:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWBXMC2
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 07:02:28 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:15756 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750796AbWBXMC2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 07:02:28 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id A33237DC005;
-	Fri, 24 Feb 2006 04:02:25 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 24 Feb 2006 04:02:25 -0800
-To: Alex Riesen <raa.lkml@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S932099AbWBXMEq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 07:04:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWBXMEq
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 07:04:46 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:17905 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932099AbWBXMEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 07:04:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060224120449.FUYI25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 24 Feb 2006 07:04:49 -0500
+To: ebiederm@xmission.com (Eric W. Biederman)
+In-Reply-To: <m18xs1dmp3.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's
+	message of "Fri, 24 Feb 2006 04:24:08 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16697>
 
-Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 2/21/06, Sam Vilain <sam@vilain.net> wrote:
-> > Alex Riesen wrote:
-> > >>>Does not work here (ActiveState Build 811, Perl 5.8.6):
-> > >>>$ perl -e 'open(F, "-|")'
-> > >>>'-' is not recognized as an internal or external command,
-> > >>>operable program or batch file.
-> > >>Portability, Ease of Coding, Few CPAN Module Dependencies.  Pick any two.
-> > > Sometimes an upgrade is just out of question. Besides, that'd mean an
-> > > upgrade to another operating system, because very important scripts
-> > > over here a just not portable to anything else but
-> > >     "ActiveState Perl on Windows (TM)"
-> > > I just have no choice.
-> >
-> > Sure, but perhaps IPC::Open2 or some other CPAN module has solved this
-> > problem already.
-> 
-> IPC::Open2 works! Well "kind of": there are still strange segfaults regarding
-> stack sometimes. And I don't know yet whether and how the arguments are escaped
-> (Windows has no argument array. It has that bloody stupid one-line command line)
+ebiederm@xmission.com (Eric W. Biederman) writes:
 
-It seems that ActiveState has more problems with pipes than it does with fork.
-If it supports redirects reasonably well, this avoids pipes entirely and
-may be more stable as a result (but possibly slower):
+> Is this something that we always want to test for in the porcelain
+> or do we want to move a check into git-commit-tree?
+>
+> For getting a reasonable error message where you have the test
+> seems to be the only sane place, but having the check deeper
+> down would be more likely to catch this kind of thing.
 
-# IO::File is standard in Perl 5.x, new_tmpfile
-# returns an open filehandle to an already unlinked file
+I think 99.9% of the time it is a mistake if a single-parented
+commit has the same tree as its parent commit has, so having a
+check in commit-tree may not be a bad idea.
 
-use IO::File;
-my $out = IO::File->new_tmpfile;
-file
-my $pid = fork;
-defined $pid or die $!;
-if (!$pid) {
-	# redirects STDOUT to $out file
-	open STDOUT, '>&', $out or die $!;
-	exec('foo','bar');
-}
-waitpid $pid, 0;
-seek $out, 0, 0;
-while (<$out>) {
-	...
-}
+If you want to do it, however, you need to be a bit careful
+about merges.  In a multi-parented commit, it is legitimate if
+the merge result exactly match one of the parents (in fact
+"git-merge -s ours" can be used to create a merge that matches
+its first parent).
 
-Writing and reading from a tempfile are very fast for me in Linux, and probably
-not much slower than pipes.  Of course I'm still assuming file descriptors stay
-shared after a 'fork', which may be asking too much on Windows.  Using something
-from File::Temp to get a temp filename would still work.
+The commit-tree program is one of the oldest part of the system,
+and as a mechanism, does not set nor enforce policies like this.
+It has been more liberal than the best current practice, such as
+(1) don't do single-parent empty commit; (2) don't list the same
+parent twice.  The second one was introduced in mid-June last
+year, which is "long after it was invented" in git timescale.
 
--- 
-Eric Wong
+On the other hand, it is more anal than it could be.  It does
+not take a tag that points to a commit to its -p parameter.
+That's because we did not have tag objects in the beginning, and
+by the time tags were introduced, nobody ran commit-tree by hand
+anymore.
+
+-- >8 --
+[PATCH] commit-tree: disallow an empty single-parent commit.
+
+Also allow "git-commit-tree -p v2.6.16-rc2", instead of having
+to say "git-commit-tree -p v2.6.16-rc2^0".
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/commit-tree.c b/commit-tree.c
+index 88871b0..14a7552 100644
+--- a/commit-tree.c
++++ b/commit-tree.c
+@@ -45,12 +45,14 @@ static void check_valid(unsigned char *s
+ {
+ 	void *buf;
+ 	char type[20];
++	unsigned char real_sha1[20];
+ 	unsigned long size;
+ 
+-	buf = read_sha1_file(sha1, type, &size);
+-	if (!buf || strcmp(type, expect))
++	buf = read_object_with_reference(sha1, expect, &size, real_sha1);
++	if (!buf)
+ 		die("%s is not a valid '%s' object", sha1_to_hex(sha1), expect);
+ 	free(buf);
++	memcpy(sha1, real_sha1, 20);
+ }
+ 
+ /*
+@@ -75,6 +77,19 @@ static int new_parent(int idx)
+ 	return 1;
+ }
+ 
++static int check_empty_commit(const unsigned char *tree_sha1,
++			      const unsigned char *parent_sha1)
++{
++	unsigned char sha1[20];
++	char refit[50];
++	sprintf(refit, "%s^{tree}", sha1_to_hex(parent_sha1));
++	if (get_sha1(refit, sha1))
++		die("cannot determine tree in parent commit.");
++	if (!memcmp(sha1, tree_sha1, 20))
++		return error ("empty commit?  aborting.");
++	return 0;
++}
++
+ int main(int argc, char **argv)
+ {
+ 	int i;
+@@ -105,6 +120,9 @@ int main(int argc, char **argv)
+ 	}
+ 	if (!parents)
+ 		fprintf(stderr, "Committing initial tree %s\n", argv[1]);
++	if (parents == 1)
++		if (check_empty_commit(tree_sha1, parent_sha1[0]))
++			exit(1);
+ 
+ 	init_buffer(&buffer, &size);
+ 	add_buffer(&buffer, &size, "tree %s\n", sha1_to_hex(tree_sha1));
