@@ -1,79 +1,113 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 10:37:46 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602241029360.23719@localhost.localdomain>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
- <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Fri, 24 Feb 2006 08:14:52 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602240800240.3771@g5.osdl.org>
+References: <Pine.LNX.4.63.0602201934270.28957@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060220191011.GA18085@hand.yhbt.net> <7vr75xbs8w.fsf_-_@assigned-by-dhcp.cox.net>
+ <81b0412b0602210930w5c1a71aage12bad2079dd515a@mail.gmail.com>
+ <43FB79E2.1040307@vilain.net> <20060221215742.GA5948@steel.home>
+ <43FB9656.8050308@vilain.net> <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
+ <20060224120225.GE12309@localdomain> <Pine.LNX.4.63.0602241440330.9461@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 16:38:07 2006
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Alex Riesen <raa.lkml@gmail.com>, Sam Vilain <sam@vilain.net>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 24 17:16:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCf0y-0003Rh-9b
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 16:37:52 +0100
+	id 1FCfbU-0006iV-MS
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 17:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274AbWBXPhu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 10:37:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbWBXPhu
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 10:37:50 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:62786 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932274AbWBXPht
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 10:37:49 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV7003XC7EYK2I0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 24 Feb 2006 10:37:46 -0500 (EST)
-In-reply-to: <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S932297AbWBXQPR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 11:15:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbWBXQPR
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 11:15:17 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:19073 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932312AbWBXQPG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 11:15:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1OGErDZ032284
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Feb 2006 08:14:54 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1OGEqYt028519;
+	Fri, 24 Feb 2006 08:14:52 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0602241440330.9461@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16710>
 
-On Fri, 24 Feb 2006, Junio C Hamano wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
+
+On Fri, 24 Feb 2006, Johannes Schindelin wrote:
 > 
-> > Indexing based on adler32 has a match precision based on the block size 
-> > (currently 16).  Lowering the block size would produce smaller deltas 
-> > but the indexing memory and computing cost increases significantly.
+> Sorry, but no. Really no. Pipes have several advantages over temporary 
+> files:
 > 
-> Indeed.
-> 
-> I had this patch in my personal tree for a while.  I was
-> wondring why sometimes progress indication during "Deltifying"
-> stage stops for literally several seconds, or more.
+> - The second program can already work on the data before the first 
+>   finishes.
 
-Note that above I'm saying that _keeping_ adler32 for small blocks is 
-even longer.  In other words, for small blocks, the version not using 
-adler32 is about 3 times faster.  
+This really is a _huge_ issue in general, although probably not a very 
+big one in this case.
 
-I also noticed the significant slowdown after I made the 
-improved progress patch. The idea now has to do with detecting 
-patological cases and breaking out of them early.
+This is what I talked about when I said "streaming" data. Look at the 
+difference between
 
-> In Linux 2.6 repository, these object pairs take forever to
-> delta.
-> 
->         blob 9af06ba723df75fed49f7ccae5b6c9c34bc5115f -> 
->         blob dfc9cd58dc065d17030d875d3fea6e7862ede143
->         size (491102 -> 496045)
->         58 seconds
-> 
->         blob 4917ec509720a42846d513addc11cbd25e0e3c4f -> 
->         blob dfc9cd58dc065d17030d875d3fea6e7862ede143
->         size (495831 -> 496045)
->         64 seconds
+	git whatchanged -s drivers/usb
 
-Thanks for this.  I'll see what I can do to tweak the code to better 
-cope with those.  Just keep my fourth delta patch in the pu branch for 
-now.
+and
 
+	git log drivers/usb
 
-Nicolas
+in the kernel repo. They give almost the same output, but...
+
+Notice how one starts _immediately_, while the other starts after a few 
+seconds (or, if you have a slow machine, and an unpacked archive, after 
+tens of seconds or longer).
+
+And the reason is that "git log" uses "git-rev-list" with a path limiter, 
+and currently that ends up having to walk basically the whole history in 
+order to generate a minimal graph.
+
+In contrast, "git-whatchanged" uses "git-diff-tree" to limit the output, 
+and git-diff-tree doesn't care about "minimal graph" or crud like that: it 
+just cares about discarding any local commits that aren't interesting. It 
+doesn't need to worry about updating parent chains etc, so it can do it 
+all incrementally - and can thus start output as soon as it gets anything 
+at all.
+
+Now, maybe you think that "a few seconds" isn't a big deal. Sure, it's 
+actually fast as hell, considering what it is doing, and anybody should be 
+really really impressed that we can do that at all.
+
+But (a) it _is_ a huge deal. Responsiveness is really important. And 
+worse: (b) it scales badly with repository size. Creating the whole 
+data-set before starting to output it really doesn't scale.
+
+Now, I have ways to make "git-rev-list" better. It doesn't really need to 
+walk the _whole_ history for its path limiting before it can start 
+outputting stuff: it really _could_ do things more incrementally. However, 
+it's a real bitch sometimes to work with incremental data when you don't 
+know everything, so it gets a lot more complicated. 
+
+So my point isn't that "git log drivers/usb" will get less and less 
+responsive over time. I can fix that - eventually. My point is that in 
+order to make it more responsive, I need to make it less synchronous. More 
+"streaming". 
+
+And that is where a pipe is so much better than a file. It's very 
+fundamentally a streaming interface.
+
+However, I suspect some of these issues are non-issues for the perl 
+programs that work with a few entries at a time.
+
+		Linus
