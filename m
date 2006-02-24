@@ -1,59 +1,71 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Re: gitview: Use monospace font to draw the branch and tag name
-Date: Fri, 24 Feb 2006 21:59:15 +0530
-Message-ID: <cc723f590602240829y3ebffaf9mdd7de0cd2a9051e@mail.gmail.com>
-References: <43FC8BF2.60205@gmail.com>
-	 <7vr75tc8gj.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Removal of "--merge-order"?
+Date: Fri, 24 Feb 2006 08:32:43 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602240824110.3771@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 17:29:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Feb 24 17:33:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCfom-00024u-OQ
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 17:29:21 +0100
+	id 1FCfsE-00037h-5s
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 17:32:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932357AbWBXQ3S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 11:29:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbWBXQ3S
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 11:29:18 -0500
-Received: from uproxy.gmail.com ([66.249.92.205]:38525 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932357AbWBXQ3R convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 11:29:17 -0500
-Received: by uproxy.gmail.com with SMTP id a2so146523ugf
-        for <git@vger.kernel.org>; Fri, 24 Feb 2006 08:29:16 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NVQrlqxxY5zdC5XPO8/Yj0X9/a30t/qdH3HtY9ifEpJGDLNQOszOsXamyOhso3vKyPmtm1+43QRw7c2GEEzKYFiS+eD6MuWd0Es1m7pRz7iJfu7cU8JXuI/IWPDeZCbW/VbrBAdUC4wJRI7Xsj4Ns4ahfFyQ0uUSsdQjgzfpDAU=
-Received: by 10.66.243.7 with SMTP id q7mr3088624ugh;
-        Fri, 24 Feb 2006 08:29:15 -0800 (PST)
-Received: by 10.66.254.7 with HTTP; Fri, 24 Feb 2006 08:29:15 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vr75tc8gj.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932372AbWBXQcv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 11:32:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932374AbWBXQcv
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 11:32:51 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57733 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932372AbWBXQcu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 11:32:50 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1OGWkDZ000753
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Feb 2006 08:32:47 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1OGWhEj029198;
+	Fri, 24 Feb 2006 08:32:45 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16714>
 
-On 2/24/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> writes:
->
-> > This patch address the below:
-> > Use monospace font to draw branch and tag name
-> > set the font size to 13.
->
-> I have an impression that hardcoding UI policy like this is
-> generally frowned upon.
 
-But with that changes branch and the tag name looks neat.
+I just tested it again, and
 
-May be down the  line we can add a prefernce tag that will allow the
-user to change all these hardcoded values.
+	git-rev-list --merge-order HEAD
 
--aneesh
+takes an inordinate amount of time:
+
+	real    5m1.139s
+	user    4m59.504s
+	sys     0m1.220s
+
+and that's on a reasonably fast machine (not my fastest, but no slouch by 
+any measure - my fastest machine I'm not allowed to really benchmark 
+publicly ;)
+
+It may be a cool algorithm, but it's essentially useless on any bigger 
+tree. And nobody uses it, since "--topo-order" gives the guarantees that 
+people really care about, and finishes in 0.537 seconds on the same 
+machine with the same tree.
+
+It also depends on the openssh "bignum" stuff, which means that any 
+machine where we just rely on our own SHA1 implementation and don't use 
+openssh doesn't have the flag anyway.
+
+In other words, I'd really prefer if it was gone. Some of the things I 
+might do to git-rev-list would be much simpler if I didn't have to worry 
+about merge-order, and the way it interfaces with the rest of 
+git-rev-list.
+
+Comments?
+
+			Linus
