@@ -1,84 +1,57 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-annotate, a tool for assigning blame.
-Date: Fri, 24 Feb 2006 01:52:38 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602240148250.32472@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11404323692193-git-send-email-ryan@michonline.com>
- <20060220234054.GA7903@c165.ib.student.liu.se> <20060223221048.GA6423@mythryan2.michonline.com>
- <20060223225547.GB8673@c165.ib.student.liu.se>
- <Pine.LNX.4.63.0602240055080.31816@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vek1thaop.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] New git-seek command with documentation and test.
+Date: Fri, 24 Feb 2006 01:54:33 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602240152490.32472@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060224002915.17331.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Fri Feb 24 01:52:46 2006
+Cc: cworth@cworth.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 24 01:54:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCRCN-0001o7-Da
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 01:52:43 +0100
+	id 1FCREE-00026b-3F
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 01:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932159AbWBXAwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Feb 2006 19:52:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932269AbWBXAwk
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Feb 2006 19:52:40 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:15583 "EHLO
+	id S932223AbWBXAyf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Feb 2006 19:54:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWBXAyf
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Feb 2006 19:54:35 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:56800 "EHLO
 	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932159AbWBXAwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2006 19:52:40 -0500
+	id S932223AbWBXAyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2006 19:54:35 -0500
 Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id 06B6D1B33;
-	Fri, 24 Feb 2006 01:52:39 +0100 (CET)
+	by mailrelay.mail (Postfix) with ESMTP id 53AD61BBD;
+	Fri, 24 Feb 2006 01:54:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id EE7CF2A72;
-	Fri, 24 Feb 2006 01:52:38 +0100 (CET)
+	by virusscan.mail (Postfix) with ESMTP id 47DC32A72;
+	Fri, 24 Feb 2006 01:54:34 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id B827912EC;
-	Fri, 24 Feb 2006 01:52:38 +0100 (CET)
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E854FA46;
+	Fri, 24 Feb 2006 01:54:33 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek1thaop.fsf@assigned-by-dhcp.cox.net>
+To: linux@horizon.com
+In-Reply-To: <20060224002915.17331.qmail@science.horizon.com>
 X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16679>
 
 Hi,
 
-On Thu, 23 Feb 2006, Junio C Hamano wrote:
+On Fri, 23 Feb 2006, linux@horizon.com wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> > This could probably benefit a *LOT* from the libification project, I
-> >> > think, though.
-> >> 
-> >> Yes, perhaps. Some of the git-rev-list bits might simplify a couple of
-> >> things.
-> >
-> > The major problem is probably not solved: What Linus calls a "stream 
-> > interface".
-> >
-> > I.e. if you pipe the output of git-rev-list to another program, you 
-> > *need* to execute the two semi-simultaneously. The "alternative" would be 
-> > to use buffers, which can get huge (and are sometimes not needed: think 
-> > git-whatchanged, which starts outputting before it's getting no more 
-> > input).
-> 
-> You need a limited coroutine support, something like generator
-> functions in Python ;-).  In C, traditional way of doing it is
-> to make your application specific function a callback of
-> rev-list or whatever generator is, which is very unpleasant to
-> code.
+> This is somewhat heretical, but how about making a truly unnamed branch by
+> having .git/HEAD *not* be a symlink, but rather hold a commit ID directly?
 
-The most unpleasant aspect is that you usually need something like "this" 
-in C++: a pointer to an object (which you have to pass around all the 
-time). Without it you can not use the function in a nested way.
+Not heretical. How do you intend to switch branches now? And how do you 
+intend to record the starting point of git-seek to which you want to 
+return to? All leads back to .git/HEAD pointing to a branch (or whatever 
+you want to call it). And BTW, .git/HEAD is no symlink these days, but a 
+symref.
 
-However, I can also see benefits of this when compared to the traditional 
-UNIX approach. It should be faster, for one, since you don't need to pass 
-data through pipes all the time. (This might be not as true for Linux as 
-for other OSes.)
-
-Ciao,
+Hth,
 Dscho
