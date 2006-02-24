@@ -1,7 +1,7 @@
 From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 16:12:14 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0602241544270.31162@localhost.localdomain>
+Date: Fri, 24 Feb 2006 16:39:42 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
 References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
  <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
  <20060224174422.GA13367@hpsvcnb.fc.hp.com>
@@ -9,93 +9,84 @@ References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
  <20060224183554.GA31247@hpsvcnb.fc.hp.com>
  <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
  <20060224192354.GC387@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0602241438521.31162@localhost.localdomain>
- <20060224204022.GA15962@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
+ <7vpslc8oni.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 22:12:32 2006
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Carl Baldwin <cnb@fc.hp.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 22:41:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCkEp-0000sC-Gg
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 22:12:31 +0100
+	id 1FCkgi-0006gX-Kb
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 22:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932499AbWBXVM2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 16:12:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932501AbWBXVM2
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 16:12:28 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:42474 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932499AbWBXVM1
+	id S932582AbWBXVkO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 16:40:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932588AbWBXVkN
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 16:40:13 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:15978 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932582AbWBXVkL
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 16:12:27 -0500
-Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR001.ip.videotron.ca
+	Fri, 24 Feb 2006 16:40:11 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MH-MR001.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IV7008XVMWET390@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 24 Feb 2006 16:12:15 -0500 (EST)
-In-reply-to: <20060224204022.GA15962@hpsvcnb.fc.hp.com>
+ with ESMTP id <0IV700BMIO66TA70@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 24 Feb 2006 16:39:43 -0500 (EST)
+In-reply-to: <7vpslc8oni.fsf@assigned-by-dhcp.cox.net>
 X-X-Sender: nico@localhost.localdomain
-To: Carl Baldwin <cnb@fc.hp.com>
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16740>
 
-On Fri, 24 Feb 2006, Carl Baldwin wrote:
+On Fri, 24 Feb 2006, Junio C Hamano wrote:
 
-> On Fri, Feb 24, 2006 at 03:02:07PM -0500, Nicolas Pitre wrote:
-> > Well that is probably a bit tight.  Ideally it should be linear with the 
-> > size of the data set to process.  If you have 10 files 10MB each it 
-> > should take about the same time to pack than 10000 files of 10KB each.  
-> > Of course incrementally packing one additional 10MB file might take more 
-> > than a second although it is only one file.
+> I haven't looked at Nico's original or updated code closely at
+> all, but two things come to mind.
 > 
-> Well, I might not have been fair here.  I tried an experiment where I
-> packed each of the twelve large blob objects explicitly one-by-one using
-> git-pack-objects.  Incrementally packing each single object was very
-> fast.  Well under a second per object on my machine.
+> (1) if we could tell the particular data is intrinsically
+>     diff_delta unfriendly and diff_delta would waste too much
+>     time when tried to delta against almost _any_ other blob,
+>     then it might help to give an interface in diff-delta.c for
+>     the caller to check for such a blob without even trying
+>     diff_delta.
 > 
-> After the twelve large objects were packed into individual packs the
-> rest of the packing went very quickly and git v1.2.3's date reuse worked
-> very well.  This was sort of my attempt at simulating how things would
-> be if git avoided deltification of each of these large files. I'm sorry
-> to have been so harsh earlier I just didn't understand that
-> incrementally packing one-by-one was going to help this much.
+> (2) otherwise, if diff_delta could detect it would spend too
+>     many cycles to finish its work for a particular input early
+>     on, we might want it to bail out instead of trying a
+>     complete job.
 
-Hmmmmmmm....
+I have a patch that implements an hybrid approach.
 
-I don't think I understand what is going on here.
+Currently, diff-delta takes blocks of data in the reference file and 
+hash them.  When the target file is scanned, it uses the hash to match 
+blocks from the target file with the reference file.
 
-You say that, if you add those big files and incrementally repack after 
-each commit using git repack with no option, then it requires only about 
-one second each time.  Right?
+If blocks are hashed evenly the cost of  producing a delta is at most 
+O(n+m) where n and m are the size of the reference and target files 
+respectively.  In other words, with good data set the cost is linear.
 
-But if you use "git-repack -a -f" then it is gone for more than an hour?
+But if many blocks from the reference buffer do hash to the same bucket 
+then for each block in the target file many blocks from the reference 
+buffer have to be tested against, making it tend towards O(n^m) which is 
+pretty highly exponential.
 
-I'd expect something like 2 * (sum i for i = 1 to 10) i.e. in the 110 
-second range due to the combinatorial effect when repacking everything.  
-This is far from one hour and something appears to be really really 
-wrong.
+The solution I'm investigating is to put a limit on the number of 
+entries in the same hash bucket so to bring the cost back to something 
+more linear.  That means the delta might miss on better matches that 
+have not been hashed but still benefit from a limited set. Experience 
+seems to show that the time to deltify the first two blobs you found to 
+be problematic can be reduced by 2 orders of magnitude with about only 
+10% increase in the resulting delta size, and still nearly 40% smaller 
+than what the current delta code produces.
 
-How many files besides those 12 big blobs do you have?
-
-> This gives me hope that if somehow git were to not attempt to deltify
-> these objects then performance would be much better than acceptible.
-> 
-> [snip]
-> > However, if you could let me play with two samples of your big file I'd 
-> > be grateful.  If so I'd like to make git work well with your data set 
-> > too which is not that uncommon after all.
-> 
-> I would be happy to do this.  I will probably need to scrub a bit and
-> make sure that the result shows the same characteristics.  How would you
-> like me to deliver these files to you?  They are about 25 MB deflated.
-
-If you can add them into a single .tgz with instructions on how 
-to reproduce the issue and provide me with an URL where I can fetch it 
-that'd be perfect.
+The question is how to determine the best limit on the number of entries 
+in the same hash bucket.
 
 
 Nicolas
