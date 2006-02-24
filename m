@@ -1,102 +1,59 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: gitview: Fix the graph display
-Date: Fri, 24 Feb 2006 21:57:51 +0530
-Message-ID: <43FF3407.5080607@gmail.com>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Re: gitview: Use monospace font to draw the branch and tag name
+Date: Fri, 24 Feb 2006 21:59:15 +0530
+Message-ID: <cc723f590602240829y3ebffaf9mdd7de0cd2a9051e@mail.gmail.com>
+References: <43FC8BF2.60205@gmail.com>
+	 <7vr75tc8gj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------040408070909000805000104"
-X-From: git-owner@vger.kernel.org Fri Feb 24 17:28:51 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 24 17:29:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCfnh-0001lx-Qf
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 17:28:14 +0100
+	id 1FCfom-00024u-OQ
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 17:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932241AbWBXQ17 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 11:27:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932357AbWBXQ17
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 11:27:59 -0500
-Received: from pproxy.gmail.com ([64.233.166.179]:44180 "EHLO pproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932241AbWBXQ16 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 11:27:58 -0500
-Received: by pproxy.gmail.com with SMTP id i75so417295pye
-        for <git@vger.kernel.org>; Fri, 24 Feb 2006 08:27:57 -0800 (PST)
+	id S932357AbWBXQ3S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 11:29:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbWBXQ3S
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 11:29:18 -0500
+Received: from uproxy.gmail.com ([66.249.92.205]:38525 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932357AbWBXQ3R convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 11:29:17 -0500
+Received: by uproxy.gmail.com with SMTP id a2so146523ugf
+        for <git@vger.kernel.org>; Fri, 24 Feb 2006 08:29:16 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=CnwZZ1W/eAk1wJP2Opw6h1iVtg+1sWauoQbo0/QicsK4uZKcBjVQZntlqNf9IhcGax6/VYyAirggny/L2rMvFvXgLrieBczbTnal1QdQmqbfA4AGMttQHRqOoemLLH87wCYazlwGiWfDxykiXswR0Y9HsHZZyj3BNHxzr7DMcuc=
-Received: by 10.35.84.12 with SMTP id m12mr371909pyl;
-        Fri, 24 Feb 2006 08:27:57 -0800 (PST)
-Received: from ?192.168.2.11? ( [59.92.199.177])
-        by mx.gmail.com with ESMTP id m39sm633357pye.2006.02.24.08.27.55;
-        Fri, 24 Feb 2006 08:27:57 -0800 (PST)
-User-Agent: Mail/News 1.5 (X11/20060213)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NVQrlqxxY5zdC5XPO8/Yj0X9/a30t/qdH3HtY9ifEpJGDLNQOszOsXamyOhso3vKyPmtm1+43QRw7c2GEEzKYFiS+eD6MuWd0Es1m7pRz7iJfu7cU8JXuI/IWPDeZCbW/VbrBAdUC4wJRI7Xsj4Ns4ahfFyQ0uUSsdQjgzfpDAU=
+Received: by 10.66.243.7 with SMTP id q7mr3088624ugh;
+        Fri, 24 Feb 2006 08:29:15 -0800 (PST)
+Received: by 10.66.254.7 with HTTP; Fri, 24 Feb 2006 08:29:15 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vr75tc8gj.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16713>
 
-This is a multi-part message in MIME format.
---------------040408070909000805000104
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On 2/24/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> writes:
+>
+> > This patch address the below:
+> > Use monospace font to draw branch and tag name
+> > set the font size to 13.
+>
+> I have an impression that hardcoding UI policy like this is
+> generally frowned upon.
 
+But with that changes branch and the tag name looks neat.
 
---------------040408070909000805000104
-Content-Type: text/plain;
- name="0005-gitview-Fix-the-graph-display.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="0005-gitview-Fix-the-graph-display.txt"
+May be down the  line we can add a prefernce tag that will allow the
+user to change all these hardcoded values.
 
-Subject: gitview: Fix the graph display .
-
-This fix all the known issue with the graph display
-The bug need to be explained graphically
-
-                                 |
-                                 a
-This line need not be there ---->| \
-                                 b  |
-                                 | /
-                                 c 
-
-c is parent of a and all a,b and c are placed on the same line and b is child of c 
-With my last checkin I added  a seperate line to indicate that a is
-connected to c. But then we had the line connecting a and b which should 
-not be ther. This changes fixes the same bug
- 
-
-
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-
----
-
- contrib/gitview/gitview |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-d4da5f1243c47322ede9dae2a65098cbc7e9ecb5
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 2cde71e..4e3847d 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -938,8 +938,10 @@ class GitView:
- 	def draw_incomplete_line(self, sha1, node_pos, out_line, in_line, index):
- 		for idx, pos in enumerate(self.incomplete_line[sha1]):
- 			if(pos == node_pos):
--				out_line.append((pos,
--					pos+0.5, self.colours[sha1]))
-+				#remove the straight line and add a slash
-+				if ((pos, pos, self.colours[sha1]) in out_line):
-+					out_line.remove((pos, pos, self.colours[sha1]))
-+				out_line.append((pos, pos+0.5, self.colours[sha1]))
- 				self.incomplete_line[sha1][idx] = pos = pos+0.5
- 			try:
- 				next_commit = self.commits[index+1]
--- 
-1.2.3.g2cf3-dirty
-
-
---------------040408070909000805000104--
+-aneesh
