@@ -1,68 +1,82 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] New git-seek command with documentation and test.
-Date: Fri, 24 Feb 2006 11:11:48 +0100
-Message-ID: <43FEDBE4.8040200@op5.se>
-References: <20060224002915.17331.qmail@science.horizon.com> <43FEAD62.6050302@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Some more pack-objects tweaks
+Date: Fri, 24 Feb 2006 02:38:21 -0800
+Message-ID: <7vvev5ca8y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, cworth@cworth.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 11:12:31 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Feb 24 11:38:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCZvx-0007oi-Is
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 11:12:22 +0100
+	id 1FCaLC-0005Ek-JV
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 11:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932187AbWBXKLu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 05:11:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932186AbWBXKLu
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 05:11:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:22675 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932187AbWBXKLt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 05:11:49 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 6A9936BD0A; Fri, 24 Feb 2006 11:11:48 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <43FEAD62.6050302@zytor.com>
+	id S1750962AbWBXKiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 05:38:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbWBXKiX
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 05:38:23 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:41466 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750882AbWBXKiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 05:38:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060224103712.KZPH3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 24 Feb 2006 05:37:12 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16692>
 
-H. Peter Anvin wrote:
-> linux@horizon.com wrote:
-> 
->> The annoying thing about temporary branch names like "bisect" and "seek"
->> is that:
->> a) They clutter up the nae space available to the repository user.
->>    Users have to know that those are reserved names.
->> b) If a repository is cloned while they're in use, they might get
->>    into a "remotes" file, with even more confusing results.
->>
->> This is somewhat heretical, but how about making a truly unnamed 
->> branch by
->> having .git/HEAD *not* be a symlink, but rather hold a commit ID 
->> directly?
->> It's already well established that files in the .git directory directly
->> are strictly local to this working directory, so it seems a much better
->> home for such temporary state.
->>
-> 
-> It might be easier to just reserve part of the namespace, e.g. ".bisect" 
-> and ".seek" instead.
-> 
+I've been working more pack-objects improvements.  There will be
+two tweaks in the "next" branch I'll be pushing out tonight.
 
-Ach, no. Not specific names. ^\.-.* would be acceptable, but I sometimes 
-use '.name' or '-name' to mark a temporary branch. Making .- or some 
-such reserved would perhaps make sense, but not with specific names.
+ * rev-list reports full pathnames not just basenames for
+   contained trees and blobs.  pack-objects hashes the incoming
+   names (and names obtained from "negative" trees when
+   --objects-edge aka "thin pack" is used) taking into account
+   the dirname and basename part.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+   Earlier, I had a patch that hashes the whole pathname, and
+   found it perform worse than the original "hash just the
+   basename" approach, so I never published it.  The idea in
+   this round is to give "Makefile" and "t/Makefile" a different
+   but close hash values.  Type-size sort groups "Makefile"s
+   from different revs together, and another group of bunch of
+   "t/Makefile"s are found close by.
+
+ * when creating "thin" pack, disable the code to avoid too
+   long a delta chain to be made due to reused delta (see
+   15b4d57 and ab7cd7b commit log for details).
+
+   This is because limiting delta chain is more costly than let
+   it grow by using preexisting delta, and "thin" pack is usable
+   by first exploding it, so at that point delta depth does not
+   matter.
+
+In Linux 2.6 repository, I've created a thin pack between
+v2.6.14..v2.6.15-rc1 (36k objects).  Here are the results:
+
+    [without either patch]
+    15463034 bytes
+    Total 36248, written 36248 (delta 29046), reused 28306 (delta 22512)
+    real    1m38.157s       user    1m32.520s       sys     0m5.440s
+
+    [with full names]
+    11138621 bytes
+    Total 36248, written 36248 (delta 30368), reused 27918 (delta 22512)
+    real    1m36.254s       user    1m28.650s       sys     0m5.470s
+
+    [with full names, and allowing deeper delta]
+    9971223 bytes
+    Total 36248, written 36248 (delta 30868), reused 27429 (delta 22512)
+    real    1m36.923s       user    1m29.770s       sys     0m5.470s
+
+All of these tests were done with the last patch in Nico's delta
+enhancement series reverted, because the dataset used in this
+test triggers a corner case performance disaster in it (I've
+sent a message separately).
