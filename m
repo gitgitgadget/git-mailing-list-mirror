@@ -1,83 +1,116 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 00:49:13 -0800
-Message-ID: <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] New git-seek command with documentation and test.
+Date: Fri, 24 Feb 2006 11:00:29 +0100
+Message-ID: <43FED93D.1000601@op5.se>
+References: <43F20532.5000609@iaglans.de>	<Pine.LNX.4.64.0602140845080.3691@g5.osdl.org>	<87k6bxvmj6.wl%cworth@cworth.org>	<Pine.LNX.4.64.0602141026570.3691@g5.osdl.org>	<87fymlvgzv.wl%cworth@cworth.org>	<Pine.LNX.4.64.0602141224110.3691@g5.osdl.org>	<87d5hpvc8p.wl%cworth@cworth.org>	<7vu0b1pntl.fsf@assigned-by-dhcp.cox.net> <87zmkhrf4y.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 09:49:21 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Feb 24 11:00:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCYdb-0007b9-7j
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 09:49:19 +0100
+	id 1FCZkY-0005YT-Lv
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 11:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbWBXItQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 03:49:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbWBXItQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 03:49:16 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:7083 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932140AbWBXItP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 03:49:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060224084603.KZKV17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 24 Feb 2006 03:46:03 -0500
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain> (Nicolas
-	Pitre's message of "Tue, 21 Feb 2006 20:45:36 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932171AbWBXKAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 05:00:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932173AbWBXKAb
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 05:00:31 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:54930 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932171AbWBXKAb
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 05:00:31 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id A7FCB6BCBE; Fri, 24 Feb 2006 11:00:29 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87zmkhrf4y.wl%cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16690>
 
-Nicolas Pitre <nico@cam.org> writes:
+Carl Worth wrote:
+> Add git-seek which allows for temporary excursions through the
+> revision history. With "git seek <revision>" one gets a working tree
+> corresponding to <revision>. When done with the excursion "git seek"
+> returns back to the original branch from where the first seek began.
+> 
 
-> Indexing based on adler32 has a match precision based on the block size 
-> (currently 16).  Lowering the block size would produce smaller deltas 
-> but the indexing memory and computing cost increases significantly.
+I've said it before, and I'll say it again. This tool provides less 
+flexibility and much less power than "git checkout -b branch 
+<commit-ish>" (although it would be nice to have '-o' for 'overwrite 
+existing branch' as an argument to git checkout)
 
-Indeed.
+> Signed-off-by: Carl Worth <cworth@cworth.org>
+> 
+> ---
+>  
+>  I had planned to just let this drop as my original need was some
+>  historical exploration that I've already finished. But now I've found
+>  a common use case in my everyday workflow that could benefit from
+>  git-seek. Here it is:
+>  
+>  I receive a bug-fix patch that updates a test case to demonstrate the
+>  bug. I can apply both the fix and the test case and see it succeed.
+>  But what I really want to do is first commit the test case, see it
+>  fail, and only then commit the fix and see the test now succeed.  I'd
+>  also like the history to reflect that order. So what I do is:
+>  
+>  	$ git-am
+>  	$ git update-index test.c ; git commit -m "Update test"
+>  	$ git update-index buggy.c ; git commit -m "Fix bug"
+>  
+>  At that point, without git-seek I can get by with:
+>  
+>  	$ git checkout -b tmp HEAD^
+>  	$ make check # to see failure
+>  	$ git checkout <branch_I_was_on_to_begin_with>
+>  	$ git branch -d tmp # easy to forget, but breaks the next time otherwise
+>  	$ make check # to see success
+>  
+>  But what I'd really like to do, (and can with the attached patch), is:
+>  
+>  	$ git seek HEAD^
+>  	$ make check # to see failure
+>  	$ git seek
+>  	$ make check # to see success
+>  
+>  This avoids me having to:
+> 1) invent a throwaway name,
 
-I had this patch in my personal tree for a while.  I was
-wondring why sometimes progress indication during "Deltifying"
-stage stops for literally several seconds, or more.
+All programmers have at least five throwaway names that are only ever 
+used as such (mine are, in order of precedence, foo, bar, tmp, fnurg, 
+sdf and asd).
 
-In Linux 2.6 repository, these object pairs take forever to
-delta.
+> 2) remember the branch I started on,
 
-        blob 9af06ba723df75fed49f7ccae5b6c9c34bc5115f -> 
-        blob dfc9cd58dc065d17030d875d3fea6e7862ede143
-        size (491102 -> 496045)
-        58 seconds
+With topic branches, you need to pick more careful topic names. Without 
+topic branches you're always on "master". Surely you know what the 
+patches touch, so you know what branch they should be in.
 
-        blob 4917ec509720a42846d513addc11cbd25e0e3c4f -> 
-        blob dfc9cd58dc065d17030d875d3fea6e7862ede143
-        size (495831 -> 496045)
-        64 seconds
+> 3) remember to actually throwaway the temporary branch.
+> 
 
-Admittedly, these are *BAD* input samples (a binary firmware
-blob with many similar looking ", 0x" sequences).  I can see
-that trying to reuse source materials really hard would take
-significant computation.
+This isn't always a bad thing, since you after applying some patch or 
+other decide you want to go back to this point in history, or want to 
+keep the point so you can show the author some problem or other with the 
+patch. With git-seek you'll then have to remember the hard-to-learn 
+SHA1, or how far below HEAD or some other easily remembered point in 
+history it is. In that case, you need to remember to add the 
+branch/tag/whatever to where you seeked rather than just go on with the 
+work. Removing a branch later is simple. Finding the right spot to 
+create it later can be trouble-some.
 
-However, this is simply unacceptable.
+If I had a vote, I'd say no to this patch, and to this tool entirely.
 
-The new algoritm takes 58 seconds to produce 136000 bytes of
-delta, while the old takes 0.25 seconds to produce 248899 (I am
-using the test-delta program in git.git distribution).  The
-compression ratio is significantly better, but this is unusable
-even for offline archival use (remember, pack delta selection
-needs to do window=10 such deltification trials to come up with
-the best delta, so you are spending 10 minutes to save 100k from
-one oddball blob), let alone on-the-fly pack generation for
-network transfer.
-
-Maybe we would want two implementation next to each other, and
-internally see if it is taking too much cycles compared to the
-input size then switch to cheaper version?
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
