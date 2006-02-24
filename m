@@ -1,73 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Removal of "--merge-order"?
-Date: Fri, 24 Feb 2006 22:37:38 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602242230210.11479@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0602240824110.3771@g5.osdl.org>
- <Pine.LNX.4.58.0602240840520.7894@shark.he.net> <Pine.LNX.4.64.0602240918030.3771@g5.osdl.org>
- <Pine.LNX.4.58.0602240942520.7894@shark.he.net> <Pine.LNX.4.64.0602240957430.22647@g5.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] diff-delta: produce optimal pack data
+Date: Fri, 24 Feb 2006 16:48:54 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0602241647250.31162@localhost.localdomain>
+References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
+ <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
+ <20060224174422.GA13367@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
+ <20060224183554.GA31247@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
+ <20060224192354.GC387@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
+ <7vpslc8oni.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Randy.Dunlap" <rdunlap@xenotime.net>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 24 22:41:26 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Carl Baldwin <cnb@fc.hp.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 22:49:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCkgi-0006gX-3V
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 22:41:20 +0100
+	id 1FCkoD-0008Fs-Na
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 22:49:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932573AbWBXVhp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 16:37:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932582AbWBXVho
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 16:37:44 -0500
-Received: from mail.gmx.de ([213.165.64.20]:41391 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932573AbWBXVho (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 16:37:44 -0500
-Received: (qmail invoked by alias); 24 Feb 2006 21:37:42 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp030) with SMTP; 24 Feb 2006 22:37:42 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602240957430.22647@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S932578AbWBXVs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 16:48:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932583AbWBXVs4
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 16:48:56 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:22425 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932578AbWBXVsz
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 16:48:55 -0500
+Received: from xanadu.home ([24.202.136.67]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IV7004ECOLIEK60@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 24 Feb 2006 16:48:54 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16742>
 
-Hi,
+On Fri, 24 Feb 2006, Nicolas Pitre wrote:
 
-On Fri, 24 Feb 2006, Linus Torvalds wrote:
+> If blocks are hashed evenly the cost of  producing a delta is at most 
+> O(n+m) where n and m are the size of the reference and target files 
+> respectively.  In other words, with good data set the cost is linear.
+> 
+> But if many blocks from the reference buffer do hash to the same bucket 
+> then for each block in the target file many blocks from the reference 
+> buffer have to be tested against, making it tend towards O(n^m) which is 
+> pretty highly exponential.
 
-> Now, rev-list.c is not the biggest file (apply.c is about twice the size), 
-> but in many ways it's the most complex one by far. It's also the most 
-> performance-critical one, and the one that it would be really nice if we 
-> were to be able to libify it.
+Well, actually this is rather O(n*m) not O(n^m), but bad nevertheless.
 
-This is what I wanted to try today, but unfortunately I had to do real 
-work :-(
 
-> For example, instead of the horrid scriping language, I _think_ I could 
-> almost libify it by just hooking into "show_commit", and using a callback 
-> function for that (and then the stand-alone program would just make the 
-> callback function be one that prints out the commit). 
-
-I don't find the scripting language you invented particularly horrid. 
-Maybe some odd things (like "if" branching to the "else" block whenever 
-*any* argument was passed), but not horrid.
-
-But in the end I would prefer a libified git, if only to get rid of 
-double parsing (if you pipe the output of git-rev-list to another git 
-program, chances are that you parse the commit objects at least twice).
-
-> That would possibly be a simpler way to get away from using nonportable 
-> scripts. Plain C really does remain one of the most portable things out 
-> there.
-
-Yes.
-
-Ciao,
-Dscho
+Nicolas
