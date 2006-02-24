@@ -1,80 +1,71 @@
-From: "Randy.Dunlap" <rdunlap@xenotime.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Removal of "--merge-order"?
-Date: Fri, 24 Feb 2006 08:53:00 -0800 (PST)
-Message-ID: <Pine.LNX.4.58.0602240840520.7894@shark.he.net>
+Date: Fri, 24 Feb 2006 09:23:24 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602240918030.3771@g5.osdl.org>
 References: <Pine.LNX.4.64.0602240824110.3771@g5.osdl.org>
+ <Pine.LNX.4.58.0602240840520.7894@shark.he.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 24 17:53:46 2006
+X-From: git-owner@vger.kernel.org Fri Feb 24 18:23:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCgC1-0000i5-B3
-	for gcvg-git@gmane.org; Fri, 24 Feb 2006 17:53:22 +0100
+	id 1FCgfJ-0000JP-Kf
+	for gcvg-git@gmane.org; Fri, 24 Feb 2006 18:23:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932386AbWBXQxE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 11:53:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWBXQxD
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 11:53:03 -0500
-Received: from xenotime.net ([66.160.160.81]:53164 "HELO xenotime.net")
-	by vger.kernel.org with SMTP id S932383AbWBXQxC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 11:53:02 -0500
-Received: from shark.he.net ([66.160.160.2]) by xenotime.net for <git@vger.kernel.org>; Fri, 24 Feb 2006 08:53:00 -0800
-X-X-Sender: rddunlap@shark.he.net
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602240824110.3771@g5.osdl.org>
+	id S932279AbWBXRXf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 12:23:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbWBXRXe
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 12:23:34 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:28563 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932279AbWBXRXe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 12:23:34 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1OHNTDZ003468
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Feb 2006 09:23:30 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1OHNOBO031262;
+	Fri, 24 Feb 2006 09:23:27 -0800
+To: "Randy.Dunlap" <rdunlap@xenotime.net>
+In-Reply-To: <Pine.LNX.4.58.0602240840520.7894@shark.he.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16716>
 
-On Fri, 24 Feb 2006, Linus Torvalds wrote:
 
->
-> I just tested it again, and
->
-> 	git-rev-list --merge-order HEAD
->
-> takes an inordinate amount of time:
->
-> 	real    5m1.139s
-> 	user    4m59.504s
-> 	sys     0m1.220s
 
-That's too bad.
+On Fri, 24 Feb 2006, Randy.Dunlap wrote:
+> 
+> I'm just a lowly user, but I see people trying to export git
+> trees to other SCMs, and they seem to prefer merge-order.
+> This is your chance to correct me about:
+> (a) how I am wrong; (b) how they are wrong.  8;)
 
-> and that's on a reasonably fast machine (not my fastest, but no slouch by
-> any measure - my fastest machine I'm not allowed to really benchmark
-> publicly ;)
->
-> It may be a cool algorithm, but it's essentially useless on any bigger
-> tree. And nobody uses it, since "--topo-order" gives the guarantees that
-> people really care about, and finishes in 0.537 seconds on the same
-> machine with the same tree.
->
-> It also depends on the openssh "bignum" stuff, which means that any
-> machine where we just rely on our own SHA1 implementation and don't use
-> openssh doesn't have the flag anyway.
->
-> In other words, I'd really prefer if it was gone. Some of the things I
-> might do to git-rev-list would be much simpler if I didn't have to worry
-> about merge-order, and the way it interfaces with the rest of
-> git-rev-list.
->
-> Comments?
+Well, I didn't even realize anybody at all was using it. I've never seen 
+any mention of it, and considering how ungodly slow it is, I would have 
+expected somebody to pipe up about it..
 
-I'm just a lowly user, but I see people trying to export git
-trees to other SCMs, and they seem to prefer merge-order.
-This is your chance to correct me about:
-(a) how I am wrong; (b) how they are wrong.  8;)
+I did a google search for "git" and "merge-order", and the only actual use 
+(as opposed to mention in a man-page) I found in the 20 hits google showed 
+was an old version of gitk.
 
-I've heard/seen you say that merge-order is not interesting,
-but I still believe that *your* merge order of the Linux kernel
-tree is almost all that people really care about.
-Apparently I needed to go to LCA to hear you discuss git.
+> I've heard/seen you say that merge-order is not interesting,
+> but I still believe that *your* merge order of the Linux kernel
+> tree is almost all that people really care about.
 
--- 
-~Randy
+Could you actually point to somebody using it? They're hiding it well.
+
+> Apparently I needed to go to LCA to hear you discuss git.
+
+I certainly never delved into any of that.. 
+
+		Linus
