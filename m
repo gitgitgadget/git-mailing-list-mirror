@@ -1,111 +1,107 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 15:55:43 -0800
-Message-ID: <7vfym88g74.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 24 Feb 2006 16:45:23 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602241637480.22647@g5.osdl.org>
 References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
-	<7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602241029360.23719@localhost.localdomain>
+ <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net> <20060224174422.GA13367@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
+ <20060224183554.GA31247@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
+ <20060224192354.GC387@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
+ <7vpslc8oni.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 25 00:55:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Carl Baldwin <cnb@fc.hp.com>
+X-From: git-owner@vger.kernel.org Sat Feb 25 01:54:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCmmr-0002ST-DX
-	for gcvg-git@gmane.org; Sat, 25 Feb 2006 00:55:49 +0100
+	id 1FCnhc-0004nV-22
+	for gcvg-git@gmane.org; Sat, 25 Feb 2006 01:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964805AbWBXXzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 18:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964806AbWBXXzq
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 18:55:46 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:11666 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S964805AbWBXXzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2006 18:55:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060224235428.TNEU15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 24 Feb 2006 18:54:28 -0500
+	id S964828AbWBYAyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 19:54:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964829AbWBYAyX
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 19:54:23 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:38307 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964828AbWBYAyW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 19:54:22 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1P0jUDZ026184
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Feb 2006 16:45:30 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1P0jOpr016328;
+	Fri, 24 Feb 2006 16:45:26 -0800
 To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0602241029360.23719@localhost.localdomain>
-	(Nicolas Pitre's message of "Fri, 24 Feb 2006 10:37:46 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16749>
 
-Nicolas Pitre <nico@cam.org> writes:
 
-> On Fri, 24 Feb 2006, Junio C Hamano wrote:
->
->> In Linux 2.6 repository, these object pairs take forever to
->> delta.
->> 
->>         blob 9af06ba723df75fed49f7ccae5b6c9c34bc5115f -> 
->>         blob dfc9cd58dc065d17030d875d3fea6e7862ede143
->>         size (491102 -> 496045)
->>         58 seconds
->> 
->>         blob 4917ec509720a42846d513addc11cbd25e0e3c4f -> 
->>         blob dfc9cd58dc065d17030d875d3fea6e7862ede143
->>         size (495831 -> 496045)
->>         64 seconds
->
-> Thanks for this.  I'll see what I can do to tweak the code to better 
-> cope with those.  Just keep my fourth delta patch in the pu branch for 
-> now.
 
-If apply this on top of pack-objects.c, you can find more of
-them yourself.
+On Fri, 24 Feb 2006, Nicolas Pitre wrote:
+> 
+> Currently, diff-delta takes blocks of data in the reference file and 
+> hash them.  When the target file is scanned, it uses the hash to match 
+> blocks from the target file with the reference file.
+> 
+> If blocks are hashed evenly the cost of  producing a delta is at most 
+> O(n+m) where n and m are the size of the reference and target files 
+> respectively.  In other words, with good data set the cost is linear.
 
----
-diff --git a/pack-objects.c b/pack-objects.c
-index be7a200..3f88e86 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -62,6 +62,7 @@ static const char *base_name;
- static unsigned char pack_file_sha1[20];
- static int progress = 1;
- static volatile int progress_update = 0;
-+static volatile int progress_update_cnt = 0;
- 
- /*
-  * The object names in objects array are hashed with this hashtable,
-@@ -826,6 +827,7 @@ static int try_delta(struct unpacked *cu
- 	struct object_entry *old_entry = old->entry;
- 	int old_preferred = (old_entry->preferred_base ||
- 			     old_entry->based_on_preferred);
-+	int last_up;
- 	unsigned long size, oldsize, delta_size, sizediff;
- 	long max_size;
- 	void *delta_buf;
-@@ -890,8 +892,17 @@ static int try_delta(struct unpacked *cu
- 	}
- 	if (sizediff >= max_size)
- 		return -1;
-+	last_up = progress_update_cnt;
- 	delta_buf = diff_delta(old->data, oldsize,
- 			       cur->data, size, &delta_size, max_size);
-+	if (last_up + 1 < progress_update_cnt) {
-+		/* It took more than one second */
-+		fprintf(stderr, "%d -> %d: %s -> ",
-+			last_up, progress_update_cnt,
-+			sha1_to_hex(old_entry->sha1));
-+		fprintf(stderr, "%s (%lu -> %lu)\n",
-+			sha1_to_hex(cur_entry->sha1), oldsize, size);
-+	}
- 	if (!delta_buf)
- 		return 0;
- 	cur_entry->delta = old_entry;
-@@ -906,6 +917,7 @@ static void progress_interval(int signum
- {
- 	signal(SIGALRM, progress_interval);
- 	progress_update = 1;
-+	progress_update_cnt++;
- }
- 
- static void find_deltas(struct object_entry **list, int window, int depth)
+Assuming the hash is good, of course.
+
+I think this was the problem with you trying something simpler than 
+adler32..
+
+> But if many blocks from the reference buffer do hash to the same bucket 
+> then for each block in the target file many blocks from the reference 
+> buffer have to be tested against, making it tend towards O(n^m) which is 
+> pretty highly exponential.
+> 
+> The solution I'm investigating is to put a limit on the number of 
+> entries in the same hash bucket so to bring the cost back to something 
+> more linear.  That means the delta might miss on better matches that 
+> have not been hashed but still benefit from a limited set.
+
+Sounds fair enough.
+
+However, you migt also want to consider another approach..
+
+One of the biggest costs for the xdelta algorithm is probably just the 
+"delta_prepare()", but at the same time, that is constant wrt the source 
+buffer.
+
+Now, the sad part is that when I wrote pack-objects, I didn't really 
+understand the diff-delta algorithm, I just plugged it in. Which means 
+that when I did it, I made the (obvious and simple) decision to keep the 
+_result_ that we are looking at constant, and try to delta against 
+different sources.
+
+HOWEVER.
+
+I suspect you already see where this is going..
+
+We _could_ switch the "pack-objects" window handling around, and instead 
+of looking at the object we want to pack, and looking at the ten (or 
+"window") previous objects to delta against, we could do it the other way 
+around: keep the object we delta against constant, and see what deltas we 
+could prepare for the ten next objects.
+
+And since the source would now be constant, you'd need to do the 
+"delta_prepare()" just _once_ per window, instead of every single time.
+
+Now, I haven't done any profiling on the diff-delta code, and maybe my 
+guess that delta_prepare() is a pretty expensive part is wrong, and maybe 
+it wouldn't help to switch the window probing around. But I thought I'd 
+mention it as one thing to explore..
+
+		Linus
