@@ -1,56 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-rm: Fix to properly handle files with spaces, tabs, newlines, etc.
-Date: Fri, 24 Feb 2006 22:05:18 -0800
-Message-ID: <7vu0ao6kip.fsf@assigned-by-dhcp.cox.net>
-References: <87u0ass7tj.wl%cworth@cworth.org> <43FB8F31.9090302@people.pl>
-	<87slqcs4y5.wl%cworth@cworth.org> <87r75ws48c.wl%cworth@cworth.org>
-	<7vaccjst3x.fsf@assigned-by-dhcp.cox.net>
-	<8764n7rl6s.wl%cworth@cworth.org>
-	<81b0412b0602240523l1b10c910q6e5d2e3cef82e306@mail.gmail.com>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Re: gitview: Use monospace font to draw the branch and tag name
+Date: Sat, 25 Feb 2006 12:30:06 +0530
+Message-ID: <cc723f590602242300h65e6a9d6k87148d2124a71907@mail.gmail.com>
+References: <43FC8BF2.60205@gmail.com>
+	 <7vr75tc8gj.fsf@assigned-by-dhcp.cox.net>
+	 <cc723f590602240829y3ebffaf9mdd7de0cd2a9051e@mail.gmail.com>
+	 <7vzmkg6kj7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Carl Worth" <cworth@cworth.org>,
-	"Krzysiek Pawlik" <krzysiek.pawlik@people.pl>
-X-From: git-owner@vger.kernel.org Sat Feb 25 07:05:36 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 25 08:01:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCsYY-0004iW-H4
-	for gcvg-git@gmane.org; Sat, 25 Feb 2006 07:05:30 +0100
+	id 1FCtQI-0000gH-JF
+	for gcvg-git@gmane.org; Sat, 25 Feb 2006 08:01:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932684AbWBYGFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Feb 2006 01:05:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932637AbWBYGFX
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Feb 2006 01:05:23 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:5783 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932692AbWBYGFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2006 01:05:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060225060228.OSXF26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 25 Feb 2006 01:02:28 -0500
-To: "Alex Riesen" <raa.lkml@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932386AbWBYHAK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Feb 2006 02:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbWBYHAJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Feb 2006 02:00:09 -0500
+Received: from uproxy.gmail.com ([66.249.92.204]:1244 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932386AbWBYHAI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2006 02:00:08 -0500
+Received: by uproxy.gmail.com with SMTP id j3so198399ugf
+        for <git@vger.kernel.org>; Fri, 24 Feb 2006 23:00:07 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aM7fCxNJhXDs2sruSvwFliCuhXQcVnOcX/vWK8p1WdD07kqnqXJG/qvLgrdwFZfi1iRaMHgTpX+YK52SxVdLSa188EKR66AiYk+T4kwZHDZd95lYZmX4VogYVsoGZFIW2T3Gpt15UH5cvLi3Osb5wlgYIMeOGyLrAuWXNTfizz0=
+Received: by 10.66.222.18 with SMTP id u18mr2517048ugg;
+        Fri, 24 Feb 2006 23:00:06 -0800 (PST)
+Received: by 10.66.254.7 with HTTP; Fri, 24 Feb 2006 23:00:06 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vzmkg6kj7.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16759>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
-
-> On 2/23/06, Carl Worth <cworth@cworth.org> wrote:
->> +# Setup some files to be removed, some with funny characters
->> +touch -- foo bar baz 'space embedded' 'tab     embedded' 'newline
->> +embedded' -q
->> +git-add -- foo bar baz 'space embedded' 'tab   embedded' 'newline
->> +embedded' -q
->> +git-commit -m "add files"
+On 2/25/06, Junio C Hamano <junkio@cox.net> wrote:
 >
-> This doesn't work on some exotic filesystems (ntfs and fat):
+> >> I have an impression that hardcoding UI policy like this is
+> >> generally frowned upon.
+> >
+> > But with that changes branch and the tag name looks neat.
+>
+> The point being that it only looks neat on your display, with
+> its size and resolution, and to your eye.
+>
+> People have different tastes and equipments.  One thing I really
+> liked gitk (I do not know if gitview does this as well -- if so
+> I am happy) is I can do - and + to change the text size
+> depending on what display I am working on.
+>
+>
 
-Sorry to have applied this without thinking.  Yes, we had
-disabled a test that uses tab for this exact reason, but I have
-forgotten about it.
+Point taken. Right now gitview doesn't support + and - key binding. I
+will try to add that. For the time being can you can drop my font and
+font size related  changes and apply rest of the patches.
+
+-aneesh
