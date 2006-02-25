@@ -1,107 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] diff-delta: produce optimal pack data
-Date: Fri, 24 Feb 2006 16:45:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602241637480.22647@g5.osdl.org>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
- <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net> <20060224174422.GA13367@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
- <20060224183554.GA31247@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
- <20060224192354.GC387@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
- <7vpslc8oni.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
+From: Nicolas Vilz 'niv' <niv@iaglans.de>
+Subject: Re: git-annotate
+Date: Sat, 25 Feb 2006 02:21:54 +0100
+Message-ID: <43FFB132.8040202@iaglans.de>
+References: <118833cc0602240721s1c64219y161cc0536fb361e4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Carl Baldwin <cnb@fc.hp.com>
-X-From: git-owner@vger.kernel.org Sat Feb 25 01:54:32 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig6DFB5969DEF1FC44AE9244C3"
+X-From: git-owner@vger.kernel.org Sat Feb 25 02:23:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FCnhc-0004nV-22
-	for gcvg-git@gmane.org; Sat, 25 Feb 2006 01:54:28 +0100
+	id 1FCo9h-0001Io-1E
+	for gcvg-git@gmane.org; Sat, 25 Feb 2006 02:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964828AbWBYAyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Feb 2006 19:54:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964829AbWBYAyX
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 19:54:23 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:38307 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964828AbWBYAyW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2006 19:54:22 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1P0jUDZ026184
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 24 Feb 2006 16:45:30 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1P0jOpr016328;
-	Fri, 24 Feb 2006 16:45:26 -0800
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964838AbWBYBX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Feb 2006 20:23:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964839AbWBYBX0
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Feb 2006 20:23:26 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:52754 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S964838AbWBYBXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2006 20:23:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id F11853FA9
+	for <git@vger.kernel.org>; Sat, 25 Feb 2006 02:23:09 +0100 (CET)
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 20599-04 for <git@vger.kernel.org>;
+	Sat, 25 Feb 2006 02:23:05 +0100 (CET)
+Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id D0EDA3E94
+	for <git@vger.kernel.org>; Sat, 25 Feb 2006 02:23:03 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+X-Accept-Language: en-us, en
+To: GIT Mailing List <git@vger.kernel.org>
+In-Reply-To: <118833cc0602240721s1c64219y161cc0536fb361e4@mail.gmail.com>
+X-Enigmail-Version: 0.92.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16750>
 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig6DFB5969DEF1FC44AE9244C3
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
+Morten Welinder wrote:
+> git-annotate ought to call usage() if it doesn't get its file.
+Full Ack.
 
-On Fri, 24 Feb 2006, Nicolas Pitre wrote:
+>>git annotate
 > 
-> Currently, diff-delta takes blocks of data in the reference file and 
-> hash them.  When the target file is scanned, it uses the hash to match 
-> blocks from the target file with the reference file.
-> 
-> If blocks are hashed evenly the cost of  producing a delta is at most 
-> O(n+m) where n and m are the size of the reference and target files 
-> respectively.  In other words, with good data set the cost is linear.
+> Use of uninitialized value in open at
+> /scratch/welinder/git/git-annotate line 40.
+> Failed to open filename: No such file or directory at
+> /scratch/welinder/git/git-annotate line 40.
 
-Assuming the hash is good, of course.
+oh yes, that was something, i slipped over today, didn't have the time
+to report it myself.
 
-I think this was the problem with you trying something simpler than 
-adler32..
+additionally i got following with git-annotate --help
 
-> But if many blocks from the reference buffer do hash to the same bucket 
-> then for each block in the target file many blocks from the reference 
-> buffer have to be tested against, making it tend towards O(n^m) which is 
-> pretty highly exponential.
-> 
-> The solution I'm investigating is to put a limit on the number of 
-> entries in the same hash bucket so to bring the cost back to something 
-> more linear.  That means the delta might miss on better matches that 
-> have not been hashed but still benefit from a limited set.
+niv@hermes ~ $ git-annotate --help
+/usr/bin/git-annotate version [unknown] calling Getopt::Std::getopts
+(version 1.05 [paranoid]),
+running under Perl version 5.8.8.
 
-Sounds fair enough.
+i don't know if that should happen so.
 
-However, you migt also want to consider another approach..
+Nicolas
 
-One of the biggest costs for the xdelta algorithm is probably just the 
-"delta_prepare()", but at the same time, that is constant wrt the source 
-buffer.
+--------------enig6DFB5969DEF1FC44AE9244C3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Now, the sad part is that when I wrote pack-objects, I didn't really 
-understand the diff-delta algorithm, I just plugged it in. Which means 
-that when I did it, I made the (obvious and simple) decision to keep the 
-_result_ that we are looking at constant, and try to delta against 
-different sources.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-HOWEVER.
+iD8DBQFD/7E3SlT0CowElk8RAsUkAJ0Yb4mjapJwhIbRSgmi5oiZzu/FIQCglAMM
+iLSGRKSMMRql/jptOWw6dTw=
+=LM85
+-----END PGP SIGNATURE-----
 
-I suspect you already see where this is going..
-
-We _could_ switch the "pack-objects" window handling around, and instead 
-of looking at the object we want to pack, and looking at the ten (or 
-"window") previous objects to delta against, we could do it the other way 
-around: keep the object we delta against constant, and see what deltas we 
-could prepare for the ten next objects.
-
-And since the source would now be constant, you'd need to do the 
-"delta_prepare()" just _once_ per window, instead of every single time.
-
-Now, I haven't done any profiling on the diff-delta code, and maybe my 
-guess that delta_prepare() is a pretty expensive part is wrong, and maybe 
-it wouldn't help to switch the window probing around. But I thought I'd 
-mention it as one thing to explore..
-
-		Linus
+--------------enig6DFB5969DEF1FC44AE9244C3--
