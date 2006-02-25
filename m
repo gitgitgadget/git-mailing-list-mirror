@@ -1,64 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-fetch: print the new and old ref when fast-forwarding
-Date: Sat, 25 Feb 2006 21:08:37 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602252107110.17999@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sat, 25 Feb 2006 12:53:32 -0800
+Message-ID: <7vlkvz6tyr.fsf@assigned-by-dhcp.cox.net>
 References: <44003D6D.2010406@etek.chalmers.se>
+	<Pine.LNX.4.63.0602252107110.17999@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1772496379-1140898117=:17999"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 25 21:08:52 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 25 21:53:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FD5ij-0006zw-KD
-	for gcvg-git@gmane.org; Sat, 25 Feb 2006 21:08:50 +0100
+	id 1FD6Q9-0007cW-HO
+	for gcvg-git@gmane.org; Sat, 25 Feb 2006 21:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161098AbWBYUIm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Feb 2006 15:08:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161100AbWBYUIm
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Feb 2006 15:08:42 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:42473 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1161098AbWBYUIl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2006 15:08:41 -0500
-Received: from virusscan.mail (mail03.mail [172.25.1.102])
-	by mailrelay.mail (Postfix) with ESMTP id 137831D09;
-	Sat, 25 Feb 2006 21:08:38 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 06D3AAD8;
-	Sat, 25 Feb 2006 21:08:38 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id CFF71AD5;
-	Sat, 25 Feb 2006 21:08:37 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-In-Reply-To: <44003D6D.2010406@etek.chalmers.se>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1161109AbWBYUxh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Feb 2006 15:53:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161108AbWBYUxh
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Feb 2006 15:53:37 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:21496 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1161109AbWBYUxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2006 15:53:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060225205054.YMAE17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 25 Feb 2006 15:50:54 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0602252107110.17999@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 25 Feb 2006 21:08:37 +0100
+	(CET)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16763>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
----1148973799-1772496379-1140898117=:17999
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+>> This is useful when you check out new changes with gitk.
+>> Just copy/paste the old ref into gitk from the terminal.
+>
+> Why does "gitk ORIG_HEAD..HEAD" not work? (It also does the correct thing 
+> when pulling...)
 
-Hi,
+For most projects and repositories with single interesting head,
+that would work just fine.
 
-On Sat, 25 Feb 2006, Lukas Sandström wrote:
+If you use additional Pull: lines to track more than one remote
+refs, this patch would help.
 
-> This is useful when you check out new changes with gitk.
-> Just copy/paste the old ref into gitk from the terminal.
+For example, if you are tracking my "next" while keeping an eye
+on my "master" and "pu", your .git/remotes/origin file may have
+something like this:
 
-Why does "gitk ORIG_HEAD..HEAD" not work? (It also does the correct thing 
-when pulling...)
+	URL: git://git.kernel.org/pub/scm/git/git.git
+        Pull: next:origin
+        Pull: master:ko-master
+        Pull: pu:ko-pu
 
-Hth,
-Dscho
-
----1148973799-1772496379-1140898117=:17999--
+When "git pull origin" pulls my next branch into your current
+branch (typically "master"), it also fast forwards your tracking
+branches ko-master and ko-pu.  If you want to see what I merged
+in the meantime, you would want to get the old value of
+ko-master and the new value and feed them to gitk (or git log).
+ORIG_HEAD in this case was the old value of _your_ current
+branch head, and is not useful to see what happened to my master
+branch.
