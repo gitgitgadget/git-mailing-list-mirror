@@ -1,171 +1,131 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] Use setenv(), fix warnings
-Date: Sun, 26 Feb 2006 17:13:46 +0200
-Message-ID: <20060226171346.33ad3e47.tihirvon@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: the war on trailing whitespace
+Date: Sun, 26 Feb 2006 09:29:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
+References: <20060225174047.0e9a6d29.akpm@osdl.org> <7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
+ <20060225210712.29b30f59.akpm@osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 26 16:12:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 26 18:29:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDNZe-00033p-Ch
-	for gcvg-git@gmane.org; Sun, 26 Feb 2006 16:12:38 +0100
+	id 1FDPhq-0001KH-Vu
+	for gcvg-git@gmane.org; Sun, 26 Feb 2006 18:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbWBZPMS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 10:12:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbWBZPMS
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 10:12:18 -0500
-Received: from wproxy.gmail.com ([64.233.184.199]:51595 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751212AbWBZPMS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 10:12:18 -0500
-Received: by wproxy.gmail.com with SMTP id 71so650812wra
-        for <git@vger.kernel.org>; Sun, 26 Feb 2006 07:12:17 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=YCNIEfJbdNwnY5AotUdO4X6jBQZHMgPqtEX9ccxtxlueLVaBi5yXC0+n6IX2kw0DizeqbFNTmUsjtwKnUMzJ8n30s4CU2noOZMlXO2P29mKUbEl1fcF9OEmDVzbdOEcT/j/L1mkV0ayhIe4UReGtLxrdufg2uUTAnQ96hAJcOco=
-Received: by 10.64.96.20 with SMTP id t20mr32813qbb;
-        Sun, 26 Feb 2006 07:12:17 -0800 (PST)
-Received: from garlic.home.net ( [82.128.228.98])
-        by mx.gmail.com with ESMTP id e10sm2430222qbe.2006.02.26.07.12.15;
-        Sun, 26 Feb 2006 07:12:16 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.12; i686-pc-linux-gnu)
+	id S1751278AbWBZR3H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 12:29:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWBZR3G
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 12:29:06 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:62189 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751278AbWBZR3F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 12:29:05 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1QHT1DZ032524
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 26 Feb 2006 09:29:02 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1QHT08B017773;
+	Sun, 26 Feb 2006 09:29:00 -0800
+To: Andrew Morton <akpm@osdl.org>
+In-Reply-To: <20060225210712.29b30f59.akpm@osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16784>
 
 
-  - Use setenv() instead of putenv()
-  - Fix -Wundef -Wold-style-definition warnings
-  - Make pll_free() static
 
-Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+On Sat, 25 Feb 2006, Andrew Morton wrote:
+> 
+> I'd suggest a) git will simply refuse to apply such a patch unless given a
+> special `forcing' flag, b) even when thus forced, it will still warn and c)
+> with a different flag, it will strip-then-apply, without generating a
+> warning.
+
+This doesn't do the "strip-then-apply" thing, but it allows you to make 
+git-apply generate a warning or error on extraneous whitespace.
+
+Use --whitespace=warn to warn, and (surprise, surprise) --whitespace=error 
+to make it a fatal error to have whitespace at the end.
+
+Totally untested, of course. But it compiles, so it must be fine.
+
+HOWEVER! Note that this literally will check every single patch-line with 
+"+" at the beginning. Which means that if you fix a simple typo, and the 
+line had a space at the end before, and you didn't remove it, that's still 
+considered a "new line with whitespace at the end", even though obviously 
+the line wasn't really new.
+
+I assume this is what you wanted, and there isn't really any sane 
+alternatives (you could make the warning activate only for _pure_ 
+additions with no deletions at all in that hunk, but that sounds a bit 
+insane).
+
+		Linus
 
 ---
-
- cache.h          |    2 +-
- exec_cmd.c       |    2 +-
- fetch-pack.c     |    2 +-
- fsck-objects.c   |    4 ++--
- pack-objects.c   |    2 +-
- pack-redundant.c |    4 ++--
- path.c           |    2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
-
-4001390d41ffd2c816cead47c256e598bedff452
-diff --git a/cache.h b/cache.h
-index 5020f07..58eec00 100644
---- a/cache.h
-+++ b/cache.h
-@@ -10,7 +10,7 @@
- #define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
- #endif
+diff --git a/apply.c b/apply.c
+index 244718c..e7b3dca 100644
+--- a/apply.c
++++ b/apply.c
+@@ -34,6 +34,12 @@ static int line_termination = '\n';
+ static const char apply_usage[] =
+ "git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [-z] [-pNUM] <patch>...";
  
--#if defined(DT_UNKNOWN) && !NO_D_TYPE_IN_DIRENT
-+#if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
- #define DTYPE(de)	((de)->d_type)
- #else
- #undef DT_UNKNOWN
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 55af33b..b5e59a9 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -13,7 +13,7 @@ void git_set_exec_path(const char *exec_
++static enum whitespace_eol {
++	nowarn,
++	warn_on_whitespace,
++	error_on_whitespace
++} new_whitespace = nowarn;
++
+ /*
+  * For "diff-stat" like behaviour, we keep track of the biggest change
+  * we've seen, and the longest filename. That allows us to do simple
+@@ -815,6 +821,22 @@ static int parse_fragment(char *line, un
+ 			oldlines--;
+ 			break;
+ 		case '+':
++			/*
++			 * We know len is at least two, since we have a '+' and
++			 * we checked that the last character was a '\n' above
++			 */
++			if (isspace(line[len-2])) {
++				switch (new_whitespace) {
++				case nowarn:
++					break;
++				case warn_on_whitespace:
++					new_whitespace = nowarn;	/* Just once */
++					error("Added whitespace at end of line at line %d", linenr);
++					break;
++				case error_on_whitespace:
++					die("Added whitespace at end of line at line %d", linenr);
++				}
++			}
+ 			added++;
+ 			newlines--;
+ 			break;
+@@ -1839,6 +1861,17 @@ int main(int argc, char **argv)
+ 			line_termination = 0;
+ 			continue;
+ 		}
++		if (!strncmp(arg, "--whitespace=", 13)) {
++			if (strcmp(arg+13, "warn")) {
++				new_whitespace = warn_on_whitespace;
++				continue;
++			}
++			if (strcmp(arg+13, "error")) {
++				new_whitespace = error_on_whitespace;
++				continue;
++			}
++			die("unrecognixed whitespace option '%s'", arg+13);
++		}
  
- 
- /* Returns the highest-priority, location to look for git programs. */
--const char *git_exec_path()
-+const char *git_exec_path(void)
- {
- 	const char *env;
- 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 09738fe..535de10 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -82,7 +82,7 @@ static void mark_common(struct commit *c
-   Get the next rev to send, ignoring the common.
- */
- 
--static const unsigned char* get_rev()
-+static const unsigned char* get_rev(void)
- {
- 	struct commit *commit = NULL;
- 
-diff --git a/fsck-objects.c b/fsck-objects.c
-index 6439d55..f9c69f5 100644
---- a/fsck-objects.c
-+++ b/fsck-objects.c
-@@ -20,7 +20,7 @@ static int check_strict = 0;
- static int keep_cache_objects = 0; 
- static unsigned char head_sha1[20];
- 
--#if NO_D_INO_IN_DIRENT
-+#ifdef NO_D_INO_IN_DIRENT
- #define SORT_DIRENT 0
- #define DIRENT_SORT_HINT(de) 0
- #else
-@@ -483,7 +483,7 @@ int main(int argc, char **argv)
- 	if (standalone && check_full)
- 		die("Only one of --standalone or --full can be used.");
- 	if (standalone)
--		putenv("GIT_ALTERNATE_OBJECT_DIRECTORIES=");
-+		setenv("GIT_ALTERNATE_OBJECT_DIRECTORIES", "", 1);
- 
- 	fsck_head_link();
- 	fsck_object_dir(get_object_directory());
-diff --git a/pack-objects.c b/pack-objects.c
-index 0287449..21ee572 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -768,7 +768,7 @@ static int sha1_sort(const struct object
- 	return memcmp(a->sha1, b->sha1, 20);
- }
- 
--static struct object_entry **create_final_object_list()
-+static struct object_entry **create_final_object_list(void)
- {
- 	struct object_entry **list;
- 	int i, j;
-diff --git a/pack-redundant.c b/pack-redundant.c
-index 1869b38..cd81f5a 100644
---- a/pack-redundant.c
-+++ b/pack-redundant.c
-@@ -45,7 +45,7 @@ static inline void llist_item_put(struct
- 	free_nodes = item;
- }
- 
--static inline struct llist_item *llist_item_get()
-+static inline struct llist_item *llist_item_get(void)
- {
- 	struct llist_item *new;
- 	if ( free_nodes ) {
-@@ -275,7 +275,7 @@ static void cmp_two_packs(struct pack_li
- 	}
- }
- 
--void pll_free(struct pll *l)
-+static void pll_free(struct pll *l)
- {
- 	struct pll *old;
- 	struct pack_list *opl;
-diff --git a/path.c b/path.c
-index 334b2bd..6500a40 100644
---- a/path.c
-+++ b/path.c
-@@ -243,7 +243,7 @@ char *enter_repo(char *path, int strict)
- 
- 	if (access("objects", X_OK) == 0 && access("refs", X_OK) == 0 &&
- 	    validate_symref("HEAD") == 0) {
--		putenv("GIT_DIR=.");
-+		setenv("GIT_DIR", ".", 1);
- 		check_repository_format();
- 		return path;
- 	}
--- 
-1.2.1
+ 		if (check_index && prefix_length < 0) {
+ 			prefix = setup_git_directory();
