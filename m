@@ -1,63 +1,76 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Sun, 26 Feb 2006 12:18:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602261217080.22647@g5.osdl.org>
-References: <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com>
- <Pine.LNX.4.63.0602222259480.6682@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0602230000t58a88af6na1aa7e323dc0179d@mail.gmail.com>
- <7vwtfmihts.fsf@assigned-by-dhcp.cox.net> <81b0412b0602230135w472aa6f3v72980f6f63bb355f@mail.gmail.com>
- <81b0412b0602230141g46dbfaev6baa5083dee2d42@mail.gmail.com> <43FD84EB.3040704@op5.se>
- <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com>
- <43FDB8CC.5000503@op5.se> <81b0412b0602230607n22146a77k36929f0ad9e44d53@mail.gmail.com>
- <20060226195552.GA30735@trixie.casa.cgf.cx>
+From: Dave Jones <davej@redhat.com>
+Subject: Re: the war on trailing whitespace
+Date: Sun, 26 Feb 2006 15:26:17 -0500
+Message-ID: <20060226202617.GH7851@redhat.com>
+References: <20060225174047.0e9a6d29.akpm@osdl.org> <7v1wxq7psj.fsf@assigned-by-dhcp.cox.net> <20060225210712.29b30f59.akpm@osdl.org> <Pine.LNX.4.64.0602260925170.22647@g5.osdl.org> <20060226103604.2d97696c.akpm@osdl.org> <Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 26 21:18:34 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Morton <akpm@osdl.org>, junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 26 21:26:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDSLd-0000rH-8a
-	for gcvg-git@gmane.org; Sun, 26 Feb 2006 21:18:29 +0100
+	id 1FDSTj-00035u-47
+	for gcvg-git@gmane.org; Sun, 26 Feb 2006 21:26:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbWBZUS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 15:18:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750949AbWBZUS0
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 15:18:26 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:60075 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750823AbWBZUS0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 15:18:26 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1QKIODZ010421
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 26 Feb 2006 12:18:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1QKIJXo023031;
-	Sun, 26 Feb 2006 12:18:22 -0800
-To: Christopher Faylor <me@cgf.cx>
-In-Reply-To: <20060226195552.GA30735@trixie.casa.cgf.cx>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751043AbWBZU0s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 15:26:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbWBZU0s
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 15:26:48 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:54957 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1751043AbWBZU0r (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 15:26:47 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id k1QKQWMZ031807;
+	Sun, 26 Feb 2006 15:26:32 -0500
+Received: from nwo.kernelslacker.org (vpn83-121.boston.redhat.com [172.16.83.121])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id k1QKQR128671;
+	Sun, 26 Feb 2006 15:26:27 -0500
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.5/8.13.5) with ESMTP id k1QKQM0A018166;
+	Sun, 26 Feb 2006 15:26:22 -0500
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id k1QKQHSJ018164;
+	Sun, 26 Feb 2006 15:26:17 -0500
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16793>
 
+On Sun, Feb 26, 2006 at 12:16:25PM -0800, Linus Torvalds wrote:
 
+ > Few enough people run "git-apply" on its own. Most people (certainly me)
+ > end up using it through some email-applicator script or other. So the plan
+ > was that the --whitespace=warn/error flag would go there, and that
+ > git-apply by default would work more like "patch".
+ >
+ > But hey, I have no strong preferences, and it's easy enough to make the
+ > default be warn (and add a "--whitespace=ok" flag to turn it off).
+ >
+ > Personally, I don't mind whitespace that much. In particular, I _suspect_
+ > I often have empty lines like
+ >
+ >	int i;
+ >
+ >	i = 10;
+ >
+ > where the "empty" line actually has the same indentation as the lines
+ > around it. Is that wrong? Perhaps.
 
-On Sun, 26 Feb 2006, Christopher Faylor wrote:
-> 
-> If the speed of cygwin's fork is an issue then I'd previously suggested
-> using spawn*.  The spawn family of functions were designed to emulate
-> Windows functions of the same name.  They start a new process without
-> the requirement of forking.
+I think I have the same anal-retentive problem Andrew has, because I have ..
 
-I thought that cygwin didn't implement the posix_spawn*() family?
+highlight RedundantSpaces term=standout ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/
 
-Anyway, we probably _can_ use posix_spawn() in various places, and 
-especially if that helps windows performance, we should.
+in my .vimrc, which highlights this (and other trailing whitespace) as
+a big red blob.  I do this in part for the same reason Andrew does,
+so that when someone sends me a diff with a zillion spaces at the EOL,
+it screams at me, I spot them, and chop them out.
 
-		Linus
+		Dave
