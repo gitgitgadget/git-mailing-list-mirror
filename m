@@ -1,66 +1,55 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add a Documentation/git-tools.txt
-Date: Sun, 26 Feb 2006 14:51:08 -0800
-Message-ID: <7vslq57mzn.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
-	<tnxwtfq8gok.fsf@arm.com>
-	<e5bfff550602260022jde1fe2n4ec117c609a5d22d@mail.gmail.com>
+Subject: Re: [PATCH] contrib/git-svn: add show-ignore command
+Date: Sun, 26 Feb 2006 14:53:41 -0800
+Message-ID: <7vlkvx7mve.fsf@assigned-by-dhcp.cox.net>
+References: <11409493473353-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Sun Feb 26 23:51:25 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 26 23:53:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDUjW-0006qw-55
-	for gcvg-git@gmane.org; Sun, 26 Feb 2006 23:51:18 +0100
+	id 1FDUlw-0007UW-VO
+	for gcvg-git@gmane.org; Sun, 26 Feb 2006 23:53:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbWBZWvO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 17:51:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbWBZWvN
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 17:51:13 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:52669 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751424AbWBZWvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2006 17:51:12 -0500
+	id S1751423AbWBZWxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 17:53:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbWBZWxp
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 17:53:45 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:56469 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751423AbWBZWxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2006 17:53:44 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060226224830.ODIH17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 26 Feb 2006 17:48:30 -0500
-To: "Marco Costalba" <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550602260022jde1fe2n4ec117c609a5d22d@mail.gmail.com>
-	(Marco Costalba's message of "Sun, 26 Feb 2006 09:22:17 +0100")
+          id <20060226225048.HJZG26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 26 Feb 2006 17:50:48 -0500
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <11409493473353-git-send-email-normalperson@yhbt.net> (Eric
+	Wong's message of "Sun, 26 Feb 2006 02:22:27 -0800")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16802>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+After Andrew Morten raised the issue, I've made sure I _really_
+enable my pre-applypatch hook.
 
-> A brief survey of useful git tools, including third-party
-> and external projects.
->
-> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
-> ---
->
-> Suggestions/corrections from the list has been collected during the
-> past week, so I resend
-> the updated patch.
->
-> Please consider for apply.
+Please enable your pre-commit hook (comes with the distribution
+as a sample hook) to catch these trailing whitespaces before
+they hit your commit objects.
 
-Thanks.  I've considered it, but it is seriously linewrapped.
+Applying 'contrib/git-svn: add show-ignore command'
 
-> +        - *pcl-cvs* (contrib/)
-> +
-> +            This is an Emacs interface for git. The user interface is
-> modeled on
-> +            pcl-cvs.
-
-Also is the emacs one really pcl-cvs?  I thought it was modeled
-after pcl-cvs, but this is a different implementation to deal
-with git.  If Alexandre does not have a name for it, I'd say
-we'll list it as "git.el".
+*
+* You have some suspicious patch lines:
+*
+* In contrib/git-svn/git-svn.perl
+* trailing whitespace (line 268)
+contrib/git-svn/git-svn.perl:268:	
+* trailing whitespace (line 276)
+contrib/git-svn/git-svn.perl:276:	
