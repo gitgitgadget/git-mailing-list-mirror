@@ -1,82 +1,50 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Teach the "git" command to handle some commands internally
-Date: Sun, 26 Feb 2006 15:22:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602261518110.22647@g5.osdl.org>
-References: <Pine.LNX.4.64.0602261225500.22647@g5.osdl.org>
- <7vbqwt7m3t.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] contrib/git-svn: add show-ignore command
+Date: Sun, 26 Feb 2006 15:46:01 -0800
+Message-ID: <20060226234601.GA28732@localdomain>
+References: <11409493473353-git-send-email-normalperson@yhbt.net> <7vlkvx7mve.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Michal Ostrowski <mostrows@watson.ibm.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 00:23:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 00:46:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDVEV-0006Bx-Cv
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 00:23:19 +0100
+	id 1FDVac-0003Rx-BY
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 00:46:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932265AbWBZXXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 18:23:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbWBZXXQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 18:23:16 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:24526 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932265AbWBZXXP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 18:23:15 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1QNMiDZ017753
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 26 Feb 2006 15:22:45 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1QNMg7e029382;
-	Sun, 26 Feb 2006 15:22:43 -0800
+	id S1751107AbWBZXqF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 18:46:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbWBZXqE
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 18:46:04 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:58023 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751107AbWBZXqE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 18:46:04 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 27D327DC005;
+	Sun, 26 Feb 2006 15:46:02 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 26 Feb 2006 15:46:01 -0800
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqwt7m3t.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <7vlkvx7mve.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16806>
 
-
-
-On Sun, 26 Feb 2006, Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> After Andrew Morten raised the issue, I've made sure I _really_
+> enable my pre-applypatch hook.
 > 
-> > There's one other change: the search order for external programs is 
-> > modified slightly, so that the first entry remains GIT_EXEC_DIR, but the 
-> > second entry is the same directory as the git wrapper itself was executed 
-> > out of - if we can figure it out from argv[0], of course.
-> 
-> I am not sure about this part, though.
+> Please enable your pre-commit hook (comes with the distribution
+> as a sample hook) to catch these trailing whitespaces before
+> they hit your commit objects.
 
-Well, what it means is that _if_ you install all your "git" binaries in 
-some directory that is not in your patch and is not GIT_EXEC_DIR, they 
-will still magically work, assuming you don't do something strange.
+Oops, sorry about this one.  I forgot it on the directory I was working
+on at the time.  I've also added Dave Jones' whitespace hilighter lines
+to my .vimrc as well.
 
-IOW, you can do things like
-
-	alias git=/opt/my-git/git
-
-and all the "git" commands will automatically work fine, even if you 
-didn't know at compile time where you would install them, and you didn't 
-set GIT_EXEC_DIR at run-time. It will still first look in GIT_EXEC_DIR, 
-but if that fails, it will take the git commands from /opt/my-git/ instead 
-of from /usr/bin or whatever.
-
-It seemed a nice thing to try to make the git wrapper execute whatever git 
-version it was installed with, rather than depend on PATH.
-
-But hey, it's only a couple of lines out of the whole thing, so you can 
-certainly skip it (remove the
-
-	if (exec_path)
-		prepend_path(exec_path)
-
-lines to disable it).
-
-		Linus
+-- 
+Eric Wong
