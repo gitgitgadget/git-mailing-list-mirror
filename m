@@ -1,94 +1,58 @@
-From: Nicolas Vilz 'niv' <niv@iaglans.de>
-Subject: git-svn and working with tags
-Date: Sun, 26 Feb 2006 12:38:35 +0100
-Message-ID: <4401933B.2070109@iaglans.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 4/4] Read author names and emails from a file
+Date: Sun, 26 Feb 2006 12:49:40 +0100
+Message-ID: <440195D4.7080905@op5.se>
+References: <20060226050335.24860.95155.stgit@backpacker.hemma.treskal.com> <20060226051131.24860.15804.stgit@backpacker.hemma.treskal.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigB8F332A0BE942B0F3B543F91"
-X-From: git-owner@vger.kernel.org Sun Feb 26 12:40:26 2006
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Feb 26 12:49:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDKGG-0001mF-AM
-	for gcvg-git@gmane.org; Sun, 26 Feb 2006 12:40:24 +0100
+	id 1FDKPJ-0003jz-7m
+	for gcvg-git@gmane.org; Sun, 26 Feb 2006 12:49:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799AbWBZLkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 06:40:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbWBZLkU
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 06:40:20 -0500
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:12557 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
-	id S1750799AbWBZLkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2006 06:40:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 6CDE83FA6
-	for <git@vger.kernel.org>; Sun, 26 Feb 2006 12:40:02 +0100 (CET)
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 24884-04 for <git@vger.kernel.org>;
-	Sun, 26 Feb 2006 12:40:00 +0100 (CET)
-Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 897EC3F7F
-	for <git@vger.kernel.org>; Sun, 26 Feb 2006 12:39:59 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+	id S1750851AbWBZLtm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 26 Feb 2006 06:49:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbWBZLtm
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 06:49:42 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:58276 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750851AbWBZLtm
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2006 06:49:42 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id D7FD46BCFE; Sun, 26 Feb 2006 12:49:40 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
 X-Accept-Language: en-us, en
-To: git <git@vger.kernel.org>
-X-Enigmail-Version: 0.92.0.0
+To: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+In-Reply-To: <20060226051131.24860.15804.stgit@backpacker.hemma.treskal.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16781>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigB8F332A0BE942B0F3B543F91
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Karl Hasselstr=F6m wrote:
+> Read a file with lines on the form
+>=20
+>   username User's Full Name <email@addres.org>
+>=20
+> and use "User's Full Name <email@addres.org>" as the GIT author and
+> committer for Subversion commits made by "username". If encountering =
+a
+> commit made by a user not in the list, abort.
+>=20
 
-Hi guys,
+This is a good thing, but wouldn't it be better to use the same format=20
+as that of cvsimport's -A flag? Also, I imagine one would like to save=20
+those files within the .git directory for incremental importing, also=20
+like cvsimport does.
 
-I am about to use a git/svn construct for a project next week to track
-my work and the work of my co-workers.
-
-Reason for this is, that all the others are working on windows-boxes and
-I am the lonesome gunman, who wants to work with git on a linux box
-contributing the others on svn side.
-
-There is still a lot of work todo, preparing both backends, git and svn,
-for serving almost the same content structure.
-
-I think, i can do a little scripting to switch my git-SVN-HEAD to
-another branch. But how am i intended to export tags to svn?
-
-tags should simply go to <repos>/tags/<tagname>
-branches go to <repos>/branches/<branchname>
-master goes to <repos>/trunk
-
-A svn-import should be no problem then. The re-exporting back to one
-branch or svn_path is described in git-svn howto. but how about tags?
-
-do i have to consider the tags on svn-side manually?
-
-any ideas/hints?
-
-Sincerly
-Nicolas
-
---------------enigB8F332A0BE942B0F3B543F91
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFEAZM/SlT0CowElk8RAhJSAJsE9R0L50b+WIZbKkDTf39nOi6NGgCggdhD
-y6UZZHACbTSH1zcuIucq0/Q=
-=Q7i4
------END PGP SIGNATURE-----
-
---------------enigB8F332A0BE942B0F3B543F91--
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
