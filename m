@@ -1,93 +1,258 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Sun, 26 Feb 2006 15:33:10 -0500
-Message-ID: <20060226203310.GB30735@trixie.casa.cgf.cx>
-References: <43FB9656.8050308@vilain.net> <81b0412b0602220835p4c4243edm145ee827eb706121@mail.gmail.com> <Pine.LNX.4.63.0602222259480.6682@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0602230000t58a88af6na1aa7e323dc0179d@mail.gmail.com> <7vwtfmihts.fsf@assigned-by-dhcp.cox.net> <81b0412b0602230135w472aa6f3v72980f6f63bb355f@mail.gmail.com> <81b0412b0602230141g46dbfaev6baa5083dee2d42@mail.gmail.com> <43FD84EB.3040704@op5.se> <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com> <43FDB8CC.5000503@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Teach the "git" command to handle some commands internally
+Date: Sun, 26 Feb 2006 12:34:51 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602261225500.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Feb 26 21:33:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Feb 26 21:35:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDSZu-0004ip-Tv
-	for gcvg-git@gmane.org; Sun, 26 Feb 2006 21:33:15 +0100
+	id 1FDSbl-0005CD-Am
+	for gcvg-git@gmane.org; Sun, 26 Feb 2006 21:35:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751005AbWBZUdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 15:33:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbWBZUdM
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 15:33:12 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:12744 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1751005AbWBZUdK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 15:33:10 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id 84BF813C3E2; Sun, 26 Feb 2006 15:33:10 -0500 (EST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <43FDB8CC.5000503@op5.se>
-User-Agent: Mutt/1.5.11
+	id S1751175AbWBZUfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 15:35:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWBZUfG
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 15:35:06 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:22447 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751175AbWBZUfE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 15:35:04 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1QKYsDZ010996
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 26 Feb 2006 12:34:55 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1QKYp6u023622;
+	Sun, 26 Feb 2006 12:34:51 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Michal Ostrowski <mostrows@watson.ibm.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16798>
 
-On Thu, Feb 23, 2006 at 02:29:48PM +0100, Andreas Ericsson wrote:
->Alex Riesen wrote:
->>On 2/23/06, Andreas Ericsson <ae@op5.se> wrote:
->>
->>>Not to be unhelpful or anything, but activestate perl seems to be quite
->>>a lot of bother. Is it worth supporting it?
->>
->>
->>It's not activestate perl actually. It's only one platform it also
->>_has_ to support.
->>Is it worth supporting Windows?
->
->
->With or without cygwin? With cygwin, I'd say "yes, unless it makes 
->things terribly difficult to maintain and so long as we don't take 
->performance hits on unices". Without cygwin, I'd say "What? It runs on 
->windows?".
->
->If we claim to support windows but do a poor job of it, no-one else will 
->start working on a windows-port. If we don't claim to support windows 
->but say that "it's known to work with cygwin, although be aware of these 
->performance penalties...", eventually someone will come along with their 
->shiny Visual Express and hack up support for it, even if some tools will 
->be missing and others unnecessarily complicated.
 
-Well, with Cygwin, you've at least got the ear of one of the Cygwin
-maintainers, which should be worth something.
+This is another patch in the "prepare to do more in C" series, where the 
+git wrapper command is taught about the notion of handling some 
+functionality internally.
 
-Even if I disappear, you can always send concerns to the Cygwin mailing
-list.  Do the ActiveState folks respond to complaints about things as
-basic as pipes not working in perl?
+Right now, the only internal commands are "version" and "help", but the 
+point being that we can now easily extend it to handle some of the trivial 
+scripts internally. Things like "git log" and "git diff" wouldn't need 
+separate external scripts any more.
 
-Cygwin's goal is to make Windows look as much like Linux as we can
-manage, so, unless we're total incompetents (which has been hinted in
-this mailing list from time to time), it has *got* to be better,
-source-code-wise to target Windows-running-Cygwin than
-just-plain-Windows.  However, as has been noted, that means that there
-will be a speed tradeoff.
+This also implies that to support the old "git-log" and "git-diff" syntax, 
+the "git" wrapper now automatically looks at the name it was executed as, 
+and if it is "git-xxxx", it will assume that it is to internally do what 
+"git xxxx" would do.
 
-I think that, for most projects, the convenience of not having to
-clutter the code with substantial accommodations for the windows/POSIX
-mismatch usually offsets the annoyance of the speed penalty.  Maybe
-that's not the case for git, however.
+In other words, you can (once you implement an internal command) soft- or 
+hard-link that command to the "git" wrapper command, and it will do the 
+right thing, whether you use the "git xxxx" or the "git-xxxx" format.
 
-Anyway, we're willing, within the limits of available time, to help out
-where git uncovers issues with Cygwin.  I just fixed some stuff in
-dirent.h in the last Cygwin release, as a direct result of people noting
-a problem here.  Basically, I don't want git to be a morasse of #ifdef
-__CYGWIN_'s and I'll do whatever I can to help.
+There's one other change: the search order for external programs is 
+modified slightly, so that the first entry remains GIT_EXEC_DIR, but the 
+second entry is the same directory as the git wrapper itself was executed 
+out of - if we can figure it out from argv[0], of course.
 
-We're always trying to tweak things to improve speed in Cygwin and am
-open to intelligent suggestions about how we can make things better.
-The dance between total linux compatibility and speed is one that we
-struggle with all of the time and, sadly, over time, we've probably
-sacrificed speed in the name of functionality.  That's probably because
-it's easy to fix a problem like "close-on-exec doesn't work for sockets"
-and feel good that you've fixed a bug even if you've just added a few
-microseconds to fork/exec.
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 
-cgf
+---
+
+I personally think this is also a cleanup, but I'm cc'ing other people who 
+have worked on the wrapper for comments. Maybe people hate it.
+
+		Linus
+
+---
+diff --git a/git.c b/git.c
+index 4616df6..993cd0d 100644
+--- a/git.c
++++ b/git.c
+@@ -230,62 +230,141 @@ static void show_man_page(char *git_cmd)
+ 	execlp("man", "man", page, NULL);
+ }
+ 
++static int cmd_version(int argc, char **argv, char **envp)
++{
++	printf("git version %s\n", GIT_VERSION);
++	return 0;
++}
++
++static int cmd_help(int argc, char **argv, char **envp)
++{
++	char *help_cmd = argv[1];
++	if (!help_cmd)
++		cmd_usage(git_exec_path(), NULL);
++	show_man_page(help_cmd);
++	return 0;
++}
++
++#define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
++
++static void handle_internal_command(int argc, char **argv, char **envp)
++{
++	const char *cmd = argv[0];
++	static struct cmd_struct {
++		const char *cmd;
++		int (*fn)(int, char **, char **);
++	} commands[] = {
++		{ "version", cmd_version },
++		{ "help", cmd_help },
++	};
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(commands); i++) {
++		struct cmd_struct *p = commands+i;
++		if (strcmp(p->cmd, cmd))
++			continue;
++		exit(p->fn(argc, argv, envp));
++	}
++}
++
+ int main(int argc, char **argv, char **envp)
+ {
++	char *cmd = argv[0];
++	char *slash = strrchr(cmd, '/');
+ 	char git_command[PATH_MAX + 1];
+-	char wd[PATH_MAX + 1];
+-	int i, show_help = 0;
+-	const char *exec_path;
++	const char *exec_path = NULL;
+ 
+-	getcwd(wd, PATH_MAX);
++	/*
++	 * Take the basename of argv[0] as the command
++	 * name, and the dirname as the default exec_path
++	 * if it's an absolute path and we don't have
++	 * anything better.
++	 */
++	if (slash) {
++		*slash++ = 0;
++		if (*cmd == '/')
++			exec_path = cmd;
++		cmd = slash;
++	}
+ 
+-	for (i = 1; i < argc; i++) {
+-		char *arg = argv[i];
++	/*
++	 * "git-xxxx" is the same as "git xxxx", but we obviously:
++	 *
++	 *  - cannot take flags in between the "git" and the "xxxx".
++	 *  - cannot execute it externally (since it would just do
++	 *    the same thing over again)
++	 *
++	 * So we just directly call the internal command handler, and
++	 * die if that one cannot handle it.
++	 */
++	if (!strncmp(cmd, "git-", 4)) {
++		cmd += 4;
++		argv[0] = cmd;
++		handle_internal_command(argc, argv, envp);
++		die("cannot handle %s internally", cmd);
++	}
+ 
+-		if (!strcmp(arg, "help")) {
+-			show_help = 1;
+-			continue;
+-		}
++	/* Default command: "help" */
++	cmd = "help";
+ 
+-		if (strncmp(arg, "--", 2))
++	/* Look for flags.. */
++	while (argc > 1) {
++		cmd = *++argv;
++		argc--;
++
++		if (strncmp(cmd, "--", 2))
+ 			break;
+ 
+-		arg += 2;
++		cmd += 2;
++
++		/*
++		 * For legacy reasons, the "version" and "help"
++		 * commands can be written with "--" prepended
++		 * to make them look like flags.
++		 */
++		if (!strcmp(cmd, "help"))
++			break;
++		if (!strcmp(cmd, "version"))
++			break;
+ 
+-		if (!strncmp(arg, "exec-path", 9)) {
+-			arg += 9;
+-			if (*arg == '=') {
+-				exec_path = arg + 1;
+-				git_set_exec_path(exec_path);
+-			} else {
+-				puts(git_exec_path());
+-				exit(0);
++		/*
++		 * Check remaining flags (which by now must be
++		 * "--exec-path", but maybe we will accept
++		 * other arguments some day)
++		 */
++		if (!strncmp(cmd, "exec-path", 9)) {
++			cmd += 9;
++			if (*cmd == '=') {
++				git_set_exec_path(cmd + 1);
++				continue;
+ 			}
+-		}
+-		else if (!strcmp(arg, "version")) {
+-			printf("git version %s\n", GIT_VERSION);
++			puts(git_exec_path());
+ 			exit(0);
+ 		}
+-		else if (!strcmp(arg, "help"))
+-			show_help = 1;
+-		else if (!show_help)
+-			cmd_usage(NULL, NULL);
+-	}
+-
+-	if (i >= argc || show_help) {
+-		if (i >= argc)
+-			cmd_usage(git_exec_path(), NULL);
+-
+-		show_man_page(argv[i]);
++		cmd_usage(NULL, NULL);
+ 	}
++	argv[0] = cmd;
+ 
++	/*
++	 * We search for git commands in the following order:
++	 *  - git_exec_path()
++	 *  - the path of the "git" command if we could find it
++	 *    in $0
++	 *  - the regular PATH.
++	 */
++	if (exec_path)
++		prepend_to_path(exec_path, strlen(exec_path));
+ 	exec_path = git_exec_path();
+ 	prepend_to_path(exec_path, strlen(exec_path));
+ 
+-	execv_git_cmd(argv + i);
++	/* See if it's an internal command */
++	handle_internal_command(argc, argv, envp);
++
++	/* .. then try the external ones */
++	execv_git_cmd(argv);
+ 
+ 	if (errno == ENOENT)
+-		cmd_usage(exec_path, "'%s' is not a git-command", argv[i]);
++		cmd_usage(exec_path, "'%s' is not a git-command", cmd);
+ 
+ 	fprintf(stderr, "Failed to run command '%s': %s\n",
+ 		git_command, strerror(errno));
