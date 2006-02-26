@@ -1,75 +1,117 @@
-From: Andrew Morton <akpm@osdl.org>
-Subject: Re: the war on trailing whitespace
-Date: Sat, 25 Feb 2006 21:07:12 -0800
-Message-ID: <20060225210712.29b30f59.akpm@osdl.org>
-References: <20060225174047.0e9a6d29.akpm@osdl.org>
-	<7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?ISO-8859-1?Q?=20Hasselstr=F6m?= <kha@treskal.com>
+Subject: [PATCH 2/4] Convert executable flag
+Date: Sun, 26 Feb 2006 06:11:27 +0100
+Message-ID: <20060226051126.24860.61044.stgit@backpacker.hemma.treskal.com>
+References: <20060226050335.24860.95155.stgit@backpacker.hemma.treskal.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 26 06:08:13 2006
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Feb 26 06:11:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDE8i-0008Kz-Fs
-	for gcvg-git@gmane.org; Sun, 26 Feb 2006 06:08:12 +0100
+	id 1FDEBv-0000Op-0M
+	for gcvg-git@gmane.org; Sun, 26 Feb 2006 06:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbWBZFIH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 00:08:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbWBZFIH
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 00:08:07 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:19946 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751199AbWBZFIG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 00:08:06 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1Q581DZ025544
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 25 Feb 2006 21:08:02 -0800
-Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id k1Q580lD031120;
-	Sat, 25 Feb 2006 21:08:01 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i386-redhat-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751209AbWBZFL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 00:11:29 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbWBZFL3
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 00:11:29 -0500
+Received: from mxfep02.bredband.com ([195.54.107.73]:12008 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S1751209AbWBZFL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2006 00:11:28 -0500
+Received: from backpacker.hemma.treskal.com ([83.227.180.148] [83.227.180.148])
+          by mxfep02.bredband.com with ESMTP
+          id <20060226051127.WRNW29994.mxfep02.bredband.com@backpacker.hemma.treskal.com>
+          for <git@vger.kernel.org>; Sun, 26 Feb 2006 06:11:27 +0100
+Received: from backpacker.hemma.treskal.com (localhost.localdomain [127.0.0.1])
+	by backpacker.hemma.treskal.com (Postfix) with ESMTP id 24A3A167C
+	for <git@vger.kernel.org>; Sun, 26 Feb 2006 06:11:27 +0100 (CET)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <20060226050335.24860.95155.stgit@backpacker.hemma.treskal.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16771>
 
-Junio C Hamano <junkio@cox.net> wrote:
->
-> Andrew Morton <akpm@osdl.org> writes:
-> 
-> > It's invariably pointless to add lines which have trailing whitespace. 
-> > Nobody cares much, but my scripts spam me when it happens, so I've become
-> > obsessive....
-> 
-> I do not call me obsessive, but I do enable pre-commit and
-> pre-applypatch hooks I ship with git myself.
+Convert the svn:executable property to file mode 755 when converting
+an SVN repository to GIT.
 
-It's apparent that few others do this.
+Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
 
-> > I realise that we cannot do this when doing git fetches, but when importing
-> > patches and mboxes, git ought to whine loudly about input which matches the
-> > above regexp, and it should offer an option to tidy it up.  Perhaps by
-> > default.
-> 
-> I stole the policy the sample hook scripts use from you; it is
-> not enabled by default, and as the tool manufacturer I am a bit
-> reluctant to do so.
-> 
+---
 
-It's not strong enough.  I mean, if you ask a developer "do you wish to add
-new trialing whitespace to the kernel" then obviously their answer would be
-"no".   So how do we help them in this?
+ git-svnimport.perl |   20 +++++++++++++-------
+ 1 files changed, 13 insertions(+), 7 deletions(-)
 
-I'd suggest a) git will simply refuse to apply such a patch unless given a
-special `forcing' flag, b) even when thus forced, it will still warn and c)
-with a different flag, it will strip-then-apply, without generating a
-warning.
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index ee2940f..6603b96 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -112,16 +112,22 @@ sub file {
+ 		    DIR =3D> File::Spec->tmpdir(), UNLINK =3D> 1);
+=20
+ 	print "... $rev $path ...\n" if $opt_v;
+-	my $pool =3D SVN::Pool->new();
+-	eval { $self->{'svn'}->get_file($path,$rev,$fh,$pool); };
+-	$pool->clear;
++	my (undef, $properties);
++	eval { (undef, $properties)
++		   =3D $self->{'svn'}->get_file($path,$rev,$fh); };
+ 	if($@) {
+ 		return undef if $@ =3D~ /Attempted to get checksum/;
+ 		die $@;
+ 	}
++	my $mode;
++	if (exists $properties->{'svn:executable'}) {
++		$mode =3D '0755';
++	} else {
++		$mode =3D '0644';
++	}
+ 	close ($fh);
+=20
+-	return $name;
++	return ($name, $mode);
+ }
+=20
+ package main;
+@@ -296,7 +302,7 @@ sub get_file($$$) {
+ 	my $svnpath =3D revert_split_path($branch,$path);
+=20
+ 	# now get it
+-	my $name;
++	my ($name,$mode);
+ 	if($opt_d) {
+ 		my($req,$res);
+=20
+@@ -316,8 +322,9 @@ sub get_file($$$) {
+ 			return undef if $res->code =3D=3D 301; # directory?
+ 			die $res->status_line." at $url\n";
+ 		}
++		$mode =3D '0644'; # can't obtain mode via direct http request?
+ 	} else {
+-		$name =3D $svn->file("$svnpath",$rev);
++		($name,$mode) =3D $svn->file("$svnpath",$rev);
+ 		return undef unless defined $name;
+ 	}
+=20
+@@ -331,7 +338,6 @@ sub get_file($$$) {
+ 	chomp $sha;
+ 	close $F;
+ 	unlink $name;
+-	my $mode =3D "0644"; # SV does not seem to store any file modes
+ 	return [$mode, $sha, $path];
+ }
+=20
