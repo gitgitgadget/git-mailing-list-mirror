@@ -1,89 +1,64 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH] git-format-patch: Always add a blank line between headers and body.
-Date: Mon, 27 Feb 2006 14:09:56 +0100
-Message-ID: <874q2lhrrv.fsf@wine.dyndns.org>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: the war on trailing whitespace
+Date: Mon, 27 Feb 2006 14:31:24 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060227133124.GA8794@informatik.uni-freiburg.de>
+References: <7v1wxq7psj.fsf@assigned-by-dhcp.cox.net> <20060225210712.29b30f59.akpm@osdl.org> <Pine.LNX.4.64.0602260925170.22647@g5.osdl.org> <20060226103604.2d97696c.akpm@osdl.org> <Pine.LNX.4.64.0602261213340.22647@g5.osdl.org> <20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer> <Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de> <94fc236b0602270326s3079d737l102d5728d59f0c98@mail.gmail.com> <4402E56D.4010606@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Feb 27 14:10:29 2006
+X-From: git-owner@vger.kernel.org Mon Feb 27 14:32:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDi8e-0003R2-BI
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 14:10:08 +0100
+	id 1FDiTh-0000zj-Aq
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 14:31:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbWB0NKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 08:10:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbWB0NKE
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 08:10:04 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:48313 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751180AbWB0NKC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 08:10:02 -0500
-Received: from adsl-62-167-33-27.adslplus.ch ([62.167.33.27] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1FDi8V-0006SE-Vl
-	for git@vger.kernel.org; Mon, 27 Feb 2006 07:10:02 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 214CF109F65; Mon, 27 Feb 2006 14:09:56 +0100 (CET)
+	id S1751091AbWB0Nb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 08:31:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWB0Nb1
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 08:31:27 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:2032 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S1751091AbWB0Nb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 08:31:26 -0500
+Received: from juno.informatik.uni-freiburg.de ([132.230.151.45])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1FDiTF-0002Dq-KU
+	for git@vger.kernel.org; Mon, 27 Feb 2006 14:31:25 +0100
+Received: from juno.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11) with ESMTP id k1RDVOSh009326
+	for <git@vger.kernel.org>; Mon, 27 Feb 2006 14:31:24 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by juno.informatik.uni-freiburg.de (8.12.11/8.12.11/Submit) id k1RDVOjt009325
+	for git@vger.kernel.org; Mon, 27 Feb 2006 14:31:24 +0100 (MET)
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/22.0.50 (gnu/linux)
-X-SA-Exim-Connect-IP: 62.167.33.27
-X-SA-Exim-Mail-From: julliard@winehq.org
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=0.9 required=3.0 tests=AWL,BAYES_00,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL,SPF_HELO_SOFTFAIL autolearn=no 
-	version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <4402E56D.4010606@op5.se>
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16845>
 
-If the second line of the commit message isn't empty, git-format-patch
-needs to add an empty line in order to generate a properly formatted
-mail. Otherwise git-rebase drops the rest of the commit message.
+Hello,
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+Andreas Ericsson wrote:
+> I think the question is whether completely empty lines are also ignored 
+> by Python, or if they start a new block of code. Whatever the case, it 
+> must hold true for both 2.3 and 2.4.
+see
+	http://www.python.org/doc/2.2.3/ref/blank-lines.html
+	http://www.python.org/doc/2.3.5/ref/blank-lines.html
+	http://www.python.org/doc/2.4.2/ref/blank-lines.html
 
----
-
- git-format-patch.sh |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-dcd0ed6ced98990c92a32416c0acc3ec298f5b91
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index eb75de4..2bd2639 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -174,7 +174,7 @@ titleScript='
- process_one () {
- 	perl -w -e '
- my ($keep_subject, $num, $signoff, $commsg) = @ARGV;
--my ($signoff_pattern, $done_header, $done_subject, $signoff_seen,
-+my ($signoff_pattern, $done_header, $done_subject, $done_separator, $signoff_seen,
-     $last_was_signoff);
- 
- if ($signoff) {
-@@ -228,6 +228,11 @@ while (<FH>) {
- 	$done_subject = 1;
- 	next;
-     }
-+    unless ($done_separator) {
-+        print "\n";
-+        $done_separator = 1;
-+        next if (/^$/);
-+    }
- 
-     $last_was_signoff = 0;
-     if (/Signed-off-by:/i) {
--- 
-1.2.3.gb348-dirty
-
+Best regards
+Uwe
 
 -- 
-Alexandre Julliard
-julliard@winehq.org
+Uwe Zeisberger
+
+http://www.google.com/search?q=gravity+on+earth%3D
