@@ -1,129 +1,121 @@
-From: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
-Subject: Recoding of {git,cg}-log output
-Date: Mon, 27 Feb 2006 01:10:44 +0100
-Message-ID: <44024384.4060406@people.pl>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] contrib/git-svn: add show-ignore command
+Date: Sun, 26 Feb 2006 16:16:08 -0800
+Message-ID: <20060227001608.GB28732@localdomain>
+References: <11409493473353-git-send-email-normalperson@yhbt.net> <7vlkvx7mve.fsf@assigned-by-dhcp.cox.net> <20060226234601.GA28732@localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigED376D7AFE4640D6D2F05B38"
-X-From: git-owner@vger.kernel.org Mon Feb 27 01:10:56 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 01:16:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDVyS-00013i-JE
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 01:10:48 +0100
+	id 1FDW3j-0002WS-2b
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 01:16:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750701AbWB0AKq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 19:10:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbWB0AKp
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 19:10:45 -0500
-Received: from people.pl ([212.85.96.54]:25822 "HELO v00054.home.net.pl")
-	by vger.kernel.org with SMTP id S1750701AbWB0AKp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 19:10:45 -0500
-Received: from localhost (HELO ?192.168.1.1?) (krzysiek.pawlik.people@home@127.0.0.1)
-  by matrix01.home.net.pl with SMTP; Mon, 27 Feb 2006 00:10:39 -0000
-User-Agent: Mail/News 1.5 (X11/20060206)
-To: Git Mailing List <git@vger.kernel.org>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: id=BC555551
+	id S1751450AbWB0AQL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 19:16:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456AbWB0AQL
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 19:16:11 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:10920 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751450AbWB0AQK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 19:16:10 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 385DD7DC005;
+	Sun, 26 Feb 2006 16:16:08 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 26 Feb 2006 16:16:08 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20060226234601.GA28732@localdomain>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16811>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigED376D7AFE4640D6D2F05B38
-Content-Type: multipart/mixed;
- boundary="------------090402010900060507030605"
+Recursively finds and lists the svn:ignore property on
+directories.  The output is suitable for appending to the
+$GIT_DIR/info/exclude file.
 
-This is a multi-part message in MIME format.
---------------090402010900060507030605
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
+---
 
-First: a little "why": having /usr/bin/vim as PAGER allows to enter
-UTF-8 commit messages quite easily, the problem is when git-log (or
-cg-log) is run in terminal that's not UTF-8. In my case: terminal is
-ISO-8859-2 and:
+ Note: Whitespace cleaned
 
-nelchael@nelchael ~$ cat ~/.vimrc | grep gitci
-au BufRead /tmp/gitci* setlocal textwidth=3D75 fileencoding=3Dutf-8
-encoding=3Dutf-8 fileencodings=3Dutf-8,default
+ contrib/git-svn/git-svn.perl |   25 +++++++++++++++++++++++++
+ contrib/git-svn/git-svn.txt  |    7 +++++++
+ 2 files changed, 32 insertions(+), 0 deletions(-)
 
-So... having {git,cg}-log recode the log entires when displaying is
-quite useful. Two patches attached:
-
- a. git-log-recode.patch - uses iconv to recode the log output to
-GIT_LOG_RECODE encoding
- b. cg-log-recode.patch - the same, but for cogito
-
-With this patches it's possible to write UTF-8 commit messages and see
-them ok in non-UTF-8 terminal in log by having GIT_LOG_RECODE=3Diso-8859-=
-2.
-
-Comments?
-
---=20
-Krzysiek Pawlik (Nelchael)
-RLU #322999 GPG Key ID: 0xBC555551
-
---------------090402010900060507030605
-Content-Type: text/plain;
- name="cg-log-recode.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="cg-log-recode.patch"
-
-LS0tIC91c3IvYmluL2NnLWxvZwkyMDA2LTAxLTE5IDE3OjIyOjIyLjAwMDAwMDAwMCArMDEw
-MAorKysgYmluL2NnLWxvZwkyMDA2LTAyLTI3IDAwOjU5OjA3LjAwMDAwMDAwMCArMDEwMApA
-QCAtMzQ4LDEzICszNDgsMjEgQEAKIAogaWYgWyAiJHNob3J0bG9nIiBdOyB0aGVuCiAJIyBT
-cGVjaWFsIGNhcmUgaGVyZS4KLQkkcmV2bHMgJHNlcCAiJHtBUkdTW0BdfSIgfCBnaXQtc2hv
-cnRsb2cgfCBwYWdlcgorCWlmIFsgLW4gIiR7R0lUX0xPR19SRUNPREV9IiBdOyB0aGVuCisJ
-CSRyZXZscyAkc2VwICIke0FSR1NbQF19IiB8IGdpdC1zaG9ydGxvZyB8IGljb252IC0tZnJv
-bS1jb2RlPVVURi04IC0tdG8tY29kZT0iJHtHSVRfTE9HX1JFQ09ERX0iIHwgcGFnZXIKKwll
-bHNlCisJCSRyZXZscyAkc2VwICIke0FSR1NbQF19IiB8IGdpdC1zaG9ydGxvZyB8IHBhZ2Vy
-CisJZmkKIAlleGl0CiBmaQogCiAKICMgTEVTUz0iUyIgd2lsbCBwcmV2ZW50IGxlc3MgdG8g
-d3JhcCB0b28gbG9uZyB0aXRsZXMgdG8gbXVsdGlwbGUgbGluZXM7CiAjIHlvdSBjYW4gc2Ny
-b2xsIGhvcml6b250YWxseS4KLSRyZXZscyAkc2VwICIke0FSR1NbQF19IiB8IHByaW50X2Nv
-bW1pdF9sb2cgfCBfbG9jYWxfQ0dfTEVTUz0iUyIgcGFnZXIKK2lmIFsgLW4gIiR7R0lUX0xP
-R19SRUNPREV9IiBdOyB0aGVuCisJJHJldmxzICRzZXAgIiR7QVJHU1tAXX0iIHwgcHJpbnRf
-Y29tbWl0X2xvZyB8IGljb252IC0tZnJvbS1jb2RlPVVURi04IC0tdG8tY29kZT0iJHtHSVRf
-TE9HX1JFQ09ERX0iIHwgX2xvY2FsX0NHX0xFU1M9IlMiIHBhZ2VyCitlbHNlCisJJHJldmxz
-ICRzZXAgIiR7QVJHU1tAXX0iIHwgcHJpbnRfY29tbWl0X2xvZyB8IF9sb2NhbF9DR19MRVNT
-PSJTIiBwYWdlcgorZmkKIAogZXhpdCAwCg==
---------------090402010900060507030605
-Content-Type: text/plain;
- name="git-log-recode.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="git-log-recode.patch"
-
-LS0tIC91c3IvYmluL2dpdC1sb2cJMjAwNi0wMi0yMyAxODozMTozMi4wMDAwMDAwMDAgKzAx
-MDAKKysrIGJpbi9naXQtbG9nCTIwMDYtMDItMjcgMDA6NDc6MzQuMDAwMDAwMDAwICswMTAw
-CkBAIC0xMSw1ICsxMSwxMSBAQAogWyAiJHJldnMiIF0gfHwgewogCWRpZSAiTm8gSEVBRCBy
-ZWYiCiB9Ci1naXQtcmV2LWxpc3QgLS1wcmV0dHkgJChnaXQtcmV2LXBhcnNlIC0tZGVmYXVs
-dCBIRUFEICIkQCIpIHwKLUxFU1M9LVMgJHtQQUdFUjotbGVzc30KK2lmIFsgLW4gIiR7R0lU
-X0xPR19SRUNPREV9IiBdOyB0aGVuCisJZ2l0LXJldi1saXN0IC0tcHJldHR5ICQoZ2l0LXJl
-di1wYXJzZSAtLWRlZmF1bHQgSEVBRCAiJEAiKSB8IFwKKwkJaWNvbnYgLS1mcm9tLWNvZGU9
-VVRGLTggLS10by1jb2RlPSIke0dJVF9MT0dfUkVDT0RFfSIgfCBcCisJCUxFU1M9LVMgJHtQ
-QUdFUjotbGVzc30KK2Vsc2UKKwlnaXQtcmV2LWxpc3QgLS1wcmV0dHkgJChnaXQtcmV2LXBh
-cnNlIC0tZGVmYXVsdCBIRUFEICIkQCIpIHwgXAorCUxFU1M9LVMgJHtQQUdFUjotbGVzc30K
-K2ZpCg==
---------------090402010900060507030605--
-
---------------enigED376D7AFE4640D6D2F05B38
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.1 (GNU/Linux)
-
-iD8DBQFEAkOEgo/w9rxVVVERAueDAKCzwhK9Cv9rBbGk4FGqwtwWbORbPwCgpYlY
-6+qHpb6eX90frh4JbiC4uYk=
-=FYrG
------END PGP SIGNATURE-----
-
---------------enigED376D7AFE4640D6D2F05B38--
+63b497ce5f0762cdfef3ef30ec658b8c98e1a144
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index a32ce15..3d855f1 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -49,6 +49,7 @@ my %cmd = (
+ 	fetch => [ \&fetch, "Download new revisions from SVN" ],
+ 	init => [ \&init, "Initialize and fetch (import)"],
+ 	commit => [ \&commit, "Commit git revisions to SVN" ],
++	'show-ignore' => [ \&show_ignore, "Show svn:ignore listings" ],
+ 	rebuild => [ \&rebuild, "Rebuild git-svn metadata (after git clone)" ],
+ 	help => [ \&usage, "Show help" ],
+ );
+@@ -258,6 +259,30 @@ sub commit {
+ 
+ }
+ 
++sub show_ignore {
++	require File::Find or die $!;
++	my $exclude_file = "$GIT_DIR/info/exclude";
++	open my $fh, '<', $exclude_file or croak $!;
++	chomp(my @excludes = (<$fh>));
++	close $fh or croak $!;
++
++	$SVN_URL ||= file_to_s("$GIT_DIR/$GIT_SVN/info/url");
++	chdir $SVN_WC or croak $!;
++	my %ign;
++	File::Find::find({wanted=>sub{if(lstat $_ && -d _ && -d "$_/.svn"){
++		s#^\./##;
++		@{$ign{$_}} = safe_qx(qw(svn propget svn:ignore),$_);
++		}}, no_chdir=>1},'.');
++
++	print "\n# /\n";
++	foreach (@{$ign{'.'}}) { print '/',$_ if /\S/ }
++	delete $ign{'.'};
++	foreach my $i (sort keys %ign) {
++		print "\n# ",$i,"\n";
++		foreach (@{$ign{$i}}) { print '/',$i,'/',$_ if /\S/ }
++	}
++}
++
+ ########################### utility functions #########################
+ 
+ sub setup_git_svn {
+diff --git a/contrib/git-svn/git-svn.txt b/contrib/git-svn/git-svn.txt
+index cf098d7..b4b7789 100644
+--- a/contrib/git-svn/git-svn.txt
++++ b/contrib/git-svn/git-svn.txt
+@@ -61,6 +61,11 @@ rebuild::
+ 	the directory/repository you're tracking has moved or changed
+ 	protocols.
+ 
++show-ignore::
++	Recursively finds and lists the svn:ignore property on
++	directories.  The output is suitable for appending to
++	the $GIT_DIR/info/exclude file.
++
+ OPTIONS
+ -------
+ -r <ARG>::
+@@ -152,6 +157,8 @@ Tracking and contributing to an Subversi
+ 	git commit git-svn-HEAD..my-branch
+ # Something is committed to SVN, pull the latest into your branch::
+ 	git-svn fetch && git pull . git-svn-HEAD
++# Append svn:ignore settings to the default git exclude file:
++	git-svn show-ignore >> .git/info/exclude
+ 
+ DESIGN PHILOSOPHY
+ -----------------
+-- 
+1.2.2.ga559
