@@ -1,88 +1,69 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
-Date: Mon, 27 Feb 2006 22:17:00 +0000
-Message-ID: <44037A5C.6080409@gmail.com>
-References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 4/4] Read author names and emails from a file
+Date: Tue, 28 Feb 2006 00:00:13 +0100
+Message-ID: <20060227230013.GA3466@diana.vm.bytemark.co.uk>
+References: <20060226050335.24860.95155.stgit@backpacker.hemma.treskal.com> <20060226051131.24860.15804.stgit@backpacker.hemma.treskal.com> <440195D4.7080905@op5.se> <7vbqwt1h9r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 27 23:17:18 2006
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 00:00:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDqg1-0005Dr-8y
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 23:17:09 +0100
+	id 1FDrLo-0007fh-Iv
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 00:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbWB0WRG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Feb 2006 17:17:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbWB0WRG
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 17:17:06 -0500
-Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:57725 "EHLO
-	mta08-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1751348AbWB0WRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 17:17:04 -0500
-Received: from aamta09-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta08-winn.ispmail.ntl.com with ESMTP
-          id <20060227221703.ROTN29066.mta08-winn.ispmail.ntl.com@aamta09-winn.ispmail.ntl.com>;
-          Mon, 27 Feb 2006 22:17:03 +0000
-Received: from [192.168.1.101] (really [86.15.186.141])
-          by aamta09-winn.ispmail.ntl.com with ESMTP
-          id <20060227221703.LOLY10548.aamta09-winn.ispmail.ntl.com@[192.168.1.101]>;
-          Mon, 27 Feb 2006 22:17:03 +0000
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-In-Reply-To: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
+	id S1750938AbWB0XAQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Feb 2006 18:00:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbWB0XAP
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 18:00:15 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:53772 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1750938AbWB0XAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 18:00:13 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FDrLh-0000zo-00; Mon, 27 Feb 2006 23:00:13 +0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vbqwt1h9r.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16888>
 
-Karl Hasselstr=F6m wrote:
-> If I make a patch series where more than one patch touches the same
-> line, I get a lot of merge errors when upstream has accepted them and
-> I try to merge them back.
+On 2006-02-26 21:51:12 -0800, Junio C Hamano wrote:
 
-We discussed about this in the thread announcing pg
-(http://article.gmane.org/gmane.comp.version-control.git/16247). This i=
-s
-not easy to fix because StGIT pushes patches one by one and it stops at
-the first conflict. Pg was trying to merge two patches at once but this
-is not suitable for StGIT since the latter keeps the patches as single
-commits.
+> Andreas Ericsson <ae@op5.se> writes:
+>
+> > This is a good thing, but wouldn't it be better to use the same
+> > format as that of cvsimport's -A flag?
+>
+> If both CVS and SVN have their own native format to express things
+> like this, and if the format they use are different, then that is a
+> valid reason for git-{cvs,svn}import to use different file format.
+>
+> But if that is not the case, I tend to agree that it might be easier
+> for users if we had just one format. I do not think, however, any
+> single project is likely to have to deal with both CVS and SVN
+> upstream, importing into the same git repository, so reusing the
+> mapping file would not be an issue, but having to learn how to write
+> the mapping just once is a good thing.
+>
+> I do not offhand recall if SVN has its own native format; if it has,
+> it may be better to use that, instead of matching what git-cvsimport
+> does, since I do not think of a reason why the version with an equal
+> sign is preferrable over the version with a space. If the version
+> with '=3D' were the CVS native format then that might be a reason to
+> prefer it, but if I recall correctly that is not the case. so...
 
-There is another problem - the same line might have been modified by a
-third-party patch merged into the kernel (and the conflict solved by th=
-e
-maintainer).
+I don't know of any SVN native format for this, so it seems silly to
+use a different format than git-cvsimport. I've also made a patch that
+saves the author information, again just like git-cvsimport.
 
-> This situation arises for every line that's modified in more than one
-> patch, and for every such patch except the last one. And it's really
-> annoying, since it's intuitively obvious that there aren't actually
-> any conflicts, since upstream accepted my patches verbatim.
-
-Because I found the same situation a bit annoying, I added the --reset
-option to resolved. If you know your patch was merged without
-modifications, just use "stg resolved --all --reset local".
-
-An idea (untested, I don't even know whether it's feasible) would be to
-check which patches were merged by reverse-applying them starting with
-the last. In this situation, all the merged patches should just revert
-their changes. You only need to do a git-diff between the bottom and th=
-e
-top of the patch and git-apply the output (maybe without even modifying
-the tree). If this operation succeeds, the patch was integrated and you
-don't even need to push it. The tool could even fold two consecutive
-patches and reverse-apply them. The disadvantage might be the delay whe=
-n
-pushing patches but we could enable this test only if an option is
-passed to the pull command.
-
-If you really want to make StGIT behave intelligently, have a look at
-the patch commuting theory in Darcs. It tends to handle this kind of
-conflicts easily. StGIT also does some patch commuting but using the
-diff3 algorithm and asks the user to fix different conflicts.
-
-Catalin
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
