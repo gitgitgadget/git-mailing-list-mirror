@@ -1,69 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] First cut at libifying revlist generation
-Date: Sun, 26 Feb 2006 21:09:45 -0800
-Message-ID: <7vy7zx1j6u.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 26 Feb 2006 21:20:12 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602262119200.22647@g5.osdl.org>
 References: <Pine.LNX.4.64.0602251608160.22647@g5.osdl.org>
-	<7vpsl93395.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602261914270.22647@g5.osdl.org>
+ <7vpsl93395.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602261914270.22647@g5.osdl.org>
+ <7vy7zx1j6u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 27 06:10:03 2006
+X-From: git-owner@vger.kernel.org Mon Feb 27 06:20:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDadu-0000Jw-MW
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 06:09:55 +0100
+	id 1FDao7-0002Rl-QP
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 06:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751363AbWB0FJt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 00:09:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbWB0FJt
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 00:09:49 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:30597 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751363AbWB0FJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 00:09:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060227050650.MLIC26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 27 Feb 2006 00:06:50 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751474AbWB0FUU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 00:20:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbWB0FUU
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 00:20:20 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:18345 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751474AbWB0FUT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 00:20:19 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1R5KFDZ031072
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 26 Feb 2006 21:20:15 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1R5KCMm008368;
+	Sun, 26 Feb 2006 21:20:14 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy7zx1j6u.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16826>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Sun, 26 Feb 2006, Junio C Hamano wrote:
->> 
->> I am clueless about the "limited = (list && list->next)" part,
->> but there is only one commit involved hence the test is false
->> with my testcase "git-rev-list --objects v1.0.0^0..v1.0.0"; I
->> think the old code said dotdot is a limited case.
->
-> dotdot should insert _two_ commits onto the list - the positive and 
-> the negative one.  Doesn't it? 
 
-Not really, because the second invocation of add_one_commit()
-says "I've seen that *commit*", which is correct.  And the story
-is obviously the same if you used longhand "^v1.0.0^0 v1.0.0".
+On Sun, 26 Feb 2006, Junio C Hamano wrote:
+> 
+> Not really, because the second invocation of add_one_commit()
+> says "I've seen that *commit*", which is correct.  And the story
+> is obviously the same if you used longhand "^v1.0.0^0 v1.0.0".
 
-As a symbolic notation v1.0.0^0..v1.0.0 may not make much sense,
-but the point is "the other end says he has that commit object,
-but now he wants the tag we later attached to that commit
-object; let's list the objects we need to send him".  This is
-what upload-pack does.
+Ok.
 
-A bad consequence of not limiting is that:
+I suspect that the simplest fix is to just move "limited" into the "revs" 
+structure, the way I did pretty much everything else. That way nothing 
+really changes: we'll have the exact same logic, the flag just moved 
+around.
 
-	git-rev-list ^v1.0.0^0 v1.0.0 | tail -n 1
-
-gives this commit ;-):
-
-	e83c5163316f89bfbde7d9ab23ca2e25604af290
-
-Argh.
+		Linus
