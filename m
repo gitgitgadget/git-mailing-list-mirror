@@ -1,62 +1,64 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: [PATCH] Handle branch names with slashes
-Date: Mon, 27 Feb 2006 12:29:51 +0000
-Message-ID: <1141043391.3438.66.camel@pc1117>
-References: <20060214173509.GA8666@diana.vm.bytemark.co.uk>
-	 <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com>
-	 <43F53C76.6080902@vilain.net>
-	 <20060217042108.GB28114@diana.vm.bytemark.co.uk>
-	 <20060227121108.GA22398@diana.vm.bytemark.co.uk>
-Reply-To: catalin.marinas@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 13:30:45 2006
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH 2/2] combine-diff: Honour -z option correctly.
+Date: Mon, 27 Feb 2006 12:52:52 +0000
+Message-ID: <20060227125252.25144.12278.stgit@metalzone.distorted.org.uk>
+References: <20060227124815.25144.83101.stgit@metalzone.distorted.org.uk>
+X-From: git-owner@vger.kernel.org Mon Feb 27 13:53:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDhWO-0001Qi-Vp
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 13:30:38 +0100
+	id 1FDhsF-00076V-4a
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 13:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932308AbWB0Ma0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Feb 2006 07:30:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbWB0Ma0
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 07:30:26 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:23712 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S1751833AbWB0MaZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 07:30:25 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k1RCTquc010423;
-	Mon, 27 Feb 2006 12:29:52 GMT
-Received: from pc1117.cambridge.arm.com ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Mon, 27 Feb 2006 12:29:52 +0000
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-In-Reply-To: <20060227121108.GA22398@diana.vm.bytemark.co.uk>
-X-Mailer: Evolution 2.0.4 
-X-OriginalArrivalTime: 27 Feb 2006 12:29:52.0069 (UTC) FILETIME=[81D1E750:01C63B99]
+	id S1751109AbWB0Mwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 07:52:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWB0Mwy
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 07:52:54 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:13656 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1751109AbWB0Mwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 07:52:54 -0500
+Received: (qmail 25588 invoked from network); 27 Feb 2006 12:52:52 -0000
+Received: from localhost (HELO metalzone.distorted.org.uk) (?n9yGm+/XLK3uZ9BIZecO4akSeR/iDWA6?@127.0.0.1)
+  by localhost with SMTP; 27 Feb 2006 12:52:52 -0000
+To: git@vger.kernel.org
+In-Reply-To: <20060227124815.25144.83101.stgit@metalzone.distorted.org.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16839>
 
-On Mon, 2006-02-27 at 13:11 +0100, Karl Hasselstr=F6m wrote:
-> There was a bug here after all: I just tried "stg pick
-> multi@kha/patches" (to pick a patch named "multi" from the branch
-> "kha/patches"), and StGIT tried to pick the patch from branch "kha".
+From: Mark Wooding <mdw@distorted.org.uk>
 
-I haven't applied your patch yet (too busy to properly review it).
+Combined diffs don't null terminate things in the same way as standard
+diffs.  This is presumably wrong.
 
-> Looking closer, I realized that the complete patch specification
-> syntax is "patchname@branchname/bottom", not
-> "patchname/bottom@branchname" as I had assumed. This is obviously har=
-d
-> to reconcile with branch names containing /.
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+---
 
-I don't have any strong opinion on either. Maybe we should use the
-latter if it makes things easier for supporting branch names with /'s.
+ combine-diff.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
---=20
-Catalin
+diff --git a/combine-diff.c b/combine-diff.c
+index 984103e..a23894d 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -726,7 +726,7 @@ static int show_patch_diff(struct combin
+ 
+ 		if (header) {
+ 			shown_header++;
+-			puts(header);
++			printf("%s%c", header, opt->line_termination);
+ 		}
+ 		printf("diff --%s ", dense ? "cc" : "combined");
+ 		if (quote_c_style(elem->path, NULL, NULL, 0))
+@@ -799,7 +799,7 @@ static void show_raw_diff(struct combine
+ 		inter_name_termination = 0;
+ 
+ 	if (header)
+-		puts(header);
++		printf("%s%c", header, line_termination);
+ 
+ 	for (i = 0; i < num_parent; i++) {
+ 		if (p->parent[i].mode)
