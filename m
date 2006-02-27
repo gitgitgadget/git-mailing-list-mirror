@@ -1,60 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Make git diff-generation use a simpler spawn-like interface
-Date: Sun, 26 Feb 2006 16:25:27 -0800
-Message-ID: <7v7j7h6420.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602261547440.22647@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Recoding of {git,cg}-log output
+Date: Mon, 27 Feb 2006 01:36:34 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602270133330.5275@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44024384.4060406@people.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 01:25:35 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 27 01:36:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDWCk-00053c-A0
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 01:25:35 +0100
+	id 1FDWNU-0007uC-MS
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 01:36:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbWB0AZb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 19:25:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbWB0AZb
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 19:25:31 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:19446 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751458AbWB0AZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2006 19:25:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060227002351.UECA6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 26 Feb 2006 19:23:51 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602261547440.22647@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 26 Feb 2006 15:51:24 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750706AbWB0Agi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 19:36:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbWB0Agi
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 19:36:38 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:50095 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750706AbWB0Agh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2006 19:36:37 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id 27A441CAB;
+	Mon, 27 Feb 2006 01:36:34 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 1B70FA0C;
+	Mon, 27 Feb 2006 01:36:34 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id F38BF1DE9;
+	Mon, 27 Feb 2006 01:36:33 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
+In-Reply-To: <44024384.4060406@people.pl>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16813>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi,
 
-> This actually ends up simplifying the code, and should make it much
-> easier to make it efficient under broken operating systems (read: Windows).
->
-> Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-> ---
->
-> Now, somebody else might disagree with my contention that this also makes 
-> things simpler, but I like how we separate out the "run an external 
-> program" phase from the actual setup and header printing phase.
+On Mon, 27 Feb 2006, Krzysiek Pawlik wrote:
 
-I agree this is going in the right direction.
+> First: a little "why": having /usr/bin/vim as PAGER allows to enter
+> UTF-8 commit messages quite easily, the problem is when git-log (or
+> cg-log) is run in terminal that's not UTF-8.
 
-A note that is offtopic to this particular patch but is related
-to Andrew's point.  I had a wrong version of pre-applypatch hook
-in the sample shipped as "templates", and after I rebuilt my
-private development repository I've been running with the
-version without a fix I personally had.  I've pushed out the fix
-in the master branch.
+Of course, you could always set up a script doing the recoding and the 
+paging, like
 
-I'll look at your patch to git-apply next.
+-- snip --
+#!/bin/sh
+
+iconv -f UTF-8 -t ISO-8859-2 "$@" | vim
+-- snap --
+
+and point your PAGER to that script (which is untested BTW). The advantage 
+of this approach compared to adjusting git is that other programs use 
+PAGER, too.
+
+Hth,
+Dscho
