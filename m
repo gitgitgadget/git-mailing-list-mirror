@@ -1,68 +1,69 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: the war on trailing whitespace
-Date: 27 Feb 2006 07:22:33 -0800
-Message-ID: <86wtfgzv0m.fsf@blue.stonehenge.com>
-References: <Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
-	<20060226103604.2d97696c.akpm@osdl.org>
-	<Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
-	<20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer>
-	<Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>
-	<94fc236b0602270326s3079d737l102d5728d59f0c98@mail.gmail.com>
-	<4402E56D.4010606@op5.se>
-	<20060227133124.GA8794@informatik.uni-freiburg.de>
-	<4403086F.5040704@op5.se>
-	<20060227143147.GA12196@brainysmurf.cs.umu.se>
-	<Pine.LNX.4.63.0602271539160.4371@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Quick question: how to generate a patch?
+Date: Mon, 27 Feb 2006 16:28:04 +0100
+Message-ID: <44031A84.1080704@op5.se>
+References: <6d6a94c50602270657m453cc581p6ec290c20879de25@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Hagervall <hager@cs.umu.se>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 16:28:32 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 16:31:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDkCx-0006fK-1g
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 16:22:45 +0100
+	id 1FDkID-0008H5-L0
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 16:28:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341AbWB0PWk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 10:22:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbWB0PWk
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 10:22:40 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:46236 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751341AbWB0PWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 10:22:39 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id B4F428F6F3;
-	Mon, 27 Feb 2006 07:22:33 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 16076-02-4; Mon, 27 Feb 2006 07:22:33 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 374158F7CE; Mon, 27 Feb 2006 07:22:33 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-x-mayan-date: Long count = 12.19.13.1.11; tzolkin = 11 Chuen; haab = 9 Kayab
-In-Reply-To: <Pine.LNX.4.63.0602271539160.4371@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932328AbWB0P2G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 10:28:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbWB0P2G
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 10:28:06 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:18354 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751450AbWB0P2F
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 10:28:05 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 5BEFE6BD10; Mon, 27 Feb 2006 16:28:04 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Aubrey <aubreylee@gmail.com>
+In-Reply-To: <6d6a94c50602270657m453cc581p6ec290c20879de25@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16853>
 
->>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Aubrey wrote:
+> Hi all,
+> 
+> I'm a newbie of git. I have a question about how to generate a patch by git.
+> I want to make a patch againt git repository HEAD. So in my local
+> tree, I do the command:
+> 
+> git diff -p > my.patch
+> 
+> The file my.patch is generated. But the unchanged files information is
+> also included in the patch file. It should be quiet.
+> Was I wrong to use git by this way?
+> 
+> Thanks for your hints.
+> 
 
-Johannes> Exactly. That is what Andreas is saying: if you change a line which 
-Johannes> consists only of trailing whitespace to an empty line, it breaks python 
-Johannes> (or formatting).
+The current best practice involves these steps:
+1. Create a topic branch (git checkout -b feature-name)
+2. Apply your changes and commit them, preferrably in small and isolated 
+steps, making sure it compiles after each change.
+3. Run "git format-patch origin".
 
-[insert standard rant about Python treating invisible things significantly,
-which is the prime counter-rant to people saying Perl looks like line noise]
-
-[chuckling]
+This will result in one or more commit-patches, which contains your 
+author info, the commit-messages you wrote, the commit-time and all 
+other such info and ofcourse the diff in unified git format. You can 
+send those patches on using "git send-email" or apply them using "git am 
+-k 00*.txt".
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
