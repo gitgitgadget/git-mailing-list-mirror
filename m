@@ -1,61 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: the war on trailing whitespace
-Date: Mon, 27 Feb 2006 12:55:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602271255340.21502@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060225174047.0e9a6d29.akpm@osdl.org>  <7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
-  <20060225210712.29b30f59.akpm@osdl.org>  <Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
-  <20060226103604.2d97696c.akpm@osdl.org>  <Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
-  <20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer> 
- <Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>
- <94fc236b0602270326s3079d737l102d5728d59f0c98@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Handle branch names with slashes
+Date: Mon, 27 Feb 2006 13:11:08 +0100
+Message-ID: <20060227121108.GA22398@diana.vm.bytemark.co.uk>
+References: <20060214173509.GA8666@diana.vm.bytemark.co.uk> <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com> <43F53C76.6080902@vilain.net> <20060217042108.GB28114@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 12:56:18 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 13:11:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDgz8-0001Fe-9L
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 12:56:14 +0100
+	id 1FDhE1-00052s-OG
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 13:11:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbWB0L4B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 06:56:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbWB0L4B
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 06:56:01 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:2239 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751027AbWB0L4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 06:56:01 -0500
-Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id 050201C6F;
-	Mon, 27 Feb 2006 12:56:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id EC8625EC4;
-	Mon, 27 Feb 2006 12:55:59 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id CF6A199F;
-	Mon, 27 Feb 2006 12:55:59 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Adrien Beau <adrienbeau@gmail.com>
-In-Reply-To: <94fc236b0602270326s3079d737l102d5728d59f0c98@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751725AbWB0MLe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Feb 2006 07:11:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbWB0MLe
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 07:11:34 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3077 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1751720AbWB0MLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 07:11:34 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FDhDY-0005sG-00; Mon, 27 Feb 2006 12:11:08 +0000
+To: Sam Vilain <sam@vilain.net>
+Content-Disposition: inline
+In-Reply-To: <20060217042108.GB28114@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16837>
 
+On 2006-02-17 05:21:08 +0100, Karl Hasselstr=F6m wrote:
 
+> On 2006-02-17 16:01:10 +1300, Sam Vilain wrote:
+>
+> > Karl Hasselstr=F6m wrote:
+> >
+> > > Let StGIT grok branch names with slashes in them. It used to
+> > > fall flat on its face when confronted with them.
+> > >
+> > > I think I've covered all, or at least most cases, but there are
+> > > probably some bugs left if you look hard enough.
+> >
+> > Does `stgit -r patchname/bottom` still work?
+>
+> Yes (if you mean 'stg diff -r ... ' :-). It's just branches that can
+> have slashes in their names, not patches.
 
-On Mon, 27 Feb 2006, Adrien Beau wrote:
+There was a bug here after all: I just tried "stg pick
+multi@kha/patches" (to pick a patch named "multi" from the branch
+"kha/patches"), and StGIT tried to pick the patch from branch "kha".
 
-> A logical line that contains only spaces and tabs is ignored by
-> Python. (All the "dirty" lines in git-merge-recursive.py are such
-> lines.)
-> 
-> Hope this helps,
+Looking closer, I realized that the complete patch specification
+syntax is "patchname@branchname/bottom", not
+"patchname/bottom@branchname" as I had assumed. This is obviously hard
+to reconcile with branch names containing /.
 
-It does.
+Thoughts?
 
-Thanks,
-Dscho
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
