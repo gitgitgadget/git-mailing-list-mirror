@@ -1,47 +1,61 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: NT directory traversal speed on 25K files on Cygwin
-Date: Mon, 27 Feb 2006 13:34:17 -0500
-Message-ID: <20060227183417.GA17978@trixie.casa.cgf.cx>
-References: <81b0412b0602230135w472aa6f3v72980f6f63bb355f@mail.gmail.com> <81b0412b0602230141g46dbfaev6baa5083dee2d42@mail.gmail.com> <43FD84EB.3040704@op5.se> <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com> <43FDB8CC.5000503@op5.se> <81b0412b0602230607n22146a77k36929f0ad9e44d53@mail.gmail.com> <20060226195552.GA30735@trixie.casa.cgf.cx> <20060226231701.GA11961@nospam.com> <20060227011801.GB9264@trixie.casa.cgf.cx> <20060227183049.GA13195@nospam.com>
+From: "Jim MacBaine" <jmacbaine@gmail.com>
+Subject: Re: cg-status and empty directories
+Date: Mon, 27 Feb 2006 19:39:51 +0100
+Message-ID: <3afbacad0602271039v21a255adndb7a2cbd2992c67a@mail.gmail.com>
+References: <3afbacad0602270643k9fdd255w8f3769ad77c54e65@mail.gmail.com>
+	 <44031941.1020806@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Feb 27 19:34:41 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 19:40:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDnCP-0005WU-HO
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 19:34:21 +0100
+	id 1FDnHo-00070E-0V
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 19:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbWB0SeS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 13:34:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbWB0SeS
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 13:34:18 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:33193 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1751461AbWB0SeS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 13:34:18 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id C1CD813C3E2; Mon, 27 Feb 2006 13:34:17 -0500 (EST)
-To: git@vger.kernel.org
+	id S1751510AbWB0Sjx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 13:39:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbWB0Sjx
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 13:39:53 -0500
+Received: from zproxy.gmail.com ([64.233.162.195]:32489 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751510AbWB0Sjw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 13:39:52 -0500
+Received: by zproxy.gmail.com with SMTP id x3so959349nzd
+        for <git@vger.kernel.org>; Mon, 27 Feb 2006 10:39:52 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nK7jhMDQIY5WBW6v/JofQ7sZKlmMBI86ItBuMG0XHw9kqMcfOdQNEYXLq+xBqpdVNf7S2rzGSZU33KgLQOqf9P4zGWnD2SgyaUFEZttpWDYmUR+heMOSThmeEobdMZlJAMyxU1Z1FdZWCp1fwNufPWD98Gn6lqctqlCquPBFN48=
+Received: by 10.36.220.52 with SMTP id s52mr7050366nzg;
+        Mon, 27 Feb 2006 10:39:51 -0800 (PST)
+Received: by 10.36.17.8 with HTTP; Mon, 27 Feb 2006 10:39:51 -0800 (PST)
+To: "Andreas Ericsson" <ae@op5.se>
+In-Reply-To: <44031941.1020806@op5.se>
 Content-Disposition: inline
-In-Reply-To: <20060227183049.GA13195@nospam.com>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16872>
 
-On Mon, Feb 27, 2006 at 07:30:49PM +0100, Rutger Nijlunsing wrote:
->However, the point I was trying to make was that git might be sped up
->by a magnitude (although not all of the magnitudes in comparison to
->Linux) by looking at why the file IO is this slow: Windows' file IO is
->_not_ the only reason. Using a different/new/better fitted interface
->to Cygwin or Win32 for a specific git task might help, although I have
->no clue what or how.
+On 2/27/06, Andreas Ericsson <ae@op5.se> wrote:
 
-I'm going to revisit Cygwin's file I/O soon to see if I can figure out
-what's adding the overhead and see if it really is inavoidable.  It's
-been a while since I've gone through that exercise so it should prove
-instructive.
+> I'm afraid not.
+>
+> You should also note that git doesn't track permissions exactly. It just
+> notices an execution bit and uses it to determine if it should write the
+> working tree using (0666 ^ umask) or (0777 ^ umask). This makes it
+> fairly unsuitable for /etc tracking unless you add some sort of
+> permission restoring thing to it.
 
-cgf
+I'm aware of those limitations. It is not a backup mechanism at all
+and permissions are handled by a small perl script.
+
+However, I'm just curious to know, why cg-status suddenly started to
+care about empty directories.
+
+Regards,
+Jim
