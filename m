@@ -1,66 +1,53 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] First cut at libifying revlist generation
-Date: Mon, 27 Feb 2006 10:00:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602270947380.5937@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0602251608160.22647@g5.osdl.org>
- <7vpsl93395.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: the war on trailing whitespace
+Date: Mon, 27 Feb 2006 10:07:05 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060225174047.0e9a6d29.akpm@osdl.org>  <7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
+  <20060225210712.29b30f59.akpm@osdl.org>  <Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
+  <20060226103604.2d97696c.akpm@osdl.org>  <Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
+  <20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 27 10:00:42 2006
+Cc: Dave Jones <davej@redhat.com>, Linus Torvalds <torvalds@osdl.org>,
+	Andrew Morton <akpm@osdl.org>, junkio@cox.net,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 10:08:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDeF9-0008JK-0L
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 10:00:35 +0100
+	id 1FDeLw-0001Id-80
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 10:07:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932316AbWB0JAN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 04:00:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbWB0JAN
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 04:00:13 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:9101 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932316AbWB0JAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 04:00:10 -0500
-Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id D79931C61;
-	Mon, 27 Feb 2006 10:00:09 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id CA5535F92;
-	Mon, 27 Feb 2006 10:00:09 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id AA8F2B03;
-	Mon, 27 Feb 2006 10:00:09 +0100 (CET)
+	id S932329AbWB0JHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 04:07:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWB0JHO
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 04:07:14 -0500
+Received: from mail.gmx.de ([213.165.64.20]:53170 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932329AbWB0JHM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 04:07:12 -0500
+Received: (qmail invoked by alias); 27 Feb 2006 09:07:10 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp010) with SMTP; 27 Feb 2006 10:07:10 +0100
+X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsl93395.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+To: MIke Galbraith <efault@gmx.de>
+In-Reply-To: <1141008633.7593.13.camel@homer>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16831>
 
 Hi,
 
-On Sun, 26 Feb 2006, Junio C Hamano wrote:
+there is a good reason not to enable the no-whitespace-at-eol checking in 
+pre-commit by default (at least for *all* files) for git development:
 
-> Johannes gets a test-pilot star for this.  This also means we need a bit 
-> better set of tests.
+	Python.
 
-Well, I don't deserve this. I cheated.
+Just do a "/ $" in git-merge-recursive.py. These whitespaces are not an 
+error, but a syntactic *requirement*.
 
-In my personal version of git, there are a few subtle things different 
-than in the official version. Most of them, I sent out already, and they 
-were rejected, such as 
-http://article.gmane.org/gmane.comp.version-control.git/10718, which 
-helped me tremendously in identyfing the bug.
-
-But there is also a test case in my version, which was a failure, 
-originally. I wrote it to demonstrate that the stupid version of 
-git-fetch was stupid. It did not demonstrate that, but rather quite a bit 
-of (my) normal usage. That is the reason it takes a really long time for a 
-test case, and that in turn is the reason I did not dare to submit it.
-
-Ciao,
+Hth,
 Dscho
