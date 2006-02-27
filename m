@@ -1,73 +1,89 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Handle branch names with slashes
-Date: Mon, 27 Feb 2006 14:09:17 +0100
-Message-ID: <20060227130917.GA22933@diana.vm.bytemark.co.uk>
-References: <20060214173509.GA8666@diana.vm.bytemark.co.uk> <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com> <43F53C76.6080902@vilain.net> <20060217042108.GB28114@diana.vm.bytemark.co.uk> <20060227121108.GA22398@diana.vm.bytemark.co.uk> <1141043391.3438.66.camel@pc1117>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] git-format-patch: Always add a blank line between headers and body.
+Date: Mon, 27 Feb 2006 14:09:56 +0100
+Message-ID: <874q2lhrrv.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 14:09:38 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Feb 27 14:10:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDi7t-0003Ic-TV
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 14:09:22 +0100
+	id 1FDi8e-0003R2-BI
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 14:10:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWB0NJT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Feb 2006 08:09:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbWB0NJT
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 08:09:19 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:30725 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S1751091AbWB0NJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 08:09:18 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1FDi7p-00063y-00; Mon, 27 Feb 2006 13:09:17 +0000
-To: catalin.marinas@gmail.com
-Content-Disposition: inline
-In-Reply-To: <1141043391.3438.66.camel@pc1117>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751180AbWB0NKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 08:10:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbWB0NKE
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 08:10:04 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:48313 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S1751180AbWB0NKC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 08:10:02 -0500
+Received: from adsl-62-167-33-27.adslplus.ch ([62.167.33.27] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1FDi8V-0006SE-Vl
+	for git@vger.kernel.org; Mon, 27 Feb 2006 07:10:02 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 214CF109F65; Mon, 27 Feb 2006 14:09:56 +0100 (CET)
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/22.0.50 (gnu/linux)
+X-SA-Exim-Connect-IP: 62.167.33.27
+X-SA-Exim-Mail-From: julliard@winehq.org
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.9 required=3.0 tests=AWL,BAYES_00,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL,SPF_HELO_SOFTFAIL autolearn=no 
+	version=3.0.3
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16844>
 
-On 2006-02-27 12:29:51 +0000, Catalin Marinas wrote:
+If the second line of the commit message isn't empty, git-format-patch
+needs to add an empty line in order to generate a properly formatted
+mail. Otherwise git-rebase drops the rest of the commit message.
 
-> On Mon, 2006-02-27 at 13:11 +0100, Karl Hasselstr=F6m wrote:
->
-> > There was a bug here after all: I just tried "stg pick
-> > multi@kha/patches" (to pick a patch named "multi" from the branch
-> > "kha/patches"), and StGIT tried to pick the patch from branch
-> > "kha".
->
-> I haven't applied your patch yet (too busy to properly review it).
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 
-And as I just demonstrated, it certainly needed reviewing! (Actually,
-I believe I said that back when I posted the patch, too.)
+---
 
-> > Looking closer, I realized that the complete patch specification
-> > syntax is "patchname@branchname/bottom", not
-> > "patchname/bottom@branchname" as I had assumed. This is obviously
-> > hard to reconcile with branch names containing /.
->
-> I don't have any strong opinion on either. Maybe we should use the
-> latter if it makes things easier for supporting branch names with
-> /'s.
+ git-format-patch.sh |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-The problem is that the current from is better (bottom is a modifier
-to patch@branch, not just patch). And using the other form will break
-when someone decides that patches with slashes in their names are a
-good idea (not a joke).
+dcd0ed6ced98990c92a32416c0acc3ec298f5b91
+diff --git a/git-format-patch.sh b/git-format-patch.sh
+index eb75de4..2bd2639 100755
+--- a/git-format-patch.sh
++++ b/git-format-patch.sh
+@@ -174,7 +174,7 @@ titleScript='
+ process_one () {
+ 	perl -w -e '
+ my ($keep_subject, $num, $signoff, $commsg) = @ARGV;
+-my ($signoff_pattern, $done_header, $done_subject, $signoff_seen,
++my ($signoff_pattern, $done_header, $done_subject, $done_separator, $signoff_seen,
+     $last_was_signoff);
+ 
+ if ($signoff) {
+@@ -228,6 +228,11 @@ while (<FH>) {
+ 	$done_subject = 1;
+ 	next;
+     }
++    unless ($done_separator) {
++        print "\n";
++        $done_separator = 1;
++        next if (/^$/);
++    }
+ 
+     $last_was_signoff = 0;
+     if (/Signed-off-by:/i) {
+-- 
+1.2.3.gb348-dirty
 
-Perhaps change /bottom to #bottom (making the complete form
-patchname@branchname#bottom), and for backward compatibility accept
-patchname@branchname/bottom as well when no branch called
-"branchname/bottom" exists.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Alexandre Julliard
+julliard@winehq.org
