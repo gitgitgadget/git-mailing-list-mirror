@@ -1,89 +1,73 @@
-From: Michal Ostrowski <mostrows@watson.ibm.com>
-Subject: Re: Teach the "git" command to handle some commands internally
-Date: Mon, 27 Feb 2006 07:59:58 -0500
-Message-ID: <1141045198.19983.9.camel@brick.watson.ibm.com>
-References: <Pine.LNX.4.64.0602261225500.22647@g5.osdl.org>
-	 <7vbqwt7m3t.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0602261518110.22647@g5.osdl.org>
-	 <7vy7zx65v0.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Handle branch names with slashes
+Date: Mon, 27 Feb 2006 14:09:17 +0100
+Message-ID: <20060227130917.GA22933@diana.vm.bytemark.co.uk>
+References: <20060214173509.GA8666@diana.vm.bytemark.co.uk> <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com> <43F53C76.6080902@vilain.net> <20060217042108.GB28114@diana.vm.bytemark.co.uk> <20060227121108.GA22398@diana.vm.bytemark.co.uk> <1141043391.3438.66.camel@pc1117>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 14:00:35 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 14:09:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDhz2-0000ag-To
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 14:00:13 +0100
+	id 1FDi7t-0003Ic-TV
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 14:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbWB0NAJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 08:00:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbWB0NAJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 08:00:09 -0500
-Received: from igw2.watson.ibm.com ([129.34.20.6]:13459 "EHLO
-	igw2.watson.ibm.com") by vger.kernel.org with ESMTP
-	id S1751149AbWB0NAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 08:00:07 -0500
-Received: from sp1n293en1.watson.ibm.com (sp1n293en1.watson.ibm.com [129.34.20.41])
-	by igw2.watson.ibm.com (8.12.11/8.13.1/8.13.1-2005-04-25 igw) with ESMTP id k1RCxvjJ008103;
-	Mon, 27 Feb 2006 07:59:58 -0500
-Received: from sp1n293en1.watson.ibm.com (localhost [127.0.0.1])
-	by sp1n293en1.watson.ibm.com (8.11.7-20030924/8.11.7/01-14-2004_2) with ESMTP id k1RCxkL211426;
-	Mon, 27 Feb 2006 07:59:46 -0500
-Received: from mgsmtp00.watson.ibm.com (mgsmtp00.watson.ibm.com [9.2.40.58])
-	by sp1n293en1.watson.ibm.com (8.11.7-20030924/8.11.7/01-14-2004_1) with ESMTP id k1RCxjH220496;
-	Mon, 27 Feb 2006 07:59:45 -0500
-Received: from kitch0.watson.ibm.com (kitch0.watson.ibm.com [9.2.224.107])
-	by mgsmtp00.watson.ibm.com (8.12.11/8.12.11/2005/09/01) with ESMTP id k1RDvcmZ001185;
-	Mon, 27 Feb 2006 08:57:38 -0500
-Received: from brick (brick.watson.ibm.com [9.2.216.48])
-	by kitch0.watson.ibm.com (AIX5.1/8.11.6p2/8.11.0/03-06-2002) with ESMTP id k1RCxfm37878;
-	Mon, 27 Feb 2006 07:59:41 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7zx65v0.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.4.1 
+	id S1751091AbWB0NJT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Feb 2006 08:09:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbWB0NJT
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 08:09:19 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:30725 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1751091AbWB0NJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 08:09:18 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FDi7p-00063y-00; Mon, 27 Feb 2006 13:09:17 +0000
+To: catalin.marinas@gmail.com
+Content-Disposition: inline
+In-Reply-To: <1141043391.3438.66.camel@pc1117>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16843>
 
-On Sun, 2006-02-26 at 15:46 -0800, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > On Sun, 26 Feb 2006, Junio C Hamano wrote:
-> >> 
-> >> > There's one other change: the search order for external programs is 
-> >> > modified slightly, so that the first entry remains GIT_EXEC_DIR, but the 
-> >> > second entry is the same directory as the git wrapper itself was executed 
-> >> > out of - if we can figure it out from argv[0], of course.
-> >> 
-> >> I am not sure about this part, though.
-> >
-> > Well, what it means is that _if_ you install all your "git" binaries in 
-> > some directory that is not in your patch and is not GIT_EXEC_DIR, they 
-> > will still magically work, assuming you don't do something strange.
-> 
-> I understood that part.  I was wondering if this change defeats
-> what Michal (you sensibly CC'ed your message to) wanted to do
-> earlier, going great length trying to avoid mucking with PATH
-> and "where-ever git itself is found" in the last round.  After
-> reviewing the change in 77cb17 commit, I realize my worry was
-> unfounded.
+On 2006-02-27 12:29:51 +0000, Catalin Marinas wrote:
 
-The changes seem reasonable for now.  We can't avoid mucking with PATH
-as long as we are going to be running shell scripts that depend on PATH
-to invoke "git-xxx" or even "git xxx".  I don't seen any easy solution
-to this that would not involve changing every script (albeit
-mechanically) and would not be prone to lapses in discipline.
+> On Mon, 2006-02-27 at 13:11 +0100, Karl Hasselstr=F6m wrote:
+>
+> > There was a bug here after all: I just tried "stg pick
+> > multi@kha/patches" (to pick a patch named "multi" from the branch
+> > "kha/patches"), and StGIT tried to pick the patch from branch
+> > "kha".
+>
+> I haven't applied your patch yet (too busy to properly review it).
 
-Any solution to this original problem (i.e. a special "PATH" for "git*")
-would seem to be applicable to the behavior this patch introduces.
+And as I just demonstrated, it certainly needed reviewing! (Actually,
+I believe I said that back when I posted the patch, too.)
 
+> > Looking closer, I realized that the complete patch specification
+> > syntax is "patchname@branchname/bottom", not
+> > "patchname/bottom@branchname" as I had assumed. This is obviously
+> > hard to reconcile with branch names containing /.
+>
+> I don't have any strong opinion on either. Maybe we should use the
+> latter if it makes things easier for supporting branch names with
+> /'s.
 
--- 
-Michal Ostrowski <mostrows@watson.ibm.com>
+The problem is that the current from is better (bottom is a modifier
+to patch@branch, not just patch). And using the other form will break
+when someone decides that patches with slashes in their names are a
+good idea (not a joke).
+
+Perhaps change /bottom to #bottom (making the complete form
+patchname@branchname#bottom), and for backward compatibility accept
+patchname@branchname/bottom as well when no branch called
+"branchname/bottom" exists.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
