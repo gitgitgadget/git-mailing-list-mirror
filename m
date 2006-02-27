@@ -1,76 +1,71 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: NT directory traversal speed on 25K files on Cygwin
-Date: Sun, 26 Feb 2006 20:18:01 -0500
-Message-ID: <20060227011801.GB9264@trixie.casa.cgf.cx>
-References: <81b0412b0602230000t58a88af6na1aa7e323dc0179d@mail.gmail.com> <7vwtfmihts.fsf@assigned-by-dhcp.cox.net> <81b0412b0602230135w472aa6f3v72980f6f63bb355f@mail.gmail.com> <81b0412b0602230141g46dbfaev6baa5083dee2d42@mail.gmail.com> <43FD84EB.3040704@op5.se> <81b0412b0602230210r3ffe6e2dta5dc86d6516692b9@mail.gmail.com> <43FDB8CC.5000503@op5.se> <81b0412b0602230607n22146a77k36929f0ad9e44d53@mail.gmail.com> <20060226195552.GA30735@trixie.casa.cgf.cx> <20060226231701.GA11961@nospam.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Recoding of {git,cg}-log output
+Date: Mon, 27 Feb 2006 02:26:56 +0100
+Message-ID: <20060227012656.GX31278@pasky.or.cz>
+References: <44024384.4060406@people.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Feb 27 02:18:12 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 27 02:26:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDX1b-0001MA-1t
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 02:18:07 +0100
+	id 1FDX9Z-00038G-4P
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 02:26:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbWB0BSD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Feb 2006 20:18:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbWB0BSD
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 20:18:03 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:47845 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1750782AbWB0BSC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 20:18:02 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id D4B4613C3E2; Sun, 26 Feb 2006 20:18:01 -0500 (EST)
-To: git@vger.kernel.org
+	id S1750712AbWB0B0O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Feb 2006 20:26:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbWB0B0N
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Feb 2006 20:26:13 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:32962 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750712AbWB0B0N (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2006 20:26:13 -0500
+Received: (qmail 14688 invoked by uid 2001); 27 Feb 2006 02:26:56 +0100
+To: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
 Content-Disposition: inline
-In-Reply-To: <20060226231701.GA11961@nospam.com>
+In-Reply-To: <44024384.4060406@people.pl>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16818>
 
-On Mon, Feb 27, 2006 at 12:17:01AM +0100, Rutger Nijlunsing wrote:
->On Sun, Feb 26, 2006 at 02:55:52PM -0500, Christopher Faylor wrote:
->>On Thu, Feb 23, 2006 at 03:07:07PM +0100, Alex Riesen wrote:
->>>filesystem is slow and locked down, and exec-attribute is NOT really
->>>useful even on NTFS (it is somehow related to execute permission and
->>>open files.  I still cannot figure out how exactly are they related).
->>
->>Again, it's not clear if you're talking about Windows or Cygwin but
->>under Cygwin, in the default configuration, the exec attribute means
->>the same thing to cygwin as it does to linux.
->
->I don't know about native Windows speed, but comparing NutCracker with
->Cygwin on a simple 'find .  | wc -l' already gives a clue that looking
->at Cygwin to benchmark NT file inspection IO will give a skewed
->picture:
->
->##### NutCracker $ time find .  | wc -l
->
->real    0m 1.44s
->user    0m 0.45s
->sys     0m 0.98s
->25794
->
->##### Cygwin $ time c:\\cygwin\\bin\\find .  | wc -l
->
->real    0m 6.72s
->user    0m 1.09s
->sys     0m 5.59s
->25794
->
->##### CMD.EXE + DIR /S C:\PROJECT> c:\cygwin\bin\time cmd /c dir /s
->>NUL 0.01user 0.01system 0:05.70elapsed 0%CPU (0avgtext+0avgdata
->6320maxresident)k 0inputs+0outputs (395major+0minor)pagefaults 0swaps
->
->##### Cygwin 'find -ls' (NutCracker doesn't have a '-ls') C:\PROJECT>
->c:\cygwin\bin\time c:\cygwin\bin\find -ls | wc -l 2.79user 7.81system
->0:10.60elapsed 100%CPU (0avgtext+0avgdata 14480maxresident)k 25794
+Dear diary, on Mon, Feb 27, 2006 at 01:10:44AM CET, I got a letter
+where Krzysiek Pawlik <krzysiek.pawlik@people.pl> said that...
+> 
+> First: a little "why": having /usr/bin/vim as PAGER allows to enter
+> UTF-8 commit messages quite easily, the problem is when git-log (or
+> cg-log) is run in terminal that's not UTF-8. In my case: terminal is
+> ISO-8859-2 and:
+> 
+> nelchael@nelchael ~$ cat ~/.vimrc | grep gitci
+> au BufRead /tmp/gitci* setlocal textwidth=75 fileencoding=utf-8
+> encoding=utf-8 fileencodings=utf-8,default
 
-I'm lost.  What does this have to do with the exec attribute?
+Wouldn't it be enough to also set termencoding?
 
-Or, were you just climbing aboard the "Cygwin sure is slow" bandwagon?
+> So... having {git,cg}-log recode the log entires when displaying is
+> quite useful. Two patches attached:
+> 
+>  a. git-log-recode.patch - uses iconv to recode the log output to
+> GIT_LOG_RECODE encoding
+>  b. cg-log-recode.patch - the same, but for cogito
+> 
+> With this patches it's possible to write UTF-8 commit messages and see
+> them ok in non-UTF-8 terminal in log by having GIT_LOG_RECODE=iso-8859-2.
+> 
+> Comments?
 
-cgf
+Not opposed in principle. But it would be much more sensible to have
+something like $GIT_META_ENCODING (defaulting probably to utf8), recode
+to whatever is your current locale, have the appropriate setting in the
+configfile, ...
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
