@@ -1,72 +1,62 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: Alexandre Julliard <julliard@winehq.org>
 Subject: Re: [PATCH] Add a Documentation/git-tools.txt
-Date: Mon, 27 Feb 2006 07:44:10 +0100
-Message-ID: <e5bfff550602262244q592cb085scc7a93cc99e1cf8e@mail.gmail.com>
+Date: Mon, 27 Feb 2006 09:39:23 +0100
+Message-ID: <87psl9i4as.fsf@wine.dyndns.org>
 References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
-	 <tnxwtfq8gok.fsf@arm.com>
-	 <e5bfff550602260022jde1fe2n4ec117c609a5d22d@mail.gmail.com>
-	 <7vslq57mzn.fsf@assigned-by-dhcp.cox.net>
+	<tnxwtfq8gok.fsf@arm.com>
+	<e5bfff550602260022jde1fe2n4ec117c609a5d22d@mail.gmail.com>
+	<7vslq57mzn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Alexandre Julliard" <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Mon Feb 27 07:44:25 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "Marco Costalba" <mcostalba@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 09:39:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDc7J-00039P-H8
-	for gcvg-git@gmane.org; Mon, 27 Feb 2006 07:44:21 +0100
+	id 1FDdup-0003S0-ES
+	for gcvg-git@gmane.org; Mon, 27 Feb 2006 09:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751584AbWB0GoN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 01:44:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751593AbWB0GoN
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 01:44:13 -0500
-Received: from zproxy.gmail.com ([64.233.162.207]:45910 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751584AbWB0GoM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 01:44:12 -0500
-Received: by zproxy.gmail.com with SMTP id 18so887874nzp
-        for <git@vger.kernel.org>; Sun, 26 Feb 2006 22:44:11 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Mc+PJof4B/xXKkMgo9iXFTZeLgAAt1GBIahNaVrheMmJMaR2kFF+T/yPIU2HPMpoNJx3Y+R4DqF6WdBhHenE1QFbpFZvq8d+PQWUXalsBqEJeQCNGp+wWeMjcFBmpQWaWR8jDhGxdtLoi3ofVnc/8nqc/hcZ0GH/kU6N2wXeHP8=
-Received: by 10.64.179.19 with SMTP id b19mr3263999qbf;
-        Sun, 26 Feb 2006 22:44:10 -0800 (PST)
-Received: by 10.64.131.15 with HTTP; Sun, 26 Feb 2006 22:44:10 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vslq57mzn.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932308AbWB0Ijc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 03:39:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932309AbWB0Ijc
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 03:39:32 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:53923 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S932308AbWB0Ijb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 03:39:31 -0500
+Received: from adsl-62-167-33-27.adslplus.ch ([62.167.33.27] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1FDduf-0001HV-Oa; Mon, 27 Feb 2006 02:39:28 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 1F4784F94E; Mon, 27 Feb 2006 09:39:23 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslq57mzn.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 26 Feb 2006 14:51:08 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/22.0.50 (gnu/linux)
+X-SA-Exim-Connect-IP: 62.167.33.27
+X-SA-Exim-Mail-From: julliard@winehq.org
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
+X-Spam-Level: **
+X-Spam-Status: No, score=2.2 required=3.0 tests=AWL,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL,SPF_HELO_SOFTFAIL autolearn=no version=3.0.3
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16829>
 
-On 2/26/06, Junio C Hamano <junkio@cox.net> wrote:
-> >
-> > Please consider for apply.
->
-> Thanks.  I've considered it, but it is seriously linewrapped.
->
+Junio C Hamano <junkio@cox.net> writes:
 
-Sorry for this. It is ok 80 columns max?
-
-> > +        - *pcl-cvs* (contrib/)
-> > +
-> > +            This is an Emacs interface for git. The user interface is
-> > modeled on
-> > +            pcl-cvs.
->
 > Also is the emacs one really pcl-cvs?  I thought it was modeled
 > after pcl-cvs, but this is a different implementation to deal
 > with git.  If Alexandre does not have a name for it, I'd say
 > we'll list it as "git.el".
->
 
-Ok, waiting for Alexandre's answer.
+It doesn't really have a specific name, so yes, "git.el" is fine.
 
-This week I foreseen to be quite busy, so perhaps the patch will be
-delayed a little bit.
-
-Marco
+-- 
+Alexandre Julliard
+julliard@winehq.org
