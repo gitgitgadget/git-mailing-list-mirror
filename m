@@ -1,109 +1,126 @@
 From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: Select the text color based on whether the entry in highlighted.
-Date: Tue, 28 Feb 2006 19:11:08 +0530
-Message-ID: <440452F4.1010803@gmail.com>
+Subject: gitview: Some  window layout changes.
+Date: Tue, 28 Feb 2006 19:12:18 +0530
+Message-ID: <4404533A.5070906@gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------040209070508010306070707"
-X-From: git-owner@vger.kernel.org Tue Feb 28 14:41:37 2006
+ boundary="------------000106080409040408060301"
+X-From: git-owner@vger.kernel.org Tue Feb 28 14:42:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE56R-0005MV-VW
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 14:41:24 +0100
+	id 1FE57T-0005eW-PU
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 14:42:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbWB1NlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 08:41:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbWB1NlT
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 08:41:19 -0500
-Received: from wproxy.gmail.com ([64.233.184.195]:28424 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750795AbWB1NlS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 08:41:18 -0500
-Received: by wproxy.gmail.com with SMTP id i20so1091661wra
-        for <git@vger.kernel.org>; Tue, 28 Feb 2006 05:41:18 -0800 (PST)
+	id S1750798AbWB1NmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 08:42:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbWB1NmZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 08:42:25 -0500
+Received: from zproxy.gmail.com ([64.233.162.194]:60489 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750798AbWB1NmZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 08:42:25 -0500
+Received: by zproxy.gmail.com with SMTP id v1so1248949nzb
+        for <git@vger.kernel.org>; Tue, 28 Feb 2006 05:42:24 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=sLnOPqtj4Vb4+BiT8ze7bCgHIxLuaRHfG48lgxVJ9+lnBU9SYYJgKJmuaulUqz0ks8vyCwdHuFsh3G9cb45tzHdaNLH40IK+k1Sq+rUZED2UbRF8TO72ReI4dPCjLIIJKug2jDAJA6aS2MemgKNmuyX+ynmxwadY1Vj6gSUQPrM=
-Received: by 10.35.121.2 with SMTP id y2mr613151pym;
-        Tue, 28 Feb 2006 05:41:17 -0800 (PST)
+        b=tiJp28rzi/XZdHbc7Ec1dF3B3GR/7LQL46vKvHZAoAyJcGg3tFcJ1mNb722AbTJg+e83QzP8PTDg0dEfZY8u3At4PjlNChO0NUOzFOEl3N8YTyHrSCN/1weG3THhWq3t6ok9BjDGiv+56oiCvhQsZ3UJoY0mglouuv+kYrqBm3E=
+Received: by 10.35.79.5 with SMTP id g5mr620039pyl;
+        Tue, 28 Feb 2006 05:42:23 -0800 (PST)
 Received: from ?192.168.2.39? ( [59.92.150.81])
-        by mx.gmail.com with ESMTP id t5sm2523820pyc.2006.02.28.05.41.14;
-        Tue, 28 Feb 2006 05:41:16 -0800 (PST)
+        by mx.gmail.com with ESMTP id t5sm2524464pyc.2006.02.28.05.42.21;
+        Tue, 28 Feb 2006 05:42:23 -0800 (PST)
 User-Agent: Mail/News 1.5 (X11/20060213)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Pavel Roskin <proski@gnu.org>
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16935>
 
 This is a multi-part message in MIME format.
---------------040209070508010306070707
+--------------000106080409040408060301
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
---------------040209070508010306070707
+--------------000106080409040408060301
 Content-Type: text/plain;
- name*0="0001-Select-the-text-color-based-on-whether-the-entry-in-highlig";
- name*1="hted.-Use.txt"
+ name="0002-gitview-Some-window-layout-changes.txt"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline;
- filename*0="0001-Select-the-text-color-based-on-whether-the-entry-in-hig";
- filename*1="hlighted.-Use.txt"
+ filename="0002-gitview-Some-window-layout-changes.txt"
 
-From: Pavel Roskin <proski@gnu.org>
-Subject: Select the text color based on whether the entry in highlighted.  Use
-standard font.
+Subject: gitview: Some  window layout changes.
+
+This makes menubar look nice
 
 Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
 
 ---
 
- contrib/gitview/gitview |   19 +++++++++++--------
- 1 files changed, 11 insertions(+), 8 deletions(-)
+ contrib/gitview/gitview |   27 +++++++++++++++------------
+ 1 files changed, 15 insertions(+), 12 deletions(-)
 
-21154c68bf8b95e0db49d507ea34e0b8a51308df
+bc288bd1cd9c70e7eb1e8742527553d1c2dea61d
 diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 048caf6..aded7ed 100755
+index aded7ed..47ecaa3 100755
 --- a/contrib/gitview/gitview
 +++ b/contrib/gitview/gitview
-@@ -239,20 +239,23 @@ class CellRendererGraph(gtk.GenericCellR
- 				box_size / 4, 0, 2 * math.pi)
+@@ -368,7 +368,7 @@ class DiffWindow:
+ 		save_menu.connect("activate", self.save_menu_response, "save")
+ 		save_menu.show()
+ 		menu_bar.append(save_menu)
+-		vbox.pack_start(menu_bar, False, False, 2)
++		vbox.pack_start(menu_bar, expand=False, fill=True)
+ 		menu_bar.show()
  
+ 		scrollwin = gtk.ScrolledWindow()
+@@ -482,19 +482,10 @@ class GitView:
  
-+		self.set_colour(ctx, colour, 0.0, 0.5)
-+		ctx.stroke_preserve()
-+
-+		self.set_colour(ctx, colour, 0.5, 1.0)
-+		ctx.fill_preserve()
-+
- 		if (len(names) != 0):
- 			name = " "
- 			for item in names:
- 				name = name + item + " "
- 
--			ctx.select_font_face("Monospace")
- 			ctx.set_font_size(13)
--			ctx.text_path(name)
+ 	def construct(self):
+ 		"""Construct the window contents."""
++		vbox = gtk.VBox()
+ 		paned = gtk.VPaned()
+ 		paned.pack1(self.construct_top(), resize=False, shrink=True)
+ 		paned.pack2(self.construct_bottom(), resize=False, shrink=True)
+-		self.window.add(paned)
+-		paned.show()
 -
--		self.set_colour(ctx, colour, 0.0, 0.5)
--		ctx.stroke_preserve()
 -
--		self.set_colour(ctx, colour, 0.5, 1.0)
--		ctx.fill()
-+			if (flags & 1):
-+				self.set_colour(ctx, colour, 0.5, 1.0)
-+			else:
-+				self.set_colour(ctx, colour, 0.0, 0.5)
-+			ctx.show_text(name)
+-	def construct_top(self):
+-		"""Construct the top-half of the window."""
+-		vbox = gtk.VBox(spacing=6)
+-		vbox.set_border_width(12)
+-		vbox.show()
+-
+ 		menu_bar = gtk.MenuBar()
+ 		menu_bar.set_pack_direction(gtk.PACK_DIRECTION_RTL)
+ 		help_menu = gtk.MenuItem("Help")
+@@ -506,8 +497,20 @@ class GitView:
+ 		help_menu.set_submenu(menu)
+ 		help_menu.show()
+ 		menu_bar.append(help_menu)
+-		vbox.pack_start(menu_bar, False, False, 2)
+ 		menu_bar.show()
++		vbox.pack_start(menu_bar, expand=False, fill=True)
++		vbox.pack_start(paned, expand=True, fill=True)
++		self.window.add(vbox)
++		paned.show()
++		vbox.show()
++
++
++	def construct_top(self):
++		"""Construct the top-half of the window."""
++		vbox = gtk.VBox(spacing=6)
++		vbox.set_border_width(12)
++		vbox.show()
++
  
- class Commit:
- 	""" This represent a commit object obtained after parsing the git-rev-list
+ 		scrollwin = gtk.ScrolledWindow()
+ 		scrollwin.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 -- 
 1.2.3.gc55f-dirty
 
 
---------------040209070508010306070707--
+--------------000106080409040408060301--
