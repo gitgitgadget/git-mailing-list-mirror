@@ -1,76 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: the war on trailing whitespace
-Date: Mon, 27 Feb 2006 16:10:52 -0800
-Message-ID: <7vbqwswdf7.fsf@assigned-by-dhcp.cox.net>
-References: <20060225174047.0e9a6d29.akpm@osdl.org>
-	<7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
-	<20060225210712.29b30f59.akpm@osdl.org>
-	<Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
-	<20060226103604.2d97696c.akpm@osdl.org>
-	<Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
-	<20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer>
-	<Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20060227011832.78359f0a.akpm@osdl.org>
-	<7vhd6kxuea.fsf@assigned-by-dhcp.cox.net>
-	<44038B73.4030004@bigpond.net.au>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch directly
+Date: Tue, 28 Feb 2006 13:25:31 +1300
+Message-ID: <46a038f90602271625y6c7e9072u372b8dd3662e272c@mail.gmail.com>
+References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de>
+	 <20060227184641.GA21684@hand.yhbt.net>
+	 <20060227185557.GA32142@delft.aura.cs.cmu.edu>
+	 <20060227192422.GB9518@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 01:11:13 2006
+X-From: git-owner@vger.kernel.org Tue Feb 28 01:25:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDsSM-0007lF-12
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 01:11:10 +0100
+	id 1FDsgW-00037A-HO
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 01:25:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789AbWB1AK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 19:10:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbWB1AK5
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 19:10:57 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:52197 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751789AbWB1AK5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 19:10:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060228000811.ITCT17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 27 Feb 2006 19:08:11 -0500
-To: Peter Williams <pwil3058@bigpond.net.au>
-In-Reply-To: <44038B73.4030004@bigpond.net.au> (Peter Williams's message of
-	"Tue, 28 Feb 2006 10:29:55 +1100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751804AbWB1AZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 19:25:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbWB1AZe
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 19:25:34 -0500
+Received: from wproxy.gmail.com ([64.233.184.205]:45189 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751804AbWB1AZd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 19:25:33 -0500
+Received: by wproxy.gmail.com with SMTP id i28so973973wra
+        for <git@vger.kernel.org>; Mon, 27 Feb 2006 16:25:31 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sYCE4mtZNnySDUDpXi59pADUDFE9YkeFBupRHwE1iMprNA1rlI9NqeQABrX5pdu+63cnvNC1s9DxhGMvBxmsf2B5Q5MtOLIvQe9LRyoizCK+dbhc4QCpTNWfh8jrJLXVzLONDD4hXSJf4shDBAn3mRvmgZJAnYbNDQpL/39UI/I=
+Received: by 10.54.100.13 with SMTP id x13mr44894wrb;
+        Mon, 27 Feb 2006 16:24:40 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Mon, 27 Feb 2006 16:25:31 -0800 (PST)
+To: "Eric Wong" <normalperson@yhbt.net>
+In-Reply-To: <20060227192422.GB9518@hand.yhbt.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16897>
 
-Peter Williams <pwil3058@bigpond.net.au> writes:
-
->> This whitespace policy should be at least per-project (people
->> working on both kernel and other things may have legitimate
->> reason to want trailing whitespace in the other project),
+On 2/28/06, Eric Wong <normalperson@yhbt.net> wrote:
+> > If it is not supposed to be changed by the user, maybe it could be
+> > stored as a tag.
+> >
+> > Or maybe another type of reference can be introduced. refs/remote/, for
+> > branches we are tracking, but which should not be modified locally.
 >
-> I'd be interested to hear these reasons.  My experience is that people
-> don't put trailing white space in deliberately (or even tolerate it if
-> they notice it) and it's usually there as a side effect of the way
-> their text editor works (and that's also the reason that they don't
-> usually notice it).  But if my experience is misleading me and there
-> are valid reasons for having trailing white space I'm genuinely
-> interested in knowing what they are.
+> Either of those could work for me.  Changing git-svn-HEAD to become a
+> tag would probably be easier (not having to update other tools, such as
+> git-fetch), but refs/remote may make more sense.
 
-For example:
+git-svn-HEAD "moves" so it's really a bad idea to have it as a tag.
+Nothing within core git prevents it from moving, but I think that
+porcelains will start breaking. Tags and heads are the same thing,
+except that heads are expected to change (specifically, to move
+forward), and tags are expected to stand still.
 
-	http://compsoc.dur.ac.uk/whitespace/
+Something else is needed -- a convention to mark a head as 'readonly'
+so that git-commit/cg-commit refuse to commit to it. cg-commit already
+does that for any head matching the name of a branch.
 
-Jokes aside, I can imagine people want to keep format=flowed
-text messages (i.e. not programming language source code) under
-git control.  Maybe pulling and pushing would be the default
-mode of operation for those people, so what git-apply does would
-not be in the picture for those people, but who knows.
+cheers,
 
-One way to find it out is to push out a strict one and see who
-screams ;-), but the point is I am reluctant to make a stricter
-policy the default, thinking, but not knowing as a fact, that it
-is good enough for everybody.
+
+martin
