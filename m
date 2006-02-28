@@ -1,73 +1,61 @@
-From: Brian Gerst <bgerst@didntduck.org>
+From: "Tony Luck" <tony.luck@gmail.com>
 Subject: Re: fatal: unexpected EOF
-Date: Tue, 28 Feb 2006 10:43:16 -0500
-Message-ID: <44046F94.3070806@didntduck.org>
-References: <440449D7.3010508@didntduck.org> <Pine.LNX.4.64.0602280731210.22647@g5.osdl.org>
+Date: Tue, 28 Feb 2006 07:59:09 -0800
+Message-ID: <12c511ca0602280759t2e584a4bkd7b6f4d97ade92f7@mail.gmail.com>
+References: <440449D7.3010508@didntduck.org>
+	 <Pine.LNX.4.64.0602280731210.22647@g5.osdl.org>
+	 <44046F94.3070806@didntduck.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 28 16:43:26 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 16:59:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE70E-00009n-0F
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 16:43:06 +0100
+	id 1FE7Fr-00059A-1C
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 16:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbWB1PnA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 10:43:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbWB1PnA
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 10:43:00 -0500
-Received: from quark.didntduck.org ([69.55.226.66]:13704 "EHLO
-	quark.didntduck.org") by vger.kernel.org with ESMTP
-	id S1751286AbWB1Pm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2006 10:42:59 -0500
-Received: from [172.21.26.85] (ip-2.provia.com [208.224.1.2])
-	(authenticated)
-	by quark.didntduck.org (8.11.6/8.11.6) with ESMTP id k1SFguv25952;
-	Tue, 28 Feb 2006 10:42:56 -0500
-User-Agent: Mozilla Thunderbird 1.0.7 (Windows/20050923)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602280731210.22647@g5.osdl.org>
+	id S1751622AbWB1P7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 10:59:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWB1P7L
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 10:59:11 -0500
+Received: from zproxy.gmail.com ([64.233.162.199]:64340 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751622AbWB1P7K convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 10:59:10 -0500
+Received: by zproxy.gmail.com with SMTP id i11so1202880nzh
+        for <git@vger.kernel.org>; Tue, 28 Feb 2006 07:59:09 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rri1ckSAJ0gczi1W+tfhnDcwnaVl7d8PwSiT/9+DV7C4S8iZMY4s6/uffcMTG+wBUTSk1PcSnu6LIm09Gp4E+bwYQM2A9mUs3GYHrViyyYOtRYpiRbgdODSZMnB5hDMxr4QItnOPTZuzppo6TwXv1RGa/7mSQv6m1rRmtB3mt68=
+Received: by 10.65.119.18 with SMTP id w18mr2019430qbm;
+        Tue, 28 Feb 2006 07:59:09 -0800 (PST)
+Received: by 10.64.27.10 with HTTP; Tue, 28 Feb 2006 07:59:09 -0800 (PST)
+To: "Brian Gerst" <bgerst@didntduck.org>
+In-Reply-To: <44046F94.3070806@didntduck.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16941>
 
-Linus Torvalds wrote:
-> 
-> On Tue, 28 Feb 2006, Brian Gerst wrote:
-> 
->>Lately I've been receiving this error frequently from git.kernel.org:
->>
->>Fetching pack (head and objects)...
->>fatal: unexpected EOF
->>cg-fetch: fetching pack failed
->>
->>What is causing this?
-> 
-> 
-> Almost any error will cause the pack sending to abort, and the git:// 
-> protocol only opens a single socket for data, so there is no way for the 
-> other end to say _what_ failed.
-> 
-> With git.kernel.org, I suspect the reason for the failure is almost always 
-> the same, though: the mirroring is not complete, so it doesn't have all 
-> object files. The mirroring from master.kernel.org to the actual public 
-> machines is just a rsync script, so there's no atomicity guarantees.
-> 
-> That said, it might be a load issue too - I don't know what limits 
-> Peter & co put on the git daemons, and it might also be that it's set up 
-> to accept at most <n> connections and will close anything else.
-> 
-> 		Linus
-> 
-> 
+> I doubt it is a problem with mirroring, since it affects all repos
+> (kernel, git, cogito, etc.) at the same time.
 
-I doubt it is a problem with mirroring, since it affects all repos 
-(kernel, git, cogito, etc.) at the same time.
+Ditto.  Jes has been grumbling overnight that he can't get a reliable pull
+from my kernel repo ... and that hasn't been updated in 10 days, so the
+mirror code shouldn't be touching it.  His error was:
 
---
-				Brian Gerst
+  fatal: read error (Connection reset by peer)
+  Fetch failure: git://git.kernel.org/pub/...
+
+He also reported that after a few retries it worked.
+
+Does the git daemon log any errors to syslog on the server?  If so, can someone
+with access go take a look.
+
+-Tony
