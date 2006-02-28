@@ -1,75 +1,114 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add git-annotate, a tool for assigning blame.
-Date: Tue, 28 Feb 2006 10:08:05 +0100
-Message-ID: <440412F5.9050909@op5.se>
-References: <11404323692193-git-send-email-ryan@michonline.com> <20060220234054.GA7903@c165.ib.student.liu.se> <7vlkw57f63.fsf@assigned-by-dhcp.cox.net> <20060228082736.GA4593@c165.ib.student.liu.se> <20060228084737.GA13537@mythryan2.michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-apply: war on whitespace -- finishing touches.
+Date: Tue, 28 Feb 2006 01:13:57 -0800
+Message-ID: <7vu0ajonfu.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20060225174047.0e9a6d29.akpm@osdl.org>
+	<7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
+	<20060225210712.29b30f59.akpm@osdl.org>
+	<Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
+	<20060226103604.2d97696c.akpm@osdl.org>
+	<Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
+	<20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer>
+	<Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060227011832.78359f0a.akpm@osdl.org>
+	<7vhd6kxuea.fsf@assigned-by-dhcp.cox.net>
+	<20060227153702.375db751.akpm@osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 10:08:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 10:14:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE0q3-0008PD-Bl
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 10:08:12 +0100
+	id 1FE0vl-0001bV-Jl
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 10:14:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086AbWB1JII (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 04:08:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWB1JII
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 04:08:08 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:30648 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932086AbWB1JIH
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2006 04:08:07 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id E0FFD6BD00; Tue, 28 Feb 2006 10:08:05 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20060228084737.GA13537@mythryan2.michonline.com>
+	id S932106AbWB1JN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 04:13:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932119AbWB1JN7
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 04:13:59 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:13247 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932106AbWB1JN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 04:13:58 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060228091026.OCOL17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Feb 2006 04:10:26 -0500
+To: git@vger.kernel.org
+In-Reply-To: <20060227153702.375db751.akpm@osdl.org> (Andrew Morton's message
+	of "Mon, 27 Feb 2006 15:37:02 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16926>
 
-Ryan Anderson wrote:
-> On Tue, Feb 28, 2006 at 09:27:36AM +0100, Fredrik Kuivinen wrote:
-> 
->>On Mon, Feb 20, 2006 at 04:01:56PM -0800, Junio C Hamano wrote:
->>
->>>Fredrik Kuivinen <freku045@student.liu.se> writes:
->>>
->>>
->>>>I have also been working on a blame program.
->>
->>...
->>
->>
->>>BTW, these days I always compile things with 
->>>
->>>	-Wall -Wdeclaration-after-statement
->>>
->>>which caught quite a many.
->>
->>Just out of curiosity, why do you prefer declarations before
->>statements?
-> 
-> 
-> I won't speak for Junio, but the explanations I've heard in the past are
-> basically:
-> 
-> 1) It keeps all declarations in one spot.
-> 2) If your function is complicated enough to not need a variable until
-> fairly far into the function, it probably should be two (or more) functions.
-> 
+Andrew Morton <akpm@osdl.org> writes:
 
-3) Not all compilers support it.
+> I'd suggest that git have options to a) generate trailing-whitespace
+> warnings, b) generate trailing-whitespace errors and c) strip trailing
+> whitespace while applying.   And that the as-shipped default be a).
 
+I've done this and will be pushing it out to "master" branch on
+my next git day (Wednesday, west coast US); "maint" branch will
+have the same for v1.2.4 sometime by the end of this week.
+
+There is one thing.  By making --whitespace=warn the default,
+the diffstat output people would see after "git pull" would also
+show the warning message.  I personally do not think this is a
+problem (you will know how dirty a tree you are merging into
+your tree), but it might not be a bad idea to explicitly squelch
+it by making it not to warn when we are not applying.
+
+-- >8 --
+
+This changes the default --whitespace policy to nowarn when we
+are only getting --stat, --summary etc. IOW when not applying
+the patch.  When applying the patch, the default is warn (spit
+out warning message but apply the patch).
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+
+ apply.c |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
+
+f21d6726150ec4219e94ea605f27a4cd58eb3d99
+diff --git a/apply.c b/apply.c
+index c4ff418..9deb206 100644
+--- a/apply.c
++++ b/apply.c
+@@ -75,6 +75,15 @@ static void parse_whitespace_option(cons
+ 	die("unrecognized whitespace option '%s'", option);
+ }
+ 
++static void set_default_whitespace_mode(const char *whitespace_option)
++{
++	if (!whitespace_option && !apply_default_whitespace) {
++		new_whitespace = (apply
++				  ? warn_on_whitespace
++				  : nowarn_whitespace);
++	}
++}
++
+ /*
+  * For "diff-stat" like behaviour, we keep track of the biggest change
+  * we've seen, and the longest filename. That allows us to do simple
+@@ -1955,9 +1964,11 @@ int main(int argc, char **argv)
+ 		if (fd < 0)
+ 			usage(apply_usage);
+ 		read_stdin = 0;
++		set_default_whitespace_mode(whitespace_option);
+ 		apply_patch(fd, arg);
+ 		close(fd);
+ 	}
++	set_default_whitespace_mode(whitespace_option);
+ 	if (read_stdin)
+ 		apply_patch(0, "<stdin>");
+ 	if (whitespace_error) {
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.2.3.g1da2
