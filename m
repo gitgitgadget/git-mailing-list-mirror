@@ -1,71 +1,94 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/3] Tie it all together: "git log"
-Date: Tue, 28 Feb 2006 12:59:03 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
-References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
- <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Warn about invalid refs
+Date: Tue, 28 Feb 2006 22:16:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602282213180.27405@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0510271936520.7518@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vacgu3hta.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0510272125580.28705@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7voe5a1yft.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Feb 28 21:59:22 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 22:16:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEBwH-0004Af-2k
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 21:59:21 +0100
+	id 1FECCX-0000ey-1e
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 22:16:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932554AbWB1U7R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 15:59:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932585AbWB1U7R
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 15:59:17 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:26343 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932554AbWB1U7Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 15:59:16 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1SKxCDZ012574
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 28 Feb 2006 12:59:12 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1SKx3Wf029873;
-	Tue, 28 Feb 2006 12:59:07 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932494AbWB1VQG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 16:16:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932620AbWB1VQF
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 16:16:05 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:21735 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932494AbWB1VQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 16:16:04 -0500
+Received: from virusscan.mail (mail04.mail [172.25.1.103])
+	by mailrelay.mail (Postfix) with ESMTP id 2FBA410E9;
+	Tue, 28 Feb 2006 22:16:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 231F55EEC;
+	Tue, 28 Feb 2006 22:16:01 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 10230A18;
+	Tue, 28 Feb 2006 22:16:01 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe5a1yft.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16955>
 
 
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-On Tue, 28 Feb 2006, Linus Torvalds wrote:
-> 
-> Again, this may not do exactly what the current "git log" does. That's not 
-> the point. The point is to introduce the fundamental functionality, so 
-> that people can play with this and improve on it, and fix any of my stupid 
-> bugs.
+---
 
-Btw, before anybody even pipes up: the missing piece here is the nasty 
-"filter_commit()" that rev-list.c does, and that really should be moved 
-into revision.c, and this is where I hit on the "--merge-order" issues.
+On Thu, 27 Oct 2005, Junio C Hamano wrote:
 
-So for example, if you do "git log -- <filename>" with the new git, it 
-won't filter out the commits that just change the passed-in <filename> 
-properly, because the filtering code still exists only in git-rev-list 
-(even if revision.c now does the traversal).
+	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+	> 
+	> > On Thu, 27 Oct 2005, Junio C Hamano wrote:
+	> >
+	> >> Not that the current loop is any better for that purpose.  
+	> >> We silently ignore not just dangling ref and ref not storing
+	> >> 40-byte hex, but files starting with a period '.', names 
+	> >> longer than 255 bytes, and unreadable ones, all of which we 
+	> >> would probably want to warn about in such a tool.
+	> >
+	> > Okay, how about 'fprintf(stderr, "Warning: ...\n"); continue;' 
+	> > instead of 'die("...");' then?
+	> 
+	> Yup.  That sounds sensible.
 
-Same goes for the max-count-based filtering, for the same reason.
+	Sorry for taking so long...
 
-So the "process_commit()" handling should be moved into "get_revision()", 
-but since the merge-order code also hooks into it...
+ refs.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-Anyway, apart from that issue (which I think should be trivial to sort out 
-if we accept breaking --merge-order), the rest looks like it should just 
-get more testing and handling of the few missing flags from rev-parse in 
-revision.c, and it should be good.
-
-		Linus
+diff --git a/refs.c b/refs.c
+index 826ae7a..982ebf8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -151,10 +151,15 @@ static int do_for_each_ref(const char *b
+ 					break;
+ 				continue;
+ 			}
+-			if (read_ref(git_path("%s", path), sha1) < 0)
++			if (read_ref(git_path("%s", path), sha1) < 0) {
++				fprintf(stderr, "%s points nowhere!", path);
+ 				continue;
+-			if (!has_sha1_file(sha1))
++			}
++			if (!has_sha1_file(sha1)) {
++				fprintf(stderr, "%s does not point to a valid "
++						"commit object!", path);
+ 				continue;
++			}
+ 			retval = fn(path, sha1);
+ 			if (retval)
+ 				break;
