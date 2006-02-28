@@ -1,82 +1,162 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: gitview: Set the default width  of graph cell
-Date: Tue, 28 Feb 2006 20:10:28 +0530
-Message-ID: <440460DC.7080307@gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
+Date: Tue, 28 Feb 2006 15:00:22 +0000
+Message-ID: <b0943d9e0602280700p132c6da2v@mail.gmail.com>
+References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
+	 <44037A5C.6080409@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------060809010208030002030705"
-X-From: git-owner@vger.kernel.org Tue Feb 28 15:40:45 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_19804_33539834.1141138822809"
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 16:00:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE61p-0006YQ-4j
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 15:40:41 +0100
+	id 1FE6Ky-0004CW-Eh
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 16:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750965AbWB1Oki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 09:40:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWB1Okh
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 09:40:37 -0500
-Received: from wproxy.gmail.com ([64.233.184.199]:43872 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750965AbWB1Okh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 09:40:37 -0500
-Received: by wproxy.gmail.com with SMTP id 57so1113479wri
-        for <git@vger.kernel.org>; Tue, 28 Feb 2006 06:40:36 -0800 (PST)
+	id S932104AbWB1PAZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 10:00:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWB1PAZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 10:00:25 -0500
+Received: from xproxy.gmail.com ([66.249.82.203]:43620 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932104AbWB1PAY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 10:00:24 -0500
+Received: by xproxy.gmail.com with SMTP id r21so748942wxc
+        for <git@vger.kernel.org>; Tue, 28 Feb 2006 07:00:23 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=mVrxGTssFcA3GSv0jQPhjBA/EfntwYVaXgVo9fuaxydqBvt249+kKEmq0SC+LVs79jHT+gdcvaDxCusXjUf4JcYLreVKj/5F2pp70cf0lFwWCUbSmFmIWA8HK2eyfdVSayMBtn3gFqlDwgdvXIqRHNsHjxcEKQ4+UH72CGCaLFA=
-Received: by 10.35.78.13 with SMTP id f13mr678394pyl;
-        Tue, 28 Feb 2006 06:40:36 -0800 (PST)
-Received: from ?192.168.2.39? ( [59.92.150.81])
-        by mx.gmail.com with ESMTP id n78sm2386980pyf.2006.02.28.06.40.34;
-        Tue, 28 Feb 2006 06:40:36 -0800 (PST)
-User-Agent: Mail/News 1.5 (X11/20060213)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=Hsm/duJNv+R9DdfmUCj378jZGCSavZ4O+p3+yG34yRryFLt4T4s5E3Kjk9P/wHxNOc+KTzopg/dqrk7Jf9fgVzQM8bfOz7QjvSazoWLGn50GPY9F+cMdmMDB83LEBU/FAMv5vAaFSqCYcRDvykmw+W0GF00rekFt6qsCkmRo62A=
+Received: by 10.70.54.20 with SMTP id c20mr666944wxa;
+        Tue, 28 Feb 2006 07:00:22 -0800 (PST)
+Received: by 10.70.31.16 with HTTP; Tue, 28 Feb 2006 07:00:22 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+In-Reply-To: <44037A5C.6080409@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16938>
 
-This is a multi-part message in MIME format.
---------------060809010208030002030705
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+------=_Part_19804_33539834.1141138822809
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
+On 27/02/06, Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> An idea (untested, I don't even know whether it's feasible) would be to
+> check which patches were merged by reverse-applying them starting with
+> the last. In this situation, all the merged patches should just revert
+> their changes. You only need to do a git-diff between the bottom and the
+> top of the patch and git-apply the output (maybe without even modifying
+> the tree). If this operation succeeds, the patch was integrated and you
+> don't even need to push it.
 
---------------060809010208030002030705
-Content-Type: text/plain;
- name="0003-gitview-Set-the-default-width-of-graph-cell.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0003-gitview-Set-the-default-width-of-graph-cell.txt"
+I tried some simple tests with the idea above. I attached a patch if
+you'd like to try (I won't push it to the main StGIT repository yet.
+For safety reasons, it only skips the merged patches when pushing
+them. A future version could simply delete the merged patches.
 
-Subject: gitview: Set the default width  of graph cell
+--
+Catalin
 
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+------=_Part_19804_33539834.1141138822809
+Content-Type: text/x-patch; name="merged-test.diff"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="merged-test.diff"
+X-Attachment-Id: f_ek8cknni
 
----
-
- contrib/gitview/gitview |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-b298aa0ee1d98b263fe3d493f2911164a4488693
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 47ecaa3..ea05cd4 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -526,6 +526,9 @@ class GitView:
- 		self.treeview.show()
- 
- 		cell = CellRendererGraph()
-+		#  Set the default width to 265
-+		#  This make sure that we have nice display with large tag names
-+		cell.set_property("width", 265)
- 		column = gtk.TreeViewColumn()
- 		column.set_resizable(True)
- 		column.pack_start(cell, expand=True)
--- 
-1.2.3.gc55f-dirty
-
-
---------------060809010208030002030705--
+QWRkIGEgbWVyZ2VkIHVwc3RyZWFtIHRlc3QgZm9yIHB1bGwgYW5kIHB1c2gKCkZyb206IENhdGFs
+aW4gTWFyaW5hcyA8Y2F0YWxpbi5tYXJpbmFzQGdtYWlsLmNvbT4KClRoaXMgcGF0Y2ggYWRkcyB0
+aGUgLS1tZXJnZWQgb3B0aW9uIHRvIGJvdGggcHVsbCBhbmQgcHVzaCBjb21tYW5kcy4gV2l0aAp0
+aGlzIG9wdGlvbiwgdGhlc2UgY29tbWFuZHMgd2lsbCBmaXJzdCB0cnkgdG8gY2hlY2sgd2hpY2gg
+cGF0Y2hlcyB3ZXJlCm1lcmdlZCB1cHN0cmVhbSBieSByZXZlcnNlLWFwcGx5aW5nIHRoZW0gaW4g
+cmV2ZXJzZSBvcmRlci4gVGhpcyBzaG91bGQKc29sdmUgdGhlIHNpdHVhdGlvbiB3aGVyZSBzZXZl
+cmFsIHBhdGNoZXMgbW9kaWZ5IHRoZSBzYW1lIGxpbmUgaW4gYSBmaWxlLgoKU2lnbmVkLW9mZi1i
+eTogQ2F0YWxpbiBNYXJpbmFzIDxjYXRhbGluLm1hcmluYXNAZ21haWwuY29tPgotLS0KCiBzdGdp
+dC9jb21tYW5kcy9wdWxsLnB5IHwgICAyMCArKysrKysrKysrKysrKysrKysrLQogc3RnaXQvY29t
+bWFuZHMvcHVzaC5weSB8ICAgMTcgKysrKysrKysrKysrKysrKy0KIHN0Z2l0L2dpdC5weSAgICAg
+ICAgICAgfCAgIDEyICsrKysrKysrKy0tLQogc3RnaXQvc3RhY2sucHkgICAgICAgICB8ICAgMjAg
+KysrKysrKysrKysrKysrKysrKysKIDQgZmlsZXMgY2hhbmdlZCwgNjQgaW5zZXJ0aW9ucygrKSwg
+NSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9zdGdpdC9jb21tYW5kcy9wdWxsLnB5IGIvc3Rn
+aXQvY29tbWFuZHMvcHVsbC5weQppbmRleCA4NDNiNTc5Li41ZDc1NTMwIDEwMDY0NAotLS0gYS9z
+dGdpdC9jb21tYW5kcy9wdWxsLnB5CisrKyBiL3N0Z2l0L2NvbW1hbmRzL3B1bGwucHkKQEAgLTM5
+LDYgKzM5LDkgQEAgZm9ybWF0LiIiIgogCiBvcHRpb25zID0gW21ha2Vfb3B0aW9uKCctbicsICct
+LW5vcHVzaCcsCiAgICAgICAgICAgICAgICAgICAgICAgIGhlbHAgPSAnZG8gbm90IHB1c2ggdGhl
+IHBhdGNoZXMgYmFjayBhZnRlciBwdWxsaW5nJywKKyAgICAgICAgICAgICAgICAgICAgICAgYWN0
+aW9uID0gJ3N0b3JlX3RydWUnKSwKKyAgICAgICAgICAgbWFrZV9vcHRpb24oJy1tJywgJy0tbWVy
+Z2VkJywKKyAgICAgICAgICAgICAgICAgICAgICAgaGVscCA9ICdjaGVjayBmb3IgcGF0Y2hlcyBt
+ZXJnZWQgdXBzdHJlYW0gKHNsb3dlciknLAogICAgICAgICAgICAgICAgICAgICAgICBhY3Rpb24g
+PSAnc3RvcmVfdHJ1ZScpXQogCiBkZWYgZnVuYyhwYXJzZXIsIG9wdGlvbnMsIGFyZ3MpOgpAQCAt
+NzcsMTIgKzgwLDI3IEBAIGRlZiBmdW5jKHBhcnNlciwgb3B0aW9ucywgYXJncyk6CiAgICAgIyBw
+dXNoIHRoZSBwYXRjaGVzIGJhY2sKICAgICBpZiBvcHRpb25zLm5vcHVzaDoKICAgICAgICAgYXBw
+bGllZCA9IFtdCisKKyAgICAjIGNoZWNrIGZvciBwYXRjaGVzIG1lcmdlZCB1cHN0cmVhbQorICAg
+IGlmIG9wdGlvbnMubWVyZ2VkOgorICAgICAgICBtZXJnZWQgPSBjcnRfc2VyaWVzLm1lcmdlZF9w
+YXRjaGVzKHBhdGNoZXMpCisgICAgZWxzZToKKyAgICAgICAgbWVyZ2VkID0gW10KKwogICAgIGZv
+ciBwIGluIGFwcGxpZWQ6CisgICAgICAgIGlmIHAgaW4gbWVyZ2VkOgorICAgICAgICAgICAgcHJp
+bnQgJ1BhdGNoICIlcyIgbWVyZ2VkIHVwc3RyZWFtJyAlIHAKKyAgICAgICAgICAgIGNvbnRpbnVl
+CisKICAgICAgICAgcHJpbnQgJ1B1c2hpbmcgcGF0Y2ggIiVzIi4uLicgJSBwLAogICAgICAgICBz
+eXMuc3Rkb3V0LmZsdXNoKCkKLSAgICAgICAgY3J0X3Nlcmllcy5wdXNoX3BhdGNoKHApCisKKyAg
+ICAgICAgbW9kaWZpZWQgPSBjcnRfc2VyaWVzLnB1c2hfcGF0Y2gocCkKKwogICAgICAgICBpZiBj
+cnRfc2VyaWVzLmVtcHR5X3BhdGNoKHApOgogICAgICAgICAgICAgcHJpbnQgJ2RvbmUgKGVtcHR5
+IHBhdGNoKScKKyAgICAgICAgZWxpZiBtb2RpZmllZDoKKyAgICAgICAgICAgIHByaW50ICdkb25l
+IChtb2RpZmllZCknCiAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICBwcmludCAnZG9uZScKIApk
+aWZmIC0tZ2l0IGEvc3RnaXQvY29tbWFuZHMvcHVzaC5weSBiL3N0Z2l0L2NvbW1hbmRzL3B1c2gu
+cHkKaW5kZXggOTkyNGE3OC4uNzJiMjY2MyAxMDA2NDQKLS0tIGEvc3RnaXQvY29tbWFuZHMvcHVz
+aC5weQorKysgYi9zdGdpdC9jb21tYW5kcy9wdXNoLnB5CkBAIC00OSw2ICs0OSw5IEBAIG9wdGlv
+bnMgPSBbbWFrZV9vcHRpb24oJy1hJywgJy0tYWxsJywKICAgICAgICAgICAgbWFrZV9vcHRpb24o
+Jy0tcmV2ZXJzZScsCiAgICAgICAgICAgICAgICAgICAgICAgIGhlbHAgPSAncHVzaCB0aGUgcGF0
+Y2hlcyBpbiByZXZlcnNlIG9yZGVyJywKICAgICAgICAgICAgICAgICAgICAgICAgYWN0aW9uID0g
+J3N0b3JlX3RydWUnKSwKKyAgICAgICAgICAgbWFrZV9vcHRpb24oJy1tJywgJy0tbWVyZ2VkJywK
+KyAgICAgICAgICAgICAgICAgICAgICAgaGVscCA9ICdjaGVjayBmb3IgcGF0Y2hlcyBtZXJnZWQg
+dXBzdHJlYW0gKHNsb3dlciknLAorICAgICAgICAgICAgICAgICAgICAgICBhY3Rpb24gPSAnc3Rv
+cmVfdHJ1ZScpLAogICAgICAgICAgICBtYWtlX29wdGlvbignLS11bmRvJywKICAgICAgICAgICAg
+ICAgICAgICAgICAgaGVscCA9ICd1bmRvIHRoZSBsYXN0IHB1c2ggb3BlcmF0aW9uJywKICAgICAg
+ICAgICAgICAgICAgICAgICAgYWN0aW9uID0gJ3N0b3JlX3RydWUnKV0KQEAgLTEzNCw5ICsxMzcs
+MjEgQEAgZGVmIGZ1bmMocGFyc2VyLCBvcHRpb25zLCBhcmdzKToKICAgICBlbGlmIGZvcndhcmRl
+ZCA9PSAxOgogICAgICAgICBwcmludCAnRmFzdC1mb3J3YXJkZWQgcGF0Y2ggIiVzIicgJSBwYXRj
+aGVzWzBdCiAKLSAgICBmb3IgcCBpbiBwYXRjaGVzW2ZvcndhcmRlZDpdOgorICAgIHBhdGNoZXMg
+PSBwYXRjaGVzW2ZvcndhcmRlZDpdCisKKyAgICAjIGNoZWNrIGZvciBwYXRjaGVzIG1lcmdlZCB1
+cHN0cmVhbQorICAgIGlmIG9wdGlvbnMubWVyZ2VkOgorICAgICAgICBtZXJnZWQgPSBjcnRfc2Vy
+aWVzLm1lcmdlZF9wYXRjaGVzKHBhdGNoZXMpCisgICAgZWxzZToKKyAgICAgICAgbWVyZ2VkID0g
+W10KKworICAgIGZvciBwIGluIHBhdGNoZXM6CiAgICAgICAgIGlzX3BhdGNoX2FwcGxpYWJsZShw
+KQogCisgICAgICAgIGlmIHAgaW4gbWVyZ2VkOgorICAgICAgICAgICAgcHJpbnQgJ1BhdGNoICIl
+cyIgbWVyZ2VkIHVwc3RyZWFtJyAlIHAKKyAgICAgICAgICAgIGNvbnRpbnVlCisKICAgICAgICAg
+cHJpbnQgJ1B1c2hpbmcgcGF0Y2ggIiVzIi4uLicgJSBwLAogICAgICAgICBzeXMuc3Rkb3V0LmZs
+dXNoKCkKIApkaWZmIC0tZ2l0IGEvc3RnaXQvZ2l0LnB5IGIvc3RnaXQvZ2l0LnB5CmluZGV4IDAx
+NmJjM2EuLjY2Yjg2MTIgMTAwNjQ0Ci0tLSBhL3N0Z2l0L2dpdC5weQorKysgYi9zdGdpdC9naXQu
+cHkKQEAgLTQ2MiwxNCArNDYyLDIwIEBAIGRlZiBjb21taXQobWVzc2FnZSwgZmlsZXMgPSBOb25l
+LCBwYXJlbnQKIAogICAgIHJldHVybiBjb21taXRfaWQKIAotZGVmIGFwcGx5X2RpZmYocmV2MSwg
+cmV2Mik6CitkZWYgYXBwbHlfZGlmZihyZXYxLCByZXYyLCBjaGVja19pbmRleCA9IFRydWUpOgog
+ICAgICIiIkFwcGx5IHRoZSBkaWZmIGJldHdlZW4gcmV2MSBhbmQgcmV2MiBvbnRvIHRoZSBjdXJy
+ZW50CiAgICAgaW5kZXguIFRoaXMgZnVuY3Rpb24gZG9lc24ndCBuZWVkIHRvIHJhaXNlIGFuIGV4
+Y2VwdGlvbiBzaW5jZSBpdAogICAgIGlzIG9ubHkgdXNlZCBmb3IgZmFzdC1wdXNoaW5nIGEgcGF0
+Y2guIElmIHRoaXMgb3BlcmF0aW9uIGZhaWxzLAogICAgIHRoZSBwdXNoaW5nIHdvdWxkIGZhbGwg
+YmFjayB0byB0aGUgdGhyZWUtd2F5IG1lcmdlLgogICAgICIiIgotICAgIHJldHVybiBvcy5zeXN0
+ZW0oJ2dpdC1kaWZmLXRyZWUgLXAgJXMgJXMgfCBnaXQtYXBwbHkgLS1pbmRleCAyPiAvZGV2L251
+bGwnCi0gICAgICAgICAgICAgICAgICAgICAlIChyZXYxLCByZXYyKSkgPT0gMAorICAgIGlmIGNo
+ZWNrX2luZGV4OgorICAgICAgICBpbmRleF9vcHQgPSAnLS1pbmRleCcKKyAgICBlbHNlOgorICAg
+ICAgICBpbmRleF9vcHQgPSAnJworICAgIGNtZCA9ICdnaXQtZGlmZi10cmVlIC1wICVzICVzIHwg
+Z2l0LWFwcGx5ICVzIDI+IC9kZXYvbnVsbCcgXAorICAgICAgICAgICUgKHJldjEsIHJldjIsIGlu
+ZGV4X29wdCkKKworICAgIHJldHVybiBvcy5zeXN0ZW0oY21kKSA9PSAwCiAKIGRlZiBtZXJnZShi
+YXNlLCBoZWFkMSwgaGVhZDIpOgogICAgICIiIlBlcmZvcm0gYSAzLXdheSBtZXJnZSBiZXR3ZWVu
+IGJhc2UsIGhlYWQxIGFuZCBoZWFkMiBpbnRvIHRoZQpkaWZmIC0tZ2l0IGEvc3RnaXQvc3RhY2su
+cHkgYi9zdGdpdC9zdGFjay5weQppbmRleCBlMWM1NWYwLi45ZDVmMDQzIDEwMDY0NAotLS0gYS9z
+dGdpdC9zdGFjay5weQorKysgYi9zdGdpdC9zdGFjay5weQpAQCAtNzgwLDYgKzc4MCwyNiBAQCBj
+bGFzcyBTZXJpZXM6CiAKICAgICAgICAgcmV0dXJuIGZvcndhcmRlZAogCisgICAgZGVmIG1lcmdl
+ZF9wYXRjaGVzKHNlbGYsIG5hbWVzKToKKyAgICAgICAgIiIiVGVzdCB3aGljaCBwYXRjaGVzIHdl
+cmUgbWVyZ2VkIHVwc3RyZWFtIGJ5IHJldmVyc2UtYXBwbHlpbmcKKyAgICAgICAgdGhlbSBpbiBy
+ZXZlcnNlIG9yZGVyLiBUaGUgZnVuY3Rpb24gcmV0dXJucyB0aGUgbGlzdCBvZgorICAgICAgICBw
+YXRjaGVzIGRldGVjdGVkIHRvIGhhdmUgYmVlbiBhcHBsaWVkLiBUaGUgc3RhdGUgb2YgdGhlIHRy
+ZWUKKyAgICAgICAgaXMgcmVzdG9yZWQgdG8gdGhlIG9yaWdpbmFsIG9uZQorICAgICAgICAiIiIK
+KyAgICAgICAgcGF0Y2hlcyA9IFtQYXRjaChuYW1lLCBzZWxmLl9fcGF0Y2hfZGlyLCBzZWxmLl9f
+cmVmc19kaXIpCisgICAgICAgICAgICAgICAgICAgZm9yIG5hbWUgaW4gbmFtZXNdCisgICAgICAg
+IHBhdGNoZXMucmV2ZXJzZSgpCisKKyAgICAgICAgbWVyZ2VkID0gW10KKyAgICAgICAgZm9yIHAg
+aW4gcGF0Y2hlczoKKyAgICAgICAgICAgIGlmIGdpdC5hcHBseV9kaWZmKHAuZ2V0X3RvcCgpLCBw
+LmdldF9ib3R0b20oKSwgRmFsc2UpOgorICAgICAgICAgICAgICAgIG1lcmdlZC5hcHBlbmQocC5n
+ZXRfbmFtZSgpKQorICAgICAgICBtZXJnZWQucmV2ZXJzZSgpCisKKyAgICAgICAgZ2l0LnJlc2V0
+KCkKKworICAgICAgICByZXR1cm4gbWVyZ2VkCisKICAgICBkZWYgcHVzaF9wYXRjaChzZWxmLCBu
+YW1lKToKICAgICAgICAgIiIiUHVzaGVzIGEgcGF0Y2ggb24gdGhlIHN0YWNrCiAgICAgICAgICIi
+Igo=
+------=_Part_19804_33539834.1141138822809--
