@@ -1,59 +1,80 @@
-From: Aubrey <aubreylee@gmail.com>
-Subject: Re: Quick question: how to generate a patch?
-Date: Tue, 28 Feb 2006 10:48:11 +0800
-Message-ID: <6d6a94c50602271848g4bf18669na6167a78a74bf834@mail.gmail.com>
-References: <6d6a94c50602270657m453cc581p6ec290c20879de25@mail.gmail.com>
-	 <Pine.LNX.4.64.0602270801280.22647@g5.osdl.org>
-	 <6d6a94c50602270818k5f82bb8ft68a19899db3db636@mail.gmail.com>
-	 <Pine.LNX.4.64.0602270830330.22647@g5.osdl.org>
-	 <6d6a94c50602270902k2c06aaffw7e70268b0753ef64@mail.gmail.com>
-	 <44033241.6070001@op5.se>
-	 <Pine.LNX.4.64.0602270923120.22647@g5.osdl.org>
-	 <6d6a94c50602271755v41e0d31ch25892192547003a9@mail.gmail.com>
-	 <Pine.LNX.4.64.0602271802110.22647@g5.osdl.org>
+From: Dave Jones <davej@redhat.com>
+Subject: someone changed the contents of my HEAD.
+Date: Mon, 27 Feb 2006 22:04:46 -0500
+Message-ID: <20060228030446.GA23490@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 03:48:51 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Feb 28 04:05:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDuuN-0000l5-Rz
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 03:48:16 +0100
+	id 1FDvAX-00056W-Ey
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 04:04:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932128AbWB1CsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 21:48:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932130AbWB1CsN
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 21:48:13 -0500
-Received: from pproxy.gmail.com ([64.233.166.176]:3895 "EHLO pproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932128AbWB1CsM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 21:48:12 -0500
-Received: by pproxy.gmail.com with SMTP id e30so830691pya
-        for <git@vger.kernel.org>; Mon, 27 Feb 2006 18:48:12 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SI1JH5L6WL14OkeAltpJ8lJz88aKTQRkB3sx3xcCa+cIvvDQmV8I/hsLk9ZWaCdbiMOsBEA4zG07gQGpBo5Mx8A/Jp8qoWDaw6l8g4P5K8n6TwK2fsyvif+ELezvuZzQWHJIG5UgCXuOhuqQ+27Oheba6jXpdSmpldkR32Q/bS4=
-Received: by 10.65.105.11 with SMTP id h11mr5026qbm;
-        Mon, 27 Feb 2006 18:48:11 -0800 (PST)
-Received: by 10.65.185.6 with HTTP; Mon, 27 Feb 2006 18:48:11 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0602271802110.22647@g5.osdl.org>
+	id S1751722AbWB1DEz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 22:04:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWB1DEz
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 22:04:55 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:13206 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1751722AbWB1DEy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 22:04:54 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id k1S34lco029030
+	for <git@vger.kernel.org>; Mon, 27 Feb 2006 22:04:47 -0500
+Received: from nwo.kernelslacker.org (vpn83-121.boston.redhat.com [172.16.83.121])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id k1S34l119702
+	for <git@vger.kernel.org>; Mon, 27 Feb 2006 22:04:47 -0500
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.5/8.13.5) with ESMTP id k1S34kcU024185
+	for <git@vger.kernel.org>; Mon, 27 Feb 2006 22:04:46 -0500
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id k1S34k45024184
+	for git@vger.kernel.org; Mon, 27 Feb 2006 22:04:46 -0500
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16909>
 
-> If you can re-create this at will, it would be interesting to see _what_
-> makes git think you've modified a file. A small mod to "read-cache.c" like
-> the appended patch should give you (very very verbose) output that could
-> help us figure this out.
-Oops, It's my fault. My mistake is that copy the clone git directory
-to another directory for backup. And work on another directory. Sorry
-for my incaution.
+I just tried to check in some changes to some trees
+on master.kernel.org, and found after the first checkin
+that git claimed..
 
--Aubrey
+fatal: Not a git repository
+
+A lot of head-scratching later, I think I've figured out
+what's happened.  It seems there was a recent upgrade
+to the version of git on m.k.o, which is incompatible
+with the helper scripts I used before.
+
+When checking in changes previously, I used this..
+
+#!/bin/sh
+export GIT_AUTHOR_NAME="$1"
+export GIT_AUTHOR_EMAIL="$2"
+tree=$(git-write-tree) || exit 1
+commit=$(git-commit-tree $tree -p HEAD) || exit 1
+echo $commit > .git/HEAD
+
+and called it thus..
+
+commit-as "Dave Jones" "<davej@redhat.com>"
+
+Previously, this updated .git/HEAD to a ptr to the latest committed change.
+All was well, as I only ever have one HEAD in my trees.
+
+With the new .git however, when I clone a new tree, .git/HEAD
+contains ref: refs/heads/master, so my script destroys the git metadata.
+
+For my newly created repos, this isn't a problem, as I can fudge my
+commit-as script to write to .git/refs/heads/master instead, but
+my concern now is the unpulled changes in the existing repos
+I have on master.  Will Linus be able to pull those into his tree
+with git 1.2.3, or will I have to recreate those repos with the
+new-style .git/HEAD ?
+
+		Dave
