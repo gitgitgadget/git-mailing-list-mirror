@@ -1,80 +1,54 @@
-From: Dave Jones <davej@redhat.com>
-Subject: someone changed the contents of my HEAD.
-Date: Mon, 27 Feb 2006 22:04:46 -0500
-Message-ID: <20060228030446.GA23490@redhat.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH 3/3] git-apply --whitespace=nowarn
+Date: Mon, 27 Feb 2006 19:26:59 -0800
+Message-ID: <4403C303.70602@gmail.com>
+References: <20060225174047.0e9a6d29.akpm@osdl.org>	<7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>	<20060225210712.29b30f59.akpm@osdl.org>	<Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>	<20060226103604.2d97696c.akpm@osdl.org>	<Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>	<20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer>	<Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>	<20060227011832.78359f0a.akpm@osdl.org>	<7vhd6kxuea.fsf@assigned-by-dhcp.cox.net> <7v4q2kuvxk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Feb 28 04:05:21 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 04:27:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDvAX-00056W-Ey
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 04:04:59 +0100
+	id 1FDvWB-0000oX-LV
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 04:27:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751722AbWB1DEz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 22:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWB1DEz
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 22:04:55 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:13206 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S1751722AbWB1DEy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 22:04:54 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id k1S34lco029030
-	for <git@vger.kernel.org>; Mon, 27 Feb 2006 22:04:47 -0500
-Received: from nwo.kernelslacker.org (vpn83-121.boston.redhat.com [172.16.83.121])
-	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id k1S34l119702
-	for <git@vger.kernel.org>; Mon, 27 Feb 2006 22:04:47 -0500
-Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
-	by nwo.kernelslacker.org (8.13.5/8.13.5) with ESMTP id k1S34kcU024185
-	for <git@vger.kernel.org>; Mon, 27 Feb 2006 22:04:46 -0500
-Received: (from davej@localhost)
-	by nwo.kernelslacker.org (8.13.5/8.13.5/Submit) id k1S34k45024184
-	for git@vger.kernel.org; Mon, 27 Feb 2006 22:04:46 -0500
-X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	id S932172AbWB1D1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 22:27:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932196AbWB1D1L
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 22:27:11 -0500
+Received: from zproxy.gmail.com ([64.233.162.199]:51718 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932172AbWB1D1J (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2006 22:27:09 -0500
+Received: by zproxy.gmail.com with SMTP id v1so1138662nzb
+        for <git@vger.kernel.org>; Mon, 27 Feb 2006 19:27:08 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=fMsxbSE8XpQ99jZmctaKAy2uT0w5IRRlX8avITESVLUjkgQY3EhLHNOYjqkDkbU/N8WAaWsRGVludRyiocL+kzrD6Sevafnt4iT0Ct9HyLdIZ9Li8vI1xsDL3Q68WmiimlcnsNzI0Jxnk7aTL52NgVo4yAs4pza1j+sepxC1SIY=
+Received: by 10.35.107.20 with SMTP id j20mr967408pym;
+        Mon, 27 Feb 2006 19:27:08 -0800 (PST)
+Received: from ?10.0.0.6? ( [67.20.71.142])
+        by mx.gmail.com with ESMTP id s72sm2363757pyc.2006.02.27.19.27.06;
+        Mon, 27 Feb 2006 19:27:07 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4q2kuvxk.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16910>
 
-I just tried to check in some changes to some trees
-on master.kernel.org, and found after the first checkin
-that git claimed..
+Junio C Hamano wrote:
+> Andrew insists --whitespace=warn should be the default, and I
+> tend to agree.  This introduces --whitespace=warn, so if your
+> project policy is more lenient, you can squelch them by having
+> apply.whitespace=nowarn in your configuration file.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-fatal: Not a git repository
-
-A lot of head-scratching later, I think I've figured out
-what's happened.  It seems there was a recent upgrade
-to the version of git on m.k.o, which is incompatible
-with the helper scripts I used before.
-
-When checking in changes previously, I used this..
-
-#!/bin/sh
-export GIT_AUTHOR_NAME="$1"
-export GIT_AUTHOR_EMAIL="$2"
-tree=$(git-write-tree) || exit 1
-commit=$(git-commit-tree $tree -p HEAD) || exit 1
-echo $commit > .git/HEAD
-
-and called it thus..
-
-commit-as "Dave Jones" "<davej@redhat.com>"
-
-Previously, this updated .git/HEAD to a ptr to the latest committed change.
-All was well, as I only ever have one HEAD in my trees.
-
-With the new .git however, when I clone a new tree, .git/HEAD
-contains ref: refs/heads/master, so my script destroys the git metadata.
-
-For my newly created repos, this isn't a problem, as I can fudge my
-commit-as script to write to .git/refs/heads/master instead, but
-my concern now is the unpulled changes in the existing repos
-I have on master.  Will Linus be able to pull those into his tree
-with git 1.2.3, or will I have to recreate those repos with the
-new-style .git/HEAD ?
-
-		Dave
+I think this is wrong. The default policy of, non-security, tools SHOULD 
+  be the least restrictive and most flexible.
