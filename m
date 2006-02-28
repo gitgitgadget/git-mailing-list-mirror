@@ -1,316 +1,390 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
-Date: Tue, 28 Feb 2006 22:45:56 +0000
-Message-ID: <b0943d9e0602281445w7160d915y@mail.gmail.com>
-References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
-	 <44037A5C.6080409@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/3] Tie it all together: "git log"
+Date: Tue, 28 Feb 2006 15:07:20 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602281504280.22647@g5.osdl.org>
+References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
+ <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org> <Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
+ <7vr75nm8cl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_6911_18125825.1141166756366"
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 28 23:46:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 00:07:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEDbe-00013X-CT
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 23:46:10 +0100
+	id 1FEDwM-0006Vl-Kf
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 00:07:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932450AbWB1Wp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 17:45:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932668AbWB1Wp6
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 17:45:58 -0500
-Received: from xproxy.gmail.com ([66.249.82.204]:38744 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932450AbWB1Wp5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 17:45:57 -0500
-Received: by xproxy.gmail.com with SMTP id t11so812306wxc
-        for <git@vger.kernel.org>; Tue, 28 Feb 2006 14:45:56 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=VzcQkPegrVMUzF6vlh8FQ1sQ+alH9AXm/PnelRWn9N2zGsRYn7Y0Zk9SL6LuEQX6v/VG2UCfIksBd8nNNgUpIYn5vEmOP5rsRPGaVhDrc1X8qwWptDMPN7dbTpLdyV/eIrsYYSuYoxq734MsEXkzwHrGWYQtGladNHCp839VXj0=
-Received: by 10.70.54.1 with SMTP id c1mr1215886wxa;
-        Tue, 28 Feb 2006 14:45:56 -0800 (PST)
-Received: by 10.70.31.16 with HTTP; Tue, 28 Feb 2006 14:45:56 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-In-Reply-To: <44037A5C.6080409@gmail.com>
+	id S932710AbWB1XH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 18:07:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932711AbWB1XH3
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 18:07:29 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:63394 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932710AbWB1XH2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 18:07:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1SN7NDZ019379
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Feb 2006 15:07:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1SN7KPP003454;
+	Tue, 28 Feb 2006 15:07:21 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr75nm8cl.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16958>
 
-------=_Part_6911_18125825.1141166756366
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
 
-On 27/02/06, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> An idea (untested, I don't even know whether it's feasible) would be to
-> check which patches were merged by reverse-applying them starting with
-> the last. In this situation, all the merged patches should just revert
-> their changes. You only need to do a git-diff between the bottom and the
-> top of the patch and git-apply the output (maybe without even modifying
-> the tree). If this operation succeeds, the patch was integrated and you
-> don't even need to push it.
 
-I attached another patch that should work properly. It also pushes
-empty patches on the stack if they were merged upstream (a 'stg clean'
-is required to remove them). This is useful for the push --undo
-command if you are not happy with the result.
+On Tue, 28 Feb 2006, Junio C Hamano wrote:
+> 
+> I would say we should just rip merge-order out.  Who uses it,
+> and why does it not work with topo-order, again?
 
-I'll try this patch for a bit more before pushing into the repository.
+Well, assuming breaking --merge-order is fine, here's a patch (on top of 
+the other ones) that makes
 
---
-Catalin
+	git log <filename>
 
-------=_Part_6911_18125825.1141166756366
-Content-Type: text/x-patch; name=merged-test.diff; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Attachment-Id: f_ek8t6ewq
-Content-Disposition: attachment; filename="merged-test.diff"
+actually work, as far as I can tell. 
 
-Add a merged upstream test for pull and push
+I didn't add the logic for --before/--after flags, but that should be 
+pretty trivial, and is independent of this anyway.
 
-From: Catalin Marinas <catalin.marinas@gmail.com>
+Perhaps more importantly, I didn't remove the tests that now start 
+failing, nor did I remove the actual code to do --merge-order ;/
 
-This patch adds the --merged option to both pull and push commands. With
-this option, these commands will first try to check which patches were
-merged upstream by reverse-applying them in reverse order. This should
-solve the situation where several patches modify the same line in a file.
+		Linus
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
-
- stgit/commands/common.py |   41 +++++++++++++++++++++++++++++++++++++++++
- stgit/commands/pull.py   |   15 +++++----------
- stgit/commands/push.py   |   28 ++++++----------------------
- stgit/git.py             |   12 +++++++++---
- stgit/stack.py           |   34 +++++++++++++++++++++++++++++++---
- 5 files changed, 92 insertions(+), 38 deletions(-)
-
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index 2e1ba7a..2985379 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -132,6 +132,47 @@ def resolved_all(reset = None):
-             resolved(filename, reset)
-         os.remove(os.path.join(git.get_base_dir(), 'conflicts'))
+----
+diff --git a/rev-list.c b/rev-list.c
+index 94f22dd..6993b1a 100644
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -8,10 +8,9 @@
+ #include "diff.h"
+ #include "revision.h"
  
-+def push_patches(patches, check_merged = False):
-+    """Push multiple patches onto the stack. This function is shared
-+    between the push and pull commands
-+    """
-+    forwarded = crt_series.forward_patches(patches)
-+    if forwarded > 1:
-+        print 'Fast-forwarded patches "%s" - "%s"' % (patches[0],
-+                                                      patches[forwarded - 1])
-+    elif forwarded == 1:
-+        print 'Fast-forwarded patch "%s"' % patches[0]
-+
-+    names = patches[forwarded:]
-+
-+    # check for patches merged upstream
-+    if check_merged:
-+        print 'Checking for patches merged upstream...',
-+        sys.stdout.flush()
-+
-+        merged = crt_series.merged_patches(names)
-+
-+        print 'done (%d found)' % len(merged)
-+    else:
-+        merged = []
-+
-+    for p in names:
-+        print 'Pushing patch "%s"...' % p,
-+        sys.stdout.flush()
-+
-+        if p in merged:
-+            crt_series.push_patch(p, empty = True)
-+            print 'done (merged upstream)'
-+        else:
-+            modified = crt_series.push_patch(p)
-+
-+            if crt_series.empty_patch(p):
-+                print 'done (empty patch)'
-+            elif modified:
-+                print 'done (modified)'
-+            else:
-+                print 'done'
-+
- def name_email(address):
-     """Return a tuple consisting of the name and email parsed from a
-     standard 'name <email>' string
-diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
-index 843b579..8f26f4d 100644
---- a/stgit/commands/pull.py
-+++ b/stgit/commands/pull.py
-@@ -39,6 +39,9 @@ format."""
+-/* bits #0-2 in revision.h */
++/* bits #0-3 in revision.h */
  
- options = [make_option('-n', '--nopush',
-                        help = 'do not push the patches back after pulling',
-+                       action = 'store_true'),
-+           make_option('-m', '--merged',
-+                       help = 'check for patches merged upstream',
-                        action = 'store_true')]
+-#define COUNTED		(1u << 3)
+-#define SHOWN		(1u << 4)
++#define COUNTED		(1u << 4)
+ #define TMP_MARK	(1u << 5) /* for isolated cases; clean after use */
  
- def func(parser, options, args):
-@@ -75,15 +78,7 @@ def func(parser, options, args):
-     print 'done'
+ static const char rev_list_usage[] =
+@@ -25,7 +24,6 @@ static const char rev_list_usage[] =
+ "    --remove-empty\n"
+ "    --all\n"
+ "  ordering output:\n"
+-"    --merge-order [ --show-breaks ]\n"
+ "    --topo-order\n"
+ "    --date-order\n"
+ "  formatting output:\n"
+@@ -47,22 +45,9 @@ static int show_parents = 0;
+ static int hdr_termination = 0;
+ static const char *commit_prefix = "";
+ static enum cmit_fmt commit_format = CMIT_FMT_RAW;
+-static int merge_order = 0;
+-static int show_breaks = 0;
+-static int stop_traversal = 0;
+-static int no_merges = 0;
  
-     # push the patches back
--    if options.nopush:
--        applied = []
--    for p in applied:
--        print 'Pushing patch "%s"...' % p,
--        sys.stdout.flush()
--        crt_series.push_patch(p)
--        if crt_series.empty_patch(p):
--            print 'done (empty patch)'
--        else:
--            print 'done'
-+    if not options.nopush:
-+        push_patches(applied, options.merged)
+ static void show_commit(struct commit *commit)
+ {
+-	commit->object.flags |= SHOWN;
+-	if (show_breaks) {
+-		commit_prefix = "| ";
+-		if (commit->object.flags & DISCONTINUITY) {
+-			commit_prefix = "^ ";     
+-		} else if (commit->object.flags & BOUNDARY) {
+-			commit_prefix = "= ";
+-		} 
+-        }        		
+ 	printf("%s%s", commit_prefix, sha1_to_hex(commit->object.sha1));
+ 	if (show_parents) {
+ 		struct commit_list *parents = commit->parents;
+@@ -96,73 +81,6 @@ static void show_commit(struct commit *c
+ 	fflush(stdout);
+ }
  
-     print_crt_patch()
-diff --git a/stgit/commands/push.py b/stgit/commands/push.py
-index 9924a78..90777c1 100644
---- a/stgit/commands/push.py
-+++ b/stgit/commands/push.py
-@@ -49,6 +49,9 @@ options = [make_option('-a', '--all',
-            make_option('--reverse',
-                        help = 'push the patches in reverse order',
-                        action = 'store_true'),
-+           make_option('-m', '--merged',
-+                       help = 'check for patches merged upstream',
-+                       action = 'store_true'),
-            make_option('--undo',
-                        help = 'undo the last push operation',
-                        action = 'store_true')]
-@@ -58,9 +61,9 @@ def is_patch_appliable(p):
-     """See if patch exists, or is already applied.
-     """
-     if p in applied:
--        raise CmdException, 'Patch "%s" is already applied.' % p
-+        raise CmdException, 'Patch "%s" is already applied' % p
-     if p not in unapplied:
--        raise CmdException, 'Patch "%s" does not exist.' % p
-+        raise CmdException, 'Patch "%s" does not exist' % p
- 
- def func(parser, options, args):
-     """Pushes the given patch or all onto the series
-@@ -127,25 +130,6 @@ def func(parser, options, args):
-     if options.reverse:
-         patches.reverse()
- 
--    forwarded = crt_series.forward_patches(patches)
--    if forwarded > 1:
--        print 'Fast-forwarded patches "%s" - "%s"' % (patches[0],
--                                                      patches[forwarded - 1])
--    elif forwarded == 1:
--        print 'Fast-forwarded patch "%s"' % patches[0]
+-static int rewrite_one(struct commit **pp)
+-{
+-	for (;;) {
+-		struct commit *p = *pp;
+-		if (p->object.flags & (TREECHANGE | UNINTERESTING))
+-			return 0;
+-		if (!p->parents)
+-			return -1;
+-		*pp = p->parents->item;
+-	}
+-}
 -
--    for p in patches[forwarded:]:
--        is_patch_appliable(p)
+-static void rewrite_parents(struct commit *commit)
+-{
+-	struct commit_list **pp = &commit->parents;
+-	while (*pp) {
+-		struct commit_list *parent = *pp;
+-		if (rewrite_one(&parent->item) < 0) {
+-			*pp = parent->next;
+-			continue;
+-		}
+-		pp = &parent->next;
+-	}
+-}
 -
--        print 'Pushing patch "%s"...' % p,
--        sys.stdout.flush()
-+    push_patches(patches, options.merged)
- 
--        modified = crt_series.push_patch(p)
+-static int filter_commit(struct commit * commit)
+-{
+-	if (stop_traversal && (commit->object.flags & BOUNDARY))
+-		return STOP;
+-	if (commit->object.flags & (UNINTERESTING|SHOWN))
+-		return CONTINUE;
+-	if (revs.min_age != -1 && (commit->date > revs.min_age))
+-		return CONTINUE;
+-	if (revs.max_age != -1 && (commit->date < revs.max_age)) {
+-		stop_traversal=1;
+-		return CONTINUE;
+-	}
+-	if (no_merges && (commit->parents && commit->parents->next))
+-		return CONTINUE;
+-	if (revs.paths && revs.dense) {
+-		if (!(commit->object.flags & TREECHANGE))
+-			return CONTINUE;
+-		rewrite_parents(commit);
+-	}
+-	return DO;
+-}
 -
--        if crt_series.empty_patch(p):
--            print 'done (empty patch)'
--        elif modified:
--            print 'done (modified)'
--        else:
--            print 'done'
-     print_crt_patch()
-diff --git a/stgit/git.py b/stgit/git.py
-index a3488ff..40d54ef 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -465,14 +465,20 @@ def commit(message, files = None, parent
+-static int process_commit(struct commit * commit)
+-{
+-	int action=filter_commit(commit);
+-
+-	if (action == STOP) {
+-		return STOP;
+-	}
+-
+-	if (action == CONTINUE) {
+-		return CONTINUE;
+-	}
+-
+-	if (revs.max_count != -1 && !revs.max_count--)
+-		return STOP;
+-
+-	show_commit(commit);
+-
+-	return CONTINUE;
+-}
+-
+ static struct object_list **process_blob(struct blob *blob,
+ 					 struct object_list **p,
+ 					 struct name_path *path,
+@@ -219,8 +137,7 @@ static void show_commit_list(struct rev_
  
-     return commit_id
+ 	while ((commit = get_revision(revs)) != NULL) {
+ 		p = process_tree(commit->tree, p, NULL, "");
+-		if (process_commit(commit) == STOP)
+-			break;
++		show_commit(commit);
+ 	}
+ 	for (pending = revs->pending_objects; pending; pending = pending->next) {
+ 		struct object *obj = pending->item;
+@@ -416,10 +333,6 @@ int main(int argc, const char **argv)
+ 				commit_prefix = "commit ";
+ 			continue;
+ 		}
+-		if (!strncmp(arg, "--no-merges", 11)) {
+-			no_merges = 1;
+-			continue;
+-		}
+ 		if (!strcmp(arg, "--parents")) {
+ 			show_parents = 1;
+ 			continue;
+@@ -428,14 +341,6 @@ int main(int argc, const char **argv)
+ 			bisect_list = 1;
+ 			continue;
+ 		}
+-		if (!strcmp(arg, "--merge-order")) {
+-		        merge_order = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--show-breaks")) {
+-			show_breaks = 1;
+-			continue;
+-		}
+ 		usage(rev_list_usage);
  
--def apply_diff(rev1, rev2):
-+def apply_diff(rev1, rev2, check_index = True):
-     """Apply the diff between rev1 and rev2 onto the current
-     index. This function doesn't need to raise an exception since it
-     is only used for fast-pushing a patch. If this operation fails,
-     the pushing would fall back to the three-way merge.
-     """
--    return os.system('git-diff-tree -p %s %s | git-apply --index 2> /dev/null'
--                     % (rev1, rev2)) == 0
-+    if check_index:
-+        index_opt = '--index'
-+    else:
-+        index_opt = ''
-+    cmd = 'git-diff-tree -p %s %s | git-apply %s 2> /dev/null' \
-+          % (rev1, rev2, index_opt)
+ 	}
+@@ -456,17 +361,7 @@ int main(int argc, const char **argv)
+ 	save_commit_buffer = verbose_header;
+ 	track_object_refs = 0;
+ 
+-	if (!merge_order) {
+-		show_commit_list(&revs);
+-	} else {
+-#ifndef NO_OPENSSL
+-		if (sort_list_in_merge_order(list, &process_commit)) {
+-			die("merge order sort failed\n");
+-		}
+-#else
+-		die("merge order sort unsupported, OpenSSL not linked");
+-#endif
+-	}
++	show_commit_list(&revs);
+ 
+ 	return 0;
+ }
+diff --git a/revision.c b/revision.c
+index fb728c1..f98fae9 100644
+--- a/revision.c
++++ b/revision.c
+@@ -381,6 +381,9 @@ static void limit_list(struct rev_info *
+ 	struct commit_list *newlist = NULL;
+ 	struct commit_list **p = &newlist;
+ 
++	if (revs->paths)
++		diff_tree_setup_paths(revs->paths);
 +
-+    return os.system(cmd) == 0
+ 	while (list) {
+ 		struct commit_list *entry = list;
+ 		struct commit *commit = list->item;
+@@ -436,12 +439,13 @@ static void handle_all(struct rev_info *
+  * Parse revision information, filling in the "rev_info" structure,
+  * and removing the used arguments from the argument list.
+  *
+- * Returns the number of arguments left ("new argc").
++ * Returns the number of arguments left that weren't recognized
++ * (which are also moved to the head of the argument list)
+  */
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const char *def)
+ {
+ 	int i, flags, seen_dashdash;
+-	const char **unrecognized = argv+1;
++	const char **unrecognized = argv + 1;
+ 	int left = 1;
  
- def merge(base, head1, head2):
-     """Perform a 3-way merge between base, head1 and head2 into the
-diff --git a/stgit/stack.py b/stgit/stack.py
-index e1c55f0..165b5a7 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -780,7 +780,27 @@ class Series:
+ 	memset(revs, 0, sizeof(*revs));
+@@ -525,6 +529,10 @@ int setup_revisions(int argc, const char
+ 				revs->remove_empty_trees = 1;
+ 				continue;
+ 			}
++			if (!strncmp(arg, "--no-merges", 11)) {
++				revs->no_merges = 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--objects")) {
+ 				revs->tag_objects = 1;
+ 				revs->tree_objects = 1;
+@@ -601,14 +609,11 @@ int setup_revisions(int argc, const char
+ 	}
+ 	if (revs->paths)
+ 		revs->limited = 1;
+-	*unrecognized = NULL;
+ 	return left;
+ }
  
-         return forwarded
+ void prepare_revision_walk(struct rev_info *revs)
+ {
+-	if (revs->paths)
+-		diff_tree_setup_paths(revs->paths);
+ 	sort_by_date(&revs->commits);
+ 	if (revs->limited)
+ 		limit_list(revs);
+@@ -616,11 +621,67 @@ void prepare_revision_walk(struct rev_in
+ 		sort_in_topological_order(&revs->commits, revs->lifo);
+ }
  
--    def push_patch(self, name):
-+    def merged_patches(self, names):
-+        """Test which patches were merged upstream by reverse-applying
-+        them in reverse order. The function returns the list of
-+        patches detected to have been applied. The state of the tree
-+        is restored to the original one
-+        """
-+        patches = [Patch(name, self.__patch_dir, self.__refs_dir)
-+                   for name in names]
-+        patches.reverse()
++static int rewrite_one(struct commit **pp)
++{
++	for (;;) {
++		struct commit *p = *pp;
++		if (p->object.flags & (TREECHANGE | UNINTERESTING))
++			return 0;
++		if (!p->parents)
++			return -1;
++		*pp = p->parents->item;
++	}
++}
 +
-+        merged = []
-+        for p in patches:
-+            if git.apply_diff(p.get_top(), p.get_bottom(), False):
-+                merged.append(p.get_name())
-+        merged.reverse()
++static void rewrite_parents(struct commit *commit)
++{
++	struct commit_list **pp = &commit->parents;
++	while (*pp) {
++		struct commit_list *parent = *pp;
++		if (rewrite_one(&parent->item) < 0) {
++			*pp = parent->next;
++			continue;
++		}
++		pp = &parent->next;
++	}
++}
 +
-+        git.reset()
+ struct commit *get_revision(struct rev_info *revs)
+ {
+-	if (!revs->commits)
++	struct commit_list *list = revs->commits;
++	struct commit *commit;
 +
-+        return merged
-+
-+    def push_patch(self, name, empty = False):
-         """Pushes a patch on the stack
-         """
-         unapplied = self.get_unapplied()
-@@ -798,7 +818,15 @@ class Series:
-         modified = False
++	if (!list)
+ 		return NULL;
+-	return pop_most_recent_commit(&revs->commits, SEEN);
+-}
  
-         # top != bottom always since we have a commit for each patch
--        if head == bottom:
-+        if empty:
-+            # just make an empty patch (top = bottom = HEAD). This
-+            # option is useful to allow undoing already merged
-+            # patches. The top is updated by refresh_patch since we
-+            # need an empty commit
-+            patch.set_bottom(head, backup = True)
-+            patch.set_top(head, backup = True)
-+            modified = True
-+        elif head == bottom:
-             # reset the backup information
-             patch.set_bottom(bottom, backup = True)
-             patch.set_top(top, backup = True)
-@@ -835,7 +863,7 @@ class Series:
-         self.__set_current(name)
++	/* Check the max_count ... */
++	commit = list->item;
++	switch (revs->max_count) {
++	case -1:
++		break;
++	case 0:
++		return NULL;
++	default:
++		revs->max_count--;
++	}
  
-         # head == bottom case doesn't need to refresh the patch
--        if head != bottom:
-+        if empty or head != bottom:
-             if not ex:
-                 # if the merge was OK and no conflicts, just refresh the patch
-                 # The GIT cache was already updated by the merge operation
-
-------=_Part_6911_18125825.1141166756366--
++	do {
++		commit = pop_most_recent_commit(&revs->commits, SEEN);
++		if (commit->object.flags & (UNINTERESTING|SHOWN))
++			continue;
++		if (revs->min_age != -1 && (commit->date > revs->min_age))
++			continue;
++		if (revs->max_age != -1 && (commit->date < revs->max_age))
++			return NULL;
++		if (revs->no_merges && commit->parents && commit->parents->next)
++			continue;
++		if (revs->paths && revs->dense) {
++			if (!(commit->object.flags & TREECHANGE))
++				continue;
++			rewrite_parents(commit);
++		}
++		commit->object.flags |= SHOWN;
++		return commit;
++	} while (revs->commits);
++	return NULL;
++}
+diff --git a/revision.h b/revision.h
+index 0bed3c0..0043c16 100644
+--- a/revision.h
++++ b/revision.h
+@@ -4,6 +4,7 @@
+ #define SEEN		(1u<<0)
+ #define UNINTERESTING   (1u<<1)
+ #define TREECHANGE	(1u<<2)
++#define SHOWN		(1u<<3)
+ 
+ struct rev_info {
+ 	/* Starting list */
+@@ -16,6 +17,7 @@ struct rev_info {
+ 
+ 	/* Traversal flags */
+ 	unsigned int	dense:1,
++			no_merges:1,
+ 			remove_empty_trees:1,
+ 			lifo:1,
+ 			topo_order:1,
