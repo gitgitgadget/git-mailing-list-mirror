@@ -1,61 +1,82 @@
-From: "Tony Luck" <tony.luck@gmail.com>
-Subject: Re: fatal: unexpected EOF
-Date: Tue, 28 Feb 2006 07:59:09 -0800
-Message-ID: <12c511ca0602280759t2e584a4bkd7b6f4d97ade92f7@mail.gmail.com>
-References: <440449D7.3010508@didntduck.org>
-	 <Pine.LNX.4.64.0602280731210.22647@g5.osdl.org>
-	 <44046F94.3070806@didntduck.org>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Re: [PATCH] git pull cannot find remote refs.
+Date: Tue, 28 Feb 2006 17:19:29 +0100
+Organization: -no organization-
+Message-ID: <20060228161928.GA4829@scotty.home>
+References: <20060227214936.GA7205@scotty.home> <7vlkvwuvyl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 28 16:59:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 17:20:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE7Fr-00059A-1C
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 16:59:15 +0100
+	id 1FE7ZX-0002bJ-F7
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 17:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbWB1P7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 10:59:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWB1P7L
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 10:59:11 -0500
-Received: from zproxy.gmail.com ([64.233.162.199]:64340 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751622AbWB1P7K convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2006 10:59:10 -0500
-Received: by zproxy.gmail.com with SMTP id i11so1202880nzh
-        for <git@vger.kernel.org>; Tue, 28 Feb 2006 07:59:09 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rri1ckSAJ0gczi1W+tfhnDcwnaVl7d8PwSiT/9+DV7C4S8iZMY4s6/uffcMTG+wBUTSk1PcSnu6LIm09Gp4E+bwYQM2A9mUs3GYHrViyyYOtRYpiRbgdODSZMnB5hDMxr4QItnOPTZuzppo6TwXv1RGa/7mSQv6m1rRmtB3mt68=
-Received: by 10.65.119.18 with SMTP id w18mr2019430qbm;
-        Tue, 28 Feb 2006 07:59:09 -0800 (PST)
-Received: by 10.64.27.10 with HTTP; Tue, 28 Feb 2006 07:59:09 -0800 (PST)
-To: "Brian Gerst" <bgerst@didntduck.org>
-In-Reply-To: <44046F94.3070806@didntduck.org>
+	id S1751853AbWB1QTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 11:19:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbWB1QTb
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 11:19:31 -0500
+Received: from moutng.kundenserver.de ([212.227.126.177]:65522 "EHLO
+	moutng.kundenserver.de") by vger.kernel.org with ESMTP
+	id S1751853AbWB1QTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 11:19:31 -0500
+Received: from [84.134.41.130] (helo=scotty.home)
+	by mrelayeu.kundenserver.de (node=mrelayeu0) with ESMTP (Nemesis),
+	id 0MKwh2-1FE7ZR2rjK-0008Gu; Tue, 28 Feb 2006 17:19:30 +0100
+Received: from scotty.home (localhost [127.0.0.1])
+	by scotty.home (8.13.4/8.13.4/Debian-3) with ESMTP id k1SGJUHu007963;
+	Tue, 28 Feb 2006 17:19:30 +0100
+Received: (from hs@localhost)
+	by scotty.home (8.13.4/8.13.4/Submit) id k1SGJUZC007960;
+	Tue, 28 Feb 2006 17:19:30 +0100
+X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vlkvwuvyl.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Mutt 1.5.6 http://www.mutt.org/
+X-Editor: GNU Emacs 21.4.1 http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+X-GPG-Public-Key: http://www.s-hahn.de/gpg-public-stefan.asc
+X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C F986 E4FC D563
+User-Agent: Mutt/1.5.9i
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on scotty.home
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on scotty.home
+X-Virus-Status: Clean
+X-Provags-ID: kundenserver.de abuse@kundenserver.de login:77aa76da759ebc9bab1cc524fc813130
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16942>
 
-> I doubt it is a problem with mirroring, since it affects all repos
-> (kernel, git, cogito, etc.) at the same time.
+Also sprach Junio C Hamano am Mon, 27 Feb 2006 at 17:13:22 -0800:
 
-Ditto.  Jes has been grumbling overnight that he can't get a reliable pull
-from my kernel repo ... and that hasn't been updated in 10 days, so the
-mirror code shouldn't be touching it.  His error was:
+> ls-remote shows "SHA1\tPATH".  The original says "hexadecimal
+> followed by [either a single space or a single tab] followed by
 
-  fatal: read error (Connection reset by peer)
-  Fetch failure: git://git.kernel.org/pub/...
+> difference.  Puzzled...
 
-He also reported that after a few retries it worked.
+Grmph... You are right.
 
-Does the git daemon log any errors to syslog on the server?  If so, can someone
-with access go take a look.
+> I've seen two servers DNS round-robin and one of them fail to
+> respond.  The first "fetch" goes to the good one and the second
+> ls-remote goes to the bad one, then you would see "Oops, we
+> cannot peek tags".  But this patch does not have anything to do
+> with that problem..
 
--Tony
+Trapped. I haven't seen this, but perhaps it was the problem. 
+I'll watching for the next occurence.
+
+
+Sorry for the noise.
+
+Stefan
+
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
