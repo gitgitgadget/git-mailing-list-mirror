@@ -1,94 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Warn about invalid refs
-Date: Tue, 28 Feb 2006 22:16:01 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0602282213180.27405@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0510271936520.7518@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vacgu3hta.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0510272125580.28705@wbgn013.biozentrum.uni-wuerzburg.de>
- <7voe5a1yft.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] Tie it all together: "git log"
+Date: Tue, 28 Feb 2006 14:22:50 -0800
+Message-ID: <7vr75nm8cl.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
+	<Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
+	<Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 22:16:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 23:22:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FECCX-0000ey-1e
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 22:16:09 +0100
+	id 1FEDF8-0002yw-N2
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 23:22:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932494AbWB1VQG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 16:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932620AbWB1VQF
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 16:16:05 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:21735 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932494AbWB1VQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2006 16:16:04 -0500
-Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id 2FBA410E9;
-	Tue, 28 Feb 2006 22:16:01 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 231F55EEC;
-	Tue, 28 Feb 2006 22:16:01 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 10230A18;
-	Tue, 28 Feb 2006 22:16:01 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe5a1yft.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932531AbWB1WWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 17:22:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932564AbWB1WWx
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 17:22:53 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:26327 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932531AbWB1WWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 17:22:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060228222121.YZAP20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Feb 2006 17:21:21 -0500
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0602281251390.22647@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 28 Feb 2006 12:59:03 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16956>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Anyway, apart from that issue (which I think should be trivial to sort out 
+> if we accept breaking --merge-order), the rest looks like it should just 
+> get more testing and handling of the few missing flags from rev-parse in 
+> revision.c, and it should be good.
 
----
-
-On Thu, 27 Oct 2005, Junio C Hamano wrote:
-
-	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-	> 
-	> > On Thu, 27 Oct 2005, Junio C Hamano wrote:
-	> >
-	> >> Not that the current loop is any better for that purpose.  
-	> >> We silently ignore not just dangling ref and ref not storing
-	> >> 40-byte hex, but files starting with a period '.', names 
-	> >> longer than 255 bytes, and unreadable ones, all of which we 
-	> >> would probably want to warn about in such a tool.
-	> >
-	> > Okay, how about 'fprintf(stderr, "Warning: ...\n"); continue;' 
-	> > instead of 'die("...");' then?
-	> 
-	> Yup.  That sounds sensible.
-
-	Sorry for taking so long...
-
- refs.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 826ae7a..982ebf8 100644
---- a/refs.c
-+++ b/refs.c
-@@ -151,10 +151,15 @@ static int do_for_each_ref(const char *b
- 					break;
- 				continue;
- 			}
--			if (read_ref(git_path("%s", path), sha1) < 0)
-+			if (read_ref(git_path("%s", path), sha1) < 0) {
-+				fprintf(stderr, "%s points nowhere!", path);
- 				continue;
--			if (!has_sha1_file(sha1))
-+			}
-+			if (!has_sha1_file(sha1)) {
-+				fprintf(stderr, "%s does not point to a valid "
-+						"commit object!", path);
- 				continue;
-+			}
- 			retval = fn(path, sha1);
- 			if (retval)
- 				break;
+I would say we should just rip merge-order out.  Who uses it,
+and why does it not work with topo-order, again?
