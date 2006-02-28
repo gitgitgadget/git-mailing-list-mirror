@@ -1,124 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 3/3] Tie it all together: "git log"
-Date: Tue, 28 Feb 2006 11:30:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
-References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Quick question: end of lines
+Date: Tue, 28 Feb 2006 21:07:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0602282101530.10710@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <f898cca90602281032n6603bf14q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Feb 28 20:30:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 21:07:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEAYJ-00031A-9N
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 20:30:32 +0100
+	id 1FEB83-0006Wb-A0
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 21:07:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932458AbWB1Ta2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 14:30:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932461AbWB1Ta2
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 14:30:28 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:26319 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932458AbWB1Ta1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 14:30:27 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1SJUNDZ007771
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 28 Feb 2006 11:30:23 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1SJUJKH026215;
-	Tue, 28 Feb 2006 11:30:21 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
-X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932536AbWB1UHY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 15:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932546AbWB1UHY
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 15:07:24 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:23270 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932536AbWB1UHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 15:07:23 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id 1B25C1CA0;
+	Tue, 28 Feb 2006 21:07:20 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 0FC7CB1A;
+	Tue, 28 Feb 2006 21:07:20 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E2C39AF2;
+	Tue, 28 Feb 2006 21:07:19 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Emmanuel Guerin <emmanuel@guerin.fr.eu.org>
+In-Reply-To: <f898cca90602281032n6603bf14q@mail.gmail.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16950>
 
+Hi,
 
-This is what the previous diffs all built up to.
+On Tue, 28 Feb 2006, Emmanuel Guerin wrote:
 
-We can do "git log" as a trivial small helper function inside git.c, 
-because the infrastructure is all there for us to use as a library.
+> Is it possible to checkout sources out of the GIT repository with
+> Windows style end of lines?
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-----
+No.
 
-Again, this may not do exactly what the current "git log" does. That's not 
-the point. The point is to introduce the fundamental functionality, so 
-that people can play with this and improve on it, and fix any of my stupid 
-bugs.
+As far as git is concerned, every versioned file is equal. IMHO this 
+decision is good, since
 
-It should be pretty easy to change some of the other rev-list-walking 
-functions to use the library interfaces too, instead of executing an 
-external "git-rev-list" process. This was a perfect example of how to get 
-something working, though.
+- different handling is more complicated (you have to keep track of the 
+file type), and
+- it is not really worth doing.
 
-		Linus
+Windows can handle Unix line endings quite properly (with the notable 
+exception of notepad.exe), and even Apple has learnt that it might be a 
+stupid idea to insist on being different when it's just not worth it.
 
-diff --git a/Makefile b/Makefile
-index 0b1a998..ead13be 100644
---- a/Makefile
-+++ b/Makefile
-@@ -450,7 +450,7 @@ strip: $(PROGRAMS) git$X
- 
- git$X: git.c $(LIB_FILE)
- 	$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
--		$(CFLAGS) $(COMPAT_CFLAGS) -o $@ $(filter %.c,$^) $(LIB_FILE)
-+		$(ALL_CFLAGS) -o $@ $(filter %.c,$^) $(LIB_FILE) $(LIBS)
- 
- $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
- 	rm -f $@
-diff --git a/git.c b/git.c
-index 993cd0d..b0da6b1 100644
---- a/git.c
-+++ b/git.c
-@@ -12,6 +12,10 @@
- #include "git-compat-util.h"
- #include "exec_cmd.h"
- 
-+#include "cache.h"
-+#include "commit.h"
-+#include "revision.h"
-+
- #ifndef PATH_MAX
- # define PATH_MAX 4096
- #endif
-@@ -245,6 +249,25 @@ static int cmd_help(int argc, char **arg
- 	return 0;
- }
- 
-+#define LOGSIZE (65536)
-+
-+static int cmd_log(int argc, char **argv, char **envp)
-+{
-+	struct rev_info rev;
-+	struct commit *commit;
-+	char *buf = xmalloc(LOGSIZE);
-+
-+	argc = setup_revisions(argc, argv, &rev, "HEAD");
-+	prepare_revision_walk(&rev);
-+	setup_pager();
-+	while ((commit = get_revision(&rev)) != NULL) {
-+		pretty_print_commit(CMIT_FMT_DEFAULT, commit, ~0, buf, LOGSIZE, 18);
-+		printf("%s\n", buf);
-+	}
-+	free(buf);
-+	return 0;
-+}
-+
- #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
- 
- static void handle_internal_command(int argc, char **argv, char **envp)
-@@ -256,6 +279,7 @@ static void handle_internal_command(int 
- 	} commands[] = {
- 		{ "version", cmd_version },
- 		{ "help", cmd_help },
-+		{ "log", cmd_log },
- 	};
- 	int i;
- 
+The only reason I would accept: you have to work with MS-DOS tools. But 
+even in this case, I'd rather write a wrapper which converts to DOS line 
+endings, executes the tool, and converts back.
+
+Hth,
+Dscho
