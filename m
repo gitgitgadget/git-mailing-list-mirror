@@ -1,126 +1,88 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: gitview: Some  window layout changes.
-Date: Tue, 28 Feb 2006 19:12:18 +0530
-Message-ID: <4404533A.5070906@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Darwin: Ignore missing /sw/lib
+Date: Tue, 28 Feb 2006 09:03:48 -0500
+Message-ID: <20060228140348.GA25504@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000106080409040408060301"
-X-From: git-owner@vger.kernel.org Tue Feb 28 14:42:35 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Feb 28 15:04:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE57T-0005eW-PU
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 14:42:30 +0100
+	id 1FE5SL-0003h9-JQ
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 15:04:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750798AbWB1NmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 08:42:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbWB1NmZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 08:42:25 -0500
-Received: from zproxy.gmail.com ([64.233.162.194]:60489 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750798AbWB1NmZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 08:42:25 -0500
-Received: by zproxy.gmail.com with SMTP id v1so1248949nzb
-        for <git@vger.kernel.org>; Tue, 28 Feb 2006 05:42:24 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=tiJp28rzi/XZdHbc7Ec1dF3B3GR/7LQL46vKvHZAoAyJcGg3tFcJ1mNb722AbTJg+e83QzP8PTDg0dEfZY8u3At4PjlNChO0NUOzFOEl3N8YTyHrSCN/1weG3THhWq3t6ok9BjDGiv+56oiCvhQsZ3UJoY0mglouuv+kYrqBm3E=
-Received: by 10.35.79.5 with SMTP id g5mr620039pyl;
-        Tue, 28 Feb 2006 05:42:23 -0800 (PST)
-Received: from ?192.168.2.39? ( [59.92.150.81])
-        by mx.gmail.com with ESMTP id t5sm2524464pyc.2006.02.28.05.42.21;
-        Tue, 28 Feb 2006 05:42:23 -0800 (PST)
-User-Agent: Mail/News 1.5 (X11/20060213)
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+	id S1750888AbWB1ODw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 09:03:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbWB1ODw
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 09:03:52 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:29900 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750768AbWB1ODw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 09:03:52 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FE5S6-0004SV-9m
+	for git@vger.kernel.org; Tue, 28 Feb 2006 09:03:46 -0500
+Received: by asimov.spearce.org (Postfix, from userid 1000)
+	id 670EC20FBA0; Tue, 28 Feb 2006 09:03:48 -0500 (EST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16936>
 
-This is a multi-part message in MIME format.
---------------000106080409040408060301
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+When on Darwin platforms don't include Fink or DarwinPorts
+into the link path unless the related library directory
+is actually present.  The linker on MacOS 10.4 complains
+if it is given a directory which does not exist.
 
-
---------------000106080409040408060301
-Content-Type: text/plain;
- name="0002-gitview-Some-window-layout-changes.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="0002-gitview-Some-window-layout-changes.txt"
-
-Subject: gitview: Some  window layout changes.
-
-This makes menubar look nice
-
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
 ---
+ I don't have Fink installed, consequently the linker is whining
+ about /sw/lib not existing every time I link a GIT executable.
+ I'd rather not see complaints from the linker unless they are
+ important.
 
- contrib/gitview/gitview |   27 +++++++++++++++------------
- 1 files changed, 15 insertions(+), 12 deletions(-)
+ Makefile |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-bc288bd1cd9c70e7eb1e8742527553d1c2dea61d
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index aded7ed..47ecaa3 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -368,7 +368,7 @@ class DiffWindow:
- 		save_menu.connect("activate", self.save_menu_response, "save")
- 		save_menu.show()
- 		menu_bar.append(save_menu)
--		vbox.pack_start(menu_bar, False, False, 2)
-+		vbox.pack_start(menu_bar, expand=False, fill=True)
- 		menu_bar.show()
- 
- 		scrollwin = gtk.ScrolledWindow()
-@@ -482,19 +482,10 @@ class GitView:
- 
- 	def construct(self):
- 		"""Construct the window contents."""
-+		vbox = gtk.VBox()
- 		paned = gtk.VPaned()
- 		paned.pack1(self.construct_top(), resize=False, shrink=True)
- 		paned.pack2(self.construct_bottom(), resize=False, shrink=True)
--		self.window.add(paned)
--		paned.show()
--
--
--	def construct_top(self):
--		"""Construct the top-half of the window."""
--		vbox = gtk.VBox(spacing=6)
--		vbox.set_border_width(12)
--		vbox.show()
--
- 		menu_bar = gtk.MenuBar()
- 		menu_bar.set_pack_direction(gtk.PACK_DIRECTION_RTL)
- 		help_menu = gtk.MenuItem("Help")
-@@ -506,8 +497,20 @@ class GitView:
- 		help_menu.set_submenu(menu)
- 		help_menu.show()
- 		menu_bar.append(help_menu)
--		vbox.pack_start(menu_bar, False, False, 2)
- 		menu_bar.show()
-+		vbox.pack_start(menu_bar, expand=False, fill=True)
-+		vbox.pack_start(paned, expand=True, fill=True)
-+		self.window.add(vbox)
-+		paned.show()
-+		vbox.show()
-+
-+
-+	def construct_top(self):
-+		"""Construct the top-half of the window."""
-+		vbox = gtk.VBox(spacing=6)
-+		vbox.set_border_width(12)
-+		vbox.show()
-+
- 
- 		scrollwin = gtk.ScrolledWindow()
- 		scrollwin.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
+base f3a4ec48e402a7b49d410bdcb23470e9723788b0
+last 84434f9549d56e522a2eb4de370100f0a6e5e041
+diff --git a/Makefile b/Makefile
+index 6c59cee41490d4bfba0fb43102555d8de3371d01..19578fc93a60cc41c31883ceac37a0f1ec4202d7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -223,11 +223,15 @@ ifeq ($(uname_S),Darwin)
+ 	NEEDS_SSL_WITH_CRYPTO = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	## fink
+-	ALL_CFLAGS += -I/sw/include
+-	ALL_LDFLAGS += -L/sw/lib
++	ifeq ($(shell test -d /sw/lib && echo y),y)
++		ALL_CFLAGS += -I/sw/include
++		ALL_LDFLAGS += -L/sw/lib
++	endif
+ 	## darwinports
+-	ALL_CFLAGS += -I/opt/local/include
+-	ALL_LDFLAGS += -L/opt/local/lib
++	ifeq ($(shell test -d /opt/local/lib && echo y),y)
++		ALL_CFLAGS += -I/opt/local/include
++		ALL_LDFLAGS += -L/opt/local/lib
++	endif
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
 -- 
-1.2.3.gc55f-dirty
-
-
---------------000106080409040408060301--
+1.2.3.gf3a4
