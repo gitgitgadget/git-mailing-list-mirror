@@ -1,72 +1,71 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [ANNOUNCE] quilt2git v0.2
-Date: Wed, 01 Mar 2006 09:55:05 +1300
-Message-ID: <4404B8A9.4020303@vilain.net>
-References: <20060228111115.GA32276@htj.dyndns.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/3] Tie it all together: "git log"
+Date: Tue, 28 Feb 2006 12:59:03 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
+References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
+ <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 21:55:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Feb 28 21:59:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEBsQ-000388-VR
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 21:55:24 +0100
+	id 1FEBwH-0004Af-2k
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 21:59:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393AbWB1UzS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 15:55:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932554AbWB1UzS
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 15:55:18 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:37800 "EHLO mail.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S932393AbWB1UzQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 15:55:16 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id CC57060B2; Wed,  1 Mar 2006 09:55:14 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 78B045D93;
-	Wed,  1 Mar 2006 09:55:06 +1300 (NZDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Tejun Heo <htejun@gmail.com>
-In-Reply-To: <20060228111115.GA32276@htj.dyndns.org>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S932554AbWB1U7R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 15:59:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932585AbWB1U7R
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 15:59:17 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:26343 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932554AbWB1U7Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 15:59:16 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1SKxCDZ012574
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Feb 2006 12:59:12 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1SKx3Wf029873;
+	Tue, 28 Feb 2006 12:59:07 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16953>
 
-Tejun Heo wrote:
-> Hello, v0.2 of quilt2git available.  New in v0.2.
-> 
-> * handles new git HEAD file format properly (regular file storing ref: ...)
-> 
-> * makes use of mail format header from quilt patch description.  From:
->   becomes the author, Subject: the subject of the patch.  All commit
->   information should be maintained through git2quilt -> quilt2git now.
-> 
-> * --signoff option added.  This option is simply passed to git-commit.
-> 
-> * little fixes
-> 
-> http://home-tj.org/wiki/index.php/Misc
-> http://home-tj.org/files/misc/quilt2git-0.2
-> http://home-tj.org/files/misc/git2quilt-0.1
-> 
-> Thanks.
-> 
 
-FWIW, I have a similar script to import a quilt export as an stgit patch 
-series, it's really simple but quite useful:
 
-   http://vserver.ustl.gen.nz/scripts/import-quilt
+On Tue, 28 Feb 2006, Linus Torvalds wrote:
+> 
+> Again, this may not do exactly what the current "git log" does. That's not 
+> the point. The point is to introduce the fundamental functionality, so 
+> that people can play with this and improve on it, and fix any of my stupid 
+> bugs.
 
-Sam.
+Btw, before anybody even pipes up: the missing piece here is the nasty 
+"filter_commit()" that rev-list.c does, and that really should be moved 
+into revision.c, and this is where I hit on the "--merge-order" issues.
+
+So for example, if you do "git log -- <filename>" with the new git, it 
+won't filter out the commits that just change the passed-in <filename> 
+properly, because the filtering code still exists only in git-rev-list 
+(even if revision.c now does the traversal).
+
+Same goes for the max-count-based filtering, for the same reason.
+
+So the "process_commit()" handling should be moved into "get_revision()", 
+but since the merge-order code also hooks into it...
+
+Anyway, apart from that issue (which I think should be trivial to sort out 
+if we accept breaking --merge-order), the rest looks like it should just 
+get more testing and handling of the few missing flags from rev-parse in 
+revision.c, and it should be good.
+
+		Linus
