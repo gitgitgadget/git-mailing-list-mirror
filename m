@@ -1,162 +1,67 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
-Date: Tue, 28 Feb 2006 15:00:22 +0000
-Message-ID: <b0943d9e0602280700p132c6da2v@mail.gmail.com>
-References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
-	 <44037A5C.6080409@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: fatal: unexpected EOF
+Date: Tue, 28 Feb 2006 07:34:49 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0602280731210.22647@g5.osdl.org>
+References: <440449D7.3010508@didntduck.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_19804_33539834.1141138822809"
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 28 16:00:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 16:36:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FE6Ky-0004CW-Eh
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 16:00:30 +0100
+	id 1FE6sV-0006Lc-A9
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 16:35:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932104AbWB1PAZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 10:00:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWB1PAZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 10:00:25 -0500
-Received: from xproxy.gmail.com ([66.249.82.203]:43620 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932104AbWB1PAY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 10:00:24 -0500
-Received: by xproxy.gmail.com with SMTP id r21so748942wxc
-        for <git@vger.kernel.org>; Tue, 28 Feb 2006 07:00:23 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=Hsm/duJNv+R9DdfmUCj378jZGCSavZ4O+p3+yG34yRryFLt4T4s5E3Kjk9P/wHxNOc+KTzopg/dqrk7Jf9fgVzQM8bfOz7QjvSazoWLGn50GPY9F+cMdmMDB83LEBU/FAMv5vAaFSqCYcRDvykmw+W0GF00rekFt6qsCkmRo62A=
-Received: by 10.70.54.20 with SMTP id c20mr666944wxa;
-        Tue, 28 Feb 2006 07:00:22 -0800 (PST)
-Received: by 10.70.31.16 with HTTP; Tue, 28 Feb 2006 07:00:22 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-In-Reply-To: <44037A5C.6080409@gmail.com>
+	id S932239AbWB1Pex (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 10:34:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbWB1Pex
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 10:34:53 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:33517 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932249AbWB1Pew (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 10:34:52 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k1SFYoDZ026727
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Feb 2006 07:34:50 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k1SFYnAh015708;
+	Tue, 28 Feb 2006 07:34:49 -0800
+To: Brian Gerst <bgerst@didntduck.org>
+In-Reply-To: <440449D7.3010508@didntduck.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16939>
 
-------=_Part_19804_33539834.1141138822809
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
 
-On 27/02/06, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> An idea (untested, I don't even know whether it's feasible) would be to
-> check which patches were merged by reverse-applying them starting with
-> the last. In this situation, all the merged patches should just revert
-> their changes. You only need to do a git-diff between the bottom and the
-> top of the patch and git-apply the output (maybe without even modifying
-> the tree). If this operation succeeds, the patch was integrated and you
-> don't even need to push it.
 
-I tried some simple tests with the idea above. I attached a patch if
-you'd like to try (I won't push it to the main StGIT repository yet.
-For safety reasons, it only skips the merged patches when pushing
-them. A future version could simply delete the merged patches.
+On Tue, 28 Feb 2006, Brian Gerst wrote:
+>
+> Lately I've been receiving this error frequently from git.kernel.org:
+> 
+> Fetching pack (head and objects)...
+> fatal: unexpected EOF
+> cg-fetch: fetching pack failed
+> 
+> What is causing this?
 
---
-Catalin
+Almost any error will cause the pack sending to abort, and the git:// 
+protocol only opens a single socket for data, so there is no way for the 
+other end to say _what_ failed.
 
-------=_Part_19804_33539834.1141138822809
-Content-Type: text/x-patch; name="merged-test.diff"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="merged-test.diff"
-X-Attachment-Id: f_ek8cknni
+With git.kernel.org, I suspect the reason for the failure is almost always 
+the same, though: the mirroring is not complete, so it doesn't have all 
+object files. The mirroring from master.kernel.org to the actual public 
+machines is just a rsync script, so there's no atomicity guarantees.
 
-QWRkIGEgbWVyZ2VkIHVwc3RyZWFtIHRlc3QgZm9yIHB1bGwgYW5kIHB1c2gKCkZyb206IENhdGFs
-aW4gTWFyaW5hcyA8Y2F0YWxpbi5tYXJpbmFzQGdtYWlsLmNvbT4KClRoaXMgcGF0Y2ggYWRkcyB0
-aGUgLS1tZXJnZWQgb3B0aW9uIHRvIGJvdGggcHVsbCBhbmQgcHVzaCBjb21tYW5kcy4gV2l0aAp0
-aGlzIG9wdGlvbiwgdGhlc2UgY29tbWFuZHMgd2lsbCBmaXJzdCB0cnkgdG8gY2hlY2sgd2hpY2gg
-cGF0Y2hlcyB3ZXJlCm1lcmdlZCB1cHN0cmVhbSBieSByZXZlcnNlLWFwcGx5aW5nIHRoZW0gaW4g
-cmV2ZXJzZSBvcmRlci4gVGhpcyBzaG91bGQKc29sdmUgdGhlIHNpdHVhdGlvbiB3aGVyZSBzZXZl
-cmFsIHBhdGNoZXMgbW9kaWZ5IHRoZSBzYW1lIGxpbmUgaW4gYSBmaWxlLgoKU2lnbmVkLW9mZi1i
-eTogQ2F0YWxpbiBNYXJpbmFzIDxjYXRhbGluLm1hcmluYXNAZ21haWwuY29tPgotLS0KCiBzdGdp
-dC9jb21tYW5kcy9wdWxsLnB5IHwgICAyMCArKysrKysrKysrKysrKysrKysrLQogc3RnaXQvY29t
-bWFuZHMvcHVzaC5weSB8ICAgMTcgKysrKysrKysrKysrKysrKy0KIHN0Z2l0L2dpdC5weSAgICAg
-ICAgICAgfCAgIDEyICsrKysrKysrKy0tLQogc3RnaXQvc3RhY2sucHkgICAgICAgICB8ICAgMjAg
-KysrKysrKysrKysrKysrKysrKysKIDQgZmlsZXMgY2hhbmdlZCwgNjQgaW5zZXJ0aW9ucygrKSwg
-NSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9zdGdpdC9jb21tYW5kcy9wdWxsLnB5IGIvc3Rn
-aXQvY29tbWFuZHMvcHVsbC5weQppbmRleCA4NDNiNTc5Li41ZDc1NTMwIDEwMDY0NAotLS0gYS9z
-dGdpdC9jb21tYW5kcy9wdWxsLnB5CisrKyBiL3N0Z2l0L2NvbW1hbmRzL3B1bGwucHkKQEAgLTM5
-LDYgKzM5LDkgQEAgZm9ybWF0LiIiIgogCiBvcHRpb25zID0gW21ha2Vfb3B0aW9uKCctbicsICct
-LW5vcHVzaCcsCiAgICAgICAgICAgICAgICAgICAgICAgIGhlbHAgPSAnZG8gbm90IHB1c2ggdGhl
-IHBhdGNoZXMgYmFjayBhZnRlciBwdWxsaW5nJywKKyAgICAgICAgICAgICAgICAgICAgICAgYWN0
-aW9uID0gJ3N0b3JlX3RydWUnKSwKKyAgICAgICAgICAgbWFrZV9vcHRpb24oJy1tJywgJy0tbWVy
-Z2VkJywKKyAgICAgICAgICAgICAgICAgICAgICAgaGVscCA9ICdjaGVjayBmb3IgcGF0Y2hlcyBt
-ZXJnZWQgdXBzdHJlYW0gKHNsb3dlciknLAogICAgICAgICAgICAgICAgICAgICAgICBhY3Rpb24g
-PSAnc3RvcmVfdHJ1ZScpXQogCiBkZWYgZnVuYyhwYXJzZXIsIG9wdGlvbnMsIGFyZ3MpOgpAQCAt
-NzcsMTIgKzgwLDI3IEBAIGRlZiBmdW5jKHBhcnNlciwgb3B0aW9ucywgYXJncyk6CiAgICAgIyBw
-dXNoIHRoZSBwYXRjaGVzIGJhY2sKICAgICBpZiBvcHRpb25zLm5vcHVzaDoKICAgICAgICAgYXBw
-bGllZCA9IFtdCisKKyAgICAjIGNoZWNrIGZvciBwYXRjaGVzIG1lcmdlZCB1cHN0cmVhbQorICAg
-IGlmIG9wdGlvbnMubWVyZ2VkOgorICAgICAgICBtZXJnZWQgPSBjcnRfc2VyaWVzLm1lcmdlZF9w
-YXRjaGVzKHBhdGNoZXMpCisgICAgZWxzZToKKyAgICAgICAgbWVyZ2VkID0gW10KKwogICAgIGZv
-ciBwIGluIGFwcGxpZWQ6CisgICAgICAgIGlmIHAgaW4gbWVyZ2VkOgorICAgICAgICAgICAgcHJp
-bnQgJ1BhdGNoICIlcyIgbWVyZ2VkIHVwc3RyZWFtJyAlIHAKKyAgICAgICAgICAgIGNvbnRpbnVl
-CisKICAgICAgICAgcHJpbnQgJ1B1c2hpbmcgcGF0Y2ggIiVzIi4uLicgJSBwLAogICAgICAgICBz
-eXMuc3Rkb3V0LmZsdXNoKCkKLSAgICAgICAgY3J0X3Nlcmllcy5wdXNoX3BhdGNoKHApCisKKyAg
-ICAgICAgbW9kaWZpZWQgPSBjcnRfc2VyaWVzLnB1c2hfcGF0Y2gocCkKKwogICAgICAgICBpZiBj
-cnRfc2VyaWVzLmVtcHR5X3BhdGNoKHApOgogICAgICAgICAgICAgcHJpbnQgJ2RvbmUgKGVtcHR5
-IHBhdGNoKScKKyAgICAgICAgZWxpZiBtb2RpZmllZDoKKyAgICAgICAgICAgIHByaW50ICdkb25l
-IChtb2RpZmllZCknCiAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICBwcmludCAnZG9uZScKIApk
-aWZmIC0tZ2l0IGEvc3RnaXQvY29tbWFuZHMvcHVzaC5weSBiL3N0Z2l0L2NvbW1hbmRzL3B1c2gu
-cHkKaW5kZXggOTkyNGE3OC4uNzJiMjY2MyAxMDA2NDQKLS0tIGEvc3RnaXQvY29tbWFuZHMvcHVz
-aC5weQorKysgYi9zdGdpdC9jb21tYW5kcy9wdXNoLnB5CkBAIC00OSw2ICs0OSw5IEBAIG9wdGlv
-bnMgPSBbbWFrZV9vcHRpb24oJy1hJywgJy0tYWxsJywKICAgICAgICAgICAgbWFrZV9vcHRpb24o
-Jy0tcmV2ZXJzZScsCiAgICAgICAgICAgICAgICAgICAgICAgIGhlbHAgPSAncHVzaCB0aGUgcGF0
-Y2hlcyBpbiByZXZlcnNlIG9yZGVyJywKICAgICAgICAgICAgICAgICAgICAgICAgYWN0aW9uID0g
-J3N0b3JlX3RydWUnKSwKKyAgICAgICAgICAgbWFrZV9vcHRpb24oJy1tJywgJy0tbWVyZ2VkJywK
-KyAgICAgICAgICAgICAgICAgICAgICAgaGVscCA9ICdjaGVjayBmb3IgcGF0Y2hlcyBtZXJnZWQg
-dXBzdHJlYW0gKHNsb3dlciknLAorICAgICAgICAgICAgICAgICAgICAgICBhY3Rpb24gPSAnc3Rv
-cmVfdHJ1ZScpLAogICAgICAgICAgICBtYWtlX29wdGlvbignLS11bmRvJywKICAgICAgICAgICAg
-ICAgICAgICAgICAgaGVscCA9ICd1bmRvIHRoZSBsYXN0IHB1c2ggb3BlcmF0aW9uJywKICAgICAg
-ICAgICAgICAgICAgICAgICAgYWN0aW9uID0gJ3N0b3JlX3RydWUnKV0KQEAgLTEzNCw5ICsxMzcs
-MjEgQEAgZGVmIGZ1bmMocGFyc2VyLCBvcHRpb25zLCBhcmdzKToKICAgICBlbGlmIGZvcndhcmRl
-ZCA9PSAxOgogICAgICAgICBwcmludCAnRmFzdC1mb3J3YXJkZWQgcGF0Y2ggIiVzIicgJSBwYXRj
-aGVzWzBdCiAKLSAgICBmb3IgcCBpbiBwYXRjaGVzW2ZvcndhcmRlZDpdOgorICAgIHBhdGNoZXMg
-PSBwYXRjaGVzW2ZvcndhcmRlZDpdCisKKyAgICAjIGNoZWNrIGZvciBwYXRjaGVzIG1lcmdlZCB1
-cHN0cmVhbQorICAgIGlmIG9wdGlvbnMubWVyZ2VkOgorICAgICAgICBtZXJnZWQgPSBjcnRfc2Vy
-aWVzLm1lcmdlZF9wYXRjaGVzKHBhdGNoZXMpCisgICAgZWxzZToKKyAgICAgICAgbWVyZ2VkID0g
-W10KKworICAgIGZvciBwIGluIHBhdGNoZXM6CiAgICAgICAgIGlzX3BhdGNoX2FwcGxpYWJsZShw
-KQogCisgICAgICAgIGlmIHAgaW4gbWVyZ2VkOgorICAgICAgICAgICAgcHJpbnQgJ1BhdGNoICIl
-cyIgbWVyZ2VkIHVwc3RyZWFtJyAlIHAKKyAgICAgICAgICAgIGNvbnRpbnVlCisKICAgICAgICAg
-cHJpbnQgJ1B1c2hpbmcgcGF0Y2ggIiVzIi4uLicgJSBwLAogICAgICAgICBzeXMuc3Rkb3V0LmZs
-dXNoKCkKIApkaWZmIC0tZ2l0IGEvc3RnaXQvZ2l0LnB5IGIvc3RnaXQvZ2l0LnB5CmluZGV4IDAx
-NmJjM2EuLjY2Yjg2MTIgMTAwNjQ0Ci0tLSBhL3N0Z2l0L2dpdC5weQorKysgYi9zdGdpdC9naXQu
-cHkKQEAgLTQ2MiwxNCArNDYyLDIwIEBAIGRlZiBjb21taXQobWVzc2FnZSwgZmlsZXMgPSBOb25l
-LCBwYXJlbnQKIAogICAgIHJldHVybiBjb21taXRfaWQKIAotZGVmIGFwcGx5X2RpZmYocmV2MSwg
-cmV2Mik6CitkZWYgYXBwbHlfZGlmZihyZXYxLCByZXYyLCBjaGVja19pbmRleCA9IFRydWUpOgog
-ICAgICIiIkFwcGx5IHRoZSBkaWZmIGJldHdlZW4gcmV2MSBhbmQgcmV2MiBvbnRvIHRoZSBjdXJy
-ZW50CiAgICAgaW5kZXguIFRoaXMgZnVuY3Rpb24gZG9lc24ndCBuZWVkIHRvIHJhaXNlIGFuIGV4
-Y2VwdGlvbiBzaW5jZSBpdAogICAgIGlzIG9ubHkgdXNlZCBmb3IgZmFzdC1wdXNoaW5nIGEgcGF0
-Y2guIElmIHRoaXMgb3BlcmF0aW9uIGZhaWxzLAogICAgIHRoZSBwdXNoaW5nIHdvdWxkIGZhbGwg
-YmFjayB0byB0aGUgdGhyZWUtd2F5IG1lcmdlLgogICAgICIiIgotICAgIHJldHVybiBvcy5zeXN0
-ZW0oJ2dpdC1kaWZmLXRyZWUgLXAgJXMgJXMgfCBnaXQtYXBwbHkgLS1pbmRleCAyPiAvZGV2L251
-bGwnCi0gICAgICAgICAgICAgICAgICAgICAlIChyZXYxLCByZXYyKSkgPT0gMAorICAgIGlmIGNo
-ZWNrX2luZGV4OgorICAgICAgICBpbmRleF9vcHQgPSAnLS1pbmRleCcKKyAgICBlbHNlOgorICAg
-ICAgICBpbmRleF9vcHQgPSAnJworICAgIGNtZCA9ICdnaXQtZGlmZi10cmVlIC1wICVzICVzIHwg
-Z2l0LWFwcGx5ICVzIDI+IC9kZXYvbnVsbCcgXAorICAgICAgICAgICUgKHJldjEsIHJldjIsIGlu
-ZGV4X29wdCkKKworICAgIHJldHVybiBvcy5zeXN0ZW0oY21kKSA9PSAwCiAKIGRlZiBtZXJnZShi
-YXNlLCBoZWFkMSwgaGVhZDIpOgogICAgICIiIlBlcmZvcm0gYSAzLXdheSBtZXJnZSBiZXR3ZWVu
-IGJhc2UsIGhlYWQxIGFuZCBoZWFkMiBpbnRvIHRoZQpkaWZmIC0tZ2l0IGEvc3RnaXQvc3RhY2su
-cHkgYi9zdGdpdC9zdGFjay5weQppbmRleCBlMWM1NWYwLi45ZDVmMDQzIDEwMDY0NAotLS0gYS9z
-dGdpdC9zdGFjay5weQorKysgYi9zdGdpdC9zdGFjay5weQpAQCAtNzgwLDYgKzc4MCwyNiBAQCBj
-bGFzcyBTZXJpZXM6CiAKICAgICAgICAgcmV0dXJuIGZvcndhcmRlZAogCisgICAgZGVmIG1lcmdl
-ZF9wYXRjaGVzKHNlbGYsIG5hbWVzKToKKyAgICAgICAgIiIiVGVzdCB3aGljaCBwYXRjaGVzIHdl
-cmUgbWVyZ2VkIHVwc3RyZWFtIGJ5IHJldmVyc2UtYXBwbHlpbmcKKyAgICAgICAgdGhlbSBpbiBy
-ZXZlcnNlIG9yZGVyLiBUaGUgZnVuY3Rpb24gcmV0dXJucyB0aGUgbGlzdCBvZgorICAgICAgICBw
-YXRjaGVzIGRldGVjdGVkIHRvIGhhdmUgYmVlbiBhcHBsaWVkLiBUaGUgc3RhdGUgb2YgdGhlIHRy
-ZWUKKyAgICAgICAgaXMgcmVzdG9yZWQgdG8gdGhlIG9yaWdpbmFsIG9uZQorICAgICAgICAiIiIK
-KyAgICAgICAgcGF0Y2hlcyA9IFtQYXRjaChuYW1lLCBzZWxmLl9fcGF0Y2hfZGlyLCBzZWxmLl9f
-cmVmc19kaXIpCisgICAgICAgICAgICAgICAgICAgZm9yIG5hbWUgaW4gbmFtZXNdCisgICAgICAg
-IHBhdGNoZXMucmV2ZXJzZSgpCisKKyAgICAgICAgbWVyZ2VkID0gW10KKyAgICAgICAgZm9yIHAg
-aW4gcGF0Y2hlczoKKyAgICAgICAgICAgIGlmIGdpdC5hcHBseV9kaWZmKHAuZ2V0X3RvcCgpLCBw
-LmdldF9ib3R0b20oKSwgRmFsc2UpOgorICAgICAgICAgICAgICAgIG1lcmdlZC5hcHBlbmQocC5n
-ZXRfbmFtZSgpKQorICAgICAgICBtZXJnZWQucmV2ZXJzZSgpCisKKyAgICAgICAgZ2l0LnJlc2V0
-KCkKKworICAgICAgICByZXR1cm4gbWVyZ2VkCisKICAgICBkZWYgcHVzaF9wYXRjaChzZWxmLCBu
-YW1lKToKICAgICAgICAgIiIiUHVzaGVzIGEgcGF0Y2ggb24gdGhlIHN0YWNrCiAgICAgICAgICIi
-Igo=
-------=_Part_19804_33539834.1141138822809--
+That said, it might be a load issue too - I don't know what limits 
+Peter & co put on the git daemons, and it might also be that it's set up 
+to accept at most <n> connections and will close anything else.
+
+		Linus
