@@ -1,85 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/3] git-apply --whitespace=nowarn
-Date: Mon, 27 Feb 2006 17:13:59 -0800
-Message-ID: <7v4q2kuvxk.fsf@assigned-by-dhcp.cox.net>
-References: <20060225174047.0e9a6d29.akpm@osdl.org>
-	<7v1wxq7psj.fsf@assigned-by-dhcp.cox.net>
-	<20060225210712.29b30f59.akpm@osdl.org>
-	<Pine.LNX.4.64.0602260925170.22647@g5.osdl.org>
-	<20060226103604.2d97696c.akpm@osdl.org>
-	<Pine.LNX.4.64.0602261213340.22647@g5.osdl.org>
-	<20060226202617.GH7851@redhat.com> <1141008633.7593.13.camel@homer>
-	<Pine.LNX.4.63.0602271004130.5937@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20060227011832.78359f0a.akpm@osdl.org>
-	<7vhd6kxuea.fsf@assigned-by-dhcp.cox.net>
+From: Aubrey <aubreylee@gmail.com>
+Subject: Re: Quick question: how to generate a patch?
+Date: Tue, 28 Feb 2006 09:55:40 +0800
+Message-ID: <6d6a94c50602271755v41e0d31ch25892192547003a9@mail.gmail.com>
+References: <6d6a94c50602270657m453cc581p6ec290c20879de25@mail.gmail.com>
+	 <Pine.LNX.4.64.0602270801280.22647@g5.osdl.org>
+	 <6d6a94c50602270818k5f82bb8ft68a19899db3db636@mail.gmail.com>
+	 <Pine.LNX.4.64.0602270830330.22647@g5.osdl.org>
+	 <6d6a94c50602270902k2c06aaffw7e70268b0753ef64@mail.gmail.com>
+	 <44033241.6070001@op5.se>
+	 <Pine.LNX.4.64.0602270923120.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@osdl.org>
-X-From: git-owner@vger.kernel.org Tue Feb 28 02:14:24 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 02:55:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDtRQ-0006sr-9x
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 02:14:21 +0100
+	id 1FDu5Y-0001PH-KR
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 02:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbWB1BOI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Feb 2006 20:14:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbWB1BOI
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 20:14:08 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:7841 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751879AbWB1BOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2006 20:14:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060228011226.PLFP6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 27 Feb 2006 20:12:26 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751607AbWB1Bzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Feb 2006 20:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbWB1Bzl
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Feb 2006 20:55:41 -0500
+Received: from zproxy.gmail.com ([64.233.162.202]:2763 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751607AbWB1Bzl convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2006 20:55:41 -0500
+Received: by zproxy.gmail.com with SMTP id 18so1121060nzp
+        for <git@vger.kernel.org>; Mon, 27 Feb 2006 17:55:40 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cSIFSwExOH446YatY0L7KIX1YVtrQI8oSxrN7p6ATI7Ehb0bTlN4rfl3p4I8w0EFsxdhGdAHHUH7i2ZoYzOHzqtAzZE0NgoAiDsVGI3GHvVqwIJ04M2uM9OUd3uYweA8aGWeExvZfoQPIEBhue/n6L8ML0WMnWJpZs+Zr+7JBBs=
+Received: by 10.65.97.16 with SMTP id z16mr202984qbl;
+        Mon, 27 Feb 2006 17:55:40 -0800 (PST)
+Received: by 10.65.185.6 with HTTP; Mon, 27 Feb 2006 17:55:40 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0602270923120.22647@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16906>
 
-Andrew insists --whitespace=warn should be the default, and I
-tend to agree.  This introduces --whitespace=warn, so if your
-project policy is more lenient, you can squelch them by having
-apply.whitespace=nowarn in your configuration file.
+On 2/28/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> I could well imagine that we still have some bug like that (ctime in
+> particular is much less used than mtime, and thus more likely to have not
+> been noticed). And it could be much worse on some less-commonly-used and
+> less-unixy networked filesystem like smb, which is why I was wondering
+> what OS version and filesystem Aubrey might be using.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+I'm using suse9.3. The filesystem is EXT3.
+I think I forgot one thing last night. When I changed the file, I
+compiled the package to verify my modification. It should be the
+reason. But should it really affect the result of "git diff"?
 
----
- * Not in "next" but will be shortly.
-
- apply.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-114b085dd7b82c3ca74760c896e86c425127cf76
-diff --git a/apply.c b/apply.c
-index a5cdd8e..d5cb5b1 100644
---- a/apply.c
-+++ b/apply.c
-@@ -39,7 +39,7 @@ static enum whitespace_eol {
- 	warn_on_whitespace,
- 	error_on_whitespace,
- 	strip_whitespace,
--} new_whitespace = nowarn_whitespace;
-+} new_whitespace = warn_on_whitespace;
- static int whitespace_error = 0;
- static int squelch_whitespace_errors = 5;
- static int applied_after_stripping = 0;
-@@ -55,6 +55,10 @@ static void parse_whitespace_option(cons
- 		new_whitespace = warn_on_whitespace;
- 		return;
- 	}
-+	if (!strcmp(option, "nowarn")) {
-+		new_whitespace = nowarn_whitespace;
-+		return;
-+	}
- 	if (!strcmp(option, "error")) {
- 		new_whitespace = error_on_whitespace;
- 		return;
--- 
-1.2.3.gbfea
+Thanks,
+-Aubrey
