@@ -1,71 +1,71 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@hp.com>
-Subject: Re: [PATCH 2/2] Don't use excessive non-standard border width
-Date: Tue, 28 Feb 2006 10:46:11 +0530
-Message-ID: <20060228051611.GB5934@satan.india.hp.com>
-References: <20060228045629.21880.19007.stgit@dv.roinet.com> <20060228045631.21880.27670.stgit@dv.roinet.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: someone changed the contents of my HEAD.
+Date: Mon, 27 Feb 2006 21:22:18 -0800
+Message-ID: <7vlkvwt5v9.fsf@assigned-by-dhcp.cox.net>
+References: <20060228030446.GA23490@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 06:16:20 2006
+X-From: git-owner@vger.kernel.org Tue Feb 28 06:22:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FDxDb-0001Vz-T5
-	for gcvg-git@gmane.org; Tue, 28 Feb 2006 06:16:16 +0100
+	id 1FDxJY-0002ra-Tf
+	for gcvg-git@gmane.org; Tue, 28 Feb 2006 06:22:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbWB1FQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Feb 2006 00:16:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751791AbWB1FQN
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 00:16:13 -0500
-Received: from palrel12.hp.com ([156.153.255.237]:47288 "EHLO palrel12.hp.com")
-	by vger.kernel.org with ESMTP id S1750869AbWB1FQM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2006 00:16:12 -0500
-Received: from localhost (unknown [15.76.101.80])
-	by palrel12.hp.com (Postfix) with ESMTP id AF79836D16;
-	Mon, 27 Feb 2006 21:16:11 -0800 (PST)
-To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
-In-Reply-To: <20060228045631.21880.27670.stgit@dv.roinet.com>
-User-Agent: mutt-ng/devel-r655 (Debian)
+	id S1751805AbWB1FWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Feb 2006 00:22:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751820AbWB1FWW
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Feb 2006 00:22:22 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:8886 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751805AbWB1FWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2006 00:22:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060228052108.UUWB3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Feb 2006 00:21:08 -0500
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20060228030446.GA23490@redhat.com> (Dave Jones's message of
+	"Mon, 27 Feb 2006 22:04:46 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16916>
 
-On Mon, Feb 27, 2006 at 11:56:31PM -0500, Pavel Roskin wrote:
-> From: Pavel Roskin <proski@gnu.org>
-> 
-> 
-> ---
-> 
->  contrib/gitview/gitview |    2 --
->  1 files changed, 0 insertions(+), 2 deletions(-)
-> 
-> diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-> index aded7ed..00cb8ee 100755
-> --- a/contrib/gitview/gitview
-> +++ b/contrib/gitview/gitview
-> @@ -492,7 +492,6 @@ class GitView:
->  	def construct_top(self):
->  		"""Construct the top-half of the window."""
->  		vbox = gtk.VBox(spacing=6)
-> -		vbox.set_border_width(12)
->  		vbox.show()
->  
->  		menu_bar = gtk.MenuBar()
-> @@ -574,7 +573,6 @@ class GitView:
->  	def construct_bottom(self):
->  		"""Construct the bottom half of the window."""
->  		vbox = gtk.VBox(False, spacing=6)
-> -		vbox.set_border_width(12)
->  		(width, height) = self.window.get_size()
->  		vbox.set_size_request(width, int(height / 2.5))
->  		vbox.show()
+Dave Jones <davej@redhat.com> writes:
 
+> When checking in changes previously, I used this..
+>
+> #!/bin/sh
+> export GIT_AUTHOR_NAME="$1"
+> export GIT_AUTHOR_EMAIL="$2"
+> tree=$(git-write-tree) || exit 1
+> commit=$(git-commit-tree $tree -p HEAD) || exit 1
+> echo $commit > .git/HEAD
 
-I am not sure about this. I guess it looks much better with a border.
+This has been deprecated for a looong time, but perhaps I should
+have been louder.  "git commit --author" should be fine -- I do
+not think you do not even need such a wrapper.
 
-Not applied.
+> For my newly created repos, this isn't a problem, as I can fudge my
+> commit-as script to write to .git/refs/heads/master instead, but
+> my concern now is the unpulled changes in the existing repos
+> I have on master.  Will Linus be able to pull those into his tree
+> with git 1.2.3, or will I have to recreate those repos with the
+> new-style .git/HEAD ?
 
--aneesh
+A .git/HEAD symlink pointing at refs/heads/master _is_ still
+(and will be) supported, so either symlink or symref is fine.
+Bare SHA1 object name in HEAD is not -- git would not know which
+branch you are on, so "checkin" would not work after that.
+
+Your refs/heads/master might be stale (one rev or more older
+than what you replaced .git/HEAD with) but still should be a
+proper ancestor.  After making sure your refs/heads/master has
+the right commit (you may have it there already if you have been
+updating them using "git-push"), running "git-symbolic-ref HEAD
+refs/heads/master" would fix things.
