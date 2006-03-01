@@ -1,83 +1,120 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
-Date: Wed, 01 Mar 2006 10:59:10 +0000
-Message-ID: <tnx1wxmig75.fsf@arm.com>
-References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
-	<20060227222600.GA11797@spearce.org>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Wed, 01 Mar 2006 04:24:14 -0800
+Message-ID: <7vmzgagxox.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 11:59:56 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Mar 01 13:24:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEP3b-0008T7-EX
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 11:59:47 +0100
+	id 1FEQNb-0003AU-0h
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 13:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964913AbWCAK7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 05:59:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964914AbWCAK7n
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 05:59:43 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:23426 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S964913AbWCAK7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 05:59:42 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k21AxFuc002196;
-	Wed, 1 Mar 2006 10:59:15 GMT
-Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Wed, 1 Mar 2006 10:59:15 +0000
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060227222600.GA11797@spearce.org> (Shawn Pearce's message of
- "Mon, 27 Feb 2006 17:26:00 -0500")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 01 Mar 2006 10:59:15.0169 (UTC) FILETIME=[2E004D10:01C63D1F]
+	id S1030200AbWCAMYV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 1 Mar 2006 07:24:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932274AbWCAMYV
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 07:24:21 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:9612 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932206AbWCAMYV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 07:24:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060301122114.IAAK26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Mar 2006 07:21:14 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16972>
 
-Shawn Pearce <spearce@spearce.org> wrote:
-> Karl Hasselstr?m <kha@treskal.com> wrote:
->> If I make a patch series where more than one patch touches the same
->> line, I get a lot of merge errors when upstream has accepted them and
->> I try to merge them back.
->
-> When pg grabs its (possibly remote) parent ("stg pull" aka pg-rebase)
-> we try to push down PatchA.  If PatchA fails to push cleanly we'll
-> pop it off and try to push PatchA + PatchB.  If that pushes cleanly
-> then we fold the content of PatchA into PatchB, effectively making
-> PatchA part of PatchB.  If PatchA + PatchB failed to push down
-> cleanly then we pop both and retry pushing PatchA + PatchB + PatchC.
+* The 'master' branch has these since the last announcement.
 
-How do you solve the situation where only PatchA, PatchC and PatchE
-were merged, B and D still pending? Trying combinations of patches is
-not a good idea.
+  - Cygwin related fixes (Alex Riesen) [*]
+  - git-rm fixes and docs (Carl Worth)
+  - gitview updates (Aneesh Kumar, Pavel Roskin)
+  - git-svn updates (Eric Wong)
+  - git-cvsserver (Martin Langhoff, Johannes Schindelin)
+  - git-annotate (Ryan Anderson)
+  - format-patch fix (Alexandre Julliard)
+  - fix send-pack to a remote with insanely large number of refs [*]
+  - "thin" pack git-push/git-fetch.
+  - eye candies to checkout [*].
+  - error() formatting fixes [*].
+  - git-am empty commit prevention [*].
+  - git-mailinfo now is built and installed again.
+  - fix two sample hooks [*].
+  - diffcore-rename and diffcore-break microfix [*].
+  - svnimport enhancements (Karl Hasselstr=F6m)
+  - git-fetch output tweak (Lukas Sandstr=F6m)
+  - start to do more things in git wrapper (Linus)
+  - combine-diff fixes (Mark Wooding) [*]
+  - ls-files -i -o fix (Shawn Pearce)
+  - Darwin related fix (Shawn Pearce)
+  - compilation warning fixes (Timo Hirvonen, Tony Luck, Andreas Ericss=
+on)
 
-As I said, if you have a big number of patches this might be pretty
-slow. Have a look at my patch for trying the reversed patches in
-reverse order. It seems to solve this problem for most of the
-cases. There are cases when this method would fail like adjacent
-changes made by third-party patches that break the context of the git
-patches and git-apply would fail. An addition to this would be to try
-a diff3 merge with the reversed patch but I don't think it's worth
-since it would become much slower.
+  The changes marked with [*] will appear in the next
+  maintenance release; they are either first applied to 1.2.X
+  maintenance branch and pulled into master, or first applied to
+  master and then cherry picked to 1.2.X maintenance branch.
 
-> If that pushes down cleanly then we make PatchA and PatchB officially
-> part of PatchC.
+* The 'next' branch, in addition, has these.
 
-I don't agree with this. For example, patches A, B and C change the
-same line in file1 but patch A also changes file2 and patch B changed
-file3. With your approach, merging A+B+C succeeds and you make A and B
-part of C and hence move the changed to file2 and file3 in patch C.
+  I wanted to have this out to "master", but ran out of time.
+  The same set of changes are already cherry-picked and waiting
+  for inclusion in the next maintenance release.
 
-The above can happen when the maintainer only merges part of the patch
-or simply decides to merge patch C only and manually solve the
-conflict in file1 (since patch C is based on the context from patches
-A+B).
+  - git-apply trailing whitespace warning (Linus and me)
 
--- 
-Catalin
+  These are waiting for further progress by authors:
+
+  - git-blame (Fredrik Kuivinen)
+  - delta packer updates for tighter packs (Nicolas Pitre)
+
+  These are here only because they are new, not because I have
+  any qualms about them:
+
+  - for_each_ref warning (Johannes Schindelin)
+  - prepare to make rename/break detection independent from delta packi=
+ng.
+  - checkout-index --stdin (Shawn Pearce)
+
+  These are here because they are rather important and I am
+  playing it safe.
+
+  - beginning of rev-list libification (Linus)
+  - git-log without shell script (Linus and me)=20
+
+  I am almost happy about this.  Now the author mapping format
+  is the same between cvs/svn importers, would it make sense to
+  unify them so that other foreign scm interface can also follow
+  suit?  Usually you would not have upstreams with two different
+  foreign scm to a single repository anyway, so this may not be an
+  issue, though...
+
+  - git-svnimport save author name mapping to a file (Karl Hasselstr=F6=
+m)
+
+* The 'pu' branch, in addition, has these.
+
+  This is in preparation for Nico's delta work already in "next".
+
+  - make rename/break detection independent from delta packing.
+
+  These muddy the water for what is in "next", improving of
+  which is more important.
+
+  - diff-delta: cull collided hash bucket more aggressively.
+  - diff-delta: allow reusing of the reference buffer index (Nicolas Pi=
+tre)
+
+  I am not sure about the command line interface of this.  Would
+  it make more sense to checkout three stages in one pass?
+
+  - checkout-index --suffix (Shawn Pearce)
