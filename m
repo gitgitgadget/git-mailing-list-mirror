@@ -1,66 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git
-Date: Wed, 01 Mar 2006 14:51:55 -0800
-Message-ID: <7vfym1eq2c.fsf@assigned-by-dhcp.cox.net>
-References: <7vmzgagxox.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603011625250.29834@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git doesn't like big files when pushing
+Date: Wed, 1 Mar 2006 15:00:49 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603011448230.22647@g5.osdl.org>
+References: <20060301220802.GA18250@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 23:52:45 2006
+X-From: git-owner@vger.kernel.org Thu Mar 02 00:01:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEaB0-0001oV-0u
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 23:52:11 +0100
+	id 1FEaJX-0003rI-TW
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 00:01:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbWCAWv7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 17:51:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751937AbWCAWv7
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 17:51:59 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:16333 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751934AbWCAWv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 17:51:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060301225042.FFBF3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Mar 2006 17:50:42 -0500
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0603011625250.29834@localhost.localdomain>
-	(Nicolas Pitre's message of "Wed, 01 Mar 2006 16:28:07 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751937AbWCAXA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 18:00:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbWCAXA4
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 18:00:56 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:36749 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751937AbWCAXA4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 18:00:56 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k21N0sDZ000880
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Mar 2006 15:00:54 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k21N0o7Z024753;
+	Wed, 1 Mar 2006 15:00:52 -0800
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20060301220802.GA18250@kroah.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17025>
 
-Nicolas Pitre <nico@cam.org> writes:
 
-> On Wed, 1 Mar 2006, Junio C Hamano wrote:
->
->>   These are waiting for further progress by authors:
->> 
->>   - delta packer updates for tighter packs (Nicolas Pitre)
->
-> Please don't wait to merge the first two patches to diff-delta.c.  They 
-> are purely cleanups with no functional differences.
 
-I presume you mean these three?
+On Wed, 1 Mar 2006, Greg KH wrote:
+> 
+> That worked fine, but when I went to push the stuff to my server, I got
+> the following errors:
+> 
+> $ git push origin
+> updating 'refs/heads/master'
+>   from 490badd9bec9ada3a21be275c97fb2a3a390f49e
+>   to   16be8985abc8a9c89ad2cc8f46a0d8e9786e832f
+> Generating pack...
+> Done counting 8 objects.
+> Deltifying 8 objects.
+> fatal: Out of memory, malloc failed
+> fatal: early EOF
 
-    commit 8e1454b5ad285ec5dd25758e799c589045aff9d4
-    Author: Nicolas Pitre <nico@cam.org>
+Gaah. We probably have a memory leak somewhere, and it just normally 
+doesn't much matter.
 
-        diff-delta: big code simplification
+Git does want to keep the "window" of the objects it packs in memory while 
+packing (it would be really costly to read them in one at a time, over and 
+over again), but it should hopefully not really not need tons more memory 
+than that. Since the window is normally 10, and you only have 8 objects, 
+it really wants to have all eight in memory, but it shouldn't need a whole 
+lot more.
 
-    commit fe474b588b3cb1c23c987a3d0f9e869a160d82d2
-    Author: Nicolas Pitre <nico@cam.org>
+But maybe it's really the case that you can't fit those 8 objects in 
+memory. One option (which might also solve some of the performance issues) 
+is to make the window be based on object _size_ rather than just be a 
+fixed number (ie with an 80MB object, you'd only try a couple of objects 
+around it, not the full window).
 
-        diff-delta: fold two special tests into one plus cleanups
-
-    commit cac251d0bc4c68b7ab36026990aff3c783913ae6
-    Author: Nicolas Pitre <nico@cam.org>
-
-        relax delta selection filtering in pack-objects
+		Linus
