@@ -1,64 +1,63 @@
-From: Paul Jakma <paul@clubi.ie>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: impure renames / history tracking
-Date: Wed, 1 Mar 2006 22:28:25 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0603012225560.13612@sheen.jakma.org>
+Date: Wed, 01 Mar 2006 14:46:35 -0800
+Message-ID: <7vk6bdeqb8.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0603011343170.13612@sheen.jakma.org>
- <4405C012.6080407@op5.se> <Pine.LNX.4.64.0603011558390.13612@sheen.jakma.org>
- <46a038f90603011005m68af7485qfdfffb9f82717427@mail.gmail.com>
- <Pine.LNX.4.64.0603011851430.13612@sheen.jakma.org> <7v3bi2ey63.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0603012105230.13612@sheen.jakma.org> <44061C59.20204@op5.se>
+	<4405C012.6080407@op5.se>
+	<Pine.LNX.4.64.0603011558390.13612@sheen.jakma.org>
+	<46a038f90603011005m68af7485qfdfffb9f82717427@mail.gmail.com>
+	<Pine.LNX.4.64.0603011851430.13612@sheen.jakma.org>
+	<7v3bi2ey63.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603012105230.13612@sheen.jakma.org>
+	<44061C59.20204@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <junkio@cox.net>, git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 01 23:29:40 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Jakma <paul@clubi.ie>, git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 01 23:47:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEZow-0003ut-Cd
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 23:29:26 +0100
+	id 1FEa5j-0000CN-7h
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 23:46:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331AbWCAW3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 17:29:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbWCAW3T
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 17:29:19 -0500
-Received: from hibernia.jakma.org ([212.17.55.49]:44695 "EHLO
-	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751331AbWCAW3T
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 17:29:19 -0500
-Received: from sheen.jakma.org (IDENT:U2FsdGVkX182jUyoNS7kK5zNk67JtVqYrE7hyvd/U2I@sheen.jakma.org [212.17.55.53])
-	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k21MSQio004767;
-	Wed, 1 Mar 2006 22:28:38 GMT
-X-X-Sender: paul@sheen.jakma.org
+	id S1751325AbWCAWqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 17:46:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbWCAWqk
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 17:46:40 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:62162 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751325AbWCAWqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 17:46:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060301224448.RQC20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Mar 2006 17:44:48 -0500
 To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <44061C59.20204@op5.se>
-Mail-Copies-To: paul@hibernia.jakma.org
-Mail-Followup-To: paul@hibernia.jakma.org
-X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
-X-Virus-Status: Clean
+In-Reply-To: <44061C59.20204@op5.se> (Andreas Ericsson's message of "Wed, 01
+	Mar 2006 23:12:41 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17023>
 
-On Wed, 1 Mar 2006, Andreas Ericsson wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
+> Just to cap off my own engagement in this discussion, here's the last
+> time rename detection was seriously discussed on the list:
+>
 > http://www.gelato.unsw.edu.au/archives/git/0504/0147.html
-
-In terms of format, that's pretty much exactly what I was thinking, 
-except it's been vetoed.
-
-> If you're going to implement something you might benefit from the 
+>
+> If you're going to implement something you might benefit from the
 > suggestions made there.
 
-Cheers.
+Also, today's #git log has some interesting material.
 
-Is there a correct way to extend the git header? To add meta-data 
-that normal git porcelain won't display? (there doesn't appear to 
-be..)
+	http://colabti.de/irclogger/irclogger_logs/git
 
-regards,
--- 
-Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
-Fortune:
-Zombie processes haunting the computer
+For anybody who wants to discuss rename recording (not
+tracking), the following is a must-read:
+
+	http://article.gmane.org/gmane.comp.version-control.git/217
