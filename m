@@ -1,69 +1,64 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: git doesn't like big files when pushing
-Date: Wed, 1 Mar 2006 14:20:18 -0800
-Message-ID: <20060301222018.GA9965@kroah.com>
-References: <20060301220802.GA18250@kroah.com> <20060301220840.GB18250@kroah.com>
+From: Paul Jakma <paul@clubi.ie>
+Subject: Re: impure renames / history tracking
+Date: Wed, 1 Mar 2006 22:28:25 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0603012225560.13612@sheen.jakma.org>
+References: <Pine.LNX.4.64.0603011343170.13612@sheen.jakma.org>
+ <4405C012.6080407@op5.se> <Pine.LNX.4.64.0603011558390.13612@sheen.jakma.org>
+ <46a038f90603011005m68af7485qfdfffb9f82717427@mail.gmail.com>
+ <Pine.LNX.4.64.0603011851430.13612@sheen.jakma.org> <7v3bi2ey63.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0603012105230.13612@sheen.jakma.org> <44061C59.20204@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Mar 01 23:22:34 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>, git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 01 23:29:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEZgb-0001gn-Hr
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 23:20:45 +0100
+	id 1FEZow-0003ut-Cd
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 23:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751325AbWCAWUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 17:20:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbWCAWUf
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 17:20:35 -0500
-Received: from mail.kroah.org ([69.55.234.183]:53438 "EHLO perch.kroah.org")
-	by vger.kernel.org with ESMTP id S1751285AbWCAWUf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 17:20:35 -0500
-Received: from [192.168.0.10] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
-	(authenticated)
-	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k21MKYK29332
-	for <git@vger.kernel.org>; Wed, 1 Mar 2006 14:20:34 -0800
-Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
- id 1FEZgA-2as-00 for <git@vger.kernel.org>; Wed, 01 Mar 2006 14:20:18
- -0800
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060301220840.GB18250@kroah.com>
-User-Agent: Mutt/1.5.11
+	id S1751331AbWCAW3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 17:29:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbWCAW3T
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 17:29:19 -0500
+Received: from hibernia.jakma.org ([212.17.55.49]:44695 "EHLO
+	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751331AbWCAW3T
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 17:29:19 -0500
+Received: from sheen.jakma.org (IDENT:U2FsdGVkX182jUyoNS7kK5zNk67JtVqYrE7hyvd/U2I@sheen.jakma.org [212.17.55.53])
+	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k21MSQio004767;
+	Wed, 1 Mar 2006 22:28:38 GMT
+X-X-Sender: paul@sheen.jakma.org
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <44061C59.20204@op5.se>
+Mail-Copies-To: paul@hibernia.jakma.org
+Mail-Followup-To: paul@hibernia.jakma.org
+X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17022>
 
-On Wed, Mar 01, 2006 at 02:08:40PM -0800, Greg KH wrote:
-> On Wed, Mar 01, 2006 at 02:08:02PM -0800, Greg KH wrote:
-> > I have a mail archive stored with git, in mbox form, and I made some
-> > changes to a few of the files and checked them back in.
-> > 
-> > That worked fine, but when I went to push the stuff to my server, I got
-> > the following errors:
-> > 
-> > $ git push origin
-> > updating 'refs/heads/master'
-> >   from 490badd9bec9ada3a21be275c97fb2a3a390f49e
-> >   to   16be8985abc8a9c89ad2cc8f46a0d8e9786e832f
-> > Generating pack...
-> > Done counting 8 objects.
-> > Deltifying 8 objects.
-> > fatal: Out of memory, malloc failed
-> > fatal: early EOF
-> > unpack unpacker exited with error code
-> > ng refs/heads/master n/a (unpacker error)
-> 
-> Oh, and I'm using:
-> 	$ git --version
-> 	git version 1.2.3.g8c2f
+On Wed, 1 Mar 2006, Andreas Ericsson wrote:
 
-Hm, 1.2.4.g6177 seems better, it's still trying to pack things, after
-about 10 minutes, but at least it isn't dying yet.  I'll let you know if
-it finishes properly or not...
+> http://www.gelato.unsw.edu.au/archives/git/0504/0147.html
 
-thanks,
+In terms of format, that's pretty much exactly what I was thinking, 
+except it's been vetoed.
 
-greg k-h
+> If you're going to implement something you might benefit from the 
+> suggestions made there.
+
+Cheers.
+
+Is there a correct way to extend the git header? To add meta-data 
+that normal git porcelain won't display? (there doesn't appear to 
+be..)
+
+regards,
+-- 
+Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
+Fortune:
+Zombie processes haunting the computer
