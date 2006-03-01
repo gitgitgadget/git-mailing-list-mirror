@@ -1,127 +1,73 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: [PATCH] git-mv: fixes for path handling
-Date: Wed, 1 Mar 2006 19:09:23 +0100
-Message-ID: <200603011909.23357.Josef.Weidendorfer@gmx.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch
+ directly
+Date: Wed, 1 Mar 2006 10:25:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603011023080.22647@g5.osdl.org>
+References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de>
+ <200603011814.43573.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0603010935201.22647@g5.osdl.org>
+ <200603011906.33433.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 19:10:33 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Eric Wong <normalperson@yhbt.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 19:27:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEVlR-0004jc-8K
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 19:09:29 +0100
+	id 1FEW16-00005W-Dj
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 19:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750734AbWCASJ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 13:09:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbWCASJ0
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 13:09:26 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:21959 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1750734AbWCASJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 13:09:25 -0500
-Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
-	by mail.in.tum.de (Postfix) with ESMTP id 3B62A2268;
-	Wed,  1 Mar 2006 19:09:24 +0100 (MET)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+	id S1750758AbWCASZd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 13:25:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751802AbWCASZd
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 13:25:33 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:39589 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750758AbWCASZc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 13:25:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k21IPMDZ017967
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Mar 2006 10:25:23 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k21IPLgo010722;
+	Wed, 1 Mar 2006 10:25:21 -0800
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200603011906.33433.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17003>
 
-Moving a directory ending in a slash was not working as the
-destination was not calculated correctly.
-E.g. in the git repo,
 
- git-mv t/ Documentation
 
-gave the error
+On Wed, 1 Mar 2006, Josef Weidendorfer wrote:
+>
+> On Wednesday 01 March 2006 18:40, Linus Torvalds wrote:
+> > But if somebody does the get_sha1() magic, and Junio agrees, then I think 
+> > it would be a great thing to do.
+> 
+> Yes.
+> 
+> 	git log origin/master..
+> 
+> is really not that bad
 
- Error: destination 'Documentation' already exists
+It really is.
 
-To get rid of this problem, strip trailing slashes from all arguments.
-The comment in cg-mv made me curious about this issue; Pasky, thanks!
-As result, the workaround in cg-mv is not needed any more.
+Think like a user. If I pull from "origin", then the name of that thing is 
+"origin", not "origin/master" or "o/master". A user doesn't care what the 
+remote branch name is - the whole _point_ of the .git/remotes/xyzzy file 
+is to give a short description that includes the names of the branches you 
+pull from.
 
-Also, another bug was shown by cg-mv. When moving files outside of
-a subdirectory, it typically calls git-mv with something like
+The good news is that "get_sha1()" shouldn't be that hard to extend on. 
+Just add a case at the end that says "do we have a .git/remotes/%s file, 
+and if so, parse it".
 
- git-mv Documentation/git.txt Documentation/../git-mv.txt
-
-which triggers the following error from git-update-index:
-
- Ignoring path Documentation/../git-mv.txt
-
-The result is a moved file, removed from git revisioning, but not
-added again. To fix this, the paths have to be normalized not have ".."
-in the middle. This was already done in git-mv, but only for
-a better visual appearance :(
-
-Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-
----
-
- git-mv.perl |   24 +++++++++++++-----------
- 1 files changed, 13 insertions(+), 11 deletions(-)
-
-15d94ce0807c1d99d10f6c3ddd32963b1ac0fece
-diff --git a/git-mv.perl b/git-mv.perl
-index 8cd95c4..9b43dcc 100755
---- a/git-mv.perl
-+++ b/git-mv.perl
-@@ -31,11 +31,12 @@ chomp($GIT_DIR);
- my (@srcArgs, @dstArgs, @srcs, @dsts);
- my ($src, $dst, $base, $dstDir);
- 
-+# remove any trailing slash in arguments
-+for (@ARGV) { s/\/*$//; }
-+
- my $argCount = scalar @ARGV;
- if (-d $ARGV[$argCount-1]) {
- 	$dstDir = $ARGV[$argCount-1];
--	# remove any trailing slash
--	$dstDir =~ s/\/$//;
- 	@srcArgs = @ARGV[0..$argCount-2];
- 	
- 	foreach $src (@srcArgs) {
-@@ -61,6 +62,16 @@ else {
-     $dstDir = "";
- }
- 
-+# normalize paths, needed to compare against versioned files and update-index
-+# also, this is nicer to end-users by doing ".//a/./b/.//./c" ==> "a/b/c"
-+for (@srcArgs, @dstArgs) {
-+    s|^\./||;
-+    s|/\./|/| while (m|/\./|);
-+    s|//+|/|g;
-+    # Also "a/b/../c" ==> "a/c"
-+    1 while (s,(^|/)[^/]+/\.\./,$1,);
-+}
-+
- my (@allfiles,@srcfiles,@dstfiles);
- my $safesrc;
- my (%overwritten, %srcForDst);
-@@ -79,15 +90,6 @@ while(scalar @srcArgs > 0) {
-     $dst = shift @dstArgs;
-     $bad = "";
- 
--    for ($src, $dst) {
--	# Be nicer to end-users by doing ".//a/./b/.//./c" ==> "a/b/c"
--	s|^\./||;
--	s|/\./|/| while (m|/\./|);
--	s|//+|/|g;
--	# Also "a/b/../c" ==> "a/c"
--	1 while (s,(^|/)[^/]+/\.\./,$1,);
--    }
--
-     if ($opt_v) {
- 	print "Checking rename of '$src' to '$dst'\n";
-     }
--- 
-1.2.0.g719b
+				Linus
