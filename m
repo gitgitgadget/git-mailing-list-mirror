@@ -1,201 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] git-log (internal): more options.
-Date: Wed, 01 Mar 2006 04:24:39 -0800
-Message-ID: <7vbqwqgxo8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
-	<Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
-	<Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
-	<7vr75nm8cl.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602281504280.22647@g5.osdl.org>
+From: Paul Jakma <paul@clubi.ie>
+Subject: impure renames / history tracking
+Date: Wed, 1 Mar 2006 14:01:28 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0603011343170.13612@sheen.jakma.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 13:25:05 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+X-From: git-owner@vger.kernel.org Wed Mar 01 15:02:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEQNt-0003Ew-QB
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 13:24:52 +0100
+	id 1FERtu-0003zg-Dd
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 15:01:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030199AbWCAMYq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 07:24:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932275AbWCAMYq
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 07:24:46 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:49843 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932206AbWCAMYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 07:24:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060301122251.PFNK20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Mar 2006 07:22:51 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751402AbWCAOBz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 09:01:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbWCAOBw
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 09:01:52 -0500
+Received: from hibernia.jakma.org ([212.17.55.49]:9601 "EHLO
+	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751142AbWCAOBv
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 09:01:51 -0500
+Received: from sheen.jakma.org (IDENT:U2FsdGVkX1+c+ur86whZ30lVHSQXF2FmkabXp2a3q8w@sheen.jakma.org [212.17.55.53])
+	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k21E1Twn030219
+	for <git@vger.kernel.org>; Wed, 1 Mar 2006 14:01:41 GMT
+X-X-Sender: paul@sheen.jakma.org
+To: git list <git@vger.kernel.org>
+Mail-Copies-To: paul@hibernia.jakma.org
+Mail-Followup-To: paul@hibernia.jakma.org
+X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16975>
 
-This ports the following options from rev-list based git-log
-implementation:
+Hi,
 
- * -<n>, -n<n>, and -n <n>.  I am still wondering if we want
-    this natively supported by setup_revisions(), which already
-    takes --max-count.  We may want to move them in the next
-    round.  Also I am not sure if we can get away with not
-    setting revs->limited when we set max-count.  The latest
-    rev-list.c and revision.c in this series do not, so I left
-    them as they are.
+I'm trying to understand git better (so I can explain it better to 
+others, with an eye to them considering switching to git), one 
+question I have is about renames.
 
- * --pretty and --pretty=<fmt>.
+- git obviously detects pure renames perfectly well
 
- * --abbrev=<n> and --no-abbrev.
+- git doesn't however record renames, so 'impure' renames may not be
+   detected
 
-The previous commit already handles time-based limiters
-(--since, --until and friends).  The remaining things that
-rev-list based git-log happens to do are not useful in a pure
-log-viewing purposes, and not ported:
+My question is:
 
- * --bisect (obviously).
+- why not record rename information explicitely in the commit object?
 
- * --header.  I am actually in favor of doing the NUL
-   terminated record format, but rev-list based one always
-   passed --pretty, which defeated this option.  Maybe next
-   round.
+I.e. so as to be able to follow history information through 'impure' 
+renames without having to resort to heuristics.
 
- * --parents.  I do not think of a reason a log viewer wants
-   this.  The flag is primarily for feeding squashed history
-   via pipe to downstream tools.
+E.g. imagine a project where development typically occurs through:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+o: commit
+m: merge
 
----
+    o---o-m--o-o-o--o----m <- project
+   /     /              /
+o-o-o-o-o--o-o-o--o-o-o <- main branch
 
- * comes on top of --since/--until patch which in turn comes on
-   top of janitorial "remove merge-order" change.
+The project merge back to main in one 'big' combined merge 
+(collapsing all of the commits on 'project' into one commit). This 
+leads to 'impure renames' being not uncommon. The desired end-result 
+of merging back to 'main' being to rebase 'project' as one commit 
+against 'main', and merge that single commit back, a la:
 
- git.c      |   70 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- rev-list.c |    5 ++--
- revision.h |    1 +
- 3 files changed, 72 insertions(+), 4 deletions(-)
+    o---o-m--o-o-o--o----m <- project
+   /     /              /
+o-o-o-o-o--o-o-o--o-o-o---m <- main branch
+                        \ /
+                         o <- project_collapsed
 
-4e365d2558356cd091ebf57f689c477a86822d53
-diff --git a/git.c b/git.c
-index b0da6b1..bf68dac 100644
---- a/git.c
-+++ b/git.c
-@@ -256,12 +256,80 @@ static int cmd_log(int argc, char **argv
- 	struct rev_info rev;
- 	struct commit *commit;
- 	char *buf = xmalloc(LOGSIZE);
-+	static enum cmit_fmt commit_format = CMIT_FMT_DEFAULT;
-+	int abbrev = DEFAULT_ABBREV;
-+	int show_parents = 0;
-+	const char *commit_prefix = "commit ";
- 
- 	argc = setup_revisions(argc, argv, &rev, "HEAD");
-+	while (1 < argc) {
-+		char *arg = argv[1];
-+		/* accept -<digit>, like traditilnal "head" */
-+		if ((*arg == '-') && isdigit(arg[1])) {
-+			rev.max_count = atoi(arg + 1);
-+		}
-+		else if (!strcmp(arg, "-n")) {
-+			if (argc < 2)
-+				die("-n requires an argument");
-+			rev.max_count = atoi(argv[2]);
-+			argc--; argv++;
-+		}
-+		else if (!strncmp(arg,"-n",2)) {
-+			rev.max_count = atoi(arg + 2);
-+		}
-+		else if (!strncmp(arg, "--pretty", 8)) {
-+			commit_format = get_commit_format(arg + 8);
-+			if (commit_format == CMIT_FMT_ONELINE)
-+				commit_prefix = "";
-+		}
-+		else if (!strcmp(arg, "--parents")) {
-+			show_parents = 1;
-+		}
-+		else if (!strcmp(arg, "--no-abbrev")) {
-+			abbrev = 0;
-+		}
-+		else if (!strncmp(arg, "--abbrev=", 9)) {
-+			abbrev = strtoul(arg + 9, NULL, 10);
-+			if (abbrev && abbrev < MINIMUM_ABBREV)
-+				abbrev = MINIMUM_ABBREV;
-+			else if (40 < abbrev)
-+				abbrev = 40;
-+		}
-+		else
-+			die("unrecognized argument: %s", arg);
-+		argc--; argv++;
-+	}
-+
- 	prepare_revision_walk(&rev);
- 	setup_pager();
- 	while ((commit = get_revision(&rev)) != NULL) {
--		pretty_print_commit(CMIT_FMT_DEFAULT, commit, ~0, buf, LOGSIZE, 18);
-+		printf("%s%s", commit_prefix,
-+		       sha1_to_hex(commit->object.sha1));
-+		if (show_parents) {
-+			struct commit_list *parents = commit->parents;
-+			while (parents) {
-+				struct object *o = &(parents->item->object);
-+				parents = parents->next;
-+				if (o->flags & TMP_MARK)
-+					continue;
-+				printf(" %s", sha1_to_hex(o->sha1));
-+				o->flags |= TMP_MARK;
-+			}
-+			/* TMP_MARK is a general purpose flag that can
-+			 * be used locally, but the user should clean
-+			 * things up after it is done with them.
-+			 */
-+			for (parents = commit->parents;
-+			     parents;
-+			     parents = parents->next)
-+				parents->item->object.flags &= ~TMP_MARK;
-+		}
-+		if (commit_format == CMIT_FMT_ONELINE)
-+			putchar(' ');
-+		else
-+			putchar('\n');
-+		pretty_print_commit(commit_format, commit, ~0, buf,
-+				    LOGSIZE, abbrev);
- 		printf("%s\n", buf);
- 	}
- 	free(buf);
-diff --git a/rev-list.c b/rev-list.c
-index 6af8d86..8e4d83e 100644
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -7,10 +7,9 @@
- #include "diff.h"
- #include "revision.h"
- 
--/* bits #0-3 in revision.h */
-+/* bits #0-4 in revision.h */
- 
--#define COUNTED		(1u << 4)
--#define TMP_MARK	(1u << 5) /* for isolated cases; clean after use */
-+#define COUNTED		(1u<<5)
- 
- static const char rev_list_usage[] =
- "git-rev-list [OPTION] <commit-id>... [ -- paths... ]\n"
-diff --git a/revision.h b/revision.h
-index 0043c16..31e8f61 100644
---- a/revision.h
-+++ b/revision.h
-@@ -5,6 +5,7 @@
- #define UNINTERESTING   (1u<<1)
- #define TREECHANGE	(1u<<2)
- #define SHOWN		(1u<<3)
-+#define TMP_MARK	(1u<<4) /* for isolated cases; clean after use */
- 
- struct rev_info {
- 	/* Starting list */
+So that 'm' on 'main' is that one commit[1].
+
+The merits or demerits of such merging practice aside, what reason 
+would there be /against/ recording explicit rename information in the 
+commit object, so as to help browsers follow history (particularly 
+impure renames) better in a commit?
+
+I.e. would there be resistance to adding meta-info rename headers 
+commit objects, and having diffcore and other tools to use those 
+headers to /augment/ their existing heuristics in detecting renames?
+
+Thanks!
+
+1. Git currently doesn't have 'porcelain' to do this, presumably 
+there'd be no objection to one?
+
+regards,
 -- 
-1.2.3.g9425
+Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
+Fortune:
+It is the quality rather than the quantity that matters.
+- Lucius Annaeus Seneca (4 B.C. - A.D. 65)
