@@ -1,66 +1,94 @@
 From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch directly
-Date: Wed, 1 Mar 2006 18:14:43 +0100
-Message-ID: <200603011814.43573.Josef.Weidendorfer@gmx.de>
-References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de> <4405C6BE.2000706@op5.se> <Pine.LNX.4.64.0603010821590.22647@g5.osdl.org>
+Subject: [PATCH] git-mv: Allow -h without repo & fix error message
+Date: Wed, 1 Mar 2006 18:16:36 +0100
+Message-ID: <200603011816.36981.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Eric Wong <normalperson@yhbt.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 18:15:17 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 18:16:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEUui-000771-7P
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 18:15:03 +0100
+	id 1FEUwM-0007aH-8m
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 18:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932421AbWCAROu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 12:14:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932420AbWCAROu
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 12:14:50 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:28853 "EHLO
+	id S1030206AbWCARQj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 12:16:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030209AbWCARQj
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 12:16:39 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:64437 "EHLO
 	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S932409AbWCAROt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 12:14:49 -0500
+	id S1030206AbWCARQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 12:16:39 -0500
 Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
-	by mail.in.tum.de (Postfix) with ESMTP id A26E61759;
-	Wed,  1 Mar 2006 18:14:44 +0100 (MET)
-To: Linus Torvalds <torvalds@osdl.org>
+	by mail.in.tum.de (Postfix) with ESMTP id E3EE22337;
+	Wed,  1 Mar 2006 18:16:37 +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
 User-Agent: KMail/1.9.1
-In-Reply-To: <Pine.LNX.4.64.0603010821590.22647@g5.osdl.org>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16992>
 
-On Wednesday 01 March 2006 17:24, Linus Torvalds wrote:
-> The thing about it being .git/refs/heads/svn/xyzzy is that then you can do
-> 
-> 	git checkout svn/xyzzy
-> 
-> and start modifying it. Which is exactly against the point: the thing is 
-> _not_ a branch and you must _not_ commit to it.
-> 
-> It's much more like a tag: it's a pointer to the last point of an 
-> svn-import.
+This fixes "git-mv -h" to output the usage without the need
+to be in a git repository.
+Additionally:
+- fix confusing error message when only one arg was given
+- fix typo in error message
 
-Isn't it the same with tracked branches of a remote git repo?
-With this reasoning, all heads that git-clone clones aside from the
-special "master" should not be under .git/refs/heads, but better
-under .git/refs/remotes/<remoteRepoName>/ ?
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 
-<remoteRepoName> is "origin" in the case of git-clone, so .git/remotes/origin
-would contain
- URL: http://host/repo.git
- Pull: master:remotes/origin/master
+---
 
-Then there would not be the need for the confusing special branch "origin"
-after cloning, as namespaces are separate.
+ git-mv.perl |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
 
-Josef
+2f1dc137362cfa84553340a8f1310bc784e5935b
+diff --git a/git-mv.perl b/git-mv.perl
+index 2ea852c..8cd95c4 100755
+--- a/git-mv.perl
++++ b/git-mv.perl
+@@ -19,15 +19,15 @@ EOT
+ 	exit(1);
+ }
+ 
+-my $GIT_DIR = `git rev-parse --git-dir`;
+-exit 1 if $?; # rev-parse would have given "not a git dir" message.
+-chomp($GIT_DIR);
+-
+ our ($opt_n, $opt_f, $opt_h, $opt_k, $opt_v);
+ getopts("hnfkv") || usage;
+ usage() if $opt_h;
+ @ARGV >= 1 or usage;
+ 
++my $GIT_DIR = `git rev-parse --git-dir`;
++exit 1 if $?; # rev-parse would have given "not a git dir" message.
++chomp($GIT_DIR);
++
+ my (@srcArgs, @dstArgs, @srcs, @dsts);
+ my ($src, $dst, $base, $dstDir);
+ 
+@@ -46,10 +46,14 @@ if (-d $ARGV[$argCount-1]) {
+ 	}
+ }
+ else {
+-    if ($argCount != 2) {
++    if ($argCount < 2) {
++	print "Error: need at least two arguments\n";
++	exit(1);
++    }
++    if ($argCount > 2) {
+ 	print "Error: moving to directory '"
+ 	    . $ARGV[$argCount-1]
+-	    . "' not possible; not exisiting\n";
++	    . "' not possible; not existing\n";
+ 	exit(1);
+     }
+     @srcArgs = ($ARGV[0]);
+-- 
+1.2.0.g719b
