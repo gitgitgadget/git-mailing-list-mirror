@@ -1,80 +1,85 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch directly
-Date: Wed, 01 Mar 2006 10:40:01 +0100
-Message-ID: <44056BF1.6000109@op5.se>
-References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de> <20060227184641.GA21684@hand.yhbt.net> <20060227185557.GA32142@delft.aura.cs.cmu.edu> <20060227192422.GB9518@hand.yhbt.net> <46a038f90602271625y6c7e9072u372b8dd3662e272c@mail.gmail.com> <Pine.LNX.4.64.0602271634410.22647@g5.osdl.org> <20060301065138.GC21684@hand.yhbt.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] diff-delta: bound hash list length to avoid O(m*n) behavior
+Date: Wed, 01 Mar 2006 02:38:46 -0800
+Message-ID: <7vmzgajvpl.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602272110320.25336@localhost.localdomain>
+	<7vhd6kq8lc.fsf@assigned-by-dhcp.cox.net>
+	<7vbqwrq4yi.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602281017241.25336@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 10:40:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 11:39:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FENob-0002TB-2q
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 10:40:13 +0100
+	id 1FEOjy-0002sb-7z
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 11:39:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964889AbWCAJkE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 04:40:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWCAJkE
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 04:40:04 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:26822 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932665AbWCAJkC
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 04:40:02 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id C64336BD00; Wed,  1 Mar 2006 10:40:01 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20060301065138.GC21684@hand.yhbt.net>
+	id S964908AbWCAKit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 05:38:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWCAKit
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 05:38:49 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59045 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S964908AbWCAKis (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 05:38:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060301103606.EEEE17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Mar 2006 05:36:06 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0602281017241.25336@localhost.localdomain>
+	(Nicolas Pitre's message of "Tue, 28 Feb 2006 12:05:59 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16970>
 
-Eric Wong wrote:
-> Linus Torvalds <torvalds@osdl.org> wrote:
-> 
->>
->>On Tue, 28 Feb 2006, Martin Langhoff wrote:
->>
->>>git-svn-HEAD "moves" so it's really a bad idea to have it as a tag.
->>>Nothing within core git prevents it from moving, but I think that
->>>porcelains will start breaking. Tags and heads are the same thing,
->>>except that heads are expected to change (specifically, to move
->>>forward), and tags are expected to stand still.
->>
->><snipped>
->>Using a "refs/remotes" subdirectory makes tons of sense for something like 
->>this. Or something even more specific, like "refs/svn-tracking/". Git 
->>shouldn't care - all the tools _should_ work fine with any subdirectory 
->>structure.
-> 
-> 
-> Git tools only work as long as the 'refs/{remotes,svn-tracking,...}/'
-> prefix is specified.  git-svn-HEAD (or any $GIT_SVN_ID-HEAD) does get
-> specified from the command-line quite often:
-> 	
-> 	git checkout -b mine git-svn-HEAD
-> 	git-log git-svn-HEAD..head
-> 	git-svn commit git-svn-HEAD..mine
-> 	git-log mine..git-svn-HEAD
-> 
-> Should rev-parse be taught to be less strict and look for basenames
-> that can't be found in heads/ and tags/ in other directories?
-> 
+Nicolas Pitre <nico@cam.org> writes:
 
-It already does. The search order is this, for a ref named 'foo':
-	$GIT_DIR/foo
-	$GIT_DIR/refs/foo
-	$GIT_DIR/refs/tags/foo
-	$GIT_DIR/refs/heads/foo
+>> I tried an experimental patch to cull collided hash buckets
+>> very aggressively.  I haven't applied your last "reuse index"
+>> patch, though -- I think that is orthogonal and I'd like to
+>> leave that to the next round.
+>
+> It is indeed orthogonal and I think you could apply it to the next 
+> branch without the other patches (it should apply with little problems).  
+> This is an obvious and undisputable gain, even more if pack-objects is 
+> reworked to reduce memory usage by keeping only one live index for 
+> multiple consecutive deltaattempts.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Umm.  The hash-index is rather huge, isn't it?  I did not
+realize it was two-pointer structure for every byte in the
+source material, and we typically delta from larger to smaller,
+so we will keep about 10x the unpacked source.  Until we swap
+the windowing around, that means about 100x the unpacked source
+with the default window size.
+
+Also, I am not sure which one is more costly: hash-index
+building or use of that to search inside target.  I somehow got
+an impression that the former is relatively cheap, and that is
+what is being cached here.
+
+> Let's suppose the reference buffer has:
+>  
+> ***********************************************************************/
+>...
+> One improvement might consist of counting the number of consecutive 
+> identical bytes when starting a compare, and manage to skip as many hash 
+> entries (minus the block size) before looping again with more entries in 
+> the same hash bucket.
+
+Umm, again.  Consecutive identical bytes (BTW, I think "* * *"
+and "** ** **" patterns have the same collision issues without
+being consecutive bytes, so such an optimization may be trickier
+and cost more), when emitted as literals, would compress well,
+wouldn't they?  At the end of the day, I think what matters is
+the size of deflated delta, since going to disk to read it out
+is more expensive than deflating and applying.  I think you made
+a suggestion along the same line, capping the max delta used by
+try_delta() more precisely by taking the deflated size into
+account.
