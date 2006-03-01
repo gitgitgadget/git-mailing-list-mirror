@@ -1,97 +1,120 @@
-From: Paul Jakma <paul@clubi.ie>
-Subject: impure renames / history tracking
-Date: Wed, 1 Mar 2006 14:01:28 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0603011343170.13612@sheen.jakma.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
+Date: Wed, 1 Mar 2006 09:51:05 -0500
+Message-ID: <20060301145105.GB3313@spearce.org>
+References: <20060227204252.GA31836@diana.vm.bytemark.co.uk> <20060227222600.GA11797@spearce.org> <tnx1wxmig75.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-X-From: git-owner@vger.kernel.org Wed Mar 01 15:02:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 15:52:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FERtu-0003zg-Dd
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 15:01:58 +0100
+	id 1FESfe-0000aM-9H
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 15:51:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751402AbWCAOBz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 09:01:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbWCAOBw
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 09:01:52 -0500
-Received: from hibernia.jakma.org ([212.17.55.49]:9601 "EHLO
-	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751142AbWCAOBv
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 09:01:51 -0500
-Received: from sheen.jakma.org (IDENT:U2FsdGVkX1+c+ur86whZ30lVHSQXF2FmkabXp2a3q8w@sheen.jakma.org [212.17.55.53])
-	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k21E1Twn030219
-	for <git@vger.kernel.org>; Wed, 1 Mar 2006 14:01:41 GMT
-X-X-Sender: paul@sheen.jakma.org
-To: git list <git@vger.kernel.org>
-Mail-Copies-To: paul@hibernia.jakma.org
-Mail-Followup-To: paul@hibernia.jakma.org
-X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
-X-Virus-Status: Clean
+	id S932274AbWCAOvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 09:51:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWCAOvO
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 09:51:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58847 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932274AbWCAOvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 09:51:14 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FESfO-0006gE-LK; Wed, 01 Mar 2006 09:51:02 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 31C0B20FBBF; Wed,  1 Mar 2006 09:51:05 -0500 (EST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <tnx1wxmig75.fsf@arm.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16976>
 
-Hi,
+[Side Note: I've suddenly stopped receiving mail from vger.
+ Even majordomo isn't replying to my pleas for help.  Arggh!
+ Yet all other incoming email seems to be fine.]
 
-I'm trying to understand git better (so I can explain it better to 
-others, with an eye to them considering switching to git), one 
-question I have is about renames.
+Catalin Marinas <catalin.marinas@arm.com> wrote:
+> Shawn Pearce <spearce@spearce.org> wrote:
+> > Karl Hasselstr?m <kha@treskal.com> wrote:
+> >> If I make a patch series where more than one patch touches the same
+> >> line, I get a lot of merge errors when upstream has accepted them and
+> >> I try to merge them back.
+> >
+> > When pg grabs its (possibly remote) parent ("stg pull" aka pg-rebase)
+> > we try to push down PatchA.  If PatchA fails to push cleanly we'll
+> > pop it off and try to push PatchA + PatchB.  If that pushes cleanly
+> > then we fold the content of PatchA into PatchB, effectively making
+> > PatchA part of PatchB.  If PatchA + PatchB failed to push down
+> > cleanly then we pop both and retry pushing PatchA + PatchB + PatchC.
+> 
+> How do you solve the situation where only PatchA, PatchC and PatchE
+> were merged, B and D still pending? Trying combinations of patches is
+> not a good idea.
 
-- git obviously detects pure renames perfectly well
+Yea, ouch.  pg would fold everything into E, destroying the B
+and D boundary.  A (not so good) workaround right now would be to
+undo the rebase, pop all patches, rebase, then push one by one.
+I didn't even consider this case as its not my workflow style:
+at least not right now.
 
-- git doesn't however record renames, so 'impure' renames may not be
-   detected
+> As I said, if you have a big number of patches this might be pretty
+> slow. Have a look at my patch for trying the reversed patches in
+> reverse order. It seems to solve this problem for most of the
+> cases. There are cases when this method would fail like adjacent
+> changes made by third-party patches that break the context of the git
+> patches and git-apply would fail. An addition to this would be to try
+> a diff3 merge with the reversed patch but I don't think it's worth
+> since it would become much slower.
 
-My question is:
+True.  The constant reapplication does really slow it down.  So does
+grabbing the reverse patch and seeing if it applies backwards
+cleanly.  Neither operation is fast, and neither is really going
+to be fast.
 
-- why not record rename information explicitely in the commit object?
+BTW - I did read through your patch when it was posted: the reverse
+apply idea is pretty slick and should work a large part of the time,
+as you said.  Nice addition to StGIT.
+ 
+> > If that pushes down cleanly then we make PatchA and PatchB officially
+> > part of PatchC.
+> 
+> I don't agree with this. For example, patches A, B and C change the
+> same line in file1 but patch A also changes file2 and patch B changed
+> file3. With your approach, merging A+B+C succeeds and you make A and B
+> part of C and hence move the changed to file2 and file3 in patch C.
+> 
+> The above can happen when the maintainer only merges part of the patch
+> or simply decides to merge patch C only and manually solve the
+> conflict in file1 (since patch C is based on the context from patches
+> A+B).
 
-I.e. so as to be able to follow history information through 'impure' 
-renames without having to resort to heuristics.
+Ah, yes.  The upstream maintainer who doesn't take everything.
+Shame on them.  :-) Shame on me for also not dealing with this
+case in pg, you are completely correct that folding these patches
+together in this scenario is a really bad idea.
 
-E.g. imagine a project where development typically occurs through:
+In the one environment where I really use pg the upstream is forced
+to take the entire patch: I have my own foreign SCM interface to PVCS
+VM (its heavily customized crap, so I'm not going to contribute it)
+and in this interface the upstream is forced to take the entire patch
+every time.  So right now its not a huge concern to me personally,
+but if anyone else is trying to use pg it might be.
 
-o: commit
-m: merge
-
-    o---o-m--o-o-o--o----m <- project
-   /     /              /
-o-o-o-o-o--o-o-o--o-o-o <- main branch
-
-The project merge back to main in one 'big' combined merge 
-(collapsing all of the commits on 'project' into one commit). This 
-leads to 'impure renames' being not uncommon. The desired end-result 
-of merging back to 'main' being to rebase 'project' as one commit 
-against 'main', and merge that single commit back, a la:
-
-    o---o-m--o-o-o--o----m <- project
-   /     /              /
-o-o-o-o-o--o-o-o--o-o-o---m <- main branch
-                        \ /
-                         o <- project_collapsed
-
-So that 'm' on 'main' is that one commit[1].
-
-The merits or demerits of such merging practice aside, what reason 
-would there be /against/ recording explicit rename information in the 
-commit object, so as to help browsers follow history (particularly 
-impure renames) better in a commit?
-
-I.e. would there be resistance to adding meta-info rename headers 
-commit objects, and having diffcore and other tools to use those 
-headers to /augment/ their existing heuristics in detecting renames?
-
-Thanks!
-
-1. Git currently doesn't have 'porcelain' to do this, presumably 
-there'd be no objection to one?
-
-regards,
 -- 
-Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
-Fortune:
-It is the quality rather than the quantity that matters.
-- Lucius Annaeus Seneca (4 B.C. - A.D. 65)
+Shawn.
