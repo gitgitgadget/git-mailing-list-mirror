@@ -1,76 +1,90 @@
-From: "Samantha Sands" <amie.farthinghfbz@gmail.com>
-Subject: increase in sexual desire
-Date: Wed, 1 Mar 2006 20:04:26 +0000 (UTC)
-Message-ID: <200603012004.k21K3rPD012416@zeus1.kernel.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] git-log (internal): more options.
+Date: Wed, 01 Mar 2006 12:06:32 -0800
+Message-ID: <7vwtfedj5j.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
+	<Pine.LNX.4.64.0602281126340.22647@g5.osdl.org>
+	<Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
+	<7vr75nm8cl.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602281504280.22647@g5.osdl.org>
+	<7vbqwqgxo8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603010730520.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Mar 01 21:04:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 21:06:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEXYS-0000Ed-R9
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 21:04:13 +0100
+	id 1FEXan-0000vU-6S
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 21:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750702AbWCAUEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 15:04:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbWCAUEJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 15:04:09 -0500
-Received: from zeus1.kernel.org ([204.152.191.4]:6115 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1750702AbWCAUEI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 15:04:08 -0500
-Received: from phi2d.uul0m5e.aol.com (c-24-2-220-70.hsd1.ct.comcast.net [24.2.220.70])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k21K3rPD012416;
-	Wed, 1 Mar 2006 20:04:03 GMT
-Received: from unknown (HELO alt1.gmail-smtp-in.l.google.com) (72.14.205.27)
-        by phi2d.uul0m5e.aol.com with SMTP; Wen, 1 Mar 2006 12:04:03 +0800
-To: <geogirb@vger.kernel.org>
-Date: Wen, 1 Mar 2006 12:04:03 +0800
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: JsjFQeqLZajdjUy41BvOylYiRkw5eOfVJ3QL
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
-X-Virus-Status: Clean
+	id S1751026AbWCAUGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 15:06:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbWCAUGe
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 15:06:34 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:41643 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751012AbWCAUGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 15:06:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060301200519.BWER3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 1 Mar 2006 15:05:19 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.6 points;
- *  0.2 INVALID_DATE Invalid Date: header (not RFC 2822)
- *  0.7 DATE_IN_PAST_12_24 Date: is 12 to 24 hours before Received: date
- *  2.4 MORE_SEX BODY: Talks about a bigger drive for sex
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  2.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP address
- *      [24.2.220.70 listed in dnsbl.sorbs.net]
- *  0.1 RCVD_IN_NJABL_DUL RBL: NJABL: dialup sender did non-local SMTP
- *      [24.2.220.70 listed in combined.njabl.org]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: planetfaktor.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: planetfaktor.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: planetfaktor.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: planetfaktor.com]
- *  0.1 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17009>
 
-Carefully chosen herbal ingredients are the key to peniis enlargement success. 
-Not only the precise blend of ingredients but also many other factors have effect
-on the overall potency and strength of peniis enlargement formula.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Some of these factors include growing conditions, geographical location where herbs are grown, 
-harvest time, the way herbs are stored before processing, the way herbs are processed. 
+> Most helpers that want a list of commits probably want the printing 
+> options too, and the ones that do not probably simply don't care (ie if 
+> they silently pass a "--pretty=raw" without it affecting anything, who 
+> really cares?)
 
-http://aceldgkbfhijm.planetfaktor.com/?bfhijmxwqowyacelzppdgk
+Perhaps (meaning, agree in general but not 100% convinced and
+haven't made up my mind yet).
 
+> I can actually imagine using "--parents" as a way of parsing both the 
+> commit log and the history. Of course, any such use is likely in a script, 
+> at which point the script probably doesn't actually want "git log", but 
+> just a raw "git-rev-list".
 
+Yes, that is exactly why I did not see why "log viewer" wants --parents.
 
+> To me, the question whether a flag would be parsed in the "revision.c" 
+> library or in the "rev-list.c" binary was more a question of whether that 
+> flag makes sense for other things than just "git log". 
 
+Good to know we are in agreement (iow, I wasn't totally off the
+mark) that revision.c should handle things that are common.
+That means:
 
+ * --bisect and --parents are for scripted use only and do not
+   concern log viewer, so we would leave them in rev-list.
 
+ * --header is good for anything that shows more than one
+   record, so it may be worthwhile to have it in generic.
 
+> For example, "git whatchanged" and "git diff" could both use 
+> setup_revision(), although "git diff" wouldn't actually _walk_ the 
+> revisions (it would just look at the "revs->commits" list to see what was 
+> passed in).
+>
+> "git whatchanged" would obviously take all the same flags "git log" does, 
+> and "git diff" could take them and just test the values for sanity (ie 
+> error out if min/max_date is not -1, for example).
 
-y6s
+Perhaps.
+
+> "git show" is like a "git-whatchanged" except it wouldn't walk the diffs 
+> (I considered adding a "--nowalk" option to setup_revisions(), which would 
+> just suppress the "add_parents_to_list()" entirely)
+
+Umm.  The current "git show -4" walks and I find the behaviour
+useful.  They are the same program with different defaults.
