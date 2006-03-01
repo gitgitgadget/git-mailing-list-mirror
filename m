@@ -1,75 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git doesn't like big files when pushing
-Date: Wed, 1 Mar 2006 15:00:49 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603011448230.22647@g5.osdl.org>
-References: <20060301220802.GA18250@kroah.com>
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: Re: What's in git.git
+Date: Wed, 1 Mar 2006 15:01:53 -0800
+Message-ID: <20060301230153.GA32286@agluck-lia64.sc.intel.com>
+References: <7vmzgagxox.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 02 00:01:36 2006
+X-From: git-owner@vger.kernel.org Thu Mar 02 00:02:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEaJX-0003rI-TW
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 00:01:04 +0100
+	id 1FEaKe-000498-3W
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 00:02:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbWCAXA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 18:00:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbWCAXA4
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 18:00:56 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:36749 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751937AbWCAXA4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 18:00:56 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k21N0sDZ000880
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 1 Mar 2006 15:00:54 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k21N0o7Z024753;
-	Wed, 1 Mar 2006 15:00:52 -0800
-To: Greg KH <greg@kroah.com>
-In-Reply-To: <20060301220802.GA18250@kroah.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751949AbWCAXCA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 18:02:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbWCAXB7
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 18:01:59 -0500
+Received: from fmr22.intel.com ([143.183.121.14]:43413 "EHLO
+	scsfmr002.sc.intel.com") by vger.kernel.org with ESMTP
+	id S1751945AbWCAXB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 18:01:57 -0500
+Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
+	by scsfmr002.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k21N1suj023240;
+	Wed, 1 Mar 2006 23:01:54 GMT
+Received: from intel.com (agluck-lia64.sc.intel.com [10.3.52.217])
+	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id k21N1qmh008322;
+	Wed, 1 Mar 2006 23:01:52 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
+	by intel.com (Postfix) with ESMTP id E87FF19F63;
+	Wed,  1 Mar 2006 15:01:53 -0800 (PST)
+Received: (from aegl@localhost)
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id k21N1rSu032298;
+	Wed, 1 Mar 2006 15:01:53 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vmzgagxox.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.1i
+X-Scanned-By: MIMEDefang 2.52 on 10.3.253.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17026>
 
+On Wed, Mar 01, 2006 at 04:24:14AM -0800, Junio C Hamano wrote:
+> * The 'master' branch has these since the last announcement.
+>   - compilation warning fixes (Timo Hirvonen, Tony Luck, Andreas Ericsson)
 
+In commit 8fcf1ad9c68e15d881194c8544e7c11d33529c2b you put in a
+combination of my double cast and Andreas' switch to using
+unsigned long ... just the latter is sufficient (and a lot less
+ugly than using the double cast).
 
-On Wed, 1 Mar 2006, Greg KH wrote:
-> 
-> That worked fine, but when I went to push the stuff to my server, I got
-> the following errors:
-> 
-> $ git push origin
-> updating 'refs/heads/master'
->   from 490badd9bec9ada3a21be275c97fb2a3a390f49e
->   to   16be8985abc8a9c89ad2cc8f46a0d8e9786e832f
-> Generating pack...
-> Done counting 8 objects.
-> Deltifying 8 objects.
-> fatal: Out of memory, malloc failed
-> fatal: early EOF
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 
-Gaah. We probably have a memory leak somewhere, and it just normally 
-doesn't much matter.
+--
 
-Git does want to keep the "window" of the objects it packs in memory while 
-packing (it would be really costly to read them in one at a time, over and 
-over again), but it should hopefully not really not need tons more memory 
-than that. Since the window is normally 10, and you only have 8 objects, 
-it really wants to have all eight in memory, but it shouldn't need a whole 
-lot more.
-
-But maybe it's really the case that you can't fit those 8 objects in 
-memory. One option (which might also solve some of the performance issues) 
-is to make the window be based on object _size_ rather than just be a 
-fixed number (ie with an 80MB object, you'd only try a couple of objects 
-around it, not the full window).
-
-		Linus
+diff --git a/pack-objects.c b/pack-objects.c
+index 21ee572..136a7f5 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -99,7 +99,7 @@ static int reused_delta = 0;
+ 
+ static int pack_revindex_ix(struct packed_git *p)
+ {
+-	unsigned long ui = (unsigned long)(long)p;
++	unsigned long ui = (unsigned long)p;
+ 	int i;
+ 
+ 	ui = ui ^ (ui >> 16); /* defeat structure alignment */
