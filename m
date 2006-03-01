@@ -1,168 +1,116 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: impure renames / history tracking
-Date: Wed, 01 Mar 2006 16:38:58 +0100
-Message-ID: <4405C012.6080407@op5.se>
-References: <Pine.LNX.4.64.0603011343170.13612@sheen.jakma.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/2] git-log (internal): more options.
+Date: Wed, 1 Mar 2006 07:43:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603010730520.22647@g5.osdl.org>
+References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
+ <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org> <Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
+ <7vr75nm8cl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602281504280.22647@g5.osdl.org>
+ <7vbqwqgxo8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 01 16:39:31 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 16:44:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FETPr-0005wO-Kt
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 16:39:08 +0100
+	id 1FETUO-0007BU-W6
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 16:43:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932241AbWCAPjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 10:39:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932386AbWCAPjA
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 10:39:00 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:58830 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932241AbWCAPi7
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 10:38:59 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 8E79C6BD0A; Wed,  1 Mar 2006 16:38:58 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Paul Jakma <paul@clubi.ie>
-In-Reply-To: <Pine.LNX.4.64.0603011343170.13612@sheen.jakma.org>
+	id S932398AbWCAPnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 10:43:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbWCAPnb
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 10:43:31 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:28382 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932398AbWCAPna (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 10:43:30 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k21FhRDZ008909
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Mar 2006 07:43:27 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k21FhQfr004079;
+	Wed, 1 Mar 2006 07:43:26 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqwqgxo8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16980>
 
-Paul Jakma wrote:
+
+
+On Wed, 1 Mar 2006, Junio C Hamano wrote:
+>
+> This ports the following options from rev-list based git-log
+> implementation:
 > 
-> - git obviously detects pure renames perfectly well
+>  * -<n>, -n<n>, and -n <n>.  I am still wondering if we want
+>     this natively supported by setup_revisions(), which already
+>     takes --max-count.  We may want to move them in the next
+>     round.  Also I am not sure if we can get away with not
+>     setting revs->limited when we set max-count.  The latest
+>     rev-list.c and revision.c in this series do not, so I left
+>     them as they are.
 > 
-> - git doesn't however record renames, so 'impure' renames may not be
->   detected
+>  * --pretty and --pretty=<fmt>.
 > 
-> My question is:
+>  * --abbrev=<n> and --no-abbrev.
+
+Looks good.
+
+I _suspect_ that we want to handle them all in setup_revision(), but I 
+wasn't sure, so I left them in rev-list.c originally.
+
+Most helpers that want a list of commits probably want the printing 
+options too, and the ones that do not probably simply don't care (ie if 
+they silently pass a "--pretty=raw" without it affecting anything, who 
+really cares?)
+
+> The previous commit already handles time-based limiters
+> (--since, --until and friends).  The remaining things that
+> rev-list based git-log happens to do are not useful in a pure
+> log-viewing purposes, and not ported:
 > 
-> - why not record rename information explicitely in the commit object?
+>  * --bisect (obviously).
 > 
-
-Mainly for two reasons, iirc:
-1. Extensive metadata is evil.
-2. Backwards compatibility. Old repos should always work with new tools. 
-Old tools should work with new repos, at least until a new major-release 
-is released.
-
-
-> I.e. so as to be able to follow history information through 'impure' 
-> renames without having to resort to heuristics.
+>  * --header.  I am actually in favor of doing the NUL
+>    terminated record format, but rev-list based one always
+>    passed --pretty, which defeated this option.  Maybe next
+>    round.
 > 
-> E.g. imagine a project where development typically occurs through:
-> 
-> o: commit
-> m: merge
-> 
->    o---o-m--o-o-o--o----m <- project
->   /     /              /
-> o-o-o-o-o--o-o-o--o-o-o <- main branch
-> 
-> The project merge back to main in one 'big' combined merge (collapsing 
-> all of the commits on 'project' into one commit). This leads to 'impure 
-> renames' being not uncommon. The desired end-result of merging back to 
-> 'main' being to rebase 'project' as one commit against 'main', and merge 
-> that single commit back, a la:
-> 
->    o---o-m--o-o-o--o----m <- project
->   /     /              /
-> o-o-o-o-o--o-o-o--o-o-o---m <- main branch
->                        \ /
->                         o <- project_collapsed
-> 
-> So that 'm' on 'main' is that one commit[1].
-> 
+>  * --parents.  I do not think of a reason a log viewer wants
+>    this.  The flag is primarily for feeding squashed history
+>    via pipe to downstream tools.
 
-I think you're misunderstanding the git meaning of rebase here. "git 
-rebase" moves all commits since "project" forked from "main branch" to 
-the tip of "main branch".
+I can actually imagine using "--parents" as a way of parsing both the 
+commit log and the history. Of course, any such use is likely in a script, 
+at which point the script probably doesn't actually want "git log", but 
+just a raw "git-rev-list".
 
-Other than that, this is the recommended workflow, and exactly how Linux 
-and git both are managed (i.e. topic branches eventually merged into 
-'master').
+After all, the only _real_ difference between "git log" and "git-rev-list" 
+is the purely syntactic one (things like defaulting to HEAD in "git log" 
+and requiring revisions in git-rev-list), and the use of PAGER.
 
-In your drawings, 'main branch' would be 'master' and 'project' would be 
-any amount of topic-branches (or just one, if you like that better).
+To me, the question whether a flag would be parsed in the "revision.c" 
+library or in the "rev-list.c" binary was more a question of whether that 
+flag makes sense for other things than just "git log". 
 
-I'm not sure what you mean by 'project_collapsed' though. If I 
-understand you correctly, each branch-head represents one 'collapse'. I 
-suggest you clone the git repo and do
+For example, "git whatchanged" and "git diff" could both use 
+setup_revision(), although "git diff" wouldn't actually _walk_ the 
+revisions (it would just look at the "revs->commits" list to see what was 
+passed in).
 
-	$ gitk master
-	$ gitk next
-	$ gitk pu
+"git whatchanged" would obviously take all the same flags "git log" does, 
+and "git diff" could take them and just test the values for sanity (ie 
+error out if min/max_date is not -1, for example).
 
-gitk is great for visualizing what you've done and what the repo looks 
-like. Use and abuse it frequently every time you're unsure what was you 
-just did. It's the best way to quickly learn what happens, really.
+"git show" is like a "git-whatchanged" except it wouldn't walk the diffs 
+(I considered adding a "--nowalk" option to setup_revisions(), which would 
+just suppress the "add_parents_to_list()" entirely)
 
-If you just want to distribute snapshots I suggest you do take a look at 
-git-tar-tree. Junio makes nice use of it in the git Makefile (the dist: 
-target).
-
-
-> The merits or demerits of such merging practice aside, what reason would 
-> there be /against/ recording explicit rename information in the commit 
-> object, so as to help browsers follow history (particularly impure 
-> renames) better in a commit?
-> 
-> I.e. would there be resistance to adding meta-info rename headers commit 
-> objects, and having diffcore and other tools to use those headers to 
-> /augment/ their existing heuristics in detecting renames?
-> 
-
-Personally I think metadata is evil. Renames will still be auto-detected 
-anyway, and with the distributed repo setup the only reason git 
-shouldn't be able to detect a rename is if you rename a file and hack it 
-up so it doesn't even come close to matching its origin (close in this 
-case is 80% by default, I think). In those cases it isn't so much a 
-rename as a rewrite. If you find the commit where the file was renamed 
-it should be listed in that commit, like so:
-
-	similarity index 92%
-	rename from Documentation/git-log-script.txt
-	rename to Documentation/git-log.txt
-
-(this is gitk output from the git repo. Search for "Big tool rename")
-
-IMO this is far better than having to tell git "I renamed this file to 
-that", since it also detects code-copying with modifications, and it's 
-usually quick enough to find those renames as well.
-
-> Thanks!
-> 
-> 1. Git currently doesn't have 'porcelain' to do this, presumably there'd 
-> be no objection to one?
-> 
-
-	$ git checkout master
-	$ git pull . project
-
-The dot means "pull from the local repo". "project" is the branch you 
-want to merge into master. You can pull an arbitrary amount of branches 
-in one go ("octopus" merge). The current tested limit is 12 (thanks, Len 
-;) ).
-
-If, for some reason, you want to combine lots of commits into a single 
-mega-patch (like Linus does for each release of the kernel), you can do:
-
-	$ git diff $(git merge-base main project) project > patch-file
-
-Then you can apply patch-file to whatever branch you want and make the 
-commit as if it was a single change-set. I'd recommend against it unless 
-you're just toying around though. It's a bad idea to lie in a projects 
-history.
-
-Hope that helps.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+			Linus
