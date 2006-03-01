@@ -1,80 +1,91 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch directly
-Date: Wed, 1 Mar 2006 21:54:16 +0100
-Message-ID: <200603012154.16509.Josef.Weidendorfer@gmx.de>
-References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de> <Pine.LNX.4.64.0603010935201.22647@g5.osdl.org> <7virqyf094.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch
+ directly
+Date: Wed, 1 Mar 2006 22:07:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603012202250.9893@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de>
+ <20060227184641.GA21684@hand.yhbt.net> <20060227185557.GA32142@delft.aura.cs.cmu.edu>
+ <20060227192422.GB9518@hand.yhbt.net> <46a038f90602271625y6c7e9072u372b8dd3662e272c@mail.gmail.com>
+ <Pine.LNX.4.64.0602271634410.22647@g5.osdl.org> <20060301065138.GC21684@hand.yhbt.net>
+ <44056BF1.6000109@op5.se> <Pine.LNX.4.64.0603010745320.22647@g5.osdl.org>
+ <4405C6BE.2000706@op5.se> <Pine.LNX.4.64.0603010821590.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 21:55:58 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Eric Wong <normalperson@yhbt.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 22:08:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEYLG-0004zC-Pg
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 21:54:39 +0100
+	id 1FEYXe-0008UN-PJ
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 22:07:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147AbWCAUyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 15:54:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbWCAUyc
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 15:54:32 -0500
-Received: from mail.gmx.de ([213.165.64.20]:40624 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751147AbWCAUyb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 15:54:31 -0500
-Received: (qmail invoked by alias); 01 Mar 2006 20:54:23 -0000
-Received: from p549692CD.dip0.t-ipconnect.de (EHLO linux) [84.150.146.205]
-  by mail.gmx.net (mp036) with SMTP; 01 Mar 2006 21:54:23 +0100
-X-Authenticated: #352111
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-In-Reply-To: <7virqyf094.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751215AbWCAVHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 16:07:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbWCAVHX
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 16:07:23 -0500
+Received: from mail.gmx.de ([213.165.64.20]:53900 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751215AbWCAVHX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 16:07:23 -0500
+Received: (qmail invoked by alias); 01 Mar 2006 21:07:22 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp034) with SMTP; 01 Mar 2006 22:07:22 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603010821590.22647@g5.osdl.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17012>
 
-On Wednesday 01 March 2006 20:11, Junio C Hamano wrote:
-> The latter at first sounds sane, but it has a subtle issue,
-> which was what bitten me previously between heads/ and tags/.
-> In that broken version, if you have a head called "dead" and a
-> tag with the same name, neither was taken ("they are not unique,
-> so do not take either!") and we ended up finding an object whose
-> SHA1 name began with those two bytes 0xDE 0xAD.  I do not think
-> this has happened in the field, fortunately, but it would have
-> been quite hard to diagnose.
+Hi,
+
+On Wed, 1 Mar 2006, Linus Torvalds wrote:
+
+> On Wed, 1 Mar 2006, Andreas Ericsson wrote:
+> > 
+> > Personally I'm all for namespace separation. I'm assuming the script 
+> > has the tracker-branch hardcoded anyway, so I don't really understand 
+> > why it would be necessary to keep other refs in a separate directory 
+> > and, if it *is* necessary, why that subdirectory can't be 
+> > .git/refs/heads/svn.
+> > 
+> > Eric mentioned earlier that the tracking-branch can't be committed to 
+> > (ever), so the user convenience for searching other directories should 
+> > be nearly non-existant.
 > 
-> So if we were to do it, I would say do the latter, but be very
-> careful to make sure you fail the whole get_sha1() when you bail
-> out of the "try possible prefixes" codepath because of
-> ambiguity.
+> The thing about it being .git/refs/heads/svn/xyzzy is that then you can 
+> do
+> 
+> 	git checkout svn/xyzzy
+> 
+> _not_ a branch and you must _not_ commit to it.
+> 
+> It's much more like a tag: it's a pointer to the last point of an 
+> svn-import.
+> 
+> So I think it should either _be_ a tag (although Dscho worries about some 
+> broken porcelain being confused by tags changing) or it should be in a 
+> namespace all it's own. Not under .git/refs/heads/ at any point, because 
+> it is _not_ a head of development.
 
-Yes.
-Any ambiguity is a source of confusion and user error. Better
-bail out. If it is not a performance problem, it would be better
-to integrate the check for abbreviated object name into the
-ambiguity analysis, and not have 2 stages of searching.
-It probably would be a good idea to print out the ambigous names
-with the error message, so that you can copy&paste the correct
-full name afterwards.
+I almost missed that you reference me in the email (often, I just delete 
+the email if the Subject is of no interest to me).
 
-If we go for the .git/refs/remotes/... and have an ambiguity becaues
-of remote shortcut names, a error message pointing at a "git-rename-remote"
-command would be handy, allowing the user to cleanup the namespace.
+I did not worry about broken porcelain. I saw broken porcelain. But that 
+is more a broken concept than broken porcelain: in a distributed 
+environment, there is no way to have a reliable tag. Think about it: 
+whenever you have two different versions of a tag, you cannot know which 
+one is the correct one.
 
-> There may be other issues involved, but I wouldn't 
-> know -- I reverted the "do not take either if they are
-> ambiguous between heads/ and tags/" patch primarily because of
-> the reason from the above paragraph, but also did not want to
-> deal with any other potential issues to keep my sanity ;-).
+But my worries do not matter at all for local tags.
 
-I think the real problem here is that names like "dead" can be interpreted
-as abbreviated object name. When you introduce such a name as head or tag,
-you have a potential ambiguity which can get real at any time.
-Perhaps it would be good to print out a warning when the user is about to
-create a head or tag name which can be interpreted as abbreviated object name?
+Conceptually, however, the last point of a svnimport should *never* be a 
+tag, but *always* a head.
 
-Josef
+Ciao,
+Dscho
