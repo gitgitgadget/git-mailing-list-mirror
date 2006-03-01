@@ -1,85 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] diff-delta: bound hash list length to avoid O(m*n) behavior
-Date: Wed, 01 Mar 2006 02:38:46 -0800
-Message-ID: <7vmzgajvpl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602272110320.25336@localhost.localdomain>
-	<7vhd6kq8lc.fsf@assigned-by-dhcp.cox.net>
-	<7vbqwrq4yi.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602281017241.25336@localhost.localdomain>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
+Date: Wed, 01 Mar 2006 10:59:10 +0000
+Message-ID: <tnx1wxmig75.fsf@arm.com>
+References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
+	<20060227222600.GA11797@spearce.org>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 11:39:44 2006
+Cc: =?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 01 11:59:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEOjy-0002sb-7z
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 11:39:30 +0100
+	id 1FEP3b-0008T7-EX
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 11:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964908AbWCAKit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 05:38:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWCAKit
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 05:38:49 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59045 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S964908AbWCAKis (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 05:38:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060301103606.EEEE17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Mar 2006 05:36:06 -0500
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0602281017241.25336@localhost.localdomain>
-	(Nicolas Pitre's message of "Tue, 28 Feb 2006 12:05:59 -0500 (EST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964913AbWCAK7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 05:59:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964914AbWCAK7n
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 05:59:43 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:23426 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S964913AbWCAK7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 05:59:42 -0500
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k21AxFuc002196;
+	Wed, 1 Mar 2006 10:59:15 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Wed, 1 Mar 2006 10:59:15 +0000
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060227222600.GA11797@spearce.org> (Shawn Pearce's message of
+ "Mon, 27 Feb 2006 17:26:00 -0500")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 01 Mar 2006 10:59:15.0169 (UTC) FILETIME=[2E004D10:01C63D1F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16971>
 
-Nicolas Pitre <nico@cam.org> writes:
-
->> I tried an experimental patch to cull collided hash buckets
->> very aggressively.  I haven't applied your last "reuse index"
->> patch, though -- I think that is orthogonal and I'd like to
->> leave that to the next round.
+Shawn Pearce <spearce@spearce.org> wrote:
+> Karl Hasselstr?m <kha@treskal.com> wrote:
+>> If I make a patch series where more than one patch touches the same
+>> line, I get a lot of merge errors when upstream has accepted them and
+>> I try to merge them back.
 >
-> It is indeed orthogonal and I think you could apply it to the next 
-> branch without the other patches (it should apply with little problems).  
-> This is an obvious and undisputable gain, even more if pack-objects is 
-> reworked to reduce memory usage by keeping only one live index for 
-> multiple consecutive deltaattempts.
+> When pg grabs its (possibly remote) parent ("stg pull" aka pg-rebase)
+> we try to push down PatchA.  If PatchA fails to push cleanly we'll
+> pop it off and try to push PatchA + PatchB.  If that pushes cleanly
+> then we fold the content of PatchA into PatchB, effectively making
+> PatchA part of PatchB.  If PatchA + PatchB failed to push down
+> cleanly then we pop both and retry pushing PatchA + PatchB + PatchC.
 
-Umm.  The hash-index is rather huge, isn't it?  I did not
-realize it was two-pointer structure for every byte in the
-source material, and we typically delta from larger to smaller,
-so we will keep about 10x the unpacked source.  Until we swap
-the windowing around, that means about 100x the unpacked source
-with the default window size.
+How do you solve the situation where only PatchA, PatchC and PatchE
+were merged, B and D still pending? Trying combinations of patches is
+not a good idea.
 
-Also, I am not sure which one is more costly: hash-index
-building or use of that to search inside target.  I somehow got
-an impression that the former is relatively cheap, and that is
-what is being cached here.
+As I said, if you have a big number of patches this might be pretty
+slow. Have a look at my patch for trying the reversed patches in
+reverse order. It seems to solve this problem for most of the
+cases. There are cases when this method would fail like adjacent
+changes made by third-party patches that break the context of the git
+patches and git-apply would fail. An addition to this would be to try
+a diff3 merge with the reversed patch but I don't think it's worth
+since it would become much slower.
 
-> Let's suppose the reference buffer has:
->  
-> ***********************************************************************/
->...
-> One improvement might consist of counting the number of consecutive 
-> identical bytes when starting a compare, and manage to skip as many hash 
-> entries (minus the block size) before looping again with more entries in 
-> the same hash bucket.
+> If that pushes down cleanly then we make PatchA and PatchB officially
+> part of PatchC.
 
-Umm, again.  Consecutive identical bytes (BTW, I think "* * *"
-and "** ** **" patterns have the same collision issues without
-being consecutive bytes, so such an optimization may be trickier
-and cost more), when emitted as literals, would compress well,
-wouldn't they?  At the end of the day, I think what matters is
-the size of deflated delta, since going to disk to read it out
-is more expensive than deflating and applying.  I think you made
-a suggestion along the same line, capping the max delta used by
-try_delta() more precisely by taking the deflated size into
-account.
+I don't agree with this. For example, patches A, B and C change the
+same line in file1 but patch A also changes file2 and patch B changed
+file3. With your approach, merging A+B+C succeeds and you make A and B
+part of C and hence move the changed to file2 and file3 in patch C.
+
+The above can happen when the maintainer only merges part of the patch
+or simply decides to merge patch C only and manually solve the
+conflict in file1 (since patch C is based on the context from patches
+A+B).
+
+-- 
+Catalin
