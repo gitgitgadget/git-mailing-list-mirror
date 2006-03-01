@@ -1,116 +1,74 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 2/2] git-log (internal): more options.
-Date: Wed, 1 Mar 2006 07:43:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603010730520.22647@g5.osdl.org>
-References: <Pine.LNX.4.64.0602281115110.22647@g5.osdl.org>
- <Pine.LNX.4.64.0602281126340.22647@g5.osdl.org> <Pine.LNX.4.64.0602281251390.22647@g5.osdl.org>
- <7vr75nm8cl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602281504280.22647@g5.osdl.org>
- <7vbqwqgxo8.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
+Date: Wed, 1 Mar 2006 10:50:43 -0500
+Message-ID: <20060301155043.GA3706@spearce.org>
+References: <20060227204252.GA31836@diana.vm.bytemark.co.uk> <20060227222600.GA11797@spearce.org> <tnx1wxmig75.fsf@arm.com> <20060301145105.GB3313@spearce.org> <b0943d9e0603010708l72cb14d1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 01 16:44:38 2006
+X-From: git-owner@vger.kernel.org Wed Mar 01 16:51:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FETUO-0007BU-W6
-	for gcvg-git@gmane.org; Wed, 01 Mar 2006 16:43:45 +0100
+	id 1FETbK-0000l1-Cz
+	for gcvg-git@gmane.org; Wed, 01 Mar 2006 16:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398AbWCAPnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 10:43:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbWCAPnb
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 10:43:31 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:28382 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932398AbWCAPna (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 10:43:30 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k21FhRDZ008909
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 1 Mar 2006 07:43:27 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k21FhQfr004079;
-	Wed, 1 Mar 2006 07:43:26 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqwqgxo8.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932402AbWCAPuu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 10:50:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbWCAPuu
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 10:50:50 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:10473 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932402AbWCAPut (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 10:50:49 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FETb9-00005i-0k; Wed, 01 Mar 2006 10:50:43 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1E07220FBBF; Wed,  1 Mar 2006 10:50:43 -0500 (EST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0603010708l72cb14d1w@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/16981>
 
-
-
-On Wed, 1 Mar 2006, Junio C Hamano wrote:
->
-> This ports the following options from rev-list based git-log
-> implementation:
+Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> On 01/03/06, Shawn Pearce <spearce@spearce.org> wrote:
+> > True.  The constant reapplication does really slow it down.  So does
+> > grabbing the reverse patch and seeing if it applies backwards
+> > cleanly.  Neither operation is fast, and neither is really going
+> > to be fast.
 > 
->  * -<n>, -n<n>, and -n <n>.  I am still wondering if we want
->     this natively supported by setup_revisions(), which already
->     takes --max-count.  We may want to move them in the next
->     round.  Also I am not sure if we can get away with not
->     setting revs->limited when we set max-count.  The latest
->     rev-list.c and revision.c in this series do not, so I left
->     them as they are.
-> 
->  * --pretty and --pretty=<fmt>.
-> 
->  * --abbrev=<n> and --no-abbrev.
+> I realised that, depending on the number of patches merged upstream,
+> using this option can make StGIT faster. That's because when pushing a
+> patch (without the --merged option), StGIT first tries a diff | apply
+> followed by a three-way merge (even slower) if the former method
+> fails. This means that for all the patches merged upstream, StGIT
+> tries both methods since diff | apply fails anyway. With the --merged
+> option, StGIT would only try the reverse-diff | apply and, if this
+> succeeds, it will skip the normal push methods.
 
-Looks good.
+Speaking of making StGIT faster: earlier we were talking about how
+git-diff|git-apply is faster than a 3 way git-read-tree on large
+merges when there are many structural changes in the tree due to
+the smaller number of process spawns required.
 
-I _suspect_ that we want to handle them all in setup_revision(), but I 
-wasn't sure, so I left them in rev-list.c originally.
+You might want to take a look at pg--merge-all: This is sort of based
+on git-merge-recursive, but I've gotten it down to just a handful
+of process spawns, aside from the stupidity of git-checkout-index.
+(My recent git-checkout-index patches are working to correct that.)
 
-Most helpers that want a list of commits probably want the printing 
-options too, and the ones that do not probably simply don't care (ie if 
-they silently pass a "--pretty=raw" without it affecting anything, who 
-really cares?)
-
-> The previous commit already handles time-based limiters
-> (--since, --until and friends).  The remaining things that
-> rev-list based git-log happens to do are not useful in a pure
-> log-viewing purposes, and not ported:
-> 
->  * --bisect (obviously).
-> 
->  * --header.  I am actually in favor of doing the NUL
->    terminated record format, but rev-list based one always
->    passed --pretty, which defeated this option.  Maybe next
->    round.
-> 
->  * --parents.  I do not think of a reason a log viewer wants
->    this.  The flag is primarily for feeding squashed history
->    via pipe to downstream tools.
-
-I can actually imagine using "--parents" as a way of parsing both the 
-commit log and the history. Of course, any such use is likely in a script, 
-at which point the script probably doesn't actually want "git log", but 
-just a raw "git-rev-list".
-
-After all, the only _real_ difference between "git log" and "git-rev-list" 
-is the purely syntactic one (things like defaulting to HEAD in "git log" 
-and requiring revisions in git-rev-list), and the use of PAGER.
-
-To me, the question whether a flag would be parsed in the "revision.c" 
-library or in the "rev-list.c" binary was more a question of whether that 
-flag makes sense for other things than just "git log". 
-
-For example, "git whatchanged" and "git diff" could both use 
-setup_revision(), although "git diff" wouldn't actually _walk_ the 
-revisions (it would just look at the "revs->commits" list to see what was 
-passed in).
-
-"git whatchanged" would obviously take all the same flags "git log" does, 
-and "git diff" could take them and just test the values for sanity (ie 
-error out if min/max_date is not -1, for example).
-
-"git show" is like a "git-whatchanged" except it wouldn't walk the diffs 
-(I considered adding a "--nowalk" option to setup_revisions(), which would 
-just suppress the "add_parents_to_list()" entirely)
-
-			Linus
+-- 
+Shawn.
