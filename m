@@ -1,97 +1,71 @@
-From: Joseph Wakeling <joseph.wakeling@webdrake.net>
-Subject: Problems with using git
-Date: Thu, 02 Mar 2006 00:25:32 +0000
-Message-ID: <44063B7C.40609@webdrake.net>
+From: Greg KH <greg@kroah.com>
+Subject: Re: git doesn't like big files when pushing
+Date: Wed, 1 Mar 2006 16:34:18 -0800
+Message-ID: <20060302003418.GA11119@kroah.com>
+References: <20060301220802.GA18250@kroah.com> <20060301220840.GB18250@kroah.com> <7v8xrtepje.fsf@assigned-by-dhcp.cox.net> <20060301232719.GA22068@kroah.com> <20060301233506.GA25209@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Mar 02 01:25:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Mar 02 01:34:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEbdC-0006w7-3s
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:25:22 +0100
+	id 1FEbmJ-0000WC-Pv
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751136AbWCBAZS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 19:25:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbWCBAZS
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:25:18 -0500
-Received: from alf.nbi.dk ([130.225.212.55]:4625 "EHLO alf.nbi.dk")
-	by vger.kernel.org with ESMTP id S1751136AbWCBAZQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 19:25:16 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by alf.nbi.dk (8.9.3/8.9.3) with ESMTP id BAA31501
-	for <git@vger.kernel.org>; Thu, 2 Mar 2006 01:25:14 +0100 (MET)
-User-Agent: Thunderbird 1.5 (X11/20060111)
-To: git@vger.kernel.org
+	id S1750917AbWCBAep (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 19:34:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbWCBAep
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:34:45 -0500
+Received: from mail.kroah.org ([69.55.234.183]:18324 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S1750917AbWCBAeo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 19:34:44 -0500
+Received: from [192.168.0.10] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k220YdK00994;
+	Wed, 1 Mar 2006 16:34:39 -0800
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1FEblt-2vJ-00; Wed, 01 Mar 2006 16:34:21 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20060301233506.GA25209@kroah.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17033>
 
-Hello all,
+On Wed, Mar 01, 2006 at 03:35:06PM -0800, Greg KH wrote:
+> On Wed, Mar 01, 2006 at 03:27:19PM -0800, Greg KH wrote:
+> > On Wed, Mar 01, 2006 at 03:03:17PM -0800, Junio C Hamano wrote:
+> > > I suspect "git push --thin origin" might help, if you are on my
+> > > "master" branch:
+> > > 
+> > >         diff-tree a79a276... (from 2245be3...)
+> > >         Author: Junio C Hamano <junkio@cox.net>
+> > >         Date:   Mon Feb 20 00:09:41 2006 -0800
+> > > 
+> > >             Add git-push --thin.
+> > > 
+> > >             Maybe we would want to make this default before it graduates to
+> > >             the master branch, but in the meantime to help testing things,
+> > >             this allows you to say "git push --thin destination".
+> > > 
+> > >             Signed-off-by: Junio C Hamano <junkio@cox.net>
+> > 
+> > Will try that.  I eventually gave up on the last push when it ran for 45
+> > minutes at full cpu usage, and X got killed by the OOM killer in the
+> > kernel for some reason...
+> 
+> Nice, this worked!
+> 
+> Now what's the odds that when I pull from the server to another box
+> these same objects, the server will have the same problem as git-push
+> did?
 
-I'm a physics PhD student, not much experienced in serious software
-writing, but I've got to the point where I felt learning to use a
-version control system would be worthwhile.  I decided to go for git
-rather than CVS or Subversion because I felt a distributed VCS would
-have more potential for future projects.
+Ok, no problem there either.
 
-However, I've been experiencing some difficulties with using git, with
-the results of commands not always being what the tutorial
-<http://www.kernel.org/pub/software/scm/git/docs/tutorial.html> says it
-should be.  So, I'm hoping someone here can advise me!
+thanks for the pointer to that option.
 
-I'm using openSUSE 10.0 and the package installed is git-core version
-0.99.3git20050905-2.
-
-The problem is to do with branches.  Wanting to make some trial
-revisions, I typed,
-
-    git branch trial
-
-to create an appropriate branch.  However, typing "git branch"
-afterwards results in an error message: "git branch: I want a branch
-name".  No list of branches as the tutorial suggests!
-
-However, I can use git checkout trial, make edits, and then go back to
-git checkout master, and switch between the two, with the revisions in
-one but not in the other.  So the branches do seem to exist, and I can
-modify them separately as one should be able to.
-
-Now, having played around with the changes and found that they really
-work very well, I'd like to merge the changes in the trial branch back
-into the master.  So, as per the tutorial, I type, git pull trial; and
-am told, "No such remote branch: trial".  I've also tried, git pull .
-trial, which has the result, "No such remote branch: .".
-
-I also note that when I'm in the master branch, having used git checkout
-master, if I go into gitk, it does not show the existence of the trial
-branch: but if I go into git checkout trial, it does.  But the two
-appear to be shown as completely separate entities.
-
-Just as a test, I tried creating a throwaway branch,
-
-    git branch silly
-
-which I then tried to delete with git branch -D silly.  However, this
-didn't delete the silly branch: it created a new one called -D (and both
-of these *did* show up in gitk under the master branch).  Using
-git-branch instead of git branch results in an error message: "bash:
-git-branch: command not found".
-
-The result is that I'm kind of confused.  I'd like to understand why the
-commands I've tried from the tutorial haven't produced the results the
-tutorial claims they will; but I'd also like to solve the original
-problem: how just to merge the stuff in my trial branch back into the
-master.
-
-I suspect this might be simply that the SUSE package has some problems. 
-For example, it doesn't appear to have any man pages included. :-(
-
-Thanks for any advice,
-
-Best wishes,
-
-        -- Joe
+greg k-h
