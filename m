@@ -1,35 +1,33 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Teach git-checkout-index to use file suffixes.
-Date: Thu, 2 Mar 2006 12:10:09 -0500
-Message-ID: <20060302171009.GD18929@spearce.org>
-References: <20060301044132.GF22894@spearce.org> <20060301150629.GB3456@spearce.org> <slrne0bh1p.fr9.mdw@metalzone.distorted.org.uk> <20060302065136.GA6377@spearce.org> <7vbqwp6zvg.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Prevent --index-info from ignoring -z.
+Date: Thu, 2 Mar 2006 12:21:33 -0500
+Message-ID: <20060302172133.GA19111@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 02 18:11:46 2006
+X-From: git-owner@vger.kernel.org Thu Mar 02 18:22:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FErK1-0002T8-4X
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 18:10:37 +0100
+	id 1FErUi-0005Eq-Ph
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 18:21:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbWCBRKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 12:10:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbWCBRKO
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 12:10:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:47567 "EHLO
+	id S1751589AbWCBRVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 12:21:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751593AbWCBRVh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 12:21:37 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:28369 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1752018AbWCBRKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Mar 2006 12:10:12 -0500
+	id S1751589AbWCBRVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Mar 2006 12:21:37 -0500
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FErJV-000203-FK; Thu, 02 Mar 2006 12:10:05 -0500
+	id 1FErUX-0002Gb-Rn
+	for git@vger.kernel.org; Thu, 02 Mar 2006 12:21:29 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2D0EC20FBBF; Thu,  2 Mar 2006 12:10:09 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id 9D68A20FBBF; Thu,  2 Mar 2006 12:21:33 -0500 (EST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vbqwp6zvg.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,68 +40,46 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17097>
 
-Junio C Hamano <junkio@cox.net> wrote:
-[...]
-> However, --stage=all with --suffix would introduce name clashes
-> between repeated conflicted merge runs, which requires Porcelain
-> to be extra careful.  Your last merge run might have involved
-> three conflicting stages (leaving a.c~1, a.c~2, and a.c~3 in
-> your working tree) and this time it may be "we removed it while
-> they modified it" situation (needing to extract a.c~1, a.c~3 but
-> not a.c~2).  The Porcelain needs to make sure not to get
-> confused by leftover a.c~2 file in the working tree from the
-> previous run.
+If git-update-index --index-info -z is used only the first
+record given to the process will actually be updated as
+the -z option is ignored until after all index records
+have been read and processed.  This meant that multiple
+null terminated records were seen as a single record which
+was lacking a trailing LF, however since the first record
+ended in a null the C string handling functions ignored the
+trailing garbage.  So --index-info should be required to be
+the last command line option, much as --stdin is required
+to be the last command line option.  Because --index-info
+implies --stdin this isn't an issue as the user shouldn't
+be passing --stdin when also passing --index-info.
 
-Clearly.  pg was trying to delete all of those files before doing its
-merge work but failed because of the --ignored bug in git-ls-files;
-but this is now fixed.  Still a possibility for confusion does exist.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-But in at least one case my Porcelain is Eclipse and a Cygwin
-prompt.  In this case I want to view and edit everything in Eclipse.
-Having all of the files in the same directory just makes it easier
-to view.  Random temporary names in the same directory as the tracked
-file would be OK except if I had multiple conflicts in the same
-directory, in which case I need some easy way to tell them apart.
-At which point we're starting to derive off the tracked file name
-and might as well always use well-known names.
- 
-> If what you are trying is to reduce the number of checkout-index
-> calls by your Porcelain to extract conflicted stages, it _might_
-> make more sense to do something like this instead (I am thinking
-> aloud, so take this with a big grain of salt -- it may not make
-> sense at all):
-> 
->     checkout-index --stage=all checks out higher-order stages in
->     made-up temporary filenames, just like git-merge-one-file
->     does using git-unpack-file one-by-one, with a single
->     invocation.
-> 
->     It reports the following to its standard output, one record
->     per pathname in the index:
-> 
-> 	tmp1 <SP> tmp2 <SP> tmp3 <TAB> pathname <RS>
-[...]
+---
 
-That's not a bad idea.  The only thing I don't like about that
-is that git-checkout-index won't build the directory tree for me;
-the Porcelain must still be responsible for doing that before it
-can rename the temporary files (if available) into the correct
-subdirectory.
+ update-index.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-My plan with git-checkout-index though was originally to just have
-it fail if the file already exists, unless -f is given.  So if
-a left-over foo.c#2 was still on disk and git-checkout-index was
-going to write to that name it would fail.
-
-
-I see a lot of benefit from the checkout to temporary file names
-and let the Porcelian rename (if it desires).
-
-So I'm going to ask you to withdraw the --suffix patch from pu.
-I'll write up a new patch using the ideas you suggest above and
-submit that instead.
-
+base eab8a06b5f0937ead199cbd35950a213486f34eb
+last 77565623e6c7a02ead3d080816c761da85421781
+diff --git a/update-index.c b/update-index.c
+index ce1db38..797245a 100644
+--- a/update-index.c
++++ b/update-index.c
+@@ -577,9 +577,11 @@ int main(int argc, const char **argv)
+ 				break;
+ 			}
+ 			if (!strcmp(path, "--index-info")) {
++				if (i != argc - 1)
++					die("--index-info must be at the end");
+ 				allow_add = allow_replace = allow_remove = 1;
+ 				read_index_info(line_termination);
+-				continue;
++				break;
+ 			}
+ 			if (!strcmp(path, "--ignore-missing")) {
+ 				not_new = 1;
 -- 
-Shawn.
+1.2.3.g5f0e
