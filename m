@@ -1,67 +1,56 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: windows problems summary
-Date: Thu, 2 Mar 2006 17:33:02 +0100
-Message-ID: <81b0412b0603020833j214556bek887c53a3ef43fd58@mail.gmail.com>
-References: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com>
-	 <Pine.LNX.4.63.0603021636020.30490@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
+Date: Thu, 2 Mar 2006 11:44:05 -0500
+Message-ID: <20060302164405.GB7292@trixie.casa.cgf.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 02 17:34:38 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Mar 02 17:45:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEqjl-0001nn-FT
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 17:33:11 +0100
+	id 1FEquS-0004au-4N
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 17:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095AbWCBQdG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 11:33:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751585AbWCBQdG
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 11:33:06 -0500
-Received: from nproxy.gmail.com ([64.233.182.200]:32828 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751095AbWCBQdE convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 11:33:04 -0500
-Received: by nproxy.gmail.com with SMTP id m19so306107nfc
-        for <git@vger.kernel.org>; Thu, 02 Mar 2006 08:33:03 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Zug/ELKqSzT05EFKGKLWVOtUx4c3h5uFYQNQ5/gesG8PnTda849S03dzyS9HL/FK8R9hjR39jjfMMFwUVURKyYmqDeV/G79YKh6P0550ycW43T2AjvYJlZWWaPFRxNlZARW9iFx2zzjOZzFf1hb7GQUV3Iern/d9a+XLN28uJFw=
-Received: by 10.49.11.18 with SMTP id o18mr734586nfi;
-        Thu, 02 Mar 2006 08:33:02 -0800 (PST)
-Received: by 10.49.88.16 with HTTP; Thu, 2 Mar 2006 08:33:02 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0603021636020.30490@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751586AbWCBQoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 11:44:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbWCBQoI
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 11:44:08 -0500
+Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:17043 "EHLO
+	cgf.cx") by vger.kernel.org with ESMTP id S1751586AbWCBQoH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 11:44:07 -0500
+Received: by cgf.cx (Postfix, from userid 201)
+	id 5D3F15A800C; Thu,  2 Mar 2006 11:44:05 -0500 (EST)
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17092>
 
-On 3/2/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> > 1. opened and mmaped files can't be removed or renamed
-> >   (caused workaround with reading index in memory)
->
-> It was not the locking which caused the workaround. It was the
-> not-working. (I still have to find a Windows machine where git-whatchanged
-> does not segfault without NO_MMAP.)
+So to summarize:
 
-me too. It crashes everywhere here.
+If anyone has a problem with Cygwin where signals do not seem to be
+working, I'd appreciate a bug report to the Cygwin list.  We really do
+expect that things should work and want to fix things if they don't.
 
-> > 4. non-unix permissions model
-> >   (breaks x-attr)
-> > 5. real slow filesystems and caching
-> >   (makes everything slow. I noticed I'm trying to avoid git status!).
-> >   Caused workaround with manual checkout)
-> > 6. real slow program startup
-> >   (makes everything slow, eventually may cause everything being put
-> >   in one super-executable, just to avoid spawning new processes,
-> >   with all associated problems. Makes scripting harder)
->
-> Except for (4), these issues should be resolvable by the libifying effort.
->
+If that isn't possible to use the Cygwin list for some reason, I will
+continue to read this mailing list and respond to Cygwin problems but I
+would appreciate it if any Cygwin problem report contained details for
+reproducing the problem.  We usually point people to this page
+http://cygwin.com/problems.html when they have problems.  The basic take
+away from that page is to provide the cygcheck output which shows what
+settings have been used for your Cygwin installation.  The interesting
+stuff in that output is the cygwin mount points, the CYGWIN environment
+variable, and version information about the Cygwin DLL.
 
-How can it help with 5? Less accesses to index?
+The Cygwin web site is http://cygwin.com/ and it has a lot of information
+about Cygwin.  Some of it is undoubtedly out-of-date or unclear but we
+do try to improve things if they are brought to our attention.
+
+I don't see any reason to respond to this thread any further but I will
+continue to rectify any misstatements that I see being made about
+Windows or Cygwin here.
+
+cgf (Cygwin Maintainer)
