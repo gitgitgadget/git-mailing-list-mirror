@@ -1,59 +1,56 @@
-From: "Luck, Tony" <tony.luck@intel.com>
-Subject: [PATCH] annotate should number lines starting with 1
-Date: Thu, 2 Mar 2006 15:27:31 -0800
-Message-ID: <200603022327.k22NRVek023304@agluck-lia64.sc.intel.com>
-X-From: git-owner@vger.kernel.org Fri Mar 03 00:28:06 2006
+From: Greg KH <greg@kroah.com>
+Subject: Re: Problems with using git
+Date: Thu, 2 Mar 2006 15:21:51 -0800
+Message-ID: <20060302232151.GA12252@kroah.com>
+References: <44063B7C.40609@webdrake.net> <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org> <4406F8B1.9050303@webdrake.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 03 00:34:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FExCp-0007CS-Qw
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 00:27:39 +0100
+	id 1FExJc-0000K8-ET
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 00:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751076AbWCBX1c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 18:27:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbWCBX1c
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 18:27:32 -0500
-Received: from fmr23.intel.com ([143.183.121.15]:58819 "EHLO
-	scsfmr003.sc.intel.com") by vger.kernel.org with ESMTP
-	id S1751076AbWCBX1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Mar 2006 18:27:32 -0500
-Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
-	by scsfmr003.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id k22NRVee008172
-	for <git@vger.kernel.org>; Thu, 2 Mar 2006 23:27:31 GMT
-Received: from intel.com (agluck-lia64.sc.intel.com [10.3.52.217])
-	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id k22NRVEJ009016
-	for <git@vger.kernel.org>; Thu, 2 Mar 2006 23:27:31 GMT
-Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
-	by intel.com (Postfix) with ESMTP id A313319F63
-	for <git@vger.kernel.org>; Thu,  2 Mar 2006 15:27:31 -0800 (PST)
-Received: (from aegl@localhost)
-	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id k22NRVek023304;
-	Thu, 2 Mar 2006 15:27:31 -0800
-To: git@vger.kernel.org
-X-Scanned-By: MIMEDefang 2.52 on 10.3.253.9
+	id S1752088AbWCBXed (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 18:34:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbWCBXed
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 18:34:33 -0500
+Received: from mail.kroah.org ([69.55.234.183]:37286 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S1752088AbWCBXed (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 18:34:33 -0500
+Received: from [192.168.0.10] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k22NYRK24524;
+	Thu, 2 Mar 2006 15:34:27 -0800
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1FEx7H-3Cd-00; Thu, 02 Mar 2006 15:21:51 -0800
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+Content-Disposition: inline
+In-Reply-To: <4406F8B1.9050303@webdrake.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17121>
 
-C programmers are well used to counting from zero, but every
-other text file tool starts counting from 1.
+On Thu, Mar 02, 2006 at 01:52:49PM +0000, Joseph Wakeling wrote:
+> Thanks very much to all who offered advice on this. :-)
+> 
+> Unfortunately openSUSE is somewhat out of sync not just with git but in
+> libraries necessary to install the latest version (libcrypto.so.4,
+> libssl.so.4).  The openssl (0.9.7g-2.4) and openssl-devel (0.9.7g-2)
+> packages don't contain these but rather contain libcrypto.so.0.9.7 and
+> libssl.0.9.7.  Just in case it's important to future git development.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+If you use the latest openSUSE betas or the FACTORY tree, git 1.1.3 is
+available there.
 
----
+10.0 was released six months or so ago, so that is why it contains an
+older version of git.
 
-diff --git a/git-annotate.perl b/git-annotate.perl
-index 08d479f..d93ee19 100755
---- a/git-annotate.perl
-+++ b/git-annotate.perl
-@@ -128,7 +128,7 @@ foreach my $l (@filelines) {
- 	}
- 
- 	printf("%s\t(%10s\t%10s\t%d)%s\n", $rev, $committer,
--		format_date($date), $i++, $output);
-+		format_date($date), ++$i, $output);
- }
- 
- sub init_claim {
+thanks,
+
+greg k-h
