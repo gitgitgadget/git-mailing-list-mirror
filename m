@@ -1,56 +1,64 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: git-annotate dies when a patch is missing trailing newline
-Date: Thu, 2 Mar 2006 13:53:21 +1300
-Message-ID: <46a038f90603011653l7956d5dat99d88a7da98d21b6@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Problems with using git
+Date: Thu, 02 Mar 2006 02:24:14 +0100
+Message-ID: <4406493E.3000701@op5.se>
+References: <44063B7C.40609@webdrake.net> <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Mar 02 01:53:35 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Joseph Wakeling <joseph.wakeling@webdrake.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 02 02:24:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEc4L-0004WX-KF
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:53:27 +0100
+	id 1FEcYF-0002a7-IQ
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 02:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbWCBAxX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 19:53:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbWCBAxX
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:53:23 -0500
-Received: from wproxy.gmail.com ([64.233.184.207]:61859 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750851AbWCBAxW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 19:53:22 -0500
-Received: by wproxy.gmail.com with SMTP id i32so283131wra
-        for <git@vger.kernel.org>; Wed, 01 Mar 2006 16:53:21 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=l022qQWWvDYZ07NKf5MdUXXuPJ+bV170rx3yyTYcv1NcXe3Q1H0psTI7tmlo+rDOEMv3vwPSsTkrf8Bg/OjQ8Muy7XzCVf3FXZD0UTLmQGZDMtcx5w5fGzWP5SmvGN/evTFRO9UUffFCsV9pUELaDCbQpbV1OFlS+4/3qvN8Y8I=
-Received: by 10.54.153.11 with SMTP id a11mr362388wre;
-        Wed, 01 Mar 2006 16:53:21 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Wed, 1 Mar 2006 16:53:21 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Ryan Anderson" <ryan@michonline.com>
-Content-Disposition: inline
+	id S1751271AbWCBBYQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 20:24:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbWCBBYQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 20:24:16 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:19670 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751271AbWCBBYQ
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 20:24:16 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 391526BCBE; Thu,  2 Mar 2006 02:24:15 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17038>
 
-Ryan, (& list)
+Linus Torvalds wrote:
+> 
+> On Thu, 2 Mar 2006, Joseph Wakeling wrote:
+> 
+>>I'm using openSUSE 10.0 and the package installed is git-core version
+>>0.99.3git20050905-2.
+> 
+> 
+> I think your problems are just related to the fact that the tutorial is 
+> newer than your git version.
+> 
+> Just fetch a newer version of git first (0.99.3 should be new enough to 
+> happily fetch a newer version using git itself, but it might be easier to 
+> just get a tar-ball), and you'll have an easier time at it.
+> 
 
-git-annotate is dying when a patch is missing trailing newline. There
-_are_ valid situations where code files are not expected to have
-trailing newlines. Just thing of that glorious programming language,
-PHP.
+... and the way to fetch and install that repo with your current git is:
 
-(Ducks).
+	$ git clone git://git.kernel.org/pub/scm/git/git.git git
+	$ cd git && make all strip install
 
-Actually, 99% of my usage of git is tracking CVS projects so this is a
-bit of a problem.
+There are 2215 commits since 0.99.3, so I think you'll find much has 
+changed since then.
 
-I had fixed it in Johannes version, but I'm lost as to where to fix it
-in the current git-annotate. Help?
-
-
-martin
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
