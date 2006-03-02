@@ -1,70 +1,90 @@
-From: Aubrey <aubreylee@gmail.com>
-Subject: Newbie question: git tag failure
-Date: Thu, 2 Mar 2006 23:51:04 +0800
-Message-ID: <6d6a94c50603020751v4bb96b75q1686d36b32e2c40f@mail.gmail.com>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: Newbie question: git tag failure
+Date: Thu, 2 Mar 2006 16:54:18 +0100
+Message-ID: <20060302155418.GZ19232@lug-owl.de>
+References: <6d6a94c50603020751v4bb96b75q1686d36b32e2c40f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Mar 02 16:52:42 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nRb24sRrY2rSsMZw"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 02 16:55:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEq58-0008Qp-Dh
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 16:51:10 +0100
+	id 1FEq8H-0000rX-CF
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 16:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbWCBPvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 10:51:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbWCBPvG
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 10:51:06 -0500
-Received: from zproxy.gmail.com ([64.233.162.204]:24892 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751547AbWCBPvF convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 10:51:05 -0500
-Received: by zproxy.gmail.com with SMTP id 13so456288nzp
-        for <git@vger.kernel.org>; Thu, 02 Mar 2006 07:51:04 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=jhGfSpVlY3wYaocUcIF2S0oaLHyxOofaO6FU8GVRMsCzjJX9yIgGAAKtK/hiRYoP6M0+ccnyvFtiw0RXERhNr9xniF1uxWoiNPVv7ZVxcP1hnoJ5OaYQ/2eiFQ8xYu0txuoPbsiTi5uXpL3IHZEmGZmENPzE1BTotUpnCkeEO5Q=
-Received: by 10.65.148.14 with SMTP id a14mr748637qbo;
-        Thu, 02 Mar 2006 07:51:04 -0800 (PST)
-Received: by 10.65.185.6 with HTTP; Thu, 2 Mar 2006 07:51:04 -0800 (PST)
-To: git@vger.kernel.org
+	id S1751978AbWCBPyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 10:54:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbWCBPyW
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 10:54:22 -0500
+Received: from lug-owl.de ([195.71.106.12]:24498 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S1751978AbWCBPyV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 10:54:21 -0500
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id 3AE5AF0034; Thu,  2 Mar 2006 16:54:18 +0100 (CET)
+To: Aubrey <aubreylee@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <6d6a94c50603020751v4bb96b75q1686d36b32e2c40f@mail.gmail.com>
+X-Operating-System: Linux mail 2.6.12.3lug-owl 
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17083>
 
-There are two commit. I want to tag one commit by commit id, but failed.
-Thanks for any hints.
 
-Regards,
--Aubrey
+--nRb24sRrY2rSsMZw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-aubrey@linux:~/local/mygit> git log
-===============================================================
-commit a8ac6540cf96f79225cc8457b02cb90d40ac7991
-Author: Aubrey.Li <aubrey@linux.site>
-Date:   Thu Mar 2 23:34:18 2006 +0800
+On Thu, 2006-03-02 23:51:04 +0800, Aubrey <aubreylee@gmail.com> wrote:
+> aubrey@linux:~/local/mygit>git tag -u
+> 43368b967bd838292b8cc6b576c5aa13850551cc v2.5
+> gpg: directory `/home/aubrey/.gnupg' created
+> gpg: new configuration file `/home/aubrey/.gnupg/gpg.conf' created
+> gpg: WARNING: options in `/home/aubrey/.gnupg/gpg.conf' are not yet
+> active during this run
+> gpg: keyring `/home/aubrey/.gnupg/secring.gpg' created
+> gpg: keyring `/home/aubrey/.gnupg/pubring.gpg' created
+> gpg: skipped "43368b967bd838292b8cc6b576c5aa13850551cc": secret key
+> not available
+> gpg: signing failed: secret key not available
+> failed to sign the tag with GPG.
 
-    add commit log
+You seem to not have a working GnuPG installation, inclusing an
+(already present) private key. Please first get familiar with GnuPG,
+then try to use it :-)  "gpg --gen-key" may help.
 
-commit 43368b967bd838292b8cc6b576c5aa13850551cc
-Author: Aubrey.Li <aubrey@linux.site>
-Date:   Thu Mar 2 22:24:55 2006 +0800
+MfG, JBG
 
-    Initial commit
-===============================================================
-aubrey@linux:~/local/mygit>git tag -u
-43368b967bd838292b8cc6b576c5aa13850551cc v2.5
-gpg: directory `/home/aubrey/.gnupg' created
-gpg: new configuration file `/home/aubrey/.gnupg/gpg.conf' created
-gpg: WARNING: options in `/home/aubrey/.gnupg/gpg.conf' are not yet
-active during this run
-gpg: keyring `/home/aubrey/.gnupg/secring.gpg' created
-gpg: keyring `/home/aubrey/.gnupg/pubring.gpg' created
-gpg: skipped "43368b967bd838292b8cc6b576c5aa13850551cc": secret key
-not available
-gpg: signing failed: secret key not available
-failed to sign the tag with GPG.
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
+m Irak!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--nRb24sRrY2rSsMZw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEBxUqHb1edYOZ4bsRAkzZAJ9SXQ49GG68SLMjuMfLpvzCubPNWQCcCIUP
+/65LfcxP0IovMRlwFvKTTcE=
+=hCWx
+-----END PGP SIGNATURE-----
+
+--nRb24sRrY2rSsMZw--
