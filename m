@@ -1,71 +1,127 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: git doesn't like big files when pushing
-Date: Wed, 1 Mar 2006 16:34:18 -0800
-Message-ID: <20060302003418.GA11119@kroah.com>
-References: <20060301220802.GA18250@kroah.com> <20060301220840.GB18250@kroah.com> <7v8xrtepje.fsf@assigned-by-dhcp.cox.net> <20060301232719.GA22068@kroah.com> <20060301233506.GA25209@kroah.com>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsserver: Checkout correctly on Eclipse
+Date: Thu, 2 Mar 2006 13:58:57 +1300
+Message-ID: <11412611372638-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Mar 02 01:34:48 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Mar 02 01:42:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEbmJ-0000WC-Pv
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:34:48 +0100
+	id 1FEbu3-0002Et-5S
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:42:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750917AbWCBAep (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 19:34:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbWCBAep
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:34:45 -0500
-Received: from mail.kroah.org ([69.55.234.183]:18324 "EHLO perch.kroah.org")
-	by vger.kernel.org with ESMTP id S1750917AbWCBAeo (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 19:34:44 -0500
-Received: from [192.168.0.10] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
-	(authenticated)
-	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k220YdK00994;
-	Wed, 1 Mar 2006 16:34:39 -0800
-Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
- id 1FEblt-2vJ-00; Wed, 01 Mar 2006 16:34:21 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060301233506.GA25209@kroah.com>
-User-Agent: Mutt/1.5.11
+	id S1751006AbWCBAmn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 19:42:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbWCBAmn
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:42:43 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:47496 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S1751006AbWCBAmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 19:42:42 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1FEbtw-0001W6-AR; Thu, 02 Mar 2006 13:42:40 +1300
+Received: from mltest ([127.0.0.1])
+	by mltest with smtp (Exim 3.36 #1 (Debian))
+	id 1FEc9h-0006Og-00; Thu, 02 Mar 2006 13:58:57 +1300
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17034>
 
-On Wed, Mar 01, 2006 at 03:35:06PM -0800, Greg KH wrote:
-> On Wed, Mar 01, 2006 at 03:27:19PM -0800, Greg KH wrote:
-> > On Wed, Mar 01, 2006 at 03:03:17PM -0800, Junio C Hamano wrote:
-> > > I suspect "git push --thin origin" might help, if you are on my
-> > > "master" branch:
-> > > 
-> > >         diff-tree a79a276... (from 2245be3...)
-> > >         Author: Junio C Hamano <junkio@cox.net>
-> > >         Date:   Mon Feb 20 00:09:41 2006 -0800
-> > > 
-> > >             Add git-push --thin.
-> > > 
-> > >             Maybe we would want to make this default before it graduates to
-> > >             the master branch, but in the meantime to help testing things,
-> > >             this allows you to say "git push --thin destination".
-> > > 
-> > >             Signed-off-by: Junio C Hamano <junkio@cox.net>
-> > 
-> > Will try that.  I eventually gave up on the last push when it ran for 45
-> > minutes at full cpu usage, and X got killed by the OOM killer in the
-> > kernel for some reason...
-> 
-> Nice, this worked!
-> 
-> Now what's the odds that when I pull from the server to another box
-> these same objects, the server will have the same problem as git-push
-> did?
+Initial checkouts were failing to create Entries files under Eclipse.
+Eclipse was waiting for two non-standard directory-resets to prepare for a new
+directory from the server.
 
-Ok, no problem there either.
+This patch is tricky, because the same directory resets tend to confuse other
+clients. It's taken a bit of fiddling to get the commandline cvs client and
+Eclipse to get a good, clean checkout.
 
-thanks for the pointer to that option.
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
-greg k-h
+
+---
+
+Heh! Using git-format-patch I make sure I don't send you stray spaces ;-)
+
+(actually, I am back to using cperl-mode which highlights trailing ws)
+
+I'll rewind/reset my 'cvsserver' branch so it's all clean and you can pull
+from it and not fear white space monsters.
+
+cheers,
+
+
+martin
+---
+
+ git-cvsserver.perl |   33 ++++++++++++++++++++++++++-------
+ 1 files changed, 26 insertions(+), 7 deletions(-)
+
+6a6ad59c4979e88e7f2a7b0997a3eb9fa115d6a7
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 3c588c9..d641c03 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -571,8 +571,19 @@ sub req_co
+     my $updater = GITCVS::updater->new($state->{CVSROOT}, $module, $log);
+     $updater->update();
+ 
++    $checkout_path =~ s|/$||; # get rid of trailing slashes
++
++    # Eclipse seems to need the Clear-sticky command
++    # to prepare the 'Entries' file for the new directory.
++    print "Clear-sticky $checkout_path/\n";
++    print $state->{CVSROOT} . "/$checkout_path/\n";
++    print "Clear-static-directory $checkout_path/\n";
++    print $state->{CVSROOT} . "/$checkout_path/\n";
++
+     # instruct the client that we're checking out to $checkout_path
+-    print "E cvs server: updating $checkout_path\n";
++    print "E cvs checkout: Updating $checkout_path\n";
++
++    my %seendirs = ();
+ 
+     foreach my $git ( @{$updater->gethead} )
+     {
+@@ -585,16 +596,24 @@ sub req_co
+         print "Mod-time $git->{modified}\n";
+ 
+         # print some information to the client
+-        print "MT +updated\n";
+-        print "MT text U \n";
+         if ( defined ( $git->{dir} ) and $git->{dir} ne "./" )
+         {
+-            print "MT fname $checkout_path/$git->{dir}$git->{name}\n";
++            print "M U $checkout_path/$git->{dir}$git->{name}\n";
+         } else {
+-            print "MT fname $checkout_path/$git->{name}\n";
++            print "M U $checkout_path/$git->{name}\n";
+         }
+-        print "MT newline\n";
+-        print "MT -updated\n";
++
++	if (length($git->{dir}) && $git->{dir} ne './' && !exists($seendirs{$git->{dir}})) {
++
++	    # Eclipse seems to need the Clear-sticky command
++	    # to prepare the 'Entries' file for the new directory.
++	    print "Clear-sticky $module/$git->{dir}\n";
++	    print $state->{CVSROOT} . "/$module/$git->{dir}\n";
++	    print "Clear-static-directory $module/$git->{dir}\n";
++	    print $state->{CVSROOT} . "/$module/$git->{dir}\n";
++	    print "E cvs checkout: Updating /$module/$git->{dir}\n";
++	    $seendirs{$git->{dir}} = 1;
++	}
+ 
+         # instruct client we're sending a file to put in this path
+         print "Created $checkout_path/" . ( defined ( $git->{dir} ) and $git->{dir} ne "./" ? $git->{dir} . "/" : "" ) . "\n";
+-- 
+1.2.3.g67153
