@@ -1,63 +1,53 @@
-From: Christopher Faylor <me@cgf.cx>
+From: "Alex Riesen" <raa.lkml@gmail.com>
 Subject: Re: windows problems summary
-Date: Thu, 2 Mar 2006 10:23:29 -0500
-Message-ID: <20060302152329.GH2781@trixie.casa.cgf.cx>
+Date: Thu, 2 Mar 2006 16:35:29 +0100
+Message-ID: <81b0412b0603020735j603b3518ob5e27a02c531093a@mail.gmail.com>
 References: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com>
+	 <20060302152329.GH2781@trixie.casa.cgf.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Mar 02 16:24:29 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 02 16:35:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEpeO-0001ep-MT
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 16:23:34 +0100
+	id 1FEpq4-0004Zb-Bw
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 16:35:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbWCBPXa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 10:23:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbWCBPXa
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 10:23:30 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:955 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1751429AbWCBPX3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 10:23:29 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id 393055A800C; Thu,  2 Mar 2006 10:23:29 -0500 (EST)
-To: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1751230AbWCBPfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 10:35:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbWCBPfb
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 10:35:31 -0500
+Received: from nproxy.gmail.com ([64.233.182.199]:48205 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750823AbWCBPfb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 10:35:31 -0500
+Received: by nproxy.gmail.com with SMTP id g2so297117nfe
+        for <git@vger.kernel.org>; Thu, 02 Mar 2006 07:35:30 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m5tTiyp9A4y7ihvDcHFEKE2GusiSomBX/iIZ/UAjT1y9xn8ef/UfGbBo7ghJ/5WpQ8a8GTG8LKVUqf/93hUW7oiBKxMWrO/L9uEuuD2A/c++5tk+JA46QnvD5TJSNz86n4AU8hGc7kJ2fqNNAV/pQVMw9J5RYLS5TZUtH0Qf63U=
+Received: by 10.48.213.18 with SMTP id l18mr693595nfg;
+        Thu, 02 Mar 2006 07:35:29 -0800 (PST)
+Received: by 10.49.88.16 with HTTP; Thu, 2 Mar 2006 07:35:29 -0800 (PST)
+To: "Christopher Faylor" <me@cgf.cx>
+In-Reply-To: <20060302152329.GH2781@trixie.casa.cgf.cx>
 Content-Disposition: inline
-In-Reply-To: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17080>
 
-On Thu, Mar 02, 2006 at 03:49:24PM +0100, Alex Riesen wrote:
->This is just to summarize all the problems which make porting to that
->thing so boring. Maybe if we have them all on one page, it'd be easier
->to locate the workarounds (it can be one thread, for example).
+On 3/2/06, Christopher Faylor <me@cgf.cx> wrote:
 >
->1. opened and mmaped files can't be removed or renamed
->  (caused workaround with reading index in memory)
->2. command can safely contain only one argument
->  (breaks and complicates passing things between processes)
->3. no fork
->  (slows down and complicates passing things between processes)
->4. non-unix permissions model
->  (breaks x-attr)
->5. real slow filesystems and caching
->  (makes everything slow. I noticed I'm trying to avoid git status!).
->  Caused workaround with manual checkout)
->6. real slow program startup
->  (makes everything slow, eventually may cause everything being put
->  in one super-executable, just to avoid spawning new processes,
->  with all associated problems. Makes scripting harder)
+> Are we *really* contemplating porting git to native Windows?
 >
->I hope this message can be a start of a big porting thread,
->even though it is only about windows at the moment.
 
-Are we *really* contemplating porting git to native Windows?
-
-I guess I missed that memo.
-
-cgf
+Actually, I wasn't thinking about that when I was writing that mail,
+but ... why not?
+Cygwin makes syscalls many times slower, git is very slow on
+windows, users (well, I) want it faster, so if the needed api subset
+can be narrowed down to a reasonable amount of work - I think
+I'd give the idea a try.
