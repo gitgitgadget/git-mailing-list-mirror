@@ -1,81 +1,60 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] annotate: fix -S parameter to take a string
-Date: Thu, 2 Mar 2006 17:24:30 +1300
-Message-ID: <11412734703272-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-annotate dies when a patch is missing trailing newline
+Date: Thu, 2 Mar 2006 17:10:11 +1300
+Message-ID: <46a038f90603012010u2efaee26lef6cd95412fb47cb@mail.gmail.com>
+References: <46a038f90603011653l7956d5dat99d88a7da98d21b6@mail.gmail.com>
+	 <7vslq1d1pr.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90603011907h6d0d4450w426afb9ada33ddb0@mail.gmail.com>
+	 <7voe0pcy9c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Thu Mar 02 05:08:19 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 02 05:10:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEf6v-0002uh-4W
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 05:08:17 +0100
+	id 1FEf8s-0003FH-7j
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 05:10:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854AbWCBEIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 23:08:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbWCBEIO
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 23:08:14 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:24473 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1750917AbWCBEIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Mar 2006 23:08:13 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1FEf6q-00027L-0n; Thu, 02 Mar 2006 17:08:12 +1300
-Received: from mltest ([127.0.0.1])
-	by mltest with smtp (Exim 3.36 #1 (Debian))
-	id 1FEfMc-0008Vv-00; Thu, 02 Mar 2006 17:24:30 +1300
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org, junkio@cox.net
+	id S1751006AbWCBEKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 23:10:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbWCBEKO
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 23:10:14 -0500
+Received: from wproxy.gmail.com ([64.233.184.203]:11836 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751006AbWCBEKM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 23:10:12 -0500
+Received: by wproxy.gmail.com with SMTP id i20so314242wra
+        for <git@vger.kernel.org>; Wed, 01 Mar 2006 20:10:12 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eAenOt13aa16+s01fCl8L4nOBZsuREBhTgACnyV5IoSFz+uIhv05SxxwpHue9ulPgrp3VDsF+Kemzc2tXLgF8b44QsdcTgr1SyS447FUxaLqclc4emjhz6WRpRE5nk9OH6K3t4GaZ0Sl5IBpdexAD9IHTL91bFHh7YUZGAxdkpU=
+Received: by 10.54.152.5 with SMTP id z5mr566995wrd;
+        Wed, 01 Mar 2006 20:10:11 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Wed, 1 Mar 2006 20:10:11 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7voe0pcy9c.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17045>
 
-In the conversion to Getopt::Long, the -S / --rev-list parameter stopped
-working. We need to tell Getopt::Long that it is a string.
+On 3/2/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
+>
+> > Yes, excellent! BTW, I just realized that git-cvsserver is in master,
+> > but the "git-annotate -S" patch isn't there, so cvs annotate dies. Is
+> > anything holding the patch back in next?
+>
+> Is -S in next?
 
-As a bonus, the open() now does some useful error handling.
+Yes, but broken since it switched to Getopt::Long (grumble...). Patch
+should be hitting the list now, you can also pull it from my repo.
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+cheers,
 
----
 
-Or pull from my cvsserver branch.
-
----
-
- git-annotate.perl |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-5a44938cf5b79dd5d056075509f12b8e9a13e941
-diff --git a/git-annotate.perl b/git-annotate.perl
-index f9c2c6c..31318d3 100755
---- a/git-annotate.perl
-+++ b/git-annotate.perl
-@@ -31,7 +31,7 @@ our ($help, $longrev, $rename, $starting
- my $rc = GetOptions(	"long|l" => \$longrev,
- 			"help|h" => \$help,
- 			"rename|r" => \$rename,
--			"rev-file|S" => \$rev_file);
-+			"rev-file|S=s" => \$rev_file);
- if (!$rc or $help) {
- 	usage();
- }
-@@ -174,7 +174,8 @@ sub git_rev_list {
- 
- 	my $revlist;
- 	if ($rev_file) {
--		open($revlist, '<' . $rev_file);
-+		open($revlist, '<' . $rev_file)
-+		    or die "Failed to open $rev_file : $!";
- 	} else {
- 		$revlist = open_pipe("git-rev-list","--parents","--remove-empty",$rev,"--",$file)
- 			or die "Failed to exec git-rev-list: $!";
--- 
-1.2.4.g09a27-dirty
+martin
