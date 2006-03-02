@@ -1,57 +1,74 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: windows problems summary
-Date: Thu, 02 Mar 2006 21:07:32 +0100
-Message-ID: <44075084.6020602@op5.se>
-References: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com> <20060302152329.GH2781@trixie.casa.cgf.cx> <81b0412b0603020735j603b3518ob5e27a02c531093a@mail.gmail.com> <4fb292fa0603020757q4cd3e80cjbb63d0dc58d19756@mail.gmail.com> <20060302195450.GB6183@steel.home> <20060302195948.GA10740@trixie.casa.cgf.cx>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-branch: add -r switch to list refs/remotes/*
+Date: Thu, 2 Mar 2006 12:23:17 -0800
+Message-ID: <20060302202317.GA6708@hand.yhbt.net>
+References: <20060302055831.GA16600@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Mar 02 21:08:00 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Mar 02 21:23:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEu5N-0005uG-5E
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 21:07:41 +0100
+	id 1FEuKY-0000g1-Cd
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 21:23:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbWCBUHf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 15:07:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbWCBUHe
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 15:07:34 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:36837 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751311AbWCBUHe
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 15:07:34 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id DA4796BCBE
-	for <git@vger.kernel.org>; Thu,  2 Mar 2006 21:07:32 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <20060302195948.GA10740@trixie.casa.cgf.cx>
+	id S932500AbWCBUXT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 15:23:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932520AbWCBUXT
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 15:23:19 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:56794 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932500AbWCBUXT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 15:23:19 -0500
+Received: by hand.yhbt.net (Postfix, from userid 500)
+	id 15A182DC08D; Thu,  2 Mar 2006 12:23:18 -0800 (PST)
+To: git list <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20060302055831.GA16600@localdomain>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17105>
 
-Christopher Faylor wrote:
-> On Thu, Mar 02, 2006 at 08:54:50PM +0100, Alex Riesen wrote:
-> 
->>Bertrand Jacquin, Thu, Mar 02, 2006 16:57:42 +0100:
->>
->>>Is the goal to have something like a git-turtoise (as
->>>{svn,cvs}-turtoise) ?  I personaly think that is could be benefic.
->>
->>Not in the original post.  It just about making git faster and more
->>stable in Windows.
-> 
-> 
-> Can I request that people stop cc'ing me in this thread?
-> 
+If we decide to use refs/remotes/, having a convenient way to
+list them would be nice.
 
-That's most likely because people hit "reply all" so the reply goes to 
-the list as well. A "normal" reply would go only to you.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
+---
+
+ git-branch.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+05fb74c2a8d4bf3692a7553c5225d25ab54f358a
+diff --git a/git-branch.sh b/git-branch.sh
+index 6ac961e..663a3a3 100755
+--- a/git-branch.sh
++++ b/git-branch.sh
+@@ -48,6 +48,12 @@ If you are sure you want to delete it, r
+     exit 0
+ }
+ 
++ls_remote_branches () {
++    git-rev-parse --symbolic --all |
++    sed -ne 's|^refs/\(remotes/\)|\1|p' |
++    sort
++}
++
+ force=
+ while case "$#,$1" in 0,*) break ;; *,-*) ;; *) break ;; esac
+ do
+@@ -56,6 +62,10 @@ do
+ 		delete_branch "$@"
+ 		exit
+ 		;;
++	-r)
++		ls_remote_branches
++		exit
++		;;
+ 	-f)
+ 		force="$1"
+ 		;;
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.2.3.gc55f
