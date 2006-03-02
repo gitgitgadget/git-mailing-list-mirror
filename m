@@ -1,80 +1,49 @@
-From: Simon Richter <Simon.Richter@hogyros.de>
-Subject: Re: git doesn't like big files when pushing
-Date: Thu, 02 Mar 2006 13:43:06 +0100
-Message-ID: <4406E85A.9030908@hogyros.de>
-References: <20060301220802.GA18250@kroah.com> <Pine.LNX.4.64.0603011448230.22647@g5.osdl.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Teach git-checkout-index to read filenames from stdin.
+Date: Thu, 2 Mar 2006 14:12:06 +0100
+Message-ID: <81b0412b0603020512i429481f7i4a0dbe4599dbb5a6@mail.gmail.com>
+References: <20060301024333.GB21186@spearce.org>
+	 <20060301155053.GC1010@trixie.casa.cgf.cx>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig5F3E60271DBB6C461B18B6BE"
-Cc: Greg KH <greg@kroah.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 02 13:43:54 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 02 14:12:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEn9Z-0004aC-Ma
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 13:43:34 +0100
+	id 1FEnbJ-0002hw-1o
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 14:12:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433AbWCBMna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 07:43:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWCBMna
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 07:43:30 -0500
-Received: from kleinhenz.com ([213.239.205.196]:11749 "EHLO kleinhenz.com")
-	by vger.kernel.org with ESMTP id S1751433AbWCBMna (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 07:43:30 -0500
-Received: from [192.168.115.35] (p54994AEF.dip.t-dialin.net [84.153.74.239])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Simon Richter", Issuer "Kleinhenz Elektronik CA" (verified OK))
-	by kleinhenz.com (Postfix) with ESMTP id AB2954A8045;
-	Thu,  2 Mar 2006 13:43:14 +0100 (CET)
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051019)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603011448230.22647@g5.osdl.org>
-X-Enigmail-Version: 0.93.0.0
-OpenPGP: url=http://www.hogyros.de/simon.asc
+	id S1751000AbWCBNMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 08:12:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbWCBNMJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 08:12:09 -0500
+Received: from nproxy.gmail.com ([64.233.182.198]:55330 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751000AbWCBNMI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 08:12:08 -0500
+Received: by nproxy.gmail.com with SMTP id b2so274117nfe
+        for <git@vger.kernel.org>; Thu, 02 Mar 2006 05:12:07 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sbJ7UUica7/w9qQQDC5YhoSzSAqjIUzNBmZ3eQhCd5HEhd/kdbkhpkytK8l6oejFqzaKUh6RZsVgMhU/yAVKqtYlVMhtWo4BEIh2oe4PPXp/T5WAUvMCIaQKObMDE4gPVFqBegRkyi4etRhpa2hWV7X/1y9RiFNlcEjj44fsTOU=
+Received: by 10.48.225.15 with SMTP id x15mr627697nfg;
+        Thu, 02 Mar 2006 05:12:06 -0800 (PST)
+Received: by 10.49.88.16 with HTTP; Thu, 2 Mar 2006 05:12:06 -0800 (PST)
+To: "Christopher Faylor" <me@cgf.cx>
+In-Reply-To: <20060301155053.GC1010@trixie.casa.cgf.cx>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17066>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig5F3E60271DBB6C461B18B6BE
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On 3/1/06, Christopher Faylor <me@cgf.cx> wrote:
+>
+> For native Windows programs, the command line length is ~32K but I don't
+> think that git uses any native Windows programs, does it?
+>
 
-Hi,
-
-Linus Torvalds wrote:
-
-> But maybe it's really the case that you can't fit those 8 objects in 
-> memory. One option (which might also solve some of the performance issues) 
-> is to make the window be based on object _size_ rather than just be a 
-> fixed number (ie with an 80MB object, you'd only try a couple of objects 
-> around it, not the full window).
-
-Well, doesn't the pack process involve keeping objects of similar size 
-in memory next to each other? My suspicion is that the system is running 
-out of virtual address space because almost every malloc() will attempt 
-to get an entirely new block because the one that was just freed is a 
-few bytes too small.
-
-    Simon
-
---------------enig5F3E60271DBB6C461B18B6BE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iQCVAwUBRAboXVYr4CN7gCINAQL4WQP/SK/OrRW32f4lD4xIiLtUTS10rRbjjZdz
-hGbXGzzEKezuj9oT+sG5MLm1UxP7m0Gef+PMvfQIVGiKDuhSjG+ZkPUKBLfM4QGZ
-CMSoasmY7C6cCMi+kP1soCCqGR5eKHhM0Z23B9r/FOEakKqN7Hf78a9SESboUxoG
-+DOT2NqL/RA=
-=hYV1
------END PGP SIGNATURE-----
-
---------------enig5F3E60271DBB6C461B18B6BE--
+Yes, ActiveState Perl is as native as it gets.
