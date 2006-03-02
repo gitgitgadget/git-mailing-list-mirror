@@ -1,58 +1,70 @@
-From: Aubrey <aubreylee@gmail.com>
-Subject: git push issue
-Date: Thu, 2 Mar 2006 17:47:36 +0800
-Message-ID: <6d6a94c50603020147l450d1cdfp1bc1747dc79189ce@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git push issue
+Date: Thu, 02 Mar 2006 01:58:43 -0800
+Message-ID: <7v4q2h6ucs.fsf@assigned-by-dhcp.cox.net>
+References: <6d6a94c50603020147l450d1cdfp1bc1747dc79189ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Mar 02 10:47:44 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 02 10:59:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEkPN-0000c1-Cq
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 10:47:41 +0100
+	id 1FEkaI-0003DC-D1
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 10:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbWCBJri (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 04:47:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbWCBJri
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 04:47:38 -0500
-Received: from zproxy.gmail.com ([64.233.162.195]:41924 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751423AbWCBJrh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 04:47:37 -0500
-Received: by zproxy.gmail.com with SMTP id 13so384518nzn
-        for <git@vger.kernel.org>; Thu, 02 Mar 2006 01:47:36 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=nnYaSW0jANQwckSpJdye0RDgSVbG6eAj8iekeWxrqwAi/Q7fJ3NqW46rtAUpqBicBXS4k+MwHVabHck0bj83i3kZi4PiGjujEth5V68m1/XbmuYWGaouqPbMdYZ5zxwJlvHb9C2cBiR+3t/YI2d1OZVtccWmF1db/bCCCCpNgJ0=
-Received: by 10.65.250.11 with SMTP id c11mr570912qbs;
-        Thu, 02 Mar 2006 01:47:36 -0800 (PST)
-Received: by 10.65.185.6 with HTTP; Thu, 2 Mar 2006 01:47:36 -0800 (PST)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S932295AbWCBJ6q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 04:58:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932395AbWCBJ6q
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 04:58:46 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:23540 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932295AbWCBJ6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Mar 2006 04:58:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060302095509.KQDK17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 2 Mar 2006 04:55:09 -0500
+To: Aubrey <aubreylee@gmail.com>
+In-Reply-To: <6d6a94c50603020147l450d1cdfp1bc1747dc79189ce@mail.gmail.com>
+	(aubreylee@gmail.com's message of "Thu, 2 Mar 2006 17:47:36 +0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17061>
 
-Hi all,
+Aubrey <aubreylee@gmail.com> writes:
 
-I followed the instruction of here:
-http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html
-to publish my work.
-But I run into a problem when I run the command "git push", see below:
-======================================================
-aubrey@linux:~/public_html/u-boot.git> git push
-10.99.22.20:/home/aubrey/public_html/my-git.git master
-Password:
-error: src refspec master does not match any.
-error: dst refspec master does not match any existing ref on the
-remote and does not start with refs/.
-fatal: unexpected EOF
-======================================================
-The remote machine is in the same subnet as mine.
-Many thanks to your help.
+> aubrey@linux:~/public_html/u-boot.git> git push
+> 10.99.22.20:/home/aubrey/public_html/my-git.git master
 
-Regards,
--Aubrey
+> error: src refspec master does not match any.
+> error: dst refspec master does not match any existing ref on the
+> remote and does not start with refs/.
+
+The error message tells you that
+
+ (1) directory you are in (u-boot.git) does not have a ref that
+     matches "master".  Do you have the "master" branch?
+
+ (2) remote repository at 10.99.22.20:/home/.../my-git.git does
+     not have a ref that matches "master".
+
+The problem on your end must be fixed first.  Then once you have
+the master branch in u-boot.git directory (I presume
+~/public_html/u-boot.git/.git/refs/heads/master would be the
+file you would need to see), then the problem on the other end
+needs to be dealt with.
+
+If you are creating a branch over there afresh, you need to
+spell it out, like this:
+
+	$ git push 10.99..:.../my-git.git master:refs/heads/master
+
+After you have done that once (hence creating
+/home/aubrey/public_html/my-git.git/.git/refs/heads/master file
+over there), you can do the command line I quoted at the
+beginning of this message.
