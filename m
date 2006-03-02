@@ -1,71 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: windows problems summary
-Date: Thu, 2 Mar 2006 16:38:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603021636020.30490@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com>
+From: Aubrey <aubreylee@gmail.com>
+Subject: Newbie question: git tag failure
+Date: Thu, 2 Mar 2006 23:51:04 +0800
+Message-ID: <6d6a94c50603020751v4bb96b75q1686d36b32e2c40f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 02 16:39:03 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Mar 02 16:52:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEpse-0005EY-Tn
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 16:38:17 +0100
+	id 1FEq58-0008Qp-Dh
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 16:51:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751022AbWCBPiO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 10:38:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbWCBPiO
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 10:38:14 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:6305 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751022AbWCBPiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Mar 2006 10:38:13 -0500
-Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id F0E1C13A2;
-	Thu,  2 Mar 2006 16:38:09 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id E56BF5CB3;
-	Thu,  2 Mar 2006 16:38:09 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id CDFFF120E;
-	Thu,  2 Mar 2006 16:38:09 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751547AbWCBPvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 10:51:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbWCBPvG
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 10:51:06 -0500
+Received: from zproxy.gmail.com ([64.233.162.204]:24892 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751547AbWCBPvF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 10:51:05 -0500
+Received: by zproxy.gmail.com with SMTP id 13so456288nzp
+        for <git@vger.kernel.org>; Thu, 02 Mar 2006 07:51:04 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=jhGfSpVlY3wYaocUcIF2S0oaLHyxOofaO6FU8GVRMsCzjJX9yIgGAAKtK/hiRYoP6M0+ccnyvFtiw0RXERhNr9xniF1uxWoiNPVv7ZVxcP1hnoJ5OaYQ/2eiFQ8xYu0txuoPbsiTi5uXpL3IHZEmGZmENPzE1BTotUpnCkeEO5Q=
+Received: by 10.65.148.14 with SMTP id a14mr748637qbo;
+        Thu, 02 Mar 2006 07:51:04 -0800 (PST)
+Received: by 10.65.185.6 with HTTP; Thu, 2 Mar 2006 07:51:04 -0800 (PST)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17082>
 
-Hi,
+There are two commit. I want to tag one commit by commit id, but failed.
+Thanks for any hints.
 
-On Thu, 2 Mar 2006, Alex Riesen wrote:
+Regards,
+-Aubrey
 
-> 1. opened and mmaped files can't be removed or renamed
->   (caused workaround with reading index in memory)
+aubrey@linux:~/local/mygit> git log
+===============================================================
+commit a8ac6540cf96f79225cc8457b02cb90d40ac7991
+Author: Aubrey.Li <aubrey@linux.site>
+Date:   Thu Mar 2 23:34:18 2006 +0800
 
-It was not the locking which caused the workaround. It was the 
-not-working. (I still have to find a Windows machine where git-whatchanged 
-does not segfault without NO_MMAP.)
+    add commit log
 
-> 2. command can safely contain only one argument
->   (breaks and complicates passing things between processes)
-> 3. no fork
->   (slows down and complicates passing things between processes)
-> 4. non-unix permissions model
->   (breaks x-attr)
-> 5. real slow filesystems and caching
->   (makes everything slow. I noticed I'm trying to avoid git status!).
->   Caused workaround with manual checkout)
-> 6. real slow program startup
->   (makes everything slow, eventually may cause everything being put
->   in one super-executable, just to avoid spawning new processes,
->   with all associated problems. Makes scripting harder)
+commit 43368b967bd838292b8cc6b576c5aa13850551cc
+Author: Aubrey.Li <aubrey@linux.site>
+Date:   Thu Mar 2 22:24:55 2006 +0800
 
-Except for (4), these issues should be resolvable by the libifying effort.
-
-Ciao,
-Dscho
+    Initial commit
+===============================================================
+aubrey@linux:~/local/mygit>git tag -u
+43368b967bd838292b8cc6b576c5aa13850551cc v2.5
+gpg: directory `/home/aubrey/.gnupg' created
+gpg: new configuration file `/home/aubrey/.gnupg/gpg.conf' created
+gpg: WARNING: options in `/home/aubrey/.gnupg/gpg.conf' are not yet
+active during this run
+gpg: keyring `/home/aubrey/.gnupg/secring.gpg' created
+gpg: keyring `/home/aubrey/.gnupg/pubring.gpg' created
+gpg: skipped "43368b967bd838292b8cc6b576c5aa13850551cc": secret key
+not available
+gpg: signing failed: secret key not available
+failed to sign the tag with GPG.
