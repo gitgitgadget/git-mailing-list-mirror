@@ -1,57 +1,56 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git doesn't like big files when pushing
-Date: Thu, 2 Mar 2006 13:45:34 +1300
-Message-ID: <46a038f90603011645v7d039b1bif3da9ebb3fa3e1c1@mail.gmail.com>
-References: <20060301220802.GA18250@kroah.com>
-	 <20060301220840.GB18250@kroah.com>
-	 <7v8xrtepje.fsf@assigned-by-dhcp.cox.net>
-	 <20060301232719.GA22068@kroah.com> <20060301233506.GA25209@kroah.com>
-	 <20060302003418.GA11119@kroah.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Problems with using git
+Date: Wed, 1 Mar 2006 16:52:56 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org>
+References: <44063B7C.40609@webdrake.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	"Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Mar 02 01:45:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 02 01:53:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEbwo-0002pH-Lf
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:45:39 +0100
+	id 1FEc42-0004Q4-Vp
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 01:53:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751224AbWCBApg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 19:45:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbWCBApf
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:45:35 -0500
-Received: from wproxy.gmail.com ([64.233.184.203]:23927 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751152AbWCBApf convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 19:45:35 -0500
-Received: by wproxy.gmail.com with SMTP id i20so282280wra
-        for <git@vger.kernel.org>; Wed, 01 Mar 2006 16:45:34 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=I+zaBNVDEGj/EH6rfkcRyPyJndYe1K6g3BAAcDS6v60NHLdBOE92ekmDewT9PRCH7DQymrInrzNxWZ7sfZJQFSAj74S5F27vgRcsbs1XGlv7jVOPZM2DjRW0KJ2ytxE++6wKOuRuK4y6T5t3FnWLUVPSF81Lm4JxT6V5ET1lgdA=
-Received: by 10.54.153.18 with SMTP id a18mr417133wre;
-        Wed, 01 Mar 2006 16:45:34 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Wed, 1 Mar 2006 16:45:34 -0800 (PST)
-To: "Greg KH" <greg@kroah.com>
-In-Reply-To: <20060302003418.GA11119@kroah.com>
-Content-Disposition: inline
+	id S1750766AbWCBAxD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 19:53:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbWCBAxD
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 19:53:03 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:36272 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750766AbWCBAxC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 19:53:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k220r0DZ007475
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 1 Mar 2006 16:53:00 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k220quSq030675;
+	Wed, 1 Mar 2006 16:52:58 -0800
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+In-Reply-To: <44063B7C.40609@webdrake.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17035>
-
-On 3/2/06, Greg KH <greg@kroah.com> wrote:
-> Ok, no problem there either.
->
-> thanks for the pointer to that option.
-
-Now that it has been tested twice, it's about time it becomes the default ;-)
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17036>
 
 
-martin
+
+On Thu, 2 Mar 2006, Joseph Wakeling wrote:
+> 
+> I'm using openSUSE 10.0 and the package installed is git-core version
+> 0.99.3git20050905-2.
+
+I think your problems are just related to the fact that the tutorial is 
+newer than your git version.
+
+Just fetch a newer version of git first (0.99.3 should be new enough to 
+happily fetch a newer version using git itself, but it might be easier to 
+just get a tar-ball), and you'll have an easier time at it.
+
+		Linus
