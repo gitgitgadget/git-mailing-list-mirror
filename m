@@ -1,64 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Problems with using git
-Date: Thu, 02 Mar 2006 02:24:14 +0100
-Message-ID: <4406493E.3000701@op5.se>
-References: <44063B7C.40609@webdrake.net> <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: git-annotate dies when a patch is missing trailing newline
+Date: Wed, 1 Mar 2006 20:53:04 -0500
+Message-ID: <20060302015303.GA27871@mythryan2.michonline.com>
+References: <46a038f90603011653l7956d5dat99d88a7da98d21b6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Joseph Wakeling <joseph.wakeling@webdrake.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 02 02:24:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 02 02:54:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEcYF-0002a7-IQ
-	for gcvg-git@gmane.org; Thu, 02 Mar 2006 02:24:20 +0100
+	id 1FEd16-0001AU-HR
+	for gcvg-git@gmane.org; Thu, 02 Mar 2006 02:54:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbWCBBYQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Mar 2006 20:24:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbWCBBYQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 20:24:16 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:19670 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751271AbWCBBYQ
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2006 20:24:16 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 391526BCBE; Thu,  2 Mar 2006 02:24:15 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org>
+	id S1751369AbWCBByF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Mar 2006 20:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbWCBByF
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Mar 2006 20:54:05 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:33199 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1751369AbWCBByD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Mar 2006 20:54:03 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1FEd0y-0000cC-PX; Wed, 01 Mar 2006 20:54:02 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FEd0u-0007d8-GB; Wed, 01 Mar 2006 20:53:56 -0500
+Received: from ryan by mythical with local (Exim 4.60)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1FEd0S-0000Ud-KC; Wed, 01 Mar 2006 20:53:28 -0500
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90603011653l7956d5dat99d88a7da98d21b6@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
+X-h4x0r5.com-MailScanner: Found to be clean
+X-h4x0r5.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17039>
 
-Linus Torvalds wrote:
+On Thu, Mar 02, 2006 at 01:53:21PM +1300, Martin Langhoff wrote:
+> Ryan, (& list)
 > 
-> On Thu, 2 Mar 2006, Joseph Wakeling wrote:
+> git-annotate is dying when a patch is missing trailing newline. There
+> _are_ valid situations where code files are not expected to have
+> trailing newlines. Just thing of that glorious programming language,
+> PHP.
 > 
->>I'm using openSUSE 10.0 and the package installed is git-core version
->>0.99.3git20050905-2.
+> (Ducks).
 > 
+> Actually, 99% of my usage of git is tracking CVS projects so this is a
+> bit of a problem.
 > 
-> I think your problems are just related to the fact that the tutorial is 
-> newer than your git version.
-> 
-> Just fetch a newer version of git first (0.99.3 should be new enough to 
-> happily fetch a newer version using git itself, but it might be easier to 
-> just get a tar-ball), and you'll have an easier time at it.
-> 
+> I had fixed it in Johannes version, but I'm lost as to where to fix it
+> in the current git-annotate. Help?
 
-... and the way to fetch and install that repo with your current git is:
-
-	$ git clone git://git.kernel.org/pub/scm/git/git.git git
-	$ cd git && make all strip install
-
-There are 2215 commits since 0.99.3, so I think you'll find much has 
-changed since then.
+Can you point me at a tree that has this problem?  I'll see what I can
+do about fixing it tonight.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Ryan Anderson
+  sometimes Pug Majere
