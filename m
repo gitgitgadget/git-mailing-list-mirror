@@ -1,125 +1,68 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: workaround fat/ntfs deficiencies for t3600-rm.sh (git-rm)
-Date: Fri, 3 Mar 2006 11:20:18 +0100
-Message-ID: <81b0412b0603030220v527779a3p4818309443e330cb@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH 1/3] cg-mv doesn't work with bash 3.1.7 due to
+	excessive quotes
+Date: Fri, 03 Mar 2006 09:11:07 -0500
+Message-ID: <1141395067.30343.14.camel@dv>
+References: <20060303011154.14619.71590.stgit@dv.roinet.com>
+	 <7vbqwo3xo4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_23044_976751.1141381218477"
-Cc: "Junio C Hamano" <junkio@cox.net>, "Carl Worth" <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Fri Mar 03 11:20:28 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 03 15:11:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FF7Od-0000Ix-JW
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 11:20:27 +0100
+	id 1FFB0C-0001NA-Hb
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 15:11:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249AbWCCKUY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Mar 2006 05:20:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752253AbWCCKUY
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 05:20:24 -0500
-Received: from nproxy.gmail.com ([64.233.182.197]:43568 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1752249AbWCCKUY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 05:20:24 -0500
-Received: by nproxy.gmail.com with SMTP id y38so433009nfb
-        for <git@vger.kernel.org>; Fri, 03 Mar 2006 02:20:18 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=ryaprjHsI+Eoukm9lxglDyb5gmUNUCcf+OZXvQav8zeQiW6xZut8zccrmlP3KR3fp87qUKbKsIZqkjMyhcdqhsuabena09jK4fyDrJsk4a3WLMtQWw79mT0sW4E28XXG5Y9DsDM6EHz7dXPo/rkhugb9F/+6wE7Bh9RZ03yyQgI=
-Received: by 10.48.238.3 with SMTP id l3mr1089962nfh;
-        Fri, 03 Mar 2006 02:20:18 -0800 (PST)
-Received: by 10.49.88.16 with HTTP; Fri, 3 Mar 2006 02:20:18 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+	id S1751091AbWCCOLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Mar 2006 09:11:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWCCOLZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 09:11:25 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:31915 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751091AbWCCOLZ
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 09:11:25 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FFB03-0000QA-HW
+	for git@vger.kernel.org; Fri, 03 Mar 2006 09:11:21 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FFAzs-0007xp-4R; Fri, 03 Mar 2006 09:11:08 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqwo3xo4.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.5.92 (2.5.92-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17152>
 
-------=_Part_23044_976751.1141381218477
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, 2006-03-02 at 21:27 -0800, Junio C Hamano wrote:
+> Pavel Roskin <proski@gnu.org> writes:
+> 
+> > -	ARGS2["${#ARGS2[@]}"]="$_git_relpath${arg%/}"
+> > +	ARGS2[${#ARGS2[@]}]="$_git_relpath${arg%/}"
+> 
+> Is this an application bug?  It looks like a workaround for a
+> bug in the shell...
 
-Signed-off-by: Alex Riesen <ariesen@harmanbecker.com>
----
-chmod u-w and even chmod a-w dont work on fat and ntfs.
-The actually do something, but rm a file from that directory
-will succeed anyway. That's windows permission model to you...
+Indeed, bash 3.00.16 (FC4) is fine with the original cg-mv.  On the
+other hand, bash 3.1.7 (FC development) doesn't even like this:
 
-------=_Part_23044_976751.1141381218477
-Content-Type: text/plain; 
-	name=0001-workaround-fat-ntfs-deficiencies-for-t3600-rm.sh-git-rm.txt; 
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Attachment-Id: f_ekccro00
-Content-Disposition: attachment; filename="0001-workaround-fat-ntfs-deficiencies-for-t3600-rm.sh-git-rm.txt"
+$ arg["0"]=0
+bash: "0": syntax error: operand expected (error token is ""0"")
 
->From nobody Mon Sep 17 00:00:00 2001
-From: Alex Riesen <raa.lkml@gmail.com>
-Date: Fri Mar 3 11:15:05 2006 +0100
-Subject: workaround fat/ntfs deficiencies for t3600-rm.sh (git-rm)
+I don't see any relevant information in the NEWS file, so even if it's
+no a bug, it's an undocumented feature :-)
 
----
+Anyway, the quotes are excessive, bash is (sort of) correct to complain
+about it, and I don't see any other instances of quoting array arguments
+in cogito.
 
- t/t3600-rm.sh |   23 +++++++++++++++++------
- 1 files changed, 17 insertions(+), 6 deletions(-)
+The quotes in question have always existed in cg-mv, they were not added
+to work around anything.
 
-583a9faeab3a200fc970577458b7827d86aa7df1
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index cabfadd..d1947e1 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -8,11 +8,20 @@ test_description='Test of the various op
- . ./test-lib.sh
- 
- # Setup some files to be removed, some with funny characters
--touch -- foo bar baz 'space embedded' 'tab	embedded' 'newline
--embedded' -q
--git-add -- foo bar baz 'space embedded' 'tab	embedded' 'newline
--embedded' -q
--git-commit -m "add files"
-+touch -- foo bar baz 'space embedded' -q
-+git-add -- foo bar baz 'space embedded' -q
-+git-commit -m "add normal files"
-+test_tabs=y
-+if touch -- 'tab	embedded' 'newline
-+embedded'
-+then
-+git-add -- 'tab	embedded' 'newline
-+embedded'
-+git-commit -m "add files with tabs and newlines"
-+else
-+    say 'Your filesystem does not allow tabs in filenames.'
-+    test_tabs=n
-+fi
- 
- test_expect_success \
-     'Pre-check that foo exists and is in index before git-rm foo' \
-@@ -42,16 +51,18 @@ test_expect_success \
-     'Test that "git-rm -- -q" succeeds (remove a file that looks like an option)' \
-     'git-rm -- -q'
- 
--test_expect_success \
-+test "$test_tabs" = y && test_expect_success \
-     "Test that \"git-rm -f\" succeeds with embedded space, tab, or newline characters." \
-     "git-rm -f 'space embedded' 'tab	embedded' 'newline
- embedded'"
- 
-+if test "$test_tabs" = y; then
- chmod u-w .
- test_expect_failure \
-     'Test that "git-rm -f" fails if its rm fails' \
-     'git-rm -f baz'
- chmod u+w .
-+fi
- 
- test_expect_success \
-     'When the rm in "git-rm -f" fails, it should not remove the file from the index' \
 -- 
-1.2.4.ga091
-
-
-
-
-------=_Part_23044_976751.1141381218477--
+Regards,
+Pavel Roskin
