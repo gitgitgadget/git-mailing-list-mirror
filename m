@@ -1,208 +1,514 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH 2/3] Make tutorial-script work with current cogito
-Date: Thu, 02 Mar 2006 20:11:57 -0500
-Message-ID: <20060303011157.14619.99070.stgit@dv.roinet.com>
-References: <20060303011154.14619.71590.stgit@dv.roinet.com>
-X-From: git-owner@vger.kernel.org Fri Mar 03 02:12:26 2006
+From: Jon Loeliger <jdl@jdl.com>
+Subject: [PATCH] Added Packing Heursitics IRC writeup.
+Date: Thu, 02 Mar 2006 19:19:29 -0600
+Message-ID: <E1FEyx7-0007vo-Je@jdl.com>
+X-From: git-owner@vger.kernel.org Fri Mar 03 02:20:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEyq4-0003AK-Lt
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 02:12:13 +0100
+	id 1FEyxZ-0004e5-FP
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 02:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752106AbWCCBMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 20:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbWCCBMB
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 20:12:01 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:46047 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1752108AbWCCBMA
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 20:12:00 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FEypp-0005TR-Sw
-	for git@vger.kernel.org; Thu, 02 Mar 2006 20:11:58 -0500
-Received: from localhost.roinet.com ([127.0.0.1] helo=dv.roinet.com)
-	by dv.roinet.com with esmtp (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1FEypp-0003on-7I; Thu, 02 Mar 2006 20:11:57 -0500
-To: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060303011154.14619.71590.stgit@dv.roinet.com>
+	id S1752115AbWCCBTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 20:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbWCCBTy
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 20:19:54 -0500
+Received: from colo.jdl.com ([66.118.10.122]:9112 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1752115AbWCCBTy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 20:19:54 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1FEyx7-0007vo-Je
+	for git@vger.kernel.org; Thu, 02 Mar 2006 19:19:32 -0600
+To: git@vger.kernel.org
+X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17131>
 
-Labels on merge conflict lines have changed.  There is no "git rename",
-use cg-mv instead.  In one case stack.h is not created, so copy
-stack.h~master to stack.h before fixing it.
 
-Also fix comments in script.sh to use the new labels.
+Signed-off-by: Jon Loeliger <jdl@jdl.com>
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
 ---
 
- .../tutorial-script/0010-alice-bob-fixup.ed        |    2 +
- .../tutorial-script/0017-alice-bob-fixup.ed        |    2 +
- .../tutorial-script/0018-alice-charlie-fixup1.ed   |    4 +--
- .../tutorial-script/0019-alice-charlie-fixup2.ed   |    4 +--
- .../tutorial-script/0021-bob-alice-fixup1.ed       |    4 +--
- .../tutorial-script/0022-bob-alice-fixup2.ed       |    2 +
- Documentation/tutorial-script/script.sh            |   31 ++++++++++----------
- 7 files changed, 25 insertions(+), 24 deletions(-)
+ Documentation/technical/pack-heuristics.txt |  466 +++++++++++++++++++++++++++
+ 1 files changed, 466 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/technical/pack-heuristics.txt
 
-diff --git a/Documentation/tutorial-script/0010-alice-bob-fixup.ed b/Documentation/tutorial-script/0010-alice-bob-fixup.ed
-index ca2047c..81b1360 100644
---- a/Documentation/tutorial-script/0010-alice-bob-fixup.ed
-+++ b/Documentation/tutorial-script/0010-alice-bob-fixup.ed
-@@ -1,3 +1,3 @@
--/^<<<<<<< rpn\.c/,/^>>>>>>> \.merge_file_/d
-+/^<<<<<<< bob/,/^>>>>>>> bobswork/d
- w
- q
-diff --git a/Documentation/tutorial-script/0017-alice-bob-fixup.ed b/Documentation/tutorial-script/0017-alice-bob-fixup.ed
-index ad04eb7..6353328 100644
---- a/Documentation/tutorial-script/0017-alice-bob-fixup.ed
-+++ b/Documentation/tutorial-script/0017-alice-bob-fixup.ed
-@@ -1,4 +1,4 @@
--/^<<<<<<< Makefile/d
-+/^<<<<<<< \.merge_file_/d
- /^=======/,/^=======/+1d
- /^>>>>>>> \.merge_file_/d
- w
-diff --git a/Documentation/tutorial-script/0018-alice-charlie-fixup1.ed b/Documentation/tutorial-script/0018-alice-charlie-fixup1.ed
-index 65f5ef5..20c25c8 100644
---- a/Documentation/tutorial-script/0018-alice-charlie-fixup1.ed
-+++ b/Documentation/tutorial-script/0018-alice-charlie-fixup1.ed
-@@ -1,7 +1,7 @@
--/^<<<<<<< Makefile/d
-+/^<<<<<<< master/d
- /^rpn\.o:/s/\.h.*$/.h lexer.h/
- /^lexer\.o:/s/:.*$/: lexer.h/
--/^=======/,/^>>>>>>> \.merge_file_/d
-+/^=======/,/^>>>>>>> charlie/d
- w
- q
- 
-diff --git a/Documentation/tutorial-script/0019-alice-charlie-fixup2.ed b/Documentation/tutorial-script/0019-alice-charlie-fixup2.ed
-index f1aadb4..5d531de 100644
---- a/Documentation/tutorial-script/0019-alice-charlie-fixup2.ed
-+++ b/Documentation/tutorial-script/0019-alice-charlie-fixup2.ed
-@@ -1,5 +1,5 @@
--/^<<<<<<< rpn\.c/,/^=======/d
--/^>>>>>>> \.merge_file_/d
-+/^<<<<<<< master/,/^=======/d
-+/^>>>>>>> charlie/d
- w
- q
- 
-diff --git a/Documentation/tutorial-script/0021-bob-alice-fixup1.ed b/Documentation/tutorial-script/0021-bob-alice-fixup1.ed
-index 2783f73..df703d5 100644
---- a/Documentation/tutorial-script/0021-bob-alice-fixup1.ed
-+++ b/Documentation/tutorial-script/0021-bob-alice-fixup1.ed
-@@ -1,4 +1,4 @@
--/^<<<<<<< Makefile/,/^=======/d
--/^>>>>>>> \.merge_file_/d
-+/^<<<<<<< master/,/^=======/d
-+/^>>>>>>> origin/d
- w
- q
-diff --git a/Documentation/tutorial-script/0022-bob-alice-fixup2.ed b/Documentation/tutorial-script/0022-bob-alice-fixup2.ed
-index 18c90d4..d8c5746 100644
---- a/Documentation/tutorial-script/0022-bob-alice-fixup2.ed
-+++ b/Documentation/tutorial-script/0022-bob-alice-fixup2.ed
-@@ -1,5 +1,5 @@
- /^#include "stack\.h"/+1d
- /^#include "lexer\.h"/+1,/^#include "stack\.h"/d
--/^<<<<<<< rpn\.c/-1,/^>>>>>>> \.merge_file_/d
-+/^<<<<<<< master/-1,/^>>>>>>> origin/d
- w
- q
-diff --git a/Documentation/tutorial-script/script.sh b/Documentation/tutorial-script/script.sh
-index bc70b77..edcebda 100755
---- a/Documentation/tutorial-script/script.sh
-+++ b/Documentation/tutorial-script/script.sh
-@@ -120,13 +120,13 @@ cg-update bobswork && should_fail
- # difference between her version and Bob's:
- 
- #: ...
--#: <<<<<<< rpn.c
-+#: <<<<<<< bob
- #: extern double pop(void);
- #: extern void push(double);
- #: extern void clear(void);
- #: 
- #: =======
--#: >>>>>>> .merge_file_5wCNZT
-+#: >>>>>>> bobswork
- #: extern int getsym(void);
- #: ...
-  
-@@ -216,7 +216,7 @@ cg-merge bob && should_fail
- # Merge fails:
- 
- #: ...
--#: <<<<<<< Makefile
-+#: <<<<<<< .merge_file_l54ztH
- #:	$(CC) $(CFLAGS) $^ -lm -o $@
- #: =======
- #:	$(CC) $(CFLAGS) $^ -o $@
-@@ -235,31 +235,31 @@ cg-merge charlie && should_fail
- # Merge conflicts!
- 
- #: ...
--#: <<<<<<< Makefile
--#:         $(CC) $(CFLAGS) $^ -lm -o $@
--#:        
-+#: <<<<<<< master
-+#:	$(CC) $(CFLAGS) $^ -lm -o $@
-+#:	
- #: rpn.o: stack.h
- #: stack.o: stack.h
--#: lexer.o:
-+#: lexer.o:	
- #: =======
--#:         $(CC) $(CFLAGS) $^ -o $@
--#:                
-+#:	$(CC) $(CFLAGS) $^ -o $@
-+#:	
- #: rpn.o lexer.o: lexer.h
--#: 
--#: >>>>>>> .merge_file_huuX9C
-+#:	
-+#: >>>>>>> charlie
- 
- ed Makefile < $TOP/0018-alice-charlie-fixup1.ed
- 
- #: ...
--#: <<<<<<< rpn.c
-+#: <<<<<<< master
- #: extern int getsym(void);
- #: 
- #: =======
- #: extern double pop(void);
- #: extern void push(double);
- #: extern void clear(void);
--#:
--#: >>>>>> .merge_file_qtv6VA
-+#: 
-+#: >>>>>>> charlie
- #: ...
- 
- ed rpn.c    < $TOP/0019-alice-charlie-fixup2.ed
-@@ -273,7 +273,7 @@ cg-add CONTRIBUTORS
- cg-commit -m "Add CONTRIBUTORS"
- 
- # Wrong file name...
--git rename CONTRIBUTORS CREDITS
-+cg-mv CONTRIBUTORS CREDITS
- cg-commit -m "Rename CONTRIBUTORS to CREDITS"
- 
- 
-@@ -308,6 +308,7 @@ echo "Merge with 0.4" | cg-merge && shou
- # Mishandled stack.h
- ed Makefile < $TOP/0021-bob-alice-fixup1.ed
- ed rpn.c    < $TOP/0022-bob-alice-fixup2.ed
-+cp stack.h~master stack.h
- ed stack.h  < $TOP/0023-bob-alice-fixup3.ed
- cg-add stack.h
- 
+0cbbcac437be6f8a0249f6cf83b90a6fe9d2362e
+diff --git a/Documentation/technical/pack-heuristics.txt b/Documentation/technical/pack-heuristics.txt
+new file mode 100644
+index 0000000..eaab3ee
+--- /dev/null
++++ b/Documentation/technical/pack-heuristics.txt
+@@ -0,0 +1,466 @@
++        Concerning Git's Packing Heuristics
++        ===================================
++
++        Oh, here's a really stupid question:
++
++                  Where do I go
++               to learn the details
++	    of git's packing heuristics?
++
++Be careful what you ask!
++
++Followers of the git, please open the git IRC Log and turn to
++February 10, 2006.
++
++It's a rare occasion, and we are joined by the King Git Himself,
++Linus Torvalds (linus).  Nathaniel Smith, (njs`), has the floor
++and seeks enlightenment.  Others are present, but silent.
++
++Let's listen in!
++
++    <njs`> Oh, here's a really stupid question -- where do I go to
++        learn the details of git's packing heuristics?  google avails
++        me not, reading the source didn't help a lot, and wading
++        through the whole mailing list seems less efficient than any
++        of that.
++
++It is a bold start!  A plea for help combined with a simultaneous
++tri-part attack on some of the tried and true mainstays in the quest
++for enlightenment.  Brash accusations of google being useless. Hubris!
++Maligning the source.  Heresy!  Disdain for the mailing list archives.
++Woe.
++
++    <pasky> yes, the packing-related delta stuff is somewhat
++        mysterious even for me ;)
++
++Ah!  Modesty after all.
++
++    <linus> njs, I don't think the docs exist. That's something where
++	 I don't think anybody else than me even really got involved.
++	 Most of the rest of git others have been busy with (especially
++	 Junio), but packing nobody touched after I did it.
++
++It's cryptic, yet vague.  Linus in style for sure.  Wise men
++interpret this as an apology.  A few argue it is merely a
++statement of fact.
++
++    <njs`> I guess the next step is "read the source again", but I
++        have to build up a certain level of gumption first :-)
++
++Indeed!  On both points.
++
++    <linus> The packing heuristic is actually really really simple.
++
++Bait...
++
++    <linus> But strange.
++
++And switch.  That ought to do it!
++
++    <linus> Remember: git really doesn't follow files. So what it does is
++        - generate a list of all objects
++        - sort the list according to magic heuristics
++        - walk the list, using a sliding window, seeing if an object
++          can be diffed against another object in the window
++        - write out the list in recency order
++
++The traditional understatement:
++
++    <njs`> I suspect that what I'm missing is the precise definition of
++        the word "magic"
++
++The traditional insight:
++
++    <pasky> yes
++
++And Bable-like confusion flowed.
++
++    <njs`> oh, hmm, and I'm not sure what this sliding window means either
++
++    <pasky> iirc, it appeared to me to be just the sha1 of the object
++        when reading the code casually ...
++
++        ... which simply doesn't sound as a very good heuristics, though ;)
++
++    <njs`> .....and recency order.  okay, I think it's clear I didn't
++       even realize how much I wasn't realizing :-)
++
++Ah, grasshopper!  And thus the enlightenment begins anew.
++
++    <linus> The "magic" is actually in theory totally arbitrary.
++        ANY order will give you a working pack, but no, it's not
++        ordered by SHA1.
++
++        Before talking about the ordering for the sliding delta
++        window, let's talk about the recency order. That's more
++        important in one way.
++
++    <njs`> Right, but if all you want is a working way to pack things
++        together, you could just use cat and save yourself some
++        trouble...
++
++Waaait for it....
++
++    <linus> The recency ordering (which is basically: put objects
++        _physically_ into the pack in the order that they are
++        "reachable" from the head) is important.
++
++    <njs`> okay
++
++    <linus> It's important because that's the thing that gives packs
++        good locality. It keeps the objects close to the head (whether
++        they are old or new, but they are _reachable_ from the head)
++        at the head of the pack. So packs actually have absolutely
++        _wonderful_ IO patterns.
++
++Read that again, because it is important.
++
++    <linus> But recency ordering is totally useless for deciding how
++        to actually generate the deltas, so the delta ordering is
++        something else.
++
++        The delta ordering is (wait for it):
++        - first sort by the "basename" of the object, as defined by
++          the name the object was _first_ reached through when
++          generating the object list
++        - within the same basename, sort by size of the object
++        - but always sort different types separately (commits first).
++
++        That's not exactly it, but it's very close.
++
++    <njs`> The "_first_ reached" thing is not too important, just you
++        need some way to break ties since the same objects may be
++        reachable many ways, yes?
++
++And as if to clarify:
++
++    <linus> The point is that it's all really just any random
++        heuristic, and the ordering is totally unimportant for
++        correctness, but it helps a lot if the heuristic gives
++        "clumping" for things that are likely to delta well against
++        each other.
++
++It is an important point, so secretly, I did my own research and have
++included my results below.  To be fair, it has changed some over time.
++And through the magic of Revisionistic History, I draw upon this entry
++from The Git IRC Logs on my father's birthday, March 1:
++
++    <gitster> The quote from the above linus should be rewritten a
++        bit (wait for it):
++        - first sort by type.  Different objects never delta with
++	  each other.
++        - then sort by filename/dirname.  hash of the basename
++          occupies the top BITS_PER_INT-DIR_BITS bits, and bottom
++          DIR_BITS are for the hash of leading path elements.
++        - then if we are doing "thin" pack, the objects we are _not_
++          going to pack but we know about are sorted earlier than
++          other objects.
++        - and finally sort by size, larger to smaller.
++
++In one swell-foop, clarification and obscurification!  Nonetheless,
++authoritative.  Cryptic, yet concise.  It even solicits notions of
++quotes from The Source Code.  Clearly, more study is needed.
++
++    <gitster> That's the sort order.  What this means is:
++        - we do not delta different object types.
++	- we prefer to delta the objects with the same full path, but
++          allow files with the same name from different directories.
++	- we always prefer to delta against objects we are not going
++          to send, if there are some.
++	- we prefer to delta against larger objects, so that we have
++          lots of removals.
++
++        The penultimate rule is for "thin" packs.  It is used when
++        the other side is known to have such objects.
++
++There it is again. "Thin" packs.  I'm thinking to myself, "What
++is a 'thin' pack?"  So I ask:
++
++    <jdl> What is a "thin" pack?
++
++    <gitster> Use of --objects-edge to rev-list as the upstream of
++        pack-objects.  The pack transfer protocol negotiates that.
++
++Woo hoo!  Cleared that _right_ up!
++
++    <gitster> There are two directions - push and fetch.
++
++There!  Did you see it?  It is not '"push" and "pull"'!  How often the
++confusion has started here.  So casually mentioned, too!
++
++    <gitster> For push, git-send-pack invokes git-receive-pack on the
++        other end.  The receive-pack says "I have up to these commits".
++        send-pack looks at them, and computes what are missing from
++        the other end.  So "thin" could be the default there.
++
++        In the other direction, fetch, git-fetch-pack and
++        git-clone-pack invokes git-upload-pack on the other end
++	(via ssh or by talking to the daemon).
++
++	There are two cases: fetch-pack with -k and clone-pack is one,
++        fetch-pack without -k is the other.  clone-pack and fetch-pack
++        with -k will keep the downloaded packfile without expanded, so
++        we do not use thin pack transfer.  Otherwise, the generated
++        pack will have delta without base object in the same pack.
++
++        But fetch-pack without -k will explode the received pack into
++        individual objects, so we automatically ask upload-pack to
++        give us a thin pack if upload-pack supports it.
++
++OK then.
++
++Uh.
++
++Let's return to the previous conversation still in progress.
++
++    <njs`> and "basename" means something like "the tail of end of
++        path of file objects and dir objects, as per basename(3), and
++        we just declare all commit and tag objects to have the same
++        basename" or something?
++
++Luckily, that too is a point that gitster clarified for us!
++
++If I might add, the trick is to make files that _might_ be similar be
++located close to each other in the hash buckets based on their file
++names.  It used to be that "foo/Makefile", "bar/baz/quux/Makefile" and
++"Makefile" all landed in the same bucket due to their common basename,
++"Makefile". However, now they land in "close" buckets.
++
++The algorithm allows not just for the _same_ bucket, but for _close_
++buckets to be considered delta candidates.  The rationale is
++essentially that files, like Makefiles, often have very similar
++content no matter what directory they live in.
++
++    <linus> I played around with different delta algorithms, and with
++        making the "delta window" bigger, but having too big of a
++        sliding window makes it very expensive to generate the pack:
++        you need to compare every object with a _ton_ of other objects.
++
++        There are a number of other trivial heuristics too, which
++        basically boil down to "don't bother even trying to delta this
++        pair" if we can tell before-hand that the delta isn't worth it
++        (due to size differences, where we can take a previous delta
++        result into account to decide that "ok, no point in trying
++        that one, it will be worse").
++
++        End result: packing is actually very size efficient. It's
++        somewhat CPU-wasteful, but on the other hand, since you're
++        really only supposed to do it maybe once a month (and you can
++        do it during the night), nobody really seems to care.
++
++Nice Engineering Touch, there.  Find when it doesn't matter, and
++proclaim it a non-issue.  Good style too!
++
++    <njs`> So, just to repeat to see if I'm following, we start by
++        getting a list of the objects we want to pack, we sort it by
++        this heuristic (basically lexicographically on the tuple
++        (type, basename, size)).
++
++        Then we walk through this list, and calculate a delta of
++        each object against the last n (tunable paramater) objects,
++        and pick the smallest of these deltas.
++
++Vastly simplified, but the essence is there!
++
++    <linus> Correct.
++
++    <njs`> And then once we have picked a delta or fulltext to
++        represent each object, we re-sort by recency, and write them
++        out in that order.
++
++    <linus> Yup. Some other small details:
++
++And of course there is the "Other Shoe" Factor too.
++
++    <linus> - We limit the delta depth to another magic value (right
++        now both the window and delta depth magic values are just "10")
++
++    <njs`> Hrm, my intuition is that you'd end up with really _bad_ IO
++        patterns, because the things you want are near by, but to
++        actually reconstruct them you may have to jump all over in
++        random ways.
++
++    <linus> - When we write out a delta, and we haven't yet written
++        out the object it is a delta against, we write out the base
++        object first.  And no, when we reconstruct them, we actually
++        get nice IO patterns, because:
++        - larger objects tend to be "more recent" (Linus' law: files grow)
++        - we actively try to generate deltas from a larger object to a
++          smaller one
++        - this means that the top-of-tree very seldom has deltas
++          (ie deltas in _practice_ are "backwards deltas")
++
++Again, we should reread that whole paragraph.  Not just because
++Linus has slipped Linus's Law in there on us, but because it is
++important.  Let's make sure we clarify some of the points here:
++
++    <njs`> So the point is just that in practice, delta order and
++        recency order match each other quite well.
++
++    <linus> Yes. There's another nice side to this (and yes, it was
++	designed that way ;):
++        - the reason we generate deltas against the larger object is
++	  actually a big space saver too!
++
++    <njs`> Hmm, but your last comment (if "we haven't yet written out
++        the object it is a delta against, we write out the base object
++        first"), seems like it would make these facts mostly
++        irrelevant because even if in practice you would not have to
++        wander around much, in fact you just brute-force say that in
++        the cases where you might have to wander, don't do that :-)
++
++    <linus> Yes and no. Notice the rule: we only write out the base
++        object first if the delta against it was more recent.  That
++        means that you can actually have deltas that refer to a base
++        object that is _not_ close to the delta object, but that only
++        happens when the delta is needed to generate an _old_ object.
++
++    <linus> See?
++
++Yeah, no.  I missed that on the first two or three readings myself.
++
++    <linus> This keeps the front of the pack dense. The front of the
++        pack never contains data that isn't relevant to a "recent"
++        object.  The size optimization comes from our use of xdelta
++        (but is true for many other delta algorithms): removing data
++        is cheaper (in size) than adding data.
++
++        When you remove data, you only need to say "copy bytes n--m".
++	In contrast, in a delta that _adds_ data, you have to say "add
++        these bytes: 'actual data goes here'"
++
++    *** njs` has quit: Read error: 104 (Connection reset by peer)
++
++    <linus> Uhhuh. I hope I didn't blow njs` mind.
++
++    *** njs` has joined channel #git
++
++    <pasky> :)
++
++The silent observers are amused.  Of course.
++
++And as if njs` was expected to be omniscient:
++
++    <linus> njs - did you miss anything?
++
++OK, I'll spell it out.  That's Geek Humor.  If njs` was not actually
++connected for a little bit there, how would he know if missed anything
++while he was disconnected?  He's a benevolent dictator with a sense of
++humor!  Well noted!
++
++    <njs`> Stupid router.  Or gremlins, or whatever.
++
++It's a cheap shot at Cisco.  Take 'em when you can.
++
++    <njs`> Yes and no. Notice the rule: we only write out the base
++        object first if the delta against it was more recent.
++
++        I'm getting lost in all these orders, let me re-read :-)
++	So the write-out order is from most recent to least recent?
++        (Conceivably it could be the opposite way too, I'm not sure if
++        we've said) though my connection back at home is logging, so I
++        can just read what you said there :-)
++
++And for those of you paying attention, the Omniscient Trick has just
++been detailed!
++
++    <linus> Yes, we always write out most recent first
++
++For the other record:
++
++    <pasky> njs`: http://pastebin.com/547965
++
++The 'net never forgets, so that should be good until the end of time.
++
++    <njs`> And, yeah, I got the part about deeper-in-history stuff
++        having worse IO characteristics, one sort of doesn't care.
++
++    <linus> With the caveat that if the "most recent" needs an older
++        object to delta against (hey, shrinking sometimes does
++        happen), we write out the old object with the delta.
++
++    <njs`> (if only it happened more...)
++
++    <linus> Anyway, the pack-file could easily be denser still, but
++        because it's used both for streaming (the git protocol) and
++        for on-disk, it has a few pessimizations.
++
++Actually, it is a made-up word. But it is a made-up word being
++used as setup for a later optimization, which is a real word:
++
++    <linus> In particular, while the pack-file is then compressed,
++        it's compressed just one object at a time, so the actual
++        compression factor is less than it could be in theory. But it
++        means that it's all nice random-access with a simple index to
++        do "object name->location in packfile" translation.
++
++    <njs`> I'm assuming the real win for delta-ing large->small is
++        more homogenous statistics for gzip to run over?
++
++        (You have to put the bytes in one place or another, but
++        putting them in a larger blob wins on compression)
++
++        Actually, what is the compression strategy -- each delta
++        individually gzipped, the whole file gzipped, somewhere in
++        between, no compression at all, ....?
++
++        Right.
++
++Reality IRC sets in.  For example:
++
++    <pasky> I'll read the rest in the morning, I really have to go
++        sleep or there's no hope whatsoever for me at the today's
++        exam... g'nite all.
++
++Heh.
++
++    <linus> pasky: g'nite
++
++    <njs`> pasky: 'luck
++
++    <linus> Right: large->small matters exactly because of compression
++        behaviour. If it was non-compressed, it probably wouldn't make
++        any difference.
++
++    <njs`> yeah
++
++    <linus> Anyway: I'm not even trying to claim that the pack-files
++        are perfect, but they do tend to have a nice balance of
++        density vs ease-of use.
++
++Gasp!  OK, saved.  That's a fair Engineering trade off.  Close call!
++In fact, Linus reflects on some Basic Engineering Fundamentals,
++design options, etc.
++
++    <linus> More importantly, they allow git to still _conceptually_
++        never deal with deltas at all, and be a "whole object" store.
++
++        Which has some problems (we discussed bad huge-file
++        behaviour on the git lists the other day), but it does mean
++        that the basic git concepts are really really simple and
++        straightforward.
++
++        It's all been quite stable.
++
++        Which I think is very much a result of having very simple
++        basic ideas, so that there's never any confusion about what's
++        going on.
++
++        Bugs happen, but they are "simple" bugs. And bugs that
++        actually get some object store detail wrong are almost always
++        so obious that they never go anywhere.
++
++    <njs`> Yeah.
++
++Nuff said.
++
++    <linus> Anyway.  I'm off for bed. It's not 6AM here, but I've got
++	 three kids, and have to get up early in the morning to send
++	 them off. I need my beauty sleep.
++
++    <njs`> :-)
++
++    <njs`> appreciate the infodump, I really was failing to find the
++        details on git packs :-)
++
++And now you know the rest of the story.
+-- 
+1.0.7.g2b74
