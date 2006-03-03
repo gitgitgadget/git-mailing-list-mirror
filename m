@@ -1,136 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] fmt-merge-msg: avoid open "-|" list form for Perl 5.6
-Date: Thu, 02 Mar 2006 16:34:20 -0800
-Message-ID: <7v1wxk5ptf.fsf@assigned-by-dhcp.cox.net>
-References: <20060302164405.GB7292@trixie.casa.cgf.cx>
-	<20060302165510.GB18929@spearce.org>
-	<20060302220930.GE6183@steel.home>
-	<Pine.LNX.4.64.0603021521250.22647@g5.osdl.org>
+Date: Thu, 2 Mar 2006 16:49:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603021643560.22647@g5.osdl.org>
+References: <20060302164405.GB7292@trixie.casa.cgf.cx> <20060302165510.GB18929@spearce.org>
+ <20060302220930.GE6183@steel.home> <Pine.LNX.4.64.0603021521250.22647@g5.osdl.org>
+ <7v1wxk5ptf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 03 01:34:27 2006
+X-From: git-owner@vger.kernel.org Fri Mar 03 01:49:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEyFV-0004hf-G4
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 01:34:25 +0100
+	id 1FEyUH-0007YL-Cu
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 01:49:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092AbWCCAeW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 19:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbWCCAeW
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 19:34:22 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:59091 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1752092AbWCCAeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Mar 2006 19:34:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060303003427.USOR25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 2 Mar 2006 19:34:27 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603021521250.22647@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 2 Mar 2006 15:27:24 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1752097AbWCCAti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 19:49:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbWCCAti
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 19:49:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57056 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1752097AbWCCAti (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 19:49:38 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k230nYDZ013206
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 2 Mar 2006 16:49:35 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k230nQln017498;
+	Thu, 2 Mar 2006 16:49:30 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wxk5ptf.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17127>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> For example, afaik, when merging multiple branches that had partially been 
-> merged already (ie they had overlapping new stuff), if I read the old perl 
-> code correctly, it would talk about the new stuff multiple times. This one 
-> doesn't.
 
-I think this is not quite right, even though it only matters in
-Octopus and not many people do Octopus anyway.  Suppose you are
-merging lt/rev-list and fk/blame branches into master, starting
-from this state:
+On Thu, 2 Mar 2006, Junio C Hamano wrote:
+> 
+> And you had lt/rev-list branch first listed in FETCH_HEAD.  In
+> this particular example, lt/rev-list has only 3 commits on top
+> of common things, but if your max were 3 instead of 10, the
+> first round would actually show the tip 3 without showing any
+> common stuff, and then the next round to show fk/blame branch
+> would show only the remaining two, without ever showing the
+> common stuff, even though it _could_ say the latest of the
+> common stuff.
 
-    ! [master] GIT-VERSION-GEN: squelch unneed
-     ! [lt/rev-list] setup_revisions(): handle
-      ! [fk/blame] git-blame, take 2
-    ---
-     +  [lt/rev-list] setup_revisions(): handl
-     +  [lt/rev-list^] git-log (internal): mor
-     +  [lt/rev-list~2] git-log (internal): ad
-      + [fk/blame] git-blame, take 2
-      - [fk/blame^] Merge part of 'lt/rev-list
-     ++ [lt/rev-list~3] Rip out merge-order an
-     ++ [lt/rev-list~4] Tie it all together: "
-     ++ [lt/rev-list~5] Introduce trivial new 
-     ++ [lt/rev-list~6] git-rev-list libificat
-     ++ [lt/rev-list~7] Splitting rev-list int
-     ++ [lt/rev-list~8] rev-list split: minimu
-     ++ [lt/rev-list~9] First cut at libifying
-      + [fk/blame~2] Add git-blame, a tool for
-    --- [lt/rev-list~10] Merge branch 'maint' 
+Yes. I considered it briefly, and it's fixable, but to fix it you'd 
+have to actualyl walk the parent list yourself, rather than letting 
+get_revision do it all for you.
 
-And you had lt/rev-list branch first listed in FETCH_HEAD.  In
-this particular example, lt/rev-list has only 3 commits on top
-of common things, but if your max were 3 instead of 10, the
-first round would actually show the tip 3 without showing any
-common stuff, and then the next round to show fk/blame branch
-would show only the remaining two, without ever showing the
-common stuff, even though it _could_ say the latest of the
-common stuff.
+And what my simple thing shows isn't really technically "wrong", since it 
+has shown that there are commits missing from the output with the "..."
 
-> The things it doesn't do:
->  - the old one had a limit of 20, the new one has a limit of 10 commits 
->    reported
+The question is just whether shared commits should be "balanced out", or 
+shown as part of the first branch that merged them. I chose the latter, 
+because it's not only simple, it's unambiguous (any balancing algorithm 
+will depend on some random heuristic or other, and on how many commits are 
+shown.
 
-Good change I would say, except for the above.
+> >  - the old one did some formatting of the branch message that I don't 
+> >    follow because I'm not a perl user. The new one just takes the 
+> >    explanatory message for the branch merging as-is.
+> 
+> FETCH_HEAD has explanatory message in more or less "canonical"
+> form.  It has noise word "branch", and the current repository is
+> typically " of .".
 
->  - the old one was tested, the new one is written by me.
->  - the old one honored the "merge.summary" git config option. The new one 
->    doesn't.
+Yeah, I actually looked at a few examples, so I knew what it was basically 
+trying to do, and then I ignored it as not interesting to the exercise, 
+which was to abuse the new revision listing library in interesting ways by 
+calling it multiple times.
 
-Easily rectifiable ;-).
-
->  - the old one did some formatting of the branch message that I don't 
->    follow because I'm not a perl user. The new one just takes the 
->    explanatory message for the branch merging as-is.
-
-FETCH_HEAD has explanatory message in more or less "canonical"
-form.  It has noise word "branch", and the current repository is
-typically " of .".  These are removed by the code, so that you would
-not have to see:
-
-	Merge branch 'jc/delta' of .
-
-Instead you would see:
-
-	Merge 'jc/delta' into 'next'.
-
-The last part, " into 'next'", is also missing from your
-version.  I can distinguish a merge into 'master' (which does
-not have " into 'master'") and other branches easily that way,
-and I find it handy.
-
-Other things the Perl code does are purely for Octopus support:
-things like coalescing multiple branches taken from the same
-repositories.  You would get something like:
-
-	Merge 'lt/rev-list' and 'fk/blame' into 'next'.
-
-	* lt/rev-list:
-	  commit 1
-          commit 2
-
-	* fk/blame:
-	  commit 3
-	  commit 4
-
-instead of (your version):
-
-	Merge branch 'lt/rev-list' of .
-	   * commit 1
-           * commit 2
-
-	Merge branch 'fk/blame' of .
-	   * commit 3
-           * commit 4
+		Linus
