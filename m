@@ -1,60 +1,125 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] send-email: accept --no-signed-off-by-cc as the documentation states
-Date: Fri, 3 Mar 2006 01:28:48 -0800
-Message-ID: <11413781281157-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: workaround fat/ntfs deficiencies for t3600-rm.sh (git-rm)
+Date: Fri, 3 Mar 2006 11:20:18 +0100
+Message-ID: <81b0412b0603030220v527779a3p4818309443e330cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Mar 03 10:28:54 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_23044_976751.1141381218477"
+Cc: "Junio C Hamano" <junkio@cox.net>, "Carl Worth" <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Fri Mar 03 11:20:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FF6ai-0005vz-LX
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 10:28:53 +0100
+	id 1FF7Od-0000Ix-JW
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 11:20:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbWCCJ2u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Mar 2006 04:28:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbWCCJ2t
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 04:28:49 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:14467 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751044AbWCCJ2t (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 04:28:49 -0500
-Received: from Muzzle (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C232F2DC08D;
-	Fri,  3 Mar 2006 01:28:48 -0800 (PST)
-In-Reply-To: 
-X-Mailer: git-send-email
-To: junkio@cox.net, ryan@michonline.com
+	id S1752249AbWCCKUY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Mar 2006 05:20:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752253AbWCCKUY
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 05:20:24 -0500
+Received: from nproxy.gmail.com ([64.233.182.197]:43568 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1752249AbWCCKUY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 05:20:24 -0500
+Received: by nproxy.gmail.com with SMTP id y38so433009nfb
+        for <git@vger.kernel.org>; Fri, 03 Mar 2006 02:20:18 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=ryaprjHsI+Eoukm9lxglDyb5gmUNUCcf+OZXvQav8zeQiW6xZut8zccrmlP3KR3fp87qUKbKsIZqkjMyhcdqhsuabena09jK4fyDrJsk4a3WLMtQWw79mT0sW4E28XXG5Y9DsDM6EHz7dXPo/rkhugb9F/+6wE7Bh9RZ03yyQgI=
+Received: by 10.48.238.3 with SMTP id l3mr1089962nfh;
+        Fri, 03 Mar 2006 02:20:18 -0800 (PST)
+Received: by 10.49.88.16 with HTTP; Fri, 3 Mar 2006 02:20:18 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17151>
 
---no-signed-off-cc is still supported, for backwards compatibility
+------=_Part_23044_976751.1141381218477
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Alex Riesen <ariesen@harmanbecker.com>
+---
+chmod u-w and even chmod a-w dont work on fat and ntfs.
+The actually do something, but rm a file from that directory
+will succeed anyway. That's windows permission model to you...
+
+------=_Part_23044_976751.1141381218477
+Content-Type: text/plain; 
+	name=0001-workaround-fat-ntfs-deficiencies-for-t3600-rm.sh-git-rm.txt; 
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Attachment-Id: f_ekccro00
+Content-Disposition: attachment; filename="0001-workaround-fat-ntfs-deficiencies-for-t3600-rm.sh-git-rm.txt"
+
+>From nobody Mon Sep 17 00:00:00 2001
+From: Alex Riesen <raa.lkml@gmail.com>
+Date: Fri Mar 3 11:15:05 2006 +0100
+Subject: workaround fat/ntfs deficiencies for t3600-rm.sh (git-rm)
 
 ---
 
- git-send-email.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ t/t3600-rm.sh |   23 +++++++++++++++++------
+ 1 files changed, 17 insertions(+), 6 deletions(-)
 
-374f3e5c7fd49c4949df9b29ed03287e6ceb2e2c
-diff --git a/git-send-email.perl b/git-send-email.perl
-index b0d095b..7c8d512 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -54,7 +54,7 @@ my $rc = GetOptions("from=s" => \$from,
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
- 		    "suppress-from" => \$suppress_from,
--		    "no-signed-off-cc" => \$no_signed_off_cc,
-+		    "no-signed-off-cc|no-signed-off-by-cc" => \$no_signed_off_cc,
- 	 );
+583a9faeab3a200fc970577458b7827d86aa7df1
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index cabfadd..d1947e1 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -8,11 +8,20 @@ test_description='Test of the various op
+ . ./test-lib.sh
  
- # Now, let's fill any that aren't set in with defaults:
+ # Setup some files to be removed, some with funny characters
+-touch -- foo bar baz 'space embedded' 'tab	embedded' 'newline
+-embedded' -q
+-git-add -- foo bar baz 'space embedded' 'tab	embedded' 'newline
+-embedded' -q
+-git-commit -m "add files"
++touch -- foo bar baz 'space embedded' -q
++git-add -- foo bar baz 'space embedded' -q
++git-commit -m "add normal files"
++test_tabs=y
++if touch -- 'tab	embedded' 'newline
++embedded'
++then
++git-add -- 'tab	embedded' 'newline
++embedded'
++git-commit -m "add files with tabs and newlines"
++else
++    say 'Your filesystem does not allow tabs in filenames.'
++    test_tabs=n
++fi
+ 
+ test_expect_success \
+     'Pre-check that foo exists and is in index before git-rm foo' \
+@@ -42,16 +51,18 @@ test_expect_success \
+     'Test that "git-rm -- -q" succeeds (remove a file that looks like an option)' \
+     'git-rm -- -q'
+ 
+-test_expect_success \
++test "$test_tabs" = y && test_expect_success \
+     "Test that \"git-rm -f\" succeeds with embedded space, tab, or newline characters." \
+     "git-rm -f 'space embedded' 'tab	embedded' 'newline
+ embedded'"
+ 
++if test "$test_tabs" = y; then
+ chmod u-w .
+ test_expect_failure \
+     'Test that "git-rm -f" fails if its rm fails' \
+     'git-rm -f baz'
+ chmod u+w .
++fi
+ 
+ test_expect_success \
+     'When the rm in "git-rm -f" fails, it should not remove the file from the index' \
 -- 
-1.2.3.g4676
+1.2.4.ga091
+
+
+
+
+------=_Part_23044_976751.1141381218477--
