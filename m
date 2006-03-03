@@ -1,71 +1,66 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: cygwin: push/pull takes very long time
-Date: Fri, 3 Mar 2006 10:10:25 +0100
-Message-ID: <81b0412b0603030110x73f080ao6a5798e339aa6355@mail.gmail.com>
-References: <81b0412b0603020526w7db41994v54a96895c1a6e960@mail.gmail.com>
-	 <81b0412b0603020909p179ed9bx4ed8fc2ddf77e868@mail.gmail.com>
-	 <20060302215408.GC6183@steel.home>
-	 <20060303002806.GB7497@trixie.casa.cgf.cx>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 3/9] contrib/git-svn: strip 'git-svn-id:' when commiting to SVN
+Date: Fri, 3 Mar 2006 01:20:08 -0800
+Message-ID: <11413776082010-git-send-email-normalperson@yhbt.net>
+References: <114137760733-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 03 10:10:35 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 03 10:20:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FF6J1-0001z5-38
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 10:10:35 +0100
+	id 1FF6SN-0003xs-QZ
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 10:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbWCCJK3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Mar 2006 04:10:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbWCCJK3
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 04:10:29 -0500
-Received: from nproxy.gmail.com ([64.233.182.205]:24154 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1752189AbWCCJK1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 04:10:27 -0500
-Received: by nproxy.gmail.com with SMTP id c31so431628nfb
-        for <git@vger.kernel.org>; Fri, 03 Mar 2006 01:10:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=C7PLN+GjfS+HjhllL9l3bBVwIP83Q/pgXYgZoGpck9OhPJMdaIvurKEJEURdsjrlAmVUmIFWMZdZA2tS5oc+Nw1fMUFfD8f+HDGtYaHrY25wZg5KJ74/C52eOggjnYg8WPTaSlCEpc7XtSRgLdHPCF9fZ9galwoQlm/y2c0echA=
-Received: by 10.48.225.15 with SMTP id x15mr1065107nfg;
-        Fri, 03 Mar 2006 01:10:25 -0800 (PST)
-Received: by 10.49.88.16 with HTTP; Fri, 3 Mar 2006 01:10:25 -0800 (PST)
-To: "Christopher Faylor" <me@cgf.cx>
-In-Reply-To: <20060303002806.GB7497@trixie.casa.cgf.cx>
-Content-Disposition: inline
+	id S1752198AbWCCJUN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Mar 2006 04:20:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbWCCJUM
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 04:20:12 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:64898 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1752198AbWCCJUI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 04:20:08 -0500
+Received: from Muzzle (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 446537DC022;
+	Fri,  3 Mar 2006 01:20:08 -0800 (PST)
+In-Reply-To: <114137760733-git-send-email-normalperson@yhbt.net>
+X-Mailer: git-send-email
+To: junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17140>
 
-On 3/3/06, Christopher Faylor <me@cgf.cx> wrote:
-> On Thu, Mar 02, 2006 at 10:54:08PM +0100, Alex Riesen wrote:
-> >Alex Riesen, Thu, Mar 02, 2006 18:09:23 +0100:
-> >>I'll cleanup the profiling code and send it as well soon (I had to
-> >>instrument x*alloc).
-> >
-> >This is not exactly the same.  It counts free as well, even if that is
-> >not really interesting - there are places were there is more frees than
-> >allocs.  Probably something missed or a result coming from libc.
-> >
-> >Also it is _not_ the code I used for windows.  I had to have a global
-> >variable for argv[0], which needs modification of all main()s, which
-> >gets too easily out of sync.
->
-> I wasn't following this discussion closely so maybe this is useless
-> information, but for Cygwin you can either use the undocumented global
-> __argv or you can use /proc/cmdline.  /proc/self/cmdline is going to be
-> pretty slow, however.
+We regenerate and use git-svn-id: whenever we fetch or otherwise
+commit to remotes/git-svn.  We don't actually know what revision
+number we'll commit to SVN at commit time, so this is useless.
+It won't throw off things like 'rebuild', though, which knows to
+only use the last instance of git-svn-id: in a log message
 
-Oh, thanks. The speed is of no problem here: it's in atexit callback.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-> It looks like pure Windows console apps define _argv in stdlib.h also
-> but I've never used this and don't know if it is what it looks like.
+---
 
-It works as usual argv. I used "char **__argv", got the message from linker:
-Info: resolving ___argv by linking to __imp____argv (auto-import)
-which I almost expected.
+ contrib/git-svn/git-svn.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+15b28ddfc496fa88cffdfddcc9262cae635a34d0
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index 67368a5..edae9d4 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -625,6 +625,9 @@ sub svn_commit_tree {
+ 		while (<$msg_fh>) {
+ 			if (!$in_msg) {
+ 				$in_msg = 1 if (/^\s*$/);
++			} elsif (/^git-svn-id: /) {
++				# skip this, we regenerate the correct one
++				# on re-fetch anyways
+ 			} else {
+ 				print $msg $_ or croak $!;
+ 			}
+-- 
+1.2.3.g4676
