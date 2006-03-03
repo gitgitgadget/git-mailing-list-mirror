@@ -1,68 +1,58 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH 1/3] cg-mv doesn't work with bash 3.1.7 due to
-	excessive quotes
-Date: Fri, 03 Mar 2006 09:11:07 -0500
-Message-ID: <1141395067.30343.14.camel@dv>
-References: <20060303011154.14619.71590.stgit@dv.roinet.com>
-	 <7vbqwo3xo4.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
+Date: Fri, 3 Mar 2006 15:13:29 +0100
+Message-ID: <20060303141329.GA16456@diana.vm.bytemark.co.uk>
+References: <20060227204252.GA31836@diana.vm.bytemark.co.uk> <44037A5C.6080409@gmail.com> <b0943d9e0602281445w7160d915y@mail.gmail.com> <4405DC41.8020700@citi.umich.edu> <b0943d9e0603010953iccf64a4v@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 03 15:11:43 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Mar 03 15:13:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFB0C-0001NA-Hb
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 15:11:29 +0100
+	id 1FFB2L-0001vF-Gp
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 15:13:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWCCOLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Mar 2006 09:11:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWCCOLZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 09:11:25 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:31915 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751091AbWCCOLZ
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 09:11:25 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FFB03-0000QA-HW
-	for git@vger.kernel.org; Fri, 03 Mar 2006 09:11:21 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FFAzs-0007xp-4R; Fri, 03 Mar 2006 09:11:08 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqwo3xo4.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.5.92 (2.5.92-1) 
+	id S1751154AbWCCONf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 3 Mar 2006 09:13:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWCCONf
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 09:13:35 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:39946 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1751154AbWCCONe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Mar 2006 09:13:34 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FFB29-0004Jw-00
+	for <git@vger.kernel.org>; Fri, 03 Mar 2006 14:13:29 +0000
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0603010953iccf64a4v@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17153>
 
-On Thu, 2006-03-02 at 21:27 -0800, Junio C Hamano wrote:
-> Pavel Roskin <proski@gnu.org> writes:
-> 
-> > -	ARGS2["${#ARGS2[@]}"]="$_git_relpath${arg%/}"
-> > +	ARGS2[${#ARGS2[@]}]="$_git_relpath${arg%/}"
-> 
-> Is this an application bug?  It looks like a workaround for a
-> bug in the shell...
+On 2006-03-01 17:53:53 +0000, Catalin Marinas wrote:
 
-Indeed, bash 3.00.16 (FC4) is fine with the original cg-mv.  On the
-other hand, bash 3.1.7 (FC development) doesn't even like this:
+> This won't solve the problem since testing whether patch "a" was
+> merged upstream will fail because its reverse won't apply cleanly
+> onto the upstream HEAD. Of course, you can try combination of
+> upstream commits and local patches but it's not really feasible.
+>
+> As I said, this method doesn't solve all the upstream merge
+> situations but it is OK for most of them.
 
-$ arg["0"]=0
-bash: "0": syntax error: operand expected (error token is ""0"")
+We could perhaps do a little better. Instead of just noting whether
+the patch vanishes when reverse-applied, save the top and bottom of
+the patch as reverse-applied, and then replace the patch with the
+reverse of that. If the patch vanishes, this does what your patch does
+right now. If the patch does not vanish, all that remains is the parts
+that upstream didn't accept. (And as before, if the patch didn't
+reverse-apply cleanly, assume upstream hasn't accepted it at all yet.)
 
-I don't see any relevant information in the NEWS file, so even if it's
-no a bug, it's an undocumented feature :-)
-
-Anyway, the quotes are excessive, bash is (sort of) correct to complain
-about it, and I don't see any other instances of quoting array arguments
-in cogito.
-
-The quotes in question have always existed in cg-mv, they were not added
-to work around anything.
-
--- 
-Regards,
-Pavel Roskin
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
