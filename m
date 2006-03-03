@@ -1,148 +1,154 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 5/9] contrib/git-svn: cleanup option parsing
-Date: Fri, 3 Mar 2006 01:20:08 -0800
-Message-ID: <11413776081545-git-send-email-normalperson@yhbt.net>
-References: <11413776082506-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH 7/9] contrib/git-svn: avoid re-reading the repository uuid, it never changes
+Date: Fri, 3 Mar 2006 01:20:09 -0800
+Message-ID: <11413776092493-git-send-email-normalperson@yhbt.net>
+References: <11413776092820-git-send-email-normalperson@yhbt.net>
 Reply-To: Eric Wong <normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 03 10:20:46 2006
+X-From: git-owner@vger.kernel.org Fri Mar 03 10:20:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FF6Sg-00041U-Js
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 10:20:34 +0100
+	id 1FF6Sh-00041U-4o
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 10:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbWCCJUR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Mar 2006 04:20:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbWCCJUR
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 04:20:17 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:387 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1752202AbWCCJUJ (ORCPT
+	id S1752209AbWCCJUV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Mar 2006 04:20:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbWCCJUV
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 04:20:21 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:1411 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1752209AbWCCJUJ (ORCPT
 	<rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 04:20:09 -0500
 Received: from Muzzle (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D6C527DC024;
-	Fri,  3 Mar 2006 01:20:08 -0800 (PST)
-In-Reply-To: <11413776082506-git-send-email-normalperson@yhbt.net>
+	by hand.yhbt.net (Postfix) with SMTP id 78B297DC026;
+	Fri,  3 Mar 2006 01:20:09 -0800 (PST)
+In-Reply-To: <11413776092820-git-send-email-normalperson@yhbt.net>
 X-Mailer: git-send-email
 To: junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17149>
+
+If it does change, we're screwed anyways as SVN will refuse to
+commit or update.  We also never access more than one SVN
+repository per-invocation, so we can store it as a global, too.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
 ---
 
- contrib/git-svn/git-svn.perl |   65 +++++++++++++++++++++++-------------------
- 1 files changed, 35 insertions(+), 30 deletions(-)
+ contrib/git-svn/git-svn.perl |   27 ++++++++++++---------------
+ 1 files changed, 12 insertions(+), 15 deletions(-)
 
-a080e189728de9a7aa834b61205df9d8de1025ba
+3dc689059bd5cffa12bb2b8cdc0f1965d5f6cee2
 diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index c2b4ee9..5d547e8 100755
+index 69b6be3..041791b 100755
 --- a/contrib/git-svn/git-svn.perl
 +++ b/contrib/git-svn/git-svn.perl
-@@ -24,6 +24,7 @@ $ENV{LC_ALL} = 'C';
- # If SVN:: library support is added, please make the dependencies
- # optional and preserve the capability to use the command-line client.
- # use eval { require SVN::... } to make it lazy load
-+# We don't use any modules not in the standard Perl distribution:
- use Carp qw/croak/;
- use IO::File qw//;
- use File::Basename qw/dirname basename/;
-@@ -37,26 +38,25 @@ my ($_revision,$_stdin,$_no_ignore_ext,$
- 	$_find_copies_harder, $_l, $_version, $_upgrade, $_authors);
- my (@_branch_from, %tree_map, %users);
+@@ -4,7 +4,7 @@
+ use warnings;
+ use strict;
+ use vars qw/	$AUTHOR $VERSION
+-		$SVN_URL $SVN_INFO $SVN_WC
++		$SVN_URL $SVN_INFO $SVN_WC $SVN_UUID
+ 		$GIT_SVN_INDEX $GIT_SVN
+ 		$GIT_DIR $REV_DIR/;
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+@@ -114,7 +114,6 @@ sub version {
  
--GetOptions(	'revision|r=s' => \$_revision,
--		'no-ignore-externals' => \$_no_ignore_ext,
--		'stdin|' => \$_stdin,
--		'edit|e' => \$_edit,
--		'rmdir' => \$_rmdir,
--		'upgrade' => \$_upgrade,
--		'help|H|h' => \$_help,
-+my %fc_opts = ( 'no-ignore-externals' => \$_no_ignore_ext,
- 		'branch|b=s' => \@_branch_from,
--		'find-copies-harder' => \$_find_copies_harder,
--		'authors-file|authors|A=s' => \$_authors,
--		'l=i' => \$_l,
--		'version|V' => \$_version,
--		'no-stop-on-copy' => \$_no_stop_copy );
-+		'authors-file|A=s' => \$_authors );
- my %cmd = (
--	fetch => [ \&fetch, "Download new revisions from SVN" ],
--	init => [ \&init, "Initialize and fetch (import)"],
--	commit => [ \&commit, "Commit git revisions to SVN" ],
--	'show-ignore' => [ \&show_ignore, "Show svn:ignore listings" ],
--	rebuild => [ \&rebuild, "Rebuild git-svn metadata (after git clone)" ],
--	help => [ \&usage, "Show help" ],
-+	fetch => [ \&fetch, "Download new revisions from SVN",
-+			{ 'revision|r=s' => \$_revision, %fc_opts } ],
-+	init => [ \&init, "Initialize and fetch (import)", { } ],
-+	commit => [ \&commit, "Commit git revisions to SVN",
-+			{	'stdin|' => \$_stdin,
-+				'edit|e' => \$_edit,
-+				'rmdir' => \$_rmdir,
-+				'find-copies-harder' => \$_find_copies_harder,
-+				'l=i' => \$_l,
-+				%fc_opts,
-+			} ],
-+	'show-ignore' => [ \&show_ignore, "Show svn:ignore listings", { } ],
-+	rebuild => [ \&rebuild, "Rebuild git-svn metadata (after git clone)",
-+			{ 'no-ignore-externals' => \$_no_ignore_ext,
-+			  'upgrade' => \$_upgrade } ],
- );
- my $cmd;
- for (my $i = 0; $i < @ARGV; $i++) {
-@@ -75,21 +75,14 @@ foreach (keys %cmd) {
- 	}
+ sub rebuild {
+ 	$SVN_URL = shift or undef;
+-	my $repo_uuid;
+ 	my $newest_rev = 0;
+ 	if ($_upgrade) {
+ 		sys('git-update-ref',"refs/remotes/$GIT_SVN","$GIT_SVN-HEAD");
+@@ -150,7 +149,7 @@ sub rebuild {
+ 
+ 		# if we merged or otherwise started elsewhere, this is
+ 		# how we break out of it
+-		next if (defined $repo_uuid && ($uuid ne $repo_uuid));
++		next if (defined $SVN_UUID && ($uuid ne $SVN_UUID));
+ 		next if (defined $SVN_URL && ($url ne $SVN_URL));
+ 
+ 		print "r$rev = $c\n";
+@@ -159,7 +158,7 @@ sub rebuild {
+ 				croak "SVN repository location required: $url\n";
+ 			}
+ 			$SVN_URL ||= $url;
+-			$repo_uuid ||= setup_git_svn();
++			$SVN_UUID ||= setup_git_svn();
+ 			$latest = $rev;
+ 		}
+ 		assert_revision_eq_or_unknown($rev, $c);
+@@ -252,7 +251,7 @@ sub commit {
+ 		print "Reading from stdin...\n";
+ 		@commits = ();
+ 		while (<STDIN>) {
+-			if (/\b($sha1_short)\b/) {
++			if (/\b($sha1_short)\b/o) {
+ 				unshift @commits, $1;
+ 			}
+ 		}
+@@ -320,14 +319,14 @@ sub setup_git_svn {
+ 	mkpath(["$GIT_DIR/$GIT_SVN/info"]);
+ 	mkpath([$REV_DIR]);
+ 	s_to_file($SVN_URL,"$GIT_DIR/$GIT_SVN/info/url");
+-	my $uuid = svn_info($SVN_URL)->{'Repository UUID'} or
++	$SVN_UUID = svn_info($SVN_URL)->{'Repository UUID'} or
+ 					croak "Repository UUID unreadable\n";
+-	s_to_file($uuid,"$GIT_DIR/$GIT_SVN/info/uuid");
++	s_to_file($SVN_UUID,"$GIT_DIR/$GIT_SVN/info/uuid");
+ 
+ 	open my $fd, '>>', "$GIT_DIR/$GIT_SVN/info/exclude" or croak $!;
+ 	print $fd '.svn',"\n";
+ 	close $fd or croak $!;
+-	return $uuid;
++	return $SVN_UUID;
  }
  
--# '<svn username> = real-name <email address>' mapping based on git-svnimport:
--if ($_authors) {
--	open my $authors, '<', $_authors or die "Can't open $_authors $!\n";
--	while (<$authors>) {
--		chomp;
--		next unless /^(\S+?)\s*=\s*(.+?)\s*<(.+)>\s*$/;
--		my ($user, $name, $email) = ($1, $2, $3);
--		$users{$user} = [$name, $email];
--	}
--	close $authors or croak $!;
--}
-+my %opts;
-+%opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
+ sub assert_svn_wc_clean {
+@@ -850,9 +849,7 @@ sub git_commit {
+ 	my ($log_msg, @parents) = @_;
+ 	assert_revision_unknown($log_msg->{revision});
+ 	my $out_fh = IO::File->new_tmpfile or croak $!;
+-	my $info = svn_info('.');
+-	my $uuid = $info->{'Repository UUID'};
+-	defined $uuid or croak "Unable to get Repository UUID\n";
++	$SVN_UUID ||= svn_info('.')->{'Repository UUID'};
  
-+GetOptions(%opts, 'help|H|h' => \$_help, 'version|V' => \$_version ) or exit 1;
- usage(0) if $_help;
- version() if $_version;
--usage(1) unless (defined $cmd);
-+usage(1) unless defined $cmd;
-+load_authors() if $_authors;
- svn_check_ignore_externals();
- $cmd{$cmd}->[0]->(@ARGV);
- exit 0;
-@@ -1047,6 +1040,18 @@ sub map_tree_joins {
- 	}
+ 	map_tree_joins() if (@_branch_from && !%tree_map);
+ 
+@@ -891,11 +888,11 @@ sub git_commit {
+ 		my $msg_fh = IO::File->new_tmpfile or croak $!;
+ 		print $msg_fh $log_msg->{msg}, "\ngit-svn-id: ",
+ 					"$SVN_URL\@$log_msg->{revision}",
+-					" $uuid\n" or croak $!;
++					" $SVN_UUID\n" or croak $!;
+ 		$msg_fh->flush == 0 or croak $!;
+ 		seek $msg_fh, 0, 0 or croak $!;
+ 
+-		set_commit_env($log_msg, $uuid);
++		set_commit_env($log_msg);
+ 
+ 		my @exec = ('git-commit-tree',$tree);
+ 		push @exec, '-p', $_  foreach @exec_parents;
+@@ -923,10 +920,10 @@ sub git_commit {
  }
  
-+# '<svn username> = real-name <email address>' mapping based on git-svnimport:
-+sub load_authors {
-+	open my $authors, '<', $_authors or die "Can't open $_authors $!\n";
-+	while (<$authors>) {
-+		chomp;
-+		next unless /^(\S+?)\s*=\s*(.+?)\s*<(.+)>\s*$/;
-+		my ($user, $name, $email) = ($1, $2, $3);
-+		$users{$user} = [$name, $email];
-+	}
-+	close $authors or croak $!;
-+}
-+
- __END__
- 
- Data structures:
+ sub set_commit_env {
+-	my ($log_msg, $uuid) = @_;
++	my ($log_msg) = @_;
+ 	my $author = $log_msg->{author};
+ 	my ($name,$email) = defined $users{$author} ?  @{$users{$author}}
+-				: ($author,"$author\@$uuid");
++				: ($author,"$author\@$SVN_UUID");
+ 	$ENV{GIT_AUTHOR_NAME} = $ENV{GIT_COMMITTER_NAME} = $name;
+ 	$ENV{GIT_AUTHOR_EMAIL} = $ENV{GIT_COMMITTER_EMAIL} = $email;
+ 	$ENV{GIT_AUTHOR_DATE} = $ENV{GIT_COMMITTER_DATE} = $log_msg->{date};
 -- 
 1.2.3.g4676
