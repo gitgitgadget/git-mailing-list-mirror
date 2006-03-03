@@ -1,514 +1,741 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: [PATCH] Added Packing Heursitics IRC writeup.
-Date: Thu, 02 Mar 2006 19:19:29 -0600
-Message-ID: <E1FEyx7-0007vo-Je@jdl.com>
-X-From: git-owner@vger.kernel.org Fri Mar 03 02:20:04 2006
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Add --temp and --stage=all options to checkout-index.
+Date: Thu, 2 Mar 2006 20:20:32 -0500
+Message-ID: <20060303012032.GC6321@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Mar 03 02:20:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FEyxZ-0004e5-FP
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 02:19:59 +0100
+	id 1FEyyG-0004oQ-HK
+	for gcvg-git@gmane.org; Fri, 03 Mar 2006 02:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115AbWCCBTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Mar 2006 20:19:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbWCCBTy
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 20:19:54 -0500
-Received: from colo.jdl.com ([66.118.10.122]:9112 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1752115AbWCCBTy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Mar 2006 20:19:54 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1FEyx7-0007vo-Je
-	for git@vger.kernel.org; Thu, 02 Mar 2006 19:19:32 -0600
+	id S1752116AbWCCBUi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Mar 2006 20:20:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbWCCBUi
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Mar 2006 20:20:38 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:25520 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1752116AbWCCBUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Mar 2006 20:20:37 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FEyy0-0000SG-Ua
+	for git@vger.kernel.org; Thu, 02 Mar 2006 20:20:25 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C3FF820FBBF; Thu,  2 Mar 2006 20:20:32 -0500 (EST)
 To: git@vger.kernel.org
-X-Spam-Score: -5.9 (-----)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17132>
 
+Sometimes it is convient for a Porcelain to be able to checkout all
+unmerged files in all stages so that an external merge tool can be
+executed by the Porcelain or the end-user.  Using git-unpack-file
+on each stage individually incurs a rather high penalty due to the
+need to fork for each file version obtained.  git-checkout-index -a
+--stage=all will now do the same thing, but faster.
 
-Signed-off-by: Jon Loeliger <jdl@jdl.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
 ---
+ This spawned out of the discussion of my prior --suffix patch
+ and replaces it entirely.
 
- Documentation/technical/pack-heuristics.txt |  466 +++++++++++++++++++++++++++
- 1 files changed, 466 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/technical/pack-heuristics.txt
+ The output format is Junio's idea, which I happened to like a lot.
+ I think I have faithfully implemented it here, but added a case
+ where you can obtain temporary files for only a specific stage
+ without needing to read the 'wider' 3-stage format.
 
-0cbbcac437be6f8a0249f6cf83b90a6fe9d2362e
-diff --git a/Documentation/technical/pack-heuristics.txt b/Documentation/technical/pack-heuristics.txt
-new file mode 100644
-index 0000000..eaab3ee
+ Unfortunately this change lead me down a path which changed the core
+ checkout code also used by apply and read-tree.  So those commands
+ could now checkout to temporary files if they wanted to.  :-)
+
+ It currently passes all test cases, including the new one provided
+ by this patch.
+
+ Documentation/git-checkout-index.txt |   51 ++++++++
+ apply.c                              |    3 
+ cache.h                              |    5 -
+ checkout-index.c                     |   84 ++++++++++++-
+ entry.c                              |   92 +++++++++------
+ read-tree.c                          |    3 
+ t/t2004-checkout-cache-temp.sh       |  212 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 396 insertions(+), 54 deletions(-)
+ create mode 100755 t/t2004-checkout-cache-temp.sh
+
+base c6b84bc40310f8e0cf2fe290b5f291e31cf688ef
+last 022659f9b239fd5513a883e09ac0e0688b69dbe1
+diff --git a/Documentation/git-checkout-index.txt b/Documentation/git-checkout-index.txt
+index b0b6588..09bd6a5 100644
+--- a/Documentation/git-checkout-index.txt
++++ b/Documentation/git-checkout-index.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-checkout-index' [-u] [-q] [-a] [-f] [-n] [--prefix=<string>]
+-		   [--stage=<number>]
++		   [--stage=<number>|all]
++		   [--temp]
+ 		   [-z] [--stdin]
+ 		   [--] [<file>]\*
+ 
+@@ -43,9 +44,15 @@ OPTIONS
+ 	When creating files, prepend <string> (usually a directory
+ 	including a trailing /)
+ 
+---stage=<number>::
++--stage=<number>|all::
+ 	Instead of checking out unmerged entries, copy out the
+ 	files from named stage.  <number> must be between 1 and 3.
++	Note: --stage=all automatically implies --temp.
++
++--temp::
++	Instead of copying the files to the working directory
++	write the content to temporary files.  The temporary name
++	associations will be written to stdout.
+ 
+ --stdin::
+ 	Instead of taking list of paths from the command line,
+@@ -87,6 +94,46 @@ it will prevent problems with a filename
+ Using `--` is probably a good policy in scripts.
+ 
+ 
++Using --temp or --stage=all
++---------------------------
++When `--temp` is used (or implied by `--stage=all`)
++`git-checkout-index` will create a temporary file for each index
++entry being checked out.  The index will not be updated with stat
++information.  These options can be useful if the caller needs all
++stages of all unmerged entries so that the unmerged files can be
++processed by an external merge tool.
++
++A listing will be written to stdout providing the association of
++temporary file names to tracked path names.  The listing format
++has two variations:
++
++    . tempname TAB path RS
+++
++The first format is what gets used when `--stage` is omitted or
++is not `--stage=all`. The field tempname is the temporary file
++name holding the file content and path is the tracked path name in
++the index.  Only the requested entries are output.
++
++    . stage1temp SP stage2temp SP stage3tmp TAB path RS
+++
++The second format is what gets used when `--stage=all`.  The three
++stage temporary fields (stage1temp, stage2temp, stage3temp) list the
++name of the temporary file if there is a stage entry in the index
++or `.` if there is no stage entry.  Paths which only have a stage 0
++entry will always be omitted from the output.
++
++In both formats RS (the record separator) is newline by default
++but will be the null byte if -z was passed on the command line.
++The temporary file names are always safe strings; they will never
++contain directory separators or whitespace characters.  The path
++field is always relative to the current directory and the temporary
++file names are always relative to the top level directory.
++
++If the object being copied out to a temporary file is a symbolic
++link the content of the link will be written to a normal file.  It is
++up to the end-user or the Porcelain to make use of this information.
++
++
+ EXAMPLES
+ --------
+ To update and refresh only the files already checked out::
+diff --git a/apply.c b/apply.c
+index c369966..5583a80 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1376,6 +1376,7 @@ static int apply_data(struct patch *patc
+ static int check_patch(struct patch *patch)
+ {
+ 	struct stat st;
++	static char topath[MAXPATHLEN+1];
+ 	const char *old_name = patch->old_name;
+ 	const char *new_name = patch->new_name;
+ 	const char *name = old_name ? old_name : new_name;
+@@ -1402,7 +1403,7 @@ static int check_patch(struct patch *pat
+ 				costate.not_new = 0;
+ 				costate.refresh_cache = 1;
+ 				if (checkout_entry(active_cache[pos],
+-						   &costate) ||
++						   &costate, topath) ||
+ 				    lstat(old_name, &st))
+ 					return -1;
+ 			}
+diff --git a/cache.h b/cache.h
+index 0d3b244..f87744c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -259,10 +259,11 @@ struct checkout {
+ 	unsigned force:1,
+ 		 quiet:1,
+ 		 not_new:1,
+-		 refresh_cache:1;
++		 refresh_cache:1,
++		 to_tempfile:1;
+ };
+ 
+-extern int checkout_entry(struct cache_entry *ce, struct checkout *state);
++extern int checkout_entry(struct cache_entry *ce, struct checkout *state, char *topath);
+ 
+ extern struct alternate_object_database {
+ 	struct alternate_object_database *next;
+diff --git a/checkout-index.c b/checkout-index.c
+index f54c606..24845c3 100644
+--- a/checkout-index.c
++++ b/checkout-index.c
+@@ -40,9 +40,12 @@
+ #include "strbuf.h"
+ #include "quote.h"
+ 
++#define CHECKOUT_ALL 4
+ static const char *prefix;
+ static int prefix_length;
++static int line_termination = '\n';
+ static int checkout_stage; /* default to checkout stage0 */
++static char topath[4][MAXPATHLEN+1];
+ 
+ static struct checkout state = {
+ 	.base_dir = "",
+@@ -51,13 +54,42 @@ static struct checkout state = {
+ 	.quiet = 0,
+ 	.not_new = 0,
+ 	.refresh_cache = 0,
++	.to_tempfile = 0,
+ };
+ 
++static void write_tempfile_record (const char *name)
++{
++	int i;
++
++	if (CHECKOUT_ALL == checkout_stage) {
++		for (i = 1; i < 4; i++) {
++			if (i > 1)
++				putchar(' ');
++			if (topath[i][0])
++				fputs(topath[i], stdout);
++			else
++				putchar('.');
++		}
++	} else
++		fputs(topath[checkout_stage], stdout);
++
++	putchar('\t');
++	write_name_quoted("", 0, name + prefix_length,
++		line_termination, stdout);
++	putchar(line_termination);
++
++	for (i = 0; i < 4; i++) {
++		topath[i][0] = 0;
++	}
++}
++
+ static int checkout_file(const char *name)
+ {
+ 	int namelen = strlen(name);
+ 	int pos = cache_name_pos(name, namelen);
+ 	int has_same_name = 0;
++	int did_checkout = 0;
++	int errs = 0;
+ 
+ 	if (pos < 0)
+ 		pos = -pos - 1;
+@@ -68,9 +100,19 @@ static int checkout_file(const char *nam
+ 		    memcmp(ce->name, name, namelen))
+ 			break;
+ 		has_same_name = 1;
+-		if (checkout_stage == ce_stage(ce))
+-			return checkout_entry(ce, &state);
+ 		pos++;
++		if (ce_stage(ce) != checkout_stage
++		    && (CHECKOUT_ALL != checkout_stage || !ce_stage(ce)))
++			continue;
++		did_checkout = 1;
++		if (checkout_entry(ce, &state, topath[ce_stage(ce)]) < 0)
++			errs++;
++	}
++
++	if (did_checkout) {
++		if (state.to_tempfile)
++			write_tempfile_record(name);
++		return errs > 0 ? -1 : 0;
+ 	}
+ 
+ 	if (!state.quiet) {
+@@ -90,18 +132,28 @@ static int checkout_file(const char *nam
+ static int checkout_all(void)
+ {
+ 	int i, errs = 0;
++	struct cache_entry* last_ce = 0;
+ 
+ 	for (i = 0; i < active_nr ; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+-		if (ce_stage(ce) != checkout_stage)
++		if (ce_stage(ce) != checkout_stage
++		    && (CHECKOUT_ALL != checkout_stage || !ce_stage(ce)))
+ 			continue;
+ 		if (prefix && *prefix &&
+ 		    (ce_namelen(ce) <= prefix_length ||
+ 		     memcmp(prefix, ce->name, prefix_length)))
+ 			continue;
+-		if (checkout_entry(ce, &state) < 0)
++		if (last_ce && state.to_tempfile) {
++			if (ce_namelen(last_ce) != ce_namelen(ce)
++			    || memcmp(last_ce->name, ce->name, ce_namelen(ce)))
++				write_tempfile_record(last_ce->name);
++		}
++		if (checkout_entry(ce, &state, topath[ce_stage(ce)]) < 0)
+ 			errs++;
++		last_ce = ce;
+ 	}
++	if (last_ce && state.to_tempfile)
++		write_tempfile_record(last_ce->name);
+ 	if (errs)
+ 		/* we have already done our error reporting.
+ 		 * exit with the same code as die().
+@@ -111,7 +163,7 @@ static int checkout_all(void)
+ }
+ 
+ static const char checkout_cache_usage[] =
+-"git-checkout-index [-u] [-q] [-a] [-f] [-n] [--stage=[123]] [--prefix=<string>] [--] <file>...";
++"git-checkout-index [-u] [-q] [-a] [-f] [-n] [--stage=[123]|all] [--prefix=<string>] [--temp] [--] <file>...";
+ 
+ static struct cache_file cache_file;
+ 
+@@ -121,7 +173,6 @@ int main(int argc, char **argv)
+ 	int newfd = -1;
+ 	int all = 0;
+ 	int read_from_stdin = 0;
+-	int line_termination = '\n';
+ 
+ 	prefix = setup_git_directory();
+ 	git_config(git_default_config);
+@@ -175,17 +226,26 @@ int main(int argc, char **argv)
+ 			i++; /* do not consider arg as a file name */
+ 			break;
+ 		}
++		if (!strcmp(arg, "--temp")) {
++			state.to_tempfile = 1;
++			continue;
++		}
+ 		if (!strncmp(arg, "--prefix=", 9)) {
+ 			state.base_dir = arg+9;
+ 			state.base_dir_len = strlen(state.base_dir);
+ 			continue;
+ 		}
+ 		if (!strncmp(arg, "--stage=", 8)) {
+-			int ch = arg[8];
+-			if ('1' <= ch && ch <= '3')
+-				checkout_stage = arg[8] - '0';
+-			else
+-				die("stage should be between 1 and 3");
++			if (!strcmp(arg + 8, "all")) {
++				state.to_tempfile = 1;
++				checkout_stage = CHECKOUT_ALL;
++			} else {
++				int ch = arg[8];
++				if ('1' <= ch && ch <= '3')
++					checkout_stage = arg[8] - '0';
++				else
++					die("stage should be between 1 and 3 or all");
++			}
+ 			continue;
+ 		}
+ 		if (arg[0] == '-')
+@@ -193,7 +253,7 @@ int main(int argc, char **argv)
+ 		break;
+ 	}
+ 
+-	if (state.base_dir_len) {
++	if (state.base_dir_len || state.to_tempfile) {
+ 		/* when --prefix is specified we do not
+ 		 * want to update cache.
+ 		 */
+diff --git a/entry.c b/entry.c
+index 8fb99bc..c33a35d 100644
+--- a/entry.c
++++ b/entry.c
+@@ -63,7 +63,7 @@ static int create_file(const char *path,
+ 	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
+ }
+ 
+-static int write_entry(struct cache_entry *ce, const char *path, struct checkout *state)
++static int write_entry(struct cache_entry *ce, char *path, struct checkout *state)
+ {
+ 	int fd;
+ 	void *new;
+@@ -80,7 +80,11 @@ static int write_entry(struct cache_entr
+ 	}
+ 	switch (ntohl(ce->ce_mode) & S_IFMT) {
+ 	case S_IFREG:
+-		fd = create_file(path, ntohl(ce->ce_mode));
++		if (state->to_tempfile) {
++			strcpy(path, ".merge_file_XXXXXX");
++			fd = mkstemp(path);
++		} else 
++			fd = create_file(path, ntohl(ce->ce_mode));
+ 		if (fd < 0) {
+ 			free(new);
+ 			return error("git-checkout-index: unable to create file %s (%s)",
+@@ -93,12 +97,27 @@ static int write_entry(struct cache_entr
+ 			return error("git-checkout-index: unable to write file %s", path);
+ 		break;
+ 	case S_IFLNK:
+-		if (symlink(new, path)) {
++		if (state->to_tempfile) {
++			strcpy(path, ".merge_link_XXXXXX");
++			fd = mkstemp(path);
++			if (fd < 0) {
++				free(new);
++				return error("git-checkout-index: unable to create "
++						 "file %s (%s)", path, strerror(errno));
++			}
++			wrote = write(fd, new, size);
++			close(fd);
+ 			free(new);
+-			return error("git-checkout-index: unable to create "
+-				     "symlink %s (%s)", path, strerror(errno));
++			if (wrote != size)
++				return error("git-checkout-index: unable to write file %s",
++					path);
++		} else {
++			wrote = symlink(new, path);
++			free(new);
++			if (wrote)
++				return error("git-checkout-index: unable to create "
++						 "symlink %s (%s)", path, strerror(errno));
+ 		}
+-		free(new);
+ 		break;
+ 	default:
+ 		free(new);
+@@ -113,41 +132,42 @@ static int write_entry(struct cache_entr
+ 	return 0;
+ }
+ 
+-int checkout_entry(struct cache_entry *ce, struct checkout *state)
++int checkout_entry(struct cache_entry *ce, struct checkout *state, char *topath)
+ {
+ 	struct stat st;
+-	static char path[MAXPATHLEN+1];
+ 	int len = state->base_dir_len;
+ 
+-	memcpy(path, state->base_dir, len);
+-	strcpy(path + len, ce->name);
+-
+-	if (!lstat(path, &st)) {
+-		unsigned changed = ce_match_stat(ce, &st, 1);
+-		if (!changed)
++	if (!state->to_tempfile) {
++		memcpy(topath, state->base_dir, len);
++		strcpy(topath + len, ce->name);
++
++		if (!lstat(topath, &st)) {
++			unsigned changed = ce_match_stat(ce, &st, 1);
++			if (!changed)
++				return 0;
++			if (!state->force) {
++				if (!state->quiet)
++					fprintf(stderr, "git-checkout-index: %s already exists\n", topath);
++				return -1;
++			}
++
++			/*
++			 * We unlink the old file, to get the new one with the
++			 * right permissions (including umask, which is nasty
++			 * to emulate by hand - much easier to let the system
++			 * just do the right thing)
++			 */
++			unlink(topath);
++			if (S_ISDIR(st.st_mode)) {
++				if (!state->force)
++					return error("%s is a directory", topath);
++				remove_subtree(topath);
++			}
++		} else if (state->not_new) 
+ 			return 0;
+-		if (!state->force) {
+-			if (!state->quiet)
+-				fprintf(stderr, "git-checkout-index: %s already exists\n", path);
+-			return -1;
+-		}
+-
+-		/*
+-		 * We unlink the old file, to get the new one with the
+-		 * right permissions (including umask, which is nasty
+-		 * to emulate by hand - much easier to let the system
+-		 * just do the right thing)
+-		 */
+-		unlink(path);
+-		if (S_ISDIR(st.st_mode)) {
+-			if (!state->force)
+-				return error("%s is a directory", path);
+-			remove_subtree(path);
+-		}
+-	} else if (state->not_new) 
+-		return 0;
+-	create_directories(path, state);
+-	return write_entry(ce, path, state);
++		create_directories(topath, state);
++	}
++	return write_entry(ce, topath, state);
+ }
+ 
+ 
+diff --git a/read-tree.c b/read-tree.c
+index be29b3f..e88d69e 100644
+--- a/read-tree.c
++++ b/read-tree.c
+@@ -279,6 +279,7 @@ static void progress_interval(int signum
+ 
+ static void check_updates(struct cache_entry **src, int nr)
+ {
++	static char topath[MAXPATHLEN+1];
+ 	static struct checkout state = {
+ 		.base_dir = "",
+ 		.force = 1,
+@@ -337,7 +338,7 @@ static void check_updates(struct cache_e
+ 		if (ce->ce_flags & mask) {
+ 			ce->ce_flags &= ~mask;
+ 			if (update)
+-				checkout_entry(ce, &state);
++				checkout_entry(ce, &state, topath);
+ 		}
+ 	}
+ 	if (total) {
+diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
+new file mode 100755
+index 0000000..c100959
 --- /dev/null
-+++ b/Documentation/technical/pack-heuristics.txt
-@@ -0,0 +1,466 @@
-+        Concerning Git's Packing Heuristics
-+        ===================================
-+
-+        Oh, here's a really stupid question:
-+
-+                  Where do I go
-+               to learn the details
-+	    of git's packing heuristics?
-+
-+Be careful what you ask!
-+
-+Followers of the git, please open the git IRC Log and turn to
-+February 10, 2006.
-+
-+It's a rare occasion, and we are joined by the King Git Himself,
-+Linus Torvalds (linus).  Nathaniel Smith, (njs`), has the floor
-+and seeks enlightenment.  Others are present, but silent.
-+
-+Let's listen in!
-+
-+    <njs`> Oh, here's a really stupid question -- where do I go to
-+        learn the details of git's packing heuristics?  google avails
-+        me not, reading the source didn't help a lot, and wading
-+        through the whole mailing list seems less efficient than any
-+        of that.
-+
-+It is a bold start!  A plea for help combined with a simultaneous
-+tri-part attack on some of the tried and true mainstays in the quest
-+for enlightenment.  Brash accusations of google being useless. Hubris!
-+Maligning the source.  Heresy!  Disdain for the mailing list archives.
-+Woe.
-+
-+    <pasky> yes, the packing-related delta stuff is somewhat
-+        mysterious even for me ;)
-+
-+Ah!  Modesty after all.
-+
-+    <linus> njs, I don't think the docs exist. That's something where
-+	 I don't think anybody else than me even really got involved.
-+	 Most of the rest of git others have been busy with (especially
-+	 Junio), but packing nobody touched after I did it.
-+
-+It's cryptic, yet vague.  Linus in style for sure.  Wise men
-+interpret this as an apology.  A few argue it is merely a
-+statement of fact.
-+
-+    <njs`> I guess the next step is "read the source again", but I
-+        have to build up a certain level of gumption first :-)
-+
-+Indeed!  On both points.
-+
-+    <linus> The packing heuristic is actually really really simple.
-+
-+Bait...
-+
-+    <linus> But strange.
-+
-+And switch.  That ought to do it!
-+
-+    <linus> Remember: git really doesn't follow files. So what it does is
-+        - generate a list of all objects
-+        - sort the list according to magic heuristics
-+        - walk the list, using a sliding window, seeing if an object
-+          can be diffed against another object in the window
-+        - write out the list in recency order
-+
-+The traditional understatement:
-+
-+    <njs`> I suspect that what I'm missing is the precise definition of
-+        the word "magic"
-+
-+The traditional insight:
-+
-+    <pasky> yes
-+
-+And Bable-like confusion flowed.
-+
-+    <njs`> oh, hmm, and I'm not sure what this sliding window means either
-+
-+    <pasky> iirc, it appeared to me to be just the sha1 of the object
-+        when reading the code casually ...
-+
-+        ... which simply doesn't sound as a very good heuristics, though ;)
-+
-+    <njs`> .....and recency order.  okay, I think it's clear I didn't
-+       even realize how much I wasn't realizing :-)
-+
-+Ah, grasshopper!  And thus the enlightenment begins anew.
-+
-+    <linus> The "magic" is actually in theory totally arbitrary.
-+        ANY order will give you a working pack, but no, it's not
-+        ordered by SHA1.
-+
-+        Before talking about the ordering for the sliding delta
-+        window, let's talk about the recency order. That's more
-+        important in one way.
-+
-+    <njs`> Right, but if all you want is a working way to pack things
-+        together, you could just use cat and save yourself some
-+        trouble...
-+
-+Waaait for it....
-+
-+    <linus> The recency ordering (which is basically: put objects
-+        _physically_ into the pack in the order that they are
-+        "reachable" from the head) is important.
-+
-+    <njs`> okay
-+
-+    <linus> It's important because that's the thing that gives packs
-+        good locality. It keeps the objects close to the head (whether
-+        they are old or new, but they are _reachable_ from the head)
-+        at the head of the pack. So packs actually have absolutely
-+        _wonderful_ IO patterns.
-+
-+Read that again, because it is important.
-+
-+    <linus> But recency ordering is totally useless for deciding how
-+        to actually generate the deltas, so the delta ordering is
-+        something else.
-+
-+        The delta ordering is (wait for it):
-+        - first sort by the "basename" of the object, as defined by
-+          the name the object was _first_ reached through when
-+          generating the object list
-+        - within the same basename, sort by size of the object
-+        - but always sort different types separately (commits first).
-+
-+        That's not exactly it, but it's very close.
-+
-+    <njs`> The "_first_ reached" thing is not too important, just you
-+        need some way to break ties since the same objects may be
-+        reachable many ways, yes?
-+
-+And as if to clarify:
-+
-+    <linus> The point is that it's all really just any random
-+        heuristic, and the ordering is totally unimportant for
-+        correctness, but it helps a lot if the heuristic gives
-+        "clumping" for things that are likely to delta well against
-+        each other.
-+
-+It is an important point, so secretly, I did my own research and have
-+included my results below.  To be fair, it has changed some over time.
-+And through the magic of Revisionistic History, I draw upon this entry
-+from The Git IRC Logs on my father's birthday, March 1:
-+
-+    <gitster> The quote from the above linus should be rewritten a
-+        bit (wait for it):
-+        - first sort by type.  Different objects never delta with
-+	  each other.
-+        - then sort by filename/dirname.  hash of the basename
-+          occupies the top BITS_PER_INT-DIR_BITS bits, and bottom
-+          DIR_BITS are for the hash of leading path elements.
-+        - then if we are doing "thin" pack, the objects we are _not_
-+          going to pack but we know about are sorted earlier than
-+          other objects.
-+        - and finally sort by size, larger to smaller.
-+
-+In one swell-foop, clarification and obscurification!  Nonetheless,
-+authoritative.  Cryptic, yet concise.  It even solicits notions of
-+quotes from The Source Code.  Clearly, more study is needed.
-+
-+    <gitster> That's the sort order.  What this means is:
-+        - we do not delta different object types.
-+	- we prefer to delta the objects with the same full path, but
-+          allow files with the same name from different directories.
-+	- we always prefer to delta against objects we are not going
-+          to send, if there are some.
-+	- we prefer to delta against larger objects, so that we have
-+          lots of removals.
-+
-+        The penultimate rule is for "thin" packs.  It is used when
-+        the other side is known to have such objects.
-+
-+There it is again. "Thin" packs.  I'm thinking to myself, "What
-+is a 'thin' pack?"  So I ask:
-+
-+    <jdl> What is a "thin" pack?
-+
-+    <gitster> Use of --objects-edge to rev-list as the upstream of
-+        pack-objects.  The pack transfer protocol negotiates that.
-+
-+Woo hoo!  Cleared that _right_ up!
-+
-+    <gitster> There are two directions - push and fetch.
-+
-+There!  Did you see it?  It is not '"push" and "pull"'!  How often the
-+confusion has started here.  So casually mentioned, too!
-+
-+    <gitster> For push, git-send-pack invokes git-receive-pack on the
-+        other end.  The receive-pack says "I have up to these commits".
-+        send-pack looks at them, and computes what are missing from
-+        the other end.  So "thin" could be the default there.
-+
-+        In the other direction, fetch, git-fetch-pack and
-+        git-clone-pack invokes git-upload-pack on the other end
-+	(via ssh or by talking to the daemon).
-+
-+	There are two cases: fetch-pack with -k and clone-pack is one,
-+        fetch-pack without -k is the other.  clone-pack and fetch-pack
-+        with -k will keep the downloaded packfile without expanded, so
-+        we do not use thin pack transfer.  Otherwise, the generated
-+        pack will have delta without base object in the same pack.
-+
-+        But fetch-pack without -k will explode the received pack into
-+        individual objects, so we automatically ask upload-pack to
-+        give us a thin pack if upload-pack supports it.
-+
-+OK then.
-+
-+Uh.
-+
-+Let's return to the previous conversation still in progress.
-+
-+    <njs`> and "basename" means something like "the tail of end of
-+        path of file objects and dir objects, as per basename(3), and
-+        we just declare all commit and tag objects to have the same
-+        basename" or something?
-+
-+Luckily, that too is a point that gitster clarified for us!
-+
-+If I might add, the trick is to make files that _might_ be similar be
-+located close to each other in the hash buckets based on their file
-+names.  It used to be that "foo/Makefile", "bar/baz/quux/Makefile" and
-+"Makefile" all landed in the same bucket due to their common basename,
-+"Makefile". However, now they land in "close" buckets.
-+
-+The algorithm allows not just for the _same_ bucket, but for _close_
-+buckets to be considered delta candidates.  The rationale is
-+essentially that files, like Makefiles, often have very similar
-+content no matter what directory they live in.
-+
-+    <linus> I played around with different delta algorithms, and with
-+        making the "delta window" bigger, but having too big of a
-+        sliding window makes it very expensive to generate the pack:
-+        you need to compare every object with a _ton_ of other objects.
-+
-+        There are a number of other trivial heuristics too, which
-+        basically boil down to "don't bother even trying to delta this
-+        pair" if we can tell before-hand that the delta isn't worth it
-+        (due to size differences, where we can take a previous delta
-+        result into account to decide that "ok, no point in trying
-+        that one, it will be worse").
-+
-+        End result: packing is actually very size efficient. It's
-+        somewhat CPU-wasteful, but on the other hand, since you're
-+        really only supposed to do it maybe once a month (and you can
-+        do it during the night), nobody really seems to care.
-+
-+Nice Engineering Touch, there.  Find when it doesn't matter, and
-+proclaim it a non-issue.  Good style too!
-+
-+    <njs`> So, just to repeat to see if I'm following, we start by
-+        getting a list of the objects we want to pack, we sort it by
-+        this heuristic (basically lexicographically on the tuple
-+        (type, basename, size)).
-+
-+        Then we walk through this list, and calculate a delta of
-+        each object against the last n (tunable paramater) objects,
-+        and pick the smallest of these deltas.
-+
-+Vastly simplified, but the essence is there!
-+
-+    <linus> Correct.
-+
-+    <njs`> And then once we have picked a delta or fulltext to
-+        represent each object, we re-sort by recency, and write them
-+        out in that order.
-+
-+    <linus> Yup. Some other small details:
-+
-+And of course there is the "Other Shoe" Factor too.
-+
-+    <linus> - We limit the delta depth to another magic value (right
-+        now both the window and delta depth magic values are just "10")
-+
-+    <njs`> Hrm, my intuition is that you'd end up with really _bad_ IO
-+        patterns, because the things you want are near by, but to
-+        actually reconstruct them you may have to jump all over in
-+        random ways.
-+
-+    <linus> - When we write out a delta, and we haven't yet written
-+        out the object it is a delta against, we write out the base
-+        object first.  And no, when we reconstruct them, we actually
-+        get nice IO patterns, because:
-+        - larger objects tend to be "more recent" (Linus' law: files grow)
-+        - we actively try to generate deltas from a larger object to a
-+          smaller one
-+        - this means that the top-of-tree very seldom has deltas
-+          (ie deltas in _practice_ are "backwards deltas")
-+
-+Again, we should reread that whole paragraph.  Not just because
-+Linus has slipped Linus's Law in there on us, but because it is
-+important.  Let's make sure we clarify some of the points here:
-+
-+    <njs`> So the point is just that in practice, delta order and
-+        recency order match each other quite well.
-+
-+    <linus> Yes. There's another nice side to this (and yes, it was
-+	designed that way ;):
-+        - the reason we generate deltas against the larger object is
-+	  actually a big space saver too!
-+
-+    <njs`> Hmm, but your last comment (if "we haven't yet written out
-+        the object it is a delta against, we write out the base object
-+        first"), seems like it would make these facts mostly
-+        irrelevant because even if in practice you would not have to
-+        wander around much, in fact you just brute-force say that in
-+        the cases where you might have to wander, don't do that :-)
-+
-+    <linus> Yes and no. Notice the rule: we only write out the base
-+        object first if the delta against it was more recent.  That
-+        means that you can actually have deltas that refer to a base
-+        object that is _not_ close to the delta object, but that only
-+        happens when the delta is needed to generate an _old_ object.
-+
-+    <linus> See?
-+
-+Yeah, no.  I missed that on the first two or three readings myself.
-+
-+    <linus> This keeps the front of the pack dense. The front of the
-+        pack never contains data that isn't relevant to a "recent"
-+        object.  The size optimization comes from our use of xdelta
-+        (but is true for many other delta algorithms): removing data
-+        is cheaper (in size) than adding data.
-+
-+        When you remove data, you only need to say "copy bytes n--m".
-+	In contrast, in a delta that _adds_ data, you have to say "add
-+        these bytes: 'actual data goes here'"
-+
-+    *** njs` has quit: Read error: 104 (Connection reset by peer)
-+
-+    <linus> Uhhuh. I hope I didn't blow njs` mind.
-+
-+    *** njs` has joined channel #git
-+
-+    <pasky> :)
-+
-+The silent observers are amused.  Of course.
-+
-+And as if njs` was expected to be omniscient:
-+
-+    <linus> njs - did you miss anything?
-+
-+OK, I'll spell it out.  That's Geek Humor.  If njs` was not actually
-+connected for a little bit there, how would he know if missed anything
-+while he was disconnected?  He's a benevolent dictator with a sense of
-+humor!  Well noted!
-+
-+    <njs`> Stupid router.  Or gremlins, or whatever.
-+
-+It's a cheap shot at Cisco.  Take 'em when you can.
-+
-+    <njs`> Yes and no. Notice the rule: we only write out the base
-+        object first if the delta against it was more recent.
-+
-+        I'm getting lost in all these orders, let me re-read :-)
-+	So the write-out order is from most recent to least recent?
-+        (Conceivably it could be the opposite way too, I'm not sure if
-+        we've said) though my connection back at home is logging, so I
-+        can just read what you said there :-)
-+
-+And for those of you paying attention, the Omniscient Trick has just
-+been detailed!
-+
-+    <linus> Yes, we always write out most recent first
-+
-+For the other record:
-+
-+    <pasky> njs`: http://pastebin.com/547965
-+
-+The 'net never forgets, so that should be good until the end of time.
-+
-+    <njs`> And, yeah, I got the part about deeper-in-history stuff
-+        having worse IO characteristics, one sort of doesn't care.
-+
-+    <linus> With the caveat that if the "most recent" needs an older
-+        object to delta against (hey, shrinking sometimes does
-+        happen), we write out the old object with the delta.
-+
-+    <njs`> (if only it happened more...)
-+
-+    <linus> Anyway, the pack-file could easily be denser still, but
-+        because it's used both for streaming (the git protocol) and
-+        for on-disk, it has a few pessimizations.
-+
-+Actually, it is a made-up word. But it is a made-up word being
-+used as setup for a later optimization, which is a real word:
-+
-+    <linus> In particular, while the pack-file is then compressed,
-+        it's compressed just one object at a time, so the actual
-+        compression factor is less than it could be in theory. But it
-+        means that it's all nice random-access with a simple index to
-+        do "object name->location in packfile" translation.
-+
-+    <njs`> I'm assuming the real win for delta-ing large->small is
-+        more homogenous statistics for gzip to run over?
-+
-+        (You have to put the bytes in one place or another, but
-+        putting them in a larger blob wins on compression)
-+
-+        Actually, what is the compression strategy -- each delta
-+        individually gzipped, the whole file gzipped, somewhere in
-+        between, no compression at all, ....?
-+
-+        Right.
-+
-+Reality IRC sets in.  For example:
-+
-+    <pasky> I'll read the rest in the morning, I really have to go
-+        sleep or there's no hope whatsoever for me at the today's
-+        exam... g'nite all.
-+
-+Heh.
-+
-+    <linus> pasky: g'nite
-+
-+    <njs`> pasky: 'luck
-+
-+    <linus> Right: large->small matters exactly because of compression
-+        behaviour. If it was non-compressed, it probably wouldn't make
-+        any difference.
-+
-+    <njs`> yeah
-+
-+    <linus> Anyway: I'm not even trying to claim that the pack-files
-+        are perfect, but they do tend to have a nice balance of
-+        density vs ease-of use.
-+
-+Gasp!  OK, saved.  That's a fair Engineering trade off.  Close call!
-+In fact, Linus reflects on some Basic Engineering Fundamentals,
-+design options, etc.
-+
-+    <linus> More importantly, they allow git to still _conceptually_
-+        never deal with deltas at all, and be a "whole object" store.
-+
-+        Which has some problems (we discussed bad huge-file
-+        behaviour on the git lists the other day), but it does mean
-+        that the basic git concepts are really really simple and
-+        straightforward.
-+
-+        It's all been quite stable.
-+
-+        Which I think is very much a result of having very simple
-+        basic ideas, so that there's never any confusion about what's
-+        going on.
-+
-+        Bugs happen, but they are "simple" bugs. And bugs that
-+        actually get some object store detail wrong are almost always
-+        so obious that they never go anywhere.
-+
-+    <njs`> Yeah.
-+
-+Nuff said.
-+
-+    <linus> Anyway.  I'm off for bed. It's not 6AM here, but I've got
-+	 three kids, and have to get up early in the morning to send
-+	 them off. I need my beauty sleep.
-+
-+    <njs`> :-)
-+
-+    <njs`> appreciate the infodump, I really was failing to find the
-+        details on git packs :-)
-+
-+And now you know the rest of the story.
++++ b/t/t2004-checkout-cache-temp.sh
+@@ -0,0 +1,212 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 Shawn Pearce
++#
++
++test_description='git-checkout-index --temp test.
++
++With --temp flag, git-checkout-index writes to temporary merge files
++rather than the tracked path.'
++
++. ./test-lib.sh
++
++test_expect_success \
++'preparation' '
++mkdir asubdir &&
++echo tree1path0 >path0 &&
++echo tree1path1 >path1 &&
++echo tree1path3 >path3 &&
++echo tree1path4 >path4 &&
++echo tree1asubdir/path5 >asubdir/path5 &&
++git-update-index --add path0 path1 path3 path4 asubdir/path5 &&
++t1=$(git-write-tree) &&
++rm -f path* .merge_* out .git/index &&
++echo tree2path0 >path0 &&
++echo tree2path1 >path1 &&
++echo tree2path2 >path2 &&
++echo tree2path4 >path4 &&
++git-update-index --add path0 path1 path2 path4 &&
++t2=$(git-write-tree) &&
++rm -f path* .merge_* out .git/index &&
++echo tree2path0 >path0 &&
++echo tree3path1 >path1 &&
++echo tree3path2 >path2 &&
++echo tree3path3 >path3 &&
++git-update-index --add path0 path1 path2 path3 &&
++t3=$(git-write-tree)'
++
++test_expect_success \
++'checkout one stage 0 to temporary file' '
++rm -f path* .merge_* out .git/index &&
++git-read-tree $t1 &&
++git-checkout-index --temp -- path1 >out &&
++test $(wc -l <out) = 1 &&
++test $(cut "-d	" -f2 out) = path1 &&
++p=$(cut "-d	" -f1 out) &&
++test -f $p &&
++test $(cat $p) = tree1path1'
++
++test_expect_success \
++'checkout all stage 0 to temporary files' '
++rm -f path* .merge_* out .git/index &&
++git-read-tree $t1 &&
++git-checkout-index -a --temp >out &&
++test $(wc -l <out) = 5 &&
++for f in path0 path1 path3 path4 asubdir/path5
++do
++	test $(grep $f out | cut "-d	" -f2) = $f &&
++	p=$(grep $f out | cut "-d	" -f1) &&
++	test -f $p &&
++	test $(cat $p) = tree1$f
++done'
++
++test_expect_success \
++'prepare 3-way merge' '
++rm -f path* .merge_* out .git/index &&
++git-read-tree -m $t1 $t2 $t3'
++
++test_expect_success \
++'checkout one stage 2 to temporary file' '
++rm -f path* .merge_* out &&
++git-checkout-index --stage=2 --temp -- path1 >out &&
++test $(wc -l <out) = 1 &&
++test $(cut "-d	" -f2 out) = path1 &&
++p=$(cut "-d	" -f1 out) &&
++test -f $p &&
++test $(cat $p) = tree2path1'
++
++test_expect_success \
++'checkout all stage 2 to temporary files' '
++rm -f path* .merge_* out &&
++git-checkout-index --all --stage=2 --temp >out &&
++test $(wc -l <out) = 3 &&
++for f in path1 path2 path4
++do
++	test $(grep $f out | cut "-d	" -f2) = $f &&
++	p=$(grep $f out | cut "-d	" -f1) &&
++	test -f $p &&
++	test $(cat $p) = tree2$f
++done'
++
++test_expect_success \
++'checkout all stages/one file to nothing' '
++rm -f path* .merge_* out &&
++git-checkout-index --stage=all --temp -- path0 >out &&
++test $(wc -l <out) = 0'
++
++test_expect_success \
++'checkout all stages/one file to temporary files' '
++rm -f path* .merge_* out &&
++git-checkout-index --stage=all --temp -- path1 >out &&
++test $(wc -l <out) = 1 &&
++test $(cut "-d	" -f2 out) = path1 &&
++cut "-d	" -f1 out | (read s1 s2 s3 &&
++test -f $s1 &&
++test -f $s2 &&
++test -f $s3 &&
++test $(cat $s1) = tree1path1 &&
++test $(cat $s2) = tree2path1 &&
++test $(cat $s3) = tree3path1)'
++
++test_expect_success \
++'checkout some stages/one file to temporary files' '
++rm -f path* .merge_* out &&
++git-checkout-index --stage=all --temp -- path2 >out &&
++test $(wc -l <out) = 1 &&
++test $(cut "-d	" -f2 out) = path2 &&
++cut "-d	" -f1 out | (read s1 s2 s3 &&
++test $s1 = . &&
++test -f $s2 &&
++test -f $s3 &&
++test $(cat $s2) = tree2path2 &&
++test $(cat $s3) = tree3path2)'
++
++test_expect_success \
++'checkout all stages/all files to temporary files' '
++rm -f path* .merge_* out &&
++git-checkout-index -a --stage=all --temp >out &&
++test $(wc -l <out) = 5'
++
++test_expect_success \
++'-- path0: no entry' '
++test x$(grep path0 out | cut "-d	" -f2) = x'
++
++test_expect_success \
++'-- path1: all 3 stages' '
++test $(grep path1 out | cut "-d	" -f2) = path1 &&
++grep path1 out | cut "-d	" -f1 | (read s1 s2 s3 &&
++test -f $s1 &&
++test -f $s2 &&
++test -f $s3 &&
++test $(cat $s1) = tree1path1 &&
++test $(cat $s2) = tree2path1 &&
++test $(cat $s3) = tree3path1)'
++
++test_expect_success \
++'-- path2: no stage 1, have stage 2 and 3' '
++test $(grep path2 out | cut "-d	" -f2) = path2 &&
++grep path2 out | cut "-d	" -f1 | (read s1 s2 s3 &&
++test $s1 = . &&
++test -f $s2 &&
++test -f $s3 &&
++test $(cat $s2) = tree2path2 &&
++test $(cat $s3) = tree3path2)'
++
++test_expect_success \
++'-- path3: no stage 2, have stage 1 and 3' '
++test $(grep path3 out | cut "-d	" -f2) = path3 &&
++grep path3 out | cut "-d	" -f1 | (read s1 s2 s3 &&
++test -f $s1 &&
++test $s2 = . &&
++test -f $s3 &&
++test $(cat $s1) = tree1path3 &&
++test $(cat $s3) = tree3path3)'
++
++test_expect_success \
++'-- path4: no stage 3, have stage 1 and 3' '
++test $(grep path4 out | cut "-d	" -f2) = path4 &&
++grep path4 out | cut "-d	" -f1 | (read s1 s2 s3 &&
++test -f $s1 &&
++test -f $s2 &&
++test $s3 = . &&
++test $(cat $s1) = tree1path4 &&
++test $(cat $s2) = tree2path4)'
++
++test_expect_success \
++'-- asubdir/path5: no stage 2 and 3 have stage 1' '
++test $(grep asubdir/path5 out | cut "-d	" -f2) = asubdir/path5 &&
++grep asubdir/path5 out | cut "-d	" -f1 | (read s1 s2 s3 &&
++test -f $s1 &&
++test $s2 = . &&
++test $s3 = . &&
++test $(cat $s1) = tree1asubdir/path5)'
++
++test_expect_success \
++'checkout --temp within subdir' '
++(cd asubdir &&
++ git-checkout-index -a --stage=all >out &&
++ test $(wc -l <out) = 1 &&
++ test $(grep path5 out | cut "-d	" -f2) = path5 &&
++ grep path5 out | cut "-d	" -f1 | (read s1 s2 s3 &&
++ test -f ../$s1 &&
++ test $s2 = . &&
++ test $s3 = . &&
++ test $(cat ../$s1) = tree1asubdir/path5)
++)'
++
++test_expect_success \
++'checkout --temp symlink' '
++rm -f path* .merge_* out .git/index &&
++ln -s b a &&
++git-update-index --add a &&
++t4=$(git-write-tree) &&
++rm -f .git/index &&
++git-read-tree $t4 &&
++git-checkout-index --temp -a >out &&
++test $(wc -l <out) = 1 &&
++test $(cut "-d	" -f2 out) = a &&
++p=$(cut "-d	" -f1 out) &&
++test -f $p &&
++test $(cat $p) = b'
++
++test_done
 -- 
-1.0.7.g2b74
+1.2.3.g5f0e
