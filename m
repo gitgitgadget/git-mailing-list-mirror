@@ -1,161 +1,131 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] Add a Documentation/git-tools.txt
-Date: Sat, 4 Mar 2006 07:42:09 +0100
-Message-ID: <e5bfff550603032242v55f88c5fvd385e17f210eb7dc@mail.gmail.com>
-References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
-	 <tnxwtfq8gok.fsf@arm.com>
-	 <e5bfff550602260022jde1fe2n4ec117c609a5d22d@mail.gmail.com>
-	 <7vslq57mzn.fsf@assigned-by-dhcp.cox.net>
-	 <87psl9i4as.fsf@wine.dyndns.org>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsserver: anonymous cvs via pserver support
+Date: Sat, 4 Mar 2006 20:30:41 +1300
+Message-ID: <11414574412510-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: "Alexandre Julliard" <julliard@winehq.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 04 07:42:17 2006
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Sat Mar 04 08:14:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFQT2-0001aK-Lm
-	for gcvg-git@gmane.org; Sat, 04 Mar 2006 07:42:17 +0100
+	id 1FFQy3-00050K-VB
+	for gcvg-git@gmane.org; Sat, 04 Mar 2006 08:14:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387AbWCDGmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Mar 2006 01:42:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbWCDGmL
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 01:42:11 -0500
-Received: from zproxy.gmail.com ([64.233.162.192]:35769 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751387AbWCDGmK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Mar 2006 01:42:10 -0500
-Received: by zproxy.gmail.com with SMTP id 16so370117nzp
-        for <git@vger.kernel.org>; Fri, 03 Mar 2006 22:42:09 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JP+UrN3g/upA8Q1tfNP0hqw32FIpWWxUWOhexb8M/rG6ySzYF4hQ2rwYe070heY6H0p3S5qJ6tF+fcy511GHYjFrd7y73999obMDo9PaXO3bBiZNQToglUIahSqR9HWEQIQczedSuRcMTwxSTXa0/NaqUcKujCae2WXFMnvclRo=
-Received: by 10.64.193.7 with SMTP id q7mr709407qbf;
-        Fri, 03 Mar 2006 22:42:09 -0800 (PST)
-Received: by 10.64.131.10 with HTTP; Fri, 3 Mar 2006 22:42:09 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <87psl9i4as.fsf@wine.dyndns.org>
-Content-Disposition: inline
+	id S1751065AbWCDHOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Mar 2006 02:14:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbWCDHOM
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 02:14:12 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:14280 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S1751065AbWCDHOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Mar 2006 02:14:12 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1FFQxu-000500-0Q; Sat, 04 Mar 2006 20:14:10 +1300
+Received: from mltest ([127.0.0.1])
+	by mltest with smtp (Exim 3.36 #1 (Debian))
+	id 1FFRDt-00025b-00; Sat, 04 Mar 2006 20:30:41 +1300
+In-Reply-To: 
+X-Mailer: git-send-email
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17178>
 
-A brief survey of useful git tools, including third-party
-and external projects.
+git-cvsserver now knows how to do the pserver auth chat when the user
+is anonymous. To get it to work, add a line to your inetd.conf like
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+  cvspserver stream tcp nowait nobody git-cvsserver pserver
+
+(On some inetd implementations you may have to put the pserver parameter twice.)
+
+Commits are blocked. Naively, git-cvsserver assumes non-malicious users. Please
+review the code before setting this up on an internet-accessible server.
+
+NOTE: the <nobody> user above will need write access to the .git directory
+to maintain the sqlite database. Updating of the sqlite database should be
+put in an update hook to avoid this problem, so that it is maintained by
+users with write access.
+
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+
+
 ---
 
- Documentation/git-tools.txt |   97 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 97 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-tools.txt
+ git-cvsserver.perl |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
 
-5e8c2ec9d08dce7f333b0963d7911c3096ab6588
-diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
-new file mode 100644
-index 0000000..00e57a6
---- /dev/null
-+++ b/Documentation/git-tools.txt
-@@ -0,0 +1,97 @@
-+A short git tools survey
-+========================
+91a6bf468230d63c414a21adeef94f1242eaaaab
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index b450792..7d3f78e 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -87,6 +87,31 @@ $log->info("--------------- STARTING ---
+ my $TEMP_DIR = tempdir( CLEANUP => 1 );
+ $log->debug("Temporary directory is '$TEMP_DIR'");
+ 
++# if we are called with a pserver argument,
++# deal with the authentication cat before entereing the
++# main loop
++if (@ARGV && $ARGV[0] eq 'pserver') {
++    my $line = <STDIN>; chomp $line;
++    unless( $line eq 'BEGIN AUTH REQUEST') {
++       die "E Do not understand $line - expecting BEGIN AUTH REQUEST\n";
++    }
++    $line = <STDIN>; chomp $line;
++    req_Root('root', $line) # reuse Root
++       or die "E Invalid root $line \n";
++    $line = <STDIN>; chomp $line;
++    unless ($line eq 'anonymous') {
++       print "E Only anonymous user allowed via pserver\n";
++       print "I HATE YOU\n";
++    }
++    $line = <STDIN>; chomp $line;    # validate the password?
++    $line = <STDIN>; chomp $line;
++    unless ($line eq 'END AUTH REQUEST') {
++       die "E Do not understand $line -- expecting END AUTH REQUEST\n";
++    }
++    print "I LOVE YOU\n";
++    # and now back to our regular programme...
++}
 +
+ # Keep going until the client closes the connection
+ while (<STDIN>)
+ {
+@@ -165,6 +190,7 @@ sub req_Root
+         print "E the repo config file needs a [gitcvs] section added, and the parameter 'enabled' set to 1\n";
+         print "E \n";
+         print "error 1 GITCVS emulation disabled\n";
++        return 0;
+     }
+ 
+     if ( defined ( $cfg->{gitcvs}{logfile} ) )
+@@ -173,6 +199,8 @@ sub req_Root
+     } else {
+         $log->nofile();
+     }
 +
-+Introduction
-+------------
++    return 1;
+ }
+ 
+ # Global_option option \n
+@@ -914,6 +942,12 @@ sub req_ci
+ 
+     $log->info("req_ci : " . ( defined($data) ? $data : "[NULL]" ));
+ 
++    if ( @ARGV && $ARGV[0] eq 'pserver')
++    {
++        print "error 1 pserver access cannot commit\n";
++        exit;
++    }
 +
-+Apart from git contrib/ area there are some others third-party tools
-+you may want to look.
-+
-+This document presents a brief summary of each tool and the corresponding
-+link.
-+
-+
-+Alternative/Augmentative Procelains
-+-----------------------------------
-+
-+   - *Cogito* (http://www.kernel.org/pub/software/scm/cogito/)
-+
-+   Cogito is a version control system layered on top of the git tree history
-+   storage system. It aims at seamless user interface and ease of use,
-+   providing generally smoother user experience than the "raw" Core GIT
-+   itself and indeed many other version control systems.
-+
-+
-+   - *pg* (http://www.spearce.org/category/projects/scm/pg/)
-+
-+   pg is a shell script wrapper around GIT to help the user manage a set of
-+   patches to files. pg is somewhat like quilt or StGIT, but it does have a
-+   slightly different feature set.
-+
-+
-+   - *StGit* (http://www.procode.org/stgit/)
-+
-+   Stacked GIT provides a quilt-like patch management functionality in the
-+    GIT environment. You can easily manage your patches in the scope of GIT
-+   until they get merged upstream.
-+
-+
-+History Viewers
-+---------------
-+
-+   - *gitk* (shipped with git-core)
-+
-+   gitk is a simple TK GUI for browsing history of GIT repositories easily.
-+
-+
-+   - *gitview*  (contrib/)
-+
-+   gitview is a GTK based repository browser for git
-+
-+
-+   - *gitweb* (ftp://ftp.kernel.org/pub/software/scm/gitweb/)
-+
-+   GITweb provides full-fledged web interface for GIT repositories.
-+
-+
-+   - *qgit* (http://digilander.libero.it/mcostalba/)
-+
-+   QGit is a git/StGIT GUI viewer built on Qt/C++. QGit could be used
-+   to browse history and directory tree, view annotated files, commit
-+   changes cherry picking single files or applying patches.
-+   Currently it is the fastest and most feature rich among the git
-+   viewers and commit tools.
-+
-+
-+
-+Foreign SCM interface
-+---------------------
-+
-+   - *git-svn* (contrib/)
-+
-+   git-svn is a simple conduit for changesets between a single Subversion
-+   branch and git.
-+
-+
-+   - *quilt2git / git2quilt* (http://home-tj.org/wiki/index.php/Misc)
-+
-+   These utilities convert patch series in a quilt repository and commit
-+   series in git back and forth.
-+
-+
-+Others
-+------
-+
-+   - *(h)gct* (http://www.cyd.liu.se/users/~freku045/gct/)
-+
-+   Commit Tool or (h)gct is a GUI enabled commit tool for git and
-+   Mercurial (hg). It allows the user to view diffs, select which files
-+   to committed (or ignored / reverted) write commit messages and
-+   perform the commit itself.
-+
-+   - *git.el* (contrib/)
-+
-+   This is an Emacs interface for git. The user interface is modeled on
-+   pcl-cvs. It has been developed on Emacs 21 and will probably need some
-+   tweaking to work on XEmacs.
---
-1.2.2.gce4c
+     if ( -e $state->{CVSROOT} . "/index" )
+     {
+         print "error 1 Index already exists in git repo\n";
+-- 
+1.2.4.g09a27-dirty
