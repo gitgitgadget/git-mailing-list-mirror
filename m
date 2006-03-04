@@ -1,74 +1,161 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] diff-delta: bound hash list length to avoid O(m*n)
- behavior
-Date: Fri, 3 Mar 2006 22:21:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603032217470.22647@g5.osdl.org>
-References: <Pine.LNX.4.64.0602272110320.25336@localhost.localdomain>
- <7vhd6kq8lc.fsf@assigned-by-dhcp.cox.net> <7vbqwrq4yi.fsf@assigned-by-dhcp.cox.net>
- <7vfylzx7t3.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Add a Documentation/git-tools.txt
+Date: Sat, 4 Mar 2006 07:42:09 +0100
+Message-ID: <e5bfff550603032242v55f88c5fvd385e17f210eb7dc@mail.gmail.com>
+References: <e5bfff550602190200j1ef3858as6a1564064dc81fef@mail.gmail.com>
+	 <tnxwtfq8gok.fsf@arm.com>
+	 <e5bfff550602260022jde1fe2n4ec117c609a5d22d@mail.gmail.com>
+	 <7vslq57mzn.fsf@assigned-by-dhcp.cox.net>
+	 <87psl9i4as.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 04 07:22:06 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Alexandre Julliard" <julliard@winehq.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 04 07:42:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFQ9V-0007xF-Lt
-	for gcvg-git@gmane.org; Sat, 04 Mar 2006 07:22:06 +0100
+	id 1FFQT2-0001aK-Lm
+	for gcvg-git@gmane.org; Sat, 04 Mar 2006 07:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbWCDGV7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Mar 2006 01:21:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbWCDGV7
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 01:21:59 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:60050 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751060AbWCDGV6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Mar 2006 01:21:58 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k246LjDZ027949
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 3 Mar 2006 22:21:46 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k246Lhic009898;
-	Fri, 3 Mar 2006 22:21:44 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfylzx7t3.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751387AbWCDGmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Mar 2006 01:42:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbWCDGmL
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 01:42:11 -0500
+Received: from zproxy.gmail.com ([64.233.162.192]:35769 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751387AbWCDGmK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Mar 2006 01:42:10 -0500
+Received: by zproxy.gmail.com with SMTP id 16so370117nzp
+        for <git@vger.kernel.org>; Fri, 03 Mar 2006 22:42:09 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JP+UrN3g/upA8Q1tfNP0hqw32FIpWWxUWOhexb8M/rG6ySzYF4hQ2rwYe070heY6H0p3S5qJ6tF+fcy511GHYjFrd7y73999obMDo9PaXO3bBiZNQToglUIahSqR9HWEQIQczedSuRcMTwxSTXa0/NaqUcKujCae2WXFMnvclRo=
+Received: by 10.64.193.7 with SMTP id q7mr709407qbf;
+        Fri, 03 Mar 2006 22:42:09 -0800 (PST)
+Received: by 10.64.131.10 with HTTP; Fri, 3 Mar 2006 22:42:09 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <87psl9i4as.fsf@wine.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17176>
 
+A brief survey of useful git tools, including third-party
+and external projects.
 
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
 
-On Fri, 3 Mar 2006, Junio C Hamano wrote:
-> 
-> 	The first round.  The set of objects packed were from
-> today's Linus tip (everything down to epoch v2.6.12-rc2), 193309
-> objects in total, on my Duron 750 with slow disks.
-> 
-> 	real		user		sys		bytes		savings
-> master	11m17.121s	10m23.280s	0m47.290s       109045599	N/A
-> nico	25m37.058s	23m0.770s       2m20.460s	104401392	4.25%
-> jc	24m12.072s	21m45.120s	2m16.400s	104409761	4.25%
+ Documentation/git-tools.txt |   97 +++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 97 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-tools.txt
 
-Ouch.
-
-Btw, it's often worth using /usr/bin/time instead of the bash built-in 
-time. Why? Because /usr/bin/time reports one absolutely _hugely_ important 
-number (maybe more important than almost any of the other numbers in 
-there).
-
-Which one? It's the "minor pagefaults". That's a very good approximation 
-of memory usage overhead. 
-
-We've already had one person report that they ran out of memory when 
-packing. So memory usage is actually a problem.
-
-Anyway, it looks like the 16-byte window is the way to go, even regardless 
-of any memory use issue.
-
-		Linus
+5e8c2ec9d08dce7f333b0963d7911c3096ab6588
+diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
+new file mode 100644
+index 0000000..00e57a6
+--- /dev/null
++++ b/Documentation/git-tools.txt
+@@ -0,0 +1,97 @@
++A short git tools survey
++========================
++
++
++Introduction
++------------
++
++Apart from git contrib/ area there are some others third-party tools
++you may want to look.
++
++This document presents a brief summary of each tool and the corresponding
++link.
++
++
++Alternative/Augmentative Procelains
++-----------------------------------
++
++   - *Cogito* (http://www.kernel.org/pub/software/scm/cogito/)
++
++   Cogito is a version control system layered on top of the git tree history
++   storage system. It aims at seamless user interface and ease of use,
++   providing generally smoother user experience than the "raw" Core GIT
++   itself and indeed many other version control systems.
++
++
++   - *pg* (http://www.spearce.org/category/projects/scm/pg/)
++
++   pg is a shell script wrapper around GIT to help the user manage a set of
++   patches to files. pg is somewhat like quilt or StGIT, but it does have a
++   slightly different feature set.
++
++
++   - *StGit* (http://www.procode.org/stgit/)
++
++   Stacked GIT provides a quilt-like patch management functionality in the
++    GIT environment. You can easily manage your patches in the scope of GIT
++   until they get merged upstream.
++
++
++History Viewers
++---------------
++
++   - *gitk* (shipped with git-core)
++
++   gitk is a simple TK GUI for browsing history of GIT repositories easily.
++
++
++   - *gitview*  (contrib/)
++
++   gitview is a GTK based repository browser for git
++
++
++   - *gitweb* (ftp://ftp.kernel.org/pub/software/scm/gitweb/)
++
++   GITweb provides full-fledged web interface for GIT repositories.
++
++
++   - *qgit* (http://digilander.libero.it/mcostalba/)
++
++   QGit is a git/StGIT GUI viewer built on Qt/C++. QGit could be used
++   to browse history and directory tree, view annotated files, commit
++   changes cherry picking single files or applying patches.
++   Currently it is the fastest and most feature rich among the git
++   viewers and commit tools.
++
++
++
++Foreign SCM interface
++---------------------
++
++   - *git-svn* (contrib/)
++
++   git-svn is a simple conduit for changesets between a single Subversion
++   branch and git.
++
++
++   - *quilt2git / git2quilt* (http://home-tj.org/wiki/index.php/Misc)
++
++   These utilities convert patch series in a quilt repository and commit
++   series in git back and forth.
++
++
++Others
++------
++
++   - *(h)gct* (http://www.cyd.liu.se/users/~freku045/gct/)
++
++   Commit Tool or (h)gct is a GUI enabled commit tool for git and
++   Mercurial (hg). It allows the user to view diffs, select which files
++   to committed (or ignored / reverted) write commit messages and
++   perform the commit itself.
++
++   - *git.el* (contrib/)
++
++   This is an Emacs interface for git. The user interface is modeled on
++   pcl-cvs. It has been developed on Emacs 21 and will probably need some
++   tweaking to work on XEmacs.
+--
+1.2.2.gce4c
