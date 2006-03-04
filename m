@@ -1,78 +1,61 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
-Date: Fri, 03 Mar 2006 22:07:38 +0000
-Message-ID: <4408BE2A.1060601@gmail.com>
-References: <20060227204252.GA31836@diana.vm.bytemark.co.uk> <44037A5C.6080409@gmail.com> <b0943d9e0602281445w7160d915y@mail.gmail.com> <20060303142413.GB16456@diana.vm.bytemark.co.uk>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: git-repack && git-prune-packed isn't doing it's job anymore?
+Date: Sat, 4 Mar 2006 13:29:52 +1300
+Message-ID: <46a038f90603031629qbbb287ckd8da1ef56a831dba@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 03 23:08:07 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Mar 04 01:30:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFIR7-0003Rs-LZ
-	for gcvg-git@gmane.org; Fri, 03 Mar 2006 23:07:46 +0100
+	id 1FFKek-0000Fq-Ji
+	for gcvg-git@gmane.org; Sat, 04 Mar 2006 01:29:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbWCCWHm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 3 Mar 2006 17:07:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWCCWHm
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 17:07:42 -0500
-Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:32158 "EHLO
-	mta07-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1750808AbWCCWHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Mar 2006 17:07:42 -0500
-Received: from aamta11-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta07-winn.ispmail.ntl.com with ESMTP
-          id <20060303220740.LQWZ15056.mta07-winn.ispmail.ntl.com@aamta11-winn.ispmail.ntl.com>;
-          Fri, 3 Mar 2006 22:07:40 +0000
-Received: from [192.168.1.101] (really [86.15.186.141])
-          by aamta11-winn.ispmail.ntl.com with ESMTP
-          id <20060303220740.LBB1217.aamta11-winn.ispmail.ntl.com@[192.168.1.101]>;
-          Fri, 3 Mar 2006 22:07:40 +0000
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-In-Reply-To: <20060303142413.GB16456@diana.vm.bytemark.co.uk>
+	id S1751739AbWCDA3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Mar 2006 19:29:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbWCDA3x
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 19:29:53 -0500
+Received: from wproxy.gmail.com ([64.233.184.201]:5481 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751739AbWCDA3x convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 19:29:53 -0500
+Received: by wproxy.gmail.com with SMTP id 71so781997wra
+        for <git@vger.kernel.org>; Fri, 03 Mar 2006 16:29:52 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=IZsmS1OZbTINwxn6tcGTw+HkTNp/KISG3TbuoTRaDjhg2MoWIQWWUQFEqoCbeL0PvKYRiLkdLPXwn3VMitGqb+KPZyyTZVuYkuEfis8na2zI4XgrcSv+tU9iOuykbsrDwjGNJtVLlYCGLaOG6bO96l7jJASQuifiOzIbMEQVe0c=
+Received: by 10.54.153.2 with SMTP id a2mr3066722wre;
+        Fri, 03 Mar 2006 16:29:52 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Fri, 3 Mar 2006 16:29:52 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17161>
 
-Karl Hasselstr=F6m wrote:
-> On 2006-02-28 22:45:56 +0000, Catalin Marinas wrote:
->>I attached another patch that should work properly. It also pushes
->>empty patches on the stack if they were merged upstream (a 'stg
->>clean' is required to remove them). This is useful for the push
->>--undo command if you are not happy with the result.
->=20
-> It appears to work for me. I still had to fix things up manually when
-> pulling the uncommit patch though, since you had made a minor change
-> in "uncommit.py":
->=20
->   Pushing patch "uncommit"...Error: File "stgit/commands/uncommit.py"=
- added in branches but different
+$ find .git/objects -type f | grep -v pack | wc -l
+    3297
+$ git-repack && git-prune-packed
+Generating pack...
+Done counting 664 objects.
+Deltifying 664 objects.
+ 100% (664/664) done
+Writing 664 objects.
+ 100% (664/664) done
+Total 664, written 664 (delta 384), reused 0 (delta 0)
+Pack pack-f38c51a5d5194d6a2f6e711586b9a51980c8d524 created.
+$ find .git/objects -type f | grep -v pack | wc -l
+    2583
 
-Yes, I made some minor modifications (one of them was the copyright).
+Strange! This is from todays master,
 
-> Is there a way to make stgit not fall on its face when faced with thi=
-s
-> situation? Surely it ought to be possible to create a merged file wit=
-h
-> conflict markers? (I realize this is harder when there is no common
-> ancestor, but these files are 95% identical!)
+$ git --version
+git version 1.2.4.g0a60
 
-I've been thinking about this but it's not straight-forward. I tried
-using /dev/null as the common ancestor but both diff3 and wiggle put th=
-e
-whole file text in the conflict regions. These tools are not smart
-enough to compare the conflict regions and reduce them.
+cheers,
 
-Another approach would be to have a script that creates the common
-ancestor only with the common lines between the two files and pass this
-file as an argument to diff3. This wouldn't probably be that difficult,
-maybe some combination of diff and sed and apply the result to one of
-the files to remove the diff'ed lines.
 
-Catalin
+martin
