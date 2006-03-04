@@ -1,125 +1,153 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Use Cogito when possible in the "tutorial" test.
-Date: Fri, 03 Mar 2006 20:23:34 -0500
-Message-ID: <20060304012333.10494.35600.stgit@dv.roinet.com>
-X-From: git-owner@vger.kernel.org Sat Mar 04 02:23:55 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] diff-delta: bound hash list length to avoid O(m*n) behavior
+Date: Fri, 03 Mar 2006 18:28:08 -0800
+Message-ID: <7vfylzx7t3.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602272110320.25336@localhost.localdomain>
+	<7vhd6kq8lc.fsf@assigned-by-dhcp.cox.net>
+	<7vbqwrq4yi.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 04 03:28:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFLUs-0007W9-OQ
-	for gcvg-git@gmane.org; Sat, 04 Mar 2006 02:23:51 +0100
+	id 1FFMVC-0003O6-Rn
+	for gcvg-git@gmane.org; Sat, 04 Mar 2006 03:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932147AbWCDBXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Mar 2006 20:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932156AbWCDBXp
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 20:23:45 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:4490 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932147AbWCDBXp
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2006 20:23:45 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FFLUj-0002rJ-B1
-	for git@vger.kernel.org; Fri, 03 Mar 2006 20:23:41 -0500
-Received: from localhost.roinet.com ([127.0.0.1] helo=dv.roinet.com)
-	by dv.roinet.com with esmtp (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1FFLUc-0002jR-8i; Fri, 03 Mar 2006 20:23:34 -0500
-To: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+	id S1751181AbWCDC2L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Mar 2006 21:28:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbWCDC2L
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Mar 2006 21:28:11 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:15301 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751171AbWCDC2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Mar 2006 21:28:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060304022626.EOGG6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 3 Mar 2006 21:26:26 -0500
+To: Nicolas Pitre <nico@cam.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17165>
 
-In particular, use Cogito branch support.  Document why git has to be
-used in some places.
+Junio C Hamano <junkio@cox.net> writes:
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
----
+>> These numbers are misleading.
+>>
+>> The 36K objects pack I used in my previous tests gives 9971223
+>> (from "next" branch) vs 9664546 (this patch) final pack size.
+>> The wallclock time on my machine is 1m35 vs 3m30.  I doubt many
+>> people are willing to pay 100% more waiting time for 3% tighter
+>> pack.
 
- Documentation/tutorial-script/script.sh |   29 +++++++++++++++++------------
- 1 files changed, 17 insertions(+), 12 deletions(-)
+	I started to suspect that the above benchmark was
+unreliable, because I do not know how the original linux-2.6
+repository I used for my testing were packed, and I was letting
+the delta reusing to do its thing, so the times were probably
+off (the 3-byte finer grained deltifier would have spent a lot
+more time during the initial packing) and the result size were
+too (the finer grained one would have packed things a lot more
+tightly if the delta it was allowed to reuse was made by itself,
+not by the old one).
 
-diff --git a/Documentation/tutorial-script/script.sh b/Documentation/tutorial-script/script.sh
-index edcebda..4d6b732 100755
---- a/Documentation/tutorial-script/script.sh
-+++ b/Documentation/tutorial-script/script.sh
-@@ -1,8 +1,9 @@
- #!/bin/bash
- #
--# FIXME: This script has many GITisms. Some of them are unnecessary, while
--# some stem from missing Cogito features (especially no support for pushing
--# tags, and consequently no support for remotes/).
-+# FIXME: This script has some GITisms. They stem from missing Cogito
-+# features, such as exporting patches to mbox format, applying patches
-+# from e-mail, merging multiple tags at once, verifying signed tags and
-+# repacking the repository.
- 
- 
- # This function is appended as "&& should_fail" to commands which should
-@@ -34,7 +35,7 @@ cd $ALICE
- tar xf $TOP/0001-alice.tar
- cd rpn
- 
--# Being a tidy girl, she places it under git
-+# Being a tidy girl, she places it under Cogito
- echo "Alice's first version" | cg-init
- cg-tag -d "First ever version of RPN" rpn-0.1
-  
-@@ -108,8 +109,8 @@ cg-export ../rpn-0.3.tar.bz2
- ### Bob tells Alice of his changes, Alice prepares to get them.
- cd $ALICE/rpn
- 
--git checkout -b bob
--git branch
-+cg-switch -r master bob
-+cg-status -g
- 
- # Alice needs to register his remote branch
- cg-branch-add bobswork $BOB/rpn
-@@ -163,14 +164,16 @@ cg-commit -m "Add proper header file for
-           -m "Update dependencies in Makefile"
- 
- # Charlie emails the patch to Alice:
-+# cg-mkpatch -d .. -r rpn-0.3..master
- git format-patch -o .. --mbox --signoff -r rpn-0.3
--      # Result is in $TOP/0014-charlie-email
-+# Only git can create mbox formatted output
-+# Compare the result to 0014-charlie-email
- 
- 
- ### Alice is busy meanwhile...
- cd $ALICE/rpn
- 
--git checkout master
-+cg-switch master
- 
- patch -p1 -i $TOP/0015-alice-mod.patch
- 
-@@ -189,21 +192,23 @@ cg-push public
- ### Alice gets Charlie's fix, creates a new branch for his changes
- cd $ALICE/rpn
- 
--git checkout master
--git checkout -b charlie rpn-0.3
--git branch
-+cg-switch -r rpn-0.3 charlie
-+cg-status -g
- 
-+# Check what's inside the patch.  There is no Cogito equivalent yet.
- git apply --stat $TOP/0014-charlie-email
- git apply --summary $TOP/0014-charlie-email
- git apply --check $TOP/0014-charlie-email
- 
- # Everything looks OK
- git applymbox $TOP/0014-charlie-email
-+# This doesn't work well yet
-+# cg-patch < $TOP/0014-charlie-email
- 
- ### Alice integrates the changes in the branches for the next release
- cd $ALICE/rpn
- 
--git checkout master
-+cg-switch master
- # Alice tries "git merge" instead of "cg-merge" since she wanted to
- # merge both branches at once, which "cg-merge" cannot do.
- git merge "Integrate changes from Bob and Charlie" master bob charlie \
+	So I tried a fresh packing without reusing delta at all,
+with three variants: the original 16-byte one (master), 3-byte
+finer grained one with your hash limit (nico), and 3-byte finer
+grained one with my more aggressive hash limit (jc).  The
+benchmark is not meant to be scientific, but to see how well it
+serves the kernel community ;-).
+
+
+	The first round.  The set of objects packed were from
+today's Linus tip (everything down to epoch v2.6.12-rc2), 193309
+objects in total, on my Duron 750 with slow disks.
+
+	real		user		sys		bytes		savings
+master	11m17.121s	10m23.280s	0m47.290s       109045599	N/A
+nico	25m37.058s	23m0.770s       2m20.460s	104401392	4.25%
+jc	24m12.072s	21m45.120s	2m16.400s	104409761	4.25%
+
+My hack does not change things much in the overall picture
+compared to yours, although it does cut down runtime by about
+5%.  We can immediately see that finer grained ones are
+significantly more expensive than the original loose one either
+way.
+
+
+	The next round of test is to place the "full pack"
+generated in the previous experiment in .git/objects/pack and
+generate packs by reusing delta.  When testing the "master"
+version, I move the pack produced above with "master" under
+.git/objects/pack, and run this to emulate pack generation for
+downloader who has v2.6.14 and wants v2.6.15-rc1 (the same 36K
+objects test I did previously):
+
+	git rev-list --objects-edge v2.6.14..v2.6.15-rc1 |
+        time git-pack-objects --stdout | wc -c
+
+When switching to test "nico" deltifier implementation, I start
+with the full pack generated by "nico" in .git/object/pack to
+make comparison fair.  Here is the result:
+
+	real		user		sys		bytes		savings
+master	1m37.703s       1m28.970s	0m5.860s        9968386		N/A
+nico	3m39.982s	3m24.420s	0m14.380s	9182761		7.88%
+jc	3m0.434s	2m35.940s	0m13.730s       9139460		8.31%
+
+In thin transfer, base object is omitted, so the generated pack
+has higher delta to non-delta ratio than usual -- and that is
+the reason we see much more savings.  Still, we are paying quite
+a lot of overhead by finer grained delta code.
+
+
+	The last test is not to do a thin pack but still reusing
+delta.  This is to emulate "git repack" performance.  Again, I
+had the matching pack in .git/objects/pack to make the
+compararison fair:
+
+	git rev-list --objects v2.6.14..v2.6.15-rc1 |
+        time git-pack-objects --stdout | wc -c
+
+And here is the result:
+
+	real		user		sys		bytes		savings
+master	1m0.866s	0m57.590s	0m2.810s	34601417	N/A
+nico	2m8.059s	2m0.360s	0m6.350s	33888419	2.06%
+jc	1m49.894s	1m42.250s	0m6.780s	33838262	2.20%
+
+This one is not getting much savings compared to the full pack
+case, but still spending about twice the time.
+
+
+	In short, I'd love to get a tighter packing, but as it
+currently stands, I do not think 5% resulting packsize reduction
+warrants making 100% slower operation the default.  And the
+experiment I did does not account for the memory pressure the
+new delitifier imposes us (two pointers per every byte of source
+material -- it could be reduced to one pointer though), so when
+we start talking about huge files I am not sure we can manage to
+keep the runtime reasonably low.
+
+	It maybe is an option to have a flag to tell "I want a
+lot tighter pack made; you can spend all the time while I am
+sleeping" and switch between two deltifiers, but otherwise...
+
+	One thing I do not understand is why my patch improves
+the compressed result size.  The patch was primarily to brutally
+pessimize the selection of "copied from source" to avoid the
+corner case performance problems, so I would understand why it
+is faster than yours, but I expected it to *always* create a
+looser pack.  I am puzzled.
+
+	Swapping window scan order is orthogonal to this, so
+maybe we could do it first and make it work, then start reusing
+the refindex to see how well things improve.  But we should be
+reminded of the recent report that pack-object ran out of space
+even with the current code that does not reuse the refindex when
+packing 8 huge objects X-<.
