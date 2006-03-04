@@ -1,131 +1,166 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsserver: anonymous cvs via pserver support
-Date: Sat, 4 Mar 2006 20:30:41 +1300
-Message-ID: <11414574412510-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+From: Rajkumar S <rajkumars@asianetindia.com>
+Subject: cvsimport woes
+Date: Sat, 04 Mar 2006 13:17:36 +0530
+Message-ID: <44094618.6070404@asianetindia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Sat Mar 04 08:14:25 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Mar 04 08:47:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFQy3-00050K-VB
-	for gcvg-git@gmane.org; Sat, 04 Mar 2006 08:14:20 +0100
+	id 1FFRUT-0000M4-VP
+	for gcvg-git@gmane.org; Sat, 04 Mar 2006 08:47:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbWCDHOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Mar 2006 02:14:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbWCDHOM
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 02:14:12 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:14280 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1751065AbWCDHOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Mar 2006 02:14:12 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1FFQxu-000500-0Q; Sat, 04 Mar 2006 20:14:10 +1300
-Received: from mltest ([127.0.0.1])
-	by mltest with smtp (Exim 3.36 #1 (Debian))
-	id 1FFRDt-00025b-00; Sat, 04 Mar 2006 20:30:41 +1300
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org, junkio@cox.net
+	id S1750927AbWCDHrl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Mar 2006 02:47:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751068AbWCDHrl
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 02:47:41 -0500
+Received: from vhs2.linuxense.com ([64.34.173.90]:34474 "EHLO
+	vhs1.asianetindia.com") by vger.kernel.org with ESMTP
+	id S1750918AbWCDHrk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Mar 2006 02:47:40 -0500
+Received: (qmail 26614 invoked by uid 1014); 4 Mar 2006 07:47:41 -0000
+Received: from rajkumars@asianetindia.com by vhs2.linuxense.com by uid 1003 with qmail-scanner-1.22 
+ (clamdscan: 0.74. spamassassin: 2.63.  Clear:RC:0(202.88.239.86):SA:0(0.0/6.5):. 
+ Processed in 0.645287 secs); 04 Mar 2006 07:47:41 -0000
+X-Spam-Status: No, hits=0.0 required=6.5
+Received: from tarpit.linuxense.com (HELO [192.168.3.49]) (raj@linuxense.com@[202.88.239.86])
+          (envelope-sender <rajkumars@asianetindia.com>)
+          by vhs1.asianetindia.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 4 Mar 2006 07:47:40 -0000
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17179>
 
-git-cvsserver now knows how to do the pserver auth chat when the user
-is anonymous. To get it to work, add a line to your inetd.conf like
+Hi,
 
-  cvspserver stream tcp nowait nobody git-cvsserver pserver
+I am trying to track a cvs project using git. The idea is to use cvsimport to update my 
+local git copy and make my changes in a separate branch. But for some reason after 
+cvsimport the last update of cvs repository is not reflected in git. I have made a small 
+script to test this behavior and am able to reproduce is consistently. I am working on 
+FreeBSD 6.0-RELEASE, git version 1.2.4 and cvsps version 2.1
 
-(On some inetd implementations you may have to put the pserver parameter twice.)
+The first script is to init a cvs repository, add 3 files and cvsimport it into git 
+repository, before which I remove the all directories and .cvsps
 
-Commits are blocked. Naively, git-cvsserver assumes non-malicious users. Please
-review the code before setting this up on an internet-accessible server.
+raj@beastie:~$ cat git_init.sh
+export CVSROOT=/home/raj/cvsroot
+rm -rf cvsroot/ git/ src/ /home/raj/.cvsps
+mkdir cvsroot  git src
+cvs init
+cd src/
+echo "Line one" > file.txt
+echo "Line one" > file1.txt
+echo "Line one" > file2.txt
+cvs import -m "Imported sources" src start realstart
+cd ..
+rm -rf src/
+cvs co src
+git cvsimport -v -d /home/raj/cvsroot -C git/  src
 
-NOTE: the <nobody> user above will need write access to the .git directory
-to maintain the sqlite database. Updating of the sqlite database should be
-put in an update hook to avoid this problem, so that it is maintained by
-users with write access.
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+on executing:
+
+N src/file.txt
+N src/file1.txt
+N src/file2.txt
+
+No conflicts created by this import
+
+cvs checkout: Updating src
+U src/file.txt
+U src/file1.txt
+U src/file2.txt
+cvs_direct initialized to CVSROOT /home/raj/cvsroot
+cvs rlog: Logging src
+Fetching file.txt   v 1.1
+New file.txt: 9 bytes
+Fetching file1.txt   v 1.1
+New file1.txt: 9 bytes
+Fetching file2.txt   v 1.1
+New file2.txt: 9 bytes
+Tree ID b75643d0deaa77018b4dbaa2ff81756c4c1bebc1
+Committed patch 1 (origin 2006-03-04 07:37:59)
+Committing initial tree b75643d0deaa77018b4dbaa2ff81756c4c1bebc1
+Commit ID e800fd633e319b9a0b4c351f2964a03abf96b6e2
+Fetching file.txt   v 1.1.1.1
+Update file.txt: 9 bytes
+Fetching file1.txt   v 1.1.1.1
+Update file1.txt: 9 bytes
+Fetching file2.txt   v 1.1.1.1
+Update file2.txt: 9 bytes
+Tree ID b75643d0deaa77018b4dbaa2ff81756c4c1bebc1
+Parent ID e800fd633e319b9a0b4c351f2964a03abf96b6e2
+Committed patch 2 (start 2006-03-04 07:37:59)
+Commit ID 21bd067b19310d11790e99ad421de6611b942fbd
+Created tag 'realstart' on 'start'
+DONE; creating master branch
+
+Now edit two files, commit cvs and cvsupdate again.
+
+raj@beastie:~$ cat git_test.sh
+export CVSROOT=/home/raj/cvsroot
+cd src/
+echo "Line two" >> file.txt
+echo "Line two" >> file1.txt
+cvs commit -m "v2.0"
+cd ..
+git cvsimport -v -d /home/raj/cvsroot -C git/  src
+cd git
+git status
+cd ..
+echo cat git/file.txt
+cat git/file.txt
+echo cat src/file.txt
+cat src/file.txt
+
+on executing:
+
+cvs commit: Examining .
+Checking in file.txt;
+/home/raj/cvsroot/src/file.txt,v  <--  file.txt
+new revision: 1.2; previous revision: 1.1
+done
+Checking in file1.txt;
+/home/raj/cvsroot/src/file1.txt,v  <--  file1.txt
+new revision: 1.2; previous revision: 1.1
+done
+cvs_direct initialized to CVSROOT /home/raj/cvsroot
+cvs rlog: Logging src
+skip patchset 1: 1141457879 before 1141457879
+skip patchset 2: 1141457879 before 1141457879
+Switching from master to origin
+Fetching file.txt   v 1.2
+Update file.txt: 18 bytes
+Fetching file1.txt   v 1.2
+Update file1.txt: 18 bytes
+Tree ID 18d855d5b825ef1c0ecb9d26591e654cbe5c21df
+Parent ID e800fd633e319b9a0b4c351f2964a03abf96b6e2
+Committed patch 3 (origin 2006-03-04 07:39:35)
+Commit ID 6e7129d186834d5b2941e78c1c67c5255f868e12
+DONE
+#
+# Updated but not checked in:
+#   (will commit)
+#
+#       modified: file.txt
+#       modified: file1.txt
+#
+cat git/file.txt
+Line one
+cat src/file.txt
+Line one
+Line two
 
 
----
+As you can see the git/file.txt and src/file.txt are different. I have tried my best to 
+read all documentation and follow them faithfully and I hope I am not making any obviously 
+  stupid mistake.
 
- git-cvsserver.perl |   34 ++++++++++++++++++++++++++++++++++
- 1 files changed, 34 insertions(+), 0 deletions(-)
-
-91a6bf468230d63c414a21adeef94f1242eaaaab
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index b450792..7d3f78e 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -87,6 +87,31 @@ $log->info("--------------- STARTING ---
- my $TEMP_DIR = tempdir( CLEANUP => 1 );
- $log->debug("Temporary directory is '$TEMP_DIR'");
- 
-+# if we are called with a pserver argument,
-+# deal with the authentication cat before entereing the
-+# main loop
-+if (@ARGV && $ARGV[0] eq 'pserver') {
-+    my $line = <STDIN>; chomp $line;
-+    unless( $line eq 'BEGIN AUTH REQUEST') {
-+       die "E Do not understand $line - expecting BEGIN AUTH REQUEST\n";
-+    }
-+    $line = <STDIN>; chomp $line;
-+    req_Root('root', $line) # reuse Root
-+       or die "E Invalid root $line \n";
-+    $line = <STDIN>; chomp $line;
-+    unless ($line eq 'anonymous') {
-+       print "E Only anonymous user allowed via pserver\n";
-+       print "I HATE YOU\n";
-+    }
-+    $line = <STDIN>; chomp $line;    # validate the password?
-+    $line = <STDIN>; chomp $line;
-+    unless ($line eq 'END AUTH REQUEST') {
-+       die "E Do not understand $line -- expecting END AUTH REQUEST\n";
-+    }
-+    print "I LOVE YOU\n";
-+    # and now back to our regular programme...
-+}
-+
- # Keep going until the client closes the connection
- while (<STDIN>)
- {
-@@ -165,6 +190,7 @@ sub req_Root
-         print "E the repo config file needs a [gitcvs] section added, and the parameter 'enabled' set to 1\n";
-         print "E \n";
-         print "error 1 GITCVS emulation disabled\n";
-+        return 0;
-     }
- 
-     if ( defined ( $cfg->{gitcvs}{logfile} ) )
-@@ -173,6 +199,8 @@ sub req_Root
-     } else {
-         $log->nofile();
-     }
-+
-+    return 1;
- }
- 
- # Global_option option \n
-@@ -914,6 +942,12 @@ sub req_ci
- 
-     $log->info("req_ci : " . ( defined($data) ? $data : "[NULL]" ));
- 
-+    if ( @ARGV && $ARGV[0] eq 'pserver')
-+    {
-+        print "error 1 pserver access cannot commit\n";
-+        exit;
-+    }
-+
-     if ( -e $state->{CVSROOT} . "/index" )
-     {
-         print "error 1 Index already exists in git repo\n";
--- 
-1.2.4.g09a27-dirty
+raj
