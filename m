@@ -1,45 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] AsciiDoc fix for tutorial
-Date: Sat, 04 Mar 2006 13:51:47 -0800
-Message-ID: <7v4q2dri8c.fsf@assigned-by-dhcp.cox.net>
-References: <20060304163527.GA12015@craic.sysops.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: Problems with using git
+Date: Sat, 4 Mar 2006 14:25:57 -0800
+Message-ID: <20060304222557.GA24628@kroah.com>
+References: <44063B7C.40609@webdrake.net> <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org> <4406F8B1.9050303@webdrake.net> <4406FA46.7080608@op5.se> <7vr75k5s4y.fsf@assigned-by-dhcp.cox.net> <20060302235824.GA13436@kroah.com> <slrne0isi9.fr9.mdw@metalzone.distorted.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 04 22:52:02 2006
+X-From: git-owner@vger.kernel.org Sat Mar 04 23:26:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFefN-0000QQ-DZ
-	for gcvg-git@gmane.org; Sat, 04 Mar 2006 22:51:57 +0100
+	id 1FFfCU-0004lb-Me
+	for gcvg-git@gmane.org; Sat, 04 Mar 2006 23:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbWCDVvy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Mar 2006 16:51:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbWCDVvy
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 16:51:54 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:420 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751355AbWCDVvx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Mar 2006 16:51:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060304214803.DODH20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 4 Mar 2006 16:48:03 -0500
-To: Francis Daly <francis@daoine.org>
-In-Reply-To: <20060304163527.GA12015@craic.sysops.org> (Francis Daly's message
-	of "Sat, 4 Mar 2006 16:35:27 +0000")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751814AbWCDW0A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Mar 2006 17:26:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751859AbWCDW0A
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 17:26:00 -0500
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:22664
+	"EHLO aria.kroah.org") by vger.kernel.org with ESMTP
+	id S1751860AbWCDW0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Mar 2006 17:26:00 -0500
+Received: from press.kroah.org ([192.168.0.25] helo=localhost)
+	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.54)
+	id 1FFfCD-0002WS-DL; Sat, 04 Mar 2006 14:25:53 -0800
+To: Mark Wooding <mdw@distorted.org.uk>
+Content-Disposition: inline
+In-Reply-To: <slrne0isi9.fr9.mdw@metalzone.distorted.org.uk>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17193>
 
-Francis Daly <francis@daoine.org> writes:
+On Sat, Mar 04, 2006 at 10:56:09AM +0000, Mark Wooding wrote:
+> Greg KH <greg@kroah.com> wrote:
+> 
+> > The latest development tree, and the latest public betas contain
+> > 1.1.3.  If you think this should be newer, I can easily go poke the
+> > proper people...
+> 
+> Given that there's a security issue which got fixed in 1.1.5, I think
+> this is really a bit poor.
+> 
+> I notice, by contrast, that Debian had managed to repackage and release
+> a new GIT the day after Junio fixed the bug in the first place.  That
+> was more than a month ago.
 
->  shows the difference between that previous state and the state two
-> -commits ago.  Also, HEAD~5 can be used as a shorthand for HEAD^^^^^,
-> +commits ago.  Also, HEAD~5 can be used as a shorthand for HEAD{caret}{caret}{caret}^^,
+Fair enough, I'll go poke the proper people now...
 
-Thanks.  Why not 5 {caret}, not just three {caret} plus ^^?
+thanks,
+
+greg k-h
