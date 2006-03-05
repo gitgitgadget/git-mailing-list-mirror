@@ -1,92 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What's in git.git
-Date: Sat, 4 Mar 2006 20:58:41 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603042058250.13139@g5.osdl.org>
-References: <7vacc5jza6.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --temp and --stage=all options to checkout-index.
+Date: Sat, 04 Mar 2006 21:29:55 -0800
+Message-ID: <7vlkvpihm4.fsf@assigned-by-dhcp.cox.net>
+References: <20060303012032.GC6321@spearce.org>
+	<7vmzg83xro.fsf@assigned-by-dhcp.cox.net>
+	<20060303151331.GA16369@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 05 05:58:52 2006
+X-From: git-owner@vger.kernel.org Sun Mar 05 06:30:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFlKU-00037w-H7
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 05:58:50 +0100
+	id 1FFlok-0001dU-7X
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 06:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751644AbWCEE6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Mar 2006 23:58:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751645AbWCEE6s
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 23:58:48 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:64159 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751606AbWCEE6r (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Mar 2006 23:58:47 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k254wgDZ015151
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 4 Mar 2006 20:58:43 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k254wfgh011735;
-	Sat, 4 Mar 2006 20:58:41 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vacc5jza6.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751696AbWCEF35 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 00:29:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812AbWCEF35
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 00:29:57 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:27881 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751696AbWCEF35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 00:29:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060305052840.KPSA3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Mar 2006 00:28:40 -0500
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060303151331.GA16369@spearce.org> (Shawn Pearce's message of
+	"Fri, 3 Mar 2006 10:13:31 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17204>
 
+Shawn Pearce <spearce@spearce.org> writes:
 
-On Sat, 4 Mar 2006, Junio C Hamano wrote:
-> 
-> The most notable core-ish change is that rev-list split and new
-> git-log implementation by Linus.  I've been using this myself
-> for a while without problems, but there might still be some
-> corner cases that I (and Linus perhaps) do not exercise where
-> git-log command behaves slightly differently.  rev-list is not
-> supposed to have *any* regression other than removal of
-> --merge-order.  Please report regressions.
+> Junio C Hamano <junkio@cox.net> wrote:
+>> Shawn Pearce <spearce@spearce.org> writes:
+>> 
+>> >  Unfortunately this change lead me down a path which changed the core
+>> >  checkout code also used by apply and read-tree.
+>> 
 
-Here's a potential fix for a special case that we used to have to make
+I would have preferred not to add to_tempfile member to the
+checkout struct.  Instead, if checkout_entry has non NULL
+topath, check out to a temporary location and return the path;
+otherwise behave the way it did before.
 
-	git-rev-list --max-count=1
+That way everybody else would not need to declare useless
+topath[] array on the stack and pass it to checkout_entry
+(instead they would just pass NULL because they are not
+interested in checking out to temporary files).
 
-be faster and not unnecessarily parse any parent objects.
+I am unsure about what the tempfile option should do when asked
+to checkout a symbolic link.  Creating a temporary regular file
+that has the readlink result does not sound very useful to me.
 
-Now, we had that special case because gitweb was apparently doing a lot of 
-it, and quite frankly, I don't know if it still does. But basically it 
-avoids doing the "pop_most_recent_commit()" which will look up and parse 
-the parents, if it is obvious that it can.
+BTW, in any case, I think there is one breakage that needs to be
+fixed with something like this...
 
-I'm not sure this is worth it, but it looks obvious enough. Somebody with 
-gitweb somewhere should probably check if it still even wants this.
-
-		Linus
-
-----
-diff --git a/revision.c b/revision.c
-index a3df810..33a5f20 100644
---- a/revision.c
-+++ b/revision.c
-@@ -696,6 +696,18 @@ struct commit *get_revision(struct rev_i
- 		break;
- 	case 0:
- 		return NULL;
-+
-+	/* Special case to avoid unnecessary parent checking */
-+	case 1:
-+		if (!revs->limited &&
-+		    !revs->no_merges &&
-+		    !revs->paths &&
-+		    revs->min_age == -1 &&
-+		    revs->max_age == -1) {
-+		    	revs->max_count = 0;
-+			commit->object.flags |= SHOWN;
-+			return commit;
-+		}
- 	default:
- 		revs->max_count--;
- 	}
+---
+diff --git a/apply.c b/apply.c
+index 5a2cf54..727d63d 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1311,6 +1311,7 @@ static int check_patch(struct patch *pat
+ 				costate.force = 0;
+ 				costate.quiet = 0;
+ 				costate.not_new = 0;
++				costate.to_tempfile = 0;
+ 				costate.refresh_cache = 1;
+ 				if (checkout_entry(active_cache[pos],
+ 						   &costate, topath) ||
