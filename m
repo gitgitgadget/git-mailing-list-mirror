@@ -1,111 +1,86 @@
-From: Francis Daly <francis@daoine.org>
-Subject: [PATCH] Tweak asciidoc output to work with broken docbook-xsl
-Date: Sun, 5 Mar 2006 23:13:36 +0000
-Message-ID: <20060305231336.GA21797@craic.sysops.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] git-blame: Use the same tests for git-blame as for git-annotate
+Date: Sun, 05 Mar 2006 18:32:47 -0500
+Message-ID: <440B751F.5000801@michonline.com>
+References: <20060305111334.GB23448@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Mar 06 00:21:22 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig7D380550841A8204EA204B6C"
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Mon Mar 06 00:33:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG2XH-0005wO-03
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 00:21:11 +0100
+	id 1FG2ik-0001Ds-9T
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 00:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbWCEXUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 18:20:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbWCEXUg
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 18:20:36 -0500
-Received: from craic.sysops.org ([217.75.2.2]:7822 "EHLO craic.sysops.org")
-	by vger.kernel.org with ESMTP id S1751281AbWCEXUf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 18:20:35 -0500
-Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
-	by craic.sysops.org (8.12.11/8.12.11) with SMTP id k25NDajj021804
-	for <git@vger.kernel.org>; Sun, 5 Mar 2006 23:13:36 GMT
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: ClamAV 0.87.1/1314/Sat Mar  4 13:39:05 2006 on craic.sysops.org
-X-Virus-Status: Clean
-X-Spam-Status: No, hits=-1.2 required=2.0
-	tests=HTML_00_10,HTML_MESSAGE,USER_AGENT_MUTT
-	version=2.55
-X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
+	id S1752082AbWCEXc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 18:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbWCEXc6
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 18:32:58 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:60839 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1752082AbWCEXc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 18:32:58 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1FG2ie-0001qH-1r; Sun, 05 Mar 2006 18:32:57 -0500
+Received: from [10.254.251.12] (helo=mythryan.michonline.com)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FG2iZ-00044y-1h; Sun, 05 Mar 2006 18:32:51 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan.michonline.com with esmtp (Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FG2iY-00038Q-P6; Sun, 05 Mar 2006 18:32:50 -0500
+User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
+X-Accept-Language: en-us, en
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060305111334.GB23448@c165.ib.student.liu.se>
+X-Enigmail-Version: 0.93.0.0
+X-h4x0r5.com-MailScanner: Found to be clean
+X-h4x0r5.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17251>
 
-docbook-xsl v1.68 incorrectly converts "<screen>" from docbook to
-manpage by not rendering it verbatim. v1.69 handles it correctly, but
-not many current popular distributions ship with it.
-
-asciidoc by default converts "listingblock" to "<screen>". This change
-causes asciidoc in git to convert "listingblock" to "<literallayout>", which
-both old and new docbook-xsl handle correctly.
-
-The difference can be seen in any manpage which includes a multi-line
-example, such as git-branch.
-
----
-This one may want some consideration, because it involves changing how
-git interacts with asciidoc in order to make up for how an older version
-of docbook-xsl is broken. Clear?
-
-What version of docbook-xsl are people who make git manpages using? If
-it's not 1.69, the manpages (at least, those with multi-line examples)
-display incorrectly. Many current popular distributions seem to be using
-version 1.68.
-
-http://www.kernel.org/pub/software/scm/git/RPMS/x86_64/git-core-1.2.4-1.x86_64.rpm
-
-ftp://ftp.kddlabs.co.jp/pub/Linux/packages/fedora/extras/4/i386/git-core-1.2.4-1.fc4.i386.rpm
-
-(found on pbone, with "redhat/" removed from url; for Fedora 4)
-
-The 1.2.1 packages linked from http://packages.debian.org/unstable/devel/git-core
-
-all show the errors.
-
-ftp://ftp.kddlabs.co.jp/pub/Linux/packages/fedora/extras/development/i386/git-core-1.2.4-1.fc5.i386.rpm
-
-(found on pbone, with "redhat/" removed from the url; for Fedora Other,
-presumably 5)
-
-is correct.
-
-Clearly the *right* solution is for binary builders to update their
-toolchains. Maybe leaving this as-is will be an impetus for them to do so.
-
-Below is a not-right workaround which allows the git manpages render
-correctly when built by someone with an old docbook-xsl package.
-
-If this is acceptable, all well and good. If not, I'll contact the package
-builders and invite them to upgrade or patch before building new packages.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig7D380550841A8204EA204B6C
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
 
- Documentation/asciidoc.conf |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+Along these lines, if anyone can pin down the complicated cases that
+annotate and blame get differently, adding them as a test would be
+*exceedingly* appreciated, even if it makes annotate (or blame) fail for
+a bit, it gives us something to work against.
 
-1885a1ac69eabd6fa882f4464d3c66303d707566
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index fa0877d..37e9ada 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -23,4 +23,11 @@ ifdef::backend-xhtml11[]
- <a href="{target}.html">{target}{0?({0})}</a>
- endif::backend-xhtml11[]
- 
-+# "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or without this.
-+[listingblock]
-+<example><title>{title}</title>
-+<literallayout>
-+|
-+</literallayout>
-+{title#}</example>
- 
--- 
-1.2.GIT
+I've been trying to find some time this weekend to dig into why annotate
+gets things wrong, but I've been distracted, unfortunately.
+
 
 -- 
-Francis Daly        francis@daoine.org
+
+Ryan Anderson
+  sometimes Pug Majere
+
+
+--------------enig7D380550841A8204EA204B6C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFEC3UifhVDhkBuUKURAilgAKDf7JzVLPc2sqDJT/1YyHlykLCJ/gCguwY1
+mflK5KQ7n5rxTBTEAbKw52U=
+=iu01
+-----END PGP SIGNATURE-----
+
+--------------enig7D380550841A8204EA204B6C--
