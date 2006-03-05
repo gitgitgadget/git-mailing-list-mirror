@@ -1,72 +1,84 @@
-From: Francis Daly <francis@daoine.org>
-Subject: [PATCH] avoid asciidoc warning in git-cvsserver.txt
-Date: Sun, 5 Mar 2006 11:41:33 +0000
-Message-ID: <20060305114133.GA20399@craic.sysops.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-blame: Make the output human readable
+Date: Sun, 05 Mar 2006 04:10:47 -0800
+Message-ID: <7vbqwlgkhk.fsf@assigned-by-dhcp.cox.net>
+References: <20060305110351.GA23448@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Mar 05 12:48:36 2006
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Sun Mar 05 13:10:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFriz-0002DR-Ga
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 12:48:33 +0100
+	id 1FFs4e-0005Ak-Vm
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 13:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752253AbWCELsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 06:48:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254AbWCELsa
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 06:48:30 -0500
-Received: from craic.sysops.org ([217.75.2.2]:26508 "EHLO craic.sysops.org")
-	by vger.kernel.org with ESMTP id S1752250AbWCELs3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 06:48:29 -0500
-Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
-	by craic.sysops.org (8.12.11/8.12.11) with SMTP id k25BfX1j020433
-	for <git@vger.kernel.org>; Sun, 5 Mar 2006 11:41:34 GMT
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: ClamAV 0.87.1/1314/Sat Mar  4 13:39:05 2006 on craic.sysops.org
-X-Virus-Status: Clean
-X-Spam-Status: No, hits=-2.5 required=2.0
-	tests=USER_AGENT_MUTT
-	version=2.55
-X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
+	id S1752256AbWCEMKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 07:10:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbWCEMKu
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 07:10:50 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:46026 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1752254AbWCEMKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 07:10:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060305120726.PWSJ17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Mar 2006 07:07:26 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060305110351.GA23448@c165.ib.student.liu.se> (Fredrik
+	Kuivinen's message of "Sun, 5 Mar 2006 12:03:51 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17225>
 
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-Manually renumber to keep asciidoc happy
+> The default output mode is slightly different from git-annotate's.
+> However, git-annotate's output mode can be obtained by using the
+> '-c' flag.
 
----
+It might be better to default to human readable and make the
+script consumption format an option, if only to reduce typing.
 
- Documentation/git-cvsserver.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> diff --git a/Makefile b/Makefile
+> index b6d8804..eb1887d 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -534,6 +534,10 @@ git-rev-list$X: rev-list.o $(LIB_FILE)
+>  	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+>  		$(LIBS) $(OPENSSL_LIBSSL)
+>  
+> +git-blame$X: blame.o $(LIB_FILE)
+> +	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> +		$(LIBS) -lm
+> +
 
-9809de6594b8e11261ca5f18bb2eadb913fb33ae
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 19c9c51..0c4948d 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -44,13 +44,13 @@ INSTALLATION
-    n.b. you need to ensure each user that is going to invoke server.pl has
-    write access to the log file.
- 
--5. On each client machine you need to set the following variables.
-+3. On each client machine you need to set the following variables.
-      CVSROOT should be set as per normal, but the directory should point at the
-              appropriate git repo.
-      CVS_SERVER should be set to the server.pl script that has been put on the
-                 remote machine.
- 
--6. Clients should now be able to check out modules (where modules are the names
-+4. Clients should now be able to check out modules (where modules are the names
-    of branches in git).
-      $ cvs co -d mylocaldir master
- 
--- 
-1.2.GIT
+I wonder what it is about to link this binary different from others...
 
--- 
-Francis Daly        francis@daoine.org
+> +char* format_time(unsigned long time, const char* tz)
+> +{
+> +	static char time_buf[128];
+> +	time_t t = time;
+> +
+> +	strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S ", gmtime(&t));
+> +	strcat(time_buf, tz);
+> +	return time_buf;
+> +}
+
+I think this shows GMT with time offset, which is compatible
+with the human readable time Johannes did to git-annotate.  I do
+not know what timezone CVS annotate shows its dates offhand (it
+seems to only show dates).  Johannes, is this an attempt to
+match what CVS does?
+
+I am wondering if we want to be in line with the date formatting
+convention used for our commits and tags, that is, to show local
+timestamp with timezone.  The code to use would be show_date()
+from date.c if we go that route.
