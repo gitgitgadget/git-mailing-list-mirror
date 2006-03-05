@@ -1,80 +1,80 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: What's in git.git
-Date: Sun, 5 Mar 2006 22:21:46 +1300
-Message-ID: <46a038f90603050121u6bccbb71ve78de69ae45b96ad@mail.gmail.com>
-References: <7vacc5jza6.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Managing topic branches
+Date: Sun, 5 Mar 2006 22:35:33 +1300
+Message-ID: <46a038f90603050135j41eaf935kd48ab68212218836@mail.gmail.com>
+References: <7vzmk5lkmo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 05 10:22:13 2006
+X-From: git-owner@vger.kernel.org Sun Mar 05 10:35:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFpRJ-00006o-BO
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 10:22:09 +0100
+	id 1FFpeV-0001qP-DU
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 10:35:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbWCEJVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 04:21:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbWCEJVs
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 04:21:48 -0500
-Received: from wproxy.gmail.com ([64.233.184.196]:7853 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1752146AbWCEJVr convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 04:21:47 -0500
-Received: by wproxy.gmail.com with SMTP id i30so942771wra
-        for <git@vger.kernel.org>; Sun, 05 Mar 2006 01:21:47 -0800 (PST)
+	id S1750822AbWCEJfe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 04:35:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbWCEJfe
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 04:35:34 -0500
+Received: from wproxy.gmail.com ([64.233.184.198]:44767 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750822AbWCEJfe convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 04:35:34 -0500
+Received: by wproxy.gmail.com with SMTP id 68so944320wri
+        for <git@vger.kernel.org>; Sun, 05 Mar 2006 01:35:33 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=o4jqxqlN3RIeYnlg4MvwXYwN5+xYVghVD/ypCejtRQo6UIHk6u4idxrdpxNOIQcyIRw3h0iT7QqzBmla9Aikuh5xoQWHe0lklmAw5ts5KFEairVxl6m+qk5EGTib7QLvfM8QiMnZkPfJeUfoZzrnj9icUpktoL5j3TcUR56FN0Q=
-Received: by 10.54.152.13 with SMTP id z13mr840523wrd;
-        Sun, 05 Mar 2006 01:21:46 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Sun, 5 Mar 2006 01:21:46 -0800 (PST)
+        b=Dv+1e2B4sd4240oElx3gI43dNbN9Lix7fl/0GAt3grwY5axBhBXqfl5nLaq30uTOr25FydprIirYDSh+SgsnMIokW4dP6X15N2MLx7caYmbZBQSBf8kB5c7w6VTgJpH9u5ZSCLhQZfhEXQi4dwnoevkVrvEBt8HlCsSGWd7kmh0=
+Received: by 10.54.116.18 with SMTP id o18mr180819wrc;
+        Sun, 05 Mar 2006 01:35:33 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Sun, 5 Mar 2006 01:35:33 -0800 (PST)
 To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vacc5jza6.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vzmk5lkmo.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17210>
 
 On 3/5/06, Junio C Hamano <junkio@cox.net> wrote:
->  - Emacs interface (Alexandre Julliard)
->    contrib/emacs: Add an Emacs VC backend.
->    git.el: Added customize support for all parameters.
->    git.el: Added support for Signed-off-by.
->    git.el: Automatically update .gitignore status.
->    git.el: Portability fixes for XEmacs and Emacs CVS.
->    git.el: Set default directory before running the status mode setup hooks.
+> I could have done without the "questionable octopus leg", but I
+> did so that when Martin pulled my "next" into his cvsserver
+...
+> The moral of the story is not to try to be nice to others
+> without thinking about its concequences ;-).  I should have just
+> done without the "questionable octopus leg", and asked Martin to
+> discard and rebase his tip of the development to my "next" after
+> this merge.
 
-I'm somewhat confused by the fact that there are two emacs modes, both
-by Alexandre. Which one should I use? Also -- the killer app for
-emacs+git would be to leverage the great patch-editing mode in emacs.
+No good deed goes unpunished as they say ;-)
 
-Can we get a new merge conflict mode that generates .rej files? Emacs
-is superb at dealing with conflicts formatted that way. OTOH, it may
-be able to deal smartly with diff3-style conflicts if it knows how to
-talk with the VC backend -- I think the cvs mode can do that.
+In any case, this was perhaps based on a misunderstanding/error on my
+side. To start off, I didn't understand how you were managing next.
 
-Linus has mentioned several times that it is more important to have
-well oiled tools to deal with conflicts when they happen -- easy
-visualization of what the different versions were, commit msgs,
-highlight characters that don't match in a line that looks the same at
-first glance, etc -- than to try and magically resolve conflicts. I'm
-in violent agreement, and keen on seeing the emacs vc stuff fill that
-gap.
+I assumed next would be a 'rewind often' branch, a volatile thing that
+I shouldn't build upon. But as I was in the awkward situation of
+depending on something in next, I had to, and didn't think of the
+consequences. As the branch I published for you to pull was based on
+next, which meant you couldn't merge my stuff into master.
 
-(of course, if xxdiff and others can help, that'd be cool too, but
-currently they seem strangely unable to deal with files with diff3
-conflict markers.)
+So it was a thinko on my side. I just though -- damn, I'll have to
+work based on next, with the downside of having to be alert for
+rewinds. Didn't think of the implications for you.
 
->  - git-cvsserver updates (Martin Langhoff)
+It's sorted now, but at great pains for you. I guess all I can suggest
+is to put something in the name of the branch that means both "rewinds
+often" and "don't base real work on this". I guess that would be
+anything but master/maint, but the rules around pu are sometimes
+tricky too (rewinds often, but some people have no option but to build
+against it, unless you are treating it same as you treat next).
 
-Wohoo! This needs testers -- give it a whirl, please! BTW, the
-workarounds for Eclipse mentioned in the doco are no longer needed.
-Still, you do want to give Documentation/git-cvsserver.txt a quick
-read.
+Anyway -- sorry to have caused so much trouble. My work "pending" is
+at the most a patch or two, easy to extract and reapply. If something
+like this comes up again, just do whatever is easiest and tell me to
+rewind/rebase/cherrypick at my end.
 
 cheers,
 
