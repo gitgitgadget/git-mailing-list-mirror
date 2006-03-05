@@ -1,104 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] blame and annotate: show localtime with timezone.
-Date: Sun, 05 Mar 2006 14:48:01 -0800
-Message-ID: <7vbqwkecf2.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20060305110351.GA23448@c165.ib.student.liu.se>
-	<7vbqwlgkhk.fsf@assigned-by-dhcp.cox.net>
-	<20060305123800.GD23448@c165.ib.student.liu.se>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: any problems with new branch of gitk?
+Date: Sun, 05 Mar 2006 15:16:06 -0800
+Message-ID: <440B7136.2000809@gmail.com>
+References: <17419.24973.402408.237865@cargo.ozlabs.ibm.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>,
-	Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Sun Mar 05 23:48:15 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 06 00:16:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG21H-0004sJ-3Z
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 23:48:07 +0100
+	id 1FG2Sp-0004cA-Tn
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 00:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932191AbWCEWsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 17:48:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWCEWsE
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 17:48:04 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:54227 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932191AbWCEWsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Mar 2006 17:48:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060305224441.VOWI17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 5 Mar 2006 17:44:41 -0500
-To: git@vger.kernel.org
-In-Reply-To: <20060305123800.GD23448@c165.ib.student.liu.se> (Fredrik
-	Kuivinen's message of "Sun, 5 Mar 2006 13:38:01 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751918AbWCEXQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 18:16:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751921AbWCEXQd
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 18:16:33 -0500
+Received: from pproxy.gmail.com ([64.233.166.179]:49181 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751918AbWCEXQc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 18:16:32 -0500
+Received: by pproxy.gmail.com with SMTP id i75so656614pye
+        for <git@vger.kernel.org>; Sun, 05 Mar 2006 15:16:31 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=rXOhj9jgCDRZ2K23ujA7LDSnE/R8YIjlNZxELA9rjcm0tM15mKjkulk41klYzBmQ0zDJHFxSZMb5L11RFbIolVAhx4YgiezU8zvhx75vv3q9Fpy3tscMwMGjzDTIMcpEirIuKxuMkwlkjDnBLHsqB462WIGY2jnh5Z+KtXsb0tM=
+Received: by 10.35.50.9 with SMTP id c9mr201966pyk;
+        Sun, 05 Mar 2006 15:16:31 -0800 (PST)
+Received: from ?10.0.0.6? ( [67.20.71.142])
+        by mx.gmail.com with ESMTP id 60sm1000576pyg.2006.03.05.15.16.30;
+        Sun, 05 Mar 2006 15:16:31 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17419.24973.402408.237865@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17249>
 
-Earlier they showed gmtime and timezone, which was inconsistent
-with the way our commits and tags are pretty-printed.
+Paul Mackerras wrote:
+> I'm planning to pull the `new' branch of the gitk repository into the
+> master branch, making the new version of gitk the standard version
+> that will go into the git.git repository.  As far as I know the new
+> version does everything the old version does.  Does anyone know of any
+> problems with the new gitk that weren't in the old one?
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- blame.c           |   15 ++++++++++++---
- git-annotate.perl |    8 +++++++-
- 2 files changed, 19 insertions(+), 4 deletions(-)
-
-e29f298a17ee898fd0d191d448ba4fc202175896
-diff --git a/blame.c b/blame.c
-index 59146fa..a3a8ddc 100644
---- a/blame.c
-+++ b/blame.c
-@@ -550,13 +550,22 @@ static void get_commit_info(struct commi
- 	*tmp = 0;
- }
- 
--char* format_time(unsigned long time, const char* tz)
-+static const char* format_time(unsigned long time, const char* tz_str)
- {
- 	static char time_buf[128];
- 	time_t t = time;
-+	int minutes, tz;
-+	struct tm *tm;
- 
--	strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S ", gmtime(&t));
--	strcat(time_buf, tz);
-+	tz = atoi(tz_str);
-+	minutes = tz < 0 ? -tz : tz;
-+	minutes = (minutes / 100)*60 + (minutes % 100);
-+	minutes = tz < 0 ? -minutes : minutes;
-+	t = time + minutes * 60;
-+	tm = gmtime(&t);
-+
-+	strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S ", tm);
-+	strcat(time_buf, tz_str);
- 	return time_buf;
- }
- 
-diff --git a/git-annotate.perl b/git-annotate.perl
-index d93ee19..b113def 100755
---- a/git-annotate.perl
-+++ b/git-annotate.perl
-@@ -418,7 +418,13 @@ sub format_date {
- 		return $_[0];
- 	}
- 	my ($timestamp, $timezone) = split(' ', $_[0]);
--	return strftime("%Y-%m-%d %H:%M:%S " . $timezone, gmtime($timestamp));
-+	my $minutes = abs($timezone);
-+	$minutes = int($minutes / 100) * 60 + ($minutes % 100);
-+	if ($timezone < 0) {
-+	    $minutes = -$minutes;
-+	}
-+	my $t = $timestamp + $minutes * 60;
-+	return strftime("%Y-%m-%d %H:%M:%S " . $timezone, gmtime($t));
- }
- 
- # Copied from git-send-email.perl - We need a Git.pm module..
--- 
-1.2.4.gee5c7
+I don't know if the old version has this problem but the new version 
+does not have a "busy" pointer while it's waiting for a merge diff. Take 
+a look at the ACPI mega(octo)pus merge that happened in January.
