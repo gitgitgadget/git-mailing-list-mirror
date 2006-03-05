@@ -1,67 +1,72 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] git-blame: Kill warning "print_map defined but not used"
-Date: Sun, 5 Mar 2006 12:16:50 +0100
-Message-ID: <20060305111650.GC23448@c165.ib.student.liu.se>
+From: Francis Daly <francis@daoine.org>
+Subject: [PATCH] avoid asciidoc warning in git-cvsserver.txt
+Date: Sun, 5 Mar 2006 11:41:33 +0000
+Message-ID: <20060305114133.GA20399@craic.sysops.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Mar 05 12:17:02 2006
+X-From: git-owner@vger.kernel.org Sun Mar 05 12:48:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFrEM-0006MI-83
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 12:16:54 +0100
+	id 1FFriz-0002DR-Ga
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 12:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750910AbWCELQv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 06:16:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbWCELQv
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 06:16:51 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:3050 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1750910AbWCELQv
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 06:16:51 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id B557F4118; Sun,  5 Mar 2006 12:32:09 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1FFrEI-0001or-00; Sun, 05 Mar 2006 12:16:50 +0100
+	id S1752253AbWCELsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 06:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254AbWCELsa
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 06:48:30 -0500
+Received: from craic.sysops.org ([217.75.2.2]:26508 "EHLO craic.sysops.org")
+	by vger.kernel.org with ESMTP id S1752250AbWCELs3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 06:48:29 -0500
+Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
+	by craic.sysops.org (8.12.11/8.12.11) with SMTP id k25BfX1j020433
+	for <git@vger.kernel.org>; Sun, 5 Mar 2006 11:41:34 GMT
 To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.4.1i
+X-Virus-Scanned: ClamAV 0.87.1/1314/Sat Mar  4 13:39:05 2006 on craic.sysops.org
+X-Virus-Status: Clean
+X-Spam-Status: No, hits=-2.5 required=2.0
+	tests=USER_AGENT_MUTT
+	version=2.55
+X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17224>
 
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
-
+Manually renumber to keep asciidoc happy
 
 ---
 
- blame.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ Documentation/git-cvsserver.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-aebef8969d11b04634b9ab7a6ae85a0844b2e4c7
-diff --git a/blame.c b/blame.c
-index 6dccae5..0fb30ee 100644
---- a/blame.c
-+++ b/blame.c
-@@ -235,6 +235,7 @@ static void print_patch(struct patch *p)
- }
+9809de6594b8e11261ca5f18bb2eadb913fb33ae
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 19c9c51..0c4948d 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -44,13 +44,13 @@ INSTALLATION
+    n.b. you need to ensure each user that is going to invoke server.pl has
+    write access to the log file.
  
- /* For debugging only */
-+#if DEBUG
- static void print_map(struct commit *cmit, struct commit *other)
- {
- 	struct util_info *util = cmit->object.util;
-@@ -267,6 +268,7 @@ static void print_map(struct commit *cmi
- 		printf("\n");
- 	}
- }
-+#endif
+-5. On each client machine you need to set the following variables.
++3. On each client machine you need to set the following variables.
+      CVSROOT should be set as per normal, but the directory should point at the
+              appropriate git repo.
+      CVS_SERVER should be set to the server.pl script that has been put on the
+                 remote machine.
  
- // p is a patch from commit to other.
- static void fill_line_map(struct commit *commit, struct commit *other,
+-6. Clients should now be able to check out modules (where modules are the names
++4. Clients should now be able to check out modules (where modules are the names
+    of branches in git).
+      $ cvs co -d mylocaldir master
+ 
 -- 
-1.2.4.g4644-dirty
+1.2.GIT
+
+-- 
+Francis Daly        francis@daoine.org
