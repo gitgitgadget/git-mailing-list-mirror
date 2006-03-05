@@ -1,55 +1,86 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] avoid asciidoc warning in git-cvsserver.txt
-Date: Mon, 6 Mar 2006 08:22:40 +1300
-Message-ID: <46a038f90603051122l75cb1312ga826643864818a5b@mail.gmail.com>
-References: <20060305121131.GA20503@craic.sysops.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] contrib/emacs/Makefile: Provide tool for byte-compiling files.
+Date: Sun, 05 Mar 2006 11:28:53 -0800
+Message-ID: <7v1wxgheru.fsf@assigned-by-dhcp.cox.net>
+References: <20060305161431.23622.20032.stgit@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 05 20:23:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mark Wooding <mdw@distorted.org.uk>
+X-From: git-owner@vger.kernel.org Sun Mar 05 20:29:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFypV-0006Ho-0J
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 20:23:45 +0100
+	id 1FFyuY-0007im-Lf
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 20:28:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751014AbWCETWm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 14:22:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbWCETWm
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 14:22:42 -0500
-Received: from wproxy.gmail.com ([64.233.184.200]:19493 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751014AbWCETWl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 14:22:41 -0500
-Received: by wproxy.gmail.com with SMTP id i20so1001177wra
-        for <git@vger.kernel.org>; Sun, 05 Mar 2006 11:22:41 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IAeh/4UpVwMkaV3WyRTw09pZksiI0WlcbsJ3z9JDnsu5+oHZkzxuqUhvT10d96XrzsSftulbqHWxgJqDPFkqByT3LDo3CtL/bwSm4ldspMZWCpqL2LlUyUicagYkJ6nkApVhyY06ws+MEvxpNgxWPmHyhc7ND+puO7CxXwWRW/Y=
-Received: by 10.54.140.20 with SMTP id n20mr3087818wrd;
-        Sun, 05 Mar 2006 11:22:40 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Sun, 5 Mar 2006 11:22:40 -0800 (PST)
-To: "Francis Daly" <francis@daoine.org>
-In-Reply-To: <20060305121131.GA20503@craic.sysops.org>
-Content-Disposition: inline
+	id S1750936AbWCET2z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 14:28:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbWCET2z
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 14:28:55 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:60134 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750936AbWCET2z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 14:28:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060305192504.NXKH20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Mar 2006 14:25:04 -0500
+To: Alexandre Julliard <julliard@winehq.org>
+In-Reply-To: <20060305161431.23622.20032.stgit@metalzone.distorted.org.uk>
+	(Mark Wooding's message of "Sun, 05 Mar 2006 16:14:31 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17239>
 
-On 3/6/06, Francis Daly <francis@daoine.org> wrote:
-> Oops, I missed
+Alexandre, this looks good to me, so I'll be applying it.
+
+-jc
+
+Mark Wooding <mdw@distorted.org.uk> writes:
+
+> From: Mark Wooding <mdw@distorted.org.uk>
 >
->   Subject: [PATCH] cvsserver: updated documentation
+> Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+> ---
 >
-> which makes this one redundant.
-
-Thanks anyway to you and Mark for the fixes. Seems we were all working
-at the same time on the file!
-
-cheers,
-
-
-martin
+>  contrib/emacs/.gitignore |    1 +
+>  contrib/emacs/Makefile   |   20 ++++++++++++++++++++
+>  2 files changed, 21 insertions(+), 0 deletions(-)
+>
+> diff --git a/contrib/emacs/.gitignore b/contrib/emacs/.gitignore
+> new file mode 100644
+> index 0000000..c531d98
+> --- /dev/null
+> +++ b/contrib/emacs/.gitignore
+> @@ -0,0 +1 @@
+> +*.elc
+> diff --git a/contrib/emacs/Makefile b/contrib/emacs/Makefile
+> new file mode 100644
+> index 0000000..d3619db
+> --- /dev/null
+> +++ b/contrib/emacs/Makefile
+> @@ -0,0 +1,20 @@
+> +## Build and install stuff
+> +
+> +EMACS = emacs
+> +
+> +ELC = git.elc vc-git.elc
+> +INSTALL = install
+> +INSTALL_ELC = $(INSTALL) -m 644
+> +prefix = $(HOME)
+> +emacsdir = $(prefix)/share/emacs/site-lisp
+> +
+> +all: $(ELC)
+> +
+> +install: all
+> +	$(INSTALL) -d $(emacsdir)
+> +	$(INSTALL_ELC) $(ELC) $(emacsdir)
+> +
+> +%.elc: %.el
+> +	$(EMACS) --batch --eval '(byte-compile-file "$<")'
+> +
+> +clean:; rm -f $(ELC)
