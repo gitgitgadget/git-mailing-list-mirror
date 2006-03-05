@@ -1,166 +1,185 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Managing topic branches
-Date: Sat, 04 Mar 2006 17:56:31 -0800
-Message-ID: <7vzmk5lkmo.fsf@assigned-by-dhcp.cox.net>
+Subject: What's in git.git
+Date: Sat, 04 Mar 2006 20:22:57 -0800
+Message-ID: <7vacc5jza6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Mar 05 02:56:52 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Mar 05 05:23:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFiUI-0006A6-4t
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 02:56:46 +0100
+	id 1FFkls-0003P7-Hd
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 05:23:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751840AbWCEB4d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Mar 2006 20:56:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbWCEB4d
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 20:56:33 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:13515 "EHLO
+	id S932223AbWCEEW7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 4 Mar 2006 23:22:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbWCEEW7
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Mar 2006 23:22:59 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:64652 "EHLO
 	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751840AbWCEB4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Mar 2006 20:56:33 -0500
+	id S1751452AbWCEEW6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Mar 2006 23:22:58 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao02.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060305015347.GOBJ17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 4 Mar 2006 20:53:47 -0500
+          id <20060305042013.HZPO17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 4 Mar 2006 23:20:13 -0500
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17201>
 
-I adopted Tony's excellent "topic branches" workflow to manage
-the topics cooking in separate branches.  The flow goes like
-this:
+I've merged up a lot for people to have fun over the weekend
+;-).
 
- - The change to the topic are made as new commits on top of
-   the topic branch.  My naming convention for topic branches
-   are two letters directory under .git/refs/heads/ and short
-   word.  E.g. np/delta for Nico's finer-grained delta work,
-   ml/cvsserver for Martin's git-cvsserver.
+The most notable core-ish change is that rev-list split and new
+git-log implementation by Linus.  I've been using this myself
+for a while without problems, but there might still be some
+corner cases that I (and Linus perhaps) do not exercise where
+git-log command behaves slightly differently.  rev-list is not
+supposed to have *any* regression other than removal of
+--merge-order.  Please report regressions.
 
- - To test topics myself and publish the bleeding edge to
-   others, updated topic branches are merged into "next".  If I
-   have some changes to "master", the tip of it is also
-   merged into "next", so that people following "next" will not
-   miss out trivial fixes directly made to "master".
+A new killer application is git-cvsserver.  It now talks pserver
+protocol for anonymous CVS access.  Helping Martin to audit the
+code for any issues, security or otherwise, is greatly
+appreciated.
 
- - Once a topic is fully cooked, it is merged into "master".  I
-   delete the topic branch in my private repository (its tip is
-   already merged into "master" and also it was merged into
-   "next" long time ago).
-
-This worked reasonably well, and I can see what are still not in
-"master" but brewing in "next" with two ways:
-
- - "git log master..next".  This is the orthodox way to view
-   list of commits that are in next but still not in next.
-   Giving --no-merges option would help cutting down the
-   cluttering.
-
- - "git show-branch --topics master 'heads/??/*'". (note: ??/*
-   is literally given to show-branch to let it glob).
-
-However, the former started to break down recently, due to two
-reasons.
-
-1. np/delta turned out to be unsatisfactory, and I had reverts
-   and re-reverts in the topic branch.  Eventually Nico and I
-   decided to throw away the last three commits after merging
-   the earlier bits into "master".
-
-        (other topic brances merged into next)
-           \   \       \    \      \   \
-        o---o---o---o---o---o---o---o---o next
-       /           /           /
-      o---o---x---x---x---x---x np/delta
-     /     \ <-- earlier parts merged
-    o---o---o---o---o master
-
-Some commits on "np/delta" merged into "next" are reverts and
-the tip of "next" now do not have unwanted bits from the
-finer-grained delta experiments.  I have dropped np/delta topic
-branch, so "show-branch --topics" does not bother me with these
-commits marked with 'x' anymore, but "git log master..next" will
-keep showing them
+=46redrik's git-blame still has -Wdeclaration-after-statement
+issues, but deserves to be beaten harder alongside Ryan's
+git-annotate for two reasons.  It should be a good example
+program to use the new revision traversal infrastructure, and it
+is always good to have competing two implementations ;-).
 
 
-2. "ml/cvsserver" was initially based on then-current "next"
-   tip, because it depended on something else that was only
-   present in "next", but by the time I pulled it from Martin,
-   the pieces it depended on have already graduated to "master".
+* The 'master' branch has these since the last announcement.
 
-Since I wanted to have cvsserver in the "master" sooner than
-everything else that were in "next" when Martin prepared these
-commits, I ended up doing this:
+ - Cygwin portability for test (Alex Riesen)
+   workaround fat/ntfs deficiencies for t3600-rm.sh (git-rm)
 
-Here is what the ancestry graph looked like when I received
-cvsserver stuff:
+ - Emacs interface (Alexandre Julliard)
+   contrib/emacs: Add an Emacs VC backend.
+   git.el: Added customize support for all parameters.
+   git.el: Added support for Signed-off-by.
+   git.el: Automatically update .gitignore status.
+   git.el: Portability fixes for XEmacs and Emacs CVS.
+   git.el: Set default directory before running the status mode setup h=
+ooks.
 
-                        a---b---c ml/cvsserver
-                       /
-          o---o---o---o next
-         /   /   /             A: another topic ml/cvsserver
-        /   A   B*                depended on
-       /     \                 B*: many other "unready" topics
-      o---o---o---o master
+ - gitview updates (Aneesh Kumar K.V)
+   gitview: Use horizontal scroll bar in the tree view
+   gitview: pass the missing argument _show_clicked_cb.
 
-So I cherry-picked them on to "master", and merged both
-"ml/cvsserver" and "master" into "next":
+ - git-svn updates (Eric Wong)
+   contrib/git-svn: add --id/-i=3D$GIT_SVN_ID command-line switch
+   contrib/git-svn: add -b/--branch switch for branch detection
+   contrib/git-svn: allow --authors-file to be specified
+   contrib/git-svn: avoid re-reading the repository uuid, it never chan=
+ges
+   contrib/git-svn: better documenting of CLI switches
+   contrib/git-svn: cleanup option parsing
+   contrib/git-svn: create a more recent master if one does not exist
+   contrib/git-svn: fix a copied-tree bug in an overzealous assertion
+   contrib/git-svn: several small bug fixes and changes
+   contrib/git-svn: strip 'git-svn-id:' when commiting to SVN
+   contrib/git-svn: use refs/remotes/git-svn instead of git-svn-HEAD
+   git-branch: add -r switch to list refs/remotes/*
 
-                        a---b---c ml/cvsserver
-                       /         \ <-- questionable octopus leg
-          o---o---o---o-----------* next
-         /   /   /               /  
-        /   o   o               /  
-       /     \                 /
-      o---o---o---o---a'--b'--c' master
+ - send-email fix (Eric Wong)
+   send-email: accept --no-signed-off-by-cc as the documentation states
 
-I could have done without the "questionable octopus leg", but I
-did so that when Martin pulled my "next" into his cvsserver
-branch, he does not have to do the real merges [*1*].  But now
-commits a---b---c comes back to haunt me whenever I do "git log
-master..next".
+ - checkout-index --stdin (Shawn Pearce)
+   Teach git-checkout-index to read filenames from stdin.
 
-The moral of the story is not to try to be nice to others
-without thinking about its concequences ;-).  I should have just
-done without the "questionable octopus leg", and asked Martin to
-discard and rebase his tip of the development to my "next" after
-this merge.
+ - git-blame (Fredrik Kuivinen)
+   Add git-blame, a tool for assigning blame.
+   git-blame, take 2
 
+ - git-mv updates (Josef Weidendorfer)
+   git-mv: Allow -h without repo & fix error message
+   git-mv: fixes for path handling
+   git-mv: fix moves into a subdir from outside
 
-Anyhow, what I ended up doing to make "log master..next" usable
-again was to cauterize the tips of unwanted topic branches
-merged into next by merging them into "master" branch using
-"ours" strategy:
+ - split rev-list implementation and git-log (Linus and me)
+   First cut at libifying revlist generation
+   Splitting rev-list into revisions lib, end of beginning.
+   git-rev-list libification: rev-list walking
+   Introduce trivial new pager.c helper infrastructure
+   Tie it all together: "git log"
+   Rip out merge-order and make "git log <paths>..." work again.
+   rev-list split: minimum fixup.
+   git-log (internal): add approxidate.
+   git-log (internal): more options.
+   setup_revisions(): handle -n<n> and -<n> internally.
 
-	$ git checkout master
-	$ git merge -s ours "excuse for this" HEAD ml/cvsserver np/delta
+ - git-verify-tag update (me)
+   Pretty-print tagger dates.
 
-Luckily, I have merged up all the B*'s from "next" to "master",
-so this was possible, but otherwise until I either merge them to
-"master" or decide to drop forever I needed to keep a---b---c
-around in "log master..next" output for a loooong time X-<.
+ - git-commit --amend (me)=20
 
+ - show-branch --topics (me)
 
-[Footnote]
+ - git-svnimport update (Karl  Hasselstr=F6m)
+   Save username -> Full Name <email@addr.es> map file
 
-*1* I briefly thought about doing this instead, but this is a
-wrong thing to do:
+ - git tool survey documentation (Marco Costalba)
+   Add a Documentation/git-tools.txt
 
-                        a---b---c ml/cvsserver
-                       /         \       
-          o---o---o---o-------------------* next
-         /   /   /                 \     /
-        /   A   B*                  \   / 
-       /     \                       \ /
-      o---o---o---o-------------------* master
-                   \                 /
-                    a'------b'------c'
-                     (cherry picked)
+ - git-cvsserver updates (Martin Langhoff)
+   cvsserver: Checkout correctly on Eclipse
+   annotate: fix -S parameter to take a string
+   cvsserver: Eclipse compat -- now "compare with latest from HEAD" wor=
+ks
+   cvsserver: checkout faster by sending files in a sensible order
+   cvsserver: fix checkouts with -d <somedir>
+   cvsserver: nested directory creation fixups for Eclipse clients
+   cvsserver: better error messages
+   cvsserver: anonymous cvs via pserver support
 
-At this point, master would claim to have merged B* but actually
-it has not.
+ - delta cleanup (Nicolas Pitre)
+   relax delta selection filtering in pack-objects
+   diff-delta: fold two special tests into one plus cleanups
+   diff-delta: big code simplification
+
+ - git-annotate updates (Ryan Anderson)
+   annotate: handle \No newline at end of file.
+   annotate: Add a basic set of test cases.
+
+ - misc fixes and docs (Francis Daly, Johannes Schindelin, Jonas Fonsec=
+a,
+   Mark Wooding, Shawn Pearce, Tony Luck, Martin Langhoff, me)
+   AsciiDoc fix for tutorial
+   Documentation: read-tree --aggressive
+   Documentation: rev-list --objects-edge
+   Fix test case for some sed
+   GIT-VERSION-GEN: squelch unneeded error from "cat version"
+   Prevent --index-info from ignoring -z.
+   Pull GIT 1.2.4 fixes from master
+   Re-fix compilation warnings.
+   Warn about invalid refs
+   annotate should number lines starting with 1
+   annotate: fix -S parameter to take a string
+   annotate: resurrect raw timestamps.
+   combine-diff: Honour --full-index.
+   combine-diff: Honour -z option correctly.
+   git-commit: make sure we protect against races.
+   manpages: insert two missing [verse] markers for multi-line SYNOPSIS
+   read-tree --aggressive: remove deleted entry from the working tree.
+   tar-tree: file/dirmode fix.
+   war on whitespaces: documentation.
+
+* The 'next' branch, in addition, has these.
+
+ - diffcore-rename/break and similarity estimator tweaks (me)
+   count-delta: no need for this anymore.
+   diffcore-break: similarity estimator fix.
+   diffcore-delta: make change counter to byte oriented again.
+   diffcore-rename: similarity estimator fix.
+
+* The 'pu' branch, in addition, has these.
+
+ - checkout-index --temp --stage=3Dall (Shawn Pearce)
