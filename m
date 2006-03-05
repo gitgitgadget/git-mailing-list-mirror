@@ -1,49 +1,54 @@
-From: Francis Daly <francis@daoine.org>
-Subject: Re: [PATCH] avoid asciidoc warning in git-cvsserver.txt
-Date: Sun, 5 Mar 2006 12:11:31 +0000
-Message-ID: <20060305121131.GA20503@craic.sysops.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Mar 05 13:18:38 2006
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH] gitignore: Ignore some more boring things.
+Date: Sun, 05 Mar 2006 12:25:43 +0000
+Message-ID: <20060305122542.6724.87703.stgit@metalzone.distorted.org.uk>
+X-From: git-owner@vger.kernel.org Sun Mar 05 13:25:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFsC4-00068w-Pe
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 13:18:37 +0100
+	id 1FFsJ3-00076Q-AJ
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 13:25:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbWCEMS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 07:18:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbWCEMS1
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 07:18:27 -0500
-Received: from craic.sysops.org ([217.75.2.2]:33164 "EHLO craic.sysops.org")
-	by vger.kernel.org with ESMTP id S1752264AbWCEMS1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 07:18:27 -0500
-Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
-	by craic.sysops.org (8.12.11/8.12.11) with SMTP id k25CBVQJ020511
-	for <git@vger.kernel.org>; Sun, 5 Mar 2006 12:11:31 GMT
+	id S1752274AbWCEMZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 07:25:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbWCEMZp
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 07:25:45 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:42651 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1752272AbWCEMZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 07:25:44 -0500
+Received: (qmail 6750 invoked from network); 5 Mar 2006 12:25:43 -0000
+Received: from localhost (HELO metalzone.distorted.org.uk) (127.0.0.1)
+  by localhost with SMTP; 5 Mar 2006 12:25:43 -0000
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: ClamAV 0.87.1/1314/Sat Mar  4 13:39:05 2006 on craic.sysops.org
-X-Virus-Status: Clean
-X-Spam-Status: No, hits=-2.5 required=2.0
-	tests=USER_AGENT_MUTT
-	version=2.55
-X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17227>
 
-Oops, I missed
+From: Mark Wooding <mdw@distorted.org.uk>
 
-  Subject: [PATCH] cvsserver: updated documentation
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+---
 
-which makes this one redundant.
+ .gitignore   |    1 +
+ t/.gitignore |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
 
-Sorry,
-
-	f
--- 
-Francis Daly        francis@daoine.org
+diff --git a/.gitignore b/.gitignore
+index 5be239a..abbc509 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -130,3 +130,4 @@ libgit.a
+ *.o
+ *.py[co]
+ config.mak
++git-blame
+diff --git a/t/.gitignore b/t/.gitignore
+new file mode 100644
+index 0000000..fad67c0
+--- /dev/null
++++ b/t/.gitignore
+@@ -0,0 +1 @@
++trash
