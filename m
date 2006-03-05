@@ -1,86 +1,59 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH] git-blame: Use the same tests for git-blame as for git-annotate
-Date: Sun, 05 Mar 2006 18:32:47 -0500
-Message-ID: <440B751F.5000801@michonline.com>
-References: <20060305111334.GB23448@c165.ib.student.liu.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] blame: avoid -lm by not using log().
+Date: Mon, 6 Mar 2006 00:36:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603060032410.32270@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060305110351.GA23448@c165.ib.student.liu.se>
+ <7vbqwlgkhk.fsf@assigned-by-dhcp.cox.net> <20060305123800.GD23448@c165.ib.student.liu.se>
+ <7vhd6cechf.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig7D380550841A8204EA204B6C"
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Mar 06 00:33:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Mon Mar 06 00:36:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG2ik-0001Ds-9T
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 00:33:02 +0100
+	id 1FG2lk-0002Bo-LL
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 00:36:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbWCEXc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 18:32:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbWCEXc6
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 18:32:58 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:60839 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1752082AbWCEXc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Mar 2006 18:32:58 -0500
-Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1FG2ie-0001qH-1r; Sun, 05 Mar 2006 18:32:57 -0500
-Received: from [10.254.251.12] (helo=mythryan.michonline.com)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FG2iZ-00044y-1h; Sun, 05 Mar 2006 18:32:51 -0500
-Received: from localhost ([127.0.0.1])
-	by mythryan.michonline.com with esmtp (Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FG2iY-00038Q-P6; Sun, 05 Mar 2006 18:32:50 -0500
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20060305111334.GB23448@c165.ib.student.liu.se>
-X-Enigmail-Version: 0.93.0.0
-X-h4x0r5.com-MailScanner: Found to be clean
-X-h4x0r5.com-MailScanner-From: ryan@michonline.com
+	id S1751299AbWCEXgF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 18:36:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbWCEXgF
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 18:36:05 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:40383 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751299AbWCEXgE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 18:36:04 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id 4739C1B20;
+	Mon,  6 Mar 2006 00:36:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 3AE33A9E;
+	Mon,  6 Mar 2006 00:36:03 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id F1522A73;
+	Mon,  6 Mar 2006 00:36:02 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhd6cechf.fsf_-_@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17252>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig7D380550841A8204EA204B6C
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Hi,
 
+On Sun, 5 Mar 2006, Junio C Hamano wrote:
 
-Along these lines, if anyone can pin down the complicated cases that
-annotate and blame get differently, adding them as a test would be
-*exceedingly* appreciated, even if it makes annotate (or blame) fail for
-a bit, it gives us something to work against.
+> -	max_digits = 1 + log(num_blame_lines+1)/log(10);
+> +	for (max_digits = 1, i = 10; i <= num_blame_lines; max_digits++)
+> +		i *= 10;
 
-I've been trying to find some time this weekend to dig into why annotate
-gets things wrong, but I've been distracted, unfortunately.
+According to my late-night maths skills, these two methods do not do the 
+same thing: if num_blame_lines == 9, the log method assigns 2 to 
+max_digits, but the for loop stops at max_digits == 1. A trivial fix would 
+be to test for i <= num_blame_lines + 1.
 
-
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
-
-
---------------enig7D380550841A8204EA204B6C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFEC3UifhVDhkBuUKURAilgAKDf7JzVLPc2sqDJT/1YyHlykLCJ/gCguwY1
-mflK5KQ7n5rxTBTEAbKw52U=
-=iu01
------END PGP SIGNATURE-----
-
---------------enig7D380550841A8204EA204B6C--
+Ciao,
+Dscho
