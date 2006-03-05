@@ -1,65 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] git-blame: Kill warning "print_map defined but not used"
-Date: Sun, 5 Mar 2006 10:58:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603051054330.13139@g5.osdl.org>
-References: <20060305111650.GC23448@c165.ib.student.liu.se>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] avoid asciidoc warning in git-cvsserver.txt
+Date: Mon, 6 Mar 2006 08:22:40 +1300
+Message-ID: <46a038f90603051122l75cb1312ga826643864818a5b@mail.gmail.com>
+References: <20060305121131.GA20503@craic.sysops.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Mar 05 19:58:49 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 05 20:23:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFyRH-0000gZ-73
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 19:58:43 +0100
+	id 1FFypV-0006Ho-0J
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 20:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750758AbWCES6c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 13:58:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbWCES6c
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 13:58:32 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:10689 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750758AbWCES6c (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 13:58:32 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k25IwKDZ028871
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 5 Mar 2006 10:58:21 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k25IwJIM001006;
-	Sun, 5 Mar 2006 10:58:20 -0800
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20060305111650.GC23448@c165.ib.student.liu.se>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751014AbWCETWm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 14:22:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbWCETWm
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 14:22:42 -0500
+Received: from wproxy.gmail.com ([64.233.184.200]:19493 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751014AbWCETWl convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 14:22:41 -0500
+Received: by wproxy.gmail.com with SMTP id i20so1001177wra
+        for <git@vger.kernel.org>; Sun, 05 Mar 2006 11:22:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IAeh/4UpVwMkaV3WyRTw09pZksiI0WlcbsJ3z9JDnsu5+oHZkzxuqUhvT10d96XrzsSftulbqHWxgJqDPFkqByT3LDo3CtL/bwSm4ldspMZWCpqL2LlUyUicagYkJ6nkApVhyY06ws+MEvxpNgxWPmHyhc7ND+puO7CxXwWRW/Y=
+Received: by 10.54.140.20 with SMTP id n20mr3087818wrd;
+        Sun, 05 Mar 2006 11:22:40 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Sun, 5 Mar 2006 11:22:40 -0800 (PST)
+To: "Francis Daly" <francis@daoine.org>
+In-Reply-To: <20060305121131.GA20503@craic.sysops.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17238>
+
+On 3/6/06, Francis Daly <francis@daoine.org> wrote:
+> Oops, I missed
+>
+>   Subject: [PATCH] cvsserver: updated documentation
+>
+> which makes this one redundant.
+
+Thanks anyway to you and Mark for the fixes. Seems we were all working
+at the same time on the file!
+
+cheers,
 
 
-
-Fredrik,
-
-Three comments on "git-blame":
-
- - you should use "-u -U 0" instead of "-u0" to avoid warnings from some 
-   versions of GNU diff
-
- - Please default to HEAD so that you don't need to say it.
-
- - What I'd actually want to see is blame for a certain group of lines. 
-   Ie, I'd like to see
-
-	git-blame --line=50-56 filename
-
-   which only shows those 7 lines. That would be wonderful for a visual 
-   interface where you could mark off a few lines and say "follow these 
-   backwards" kind of thing, and should make it more efficient than trying 
-   to resolve the _whole_ file.
-
-Hmm?
-
-		Linus
+martin
