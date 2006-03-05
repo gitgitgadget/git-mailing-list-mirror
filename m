@@ -1,79 +1,72 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] git-blame: Make the output human readable
-Date: Sun, 5 Mar 2006 15:11:29 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603051509480.12799@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sun, 5 Mar 2006 15:23:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603051516020.12866@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <20060305110351.GA23448@c165.ib.student.liu.se>
- <7vbqwlgkhk.fsf@assigned-by-dhcp.cox.net>
+ <7vbqwlgkhk.fsf@assigned-by-dhcp.cox.net> <20060305123800.GD23448@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org,
-	Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Sun Mar 05 15:11:45 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 05 15:23:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FFtxT-0002tL-BR
-	for gcvg-git@gmane.org; Sun, 05 Mar 2006 15:11:39 +0100
+	id 1FFu8l-0005n7-Bz
+	for gcvg-git@gmane.org; Sun, 05 Mar 2006 15:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbWCEOLe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 09:11:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932119AbWCEOLe
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 09:11:34 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:14237 "EHLO
+	id S932133AbWCEOXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 09:23:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932119AbWCEOXJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 09:23:09 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:58511 "EHLO
 	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932116AbWCEOLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Mar 2006 09:11:33 -0500
+	id S932133AbWCEOXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 09:23:08 -0500
 Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id 56D7A20B2;
-	Sun,  5 Mar 2006 15:11:30 +0100 (CET)
+	by mailrelay.mail (Postfix) with ESMTP id 1B27D1CA3;
+	Sun,  5 Mar 2006 15:23:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 4A9A95DD8;
-	Sun,  5 Mar 2006 15:11:30 +0100 (CET)
+	by virusscan.mail (Postfix) with ESMTP id 0EB131143;
+	Sun,  5 Mar 2006 15:23:05 +0100 (CET)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id B0A9B20AD;
-	Sun,  5 Mar 2006 15:11:29 +0100 (CET)
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id D946620B7;
+	Sun,  5 Mar 2006 15:23:04 +0100 (CET)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqwlgkhk.fsf@assigned-by-dhcp.cox.net>
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060305123800.GD23448@c165.ib.student.liu.se>
 X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17231>
 
 Hi,
 
-On Sun, 5 Mar 2006, Junio C Hamano wrote:
+On Sun, 5 Mar 2006, Fredrik Kuivinen wrote:
 
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> On Sun, Mar 05, 2006 at 04:10:47AM -0800, Junio C Hamano wrote:
+> > Fredrik Kuivinen <freku045@student.liu.se> writes:
+> > 
+> > > +git-blame$X: blame.o $(LIB_FILE)
+> > > +	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> > > +		$(LIBS) -lm
+> > > +
+> > 
+> > I wonder what it is about to link this binary different from others...
+> > 
 > 
-> > +char* format_time(unsigned long time, const char* tz)
-> > +{
-> > +	static char time_buf[128];
-> > +	time_t t = time;
-> > +
-> > +	strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S ", gmtime(&t));
-> > +	strcat(time_buf, tz);
-> > +	return time_buf;
-> > +}
-> 
-> I think this shows GMT with time offset, which is compatible
-> with the human readable time Johannes did to git-annotate.  I do
-> not know what timezone CVS annotate shows its dates offhand (it
-> seems to only show dates).  Johannes, is this an attempt to
-> match what CVS does?
+> It uses log(3) to compute the number of digits needed to represent the
+> last line number. It is probably better to this some other way
+> though...
 
-CVS only shows the date, something like
+How about this:
 
-	strftime("%Y-%b-%d", gmtime($timestamp));
+-	max_digits = 1 + log(num_blame_lines+1)/log(10);
++	for (i = 10, max_digits = 1; i <= num_blame_lines + 1;
++		i *= 10, max_digits++);
 
-> I am wondering if we want to be in line with the date formatting
-> convention used for our commits and tags, that is, to show local
-> timestamp with timezone.  The code to use would be show_date()
-> from date.c if we go that route.
+(Totally untested)
 
-I like that approach. Sometimes imitating CVS can be overdone.
-
-Ciao,
+Hth,
 Dscho
