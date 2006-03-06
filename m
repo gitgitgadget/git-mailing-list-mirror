@@ -1,99 +1,62 @@
-From: Rajkumar S <rajkumars@asianetindia.com>
-Subject: Re: cvsimport woes
-Date: Mon, 06 Mar 2006 22:22:09 +0530
-Message-ID: <440C68B9.9030305@asianetindia.com>
-References: <44094618.6070404@asianetindia.com> <46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com> <46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Any news on an Eclipse plugin?
+Date: Mon, 6 Mar 2006 12:32:29 -0500
+Message-ID: <20060306173229.GA27965@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Mar 06 17:54:23 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Mar 06 18:33:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGIwU-0000d6-O9
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 17:52:19 +0100
+	id 1FGJZU-0001tl-Mz
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 18:32:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbWCFQwP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 11:52:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbWCFQwP
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 11:52:15 -0500
-Received: from smtp.asianetindia.com ([202.88.238.28]:6876 "EHLO
-	smtp.asianetindia.com") by vger.kernel.org with ESMTP
-	id S1751937AbWCFQwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Mar 2006 11:52:14 -0500
-Received: (qmail 2158 invoked from network); 7 Mar 2006 04:17:16 -0000
-Received: by simscan 1.1.0 ppid: 2154, pid: 2155, t: 0.7141s
-         scanners:none
-Received: from unknown (HELO [202.83.59.61]) ([202.83.59.61])
-          (envelope-sender <rajkumars@asianetindia.com>)
-          by smtp.asianetindia.com (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 7 Mar 2006 04:17:15 -0000
-User-Agent: Thunderbird 1.4.1 (X11/20051006)
+	id S1751379AbWCFRce (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 12:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbWCFRce
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 12:32:34 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39607 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751379AbWCFRcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 12:32:33 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FGJZJ-00037n-FU
+	for git@vger.kernel.org; Mon, 06 Mar 2006 12:32:25 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5474620FBAC; Mon,  6 Mar 2006 12:32:29 -0500 (EST)
 To: git@vger.kernel.org
-In-Reply-To: <46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17300>
 
-Martin Langhoff wrote:
-> On 3/6/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
->> you don't seem to be making any silly mistake. Make sure you are using
->> a recent git, and a recent cvsps. Actually you want the _latest_ cvsps
->> (2.1 I think).
-> 
-> Scratch this bit, naturally. I wasn't 100% paying attention. Still,
-> the rest of the answer should kinda/sorta make sense.
+I'm considering starting an Eclipse plugin for GIT.  So I did
+some digging to see if any existing projects have anything I can
+contribute to (rather than starting from scratch) but I only turned
+up a thread from May 2005 started by Jon Seymour:
 
-Thanks for your kind replies.
+  http://www.gelato.unsw.edu.au/archives/git/0505/3357.html
 
-I was also talking to Matthias Urlichs (the author of cvsimport) What he 
-says is that the first version is still checked out because
-the import does not do the fast-forward/merge by itself.
+anyone know anything newer?  If there's nothing existing worth
+starting with other than the CVS or SVN plugins (as mentioned in
+this thread) I'll probably start putting together a prototype and
+start making it available early next week.
 
-I am wondering how can I do the fast-forward. I had a long chat in irc 
-but did not find any solution to this particular issue. I tried git 
-merge, but that does not work as the command needs more arguments. (I am 
-a git newbie and git concepts are still bit fuzzy for me)
+I'm going to carefully read the thread that I linked to above before
+writing anything, so there's no need to start getting into the core
+and not so core discussion again.  I'll read it over for myself. :-)
 
-I would appreciate a lot if some one can point me in the right direction.
-
-If you are not following this thread, the problem I am talking about is 
-that when I do a cvsimport for a second time (ie do a git cvsimport; 
-update the cvs; do a cvsimport again) the second updates are not visible 
-in the current directory, though they are present in the git database.
-
-You can use this script to reproduce this problem.
-
-export CVSROOT=/home/raj/cvsroot
-rm -rf cvsroot/ git/ src/ /home/raj/.cvsps
-mkdir cvsroot  git src
-cvs init
-cd src/
-echo "Line one" > file.txt
-echo "Line one" > file1.txt
-echo "Line one" > file2.txt
-cvs import -m "Imported sources" src start realstart
-cd ..
-rm -rf src/
-cvs co src
-git cvsimport -v -k -u -m -d $CVSROOT -C git/  src
-cd git
-git status
-cd ..
-cd src/
-echo "Line two" >> file.txt
-echo "Line two" >> file1.txt
-cvs commit -m "v2.0"
-cd ..
-git cvsimport -v -k -u -m -d $CVSROOT -C git/  src
-cd git
-git status
-cd ..
-
-Now the cvs version of file.txt and git version are different.
-
-Thanks and regards,
-
-raj
+-- 
+Shawn.
