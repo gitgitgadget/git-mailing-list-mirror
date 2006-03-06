@@ -1,67 +1,88 @@
-From: Belmar-Letelier <luis@itaapy.com>
+From: Brandon Philips <brandon@ifup.org>
 Subject: Re: SSH with alternative port number?
-Date: Mon, 06 Mar 2006 23:01:10 +0100
-Message-ID: <440CB126.7080707@itaapy.com>
+Date: Mon, 6 Mar 2006 13:59:39 -0800
+Message-ID: <20060306215939.GD14725@osuosl.org>
 References: <20060306214418.66E153525CB@atlas.denx.de>
-Reply-To: luis@itaapy.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 06 22:59:51 2006
+X-From: git-owner@vger.kernel.org Mon Mar 06 23:00:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGNk6-00009T-3m
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 22:59:50 +0100
+	id 1FGNk6-00009T-St
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 22:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752448AbWCFV7f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 6 Mar 2006 16:59:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbWCFV7f
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 16:59:35 -0500
-Received: from smtp3.wanadoo.fr ([193.252.22.28]:41117 "EHLO smtp3.wanadoo.fr")
-	by vger.kernel.org with ESMTP id S1752448AbWCFV7e (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 16:59:34 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf0307.wanadoo.fr (SMTP Server) with ESMTP id 408C51C00216
-	for <git@vger.kernel.org>; Mon,  6 Mar 2006 22:59:33 +0100 (CET)
-Received: from [192.168.2.13] (ATuileries-153-1-88-167.w83-202.abo.wanadoo.fr [83.202.107.167])
-	by mwinf0307.wanadoo.fr (SMTP Server) with ESMTP id DC7F81C001F7;
-	Mon,  6 Mar 2006 22:59:32 +0100 (CET)
-X-ME-UUID: 20060306215932903.DC7F81C001F7@mwinf0307.wanadoo.fr
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051010)
-X-Accept-Language: fr, en
+	id S1752449AbWCFV7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 16:59:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbWCFV7n
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 16:59:43 -0500
+Received: from ns2.osuosl.org ([140.211.166.131]:48830 "EHLO ns2.osuosl.org")
+	by vger.kernel.org with ESMTP id S1752449AbWCFV7l (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 16:59:41 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by ns2.osuosl.org (Postfix) with ESMTP id 30A8F121ADA;
+	Mon,  6 Mar 2006 13:59:43 -0800 (PST)
+Received: from ns2.osuosl.org ([127.0.0.1])
+	by localhost (ns1.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 09210-06; Mon, 6 Mar 2006 13:59:42 -0800 (PST)
+Received: from shell.osuosl.org (shell.osuosl.org [140.211.166.149])
+	by ns2.osuosl.org (Postfix) with ESMTP id EEABC121ACD;
+	Mon,  6 Mar 2006 13:59:41 -0800 (PST)
+Received: by shell.osuosl.org (Postfix, from userid 1000)
+	id BBF1F62C00A; Mon,  6 Mar 2006 13:59:39 -0800 (PST)
 To: Wolfgang Denk <wd@denx.de>
+Content-Disposition: inline
 In-Reply-To: <20060306214418.66E153525CB@atlas.denx.de>
-X-Enigmail-Version: 0.91.0.0
+User-Agent: Mutt/1.5.10i
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at osuosl.org
+X-Spam-Status: No, hits=-3.8 tagged_above=-999.0 required=5.0
+	tests=ALL_TRUSTED, AWL, BAYES_00
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17307>
 
-Wolfgang Denk a =E9crit :
+Hello Wolfgang-
+
+man(5) ssh_config
+
+Add something like this to your .ssh/config file:
+
+Host example
+	Hostname ssh.example.com
+	Port 2222
+	User wolfgang
+
+Then use "example" as the hostname for the git commands instead of
+ssh.example.com.
+
+Best,
+
+	Brandon
+
+--
+http://ifup.org
+
+
+On 22:44 Mon 06 Mar     , Wolfgang Denk wrote:
 > Hi,
->
+> 
 > is there any way to specify an alternative port number for SSH  based
 > remote repository access?
->
+> 
 > Best regards,
->
+> 
 > Wolfgang Denk
->
-
-Use your .ssh/config file
-
-$ more /home/luis/.ssh/config
-host 217.111.187.226
-hostname bmi
-port 1234
-
-
-
-Luis
-
-
---=20
-Luis Belmar-Letelier
+> 
+> -- 
+> Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+> Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+> "Here's a fish hangs in the net like a poor man's right in  the  law.
+> 'Twill hardly come out."     - Shakespeare, Pericles, Act II, Scene 1
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
