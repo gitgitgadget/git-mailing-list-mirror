@@ -1,64 +1,45 @@
-From: Francis Daly <francis@daoine.org>
-Subject: Re: [PATCH] Tweak asciidoc output to work with broken docbook-xsl
-Date: Mon, 6 Mar 2006 01:09:07 +0000
-Message-ID: <20060306010907.GA22105@craic.sysops.org>
-References: <20060305231336.GA21797@craic.sysops.org> <7vr75gcs20.fsf@assigned-by-dhcp.cox.net>
+From: Benjamin LaHaise <bcrl@kvack.org>
+Subject: git clone does not work with GIT_OBJECT_DIRECTORY set
+Date: Sun, 5 Mar 2006 20:21:15 -0500
+Message-ID: <20060306012115.GG20768@kvack.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 06 02:16:25 2006
+X-From: git-owner@vger.kernel.org Mon Mar 06 02:26:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG4Ka-0000da-TV
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 02:16:13 +0100
+	id 1FG4Um-00036N-4L
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 02:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbWCFBQJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 20:16:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbWCFBQJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 20:16:09 -0500
-Received: from craic.sysops.org ([217.75.2.2]:38286 "EHLO craic.sysops.org")
-	by vger.kernel.org with ESMTP id S1751337AbWCFBQI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 20:16:08 -0500
-Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
-	by craic.sysops.org (8.12.11/8.12.11) with SMTP id k261973V022147;
-	Mon, 6 Mar 2006 01:09:07 GMT
-To: Junio C Hamano <junkio@cox.net>
+	id S1751104AbWCFB0l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 20:26:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWCFB0l
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 20:26:41 -0500
+Received: from kanga.kvack.org ([66.96.29.28]:60837 "EHLO kanga.kvack.org")
+	by vger.kernel.org with ESMTP id S1751104AbWCFB0k (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 20:26:40 -0500
+Received: (from localhost user: 'bcrl' uid#63042 fake: STDIN
+	(bcrl@kanga.kvack.org)) by kvack.org id <S26570AbWCFBVP>;
+	Sun, 5 Mar 2006 20:21:15 -0500
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vr75gcs20.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: ClamAV 0.87.1/1314/Sat Mar  4 13:39:05 2006 on craic.sysops.org
-X-Virus-Status: Clean
-X-Spam-Status: No, hits=-5.0 required=2.0
-	tests=EMAIL_ATTRIBUTION,IN_REP_TO,QUOTED_EMAIL_TEXT,REFERENCES,
-	      REPLY_WITH_QUOTES,USER_AGENT_MUTT
-	version=2.55
-X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17258>
 
-On Sun, Mar 05, 2006 at 04:53:11PM -0800, Junio C Hamano wrote:
-> Francis Daly <francis@daoine.org> writes:
+And another bug (linux-2.6.git was created with a clone of git://.../ 
+while GIT_OBJECT_DIRECTORY was set):
 
-> > asciidoc by default converts "listingblock" to "<screen>". This change
-> > causes asciidoc in git to convert "listingblock" to "<literallayout>", which
-> > both old and new docbook-xsl handle correctly.
-> 
-> Have you tested html generation side?  With 1.68 I seem to be
-> getting an disaster.
+$ git clone linux-2.6.git bootcache.git
+fatal: '/home/bcrl/linux-2.6.git/.git': unable to chdir or not a git archive
+fatal: unexpected EOF
+clone-pack from '/home/bcrl/linux-2.6.git/.git' failed.
+$ 
 
-Oh how stupid of me.
-
-Yes, of course you're right.  The backend matters.
-
-Clearly, I don't read the html pages; and no-one (with old stylesheets)
-reads the man pages ;-)
-
-Thanks,
-
-	f
+		-ben
 -- 
-Francis Daly        francis@daoine.org
+"Time is of no importance, Mr. President, only life is important."
+Don't Email: <dont@kvack.org>.
