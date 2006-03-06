@@ -1,50 +1,59 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: What's in git.git
-Date: Mon, 6 Mar 2006 22:05:41 +1300
-Message-ID: <46a038f90603060105m29595745ke64d4a623506c0b0@mail.gmail.com>
+Date: Mon, 6 Mar 2006 10:15:36 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603061012120.1422@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <7v1wxg82r3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 06 10:05:56 2006
+X-From: git-owner@vger.kernel.org Mon Mar 06 10:15:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGBf7-0001CQ-8m
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 10:05:53 +0100
+	id 1FGBoc-00032y-AI
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 10:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751396AbWCFJFn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 04:05:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbWCFJFn
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 04:05:43 -0500
-Received: from wproxy.gmail.com ([64.233.184.197]:39035 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751396AbWCFJFm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 04:05:42 -0500
-Received: by wproxy.gmail.com with SMTP id i20so1092479wra
-        for <git@vger.kernel.org>; Mon, 06 Mar 2006 01:05:41 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oO0o8Gcu4hGoowT5Vi2VpICc5Glg850lk/jueMkYWd/oe1rUOrHgg65AmOtix3bq1JXGpE+7xzy5La364e8XgwFEgOz0ZJOQEdSF2mSLssff/9fb4l/2D+UmUa29EgG178wmgzGAUeO38ZXYOHfOxQ4s52obelfdXbE92MNwg6E=
-Received: by 10.54.153.2 with SMTP id a2mr4898576wre;
-        Mon, 06 Mar 2006 01:05:41 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Mon, 6 Mar 2006 01:05:41 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+	id S1752322AbWCFJPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 04:15:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbWCFJPi
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 04:15:38 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:11214 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1752320AbWCFJPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 04:15:37 -0500
+Received: from virusscan.mail (mail04.mail [172.25.1.103])
+	by mailrelay.mail (Postfix) with ESMTP id 6B4E617E8;
+	Mon,  6 Mar 2006 10:15:36 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 5E77D5DD9;
+	Mon,  6 Mar 2006 10:15:36 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 41A88905;
+	Mon,  6 Mar 2006 10:15:36 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <7v1wxg82r3.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17287>
 
-On 3/6/06, Junio C Hamano <junkio@cox.net> wrote:
-> - The deathmatch between annotate/blame (Ryan Anderson, Fredrik
->   Kuivinen, me cheerleading)
+Hi,
 
-Add fuel to the fire  ;-) Can git-blame take cached git-rev-list
-output like annotate does with -S?
+On Sun, 5 Mar 2006, Junio C Hamano wrote:
 
+> Another thing I have started in "pu" branch is to stop placing
+> an object we decided to delta that is already max-depth deep
+> back in the delta-base window, because such a thing only wastes
+> the delta base slot.  The changed pack-objects does pick up more
+> delta, but the resulting pack seems bigger and I am puzzled why.
 
-m
+Not that I know much about the pack format, but is it possible that the 
+deltas are deflated? In that case, a possible explanation is that a better 
+delta is less compressible (and taken together, this could amount to more 
+bytes).
+
+Ciao,
+Dscho
