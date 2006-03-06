@@ -1,65 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] annotate: Support annotation of files on other revisions.
-Date: Mon, 6 Mar 2006 10:24:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603061021240.1422@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060305111334.GB23448@c165.ib.student.liu.se>
- <440B751F.5000801@michonline.com> <46a038f90603051629ke34a0a6u89dad995bbd777b0@mail.gmail.com>
- <20060306024353.GA23001@mythryan2.michonline.com> <440BC92E.4060306@gmail.com>
- <440BCB67.4070406@michonline.com> <20060306055036.GB26820@spearce.org>
- <440BD4F4.3060906@gmail.com> <7vk6b8axz4.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: cvsimport woes
+Date: Mon, 6 Mar 2006 22:24:03 +1300
+Message-ID: <46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com>
+References: <44094618.6070404@asianetindia.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitzilla@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Mar 06 10:24:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGBww-0004ZP-7K
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 10:24:18 +0100
+	id 1FGBwx-0004ZP-5w
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 10:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341AbWCFJYN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 04:24:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752343AbWCFJYM
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 04:24:12 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:27092 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1752342AbWCFJYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Mar 2006 04:24:11 -0500
-Received: from virusscan.mail (mail03.mail [172.25.1.102])
-	by mailrelay.mail (Postfix) with ESMTP id 7DF0B15A3;
-	Mon,  6 Mar 2006 10:24:10 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 71CAFB16;
-	Mon,  6 Mar 2006 10:24:10 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 4ABCB977;
-	Mon,  6 Mar 2006 10:24:10 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6b8axz4.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1752338AbWCFJYG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 04:24:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbWCFJYG
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 04:24:06 -0500
+Received: from wproxy.gmail.com ([64.233.184.202]:17345 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1752339AbWCFJYE convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 04:24:04 -0500
+Received: by wproxy.gmail.com with SMTP id 50so1098818wri
+        for <git@vger.kernel.org>; Mon, 06 Mar 2006 01:24:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uYWyJBDAq7L3gcaZc2s7t8DMfNJYEkCGg+NFSxJWhqcRPkbp6NLFWhQfJSRN6MD9dB2eWV9N8+WdLrLDg2NzObd5dpP5b6O/OCgfQxWjZuTZPCkQED3PHLuN6nSZGl2FvQepp3e0dZmQdtBmLok/KdHqxdF22L4WpTZVjZgf/+A=
+Received: by 10.54.66.18 with SMTP id o18mr4947761wra;
+        Mon, 06 Mar 2006 01:24:03 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Mon, 6 Mar 2006 01:24:03 -0800 (PST)
+To: "Rajkumar S" <rajkumars@asianetindia.com>
+In-Reply-To: <44094618.6070404@asianetindia.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17291>
 
-Hi,
+Hi Raj,
 
-On Sun, 5 Mar 2006, Junio C Hamano wrote:
+you don't seem to be making any silly mistake. Make sure you are using
+a recent git, and a recent cvsps. Actually you want the _latest_ cvsps
+(2.1 I think).
 
-> > Is there any reason that git-{annotate,blame} can't take more than one
-> > filename, ever?
-> 
-> I do not see it would be much useful -- the output does not
-> have a sign to show file boundary.
+A good thing to check is what cvsps is telling cvsimport.
 
-CVS does it. Why shouldn't git, too?
 
-Ciao,
-Dscho
+Now, here you are not showing us your cvsimport commandline:
+> cvs_direct initialized to CVSROOT /home/raj/cvsroot
+> cvs rlog: Logging src
+> skip patchset 1: 1141457879 before 1141457879
+> skip patchset 2: 1141457879 before 1141457879
 
-P.S.: The output for more than one file is separated by something like
+Ahhh... ok, you are doing it all very fast. Is this a script you are
+running? add sleep 1 before you call cvsimport.
 
-	Annotations for <filename.txt>
-	***************
+cheers,
+
+
+martin
