@@ -1,52 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git clone does not work with GIT_OBJECT_DIRECTORY set
-Date: Sun, 05 Mar 2006 17:33:25 -0800
-Message-ID: <7vmzg4cq6y.fsf@assigned-by-dhcp.cox.net>
-References: <20060306012115.GG20768@kvack.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git clone downloads objects that are in GIT_OBJECT_DIRECTORY
+Date: Sun, 5 Mar 2006 20:42:53 -0500
+Message-ID: <20060306014253.GD25790@spearce.org>
+References: <20060306010825.GF20768@kvack.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 06 02:33:44 2006
+X-From: git-owner@vger.kernel.org Mon Mar 06 02:43:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG4bJ-0005K4-OL
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 02:33:30 +0100
+	id 1FG4kX-00007Z-QZ
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 02:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbWCFBd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 20:33:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbWCFBd1
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 20:33:27 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:64411 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751502AbWCFBd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Mar 2006 20:33:26 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060306013210.TEGQ3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 5 Mar 2006 20:32:10 -0500
-To: Benjamin LaHaise <bcrl@kvack.org>
-In-Reply-To: <20060306012115.GG20768@kvack.org> (Benjamin LaHaise's message of
-	"Sun, 5 Mar 2006 20:21:15 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751543AbWCFBm6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 20:42:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbWCFBm6
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 20:42:58 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:7605 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751199AbWCFBm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 20:42:57 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FG4kH-0007wF-NZ
+	for git@vger.kernel.org; Sun, 05 Mar 2006 20:42:45 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0EE7F20FBBF; Sun,  5 Mar 2006 20:42:54 -0500 (EST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060306010825.GF20768@kvack.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17261>
 
-Benjamin LaHaise <bcrl@kvack.org> writes:
+Benjamin LaHaise <bcrl@kvack.org> wrote:
+> Hi folks,
+> 
+> Doing a fresh git clone git://some.git.url/ foo seems to download the 
+> entire remote repository even if all the objects are already stored in 
+> GIT_OBJECT_DIRECTORY=/home/bcrl/.git/object .  Is this a known bug?  
+> At 100MB for a kernel, this takes a *long* time.
 
-> And another bug (linux-2.6.git was created with a clone of git://.../ 
-> while GIT_OBJECT_DIRECTORY was set):
->
-> $ git clone linux-2.6.git bootcache.git
-> fatal: '/home/bcrl/linux-2.6.git/.git': unable to chdir or not a git archive
-> fatal: unexpected EOF
-> clone-pack from '/home/bcrl/linux-2.6.git/.git' failed.
-> $ 
+I believe it is a known missing feature.  :-) git-clone doesn't
+prep HEAD to have some sort of starting point so the pull it uses
+to download everything literally downloads everything as nothing
+is in common.
 
-Please try it without GIT_OBJECT_DIRECTORY and see it works
-correctly (I think it should).  If that is the case, maybe
-git-clone should explicitly unset GIT_OBJECT_DIRECTORY.
+One could work around it by running git-init-db to create the new
+clone locally, git-update-ref HEAD to some commit which you have in
+common with the remote, create a origin file, then perform a git-pull.
+This would only download the objects between the commit you put into
+HEAD and the current master of the remote...  But that is actually
+some work.
+
+I think Cogito's clone is capable of restarting a failed clone; I
+wonder if that logic would benefit you here?
+
+Is using a common GIT_OBJECT_DIRECTORY across many clones actually
+pretty common?  Maybe its time that git-clone gets some more smarts
+with regards to what it yanks from the origin.
+
+-- 
+Shawn.
