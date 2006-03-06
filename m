@@ -1,68 +1,75 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] git-blame: Use the same tests for git-blame as for git-annotate
-Date: Mon, 6 Mar 2006 13:29:32 +1300
-Message-ID: <46a038f90603051629ke34a0a6u89dad995bbd777b0@mail.gmail.com>
-References: <20060305111334.GB23448@c165.ib.student.liu.se>
-	 <440B751F.5000801@michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Tweak asciidoc output to work with broken docbook-xsl
+Date: Sun, 05 Mar 2006 16:53:11 -0800
+Message-ID: <7vr75gcs20.fsf@assigned-by-dhcp.cox.net>
+References: <20060305231336.GA21797@craic.sysops.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Fredrik Kuivinen" <freku045@student.liu.se>, git@vger.kernel.org,
-	junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Mar 06 01:29:42 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 06 01:54:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG3bY-0001eS-6I
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 01:29:40 +0100
+	id 1FG3yU-0001To-KT
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 01:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbWCFA3e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Mar 2006 19:29:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbWCFA3e
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 19:29:34 -0500
-Received: from wproxy.gmail.com ([64.233.184.195]:16189 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750837AbWCFA3d convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2006 19:29:33 -0500
-Received: by wproxy.gmail.com with SMTP id 71so1038921wra
-        for <git@vger.kernel.org>; Sun, 05 Mar 2006 16:29:33 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A6BrijaXRXp/+lrpzisCQTfld55EHTTctXsyb5wnnLP3Zv7TvaBc0NK9VobbvrNbLYtEOC9nBFU1uMNN2X0WyOVaUlHcivS9zM7S/DT5MGrIDhZi/DRZuVgOJRInW5nLK52OqdPvYVZ3bV2ZF6+zWcvQXnoT+EzVmrqpyYuVVpU=
-Received: by 10.54.116.18 with SMTP id o18mr646861wrc;
-        Sun, 05 Mar 2006 16:29:32 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Sun, 5 Mar 2006 16:29:32 -0800 (PST)
-To: "Ryan Anderson" <ryan@michonline.com>
-In-Reply-To: <440B751F.5000801@michonline.com>
-Content-Disposition: inline
+	id S1750959AbWCFAxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Mar 2006 19:53:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbWCFAxO
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Mar 2006 19:53:14 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:56522 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750959AbWCFAxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Mar 2006 19:53:13 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060306004931.SWGI17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Mar 2006 19:49:31 -0500
+To: Francis Daly <francis@daoine.org>
+In-Reply-To: <20060305231336.GA21797@craic.sysops.org> (Francis Daly's message
+	of "Sun, 5 Mar 2006 23:13:36 +0000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17255>
 
-On 3/6/06, Ryan Anderson <ryan@michonline.com> wrote:
-> Along these lines, if anyone can pin down the complicated cases that
-> annotate and blame get differently, adding them as a test would be
-> *exceedingly* appreciated, even if it makes annotate (or blame) fail for
-> a bit, it gives us something to work against.
+Francis Daly <francis@daoine.org> writes:
 
-It would be great if they both worked properly with paths that existed
-in the past. Right now, I can't git-annotate or git-blame a file I
-know was there in a past revision. I think I had taught Johannes'
-annotate to deal with this, or at least intended to. As things stand,
-git-annotate/git-blame need a checkout, which is really silly.
+> docbook-xsl v1.68 incorrectly converts "<screen>" from docbook to
+> manpage by not rendering it verbatim. v1.69 handles it correctly, but
+> not many current popular distributions ship with it.
+>
+> asciidoc by default converts "listingblock" to "<screen>". This change
+> causes asciidoc in git to convert "listingblock" to "<literallayout>", which
+> both old and new docbook-xsl handle correctly.
 
-Tools like gitweb and cvsserver should be able to do:
+Have you tested html generation side?  With 1.68 I seem to be
+getting an disaster.
 
-  GIT_DIR=/somebarerepo/git.git git-(annotate|blame) -h headname Makefile
+How about this instead?
 
-and not worry about creating a temporary index *and* checking out
-Makefile so that things work. That's what cvsserver does now, anyway.
-Ugly :-(
-
-cheers,
-
-
-
-m
+---
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index fa0877d..7ce7151 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -18,6 +18,16 @@ ifdef::backend-docbook[]
+ {0#</citerefentry>}
+ endif::backend-docbook[]
+ 
++ifdef::backend-docbook[]
++# "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or without this.
++[listingblock]
++<example><title>{title}</title>
++<literallayout>
++|
++</literallayout>
++{title#}</example>
++endif::backend-docbook[]
++
+ ifdef::backend-xhtml11[]
+ [gitlink-inlinemacro]
+ <a href="{target}.html">{target}{0?({0})}</a>
