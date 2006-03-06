@@ -1,95 +1,70 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH] Add git-annotate(1) and git-blame(1)
-Date: Mon, 06 Mar 2006 01:30:46 -0500
-Message-ID: <440BD716.4010400@michonline.com>
-References: <20060306052444.GC6487@diku.dk> <7v3bhwcezy.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] annotate: Support annotation of files on other revisions.
+Date: Mon, 6 Mar 2006 01:32:54 -0500
+Message-ID: <20060306063254.GE26820@spearce.org>
+References: <20060305111334.GB23448@c165.ib.student.liu.se> <440B751F.5000801@michonline.com> <46a038f90603051629ke34a0a6u89dad995bbd777b0@mail.gmail.com> <20060306024353.GA23001@mythryan2.michonline.com> <440BC92E.4060306@gmail.com> <440BCB67.4070406@michonline.com> <20060306055036.GB26820@spearce.org> <7vpsl0ayij.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigBBDD98B6D95D3179CB8F717F"
-Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 06 07:31:02 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Mar 06 07:33:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FG9FF-0000nL-I2
-	for gcvg-git@gmane.org; Mon, 06 Mar 2006 07:31:01 +0100
+	id 1FG9HD-0000z3-Pr
+	for gcvg-git@gmane.org; Mon, 06 Mar 2006 07:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbWCFGa7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 01:30:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbWCFGa7
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 01:30:59 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:63681 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1751596AbWCFGa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Mar 2006 01:30:58 -0500
-Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1FG9F8-0000mC-Vb; Mon, 06 Mar 2006 01:30:56 -0500
-Received: from [10.254.251.12] (helo=mythryan.michonline.com)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FG9F4-0005dE-3U; Mon, 06 Mar 2006 01:30:50 -0500
-Received: from localhost ([127.0.0.1])
-	by mythryan.michonline.com with esmtp (Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FG9F3-0004Iq-PI; Mon, 06 Mar 2006 01:30:49 -0500
-User-Agent: Debian Thunderbird 1.0.7 (X11/20051017)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bhwcezy.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.93.0.0
-X-h4x0r5.com-MailScanner: Found to be clean
-X-h4x0r5.com-MailScanner-From: ryan@michonline.com
+	id S1751708AbWCFGc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 01:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbWCFGc7
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 01:32:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49361 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751333AbWCFGc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 01:32:58 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FG9H6-0004JA-Nn
+	for git@vger.kernel.org; Mon, 06 Mar 2006 01:32:56 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0F8FE20FBAC; Mon,  6 Mar 2006 01:32:55 -0500 (EST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vpsl0ayij.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17281>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigBBDD98B6D95D3179CB8F717F
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > 	git-diff Makefile
+> > 	git-diff HEAD Makefile
+> >
+> > ?  (Which is rather ugly as what if you have a tracked file actually
+> > called HEAD and you want the first form when the commit-ish is
+> > omitted.)  So accepting an optional commit-ish before the filename
+> > would be in line with what git-diff accepts today.
+> 
+> The use of "start of filelist" marker "--" is optional when
+> unambiguous, and that is why "git-diff Makefile" works.  To view
+> the change you still haven't update-index'ed to the path called
+> "HEAD", you would naturally say "git-diff -- HEAD"
 
-Junio C Hamano wrote:
+Naturally.  :-)
 
->Jonas Fonseca <fonseca@diku.dk> writes:
->
->  
->
->>Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
->>    
->>
->
->Wonderful, but I was hoping the "deathmatch" would leave only
->one that needs to be documented and we could wait documenting
->until then ;-).
->  
->
-heh.  If I'm not mistaken, blame is still lacking rename following (at
-least, in master), and annotate is still misrepresenting things on
-merges, so we've got a bit of a ways to go still.
+After getting along fine with `git-diff foo` for months I would
+natually not be surprised when `git-diff foo` didn't work because
+I performed a `git-checkout -b foo pu` one day.
 
 -- 
-
-Ryan Anderson
-  sometimes Pug Majere
-
-
---------------enigBBDD98B6D95D3179CB8F717F
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFEC9cZfhVDhkBuUKURArxiAKDViX5q0vj603u7ozj72Er+i8JvHACg69Ne
-cXH6+N8pvZIUMHNfL/bG0zM=
-=LNIN
------END PGP SIGNATURE-----
-
---------------enigBBDD98B6D95D3179CB8F717F--
+Shawn.
