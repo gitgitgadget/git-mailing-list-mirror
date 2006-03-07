@@ -1,65 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: PATCH: Allow format-patch to attach patches
-Date: Mon, 06 Mar 2006 17:01:26 -0800
-Message-ID: <7vpskz5aqh.fsf@assigned-by-dhcp.cox.net>
-References: <440C352C.9070009@codeweavers.com>
+From: Blaisorblade <blaisorblade@yahoo.it>
+Subject: git-unpack-objects < pack file in repository doesn't work!
+Date: Tue, 7 Mar 2006 02:13:02 +0100
+Message-ID: <200603070213.02805.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 02:02:09 2006
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Mar 07 02:13:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGQaO-0003B3-PL
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 02:02:01 +0100
+	id 1FGQlH-00050y-6f
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 02:13:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932571AbWCGBBb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 20:01:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932570AbWCGBBb
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 20:01:31 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45457 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932571AbWCGBBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Mar 2006 20:01:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060307005934.OBLU20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 6 Mar 2006 19:59:34 -0500
-To: Mike McCormack <mike@codeweavers.com>
-In-Reply-To: <440C352C.9070009@codeweavers.com> (Mike McCormack's message of
-	"Mon, 06 Mar 2006 22:12:12 +0900")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932537AbWCGBNL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 20:13:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbWCGBNL
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 20:13:11 -0500
+Received: from smtp002.mail.ukl.yahoo.com ([217.12.11.33]:2405 "HELO
+	smtp002.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S932537AbWCGBNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 20:13:10 -0500
+Received: (qmail 44390 invoked from network); 7 Mar 2006 01:13:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Received:From:To:Subject:Date:User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Disposition:Message-Id;
+  b=cvtwPCD/H2Ts6FRP0lwkfCYgF774+eYViyr5YJ7vEO8JkulI0v99KkYlNyvTvtqCsus1/FyyPqIcEYizrHPPS/iCMRh4Ml75MZ6ggNMExFn+4ezxrt5S4qqh3KsCEEMovpubwL9nyzku6zGfyS3wIJQnnoxRztJqmsleDKfYOMA=  ;
+Received: from unknown (HELO ?151.97.230.41?) (blaisorblade@151.97.230.41 with login)
+  by smtp002.mail.ukl.yahoo.com with SMTP; 7 Mar 2006 01:13:08 -0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17313>
 
-Nicely done.
+It's not a bug, it's an undocumented feature. It should be documented as 
+"git-unpack-objects < $pack; rm $pack" is something one would deem correct at 
+first glance (luckily I just moved the pack away and did git-fsck-cache).
 
-Especially I like the part that you explicitly set charset to
-UTF-8 to the primary part.
+To write an object, git-unpack-objects ends in
 
-The only two and half minor issues I might have about this are:
+unpack-objects.c:write_object -> sha1_file.c:write_sha1_file:
 
- (1) is the type text/x-patch appropriate?
+        /* Normally if we have it in the pack then we do not bother writing
+         * it out into .git/objects/??/?{38} file.
+         */
 
- (2) is it possible to cheaply come up with a safe mime-magic,
-     instead of a hardcoded long string and hope it does not
-     clash?
+This indeed works, so the files aren't unpacked.
+-- 
+Inform me of my mistakes, so I can keep imitating Homer Simpson's "Doh!".
+Paolo Giarrusso, aka Blaisorblade (Skype ID "PaoloGiarrusso", ICQ 215621894)
+http://www.user-mode-linux.org/~blaisorblade
 
-You can just say "Yes it is an established practice, widely
-accepted and that is what you are responding to so obviously you
-can grok it ;-)" to (1).  About (2), you would probably need to
-read the "diff-tree -p" output beforehand if we want to be
-absolutely sure, so punting on the issue like this might be the
-best practical approach for now, but I am asking it anyway
-because people may have better ideas.
+	
 
-The remaining half issue is if would it make sense to sometimes
-optionally use non 8-bit CTE for the patch part.  I do _NOT_
-want to receive CTE=QP patch myself, nor I want to encourage it
-(actually I would want to actively discourage it), but I do not
-mind if people find use of such a patch in a distant corner of
-the galaxy where I do not have to touch such a patch.
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
