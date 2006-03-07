@@ -1,63 +1,92 @@
-From: "David Ho" <davidkwho@gmail.com>
-Subject: Re: Pulling tags from git.git
-Date: Mon, 6 Mar 2006 13:54:25 -0500
-Message-ID: <4dd15d180603061054k36d1a434se7377ded1b3240bb@mail.gmail.com>
-References: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-status too verbose?
+Date: Mon, 06 Mar 2006 16:21:52 -0800
+Message-ID: <7vacc36r4v.fsf@assigned-by-dhcp.cox.net>
+References: <38b80e980603040952j15152a21h2c903bd011d7e905@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Mar 07 00:00:09 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 07 01:22:15 2006
 Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
-	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1FGLAE-0004Iq-01
-	for <gcvg-git@gmane.org>; Mon, 06 Mar 2006 20:14:38 +0100
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1FGPxf-0004dW-GE
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 01:21:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075AbWCFSy0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 13:54:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbWCFSy0
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 13:54:26 -0500
-Received: from zproxy.gmail.com ([64.233.162.205]:15156 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751566AbWCFSyZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 13:54:25 -0500
-Received: by zproxy.gmail.com with SMTP id i11so1315257nzi
-        for <git@vger.kernel.org>; Mon, 06 Mar 2006 10:54:25 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Vpfpxubh/SyrH0VYj/mB1UNdQB5DXNBshnHZeYETUWNxV4CkGHAEk3dAoW3uSxnr8CCM6rjT9f8etBQISlXVp9qGW5aHk3CRQ+rmGJ0JRum3KWHDHV+bvLjYX4S03zyRwQSy8LLY/QJpyoKCHOb5h11In0ASpgnjg++caz4AYco=
-Received: by 10.65.220.2 with SMTP id x2mr2721885qbq;
-        Mon, 06 Mar 2006 10:54:25 -0800 (PST)
-Received: by 10.65.22.11 with HTTP; Mon, 6 Mar 2006 10:54:24 -0800 (PST)
-To: git@vger.kernel.org
-In-Reply-To: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>
-Content-Disposition: inline
+	id S1752063AbWCGAV4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 19:21:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbWCGAV4
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 19:21:56 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52676 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932520AbWCGAVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 19:21:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060307002033.OHLX15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 6 Mar 2006 19:20:33 -0500
+To: "Eric Jaffe" <jaffe.eric@gmail.com>, Carl Worth <cworth@cworth.org>
+In-Reply-To: <38b80e980603040952j15152a21h2c903bd011d7e905@mail.gmail.com>
+	(Eric Jaffe's message of "Sat, 4 Mar 2006 12:52:17 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17311>
 
-Okay sorry, git fetch --tags did the trick.
+"Eric Jaffe" <jaffe.eric@gmail.com> writes:
 
-Just out of curiosity, should git pull --tags behave similarly since
-the difference is git pull does a merge after a fetch?
+> I was wondering if anyone else thinks that git-status should be more
+> like "git-diff --name-status". That is,
+>   # A a/newfile.c
+>   # M a/oldfile.c
+>
+> instead of
+>   # new file: a/newfile.c
+>   # modified: a/oldfile.c
 
-David
+Why do people think mysterious single letter abbreviation is
+better than spelled out words in an output meant for human
+consumption?
 
-On 3/6/06, David Ho <davidkwho@gmail.com> wrote:
-> Hi,
->
-> I have been trying to pull from the git repo via rsync.
-> (rsync://rsync.kernel.org/pub/scm/git/git.git)  I got all the commits
-> up to today but the tags since my initial cloning are missing.
->
-> I tried git pull --tags, I still only have old tags.
-> I switched to using the git protocol but that failed too.
->
-> git ls-remotes --tags showed, as expected, all the tags up to 1.2.4.
->
-> Is there a switch I missed?
->
-> Regards,
-> David
->
+The tag letters you get from "ls-files -t" are inconsistent with
+what you would get from all the other git tools for historical
+reasons, so if you want to do a single-letter abbreviation, you
+first need to come up with a set of letters and translate the
+output from ls-files -t into that.
+
+Although I personally like Carl's suggestion a lot, I am still
+ambivalent about it a bit.
+
+I agree that it would be useful if we had a tool that showed the
+two status that matter for each file, grouped together on one
+line, e.g.
+
+			HEAD->index	index->files
+	------------------------------------------------
+	hello.c		unmodified      modified
+        world.c		modified	unmodified
+	frotz.c		new		unmodified
+        ...
+	garbage.c~	???		n/a
+
+for the current index file and the current HEAD commit.
+
+You obviously need to learn how to read it though.  The first
+column means what you _would_ commit if you just said "git
+commit" without doing anything else now; the second column is
+what you _could_ commit if you did some update-index and then
+said "git commit" (or ran "git commit" with paths arguments).
+
+I think it is a valid view for people who know how internally
+git barebone porcelain works using git lowlevel, and to them
+(including me), the above is more concise and appear useful.
+
+But I am not sure if it is appropriate for "git status", which
+is the tool for commit-preview.  The index "git status" is
+showing is the index you would get if you were to run "git
+commit" with the same set of parameters, exactly for that reason
+(e.g. "git status -a -v" would see "unmodified" for all tracked
+paths in index->files column in the above output). 
