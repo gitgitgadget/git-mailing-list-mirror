@@ -1,124 +1,123 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: git-svn, tree moves, and --no-stop-on-copy
-Date: Tue, 7 Mar 2006 23:08:37 +0100
-Message-ID: <20060307220837.GB27397@nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFH] zlib gurus out there?
+Date: Tue, 07 Mar 2006 15:48:17 -0800
+Message-ID: <7vzmk1izpa.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
+	<7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
+	<20060224174422.GA13367@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
+	<20060224183554.GA31247@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
+	<20060224192354.GC387@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
+	<7vpslc8oni.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
+	<Pine.LNX.4.64.0602241637480.22647@g5.osdl.org>
+	<Pine.LNX.4.64.0602242130030.31162@localhost.localdomain>
+	<Pine.LNX.4.64.0602241952140.22647@g5.osdl.org>
+	<Pine.LNX.4.64.0602242326381.31162@localhost.localdomain>
+	<Pine.LNX.4.64.0602250012230.31162@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 07 23:32:11 2006
+Cc: Nicolas Pitre <nico@cam.org>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Mar 08 00:48:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGkie-0001Uq-L6
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 23:31:53 +0100
+	id 1FGlug-0000IY-J8
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 00:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750719AbWCGWbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 17:31:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbWCGWbt
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 17:31:49 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:19176 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750719AbWCGWbt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 17:31:49 -0500
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id CCA291F044;
-	Tue,  7 Mar 2006 23:01:49 +0100 (CET)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1FGkMA-00043F-Dn; Tue, 07 Mar 2006 23:08:38 +0100
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1751633AbWCGXsT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 18:48:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbWCGXsT
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 18:48:19 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40683 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751633AbWCGXsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Mar 2006 18:48:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060307234527.ZJAN17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 7 Mar 2006 18:45:27 -0500
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0602250012230.31162@localhost.localdomain>
+	(Nicolas Pitre's message of "Sat, 25 Feb 2006 00:35:26 -0500 (EST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17355>
 
-It looks that the --no-stop-on-copy flag has been dropped by error
-during the "options cleanup" commit a couple of days ago.  This
-trivial patch appears at first sight to address the problem:
+I've been staring at reusing existing data while packing, and
+this occurred to me...
 
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 3c860e4..91a0d3b 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -36,7 +36,9 @@ my %fc_opts = ( 'no-ignore-externals' =>
-                'authors-file|A=s' => \$_authors );
- my %cmd = (
-        fetch => [ \&fetch, "Download new revisions from SVN",
--                       { 'revision|r=s' => \$_revision, %fc_opts } ],
-+                       { 'revision|r=s' => \$_revision,
-+                         'no-stop-on-copy' => \$_no_stop_copy,
-+                         %fc_opts } ],
-        init => [ \&init, "Initialize and fetch (import)", { } ],
-        commit => [ \&commit, "Commit git revisions to SVN",
-                        {       'stdin|' => \$_stdin,
+During packing, suppose that we chose to store an object in
+base form, undeltified.  And also suppose we have that object
+loose in .git/objects/??/ directory.  We already have it in
+deflated form, but with its own header.  I started wondering if
+we can somehow reuse this.
 
-But then, "git-svn fetch" fails when trying to deal with the renaming:
+A short object format brush-up lesson is in order here.  
 
-$ git-svn.perl init https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk/src
-$ git-svn.perl fetch --no-stop-on-copy
-[...]
-Updated to revision 163.
-r163 = 68da9a01b2d5a2372262ada33a401e03aef41e97
-svn: REPORT request failed on '/svnroot/ufoai/!svn/vcc/default'
-svn: Cannot replace a directory from within
-256 at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 812
-        main::sys('svn', 'up', '--ignore-externals', '-r166') called at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 243
-        main::fetch() called at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 83
+* An undeltified object in a pack is represented like this:
 
-The impacted revision in svn is:
+ (1) the header is a dense variable size binary data, that
+     encodes type and inflated length;
+ (2) deflated data immediately follows the header.
 
-------------------------------------------------------------------------
-r166 | ydirson | 2006-03-02 01:36:55 +0100 (Thu, 02 Mar 2006) | 1 line
-Changed paths:
-   D /trunk
-   A /ufoai/trunk (from /trunk:165)
+* On the other hand, a loose object is represented like this:
 
-Adding an ufoai toplevel module
-------------------------------------------------------------------------
+ (1) the header looks like sprintf("%s %lu%c", type, len, 0);
+ (2) concatenate the data to the header;
+ (3) SHA1 checksum of the above becomes the object name.
+ (4) deflate the header and data using the same z_stream, in two
+     steps, like this (sha1_file.c::write_sha1_file):
 
-Obviously "svn update" does not like it at all.
+	/* Compress it */
+	stream.next_out = compressed;
+	stream.avail_out = size;
 
-"svn switch --relocate" does not seem to be of any help.  Switching
-manually .git/git-svn/tree/ to the new repository location does not
-help either, since I must obviously update to r166 in that case, and
-then a further "git-svn fetch" fails because it does not find
-.git/git-svn/revs/166 aleady imported.
+	/* First header.. */
+	stream.next_in = hdr;
+	stream.avail_in = hdrlen;
+	while (deflate(&stream, 0) == Z_OK)
+		/* nothing */;
 
-Any idea as to how to get the work done ?
-I could surely import in another branch not using --no-stop-on-copy,
-and then use a graft, but if we could make it work in a more
-streamlined manner, it would surely be useful.
+	/* Then the data itself.. */
+	stream.next_in = buf;
+	stream.avail_in = len;
+	while (deflate(&stream, Z_FINISH) == Z_OK)
+		/* nothing */;
+	deflateEnd(&stream);
+	size = stream.total_out;
 
+So I thought... if we cause a full flush after the header part,
+I can find the flush boundaries from a loose object file and
+copy the rest into a packfile I am generating, after placing the
+binary encoded header.  If this works, we do not have to inflate
+loose object to read it and deflate it to store that in the
+pack.  We will get a better packing as well, since we deflate
+loose objects with Z_BEST_COMPRESSION, while packs are done with
+Z_DEFAULT_COMPRESSION.  While pack-objects read from a loose
+object, if we can detect that there is no full flush after the
+header, we would do the traditional inflate-deflate cycle, so
+this would be backward compatible.
 
-Before I find out in the doc about --no-stop-on-copy, I did a coupld
-of experimentation.  Among them, was using a peg-revision in the URL
-passed to "git-svn init":
+However, I am stuck with the first step, which is to do a full
+flush after the header.  An obvious change to the code quoted
+above writes out a corrupt object:
 
-$ GIT_SVN_ID=git-oldsvn git-svn init https://svn.sourceforge.net/svnroot/ufoai/trunk/src@165
+	/* First header.. */
+	stream.next_in = hdr;
+	stream.avail_in = hdrlen;
+-	while (deflate(&stream, 0) == Z_OK)
++	while (deflate(&stream, Z_FULL_FLUSH) == Z_OK)
+		/* nothing */;
 
-That succeeds, but then "git-svn fetch" will fail with:
+git-fsck-objects complains that sha1 does not match.  It appears
+that the sha1_file.c::unpack_sha1_rest() somehow barfs upon
+seeing the full flush, but I haven't dug into it yet.
 
-svn: REPORT request failed on '/svnroot/ufoai/!svn/bc/190/trunk/src@165'
-svn: '/svnroot/ufoai/!svn/bc/190/trunk/src@165' path not found
-256 at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 783
-        main::svn_log_raw('https://svn.sourceforge.net/svnroot/ufoai/trunk/src@165', '-r0:HEAD', '--stop-on-copy') called at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 219
-        main::fetch() called at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 81
-
-
-Maybe git-svn could also be guarded against peg-revisions on init
-command-line, since that appears to confuse it quite a bit :)
-
-
-Additionally, it may be worth poiting out in the doc at least one
-valid use of the --no-stop-on-copy flag that is friendly to the user's
-sanity: when the svn repository has undergone a reorg, such that the
-URL passed to "init" indeed moved - at least, when/if it is made to
-work :)
-
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+Would anybody with more experience with zlib want to help?
