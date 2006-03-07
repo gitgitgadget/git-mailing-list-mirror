@@ -1,51 +1,68 @@
-From: Jacob Kroon <jacob.kroon@gmail.com>
-Subject: gitk : Lines not showing up in diff
-Date: Tue, 07 Mar 2006 20:43:30 +0100
-Message-ID: <440DE262.7020007@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] ls-tree: add --abbrev[=<n>] option
+Date: Tue, 7 Mar 2006 11:58:26 -0800
+Message-ID: <20060307195826.GA26870@localdomain>
+References: <20060307135202.GA17891@localdomain> <7vzmk2jfzr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 20:36:12 2006
+X-From: git-owner@vger.kernel.org Tue Mar 07 20:58:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGhyK-0007kQ-PW
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 20:35:56 +0100
+	id 1FGiKG-0003wU-By
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 20:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932066AbWCGTfs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 14:35:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbWCGTfs
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 14:35:48 -0500
-Received: from uproxy.gmail.com ([66.249.92.202]:45677 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932066AbWCGTfr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 14:35:47 -0500
-Received: by uproxy.gmail.com with SMTP id m2so1247uge
-        for <git@vger.kernel.org>; Tue, 07 Mar 2006 11:35:46 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=LT42yNB2avLvJyn7We2juTPFKcoF0WvlS555drZzYq0lRk4Ru0/gkTv4tXeBZ8hmLBoGCw7szGShCt7OXeFK8HKQ3dUS+8otSH8ojGoQMYyeK8/vb4rD8IPpqF9cAzLdihEna+li7pW724Zi0IL2yCGVAiy/xnL0MTFMh3q+uSo=
-Received: by 10.66.225.7 with SMTP id x7mr3805126ugg;
-        Tue, 07 Mar 2006 11:35:46 -0800 (PST)
-Received: from ?192.168.0.3? ( [83.249.217.43])
-        by mx.gmail.com with ESMTP id k2sm11191ugf.2006.03.07.11.35.45;
-        Tue, 07 Mar 2006 11:35:46 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: paulus@samba.org
+	id S932294AbWCGT63 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 14:58:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbWCGT63
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 14:58:29 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:59566 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932150AbWCGT63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 14:58:29 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id E8E6D2DC033;
+	Tue,  7 Mar 2006 11:58:26 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  7 Mar 2006 11:58:26 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vzmk2jfzr.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17348>
 
-I "think" this is a bug in gitk:
+Junio C Hamano <junkio@cox.net> wrote:
+> Output from ls-tree and ls-files -s are primarily for script
+> consumption.  diff-raw output which already has abbrev is also
+> primarily for scripts, but we have an excuse there that human
+> eyes can spot differences easier in abbreviated form and two
+> values on the same row being different is the only information
+> we are conveying in "git whatchanged" default output, and not
+> abbreviating the object names makes pathnames pushed to far
+> right of the display which will be chopped by "less -S".
+> 
+> So I am not quite sure if I should take this, and a subsequent
+> one you would probably send for ls-files ;-).
 
-If I have a textfile in which I remove or add a line that looks like 
-"-----------...", it won't show up in the diff gitk produces. "cg-log" 
-shows the line correctly being added or deleted.
+I've never used ls-files with -s, but it's a simple patch on its way :>
 
-I'm using gitk 1.2.4 (From Fedora, gitk-1.2.4-1.fc4)
+> Care to point out a use case I might have missed that this is
+> useful?  I've never done ls-tree to be read by _me_ (not by
+> script) unless I am debugging ls-tree itself.
 
-//Jacob
+I'm a weirdo and I use vim as a repository browser:
+(ref: http://www.gelato.unsw.edu.au/archives/git/0511/13088.html ,
+I've since renamed my 'git-show' script to 'git-cat-any').
+
+My usual buffer width is 80 columns.  So when I want to see a file from
+a certain tree that's not checked out: I'll run git-ls-tree -r <tree>
+and output it to my vim buffer, find the corresponding sha1 for the
+file, and hit my ',G' macro with my cursor over the blob sha1 to display
+its contents.  Abbreviating the sha1 is very useful for seeing longer
+file paths on an 80 column buffer.
+
+-- 
+Eric Wong
