@@ -1,56 +1,121 @@
-From: Rajkumar S <rajkumars@asianetindia.com>
-Subject: Re: [PATCH] cvsimport: Remove master-updating code
-Date: Tue, 07 Mar 2006 19:12:01 +0530
-Message-ID: <440D8DA9.4040206@asianetindia.com>
-References: <44094618.6070404@asianetindia.com> <46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com> <46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com> <440C68B9.9030305@asianetindia.com> <7vek1e6cnk.fsf@assigned-by-dhcp.cox.net> <20060307090834.GX13888@smurf.noris.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] ls-tree: add --abbrev[=<n>] option
+Date: Tue, 7 Mar 2006 05:52:02 -0800
+Message-ID: <20060307135202.GA17891@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 14:42:37 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Mar 07 14:52:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGcS1-0003kL-Jn
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 14:42:11 +0100
+	id 1FGcbm-0005xn-QT
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 14:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750988AbWCGNmG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 08:42:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbWCGNmG
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 08:42:06 -0500
-Received: from vhs2.linuxense.com ([64.34.173.90]:63198 "EHLO
-	vhs1.asianetindia.com") by vger.kernel.org with ESMTP
-	id S1751022AbWCGNmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Mar 2006 08:42:05 -0500
-Received: (qmail 14556 invoked by uid 1014); 7 Mar 2006 13:42:04 -0000
-Received: from rajkumars@asianetindia.com by vhs2.linuxense.com by uid 1003 with qmail-scanner-1.22 
- (clamdscan: 0.74. spamassassin: 2.63.  Clear:RC:0(202.88.239.86):SA:0(0.0/6.5):. 
- Processed in 0.676879 secs); 07 Mar 2006 13:42:04 -0000
-X-Spam-Status: No, hits=0.0 required=6.5
-Received: from tarpit.linuxense.com (HELO [192.168.3.49]) (raj@linuxense.com@[202.88.239.86])
-          (envelope-sender <rajkumars@asianetindia.com>)
-          by vhs1.asianetindia.com (qmail-ldap-1.03) with SMTP
-          for <smurf@smurf.noris.de>; 7 Mar 2006 13:42:03 -0000
-User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
-X-Accept-Language: en-us, en
-To: smurf@smurf.noris.de
-In-Reply-To: <20060307090834.GX13888@smurf.noris.de>
+	id S1751095AbWCGNwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 08:52:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbWCGNwG
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 08:52:06 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:13994 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751221AbWCGNwF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 08:52:05 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id D02F42DC033;
+	Tue,  7 Mar 2006 05:52:02 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  7 Mar 2006 05:52:02 -0800
+To: Junio C Hamano <junkio@cox.net>, git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17335>
 
-smurf@smurf.noris.de wrote:
-> Junio C Hamano:
-> 
->>I do not understand what cvsimport is trying to do here; I
->>_suspect_ the part that updates the "master" branch head might
->>be a bug.
->>
-> 
-> This should fix it.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-It's working fine for me. Thanks!
+---
 
-raj
+ Documentation/git-ls-tree.txt |    9 ++++++++-
+ ls-tree.c                     |   19 +++++++++++++++++--
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+
+24fa229085e3090eea54adbb18e906fed8a63a40
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index b92a8b2..b30b766 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -8,7 +8,9 @@ git-ls-tree - Lists the contents of a tr
+ 
+ SYNOPSIS
+ --------
+-'git-ls-tree' [-d] [-r] [-t] [-z] [--name-only] [--name-status] <tree-ish> [paths...]
++'git-ls-tree' [-d] [-r] [-t] [-z]
++	[--name-only] [--name-status] [--full-name] [--abbrev=[<n>]]
++	<tree-ish> [paths...]
+ 
+ DESCRIPTION
+ -----------
+@@ -40,6 +42,11 @@ OPTIONS
+ --name-status::
+ 	List only filenames (instead of the "long" output), one per line.
+ 
++--abbrev[=<n>]::
++	Instead of showing the full 40-byte hexadecimal object
++	lines, show only handful hexdigits prefix.
++	Non default number of digits can be specified with --abbrev=<n>.
++
+ paths::
+ 	When paths are given, show them (note that this isn't really raw
+ 	pathnames, but rather a list of patterns to match).  Otherwise
+diff --git a/ls-tree.c b/ls-tree.c
+index d005643..97f09bd 100644
+--- a/ls-tree.c
++++ b/ls-tree.c
+@@ -13,13 +13,14 @@ static int line_termination = '\n';
+ #define LS_TREE_ONLY 2
+ #define LS_SHOW_TREES 4
+ #define LS_NAME_ONLY 8
++static int abbrev = 0;
+ static int ls_options = 0;
+ const char **pathspec;
+ static int chomp_prefix = 0;
+ static const char *prefix;
+ 
+ static const char ls_tree_usage[] =
+-	"git-ls-tree [-d] [-r] [-t] [-z] [--name-only] [--name-status] [--full-name] <tree-ish> [path...]";
++	"git-ls-tree [-d] [-r] [-t] [-z] [--name-only] [--name-status] [--full-name] [--abbrev[=<n>]] <tree-ish> [path...]";
+ 
+ static int show_recursive(const char *base, int baselen, const char *pathname)
+ {
+@@ -73,7 +74,9 @@ static int show_tree(unsigned char *sha1
+ 		return 0;
+ 
+ 	if (!(ls_options & LS_NAME_ONLY))
+-		printf("%06o %s %s\t", mode, type, sha1_to_hex(sha1));
++		printf("%06o %s %s\t", mode, type,
++				abbrev ? find_unique_abbrev(sha1,abbrev)
++					: sha1_to_hex(sha1));
+ 	write_name_quoted(base + chomp_prefix, baselen - chomp_prefix,
+ 			  pathname,
+ 			  line_termination, stdout);
+@@ -113,6 +116,18 @@ int main(int argc, const char **argv)
+ 				chomp_prefix = 0;
+ 				break;
+ 			}
++			if (!strncmp(argv[1]+2, "abbrev=",7)) {
++				abbrev = strtoul(argv[1]+9, NULL, 10);
++				if (abbrev && abbrev < MINIMUM_ABBREV)
++					abbrev = MINIMUM_ABBREV;
++				else if (abbrev > 40)
++					abbrev = 40;
++				break;
++			}
++			if (!strcmp(argv[1]+2, "abbrev")) {
++				abbrev = DEFAULT_ABBREV;
++				break;
++			}
+ 			/* otherwise fallthru */
+ 		default:
+ 			usage(ls_tree_usage);
+-- 
+1.2.4.g76f4
