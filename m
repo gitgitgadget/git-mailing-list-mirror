@@ -1,116 +1,98 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: [PATCH] Allow git-repack to optionally run git-prune-packed.
-Date: Tue, 7 Mar 2006 18:16:12 +0300
-Message-ID: <11417445722524-git-send-email-matlads@dsmagic.com>
-Reply-To: Martin Atukunda <matlads@dsmagic.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Pulling tags from git.git
+Date: Tue, 07 Mar 2006 16:35:09 +0100
+Message-ID: <440DA82D.3060909@op5.se>
+References: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>	<4dd15d180603061054k36d1a434se7377ded1b3240bb@mail.gmail.com>	<440D5285.3050401@op5.se> <7voe0ilf25.fsf@assigned-by-dhcp.cox.net> <440D7A7D.8070507@op5.se> <440D9AB0.4070305@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Martin Atukunda <matlads@dsmagic.com>
-X-From: git-owner@vger.kernel.org Tue Mar 07 16:17:07 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 07 16:36:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGdvX-0000FK-10
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 16:16:44 +0100
+	id 1FGeE2-0004Fk-Vu
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 16:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbWCGPQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 10:16:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbWCGPQ3
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 10:16:29 -0500
-Received: from mail1.starcom.co.ug ([217.113.72.31]:40743 "EHLO
-	mail1.infocom.co.ug") by vger.kernel.org with ESMTP
-	id S1751170AbWCGPQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Mar 2006 10:16:29 -0500
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.infocom.co.ug with esmtp; Tue, 07 Mar 2006 18:16:17 +0300
-  id 000F9CA9.440DA3C1.00006918
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP
-	id 0BC865167; Tue,  7 Mar 2006 18:18:24 +0300 (EAT)
-Received: from localhost ([127.0.0.1] helo=igloo.ds.co.ug)
-	by igloo.ds.co.ug with smtp (Exim 4.60)
-	(envelope-from <matlads@dsmagic.com>)
-	id 1FGdv2-0006Pn-Tu; Tue, 07 Mar 2006 18:16:13 +0300
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org
-X-Mime-Autoconverted: from 8bit to 7bit by courier 0.46
+	id S1751224AbWCGPfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 10:35:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbWCGPfM
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 10:35:12 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:444 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S1751224AbWCGPfL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 10:35:11 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id BCA846BD1E; Tue,  7 Mar 2006 16:35:09 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: gitzilla@gmail.com
+In-Reply-To: <440D9AB0.4070305@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17338>
 
-Signed-off-by: Martin Atukunda <matlads@dsmagic.com>
+A Large Angry SCM wrote:
+> Andreas Ericsson wrote:
+> 
+>> Junio C Hamano wrote:
+>>
+>>> Andreas Ericsson <ae@op5.se> writes:
+>>>
+>>>
+>>>> With the git or git+ssh protocol, tags will be autofollowed
+>>>> when you do a pull (only signed tags, I think).  The
+>>>> auto-following is done by detecting tags that are fetched,
+>>>
+>>>
+>>>
+>>> Ah, you are correct.  We do not follow lightweight tags; I am
+>>> not sure if we should.
+>>>
+>>
+>> I'm fairly sure we shouldn't. The default update-hook prevents them 
+>> (if enabled), and I can't for the life of me think of why anyone would 
+>> want to distribute such tags.
+>>
+>> OTOH, preventing unannotated tags from being pushed seems like a 
+>> better way than to not have the ability to auto-follow those same 
+>> tags. After all, it's better to discourage than to disallow.
+>>
+> 
+> Before you do this, please explain why unannotated tags are not useful, 
+> and so should not be allowed to be pushed.
 
----
 
- Documentation/git-repack.txt |    6 +++++-
- git-repack.sh                |    9 +++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
+Imagine Linus, getting his "please pull" emails and doing so only to 
+find dozens of temporary tags fetched by the pull. Junio's patch (if I 
+read it correctly) unconditionally fetches *ALL* tags reachable from the 
+top of the commit-chain, which means there is no longer any way to keep 
+temporary tags in a repo from which someone else will pull.
 
-84104979482df25e6c70e17f8bf2307cdad1faff
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index d2f9a44..835e698 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -9,7 +9,7 @@ objects into pack files.
- 
- SYNOPSIS
- --------
--'git-repack' [-a] [-d] [-f] [-l] [-n] [-q]
-+'git-repack' [-a] [-d] [-f] [-l] [-n] [-q] [-p]
- 
- DESCRIPTION
- -----------
-@@ -55,6 +55,10 @@ OPTIONS
-         Do not update the server information with
-         `git update-server-info`.
- 
-+-p::
-+	Run `git-prune-packed` after packing, see
-+	gitlink:git-prune-packed[1]
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/git-repack.sh b/git-repack.sh
-index 3d6fec1..970f4ca 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -3,11 +3,11 @@
- # Copyright (c) 2005 Linus Torvalds
- #
- 
--USAGE='[-a] [-d] [-f] [-l] [-n] [-q]'
-+USAGE='[-a] [-d] [-f] [-l] [-n] [-q] [-p]'
- . git-sh-setup
- 	
- no_update_info= all_into_one= remove_redundant=
--local= quiet= no_reuse_delta=
-+local= quiet= no_reuse_delta= run_prune=
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -17,6 +17,7 @@ do
- 	-q)	quiet=-q ;;
- 	-f)	no_reuse_delta=--no-reuse-delta ;;
- 	-l)	local=--local ;;
-+	-p)	run_prune=t;;
- 	*)	usage ;;
- 	esac
- 	shift
-@@ -77,6 +78,10 @@ then
- 	fi
- fi
- 
-+case "$run_prune" in
-+t) git-prune-packed;;
-+esac
-+
- case "$no_update_info" in
- t) : ;;
- *) git-update-server-info ;;
+I for one riddle my repos with temporary tags whenever I'm trying 
+something I'm not so sure of, or find an interesting bug or a design 
+decision I'm not 100% sure of. Perhaps I should rather do this with 
+branches, but imo branches are for doing work, whereas tags just mark a 
+spot in the development so I easily can find them with gitk or some such.
+
+I may be biased by the way we do things at work. In our workflow, all 
+tags meant to be distributed have a short note in them which explains 
+the rationale of the tag. For example, new versions have a very brief 
+changelog that sales-people get on email (a blessing, that, since we 
+devs no longer have to update feature-lists and such).
+
+Tags not meant to be distributed are unannotated, and unannotated tags 
+are kept out of published repos which are always stored at a central 
+server. Everybody synchronize to those central repos, so nobody pulls 
+from each other. Perhaps this is how the kernel devs work too, but if it 
+ever changes the update hook will no longer be able to safeguard from it 
+and the, in my eyes, temporary tags will be distributed in a 
+criss-crossing mesh so no-one will ever know where it came from or who 
+created it or why. I.e. a Bad Thing.
+
 -- 
-1.2.4.g84104
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
