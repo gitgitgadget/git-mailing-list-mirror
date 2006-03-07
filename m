@@ -1,88 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Pulling tags from git.git
-Date: Tue, 07 Mar 2006 02:33:38 -0800
-Message-ID: <7voe0ilf25.fsf@assigned-by-dhcp.cox.net>
-References: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>
-	<4dd15d180603061054k36d1a434se7377ded1b3240bb@mail.gmail.com>
-	<440D5285.3050401@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Libify puzzle
+Date: Tue, 7 Mar 2006 12:00:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603071151520.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 11:33:52 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Mar 07 12:00:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGZVk-0002Sd-0Q
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 11:33:48 +0100
+	id 1FGZvM-0007CQ-3O
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 12:00:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbWCGKdl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 05:33:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbWCGKdl
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 05:33:41 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34259 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751658AbWCGKdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Mar 2006 05:33:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060307103148.WJLS20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 7 Mar 2006 05:31:48 -0500
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <440D5285.3050401@op5.se> (Andreas Ericsson's message of "Tue, 07
-	Mar 2006 10:29:41 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1752137AbWCGLAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 06:00:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752105AbWCGLAF
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 06:00:05 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:27604 "EHLO
+	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1752140AbWCGLAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Mar 2006 06:00:04 -0500
+Received: from virusscan.mail (mail04.mail [172.25.1.103])
+	by mailrelay.mail (Postfix) with ESMTP id DFF611415
+	for <git@vger.kernel.org>; Tue,  7 Mar 2006 12:00:02 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id D13C25E03
+	for <git@vger.kernel.org>; Tue,  7 Mar 2006 12:00:02 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id B46681F3A
+	for <git@vger.kernel.org>; Tue,  7 Mar 2006 12:00:02 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17332>
 
-Andreas Ericsson <ae@op5.se> writes:
+Hi,
 
-> With the git or git+ssh protocol, tags will be autofollowed
-> when you do a pull (only signed tags, I think).  The
-> auto-following is done by detecting tags that are fetched,
+I was just thinking a bit about teaching git-blame about renames, and hit 
+a problem: When rev-list stops because none of the parents has the file of 
+interest, the program should look if the parents contained a similar file 
+which got deleted. But the commit's parents were explicitely culled!
 
-Ah, you are correct.  We do not follow lightweight tags; I am
-not sure if we should.
+The problem seems to affect more programs when we try to libify them: What 
+used to be a pipe between two programs, can no longer just set 
+save_commit_buffer = 0 in the first stage, since the second might depend 
+on the buffer.
 
-We detect from ls-remote output if you have objects pointed by
-remote tags (either signed or unsigned -- we cannot tell it from
-ls-remote output) and fetch those tags that point at what we
-have.
+Would the correct solution be something like reparse_commit(commit)?
 
-The auto following is done only when you are tracking remote
-branches, BTW.  Promiscuous fetch for immediate merging does not
-follow tags.
-
-Totally untested, so if somebody is interested, please test it,
-and if it works, sign it off and bounce it back to me ;-).
-
--- >8 --
-[PATCH] make "git fetch" follow unannotated tags as well.
-
----
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 0346d4a..90c8882 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -375,7 +375,7 @@ case "$no_tags$tags" in
- 		# using local tracking branch.
- 		taglist=$(IFS=" " &&
- 		git-ls-remote $upload_pack --tags "$remote" |
--		sed -ne 's|^\([0-9a-f]*\)[ 	]\(refs/tags/.*\)^{}$|\1 \2|p' |
-+		sed -e 's/\^{}$//' -e 's/	/ /' |
- 		while read sha1 name
- 		do
- 			test -f "$GIT_DIR/$name" && continue
-@@ -386,7 +386,8 @@ case "$no_tags$tags" in
- 			git-cat-file -t "$sha1" >/dev/null 2>&1 || continue
- 			echo >&2 "Auto-following $name"
- 			echo ".${name}:${name}"
--		done)
-+		done |
-+		sort -u)
- 	esac
- 	case "$taglist" in
- 	'') ;;
+Ciao,
+Dscho
