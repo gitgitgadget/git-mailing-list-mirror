@@ -1,78 +1,81 @@
-From: Mike McCormack <mike@codeweavers.com>
-Subject: Re: PATCH: Allow format-patch to attach patches
-Date: Tue, 07 Mar 2006 12:20:38 +0900
-Organization: CodeWeavers
-Message-ID: <440CFC06.9080901@codeweavers.com>
-References: <440C352C.9070009@codeweavers.com> <7vpskz5aqh.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git-unpack-objects < pack file in repository doesn't work!
+Date: Mon, 6 Mar 2006 23:02:55 -0500
+Message-ID: <20060307040255.GA29544@spearce.org>
+References: <200603070213.02805.blaisorblade@yahoo.it> <20060307022926.GB29180@spearce.org> <7vlkvn54sv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 04:25:03 2006
+X-From: git-owner@vger.kernel.org Tue Mar 07 05:03:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGSom-0008Bc-5n
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 04:25:00 +0100
+	id 1FGTPb-0005sX-Fs
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 05:03:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932644AbWCGDY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 22:24:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932646AbWCGDY5
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 22:24:57 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:51845 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S932644AbWCGDY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Mar 2006 22:24:56 -0500
-Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
-	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1FGSog-0000Jf-96; Mon, 06 Mar 2006 21:24:56 -0600
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
-X-Accept-Language: en, en-us
+	id S1752059AbWCGEC7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 23:02:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbWCGEC7
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 23:02:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:2747 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1752059AbWCGEC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 23:02:58 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FGTPJ-0003zG-Mk; Mon, 06 Mar 2006 23:02:45 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 72E9420FBAC; Mon,  6 Mar 2006 23:02:55 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpskz5aqh.fsf@assigned-by-dhcp.cox.net>
-X-SA-Exim-Connect-IP: 216.251.189.130
-X-SA-Exim-Mail-From: mike@codeweavers.com
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+Content-Disposition: inline
+In-Reply-To: <7vlkvn54sv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17319>
 
-
-Junio C Hamano wrote:
-
-> The only two and half minor issues I might have about this are:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
->  (1) is the type text/x-patch appropriate?
+> > I totally didn't expect that behavior.  But I should have.  It makes
+> > perfect sense.
+> 
+> Good to hear that you two did not lose any data.  I think the
+> command should be documented as "not for interactive use without
+> understanding what it does" ;-).
+> 
+> What was the reason you wanted to use it?  I think we should
+> have a wrapper command to do what you wanted to achieve, so that
+> people do not have to run unpack-objects by hand.
 
-I'm no expert on MIME types, unfortunately.  Maybe text/x-diff makes 
-more sense?   A few different projects require one of those two types 
-for diffs sent as attachments.  My main concern is that mailers can 
-recognize that the attachment is text, then displayed with the message 
-so that people can see the patch without opening the attachment.
+Don't bother.
 
->  (2) is it possible to cheaply come up with a safe mime-magic,
->      instead of a hardcoded long string and hope it does not
->      clash?
+I wanted to explode a pack because I'm starting work on an Eclipse
+plugin for GIT.  I thought I'd try going down the road of letting
+the plugin read the repository directly, and write loose objects
+directly, but leave pack construction to the native C code.  So I
+tried to clone my local GIT repository to a new directory (thus
+had no loose objects at all) and unpack it to get loose objects.
+That didn't go so well.  :-)
 
-I agree that using a hardcoded long string isn't that great.  Reading 
-all of the "diff-tree -p" output seems a bit expensive.  How about using 
-   some part of the patch's SHA1 combined with date/time?
+So now I'm currently just playing around with a tiny repository I
+created for testing (something like 50 objects total).  Since I have
+never packed it everything is loose, and that's working out OK...
 
-> The remaining half issue is if would it make sense to sometimes
-> optionally use non 8-bit CTE for the patch part.
+I've already got loose object reading working, but thanks to
+the trivially simple repository format in GIT (thanks Linus,
+et.al.!) that amounted to a trivial Java implementation so its
+nothing to really brag about yet.  :-)
 
-Maybe allow something like:
-
-git-format-patch --attach=quoted-printable
-
-where the default would be 8bit.  This require adding a perl script for 
-each Content-Transfer-Encoding that we support.
-
-Mike
+-- 
+Shawn.
