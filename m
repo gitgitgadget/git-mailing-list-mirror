@@ -1,110 +1,121 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cvsimport woes
-Date: Mon, 06 Mar 2006 21:34:39 -0800
-Message-ID: <7vek1e6cnk.fsf@assigned-by-dhcp.cox.net>
-References: <44094618.6070404@asianetindia.com>
-	<46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com>
-	<46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com>
-	<440C68B9.9030305@asianetindia.com>
+Subject: Re: git clone does not work with GIT_OBJECT_DIRECTORY set
+Date: Mon, 06 Mar 2006 22:29:51 -0800
+Message-ID: <7vu0aa4vj4.fsf@assigned-by-dhcp.cox.net>
+References: <20060306012115.GG20768@kvack.org>
+	<7vmzg4cq6y.fsf@assigned-by-dhcp.cox.net>
+	<20060306013854.GH20768@kvack.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Tue Mar 07 06:34:57 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 07 07:30:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGUqN-0004B6-EW
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 06:34:48 +0100
+	id 1FGVht-0003gq-Pb
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 07:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750846AbWCGFen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 00:34:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbWCGFen
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 00:34:43 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38298 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750846AbWCGFem (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Mar 2006 00:34:42 -0500
+	id S1751706AbWCGG3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 01:29:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbWCGG3z
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 01:29:55 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20971 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751383AbWCGG3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Mar 2006 01:29:55 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060307053154.TORB17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 7 Mar 2006 00:31:54 -0500
-To: Rajkumar S <rajkumars@asianetindia.com>
-In-Reply-To: <440C68B9.9030305@asianetindia.com> (Rajkumar S.'s message of
-	"Mon, 06 Mar 2006 22:22:09 +0530")
+          id <20060307062558.WWGB20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 7 Mar 2006 01:25:58 -0500
+To: Benjamin LaHaise <bcrl@kvack.org>
+In-Reply-To: <20060306013854.GH20768@kvack.org> (Benjamin LaHaise's message of
+	"Sun, 5 Mar 2006 20:38:54 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17322>
 
-I've run your reproduction recipe and also looked at #git log
-from yesterday.
+Benjamin LaHaise <bcrl@kvack.org> writes:
 
-Here is what I see immediately after the initial cvs import:
+> On Sun, Mar 05, 2006 at 05:33:25PM -0800, Junio C Hamano wrote:
+>> Please try it without GIT_OBJECT_DIRECTORY and see it works
+>> correctly (I think it should).  If that is the case, maybe
+>> git-clone should explicitly unset GIT_OBJECT_DIRECTORY.
+>
+> Nope.  There is no .git/objects directory, so how would it be able to 
+> find the objects?
 
-$ git show-branch
-* [master] Initial revision
- ! [origin] Initial revision
-  ! [start] Imported sources
----
-  + [start] Imported sources
-*++ [master] Initial revision
+Ah, I misunderstood what you were trying to do here.  What you
+meant with this is:
 
-And here is what I get immediately after the second one:
+	$ git clone linux-2.6.git bootcache.git
 
-$ git show-branch
-* [master] v2.0
- ! [origin] v2.0
-  ! [start] Imported sources
----
-*+  [master] v2.0
-  + [start] Imported sources
-*++ [master^] Initial revision
-$ git diff --cached --abbrev -r
-:100644 100644 b8b933b... e251870... M  file.txt
-:100644 100644 b8b933b... e251870... M  file1.txt
+* linux-2.6.git is a local directory with HEAD, refs/* and stuff
+  but does not have objects/.
 
-I think what is happening is that cvsimport updates origin and
-master branch HEAD without updating the working tree.  I am not
-sure what the cvsimport command line you used is intended to do:
+* bootcache.git is a local directory to be created anew.
 
-	git cvsimport -v -k -u -m -d $CVSROOT -C git/ src
+Even though linux-2.6.git does not have objects subdirectory, it
+is usually not a problem for you because you use GIT_OBJECT_DIRECTORY
+for that.
 
-Specifically, what branch, if any, is used as the "tracking
-branch" (i.e. stores the unmodified copy from CVS)?  I presume
-it is "origin", in which case, I would have expected to see
-something like this instead.
+Short answer for this is: sorry, "git clone" barebone Porcelain
+does not support such a configuration if your source repository
+is local.  It works for destination, though:
 
-$ git show-branch
-* [master] Initial revision
- ! [origin] v2.0
-  ! [start] Imported sources
----
- +  [origin] v2.0
-  + [start] Imported sources
-*++ [master^] Initial revision
-$ git diff --cached --abbrev -r
-(empty)
+	$ export GIT_OBJECT_DIRECTORY=/tmp/foobla 
+	$ git clone git://git.kernel.org/.../linux-2.6.git bootcache.git
 
-Then I would understand what cvsimport author means by "it does
-not do fast forward, you have to do it yourself".  What it means
-is that the import only updates the tracking branch but does not
-update your working tree; merging the updates to the tracking
-branch made from the foreign SCM into your working branch is
-left for you to perform whenever it is convenient for you to do
-(meaning, you may have some intermediate change in your master
-branch in which case you would first commit them first and then
-merge from CVS).  And if that is they way cvsimport is intended
-to be used, then you would at this point do:
+You will get a single pack in /tmp/foobla/pack and would not
+even have bootcache.git/.git/objects directory.
 
-$ git pull . origin
+I should probably add that GIT_OBJECT_DIRECTORY environment
+variable has outlived its usefulness.  Initially we added that
+flexibility without really knowing where it would lead us, but
+it has turned out that often we would want the refs and objects
+go hand-in-hand.  Two or more repositories sharing the object
+pool to save storage initially sounded a good idea, but that
+would make fsck-objects cumbersome (you have to learn to ignore
+dangling warnings, which makes checking rather pointless), and
+packing less useful (you need to collect refs in all the
+repositories that share the object pool).
 
-to do the fast forward.
+I think the recommended way these days to set up multiple
+repositories that work on related projects is to set up a single
+clone from external source (e.g. linux-2.6.git), and make a set
+of local "-l -s" clones out of it, and then fetch forked
+upstreams into them.  It would go something like this:
 
-I do not understand what cvsimport is trying to do here; I
-_suspect_ the part that updates the "master" branch head might
-be a bug.
+(initial setup)
+	$ git clone --bare git://git.kernel.org/.../torvalds/linux-2.6.git \
+          linux-2.6.git
 
-Smurf, mind clarifying what is happening here for me please?
+    (do this only once for each forked upstream)
+        $ git clone -l -s -n linux-2.6.git netdev-2.6
+	$ cd netdev-2.6
+        $ ed .git/remotes/origin ;# adjust to jgarzik tree's location
+        $ mkdir .git/refs/stashed
+        $ mv .git/refs/heads .git/refs/tags .git/refs/stashed
+        $ mkdir .git/refs/heads .git/refs/tags
+	$ git fetch -k 
+        $ cp .git/refs/heads/origin .git/refs/heads/master
+        $ rm -fr .git/refs/stashed
+        $ git checkout
+        
+(update the shared master tree from time to time)
+	$ cd linux-2.6.git
+        $ GIT_DIR=. git fetch-pack \
+          git://git.kernel.org/.../torvalds/linux-2.6.git
+
+(working in the individual forked tree is just as usual)
+	$ cd netdev-2.6
+        $ git fetch ;# or git pull
+
+I think the part for each forked upstream above that consists of
+10 or so commands above can be more or less automated.  The part
+that needs human input is the adjusting of .git/remotes/origin,
+which depends on where each forked upstream tree is and what
+branches there are of interest.
