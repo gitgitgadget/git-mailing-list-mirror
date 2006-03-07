@@ -1,51 +1,110 @@
-From: Joshua N Pritikin <jpritikin@pobox.com>
-Subject: Re: git-status too verbose?
-Date: Tue, 7 Mar 2006 11:05:47 +0530
-Message-ID: <20060307053547.GK6346@always.joy.eth.net>
-References: <38b80e980603040952j15152a21h2c903bd011d7e905@mail.gmail.com> <7vacc36r4v.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: cvsimport woes
+Date: Mon, 06 Mar 2006 21:34:39 -0800
+Message-ID: <7vek1e6cnk.fsf@assigned-by-dhcp.cox.net>
+References: <44094618.6070404@asianetindia.com>
+	<46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com>
+	<46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com>
+	<440C68B9.9030305@asianetindia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 06:26:47 2006
+Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Tue Mar 07 06:34:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGUiV-00032N-OU
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 06:26:43 +0100
+	id 1FGUqN-0004B6-EW
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 06:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbWCGF0h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 00:26:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbWCGF0h
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 00:26:37 -0500
-Received: from proof.pobox.com ([207.106.133.28]:31142 "EHLO proof.pobox.com")
-	by vger.kernel.org with ESMTP id S1751188AbWCGF0g (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 00:26:36 -0500
-Received: from proof (localhost [127.0.0.1])
-	by proof.pobox.com (Postfix) with ESMTP id EFC368F9D8;
-	Tue,  7 Mar 2006 00:26:35 -0500 (EST)
-Received: from emit.nirmalvihar.info (house.nirmalvihar.info [61.17.90.7])
-	by proof.sasl.smtp.pobox.com (Postfix) with ESMTP id 353C023566;
-	Tue,  7 Mar 2006 00:26:32 -0500 (EST)
-Received: by emit.nirmalvihar.info (sSMTP sendmail emulation); Tue, 7 Mar 2006 11:05:47 +0530
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vacc36r4v.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Key: 06E3 3D22 D307 AAE6 ACB4  6B44 A9CA A794 A4A6 0BBD
-User-Agent: Mutt/1.5.4i
+	id S1750846AbWCGFen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 00:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbWCGFen
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 00:34:43 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38298 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750846AbWCGFem (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Mar 2006 00:34:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060307053154.TORB17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 7 Mar 2006 00:31:54 -0500
+To: Rajkumar S <rajkumars@asianetindia.com>
+In-Reply-To: <440C68B9.9030305@asianetindia.com> (Rajkumar S.'s message of
+	"Mon, 06 Mar 2006 22:22:09 +0530")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17321>
 
-On Mon, Mar 06, 2006 at 04:21:52PM -0800, Junio C Hamano wrote:
-> 			HEAD->index	index->files
-> 	------------------------------------------------
-> 	hello.c		unmodified      modified
->         world.c		modified	unmodified
-> 	frotz.c		new		unmodified
->         ...
-> 	garbage.c~	???		n/a
+I've run your reproduction recipe and also looked at #git log
+from yesterday.
 
-For what it's worth, this chart immediately made sense to me and I would
-prefer it to the current git-status output.
+Here is what I see immediately after the initial cvs import:
+
+$ git show-branch
+* [master] Initial revision
+ ! [origin] Initial revision
+  ! [start] Imported sources
+---
+  + [start] Imported sources
+*++ [master] Initial revision
+
+And here is what I get immediately after the second one:
+
+$ git show-branch
+* [master] v2.0
+ ! [origin] v2.0
+  ! [start] Imported sources
+---
+*+  [master] v2.0
+  + [start] Imported sources
+*++ [master^] Initial revision
+$ git diff --cached --abbrev -r
+:100644 100644 b8b933b... e251870... M  file.txt
+:100644 100644 b8b933b... e251870... M  file1.txt
+
+I think what is happening is that cvsimport updates origin and
+master branch HEAD without updating the working tree.  I am not
+sure what the cvsimport command line you used is intended to do:
+
+	git cvsimport -v -k -u -m -d $CVSROOT -C git/ src
+
+Specifically, what branch, if any, is used as the "tracking
+branch" (i.e. stores the unmodified copy from CVS)?  I presume
+it is "origin", in which case, I would have expected to see
+something like this instead.
+
+$ git show-branch
+* [master] Initial revision
+ ! [origin] v2.0
+  ! [start] Imported sources
+---
+ +  [origin] v2.0
+  + [start] Imported sources
+*++ [master^] Initial revision
+$ git diff --cached --abbrev -r
+(empty)
+
+Then I would understand what cvsimport author means by "it does
+not do fast forward, you have to do it yourself".  What it means
+is that the import only updates the tracking branch but does not
+update your working tree; merging the updates to the tracking
+branch made from the foreign SCM into your working branch is
+left for you to perform whenever it is convenient for you to do
+(meaning, you may have some intermediate change in your master
+branch in which case you would first commit them first and then
+merge from CVS).  And if that is they way cvsimport is intended
+to be used, then you would at this point do:
+
+$ git pull . origin
+
+to do the fast forward.
+
+I do not understand what cvsimport is trying to do here; I
+_suspect_ the part that updates the "master" branch head might
+be a bug.
+
+Smurf, mind clarifying what is happening here for me please?
