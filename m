@@ -1,54 +1,60 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: cvsimport woes
-Date: Tue, 7 Mar 2006 16:06:39 +1300
-Message-ID: <46a038f90603061906n6ef7f48dw910661e33496fec3@mail.gmail.com>
-References: <44094618.6070404@asianetindia.com>
-	 <46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com>
-	 <46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com>
-	 <440C68B9.9030305@asianetindia.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-unpack-objects < pack file in repository doesn't work!
+Date: Mon, 06 Mar 2006 19:09:36 -0800
+Message-ID: <7vlkvn54sv.fsf@assigned-by-dhcp.cox.net>
+References: <200603070213.02805.blaisorblade@yahoo.it>
+	<20060307022926.GB29180@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 04:06:58 2006
+X-From: git-owner@vger.kernel.org Tue Mar 07 04:09:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGSX7-0005u2-Bb
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 04:06:49 +0100
+	id 1FGSZy-0006GG-D5
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 04:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932633AbWCGDGl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 22:06:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWCGDGl
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 22:06:41 -0500
-Received: from wproxy.gmail.com ([64.233.184.195]:8552 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932633AbWCGDGk convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 22:06:40 -0500
-Received: by wproxy.gmail.com with SMTP id i20so1303587wra
-        for <git@vger.kernel.org>; Mon, 06 Mar 2006 19:06:39 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DY/Rk6+iG4jtT2p0OoP+X3mrBOdKEjKxqWyIvagUgvS+i/mDsvU/eiUimLqX7p9zPtQ3P3ldbbWusfi2aRwKV5uPTepaU/5A4HDjqeSPjYPwHnglHApm3APVtveamJteQDP53Mrg+iOnKYhT/FZb8yjB7dKUS8qaFAEeZTk04EM=
-Received: by 10.54.92.13 with SMTP id p13mr56479wrb;
-        Mon, 06 Mar 2006 19:06:32 -0800 (PST)
-Received: by 10.54.71.5 with HTTP; Mon, 6 Mar 2006 19:06:39 -0800 (PST)
-To: "Rajkumar S" <rajkumars@asianetindia.com>
-In-Reply-To: <440C68B9.9030305@asianetindia.com>
-Content-Disposition: inline
+	id S932636AbWCGDJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 22:09:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932638AbWCGDJj
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 22:09:39 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:43932 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932636AbWCGDJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Mar 2006 22:09:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060307030804.TUHD20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 6 Mar 2006 22:08:04 -0500
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060307022926.GB29180@spearce.org> (Shawn Pearce's message of
+	"Mon, 6 Mar 2006 21:29:26 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17316>
 
-On 3/7/06, Rajkumar S <rajkumars@asianetindia.com> wrote:
-> You can use this script to reproduce this problem.
+Shawn Pearce <spearce@spearce.org> writes:
 
-Rajkumar, does it work better if you add "sleep 10" before each
-invocation of git-cvsimport?
+> I totally didn't expect that behavior.  But I should have.  It makes
+> perfect sense.
 
-cheers,
+Good to hear that you two did not lose any data.  I think the
+command should be documented as "not for interactive use without
+understanding what it does" ;-).
 
+What was the reason you wanted to use it?  I think we should
+have a wrapper command to do what you wanted to achieve, so that
+people do not have to run unpack-objects by hand.
 
-martin
+One thing I _could_ think of is to explode a contaminated pack
+so that you can repack.  For example, every time I do "git
+repack -a -d", the resulting pack ends up containing a couple of
+commits from my "pu" branch that will become dangling when I
+redo "pu" the next time.  But then "git repack -a -d" is so
+inexpensive these days, without unpacking things first, I do not
+see the point of exploding a pack using unpack-objects in the
+first place.
