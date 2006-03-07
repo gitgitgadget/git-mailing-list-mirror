@@ -1,121 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git clone does not work with GIT_OBJECT_DIRECTORY set
-Date: Mon, 06 Mar 2006 22:29:51 -0800
-Message-ID: <7vu0aa4vj4.fsf@assigned-by-dhcp.cox.net>
-References: <20060306012115.GG20768@kvack.org>
-	<7vmzg4cq6y.fsf@assigned-by-dhcp.cox.net>
-	<20060306013854.GH20768@kvack.org>
+From: Noel Grandin <noel@peralex.com>
+Subject: Re: Any news on an Eclipse plugin?
+Date: Tue, 07 Mar 2006 08:59:26 +0200
+Message-ID: <440D2F4E.9090009@peralex.com>
+References: <20060306173229.GA27965@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed; boundary="----------=_1141714747-80022-317"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 07 07:30:11 2006
+X-From: git-owner@vger.kernel.org Tue Mar 07 07:59:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGVht-0003gq-Pb
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 07:30:06 +0100
+	id 1FGWAV-0007oC-6R
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 07:59:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706AbWCGG3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 01:29:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbWCGG3z
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 01:29:55 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20971 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751383AbWCGG3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Mar 2006 01:29:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060307062558.WWGB20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 7 Mar 2006 01:25:58 -0500
-To: Benjamin LaHaise <bcrl@kvack.org>
-In-Reply-To: <20060306013854.GH20768@kvack.org> (Benjamin LaHaise's message of
-	"Sun, 5 Mar 2006 20:38:54 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1752077AbWCGG7g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 01:59:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752078AbWCGG7g
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 01:59:36 -0500
+Received: from mail.peralex.com ([196.1.58.220]:10744 "EHLO mail.peralex.com")
+	by vger.kernel.org with ESMTP id S1752077AbWCGG7f (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 01:59:35 -0500
+Received: from [192.168.1.230] (noel.ct [192.168.1.230])
+	by mail.peralex.com (8.13.4/8.13.4) with ESMTP id k276x0BF002267;
+	Tue, 7 Mar 2006 08:59:00 +0200 (SAST)
+	(envelope-from noel@peralex.com)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.12) Gecko/20050923 Thunderbird/1.0.7 Mnenhy/0.7.3.0
+X-Accept-Language: en-us, en
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060306173229.GA27965@spearce.org>
+X-Enigmail-Version: 0.93.0.0
+X-Scanned-By: MIMEDefang 2.42
+X-Synonym: Copied by Synonym (http://www.modulo.ro/synonym) to: mailbackup@peralex.com
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (mail.peralex.com [192.168.1.7]); Tue, 07 Mar 2006 08:59:07 +0200 (SAST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17323>
 
-Benjamin LaHaise <bcrl@kvack.org> writes:
+This is a multi-part message in MIME format...
 
-> On Sun, Mar 05, 2006 at 05:33:25PM -0800, Junio C Hamano wrote:
->> Please try it without GIT_OBJECT_DIRECTORY and see it works
->> correctly (I think it should).  If that is the case, maybe
->> git-clone should explicitly unset GIT_OBJECT_DIRECTORY.
+------------=_1141714747-80022-317
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+
+The subversion plugin (subclipse.tigris.org) might be a good starting
+point since it delegates a lot of it's low-level work through an
+interface called svnClientAdapter. Re-implementing that to talk to git
+should get you something useful in a reasonable time-frame.
+
+Note that an eclipse team plugin is a pretty complicated beast.
+
+
+Shawn Pearce wrote:
+
+>I'm considering starting an Eclipse plugin for GIT.  So I did
+>some digging to see if any existing projects have anything I can
+>contribute to (rather than starting from scratch) but I only turned
+>up a thread from May 2005 started by Jon Seymour:
 >
-> Nope.  There is no .git/objects directory, so how would it be able to 
-> find the objects?
+>  http://www.gelato.unsw.edu.au/archives/git/0505/3357.html
+>
+>anyone know anything newer?  If there's nothing existing worth
+>starting with other than the CVS or SVN plugins (as mentioned in
+>this thread) I'll probably start putting together a prototype and
+>start making it available early next week.
+>
+>I'm going to carefully read the thread that I linked to above before
+>writing anything, so there's no need to start getting into the core
+>and not so core discussion again.  I'll read it over for myself. :-)
+>
+>  
+>
 
-Ah, I misunderstood what you were trying to do here.  What you
-meant with this is:
 
-	$ git clone linux-2.6.git bootcache.git
+NOTICE: Please note that this email, and the contents thereof, 
+are subject to the standard Peralex email disclaimer, which may 
+be found at: http://www.peralex.com/disclaimer.html
 
-* linux-2.6.git is a local directory with HEAD, refs/* and stuff
-  but does not have objects/.
+If you cannot access the disclaimer through the URL attached 
+ and you wish to receive a copy thereof please send 
+ an email to email@peralex.com
 
-* bootcache.git is a local directory to be created anew.
-
-Even though linux-2.6.git does not have objects subdirectory, it
-is usually not a problem for you because you use GIT_OBJECT_DIRECTORY
-for that.
-
-Short answer for this is: sorry, "git clone" barebone Porcelain
-does not support such a configuration if your source repository
-is local.  It works for destination, though:
-
-	$ export GIT_OBJECT_DIRECTORY=/tmp/foobla 
-	$ git clone git://git.kernel.org/.../linux-2.6.git bootcache.git
-
-You will get a single pack in /tmp/foobla/pack and would not
-even have bootcache.git/.git/objects directory.
-
-I should probably add that GIT_OBJECT_DIRECTORY environment
-variable has outlived its usefulness.  Initially we added that
-flexibility without really knowing where it would lead us, but
-it has turned out that often we would want the refs and objects
-go hand-in-hand.  Two or more repositories sharing the object
-pool to save storage initially sounded a good idea, but that
-would make fsck-objects cumbersome (you have to learn to ignore
-dangling warnings, which makes checking rather pointless), and
-packing less useful (you need to collect refs in all the
-repositories that share the object pool).
-
-I think the recommended way these days to set up multiple
-repositories that work on related projects is to set up a single
-clone from external source (e.g. linux-2.6.git), and make a set
-of local "-l -s" clones out of it, and then fetch forked
-upstreams into them.  It would go something like this:
-
-(initial setup)
-	$ git clone --bare git://git.kernel.org/.../torvalds/linux-2.6.git \
-          linux-2.6.git
-
-    (do this only once for each forked upstream)
-        $ git clone -l -s -n linux-2.6.git netdev-2.6
-	$ cd netdev-2.6
-        $ ed .git/remotes/origin ;# adjust to jgarzik tree's location
-        $ mkdir .git/refs/stashed
-        $ mv .git/refs/heads .git/refs/tags .git/refs/stashed
-        $ mkdir .git/refs/heads .git/refs/tags
-	$ git fetch -k 
-        $ cp .git/refs/heads/origin .git/refs/heads/master
-        $ rm -fr .git/refs/stashed
-        $ git checkout
-        
-(update the shared master tree from time to time)
-	$ cd linux-2.6.git
-        $ GIT_DIR=. git fetch-pack \
-          git://git.kernel.org/.../torvalds/linux-2.6.git
-
-(working in the individual forked tree is just as usual)
-	$ cd netdev-2.6
-        $ git fetch ;# or git pull
-
-I think the part for each forked upstream above that consists of
-10 or so commands above can be more or less automated.  The part
-that needs human input is the adjusting of .git/remotes/origin,
-which depends on where each forked upstream tree is and what
-branches there are of interest.
+------------=_1141714747-80022-317--
