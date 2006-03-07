@@ -1,71 +1,54 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-unpack-objects < pack file in repository doesn't work!
-Date: Mon, 6 Mar 2006 21:29:26 -0500
-Message-ID: <20060307022926.GB29180@spearce.org>
-References: <200603070213.02805.blaisorblade@yahoo.it>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: cvsimport woes
+Date: Tue, 7 Mar 2006 16:06:39 +1300
+Message-ID: <46a038f90603061906n6ef7f48dw910661e33496fec3@mail.gmail.com>
+References: <44094618.6070404@asianetindia.com>
+	 <46a038f90603060124h4ea1c3c6gaa5d8b52ed311230@mail.gmail.com>
+	 <46a038f90603060137o758ea7ch6c40652ad86a102a@mail.gmail.com>
+	 <440C68B9.9030305@asianetindia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Mar 07 03:29:34 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 07 04:06:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGRx8-00087r-0y
-	for gcvg-git@gmane.org; Tue, 07 Mar 2006 03:29:34 +0100
+	id 1FGSX7-0005u2-Bb
+	for gcvg-git@gmane.org; Tue, 07 Mar 2006 04:06:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617AbWCGC3a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Mar 2006 21:29:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbWCGC3a
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 21:29:30 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:9390 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751391AbWCGC33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Mar 2006 21:29:29 -0500
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FGRwr-0002A0-3P
-	for git@vger.kernel.org; Mon, 06 Mar 2006 21:29:17 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4EC1A20FBAC; Mon,  6 Mar 2006 21:29:26 -0500 (EST)
-To: git@vger.kernel.org
+	id S932633AbWCGDGl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Mar 2006 22:06:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWCGDGl
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Mar 2006 22:06:41 -0500
+Received: from wproxy.gmail.com ([64.233.184.195]:8552 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932633AbWCGDGk convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Mar 2006 22:06:40 -0500
+Received: by wproxy.gmail.com with SMTP id i20so1303587wra
+        for <git@vger.kernel.org>; Mon, 06 Mar 2006 19:06:39 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DY/Rk6+iG4jtT2p0OoP+X3mrBOdKEjKxqWyIvagUgvS+i/mDsvU/eiUimLqX7p9zPtQ3P3ldbbWusfi2aRwKV5uPTepaU/5A4HDjqeSPjYPwHnglHApm3APVtveamJteQDP53Mrg+iOnKYhT/FZb8yjB7dKUS8qaFAEeZTk04EM=
+Received: by 10.54.92.13 with SMTP id p13mr56479wrb;
+        Mon, 06 Mar 2006 19:06:32 -0800 (PST)
+Received: by 10.54.71.5 with HTTP; Mon, 6 Mar 2006 19:06:39 -0800 (PST)
+To: "Rajkumar S" <rajkumars@asianetindia.com>
+In-Reply-To: <440C68B9.9030305@asianetindia.com>
 Content-Disposition: inline
-In-Reply-To: <200603070213.02805.blaisorblade@yahoo.it>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17315>
 
-Blaisorblade <blaisorblade@yahoo.it> wrote:
-> It's not a bug, it's an undocumented feature. It should be documented as 
-> "git-unpack-objects < $pack; rm $pack" is something one would deem correct at 
-> first glance (luckily I just moved the pack away and did git-fsck-cache).
-> 
-> To write an object, git-unpack-objects ends in
-> 
-> unpack-objects.c:write_object -> sha1_file.c:write_sha1_file:
-> 
->         /* Normally if we have it in the pack then we do not bother writing
->          * it out into .git/objects/??/?{38} file.
->          */
-> 
-> This indeed works, so the files aren't unpacked.
+On 3/7/06, Rajkumar S <rajkumars@asianetindia.com> wrote:
+> You can use this script to reproduce this problem.
 
-Funny, I just did the exact same thing today, scratched my head and
-said ``what did I just do!?!?!'' as I had deleted the pack before
-discovering that nothing was actually unpacked.  *sigh* At least
-it was a clone of the real repository and thus didn't matter to me.
+Rajkumar, does it work better if you add "sleep 10" before each
+invocation of git-cvsimport?
 
-I totally didn't expect that behavior.  But I should have.  It makes
-perfect sense.
+cheers,
 
--- 
-Shawn.
+
+martin
