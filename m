@@ -1,116 +1,146 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn, tree moves, and --no-stop-on-copy
-Date: Tue, 7 Mar 2006 17:42:07 -0800
-Message-ID: <20060308014207.GA31137@localdomain>
-References: <20060307220837.GB27397@nowhere.earth>
+Subject: [PATCH] contrib/git-svn: fix UUID reading w/pre-1.2 svn; fetch args
+Date: Tue, 7 Mar 2006 17:57:30 -0800
+Message-ID: <20060308015730.GA28056@localdomain>
+References: <20060307220837.GB27397@nowhere.earth> <20060308014207.GA31137@localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 08 02:42:18 2006
+X-From: git-owner@vger.kernel.org Wed Mar 08 02:58:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGngs-0003WW-Jw
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 02:42:15 +0100
+	id 1FGnwY-0006UY-IX
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 02:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964843AbWCHBmL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 20:42:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752007AbWCHBmL
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 20:42:11 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:46513 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751917AbWCHBmK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 20:42:10 -0500
+	id S964847AbWCHB6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 20:58:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964877AbWCHB6R
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 20:58:17 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:57521 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S964847AbWCHB6Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 20:58:16 -0500
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 32A9D2DC033;
-	Tue,  7 Mar 2006 17:42:08 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  7 Mar 2006 17:42:07 -0800
+	by hand.yhbt.net (Postfix) with SMTP id 469912DC033;
+	Tue,  7 Mar 2006 17:58:14 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  7 Mar 2006 17:57:30 -0800
 To: Yann Dirson <ydirson@altern.org>
 Content-Disposition: inline
-In-Reply-To: <20060307220837.GB27397@nowhere.earth>
+In-Reply-To: <20060308014207.GA31137@localdomain>
 User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17360>
 
-Yann Dirson <ydirson@altern.org> wrote:
-> It looks that the --no-stop-on-copy flag has been dropped by error
-> during the "options cleanup" commit a couple of days ago.  This
-> trivial patch appears at first sight to address the problem:
+Junio: please don't apply this patch to git.git just yet.  It seems fine
+to me, but I haven't tested it heavily yet (Yann can help me, I hope :)
+I hardly slept the past few days and I may have broken something badly
+(it pasts all the tests, though).
 
-Thanks for the patch, but on second thought...
+---
 
-I'm tempted to drop it as an option...  IIRC, the only reason
---no-stop-on-copy exists in git-svn is in case ancient versions of svn
-did not support --stop-on-copy.  I haven't bothered looking deeply into
-SVN history to see if it was always supported or not.
+As a side effect, this should also work better for 'init' off
+directories that are no longer in the latest revision of the
+repository.
+
+Fix 'fetch' args (<rev>=<commit> options) on brand-new heads
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+
+---
+
+ contrib/git-svn/git-svn.perl |   26 ++++++++++++++++++--------
+ 1 files changed, 18 insertions(+), 8 deletions(-)
+
+9f59596bde5bdd68d1a0a116f7383df74966de44
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index c575883..b8d2b3e 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -162,7 +162,8 @@ sub rebuild {
+ 				croak "SVN repository location required: $url\n";
+ 			}
+ 			$SVN_URL ||= $url;
+-			$SVN_UUID ||= setup_git_svn();
++			$SVN_UUID ||= $uuid;
++			setup_git_svn();
+ 			$latest = $rev;
+ 		}
+ 		assert_revision_eq_or_unknown($rev, $c);
+@@ -226,10 +227,12 @@ sub fetch {
+ 		push @svn_co,'--ignore-externals' unless $_no_ignore_ext;
+ 		sys(@svn_co, $SVN_URL, $SVN_WC);
+ 		chdir $SVN_WC or croak $!;
++		read_uuid();
+ 		$last_commit = git_commit($base, @parents);
+ 		assert_svn_wc_clean($base->{revision}, $last_commit);
+ 	} else {
+ 		chdir $SVN_WC or croak $!;
++		read_uuid();
+ 		$last_commit = file_to_s("$REV_DIR/$base->{revision}");
+ 	}
+ 	my @svn_up = qw(svn up);
+@@ -275,7 +278,9 @@ sub commit {
  
-> Before I find out in the doc about --no-stop-on-copy, I did a coupld
-> of experimentation.  Among them, was using a peg-revision in the URL
-> passed to "git-svn init":
-> 
-> $ GIT_SVN_ID=git-oldsvn git-svn init https://svn.sourceforge.net/svnroot/ufoai/trunk/src@165
-> 
-> That succeeds, but then "git-svn fetch" will fail with:
-> 
-> svn: REPORT request failed on '/svnroot/ufoai/!svn/bc/190/trunk/src@165'
-> svn: '/svnroot/ufoai/!svn/bc/190/trunk/src@165' path not found
-> 256 at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 783
->         man::svn_log_raw('https://svn.sourceforge.net/svnroot/ufoai/trunk/src@165', '-r0:HEAD', '--stop-on-copy') called at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 219
->         main::fetch() called at /export/work/yann/git/git/contrib/git-svn/git-svn.perl line 81
-
-If you want full repository history for reorganized repositories,
-easiest way is to pay the price for full repository and all of its
-history.
-
-	git-svn init https://svn.sourceforge.net/svnroot/ufoai
-	git-svn fetch
-	# this puts all your branches and tags into one single big git tree.
-
-However, the following should always work: (after the following patch,
-
-	GIT_SVN_ID=git-oldsvn git-svn init \
-		https://svn.sourceforge.net/svnroot/ufoai/trunk
-	GIT_SVN_ID=git-oldsvn git-svn fetch -r1:165
-
-	GIT_SVN_ID=git-newsvn git-svn init
-		https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
-	GIT_SVN_ID=git-newsvn git-svn fetch \
-		166=`git-rev-parse refs/remotes/git-oldsvn`
-
-Unfortunately, it does not, at least with svn 1.2.3...  I have a patch
-coming that should fix things for 1.1.1 (and give better 1.1.x support
-in general).  I'm not sure, but it feels like something is screwed up
-with svn 1.2.3dfsg1-3:
-
-This works:	svn log -r1 https://svn.sourceforge.net/svnroot/ufoai/trunk
-
-This doesn't:	svn  co -r1 https://svn.sourceforge.net/svnroot/ufoai/trunk
-
-But this:	svn  co -r1 https://svn.sourceforge.net/svnroot/ufoai
-will create the following structure:
-	ufoai/{trunk,branches,tags}
-
-I'm quite puzzled about it, as I swear I've seen it work on a different
-project recently (of course I cannot remember which :<)
-
-> Maybe git-svn could also be guarded against peg-revisions on init
-> command-line, since that appears to confuse it quite a bit :)
-
-Possibly, but having '@' in URLs is valid in some cases outside of
-peg-revisions.
-
-> Additionally, it may be worth poiting out in the doc at least one
-> valid use of the --no-stop-on-copy flag that is friendly to the user's
-> sanity: when the svn repository has undergone a reorg, such that the
-> URL passed to "init" indeed moved - at least, when/if it is made to
-> work :)
-
-In the face of repository reorgs, git-svn is happiest tracking partial
-history.  Or tracking the entire repository from the root.
-
-Hopefully I've been reasonably coherent, having insomnia lately.
-
+ 	fetch();
+ 	chdir $SVN_WC or croak $!;
+-	my $svn_current_rev =  svn_info('.')->{'Last Changed Rev'};
++	my $info = svn_info('.');
++	read_uuid($info);
++	my $svn_current_rev =  $info->{'Last Changed Rev'};
+ 	foreach my $c (@revs) {
+ 		my $mods = svn_checkout_tree($svn_current_rev, $c);
+ 		if (scalar @$mods == 0) {
+@@ -314,6 +319,14 @@ sub show_ignore {
+ 
+ ########################### utility functions #########################
+ 
++sub read_uuid {
++	return if $SVN_UUID;
++	my $info = shift || svn_info('.');
++	$SVN_UUID = $info->{'Repository UUID'} or
++					croak "Repository UUID unreadable\n";
++	s_to_file($SVN_UUID,"$GIT_DIR/$GIT_SVN/info/uuid");
++}
++
+ sub setup_git_svn {
+ 	defined $SVN_URL or croak "SVN repository location required\n";
+ 	unless (-d $GIT_DIR) {
+@@ -323,14 +336,10 @@ sub setup_git_svn {
+ 	mkpath(["$GIT_DIR/$GIT_SVN/info"]);
+ 	mkpath([$REV_DIR]);
+ 	s_to_file($SVN_URL,"$GIT_DIR/$GIT_SVN/info/url");
+-	$SVN_UUID = svn_info($SVN_URL)->{'Repository UUID'} or
+-					croak "Repository UUID unreadable\n";
+-	s_to_file($SVN_UUID,"$GIT_DIR/$GIT_SVN/info/uuid");
+ 
+ 	open my $fd, '>>', "$GIT_DIR/$GIT_SVN/info/exclude" or croak $!;
+ 	print $fd '.svn',"\n";
+ 	close $fd or croak $!;
+-	return $SVN_UUID;
+ }
+ 
+ sub assert_svn_wc_clean {
+@@ -860,7 +869,6 @@ sub git_commit {
+ 	my ($log_msg, @parents) = @_;
+ 	assert_revision_unknown($log_msg->{revision});
+ 	my $out_fh = IO::File->new_tmpfile or croak $!;
+-	$SVN_UUID ||= svn_info('.')->{'Repository UUID'};
+ 
+ 	map_tree_joins() if (@_branch_from && !%tree_map);
+ 
+@@ -922,7 +930,9 @@ sub git_commit {
+ 	}
+ 	my @update_ref = ('git-update-ref',"refs/remotes/$GIT_SVN",$commit);
+ 	if (my $primary_parent = shift @exec_parents) {
+-		push @update_ref, $primary_parent;
++		if (!system('git-rev-parse',"refs/remotes/$GIT_SVN")){
++			push @update_ref, $primary_parent;
++		}
+ 	}
+ 	sys(@update_ref);
+ 	sys('git-update-ref',"$GIT_SVN/revs/$log_msg->{revision}",$commit);
 -- 
-Eric Wong
+1.2.4.g198d
