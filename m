@@ -1,67 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] write_sha1_file(): Perform Z_FULL_FLUSH between header and data
-Date: Wed, 08 Mar 2006 03:04:14 -0800
-Message-ID: <7vhd69i4ep.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
-	<7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net>
-	<20060224174422.GA13367@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
-	<20060224183554.GA31247@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
-	<20060224192354.GC387@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
-	<7vpslc8oni.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
-	<Pine.LNX.4.64.0602241637480.22647@g5.osdl.org>
-	<Pine.LNX.4.64.0602242130030.31162@localhost.localdomain>
-	<Pine.LNX.4.64.0602241952140.22647@g5.osdl.org>
-	<Pine.LNX.4.64.0602242326381.31162@localhost.localdomain>
-	<Pine.LNX.4.64.0602250012230.31162@localhost.localdomain>
-	<7vzmk1izpa.fsf_-_@assigned-by-dhcp.cox.net>
-	<20060308134519.78ea313d.vsu@altlinux.ru>
+From: "=?ISO-8859-1?Q?Niklas_H=F6glund?=" <nhoglund@gmail.com>
+Subject: Update hook in Cygwin
+Date: Wed, 8 Mar 2006 12:16:56 +0000
+Message-ID: <ad8ce5c20603080416g5ed6d77el@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 08 12:05:15 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Mar 08 13:17:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGwSs-0004TU-Fo
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 12:04:25 +0100
+	id 1FGxbA-000754-Oj
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 13:17:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932481AbWCHLET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 06:04:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932471AbWCHLET
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 06:04:19 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:45761 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751313AbWCHLES (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Mar 2006 06:04:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060308110127.VKDU17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Mar 2006 06:01:27 -0500
-To: Sergey Vlasov <vsu@altlinux.ru>
-In-Reply-To: <20060308134519.78ea313d.vsu@altlinux.ru> (Sergey Vlasov's
-	message of "Wed, 8 Mar 2006 13:45:19 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932505AbWCHMQ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 07:16:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbWCHMQ6
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 07:16:58 -0500
+Received: from nproxy.gmail.com ([64.233.182.196]:7751 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932505AbWCHMQ5 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 07:16:57 -0500
+Received: by nproxy.gmail.com with SMTP id a27so120093nfc
+        for <git@vger.kernel.org>; Wed, 08 Mar 2006 04:16:56 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=H1xhHkWuxtN6OZsCugdROeRTjrV09M82IFo1Z/MubKt8R9hpUq+yl+As3aPNLEi8qMHNcjMdUD0Z424v/UDKvQpiMogaRS+VTMiGueVqKFs1I66PsZy+PW2ViUDcMaqdpCFSEnL0bKzw4HP1Y4I7Tj7sKoGkOwoWOQXDpAv2BRE=
+Received: by 10.49.67.12 with SMTP id u12mr319067nfk;
+        Wed, 08 Mar 2006 04:16:56 -0800 (PST)
+Received: by 10.48.206.11 with HTTP; Wed, 8 Mar 2006 04:16:56 -0800 (PST)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17370>
 
-Sergey Vlasov <vsu@altlinux.ru> writes:
+Hi.
 
-> However, a straight reuse still will not be possible, because
-> sha1write_compressed() uses deflateInit(&stream, Z_DEFAULT_COMPRESSION),
-> which writes zlib headers around the deflate stream, and the zlib footer
-> contains adler32 checksum.  So, as a minimum, you will need to
-> decompress the object data, calculate its adler32 checksum and write the
-> zlib header yourself.
+After creating a couple of repositories and pushing and cloning them,
+I get the following:
 
-Hmph.  Thanks for helping, but it sounds like my original plan
-was not useful at all.  Probably inflating would be still
-cheaper than inflating and then deflating, but it would not be
-as cool as a straight copy.  Sigh...
+$ git push --all origin
+...
+hooks/update: line 88: mail: command not found
+
+This is in cygwin. I'm rather glad I don't have the mail command
+installed, as I don't want mails going anywhere.
+
+The update hook contains the following comment:
+
+# To enable this hook:
+# (1) change the recipient e-mail address
+# (2) make this file executable by "chmod +x update".
+
+But my impression after a cursory look at it is that it would always
+call "mail" whenever it is run, and since all files are executable in
+Windows (AFAIK), it would always be run.
