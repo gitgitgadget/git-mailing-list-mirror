@@ -1,45 +1,55 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: Update hook in Cygwin
-Date: Wed, 8 Mar 2006 10:54:00 -0500
-Message-ID: <20060308155400.GE11231@trixie.casa.cgf.cx>
-References: <ad8ce5c20603080416g5ed6d77el@mail.gmail.com> <440EDDE4.9070405@op5.se> <20060308144413.GA516@spearce.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: git-rev-list bug?
+Date: Wed, 8 Mar 2006 16:19:48 +0000
+Message-ID: <b0943d9e0603080819i227c637fo@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Mar 08 16:57:49 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Mar 08 17:20:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FH0zN-00021m-W8
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 16:54:15 +0100
+	id 1FH1OC-00033o-VB
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 17:19:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086AbWCHPyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 10:54:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWCHPyE
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 10:54:04 -0500
-Received: from c-24-61-23-223.hsd1.ma.comcast.net ([24.61.23.223]:50565 "EHLO
-	cgf.cx") by vger.kernel.org with ESMTP id S1751086AbWCHPyD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 10:54:03 -0500
-Received: by cgf.cx (Postfix, from userid 201)
-	id C6B4513C41B; Wed,  8 Mar 2006 10:54:00 -0500 (EST)
-To: Andreas Ericsson <ae@op5.se>, Niklas H?glund <nhoglund@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+	id S932065AbWCHQTu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 11:19:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbWCHQTt
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 11:19:49 -0500
+Received: from xproxy.gmail.com ([66.249.82.206]:31589 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932065AbWCHQTt convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 11:19:49 -0500
+Received: by xproxy.gmail.com with SMTP id h31so156297wxd
+        for <git@vger.kernel.org>; Wed, 08 Mar 2006 08:19:48 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=P9bTf236mH6UET+zQb0rAIx+Iz7a5VYT4JEwG+Tu7L0T5yUIYDDRpQfMn1xY29WXKY7iqOcoq+abhkUmxWOxuDInSZvAwM8uHzsvFO80ubQNBsOHKIPD3xxJfmsks5CrPLz29riiRAp2KqJz6lmy4T8/I/jp+FJMive6qd65cUw=
+Received: by 10.70.124.1 with SMTP id w1mr1018647wxc;
+        Wed, 08 Mar 2006 08:19:48 -0800 (PST)
+Received: by 10.70.31.4 with HTTP; Wed, 8 Mar 2006 08:19:48 -0800 (PST)
+To: git <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20060308144413.GA516@spearce.org>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17376>
 
-On Wed, Mar 08, 2006 at 09:44:13AM -0500, Shawn Pearce wrote:
->BTW: chmod a-x .git/hooks/* also works as the Cygwin unixy permission
->layer will remember the change.
+Sorry if this was previously discussed. I ran git-rev-list on a linear
+graph and tried to filter the results by a file name:
 
-Using "chmod a-x" should work like linux as long as you're using an NTFS
-filesystem and have not specifically turned off Cygwin's handling of this
-kind of thing with the CYGWIN=nontsec environment variable.
+  git rev-list since.. path/to/file
 
-i.e., it should work in most cases on W2K+
+but it always shows the child commit of "since" even if it didn't
+touch the file. The same behaviour is for git-log (since it uses
+git-rev-list) but git-whatchanged seems to be fine.
 
-cgf
+Is this the intended behaviour? The "stg patches" command based on
+git-rev-list used to work fine a few weeks ago but now it is always
+reporting the bottom patch in the stack as modifying a given file.
+
+Thanks.
+
+--
+Catalin
