@@ -1,91 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFH] zlib gurus out there?
-Date: Tue, 7 Mar 2006 18:00:35 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603071753370.32577@g5.osdl.org>
-References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
- <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net> <20060224174422.GA13367@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
- <20060224183554.GA31247@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
- <20060224192354.GC387@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
- <7vpslc8oni.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
- <Pine.LNX.4.64.0602241637480.22647@g5.osdl.org>
- <Pine.LNX.4.64.0602242130030.31162@localhost.localdomain>
- <Pine.LNX.4.64.0602241952140.22647@g5.osdl.org>
- <Pine.LNX.4.64.0602242326381.31162@localhost.localdomain>
- <Pine.LNX.4.64.0602250012230.31162@localhost.localdomain>
- <7vzmk1izpa.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603071658300.32577@g5.osdl.org>
- <7vslptivbg.fsf@assigned-by-dhcp.cox.net>
+From: Greg KH <greg@kroah.com>
+Subject: Re: Problems with using git
+Date: Tue, 7 Mar 2006 18:16:08 -0800
+Message-ID: <20060308021608.GA26634@kroah.com>
+References: <44063B7C.40609@webdrake.net> <Pine.LNX.4.64.0603011651240.22647@g5.osdl.org> <4406F8B1.9050303@webdrake.net> <4406FA46.7080608@op5.se> <7vr75k5s4y.fsf@assigned-by-dhcp.cox.net> <20060302235824.GA13436@kroah.com> <slrne0isi9.fr9.mdw@metalzone.distorted.org.uk> <20060304222557.GA24628@kroah.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 08 03:00:55 2006
+X-From: git-owner@vger.kernel.org Wed Mar 08 03:16:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGnys-0006tm-IJ
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 03:00:50 +0100
+	id 1FGoDz-00019q-7c
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 03:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964879AbWCHCAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 21:00:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964880AbWCHCAr
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 21:00:47 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:11683 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964879AbWCHCAq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 21:00:46 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2820dDZ028381
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 7 Mar 2006 18:00:40 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2820Z7X021684;
-	Tue, 7 Mar 2006 18:00:38 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslptivbg.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752028AbWCHCQY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 21:16:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752029AbWCHCQY
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 21:16:24 -0500
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:8938 "EHLO
+	aria.kroah.org") by vger.kernel.org with ESMTP id S1752028AbWCHCQX
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 21:16:23 -0500
+Received: from press.kroah.org ([192.168.0.25] helo=localhost)
+	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.54)
+	id 1FGoDi-0001X0-EP; Tue, 07 Mar 2006 18:16:10 -0800
+To: Mark Wooding <mdw@distorted.org.uk>
+Content-Disposition: inline
+In-Reply-To: <20060304222557.GA24628@kroah.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17362>
 
-
-
-On Tue, 7 Mar 2006, Junio C Hamano wrote:
-> >
-> > No, I don't think that's good. You're only doing a partial deflate, you 
-> > can't ask for a Z_FULL_FLUSH. That only works if you give it the whole 
-> > buffer, and you don't.
-
-Actually, I misread what you were trying to do, and thought this was the 
-inflate phase, not the deflate. Now that I understand what you want, 
-
-> So, in short there is no way to create:
+On Sat, Mar 04, 2006 at 02:25:57PM -0800, Greg KH wrote:
+> On Sat, Mar 04, 2006 at 10:56:09AM +0000, Mark Wooding wrote:
+> > Greg KH <greg@kroah.com> wrote:
+> > 
+> > > The latest development tree, and the latest public betas contain
+> > > 1.1.3.  If you think this should be newer, I can easily go poke the
+> > > proper people...
+> > 
+> > Given that there's a security issue which got fixed in 1.1.5, I think
+> > this is really a bit poor.
+> > 
+> > I notice, by contrast, that Debian had managed to repackage and release
+> > a new GIT the day after Junio fixed the bug in the first place.  That
+> > was more than a month ago.
 > 
->     hdr part deflated.
->     flush.
->     data part deflated independently.
-> 
-> and have the current sha1_read_file() not to notice that flush,
+> Fair enough, I'll go poke the proper people now...
 
-Actually, try the patch you already tried, except you'll need to add a 
+They jumped and the cogito and git should be updated to the latest
+version in the next update.
 
-	deflateEnd(&stream);
-	deflateInit(&stream, Z_BEST_COMPRESSION);
-	.. set up output parameters again ..
+thanks,
 
-and you need to change the initial 
-
-	size = deflateBound(&stream, len+hdrlen);
-
-to
-
-	size = deflateBound(&stream, len) + deflateBound(&stream, hdrlen);
-
-and then you might be ok.
-
-That said, I'm not sure I agree with what you're trying to do. 
-
-		Linus
+greg k-h
