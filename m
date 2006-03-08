@@ -1,111 +1,112 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Pulling tags from git.git
-Date: Tue, 07 Mar 2006 20:32:00 -0800
-Message-ID: <440E5E40.7090700@gmail.com>
-References: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>	<4dd15d180603061054k36d1a434se7377ded1b3240bb@mail.gmail.com>	<440D5285.3050401@op5.se> <7voe0ilf25.fsf@assigned-by-dhcp.cox.net> <440D7A7D.8070507@op5.se> <440D9AB0.4070305@gmail.com> <440DA82D.3060909@op5.se>
-Reply-To: gitzilla@gmail.com
+From: Rajkumar S <rajkumars@asianetindia.com>
+Subject: Some more cvsimport
+Date: Wed, 08 Mar 2006 14:19:44 +0530
+Message-ID: <440E9AA8.2020605@asianetindia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 08 05:32:26 2006
+Content-Type: multipart/mixed;
+ boundary="------------050602060407010303010108"
+X-From: git-owner@vger.kernel.org Wed Mar 08 09:50:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGqLL-0007Cb-Vv
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 05:32:14 +0100
+	id 1FGuMu-0004ap-Cq
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 09:50:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbWCHEcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 23:32:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbWCHEcI
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 23:32:08 -0500
-Received: from zproxy.gmail.com ([64.233.162.198]:2981 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751510AbWCHEcH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 23:32:07 -0500
-Received: by zproxy.gmail.com with SMTP id 14so93392nzn
-        for <git@vger.kernel.org>; Tue, 07 Mar 2006 20:32:06 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=e3ubB9iEfVbGzcjRyn/xe4RliqCQ0zQmMtfbr1IHe+MJ7gplEzOYygSdA4dvCelCgwYcZ59Jesx2MUdtcKeDfynP9sLRlboPzYGaEGD8H2/oxE4gB+JRiN6zhjRK7WWpSGc8y6z+AF//espCSBDAXb29pYMK++rEs3VeJokMFZQ=
-Received: by 10.37.22.65 with SMTP id z65mr1576119nzi;
-        Tue, 07 Mar 2006 20:32:06 -0800 (PST)
-Received: from ?192.168.1.2? ( [209.79.152.188])
-        by mx.gmail.com with ESMTP id 15sm675854nzo.2006.03.07.20.32.05;
-        Tue, 07 Mar 2006 20:32:06 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+	id S932522AbWCHItt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 03:49:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932521AbWCHIts
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 03:49:48 -0500
+Received: from vhs2.linuxense.com ([64.34.173.90]:34794 "EHLO
+	vhs1.asianetindia.com") by vger.kernel.org with ESMTP
+	id S932516AbWCHIts (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Mar 2006 03:49:48 -0500
+Received: (qmail 27820 invoked by uid 1014); 8 Mar 2006 08:49:48 -0000
+Received: from rajkumars@asianetindia.com by vhs2.linuxense.com by uid 1003 with qmail-scanner-1.22 
+ (clamdscan: 0.74. spamassassin: 2.63.  Clear:RC:0(61.17.42.102):SA:0(0.0/6.5):. 
+ Processed in 0.716119 secs); 08 Mar 2006 08:49:48 -0000
+X-Spam-Status: No, hits=0.0 required=6.5
+Received: from static-61.17.42.102.ip-dsl-tvm.eth.net (HELO [192.168.3.49]) (raj@linuxense.com@[61.17.42.102])
+          (envelope-sender <rajkumars@asianetindia.com>)
+          by vhs1.asianetindia.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 8 Mar 2006 08:49:47 -0000
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
 X-Accept-Language: en-us, en
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <440DA82D.3060909@op5.se>
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17365>
 
-Andreas Ericsson wrote:
-> A Large Angry SCM wrote:
->> Andreas Ericsson wrote:
->>
->>> Junio C Hamano wrote:
->>>
->>>> Andreas Ericsson <ae@op5.se> writes:
->>>>
->>>>
->>>>> With the git or git+ssh protocol, tags will be autofollowed
->>>>> when you do a pull (only signed tags, I think).  The
->>>>> auto-following is done by detecting tags that are fetched,
->>>>
->>>>
->>>>
->>>> Ah, you are correct.  We do not follow lightweight tags; I am
->>>> not sure if we should.
->>>>
->>>
->>> I'm fairly sure we shouldn't. The default update-hook prevents them 
->>> (if enabled), and I can't for the life of me think of why anyone 
->>> would want to distribute such tags.
->>>
->>> OTOH, preventing unannotated tags from being pushed seems like a 
->>> better way than to not have the ability to auto-follow those same 
->>> tags. After all, it's better to discourage than to disallow.
->>>
->>
->> Before you do this, please explain why unannotated tags are not 
->> useful, and so should not be allowed to be pushed.
-> 
-> 
-> Imagine Linus, getting his "please pull" emails and doing so only to 
-> find dozens of temporary tags fetched by the pull. Junio's patch (if I 
-> read it correctly) unconditionally fetches *ALL* tags reachable from the 
-> top of the commit-chain, which means there is no longer any way to keep 
-> temporary tags in a repo from which someone else will pull.
+This is a multi-part message in MIME format.
+--------------050602060407010303010108
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Why is a "pull" bothering with tags? A "fetch" yes, but not a pull.
+Hi all,
 
-> I for one riddle my repos with temporary tags whenever I'm trying 
-> something I'm not so sure of, or find an interesting bug or a design 
-> decision I'm not 100% sure of. Perhaps I should rather do this with 
-> branches, but imo branches are for doing work, whereas tags just mark a 
-> spot in the development so I easily can find them with gitk or some such.
-> 
-> I may be biased by the way we do things at work. In our workflow, all 
-> tags meant to be distributed have a short note in them which explains 
-> the rationale of the tag. For example, new versions have a very brief 
-> changelog that sales-people get on email (a blessing, that, since we 
-> devs no longer have to update feature-lists and such).
-> 
-> Tags not meant to be distributed are unannotated, and unannotated tags 
-> are kept out of published repos which are always stored at a central 
-> server. Everybody synchronize to those central repos, so nobody pulls 
-> from each other. Perhaps this is how the kernel devs work too, but if it 
-> ever changes the update hook will no longer be able to safeguard from it 
-> and the, in my eyes, temporary tags will be distributed in a 
-> criss-crossing mesh so no-one will ever know where it came from or who 
-> created it or why. I.e. a Bad Thing.
+Thanks every one for replying to my previous mails and to Smurf for his helpful replies 
+and patch.
 
-The distinction here is not annotated tags or temporary tags but _local_ 
-tags. _Your_ workflow conventions treat unannotated tags as local tags 
-but declaring that unannotated tags can not be pushed is imposing _your_ 
-conventions on other groups. Just as branch names, themselves, can be 
-meaningful, so can tag names.
+The cvs project I am trying to track has 2 branchs. One head and another for releng_1. The 
+upstream cvs tree gets updated on both branchs. I also make modifications to both. When I 
+normally do cvsimport, the releng_1 tree gets updated automatically, but if I have checked 
+out the releng_1 branch in my local git repository when cvsimport happens the files do not 
+get updated.  I can fix this by checking out the master branch just before cvsimport and 
+then switching back.
+
+I am attaching a test script to simulate the problem and the fix is commented out.
+
+raj
+
+--------------050602060407010303010108
+Content-Type: application/x-shellscript;
+ name="git_branch_init.sh"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="git_branch_init.sh"
+
+ZXhwb3J0IENWU1JPT1Q9L2hvbWUvcmFqL2N2c3Jvb3QKcm0gLXJmIGN2c3Jvb3QvIGdpdC8g
+c3JjLyAvaG9tZS9yYWovLmN2c3BzCm1rZGlyIGN2c3Jvb3QgIGdpdCBzcmMKY3ZzIGluaXQg
+CmNkIHNyYy8KZWNobyAiSW5pdGlhbCBJbXBvcnQiID4gZmlsZS50eHQKZWNobyAiTGluZSBv
+bmUiID4gZmlsZTEudHh0CmVjaG8gIkxpbmUgb25lIiA+IGZpbGUyLnR4dApjdnMgaW1wb3J0
+IC1tICJJbXBvcnRlZCBzb3VyY2VzIiBzcmMgc3RhcnQgcmVhbHN0YXJ0CmVjaG8gIkluaXRp
+YWwgSW1wb3J0IgoKY2QgLi4Kcm0gLXJmIHNyYy8KY3ZzIGNvIHNyYyAKY2Qgc3JjCmVjaG8g
+IkZpcnN0IGNvbW1pdCwgYmVmb3JlIGJyYW5jaGluZyIgPj4gZmlsZS50eHQKY3ZzIGNvbW1p
+dCAtbSAiRmlyc3QgY29tbWl0LCBiZWZvcmUgYnJhbmNoaW5nIgplY2hvICJGaXJzdCBjb21t
+aXQgb3Zlciwgbm93IGJyYW5jaCIKCmN2cyB0YWcgLWIgcmVsZW5nXzEKc2xlZXAgMQplY2hv
+ICJCcmFuY2hlZCIKCmNkIC4uCnJtIC1yZiBzcmMKY3ZzIGNvIC1yIHJlbGVuZ18xIHNyYwpj
+ZCBzcmMKZWNobyAiQ2hlY2tlZCBvdXQgdGFnZ2VkIHZlcnNpb24iCmVjaG8gIkNvbW1pdGVk
+IGZpcnN0IHVwZGF0ZSB0byByZWxlbmdfMSIgPj4gZmlsZS50eHQKdG91Y2ggcmVsZW5nXzEK
+Y3ZzIGFkZCByZWxlbmdfMQplY2hvICJMaW5lIHR3byIgPj4gZmlsZTEudHh0CmN2cyBjb21t
+aXQgLW0gIkNvbW1pdGVkIGZpcnN0IHVwZGF0ZSB0byByZWxlbmdfMSIKc2xlZXAgMQplY2hv
+ICJDb21taXRlZCBmaXJzdCB1cGRhdGUgdG8gcmVsZW5nXzEiCgpjZCAuLgpybSAtcmYgc3Jj
+CmN2cyBjbyBzcmMKY2Qgc3JjCmVjaG8gIlNlY29uZCBjb21taXQgdG8gSEVBRCwgYmVmb3Jl
+IGN2c2ltcG9ydCIgPj4gZmlsZS50eHQKdG91Y2ggdmVyMS4xCmVjaG8gIkxpbmUgdHdvIiA+
+PiBmaWxlMS50eHQKY3ZzIGNvbW1pdCAtbSAiU2Vjb25kIGNvbW1pdCB0byBIRUFEIgoKI0Zp
+cnN0IGdpdCBpbXBvcnQKY2QgLi4KZ2l0IGN2c2ltcG9ydCAtdiAtayAtdSAtbSAtZCAkQ1ZT
+Uk9PVCAtQyBnaXQvICBzcmMKY2QgZ2l0IApnaXQgc3RhdHVzCgpjZCAuLgpybSAtcmYgc3Jj
+CmN2cyBjbyBzcmMKY2Qgc3JjCmVjaG8gIlRoaXJkIGNvbW1pdCB0byBIRUFEIiA+PiBmaWxl
+LnR4dAplY2hvICJ1cGRhdGVzIGluIGhlYWQiID4+IGZpbGUxLnR4dApjdnMgY29tbWl0IC1t
+ICJUaGlyZCBjb21taXQgdG8gSEVBRCIKCmNkIC4uCnJtIC1yZiBzcmMKY3ZzIGNvIC1yIHJl
+bGVuZ18xIHNyYwpjZCBzcmMKZWNobyAiU2Vjb25kIENvbW1pdCB0byByZWxlbmdfMSIgPj4g
+ZmlsZS50eHQKZWNobyAiTGluZSB0aHJlZSBpbiByZWxlbmciID4+IGZpbGUxLnR4dApjdnMg
+Y29tbWl0IC1tICJTZWNvbmQgQ29tbWl0IHRvIHJlbGVuZ18xIgoKI1NlY29uZCBnaXQgaW1w
+b3J0CmNkIC4uCmdpdCBjdnNpbXBvcnQgLXYgLWsgLXUgLW0gLWQgJENWU1JPT1QgLUMgZ2l0
+LyAgc3JjCmNkIGdpdApnaXQgc3RhdHVzCgoKY2QgLi4Kcm0gLXJmIHNyYwpjdnMgY28gc3Jj
+CmNkIHNyYwplY2hvICJGb3VydGggQ29tbWl0IGluIGhlYWQiID4+IGZpbGUudHh0CmVjaG8g
+ImV2ZW4gbW9yZSB1cGRhdGVzIGluIGhlYWQiID4+IGZpbGUxLnR4dApjdnMgY29tbWl0IC1t
+ICJGb3VydGggQ29tbWl0IGluIGhlYWQiCgpjZCAuLgpybSAtcmYgc3JjCmN2cyBjbyAtciBy
+ZWxlbmdfMSBzcmMKY2Qgc3JjCmVjaG8gIlRoaXJkIENvbW1pdCB0byByZWxlbmdfMSIgPj4g
+ZmlsZS50eHQKZWNobyAiTGluZSBmb3VyIGluIHJlbGVuZyIgPj4gZmlsZTEudHh0CmN2cyBj
+b21taXQgLW0gIlRoaXJkIENvbW1pdCB0byByZWxlbmdfMSIKCmNkIC4uCmdpdCBjdnNpbXBv
+cnQgLXYgLWsgLXUgLW0gLWQgJENWU1JPT1QgLUMgZ2l0LyAgc3JjCiNybSAtcmYgZ2l0X3Jl
+bGVhc2UKI2dpdCBjbG9uZSBnaXQgZ2l0X3JlbGVhc2UKY2QgZ2l0CmdpdCBjaGVja291dCBy
+ZWxlbmdfMQpnaXQgc3RhdHVzCmNkIC4uCgpybSAtcmYgc3JjCmN2cyBjbyAtciByZWxlbmdf
+MSBzcmMKY2Qgc3JjCmVjaG8gIkNvbW1pdCBhZnRlciBjbG9uZSB0byByZWxlbmdfMSIgPj4g
+ZmlsZS50eHQKY3ZzIGNvbW1pdCAtbSAiQ29tbWl0IGFmdGVyIGNsb25lIHRvIHJlbGVuZ18x
+IgoKY2QgLi4KIyBVbmNvbW1lbnQgIyMjIHRvIGZpeCB0aGUgYnVnKD8pLgojIyMgY2QgZ2l0
+CiMjIyBnaXQgY2hlY2tvdXQgbWFzdGVyCiMjIyBjZCAuLgpnaXQgY3ZzaW1wb3J0IC12IC1r
+IC11IC1tIC1kICRDVlNST09UIC1DIGdpdC8gIHNyYwpjZCBnaXQKIyMjIGdpdCBjaGVja291
+dCByZWxlbmdfMQpnaXQgc3RhdHVzCmNkIC4uCgo=
+--------------050602060407010303010108--
