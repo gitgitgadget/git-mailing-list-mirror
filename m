@@ -1,59 +1,69 @@
-From: "=?ISO-8859-1?Q?Niklas_H=F6glund?=" <nhoglund@gmail.com>
-Subject: Update hook in Cygwin
-Date: Wed, 8 Mar 2006 12:16:56 +0000
-Message-ID: <ad8ce5c20603080416g5ed6d77el@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Update hook in Cygwin
+Date: Wed, 08 Mar 2006 14:36:36 +0100
+Message-ID: <440EDDE4.9070405@op5.se>
+References: <ad8ce5c20603080416g5ed6d77el@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Mar 08 13:17:14 2006
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 08 14:37:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGxbA-000754-Oj
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 13:17:04 +0100
+	id 1FGyqQ-0002NA-5a
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 14:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932505AbWCHMQ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 07:16:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbWCHMQ6
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 07:16:58 -0500
-Received: from nproxy.gmail.com ([64.233.182.196]:7751 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932505AbWCHMQ5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 07:16:57 -0500
-Received: by nproxy.gmail.com with SMTP id a27so120093nfc
-        for <git@vger.kernel.org>; Wed, 08 Mar 2006 04:16:56 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=H1xhHkWuxtN6OZsCugdROeRTjrV09M82IFo1Z/MubKt8R9hpUq+yl+As3aPNLEi8qMHNcjMdUD0Z424v/UDKvQpiMogaRS+VTMiGueVqKFs1I66PsZy+PW2ViUDcMaqdpCFSEnL0bKzw4HP1Y4I7Tj7sKoGkOwoWOQXDpAv2BRE=
-Received: by 10.49.67.12 with SMTP id u12mr319067nfk;
-        Wed, 08 Mar 2006 04:16:56 -0800 (PST)
-Received: by 10.48.206.11 with HTTP; Wed, 8 Mar 2006 04:16:56 -0800 (PST)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751111AbWCHNgi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Mar 2006 08:36:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbWCHNgi
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 08:36:38 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:3531 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S1751111AbWCHNgi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 08:36:38 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id B9B426BD60; Wed,  8 Mar 2006 14:36:36 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: =?ISO-8859-15?Q?Niklas_H=F6glund?= <nhoglund@gmail.com>
+In-Reply-To: <ad8ce5c20603080416g5ed6d77el@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17371>
 
-Hi.
+Niklas H=F6glund wrote:
+> Hi.
+>=20
+> After creating a couple of repositories and pushing and cloning them,
+> I get the following:
+>=20
+> $ git push --all origin
+> ...
+> hooks/update: line 88: mail: command not found
+>=20
+> This is in cygwin. I'm rather glad I don't have the mail command
+> installed, as I don't want mails going anywhere.
+>=20
+> The update hook contains the following comment:
+>=20
+> # To enable this hook:
+> # (1) change the recipient e-mail address
+> # (2) make this file executable by "chmod +x update".
+>=20
+> But my impression after a cursory look at it is that it would always
+> call "mail" whenever it is run, and since all files are executable in
+> Windows (AFAIK), it would always be run.
 
-After creating a couple of repositories and pushing and cloning them,
-I get the following:
 
-$ git push --all origin
-...
-hooks/update: line 88: mail: command not found
+I was under the impression that the cygwin abstraction layer had some=20
+unixy permission thing on top of NTFS. Perhaps that's wrong. If you=20
+remove the hook it won't be called.
 
-This is in cygwin. I'm rather glad I don't have the mail command
-installed, as I don't want mails going anywhere.
-
-The update hook contains the following comment:
-
-# To enable this hook:
-# (1) change the recipient e-mail address
-# (2) make this file executable by "chmod +x update".
-
-But my impression after a cursory look at it is that it would always
-call "mail" whenever it is run, and since all files are executable in
-Windows (AFAIK), it would always be run.
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
