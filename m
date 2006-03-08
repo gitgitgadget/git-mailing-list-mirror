@@ -1,58 +1,43 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: git-svn, tree moves, and --no-stop-on-copy
-Date: Wed, 08 Mar 2006 18:02:05 +0100
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2006.03.08.17.02.04.503230@smurf.noris.de>
-References: <20060307220837.GB27397@nowhere.earth>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Mar 08 18:25:07 2006
+From: linux@horizon.com
+Subject: Re: [PATCH] git-blame: Make the output human readable
+Date: 8 Mar 2006 13:04:22 -0500
+Message-ID: <20060308180422.27978.qmail@science.horizon.com>
+References: <20060308173249.1faed1d7.vsu@altlinux.ru>
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Mar 08 19:05:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FH2NA-0001wW-0v
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 18:22:52 +0100
+	id 1FH31U-0000Qa-Un
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 19:04:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964777AbWCHRWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 12:22:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964789AbWCHRWs
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 12:22:48 -0500
-Received: from main.gmane.org ([80.91.229.2]:33208 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964777AbWCHRWs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 12:22:48 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FH2Dw-0006kR-Pk
-	for git@vger.kernel.org; Wed, 08 Mar 2006 18:13:21 +0100
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Mar 2006 18:13:20 +0100
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Mar 2006 18:13:20 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S932067AbWCHSEa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 13:04:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbWCHSEa
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 13:04:30 -0500
+Received: from science.horizon.com ([192.35.100.1]:40525 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932067AbWCHSE3
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 13:04:29 -0500
+Received: (qmail 27979 invoked by uid 1000); 8 Mar 2006 13:04:22 -0500
+To: linux@horizon.com, vsu@altlinux.ru
+In-Reply-To: <20060308173249.1faed1d7.vsu@altlinux.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17378>
 
-Hi, Yann Dirson wrote:
+> And this won't work, unless you also add that wcwidth() implementation
+> to git.
 
-> "svn switch --relocate" does not seem to be of any help.  Switching
-> manually .git/git-svn/tree/ to the new repository location does not
-> help either, since I must obviously update to r166 in that case, and
-> then a further "git-svn fetch" fails because it does not find
-> .git/git-svn/revs/166 aleady imported.
-> 
-> Any idea as to how to get the work done ?
+That was the general idea.  It is freely usable.
 
-You can manually edit the .git/corr file. Simply add an entry for #166
-that has your reorganized (if necessary) head's SHA1.
--- 
-Matthias Urlichs
+> The problem is that the wchar_t encoding is not specified anywhere -
+> glibc uses Unicode for it, but other systems can use whatever they want
+> (even locale-dependent).
+
+Why is that a problem?  None of the code mentioned even uses wchar_t.
+The code I wrote converts from UTF-8 to straight Unicode, and that's
+what Markus Kuhn's wcwidth() expects as an argument.
+
+At no time do we ask the compiler for its opinion on the subject.
