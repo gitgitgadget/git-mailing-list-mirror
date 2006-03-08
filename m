@@ -1,213 +1,74 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] diff-delta: bound hash list length to avoid O(m*n) behavior
-Date: Wed, 08 Mar 2006 14:32:50 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0603081319220.1859@localhost.localdomain>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: endless loop: ?
+Date: Wed, 08 Mar 2006 21:04:28 +0100
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2006.03.08.20.04.24.62170@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 08 20:34:16 2006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Mar 08 21:14:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FH4P1-0007RA-Gy
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 20:32:57 +0100
+	id 1FH51j-0003N4-To
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 21:12:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932124AbWCHTcw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 14:32:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932126AbWCHTcw
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 14:32:52 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:23729 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932124AbWCHTcv
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 14:32:51 -0500
-Received: from xanadu.home ([66.131.142.204]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IVT00JHYQAQ7830@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 08 Mar 2006 14:32:51 -0500 (EST)
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S1751315AbWCHUMx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 15:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbWCHUMx
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 15:12:53 -0500
+Received: from main.gmane.org ([80.91.229.2]:7563 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750749AbWCHUMw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 15:12:52 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FH50a-0002xv-J4
+	for git@vger.kernel.org; Wed, 08 Mar 2006 21:11:44 +0100
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Mar 2006 21:11:44 +0100
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Mar 2006 21:11:44 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17384>
 
+Hmmm...
 
-The diff-delta code can exhibit O(m*n) behavior with some patological
-data set where most hash entries end up in the same hash bucket.
+# ps axurw
+smurf    26367 84.1  0.2   3200  2068 pts/1    R    20:08  40:30 /usr/bin/git-rev-list --objects 5771c72e2908fb68906020d07d4e0cb77d2
 
-To prevent this, a limit is imposed to the number of entries that can 
-exist in the same hash bucket.
+# strace -p 26367
+stat64("/daten/src/noris/kundet.git/.git/objects/23/ae4dd0bab2f05dba8a3c77d4c792542b07b73e", {st_mode=S_IFREG|0644, st_size=204, ...}) = 0
+[ lots of different filenames, however ..:]
 
-Because of the above the code is a tiny bit more expensive on average, 
-even if some small optimizations were added as well to atenuate the 
-overhead. But the problematic samples used to diagnoze the issue are now 
-orders of magnitude less expensive to process with only a slight loss in 
-compression.
+# strace -p 26367 | grep ae4dd
+stat64("/daten/src/noris/kundet.git/.git/objects/23/ae4dd0bab2f05dba8a3c77d4c792542b07b73e", {st_mode=S_IFREG|0644, st_size=204, ...}) = 0
+[ lots of repetitions of the same filename => we're in a bad loop of some sort ]
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+# gdb /daten/src/git/git/git-rev-list 26367
+(gdb) whe
+#0  0xffffe410 in __kernel_vsyscall ()
+#1  0xb7ec08f8 in _xstat () from /lib/tls/i686/cmov/libc.so.6
+#2  0x0804e2f0 in find_sha1_file (
+    sha1=0x81ddb20 "#\uffffM\u043a\uffff\uffff]\uffff\212<w\uffff\uffff\222T+\a\uffff>\uffffr\005\b\uffff\uffff\035\b",
+    st=0xbf87b450) at stat.h:366
+#3  0x0804e752 in has_sha1_file (
+    sha1=0x81ddb20 "#\uffffM\u043a\uffff\uffff]\uffff\212<w\uffff\uffff\222T+\a\uffff>\uffffr\005\b\uffff\uffff\035\b")
+    at sha1_file.c:1600
+#4  0x080514f8 in mark_parents_uninteresting (commit=0x0) at revision.c:106
+#5  0x080514ed in mark_parents_uninteresting (commit=0x0) at revision.c:96
+[ bah ]
+#104 0x080514ed in mark_parents_uninteresting (commit=0x0) at revision.c:96
+#105 0x080516d8 in prepare_revision_walk (revs=0x8066560) at revision.c:347
+#106 0x08049ab4 in main (argc=1, argv=0xbf87c294) at rev-list.c:352
 
----
-
-For example, Carl Baldwin provided me with a couple 20MB files, and 
-deltifying one against another one with test-delta takes around 
-TEN MINUTES for only one delta on my P4 @ 3GHz.
-
-Nnow imagine using git-repack -a with a default window
-of 10 ... 
-
-With this patch the test-delta time dropped to only 9 seconds.  And the 
-resulting delta, once compressed, is about 2% larger.
-
-diff --git a/diff-delta.c b/diff-delta.c
-index 2ed5984..aaee7be 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -40,17 +40,18 @@ struct index {
- 
- static struct index ** delta_index(const unsigned char *buf,
- 				   unsigned long bufsize,
-+				   unsigned long trg_bufsize,
- 				   unsigned int *hash_shift)
- {
--	unsigned int hsize, hshift, entries, blksize, i;
-+	unsigned int i, hsize, hshift, hlimit, entries, *hash_count;
- 	const unsigned char *data;
- 	struct index *entry, **hash;
- 	void *mem;
- 
- 	/* determine index hash size */
--	entries = (bufsize + BLK_SIZE - 1) / BLK_SIZE;
-+	entries = bufsize  / BLK_SIZE;
- 	hsize = entries / 4;
--	for (i = 4; (1 << i) < hsize && i < 16; i++);
-+	for (i = 4; (1 << i) < hsize && i < 31; i++);
- 	hsize = 1 << i;
- 	hshift = 32 - i;
- 	*hash_shift = hshift;
-@@ -63,20 +64,62 @@ static struct index ** delta_index(const
- 	entry = mem + hsize * sizeof(*hash);
- 	memset(hash, 0, hsize * sizeof(*hash));
- 
--	/* then populate it */
-+	/* allocate an array to count hash entries */
-+	hash_count = calloc(hsize, sizeof(*hash_count));
-+	if (!hash_count) {
-+		free(hash);
-+		return NULL;
-+	}
-+
-+	/* then populate the index */
- 	data = buf + entries * BLK_SIZE - BLK_SIZE;
--	blksize = bufsize - (data - buf);
- 	while (data >= buf) {
--		unsigned int val = adler32(0, data, blksize);
-+		unsigned int val = adler32(0, data, BLK_SIZE);
- 		i = HASH(val, hshift);
- 		entry->ptr = data;
- 		entry->val = val;
- 		entry->next = hash[i];
- 		hash[i] = entry++;
--		blksize = BLK_SIZE;
-+		hash_count[i]++;
- 		data -= BLK_SIZE;
-  	}
- 
-+	/*
-+	 * Determine a limit on the number of entries in the same hash
-+	 * bucket.  This guard us against patological data sets causing
-+	 * really bad hash distribution with most entries in the same hash
-+	 * bucket that would bring us to O(m*n) computing costs (m and n
-+	 * corresponding to reference and target buffer sizes).
-+	 *
-+	 * The more the target buffer is large, the more it is important to
-+	 * have small entry lists for each hash buckets.  With such a limit
-+	 * the cost is bounded to something more like O(m+n).
-+	 */
-+	hlimit = (1 << 26) / trg_bufsize;
-+	if (hlimit < 4*BLK_SIZE)
-+		hlimit = 4*BLK_SIZE;
-+
-+	/*
-+	 * Now make sure none of the hash buckets has more entries than
-+	 * we're willing to test.  Otherwise we cull the entry list
-+	 * uniformly to still preserve a good repartition across
-+	 * the reference buffer.
-+	 */
-+	for (i = 0; i < hsize; i++) {
-+		if (hash_count[i] < hlimit)
-+			continue;
-+		entry = hash[i];
-+		do {
-+			struct index *keep = entry;
-+			int skip = hash_count[i] / hlimit / 2;
-+			do {
-+				entry = entry->next;
-+			} while(--skip && entry);
-+			keep->next = entry;
-+		} while(entry);
-+	}
-+	free(hash_count);
-+
- 	return hash;
- }
- 
-@@ -100,7 +143,7 @@ void *diff_delta(void *from_buf, unsigne
- 
- 	if (!from_size || !to_size)
- 		return NULL;
--	hash = delta_index(from_buf, from_size, &hash_shift);
-+	hash = delta_index(from_buf, from_size, to_size, &hash_shift);
- 	if (!hash)
- 		return NULL;
- 
-@@ -141,29 +184,27 @@ void *diff_delta(void *from_buf, unsigne
- 
- 	while (data < top) {
- 		unsigned int moff = 0, msize = 0;
--		unsigned int blksize = MIN(top - data, BLK_SIZE);
--		unsigned int val = adler32(0, data, blksize);
--		i = HASH(val, hash_shift);
--		for (entry = hash[i]; entry; entry = entry->next) {
--			const unsigned char *ref = entry->ptr;
--			const unsigned char *src = data;
--			unsigned int ref_size = ref_top - ref;
--			if (entry->val != val)
--				continue;
--			if (ref_size > top - src)
--				ref_size = top - src;
--			while (ref_size && *src++ == *ref) {
--				ref++;
--				ref_size--;
--			}
--			ref_size = ref - entry->ptr;
--			if (ref_size > msize) {
--				/* this is our best match so far */
--				moff = entry->ptr - ref_data;
--				msize = ref_size;
--				if (msize >= 0x10000) {
--					msize = 0x10000;
-+		if (data + BLK_SIZE <= top) {
-+			unsigned int val = adler32(0, data, BLK_SIZE);
-+			i = HASH(val, hash_shift);
-+			for (entry = hash[i]; entry; entry = entry->next) {
-+				const unsigned char *ref = entry->ptr;
-+				const unsigned char *src = data;
-+				unsigned int ref_size = ref_top - ref;
-+				if (entry->val != val)
-+					continue;
-+				if (ref_size > top - src)
-+					ref_size = top - src;
-+				if (ref_size > 0x10000)
-+					ref_size = 0x10000;
-+				if (ref_size <= msize)
- 					break;
-+				while (ref_size-- && *src++ == *ref)
-+					ref++;
-+				if (msize < ref - entry->ptr) {
-+					/* this is our best match so far */
-+					msize = ref - entry->ptr;
-+					moff = entry->ptr - ref_data;
- 				}
- 			}
- 		}
+I'll dig further tomorrow...
