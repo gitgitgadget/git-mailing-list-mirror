@@ -1,75 +1,52 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: git-svn, tree moves, and --no-stop-on-copy
-Date: Wed, 8 Mar 2006 23:41:04 +0100
-Message-ID: <20060308224104.GC27397@nowhere.earth>
-References: <20060307220837.GB27397@nowhere.earth> <20060308014207.GA31137@localdomain> <20060308221524.GF12638@nowhere.earth>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 0/3] Teach git-blame about renames
+Date: Wed, 8 Mar 2006 23:54:12 +0100
+Message-ID: <20060308225412.GA461@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 08 23:34:49 2006
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Mar 08 23:54:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FH7EU-0007Mx-Om
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 23:34:16 +0100
+	id 1FH7Y8-0005V0-6Y
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 23:54:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228AbWCHWeM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 17:34:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbWCHWeM
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 17:34:12 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:25986 "EHLO smtp6-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1751228AbWCHWeL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 17:34:11 -0500
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id D363D222AC;
-	Wed,  8 Mar 2006 23:34:10 +0100 (CET)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1FH7L7-0005Qr-Nt; Wed, 08 Mar 2006 23:41:05 +0100
-To: Eric Wong <normalperson@yhbt.net>
+	id S1030242AbWCHWyU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 17:54:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030241AbWCHWyU
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 17:54:20 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:42114 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1030242AbWCHWyT
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 17:54:19 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id DDA6340FF; Thu,  9 Mar 2006 00:09:44 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1FH7Xo-00007h-00; Wed, 08 Mar 2006 23:54:12 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060308221524.GF12638@nowhere.earth>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17388>
 
-On Wed, Mar 08, 2006 at 11:15:24PM +0100, Yann Dirson wrote:
-> OTOH, this does work:
-> 
->  svn co -r1 https://svn.sourceforge.net/svnroot/ufoai/trunk@1
+Hi,
 
-Let's go further:
+This patch series teaches git-blame about renames. To do this I have
+changed the revision.h interface a bit. In particular, it is now
+possible for the user of revision.h to specify a
+try_to_simply_commit-like function. That function can then do the
+rename tracking.
 
-@@ -224,12 +227,14 @@ sub fetch {
-        unless (-d $SVN_WC) {
-                my @svn_co = ('svn','co',"-r$base->{revision}");
-                push @svn_co,'--ignore-externals' unless $_no_ignore_ext;
--               sys(@svn_co, $SVN_URL, $SVN_WC);
-+               sys(@svn_co, $SVN_URL . "\@$base->{revision}", $SVN_WC);
-                chdir $SVN_WC or croak $!;
+I have also made a small change to sort_in_topological_order to make
+it possible to use the object.util field at the same time as a
+topological sort is done. Previously the object.util field was
+clobbered by the topological sort. In the new interface the auxiliary
+data that the topological sort needs to store for each commit object
+is stored with a setter function and retrieved by a getter. Pointers
+to those functions are passed to sort_in_topological_order.
 
-
-That allows git-svn not to fail at r1 (or at r3 when checking out
-trunk/src only), and the 1st fetch runs OK.
-
-The second fetch runs OK as well, but it shows the following somewhat
-scary stuff before starting the import:
-
-Checked out revision 166.
-refs/remotes/git-newsvn
-fatal: 'refs/remotes/git-newsvn': No such file or directory
-r166 = 38a6ba0e3db486c65a611c54c53f838210ce7551
-
-
-The results looks fine.  I don't know if it is expected to have the
-master head stuck at remotes/git-oldsvn, though.
-
-Thanks much for your help!
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+- Fredrik
