@@ -1,43 +1,53 @@
-From: linux@horizon.com
-Subject: Re: [PATCH] git-blame: Make the output human readable
-Date: 8 Mar 2006 13:04:22 -0500
-Message-ID: <20060308180422.27978.qmail@science.horizon.com>
-References: <20060308173249.1faed1d7.vsu@altlinux.ru>
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Mar 08 19:05:12 2006
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] test-delta needs zlib to compile
+Date: Wed, 08 Mar 2006 13:19:19 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0603081317280.1859@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 08 19:19:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FH31U-0000Qa-Un
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 19:04:33 +0100
+	id 1FH3G3-0006lp-AW
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 19:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932067AbWCHSEa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 13:04:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbWCHSEa
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 13:04:30 -0500
-Received: from science.horizon.com ([192.35.100.1]:40525 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S932067AbWCHSE3
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 13:04:29 -0500
-Received: (qmail 27979 invoked by uid 1000); 8 Mar 2006 13:04:22 -0500
-To: linux@horizon.com, vsu@altlinux.ru
-In-Reply-To: <20060308173249.1faed1d7.vsu@altlinux.ru>
+	id S1750889AbWCHSTU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 13:19:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbWCHSTU
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 13:19:20 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:28267 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750889AbWCHSTU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Mar 2006 13:19:20 -0500
+Received: from xanadu.home ([66.131.142.204]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IVT0096ZMW7O040@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 08 Mar 2006 13:19:19 -0500 (EST)
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17379>
 
-> And this won't work, unless you also add that wcwidth() implementation
-> to git.
 
-That was the general idea.  It is freely usable.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-> The problem is that the wchar_t encoding is not specified anywhere -
-> glibc uses Unicode for it, but other systems can use whatever they want
-> (even locale-dependent).
+---
 
-Why is that a problem?  None of the code mentioned even uses wchar_t.
-The code I wrote converts from UTF-8 to straight Unicode, and that's
-what Markus Kuhn's wcwidth() expects as an argument.
-
-At no time do we ask the compiler for its opinion on the subject.
+diff --git a/Makefile b/Makefile
+index a5eb0c4..89d67d6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -565,7 +565,7 @@ test-date$X: test-date.c date.o ctype.o
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) test-date.c date.o ctype.o
+ 
+ test-delta$X: test-delta.c diff-delta.o patch-delta.o
+-	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $^
++	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $^ -lz
+ 
+ check:
+ 	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; done
