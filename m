@@ -1,146 +1,91 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] contrib/git-svn: fix UUID reading w/pre-1.2 svn; fetch args
-Date: Tue, 7 Mar 2006 17:57:30 -0800
-Message-ID: <20060308015730.GA28056@localdomain>
-References: <20060307220837.GB27397@nowhere.earth> <20060308014207.GA31137@localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFH] zlib gurus out there?
+Date: Tue, 7 Mar 2006 18:00:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603071753370.32577@g5.osdl.org>
+References: <Pine.LNX.4.64.0602212043260.5606@localhost.localdomain>
+ <7v4q2pf8fq.fsf@assigned-by-dhcp.cox.net> <20060224174422.GA13367@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0602241252300.31162@localhost.localdomain>
+ <20060224183554.GA31247@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241350190.31162@localhost.localdomain>
+ <20060224192354.GC387@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0602241152290.22647@g5.osdl.org>
+ <7vpslc8oni.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0602241613030.31162@localhost.localdomain>
+ <Pine.LNX.4.64.0602241637480.22647@g5.osdl.org>
+ <Pine.LNX.4.64.0602242130030.31162@localhost.localdomain>
+ <Pine.LNX.4.64.0602241952140.22647@g5.osdl.org>
+ <Pine.LNX.4.64.0602242326381.31162@localhost.localdomain>
+ <Pine.LNX.4.64.0602250012230.31162@localhost.localdomain>
+ <7vzmk1izpa.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603071658300.32577@g5.osdl.org>
+ <7vslptivbg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 08 02:58:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 08 03:00:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FGnwY-0006UY-IX
-	for gcvg-git@gmane.org; Wed, 08 Mar 2006 02:58:27 +0100
+	id 1FGnys-0006tm-IJ
+	for gcvg-git@gmane.org; Wed, 08 Mar 2006 03:00:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964847AbWCHB6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Mar 2006 20:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964877AbWCHB6R
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 20:58:17 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:57521 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S964847AbWCHB6Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 20:58:16 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 469912DC033;
-	Tue,  7 Mar 2006 17:58:14 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  7 Mar 2006 17:57:30 -0800
-To: Yann Dirson <ydirson@altern.org>
-Content-Disposition: inline
-In-Reply-To: <20060308014207.GA31137@localdomain>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S964879AbWCHCAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Mar 2006 21:00:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964880AbWCHCAr
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Mar 2006 21:00:47 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:11683 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964879AbWCHCAq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Mar 2006 21:00:46 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2820dDZ028381
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 7 Mar 2006 18:00:40 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2820Z7X021684;
+	Tue, 7 Mar 2006 18:00:38 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslptivbg.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17361>
 
-Junio: please don't apply this patch to git.git just yet.  It seems fine
-to me, but I haven't tested it heavily yet (Yann can help me, I hope :)
-I hardly slept the past few days and I may have broken something badly
-(it pasts all the tests, though).
 
----
 
-As a side effect, this should also work better for 'init' off
-directories that are no longer in the latest revision of the
-repository.
+On Tue, 7 Mar 2006, Junio C Hamano wrote:
+> >
+> > No, I don't think that's good. You're only doing a partial deflate, you 
+> > can't ask for a Z_FULL_FLUSH. That only works if you give it the whole 
+> > buffer, and you don't.
 
-Fix 'fetch' args (<rev>=<commit> options) on brand-new heads
+Actually, I misread what you were trying to do, and thought this was the 
+inflate phase, not the deflate. Now that I understand what you want, 
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> So, in short there is no way to create:
+> 
+>     hdr part deflated.
+>     flush.
+>     data part deflated independently.
+> 
+> and have the current sha1_read_file() not to notice that flush,
 
----
+Actually, try the patch you already tried, except you'll need to add a 
 
- contrib/git-svn/git-svn.perl |   26 ++++++++++++++++++--------
- 1 files changed, 18 insertions(+), 8 deletions(-)
+	deflateEnd(&stream);
+	deflateInit(&stream, Z_BEST_COMPRESSION);
+	.. set up output parameters again ..
 
-9f59596bde5bdd68d1a0a116f7383df74966de44
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index c575883..b8d2b3e 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -162,7 +162,8 @@ sub rebuild {
- 				croak "SVN repository location required: $url\n";
- 			}
- 			$SVN_URL ||= $url;
--			$SVN_UUID ||= setup_git_svn();
-+			$SVN_UUID ||= $uuid;
-+			setup_git_svn();
- 			$latest = $rev;
- 		}
- 		assert_revision_eq_or_unknown($rev, $c);
-@@ -226,10 +227,12 @@ sub fetch {
- 		push @svn_co,'--ignore-externals' unless $_no_ignore_ext;
- 		sys(@svn_co, $SVN_URL, $SVN_WC);
- 		chdir $SVN_WC or croak $!;
-+		read_uuid();
- 		$last_commit = git_commit($base, @parents);
- 		assert_svn_wc_clean($base->{revision}, $last_commit);
- 	} else {
- 		chdir $SVN_WC or croak $!;
-+		read_uuid();
- 		$last_commit = file_to_s("$REV_DIR/$base->{revision}");
- 	}
- 	my @svn_up = qw(svn up);
-@@ -275,7 +278,9 @@ sub commit {
- 
- 	fetch();
- 	chdir $SVN_WC or croak $!;
--	my $svn_current_rev =  svn_info('.')->{'Last Changed Rev'};
-+	my $info = svn_info('.');
-+	read_uuid($info);
-+	my $svn_current_rev =  $info->{'Last Changed Rev'};
- 	foreach my $c (@revs) {
- 		my $mods = svn_checkout_tree($svn_current_rev, $c);
- 		if (scalar @$mods == 0) {
-@@ -314,6 +319,14 @@ sub show_ignore {
- 
- ########################### utility functions #########################
- 
-+sub read_uuid {
-+	return if $SVN_UUID;
-+	my $info = shift || svn_info('.');
-+	$SVN_UUID = $info->{'Repository UUID'} or
-+					croak "Repository UUID unreadable\n";
-+	s_to_file($SVN_UUID,"$GIT_DIR/$GIT_SVN/info/uuid");
-+}
-+
- sub setup_git_svn {
- 	defined $SVN_URL or croak "SVN repository location required\n";
- 	unless (-d $GIT_DIR) {
-@@ -323,14 +336,10 @@ sub setup_git_svn {
- 	mkpath(["$GIT_DIR/$GIT_SVN/info"]);
- 	mkpath([$REV_DIR]);
- 	s_to_file($SVN_URL,"$GIT_DIR/$GIT_SVN/info/url");
--	$SVN_UUID = svn_info($SVN_URL)->{'Repository UUID'} or
--					croak "Repository UUID unreadable\n";
--	s_to_file($SVN_UUID,"$GIT_DIR/$GIT_SVN/info/uuid");
- 
- 	open my $fd, '>>', "$GIT_DIR/$GIT_SVN/info/exclude" or croak $!;
- 	print $fd '.svn',"\n";
- 	close $fd or croak $!;
--	return $SVN_UUID;
- }
- 
- sub assert_svn_wc_clean {
-@@ -860,7 +869,6 @@ sub git_commit {
- 	my ($log_msg, @parents) = @_;
- 	assert_revision_unknown($log_msg->{revision});
- 	my $out_fh = IO::File->new_tmpfile or croak $!;
--	$SVN_UUID ||= svn_info('.')->{'Repository UUID'};
- 
- 	map_tree_joins() if (@_branch_from && !%tree_map);
- 
-@@ -922,7 +930,9 @@ sub git_commit {
- 	}
- 	my @update_ref = ('git-update-ref',"refs/remotes/$GIT_SVN",$commit);
- 	if (my $primary_parent = shift @exec_parents) {
--		push @update_ref, $primary_parent;
-+		if (!system('git-rev-parse',"refs/remotes/$GIT_SVN")){
-+			push @update_ref, $primary_parent;
-+		}
- 	}
- 	sys(@update_ref);
- 	sys('git-update-ref',"$GIT_SVN/revs/$log_msg->{revision}",$commit);
--- 
-1.2.4.g198d
+and you need to change the initial 
+
+	size = deflateBound(&stream, len+hdrlen);
+
+to
+
+	size = deflateBound(&stream, len) + deflateBound(&stream, hdrlen);
+
+and then you might be ok.
+
+That said, I'm not sure I agree with what you're trying to do. 
+
+		Linus
