@@ -1,52 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Allow git-repack to optionally run git-prune-packed.
-Date: Thu, 09 Mar 2006 10:50:43 -0800
-Message-ID: <7vy7zj4flo.fsf@assigned-by-dhcp.cox.net>
-References: <11417445722524-git-send-email-matlads@dsmagic.com>
-	<20060307212918.GA9474@steel.home>
-	<20060309102419.GA9961@igloo.ds.co.ug>
-	<81b0412b0603090648w4a3e4e4bwceb0ad19a2a4d15f@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] allow double click on current HEAD id after git-pull
+Date: Thu, 9 Mar 2006 22:02:50 +0100
+Message-ID: <20060309210250.GY31278@pasky.or.cz>
+References: <20060211112630.GA12421@suse.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 09 19:51:43 2006
+Cc: Olaf Hering <olh@suse.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 09 22:03:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHQDr-0002hR-7V
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 19:50:52 +0100
+	id 1FHSH8-00055N-0d
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 22:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbWCISuq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 13:50:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbWCISuq
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 13:50:46 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:62147 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751323AbWCISup (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Mar 2006 13:50:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060309184752.MWOI17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Mar 2006 13:47:52 -0500
-To: "Alex Riesen" <raa.lkml@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750722AbWCIVCO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 16:02:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbWCIVCO
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 16:02:14 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:10206 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750722AbWCIVCO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 16:02:14 -0500
+Received: (qmail 8050 invoked by uid 2001); 9 Mar 2006 22:02:50 +0100
+To: junkio@cox.net
+Content-Disposition: inline
+In-Reply-To: <20060211112630.GA12421@suse.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17437>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Dear diary, on Sat, Feb 11, 2006 at 12:26:30PM CET, I got a letter
+where Olaf Hering <olh@suse.de> said that...
+> Double click on to current HEAD commit id is not possible,
+> the dot has to go.
+> 
+> olaf@pomegranate:~/kernel/git/linux-2.6> git-pull
+> Unpacking 194 objects
+>  100% (194/194) done
+> * refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+> Updating from 5bc159e6cb7ca8d173195919ee935885c129011e to 25bf368b3d98668c5d5f38e2201d8bca16e52680.
+                                                                                                    ^
 
-> On 3/9/06, Martin Atukunda <matlads@dsmagic.com> wrote:
->> Your suggestion has merit, though it's different from the behaviour I
->> desired. I _sometimes_ need the pruning, and it felt appropriate to make
->> it an option as opposed to default behaviour.
->>
->> What do you think?
->
-> I think that my patch didn't change the default. git-prune-packed is called
-> only if -d is given, which is not the default.
+Junio, is there any particular reason why this hasn't been applied?
 
-I am inclined to say I prefer Alex' one.
+Thanks,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
