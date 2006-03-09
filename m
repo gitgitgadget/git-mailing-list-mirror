@@ -1,64 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-imap-send.
-Date: Thu, 9 Mar 2006 14:47:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603091445280.21440@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <440C3499.9080000@codeweavers.com> <7vacbz7vod.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0603091227560.20277@wbgn013.biozentrum.uni-wuerzburg.de>
- <4410140E.2000609@op5.se> <Pine.LNX.4.63.0603091243001.20908@wbgn013.biozentrum.uni-wuerzburg.de>
- <slrne10b8c.fr9.mdw@metalzone.distorted.org.uk>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Allow git-repack to optionally run git-prune-packed.
+Date: Thu, 9 Mar 2006 15:48:28 +0100
+Message-ID: <81b0412b0603090648w4a3e4e4bwceb0ad19a2a4d15f@mail.gmail.com>
+References: <11417445722524-git-send-email-matlads@dsmagic.com>
+	 <20060307212918.GA9474@steel.home>
+	 <20060309102419.GA9961@igloo.ds.co.ug>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 09 14:47:30 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Mar 09 15:49:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHLU4-0003Yv-0i
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 14:47:16 +0100
+	id 1FHMRN-0007Sl-7W
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 15:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932158AbWCINrF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 08:47:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932121AbWCINrF
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 08:47:05 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:49871 "EHLO
-	mailrelay.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932158AbWCINrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Mar 2006 08:47:04 -0500
-Received: from virusscan.mail (mail03.mail [172.25.1.102])
-	by mailrelay.mail (Postfix) with ESMTP id CAB1A1284;
-	Thu,  9 Mar 2006 14:47:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id BE3B4AFA;
-	Thu,  9 Mar 2006 14:47:00 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id A24FDAE7;
-	Thu,  9 Mar 2006 14:47:00 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <slrne10b8c.fr9.mdw@metalzone.distorted.org.uk>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751077AbWCIOsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 09:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbWCIOsa
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 09:48:30 -0500
+Received: from nproxy.gmail.com ([64.233.182.194]:65481 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751077AbWCIOsa convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 09:48:30 -0500
+Received: by nproxy.gmail.com with SMTP id a27so337304nfc
+        for <git@vger.kernel.org>; Thu, 09 Mar 2006 06:48:28 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qr52e37mmkbkAPGec5H/cFNHQ99eqU0QZthwntV86YNZgF692F3liEXtLLSAh/me0dI/qJKEcwdUAJ4XGpzPasLFNjoFcWMubvukWu1m0Jg0ZYddhUdEFwCLNRteRIG4f+UnpV8VTGUjqqgtdL4Uoab70D0joDcYwF8AsKBCHUA=
+Received: by 10.49.56.20 with SMTP id i20mr885657nfk;
+        Thu, 09 Mar 2006 06:48:28 -0800 (PST)
+Received: by 10.49.88.16 with HTTP; Thu, 9 Mar 2006 06:48:28 -0800 (PST)
+To: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+In-Reply-To: <20060309102419.GA9961@igloo.ds.co.ug>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17417>
 
-Hi,
+On 3/9/06, Martin Atukunda <matlads@dsmagic.com> wrote:
+> Your suggestion has merit, though it's different from the behaviour I
+> desired. I _sometimes_ need the pruning, and it felt appropriate to make
+> it an option as opposed to default behaviour.
+>
+> What do you think?
+>
 
-On Thu, 9 Mar 2006, Mark Wooding wrote:
-
-> There are reasons for which it'd be desirable that memcmp really compare
-> all the bytes, even if it can in theory stop early: in particular, there
-> are cases where early exit can leak timing information which makes it
-> possible to attack cryptographic protocols.
-
-I would be astonished if memcmp has to be timing proof for *all* 
-applications, just to keep crypto people happy. I don't *want* a slow-down 
-in my super-duper 3d shooter.
-
-> I'd have to recommend strncmp for this job.
-
-Fully agree.
-
-Ciao,
-Dscho
+I think that my patch didn't change the default. git-prune-packed is called
+only if -d is given, which is not the default.
