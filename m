@@ -1,88 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] clone: add refs/remotes/* to Pull: targets when cloning
-Date: Thu, 09 Mar 2006 10:23:19 -0800
-Message-ID: <7vfylr5vfs.fsf@assigned-by-dhcp.cox.net>
-References: <20060309115452.GA13369@localdomain>
-	<20060309115535.GB13369@localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Add git-imap-send.
+Date: Thu, 9 Mar 2006 10:21:50 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603091017530.18022@g5.osdl.org>
+References: <440C3499.9080000@codeweavers.com> <7vacbz7vod.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0603091227560.20277@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0603090836030.18022@g5.osdl.org> <7vmzfz5w2k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 09 19:24:33 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>
+X-From: git-owner@vger.kernel.org Thu Mar 09 19:24:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHPnO-0002DB-Sg
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 19:23:31 +0100
+	id 1FHPmG-0001u0-Ps
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 19:22:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750744AbWCISX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 13:23:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWCISX0
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 13:23:26 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43212 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750744AbWCISXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Mar 2006 13:23:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060309181935.ZBNX17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Mar 2006 13:19:35 -0500
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20060309115535.GB13369@localdomain> (Eric Wong's message of
-	"Thu, 9 Mar 2006 03:55:35 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750859AbWCISWH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 13:22:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbWCISWH
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 13:22:07 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:58585 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750859AbWCISWF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 13:22:05 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k29ILqDZ018585
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 9 Mar 2006 10:21:52 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k29ILokx007700;
+	Thu, 9 Mar 2006 10:21:51 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzfz5w2k.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17432>
 
-Eric Wong <normalperson@yhbt.net> writes:
 
-> diff --git a/git-clone.sh b/git-clone.sh
-> index 4ed861d..a8ab7fd 100755
-> --- a/git-clone.sh
-> +++ b/git-clone.sh
-> @@ -249,6 +249,12 @@ Pull: $head_points_at:$origin" &&
->  			test "$origin" = "$head" ||
->  			echo "Pull: ${head}:${head}"
->  		done >>"$GIT_DIR/remotes/origin"
-> +		(test -d "$GIT_DIR"/refs/remotes && cd "$GIT_DIR" &&
-> +		 find "refs/remotes" -type f -print | sed -e 's|^refs/||') |
-> +		while read ref
-> +		do
-> +			echo "Pull: $ref:$ref"
-> +		done >>"$GIT_DIR/remotes/origin"
->  	esac
 
-I am not sure I agree with what you are doing here.  I thought
-the idea behind refs/remotes is to migrate away from copying all
-the remote heads into refs/heads (so that Linus does not need to
-see my "next" and "pu" under his refs/heads), and putting
-foreign SCM tracking branches used by SVN and CVS importers in
-there instead of in refs/heads naturally falls out from that
-pattern.
+On Thu, 9 Mar 2006, Junio C Hamano wrote:
+>
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > it's entirely possible that it will load bytes from "string" _past_ the 
+> > end of the string because of an unrolled inner loop that does things 
+> > multiple bytes at a time. They won't be used in the eventual result, but 
+> > just the fact that they are loaded from memory can mean that your program 
+> > takes a SIGSEGV, for example, becaue it turns out "string" was just a 
+> > single NUL byte at the end of a page, and there's nothing after it.
+> 
+> Funny.  I've seen this exact bug in memcmp and strcmp in earlier
+> SunOS (pre Solaris) libc when I was working on something like
+> Valgrind in my previous life.
 
-Now I do not propose to change the current clone that
-contaminates the local branch namespace by copying remote
-refs/heads into local refs/heads in the middle of v1.3.0
-development without laying out a transition plan, but I think
-that is a sensible future direction.  Instead of copying
-everything from refs/heads to refs/heads, we only copy what
-remote HEAD points at to refs/heads/master to initialize the
-local clone, and copy everything from refs/heads to
-refs/remotes, _and_ set up Pull: lines to do the same tracking.
-The part of the code you are touching corresponds to the last
-part.
+Well, Valgrind actually can complain for no good reason.
 
-We would probably be better off not doing this right now.  When
-we are sure everybody thinks it is a better approach to use
-refs/remotes for remote branch tracking, we would need to change
-the part you did not change (I think the clone-pack part is the
-hardest to change since it has a built-in "copy refs to matching
-locations" logic) alongside with the part you touched with this
-patch to make things consistent.  At that time also you would
-need to remove several lines above the part you touched so that
-we do not use local refs/heads/* for tracking.
+System libraries often take advantage of knowing how the CPU and the 
+system memory layout works. For example, just from knowing that pages are 
+always aligned to a certain (largish) boundary, you can know that it's 
+perfectly safe to do certain optimizations and prefetch past the end of an 
+object, as long as it's in the same page (and the easiest way to verify 
+that is to just do it when something is aligned).
 
-How does that sound?
+So Valgrind will sometimes complain about perfectly bug-free code, just 
+because the bug-free code accesses outside the "strictly allowable" 
+region because it knows it can. 
+
+Valgrind can be taught about system libraries like that, but especially if 
+it's an early port to a new architecture or OS, valgrind will often 
+complain unnecessarily.
+
+			Linus
