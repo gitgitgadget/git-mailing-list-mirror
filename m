@@ -1,242 +1,51 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 1/3] Nicer output from 'git'
-Date: Thu, 9 Mar 2006 17:24:19 +0100
-Message-ID: <20060309162419.GB4484@c165.ib.student.liu.se>
-References: <20060309161722.GA4484@c165.ib.student.liu.se>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: Pulling tags from git.git
+Date: Thu, 09 Mar 2006 08:37:02 +0100
+Message-ID: <87zmk0dq75.fsf@mid.deneb.enyo.de>
+References: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>
+	<4dd15d180603061054k36d1a434se7377ded1b3240bb@mail.gmail.com>
+	<440D5285.3050401@op5.se> <7voe0ilf25.fsf@assigned-by-dhcp.cox.net>
+	<440D7A7D.8070507@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Mar 09 17:26:00 2006
+X-From: git-owner@vger.kernel.org Thu Mar 09 17:32:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHNwA-0006eD-Tp
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 17:24:27 +0100
+	id 1FHO2M-0000IX-IK
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 17:30:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932333AbWCIQYW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 11:24:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbWCIQYV
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 11:24:21 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:10628 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932333AbWCIQYU
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 11:24:20 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 514724102; Thu,  9 Mar 2006 17:39:54 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1FHNw3-00062f-00; Thu, 09 Mar 2006 17:24:19 +0100
+	id S932679AbWCIQar (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 11:30:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932663AbWCIQar
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 11:30:47 -0500
+Received: from mail.enyo.de ([212.9.189.167]:473 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S932679AbWCIQaq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 11:30:46 -0500
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1FHO2G-0006dB-KU
+	for git@vger.kernel.org; Thu, 09 Mar 2006 17:30:44 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.60)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1FHFhm-0000Za-Q8
+	for git@vger.kernel.org; Thu, 09 Mar 2006 08:37:02 +0100
 To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060309161722.GA4484@c165.ib.student.liu.se>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <440D7A7D.8070507@op5.se> (Andreas Ericsson's message of "Tue, 07
+	Mar 2006 13:20:13 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17424>
 
+* Andreas Ericsson:
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+[lightweight tags]
 
+> I'm fairly sure we shouldn't. The default update-hook prevents them
+> (if enabled), and I can't for the life of me think of why anyone would
+> want to distribute such tags.
 
----
-
- .gitignore            |    1 +
- Documentation/git.txt |   11 ++++++-----
- Makefile              |    7 +++++--
- generate-cmdlist.sh   |   22 ++++++++++++++++++++++
- git.c                 |   50 +++++++++++++++++++++++++++++++++++++------------
- 5 files changed, 72 insertions(+), 19 deletions(-)
-
-diff --git a/.gitignore b/.gitignore
-index abbc509..8e94cbd 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -121,6 +121,7 @@ git-write-tree
- git-core-*/?*
- test-date
- test-delta
-+common-cmds.h
- *.tar.gz
- *.dsc
- *.deb
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 2d0ca9d..8610d36 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -20,15 +20,16 @@ brings your stuff to the plumbing).
- OPTIONS
- -------
- --version::
--	prints the git suite version that the 'git' program came from.
-+	Prints the git suite version that the 'git' program came from.
- 
- --help::
--	prints the synopsis and a list of available commands.
--	If a git command is named this option will bring up the
--	man-page for that command.
-+	Prints the synopsis and a list of the most commonly used
-+	commands.  If a git command is named this option will bring up
-+	the man-page for that command. If the option '--all' or '-a' is
-+	given then all available commands are printed.
- 
- --exec-path::
--	path to wherever your core git programs are installed.
-+	Path to wherever your core git programs are installed.
- 	This can also be controlled by setting the GIT_EXEC_PATH
- 	environment variable. If no path is given 'git' will print
- 	the current setting and then exit.
-diff --git a/Makefile b/Makefile
-index 1c555da..dc9a742 100644
---- a/Makefile
-+++ b/Makefile
-@@ -452,10 +452,13 @@ all:
- strip: $(PROGRAMS) git$X
- 	$(STRIP) $(STRIP_OPTS) $(PROGRAMS) git$X
- 
--git$X: git.c $(LIB_FILE)
-+git$X: git.c common-cmds.h $(LIB_FILE)
- 	$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
- 		$(ALL_CFLAGS) -o $@ $(filter %.c,$^) $(LIB_FILE) $(LIBS)
- 
-+common-cmds.h: Documentation/git-*.txt
-+	./generate-cmdlist.sh > $@
-+
- $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
- 	rm -f $@
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-@@ -612,7 +615,7 @@ rpm: dist
- clean:
- 	rm -f *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o $(LIB_FILE)
- 	rm -f $(ALL_PROGRAMS) git$X
--	rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo
-+	rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h
- 	rm -rf $(GIT_TARNAME)
- 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	$(MAKE) -C Documentation/ clean
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-new file mode 100755
-index 0000000..02091b5
---- /dev/null
-+++ b/generate-cmdlist.sh
-@@ -0,0 +1,22 @@
-+#!/bin/sh
-+
-+echo "/* Automatically generated by $0 */
-+struct cmdname_help 
-+{
-+    char name[16];
-+    char help[64];
-+};
-+
-+struct cmdname_help common_cmds[] = {"
-+
-+# Please keep this list sorted
-+for i in "add" "apply" "bisect" "branch" "checkout" "cherry-pick" "clone" \
-+"commit" "diff" "fetch" "grep" "init-db" "log" "merge" "mv" \
-+"prune" "pull" "push" "rebase" "reset" "revert" "rm" "show-branch" \
-+"status" "tag" "verify-tag" "whatchanged"
-+do
-+    sed -n "/NAME/,/git-$i/H;
-+	    \$ {x; s/.*git-$i - \\(.*\\)/{\"$i\", \"\1\"},/; p}" \
-+	"Documentation/git-$i.txt"
-+done
-+echo "};"
-diff --git a/git.c b/git.c
-index 164d3e9..2cbb471 100644
---- a/git.c
-+++ b/git.c
-@@ -11,6 +11,7 @@
- #include <sys/ioctl.h>
- #include "git-compat-util.h"
- #include "exec_cmd.h"
-+#include "common-cmds.h"
- 
- #include "cache.h"
- #include "commit.h"
-@@ -171,11 +172,29 @@ static void list_commands(const char *ex
- 	putchar('\n');
- }
- 
-+static void list_common_cmds_help()
-+{
-+	int i, longest = 0;
-+
-+	for(i = 0; i < sizeof(common_cmds)/sizeof(struct cmdname_help); i++) {
-+		if(strlen(common_cmds[i].name) > longest)
-+			longest = strlen(common_cmds[i].name);
-+	}
-+
-+	puts("The most commonly used git commands are:");
-+	for(i = 0; i < sizeof(common_cmds)/sizeof(struct cmdname_help); i++) {
-+		printf("    %s", common_cmds[i].name);
-+		mput_char(' ', longest - strlen(common_cmds[i].name) + 4);
-+		puts(common_cmds[i].help);
-+	}
-+	puts("(use 'git help -a' to get a list of all installed git commands)");
-+}
-+
- #ifdef __GNUC__
--static void cmd_usage(const char *exec_path, const char *fmt, ...)
--	__attribute__((__format__(__printf__, 2, 3), __noreturn__));
-+static void cmd_usage(int show_all, const char *exec_path, const char *fmt, ...)
-+	__attribute__((__format__(__printf__, 3, 4), __noreturn__));
- #endif
--static void cmd_usage(const char *exec_path, const char *fmt, ...)
-+static void cmd_usage(int show_all, const char *exec_path, const char *fmt, ...)
- {
- 	if (fmt) {
- 		va_list ap;
-@@ -189,11 +208,14 @@ static void cmd_usage(const char *exec_p
- 	else
- 		puts(git_usage);
- 
--	putchar('\n');
--
--	if(exec_path)
--		list_commands(exec_path, "git-*");
--
-+	if(exec_path) {
-+		putchar('\n');
-+		if(show_all)
-+			list_commands(exec_path, "git-*");
-+		else
-+			list_common_cmds_help();
-+        }
-+        
- 	exit(1);
- }
- 
-@@ -244,8 +266,12 @@ static int cmd_help(int argc, const char
- {
- 	const char *help_cmd = argv[1];
- 	if (!help_cmd)
--		cmd_usage(git_exec_path(), NULL);
--	show_man_page(help_cmd);
-+		cmd_usage(0, git_exec_path(), NULL);
-+	else if(!strcmp(help_cmd, "--all") ||
-+		!strcmp(help_cmd, "-a"))
-+		cmd_usage(1, git_exec_path(), NULL);
-+	else
-+		show_man_page(help_cmd);
- 	return 0;
- }
- 
-@@ -420,7 +446,7 @@ int main(int argc, const char **argv, ch
- 			puts(git_exec_path());
- 			exit(0);
- 		}
--		cmd_usage(NULL, NULL);
-+		cmd_usage(0, NULL, NULL);
- 	}
- 	argv[0] = cmd;
- 
-@@ -443,7 +469,7 @@ int main(int argc, const char **argv, ch
- 	execv_git_cmd(argv);
- 
- 	if (errno == ENOENT)
--		cmd_usage(exec_path, "'%s' is not a git-command", cmd);
-+		cmd_usage(0, exec_path, "'%s' is not a git-command", cmd);
- 
- 	fprintf(stderr, "Failed to run command '%s': %s\n",
- 		git_command, strerror(errno));
+The current implementation is rather counter-intuitive because it's
+much easier to create lightweight tags, and you wonder why they aren't
+replicated by fetches (but some other tags are).
