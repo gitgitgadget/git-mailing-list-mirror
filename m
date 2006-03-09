@@ -1,63 +1,60 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: bug?: stgit creates (unneccessary?) conflicts when pulling
-Date: Thu, 9 Mar 2006 22:00:25 +0000
-Message-ID: <b0943d9e0603091400o2cd0291h@mail.gmail.com>
-References: <20060227204252.GA31836@diana.vm.bytemark.co.uk>
-	 <20060227222600.GA11797@spearce.org> <tnx1wxmig75.fsf@arm.com>
-	 <20060301145105.GB3313@spearce.org>
-	 <b0943d9e0603010708l72cb14d1w@mail.gmail.com>
-	 <20060301155043.GA3706@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] allow double click on current HEAD id after git-pull
+Date: Thu, 09 Mar 2006 15:17:29 -0800
+Message-ID: <7vy7zj2oom.fsf@assigned-by-dhcp.cox.net>
+References: <20060211112630.GA12421@suse.de>
+	<20060309210250.GY31278@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 09 23:00:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net, Olaf Hering <olh@suse.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 10 00:17:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHTBN-0008Sn-MS
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 23:00:30 +0100
+	id 1FHUNz-0005JI-Je
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 00:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751712AbWCIWA1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 17:00:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbWCIWA1
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 17:00:27 -0500
-Received: from xproxy.gmail.com ([66.249.82.199]:21621 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751608AbWCIWA0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 17:00:26 -0500
-Received: by xproxy.gmail.com with SMTP id s11so420274wxc
-        for <git@vger.kernel.org>; Thu, 09 Mar 2006 14:00:25 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Za0ra87BxJ1GLKwmdTu78gY22R058GzXQ0OeElAW2zAfejWTMckmXcbZAxBv9w4GoWD0gc8omUrGr0eBfbKUyLLezQkQm9SajpBCeV74zzdNZaOhNLSFn59kWHn3wwsDoZTMpopOdGFwmj6Yt1Rl3fdAtRMaGduyC+OhwRM5S4g=
-Received: by 10.70.78.12 with SMTP id a12mr2856540wxb;
-        Thu, 09 Mar 2006 14:00:25 -0800 (PST)
-Received: by 10.70.31.4 with HTTP; Thu, 9 Mar 2006 14:00:25 -0800 (PST)
-To: "Shawn Pearce" <spearce@spearce.org>
-In-Reply-To: <20060301155043.GA3706@spearce.org>
-Content-Disposition: inline
+	id S1751949AbWCIXRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 18:17:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbWCIXRc
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 18:17:32 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:36313 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751949AbWCIXRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Mar 2006 18:17:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060309231441.DYTL17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Mar 2006 18:14:41 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060309210250.GY31278@pasky.or.cz> (Petr Baudis's message of
+	"Thu, 9 Mar 2006 22:02:50 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17439>
 
-On 01/03/06, Shawn Pearce <spearce@spearce.org> wrote:
-> Speaking of making StGIT faster: earlier we were talking about how
-> git-diff|git-apply is faster than a 3 way git-read-tree on large
-> merges when there are many structural changes in the tree due to
-> the smaller number of process spawns required.
+Petr Baudis <pasky@suse.cz> writes:
+
+> Dear diary, on Sat, Feb 11, 2006 at 12:26:30PM CET, I got a letter
+> where Olaf Hering <olh@suse.de> said that...
+>> Double click on to current HEAD commit id is not possible,
+>> the dot has to go.
+>> 
+>> olaf@pomegranate:~/kernel/git/linux-2.6> git-pull
+>> Unpacking 194 objects
+>>  100% (194/194) done
+>> * refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+>> Updating from 5bc159e6cb7ca8d173195919ee935885c129011e to 25bf368b3d98668c5d5f38e2201d8bca16e52680.
+>                                                                                                     ^
 >
-> You might want to take a look at pg--merge-all: This is sort of based
-> on git-merge-recursive, but I've gotten it down to just a handful
-> of process spawns, aside from the stupidity of git-checkout-index.
+> Junio, is there any particular reason why this hasn't been applied?
 
-Trying to implement this, I've just noticed that git-read-tree has a
---aggressive option which takes care of the file removals. Adding this
-option lowered the pushing time in StGIT from ~2 min to under 2
-seconds (merges between 2.6.14 and the latest kernel). There's
-probably no need to deal with file removals in pg--merge-all anymore.
+Well I kind of like ending a sentence with a full stop.  Isn't
+this something you can do by confuguiring your cut&paste?
 
---
-Catalin
+But I do not have a _very_ strong feeling either way.  If
+majority of the list wants it that way I do not mind.
