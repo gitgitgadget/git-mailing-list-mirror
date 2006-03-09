@@ -1,65 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: fsck-object --standalone got errors
-Date: Wed, 08 Mar 2006 19:17:18 -0800
-Message-ID: <7v7j74fgsh.fsf@assigned-by-dhcp.cox.net>
-References: <440F945C.2010401@brocade.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: [PATCH] Don't recurse into parents marked uninteresting.
+Date: Thu, 09 Mar 2006 05:04:36 +0100
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2006.03.09.04.04.34.617873@smurf.noris.de>
+References: <pan.2006.03.08.20.04.24.62170@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 09 04:20:47 2006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Mar 09 05:11:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHBeh-0007Rk-Lh
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 04:17:36 +0100
+	id 1FHCUK-0004GS-Ku
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 05:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbWCIDRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 22:17:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932605AbWCIDRU
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 22:17:20 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:28873 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932334AbWCIDRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Mar 2006 22:17:20 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060309031726.DRUU25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Mar 2006 22:17:26 -0500
-To: Ming Lei <mlei@brocade.com>
-In-Reply-To: <440F945C.2010401@brocade.com> (Ming Lei's message of "Wed, 08
-	Mar 2006 18:35:08 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030180AbWCIEKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 23:10:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030202AbWCIEKo
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 23:10:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:51076 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030180AbWCIEKo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Mar 2006 23:10:44 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FHCU3-0004AY-4L
+	for git@vger.kernel.org; Thu, 09 Mar 2006 05:10:39 +0100
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Mar 2006 05:10:39 +0100
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Mar 2006 05:10:39 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17397>
 
-Ming Lei <mlei@brocade.com> writes:
+revision.c:make_parents_uninteresting() is exponential with the number
+of merges in the tree. That's fine -- unless some other part of git
+already has pulled the whole commit tree into memory ...
 
-> I have a repository created by GIT itself(not cognito, etc). It has
-> branches called base, master and origin. When I did git-fsck-objects
-> --full there is nothing shown, but when I did git-fsck-objects
-> --standalone, it displayed following:
+---
 
-That is really an artifact from a distant past.  Please do not
-worry about that error -- as long as --full does not see
-anything long, there is nothing wrong with your repository.
+... or, in other words, "Don't do that, please."
 
-The fsck-object command (back then it was called fsck-cache)
-complained if objects referred to by files in .git/refs/ or
-objects stored in files under .git/objects/??/ are not found as
-stand-alone SHA1 files (i.e.  found in alternate object pools or
-packed archives stored under .git/objects/pack).  Back then,
-packs and alternates were curiosity and having everything as
-loose objects were the norm.
+With this patch, all tests still succeed, and the "git push" which
+triggered the problem takes 5min instead of an estimated 10mio years.
 
-When we adjusted the behaviour of fsck-cache to consider objects
-found in packs are OK, we introduced the --standalone flag as a
-backward compatibility measure.
+---
 
-It still correctly checks if your repository is complete and
-consists only of loose objects, so in that sense it is doing the
-"right" thing, but checking that is pointless these days.  We
-probably should remove that flag.
+ revision.c |   24 +++++++++++++-----------
+ 1 files changed, 13 insertions(+), 11 deletions(-)
+
+32c9750691d1ef225ca1641fdf6902e53c25fe5b
+diff --git a/revision.c b/revision.c
+index 2a33637..713f27e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -82,18 +82,20 @@ void mark_parents_uninteresting(struct c
+ 
+ 	while (parents) {
+ 		struct commit *commit = parents->item;
+-		commit->object.flags |= UNINTERESTING;
++		if (!(commit->object.flags & UNINTERESTING)) {
++			commit->object.flags |= UNINTERESTING;
+ 
+-		/*
+-		 * Normally we haven't parsed the parent
+-		 * yet, so we won't have a parent of a parent
+-		 * here. However, it may turn out that we've
+-		 * reached this commit some other way (where it
+-		 * wasn't uninteresting), in which case we need
+-		 * to mark its parents recursively too..
+-		 */
+-		if (commit->parents)
+-			mark_parents_uninteresting(commit);
++			/*
++			 * Normally we haven't parsed the parent
++			 * yet, so we won't have a parent of a parent
++			 * here. However, it may turn out that we've
++			 * reached this commit some other way (where it
++			 * wasn't uninteresting), in which case we need
++			 * to mark its parents recursively too..
++			 */
++			if (commit->parents)
++				mark_parents_uninteresting(commit);
++		}
+ 
+ 		/*
+ 		 * A missing commit is ok iff its parent is marked
+-- 
+Matthias Urlichs
