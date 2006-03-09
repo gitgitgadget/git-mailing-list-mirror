@@ -1,61 +1,58 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Pulling tags from git.git
-Date: Thu, 09 Mar 2006 18:24:45 +0100
-Message-ID: <441064DD.2010903@op5.se>
-References: <4dd15d180603061044h3f70d48bk8006c15e605fdca1@mail.gmail.com>	<4dd15d180603061054k36d1a434se7377ded1b3240bb@mail.gmail.com>	<440D5285.3050401@op5.se> <7voe0ilf25.fsf@assigned-by-dhcp.cox.net>	<440D7A7D.8070507@op5.se> <87zmk0dq75.fsf@mid.deneb.enyo.de>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH 0/3] Make the output of 'git' nicer
+Date: Thu, 9 Mar 2006 12:32:04 -0500
+Message-ID: <20060309173203.GA8578@mythryan2.michonline.com>
+References: <20060309161722.GA4484@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 09 18:25:38 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Mar 09 18:34:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHOsc-0000w0-1p
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 18:24:51 +0100
+	id 1FHP0d-0003Mf-34
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 18:33:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799AbWCIRYr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 12:24:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbWCIRYr
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 12:24:47 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:53987 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750799AbWCIRYr
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 12:24:47 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id DA9906BCFF; Thu,  9 Mar 2006 18:24:45 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Florian Weimer <fw@deneb.enyo.de>
-In-Reply-To: <87zmk0dq75.fsf@mid.deneb.enyo.de>
+	id S1750962AbWCIRdE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 12:33:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbWCIRdE
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 12:33:04 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:33232 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1750962AbWCIRdC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Mar 2006 12:33:02 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1FHP0T-0007m8-Qv; Thu, 09 Mar 2006 12:33:01 -0500
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FHP0P-0008Se-Aj; Thu, 09 Mar 2006 12:32:53 -0500
+Received: from ryan by mythical with local (Exim 4.60)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1FHP00-0004P5-HS; Thu, 09 Mar 2006 12:32:28 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+Content-Disposition: inline
+In-Reply-To: <20060309161722.GA4484@c165.ib.student.liu.se>
+User-Agent: Mutt/1.5.11+cvs20060126
+X-h4x0r5.com-MailScanner: Found to be clean
+X-h4x0r5.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17429>
 
-Florian Weimer wrote:
-> * Andreas Ericsson:
+On Thu, Mar 09, 2006 at 05:17:22PM +0100, Fredrik Kuivinen wrote:
+> Hi,
 > 
-> [lightweight tags]
-> 
-> 
->>I'm fairly sure we shouldn't. The default update-hook prevents them
->>(if enabled), and I can't for the life of me think of why anyone would
->>want to distribute such tags.
-> 
-> 
-> The current implementation is rather counter-intuitive because it's
-> much easier to create lightweight tags, and you wonder why they aren't
-> replicated by fetches (but some other tags are).
+> This series makes the output of 'git' easier to read (IMHO). With this
+> patch the output will look like this:
 
-
-Well, you wouldn't want to go through the trouble of writing a 
-tag-message for a temporary tag, but signing and writing a short note 
-for a tag that you intend those who share your workload to have is not 
-that much of a bother imo.
+You'll probably want to add "show" to that list.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Ryan Anderson
+  sometimes Pug Majere
