@@ -1,47 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-fmt-merge-msg cleanup
-Date: Wed, 08 Mar 2006 18:27:51 -0800
-Message-ID: <7vzmk0fj2w.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0603081753270.32577@g5.osdl.org>
+From: Ming Lei <mlei@brocade.com>
+Subject: fsck-object --standalone got errors
+Date: Wed, 08 Mar 2006 18:35:08 -0800
+Message-ID: <440F945C.2010401@brocade.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 09 03:28:06 2006
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Mar 09 03:35:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHAsh-0003KO-MI
-	for gcvg-git@gmane.org; Thu, 09 Mar 2006 03:28:00 +0100
+	id 1FHAzo-0005B8-PS
+	for gcvg-git@gmane.org; Thu, 09 Mar 2006 03:35:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932710AbWCIC1x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Mar 2006 21:27:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932712AbWCIC1x
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 21:27:53 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:7069 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932710AbWCIC1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Mar 2006 21:27:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060309022759.CUDC25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Mar 2006 21:27:59 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603081753270.32577@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 8 Mar 2006 17:56:07 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161001AbWCICfR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Mar 2006 21:35:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161006AbWCICfR
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Mar 2006 21:35:17 -0500
+Received: from mail55.messagelabs.com ([216.82.240.35]:8165 "HELO
+	mail55.messagelabs.com") by vger.kernel.org with SMTP
+	id S1161001AbWCICfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Mar 2006 21:35:15 -0500
+X-VirusChecked: Checked
+X-Env-Sender: mlei@Brocade.COM
+X-Msg-Ref: server-6.tower-55.messagelabs.com!1141871709!72676214!1
+X-StarScan-Version: 5.5.9.1; banners=-,-,-
+X-Originating-IP: [66.243.153.112]
+Received: (qmail 16116 invoked from network); 9 Mar 2006 02:35:09 -0000
+Received: from f112.brocade.com (HELO blasphemy.brocade.com) (66.243.153.112)
+  by server-6.tower-55.messagelabs.com with SMTP; 9 Mar 2006 02:35:09 -0000
+Received: from hq-ex-2.corp.brocade.com (hq-ex-2 [192.168.38.63])
+	by blasphemy.brocade.com (Postfix) with ESMTP id 0E1B41425C
+	for <git@vger.kernel.org>; Wed,  8 Mar 2006 18:35:09 -0800 (PST)
+Received: from brocade.com ([192.168.78.243]) by hq-ex-2.corp.brocade.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 8 Mar 2006 18:35:08 -0800
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.2.1) Gecko/20030225
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+X-OriginalArrivalTime: 09 Mar 2006 02:35:08.0945 (UTC) FILETIME=[1526C810:01C64322]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17395>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+I have a repository created by GIT itself(not cognito, etc). It has 
+branches called base, master and origin. When I did git-fsck-objects 
+--full there is nothing shown, but when I did git-fsck-objects 
+--standalone, it displayed following:
 
-> Since I've started using the "merge.summary" flag in my repo, my merge 
-> messages look nicer, but I dislike how I get notifications of merges 
-> within merges.
->
-> So I'd suggest this trivial change..
+error: refs/heads/master: invalid sha1 pointer 
+ea51c414519ffe78c5bf95c488e94e82d3603472
+error: refs/heads/base: invalid sha1 pointer 
+4b75aaeb5af2dc69374ad080020758e4de6a45d2
+error: refs/heads/origin: invalid sha1 pointer 
+f4c9503abb2ad52752004e8e9b77b72e23d18d3e
+fatal: No default references
 
-Makes sense.  Thanks.
+
+The question is:
+what's the purpose for this standalone check? what's these errors about? 
+Do I need to care these errors?
+what's the step to ensure my repository always be in a good shape? Is 
+running fsck-objects --full sufficient?
+
+
+Thanks
+Ming
