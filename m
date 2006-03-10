@@ -1,56 +1,74 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-rev-list bug?
-Date: Fri, 10 Mar 2006 10:31:31 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603101030160.18022@g5.osdl.org>
-References: <b0943d9e0603080819i227c637fo@mail.gmail.com>
- <7vacc0iten.fsf@assigned-by-dhcp.cox.net> <7vmzfy1zjb.fsf@assigned-by-dhcp.cox.net>
- <7virqmzlhb.fsf@assigned-by-dhcp.cox.net> <7v4q26zklx.fsf@assigned-by-dhcp.cox.net>
- <7vslpqy4u7.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH 1/3] cg-mv doesn't work with bash 3.1.7 due to
+	excessive quotes
+Date: Fri, 10 Mar 2006 15:48:42 -0500
+Message-ID: <1142023722.23830.8.camel@dv>
+References: <20060303011154.14619.71590.stgit@dv.roinet.com>
+	 <7vbqwo3xo4.fsf@assigned-by-dhcp.cox.net>  <1141395067.30343.14.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 10 19:32:09 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 10 21:49:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHmOt-0007mz-98
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 19:31:43 +0100
+	id 1FHoY3-0002lE-NR
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 21:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbWCJSbk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 13:31:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbWCJSbk
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 13:31:40 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:15323 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751958AbWCJSbj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Mar 2006 13:31:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2AIVXDZ023183
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 10 Mar 2006 10:31:33 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2AIVVAA026980;
-	Fri, 10 Mar 2006 10:31:32 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslpqy4u7.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932229AbWCJUtA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 15:49:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbWCJUtA
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 15:49:00 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:11658 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932229AbWCJUs7
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Mar 2006 15:48:59 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FHoXe-0000p6-G5
+	for git@vger.kernel.org; Fri, 10 Mar 2006 15:48:55 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FHoXS-0005qp-Px; Fri, 10 Mar 2006 15:48:42 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <1141395067.30343.14.camel@dv>
+X-Mailer: Evolution 2.5.92 (2.5.92-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17481>
 
+Hello, Petr!
 
+On Fri, 2006-03-03 at 09:11 -0500, Pavel Roskin wrote:
+> On Thu, 2006-03-02 at 21:27 -0800, Junio C Hamano wrote:
+> > Pavel Roskin <proski@gnu.org> writes:
+> > 
+> > > -	ARGS2["${#ARGS2[@]}"]="$_git_relpath${arg%/}"
+> > > +	ARGS2[${#ARGS2[@]}]="$_git_relpath${arg%/}"
 
-On Fri, 10 Mar 2006, Junio C Hamano wrote:
-> 
-> So we would need a combination of both, something like this?
+Any issues with this patch?  FC5 is due in a week.  Expect and outcry
+from the new bash 3.1.7 users if the fixed cogito is not available
+shortly.
 
-Looks good to me.
+Bash is not as wrong as it may seem.  Left hand side in assignments is
+already a special case in earlier versions of bash, just not in the
+index:
 
-As does the 'revs.prune_fn' abstraction by Fredrik Kuivinen, for that 
-matter. Ack to both.
+bash 3.00.16 (FC4)
+$ f"oo"=bar
+bash: foo=bar: command not found
+$ foo["0"]=bar
+$
 
-		Linus
+bash 3.1.7 (FC5)
+$ f"oo"=bar
+bash: foo=bar: command not found
+$ foo["0"]=bar
+bash: "0": syntax error: operand expected (error token is ""0"")
+$
+
+-- 
+Regards,
+Pavel Roskin
