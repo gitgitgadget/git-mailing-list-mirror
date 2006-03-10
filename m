@@ -1,92 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-rev-list bug?
-Date: Fri, 10 Mar 2006 00:20:40 -0800
-Message-ID: <7vmzfy1zjb.fsf@assigned-by-dhcp.cox.net>
-References: <b0943d9e0603080819i227c637fo@mail.gmail.com>
-	<7vacc0iten.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Mar 10 09:21:08 2006
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 0/3] Teach git-blame about renames (take 2)
+Date: Fri, 10 Mar 2006 10:21:35 +0100
+Message-ID: <20060310092135.24015.26510.stgit@c165>
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Mar 10 10:21:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHcrc-0004A4-Ry
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 09:20:49 +0100
+	id 1FHdof-00041E-M1
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 10:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932328AbWCJIUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 03:20:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932693AbWCJIUm
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 03:20:42 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:13499 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932328AbWCJIUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Mar 2006 03:20:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060310081747.BHSI17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 10 Mar 2006 03:17:47 -0500
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751257AbWCJJVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 04:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWCJJVl
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 04:21:41 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:61061 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1751257AbWCJJVl
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Mar 2006 04:21:41 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 441024102; Fri, 10 Mar 2006 10:37:12 +0100 (CET)
+Received: from c165 ([127.0.0.1])
+	by c165 with esmtp (Exim 3.36 #1 (Debian))
+	id 1FHdoV-0006FO-00; Fri, 10 Mar 2006 10:21:35 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17461>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
->
->> Sorry if this was previously discussed. I ran git-rev-list on a linear
->> graph and tried to filter the results by a file name:
->>
->>   git rev-list since.. path/to/file
->>
->> but it always shows the child commit of "since" even if it didn't
->> touch the file. The same behaviour is for git-log (since it uses
->> git-rev-list) but git-whatchanged seems to be fine.
->>
->> Is this the intended behaviour? The "stg patches" command based on
->> git-rev-list used to work fine a few weeks ago but now it is always
->> reporting the bottom patch in the stack as modifying a given file.
->
-> I can confirm that this is a recent breakage, but since it is
-> unfortunately my day-job day the more detailed analysis and fix
-> needs to wait.  Sorry.
+Changes since the previous version:
 
-To my surprise, it turns out that this regression was not very
-recent.  Bisecting points at this commite:
+* Fix the things pointed out by Junio.
+* Some other minor clean-ups
 
-diff-tree 461cf59... (from 6b94f1e...)
-Author: Linus Torvalds <torvalds@osdl.org>
-Date:   Wed Jan 18 14:47:30 2006 -0800
+---
 
-    rev-list: stop when the file disappears
-    
-    The one thing I've considered doing (I really should) is to add a "stop
-    when you don't find the file" option to "git-rev-list". This patch does
-    some of the work towards that: it removes the "parent" thing when the
-    file disappears, so a "git annotate" could do do something like
-    
-    	git-rev-list --remove-empty --parents HEAD -- "$filename"
-    
-    and it would get a good graph that stops when the filename disappears
-    (it's not perfect though: it won't remove all the unintersting commits).
-    
-    It also simplifies the logic of finding tree differences a bit, at the
-    cost of making it a tad less efficient.
-    
-    The old logic was two-phase: it would first simplify _only_ merges tree as
-    it traversed the tree, and then simplify the linear parts of the remainder
-    independently. That was pretty optimal from an efficiency standpoint
-    because it avoids doing any comparisons that we can see are unnecessary,
-    but it made it much harder to understand than it really needed to be.
-    
-    The new logic is a lot more straightforward, and compares the trees as it
-    traverses the graph (ie everything is a single phase). That makes it much
-    easier to stop graph traversal at any point where a file disappears.
-    
+This patch series teaches git-blame about renames. To do this I have
+changed the revision.h interface a bit. In particular, it is now
+possible for the user of revision.h to specify a
+try_to_simply_commit-like function. That function can then do the
+rename tracking.
 
-I haven't had time to dig into this deeper yet...
+I have also made a small change to sort_in_topological_order to make
+it possible to use the object.util field at the same time as a
+topological sort is done. Previously the object.util field was
+clobbered by the topological sort. In the new interface the auxiliary
+data that the topological sort needs to store for each commit object
+is stored with a setter function and retrieved by a getter. Pointers
+to those functions are passed to sort_in_topological_order_fn.
+
+- Fredrik
