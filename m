@@ -1,54 +1,67 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: What's in git.git
-Date: Fri, 10 Mar 2006 11:44:43 +0100
-Message-ID: <20060310104443.GA4491@c165.ib.student.liu.se>
-References: <7v1wxg82r3.fsf@assigned-by-dhcp.cox.net> <46a038f90603060105m29595745ke64d4a623506c0b0@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: git-rev-list bug?
+Date: Fri, 10 Mar 2006 11:01:55 +0000
+Message-ID: <tnx64mmpnq4.fsf@arm.com>
+References: <b0943d9e0603080819i227c637fo@mail.gmail.com>
+	<7vacc0iten.fsf@assigned-by-dhcp.cox.net>
+	<7vmzfy1zjb.fsf@assigned-by-dhcp.cox.net>
+	<7virqmzlhb.fsf@assigned-by-dhcp.cox.net>
+	<7v4q26zklx.fsf@assigned-by-dhcp.cox.net>
+	<7vslpqy4u7.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 10 11:45:24 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 10 12:02:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHf77-0002Td-6K
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 11:44:53 +0100
+	id 1FHfO5-0007LQ-9Z
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 12:02:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbWCJKou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 05:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbWCJKou
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 05:44:50 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:3974 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1752215AbWCJKot
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Mar 2006 05:44:49 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 0A4404114; Fri, 10 Mar 2006 12:00:21 +0100 (CET)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1FHf6x-0006kh-00; Fri, 10 Mar 2006 11:44:43 +0100
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90603060105m29595745ke64d4a623506c0b0@mail.gmail.com>
-User-Agent: Mutt/1.5.11
+	id S1752224AbWCJLCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 06:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWCJLCW
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 06:02:22 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:7845 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1752223AbWCJLCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Mar 2006 06:02:21 -0500
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k2AB21uc019092;
+	Fri, 10 Mar 2006 11:02:02 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Fri, 10 Mar 2006 11:02:01 +0000
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslpqy4u7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Fri, 10 Mar 2006 02:25:04 -0800")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 10 Mar 2006 11:02:01.0803 (UTC) FILETIME=[0F0A61B0:01C64432]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17469>
 
-On Mon, Mar 06, 2006 at 10:05:41PM +1300, Martin Langhoff wrote:
-> On 3/6/06, Junio C Hamano <junkio@cox.net> wrote:
-> > - The deathmatch between annotate/blame (Ryan Anderson, Fredrik
-> >   Kuivinen, me cheerleading)
-> 
-> Add fuel to the fire  ;-) Can git-blame take cached git-rev-list
-> output like annotate does with -S?
-> 
+Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+>
+>> It however has a side effect -- uninteresting commits were never
+>> parsed here, but now they get parsed.  I am not sure if there
+>> are correctness implications...
+>
+> Actually there is.  If a merge with an uninteresting side branch
+> was the only thing that brought changes to paths we are
+> interested in, we do not want TREE_SAME logic to remove other
+> parents (i.e. the branches we are interested in) from the merge
+> commit.  
+>
+> So we would need a combination of both, something like this?
 
-Currently it cannot do that. How is that option used? If you want to
-make annotate/blame faster for certain files you might as well cache
-the output of annotate/blame instead of the git-rev-list output, no?
+I can confirm that it "stg patches" works fine with this patch for
+git-rev-list.
 
-What am I missing?
+Thanks.
 
-- Fredrik
+-- 
+Catalin
