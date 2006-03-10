@@ -1,146 +1,64 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] fetch,parse-remote,fmt-merge-msg: refs/remotes/* support
-Date: Fri, 10 Mar 2006 04:19:07 -0800
-Message-ID: <20060310121907.GA15746@localdomain>
-References: <20060309115452.GA13369@localdomain> <7vzmjz5y6o.fsf@assigned-by-dhcp.cox.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Cogito: Cleanup documentation building and add quick reference
+Date: Fri, 10 Mar 2006 15:41:06 +0100
+Message-ID: <20060310144106.GA7920@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 10 13:19:23 2006
+X-From: git-owner@vger.kernel.org Fri Mar 10 15:41:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHgaP-0002eg-NY
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 13:19:14 +0100
+	id 1FHinv-0007V2-Eu
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 15:41:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750787AbWCJMTK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 07:19:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbWCJMTK
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 07:19:10 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:2767 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750787AbWCJMTJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Mar 2006 07:19:09 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 16B322DC01A;
-	Fri, 10 Mar 2006 04:19:08 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 10 Mar 2006 04:19:07 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1751363AbWCJOlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 09:41:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751368AbWCJOlQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 09:41:16 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:46304 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1751363AbWCJOlQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Mar 2006 09:41:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 1987B52D62B;
+	Fri, 10 Mar 2006 15:41:14 +0100 (CET)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 01501-20; Fri, 10 Mar 2006 15:41:06 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 556BF52D533;
+	Fri, 10 Mar 2006 15:41:06 +0100 (CET)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 18F856DF835; Fri, 10 Mar 2006 15:39:42 +0100 (CET)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 3C5E561DC1; Fri, 10 Mar 2006 15:41:06 +0100 (CET)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <7vzmjz5y6o.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060126
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17474>
 
-Note: This replaces the previous patch to fetch and parse-remote.
+Hi,
 
-We can now easily fetch and merge things from heads in the
-refs/remotes/ hierarchy in remote repositories.
+Here are a few patches that makes it possible to build documentation as
+PDF using docbook2pdf (chosen because xmlto doesn't seem to be able to
+generate PDFs).
 
-The refs/remotes/ hierarchy is likely to become the standard for
-tracking foreign SCMs, as well as the location of Pull: targets
-for non-master heads of newly cloned repositories.
+All the patches leads up to adding a quick reference with often used
+Cogito commands and associated option. It is inspired by svn-ref and the
+goal is to have the PDF version under two pages long. The grouping of
+commands could need some more comments.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+The quick reference can be translated into HTML, PDF and cg-ref(7)
+manpage. The last one is achieved by stripping much of the markup from
+the 'default' version since manpages cannot have table layout. Note the
+HTML and PDF versions are generated as quick-reference.{html,pdf}. We
+might want to generate cg-ref.{html,pdf} instead.
 
----
-
- git-fetch.sh           |    8 +++++++-
- git-fmt-merge-msg.perl |    8 ++++++++
- git-parse-remote.sh    |    8 ++++----
- 3 files changed, 19 insertions(+), 5 deletions(-)
-
-6697c83da96b26739c3fe33c8526da6124cea909
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 0346d4a..11e9a9d 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -94,6 +94,9 @@ append_fetch_head () {
-     # remote-nick is the URL given on the command line (or a shorthand)
-     # remote-name is the $GIT_DIR relative refs/ path we computed
-     # for this refspec.
-+
-+    # the $note_ variable will be fed to git-fmt-merge-msg for further
-+    # processing.
-     case "$remote_name_" in
-     HEAD)
- 	note_= ;;
-@@ -103,6 +106,9 @@ append_fetch_head () {
-     refs/tags/*)
- 	note_="$(expr "$remote_name_" : 'refs/tags/\(.*\)')"
- 	note_="tag '$note_' of " ;;
-+    refs/remotes/*)
-+	note_="$(expr "$remote_name_" : 'refs/\(remotes/.*\)')"
-+	note_="remote branch '$note_' of " ;;
-     *)
- 	note_="$remote_name of " ;;
-     esac
-@@ -150,7 +156,7 @@ fast_forward_local () {
- 	git-update-ref "$1" "$2" 
- 	;;
- 
--    refs/heads/*)
-+    refs/heads/* | refs/remotes/*)
- 	# $1 is the ref being updated.
- 	# $2 is the new value for the ref.
- 	local=$(git-rev-parse --verify "$1^0" 2>/dev/null)
-diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
-index afe80e6..5986e54 100755
---- a/git-fmt-merge-msg.perl
-+++ b/git-fmt-merge-msg.perl
-@@ -75,6 +75,7 @@ while (<>) {
- 		$src{$src} = {
- 			BRANCH => [],
- 			TAG => [],
-+			R_BRANCH => [],
- 			GENERIC => [],
- 			# &1 == has HEAD.
- 			# &2 == has others.
-@@ -91,6 +92,11 @@ while (<>) {
- 		push @{$src{$src}{TAG}}, $1;
- 		$src{$src}{HEAD_STATUS} |= 2;
- 	}
-+	elsif (/^remote branch (.*)$/) {
-+		$origin = $1;
-+		push @{$src{$src}{R_BRANCH}}, $1;
-+		$src{$src}{HEAD_STATUS} |= 2;
-+	}
- 	elsif (/^HEAD$/) {
- 		$origin = $src;
- 		$src{$src}{HEAD_STATUS} |= 1;
-@@ -123,6 +129,8 @@ for my $src (@src) {
- 	}
- 	push @this, andjoin("branch ", "branches ",
- 			   $src{$src}{BRANCH});
-+	push @this, andjoin("remote branch ", "remote branches ",
-+			   $src{$src}{R_BRANCH});
- 	push @this, andjoin("tag ", "tags ",
- 			   $src{$src}{TAG});
- 	push @this, andjoin("commit ", "commits ",
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 5f158c6..63f2281 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -86,14 +86,14 @@ canon_refs_list_for_fetch () {
- 		local=$(expr "$ref" : '[^:]*:\(.*\)')
- 		case "$remote" in
- 		'') remote=HEAD ;;
--		refs/heads/* | refs/tags/*) ;;
--		heads/* | tags/* ) remote="refs/$remote" ;;
-+		refs/heads/* | refs/tags/* | refs/remotes/*) ;;
-+		heads/* | tags/* | remotes/* ) remote="refs/$remote" ;;
- 		*) remote="refs/heads/$remote" ;;
- 		esac
- 		case "$local" in
- 		'') local= ;;
--		refs/heads/* | refs/tags/*) ;;
--		heads/* | tags/* ) local="refs/$local" ;;
-+		refs/heads/* | refs/tags/* | refs/remotes/*) ;;
-+		heads/* | tags/* | remotes/* ) local="refs/$local" ;;
- 		*) local="refs/heads/$local" ;;
- 		esac
- 
 -- 
-1.2.4.gbe2d
+Jonas Fonseca
