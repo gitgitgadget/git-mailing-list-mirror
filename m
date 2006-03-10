@@ -1,37 +1,37 @@
 From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 3/3] blame: Rename detection (take 2)
-Date: Fri, 10 Mar 2006 10:21:41 +0100
-Message-ID: <20060310092141.24015.42482.stgit@c165>
+Subject: [PATCH 1/3] Make it possible to not clobber object.util in sort_in_topological_order (take 2)
+Date: Fri, 10 Mar 2006 10:21:37 +0100
+Message-ID: <20060310092137.24015.45112.stgit@c165>
 References: <20060310092135.24015.26510.stgit@c165>
 Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Mar 10 10:22:18 2006
+X-From: git-owner@vger.kernel.org Fri Mar 10 10:22:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHdov-00044h-Q5
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 10:22:02 +0100
+	id 1FHdog-00041E-7s
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 10:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbWCJJVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 04:21:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbWCJJVs
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 04:21:48 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:62853 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1751955AbWCJJVq
+	id S1751408AbWCJJVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 04:21:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbWCJJVo
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 04:21:44 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:61829 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1751408AbWCJJVn
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Mar 2006 04:21:46 -0500
+	Fri, 10 Mar 2006 04:21:43 -0500
 Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
 	by mail6.wasadata.com (Postfix) with ESMTP
-	id A01A94102; Fri, 10 Mar 2006 10:37:18 +0100 (CET)
+	id 61F244103; Fri, 10 Mar 2006 10:37:14 +0100 (CET)
 Received: from c165 ([127.0.0.1])
 	by c165 with esmtp (Exim 3.36 #1 (Debian))
-	id 1FHdob-0006GB-00; Fri, 10 Mar 2006 10:21:41 +0100
+	id 1FHdoX-0006Fj-00; Fri, 10 Mar 2006 10:21:37 +0100
 To: git@vger.kernel.org
 In-Reply-To: <20060310092135.24015.26510.stgit@c165>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17464>
 
 
 
@@ -40,347 +40,127 @@ Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
 ---
 
- blame.c |  239 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
- 1 files changed, 199 insertions(+), 40 deletions(-)
+ commit.c |   30 ++++++++++++++++++++++++------
+ commit.h |   16 +++++++++++++++-
+ 2 files changed, 39 insertions(+), 7 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 90338af..ac57e10 100644
---- a/blame.c
-+++ b/blame.c
-@@ -14,6 +14,7 @@
- #include "tree.h"
- #include "blob.h"
- #include "diff.h"
-+#include "diffcore.h"
- #include "revision.h"
- 
- #define DEBUG 0
-@@ -34,7 +35,9 @@ struct util_info {
- 	char *buf;
- 	unsigned long size;
- 	int num_lines;
--//    const char* path;
-+	const char* pathname;
-+
-+	void* topo_data;
- };
- 
- struct chunk {
-@@ -342,25 +345,34 @@ static int map_line(struct commit *commi
- 	return info->line_map[line];
+diff --git a/commit.c b/commit.c
+index 06d5439..013683a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -569,11 +569,29 @@ int count_parents(struct commit * commit
+         return count;
  }
  
--static int fill_util_info(struct commit *commit, const char *path)
-+static struct util_info* get_util(struct commit *commit)
++void topo_sort_default_setter(struct commit *c, void *data)
++{
++	c->object.util = data;
++}
++
++void *topo_sort_default_getter(struct commit *c)
++{
++	return c->object.util;
++}
++
+ /*
+  * Performs an in-place topological sort on the list supplied.
+  */
+ void sort_in_topological_order(struct commit_list ** list, int lifo)
  {
--	struct util_info *util;
--	if (commit->object.util)
--		return 0;
-+	struct util_info *util = commit->object.util;
-+
-+	if (util)
-+		return util;
- 
- 	util = xmalloc(sizeof(struct util_info));
-+	util->buf = NULL;
-+	util->size = 0;
-+	util->line_map = NULL;
-+	util->num_lines = -1;
-+	util->pathname = NULL;
-+	commit->object.util = util;
-+	return util;
-+}
- 
--	if (get_blob_sha1(commit->tree, path, util->sha1)) {
--		free(util);
-+static int fill_util_info(struct commit *commit)
-+{
-+	struct util_info *util = commit->object.util;
-+
-+	assert(util);
-+	assert(util->pathname);
-+	
-+	if (get_blob_sha1(commit->tree, util->pathname, util->sha1))
- 		return 1;
--	} else {
--		util->buf = NULL;
--		util->size = 0;
--		util->line_map = NULL;
--		util->num_lines = -1;
--		commit->object.util = util;
-+	else
- 		return 0;
--	}
- }
- 
- static void alloc_line_map(struct commit *commit)
-@@ -389,10 +401,11 @@ static void alloc_line_map(struct commit
- 
- static void init_first_commit(struct commit* commit, const char* filename)
- {
--	struct util_info* util;
-+	struct util_info* util = commit->object.util;
- 	int i;
- 
--	if (fill_util_info(commit, filename))
-+	util->pathname = filename;
-+	if (fill_util_info(commit))
- 		die("fill_util_info failed");
- 
- 	alloc_line_map(commit);
-@@ -453,7 +466,7 @@ static void process_commits(struct rev_i
- 		if(num_parents == 0)
- 			*initial = commit;
- 
--		if(fill_util_info(commit, path))
-+		if (fill_util_info(commit))
- 			continue;
- 
- 		alloc_line_map(commit);
-@@ -471,7 +484,7 @@ static void process_commits(struct rev_i
- 				printf("parent: %s\n",
- 				       sha1_to_hex(parent->object.sha1));
- 
--			if(fill_util_info(parent, path)) {
-+			if (fill_util_info(parent)) {
- 				num_parents--;
- 				continue;
- 			}
-@@ -511,6 +524,135 @@ static void process_commits(struct rev_i
- 	} while ((commit = get_revision(rev)) != NULL);
- }
- 
-+
-+static int compare_tree_path(struct rev_info* revs,
-+			     struct commit* c1, struct commit* c2)
-+{
-+	const char* paths[2];
-+	struct util_info* util = c2->object.util;
-+	paths[0] = util->pathname;
-+	paths[1] = NULL;
-+
-+	diff_tree_setup_paths(get_pathspec(revs->prefix, paths));
-+	return rev_compare_tree(c1->tree, c2->tree);
++	sort_in_topological_order_fn(list, lifo, topo_sort_default_setter,
++				     topo_sort_default_getter);
 +}
 +
-+
-+static int same_tree_as_empty_path(struct rev_info *revs, struct tree* t1,
-+				   const char* path)
++void sort_in_topological_order_fn(struct commit_list ** list, int lifo,
++				  topo_sort_set_fn_t setter,
++				  topo_sort_get_fn_t getter)
 +{
-+	const char* paths[2];
-+	paths[0] = path;
-+	paths[1] = NULL;
-+
-+	diff_tree_setup_paths(get_pathspec(revs->prefix, paths));
-+	return rev_same_tree_as_empty(t1);
-+}
-+
-+static const char* find_rename(struct commit* commit, struct commit* parent)
-+{
-+	struct util_info* cutil = commit->object.util;
-+	struct diff_options diff_opts;
-+	const char *paths[1];
-+	int i;
-+
-+	if (DEBUG) {
-+		printf("find_rename commit: %s ",
-+		       sha1_to_hex(commit->object.sha1));
-+		puts(sha1_to_hex(parent->object.sha1));
-+	}
-+
-+	diff_setup(&diff_opts);
-+	diff_opts.recursive = 1;
-+	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-+	paths[0] = NULL;
-+	diff_tree_setup_paths(paths);
-+	if (diff_setup_done(&diff_opts) < 0)
-+		die("diff_setup_done failed");
-+
-+	diff_tree_sha1(commit->tree->object.sha1, parent->tree->object.sha1,
-+		       "", &diff_opts);
-+	diffcore_std(&diff_opts);
-+
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		if (p->status == 'R' && !strcmp(p->one->path, cutil->pathname)) {
-+			if (DEBUG)
-+				printf("rename %s -> %s\n", p->one->path, p->two->path);
-+			return p->two->path;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static void simplify_commit(struct rev_info *revs, struct commit *commit)
-+{
-+	struct commit_list **pp, *parent;
-+
-+	if (!commit->tree)
-+		return;
-+
-+	if (!commit->parents) {
-+		struct util_info* util = commit->object.util;
-+		if (!same_tree_as_empty_path(revs, commit->tree,
-+					     util->pathname))
-+			commit->object.flags |= TREECHANGE;
-+		return;
-+	}
-+
-+	pp = &commit->parents;
-+	while ((parent = *pp) != NULL) {
-+		struct commit *p = parent->item;
-+
-+		if (p->object.flags & UNINTERESTING) {
-+			pp = &parent->next;
-+			continue;
-+		}
-+
-+		parse_commit(p);
-+		switch (compare_tree_path(revs, p, commit)) {
-+		case REV_TREE_SAME:
-+			parent->next = NULL;
-+			commit->parents = parent;
-+			get_util(p)->pathname = get_util(commit)->pathname;
-+			return;
-+
-+		case REV_TREE_NEW:
-+		{
-+			
-+			struct util_info* util = commit->object.util;
-+			if (revs->remove_empty_trees &&
-+			    same_tree_as_empty_path(revs, p->tree,
-+						    util->pathname)) {
-+				const char* new_name = find_rename(commit, p);
-+				if (new_name) {
-+					struct util_info* putil = get_util(p);
-+					if (!putil->pathname)
-+						putil->pathname = strdup(new_name);
-+				} else {
-+					*pp = parent->next;
-+					continue;
-+				}
-+			}
-+		}
-+
-+		/* fallthrough */
-+		case REV_TREE_DIFFERENT:
-+			pp = &parent->next;
-+			if (!get_util(p)->pathname)
-+				get_util(p)->pathname =
-+					get_util(commit)->pathname;
-+			continue;
-+		}
-+		die("bad tree compare for commit %s",
-+		    sha1_to_hex(commit->object.sha1));
-+	}
-+	commit->object.flags |= TREECHANGE;
-+}
-+
-+
- struct commit_info
- {
- 	char* author;
-@@ -569,6 +711,18 @@ static const char* format_time(unsigned 
- 	return time_buf;
- }
- 
-+static void topo_setter(struct commit* c, void* data)
-+{
-+	struct util_info* util = c->object.util;
-+	util->topo_data = data;
-+}
-+
-+static void* topo_getter(struct commit* c)
-+{
-+	struct util_info* util = c->object.util;
-+	return util->topo_data;
-+}
-+
- int main(int argc, const char **argv)
- {
- 	int i;
-@@ -580,8 +734,8 @@ int main(int argc, const char **argv)
- 	int sha1_len = 8;
- 	int compability = 0;
- 	int options = 1;
-+	struct commit* start_commit;
- 
--	int num_args;
- 	const char* args[10];
- 	struct rev_info rev;
- 
-@@ -634,28 +788,29 @@ int main(int argc, const char **argv)
- 		strcpy(filename_buf, filename);
- 	filename = filename_buf;
- 
--	{
--		struct commit* c;
--		if (get_sha1(commit, sha1))
--			die("get_sha1 failed, commit '%s' not found", commit);
--		c = lookup_commit_reference(sha1);
--
--		if (fill_util_info(c, filename)) {
--			printf("%s not found in %s\n", filename, commit);
--			return 1;
--		}
-+	if (get_sha1(commit, sha1))
-+		die("get_sha1 failed, commit '%s' not found", commit);	
-+	start_commit = lookup_commit_reference(sha1);
-+	get_util(start_commit)->pathname = filename;
-+	if (fill_util_info(start_commit)) {
-+		printf("%s not found in %s\n", filename, commit);
-+		return 1;
+ 	struct commit_list * next = *list;
+ 	struct commit_list * work = NULL, **insert;
+ 	struct commit_list ** pptr = list;
+@@ -596,7 +614,7 @@ void sort_in_topological_order(struct co
+ 	next=*list;
+ 	while (next) {
+ 		next_nodes->list_item = next;
+-		next->item->object.util = next_nodes;
++		setter(next->item, next_nodes);
+ 		next_nodes++;
+ 		next = next->next;
  	}
+@@ -606,7 +624,7 @@ void sort_in_topological_order(struct co
+ 		struct commit_list * parents = next->item->parents;
+ 		while (parents) {
+ 			struct commit * parent=parents->item;
+-			struct sort_node * pn = (struct sort_node *)parent->object.util;
++			struct sort_node * pn = (struct sort_node *) getter(parent);
+ 			
+ 			if (pn)
+ 				pn->indegree++;
+@@ -624,7 +642,7 @@ void sort_in_topological_order(struct co
+ 	next=*list;
+ 	insert = &work;
+ 	while (next) {
+-		struct sort_node * node = (struct sort_node *)next->item->object.util;
++		struct sort_node * node = (struct sort_node *) getter(next->item);
  
--	num_args = 0;
--	args[num_args++] = NULL;
--	args[num_args++] = "--topo-order";
--	args[num_args++] = "--remove-empty";
--	args[num_args++] = commit;
--	args[num_args++] = "--";
--	args[num_args++] = filename;
--	args[num_args] = NULL;
+ 		if (node->indegree == 0) {
+ 			insert = &commit_list_insert(next->item, insert)->next;
+@@ -637,12 +655,12 @@ void sort_in_topological_order(struct co
+ 		sort_by_date(&work);
+ 	while (work) {
+ 		struct commit * work_item = pop_commit(&work);
+-		struct sort_node * work_node = (struct sort_node *)work_item->object.util;
++		struct sort_node * work_node = (struct sort_node *) getter(work_item);
+ 		struct commit_list * parents = work_item->parents;
  
--	setup_revisions(num_args, args, &rev, "HEAD");
-+	init_revisions(&rev);	
-+	rev.remove_empty_trees = 1;
-+	rev.topo_order = 1;
-+	rev.prune_fn = simplify_commit;
-+	rev.topo_setter = topo_setter;
-+	rev.topo_getter = topo_getter;
-+	rev.limited = 1;
+ 		while (parents) {
+ 			struct commit * parent=parents->item;
+-			struct sort_node * pn = (struct sort_node *)parent->object.util;
++			struct sort_node * pn = (struct sort_node *) getter(parent);
+ 			
+ 			if (pn) {
+ 				/* 
+@@ -667,7 +685,7 @@ void sort_in_topological_order(struct co
+ 		*pptr = work_node->list_item;
+ 		pptr = &(*pptr)->next;
+ 		*pptr = NULL;
+-		work_item->object.util = NULL;
++		setter(work_item, NULL);
+ 	}
+ 	free(nodes);
+ }
+diff --git a/commit.h b/commit.h
+index 70a7c75..15c798a 100644
+--- a/commit.h
++++ b/commit.h
+@@ -65,15 +65,29 @@ int count_parents(struct commit * commit
+ /*
+  * Performs an in-place topological sort of list supplied.
+  *
+- * Pre-conditions:
++ * Pre-conditions for sort_in_topological_order:
+  *   all commits in input list and all parents of those
+  *   commits must have object.util == NULL
+  *        
++ * Pre-conditions for sort_in_topological_order_fn:
++ *   all commits in input list and all parents of those
++ *   commits must have getter(commit) == NULL
++ *
+  * Post-conditions: 
+  *   invariant of resulting list is:
+  *      a reachable from b => ord(b) < ord(a)
+  *   in addition, when lifo == 0, commits on parallel tracks are
+  *   sorted in the dates order.
+  */
 +
-+	commit_list_insert(start_commit, &rev.commits);
-+	
-+	args[0] = filename;
-+	args[1] = NULL;
-+	diff_tree_setup_paths(args);
- 	prepare_revision_walk(&rev);
- 	process_commits(&rev, filename, &initial);
- 
-@@ -665,17 +820,21 @@ int main(int argc, const char **argv)
- 
- 	for (i = 0; i < num_blame_lines; i++) {
- 		struct commit *c = blame_lines[i];
-+		struct util_info* u;
++typedef void (*topo_sort_set_fn_t)(struct commit*, void *data);
++typedef void* (*topo_sort_get_fn_t)(struct commit*);
 +
- 		if (!c)
- 			c = initial;
- 
-+		u = c->object.util;
- 		get_commit_info(c, &ci);
- 		fwrite(sha1_to_hex(c->object.sha1), sha1_len, 1, stdout);
- 		if(compability)
- 			printf("\t(%10s\t%10s\t%d)", ci.author,
- 			       format_time(ci.author_time, ci.author_tz), i+1);
- 		else
--			printf(" (%-15.15s %10s %*d) ", ci.author,
--			       format_time(ci.author_time, ci.author_tz),
-+			printf(" %s (%-15.15s %10s %*d) ", u->pathname,
-+			       ci.author, format_time(ci.author_time,
-+						      ci.author_tz),
- 			       max_digits, i+1);
- 
- 		if(i == num_blame_lines - 1) {
++void topo_sort_default_setter(struct commit *c, void *data);
++void *topo_sort_default_getter(struct commit *c);
++
+ void sort_in_topological_order(struct commit_list ** list, int lifo);
++void sort_in_topological_order_fn(struct commit_list ** list, int lifo,
++				  topo_sort_set_fn_t setter,
++				  topo_sort_get_fn_t getter);
+ #endif /* COMMIT_H */
