@@ -1,31 +1,32 @@
 From: Mike McCormack <mike@codeweavers.com>
-Subject: [PATCH] Document the --attach flag.
-Date: Fri, 10 Mar 2006 13:47:24 +0900
+Subject: [PATCH] Describe how to add extra mail header lines in mail generated
+ by git-format-patch.
+Date: Fri, 10 Mar 2006 13:47:59 +0900
 Organization: CodeWeavers
-Message-ID: <441104DC.10805@codeweavers.com>
+Message-ID: <441104FF.9010202@codeweavers.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------030305010804070009090807"
-X-From: git-owner@vger.kernel.org Fri Mar 10 05:51:49 2006
+ boundary="------------000108080109050204030905"
+X-From: git-owner@vger.kernel.org Fri Mar 10 05:52:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHZbQ-0002bB-7X
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 05:51:48 +0100
+	id 1FHZbz-0002ix-O3
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 05:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbWCJEvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 23:51:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbWCJEvp
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 23:51:45 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:62664 "EHLO
+	id S1751333AbWCJEwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 23:52:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378AbWCJEwV
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 23:52:21 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:3273 "EHLO
 	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751101AbWCJEvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Mar 2006 23:51:45 -0500
+	id S1751333AbWCJEwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Mar 2006 23:52:20 -0500
 Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
 	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1FHZbL-0004dC-0w
-	for git@vger.kernel.org; Thu, 09 Mar 2006 22:51:44 -0600
+	id 1FHZbu-0004e2-LU
+	for git@vger.kernel.org; Thu, 09 Mar 2006 22:52:20 -0600
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
 X-Accept-Language: en, en-us
 To: git@vger.kernel.org
@@ -40,51 +41,48 @@ X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17451>
 
 This is a multi-part message in MIME format.
---------------030305010804070009090807
+--------------000108080109050204030905
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 ---
 
-  Documentation/git-format-patch.txt |    5 ++++-
-  1 files changed, 4 insertions(+), 1 deletions(-)
+  Documentation/git-format-patch.txt |    9 +++++++++
+  1 files changed, 9 insertions(+), 0 deletions(-)
 
 
---------------030305010804070009090807
+--------------000108080109050204030905
 Content-Type: text/x-patch;
- name="2dbe606be2d9fadb7d8e84f5fed0d1c4a34377b7.diff"
+ name="38fb623a9fe06cb56f96ee1f25a64d576372f997.diff"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline;
- filename="2dbe606be2d9fadb7d8e84f5fed0d1c4a34377b7.diff"
+ filename="38fb623a9fe06cb56f96ee1f25a64d576372f997.diff"
 
-2dbe606be2d9fadb7d8e84f5fed0d1c4a34377b7
+38fb623a9fe06cb56f96ee1f25a64d576372f997
 diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 7c467c5..bc85a62 100644
+index bc85a62..7cc7faf 100644
 --- a/Documentation/git-format-patch.txt
 +++ b/Documentation/git-format-patch.txt
-@@ -9,7 +9,7 @@ git-format-patch - Prepare patches for e
- SYNOPSIS
- --------
- [verse]
--'git-format-patch' [-n | -k] [-o <dir> | --stdout] [-s] [-c]
-+'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--attach] [-s] [-c]
- 		 [--diff-options] <his> [<mine>]
+@@ -64,6 +64,15 @@ OPTIONS
+ 	Create attachments instead of inlining patches.
  
- DESCRIPTION
-@@ -60,6 +60,9 @@ OPTIONS
- 	standard output, instead of saving them into a file per
- 	patch and implies --mbox.
  
-+--attach::
-+	Create attachments instead of inlining patches.
++CONFIGURATION
++-------------
++You can specify extra mail header lines to be added to each
++message in the repository configuration as follows:
 +
- 
++[format]
++        headers = "Organization: git-foo\n"
++
++
  EXAMPLES
  --------
+ 
 
 
---------------030305010804070009090807--
+--------------000108080109050204030905--
