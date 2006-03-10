@@ -1,110 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-rev-list bug?
-Date: Fri, 10 Mar 2006 02:25:04 -0800
-Message-ID: <7vslpqy4u7.fsf@assigned-by-dhcp.cox.net>
-References: <b0943d9e0603080819i227c637fo@mail.gmail.com>
-	<7vacc0iten.fsf@assigned-by-dhcp.cox.net>
-	<7vmzfy1zjb.fsf@assigned-by-dhcp.cox.net>
-	<7virqmzlhb.fsf@assigned-by-dhcp.cox.net>
-	<7v4q26zklx.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: What's in git.git
+Date: Fri, 10 Mar 2006 11:44:43 +0100
+Message-ID: <20060310104443.GA4491@c165.ib.student.liu.se>
+References: <7v1wxg82r3.fsf@assigned-by-dhcp.cox.net> <46a038f90603060105m29595745ke64d4a623506c0b0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 10 11:25:19 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 10 11:45:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHeoA-0005UT-90
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 11:25:19 +0100
+	id 1FHf77-0002Td-6K
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 11:44:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976AbWCJKZJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 05:25:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752200AbWCJKZJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 05:25:09 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45553 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751976AbWCJKZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Mar 2006 05:25:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060310102310.KFVQ20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 10 Mar 2006 05:23:10 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7v4q26zklx.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 10 Mar 2006 01:59:06 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1752217AbWCJKou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 05:44:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbWCJKou
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 05:44:50 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:3974 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1752215AbWCJKot
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Mar 2006 05:44:49 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 0A4404114; Fri, 10 Mar 2006 12:00:21 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1FHf6x-0006kh-00; Fri, 10 Mar 2006 11:44:43 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90603060105m29595745ke64d4a623506c0b0@mail.gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17468>
 
-Junio C Hamano <junkio@cox.net> writes:
+On Mon, Mar 06, 2006 at 10:05:41PM +1300, Martin Langhoff wrote:
+> On 3/6/06, Junio C Hamano <junkio@cox.net> wrote:
+> > - The deathmatch between annotate/blame (Ryan Anderson, Fredrik
+> >   Kuivinen, me cheerleading)
+> 
+> Add fuel to the fire  ;-) Can git-blame take cached git-rev-list
+> output like annotate does with -S?
+> 
 
-> It however has a side effect -- uninteresting commits were never
-> parsed here, but now they get parsed.  I am not sure if there
-> are correctness implications...
+Currently it cannot do that. How is that option used? If you want to
+make annotate/blame faster for certain files you might as well cache
+the output of annotate/blame instead of the git-rev-list output, no?
 
-Actually there is.  If a merge with an uninteresting side branch
-was the only thing that brought changes to paths we are
-interested in, we do not want TREE_SAME logic to remove other
-parents (i.e. the branches we are interested in) from the merge
-commit.  
+What am I missing?
 
-So we would need a combination of both, something like this?
-
----
-diff --git a/revision.c b/revision.c
-index 713f27e..c8d93ff 100644
---- a/revision.c
-+++ b/revision.c
-@@ -282,6 +282,7 @@ static int same_tree_as_empty(struct tre
- static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- {
- 	struct commit_list **pp, *parent;
-+	int tree_changed = 0;
- 
- 	if (!commit->tree)
- 		return;
-@@ -296,14 +297,19 @@ static void try_to_simplify_commit(struc
- 	while ((parent = *pp) != NULL) {
- 		struct commit *p = parent->item;
- 
--		if (p->object.flags & UNINTERESTING) {
--			pp = &parent->next;
--			continue;
--		}
--
- 		parse_commit(p);
- 		switch (compare_tree(p->tree, commit->tree)) {
- 		case TREE_SAME:
-+			if (p->object.flags & UNINTERESTING) {
-+				/* Even if a merge with an uninteresting
-+				 * side branch brought the entire change
-+				 * we are interested in, we do not want
-+				 * to lose the other branches of this
-+				 * merge, so we just keep going.
-+				 */
-+				pp = &parent->next;
-+				continue;
-+			}
- 			parent->next = NULL;
- 			commit->parents = parent;
- 			return;
-@@ -315,12 +321,14 @@ static void try_to_simplify_commit(struc
- 			}
- 		/* fallthrough */
- 		case TREE_DIFFERENT:
-+			tree_changed = 1;
- 			pp = &parent->next;
- 			continue;
- 		}
- 		die("bad tree compare for commit %s", sha1_to_hex(commit->object.sha1));
- 	}
--	commit->object.flags |= TREECHANGE;
-+	if (tree_changed)
-+		commit->object.flags |= TREECHANGE;
- }
- 
- static void add_parents_to_list(struct rev_info *revs, struct commit *commit, struct commit_list **list)
+- Fredrik
