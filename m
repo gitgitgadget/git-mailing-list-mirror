@@ -1,78 +1,64 @@
-From: Mike McCormack <mike@codeweavers.com>
-Subject: Re: [PATCH] Add git-imap-send.
-Date: Fri, 10 Mar 2006 13:58:10 +0900
-Organization: CodeWeavers
-Message-ID: <44110762.106@codeweavers.com>
-References: <440C3499.9080000@codeweavers.com> <7vacbz7vod.fsf@assigned-by-dhcp.cox.net>
+From: Dave Jones <davej@redhat.com>
+Subject: git-applymbox fails to extract patch.
+Date: Fri, 10 Mar 2006 00:04:46 -0500
+Message-ID: <20060310050446.GA20764@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 10 06:02:37 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Mar 10 06:05:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHZls-0004Oi-I5
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 06:02:36 +0100
+	id 1FHZoG-0004kf-D4
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 06:05:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535AbWCJFCd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 00:02:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751520AbWCJFCd
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 00:02:33 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:56521 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751499AbWCJFCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Mar 2006 00:02:33 -0500
-Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
-	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1FHZll-0004p3-63; Thu, 09 Mar 2006 23:02:32 -0600
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
-X-Accept-Language: en, en-us
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vacbz7vod.fsf@assigned-by-dhcp.cox.net>
-X-SA-Exim-Connect-IP: 216.251.189.130
-X-SA-Exim-Mail-From: mike@codeweavers.com
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+	id S1751604AbWCJFFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 00:05:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751606AbWCJFFA
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 00:05:00 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:26047 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1751604AbWCJFE7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Mar 2006 00:04:59 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id k2A54vr1007509
+	for <git@vger.kernel.org>; Fri, 10 Mar 2006 00:04:57 -0500
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id k2A54l110762
+	for <git@vger.kernel.org>; Fri, 10 Mar 2006 00:04:47 -0500
+Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id k2A54kD2021989
+	for <git@vger.kernel.org>; Fri, 10 Mar 2006 00:04:46 -0500
+Received: (from davej@localhost)
+	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id k2A54ke5021987
+	for git@vger.kernel.org; Fri, 10 Mar 2006 00:04:46 -0500
+X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17453>
+
+Since my munged versions of Linus' original apply-mbox scripts
+no longer work on current git, I figured I'd try and use the
+ones provided with it.
+
+I'm totally confused as to what's going on here.
+
+Here's what I'm trying to apply..
+http://userweb.kernel.org/~davej/mbox.txt
+
+And here's what happens..
+
+(04:59:42:davej@hera:cpufreq)$ git-applymbox -k ~/Mail/mbox
+1 patch(es) to process.
+
+Applying ''
+
+fatal: No changes
 
 
-Junio C Hamano wrote:
+What am I missing ?
 
->>[imap]
->>	Host = imap.server.com
->>	User = bob
->>	Password = pwd
->>	Port = 143
-> 
-> These I am not so sure.  It _might_ make sense to have something
-> like this under $HOME/.  Isn't there an established convention
-> for storing something like this for existing MUAs?
-
-It seems better to keep all the configuration in the same place.  It's 
-possible (although unlikely) that somebody uses two different IMAP 
-servers to send mail... maybe one for work and one for play?
-
-I think it would also be good to be able to specify these as command 
-line options, as some people might be uncomfortable with having their 
-password in a file (though it would be better to use an ssh tunnel).
-
->>+ * As a special exception, mbsync may be linked with the OpenSSL library,
->>+ * despite that library's more restrictive license.
-
-> Hmmm.
-
-I'll remove this, and all the SSL specific code, as it also complicates 
-the Makefile and adds an extra dependency.
-
-I've fixed all the other issues you pointed out, and will resend the patch.
-
-Mike
+		Dave
