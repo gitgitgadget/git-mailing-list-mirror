@@ -1,58 +1,55 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: git-rev-list feature request
-Date: Fri, 10 Mar 2006 12:07:07 +1100
-Message-ID: <17424.53563.622642.738307@cargo.ozlabs.ibm.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] allow double click on current HEAD id after git-pull
+Date: Fri, 10 Mar 2006 02:24:03 +0100
+Message-ID: <20060310012403.GZ31278@pasky.or.cz>
+References: <20060211112630.GA12421@suse.de> <20060309210250.GY31278@pasky.or.cz> <7vy7zj2oom.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 10 02:07:32 2006
+Cc: Olaf Hering <olh@suse.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 10 02:23:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHW6G-0001i7-ST
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 02:07:25 +0100
+	id 1FHWLp-0005aX-CW
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 02:23:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422677AbWCJBHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 20:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422678AbWCJBHU
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 20:07:20 -0500
-Received: from ozlabs.org ([203.10.76.45]:48256 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1422677AbWCJBHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 20:07:18 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 3470A679EF; Fri, 10 Mar 2006 12:07:15 +1100 (EST)
+	id S932173AbWCJBX1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 20:23:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932698AbWCJBX0
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 20:23:26 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:13291 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932173AbWCJBX0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 20:23:26 -0500
+Received: (qmail 2922 invoked by uid 2001); 10 Mar 2006 02:24:03 +0100
 To: Junio C Hamano <junkio@cox.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+Content-Disposition: inline
+In-Reply-To: <7vy7zj2oom.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17445>
 
-Hi,
+Dear diary, on Fri, Mar 10, 2006 at 12:17:29AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Well I kind of like ending a sentence with a full stop.  Isn't
+> this something you can do by confuguiring your cut&paste?
 
-I'd like to implement a new features in gitk to enable it to show the
-relationship of a given commit to the tags and other references.  What
-I would like is for git-rev-list to be able to output a dense graph
-containing only one or more specified commits plus all the commits
-that have a reference (i.e. a file under $GIT_DIR/refs that contains
-their SHA1 ID), plus the merges that are needed to complete the
-graph.
+I wouldn't think cut'n'paste is usually that flexible and/or easy to
+configure.
 
-It would be nice also to be able to combine that with the existing
-ability to output a dense graph containing the commits that modify a
-specified set of files or directories.
+> But I do not have a _very_ strong feeling either way.  If
+> majority of the list wants it that way I do not mind.
 
-In other words, I would like to be able to select any combination of
-(a) some explicitly specified commits
-(b) commits that have a reference
-(c) commits that affect specified files or directories
+Being able to easily cut'n'paste is IMHO an important usability thing,
+and with that long sha1s, who's going to notice a missing fullstop far
+at the right? ;-)
 
-and have git-rev-list output a graph that shows the relationship of
-those commits.
-
-Possible?
-
-Thanks,
-Paul.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
