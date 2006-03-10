@@ -1,53 +1,58 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: [PATCH] allow double click on current HEAD id after git-pull
-Date: Fri, 10 Mar 2006 00:49:47 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrne11j9b.fr9.mdw@metalzone.distorted.org.uk>
-References: <20060211112630.GA12421@suse.de> <20060309210250.GY31278@pasky.or.cz> <7vy7zj2oom.fsf@assigned-by-dhcp.cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 10 01:50:48 2006
+From: Paul Mackerras <paulus@samba.org>
+Subject: git-rev-list feature request
+Date: Fri, 10 Mar 2006 12:07:07 +1100
+Message-ID: <17424.53563.622642.738307@cargo.ozlabs.ibm.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 10 02:07:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHVpk-0005iK-1G
-	for gcvg-git@gmane.org; Fri, 10 Mar 2006 01:50:20 +0100
+	id 1FHW6G-0001i7-ST
+	for gcvg-git@gmane.org; Fri, 10 Mar 2006 02:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbWCJAtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Mar 2006 19:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbWCJAtu
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 19:49:50 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:439 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S932206AbWCJAts (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Mar 2006 19:49:48 -0500
-Received: (qmail 362 invoked by uid 110); 10 Mar 2006 00:49:47 -0000
-To: git@vger.kernel.org
-Received: (qmail 349 invoked by uid 9); 10 Mar 2006 00:49:47 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1141951787 32152 172.29.199.2 (10 Mar 2006 00:49:47 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Fri, 10 Mar 2006 00:49:47 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1422677AbWCJBHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Mar 2006 20:07:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422678AbWCJBHU
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Mar 2006 20:07:20 -0500
+Received: from ozlabs.org ([203.10.76.45]:48256 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1422677AbWCJBHS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Mar 2006 20:07:18 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 3470A679EF; Fri, 10 Mar 2006 12:07:15 +1100 (EST)
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17444>
 
-Junio C Hamano <junkio@cox.net> wrote:
+Hi,
 
-> Well I kind of like ending a sentence with a full stop.  Isn't
-> this something you can do by confuguiring your cut&paste?
+I'd like to implement a new features in gitk to enable it to show the
+relationship of a given commit to the tags and other references.  What
+I would like is for git-rev-list to be able to output a dense graph
+containing only one or more specified commits plus all the commits
+that have a reference (i.e. a file under $GIT_DIR/refs that contains
+their SHA1 ID), plus the merges that are needed to complete the
+graph.
 
-Could do, but since . is a useful filename character it usually seems
-like a good idea to include it in the set of characters considered a
-`word' by the terminal double-click logic.  I've not used xterm for
-ages, but a quick check shows that Eterm isn't smart enough to be told
-that . followed by a word-constituent is good and should be included in
-a word, whereas a trailing . is a different thing which it doesn't want
-to include.
+It would be nice also to be able to combine that with the existing
+ability to output a dense graph containing the commits that modify a
+specified set of files or directories.
 
-So I'm in favour of killing the full-stops.  Sorry. :-(
+In other words, I would like to be able to select any combination of
+(a) some explicitly specified commits
+(b) commits that have a reference
+(c) commits that affect specified files or directories
 
--- [mdw]
+and have git-rev-list output a graph that shows the relationship of
+those commits.
+
+Possible?
+
+Thanks,
+Paul.
