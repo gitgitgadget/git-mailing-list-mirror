@@ -1,381 +1,325 @@
 From: Nick Hengeveld <nickh@reactrix.com>
-Subject: [PATCH 3/6] http-push: refactor remote file/directory processing
-Date: Fri, 10 Mar 2006 20:18:08 -0800
-Message-ID: <20060311041808.GE3997@reactrix.com>
+Subject: [PATCH 4/6] http-push: improve remote lock management
+Date: Fri, 10 Mar 2006 20:18:12 -0800
+Message-ID: <20060311041812.GF3997@reactrix.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Mar 11 05:18:27 2006
+X-From: git-owner@vger.kernel.org Sat Mar 11 05:18:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FHvYf-0004ul-FC
-	for gcvg-git@gmane.org; Sat, 11 Mar 2006 05:18:25 +0100
+	id 1FHvYg-0004ul-02
+	for gcvg-git@gmane.org; Sat, 11 Mar 2006 05:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932408AbWCKESK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Mar 2006 23:18:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932410AbWCKESK
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 23:18:10 -0500
-Received: from 193.37.26.69.virtela.com ([69.26.37.193]:60110 "EHLO
+	id S932410AbWCKESO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Mar 2006 23:18:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932413AbWCKESN
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Mar 2006 23:18:13 -0500
+Received: from 195.37.26.69.virtela.com ([69.26.37.195]:47055 "EHLO
 	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S932408AbWCKESI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Mar 2006 23:18:08 -0500
+	id S932410AbWCKESM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Mar 2006 23:18:12 -0500
 Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k2B4I8eP007652
-	for <git@vger.kernel.org>; Fri, 10 Mar 2006 20:18:08 -0800
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k2B4ICIm007659
+	for <git@vger.kernel.org>; Fri, 10 Mar 2006 20:18:12 -0800
 Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k2B4I8Pt007650
-	for git@vger.kernel.org; Fri, 10 Mar 2006 20:18:08 -0800
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k2B4ICNN007657
+	for git@vger.kernel.org; Fri, 10 Mar 2006 20:18:12 -0800
 To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17491>
 
-Replace single-use functions with one that can get a list of remote
-collections and pass file/directory information to user-defined functions
-for processing.
+Associate the remote locks with the remote repo, add a function to check
+and refresh all current locks.
 
 ---
 
- http-push.c |  245 ++++++++++++++++++++++++++---------------------------------
- 1 files changed, 107 insertions(+), 138 deletions(-)
+ http-push.c |  149 ++++++++++++++++++++++++++++++-----------------------------
+ 1 files changed, 76 insertions(+), 73 deletions(-)
 
-05c0fc457388309cf12f3647a48071845acc2c70
+fd1de0bf29e5e0fa63b851cb2195fbe05ebf80c2
 diff --git a/http-push.c b/http-push.c
-index 1b0b3a8..755bcb8 100644
+index 755bcb8..ece40da 100644
 --- a/http-push.c
 +++ b/http-push.c
-@@ -140,11 +140,23 @@ struct remote_lock
+@@ -80,10 +80,10 @@ struct repo
+ 	char *url;
+ 	int path_len;
+ 	struct packed_git *packs;
++	struct remote_lock *locks;
+ };
+ 
+ static struct repo *remote = NULL;
+-static struct remote_lock *remote_locks = NULL;
+ 
+ enum transfer_state {
+ 	NEED_PUSH,
+@@ -135,7 +135,6 @@ struct remote_lock
+ 	char *token;
+ 	time_t start_time;
+ 	long timeout;
+-	int active;
+ 	int refreshing;
  	struct remote_lock *next;
  };
- 
--struct remote_dentry
-+/* Flags that control remote_ls processing */
-+#define PROCESS_FILES (1u << 0)
-+#define PROCESS_DIRS  (1u << 1)
-+#define RECURSIVE     (1u << 2)
-+
-+/* Flags that remote_ls passes to callback functions */
-+#define IS_DIR (1u << 0)
-+
-+struct remote_ls_ctx
- {
--	char *base;
--	char *name;
--	int is_dir;
-+	char *path;
-+	void (*userFunc)(struct remote_ls_ctx *ls);
-+	void *userData;
-+	int flags;
-+	char *dentry_name;
-+	int dentry_flags;
-+	struct remote_ls_ctx *parent;
- };
- 
- static void finish_request(struct transfer_request *request);
-@@ -812,55 +824,6 @@ static void handle_new_lock_ctx(struct x
- }
- 
- static void one_remote_ref(char *refname);
--static void crawl_remote_refs(char *path);
--
--static void handle_crawl_ref_ctx(struct xml_ctx *ctx, int tag_closed)
--{
--	struct remote_dentry *dentry = (struct remote_dentry *)ctx->userData;
--
--
--	if (tag_closed) {
--		if (!strcmp(ctx->name, DAV_PROPFIND_RESP) && dentry->name) {
--			if (dentry->is_dir) {
--				if (strcmp(dentry->name, dentry->base)) {
--					crawl_remote_refs(dentry->name);
--				}
--			} else {
--				one_remote_ref(dentry->name);
--			}
--		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
--			dentry->name = xmalloc(strlen(ctx->cdata) -
--					       remote->path_len + 1);
--			strcpy(dentry->name,
--			       ctx->cdata + remote->path_len);
--		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
--			dentry->is_dir = 1;
--		}
--	} else if (!strcmp(ctx->name, DAV_PROPFIND_RESP)) {
--		dentry->name = NULL;
--		dentry->is_dir = 0;
--	}
--}
--
--static void handle_remote_object_list_ctx(struct xml_ctx *ctx, int tag_closed)
--{
--	char *path;
--	char *obj_hex;
--
--	if (tag_closed) {
--		if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
--			path = ctx->cdata + remote->path_len;
--			if (strlen(path) != 50)
--				return;
--			path += 9;
--			obj_hex = xmalloc(strlen(path));
--			strncpy(obj_hex, path, 2);
--			strcpy(obj_hex + 2, path + 3);
--			one_remote_object(obj_hex);
--			free(obj_hex);
--		}
--	}
--}
- 
- static void
- xml_start_tag(void *userData, const char *name, const char **atts)
-@@ -1101,91 +1064,83 @@ static int unlock_remote(struct remote_l
- 	return rc;
- }
- 
--static void crawl_remote_refs(char *path)
--{
--	char *url;
--	struct active_request_slot *slot;
--	struct slot_results results;
--	struct buffer in_buffer;
--	struct buffer out_buffer;
--	char *in_data;
--	char *out_data;
--	XML_Parser parser = XML_ParserCreate(NULL);
--	enum XML_Status result;
--	struct curl_slist *dav_headers = NULL;
--	struct xml_ctx ctx;
--	struct remote_dentry dentry;
--
--	fprintf(stderr, "  %s\n", path);
-+static void remote_ls(const char *path, int flags,
-+		      void (*userFunc)(struct remote_ls_ctx *ls),
-+		      void *userData);
- 
--	dentry.base = path;
--	dentry.name = NULL;
--	dentry.is_dir = 0;
--
--	url = xmalloc(strlen(remote->url) + strlen(path) + 1);
--	sprintf(url, "%s%s", remote->url, path);
-+static void process_ls_object(struct remote_ls_ctx *ls)
-+{
-+	unsigned int *parent = (unsigned int *)ls->userData;
-+	char *path = ls->dentry_name;
-+	char *obj_hex;
- 
--	out_buffer.size = strlen(PROPFIND_ALL_REQUEST);
--	out_data = xmalloc(out_buffer.size + 1);
--	snprintf(out_data, out_buffer.size + 1, PROPFIND_ALL_REQUEST);
--	out_buffer.posn = 0;
--	out_buffer.buffer = out_data;
-+	if (!strcmp(ls->path, ls->dentry_name) && (ls->flags & IS_DIR)) {
-+		remote_dir_exists[*parent] = 1;
-+		return;
-+	}
- 
--	in_buffer.size = 4096;
--	in_data = xmalloc(in_buffer.size);
--	in_buffer.posn = 0;
--	in_buffer.buffer = in_data;
-+	if (strlen(path) != 49)
-+		return;
-+	path += 8;
-+	obj_hex = xmalloc(strlen(path));
-+	strncpy(obj_hex, path, 2);
-+	strcpy(obj_hex + 2, path + 3);
-+	one_remote_object(obj_hex);
-+	free(obj_hex);
-+}
- 
--	dav_headers = curl_slist_append(dav_headers, "Depth: 1");
--	dav_headers = curl_slist_append(dav_headers, "Content-Type: text/xml");
-+static void process_ls_ref(struct remote_ls_ctx *ls)
-+{
-+	if (!strcmp(ls->path, ls->dentry_name) && (ls->dentry_flags & IS_DIR)) {
-+		fprintf(stderr, "  %s\n", ls->dentry_name);
-+		return;
-+	}
- 
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.size);
--	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PROPFIND);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-+	if (!(ls->dentry_flags & IS_DIR))
-+		one_remote_ref(ls->dentry_name);
-+}
- 
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result == CURLE_OK) {
--			ctx.name = xcalloc(10, 1);
--			ctx.len = 0;
--			ctx.cdata = NULL;
--			ctx.userFunc = handle_crawl_ref_ctx;
--			ctx.userData = &dentry;
--			XML_SetUserData(parser, &ctx);
--			XML_SetElementHandler(parser, xml_start_tag,
--					      xml_end_tag);
--			XML_SetCharacterDataHandler(parser, xml_cdata);
--			result = XML_Parse(parser, in_buffer.buffer,
--					   in_buffer.posn, 1);
--			free(ctx.name);
-+static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
-+{
-+	struct remote_ls_ctx *ls = (struct remote_ls_ctx *)ctx->userData;
- 
--			if (result != XML_STATUS_OK) {
--				fprintf(stderr, "XML error: %s\n",
--					XML_ErrorString(
--						XML_GetErrorCode(parser)));
-+	if (tag_closed) {
-+		if (!strcmp(ctx->name, DAV_PROPFIND_RESP) && ls->dentry_name) {
-+			if (ls->dentry_flags & IS_DIR) {
-+				if (ls->flags & PROCESS_DIRS) {
-+					ls->userFunc(ls);
-+				}
-+				if (strcmp(ls->dentry_name, ls->path) &&
-+				    ls->flags & RECURSIVE) {
-+					remote_ls(ls->dentry_name,
-+						  ls->flags,
-+						  ls->userFunc,
-+						  ls->userData);
-+				}
-+			} else if (ls->flags & PROCESS_FILES) {
-+				ls->userFunc(ls);
- 			}
-+		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
-+			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
-+						  remote->path_len + 1);
-+			strcpy(ls->dentry_name, ctx->cdata + remote->path_len);
-+		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
-+			ls->dentry_flags |= IS_DIR;
- 		}
--	} else {
--		fprintf(stderr, "Unable to start request\n");
-+	} else if (!strcmp(ctx->name, DAV_PROPFIND_RESP)) {
-+		if (ls->dentry_name) {
-+			free(ls->dentry_name);
-+		}
-+		ls->dentry_name = NULL;
-+		ls->dentry_flags = 0;
+@@ -311,64 +310,69 @@ static void start_move(struct transfer_r
  	}
--
--	free(url);
--	free(out_data);
--	free(in_buffer.buffer);
--	curl_slist_free_all(dav_headers);
  }
  
--static void get_remote_object_list(unsigned char parent)
-+static void remote_ls(const char *path, int flags,
-+		      void (*userFunc)(struct remote_ls_ctx *ls),
-+		      void *userData)
+-static int refresh_lock(struct remote_lock *check_lock)
++static int refresh_lock(struct remote_lock *lock)
  {
--	char *url;
-+	char *url = xmalloc(strlen(remote->url) + strlen(path) + 1);
  	struct active_request_slot *slot;
  	struct slot_results results;
- 	struct buffer in_buffer;
-@@ -1196,13 +1151,15 @@ static void get_remote_object_list(unsig
- 	enum XML_Status result;
+ 	char *if_header;
+ 	char timeout_header[25];
  	struct curl_slist *dav_headers = NULL;
- 	struct xml_ctx ctx;
--	char path[] = "/objects/XX/";
--	static const char hex[] = "0123456789abcdef";
--	unsigned int val = parent;
-+	struct remote_ls_ctx ls;
-+
-+	ls.flags = flags;
-+	ls.path = strdup(path);
-+	ls.dentry_name = NULL;
-+	ls.dentry_flags = 0;
-+	ls.userData = userData;
-+	ls.userFunc = userFunc;
+-	struct remote_lock *lock;
+-	int time_remaining;
+-	time_t current_time;
++	int rc = 0;
  
--	path[9] = hex[val >> 4];
--	path[10] = hex[val & 0xf];
--	url = xmalloc(strlen(remote->url) + strlen(path) + 1);
- 	sprintf(url, "%s%s", remote->url, path);
+-	/* Refresh all active locks if they're close to expiring */
+-	for (lock = remote_locks; lock; lock = lock->next) {
+-		if (!lock->active)
+-			continue;
++	lock->refreshing = 1;
  
- 	out_buffer.size = strlen(PROPFIND_ALL_REQUEST);
-@@ -1218,7 +1175,7 @@ static void get_remote_object_list(unsig
+-		current_time = time(NULL);
+-		time_remaining = lock->start_time + lock->timeout
+-			- current_time;
+-		if (time_remaining > LOCK_REFRESH)
+-			continue;
++	if_header = xmalloc(strlen(lock->token) + 25);
++	sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
++	sprintf(timeout_header, "Timeout: Second-%ld", lock->timeout);
++	dav_headers = curl_slist_append(dav_headers, if_header);
++	dav_headers = curl_slist_append(dav_headers, timeout_header);
  
- 	dav_headers = curl_slist_append(dav_headers, "Depth: 1");
- 	dav_headers = curl_slist_append(dav_headers, "Content-Type: text/xml");
--
-+	
- 	slot = get_active_slot();
- 	slot->results = &results;
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
-@@ -1234,11 +1191,11 @@ static void get_remote_object_list(unsig
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
- 		if (results.curl_result == CURLE_OK) {
--			remote_dir_exists[parent] = 1;
- 			ctx.name = xcalloc(10, 1);
- 			ctx.len = 0;
- 			ctx.cdata = NULL;
--			ctx.userFunc = handle_remote_object_list_ctx;
-+			ctx.userFunc = handle_remote_ls_ctx;
-+			ctx.userData = &ls;
- 			XML_SetUserData(parser, &ctx);
- 			XML_SetElementHandler(parser, xml_start_tag,
- 					      xml_end_tag);
-@@ -1252,19 +1209,31 @@ static void get_remote_object_list(unsig
- 					XML_ErrorString(
- 						XML_GetErrorCode(parser)));
- 			}
--		} else {
--			remote_dir_exists[parent] = 0;
- 		}
- 	} else {
--		fprintf(stderr, "Unable to start request\n");
-+		fprintf(stderr, "Unable to start PROPFIND request\n");
- 	}
+-		lock->refreshing = 1;
++	slot = get_active_slot();
++	slot->results = &results;
++	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
++	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
++	curl_easy_setopt(slot->curl, CURLOPT_URL, lock->url);
++	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_LOCK);
++	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
  
-+	free(ls.path);
- 	free(url);
- 	free(out_data);
- 	free(in_buffer.buffer);
- 	curl_slist_free_all(dav_headers);
- }
+-		if_header = xmalloc(strlen(lock->token) + 25);
+-		sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
+-		sprintf(timeout_header, "Timeout: Second-%ld", lock->timeout);
+-		dav_headers = curl_slist_append(dav_headers, if_header);
+-		dav_headers = curl_slist_append(dav_headers, timeout_header);
++	if (start_active_slot(slot)) {
++		run_active_slot(slot);
++		if (results.curl_result != CURLE_OK) {
++			fprintf(stderr, "LOCK HTTP error %ld\n",
++				results.http_code);
++		} else {
++			lock->start_time = time(NULL);
++			rc = 1;
++		}
++	}
  
-+static void get_remote_object_list(unsigned char parent)
-+{
-+	char path[] = "objects/XX/";
-+	static const char hex[] = "0123456789abcdef";
-+	unsigned int val = parent;
-+
-+	path[8] = hex[val >> 4];
-+	path[9] = hex[val & 0xf];
-+	remote_dir_exists[val] = 0;
-+	remote_ls(path, (PROCESS_FILES | PROCESS_DIRS),
-+		  process_ls_object, &val);
+-		slot = get_active_slot();
+-		slot->results = &results;
+-		curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+-		curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
+-		curl_easy_setopt(slot->curl, CURLOPT_URL, lock->url);
+-		curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_LOCK);
+-		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
++	lock->refreshing = 0;
++	curl_slist_free_all(dav_headers);
++	free(if_header);
+ 
+-		if (start_active_slot(slot)) {
+-			run_active_slot(slot);
+-			if (results.curl_result != CURLE_OK) {
+-				fprintf(stderr, "Got HTTP error %ld\n", results.http_code);
+-				lock->active = 0;
+-			} else {
+-				lock->active = 1;
+-				lock->start_time = time(NULL);
++	return rc;
 +}
 +
- static int locking_available(void)
- {
- 	struct active_request_slot *slot;
-@@ -1534,7 +1503,7 @@ static void get_local_heads(void)
- static void get_dav_remote_heads(void)
- {
- 	remote_tail = &remote_refs;
--	crawl_remote_refs("refs/");
-+	remote_ls("refs/", (PROCESS_FILES | PROCESS_DIRS | RECURSIVE), process_ls_ref, NULL);
++static void check_locks()
++{
++	struct remote_lock *lock = remote->locks;
++	time_t current_time = time(NULL);
++	int time_remaining;
++
++	while (lock) {
++		time_remaining = lock->start_time + lock->timeout -
++			current_time;
++		if (!lock->refreshing && time_remaining < LOCK_REFRESH) {
++			if (!refresh_lock(lock)) {
++				fprintf(stderr,
++					"Unable to refresh lock for %s\n",
++					lock->url);
++				aborted = 1;
++				return;
+ 			}
+ 		}
+-
+-		lock->refreshing = 0;
+-		curl_slist_free_all(dav_headers);
+-		free(if_header);
++		lock = lock->next;
+ 	}
+-
+-	if (check_lock)
+-		return check_lock->active;
+-	else
+-		return 0;
  }
  
- static int is_zero_sha1(const unsigned char *sha1)
+ static void release_request(struct transfer_request *request)
+@@ -396,7 +400,7 @@ static void finish_request(struct transf
+ 	request->slot = NULL;
+ 
+ 	/* Keep locks active */
+-	refresh_lock(request->lock);
++	check_locks();
+ 
+ 	if (request->headers != NULL)
+ 		curl_slist_free_all(request->headers);
+@@ -483,6 +487,9 @@ static void add_request(struct object *o
+ 	struct transfer_request *request = request_queue_head;
+ 	struct packed_git *target;
+ 
++	/* Keep locks active */
++	check_locks();
++
+ 	/*
+ 	 * Don't push the object if it's known to exist on the remote
+ 	 * or is already in the request queue
+@@ -893,7 +900,7 @@ static struct remote_lock *lock_remote(c
+ 	char *url;
+ 	char *ep;
+ 	char timeout_header[25];
+-	struct remote_lock *lock = remote_locks;
++	struct remote_lock *lock = NULL;
+ 	XML_Parser parser = XML_ParserCreate(NULL);
+ 	enum XML_Status result;
+ 	struct curl_slist *dav_headers = NULL;
+@@ -902,18 +909,6 @@ static struct remote_lock *lock_remote(c
+ 	url = xmalloc(strlen(remote->url) + strlen(path) + 1);
+ 	sprintf(url, "%s%s", remote->url, path);
+ 
+-	/* Make sure the url is not already locked */
+-	while (lock && strcmp(lock->url, url)) {
+-		lock = lock->next;
+-	}
+-	if (lock) {
+-		free(url);
+-		if (refresh_lock(lock))
+-			return lock;
+-		else
+-			return NULL;
+-	}
+-
+ 	/* Make sure leading directories exist for the remote ref */
+ 	ep = strchr(url + strlen(remote->url) + 11, '/');
+ 	while (ep) {
+@@ -971,10 +966,7 @@ static struct remote_lock *lock_remote(c
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
+ 
+ 	lock = xcalloc(1, sizeof(*lock));
+-	lock->owner = NULL;
+-	lock->token = NULL;
+ 	lock->timeout = -1;
+-	lock->refreshing = 0;
+ 
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+@@ -1016,10 +1008,9 @@ static struct remote_lock *lock_remote(c
+ 		lock = NULL;
+ 	} else {
+ 		lock->url = url;
+-		lock->active = 1;
+ 		lock->start_time = time(NULL);
+-		lock->next = remote_locks;
+-		remote_locks = lock;
++		lock->next = remote->locks;
++		remote->locks = lock;
+ 	}
+ 
+ 	return lock;
+@@ -1029,6 +1020,7 @@ static int unlock_remote(struct remote_l
+ {
+ 	struct active_request_slot *slot;
+ 	struct slot_results results;
++	struct remote_lock *prev = remote->locks;
+ 	char *lock_token_header;
+ 	struct curl_slist *dav_headers = NULL;
+ 	int rc = 0;
+@@ -1050,16 +1042,29 @@ static int unlock_remote(struct remote_l
+ 		if (results.curl_result == CURLE_OK)
+ 			rc = 1;
+ 		else
+-			fprintf(stderr, "Got HTTP error %ld\n",
++			fprintf(stderr, "UNLOCK HTTP error %ld\n",
+ 				results.http_code);
+ 	} else {
+-		fprintf(stderr, "Unable to start request\n");
++		fprintf(stderr, "Unable to start UNLOCK request\n");
+ 	}
+ 
+ 	curl_slist_free_all(dav_headers);
+ 	free(lock_token_header);
+ 
+-	lock->active = 0;
++	if (remote->locks == lock) {
++		remote->locks = lock->next;
++	} else {
++		while (prev && prev->next != lock)
++			prev = prev->next;
++		if (prev)
++			prev->next = prev->next->next;			
++	}
++
++	if (lock->owner != NULL)
++		free(lock->owner);
++	free(lock->url);
++	free(lock->token);
++	free(lock);
+ 
+ 	return rc;
+ }
+@@ -1597,7 +1602,7 @@ int main(int argc, char **argv)
+ 	struct transfer_request *next_request;
+ 	int nr_refspec = 0;
+ 	char **refspec = NULL;
+-	struct remote_lock *ref_lock;
++	struct remote_lock *ref_lock = NULL;
+ 	struct rev_info revs;
+ 	int rc = 0;
+ 	int i;
+@@ -1605,10 +1610,7 @@ int main(int argc, char **argv)
+ 	setup_git_directory();
+ 	setup_ident();
+ 
+-	remote = xmalloc(sizeof(*remote));
+-	remote->url = NULL;
+-	remote->path_len = 0;
+-	remote->packs = NULL;
++	remote = xcalloc(sizeof(*remote), 1);
+ 
+ 	argv++;
+ 	for (i = 1; i < argc; i++, argv++) {
+@@ -1787,6 +1789,7 @@ int main(int argc, char **argv)
+ 		if (!rc)
+ 			fprintf(stderr, "    done\n");
+ 		unlock_remote(ref_lock);
++		check_locks();
+ 	}
+ 
+  cleanup:
 -- 
 1.2.4.g8e81-dirty
