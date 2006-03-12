@@ -1,72 +1,122 @@
-From: lamikr <lamikr@cc.jyu.fi>
-Subject: Re: Any news on an Eclipse plugin?
-Date: Sun, 12 Mar 2006 21:50:35 +0200
-Message-ID: <44147B8B.4050503@cc.jyu.fi>
-References: <20060306173229.GA27965@spearce.org> <440D2F4E.9090009@peralex.com>
-Reply-To: lamikr@cc.jyu.fi
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Possible --remove-empty bug
+Date: Sun, 12 Mar 2006 13:31:06 -0800
+Message-ID: <7vk6azz6xx.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 12 21:20:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Mar 12 22:56:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIWbO-00017z-SD
-	for gcvg-git@gmane.org; Sun, 12 Mar 2006 20:51:43 +0100
+	id 1FIY9l-0006MY-9T
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 22:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932167AbWCLTvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 14:51:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932191AbWCLTvf
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 14:51:35 -0500
-Received: from posti5.jyu.fi ([130.234.4.34]:5809 "EHLO posti5.jyu.fi")
-	by vger.kernel.org with ESMTP id S932167AbWCLTve (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 14:51:34 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id k2CJoMk9017675;
-	Sun, 12 Mar 2006 21:50:22 +0200
-Received: from aragorn.kortex.jyu.fi (aragorn.kortex.jyu.fi [130.234.182.44])
-	by posti5.jyu.fi (8.13.4/8.13.4) with ESMTP id k2CJoIU1017667;
-	Sun, 12 Mar 2006 21:50:20 +0200
-Received: from [127.0.0.1] (aragorn.kortex.jyu.fi [127.0.0.1])
-	by aragorn.kortex.jyu.fi (Postfix) with ESMTP id 13999468167;
-	Sun, 12 Mar 2006 21:50:36 +0200 (EET)
-User-Agent: Mozilla Thunderbird 1.0.6-7.5.20060mdk (X11/20050322)
-X-Accept-Language: en-us, en
-To: Noel Grandin <noel@peralex.com>
-In-Reply-To: <440D2F4E.9090009@peralex.com>
-X-Virus-Scanned: amavisd-new at cc.jyu.fi
+	id S932220AbWCLVbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 16:31:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932232AbWCLVbK
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 16:31:10 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:41349 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932220AbWCLVbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Mar 2006 16:31:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060312212919.GNFF6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 12 Mar 2006 16:29:19 -0500
+To: "Marco Costalba" <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
+	(Marco Costalba's message of "Sun, 12 Mar 2006 15:12:12 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17527>
 
-Hi
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-Have you yet made any kind of planning of the features that would be
-available or put up the repository?
-I use novadays Eclipse basically for all of my editing and something
-like CVS/Subclipse plug-ins for git would be cool.
-(cdt cross-indexing is still a little bit slow with the amount of files
-in kernel so with kernel I have turned that off)
-
-Noel Grandin wrote:
-
->The subversion plugin (subclipse.tigris.org) might be a good starting
->point since it delegates a lot of it's low-level work through an
->interface called svnClientAdapter. Re-implementing that to talk to git
->should get you something useful in a reasonable time-frame.
+>>>From git-rev-list documentation:
 >
->Note that an eclipse team plugin is a pretty complicated beast.
->  
+> --remove-empty::
+> 	Stop when a given path disappears from the tree.
 >
-Yes, but very powerfull for the people like me who have who just have
-never bothered to learn VI/Emacs/sed properly
-and feel with them like having 5 thumps, code finders, search tools,
-refactoring tools, etc. available in Eclipse are very cool.
+> But isn't it to be intended *after* a path disapperas from the tree?
 
-So if the repository for git plug-ins goes up somewhere I could try to
-help a little bit.
+To be honest, I do not know how --remove-empty is intended to
+work.  What revision traversal code does and what the above says
+are different.
 
-Mika
+The traversal code goes like this:
+
+	* Start from given commits (both interesting and
+          uninteresting), look at still-to-be-procesed commit
+          one by one, by calling add_parents_to_list().
+
+          * add_parents_to_list() grows still-to-be-processed
+            list; if the current commit is uninteresting, mark its
+            parents also uninteresting, and if no interesting
+            commit remains in the still-to-be-processed list, we
+            are done.  On the other hand, if the current commit is
+            interesting, place it to the list of results.
+
+        * After the above traversal is done, the consumer calls
+	  get_revision() to retrieve commits from the list of
+	  results one-by-one.  We return only interesting ones.
+
+And in add_parents_to_list()
+
+	* if the commit is interesting, and when we are limiting
+          by paths, we call try_to_simplify_commit().  This
+          checks if the tree associated with the current commit
+          is the same as one of its parents' with respect to
+          specified paths, and if so pretend that the current
+          commit has only that parent and no other.  This can
+          make a merge commit to lose other parents that we do
+          not inherit the specified paths from.
+
+        * try_to_simplify_commit() looks at each parent, and:
+
+          - if we find a parent that has the same tree (wrt the
+            paths we are interested in), we pretend it is the
+            sole parent of this commit.
+
+	  - if we find a parent that does not have any of the
+            specified paths, we pretend we do not have that
+            parent under --remove-empty.
+
+	  - otherwise we do not munge the list of parents.
+
+My understanding of what the code is doing from the above
+reading is to lose that empty parent, and it does not have much
+to do with stop traversing the ancestry chain at such commit.  I
+am not sure that is what was intended...
+
+Maybe something like this is closer to what the documentation
+says.
+
+-- >8 --
+diff --git a/revision.c b/revision.c
+index c8d93ff..03085ff 100644
+--- a/revision.c
++++ b/revision.c
+@@ -315,9 +315,14 @@ static void try_to_simplify_commit(struc
+ 			return;
+ 
+ 		case TREE_NEW:
+-			if (revs->remove_empty_trees && same_tree_as_empty(p->tree)) {
+-				*pp = parent->next;
+-				continue;
++			if (revs->remove_empty_trees &&
++			    same_tree_as_empty(p->tree)) {
++				/* We are adding all the specified paths from
++				 * this parent, so the parents of it is
++				 * not interesting, but the difference between
++				 * this parent and us still is interesting.
++				 */
++				p->object.flags |= UNINTERESTING;
+ 			}
+ 		/* fallthrough */
+ 		case TREE_DIFFERENT:
