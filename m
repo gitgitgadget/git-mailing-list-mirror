@@ -1,57 +1,62 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [BUG] imap-send.c fails to build on OSX
-Date: 12 Mar 2006 11:08:16 -0800
-Message-ID: <86k6azjxb3.fsf@blue.stonehenge.com>
-References: <863bhnlo3r.fsf@blue.stonehenge.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH] Trivial warning fix for imap-send.c
+Date: Sun, 12 Mar 2006 11:20:27 -0800
+Message-ID: <4414747B.7040700@gmail.com>
+References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603120847500.3618@g5.osdl.org> <slrne18of5.fr9.mdw@metalzone.distorted.org.uk>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Mar 12 20:17:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 12 20:20:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIVve-00036H-7n
-	for gcvg-git@gmane.org; Sun, 12 Mar 2006 20:08:36 +0100
+	id 1FIW7Q-0007sz-Nc
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 20:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750932AbWCLTIW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 14:08:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWCLTIW
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 14:08:22 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:53912 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750932AbWCLTIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Mar 2006 14:08:22 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 6758D8F72A
-	for <git@vger.kernel.org>; Sun, 12 Mar 2006 11:08:17 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 22799-01 for <git@vger.kernel.org>;
- Sun, 12 Mar 2006 11:08:16 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id A7A5A8F72E; Sun, 12 Mar 2006 11:08:16 -0800 (PST)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.13.2.4; tzolkin = 11 Kan; haab = 2 Cumku
-In-Reply-To: <863bhnlo3r.fsf@blue.stonehenge.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750932AbWCLTUi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 14:20:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWCLTUi
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 14:20:38 -0500
+Received: from wproxy.gmail.com ([64.233.184.204]:51281 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750932AbWCLTUi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 14:20:38 -0500
+Received: by wproxy.gmail.com with SMTP id 57so469065wri
+        for <git@vger.kernel.org>; Sun, 12 Mar 2006 11:20:37 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=ZZRlQPp9RpnTi3LnWfQzY3UCLQSr0nOj5bYKtqSz8AGDE+fFu6RMyEJ/rGUNPFAoue6us+bAGAi5eJRtiO8XjOc4vocFNgYZNMfqZeSL0A8E1Ir9fW4g0ONgWEVbFEj9wn+MfKlRcKLP8layexS12cJFhvZivLRoxjrgfZHo3jw=
+Received: by 10.54.140.6 with SMTP id n6mr1091466wrd;
+        Sun, 12 Mar 2006 11:20:37 -0800 (PST)
+Received: from ?10.0.0.6? ( [67.20.67.7])
+        by mx.gmail.com with ESMTP id 64sm119518wra.2006.03.12.11.20.36;
+        Sun, 12 Mar 2006 11:20:37 -0800 (PST)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Mark Wooding <mdw@distorted.org.uk>
+In-Reply-To: <slrne18of5.fr9.mdw@metalzone.distorted.org.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17524>
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
+Mark Wooding wrote:
+> Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+>>So in modern C, using NULL at the end of a varargs array as a pointer is 
+>>perfectly sane, and the extra cast is just ugly and bowing to bad 
+>>programming practices and makes no sense to anybody who never saw the 
+>>horror that is K&R.
+> 
+> No!  You can still get bitten.  You're lucky that on common platforms
+> all pointers look the same, but if you find one where `char *' (and
+> hence `void *') isn't the same as `struct foo *' then, under appropriate
+> circumstances you /will/ unless you put the casts in.
 
-Randal>     gcc -o imap-send.o -c -g -O2 -Wall -I/sw/include -I/opt/local/include -DSHA1_HEADER='<openssl/sha.h>'  imap-send.c
-Randal>     imap-send.c:376: error: static declaration of 'vasprintf' follows non-static declaration
-Randal>     /usr/include/stdio.h:297: error: previous declaration of 'vasprintf' was here
-Randal>     make: *** [imap-send.o] Error 1
-
-By the way, /usr/include/stdio.h near the line in question looks like:
-
-int      vasprintf(char **, const char *, va_list) __DARWIN_LDBL_COMPAT(vasprintf);
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Please explain how malloc() can work on such a platform. My reading of 
+the '89 ANSI C spec. finds that _ALL_ (non function) pointers _are_ 
+cast-able to/from a void * and that NULL should be #defined as (void *). 
+See 3.2.2.3 and 4.1.5 if interested.
