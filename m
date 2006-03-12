@@ -1,122 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Possible --remove-empty bug
-Date: Sun, 12 Mar 2006 13:31:06 -0800
-Message-ID: <7vk6azz6xx.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 12 Mar 2006 14:54:13 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603121450210.3618@g5.osdl.org>
 References: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
+ <7vk6azz6xx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Mar 12 22:56:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 13 00:14:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIY9l-0006MY-9T
-	for gcvg-git@gmane.org; Sun, 12 Mar 2006 22:31:19 +0100
+	id 1FIZSB-0005TQ-Ag
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 23:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220AbWCLVbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 16:31:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932232AbWCLVbK
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 16:31:10 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:41349 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932220AbWCLVbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Mar 2006 16:31:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060312212919.GNFF6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 12 Mar 2006 16:29:19 -0500
-To: "Marco Costalba" <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
-	(Marco Costalba's message of "Sun, 12 Mar 2006 15:12:12 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751239AbWCLWyU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 17:54:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbWCLWyU
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 17:54:20 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:54747 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751239AbWCLWyU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 17:54:20 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2CMsEDZ031151
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Mar 2006 14:54:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2CMsDOM016852;
+	Sun, 12 Mar 2006 14:54:14 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6azz6xx.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17528>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
 
->>>From git-rev-list documentation:
->
-> --remove-empty::
-> 	Stop when a given path disappears from the tree.
->
-> But isn't it to be intended *after* a path disapperas from the tree?
 
-To be honest, I do not know how --remove-empty is intended to
-work.  What revision traversal code does and what the above says
-are different.
+On Sun, 12 Mar 2006, Junio C Hamano wrote:
+> 
+> To be honest, I do not know how --remove-empty is intended to
+> work.
 
-The traversal code goes like this:
+It's supposed to stop traversing the tree once a pathname disappears.
 
-	* Start from given commits (both interesting and
-          uninteresting), look at still-to-be-procesed commit
-          one by one, by calling add_parents_to_list().
+> Maybe something like this is closer to what the documentation
+> says.
 
-          * add_parents_to_list() grows still-to-be-processed
-            list; if the current commit is uninteresting, mark its
-            parents also uninteresting, and if no interesting
-            commit remains in the still-to-be-processed list, we
-            are done.  On the other hand, if the current commit is
-            interesting, place it to the list of results.
+If it is, then the documentation is broken.
 
-        * After the above traversal is done, the consumer calls
-	  get_revision() to retrieve commits from the list of
-	  results one-by-one.  We return only interesting ones.
+The fact that a pathname disappears does _not_ make the commit 
+uninteresting. It just means that we should stop traversing that parent.
 
-And in add_parents_to_list()
+"uninteresting" has a big side effect: it inherits to parents. So if you 
+have
 
-	* if the commit is interesting, and when we are limiting
-          by paths, we call try_to_simplify_commit().  This
-          checks if the tree associated with the current commit
-          is the same as one of its parents' with respect to
-          specified paths, and if so pretend that the current
-          commit has only that parent and no other.  This can
-          make a merge commit to lose other parents that we do
-          not inherit the specified paths from.
+	    a
+	   / \
+	  b   c
+	   \ /
+	    d
 
-        * try_to_simplify_commit() looks at each parent, and:
+where the pathname disappeared in "b", you must NOT mark it uninteresting, 
+because that would mean that "d" is also uninteresting.
 
-          - if we find a parent that has the same tree (wrt the
-            paths we are interested in), we pretend it is the
-            sole parent of this commit.
+There's a huge difference between saying "I will not traverse down this 
+line any more" and "I mark this commit uninteresting". The first one just 
+stops adding commits to the commit list (but parents deeper down might 
+still be interesting because they are also reached through another 
+pathway). The second says "this commit and all of its ancestors are 
+deemed worthless".
 
-	  - if we find a parent that does not have any of the
-            specified paths, we pretend we do not have that
-            parent under --remove-empty.
+The "path goes away" case is meant to just stop traversal, not mark all 
+parents worthless.
 
-	  - otherwise we do not munge the list of parents.
-
-My understanding of what the code is doing from the above
-reading is to lose that empty parent, and it does not have much
-to do with stop traversing the ancestry chain at such commit.  I
-am not sure that is what was intended...
-
-Maybe something like this is closer to what the documentation
-says.
-
--- >8 --
-diff --git a/revision.c b/revision.c
-index c8d93ff..03085ff 100644
---- a/revision.c
-+++ b/revision.c
-@@ -315,9 +315,14 @@ static void try_to_simplify_commit(struc
- 			return;
- 
- 		case TREE_NEW:
--			if (revs->remove_empty_trees && same_tree_as_empty(p->tree)) {
--				*pp = parent->next;
--				continue;
-+			if (revs->remove_empty_trees &&
-+			    same_tree_as_empty(p->tree)) {
-+				/* We are adding all the specified paths from
-+				 * this parent, so the parents of it is
-+				 * not interesting, but the difference between
-+				 * this parent and us still is interesting.
-+				 */
-+				p->object.flags |= UNINTERESTING;
- 			}
- 		/* fallthrough */
- 		case TREE_DIFFERENT:
+		Linus
