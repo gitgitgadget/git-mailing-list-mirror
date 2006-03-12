@@ -1,55 +1,55 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: [PATCH] imap-send: cleanup execl() call to use NULL sentinel instead of 0
-Date: Sat, 11 Mar 2006 21:30:22 +0100
-Message-ID: <20060311203022.GA1578@fiberbit.xs4all.nl>
-References: <20060311085550.GA32089@fiberbit.xs4all.nl> <118833cc0603110601x6ac9b2b6kaa0277981c6dd44b@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-diff-tree -M performance regression in 'next'
+Date: Sat, 11 Mar 2006 19:10:35 -0800
+Message-ID: <7v7j70gxxw.fsf@assigned-by-dhcp.cox.net>
+References: <20060311172818.GB32609@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Mike McCormack <mike@codeweavers.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 11 21:30:39 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Mar 12 04:11:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIAjS-0002Bq-7Y
-	for gcvg-git@gmane.org; Sat, 11 Mar 2006 21:30:35 +0100
+	id 1FIGyt-0004kN-9W
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 04:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbWCKUaZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Mar 2006 15:30:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbWCKUaZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Mar 2006 15:30:25 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:23177 "EHLO
-	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1751187AbWCKUaZ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Mar 2006 15:30:25 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
-	id 1FIAjH-0000Qp-1f; Sat, 11 Mar 2006 21:30:23 +0100
-To: Morten Welinder <mwelinder@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <118833cc0603110601x6ac9b2b6kaa0277981c6dd44b@mail.gmail.com>
-User-Agent: Mutt/1.5.11
+	id S1751103AbWCLDKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Mar 2006 22:10:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbWCLDKk
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Mar 2006 22:10:40 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:52406 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751103AbWCLDKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Mar 2006 22:10:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060312030740.JAGN17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 11 Mar 2006 22:07:40 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060311172818.GB32609@c165.ib.student.liu.se> (Fredrik
+	Kuivinen's message of "Sat, 11 Mar 2006 18:28:18 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17506>
 
-On Saturday March 11th 2006 Morten Welinder wrote:
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-> If you're going to fix that, you should use (char *)NULL or
-> (char *)0, just in case you end up on a machine where
-> NULL doesn't a pointer type.
-> 
-> (Yup, NULL can be a null pointer without having pointer type.)
+> I turned out that the rename detection took almost 10 minutes on my
+> machine.
 
-For gcc NULL is specifically always guaranteed to be a valid sentinel.
-And it was basically just about fixing the gcc warning, no pedantics
-intended! All other uses within git for the exec() family also use plain
-uncast NULL, which looks better anyway.
+Yes, that is one of the reasons why it still is in "next", not
+in "master".
 
-Strictly speaking you're probably right, but there's a chance that this
-will generate warnings on other compilers.
-
-And if you should use a compiler with a weird notion of NULL, you're
-probably better off switching compilers immediately. ;-)
--- 
-Marco Roeland
+The rename-detector change was done primarily to work around the
+correctness problem the finer-grained delta changes would have
+introduced.  The new delta code would have produced far more
+copies from the source than the current xdelta code, but the
+nature of the new copies it would have found was quite different
+from what we would usually call "file being renamed".  Now we
+decided to shelve the finer-grained delta code for now, I do not
+see a pressing reason to have the experimental rename detector
+graduate to "master" until we resolve its performance issues.
