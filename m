@@ -1,64 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-diff-tree -M performance regression in 'next'
-Date: Sun, 12 Mar 2006 09:00:13 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603120858230.3618@g5.osdl.org>
-References: <20060311172818.GB32609@c165.ib.student.liu.se>
- <7voe0bdeyr.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 12 18:00:29 2006
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: Re: [PATCH] Use explicit pointers for execl...() sentinels.
+Date: Sun, 12 Mar 2006 17:32:51 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrne18mq3.fr9.mdw@metalzone.distorted.org.uk>
+References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <7v7j6zgaxx.fsf@assigned-by-dhcp.cox.net> <slrne18aae.fr9.mdw@metalzone.distorted.org.uk> <20060312171316.39d138f8.tihirvon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 12 18:33:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FITvf-0004P2-QA
-	for gcvg-git@gmane.org; Sun, 12 Mar 2006 18:00:28 +0100
+	id 1FIURF-0005G2-Fc
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 18:33:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbWCLRAZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 12:00:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbWCLRAZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 12:00:25 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:17051 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751560AbWCLRAY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 12:00:24 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2CH0EDZ017284
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Mar 2006 09:00:14 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2CH0Dok008376;
-	Sun, 12 Mar 2006 09:00:13 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe0bdeyr.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751661AbWCLRc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 12:32:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbWCLRcz
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 12:32:55 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:32200 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1751659AbWCLRcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Mar 2006 12:32:55 -0500
+Received: (qmail 20520 invoked by uid 110); 12 Mar 2006 17:32:51 -0000
+To: git@vger.kernel.org
+Received: (qmail 20507 invoked by uid 9); 12 Mar 2006 17:32:51 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1142184771 20505 172.29.199.2 (12 Mar 2006 17:32:51 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Sun, 12 Mar 2006 17:32:51 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17520>
 
+Timo Hirvonen <tihirvon@gmail.com> wrote:
 
+> NULL should always be ((void *)0).
 
-On Sun, 12 Mar 2006, Junio C Hamano wrote:
-> 
-> On my otherwise idle Duron 750 with slow disks, I am getting
-> something like these:
-> 
-> 0.99.9m : 130m virtual, 40m resident, (0major+14205minor)
->           67.62user 0.08system 1:15.95elapsed
-> master  : 130m virtual, 40m resident, (0major+12510minor)
->           66.06user 0.07system 1:10.95elapsed
-> "next"  : 150m virtual, 65m resident, (0major+49858minor)
->           51.41user 0.45system 0.57.55elapsed
+Says who?  I already gave chapter and verse for what NULL is required to
+do.
 
-Any way to fix that "4 times as many page misses, and 70% bigger rss?" 
-thing? It looks like you're not very careful about your memory use.
+Besides, (void *)0 fixes /this particular/ problem, because `void *' and
+`char *' have the same representation (6.2.5#27).  This wouldn't help us
+with a putative function which takes an arbitrary number of `foo *'
+pointers, since nothing guarantees that `void *' and `foo *' have
+similar representations.  You'd have to say `(foo *)0' or `(foo *)NULL'.
 
-I realize that git in general wants a lot of memory, but I see that as a 
-failure most of the time. I've got 2GB in most of my machines, but I 
-shouldn't _need_ to have it..
+> What 64-bit systems declare NULL as plain 0 (not 0L)?
 
-			Linus
+Don't know: didn't look.  0L won't do the right thing with IL32LLP64, if
+anyone was actually crazy enough to specify such an ABI.  The point is,
+there's not much 
+
+> How about fixing those systems instead of making the git source code
+> unreadable.
+
+Because, according to the C and POSIX specs, they're not wrong.
+
+The right fix from the point of view of a C implementation would be to
+define NULL to be some weird __null_pointer token which the compiler
+could warn about whenever it was used in an untyped argument context.
+
+(Besides, I don't find bare or casted `0' unreadable.  Maybe I'm just
+strange.)
+
+-- [mdw]
