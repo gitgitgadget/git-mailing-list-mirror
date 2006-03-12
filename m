@@ -1,62 +1,89 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH] Use explicit pointers for execl...() sentinels.
-Date: Sun, 12 Mar 2006 17:13:16 +0200
-Message-ID: <20060312171316.39d138f8.tihirvon@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Trivial warning fix for imap-send.c
+Date: Sun, 12 Mar 2006 08:57:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603120847500.3618@g5.osdl.org>
 References: <20060311192954.GQ16135@artsapartment.org>
-	<slrne17urp.fr9.mdw@metalzone.distorted.org.uk>
-	<7v7j6zgaxx.fsf@assigned-by-dhcp.cox.net>
-	<slrne18aae.fr9.mdw@metalzone.distorted.org.uk>
+ <slrne17urp.fr9.mdw@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 12 16:11:34 2006
+X-From: git-owner@vger.kernel.org Sun Mar 12 17:57:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FISEF-0004Tz-VZ
-	for gcvg-git@gmane.org; Sun, 12 Mar 2006 16:11:32 +0100
+	id 1FITsd-0003e6-EA
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 17:57:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751050AbWCLPLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 10:11:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWCLPLZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 10:11:25 -0500
-Received: from nproxy.gmail.com ([64.233.182.199]:55563 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751050AbWCLPLY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 10:11:24 -0500
-Received: by nproxy.gmail.com with SMTP id x29so782184nfb
-        for <git@vger.kernel.org>; Sun, 12 Mar 2006 07:11:20 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=g2vorlxKgc3I5+au4a0z2SW8sXzCgCIcmxFg/PqS0o4SpEseDOJnfzpppjK0p5fEV2c2gVSBwN5R1pPthIb1jHzAt/WZgsLoJBFUfa7S1AFdKc08lzWsnEiF4tiXQy1NTPkkboLieSJTmJcftBoslWNCkErd24QTqA/e9tjJ7DA=
-Received: by 10.48.226.12 with SMTP id y12mr2373952nfg;
-        Sun, 12 Mar 2006 07:11:20 -0800 (PST)
-Received: from garlic.home.net ( [82.128.201.244])
-        by mx.gmail.com with ESMTP id m15sm2536042nfc.2006.03.12.07.11.17;
-        Sun, 12 Mar 2006 07:11:18 -0800 (PST)
-To: git@vger.kernel.org
-In-Reply-To: <slrne18aae.fr9.mdw@metalzone.distorted.org.uk>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.14; i686-pc-linux-gnu)
+	id S1751544AbWCLQ5Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 11:57:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbWCLQ5Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 11:57:16 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:24474 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751544AbWCLQ5Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 11:57:16 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2CGv3DZ017110
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Mar 2006 08:57:03 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2CGv2P5008260;
+	Sun, 12 Mar 2006 08:57:03 -0800
+To: Mark Wooding <mdw@distorted.org.uk>
+In-Reply-To: <slrne17urp.fr9.mdw@metalzone.distorted.org.uk>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17518>
 
-On Sun, 12 Mar 2006 13:59:42 +0000 (UTC)
-Mark Wooding <mdw@distorted.org.uk> wrote:
 
-> A terminator of `0' (or `NULL', which might well expand to `0') gets
-> passed as type `int' in the absence of argument type declarations (which
-> is the case for execl...(), since it uses varargs).  Argument passing
-> conventions may differ between `int' and `char *' if, say, `int' is 32
-> bits and pointers a 64; and there's no particular guarantee that a null
-> pointer has all-bits-zero anyway.
 
-NULL should always be ((void *)0).  What 64-bit systems declare NULL as
-plain 0 (not 0L)?  How about fixing those systems instead of making the
-git source code unreadable.
+On Sun, 12 Mar 2006, Mark Wooding wrote:
+> "Art Haas" <ahaas@airmail.net> wrote:
+> 
+> > -			execl( "/bin/sh", "sh", "-c", srvc->tunnel, 0 );
+> > +			execl( "/bin/sh", "sh", "-c", srvc->tunnel, NULL );
+> 
+> This is not the right fix.  NULL can be simply a #define for 0 (see
+> 6.3.2.3#3 and 7.17).  You need to write (char *)0 or (char *)NULL.  I
+> prefer to avoid the macro NULL entirely, since its misleading behaviour
+> is precisely what got us into this mess.
 
--- 
-http://onion.dynserv.net/~timo/
+It's perfectly fine.
+
+Quite frankly, if you have a 64-bit C compiler that doesn't make "NULL" be 
+"((void *)0)" (or equivalent - some compilers will actually have NULL as 
+an intrisic, because especially if they also support C++, NULL has some 
+really magical properties there), you should switch vendors as quickly as 
+humanly possible.
+
+The "#define NULL 0" practice is still _legal_ C, but that doesn't make it 
+any less broken. It's K&R traditional, but git requires ANSI prototypes 
+and some fancy features from modern compilers, so K&R compilers aren't 
+welcome anyway, and if their headers don't define NULL as a void pointer, 
+their headers are simply _broken_.
+
+So in modern C, using NULL at the end of a varargs array as a pointer is 
+perfectly sane, and the extra cast is just ugly and bowing to bad 
+programming practices and makes no sense to anybody who never saw the 
+horror that is K&R.
+
+It's akin to trying to not using prototypes, or to trying to limit your 
+externally visible names to 7 characters. It was "appropriate" about two 
+decades ago, these days it's just cuddling broken setups that have been 
+broken for a long long time.
+
+Btw, the reason NULL _has_ to be a pointer ("((void *)0)" or otherwise) is 
+simply that if it isn't, you not only won't get reasonable varargs 
+behaviour, you'll also miss real warnings. I've seen broken code like
+
+	int i = NULL;
+
+in my life, and if the compiler doesn't warn about that, then the compiler 
+is BROKEN, and not worth supporting as a programmer.
+
+			Linus
