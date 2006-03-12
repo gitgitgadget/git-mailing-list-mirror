@@ -1,65 +1,50 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Possible --remove-empty bug
-Date: Sun, 12 Mar 2006 15:12:12 +0100
-Message-ID: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: [BUG] imap-send.c fails to build on OSX
+Date: 12 Mar 2006 06:44:08 -0800
+Message-ID: <863bhnlo3r.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 12 15:12:30 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Mar 12 15:44:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIRJ2-0008Si-8f
-	for gcvg-git@gmane.org; Sun, 12 Mar 2006 15:12:24 +0100
+	id 1FIRnu-0006oP-S0
+	for gcvg-git@gmane.org; Sun, 12 Mar 2006 15:44:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803AbWCLOMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 09:12:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbWCLOMN
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 09:12:13 -0500
-Received: from wproxy.gmail.com ([64.233.184.200]:48627 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750803AbWCLOMN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Mar 2006 09:12:13 -0500
-Received: by wproxy.gmail.com with SMTP id 69so1229241wri
-        for <git@vger.kernel.org>; Sun, 12 Mar 2006 06:12:12 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=t2fPd8BiRD7bWXcufe9DSI2PNEUglS1jrtRTafX6zDIbTZfp5Jo+FX57XlWi1YRr7VfNNUbBxADp5F8UiHWMmmxRsQ0AsmH8WSTvUYt11hZpdnm0OKofgyWO4SIP1GdhrpYWnPTkAbiogsa7wg8/abM+u7mbbRZ5PR0d1/ocC5g=
-Received: by 10.65.73.20 with SMTP id a20mr1577490qbl;
-        Sun, 12 Mar 2006 06:12:12 -0800 (PST)
-Received: by 10.64.131.10 with HTTP; Sun, 12 Mar 2006 06:12:11 -0800 (PST)
-To: junkio@cox.net
-Content-Disposition: inline
+	id S1750995AbWCLOoN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 09:44:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbWCLOoN
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 09:44:13 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:33554 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750815AbWCLOoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Mar 2006 09:44:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id AE2468FAF6
+	for <git@vger.kernel.org>; Sun, 12 Mar 2006 06:44:08 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 06935-01-3 for <git@vger.kernel.org>;
+ Sun, 12 Mar 2006 06:44:08 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 397D08FB61; Sun, 12 Mar 2006 06:44:08 -0800 (PST)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.13.2.4; tzolkin = 11 Kan; haab = 2 Cumku
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17515>
 
->From today git:
 
-$ git-rev-parse HEAD
-be767c91724275c4534965c0d25c452b76057602
-$ git-rev-list be767c91724275c4534965c0d25c452b76057602 -- imap-send.c
-f2561fda364ad984ef1441a80c90b0ee04f1a7c4
-$ git-rev-list --remove-empty be767c91724275c4534965c0d25c452b76057602
--- imap-send.c
-$
+    gcc -o imap-send.o -c -g -O2 -Wall -I/sw/include -I/opt/local/include -DSHA1_HEADER='<openssl/sha.h>'  imap-send.c
+    imap-send.c:376: error: static declaration of 'vasprintf' follows non-static declaration
+    /usr/include/stdio.h:297: error: previous declaration of 'vasprintf' was here
+    make: *** [imap-send.o] Error 1
 
->From git-rev-list documentation:
-
---remove-empty::
-	Stop when a given path disappears from the tree.
-
-But isn't it to be intended *after* a path disapperas from the tree?
-In this case I would expect to see revision
-f2561fda364ad984ef1441a80c90b0ee04f1a7c4 also with --remove-empty
-option.
-
-BTW rev f2561fda364ad984ef1441a80c90b0ee04f1a7c4 is the 'Add
-git-imap-send, derived from isync 1.0.1.' patch.
-
-Thanks
-Marco
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
