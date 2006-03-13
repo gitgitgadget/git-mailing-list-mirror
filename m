@@ -1,93 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Possible --remove-empty bug
-Date: Sun, 12 Mar 2006 17:08:58 -0800
-Message-ID: <7vlkvfw3px.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
-	<7vk6azz6xx.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603121450210.3618@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-diff-tree -M performance regression in 'next'
+Date: Sun, 12 Mar 2006 17:09:47 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603121700410.3618@g5.osdl.org>
+References: <20060311172818.GB32609@c165.ib.student.liu.se>
+ <7voe0bdeyr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603120858230.3618@g5.osdl.org>
+ <7vk6azcv9y.fsf@assigned-by-dhcp.cox.net> <7vwtezw4ye.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 02:09:25 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 13 02:11:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIbYb-0008Qz-Co
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 02:09:11 +0100
+	id 1FIbZO-0000Hr-Ib
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 02:10:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315AbWCMBJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 20:09:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932316AbWCMBJF
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 20:09:05 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:24061 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932315AbWCMBJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Mar 2006 20:09:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060313010457.LTGW20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 12 Mar 2006 20:04:57 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932316AbWCMBJ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 20:09:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbWCMBJ4
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 20:09:56 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:53126 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932316AbWCMBJz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 20:09:55 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2D19mDZ004447
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Mar 2006 17:09:48 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2D19lg4020420;
+	Sun, 12 Mar 2006 17:09:47 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtezw4ye.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17532>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Sun, 12 Mar 2006, Junio C Hamano wrote:
->> 
->> To be honest, I do not know how --remove-empty is intended to
->> work.
->
-> It's supposed to stop traversing the tree once a pathname disappears.
 
-Then what we should simplify is the parent commit that does not
-have those pathnames (i.e. remove parents from that parent
-commit).  In other words, currently the code removes the parent
-commit that makes the tree disappear, but we would want to keep
-that parent, remove the grandparents, and then mark the parent
-uninteresting.
+On Sun, 12 Mar 2006, Junio C Hamano wrote:
+> 
+> To reduce wasted memory, wait until the hash fills up more
+> densely before we rehash.  This reduces the working set size a
+> bit further.
 
--- >8 --
-[PATCH] revision traversal: --remove-empty fix (take #2).
+Umm. Why do you rehash at all?
 
-Marco Costalba reports that --remove-empty omits the commit that
-created paths we are interested in.  try_to_simplify_commit()
-logic was dropping a parent we introduced those paths against,
-which I think is not what we meant.  Instead, this makes such
-parent parentless.
+Just take the size of the "src" file as the initial hash size. 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Also, I think it is likely really wasteful to try to actually hash at 
+_each_ character. Instead, let's say that the chunk-size is 8 bytes (like 
+you do now), and let's say that you have a 32-bit good hash of those 8 
+bytes. What you can do is:
 
----
+ - for each 8 bytes in the source, hash those 8 bytes (not every byte)
+ - for each byte in the other file, hash 8 next bytes. IF it matches a 
+   hash in the source with a non-zero count, subtract the count for that 
+   hash and move up by _eight_ characters! If it doesn't, add one to 
+   "characters not matched" counter, and move up _one_ character, and try 
+   again.
 
-diff --git a/revision.c b/revision.c
-index c8d93ff..73fba5d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -315,9 +315,18 @@ static void try_to_simplify_commit(struc
- 			return;
- 
- 		case TREE_NEW:
--			if (revs->remove_empty_trees && same_tree_as_empty(p->tree)) {
--				*pp = parent->next;
--				continue;
-+			if (revs->remove_empty_trees &&
-+			    same_tree_as_empty(p->tree)) {
-+				/* We are adding all the specified
-+				 * paths from this parent, so the
-+				 * history beyond this parent is not
-+				 * interesting.  Remove its parents
-+				 * (they are grandparents for us).
-+				 * IOW, we pretend this parent is a
-+				 * "root" commit.
-+				 */
-+				parse_commit(p);
-+				p->parents = NULL;
- 			}
- 		/* fallthrough */
- 		case TREE_DIFFERENT:
+At the end of this, you have two counts: the count of characters that you 
+couldn't match in the other file, and the count of 8-byte hash-chunks that 
+you couldn't match in the first one. Use those two counts to decide if 
+it's close or not.
+
+Especially for good matches, this should basically cut your work into an 
+eight of what you do now.
+
+Actually, even for bad matches, you cut the first source overhead into one 
+eight (the second file will obviously do the "update by 1 byte" most of 
+the time).
+
+Don't you think that would be as accurate as what you're doing now (it's 
+the same basic notion, after all), and noticeably faster?
+
+			Linus
