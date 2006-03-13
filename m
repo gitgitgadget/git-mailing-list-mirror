@@ -1,55 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-diff-tree -M performance regression in 'next'
-Date: Sun, 12 Mar 2006 18:53:17 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603121852280.3618@g5.osdl.org>
-References: <20060311172818.GB32609@c165.ib.student.liu.se>
- <7voe0bdeyr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603120858230.3618@g5.osdl.org>
- <7vk6azcv9y.fsf@assigned-by-dhcp.cox.net> <7vwtezw4ye.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0603121700410.3618@g5.osdl.org> <Pine.LNX.4.64.0603121710110.3618@g5.osdl.org>
- <Pine.LNX.4.64.0603121810140.3618@g5.osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] Trivial warning fix for imap-send.c
+Date: Sun, 12 Mar 2006 18:59:12 -0800
+Message-ID: <4414E000.9030902@zytor.com>
+References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603120847500.3618@g5.osdl.org> <slrne18of5.fr9.mdw@metalzone.distorted.org.uk> <4414747B.7040700@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 03:54:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 13 03:59:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIdBf-0001pu-PS
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 03:53:36 +0100
+	id 1FIdHT-0004sn-Ca
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 03:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbWCMCx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 21:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750969AbWCMCx1
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 21:53:27 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:63645 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750712AbWCMCx0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 21:53:26 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2D2rIDZ008764
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Mar 2006 18:53:19 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2D2rHTX023234;
-	Sun, 12 Mar 2006 18:53:18 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0603121810140.3618@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750712AbWCMC7Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 21:59:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750716AbWCMC7Z
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 21:59:25 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:3461 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750712AbWCMC7Z
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Mar 2006 21:59:25 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k2D2xC2I019622
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 12 Mar 2006 18:59:13 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: gitzilla@gmail.com
+In-Reply-To: <4414747B.7040700@gmail.com>
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17539>
 
+A Large Angry SCM wrote:
+> Mark Wooding wrote:
+> 
+>> Linus Torvalds <torvalds@osdl.org> wrote:
+>>
+>>> So in modern C, using NULL at the end of a varargs array as a pointer 
+>>> is perfectly sane, and the extra cast is just ugly and bowing to bad 
+>>> programming practices and makes no sense to anybody who never saw the 
+>>> horror that is K&R.
+>>
+>> No!  You can still get bitten.  You're lucky that on common platforms
+>> all pointers look the same, but if you find one where `char *' (and
+>> hence `void *') isn't the same as `struct foo *' then, under appropriate
+>> circumstances you /will/ unless you put the casts in.
+> 
+> Please explain how malloc() can work on such a platform. My reading of 
+> the '89 ANSI C spec. finds that _ALL_ (non function) pointers _are_ 
+> cast-able to/from a void * and that NULL should be #defined as (void *). 
+> See 3.2.2.3 and 4.1.5 if interested.
 
+Consider the non-hypothetical example of a word-addressed machine, which 
+has to have extra bits in a subword pointer like char *.  The C standard 
+requires that void * has those bits as well, but it doesn't means that 
+any void * can be cast to any arbitrary pointer -- the opposite, 
+however, is required.
 
-On Sun, 12 Mar 2006, Linus Torvalds wrote:
->
-> 		if (high > HASH_VAL)
-> 			high -= HASH_VAL;
-
-That should be ">= HASH_VAL", of course. I'm a retard. 
-
-		Linus
+	-hpa
