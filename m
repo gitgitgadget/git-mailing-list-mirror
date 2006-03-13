@@ -1,55 +1,85 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: What should I use instead of git show?
-Date: Mon, 13 Mar 2006 17:58:42 +0100
-Message-ID: <20060313165842.GD87487@dspnet.fr.eu.org>
-References: <20060313144747.GA81092@dspnet.fr.eu.org> <200603131717.53416.astralstorm@o2.pl> <Pine.LNX.4.64.0603130830050.3618@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Possible --remove-empty bug
+Date: Mon, 13 Mar 2006 11:03:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603131058270.3618@g5.osdl.org>
+References: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
+ <7vk6azz6xx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603121450210.3618@g5.osdl.org>
+ <7vlkvfw3px.fsf@assigned-by-dhcp.cox.net> <7v4q22ucio.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Radoslaw Szkodzinski <astralstorm@o2.pl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 18:00:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 13 20:07:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIqNc-0001Mw-0t
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 17:58:48 +0100
+	id 1FIsKU-0005Uu-Uf
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 20:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751603AbWCMQ6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Mar 2006 11:58:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbWCMQ6o
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 11:58:44 -0500
-Received: from dspnet.fr.eu.org ([213.186.44.138]:53513 "EHLO dspnet.fr.eu.org")
-	by vger.kernel.org with ESMTP id S1751593AbWCMQ6n (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 11:58:43 -0500
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id CB017A3A6D; Mon, 13 Mar 2006 17:58:42 +0100 (CET)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0603130830050.3618@g5.osdl.org>
-User-Agent: Mutt/1.4.2.1i
+	id S1751746AbWCMTDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 14:03:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751558AbWCMTDk
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 14:03:40 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:55488 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751728AbWCMTDj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 14:03:39 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2DJ3YDZ019738
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 13 Mar 2006 11:03:34 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2DJ3W6N019948;
+	Mon, 13 Mar 2006 11:03:33 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4q22ucio.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17575>
 
-On Mon, Mar 13, 2006 at 08:33:22AM -0800, Linus Torvalds wrote:
-> Why not just use "git show"?
+
+
+On Sun, 12 Mar 2006, Junio C Hamano wrote:
 > 
-> It hasn't gone anywhere that I know of. It's still there.
+> It removes the grandparents from the parent, and leaves the
+> parent still interesting.  As a result, in your example:
+> 
+>     ... if you have
+> 
+>                 a
+>                / \
+>               b   c
+>                \ /
+>                 d
+> 
+>     where the pathname disappeared in "b"...
+> 
+> we would get this world view:
+> 
+>                 a
+>                / \
+>               b   c
+>                  /
+>                 d
 
-Oh beautiful.
+Yeah, that's correct. That way you still see all the history that is 
+relevant to the tree that became empty.
 
-I had an old (as in 3 months max, but heh) git-tree at work in a
-corner from which I had compiled git.  When I saw it didn't have git
-show which I have at home I did a git pull, recompile, reinstall.
+However, to be honest, the only reason to ever use --remove-empty is for 
+rename detection, and Frederik's approach of doing that through the 
+library interface directly is actually a much superior option. So we might 
+as well drop the compilcation of --remove-empty entirely, unless somebody 
+has already started using it.
 
-The new git didn't have git show, so I thought it had been removed
-after all.  Turns out, the git pull had broken halfway due to the old
-version of git.  It hadn't fast forwarded _all_ the versions.  But the
-new git, while not current, has been able to do the complete git pull
-this time.  And now I have git show at work too.
+The _real_ optimization would be to make the pathname based pruning be 
+done incrementally instead of having to build up the whole tree. That 
+would be much more important than the --remove-empty stuff from a 
+usability standpoint. I'm absolutely sure it's possible, and I simplified 
+the code earlier so that it should be simpler to do, but every time I 
+actually look at the code I get confused again.
 
-Guess you have to update git every month or so if you want to be able
-to follow current trees.
-
-  OG.
+		Linus
