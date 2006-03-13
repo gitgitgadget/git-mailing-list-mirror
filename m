@@ -1,102 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff-tree -M performance regression in 'next'
-Date: Sun, 12 Mar 2006 20:14:21 -0800
-Message-ID: <7vwtezt202.fsf@assigned-by-dhcp.cox.net>
-References: <20060311172818.GB32609@c165.ib.student.liu.se>
-	<7voe0bdeyr.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603120858230.3618@g5.osdl.org>
-	<7vk6azcv9y.fsf@assigned-by-dhcp.cox.net>
-	<7vwtezw4ye.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603121700410.3618@g5.osdl.org>
-	<Pine.LNX.4.64.0603121710110.3618@g5.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [BUG] imap-send.c fails to build on OSX
+Date: Sun, 12 Mar 2006 23:25:52 -0500
+Message-ID: <20060313042552.GA18136@spearce.org>
+References: <863bhnlo3r.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 05:14:53 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 13 05:26:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIeRz-0007Ry-CS
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 05:14:42 +0100
+	id 1FIedF-0002jU-5t
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 05:26:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430AbWCMEO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 23:14:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbWCMEO2
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 23:14:28 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:63922 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751430AbWCMEO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Mar 2006 23:14:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060313041127.ZOHQ17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 12 Mar 2006 23:11:27 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603121710110.3618@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 12 Mar 2006 17:29:45 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932098AbWCME0A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 23:26:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932115AbWCME0A
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 23:26:00 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:18879 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932098AbWCMEZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Mar 2006 23:25:59 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FIeco-0000Zh-BZ; Sun, 12 Mar 2006 23:25:42 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 302D020FBAC; Sun, 12 Mar 2006 23:25:52 -0500 (EST)
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+Content-Disposition: inline
+In-Reply-To: <863bhnlo3r.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17544>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Workarounds for compiling on MacOS X.
 
-> However, it worries me a bit that you don't check the source strings, 
-> especially since the hash you use seems somewhat suspect (why limit it to 
-> essentially just 16 bits? Wouldn't it be best to have the _biggest_ prime 
-> that fits in the "hashval" thing, which is at least 32 bits? Also, 
-> shouldn't you make that spanhash thing use a "unsigned int" instead of 
-> "unsigned long"?)
->
-> So I would suggest instead the hash function to be:
->
-> 	typedef unsigned long long u64;
->
-> 	/* Biggest prime in 32 bits */
-> 	#define HASHVAL (4294967291u)
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-Actually what you are seeing is the best compromise I've come up
-with.  There were about a dozen crappoid that turned out to be
-suboptimal I threw away.
+---
+ "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+ > 
+ >     gcc -o imap-send.o -c -g -O2 -Wall -I/sw/include -I/opt/local/include -DSHA1_HEADER='<openssl/sha.h>'  imap-send.c
+ >     imap-send.c:376: error: static declaration of 'vasprintf' follows non-static declaration
+ >     /usr/include/stdio.h:297: error: previous declaration of 'vasprintf' was here
+ >     make: *** [imap-send.o] Error 1
 
-The hashsize is an interesting example of such a compromise
-between precision and performance.  It is true that full 32-bit
-hash gives us more precise match detection.  If you change the
-current hash function to divide with (4294967291u), the rename
-similarity score assigned to some (but not all) paths in the
-example dataset we have been using (diff between v2.6.12 and
-v2.6.14) decreases by about 1% -- this comes from the fact that
-the hashvalue capped to 16-bit gives some false hits that larger
-hashbase value can tell apart.  Because of it, some paths near
-the rename detection threshold stop being recognized as renames.
+ This should fix the build issues on Mac OS X.  Not tested on other
+ (possibly) more important platforms, like Linux.  :-)
 
-However, the runtime of the same dataset increases quite a bit
-when we do this.  I think this is because we need to keep more
-different hash values in the hashtable and the cost to randomly
-access into a huge table starts to hurt, unlike the 16-bit
-capped version whose hash table never needs to grow beyond 65k
-entries.
+ generate-cmdlist.sh |    2 +-
+ imap-send.c         |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-        next    39.77user 0.22system 0:40.78elapsed
-                0inputs+0outputs (0major+18855minor)
-
-        32-bit  66.32user 0.15system 1:07.00elapsed
-                0inputs+0outputs (0major+21057minor)
-
-Admittedly, we should not optimize for one particular test case,
-but we should start from somewhere.
-
-Decreasing the hashsize to 14-bit or less had noticeable
-degradation on the quality of renames the algorithm detects and
-misses to detect, both in v2.6.12..v2.6.14 test and some tests
-in git.git repository.
-
-One obvious change we could do is to make the hashsize to
-0x1800D (a prime halfway between 16- and 17-bit); currently the
-hashtable grows double every time when the table of the current
-size fills up sufficiently, but the current hashbase cannot fit
-in 16-bit, so we _are_ already using a table with 128K entries
-in some cases.
+base 57f4a482a7fc31e31cafd31fe23f4a4779b2c2f0
+last 6854050e1cdaf1b7ab352e1d4757ff5b29a5db93
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 6ee85d5..76ba49c 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -42,7 +42,7 @@ EOF
+ while read cmd
+ do
+     sed -n "/NAME/,/git-$cmd/H;
+-	    \$ {x; s/.*git-$cmd - \\(.*\\)/  {\"$cmd\", \"\1\"},/; p}" \
++	    \$ {x; s/.*git-$cmd - \\(.*\\)/  {\"$cmd\", \"\1\"},/; p;}" \
+ 	"Documentation/git-$cmd.txt"
+ done
+ echo "};"
+diff --git a/imap-send.c b/imap-send.c
+index fddaac0..376929f 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -370,7 +370,7 @@ free_generic_messages( message_t *msgs )
+ 	}
+ }
+ 
+-static int
++int
+ vasprintf( char **strp, const char *fmt, va_list ap )
+ {
+ 	int len;
+-- 
+1.2.4.g806b
