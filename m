@@ -1,73 +1,56 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: make -d work in git-repack (without -a)
-Date: Mon, 13 Mar 2006 23:26:21 +0100
-Message-ID: <20060313222621.GA25713@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Mark Hollomon <markhollomon@comcast.net>
+Subject: Re: What should I use instead of git show?
+Date: Mon, 13 Mar 2006 18:26:48 -0500
+Message-ID: <4415FFB8.3000001@comcast.net>
+References: <20060313144747.GA81092@dspnet.fr.eu.org> <200603131717.53416.astralstorm@o2.pl> <Pine.LNX.4.64.0603130830050.3618@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 23:28:55 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Mar 14 00:27:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIvUu-0005pd-Vn
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 23:26:42 +0100
+	id 1FIwQu-00069X-56
+	for gcvg-git@gmane.org; Tue, 14 Mar 2006 00:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964785AbWCMW0f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Mar 2006 17:26:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964786AbWCMW0f
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 17:26:35 -0500
-Received: from devrace.com ([198.63.210.113]:18443 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S964785AbWCMW0e (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 17:26:34 -0500
-Received: from tigra.home (p54A07B36.dip.t-dialin.net [84.160.123.54])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k2DMQObM006072;
-	Mon, 13 Mar 2006 16:26:25 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1FIvUc-0000sV-00; Mon, 13 Mar 2006 23:26:22 +0100
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FIvUb-0006ms-T4; Mon, 13 Mar 2006 23:26:21 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1751614AbWCMX0d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 18:26:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbWCMX0d
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 18:26:33 -0500
+Received: from rwcrmhc13.comcast.net ([216.148.227.153]:34291 "EHLO
+	rwcrmhc13.comcast.net") by vger.kernel.org with ESMTP
+	id S1751614AbWCMX0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Mar 2006 18:26:32 -0500
+Received: from [10.0.0.3] (c-69-249-27-188.hsd1.de.comcast.net[69.249.27.188])
+          by comcast.net (rwcrmhc13) with ESMTP
+          id <20060313232628m13001n34ae>; Mon, 13 Mar 2006 23:26:28 +0000
+User-Agent: Thunderbird 1.5 (X11/20060113)
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0603130830050.3618@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17577>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Linus Torvalds wrote:
+> 
+> 
+> 	git whatchanged -p -1 <sha1>
+> 
+> instead (actually, if your git is really old, you shouldn't use the modern 
+> shorthand of "-1", you should use the longer "--max-count=1" instead).
 
----
+I must be misunderstanding this:
 
-Junio C Hamano, Thu, Mar 09, 2006 19:50:43 +0100:
-> I am inclined to say I prefer Alex' one.
+	git whatchanged -p -1 HEAD
 
-I guess it has to be sent in formally...
+in the current git tree results in nothing. only when I get to -5 does it show something.
 
- git-repack.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Is this expected?
 
-a594bee1d539f71970e321592f45a114ea648d92
-diff --git a/git-repack.sh b/git-repack.sh
-index bc90112..2f643b5 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -74,6 +74,8 @@ then
- 			esac
- 		  done
- 		)
-+	else
-+		git-prune-packed
- 	fi
- 	git-prune-packed
- fi
+ > git version
+git version 1.2.4.gea75
+
 -- 
-1.2.4.g6ec337
+Mark Hollomon
