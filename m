@@ -1,80 +1,98 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Possible --remove-empty bug
-Date: Sun, 12 Mar 2006 21:41:51 -0800
-Message-ID: <7v4q22ucio.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550603120612k555fc7f3v9d8d17b1bd0b9e41@mail.gmail.com>
-	<7vk6azz6xx.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603121450210.3618@g5.osdl.org>
-	<7vlkvfw3px.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix up diffcore-rename scoring
+Date: Sun, 12 Mar 2006 22:26:34 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603122223160.3618@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 06:42:05 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Mar 13 07:26:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIfog-0003aB-Hk
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 06:42:03 +0100
+	id 1FIgVu-0001Ac-6a
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 07:26:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430AbWCMFlz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Mar 2006 00:41:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbWCMFlz
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 00:41:55 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:4809 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751430AbWCMFly (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Mar 2006 00:41:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060313054035.BMHV3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 13 Mar 2006 00:40:35 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vlkvfw3px.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 12 Mar 2006 17:08:58 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751536AbWCMG0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 01:26:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbWCMG0j
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 01:26:39 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:46022 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751534AbWCMG0j (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 01:26:39 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2D6QYDZ016360
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Mar 2006 22:26:35 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2D6QYQu029622;
+	Sun, 12 Mar 2006 22:26:34 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17552>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> It's supposed to stop traversing the tree once a pathname disappears.
->
-> Then what we should simplify is the parent commit that does not
-> have those pathnames (i.e. remove parents from that parent
-> commit).  In other words, currently the code removes the parent
-> commit that makes the tree disappear, but we would want to keep
-> that parent, remove the grandparents, and then mark the parent
-> uninteresting.
+The "score" calculation for diffcore-rename was totally broken.
 
-Sorry, the last clause in the above comment is wrong, and does
-not describe what the code attached does.
+It scaled "score" as
 
-It removes the grandparents from the parent, and leaves the
-parent still interesting.  As a result, in your example:
+	score = src_copied * MAX_SCORE / dst->size;
 
-    ... if you have
+which means that you got a 100% similarity score even if src and dest were 
+different, if just every byte of dst was copied from src, even if source 
+was much larger than dst (eg we had copied 85% of the bytes, but _deleted_ 
+the remaining 15%).
 
-                a
-               / \
-              b   c
-               \ /
-                d
+That's clearly bogus. We should do the score calculation relative not to 
+the destination size, but to the max size of the two.
 
-    where the pathname disappeared in "b"...
+This seems to fix it.
 
-we would get this world view:
-
-                a
-               / \
-              b   c
-                 /
-                d
-
-because when inspecting a and finding that "b" does not have any
-paths we are interested in, b loses all of its parents.
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index ed99fe2..e992698 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -133,7 +133,7 @@ static int estimate_similarity(struct di
+ 	 * match than anything else; the destination does not even
+ 	 * call into this function in that case.
+ 	 */
+-	unsigned long delta_size, base_size, src_copied, literal_added;
++	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
+ 	unsigned long delta_limit;
+ 	int score;
+ 
+@@ -144,9 +144,9 @@ static int estimate_similarity(struct di
+ 	if (!S_ISREG(src->mode) || !S_ISREG(dst->mode))
+ 		return 0;
+ 
+-	delta_size = ((src->size < dst->size) ?
+-		      (dst->size - src->size) : (src->size - dst->size));
++	max_size = ((src->size > dst->size) ? src->size : dst->size);
+ 	base_size = ((src->size < dst->size) ? src->size : dst->size);
++	delta_size = max_size - base_size;
+ 
+ 	/* We would not consider edits that change the file size so
+ 	 * drastically.  delta_size must be smaller than
+@@ -174,12 +174,10 @@ static int estimate_similarity(struct di
+ 	/* How similar are they?
+ 	 * what percentage of material in dst are from source?
+ 	 */
+-	if (dst->size < src_copied)
+-		score = MAX_SCORE;
+-	else if (!dst->size)
++	if (!dst->size)
+ 		score = 0; /* should not happen */
+ 	else
+-		score = src_copied * MAX_SCORE / dst->size;
++		score = src_copied * MAX_SCORE / max_size;
+ 	return score;
+ }
+ 
