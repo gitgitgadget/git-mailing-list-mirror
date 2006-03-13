@@ -1,98 +1,50 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix up diffcore-rename scoring
-Date: Sun, 12 Mar 2006 22:26:34 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603122223160.3618@g5.osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] Trivial warning fix for imap-send.c
+Date: Sun, 12 Mar 2006 22:37:36 -0800
+Message-ID: <44151330.7020905@zytor.com>
+References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603120847500.3618@g5.osdl.org> <slrne18of5.fr9.mdw@metalzone.distorted.org.uk> <4414747B.7040700@gmail.com> <4414E000.9030902@zytor.com> <4414F6B1.9080107@gmail.com> <Pine.LNX.4.64.0603122103440.3618@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Mar 13 07:26:45 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Mark Wooding <mdw@distorted.org.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 13 07:37:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIgVu-0001Ac-6a
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 07:26:45 +0100
+	id 1FIgge-0005Nv-Cn
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 07:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbWCMG0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Mar 2006 01:26:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbWCMG0j
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 01:26:39 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:46022 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751534AbWCMG0j (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 01:26:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2D6QYDZ016360
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Mar 2006 22:26:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2D6QYQu029622;
-	Sun, 12 Mar 2006 22:26:34 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751690AbWCMGho (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 01:37:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbWCMGhn
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 01:37:43 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:63199 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751667AbWCMGhn
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Mar 2006 01:37:43 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k2D6baT4025169
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 12 Mar 2006 22:37:37 -0800
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603122103440.3618@g5.osdl.org>
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17553>
 
+On "real" machines, the biggest reason you'd care is that a lot of 
+compilers, *especially* in C++ mode, really still define NULL as "0"; 
+ostensibly because defining it as "((void *)0)" breaks some obscure C++ 
+casting rule.
 
-The "score" calculation for diffcore-rename was totally broken.
-
-It scaled "score" as
-
-	score = src_copied * MAX_SCORE / dst->size;
-
-which means that you got a 100% similarity score even if src and dest were 
-different, if just every byte of dst was copied from src, even if source 
-was much larger than dst (eg we had copied 85% of the bytes, but _deleted_ 
-the remaining 15%).
-
-That's clearly bogus. We should do the score calculation relative not to 
-the destination size, but to the max size of the two.
-
-This seems to fix it.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index ed99fe2..e992698 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -133,7 +133,7 @@ static int estimate_similarity(struct di
- 	 * match than anything else; the destination does not even
- 	 * call into this function in that case.
- 	 */
--	unsigned long delta_size, base_size, src_copied, literal_added;
-+	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
- 	unsigned long delta_limit;
- 	int score;
- 
-@@ -144,9 +144,9 @@ static int estimate_similarity(struct di
- 	if (!S_ISREG(src->mode) || !S_ISREG(dst->mode))
- 		return 0;
- 
--	delta_size = ((src->size < dst->size) ?
--		      (dst->size - src->size) : (src->size - dst->size));
-+	max_size = ((src->size > dst->size) ? src->size : dst->size);
- 	base_size = ((src->size < dst->size) ? src->size : dst->size);
-+	delta_size = max_size - base_size;
- 
- 	/* We would not consider edits that change the file size so
- 	 * drastically.  delta_size must be smaller than
-@@ -174,12 +174,10 @@ static int estimate_similarity(struct di
- 	/* How similar are they?
- 	 * what percentage of material in dst are from source?
- 	 */
--	if (dst->size < src_copied)
--		score = MAX_SCORE;
--	else if (!dst->size)
-+	if (!dst->size)
- 		score = 0; /* should not happen */
- 	else
--		score = src_copied * MAX_SCORE / dst->size;
-+		score = src_copied * MAX_SCORE / max_size;
- 	return score;
- }
- 
+	-hpa
