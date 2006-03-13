@@ -1,159 +1,94 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fix up diffcore-rename scoring
-Date: Sun, 12 Mar 2006 23:44:44 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603122316160.3618@g5.osdl.org>
-References: <Pine.LNX.4.64.0603122223160.3618@g5.osdl.org>
- <7vmzfusuyq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603122256550.3618@g5.osdl.org>
+From: Keith Packard <keithp@keithp.com>
+Subject: Direct CVS import tool
+Date: Mon, 13 Mar 2006 00:25:42 -0800
+Message-ID: <1142238342.24217.63.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 13 08:44:54 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-+dEZnFEx1wAUFVwZoRiX"
+Cc: keithp@keithp.com
+X-From: git-owner@vger.kernel.org Mon Mar 13 09:26:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIhjY-0005Ue-VT
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 08:44:53 +0100
+	id 1FIiNN-0005Fi-1Y
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 09:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932324AbWCMHou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Mar 2006 02:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbWCMHou
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 02:44:50 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:13528 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932324AbWCMHot (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 02:44:49 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2D7ijDZ019593
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Mar 2006 23:44:46 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2D7iigs031689;
-	Sun, 12 Mar 2006 23:44:45 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0603122256550.3618@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932333AbWCMIZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 03:25:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbWCMIZ6
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 03:25:58 -0500
+Received: from home.keithp.com ([63.227.221.253]:37638 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S932333AbWCMIZ5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 03:25:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 7C52E130022;
+	Mon, 13 Mar 2006 00:25:55 -0800 (PST)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 30175-06; Mon, 13 Mar 2006 00:25:54 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1033)
+	id BB9E1130021; Mon, 13 Mar 2006 00:25:54 -0800 (PST)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 9BC8C14001;
+	Mon, 13 Mar 2006 00:25:54 -0800 (PST)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id AB57C6AC1DF; Mon, 13 Mar 2006 00:25:42 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17561>
 
 
+--=-+dEZnFEx1wAUFVwZoRiX
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 12 Mar 2006, Linus Torvalds wrote:
-> 
-> Now, that said, they _both_ find some pretty funky renames. I think there 
-> is probably some serious room for improvement, regardless (or at least 
-> changing the default similarity cut-off to something better ;)
+I've got some rather large, broken, CVS trees that I'm trying to migrate
+to git (X.org).
 
-I'm afraid that _good_ rename detection really ends up wanting to take 
-"longest possible sequence" into account, exactly like the full xdelta 
-does. 
+Attempts to do this with the existing cvsps-based git-cvsimport have
+proved rather disasterous; missing files, incorrect log messages and
+incorrect revisions are spread throughout the tree, including on the tip
+of each branch.
 
-Instead of doing a fixed-chunk thing and saying that any copy is 
-equivalent to any other copy. That's simply not true. It's _much_ better 
-to have one 24-byte copy than it is to have three 8-byte copies, but the 
-new faster diffcore-delta.c just can't see that.
+I'm reasonably sure the problems are caused by cvsps, and while I've
+hacked at that quite a bit, it seems like it's so focused on analysing
+the tree for putative software engineering reesarch that it cannot be
+made to accurately reproduce the tree via changeset analysis.
 
-So one big reason as to why it is fast in the first place is that it 
-fundamentally just doesn't do a very good job ;(
+So, I've given up hacking cvsps and wrote a simple RCS file parser that
+directly reads ,v files into a git-like revlist structure, and then
+merges those together into a final tree. At this point, it's generating
+the right head information for every named branch, but it's still not
+successfully connecting all of the branches back together at suitable
+points.
 
-It might be that the fast delta thing is a good way to ask "is this even 
-worth considering", to cut down the O(m*n) rename/copy detection to 
-something much smaller, and then use xdelta() to actually figure out what 
-is a good rename and what isn't from a much smaller set of potential 
-targets.
+It's also not yet generating actual git trees; instead it dumps the
+generated revision tree structure to a graphviz file for visual
+inspection of the results.
 
-That would actually allow us to be even _less_ precise. Screw that big 
-hash-table etc, don't even try to be exact. Just try to be fairly fast, 
-and then pick the top entries from the similarity array for more precise 
-diffing if there are multiple choices that look like they might be 
-possible.
+But, I figured instead of doing this work in secret, I'd let people know
+what I'm up to in case others want to play along.
 
-The appended alternate "diffcore-delta.c" doesn't do any of the caching 
-(ie I wrote it so that it would be easy to change to make the _caller_ 
-keeps "src" constant, and iterates over destination - or the other way 
-around - and would do the hash setup just once per src).
+git://git.freedesktop.org/~keithp/parsecvs
 
-Still, even with the existing setup, it's pretty fast for me (not much 
-slower than your caching version even though it recalculates everything 
-every time). And it's not that far off, which tells me that if it was used 
-as a "first-pass filter", we could afford to do a better job on the things 
-that it says are likely candidates.
+And, of course ideas for a suitable name would be welcome.
 
-Hmm? It really does bother me how the suggested rename detector finds 
-stuff that clearly isn't. 
+--=20
+keith.packard@intel.com
 
-			Linus
+--=-+dEZnFEx1wAUFVwZoRiX
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-----
-#include "cache.h"
-#include "diff.h"
-#include "diffcore.h"
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-#define CHUNK (16)
-#define SILLYSIZE (65537)
-static int hashnr[SILLYSIZE];
+iD8DBQBEFSyGQp8BWwlsTdMRAlShAJwIFHeZ8fBtjOFascESo5w93uGULgCfcAWd
+DJcSUbmG+4n8lvxCptNUPoE=
+=n4K1
+-----END PGP SIGNATURE-----
 
-static void setup_hash(void)
-{
-	memset(hashnr, 0, sizeof(hashnr));
-}
-
-static void insert_hash(unsigned int hashval)
-{
-	hashval = hashval % SILLYSIZE;
-	hashnr[hashval]++;
-}
-
-static int find_hash(unsigned int hashval)
-{
-	hashval = hashval % SILLYSIZE;
-	if (hashnr[hashval]) {
-		hashnr[hashval]--;
-		return 1;
-	}
-	return 0;
-}
-
-int diffcore_count_changes(void *src, unsigned long src_size,
-			   void *dst, unsigned long dst_size,
-			   void **src_count_p,
-			   void **dst_count_p,
-			   unsigned long delta_limit,
-			   unsigned long *src_copied,
-			   unsigned long *literal_added)
-{
-	unsigned long copied = 0;
-	unsigned long literal = 0;
-
-	setup_hash();
-	while (src_size >= CHUNK) {
-		unsigned int hashval = adler32(0, src, CHUNK);
-		insert_hash(hashval);
-		src += CHUNK;
-		src_size -= CHUNK;
-	}
-
-	while (dst_size >= CHUNK) {
-		unsigned int hashval = adler32(0, dst, CHUNK);
-		if (find_hash(hashval)) {
-			copied += CHUNK;
-			dst += CHUNK;
-			dst_size -= CHUNK;
-			continue;
-		}
-		literal++;
-		if (literal > delta_limit)
-			return -1;
-		dst++;
-		dst_size--;
-	}
-	literal += dst_size;
-
-	*src_copied = copied;
-	*literal_added = literal;
-	return 0;
-}
+--=-+dEZnFEx1wAUFVwZoRiX--
