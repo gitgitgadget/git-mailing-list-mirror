@@ -1,96 +1,76 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Trivial warning fix for imap-send.c
-Date: Sun, 12 Mar 2006 20:36:01 -0800
-Message-ID: <4414F6B1.9080107@gmail.com>
-References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603120847500.3618@g5.osdl.org> <slrne18of5.fr9.mdw@metalzone.distorted.org.uk> <4414747B.7040700@gmail.com> <4414E000.9030902@zytor.com>
-Reply-To: git@vger.kernel.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git
+Date: Sun, 12 Mar 2006 21:01:06 -0800
+Message-ID: <7vlkvfszu5.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wxg82r3.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90603060105m29595745ke64d4a623506c0b0@mail.gmail.com>
+	<20060310104443.GA4491@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 05:36:13 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 13 06:01:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIemw-0006B5-AQ
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 05:36:10 +0100
+	id 1FIfBC-00067p-30
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 06:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430AbWCMEgH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 23:36:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbWCMEgH
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 23:36:07 -0500
-Received: from zproxy.gmail.com ([64.233.162.207]:41641 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751430AbWCMEgE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 23:36:04 -0500
-Received: by zproxy.gmail.com with SMTP id 13so1238671nzn
-        for <git@vger.kernel.org>; Sun, 12 Mar 2006 20:36:03 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=D1NzHdKKxQG4cJ2qTttMq1ZAN6ZXUA1mqb3GO2EXQaXUTZhAacF0/nuBydw0hPqCPJelAeTL7BIQf6Zo59/OJYMH8XN2hw60ysZtEoyotUT5XlD6lzRXib1rXeGNa102AvovhrRIm6SPAEWVRBjeN7gQRqIr55CJJ1d09/fxON4=
-Received: by 10.36.222.43 with SMTP id u43mr4531089nzg;
-        Sun, 12 Mar 2006 20:36:03 -0800 (PST)
-Received: from ?10.0.0.6? ( [67.20.67.7])
-        by mx.gmail.com with ESMTP id e1sm4612661nzd.2006.03.12.20.36.02;
-        Sun, 12 Mar 2006 20:36:03 -0800 (PST)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4414E000.9030902@zytor.com>
+	id S932316AbWCMFBK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 00:01:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbWCMFBK
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 00:01:10 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:44210 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932316AbWCMFBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Mar 2006 00:01:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060313045944.ECGQ15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 12 Mar 2006 23:59:44 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060310104443.GA4491@c165.ib.student.liu.se> (Fredrik
+	Kuivinen's message of "Fri, 10 Mar 2006 11:44:43 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17547>
 
-H. Peter Anvin wrote:
-> A Large Angry SCM wrote:
->> Mark Wooding wrote:
->>
->>> Linus Torvalds <torvalds@osdl.org> wrote:
->>>
->>>> So in modern C, using NULL at the end of a varargs array as a 
->>>> pointer is perfectly sane, and the extra cast is just ugly and 
->>>> bowing to bad programming practices and makes no sense to anybody 
->>>> who never saw the horror that is K&R.
->>>
->>> No!  You can still get bitten.  You're lucky that on common platforms
->>> all pointers look the same, but if you find one where `char *' (and
->>> hence `void *') isn't the same as `struct foo *' then, under appropriate
->>> circumstances you /will/ unless you put the casts in.
->>
->> Please explain how malloc() can work on such a platform. My reading of 
->> the '89 ANSI C spec. finds that _ALL_ (non function) pointers _are_ 
->> cast-able to/from a void * and that NULL should be #defined as (void 
->> *). See 3.2.2.3 and 4.1.5 if interested.
-> 
-> Consider the non-hypothetical example of a word-addressed machine, which 
-> has to have extra bits in a subword pointer like char *.  The C standard 
-> requires that void * has those bits as well, but it doesn't means that 
-> any void * can be cast to any arbitrary pointer -- the opposite, 
-> however, is required.
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-ANSI X3.159-1989
+> On Mon, Mar 06, 2006 at 10:05:41PM +1300, Martin Langhoff wrote:
+>> 
+>> Add fuel to the fire  ;-) Can git-blame take cached git-rev-list
+>> output like annotate does with -S?
+>
+> Currently it cannot do that. How is that option used? If you want to
+> make annotate/blame faster for certain files you might as well cache
+> the output of annotate/blame instead of the git-rev-list output, no?
 
-3.2.2.3 Pointers
-	A pointer to *void* may be converted to or from a pointer to any 
-incomplete or object type. A pointer to any incomplete or object type 
-may be converted to a pointer to *void* and back again; the result shall 
-compare equal to the original pointer.
+There are two reasons Martin's git-cvsserver uses -S to feed you
+the revision list.  One is that he already has that ancestry
+chain information, and there is no point for him to have the
+git-annotate command to recompute it.
 
-For any qualifier /q/, a pointer to a non-/q/-qualified type may be 
-converted to a pointer to the /q/-qualified version of the type; the 
-values stored in the original and converted pointers shall compare equal.
+But there is another, more important reason.  He is giving his
+clients a modified world view where the branch he is exposing to
+have _no_ merges -- just a single strand of pearls.  So what is
+fed to git-annotate using -S from git-cvsserver has either one
+object name (single root commit) or two (the commit and its sole
+parent).  IOW, he does not want you to look at other parents
+when dealing with a merge commit.
 
-In integral constant expression with value 0, or such an expression cast 
-to type <bold>void *</bold>, is called a /null pointer constant.[*33*] 
-If a null pointer constant is assigned to or compared for equality to a 
-pointer, the constant is converted to a pointer of that type. Such a 
-pointer, called a /null pointer/, is guaranteed to compare unequal to a 
-pointer to any object or function.
-
-Two null pointers, converted through possibly different sequences of 
-casts to pointer types, shall compare equal.
-
-[*33*] the macro *NULL* is defined in <stddef.h> as a null pointer 
-constant; see 4.1.5.
+What this means is that in cases where your algorithm looked at
+second and subsequent parents to pass remaining blame on after
+looking at the first parent for a merge, the algorithm now needs
+to assign the blame to the merge commit itself.  Your
+process_commit() currently reads the commit object and loops
+over its true parents, but the -S flag wants to supply its own
+notion of who are the parents of whom (and in the case of
+git-cvsserver, it always supplies at most one parent) so you
+would need to honor that instead of looking at the real
+ancestry.
