@@ -1,71 +1,74 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] Trivial warning fix for imap-send.c
-Date: Sun, 12 Mar 2006 18:59:12 -0800
-Message-ID: <4414E000.9030902@zytor.com>
-References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603120847500.3618@g5.osdl.org> <slrne18of5.fr9.mdw@metalzone.distorted.org.uk> <4414747B.7040700@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Use explicit pointers for execl...() sentinels.
+Date: Sun, 12 Mar 2006 22:31:21 -0500
+Message-ID: <20060313033121.GA14601@coredump.intra.peff.net>
+References: <20060311192954.GQ16135@artsapartment.org> <slrne17urp.fr9.mdw@metalzone.distorted.org.uk> <7v7j6zgaxx.fsf@assigned-by-dhcp.cox.net> <slrne18aae.fr9.mdw@metalzone.distorted.org.uk> <20060312171316.39d138f8.tihirvon@gmail.com> <slrne18mq3.fr9.mdw@metalzone.distorted.org.uk> <20060312200812.3fb04638.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 13 03:59:52 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Mar 13 04:34:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIdHT-0004sn-Ca
-	for gcvg-git@gmane.org; Mon, 13 Mar 2006 03:59:35 +0100
+	id 1FIdmR-0000dg-AE
+	for gcvg-git@gmane.org; Mon, 13 Mar 2006 04:31:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbWCMC7Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Mar 2006 21:59:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750716AbWCMC7Z
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 21:59:25 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:3461 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750712AbWCMC7Z
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Mar 2006 21:59:25 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.4/8.13.4) with ESMTP id k2D2xC2I019622
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 12 Mar 2006 18:59:13 -0800
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: gitzilla@gmail.com
-In-Reply-To: <4414747B.7040700@gmail.com>
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1750712AbWCMDbY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Mar 2006 22:31:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbWCMDbY
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Mar 2006 22:31:24 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:23289 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1750712AbWCMDbY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Mar 2006 22:31:24 -0500
+Received: (qmail 74325 invoked from network); 13 Mar 2006 03:31:21 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 13 Mar 2006 03:31:21 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Mar 2006 22:31:21 -0500
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060312200812.3fb04638.tihirvon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17540>
 
-A Large Angry SCM wrote:
-> Mark Wooding wrote:
-> 
->> Linus Torvalds <torvalds@osdl.org> wrote:
->>
->>> So in modern C, using NULL at the end of a varargs array as a pointer 
->>> is perfectly sane, and the extra cast is just ugly and bowing to bad 
->>> programming practices and makes no sense to anybody who never saw the 
->>> horror that is K&R.
->>
->> No!  You can still get bitten.  You're lucky that on common platforms
->> all pointers look the same, but if you find one where `char *' (and
->> hence `void *') isn't the same as `struct foo *' then, under appropriate
->> circumstances you /will/ unless you put the casts in.
-> 
-> Please explain how malloc() can work on such a platform. My reading of 
-> the '89 ANSI C spec. finds that _ALL_ (non function) pointers _are_ 
-> cast-able to/from a void * and that NULL should be #defined as (void *). 
-> See 3.2.2.3 and 4.1.5 if interested.
+On Sun, Mar 12, 2006 at 08:08:12PM +0200, Timo Hirvonen wrote:
 
-Consider the non-hypothetical example of a word-addressed machine, which 
-has to have extra bits in a subword pointer like char *.  The C standard 
-requires that void * has those bits as well, but it doesn't means that 
-any void * can be cast to any arbitrary pointer -- the opposite, 
-however, is required.
+> NULL pointer does not point to any data, it just says it's 'empty'.  So
+> it doesn't need to be same type pointer as specified in the function
+> prototype.  Pointers are just addresses, it doesn't matter from to code
+> generation point of view whether it is (char *)0 or (void *)0.
 
-	-hpa
+Sorry, but I think you're wrong according to the C standard. Pointers of 
+different types do NOT have to share the same representation (e.g.,
+there have been some platforms where char* and int* were different
+sizes). A void pointer must be capable of representing any type of
+pointer (for example, holding the largest possible type). However, if
+sizeof(void *) == 8 and sizeof(char *) == 4, you have a problem with
+variadic functions which are expecting to pull 4 byte off the stack. 
+
+In a non-variadic function, the compiler would do the right implicit
+casting. In a variadic function, it can't. 
+
+The real question is, does git want to care about portability to such
+platforms.
+
+If you remain unconvinced, I can try to find chapter and verse of the
+standard.
+
+> sizeof(unsigned long) is sizeof(void *) in real world.
+
+Are you saying that because it encompasses all of the platforms you've
+worked on, or do you have some evidence that it is largely the case? It
+certainly isn't guaranteed by the C standard.
+
+> > Because, according to the C and POSIX specs, they're not wrong.
+> They didn't think of 64-bit architectures back then, I suppose.
+
+No, they did think of those issues; they intentionally left such sizing
+up to the implementation to allow C to grow with the hardware. Mostly
+you don't have to care, but as I said, typing with variadic functions is
+a pain.
+
+-Peff
