@@ -1,66 +1,58 @@
-From: Qingning Huo <qhuo@mayhq.co.uk>
-Subject: [PATCH] Invoke git-stripspace directly.
-Date: Tue, 14 Mar 2006 21:11:35 +0000
-Message-ID: <20060314211135.GB12498@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Invoke git-repo-config directly.
+Date: Tue, 14 Mar 2006 22:20:53 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603142219040.23646@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060314211022.GA12498@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Mar 14 22:19:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Mar 14 22:25:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJGnm-0005kO-Hn
-	for gcvg-git@gmane.org; Tue, 14 Mar 2006 22:11:35 +0100
+	id 1FJGwr-0000DN-Hb
+	for gcvg-git@gmane.org; Tue, 14 Mar 2006 22:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932451AbWCNVLb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Mar 2006 16:11:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932457AbWCNVLb
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 16:11:31 -0500
-Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:43676 "EHLO
-	mtaout03-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S932451AbWCNVLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Mar 2006 16:11:30 -0500
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com with ESMTP
-          id <20060314211129.VYSC1060.mtaout03-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Tue, 14 Mar 2006 21:11:29 +0000
-Received: from rabbit.zoo.mayhq.org ([80.0.127.16])
-          by aamtaout04-winn.ispmail.ntl.com with SMTP
-          id <20060314211129.VNJQ18957.aamtaout04-winn.ispmail.ntl.com@rabbit.zoo.mayhq.org>
-          for <git@vger.kernel.org>; Tue, 14 Mar 2006 21:11:29 +0000
-Received: (qmail 12575 invoked by uid 1000); 14 Mar 2006 21:11:35 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1750816AbWCNVUz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Mar 2006 16:20:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbWCNVUz
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 16:20:55 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:58808 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750816AbWCNVUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Mar 2006 16:20:54 -0500
+Received: from virusscan.mail (mail04.mail [172.25.1.103])
+	by mailrelay.mail (Postfix) with ESMTP id 7E6E31C68;
+	Tue, 14 Mar 2006 22:20:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 716D75CC7;
+	Tue, 14 Mar 2006 22:20:53 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 55E0AA90;
+	Tue, 14 Mar 2006 22:20:53 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Qingning Huo <qhuo@mayhq.co.uk>
+In-Reply-To: <20060314211022.GA12498@localhost.localdomain>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17598>
 
-Run "git-stripspace" instead of "git stripspace" to avoid calling
-external git command.
+Hi,
 
-Signed-off-by: Qingning Huo <qhuo@mayhq.co.uk>
+On Tue, 14 Mar 2006, Qingning Huo wrote:
 
----
+> -	var=`git repo-config --get pull.octopus`
+> +	var=`git-repo-config --get pull.octopus`
 
- git-format-patch.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+This is unlikely to be applied; there are plans to have a "libexec" path 
+in which all git executables are stored, and just the "git" wrapper in the 
+path. Your patch would break git in those setups.
 
-aad41923a43b82713af05eaa26db688272091520
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index 2ebf7e8..486fb31 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -213,7 +213,7 @@ sub show_date {
- }
- 
- print "From nobody Mon Sep 17 00:00:00 2001\n";
--open FH, "git stripspace <$commsg |" or die "open $commsg pipe";
-+open FH, "git-stripspace <$commsg |" or die "open $commsg pipe";
- while (<FH>) {
-     unless ($done_header) {
- 	if (/^$/) {
--- 
-1.2.4.ga019-dirty
+Ciao,
+Dscho
+
+P.S.: BTW there are quite a few discussions of this in the mailing list 
+archives...
