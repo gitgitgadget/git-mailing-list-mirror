@@ -1,57 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Use resolve in git-pull if NO_PYTHON
-Date: Tue, 14 Mar 2006 18:26:19 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603141825200.22344@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1142356355-4772-markhollomon@comcast.net>
+From: Paul Jakma <paul@clubi.ie>
+Subject: Re: seperate commits for objects already updated in index?
+Date: Tue, 14 Mar 2006 17:27:19 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0603141723240.5276@sheen.jakma.org>
+References: <Pine.LNX.4.64.0603141634010.5276@sheen.jakma.org>
+ <Pine.LNX.4.64.0603140856120.3618@g5.osdl.org> <Pine.LNX.4.64.0603141703080.5276@sheen.jakma.org>
+ <Pine.LNX.4.64.0603140915290.3618@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 14 18:34:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 14 18:39:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJDI3-0006Rr-FY
-	for gcvg-git@gmane.org; Tue, 14 Mar 2006 18:26:35 +0100
+	id 1FJDJM-0006wN-1Y
+	for gcvg-git@gmane.org; Tue, 14 Mar 2006 18:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbWCNR0Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Mar 2006 12:26:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750901AbWCNR0Y
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 12:26:24 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:63706 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751350AbWCNR0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Mar 2006 12:26:23 -0500
-Received: from virusscan.mail (mail03.mail [172.25.1.102])
-	by mailrelay.mail (Postfix) with ESMTP id 128CF1CA0;
-	Tue, 14 Mar 2006 18:26:20 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 0526EACB;
-	Tue, 14 Mar 2006 18:26:20 +0100 (CET)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id DD0C11CA0;
-	Tue, 14 Mar 2006 18:26:19 +0100 (CET)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Mark Hollomon <markhollomon@comcast.net>
-In-Reply-To: <1142356355-4772-markhollomon@comcast.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751402AbWCNR1x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Mar 2006 12:27:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbWCNR1x
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 12:27:53 -0500
+Received: from hibernia.jakma.org ([212.17.55.49]:41600 "EHLO
+	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751402AbWCNR1w
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Mar 2006 12:27:52 -0500
+Received: from sheen.jakma.org (IDENT:U2FsdGVkX19uTbXUBGX6VAkVt26FTSgukF/+2naanqw@sheen.jakma.org [212.17.55.53])
+	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k2EHRJS9023639;
+	Tue, 14 Mar 2006 17:27:31 GMT
+X-X-Sender: paul@sheen.jakma.org
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603140915290.3618@g5.osdl.org>
+Mail-Copies-To: paul@hibernia.jakma.org
+Mail-Followup-To: paul@hibernia.jakma.org
+X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17594>
 
-Hi,
+On Tue, 14 Mar 2006, Linus Torvalds wrote:
 
-On Tue, 14 Mar 2006, Mark Hollomon wrote:
+> Well, I actually think git is being somewhat of an ass, for no 
+> really good reason. It's true that you are doing something pretty 
+> strange by _both_ using "git-update-index" and "git commit -o" but 
+> the fact is, at least when adding files, that would be expected (ie 
+> you have to mark a file in the index to add it).
 
-> git-pull is hardcoded to use the recursive merge strategy
-> for the twohead case. But if git has been built with NO_PYTHON,
-> that strategy is not available. Teach git-pull to use resolve
-> if built with NO_PYTHON.
+Well, I tend to work on one thing, then notice something else 
+unrelated (or in a support file), fix/tweak that, etc.. I use the 
+index for 'way-point' diffs, rather than commit things I havn't quite 
+tested yet (or dont know whether they'll be useful yet).
 
-D'oh. I forgot to send that patch when I was doing the NO_PYTHON stuff. 
-But I did it differently: There is no good reason that git-pull should 
-insist on its own default strategy when git-merge already has one.
+> I also think that test is historical, from before Junio cleaned up 
+> how "git commit" worked - it _used_ to be that "git commit" would 
+> work in the current index, but these days it generates a new index 
+> to commit when you do "-o", so there's really no _technical_ reason 
+> to refuse the partial commit any more as far as I can see.
 
-Ciao,
-Dscho
+Aha. So that check possibly could just be removed?
+
+> So I don't know. I don't think you were being dumb, I think git 
+> could have been friendlier to you.
+
+:)
+
+git reset works just fine too.
+
+regards,
+-- 
+Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
+Fortune:
+A day for firm decisions!!!!!  Or is it?
