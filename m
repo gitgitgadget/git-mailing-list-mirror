@@ -1,72 +1,73 @@
-From: Mark Hollomon <markhollomon@comcast.net>
-Subject: [PATCH] Use resolve in git-pull if NO_PYTHON
-Date: Tue, 14 Mar 2006 17:16:04 +0000 (UTC)
-Message-ID: <1142356355-4772-markhollomon@comcast.net>
-X-From: git-owner@vger.kernel.org Tue Mar 14 18:16:02 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: seperate commits for objects already updated in index?
+Date: Tue, 14 Mar 2006 09:20:22 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603140915290.3618@g5.osdl.org>
+References: <Pine.LNX.4.64.0603141634010.5276@sheen.jakma.org>
+ <Pine.LNX.4.64.0603140856120.3618@g5.osdl.org> <Pine.LNX.4.64.0603141703080.5276@sheen.jakma.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 14 18:28:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJD4G-0007zd-Ee
-	for gcvg-git@gmane.org; Tue, 14 Mar 2006 18:12:21 +0100
+	id 1FJDD3-00049e-Av
+	for gcvg-git@gmane.org; Tue, 14 Mar 2006 18:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751021AbWCNRMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Mar 2006 12:12:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752305AbWCNRMQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 12:12:16 -0500
-Received: from sccrmhc14.comcast.net ([63.240.77.84]:24251 "EHLO
-	sccrmhc14.comcast.net") by vger.kernel.org with ESMTP
-	id S1751021AbWCNRMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Mar 2006 12:12:15 -0500
-Received: from [10.0.0.3] (c-69-249-27-188.hsd1.de.comcast.net[69.249.27.188])
-          by comcast.net (sccrmhc14) with SMTP
-          id <20060314171214014000oghne>; Tue, 14 Mar 2006 17:12:14 +0000
-Date: Tue, Mar 14 12:12:35 2006 -0500
-To: git@vger.kernel.org
-User-Agent: send_patch 0.1
+	id S1752321AbWCNRU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Mar 2006 12:20:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752307AbWCNRUc
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 12:20:32 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:28608 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1752306AbWCNRUZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Mar 2006 12:20:25 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2EHKMDZ021945
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 14 Mar 2006 09:20:23 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2EHKMbF001384;
+	Tue, 14 Mar 2006 09:20:22 -0800
+To: Paul Jakma <paul@clubi.ie>
+In-Reply-To: <Pine.LNX.4.64.0603141703080.5276@sheen.jakma.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17591>
-
-git-pull is hardcoded to use the recursive merge strategy
-for the twohead case. But if git has been built with NO_PYTHON,
-that strategy is not available. Teach git-pull to use resolve
-if built with NO_PYTHON.
-
-Signed-off-by: Mark Hollomon <markhollomon@comcast.net>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17592>
 
 
----
 
- git-pull.sh |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+On Tue, 14 Mar 2006, Paul Jakma wrote:
 
-1eb3abec6f4811e3eeafa50445ed0f2ce5d85b08
-diff --git a/git-pull.sh b/git-pull.sh
-index 6caf1aa..ae9c346 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -8,6 +8,11 @@ USAGE='[-n | --no-summary] [--no-commit]
- LONG_USAGE='Fetch one or more remote refs and merge it/them into the current HEAD.'
- . git-sh-setup
- 
-+default_twohead_strategy='recursive'
-+if test "@@NO_PYTHON@@"; then
-+    default_twohead_strategy='resolve'
-+fi
-+
- strategy_args= no_summary= no_commit=
- while case "$#,$1" in 0) break ;; *,-*) ;; *) break ;; esac
- do
-@@ -82,7 +87,7 @@ case "$merge_head" in
- 	var=`git repo-config --get pull.twohead`
- 	if test '' = "$var"
- 	then
--		strategy_default_args='-s recursive'
-+		strategy_default_args="-s $default_twohead_strategy"
- 	else
- 		strategy_default_args="-s $var"
- 	fi
--- 
-1.2.4.g967a
+> On Tue, 14 Mar 2006, Linus Torvalds wrote:
+> 
+> > The simplest thing to do is to do
+> > 
+> > 	git reset
+> > 
+> > to reset your index back to your HEAD (but obviously DON'T use the "-f"
+> > flag, which will also force the working tree!).
+> 
+> Ah, of course! (I knew I was being dumb ;) ).
+
+Well, I actually think git is being somewhat of an ass, for no really good 
+reason. It's true that you are doing something pretty strange by _both_ 
+using "git-update-index" and "git commit -o" but the fact is, at least 
+when adding files, that would be expected (ie you have to mark a file 
+in the index to add it).
+
+I also think that test is historical, from before Junio cleaned up how 
+"git commit" worked - it _used_ to be that "git commit" would work in the 
+current index, but these days it generates a new index to commit when you 
+do "-o", so there's really no _technical_ reason to refuse the partial 
+commit any more as far as I can see.
+
+So I don't know. I don't think you were being dumb, I think git could have 
+been friendlier to you.
+
+		Linus
