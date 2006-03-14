@@ -1,56 +1,94 @@
-From: Paul Jakma <paul@clubi.ie>
-Subject: git-cvsimport missed a commit
-Date: Tue, 14 Mar 2006 17:34:31 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0603141727450.5276@sheen.jakma.org>
+From: Qingning Huo <qhuo@mayhq.co.uk>
+Subject: [PATCH] Invoke git-repo-config directly.
+Date: Tue, 14 Mar 2006 21:10:22 +0000
+Message-ID: <20060314211022.GA12498@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-X-From: git-owner@vger.kernel.org Tue Mar 14 18:44:06 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Mar 14 22:15:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJDQ6-0001RP-Rm
-	for gcvg-git@gmane.org; Tue, 14 Mar 2006 18:34:57 +0100
+	id 1FJGmq-0005SD-6n
+	for gcvg-git@gmane.org; Tue, 14 Mar 2006 22:10:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521AbWCNRev (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Mar 2006 12:34:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbWCNRev
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 12:34:51 -0500
-Received: from hibernia.jakma.org ([212.17.55.49]:44160 "EHLO
-	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751521AbWCNRev
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Mar 2006 12:34:51 -0500
-Received: from sheen.jakma.org (IDENT:U2FsdGVkX1/zNoNidAKCRWXH/XLH4b637GnXMNxfQmM@sheen.jakma.org [212.17.55.53])
-	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k2EHYWPZ023893
-	for <git@vger.kernel.org>; Tue, 14 Mar 2006 17:34:44 GMT
-X-X-Sender: paul@sheen.jakma.org
-To: git list <git@vger.kernel.org>
-Mail-Copies-To: paul@hibernia.jakma.org
-Mail-Followup-To: paul@hibernia.jakma.org
-X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
-X-Virus-Status: Clean
+	id S932444AbWCNVKY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Mar 2006 16:10:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932451AbWCNVKY
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Mar 2006 16:10:24 -0500
+Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:16236 "EHLO
+	mtaout01-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S932444AbWCNVKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Mar 2006 16:10:24 -0500
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com with ESMTP
+          id <20060314211017.GPFK1118.mtaout01-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>
+          for <git@vger.kernel.org>; Tue, 14 Mar 2006 21:10:17 +0000
+Received: from rabbit.zoo.mayhq.org ([80.0.127.16])
+          by aamtaout03-winn.ispmail.ntl.com with SMTP
+          id <20060314211017.XBOS20548.aamtaout03-winn.ispmail.ntl.com@rabbit.zoo.mayhq.org>
+          for <git@vger.kernel.org>; Tue, 14 Mar 2006 21:10:17 +0000
+Received: (qmail 12552 invoked by uid 1000); 14 Mar 2006 21:10:22 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17596>
 
-git-cvsimport missed a commit (one involving 'renamed' files in CVS, 
-added/deleted).
+The system have GNU git installed at /usr/bin/git.  I installed git-core
+to ~/opt/bin.  ~/opt/bin is in my PATH, but is after /usr/bin.  I have
+set alias git="$HOME/opt/bin/git".
 
-I'm wondering how best to fix this. My thinking was to just branch my 
-'cvs_head' from the ancestor prior the missed commit, rename the 
-heads around, and try again.
+git-push and git-pull behaves strangely, because they call "git
+repo-config", which runs /usr/bin/git.  Using "git-repo-config" directly
+fixed the problem.
 
-Is there a better way? Given I actually have the missing commit in my 
-'master' branch?
+Signed-off-by: Qingning Huo <qhuo@mayhq.co.uk>
 
-(I actually have a 2-way thing going with CVS. I export selected 
-commit from master to CVS every now and then, and get my own CVS 
-commits back again via a later import - seems to work).
+---
 
-regards,
+ git-pull.sh     |    4 ++--
+ git-sh-setup.sh |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+a0194fff002cb12ac58b202201d387f8ea55b225
+diff --git a/git-pull.sh b/git-pull.sh
+index 6caf1aa..e32e2b0 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -70,7 +70,7 @@ case "$merge_head" in
+ 	exit 0
+ 	;;
+ ?*' '?*)
+-	var=`git repo-config --get pull.octopus`
++	var=`git-repo-config --get pull.octopus`
+ 	if test '' = "$var"
+ 	then
+ 		strategy_default_args='-s octopus'
+@@ -79,7 +79,7 @@ case "$merge_head" in
+ 	fi
+ 	;;
+ *)
+-	var=`git repo-config --get pull.twohead`
++	var=`git-repo-config --get pull.twohead`
+ 	if test '' = "$var"
+ 	then
+ 		strategy_default_args='-s recursive'
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 025ef2d..12f5ede 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -41,7 +41,7 @@ then
+ 	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
+ 
+ 	# Make sure we are in a valid repository of a vintage we understand.
+-	GIT_DIR="$GIT_DIR" git repo-config --get core.nosuch >/dev/null
++	GIT_DIR="$GIT_DIR" git-repo-config --get core.nosuch >/dev/null
+ 	if test $? = 128
+ 	then
+ 	    exit
 -- 
-Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
-Fortune:
-So much food; so little time!
+1.2.4.ga019-dirty
