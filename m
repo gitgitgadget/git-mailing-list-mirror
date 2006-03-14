@@ -1,78 +1,78 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [PATCH 0/6] http-push updates
-Date: Mon, 13 Mar 2006 16:28:15 -0800
-Message-ID: <20060314002815.GJ3997@reactrix.com>
-References: <20060311041749.GB3997@reactrix.com> <7vek16udg6.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: [OT] Re: [PATCH] Use explicit pointers for execl...() sentinels.
+Date: Mon, 13 Mar 2006 19:42:53 -0500
+Message-ID: <20060314004253.GA24668@coredump.intra.peff.net>
+References: <20060313033121.GA14601@coredump.intra.peff.net> <200603130412.k2D4CW1b011631@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 14 01:28:38 2006
+X-From: git-owner@vger.kernel.org Tue Mar 14 01:43:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FIxOk-0002sk-Jv
-	for gcvg-git@gmane.org; Tue, 14 Mar 2006 01:28:27 +0100
+	id 1FIxd6-0001SQ-Rr
+	for gcvg-git@gmane.org; Tue, 14 Mar 2006 01:43:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbWCNA2X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Mar 2006 19:28:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbWCNA2X
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 19:28:23 -0500
-Received: from 194.37.26.69.virtela.com ([69.26.37.194]:49310 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1751710AbWCNA2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Mar 2006 19:28:23 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k2E0SFU0023106;
-	Mon, 13 Mar 2006 16:28:16 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k2E0SFfC023104;
-	Mon, 13 Mar 2006 16:28:15 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1751731AbWCNAm5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Mar 2006 19:42:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbWCNAm4
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Mar 2006 19:42:56 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:29888 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1751731AbWCNAm4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Mar 2006 19:42:56 -0500
+Received: (qmail 34152 invoked from network); 14 Mar 2006 00:42:53 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 14 Mar 2006 00:42:53 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Mar 2006 19:42:53 -0500
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vek16udg6.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <200603130412.k2D4CW1b011631@laptop11.inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17580>
 
-On Sun, Mar 12, 2006 at 09:21:45PM -0800, Junio C Hamano wrote:
+On Mon, Mar 13, 2006 at 12:12:31AM -0400, Horst von Brand wrote:
 
-> Repository maintenance tasks:
-> 
->  - create a new repository
->  - remove an unneeded branch and tag
->  - running repack
+> Very improbable, they'll be the same normally ("void *" is a way of getting
+> rid of the overloading of the meaning of "char *" for this before ANSI C).
+> Sure, sizeof(int *) might be 4, but I think that is pretty far off.
 
-In a DAV-only server environment, it seems like there are a few
-options for supporting these tasks:
+Let me clarify my position. The STANDARD doesn't guarantee such things.
+In PRACTICE, for modern machines you can assume that all pointers are
+the same size (and things like all-bits-zero is a null pointer) if it
+makes your code cleaner. In other words, I agree with Linus: git should
+follow what works in practice, but you should at least recognize that
+you're violating the standard.
 
-- extend http-push with additional args and/or local config settings.
-  This approach would be more efficient wrt packs than separate
-  push and repack steps since packs will all need to be created locally
-  and then sent; a combined repack/push operation would mean that new
-  objects will only be sent once as part of a pack.
+That being said, you appear to be making the argument that passing a
+'foo *' to a variadic function expecting a 'bar *' doesn't violate the
+standard. I believe it invokes undefined behavior.
 
-- add DAV versions of git-init-db/git-branch/git-repack
+> There are special rules for variadic functions, probably pointers would be
+> cast to/from void * in such a case by the compiler.
 
-- extend git-init-db/git-branch/git-repack to be DAV-aware
+The rules indicate that arguments matching the '...' follow "default
+argument promotion".  See section 6.5.2.2, paragraph 7.  This default
+promotion is the same as what would happen if there were no prototype
+for the function, and is defined in paragraph 6:
+  ...the integer promotions are performed on each argument, and arguments
+  that have type float are promoted to double.
+I don't see anything about promoting pointers to void.
 
-I like option #1.
+Furthermore, when accessing the arguments using va_arg, the types must
+match or the behavior is undefined, UNLESS (7.5.1.1, para 2):
+  - one type is signed and the other is the matching unsigned type
+  - one type is a pointer to void and the other is a pointer of
+    character type
+IOW, the standard does promise that void* and char* pointers are
+represented the same, but nothing else.
 
->  - create new branch (and new tag) -- I think you can already do this
+> > If you remain unconvinced, I can try to find chapter and verse of the
+> > standard.
+> Please do.
 
-Right - you can create locally and then push that branch/tag or
---all/--tags.
+See above.
 
->  - (perhaps) running update-server-info
-
-http-push already updates info/refs if it existed before the push 
-(perhaps that behavior should also be based on a local config setting.)
-I would plan to add support for updating objects/info/packs along with
-pack/repack support.  That should be all the server-info there is to
-update, right?
-
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+-Peff
