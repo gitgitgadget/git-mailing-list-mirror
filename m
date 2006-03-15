@@ -1,76 +1,55 @@
-From: Mark Hollomon <markhollomon@comcast.net>
-Subject: [PATCH] Let merge set the default strategy.
-Date: Wed, 15 Mar 2006 22:51:41 +0000 (UTC)
-Message-ID: <1142463103-6986-markhollomon@comcast.net>
-Cc: Johannes.Schindelin@gmx.de, markhollomon@comcast.net
-X-From: git-owner@vger.kernel.org Wed Mar 15 23:51:38 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Invoke git-repo-config directly.
+Date: Wed, 15 Mar 2006 14:51:30 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603151450070.3618@g5.osdl.org>
+References: <20060314211022.GA12498@localhost.localdomain>
+ <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org> <20060314224027.GB14733@localhost.localdomain>
+ <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org> <7vek13ieap.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Qingning Huo <qhuo@mayhq.co.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 15 23:51:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJepz-0000ND-Vq
-	for gcvg-git@gmane.org; Wed, 15 Mar 2006 23:51:28 +0100
+	id 1FJeqD-0000Pi-Nz
+	for gcvg-git@gmane.org; Wed, 15 Mar 2006 23:51:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932549AbWCOWvY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Mar 2006 17:51:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932540AbWCOWvY
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 17:51:24 -0500
-Received: from rwcrmhc11.comcast.net ([204.127.192.81]:62368 "EHLO
-	rwcrmhc11.comcast.net") by vger.kernel.org with ESMTP
-	id S932549AbWCOWvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Mar 2006 17:51:23 -0500
-Received: from [10.0.0.3] (c-69-249-27-188.hsd1.de.comcast.net[69.249.27.188])
-          by comcast.net (rwcrmhc11) with SMTP
-          id <20060315225122m1100c3npte>; Wed, 15 Mar 2006 22:51:22 +0000
-Date: Wed, Mar 15 17:51:43 2006 -0500
-To: git@vger.kernel.org
-User-Agent: send_patch 0.1
+	id S932540AbWCOWvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Mar 2006 17:51:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932552AbWCOWvi
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 17:51:38 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:42676 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932540AbWCOWvh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Mar 2006 17:51:37 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2FMpVDZ010411
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 15 Mar 2006 14:51:31 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2FMpURE006443;
+	Wed, 15 Mar 2006 14:51:31 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vek13ieap.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.129 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17620>
-
-If the user does not set a merge strategy for git-pull,
-let git-merge calculate a default strategy.
-
-This may be preferable to the earlier patch involving
-NO_PYTHON.
-
-Signed-off-by: Mark Hollomon <markhollomon@comcast.net>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17621>
 
 
----
 
- git-pull.sh |   10 +++-------
- 1 files changed, 3 insertions(+), 7 deletions(-)
+On Wed, 15 Mar 2006, Junio C Hamano wrote:
+> 
+> If we do the dash-form for consistency's sake, we should do
+> PATH="`git --exec-path`:$PATH" in git-setup-sh when/before we do
+> so.
 
-54e2c920b8ad979bc75d25ae73300be6077f46a0
-diff --git a/git-pull.sh b/git-pull.sh
-index 6caf1aa..7764b70 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -71,19 +71,15 @@ case "$merge_head" in
- 	;;
- ?*' '?*)
- 	var=`git repo-config --get pull.octopus`
--	if test '' = "$var"
-+	if test '' != "$var"
- 	then
--		strategy_default_args='-s octopus'
--	else
- 		strategy_default_args="-s $var"
- 	fi
- 	;;
- *)
- 	var=`git repo-config --get pull.twohead`
--	if test '' = "$var"
--	then
--		strategy_default_args='-s recursive'
--	else
-+	if test '' != "$var"
-+        then
- 		strategy_default_args="-s $var"
- 	fi
- 	;;
--- 
-1.2.4.gea75
+Yes. That would make sense too. Then git-setup-sh would look more like 
+what the builtin git.c does.
+
+		Linus
