@@ -1,92 +1,55 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: seperate commits for objects already updated in index?
-Date: Wed, 15 Mar 2006 15:00:30 +0100
-Message-ID: <44181DFE.7080204@op5.se>
-References: <Pine.LNX.4.64.0603141634010.5276@sheen.jakma.org>	<Pine.LNX.4.64.0603140856120.3618@g5.osdl.org>	<Pine.LNX.4.64.0603141703080.5276@sheen.jakma.org>	<Pine.LNX.4.64.0603140915290.3618@g5.osdl.org>	<7vwtewk2jp.fsf@assigned-by-dhcp.cox.net> <7vy7zcie5c.fsf@assigned-by-dhcp.cox.net>
+From: Rajkumar S <rajkumars@asianetindia.com>
+Subject: git merge in FreeBSD
+Date: Wed, 15 Mar 2006 20:22:44 +0530
+Message-ID: <44182A3C.80701@asianetindia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Paul Jakma <paul@clubi.ie>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Mar 15 15:00:53 2006
+X-From: git-owner@vger.kernel.org Wed Mar 15 15:53:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJWYO-00054U-5H
-	for gcvg-git@gmane.org; Wed, 15 Mar 2006 15:00:47 +0100
+	id 1FJXMy-0001kZ-UD
+	for gcvg-git@gmane.org; Wed, 15 Mar 2006 15:53:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbWCOOAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Mar 2006 09:00:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbWCOOAc
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 09:00:32 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:59597 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751271AbWCOOAb
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Mar 2006 09:00:31 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 6D4B06BD32; Wed, 15 Mar 2006 15:00:30 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+	id S1750884AbWCOOwx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Mar 2006 09:52:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752065AbWCOOwx
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 09:52:53 -0500
+Received: from vhs2.linuxense.com ([64.34.173.90]:1453 "EHLO
+	vhs1.asianetindia.com") by vger.kernel.org with ESMTP
+	id S1750884AbWCOOwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Mar 2006 09:52:53 -0500
+Received: (qmail 13454 invoked by uid 1014); 15 Mar 2006 14:52:49 -0000
+Received: from rajkumars@asianetindia.com by vhs2.linuxense.com by uid 1003 with qmail-scanner-1.22 
+ (clamdscan: 0.74. spamassassin: 2.63.  Clear:RC:0(202.88.239.86):SA:0(0.0/6.5):. 
+ Processed in 0.41272 secs); 15 Mar 2006 14:52:49 -0000
+X-Spam-Status: No, hits=0.0 required=6.5
+Received: from tarpit.linuxense.com (HELO [192.168.3.49]) (raj@linuxense.com@[202.88.239.86])
+          (envelope-sender <rajkumars@asianetindia.com>)
+          by vhs1.asianetindia.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 15 Mar 2006 14:52:48 -0000
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7zcie5c.fsf@assigned-by-dhcp.cox.net>
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17610>
 
-Junio C Hamano wrote:
-> The background behind this is around beginning of February 2006,
-> the thread "Two ideas" by Carl Worth.  And the current behaviour
-> is defined by this commit.  I'll talk about a possible
-> improvement but first, here is what it does:
-> 
-> commit 130fcca63fe8e7e087e7419907e018cbbaf434a3
-> Author: Junio C Hamano <junkio@cox.net>
-> Date:   Sun Feb 5 00:07:44 2006 -0800
-> 
->     
->        2. refuses to run if named paths... are different in HEAD and
->           the index (ditto about reminding).  Added paths are OK.
->     
-> 
-> The check that prevents you from doing
-> 
-> 	$ edit A B
-> 	$ git update-index A B
->         $ git commit -o B
-> 
-> is the rule #2, which I think could use further improvement.  It
-> is to address the "committing skewed files" issue Carl brought
-> up in that thread.
-> 
-> It might be better to further check if the working tree file is
-> the same as the index, and to allow a commit in such a case.
-> 
-> The intent of rule #2 is to prevent this from happening:
-> 
-> 	$ edit A B
->         $ git update-index A B
->         $ edit B again
->         $ git commit -o B
-> 
-> When this happens, the real index will have _old_ contents of B
-> that never was committed, and does not match what is in the
-> index.  But after the commit, we will match the real index to
-> what was committed, so we will _lose_ the index entry for B
-> before the second edit you explicitly told git to remember by
-> saying 'update-index'.
-> 
+Hi,
 
-Can't this be done by updating .git/index first and then use the 
-temporary index to commit? Then .git/index would match the current tree 
-and everybody would be happy with very little tweaking. Doing the 
-temporary index commit first could cause data-loss as described above if 
-the updating of .git/index somehow fails and the user is unaware of it 
-(or what to do to fix it).
+I get a "git-merge-recursive: not found" error when I try to do a merge in FreeBSD. Same 
+command in Linux does not give an error.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+# git merge "Merging from updates" RELENG_1 RELENG_1_origin
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+/usr/local/bin/git-merge: git-merge-recursive: not found
+No merge strategy handled the merge.
+
+I am using git version 1.2.4.gea75 in FreeBSD 6
+
+raj
