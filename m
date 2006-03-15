@@ -1,66 +1,78 @@
-From: Qingning Huo <qhuo@mayhq.co.uk>
-Subject: Re: [PATCH] Invoke git-repo-config directly.
-Date: Wed, 15 Mar 2006 22:11:54 +0000
-Message-ID: <20060315221154.GA6494@localhost.localdomain>
-References: <20060314211022.GA12498@localhost.localdomain> <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org> <20060314224027.GB14733@localhost.localdomain> <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org> <7vek13ieap.fsf@assigned-by-dhcp.cox.net> <7vacbrie79.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Wed, 15 Mar 2006 14:13:29 -0800
+Message-ID: <7vk6avgxva.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 15 23:12:27 2006
+X-From: git-owner@vger.kernel.org Wed Mar 15 23:13:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJeDi-0008KT-8C
-	for gcvg-git@gmane.org; Wed, 15 Mar 2006 23:11:54 +0100
+	id 1FJeFL-0000KE-Vv
+	for gcvg-git@gmane.org; Wed, 15 Mar 2006 23:13:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751625AbWCOWLu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Mar 2006 17:11:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbWCOWLu
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 17:11:50 -0500
-Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:61998 "EHLO
-	mtaout01-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1751360AbWCOWLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Mar 2006 17:11:49 -0500
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com with ESMTP
-          id <20060315221148.IGAX29343.mtaout01-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Wed, 15 Mar 2006 22:11:48 +0000
-Received: from rabbit.zoo.mayhq.org ([80.0.127.16])
-          by aamtaout04-winn.ispmail.ntl.com with SMTP
-          id <20060315221147.RLUA18957.aamtaout04-winn.ispmail.ntl.com@rabbit.zoo.mayhq.org>
-          for <git@vger.kernel.org>; Wed, 15 Mar 2006 22:11:47 +0000
-Received: (qmail 6808 invoked by uid 1000); 15 Mar 2006 22:11:54 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vacbrie79.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1751811AbWCOWNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Mar 2006 17:13:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751823AbWCOWNc
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 17:13:32 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:50161 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751811AbWCOWNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Mar 2006 17:13:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060315221209.PNYG3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 15 Mar 2006 17:12:09 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17619>
 
-On Wed, Mar 15, 2006 at 01:35:22PM -0800, Junio C Hamano wrote:
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Linus Torvalds <torvalds@osdl.org> writes:
-> >
-> >> I agree that it is inconsistent as-is. So a patch to make it use the 
-> >> "git-repo-config" form (the argument being that internally, we use the 
-> >> full names) might be good if just for consistency.
-> >
-> > If we do the dash-form for consistency's sake,...
-> 
-> Probably I should add that personally my preference is to standardize on
-> the dashless form.
-> 
+* The 'master' branch has these since the last announcement.
 
-That would remove the possibility to run "git-push" in my scenario.  And
-what is the benefit?  Wasting CPU cycles to an extra execve?
-Duplicating git --exec-path to PATH?
+ - git-svn updates (Eric Wong)
+ - git-blame knows about renames (Fredrik Kuivinen)
+ - imap-send (Mike McCormack with fixes from Johannes Schindelin
+   and Marco Roeland)
+ - cvsimport only updates tracking branch (Matthias Urlichs)
+ - repo-config fix (Jonas Fonseca)
+ - fmt-merge-msg cleanup (Linus Torvalds)
+ - format-patch attachments enhancements (Mike McCormack)
+ - delitifier cleanup and performance fix (Nicolas Pitre)
+ - remove end-of-line period from git-pull message (Olaf Hering)
+ - http-push and fetch updates (Nick Hengeveld)
+ - rev-list and revision walker performance fix (Matthias Urlichs)
+ - annotate RPM packaging workaround (sean)
+ - assorted doc fixes (Francis Daly, Fredrik Kuivinen)
+ - assorted test fixes (Mark Wooding, me)
+ - improve git wrapper --help output (Fredrik Kuivinen)
+ - checkout-index --temp (Shawn Pearce)
+ - no more --standalone to fsck-objects
+ - rev-list path limiter fix at boundary
+ - git-diff: -p disables rename detection
 
-Personally I recommend to always run git helper programs with absolute
-path, this would remove all confusions, not play with users' PATH
-environment, and save CPU cycles.
+As you can see from the above, the core part does not have
+drastic changes these days anymore.  Just some boring fixes with
+a handful new and interesting developments.
 
-Qingning
+In the "next" branch is the "insanely fast rename detection".
+I've done some minor fixups to its hash function to be usable on
+both 32-bit and 64-bit machines but otherwise it is what was
+posted by Linus to the list.  It completes the rename detection
+between v2.6.12 and v2.6.14 kernel source under 5 seconds on my
+Duron 750 with slow disks, where the current "master" branch
+version takes about 60 seconds.
+
+Also I've been keeping ls-{tree,files} --abbrev patches and
+refs/remotes patch from Eric Wong in 'next' and 'pu'.  I haven't
+seen anybody jumps up and down to have them merged to "master",
+nor have been asked to push them out sooner so that a widely
+used Porcelain or two can take advantage of them, and that's the
+only reason why they are not in "master".  In other words, while
+I do not have much against them, it would be nicer to have a
+convincing argument why they are must-have's or even
+better-have's before they graduate.
