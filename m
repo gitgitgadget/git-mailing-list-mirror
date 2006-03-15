@@ -1,55 +1,82 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Invoke git-repo-config directly.
-Date: Wed, 15 Mar 2006 14:51:30 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603151450070.3618@g5.osdl.org>
-References: <20060314211022.GA12498@localhost.localdomain>
- <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org> <20060314224027.GB14733@localhost.localdomain>
- <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org> <7vek13ieap.fsf@assigned-by-dhcp.cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: [patch] fix imap-send for OSX
+Date: 15 Mar 2006 15:35:06 -0800
+Message-ID: <86slpj5ljp.fsf@blue.stonehenge.com>
+References: <7vk6avgxva.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Qingning Huo <qhuo@mayhq.co.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 15 23:51:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 16 00:35:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJeqD-0000Pi-Nz
-	for gcvg-git@gmane.org; Wed, 15 Mar 2006 23:51:42 +0100
+	id 1FJfWR-0001Pf-Jf
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 00:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932540AbWCOWvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Mar 2006 17:51:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932552AbWCOWvi
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 17:51:38 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:42676 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932540AbWCOWvh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Mar 2006 17:51:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2FMpVDZ010411
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 15 Mar 2006 14:51:31 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2FMpURE006443;
-	Wed, 15 Mar 2006 14:51:31 -0800
+	id S1752165AbWCOXfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Mar 2006 18:35:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbWCOXfO
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Mar 2006 18:35:14 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:33640 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1752166AbWCOXfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Mar 2006 18:35:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 1E8348F556;
+	Wed, 15 Mar 2006 15:35:07 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 28889-01-29; Wed, 15 Mar 2006 15:35:06 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 9F6E68F557; Wed, 15 Mar 2006 15:35:06 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek13ieap.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+x-mayan-date: Long count = 12.19.13.2.7; tzolkin = 1 Manik; haab = 5 Cumku
+In-Reply-To: <7vk6avgxva.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17622>
+
+
+This patch works... I've been using it to stay current.
+
+---
+
+ imap-send.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+ba458b49b860488c25cf57dabbb5db97f12e41f2
+diff --git a/imap-send.c b/imap-send.c
+index 1b38b3a..e33c78b 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -372,7 +372,7 @@ free_generic_messages( message_t *msgs )
+ }
+ 
+ static int
+-vasprintf( char **strp, const char *fmt, va_list ap )
++git_vasprintf( char **strp, const char *fmt, va_list ap )
+ {
+ 	int len;
+ 	char tmp[1024];
+@@ -402,7 +402,7 @@ nfsnprintf( char *buf, int blen, const c
+ static int
+ nfvasprintf( char **str, const char *fmt, va_list va )
+ {
+-	int ret = vasprintf( str, fmt, va );
++	int ret = git_vasprintf( str, fmt, va );
+ 	if (ret < 0)
+ 		die( "Fatal: Out of memory\n");
+ 	return ret;
+-- 
+1.2.4.g5593
 
 
 
-On Wed, 15 Mar 2006, Junio C Hamano wrote:
-> 
-> If we do the dash-form for consistency's sake, we should do
-> PATH="`git --exec-path`:$PATH" in git-setup-sh when/before we do
-> so.
-
-Yes. That would make sense too. Then git-setup-sh would look more like 
-what the builtin git.c does.
-
-		Linus
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
