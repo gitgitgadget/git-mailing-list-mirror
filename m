@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Invoke git-repo-config directly.
-Date: Thu, 16 Mar 2006 00:26:09 -0800
-Message-ID: <7v64mebxsu.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 16 Mar 2006 02:14:52 -0800
+Message-ID: <7vmzfq8zmr.fsf@assigned-by-dhcp.cox.net>
 References: <20060314211022.GA12498@localhost.localdomain>
 	<Pine.LNX.4.64.0603141351470.3618@g5.osdl.org>
 	<20060314224027.GB14733@localhost.localdomain>
@@ -13,27 +13,27 @@ References: <20060314211022.GA12498@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 16 09:26:21 2006
+X-From: git-owner@vger.kernel.org Thu Mar 16 11:15:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJnoE-0004Nt-Vp
-	for gcvg-git@gmane.org; Thu, 16 Mar 2006 09:26:15 +0100
+	id 1FJpWA-0004gs-Ks
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 11:15:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752253AbWCPI0M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 03:26:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbWCPI0M
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 03:26:12 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:22257 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1752250AbWCPI0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 03:26:11 -0500
+	id S1752321AbWCPKOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 05:14:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbWCPKOz
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 05:14:55 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:44758 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1752321AbWCPKOy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Mar 2006 05:14:54 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060316082430.RLDD20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 16 Mar 2006 03:24:30 -0500
+          id <20060316101137.TJRI26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 16 Mar 2006 05:11:37 -0500
 To: Qingning Huo <qhuo@mayhq.org>
 In-Reply-To: <20060316075324.GA19650@pfit.vm.bytemark.co.uk> (Qingning Huo's
 	message of "Thu, 16 Mar 2006 07:53:24 +0000")
@@ -41,122 +41,111 @@ User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17631>
 
 Qingning Huo <qhuo@mayhq.org> writes:
 
-> So we recognize the full path approach is desired,
+> On Wed, Mar 15, 2006 at 03:35:36PM -0800, Junio C Hamano wrote:
+>> I think some historical background is in order.
+>> ...
+> Thanks for the historical background.
 
-I said "if you can work problems your environment has _without_
-doing the full path thing, then it would be ideal".
+Sorry, it just occurred to me that I was totally confused, and I
+apologize for giving only half of the historical background,
+without giving the "end of the story -- conclusion", which I did
+not remember until now.
 
-I never said full path is desired -- I despise full path, in
-fact.  It makes certain things very inconvenient.
+What we ended up deciding after that "My /usr/bin/git is sane
+but /usr/bin/diff is wrong so I have /home/$u/bin/diff and
+/home/$u/bin is listed earlier in my $PATH" discussion, as I
+remember, was this:
 
-> ...but because of
-> technique reasons (building and testing), it is not applied.
+ * We expect users to invoke things on the command line via the
+   "git" wrapper.  Either having the directory that has our
+   "git" in earlier on the PATH, or giving the full path to it
+   as the command (your use of alias qualifies as the latter).
 
-There were not even a patch.  I suspect people involved in the
-discussion realized that approach was unworkably cumbersome.
+ * One of the important things the "git" wrapper does is to
+   prefix GIT_EXEC_PATH to the $PATH environment before invoking
+   the "git-foo" commands [*1*].  
 
-In our Makefile, we have sed script mechanism to replace tokens
-so we _could_ change our sources to do something like this:
+ * "git-foo" command, if it is written in a scripting language,
+   can safely assume "git-bar" is found on the PATH while it is
+   executing.  If it is C-level and uses exec[vl]_git_cmd() to
+   run the subcommand, it would also work fine (it will use the
+   right GIT_EXEC_PATH).
 
-        diff --git a/git-commit.sh b/git-commit.sh
-        index 330a434..10835c6 100755
-        --- a/git-commit.sh
-        +++ b/git-commit.sh
-	...
-        @@ -115,7 +115,7 @@ run_status () {
-                    echo '#
-         # Initial commit
-         #'
-        -	    git-ls-files |
-        +	    @@GIT_PATH@@git-ls-files |
-                    sed -e '
-                            s/\\/\\\\/g
-                            s/ /\\ /g
-        @@ -126,7 +126,7 @@ run_status () {
-                    committable="$?"
-                fi
+This has a few implications:
 
-        -	git-diff-files --name-status |
-        +	@@GIT_PATH@@git-diff-files --name-status |
-                sed -e '
-                        s/\\/\\\\/g
-                        s/ /\\ /g
-	...
+ * By doing the above setup, we are effectively punting on the
+   original issue.  First of all, it is very inconceivable that
+   /usr/bin/git is sane, and /usr/bin/diff is not (git wants a
+   working diff after all).  If the user is overriding
+   /usr/bin/diff by having a better diff under /home/$u/bin/, he
+   could have his own copy of git under /home/$u/bin/ as well
+   (more likely, the person with correct privilege to installed
+   /usr/bin/git would have replaced faulty /usr/bin/diff).  More
+   importantly, when bindir and gitexecdir are split, gitexecdir
+   will not be /usr/bin (bindir will be).  It will more likely
+   to be /usr/lib/git/exec, and it would contain only git-*
+   things; prefixing that directory to PATH would not mask the
+   /home/$u/bin/diff or anything else non-git the user wanted to
+   mask stuff from /usr/bin with, so the original issue becomes
+   moot at that point.
 
-and sed it out with 's/@@GIT_PATH@@/$(gitexecdir_SQ)/g'.
+ * Typing "git-foo" on the command line would work most of the
+   time, if git is built with gitexecdir set to standard bin
+   directory (the way our Makefile is shipped).  git-foo will be
+   found on your PATH, and it will find "git-bar" on your PATH.
+   However, when we split bindir and gitexecdir, typing
+   "git-foo" on the command line without having GIT_EXEC_PATH on
+   your PATH would stop working, so users have been encouraged
+   to train their fingers to use dashless form ever since
+   GIT_EXEC_PATH was introduced [*2*].
 
-However, you have to realize that I often want to try things out
-*without* running "make", let alone installing.  The current way
-things are set up lets me say:
+ * If "git-foo" invoked from the command line (without necessary
+   GIT_EXEC_PATH prefixing done by the "git" wrapper) tries to
+   run "git", the right git needs to be found on your PATH,
+   otherwise things may not necessarily work (your setup
+   violates this).  But people have been encouraged to say "git
+   foo" to begin with, so this is probably not a big
+   deal. Retraining people to say "git foo" instead of "git-foo"
+   is a bigger issue compared to this.
 
-	$ GIT_EXEC_PATH=$my_git_source \
-          sh -x $my_git_source/git-commit.sh
+ * If "git foo" is typed on the command line, underlying
+   "git-foo" is run with GIT_EXEC_PATH prefixed, so it will find
+   "git-bar".  If the script uses "git bar", "git" needs to be
+   found either in GIT_EXEC_PATH or on your PATH, since our
+   Makefile does not install "git" in gitexecdir.  Right now, we
+   have bindir == gitexecdir, so "git bar" in "git-foo" script
+   will work fine and this is a non-issue, but when we split
+   them, it will break your setup, so we need to address this
+   before that happens.
 
-to see where things break.  Changing things the way I quoted
-above would make things _extremely_ inconvenient for me.
+So in short, there are two real issues with your original
+"git-push misbehaves".  One is that it broke because it was
+spelled with dash.  I think "git push" shouldn't misbehave even
+with your setup, because the "git" wrapper, before it calls
+"git-push", should set up the PATH so that its exec-path is in
+front of anything you have in your original PATH (either
+/usr/bin or ~/opt/bin), and should find the right "git".
 
-And it is ugly.  "Making things ugly and inconvenient for what
-purpose?" is the question I have to ask myself at this point.
+And the second issue is the last point in the "implications"
+list above.  You are right, and I stand corrected.  Our scripts
+should consistently use dash form.
 
-And if the answer is "to support unusual configuration which,
-quite frankly, I think is broken", then...
-
-We could probably define a shell function that looks like:
-
-        git_exec () {
-                cmd="$1"
-                shift
-                case "${GIT_EXEC_PATH+set}" in
-                set) ;;
-                *) GIT_EXEC_PATH='@@GIT_EXEC_PATH@@' ;;
-                esac
-                "$GIT_EXEC_PATH/git-$cmd" "$@"
-        }
-
-in git-sh-setup [*1*], and then rewrite the above to something
-like this instead:
-
-        diff --git a/git-commit.sh b/git-commit.sh
-        index 330a434..8a73420 100755
-        --- a/git-commit.sh
-        +++ b/git-commit.sh
-        ...
-        @@ -115,7 +115,7 @@ run_status () {
-                    echo '#
-         # Initial commit
-         #'
-        -	    git-ls-files |
-        +	    git_exec ls-files |
-                    sed -e '
-                            s/\\/\\\\/g
-                            s/ /\\ /g
-        @@ -126,7 +126,7 @@ run_status () {
-                    committable="$?"
-                fi
-
-        -	git-diff-files  --name-status |
-        +	git_exec diff-files  --name-status |
-                sed -e '
-                        s/\\/\\\\/g
-                        s/ /\\ /g
-        ...
-
-But that does not cover Perl nor Python scripts, and does not
-address the ugliness either.
+One thing that bothers me is that we need to keep encouraging
+users to use dashless form from the command line, while we
+update our scripts to use dash form.  What a contradicting and
+confusing situation X-<.
 
 
 [Footnote]
 
-*1* BTW, I just noticed that git-sh-setup needs to be on user's
-PATH, so we probably have to inline and duplicate the git_exec()
-shell function definition at the beginning of each script after
-all, when we make the initial ". git-sh-setup" inclusion to
-honor GIT_EXEC_PATH without munging the user's PATH.
+*1* The "remove prefixing from git.c" patch I sent out earlier
+tonight is wrong.  That's the crucial piece to make this whole
+setup work.
 
-Which is not a big deal by itself, since we preprocess
-*.{sh,perl,py} files anyway, but still it leaves a _big_
-ugliness factor.
+*2* I think I've been careful enough to use dashless form in the
+examples I give in my list postings, but I am not sure how
+successful I have been.
