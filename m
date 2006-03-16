@@ -1,98 +1,70 @@
-From: Qingning Huo <qhuo@mayhq.org>
-Subject: Re: [PATCH] Invoke git-repo-config directly.
-Date: Thu, 16 Mar 2006 20:33:19 +0000
-Message-ID: <20060316203319.GA20159@localhost.localdomain>
-References: <20060314211022.GA12498@localhost.localdomain> <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org> <20060314224027.GB14733@localhost.localdomain> <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org> <7vek13ieap.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603151450070.3618@g5.osdl.org> <7vlkvbffhz.fsf@assigned-by-dhcp.cox.net> <20060316075324.GA19650@pfit.vm.bytemark.co.uk> <7v64mebxsu.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: First dumb question to the list :)
+Date: Thu, 16 Mar 2006 23:11:04 +0100
+Message-ID: <20060316221104.GA5898@steel.home>
+References: <4d8e3fd30603160949l655c4f9blb1e202eaf22fbfe@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 16 21:33:26 2006
+X-From: git-owner@vger.kernel.org Thu Mar 16 23:11:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJz9o-00055t-PS
-	for gcvg-git@gmane.org; Thu, 16 Mar 2006 21:33:17 +0100
+	id 1FK0gh-00015p-L9
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 23:11:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932718AbWCPUdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 15:33:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932720AbWCPUdN
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 15:33:13 -0500
-Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:58345 "EHLO
-	mtaout01-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S932718AbWCPUdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 15:33:13 -0500
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com with ESMTP
-          id <20060316203311.DVFS29343.mtaout01-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Thu, 16 Mar 2006 20:33:11 +0000
-Received: from rabbit.zoo.mayhq.org ([80.0.127.16])
-          by aamtaout04-winn.ispmail.ntl.com with SMTP
-          id <20060316203311.KEJM18957.aamtaout04-winn.ispmail.ntl.com@rabbit.zoo.mayhq.org>
-          for <git@vger.kernel.org>; Thu, 16 Mar 2006 20:33:11 +0000
-Received: (qmail 20354 invoked by uid 1000); 16 Mar 2006 20:33:19 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S964872AbWCPWLP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 17:11:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbWCPWLO
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 17:11:14 -0500
+Received: from devrace.com ([198.63.210.113]:55564 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S964872AbWCPWLO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Mar 2006 17:11:14 -0500
+Received: from tigra.home (p54A06E62.dip.t-dialin.net [84.160.110.98])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k2GMB6tH094550;
+	Thu, 16 Mar 2006 16:11:07 -0600 (CST)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1FK0gS-0005gw-00; Thu, 16 Mar 2006 23:11:04 +0100
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FK0gS-0002bk-GJ; Thu, 16 Mar 2006 23:11:04 +0100
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v64mebxsu.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060126
+In-Reply-To: <4d8e3fd30603160949l655c4f9blb1e202eaf22fbfe@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17648>
 
-On Thu, Mar 16, 2006 at 12:26:09AM -0800, Junio C Hamano wrote:
-> 
-> We could probably define a shell function that looks like:
-> 
->         git_exec () {
->                 cmd="$1"
->                 shift
->                 case "${GIT_EXEC_PATH+set}" in
->                 set) ;;
->                 *) GIT_EXEC_PATH='@@GIT_EXEC_PATH@@' ;;
->                 esac
->                 "$GIT_EXEC_PATH/git-$cmd" "$@"
->         }
-> 
-> in git-sh-setup [*1*], and then rewrite the above to something
-> like this instead:
-> 
->         diff --git a/git-commit.sh b/git-commit.sh
->         index 330a434..8a73420 100755
->         --- a/git-commit.sh
->         +++ b/git-commit.sh
->         ...
->         @@ -115,7 +115,7 @@ run_status () {
->                     echo '#
->          # Initial commit
->          #'
->         -	    git-ls-files |
->         +	    git_exec ls-files |
->                     sed -e '
->                             s/\\/\\\\/g
->                             s/ /\\ /g
->         @@ -126,7 +126,7 @@ run_status () {
->                     committable="$?"
->                 fi
-> 
->         -	git-diff-files  --name-status |
->         +	git_exec diff-files  --name-status |
->                 sed -e '
->                         s/\\/\\\\/g
->                         s/ /\\ /g
->         ...
-> 
-> But that does not cover Perl nor Python scripts, and does not
-> address the ugliness either.
+Paolo Ciarrocchi, Thu, Mar 16, 2006 18:49:16 +0100:
+> What I want to do is to simply keep my repository aligned with Linus
+> so I simply have to do:
+> cd linus2.6
+> cg-fetch
 
-This is similiar to what I had in mind when I recommended the full path
-approach.  Perl or Python should be able to do the similiar.  I have no
-comment on the ugliness.  The functionality and effeciency of the
-program is more important to me.  But I do recognize the difficulties of
-changing all scripts overnight.
+Or "git pull"
 
-Anyway, there are at least other two ways to solve my problem.  (a)
-setup PATH in git-sh-setup, or (b) consistently use git-command form in
-scripts.  Even before their implementation, I can still use "git push".  
+> How can I confg git in order to, by default,  use git instead of rsync ?
 
-Qingning
+By editing .git/remotes/origin and replacing "rsync://rsync." with
+"git://git." (I think the rest is identical, but you better check).
+
+> Now my dumb question is... since I want to build that kernel do I have
+> to locally clone/copy it in order to don't modify any file on my local
+> tree?
+
+No. As long you don't modify anything under .git you can always get to
+any state of your kernel tree you ever had (assuming you _use_ git, of
+course).
+
+Or you can just revert your changes after you've played enough with
+them: "git reset --hard".
