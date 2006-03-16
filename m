@@ -1,54 +1,62 @@
-From: Paul Jakma <paul@clubi.ie>
-Subject: Re: git-reset and clones
-Date: Thu, 16 Mar 2006 15:48:13 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0603161547540.5276@sheen.jakma.org>
-References: <Pine.LNX.4.64.0603161424310.5276@sheen.jakma.org>
- <BAYC1-PASMTP09E59C4F23C4CDF45B1C42AEE70@CEZ.ICE>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: First dumb question to the list :)
+Date: Thu, 16 Mar 2006 18:49:16 +0100
+Message-ID: <4d8e3fd30603160949l655c4f9blb1e202eaf22fbfe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 16 16:49:42 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Mar 16 18:50:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJuj0-00081q-EN
-	for gcvg-git@gmane.org; Thu, 16 Mar 2006 16:49:18 +0100
+	id 1FJwbC-0003Mh-GV
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 18:49:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360AbWCPPtP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 10:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752370AbWCPPtP
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 10:49:15 -0500
-Received: from hibernia.jakma.org ([212.17.55.49]:28048 "EHLO
-	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1752360AbWCPPtO
+	id S1752451AbWCPRtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 12:49:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbWCPRtS
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 12:49:18 -0500
+Received: from xproxy.gmail.com ([66.249.82.195]:17113 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1752451AbWCPRtS convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 10:49:14 -0500
-Received: from sheen.jakma.org (IDENT:U2FsdGVkX18zlflPQc1xq05t7squpNZj5GL8MI8VxUY@sheen.jakma.org [212.17.55.53])
-	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id k2GFmDjd000419;
-	Thu, 16 Mar 2006 15:48:27 GMT
-X-X-Sender: paul@sheen.jakma.org
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP09E59C4F23C4CDF45B1C42AEE70@CEZ.ICE>
-Mail-Copies-To: paul@hibernia.jakma.org
-Mail-Followup-To: paul@hibernia.jakma.org
-X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on hibernia.jakma.org
-X-Virus-Status: Clean
+	Thu, 16 Mar 2006 12:49:18 -0500
+Received: by xproxy.gmail.com with SMTP id i30so310927wxd
+        for <git@vger.kernel.org>; Thu, 16 Mar 2006 09:49:17 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=f9FS2cPVFTOv6a30vUL9Qp6/WeVmf9+KNAoBnlV3/MdW1rK44Q1hGkezguZEiNIFgmrDZJ27dj6NDp5cn6hzht3Z2h8LcjUvDXEuXA/fh/bgdrj+WOhBToK1o+44SK0W8bXYStinMWJ5uAnrCi45AsW5iBzJDoZbDZfWY0Wvync=
+Received: by 10.70.90.16 with SMTP id n16mr2348942wxb;
+        Thu, 16 Mar 2006 09:49:16 -0800 (PST)
+Received: by 10.70.69.16 with HTTP; Thu, 16 Mar 2006 09:49:16 -0800 (PST)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17643>
 
-On Thu, 16 Mar 2006, sean wrote:
+Hi all,
+I just installed git and cogito from Ubuntu Drapper,
+performed a simple cg-clone git://URItoLinus2.6 linux2.6
+and aftwer more or less one hour I had a clone of Linus 2.6 tree.
+So far so good.
 
-> $ git reset ORIG_HEAD
+What I want to do is to simply keep my repository aligned with Linus
+so I simply have to do:
+cd linus2.6
+cg-fetch
 
-Ah, of course :).
+How can I confg git in order to, by default,  use git instead of rsync ?
 
-Thanks.
+Now my dumb question is... since I want to build that kernel do I have
+to locally clone/copy it in order to don't modify any file on my local
+tree?
+If I don't do so, I guess git/cogito will not be happy when I run
+cg-fetch, right?
 
-regards,
--- 
-Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
-Fortune:
-There's no such thing as pure pleasure; some anxiety always goes with it.
+Thanks!
+
+--
+Paolo
