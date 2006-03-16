@@ -1,93 +1,56 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Mark Wooding <mdw@distorted.org.uk>
 Subject: Re: [PATCH] Invoke git-repo-config directly.
-Date: Thu, 16 Mar 2006 12:55:55 +0100
-Message-ID: <4419524B.1030405@op5.se>
-References: <20060314211022.GA12498@localhost.localdomain>	<Pine.LNX.4.64.0603141351470.3618@g5.osdl.org>	<20060314224027.GB14733@localhost.localdomain>	<Pine.LNX.4.64.0603141506130.3618@g5.osdl.org>	<7vek13ieap.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0603151450070.3618@g5.osdl.org>	<7vlkvbffhz.fsf@assigned-by-dhcp.cox.net>	<20060316075324.GA19650@pfit.vm.bytemark.co.uk> <7vmzfq8zmr.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Qingning Huo <qhuo@mayhq.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 16 12:56:11 2006
+Date: Thu, 16 Mar 2006 12:53:20 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrne1inu0.fr9.mdw@metalzone.distorted.org.uk>
+References: <20060314211022.GA12498@localhost.localdomain> <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org> <20060314224027.GB14733@localhost.localdomain> <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org> <7vek13ieap.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603151450070.3618@g5.osdl.org> <7vlkvbffhz.fsf@assigned-by-dhcp.cox.net> <20060316075324.GA19650@pfit.vm.bytemark.co.uk> <7v64mebxsu.fsf@assigned-by-dhcp.cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 16 13:54:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJr5F-0004DD-Cf
-	for gcvg-git@gmane.org; Thu, 16 Mar 2006 12:56:01 +0100
+	id 1FJrz4-0005Fb-9t
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 13:53:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932094AbWCPLz6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 06:55:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbWCPLz6
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 06:55:58 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:64216 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932094AbWCPLz5
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 06:55:57 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 3E5B76BD21; Thu, 16 Mar 2006 12:55:56 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzfq8zmr.fsf@assigned-by-dhcp.cox.net>
+	id S1751586AbWCPMxZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 07:53:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbWCPMxZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 07:53:25 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:56288 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1750858AbWCPMxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Mar 2006 07:53:24 -0500
+Received: (qmail 5180 invoked by uid 110); 16 Mar 2006 12:53:20 -0000
+To: git@vger.kernel.org
+Received: (qmail 5167 invoked by uid 9); 16 Mar 2006 12:53:20 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1142513600 5165 172.29.199.2 (16 Mar 2006 12:53:20 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Thu, 16 Mar 2006 12:53:20 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17633>
 
-Junio C Hamano wrote:
-> 
-> And the second issue is the last point in the "implications"
-> list above.  You are right, and I stand corrected.  Our scripts
-> should consistently use dash form.
-> 
-> One thing that bothers me is that we need to keep encouraging
-> users to use dashless form from the command line, while we
-> update our scripts to use dash form.  What a contradicting and
-> confusing situation X-<.
-> 
+Junio C Hamano <junkio@cox.net> wrote:
 
-One of the two reasons for rewriting the git wrapper in C was the 
-performance penalty that came from having it as a shell-script while it 
-was desirable from a porcelainish standpoint to use the dash-less form 
-since we thought even then that "git" would always be in PATH while 
-"git-foo" was to be moved to the still-imaginary GIT_EXEC_PATH.
+> *1* BTW, I just noticed that git-sh-setup needs to be on user's
+> PATH, so we probably have to inline and duplicate the git_exec()
+> shell function definition at the beginning of each script after
+> all, when we make the initial ". git-sh-setup" inclusion to
+> honor GIT_EXEC_PATH without munging the user's PATH.
 
-The prepending of the GIT_EXEC_PATH to PATH was a laziness workaround 
-for scripts that use the dashed form until we'd had time to change 
-those, although I see from the commit-message that it's a far cry from 
-abundantly clear (reading it now I even think it's clear I meant the 
-other way around, although I remember I didn't). Anyways, the relative 
-parts are these, from commit 8e49d50388211a0f3e7286f6ee600bf7736f4814
+. ${GIT_EXEC_PATH-'@@@GIT_EXEC_PATH@@@'}/git-sh-setup
 
----8<---8<---8<---
-     The location of the GIT_EXEC_PATH (name discussion's closed,
-     thank gods) can be obtained by running
+isn't too grim, and shows how the git_exec shell function can be made
+somewhat terser.
 
-     	git --exec-path
+By the way, am I the only person who /likes/ having all the git-*
+programs on his path?  It makes shell completion work fairly well
+without having to install strange completion scripts which get out of
+date for one thing.
 
-     which will hopefully give porcelainistas ample time to adapt their
-     heavy-duty loops to call the core programs directly and thus save
-     the extra fork() / execve() overhead, although that's not really
-     necessary any more.
-
-     The --exec-path value is prepended to $PATH, so the git-* programs
-     should Just Work without ever requiring any changes to how they call
-     other programs in the suite.
-
-     Some timing values for 10000 invocations of git-var >&/dev/null:
-     	git.sh: 24.194s
-     	git.c:   9.044s
-     	git-var: 7.377s
-
----8<---8<---8<---
-
- From the timing values there I think the performance issues of using 
-the dash-less form can just be ignored. Very rarely will a porcelainish 
-wrapper do 10000 invocations of git commands where less than 2 seconds 
-will be a large percentage of the overall runtime.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+-- [mdw]
