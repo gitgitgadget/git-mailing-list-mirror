@@ -1,62 +1,66 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: First dumb question to the list :)
-Date: Thu, 16 Mar 2006 18:49:16 +0100
-Message-ID: <4d8e3fd30603160949l655c4f9blb1e202eaf22fbfe@mail.gmail.com>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH] Invoke git-repo-config directly.
+Date: Thu, 16 Mar 2006 13:27:37 -0600
+Message-ID: <1142537257.17536.137.camel@cashmere.sps.mot.com>
+References: <20060314211022.GA12498@localhost.localdomain>
+	 <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org>
+	 <20060314224027.GB14733@localhost.localdomain>
+	 <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org>
+	 <7vek13ieap.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0603151450070.3618@g5.osdl.org>
+	 <7vlkvbffhz.fsf@assigned-by-dhcp.cox.net>
+	 <20060316075324.GA19650@pfit.vm.bytemark.co.uk>
+	 <7vmzfq8zmr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Mar 16 18:50:08 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Mar 16 20:28:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJwbC-0003Mh-GV
-	for gcvg-git@gmane.org; Thu, 16 Mar 2006 18:49:23 +0100
+	id 1FJy8d-00087h-6f
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 20:27:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbWCPRtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 12:49:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbWCPRtS
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 12:49:18 -0500
-Received: from xproxy.gmail.com ([66.249.82.195]:17113 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1752451AbWCPRtS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 12:49:18 -0500
-Received: by xproxy.gmail.com with SMTP id i30so310927wxd
-        for <git@vger.kernel.org>; Thu, 16 Mar 2006 09:49:17 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=f9FS2cPVFTOv6a30vUL9Qp6/WeVmf9+KNAoBnlV3/MdW1rK44Q1hGkezguZEiNIFgmrDZJ27dj6NDp5cn6hzht3Z2h8LcjUvDXEuXA/fh/bgdrj+WOhBToK1o+44SK0W8bXYStinMWJ5uAnrCi45AsW5iBzJDoZbDZfWY0Wvync=
-Received: by 10.70.90.16 with SMTP id n16mr2348942wxb;
-        Thu, 16 Mar 2006 09:49:16 -0800 (PST)
-Received: by 10.70.69.16 with HTTP; Thu, 16 Mar 2006 09:49:16 -0800 (PST)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1752437AbWCPT14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 14:27:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbWCPT14
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 14:27:56 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:19593 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1752437AbWCPT1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Mar 2006 14:27:55 -0500
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k2GJfopM005695
+	for <git@vger.kernel.org>; Thu, 16 Mar 2006 12:41:50 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k2GJc6qF019964
+	for <git@vger.kernel.org>; Thu, 16 Mar 2006 13:38:06 -0600 (CST)
+To: Git List <git@vger.kernel.org>
+In-Reply-To: <7vmzfq8zmr.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17644>
 
-Hi all,
-I just installed git and cogito from Ubuntu Drapper,
-performed a simple cg-clone git://URItoLinus2.6 linux2.6
-and aftwer more or less one hour I had a clone of Linus 2.6 tree.
-So far so good.
+On Thu, 2006-03-16 at 04:14, Junio C Hamano wrote:
 
-What I want to do is to simply keep my repository aligned with Linus
-so I simply have to do:
-cd linus2.6
-cg-fetch
+> And the second issue is the last point in the "implications"
+> list above.  You are right, and I stand corrected.  Our scripts
+> should consistently use dash form.
+> 
+> One thing that bothers me is that we need to keep encouraging
+> users to use dashless form from the command line, while we
+> update our scripts to use dash form.  What a contradicting and
+> confusing situation X-<.
 
-How can I confg git in order to, by default,  use git instead of rsync ?
+I think it has a philosophical rationale, though.
 
-Now my dumb question is... since I want to build that kernel do I have
-to locally clone/copy it in order to don't modify any file on my local
-tree?
-If I don't do so, I guess git/cogito will not be happy when I run
-cg-fetch, right?
+While we want to proved an abstraction layer to the
+user through the "git" wrapper, we still want to be
+precise internally within the scripts themselves.
 
-Thanks!
+Or so.
 
---
-Paolo
+jdl
