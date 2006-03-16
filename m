@@ -1,73 +1,66 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Timo Hirvonen <tihirvon@gmail.com>
 Subject: Re: [PATCH] Invoke git-repo-config directly.
-Date: Thu, 16 Mar 2006 14:53:43 +0100
-Message-ID: <44196DE7.8010205@op5.se>
-References: <20060314211022.GA12498@localhost.localdomain> <Pine.LNX.4.64.0603141351470.3618@g5.osdl.org> <20060314224027.GB14733@localhost.localdomain> <Pine.LNX.4.64.0603141506130.3618@g5.osdl.org> <7vek13ieap.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603151450070.3618@g5.osdl.org> <7vlkvbffhz.fsf@assigned-by-dhcp.cox.net> <20060316075324.GA19650@pfit.vm.bytemark.co.uk> <7v64mebxsu.fsf@assigned-by-dhcp.cox.net> <slrne1inu0.fr9.mdw@metalzone.distorted.org.uk>
+Date: Thu, 16 Mar 2006 16:27:09 +0200
+Message-ID: <20060316162709.6f383f95.tihirvon@gmail.com>
+References: <20060314211022.GA12498@localhost.localdomain>
+	<Pine.LNX.4.64.0603141351470.3618@g5.osdl.org>
+	<20060314224027.GB14733@localhost.localdomain>
+	<Pine.LNX.4.64.0603141506130.3618@g5.osdl.org>
+	<7vek13ieap.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603151450070.3618@g5.osdl.org>
+	<7vlkvbffhz.fsf@assigned-by-dhcp.cox.net>
+	<20060316075324.GA19650@pfit.vm.bytemark.co.uk>
+	<7v64mebxsu.fsf@assigned-by-dhcp.cox.net>
+	<slrne1inu0.fr9.mdw@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 16 14:54:36 2006
+X-From: git-owner@vger.kernel.org Thu Mar 16 15:25:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FJsvJ-0008EG-GH
-	for gcvg-git@gmane.org; Thu, 16 Mar 2006 14:53:54 +0100
+	id 1FJtPs-0006Fy-2z
+	for gcvg-git@gmane.org; Thu, 16 Mar 2006 15:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbWCPNxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 08:53:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWCPNxp
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 08:53:45 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:25052 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751121AbWCPNxo
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 08:53:44 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 616E26BD21; Thu, 16 Mar 2006 14:53:43 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Mark Wooding <mdw@distorted.org.uk>
+	id S1750999AbWCPOZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 09:25:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbWCPOZI
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 09:25:08 -0500
+Received: from nproxy.gmail.com ([64.233.182.201]:17492 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750999AbWCPOZG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Mar 2006 09:25:06 -0500
+Received: by nproxy.gmail.com with SMTP id x29so274324nfb
+        for <git@vger.kernel.org>; Thu, 16 Mar 2006 06:25:05 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=OCtwgxKCYEFcsI61BYKoJ+pnTJ0X/JqlqZ1yNcRIHnXnbPzyzbZ34/axI8sNugx9PdZPyAkzkb65VAGI5h+OOcwSgolgoQjvu9FlWXjVgUe0SxhwtlJzouw05OvHJ3cKCHjX8h9WvwP8qJulxweqOoHdNoQ3cJdTEYqSl5Os4D8=
+Received: by 10.49.58.18 with SMTP id l18mr833292nfk;
+        Thu, 16 Mar 2006 06:25:05 -0800 (PST)
+Received: from garlic.home.net ( [82.128.201.160])
+        by mx.gmail.com with ESMTP id l27sm3124581nfa.2006.03.16.06.25.04;
+        Thu, 16 Mar 2006 06:25:04 -0800 (PST)
+To: git@vger.kernel.org
 In-Reply-To: <slrne1inu0.fr9.mdw@metalzone.distorted.org.uk>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17635>
 
-Mark Wooding wrote:
-> Junio C Hamano <junkio@cox.net> wrote:
-> 
-> 
->>*1* BTW, I just noticed that git-sh-setup needs to be on user's
->>PATH, so we probably have to inline and duplicate the git_exec()
->>shell function definition at the beginning of each script after
->>all, when we make the initial ". git-sh-setup" inclusion to
->>honor GIT_EXEC_PATH without munging the user's PATH.
-> 
-> 
-> . ${GIT_EXEC_PATH-'@@@GIT_EXEC_PATH@@@'}/git-sh-setup
-> 
-> isn't too grim, and shows how the git_exec shell function can be made
-> somewhat terser.
-> 
-
-But it breaks the convenience when testing.
+On Thu, 16 Mar 2006 12:53:20 +0000 (UTC)
+Mark Wooding <mdw@distorted.org.uk> wrote:
 
 > By the way, am I the only person who /likes/ having all the git-*
 > programs on his path?  It makes shell completion work fairly well
 > without having to install strange completion scripts which get out of
 > date for one thing.
-> 
 
-I like it too, but I don't use it unless I can't remember what the 
-command was named (finger-training). It shouldn't be too difficult to 
-make git.c write its own auto-generated bash-completion rules. If 
-someone would care to teach me the syntax I'd gladly hack up a patch for 
-it. This is a Good Thing, since it means it would also work for the 
-internal commands, which bash's path-completion doesn't.
+I like git-* for the same reason.  But if git potty had aliases for long
+commands then git-* commands would become irrelevant.  Especially
+"git co" would be nice.  It even would be faster to type than
+git-ch<tab>c<tab>o<tab> ;)
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+http://onion.dynserv.net/~timo/
