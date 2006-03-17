@@ -1,81 +1,84 @@
-From: Andrew Morton <akpm@osdl.org>
-Subject: Re: [RFC] exit code from git fetch
-Date: Thu, 16 Mar 2006 22:23:00 -0800
-Message-ID: <20060316222300.6f5dc9d9.akpm@osdl.org>
-References: <7vek116253.fsf@assigned-by-dhcp.cox.net>
+From: smurf@smurf.noris.de
+Subject: Re: git-cvsimport "you may need to merge manually"
+Date: Fri, 17 Mar 2006 07:46:18 +0100
+Message-ID: <20060317064618.GG14562@smurf.noris.de>
+References: <86veud23v0.fsf@blue.stonehenge.com> <7vu09x7puo.fsf@assigned-by-dhcp.cox.net> <86r75122yj.fsf@blue.stonehenge.com> <7vk6at7o06.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 17 07:26:06 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="9UV9rz0O2dU/yYYn"
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 17 07:55:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FK8PM-0000YH-JL
-	for gcvg-git@gmane.org; Fri, 17 Mar 2006 07:25:59 +0100
+	id 1FK8rU-000400-QT
+	for gcvg-git@gmane.org; Fri, 17 Mar 2006 07:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547AbWCQGZt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Mar 2006 01:25:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbWCQGZt
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 01:25:49 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:62666 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1752547AbWCQGZs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Mar 2006 01:25:48 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2H6PiDZ032638
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 16 Mar 2006 22:25:44 -0800
-Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id k2H6PiFI010941;
-	Thu, 16 Mar 2006 22:25:44 -0800
+	id S1752546AbWCQGy4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Mar 2006 01:54:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbWCQGy4
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 01:54:56 -0500
+Received: from run.smurf.noris.de ([192.109.102.41]:24786 "EHLO smurf.noris.de")
+	by vger.kernel.org with ESMTP id S1752546AbWCQGyz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Mar 2006 01:54:55 -0500
+Received: from smurf by smurf.noris.de with local (Exim 4.60)
+	(envelope-from <smurf@smurf.noris.de>)
+	id 1FK8j4-0001a3-UO; Fri, 17 Mar 2006 07:46:18 +0100
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek116253.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i386-redhat-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.129 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <7vk6at7o06.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17661>
 
-Junio C Hamano <junkio@cox.net> wrote:
->
-> When "git fetch" fails because the remote unexpectedly rewound
-> its head and fast-forward check triggers, we issued a warning
-> but kept going anyway.  This proposed patch makes the command
-> exit with non-zero status.
-> 
-> I think this is a sensible change and makes it easier to use
-> from scripts, but it might have other issues.  For example when
-> you are tracking more than one heads from the remote, and the
-> first one fast-forwards but the second one doesn't, it updates
-> the first one and then stops.  If we happen to process the
-> rewound one first, neither is updated because we stop at the
-> first one.  I think this particular discrepancy probably is not
-> worth worrying about, but there may be other more serious
-> fallouts we need to fix if we did this.
-> 
-> Comments?
-> 
-> ---
-> diff --git a/git-fetch.sh b/git-fetch.sh
-> index 0346d4a..6835634 100755
-> --- a/git-fetch.sh
-> +++ b/git-fetch.sh
-> @@ -179,6 +179,7 @@ fast_forward_local () {
->  			;;
->  		*)
->  			echo >&2 "  not updating."
-> +			exit 1
->  			;;
->  		esac
->  	    }
 
-Thanks ;)
+--9UV9rz0O2dU/yYYn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I guess you could exit with different exit codes according to what
-went wrong.  So if a script writer really cared about the fine details,
-appropriate decisions could be made.
+Hi,
+
+Junio C Hamano:
+> ... Ugh, and after I wrote all of the above, the version of git
+> I have at work predates that commit X-<.  So maybe this was
+> fixed with that commit, and you are expected to say:
+>=20
+> 	$ git pull . origin
+>=20
+Exactly.
+
+> assuming that you are on "master" branch and cvsimoprt tracks
+> CVS head with "origin" branch, that is.
+>=20
+> Smurf, help?
+>=20
+What for? You got it, after all. *g*
+
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Sally sued for support; she was claimin'
+Phil had fathered her baby (named Damon).
+    She said, "I ought to know,"
+    As she pointed below.
+"'Cause this is the box that he came in."
+
+--9UV9rz0O2dU/yYYn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQFEGls68+hUANcKr/kRAsrVAJ9Lcz7ixjqUF72qazlla0O2yiSkXgCfc6eK
+KJDn65gB6f0YvUpKFQ4oFbM=
+=yUUa
+-----END PGP SIGNATURE-----
+
+--9UV9rz0O2dU/yYYn--
