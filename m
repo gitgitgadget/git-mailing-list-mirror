@@ -1,142 +1,113 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-reset and clones
-Date: Fri, 17 Mar 2006 22:21:41 +0100
-Message-ID: <441B2865.5090505@op5.se>
-References: <Pine.LNX.4.64.0603161424310.5276@sheen.jakma.org>	 <7v4q1x95yo.fsf@assigned-by-dhcp.cox.net> <1142623141.17536.225.camel@cashmere.sps.mot.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, paul@hibernia.jakma.org,
-	Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 17 22:22:03 2006
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH 1/2] blame: Nicer output
+Date: Fri, 17 Mar 2006 22:49:28 +0100
+Message-ID: <20060317214928.23075.76032.stgit@c165>
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Mar 17 22:49:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKMOJ-0003j2-38
-	for gcvg-git@gmane.org; Fri, 17 Mar 2006 22:21:48 +0100
+	id 1FKMpG-00089W-JF
+	for gcvg-git@gmane.org; Fri, 17 Mar 2006 22:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030200AbWCQVVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Mar 2006 16:21:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932796AbWCQVVo
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 16:21:44 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:6531 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S932794AbWCQVVn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Mar 2006 16:21:43 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id E92536BD04; Fri, 17 Mar 2006 22:21:41 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <1142623141.17536.225.camel@cashmere.sps.mot.com>
+	id S932797AbWCQVtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Mar 2006 16:49:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932798AbWCQVtg
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 16:49:36 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:28565 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932797AbWCQVtf
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Mar 2006 16:49:35 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 3237540FD; Fri, 17 Mar 2006 23:05:33 +0100 (CET)
+Received: from c165 ([127.0.0.1])
+	by c165 with esmtp (Exim 3.36 #1 (Debian))
+	id 1FKMp7-00060M-00; Fri, 17 Mar 2006 22:49:29 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17671>
-
-I'm in sort of shallow waters, hoping that Junio or Linus will come 
-along and pull me off the shores in case I mis-step and say something 
-stupid that would have made an amusing pictograph had it been done right 
-by a cartoonist.
-
-Jon Loeliger wrote:
-> On Thu, 2006-03-16 at 20:10, Junio C Hamano wrote:
-> 
-> 
->>You used to have something like this:
->>
->>
->>                 o---o---o---A
->>                /            ^ your HEAD used to point at here
->>    ---o---o---o
->>
->>and you forgot other people already have the commit chain up to
->>commit A.   But you rewound and did cleanups:
->>
->>                 o---o---o---A
->>                /
->>    ---o---o---o---o---o---B
->>                           ^ your HEAD now points at here
->>
->>People who track your HEAD have A and your updated head B does
->>not fast forward.  Oops.
->>
->>The recovery consists of two steps.  The first step is more
->>important.  To find what commits you lost that others already
->>may have.  You may be lucky and remember A's commit object name,
->>but when I did that I had to ask around on the list X-<.
->>
->>The second step is a single command:
->>
->>	$ git merge -s ours 'Graft the lost side branch back in' \
->>		HEAD A
->>
->>where A is the object name of that commit.  On your current
->>branch, this creates a merge commit between A and B (your
->>current HEAD), taking the tree object from B.
->>
->>                 o---o---o---A
->>                /             \
->>    ---o---o---o---o---o---B---M
-> 
-> 
-> Junio,
-> 
-> Can you explain a bit more why the "ours" strategy
-> comes into play here?  I _think_ I understand, but
-> I'd like to hear a bit more explanation, please.
-> How is this different from just merging in A directly?
-> 
-
-"Ours" is an algorithm you can invent yourself and pass as the defautl 
-merge strategy (useful if you know you'll always keep upstream as-is or 
-some such).
-
-> 
->>You want to keep the contents of the cleaned-up HEAD, so that is
->>why you are taking the tree from B.
-> 
-> 
-> And the "ours" strategy effectively says, "Favor the B
-> side of things when pulling in the A parts", right?
-> 
-
-Yes, and/or no. "Ours"' is still whatever you want it to be. Perhaps we 
-should add some new strategies, like "favour-current" and "favour-new".
-
-> 
->>  With this commit M, you are
->>telling the outside world that it is OK if they start from a
->>commit on the now-recovered side branch.
-> 
-> 
-> This is mystical to me.  How is the "A" (ie, side branch)
-> now in a "recovered" state?
-> 
-
-Because the commits pullers already have are now inside the respository 
-history, as seen by average pullers (again). The merge between "master" 
-(or some such) and "new-devel" (or some such) happen to coincide, which 
-means they share a mutual merge-base, which means they're both part of 
-the same chain of developemnt. If you intend to disimiss most of the 
-changes between (fork-point) and (point-of-new-weird-rebase) this might 
-not be the best solution, but...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17672>
 
 
-Sorry, but to me this is friaday night and currently I can't logically 
-differ between a bluewhale and a kangaroo [*1]
+As pointed out by Junio, it may be dangerous to cut off people's names
+after 15 bytes. If the name is encoded in an encoding which uses more
+than one byte per code point we may end up with outputting garbage.
+Instead of trying to do something smart, just output the entire name.
+We don't gain much screen space by chopping it off anyway.
 
-/exon
+Furthermore, only output the file name if we actually found any
+renames.
 
-[1]
-Sadly, this has been empirically proven. [*2]
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
+---
 
-[2]
-At some other time. I'm no *that* drunk right now.
+ blame.c |   35 ++++++++++++++++++++++++++++++-----
+ 1 files changed, 30 insertions(+), 5 deletions(-)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+diff --git a/blame.c b/blame.c
+index 1fb5070..8af4b54 100644
+--- a/blame.c
++++ b/blame.c
+@@ -742,6 +742,8 @@ int main(int argc, const char **argv)
+ 	struct commit_info ci;
+ 	const char *buf;
+ 	int max_digits;
++	size_t longest_file, longest_author;
++	int found_rename;
+ 
+ 	const char* prefix = setup_git_directory();
+ 
+@@ -818,6 +820,25 @@ int main(int argc, const char **argv)
+ 	for (max_digits = 1, i = 10; i <= num_blame_lines + 1; max_digits++)
+ 		i *= 10;
+ 
++	longest_file = 0;
++	longest_author = 0;
++	found_rename = 0;
++	for (i = 0; i < num_blame_lines; i++) {
++		struct commit *c = blame_lines[i];
++		struct util_info* u;
++		if (!c)
++			c = initial;
++		u = c->object.util;
++
++		if (!found_rename && strcmp(filename, u->pathname))
++			found_rename = 1;
++		if (longest_file < strlen(u->pathname))
++			longest_file = strlen(u->pathname);
++		get_commit_info(c, &ci);
++		if (longest_author < strlen(ci.author))
++			longest_author = strlen(ci.author);
++	}
++
+ 	for (i = 0; i < num_blame_lines; i++) {
+ 		struct commit *c = blame_lines[i];
+ 		struct util_info* u;
+@@ -828,14 +849,18 @@ int main(int argc, const char **argv)
+ 		u = c->object.util;
+ 		get_commit_info(c, &ci);
+ 		fwrite(sha1_to_hex(c->object.sha1), sha1_len, 1, stdout);
+-		if(compability)
++		if(compability) {
+ 			printf("\t(%10s\t%10s\t%d)", ci.author,
+ 			       format_time(ci.author_time, ci.author_tz), i+1);
+-		else
+-			printf(" %s (%-15.15s %10s %*d) ", u->pathname,
+-			       ci.author, format_time(ci.author_time,
+-						      ci.author_tz),
++		} else {
++			if (found_rename)
++				printf(" %-*.*s", longest_file, longest_file,
++				       u->pathname);
++			printf(" (%-*.*s %10s %*d) ",
++			       longest_author, longest_author, ci.author,
++			       format_time(ci.author_time, ci.author_tz),
+ 			       max_digits, i+1);
++		}
+ 
+ 		if(i == num_blame_lines - 1) {
+ 			fwrite(buf, blame_len - (buf - blame_contents),
