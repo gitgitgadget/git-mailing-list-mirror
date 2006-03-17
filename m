@@ -1,80 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: git-cvsimport "you may need to merge manually"
-Date: Thu, 16 Mar 2006 18:43:43 -0800
-Message-ID: <7vu09x7puo.fsf@assigned-by-dhcp.cox.net>
+Date: 16 Mar 2006 18:57:08 -0800
+Message-ID: <86r75122yj.fsf@blue.stonehenge.com>
 References: <86veud23v0.fsf@blue.stonehenge.com>
+	<7vu09x7puo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Mar 17 03:43:50 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 17 03:57:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FK4wO-0004AF-MD
-	for gcvg-git@gmane.org; Fri, 17 Mar 2006 03:43:49 +0100
+	id 1FK59R-0007MI-Tt
+	for gcvg-git@gmane.org; Fri, 17 Mar 2006 03:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024AbWCQCnq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 21:43:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbWCQCnp
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 21:43:45 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:38859 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750794AbWCQCnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 21:43:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060317024217.DYWG15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 16 Mar 2006 21:42:17 -0500
-To: git@vger.kernel.org
-In-Reply-To: <86veud23v0.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "16 Mar 2006 18:37:39 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964800AbWCQC5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 21:57:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbWCQC5P
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 21:57:15 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:58803 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750759AbWCQC5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Mar 2006 21:57:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id C8E028D66B;
+	Thu, 16 Mar 2006 18:57:09 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 25316-02-7; Thu, 16 Mar 2006 18:57:09 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 36B8B8F76E; Thu, 16 Mar 2006 18:57:09 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.13.2.8; tzolkin = 2 Lamat; haab = 6 Cumku
+In-Reply-To: <7vu09x7puo.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17653>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-> Starting recently, git-cvsimport has always ended with "you
-> may need to merge manually".  Why?  It worked before.  What
-> is it doing now?
->
->     $ cd /home/merlyn/Git/stonehenge.git || exit 1
->     $ git-cvsimport -v -k -o master -d /web/cvs stonehenge
->     .
->     .
->     .
->     skip patchset 323: 1142297290 before 1142351976
->     Fetching htdocs/courses.html   v 1.4
->     Update htdocs/courses.html: 8767 bytes
->     Fetching htdocs/rates.html   v 1.2
->     Update htdocs/rates.html: 2043 bytes
->     Tree ID 38280334da5eaa4fd80fe1011e63db4b527f1d13
->     Parent ID e93de754181fe963b8623423f509540021caead0
->     Committed patch 324 (master 2006-03-16 18:14:31)
->     Commit ID 985ca72d4e8a07d4189794231f035bac63c9e91d
->     DONE; you may need to merge manually.
->     $ git-status
->     #
->     # Updated but not checked in:
->     #   (will commit)
->     #
->     #       modified: htdocs/courses.html
->     #       modified: htdocs/rates.html
->     #
->
-> Right... why didn't it commit those?  I'm having to issue "fake"
-> commits now, so I've lost the cvs-log comments that were formerly
-> very complete and cool.
+>> Right... why didn't it commit those?  I'm having to issue "fake"
+>> commits now, so I've lost the cvs-log comments that were formerly
+>> very complete and cool.
 
-I do not use cvsimport but I wonder what Commit ID 985ca7
-contains.  Can you try "git show 985ca7" and see if that is the
-commit you want?
+Junio> I do not use cvsimport but I wonder what Commit ID 985ca7
+Junio> contains.  Can you try "git show 985ca7" and see if that is the
+Junio> commit you want?
 
-Also, which branch are you on when you run git-cvsimport, and
-which branch did the commit 985ca7 go?  I suspect it is storing
-the tip commit 985ca7 to a branch that you are _not_ on
-currently, but refraining from merging that to your current
-branch, or something like that.
+To bring the tree clean, I issued "git commit -a -m 'cvs sync'", and
+"git-whatchanged -p" shows the most recent commit with the diff actually
+*backed out* the most recent change in CVS, and the next change down was
+actually the good one.  Weird.  Do I need to start all over again?
+
+Junio> Also, which branch are you on when you run git-cvsimport, and
+Junio> which branch did the commit 985ca7 go?  I suspect it is storing
+Junio> the tip commit 985ca7 to a branch that you are _not_ on
+Junio> currently, but refraining from merging that to your current
+Junio> branch, or something like that.
+
+Nope.  I'm on "master", and it should be writing "master".
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
