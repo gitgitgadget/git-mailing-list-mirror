@@ -1,100 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-reset and clones
-Date: Thu, 16 Mar 2006 18:10:23 -0800
-Message-ID: <7v4q1x95yo.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0603161424310.5276@sheen.jakma.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: git-cvsimport "you may need to merge manually"
+Date: 16 Mar 2006 18:37:39 -0800
+Message-ID: <86veud23v0.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 17 03:11:03 2006
+X-From: git-owner@vger.kernel.org Fri Mar 17 03:38:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FK4QZ-0006xQ-GP
-	for gcvg-git@gmane.org; Fri, 17 Mar 2006 03:10:55 +0100
+	id 1FK4qx-000321-3g
+	for gcvg-git@gmane.org; Fri, 17 Mar 2006 03:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbWCQCKd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Mar 2006 21:10:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbWCQCKd
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 21:10:33 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:50367 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1752501AbWCQCKc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Mar 2006 21:10:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060317020633.NCWD17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 16 Mar 2006 21:06:33 -0500
-To: paul@hibernia.jakma.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750828AbWCQChp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Mar 2006 21:37:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbWCQChp
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Mar 2006 21:37:45 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:42844 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750828AbWCQCho (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Mar 2006 21:37:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id C48D88F2FC
+	for <git@vger.kernel.org>; Thu, 16 Mar 2006 18:37:39 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 11415-01-8 for <git@vger.kernel.org>;
+ Thu, 16 Mar 2006 18:37:39 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 495FF8F2E3; Thu, 16 Mar 2006 18:37:39 -0800 (PST)
+To: <git@vger.kernel.org>
+x-mayan-date: Long count = 12.19.13.2.8; tzolkin = 2 Lamat; haab = 6 Cumku
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17650>
-
-Paul Jakma <paul@clubi.ie> writes:
-
-> If a git repository has a reset HEAD~X done, then any later pulls in
-> clone repositories get /really/ upset, with:
->
-> $ git pull
-> * refs/heads/origin: does not fast forward to branch 'master' of
-> /home/paul/foo-git/;
->
-> Type of thing. This seems to be a similar issue to:
->
-> 	http://www.gelato.unsw.edu.au/archives/git/0510/10767.html
->
-> The question is has this improved at all since last year? Is there
-> anything the origin repository maintainer (the one who did reset) can
-> do to recover from this?
-
-You used to have something like this:
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17651>
 
 
-                 o---o---o---A
-                /            ^ your HEAD used to point at here
-    ---o---o---o
+Starting recently, git-cvsimport has always ended with "you
+may need to merge manually".  Why?  It worked before.  What
+is it doing now?
 
-and you forgot other people already have the commit chain up to
-commit A.   But you rewound and did cleanups:
+    $ cd /home/merlyn/Git/stonehenge.git || exit 1
+    $ git-cvsimport -v -k -o master -d /web/cvs stonehenge
+    .
+    .
+    .
+    skip patchset 323: 1142297290 before 1142351976
+    Fetching htdocs/courses.html   v 1.4
+    Update htdocs/courses.html: 8767 bytes
+    Fetching htdocs/rates.html   v 1.2
+    Update htdocs/rates.html: 2043 bytes
+    Tree ID 38280334da5eaa4fd80fe1011e63db4b527f1d13
+    Parent ID e93de754181fe963b8623423f509540021caead0
+    Committed patch 324 (master 2006-03-16 18:14:31)
+    Commit ID 985ca72d4e8a07d4189794231f035bac63c9e91d
+    DONE; you may need to merge manually.
+    $ git-status
+    #
+    # Updated but not checked in:
+    #   (will commit)
+    #
+    #       modified: htdocs/courses.html
+    #       modified: htdocs/rates.html
+    #
 
-                 o---o---o---A
-                /
-    ---o---o---o---o---o---B
-                           ^ your HEAD now points at here
+Right... why didn't it commit those?  I'm having to issue "fake"
+commits now, so I've lost the cvs-log comments that were formerly
+very complete and cool.
 
-People who track your HEAD have A and your updated head B does
-not fast forward.  Oops.
-
-The recovery consists of two steps.  The first step is more
-important.  To find what commits you lost that others already
-may have.  You may be lucky and remember A's commit object name,
-but when I did that I had to ask around on the list X-<.
-
-The second step is a single command:
-
-	$ git merge -s ours 'Graft the lost side branch back in' \
-		HEAD A
-
-where A is the object name of that commit.  On your current
-branch, this creates a merge commit between A and B (your
-current HEAD), taking the tree object from B.
-
-                 o---o---o---A
-                /             \
-    ---o---o---o---o---o---B---M
-
-You want to keep the contents of the cleaned-up HEAD, so that is
-why you are taking the tree from B.  With this commit M, you are
-telling the outside world that it is OK if they start from a
-commit on the now-recovered side branch.
-
-If the tree of A and B exactly match, further merges with people
-starting from A branch would not have conflicts.  If the
-difference between A and B are mostly clean-ups, automerge would
-lose dirtiness you cleaned-up when they update to your new HEAD
-(because the transition from A to M reverts the dirtiness, which
-is what your clean-up was about), which is what you want.
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
