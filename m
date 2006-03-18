@@ -1,65 +1,60 @@
-From: "Nikolai Weibull" <now@bitwi.se>
+From: Fredrik Kuivinen <freku045@student.liu.se>
 Subject: Re: [PATCH] Basic Zsh completion support
-Date: Sat, 18 Mar 2006 17:14:31 +0100
-Message-ID: <dbfc82860603180814p36a5bf3eo4771610981870bca@mail.gmail.com>
-References: <20060318145347.15128.85902.stgit@c165>
-	 <dbfc82860603180725w2eb3057ey17fa8d9dc746127@mail.gmail.com>
-	 <4fb292fa0603180752r731c628eoa2b96fcd6ef43e0f@mail.gmail.com>
+Date: Sat, 18 Mar 2006 17:23:39 +0100
+Message-ID: <20060318162339.GA4470@c165.ib.student.liu.se>
+References: <20060318145347.15128.85902.stgit@c165> <dbfc82860603180725w2eb3057ey17fa8d9dc746127@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Fredrik Kuivinen" <freku045@student.liu.se>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org,
 	junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Mar 18 17:14:37 2006
+X-From: git-owner@vger.kernel.org Sat Mar 18 17:24:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKe4Z-0007EZ-0B
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 17:14:35 +0100
+	id 1FKeDU-00009f-Vf
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 17:23:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbWCRQOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Mar 2006 11:14:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbWCRQOc
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 11:14:32 -0500
-Received: from xproxy.gmail.com ([66.249.82.203]:46263 "EHLO xproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751400AbWCRQOb convert rfc822-to-8bit
+	id S1751423AbWCRQXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Mar 2006 11:23:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWCRQXq
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 11:23:46 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:54934 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1751423AbWCRQXp
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Mar 2006 11:14:31 -0500
-Received: by xproxy.gmail.com with SMTP id t14so577701wxc
-        for <git@vger.kernel.org>; Sat, 18 Mar 2006 08:14:31 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XBQZqJs7Sb+kGCYVb/jUHXYt+pY1Q9OTw9AjfVzvYLNwhRwKsXHceseNNQC31FgRH7+FhtzQ05Lxuf0Y/hRl90pGZtweuPWy4iRjJ+7B0oAwHL3KQDefL/sjhu8CJHf/apQlZ/PEMxAXk0G8QUayICpO2eV21d2CMmk6CJA89+Y=
-Received: by 10.70.52.1 with SMTP id z1mr355838wxz;
-        Sat, 18 Mar 2006 08:14:31 -0800 (PST)
-Received: by 10.70.39.9 with HTTP; Sat, 18 Mar 2006 08:14:31 -0800 (PST)
-To: "Bertrand Jacquin" <beber.mailing@gmail.com>
-In-Reply-To: <4fb292fa0603180752r731c628eoa2b96fcd6ef43e0f@mail.gmail.com>
+	Sat, 18 Mar 2006 11:23:45 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 440344114; Sat, 18 Mar 2006 17:39:46 +0100 (CET)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1FKeDL-00044K-00; Sat, 18 Mar 2006 17:23:39 +0100
+To: Nikolai Weibull <now@bitwi.se>
 Content-Disposition: inline
+In-Reply-To: <dbfc82860603180725w2eb3057ey17fa8d9dc746127@mail.gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17700>
 
-On 3/18/06, Bertrand Jacquin <beber.mailing@gmail.com> wrote:
-> On 3/18/06, Nikolai Weibull <now@bitwi.se> wrote:
-> > On 3/18/06, Fredrik Kuivinen <freku045@student.liu.se> wrote:
-> > >
-> > > Based on the completion code for quilt in the Zsh distribution.
+On Sat, Mar 18, 2006 at 04:25:04PM +0100, Nikolai Weibull wrote:
+> On 3/18/06, Fredrik Kuivinen <freku045@student.liu.se> wrote:
 > >
-> > Actually, there's an almost-complete implementation in 4.3 already.
-> > Written by me nonetheless.  You can take a look and make suggestions
-> > if you like :-).  I have an updated version to deal with post
-> > 1.0-changes locally that I'm going to put in Zsh's CVS soon enough.
->
-> Any plan do to this for cogito ?
+> > Based on the completion code for quilt in the Zsh distribution.
+> 
+> Actually, there's an almost-complete implementation in 4.3 already. 
+> Written by me nonetheless.  You can take a look and make suggestions
+> if you like :-).  I have an updated version to deal with post
+> 1.0-changes locally that I'm going to put in Zsh's CVS soon enough.
+> 
 
-Sure, and stgit as well, but I haven't gotten around to it.  The idea
-was to reuse as much as possible of the stuff that the three have in
-common (like tags, references, and so on), but as I haven't used
-either of the two (cogito and stgit) I haven't had a compelling reason
-to sit down and do it.
+Oh, I didn't know about that.
 
-  nikolai
+<updates zsh>
+
+Very nice! Much better than my crude cut-and-paste work.
+
+
+Junio: Please don't apply the patch.
+
+- Fredrik
