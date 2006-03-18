@@ -1,200 +1,80 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: [PATCH] git-merge: New options `--no-fast-forward' and `--direct'.
-Date: Sat, 18 Mar 2006 10:19:42 +0000
-Message-ID: <20060318101941.8941.52615.stgit@metalzone.distorted.org.uk>
-References: <slrne1nnhm.fr9.mdw@metalzone.distorted.org.uk>
-X-From: git-owner@vger.kernel.org Sat Mar 18 11:19:47 2006
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] ls-files: Don't require exclude files to end with a newline.
+Date: Sat, 18 Mar 2006 11:27:45 +0100
+Message-ID: <8764mccaji.fsf@wine.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Mar 18 11:28:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKYXC-0003WS-I2
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 11:19:46 +0100
+	id 1FKYfB-0004K2-KL
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 11:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbWCRKTo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Mar 2006 05:19:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932382AbWCRKTo
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 05:19:44 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:37101 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S932379AbWCRKTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Mar 2006 05:19:43 -0500
-Received: (qmail 8968 invoked from network); 18 Mar 2006 10:19:42 -0000
-Received: from localhost (HELO metalzone.distorted.org.uk) (127.0.0.1)
-  by localhost with SMTP; 18 Mar 2006 10:19:42 -0000
+	id S932189AbWCRK16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Mar 2006 05:27:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbWCRK16
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 05:27:58 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:58058 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S1751206AbWCRK16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Mar 2006 05:27:58 -0500
+Received: from adsl-62-167-67-224.adslplus.ch ([62.167.67.224] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1FKYez-0001Qd-7u
+	for git@vger.kernel.org; Sat, 18 Mar 2006 04:27:57 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id E0C2D4F657; Sat, 18 Mar 2006 11:27:45 +0100 (CET)
 To: git@vger.kernel.org
-In-Reply-To: <slrne1nnhm.fr9.mdw@metalzone.distorted.org.uk>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/22.0.50 (gnu/linux)
+X-SA-Exim-Connect-IP: 62.167.67.224
+X-SA-Exim-Mail-From: julliard@winehq.org
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.9 required=3.0 tests=AWL,BAYES_00,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL,SPF_HELO_SOFTFAIL autolearn=no 
+	version=3.0.3
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17695>
 
-From: Mark Wooding <mdw@distorted.org.uk>
+Without this patch, the last line of an exclude file is silently
+ignored if it doesn't end with a newline.
 
-These options disable some of git-merge's optimizations.  
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 
---no-fast-forward
-	Does what it says on the tin: git-merge will always make a
-	commit as a result of this merge (or leave one in the pipeline,
-	if --no-commit was given).
-
---direct
-	Don't do anything clever: go directly to the merge strategy
-	programs.  In particular, this forbids an attempt at in-index
-	merging.
-
-We also force direct merging with the `ours' strategy, since this is
-obviously what was wanted.
-
-Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
 ---
 
- Documentation/merge-options.txt |    9 ++++++++-
- git-merge.sh                    |   28 ++++++++++++++++++++++------
- git-pull.sh                     |   13 +++++++++++--
- 3 files changed, 41 insertions(+), 9 deletions(-)
+ ls-files.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 53cc355..5b145a1 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -6,7 +6,6 @@
- 	not autocommit, to give the user a chance to inspect and
- 	further tweak the merge result before committing.
+9c5a78851bcf3b541364f818f6b397c29a8f4592
+diff --git a/ls-files.c b/ls-files.c
+index df25c8c..e42119c 100644
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -92,11 +92,12 @@ static int add_excludes_from_file_1(cons
+ 		close(fd);
+ 		return 0;
+ 	}
+-	buf = xmalloc(size);
++	buf = xmalloc(size+1);
+ 	if (read(fd, buf, size) != size)
+ 		goto err;
+ 	close(fd);
  
--
- -s <strategy>, \--strategy=<strategy>::
- 	Use the given merge strategy; can be supplied more than
- 	once to specify them in the order they should be tried.
-@@ -14,3 +13,11 @@
- 	is used instead (`git-merge-recursive` when merging a single
- 	head, `git-merge-octopus` otherwise).
- 
-+--no-ff, \--no-fast-forward::
-+	Don't fast-forward, even when it looks possible.  There will
-+	always be a commit to do at the end of the merge.
-+
-+--direct::
-+	Don't do anything clever: go directly to the merge strategy
-+	programs.  In particular, this forbids an attempt at in-index
-+	merging.
-diff --git a/git-merge.sh b/git-merge.sh
-index cc0952a..d6a579f 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -13,6 +13,8 @@ LF='
- all_strategies='recursive octopus resolve stupid ours'
- default_strategies='recursive'
- use_strategies=
-+ff=t
-+index_merge=t
- if test "@@NO_PYTHON@@"; then
- 	all_strategies='resolve octopus stupid ours'
- 	default_strategies='resolve'
-@@ -65,6 +67,12 @@ do
- 		no_summary=t ;;
- 	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
- 		no_commit=t ;;
-+	--no-f|--no-ff|--no-fa|--no-fas|--no-fast|--no-fast-|--no-fast-f|\
-+		--no-fast-fo|--no-fast-for|--no-fast-forw|--no-fast-forwa|\
-+		--no-fast-forwar|--no-fast-forward)
-+		ff=f ;;
-+	--d|--di|--dir|--dire|--direc|--direct)
-+		ff=f index_merge=f ;;
- 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
- 		--strateg=*|--strategy=*|\
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-@@ -90,6 +98,10 @@ do
- 	shift
- done
- 
-+# `ours' is a funny strategy and clever merging optimizations here make
-+# it not work.
-+case " $use_strategies " in *" ours "*) ff=f index_merge=f ;; esac
-+
- test "$#" -le 2 && usage ;# we need at least two heads.
- 
- merge_msg="$1"
-@@ -118,18 +130,18 @@ case "$#" in
- esac
- echo "$head" >"$GIT_DIR/ORIG_HEAD"
- 
--case "$#,$common,$no_commit" in
--*,'',*)
-+case "$#,$ff,$index_merge,$common,$no_commit" in
-+*,*,*,'',*)
- 	# No common ancestors found. We need a real merge.
- 	;;
--1,"$1",*)
-+1,*,*,"$1",*)
- 	# If head can reach all the merge then we are up to date.
- 	# but first the most common case of merging one remote
- 	echo "Already up-to-date."
- 	dropsave
- 	exit 0
- 	;;
--1,"$head",*)
-+1,t,*,"$head",*)
- 	# Again the most common case of merging one remote.
- 	echo "Updating from $head to $1"
- 	git-update-index --refresh 2>/dev/null
-@@ -139,11 +151,11 @@ case "$#,$common,$no_commit" in
- 	dropsave
- 	exit 0
- 	;;
--1,?*"$LF"?*,*)
-+1,*,*,?*"$LF"?*,*)
- 	# We are not doing octopus and not fast forward.  Need a
- 	# real merge.
- 	;;
--1,*,)
-+1,*,t,*,)
- 	# We are not doing octopus, not fast forward, and have only
- 	# one common.  See if it is really trivial.
- 	git var GIT_COMMITTER_IDENT >/dev/null || exit
-@@ -164,6 +176,10 @@ case "$#,$common,$no_commit" in
- 	fi
- 	echo "Nope."
- 	;;
-+1,*,*,*,)
-+	# Only a single remote, but we've been told not to try anything
-+	# clever.  Skip to real merge.
-+	;;
- *)
- 	# An octopus.  If we can reach all the remote we are up to date.
- 	up_to_date=t
-diff --git a/git-pull.sh b/git-pull.sh
-index 17fda26..229cec7 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -8,7 +8,7 @@ USAGE='[-n | --no-summary] [--no-commit]
- LONG_USAGE='Fetch one or more remote refs and merge it/them into the current HEAD.'
- . git-sh-setup
- 
--strategy_args= no_summary= no_commit=
-+strategy_args= no_summary= no_commit= noff= direct=
- while case "$#,$1" in 0) break ;; *,-*) ;; *) break ;; esac
- do
- 	case "$1" in
-@@ -17,6 +17,12 @@ do
- 		no_summary=-n ;;
- 	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
- 		no_commit=--no-commit ;;
-+	--no-f|--no-ff|--no-fa|--no-fas|--no-fast|--no-fast-|--no-fast-f|\
-+		--no-fast-fo|--no-fast-for|--no-fast-forw|--no-fast-forwa|\
-+		--no-fast-forwar|--no-fast-forward)
-+		noff=--no-fast-forward ;;
-+	--d|--di|--dir|--dire|--direc|--direct)
-+		direct=--direct ;;
- 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
- 		--strateg=*|--strategy=*|\
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-@@ -92,4 +98,7 @@ case "$strategy_args" in
- esac
- 
- merge_name=$(git-fmt-merge-msg <"$GIT_DIR/FETCH_HEAD")
--git-merge $no_summary $no_commit $strategy_args "$merge_name" HEAD $merge_head
-+git-merge \
-+	$no_summary $no_commit $noff $direct \
-+	$strategy_args \
-+	"$merge_name" HEAD $merge_head
++	buf[size++] = '\n';
+ 	entry = buf;
+ 	for (i = 0; i < size; i++) {
+ 		if (buf[i] == '\n') {
+-- 
+1.2.4.g5a1f-dirty
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
