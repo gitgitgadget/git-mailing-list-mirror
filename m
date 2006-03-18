@@ -1,76 +1,56 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH 2/2] blame: Fix git-blame <directory>
-Date: Fri, 17 Mar 2006 22:49:31 +0100
-Message-ID: <20060317214931.23075.14431.stgit@c165>
-References: <20060317214928.23075.76032.stgit@c165>
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Mar 17 22:50:04 2006
+From: Jon Loeliger <jdl@jdl.com>
+Subject: [PATCH] Add git-show reference
+Date: Fri, 17 Mar 2006 18:21:39 -0600
+Message-ID: <E1FKPCN-00061b-Fn@jdl.com>
+X-From: git-owner@vger.kernel.org Sat Mar 18 01:22:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKMpN-0008Bw-2g
-	for gcvg-git@gmane.org; Fri, 17 Mar 2006 22:49:45 +0100
+	id 1FKPD1-0006JA-9y
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 01:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932798AbWCQVti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Mar 2006 16:49:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932799AbWCQVti
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 16:49:38 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:29333 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932798AbWCQVth
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Mar 2006 16:49:37 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 33F5F40FF; Fri, 17 Mar 2006 23:05:35 +0100 (CET)
-Received: from c165 ([127.0.0.1])
-	by c165 with esmtp (Exim 3.36 #1 (Debian))
-	id 1FKMp9-00060c-00; Fri, 17 Mar 2006 22:49:31 +0100
+	id S1751790AbWCRAWI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Mar 2006 19:22:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbWCRAWI
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 19:22:08 -0500
+Received: from jdl.com ([66.118.10.122]:14989 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1751790AbWCRAWH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Mar 2006 19:22:07 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1FKPCN-00061b-Fn
+	for git@vger.kernel.org; Fri, 17 Mar 2006 18:21:40 -0600
 To: git@vger.kernel.org
-In-Reply-To: <20060317214928.23075.76032.stgit@c165>
+X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17674>
 
 
-Before this patch git-blame <directory> gave non-sensible output. (It
-assigned blame to some random file in <directory>) Abort with an error
-message instead.
+Signed-off-by: Jon Loeliger <jdl@jdl.com>
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
 ---
 
- blame.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+ Documentation/git.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 8af4b54..9c97aec 100644
---- a/blame.c
-+++ b/blame.c
-@@ -180,11 +180,13 @@ static int get_blob_sha1_internal(unsign
- 				  unsigned mode, int stage);
+e202e207b8da1ac771a98f039cdfac70ad9ea0d2
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 8610d36..de3934d 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -329,6 +329,9 @@ gitlink:git-revert[1]::
+ gitlink:git-shortlog[1]::
+ 	Summarizes 'git log' output.
  
- static unsigned char blob_sha1[20];
-+static const char* blame_file;
- static int get_blob_sha1(struct tree *t, const char *pathname,
- 			 unsigned char *sha1)
- {
- 	int i;
- 	const char *pathspec[2];
-+	blame_file = pathname;
- 	pathspec[0] = pathname;
- 	pathspec[1] = NULL;
- 	memset(blob_sha1, 0, sizeof(blob_sha1));
-@@ -209,6 +211,10 @@ static int get_blob_sha1_internal(unsign
- 	if (S_ISDIR(mode))
- 		return READ_TREE_RECURSIVE;
- 
-+	if (strncmp(blame_file, base, baselen) ||
-+	    strcmp(blame_file + baselen, pathname))
-+		return -1;
++gitlink:git-show[1]::
++	Show one commit log and its diff.
 +
- 	memcpy(blob_sha1, sha1, 20);
- 	return -1;
- }
+ gitlink:git-show-branch[1]::
+ 	Show branches and their commits.
+ 
+-- 
+1.2.4.gdd7be
