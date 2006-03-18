@@ -1,80 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] 3% tighter packs for free
-Date: Fri, 17 Mar 2006 22:45:07 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0603172205490.4889@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: First dumb question to the list :)
+Date: Fri, 17 Mar 2006 23:25:37 -0500
+Message-ID: <20060318042537.GA32348@coredump.intra.peff.net>
+References: <4d8e3fd30603160949l655c4f9blb1e202eaf22fbfe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 18 04:45:18 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Mar 18 05:25:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKSNP-0007EP-6d
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 04:45:15 +0100
+	id 1FKT0c-0002VF-7Q
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 05:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210AbWCRDpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Mar 2006 22:45:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932292AbWCRDpK
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 22:45:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:31299 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932210AbWCRDpI
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Mar 2006 22:45:08 -0500
-Received: from xanadu.home ([74.56.105.38]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IWB00AGR1375260@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 17 Mar 2006 22:45:08 -0500 (EST)
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S1750998AbWCREZm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Mar 2006 23:25:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbWCREZl
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Mar 2006 23:25:41 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:28377 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1750998AbWCREZl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Mar 2006 23:25:41 -0500
+Received: (qmail 10574 invoked from network); 18 Mar 2006 04:25:37 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 18 Mar 2006 04:25:37 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Mar 2006 23:25:37 -0500
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <4d8e3fd30603160949l655c4f9blb1e202eaf22fbfe@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17683>
 
+On Thu, Mar 16, 2006 at 06:49:16PM +0100, Paolo Ciarrocchi wrote:
 
-This patch makes for 3.4% smaller pack with the git repository, and
-a bit more than 3% smaller pack with the kernel repository.
+> performed a simple cg-clone git://URItoLinus2.6 linux2.6
+> [...]
+> What I want to do is to simply keep my repository aligned with Linus
+> so I simply have to do:
+> cd linus2.6
+> cg-fetch
+> [...]
+> How can I confg git in order to, by default,  use git instead of rsync ?
 
-And so with _no_ measurable CPU difference.
+It should use the git protocol by default; cg-clone will make an
+'origin' branch (cogito doesn't support .git/remotes/ yet) pointing to
+the original source. Future 'cg-fetch' invocations default to the origin
+branch.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Try using 'cg-branch-ls' to see what's on your origin branch.
 
----
+> Now my dumb question is... since I want to build that kernel do I have
+> to locally clone/copy it in order to don't modify any file on my local
+> tree?
+> If I don't do so, I guess git/cogito will not be happy when I run
+> cg-fetch, right?
 
-diff --git a/diff-delta.c b/diff-delta.c
-index aaee7be..1188b31 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -136,7 +136,8 @@ void *diff_delta(void *from_buf, unsigne
- 		 unsigned long *delta_size,
- 		 unsigned long max_size)
- {
--	unsigned int i, outpos, outsize, inscnt, hash_shift;
-+	unsigned int i, outpos, outsize, hash_shift;
-+	int inscnt;
- 	const unsigned char *ref_data, *ref_top, *data, *top;
- 	unsigned char *out;
- 	struct index *entry, **hash;
-@@ -222,6 +223,20 @@ void *diff_delta(void *from_buf, unsigne
- 			unsigned char *op;
- 
- 			if (inscnt) {
-+				while (moff && ref_data[moff-1] == data[-1]) {
-+					if (msize == 0x10000)
-+						break;
-+					/* we can match one byte back */
-+					msize++;
-+					moff--;
-+					data--;
-+					outpos--;
-+					if (--inscnt)
-+						continue;
-+					outpos--;  /* remove count slot */
-+					inscnt--;  /* make it -1 */
-+					break;
-+				}
- 				out[outpos - inscnt - 1] = inscnt;
- 				inscnt = 0;
- 			}
+cg-fetch just pulls Linus' changes to your 'origin' head. You will then
+have to cg-merge the changes into your branch. You can do both at once
+with cg-update. If there are conflits, then cogito will notify you.
+
+-Peff
