@@ -1,80 +1,132 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH] ls-files: Don't require exclude files to end with a newline.
-Date: Sat, 18 Mar 2006 11:27:45 +0100
-Message-ID: <8764mccaji.fsf@wine.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Mar 18 11:28:02 2006
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH] Basic Zsh completion support
+Date: Sat, 18 Mar 2006 15:53:47 +0100
+Message-ID: <20060318145347.15128.85902.stgit@c165>
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Mar 18 15:54:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKYfB-0004K2-KL
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 11:28:02 +0100
+	id 1FKcoi-0005Mh-B3
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 15:54:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189AbWCRK16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Mar 2006 05:27:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbWCRK16
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 05:27:58 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:58058 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751206AbWCRK16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Mar 2006 05:27:58 -0500
-Received: from adsl-62-167-67-224.adslplus.ch ([62.167.67.224] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1FKYez-0001Qd-7u
-	for git@vger.kernel.org; Sat, 18 Mar 2006 04:27:57 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id E0C2D4F657; Sat, 18 Mar 2006 11:27:45 +0100 (CET)
+	id S932208AbWCROxz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Mar 2006 09:53:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWCROxz
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 09:53:55 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:16278 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932208AbWCROxy
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Mar 2006 09:53:54 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 62F534103; Sat, 18 Mar 2006 16:09:54 +0100 (CET)
+Received: from c165 ([127.0.0.1])
+	by c165 with esmtp (Exim 3.36 #1 (Debian))
+	id 1FKcoN-0003wJ-00; Sat, 18 Mar 2006 15:53:47 +0100
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/22.0.50 (gnu/linux)
-X-SA-Exim-Connect-IP: 62.167.67.224
-X-SA-Exim-Mail-From: julliard@winehq.org
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=0.9 required=3.0 tests=AWL,BAYES_00,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL,SPF_HELO_SOFTFAIL autolearn=no 
-	version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17696>
 
-Without this patch, the last line of an exclude file is silently
-ignored if it doesn't end with a newline.
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+Based on the completion code for quilt in the Zsh distribution.
+
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
 ---
 
- ls-files.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ .gitignore            |    1 +
+ Makefile              |    8 +++++++-
+ generate-zsh-compl.sh |   26 ++++++++++++++++++++++++++
+ 3 files changed, 34 insertions(+), 1 deletions(-)
 
-9c5a78851bcf3b541364f818f6b397c29a8f4592
-diff --git a/ls-files.c b/ls-files.c
-index df25c8c..e42119c 100644
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -92,11 +92,12 @@ static int add_excludes_from_file_1(cons
- 		close(fd);
- 		return 0;
- 	}
--	buf = xmalloc(size);
-+	buf = xmalloc(size+1);
- 	if (read(fd, buf, size) != size)
- 		goto err;
- 	close(fd);
+diff --git a/.gitignore b/.gitignore
+index b4355b9..1cf6ac0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -133,3 +133,4 @@ libgit.a
+ *.py[co]
+ config.mak
+ git-blame
++_git
+diff --git a/Makefile b/Makefile
+index 8a20c76..85c5e2d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -96,6 +96,7 @@ bindir = $(prefix)/bin
+ gitexecdir = $(bindir)
+ template_dir = $(prefix)/share/git-core/templates/
+ GIT_PYTHON_DIR = $(prefix)/share/git-core/python
++ZSH_COMPL_DIR = $(prefix)/share/zsh/site-functions
+ # DESTDIR=
  
-+	buf[size++] = '\n';
- 	entry = buf;
- 	for (i = 0; i < size; i++) {
- 		if (buf[i] == '\n') {
--- 
-1.2.4.g5a1f-dirty
-
--- 
-Alexandre Julliard
-julliard@winehq.org
+ CC = gcc
+@@ -438,13 +439,14 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_P
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
+ PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
+ GIT_PYTHON_DIR_SQ = $(subst ','\'',$(GIT_PYTHON_DIR))
++ZSH_COMPL_DIR_SQ = $(subst ','\'',$(ZSH_COMPL_DIR))
+ 
+ ALL_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' $(COMPAT_CFLAGS)
+ LIB_OBJS += $(COMPAT_OBJS)
+ export prefix TAR INSTALL DESTDIR SHELL_PATH template_dir
+ ### Build rules
+ 
+-all: $(ALL_PROGRAMS) git$X gitk
++all: $(ALL_PROGRAMS) git$X gitk _git
+ 
+ all:
+ 	$(MAKE) -C templates
+@@ -553,6 +555,8 @@ $(LIB_FILE): $(LIB_OBJS)
+ doc:
+ 	$(MAKE) -C Documentation all
+ 
++_git: generate-zsh-compl.sh
++	./generate-zsh-compl.sh version help $(ALL_PROGRAMS) > _git
+ 
+ ### Testing rules
+ 
+@@ -586,6 +590,8 @@ install: all
+ 	$(MAKE) -C templates install
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
+ 	$(INSTALL) $(PYMODULES) '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
++	$(INSTALL) -d -m755 $(ZSH_COMPL_DIR)
++	$(INSTALL) -m644 _git '$(DESTDIR_SQ)$(ZSH_COMPL_DIR_SQ)'
+ 
+ install-doc:
+ 	$(MAKE) -C Documentation install
+diff --git a/generate-zsh-compl.sh b/generate-zsh-compl.sh
+new file mode 100755
+index 0000000..f8c80de
+--- /dev/null
++++ b/generate-zsh-compl.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++cmds=$(echo "$@" | sed s/git-//g | sed "s/\\.[^ ]*//g")
++
++cat <<EOF
++#compdef git
++
++# Automatically generated by $0
++
++local _git_subcommands expl curcontext="$curcontext"
++
++_arguments \
++  '--version' \
++  '--exec-path=:Git exec path:_path_files' \
++  '--help' \
++  '*::git command:->subcmd' && return 0
++
++ _git_subcommands=($cmds)
++
++if (( CURRENT == 1 )); then
++  _describe -t subcommand 'subcommand' _git_subcommands
++else
++  # this part should be tailored for subcmds
++  _files
++fi
++EOF
