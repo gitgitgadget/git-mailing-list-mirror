@@ -1,77 +1,72 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] Makefile: Add TAGS and tags targets
-Date: Sat, 18 Mar 2006 11:07:12 +0100
-Message-ID: <20060318100712.8364.7137.stgit@c165>
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Mar 18 11:07:35 2006
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: On merging strategies, fast forward and index merge
+Date: Sat, 18 Mar 2006 10:17:26 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrne1nnhm.fr9.mdw@metalzone.distorted.org.uk>
+X-From: git-owner@vger.kernel.org Sat Mar 18 11:17:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKYLO-0002My-Ni
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 11:07:35 +0100
+	id 1FKYV6-0003Kd-Dq
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 11:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932377AbWCRKHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Mar 2006 05:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932374AbWCRKHV
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 05:07:21 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:39829 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932377AbWCRKHV
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Mar 2006 05:07:21 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 8C0A440FD; Sat, 18 Mar 2006 11:23:18 +0100 (CET)
-Received: from c165 ([127.0.0.1])
-	by c165 with esmtp (Exim 3.36 #1 (Debian))
-	id 1FKYL2-0002B5-00; Sat, 18 Mar 2006 11:07:12 +0100
+	id S932363AbWCRKRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Mar 2006 05:17:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbWCRKRd
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 05:17:33 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:36077 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S932363AbWCRKRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Mar 2006 05:17:32 -0500
+Received: (qmail 8815 invoked by uid 110); 18 Mar 2006 10:17:26 -0000
 To: git@vger.kernel.org
+Received: (qmail 8802 invoked by uid 9); 18 Mar 2006 10:17:26 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1142677046 8800 172.29.199.2 (18 Mar 2006 10:17:26 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Sat, 18 Mar 2006 10:17:26 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17693>
 
+I recently read Junio's description of how to dig oneself out of a hole
+using `git merge -s ours' (I'm learning to use the space...), and I've
+realised there's a problem here.
 
+The `ours' merge strategy is meant to create a merge commit whose tree
+is in every way identical to that of the starting commit.  But `git
+merge' won't always do this, because it doesn't always invoke the
+strategy program.
 
+Consider the command `git merge -s ours MESSAGE MASTER FAILED'.
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+  * If we've not actually messed with our MASTER since the FAILED branch
+    departed, then MASTER is actually an ancestor of FAILED, and `git
+    merge' will unhelpfully fast-forward us to the tip of the FAILED
+    branch.  Instead of leaving the merge result like MASTER, it's made
+    it entirely the wrong thing!
 
----
+  * If both MASTER and FAILED have made changes, but to different files,
+    then `git merge' will try an index-level merge, find that it
+    succeeds, and leave us with a mixture of MASTER and FAILED files.
+    Which is (in this case) entirely what we didn't want.
 
- Makefile |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+Additionally, it occurs to me that the fast-forwarding behaviour isn't
+always what I want anyway.  Consider a merge of a topic branch:
 
-diff --git a/Makefile b/Makefile
-index 8a20c76..8d45378 100644
---- a/Makefile
-+++ b/Makefile
-@@ -553,6 +553,13 @@ $(LIB_FILE): $(LIB_OBJS)
- doc:
- 	$(MAKE) -C Documentation all
- 
-+TAGS:
-+	rm -f TAGS
-+	find . -name '*.[hcS]' -print | xargs etags -a
-+
-+tags:
-+	rm -f tags
-+	find . -name '*.[hcS]' -print | xargs ctags -a
- 
- ### Testing rules
- 
-@@ -617,7 +624,7 @@ rpm: dist
- clean:
- 	rm -f *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o $(LIB_FILE)
- 	rm -f $(ALL_PROGRAMS) git$X
--	rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h
-+	rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
- 	rm -rf $(GIT_TARNAME)
- 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	$(MAKE) -C Documentation/ clean
-@@ -626,5 +633,5 @@ clean:
- 	rm -f GIT-VERSION-FILE
- 
- .PHONY: all install clean strip
--.PHONY: .FORCE-GIT-VERSION-FILE
-+.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags
- 
+  `git merge MESSAGE MASTER TOPIC'
+
+If I allow fast-forward, I lose information about where the topic
+started and ended.  This is a shame, particularly if I find other places
+I want to apply those changes (either as a string of similar commits, or
+squidged into a single one) onto other branches.
+
+Because code speaks louder, I'll follow-up this article with a suggested
+patch.
+
+-- [mdw]
