@@ -1,132 +1,52 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [PATCH] Basic Zsh completion support
-Date: Sat, 18 Mar 2006 15:53:47 +0100
-Message-ID: <20060318145347.15128.85902.stgit@c165>
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Mar 18 15:54:08 2006
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: [PATCH] Basic Zsh completion support
+Date: Sat, 18 Mar 2006 16:25:04 +0100
+Message-ID: <dbfc82860603180725w2eb3057ey17fa8d9dc746127@mail.gmail.com>
+References: <20060318145347.15128.85902.stgit@c165>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Mar 18 16:25:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKcoi-0005Mh-B3
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 15:54:08 +0100
+	id 1FKdIj-0000lP-UB
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 16:25:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932208AbWCROxz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Mar 2006 09:53:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWCROxz
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 09:53:55 -0500
-Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:16278 "EHLO
-	mail6.wasadata.com") by vger.kernel.org with ESMTP id S932208AbWCROxy
+	id S932385AbWCRPZG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Mar 2006 10:25:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932790AbWCRPZG
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 10:25:06 -0500
+Received: from xproxy.gmail.com ([66.249.82.192]:63318 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932385AbWCRPZE convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Mar 2006 09:53:54 -0500
-Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 62F534103; Sat, 18 Mar 2006 16:09:54 +0100 (CET)
-Received: from c165 ([127.0.0.1])
-	by c165 with esmtp (Exim 3.36 #1 (Debian))
-	id 1FKcoN-0003wJ-00; Sat, 18 Mar 2006 15:53:47 +0100
-To: git@vger.kernel.org
+	Sat, 18 Mar 2006 10:25:04 -0500
+Received: by xproxy.gmail.com with SMTP id s18so572856wxc
+        for <git@vger.kernel.org>; Sat, 18 Mar 2006 07:25:04 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CIdLAxLtzxzoSUuuoo5fD8MFpjANfJp9ogJ5ChnFTN3RLnaOoWaHE0OAgkbnMbzHsoL3jo+4jFqGhVP4Ant3ZZ/jRlUY8Xg3t+DGVuSzg3JuJoeJi0hbccdMaM1OXf9e0UGou/m/wrXN/+nykbgfYh9HUtui2d0SUwlDzDX079k=
+Received: by 10.70.52.1 with SMTP id z1mr307911wxz;
+        Sat, 18 Mar 2006 07:25:04 -0800 (PST)
+Received: by 10.70.39.9 with HTTP; Sat, 18 Mar 2006 07:25:04 -0800 (PST)
+To: "Fredrik Kuivinen" <freku045@student.liu.se>
+In-Reply-To: <20060318145347.15128.85902.stgit@c165>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17697>
 
+On 3/18/06, Fredrik Kuivinen <freku045@student.liu.se> wrote:
+>
+> Based on the completion code for quilt in the Zsh distribution.
 
-Based on the completion code for quilt in the Zsh distribution.
+Actually, there's an almost-complete implementation in 4.3 already. 
+Written by me nonetheless.  You can take a look and make suggestions
+if you like :-).  I have an updated version to deal with post
+1.0-changes locally that I'm going to put in Zsh's CVS soon enough.
 
-Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
-
----
-
- .gitignore            |    1 +
- Makefile              |    8 +++++++-
- generate-zsh-compl.sh |   26 ++++++++++++++++++++++++++
- 3 files changed, 34 insertions(+), 1 deletions(-)
-
-diff --git a/.gitignore b/.gitignore
-index b4355b9..1cf6ac0 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -133,3 +133,4 @@ libgit.a
- *.py[co]
- config.mak
- git-blame
-+_git
-diff --git a/Makefile b/Makefile
-index 8a20c76..85c5e2d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -96,6 +96,7 @@ bindir = $(prefix)/bin
- gitexecdir = $(bindir)
- template_dir = $(prefix)/share/git-core/templates/
- GIT_PYTHON_DIR = $(prefix)/share/git-core/python
-+ZSH_COMPL_DIR = $(prefix)/share/zsh/site-functions
- # DESTDIR=
- 
- CC = gcc
-@@ -438,13 +439,14 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_P
- PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
- PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
- GIT_PYTHON_DIR_SQ = $(subst ','\'',$(GIT_PYTHON_DIR))
-+ZSH_COMPL_DIR_SQ = $(subst ','\'',$(ZSH_COMPL_DIR))
- 
- ALL_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' $(COMPAT_CFLAGS)
- LIB_OBJS += $(COMPAT_OBJS)
- export prefix TAR INSTALL DESTDIR SHELL_PATH template_dir
- ### Build rules
- 
--all: $(ALL_PROGRAMS) git$X gitk
-+all: $(ALL_PROGRAMS) git$X gitk _git
- 
- all:
- 	$(MAKE) -C templates
-@@ -553,6 +555,8 @@ $(LIB_FILE): $(LIB_OBJS)
- doc:
- 	$(MAKE) -C Documentation all
- 
-+_git: generate-zsh-compl.sh
-+	./generate-zsh-compl.sh version help $(ALL_PROGRAMS) > _git
- 
- ### Testing rules
- 
-@@ -586,6 +590,8 @@ install: all
- 	$(MAKE) -C templates install
- 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
- 	$(INSTALL) $(PYMODULES) '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
-+	$(INSTALL) -d -m755 $(ZSH_COMPL_DIR)
-+	$(INSTALL) -m644 _git '$(DESTDIR_SQ)$(ZSH_COMPL_DIR_SQ)'
- 
- install-doc:
- 	$(MAKE) -C Documentation install
-diff --git a/generate-zsh-compl.sh b/generate-zsh-compl.sh
-new file mode 100755
-index 0000000..f8c80de
---- /dev/null
-+++ b/generate-zsh-compl.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+cmds=$(echo "$@" | sed s/git-//g | sed "s/\\.[^ ]*//g")
-+
-+cat <<EOF
-+#compdef git
-+
-+# Automatically generated by $0
-+
-+local _git_subcommands expl curcontext="$curcontext"
-+
-+_arguments \
-+  '--version' \
-+  '--exec-path=:Git exec path:_path_files' \
-+  '--help' \
-+  '*::git command:->subcmd' && return 0
-+
-+ _git_subcommands=($cmds)
-+
-+if (( CURRENT == 1 )); then
-+  _describe -t subcommand 'subcommand' _git_subcommands
-+else
-+  # this part should be tailored for subcmds
-+  _files
-+fi
-+EOF
+  nikolai
