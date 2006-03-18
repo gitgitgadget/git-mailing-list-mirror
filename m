@@ -1,130 +1,204 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-merge: New options `--no-fast-forward' and `--direct'.
-Date: Sat, 18 Mar 2006 13:59:21 -0800
-Message-ID: <7vmzfns9c6.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 18 Mar 2006 14:53:52 -0800
+Message-ID: <7vhd5vs6tb.fsf@assigned-by-dhcp.cox.net>
 References: <slrne1nnhm.fr9.mdw@metalzone.distorted.org.uk>
 	<20060318101941.8941.52615.stgit@metalzone.distorted.org.uk>
+	<7vmzfns9c6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 18 22:59:32 2006
+X-From: git-owner@vger.kernel.org Sat Mar 18 23:54:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKjSN-0004vj-EP
-	for gcvg-git@gmane.org; Sat, 18 Mar 2006 22:59:31 +0100
+	id 1FKkJ7-0003ZB-Ou
+	for gcvg-git@gmane.org; Sat, 18 Mar 2006 23:54:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbWCRV72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Mar 2006 16:59:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751070AbWCRV72
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 16:59:28 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:51711 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751052AbWCRV72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Mar 2006 16:59:28 -0500
+	id S1750753AbWCRWxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Mar 2006 17:53:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbWCRWxy
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Mar 2006 17:53:54 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62613 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750753AbWCRWxy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Mar 2006 17:53:54 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060318215627.GZXV17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 18 Mar 2006 16:56:27 -0500
+          id <20060318225231.PHVH3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 18 Mar 2006 17:52:31 -0500
 To: Mark Wooding <mdw@distorted.org.uk>
+In-Reply-To: <7vmzfns9c6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 18 Mar 2006 13:59:21 -0800")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17704>
 
-Mark Wooding <mdw@distorted.org.uk> writes:
+>From nobody Mon Sep 17 00:00:00 2001
+From: Junio C Hamano <junkio@cox.net>
+Date: Sat Mar 18 14:50:53 2006 -0800
+Subject: [PATCH] git-merge knows some strategies want to skip trivial merges
 
-> These options disable some of git-merge's optimizations.  
+Most notably "ours".  Also this makes sure we do not record
+duplicated parents on the parent list of the resulting commit.
 
-While there is no question about the part of the proposed change
-to bypass "trivial merge", I do not necessarily agree with
-"skipping fast forward" part.
+This is based on Mark Wooding's work, but does not change the UI
+nor introduce new flags.
 
-It is a problem that "ours" strategy cannot be used as a way to
-recover from the "accidentally rewound head" situation, because
-it is prevented from running under certain conditions as you
-described.  But that does not necessarily mean we should make
-"ours" to work in these situations.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-You accidentally discarded B while somebody picked it up:
+---
 
-                 o---o
-                /     \
-    ---o---o---A---o---o---B
-               ^your head
+ * How about this instead?  It looks larger than it really is
+   because strategy-defaulting code needed to get moved around.
 
-Now you would want to recover.  With your patch, it would create
-this:
+ git-merge.sh |   67 +++++++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 40 insertions(+), 27 deletions(-)
 
-                 o---o
-                /     \
-    ---o---o---A---o---o---B
-                \           \
-                 ------------M
-                             ^your updated head,
-                              having the same tree as A
-
-But recording A as a parent of M is not necessary.  I think what
-we want to have as the result is this instead:
-
-                 o---o
-                /     \
-    ---o---o---A---o---o---B---M
-                               ^your updated head,
-                                having the same tree as A
-
-This is something you cannot do within the current git-merge
-framework; it is set up to either just fast forward or make a
-multi-parent commit.  You would want have a "revert to this
-state" [*1*], something like this (assuming you have rewound to
-A and currently your index matches A):
-
-        $ git reset --soft B
-        $ git commit -m 'Discard A..B and revert to A'
-
-I did "ours" primarily as a demonstration of a funky thing
-people could do with the consolidated driver "git-merge".  I did
-not have a useful use-case in mind back then, but it turned out
-to be the ideal way to recover from "accidentally rewound head"
-situation, except that making a merge commit between A and B is
-not always the way to recover from it.  If we wanted to, we
-could have a special purpose command that does "git merge -s
-ours" if there will be a new commit, otherwise the above two
-commands sequence if it will be a fast forward, but the
-"recovering from accidentally rewound head" _is_ really a
-special purpose, so I do not know if it is worth it.
-
-In your cover letter, you talked about using --no-fast-forward
-to collapse your sole topic branch into your master branch.  I
-do not think smudging the development history with extra merge
-commits for that is justfied either.  There is no reason for you
-to discard your topic branch heads after you merged them into
-master.  If they get in the way of your normal workflow, you can
-stash them away as tags that you do not usually see in "git
-branch" output [*2*].
-
-Also I am already unhappy that git-merge knows about the
-specifics of strategies [*3*], e.g. it knows octopus is
-currently the only strategy that can do more than two heads.
-Your patch gives more strategy specific knowledge to it, but I
-do not know how to avoid it.
-
-
-[Footnotes]
-
-*1* As opposed to "git revert X" which means "revert the effect
-of commit X", you would want "revert to the state X".
-
-*2* I keep some of my old topic branch heads under
-.git/tags/attic/.
-
-*3* Another thing I am unhappy about is the list of available
-strategies.  I initially wanted to allow users to write their
-own merge strategies and have them on their PATH (not even
-necessarily in GIT_EXEC_PATH directory), so that you can do a
-git-merge-mdw secretly, keep it in ~mdw/bin and cook it for a
-while using yourself as a guinea pig, and then share that with
-the community later, _without_ touching git-merge.
+313093ea6d29bbce5977556645eb5946dbfb211e
+diff --git a/git-merge.sh b/git-merge.sh
+index cc0952a..78ab422 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -11,11 +11,15 @@ LF='
+ '
+ 
+ all_strategies='recursive octopus resolve stupid ours'
+-default_strategies='recursive'
++default_twohead_strategies='recursive'
++default_octopus_strategies='octopus'
++no_trivial_merge_strategies='ours'
+ use_strategies=
++
++index_merge=t
+ if test "@@NO_PYTHON@@"; then
+ 	all_strategies='resolve octopus stupid ours'
+-	default_strategies='resolve'
++	default_twohead_strategies='resolve'
+ fi
+ 
+ dropsave() {
+@@ -90,8 +94,6 @@ do
+ 	shift
+ done
+ 
+-test "$#" -le 2 && usage ;# we need at least two heads.
+-
+ merge_msg="$1"
+ shift
+ head_arg="$1"
+@@ -99,6 +101,8 @@ head=$(git-rev-parse --verify "$1"^0) ||
+ shift
+ 
+ # All the rest are remote heads
++test "$#" = 0 && usage ;# we need at least one remote head.
++
+ remoteheads=
+ for remote
+ do
+@@ -108,6 +112,27 @@ do
+ done
+ set x $remoteheads ; shift
+ 
++case "$use_strategies" in
++'')
++	case "$#" in
++	1)
++		use_strategies="$default_twohead_strategies" ;;
++	*)
++		use_strategies="$default_octopus_strategies" ;;
++	esac
++	;;
++esac
++
++for s in $use_strategies
++do
++	case " $s " in
++	*" $no_trivial_merge_strategies "*)
++		index_merge=f
++		break
++		;;
++	esac
++done
++
+ case "$#" in
+ 1)
+ 	common=$(git-merge-base --all $head "$@")
+@@ -118,18 +143,21 @@ case "$#" in
+ esac
+ echo "$head" >"$GIT_DIR/ORIG_HEAD"
+ 
+-case "$#,$common,$no_commit" in
+-*,'',*)
++case "$index_merge,$#,$common,$no_commit" in
++f,*)
++	# We've been told not to try anything clever.  Skip to real merge.
++	;;
++?,*,'',*)
+ 	# No common ancestors found. We need a real merge.
+ 	;;
+-1,"$1",*)
++?,1,"$1",*)
+ 	# If head can reach all the merge then we are up to date.
+-	# but first the most common case of merging one remote
++	# but first the most common case of merging one remote.
+ 	echo "Already up-to-date."
+ 	dropsave
+ 	exit 0
+ 	;;
+-1,"$head",*)
++?,1,"$head",*)
+ 	# Again the most common case of merging one remote.
+ 	echo "Updating from $head to $1"
+ 	git-update-index --refresh 2>/dev/null
+@@ -139,11 +167,11 @@ case "$#,$common,$no_commit" in
+ 	dropsave
+ 	exit 0
+ 	;;
+-1,?*"$LF"?*,*)
++?,1,?*"$LF"?*,*)
+ 	# We are not doing octopus and not fast forward.  Need a
+ 	# real merge.
+ 	;;
+-1,*,)
++?,1,*,)
+ 	# We are not doing octopus, not fast forward, and have only
+ 	# one common.  See if it is really trivial.
+ 	git var GIT_COMMITTER_IDENT >/dev/null || exit
+@@ -188,17 +216,6 @@ esac
+ # We are going to make a new commit.
+ git var GIT_COMMITTER_IDENT >/dev/null || exit
+ 
+-case "$use_strategies" in
+-'')
+-	case "$#" in
+-	1)
+-		use_strategies="$default_strategies" ;;
+-	*)
+-		use_strategies=octopus ;;
+-	esac		
+-	;;
+-esac
+-
+ # At this point, we need a real merge.  No matter what strategy
+ # we use, it would operate on the index, possibly affecting the
+ # working tree, and when resolved cleanly, have the desired tree
+@@ -270,11 +287,7 @@ done
+ # auto resolved the merge cleanly.
+ if test '' != "$result_tree"
+ then
+-    parents="-p $head"
+-    for remote
+-    do
+-        parents="$parents -p $remote"
+-    done
++    parents=$(git-show-branch --independent "$head" "$@" | sed -e 's/^/-p /')
+     result_commit=$(echo "$merge_msg" | git-commit-tree $result_tree $parents) || exit
+     finish "$result_commit" "Merge $result_commit, made by $wt_strategy."
+     dropsave
+-- 
+1.2.4.g2fc2
