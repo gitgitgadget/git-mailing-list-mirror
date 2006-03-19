@@ -1,70 +1,76 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [ANNOUNCE] qgit 1.1.1
-Date: Sun, 19 Mar 2006 17:53:25 +0100
-Message-ID: <e5bfff550603190853m2db7bb38gecc94934c4dfb89e@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-svn and huge data and modifying the git-svn-HEAD branch directly
+Date: Sun, 19 Mar 2006 20:12:44 +0100
+Message-ID: <20060319191243.GB18185@pasky.or.cz>
+References: <62502.84.163.87.135.1141063190.squirrel@mail.geht-ab-wie-schnitzel.de> <20060227184641.GA21684@hand.yhbt.net> <20060227185557.GA32142@delft.aura.cs.cmu.edu> <20060227192422.GB9518@hand.yhbt.net> <46a038f90602271625y6c7e9072u372b8dd3662e272c@mail.gmail.com> <Pine.LNX.4.64.0602271634410.22647@g5.osdl.org> <20060301065138.GC21684@hand.yhbt.net> <44056BF1.6000109@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: proski@gnu.org
-X-From: git-owner@vger.kernel.org Sun Mar 19 17:53:33 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 19 20:12:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FL19l-00041N-Cd
-	for gcvg-git@gmane.org; Sun, 19 Mar 2006 17:53:29 +0100
+	id 1FL3KT-0007fI-TB
+	for gcvg-git@gmane.org; Sun, 19 Mar 2006 20:12:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbWCSQx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Mar 2006 11:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbWCSQx0
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 11:53:26 -0500
-Received: from wproxy.gmail.com ([64.233.184.202]:64956 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751355AbWCSQx0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Mar 2006 11:53:26 -0500
-Received: by wproxy.gmail.com with SMTP id i21so898281wra
-        for <git@vger.kernel.org>; Sun, 19 Mar 2006 08:53:25 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=aC9KSeIM6nsxHaTDHspVy8ihkKAx4ccXpRGAoc0+PW/uihi5dGqfRgjVt4T4aDW8CXJjh4M99aXBAp5pMG+buQ7OOmoDCBGHzumHuTV6cKzZz1Q98Ibogf7a0mWfQMjrG+RSqKsXzJGsakWKsXWmxFAnyROGee3E8opf3QRyn5Y=
-Received: by 10.64.201.14 with SMTP id y14mr1108042qbf;
-        Sun, 19 Mar 2006 08:53:25 -0800 (PST)
-Received: by 10.64.131.10 with HTTP; Sun, 19 Mar 2006 08:53:25 -0800 (PST)
-To: git@vger.kernel.org
+	id S1750709AbWCSTMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Mar 2006 14:12:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWCSTMi
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 14:12:38 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:28817 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750709AbWCSTMh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Mar 2006 14:12:37 -0500
+Received: (qmail 21136 invoked by uid 2001); 19 Mar 2006 20:12:44 +0100
+To: Andreas Ericsson <ae@op5.se>
 Content-Disposition: inline
+In-Reply-To: <44056BF1.6000109@op5.se>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17717>
 
-This is a maintenance release, mainly performance tweaks and small bug fixes.
+Dear diary, on Wed, Mar 01, 2006 at 10:40:01AM CET, I got a letter
+where Andreas Ericsson <ae@op5.se> said that...
+> It already does. The search order is this, for a ref named 'foo':
+> 	$GIT_DIR/foo
+> 	$GIT_DIR/refs/foo
+> 	$GIT_DIR/refs/tags/foo
+> 	$GIT_DIR/refs/heads/foo
 
-To install use:
+Actually, I've hit this recently when supporting an unhappy user on
+#git, and I didn't manage to find anything in the archives (but perhaps
+I missed it). Is there a particular reason why tags are checked first
+than branches?
 
-./configure
-make
-make install-strip
+Why not:
 
-Or check the shipped README for detailed information.
+(i) I _think_ that it would be less of a surprise if a branch would be
+checked first.
 
-To note are big speed-up in annotation and tree viewer browsing
+(ii) E.g. Cogito output (cg-status -g) is very confusing when you have a
+naming clash - cg-object-id foo will show tag commit ID, but cg-status -g
+will say that the "foo" branch has a different commit ID (and it is
+_right_).
 
-See http://digilander.libero.it/mcostalba/  for download information.
+(iii) Many operations will stop making sense (cg-merge foo, and even
+cg-fetch foo will be confused), while in case of the opposite way I can't
+think of any command still not making sense.
 
-Changelog
-    *  add support for file annotations in multi-branch repos
-    * speed-up browsing with tree view open
-    * tree view: set in bold the names of modified files
-    * use a map instead of a list to speed-up path filtering
-    * add support for listing tags in a submenu in mainview context pop-up
-    * show StGIT patch names on the status bar (Pavel Roskin)
-    * use dark green pluses for applied StGIT patches (Pavel Roskin)
-    * more then double annotation speed
-    * add support for jumping to branches from pop-up menu
-    * remove setting 'Load file names in background'
-    * save cache file under ./git directory
-    * fix duplicate tags in the pop-up menu (Pavel Roskin)
+(iv) A security hole when you auto-fetch tags from remote repositories
+- you could then be misled to merge something totally different when the
+attacker will introduce a naming clash to your refs hierarchy.
 
-Have fun
-Marco
+Actually, I'm almost inclined to suggest making Git fail violently in
+case of an ambiguous name.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
