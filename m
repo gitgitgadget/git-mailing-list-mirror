@@ -1,75 +1,74 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: efficient cloning
-Date: Sun, 19 Mar 2006 16:16:16 -0500
-Message-ID: <m3r74ykue7.fsf@lugabout.cloos.reno.nv.us>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-reset and clones
+Date: Sun, 19 Mar 2006 22:40:38 +0100
+Message-ID: <20060319214038.GF18185@pasky.or.cz>
+References: <Pine.LNX.4.64.0603161424310.5276@sheen.jakma.org> <7v4q1x95yo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Mar 19 22:40:26 2006
+Cc: paul@hibernia.jakma.org, git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 19 22:40:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FL5dM-0003KS-Vc
-	for gcvg-git@gmane.org; Sun, 19 Mar 2006 22:40:21 +0100
+	id 1FL5dU-0003Lj-OX
+	for gcvg-git@gmane.org; Sun, 19 Mar 2006 22:40:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085AbWCSVkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Mar 2006 16:40:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbWCSVkS
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 16:40:18 -0500
-Received: from ore.jhcloos.com ([64.240.156.239]:37637 "EHLO ore.jhcloos.com")
-	by vger.kernel.org with ESMTP id S1751085AbWCSVkQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Mar 2006 16:40:16 -0500
-Received: from lugabout.jhcloos.org (host-69-48-10-108.roc.choiceone.net [69.48.10.108])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
-	by ore.jhcloos.com (Postfix) with ESMTP id D4B6B1C496
-	for <git@vger.kernel.org>; Sun, 19 Mar 2006 15:40:12 -0600 (CST)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 39A2B12561D; Sun, 19 Mar 2006 21:16:17 +0000 (GMT)
-To: git@vger.kernel.org
-Copyright: Copyright 2006 James Cloos
-X-Hashcash: 1:23:060319:git@vger.kernel.org::JJHl9tGsrY4EYR1u:000000000000000000000000000000000000000000Nds+
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/23.0.0 (gnu/linux)
+	id S1751094AbWCSVkZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Mar 2006 16:40:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbWCSVkZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 16:40:25 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:19094 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751094AbWCSVkZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Mar 2006 16:40:25 -0500
+Received: (qmail 6776 invoked by uid 2001); 19 Mar 2006 22:40:38 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v4q1x95yo.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17725>
 
-Is there a way to accomplish the effect of this script w/o having to
-download any unnecessary objects?
+Dear diary, on Fri, Mar 17, 2006 at 03:10:23AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> You used to have something like this:
+> 
+> 
+>                  o---o---o---A
+>                 /            ^ your HEAD used to point at here
+>     ---o---o---o
+> 
+> and you forgot other people already have the commit chain up to
+> commit A.   But you rewound and did cleanups:
+> 
+>                  o---o---o---A
+>                 /
+>     ---o---o---o---o---o---B
+>                            ^ your HEAD now points at here
+> 
+> People who track your HEAD have A and your updated head B does
+> not fast forward.  Oops.
 
-==================================================
-#!/bin/bash
+Just for the sake of completeness, this is a GIT-only doctrine; Cogito
+is more confiding and has less strict requirements.
 
-lt="/gits/linux-2.6/.git"
+First, when fetching, it does not care at all whether the new head is a
+fast-forward of the original one or not.
 
-if [ $# -ne 2 ]; then
-    echo >&2 "Usage: $0 <repo> <target-dir>"
-    exit 1
-fi
+Second, when the people who are tracking you had A as their current
+master head _and_ also the origin remote head (or whichever their
+respective branch names are), their current master head will be updated
+to B when cg-updating, as Cogito pretends it to be a fast-forward even
+though it is not.
 
-git-clone $1 $2
-mkdir -p $2/objects/info
-{
- test -f "$lt/objects/info/alternates" &&
- cat "$lt/objects/info/alternates";
- echo "$lt/objects"
-} >"$2/objects/info/alternates"
+So, in the simple tracking cases, Cogito will do the right thing, if you
+use cg-update.
 
-cd $2
-git-repack -a -d -s
-git-prune-packed
-==================================================
-
-I tried to modify git-clone to add an alternates file before calling
-fetch, but that file just gets deleted.
-
-I presume I need to clone -s -l the local alternate, re-parent it to
-the new URL and grab anything missing, but how can I assure that it
-results in exactly the same repo as this script?
-
-I'm often behind tiny straws, so efficiency is important.
-
--JimC
 -- 
-James H. Cloos, Jr. <cloos@jhcloos.com>
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
