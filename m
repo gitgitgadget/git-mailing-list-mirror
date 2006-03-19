@@ -1,59 +1,75 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cloning from sites with 404 overridden
-Date: Sun, 19 Mar 2006 22:31:25 +0100
-Message-ID: <20060319213125.GE18185@pasky.or.cz>
-References: <e5bfff550603190252n7e3e1cbbp94e3f15c92f12d07@mail.gmail.com> <4d8e3fd30603190525o5a01fba8w5bcdedd064c213ec@mail.gmail.com> <e5bfff550603190604ne4364f3o6a862d25267a2dce@mail.gmail.com> <7v7j6qqks6.fsf@assigned-by-dhcp.cox.net>
+From: James Cloos <cloos@jhcloos.com>
+Subject: efficient cloning
+Date: Sun, 19 Mar 2006 16:16:16 -0500
+Message-ID: <m3r74ykue7.fsf@lugabout.cloos.reno.nv.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 19 22:31:19 2006
+X-From: git-owner@vger.kernel.org Sun Mar 19 22:40:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FL5UZ-0001vg-V8
-	for gcvg-git@gmane.org; Sun, 19 Mar 2006 22:31:16 +0100
+	id 1FL5dM-0003KS-Vc
+	for gcvg-git@gmane.org; Sun, 19 Mar 2006 22:40:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbWCSVbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Mar 2006 16:31:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbWCSVbN
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 16:31:13 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:63964 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750761AbWCSVbM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Mar 2006 16:31:12 -0500
-Received: (qmail 5255 invoked by uid 2001); 19 Mar 2006 22:31:25 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v7j6qqks6.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751085AbWCSVkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Mar 2006 16:40:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbWCSVkS
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 16:40:18 -0500
+Received: from ore.jhcloos.com ([64.240.156.239]:37637 "EHLO ore.jhcloos.com")
+	by vger.kernel.org with ESMTP id S1751085AbWCSVkQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Mar 2006 16:40:16 -0500
+Received: from lugabout.jhcloos.org (host-69-48-10-108.roc.choiceone.net [69.48.10.108])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
+	by ore.jhcloos.com (Postfix) with ESMTP id D4B6B1C496
+	for <git@vger.kernel.org>; Sun, 19 Mar 2006 15:40:12 -0600 (CST)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id 39A2B12561D; Sun, 19 Mar 2006 21:16:17 +0000 (GMT)
+To: git@vger.kernel.org
+Copyright: Copyright 2006 James Cloos
+X-Hashcash: 1:23:060319:git@vger.kernel.org::JJHl9tGsrY4EYR1u:000000000000000000000000000000000000000000Nds+
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/23.0.0 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17724>
 
-Dear diary, on Sun, Mar 19, 2006 at 08:47:21PM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> "Marco Costalba" <mcostalba@gmail.com> writes:
-> 
-> > On 3/19/06, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
-> >>
-> >> How about getting an account on kernel.org?
-> >
-> > I don't think I have the credentials to ask for ;-)
-> 
-> Heh, it has a striking resemblance to the first thing I said
-> when Linus asked me if I want to take over git.git: "It would
-> be embarrassing to be the first person to have an account there
-> without having a single line of code in the kernel" ;-).
-> 
-> Well, you won't be the first (in fact it appears I wasn't
-> either), and it would never hurt to ask.
+Is there a way to accomplish the effect of this script w/o having to
+download any unnecessary objects?
 
-Yeah, I think I was there before you... ;-)
+==================================================
+#!/bin/bash
 
+lt="/gits/linux-2.6/.git"
+
+if [ $# -ne 2 ]; then
+    echo >&2 "Usage: $0 <repo> <target-dir>"
+    exit 1
+fi
+
+git-clone $1 $2
+mkdir -p $2/objects/info
+{
+ test -f "$lt/objects/info/alternates" &&
+ cat "$lt/objects/info/alternates";
+ echo "$lt/objects"
+} >"$2/objects/info/alternates"
+
+cd $2
+git-repack -a -d -s
+git-prune-packed
+==================================================
+
+I tried to modify git-clone to add an alternates file before calling
+fetch, but that file just gets deleted.
+
+I presume I need to clone -s -l the local alternate, re-parent it to
+the new URL and grab anything missing, but how can I assure that it
+results in exactly the same repo as this script?
+
+I'm often behind tiny straws, so efficiency is important.
+
+-JimC
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+James H. Cloos, Jr. <cloos@jhcloos.com>
