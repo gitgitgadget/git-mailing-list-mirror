@@ -1,89 +1,79 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Subject: Re: [PATCH] Added Packing Heursitics IRC writeup.
-Date: Sun, 19 Mar 2006 11:22:51 +0100
-Message-ID: <20060319102251.GY20746@lug-owl.de>
-References: <E1FEyx7-0007vo-Je@jdl.com> <20060319003255.GA17124@c165.ib.student.liu.se> <7vr74zqhhi.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Cloning from sites with 404 overridden
+Date: Sun, 19 Mar 2006 11:52:05 +0100
+Message-ID: <e5bfff550603190252n7e3e1cbbp94e3f15c92f12d07@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="huLXOlJ1ghGp/P5+"
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org,
-	Jon Loeliger <jdl@jdl.com>
-X-From: git-owner@vger.kernel.org Sun Mar 19 11:23:27 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Mar 19 11:52:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FKv4G-0005hJ-8T
-	for gcvg-git@gmane.org; Sun, 19 Mar 2006 11:23:24 +0100
+	id 1FKvW8-0000aN-OP
+	for gcvg-git@gmane.org; Sun, 19 Mar 2006 11:52:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbWCSKWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Mar 2006 05:22:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbWCSKWz
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 05:22:55 -0500
-Received: from lug-owl.de ([195.71.106.12]:11439 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S1751054AbWCSKWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Mar 2006 05:22:55 -0500
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id 9DD87F004B; Sun, 19 Mar 2006 11:22:51 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+	id S932068AbWCSKwJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Mar 2006 05:52:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932070AbWCSKwJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 05:52:09 -0500
+Received: from zproxy.gmail.com ([64.233.162.206]:43243 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932068AbWCSKwI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Mar 2006 05:52:08 -0500
+Received: by zproxy.gmail.com with SMTP id 13so943162nzp
+        for <git@vger.kernel.org>; Sun, 19 Mar 2006 02:52:06 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=d7kcx//KZb82sCDG+9W5PTkYhfwd/e3gsnqikn93biXxxzbHXaea0q3q91EDbIMEbhl9vHSZRtysc5yod7k5Rn/PA09yYYGkeWZH5UitdH/uNrXyoU49itERq1EDoB+o4PadvtCYzKmYdcOJm3GKCpWMN/Xi8kHrLvrcqQQkCPU=
+Received: by 10.65.188.19 with SMTP id q19mr1050856qbp;
+        Sun, 19 Mar 2006 02:52:05 -0800 (PST)
+Received: by 10.64.131.10 with HTTP; Sun, 19 Mar 2006 02:52:05 -0800 (PST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vr74zqhhi.fsf@assigned-by-dhcp.cox.net>
-X-Operating-System: Linux mail 2.6.12.3lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17713>
 
+Hi all,
 
---huLXOlJ1ghGp/P5+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    I have set a git repository on a hosted public site:
+http://digilander.libero.it/mcostalba/scm/qgit.git
 
-On Sat, 2006-03-18 18:46:17 -0800, Junio C Hamano <junkio@cox.net> wrote:
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
-> > [nice description of Git's packing heuristics]
-> >
-> > Junio, are there any specific reasons why this hasn't been applied
-> > yet?
->=20
-> Funny.  I was just re-reading it last night.
->=20
-> It _is_ amusing, but I am not sure if it should go to
-> technical/.  If properly digested and reorganized, I suspect
-> that the document would become 1/3 of its current length.
+I cannot run any process (read git-daemon) on that site, so git-clone uses
+a 'dumb server' type protocol and this is what I got.
 
-But surely it should go somewhere, in its current form. It's *such* a
-nice reading and really amusing, so it shouldn't get lost.
+$ git clone http://digilander.libero.it/mcostalba/scm/qgit.git
+error: File 8dea03519e75f47da91108330dde3043defddd60
+(http://digilander.libero.it/mcostalba/scm/qgit.git/objects/8d/ea03519e75f47da91108330dde3043defddd60)
+corrupt
+Getting pack list for http://digilander.libero.it/mcostalba/scm/qgit.git/
+Getting index for pack fe1f3586b38e70e963de47f31379ef170adc5ca9
+Getting pack fe1f3586b38e70e963de47f31379ef170adc5ca9
+ which contains 8dea03519e75f47da91108330dde3043defddd60
+walk 8dea03519e75f47da91108330dde3043defddd60
+walk ec47dab590fb838ba2be7af5bf9aa46d9f2e502d
 
-MfG, JBG
+-------------- cut ------------------------
 
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
-_ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
-_ _ O
- f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
-m Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
-);
+walk 907d47e836f4f174386d02d21e38aeafc1e79626
+walk 5d3454248bbb3aaba080057dc9666a3c3aaeca1f
+$
 
---huLXOlJ1ghGp/P5+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+The above mentioned error belongs to git requests a non existing object
+(8dea03519e75f47da91108330dde3043defddd60) _and_  the site answers with
+a pre-canned 'page not found' html page instead of reporting 404 error.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+After some research I found it is quite common for public hosting
+sites to use a pre-canned
+'Sorry, no page here' html stuff instead of 404.
 
-iD8DBQFEHTD7Hb1edYOZ4bsRAhNUAJ4m6JQnSmTVGh7E2zuj9YTkkZc8UgCffFls
-JxnrZlzSluBhaysElL9H/a4=
-=B9e8
------END PGP SIGNATURE-----
+So my request is if it is possible for git to _learn_ this and to
+avoid been fooled by
+these kind of public sites.
 
---huLXOlJ1ghGp/P5+--
+Thanks
+Marco
