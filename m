@@ -1,62 +1,66 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: Cloning from sites with 404 overridden
-Date: 19 Mar 2006 20:32:15 -0800
-Message-ID: <863bhdvir4.fsf@blue.stonehenge.com>
+Date: Mon, 20 Mar 2006 07:31:03 +0100
+Message-ID: <e5bfff550603192231k7843a741xbf14394bc5e4c57@mail.gmail.com>
 References: <e5bfff550603190252n7e3e1cbbp94e3f15c92f12d07@mail.gmail.com>
-	<4d8e3fd30603190525o5a01fba8w5bcdedd064c213ec@mail.gmail.com>
-	<e5bfff550603190604ne4364f3o6a862d25267a2dce@mail.gmail.com>
-	<7v7j6qqks6.fsf@assigned-by-dhcp.cox.net>
+	 <4d8e3fd30603190525o5a01fba8w5bcdedd064c213ec@mail.gmail.com>
+	 <e5bfff550603190604ne4364f3o6a862d25267a2dce@mail.gmail.com>
+	 <7vk6aqql9e.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550603191340u466d3551t8a95c3808eb977c1@mail.gmail.com>
+	 <7vmzfmm35t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Marco Costalba" <mcostalba@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 20 05:32:33 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 20 07:31:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FLC4F-0007Gx-F0
-	for gcvg-git@gmane.org; Mon, 20 Mar 2006 05:32:31 +0100
+	id 1FLDv3-0002oA-IE
+	for gcvg-git@gmane.org; Mon, 20 Mar 2006 07:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbWCTEcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Mar 2006 23:32:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbWCTEcV
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Mar 2006 23:32:21 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:13078 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751312AbWCTEcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Mar 2006 23:32:21 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 5DD248F3E2;
-	Sun, 19 Mar 2006 20:32:16 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 18781-01-7; Sun, 19 Mar 2006 20:32:15 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id D1E368F418; Sun, 19 Mar 2006 20:32:15 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.13.2.11; tzolkin = 5 Chuen; haab = 9 Cumku
-In-Reply-To: <7v7j6qqks6.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932090AbWCTGbF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Mar 2006 01:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932091AbWCTGbF
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Mar 2006 01:31:05 -0500
+Received: from wproxy.gmail.com ([64.233.184.203]:38588 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932090AbWCTGbE convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Mar 2006 01:31:04 -0500
+Received: by wproxy.gmail.com with SMTP id i11so895342wra
+        for <git@vger.kernel.org>; Sun, 19 Mar 2006 22:31:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FKfH3Dp/zExmrcsL5SwzurSR8Hvj2+TMv2ZiGyzDsY+eQIrrqz8964TwFiaoiyjU78ye2Xeu1pygmnF99X1aIdrw6dfhqZmklcPCpkwWJTb4FtSF6J/+8mOR5tAiUOZFDb5CJ2UxyL3k5pa0MGKpqajMGzn/2sJrwWN7wXG+y3w=
+Received: by 10.65.20.2 with SMTP id x2mr142328qbi;
+        Sun, 19 Mar 2006 22:31:03 -0800 (PST)
+Received: by 10.64.131.10 with HTTP; Sun, 19 Mar 2006 22:31:03 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vmzfmm35t.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17742>
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+On 3/20/06, Junio C Hamano <junkio@cox.net> wrote:
+>
+> Your inability to produce 404 is a different matter -- often the
+> hosting server is not under your control.  But that does not
+> change the fact that the repository observed by your clients is
+> "broken".  That is why a workaround flag like I suggested may be
+> needed for such a setup.
+>
+> This is totally untested, but maybe something like this?
+>
 
-Junio> Heh, it has a striking resemblance to the first thing I said
-Junio> when Linus asked me if I want to take over git.git: "It would
-Junio> be embarrassing to be the first person to have an account there
-Junio> without having a single line of code in the kernel" ;-).
+It works for me. Just some trailing white space warning when applying.
 
-Junio> Well, you won't be the first (in fact it appears I wasn't
-Junio> either), and it would never hurt to ask.
+I didn't found a way to pass '--unreliable-404' flag from git-clone,
+perhaps my bad,
+I have tested forcing the flag in sources.
 
-Wow.  That would perhaps completely rule out people who have never owned
-anything that can execute the x86 instruction set except in emulation. :)
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Marco
