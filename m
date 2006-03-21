@@ -1,69 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Mauro Carvalho Chehab <mchehab@infradead.org>
 Subject: Re: Bad merging with stgit or git
-Date: Tue, 21 Mar 2006 21:08:47 +0100
-Message-ID: <20060321200847.GS18185@pasky.or.cz>
+Date: Tue, 21 Mar 2006 17:18:33 -0300
+Message-ID: <1142972313.4749.123.camel@praia>
 References: <1142969653.4749.109.camel@praia>
+	 <20060321193924.GD14579@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue Mar 21 21:09:13 2006
+X-From: git-owner@vger.kernel.org Tue Mar 21 21:18:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FLnAA-0001pV-TC
-	for gcvg-git@gmane.org; Tue, 21 Mar 2006 21:09:07 +0100
+	id 1FLnJU-0003g6-0a
+	for gcvg-git@gmane.org; Tue, 21 Mar 2006 21:18:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbWCUUI1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Mar 2006 15:08:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751723AbWCUUI1
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Mar 2006 15:08:27 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:15074 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751719AbWCUUI0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Mar 2006 15:08:26 -0500
-Received: (qmail 19154 invoked by uid 2001); 21 Mar 2006 21:08:47 +0100
-To: Mauro Carvalho Chehab <mchehab@infradead.org>
-Content-Disposition: inline
-In-Reply-To: <1142969653.4749.109.camel@praia>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932145AbWCUUSl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Mar 2006 15:18:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932429AbWCUUSk
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Mar 2006 15:18:40 -0500
+Received: from pentafluge.infradead.org ([213.146.154.40]:55194 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S932438AbWCUUSk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Mar 2006 15:18:40 -0500
+Received: from [200.181.90.159] (helo=[192.168.255.65])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.54 #1 (Red Hat Linux))
+	id 1FLnJO-0005jM-Lq; Tue, 21 Mar 2006 20:18:39 +0000
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20060321193924.GD14579@fieldses.org>
+X-Mailer: Evolution 2.4.2.1-3mdk 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <mchehab@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17786>
 
-Dear diary, on Tue, Mar 21, 2006 at 08:34:13PM CET, I got a letter
-where Mauro Carvalho Chehab <mchehab@infradead.org> said that...
-> With git-cat-file, it shows:
-> 
-> $ git-cat-file commit e338b736f1aee59b757130ffdc778538b7db18d6
-> tree b233a18f740a2883e4863506175f671d821f1e5e
-> parent cb31c70cdf1ac7034bed5f83d543f4888c39888a
-> author Mauro Carvalho Chehab <mchehab@infradead.org> 1141965004 -0300
-> committer Mauro Carvalho Chehab <mchehab@infradead.org> 1141965004 -0300
-> 
-> Merging Linus tree
+Em Ter, 2006-03-21 =E0s 14:39 -0500, J. Bruce Fields escreveu:
+> On Tue, Mar 21, 2006 at 04:34:13PM -0300, Mauro Carvalho Chehab wrote=
+:
+> > It shouldn't have any conflicts here for Linus, since those patches=
+ came
+> > from his tree.
+>=20
+> What do you mean by "those patches came from his tree"?  If you're
+> actually cherry-picking patches from his tree and applying them to
+> yours, then you're not reproducing the same commits he has--you're ju=
+st
+> creating new commits that happen to have nearly identical content.
+No, I'm not cherry-picking his patches.=20
 
-Our IRC hypothesis:
+>From the discussions on git IRC, I think it may be caused by a bad
+procedure when solving a conflict, after merging from Linus tree.
 
-gitweb shows two commits in sequence there,
+>From what I'm understanding now, I should do, when a conflict is
+detected:
 
-	11 days ago Mauro Carvalho ...     Merge branch 'origin'
-	11 days ago Mauro Carvalho ...     Merging Linus tree
+nano <files>
+git-update-index <files>
+git commit
 
-where the "Merge branch 'origin'" commit is a true merge commit, but a
-rather boring one. There were conflicts during the merge, and according
-to mchebab they were "resolved" by (incorrectly) doing:
+Previously (at git 1.1.4), I was doing:
+nano <files>
+git commit <files>
 
-	...edit <files>...
-	git-commit <files>
+git 1.2.4 don't allow this bad commit syntax anymore.
 
-With the old Git version (probably v1.1.4, but I'm not so sure when
-looking at 1.1.4's git-commit.sh), git-commit would happily do the
-commit, but wouldn't record the commit as a merge.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+>=20
+> --b.
+Cheers,=20
+Mauro.
