@@ -1,53 +1,54 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: git daemon and v6-only
-Date: Wed, 22 Mar 2006 00:04:52 -0500
-Message-ID: <4420DAF4.7070406@garzik.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git
+Date: Tue, 21 Mar 2006 21:07:37 -0800
+Message-ID: <7vacbjawyu.fsf@assigned-by-dhcp.cox.net>
+References: <7vodzzb5q3.fsf@assigned-by-dhcp.cox.net>
+	<86y7z3mdcz.fsf@blue.stonehenge.com>
+	<86hd5rma75.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Mar 22 06:05:11 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Mar 22 06:07:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FLvWp-0006kY-QT
-	for gcvg-git@gmane.org; Wed, 22 Mar 2006 06:05:04 +0100
+	id 1FLvZQ-000750-5C
+	for gcvg-git@gmane.org; Wed, 22 Mar 2006 06:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbWCVFEy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 00:04:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbWCVFEy
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 00:04:54 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:33984 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1750761AbWCVFEx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 00:04:53 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.60 #1 (Red Hat Linux))
-	id 1FLvWe-0003rB-Q6
-	for git@vger.kernel.org; Wed, 22 Mar 2006 05:04:53 +0000
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: -2.5 (--)
-X-Spam-Report: SpamAssassin version 3.0.5 on srv5.dvmed.net summary:
-	Content analysis details:   (-2.5 points, 5.0 required)
+	id S1750762AbWCVFHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 00:07:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbWCVFHl
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 00:07:41 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:49074 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750762AbWCVFHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Mar 2006 00:07:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060322050416.OXPE26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 22 Mar 2006 00:04:16 -0500
+To: git@vger.kernel.org
+In-Reply-To: <86hd5rma75.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "21 Mar 2006 19:26:22 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17804>
 
-Regarding the following code in daemon.c socksetup():
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-> #ifdef IPV6_V6ONLY
->                 if (ai->ai_family == AF_INET6) {
->                         int on = 1;
->                         setsockopt(sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
->                                    &on, sizeof(on));
->                         /* Note: error is not fatal */
->                 }
-> #endif
+> For example, I can do this:
+>
+> $ git-checkout next
+> $ cp git-cvsimport.perl DUMMY
+> $ git-checkout -b my-playground
+> $ mv DUMMY git-cvsimport.perl
+> $ git-commit -a -m 'trying that other version'
+>
+> But this wastes a commit.  Is there any way to get an index that simply
+> includes the file from that other branch?
 
-On Linux this causes you to bind separately to v4 and v6 interfaces, 
-avoiding the default (desired) behavior of using a single socket for 
-both v4 and v6.
-
-	Jeff
+        $ git checkout master
+        $ git checkout next git-cvsimport.perl
