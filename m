@@ -1,69 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What's in git.git
-Date: Wed, 22 Mar 2006 08:21:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603220820090.26286@g5.osdl.org>
-References: <7vodzzb5q3.fsf@assigned-by-dhcp.cox.net> <86y7z3mdcz.fsf@blue.stonehenge.com>
- <86hd5rma75.fsf@blue.stonehenge.com> <7vacbjawyu.fsf@assigned-by-dhcp.cox.net>
- <867j6nm47b.fsf@blue.stonehenge.com> <7v64m7av6o.fsf@assigned-by-dhcp.cox.net>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: Cloning from sites with 404 overridden
+Date: Wed, 22 Mar 2006 09:22:27 -0800
+Message-ID: <20060322172227.GO3997@reactrix.com>
+References: <20060322025921.1722.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 22 17:22:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 22 18:22:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FM65Y-0003oX-Pa
-	for gcvg-git@gmane.org; Wed, 22 Mar 2006 17:21:37 +0100
+	id 1FM72d-0001qv-Fk
+	for gcvg-git@gmane.org; Wed, 22 Mar 2006 18:22:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbWCVQVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 11:21:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbWCVQVd
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 11:21:33 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:11917 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751350AbWCVQVd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 11:21:33 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2MGLSDZ018376
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Mar 2006 08:21:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2MGLNKp006188;
-	Wed, 22 Mar 2006 08:21:25 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64m7av6o.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750990AbWCVRWh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 12:22:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbWCVRWg
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 12:22:36 -0500
+Received: from 241.37.26.69.virtela.com ([69.26.37.241]:34100 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1750988AbWCVRWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Mar 2006 12:22:36 -0500
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k2MHMS3p021268;
+	Wed, 22 Mar 2006 09:22:28 -0800
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k2MHMSJa021266;
+	Wed, 22 Mar 2006 09:22:28 -0800
+To: linux@horizon.com
+Content-Disposition: inline
+In-Reply-To: <20060322025921.1722.qmail@science.horizon.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17817>
 
+On Tue, Mar 21, 2006 at 09:59:21PM -0500, linux@horizon.com wrote:
 
+> If someone feels ambitious, you can detect this condition automatically
+> by searching for a file that you know won't be there and seeing if you
+> get a 404 response to that.
 
-On Tue, 21 Mar 2006, Junio C Hamano wrote:
+It might be feasible to detect this condition using the Content-Type:
+header in the server response.  So far, all the GIT repositories I've
+tried return text/plain for loose objects and a special 404 page will
+likely be text/html.
 
-> merlyn@stonehenge.com (Randal L. Schwartz) writes:
-> 
-> >>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
-> >
-> >>> But this wastes a commit.  Is there any way to get an index that simply
-> >>> includes the file from that other branch?
-> >
-> > Junio>         $ git checkout master
-> > Junio>         $ git checkout next git-cvsimport.perl
-> >
-> > Yow.  How simple is *that*?  Thanks.
-> 
-> There is one thing you would want to be careful about.
-> This updates the index.
-
-Yes. Btw, I've been bitten by that. I think it might be better to _not_ 
-update the index when we check out a file from another branch than the one 
-we're on (or rather, we should perhaps update the index with the value 
-from the current branch every time, even though the _working_tree_ is 
-updated from another branch)
-
-		Linus
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
