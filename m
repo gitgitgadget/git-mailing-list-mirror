@@ -1,68 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Proper Publishing of a Repository
-Date: Wed, 22 Mar 2006 12:47:06 -0800
-Message-ID: <7v3bha8awl.fsf@assigned-by-dhcp.cox.net>
-References: <1143055072.4527.142.camel@cashmere.sps.mot.com>
-	<20060322221630.e65baca0.tihirvon@gmail.com>
-	<1143059181.4527.162.camel@cashmere.sps.mot.com>
+From: Radoslaw Szkodzinski <astralstorm@o2.pl>
+Subject: Re: Question about possible git races
+Date: Wed, 22 Mar 2006 21:46:21 +0100
+Message-ID: <200603222146.25395.astralstorm@o2.pl>
+References: <200603201724.12442.astralstorm@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 22 21:47:27 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1411935.IPGzkifhxl";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Mar 22 21:50:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMAEb-0005kQ-EC
-	for gcvg-git@gmane.org; Wed, 22 Mar 2006 21:47:13 +0100
+	id 1FMAHe-0006Tc-PR
+	for gcvg-git@gmane.org; Wed, 22 Mar 2006 21:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932295AbWCVUrK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 15:47:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932713AbWCVUrK
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 15:47:10 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:16102 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932295AbWCVUrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Mar 2006 15:47:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060322204707.HTYV15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 22 Mar 2006 15:47:07 -0500
-To: Jon Loeliger <jdl@freescale.com>
-In-Reply-To: <1143059181.4527.162.camel@cashmere.sps.mot.com> (Jon Loeliger's
-	message of "Wed, 22 Mar 2006 14:26:21 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932715AbWCVUuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 15:50:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932717AbWCVUuU
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 15:50:20 -0500
+Received: from mx.go2.pl ([193.17.41.41]:13722 "EHLO poczta.o2.pl")
+	by vger.kernel.org with ESMTP id S932715AbWCVUuT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 15:50:19 -0500
+Received: from zen.localdomain (host-81-190-201-167.gorzow.mm.pl [81.190.201.167])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by poczta.o2.pl (Postfix) with ESMTP id 9AE41137759
+	for <git@vger.kernel.org>; Wed, 22 Mar 2006 21:50:12 +0100 (CET)
+Received: from zen.localdomain ([192.168.0.1])
+	by zen.localdomain with esmtpa (Exim 4.60)
+	(envelope-from <astralstorm@o2.pl>)
+	id 1FMAEF-0001KU-Up
+	for git@vger.kernel.org; Wed, 22 Mar 2006 21:46:51 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+In-Reply-To: <200603201724.12442.astralstorm@o2.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17829>
 
-Jon Loeliger <jdl@freescale.com> writes:
+--nextPart1411935.IPGzkifhxl
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> On Wed, 2006-03-22 at 14:16, Timo Hirvonen wrote:
->> Jon Loeliger <jdl@freescale.com> wrote:
->>
->> > All this on the linux kernel over HTTP.
->> 
->> Use git:// protocol (git-daemon) if possible.  It is much faster.
+On Monday 20 March 2006 17:24, Radoslaw Szkodzinski wrote yet:
+> I'd like to write a multithreaded application using git, so I'd like to s=
+ee
+> if there are any races:
 >
-> Trust me, if it were an option, I would.  It isn't.
+> - push vs fetch
+> ...
+> - push vs push
+> ...
+> - fetch vs fetch
+> ...
 >
-> So, I think git-prune-packed was the answer here...
+> I'm meaning really bare git there, w/o bash+perl scripts.
 
-It really depends on who your audiences are.  By packing
-everything in a single pack, you are optimizing for the initial
-cloners but punishing incremental updaters.
+Could anyone try to answer the question?=20
+I'd really like to know, because it's crucial to my application.
 
-Since your tree is derived from Linus tree, anybody who is
-interested in your tree is very likely nterested in Linus tree
-and chances are that she has a recent copy of it locally.  In
-such a case, I would not be surprised if:
+=2D-=20
+GPG Key id:  0xD1F10BA2
+=46ingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
 
-	$ git clone -l -s -n /local-linux-2.6.git/ jdl-linux.git
-        $ cd jdl-linux.git
-        $ git fetch http://jdl.com/jdl-linux.git master:refs/heads/jdl
+AstralStorm
 
-goes a lot faster if you have loose objects around in the
-repository.
+--nextPart1411935.IPGzkifhxl
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.1 (GNU/Linux)
+
+iD8DBQBEIbehlUMEU9HxC6IRAgjDAJ9WWUPsgJFc2B6TGR1Dr+l4z2yIAgCgsJkZ
+2CiDoD8A3I9qHpre+Lt+WBo=
+=/XWg
+-----END PGP SIGNATURE-----
+
+--nextPart1411935.IPGzkifhxl--
