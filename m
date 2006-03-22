@@ -1,86 +1,90 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Wed, 22 Mar 2006 15:39:00 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
-References: <20060322133337.GU20746@lug-owl.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Question about possible git races
+Date: Thu, 23 Mar 2006 00:55:50 +0100
+Message-ID: <4421E406.5030700@op5.se>
+References: <200603201724.12442.astralstorm@o2.pl> <200603222146.25395.astralstorm@o2.pl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 00:39:12 2006
+X-From: git-owner@vger.kernel.org Thu Mar 23 00:56:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMCv0-0007vt-RD
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 00:39:11 +0100
+	id 1FMDBG-0000B4-MN
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 00:56:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbWCVXjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 18:39:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932632AbWCVXjH
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 18:39:07 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:54462 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932622AbWCVXjF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 18:39:05 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2MNd1DZ017561
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Mar 2006 15:39:01 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2MNd0Ol032766;
-	Wed, 22 Mar 2006 15:39:00 -0800
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20060322133337.GU20746@lug-owl.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932565AbWCVXzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 18:55:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbWCVXzx
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 18:55:53 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:35782 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932421AbWCVXzv
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Mar 2006 18:55:51 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 772F76BCFE; Thu, 23 Mar 2006 00:55:50 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Radoslaw Szkodzinski <astralstorm@o2.pl>
+In-Reply-To: <200603222146.25395.astralstorm@o2.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17834>
 
-
-
-On Wed, 22 Mar 2006, Jan-Benedict Glaw wrote:
+Radoslaw Szkodzinski wrote:
+> On Monday 20 March 2006 17:24, Radoslaw Szkodzinski wrote yet:
 > 
-> I'm currently working a lot with Binutils and GCC and wanted to import
-> those two projects into GIT trees, but both of them failed. If anybody
-> wants to have access to the half-finished GIT trees, please let me
-> know:
+> Could anyone try to answer the question? 
+> I'd really like to know, because it's crucial to my application.
+> 
 
-Well, I can re-create your error..
+I believe the reasons no-one answered your first mail are, in the 
+following order:
 
-> Switching from origin to gdb-4_18-branch
-> usage: git-read-tree (<sha> | -m [--aggressive] [-u | -i] <sha1> [<sha2> [<sha3>]])
-> read-tree failed: 33024
+1. Since I'm sure you're truly capable of writing such an application 
+and finishing it before the git API has changed completely you should 
+have gotten your answers from trial-and-error, reading the source, or by 
+just trying the app and seeing where it fails.
 
-That's a horrible error message, and the reason for it is that no 
-"gdb-4_18-branch" exists.
+2. You didn't say *why* you want to write a multi-threaded layer on top 
+of git. Is it to implement a redundant file-server with revision 
+control? If so you don't need multi-threading. You need clever update 
+hooks, a master repo and plenty of bandwidth with fast disks on the 
+file-servers.
 
-There's a _tag_ called "gdb-4_18", and there's a branch called "GDB_4_18", 
-and they actually point to two _different_ commits (both "Initial creation 
-of sourceware repository"). The commits actually have identical trees, but 
-they're different, because they have different times - by 50 seconds. 
+3. You didn't mention what you've tried to find the answers yourself, 
+which makes me think you want me and the rest of us gitizens (yay! I 
+coined a phrase) do your homework for you. I personally find it very 
+rude that you send another email again so shortly after the first one 
+claiming that "you need this info for your app", when the 500-odd people 
+you're asking clearly need their time for their families, hobbies, 
+daytime jobs, beer, etc. etc...
 
-Gaah.
+4. Noone felt like answering since they saw no use for a multi-threaded 
+layer on top of git, especially without knowing what it was for. 
+Friendliness only goes so far when met by such lack of respect for other 
+peoples time, but if someone had seen the uses for the app you're 
+writing they probably would have taken time to at least ask you for some 
+of the answers you left out in your original mail. If nothing else for 
+the sake of curiosity.
 
-Looking at cvsps output (from
 
-	cvsps --norc -u -A -v -d --cvsdirect
-		--root :pserver:anoncvs@sourceware.org:/cvs/src
-		src > cvsps.out 2> cvsps.err
+Some more pointers on how to get answers to questions posted in online 
+forums can be found on the links below.
 
-it's "PatchSet 104" (well, for me it is, I have a hacked cvsps, so it 
-might not be that for you), which creates the "gdb-4_18-branch", but it 
-appears that cvsps hasn't actually figured out any "Ancestor branch" for 
-that commit.
+http://catb.org/~esr/faqs/smart-questions.html
+http://www.catb.org/~esr/faqs/hacker-howto.html
 
-What a crock.
 
-Anyway, it's clearly a cvsps bug (mentioning a new branch without the 
-_source_ of that branch). Equally clearly, "git cvsimport" is being an ass 
-about then failing so totally on it.
+Btw. I'm assuming you're aware you'll have to GPL this app of yours, 
+since git is GPL and you'll be using the git produce in a way that makes 
+it vital to your app.
 
-I'll try to take a look at why cvsps does that.
-
-		Linus
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
