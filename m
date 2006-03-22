@@ -1,61 +1,68 @@
-From: Jon Loeliger <jdl@freescale.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Proper Publishing of a Repository
-Date: Wed, 22 Mar 2006 14:26:21 -0600
-Message-ID: <1143059181.4527.162.camel@cashmere.sps.mot.com>
+Date: Wed, 22 Mar 2006 12:47:06 -0800
+Message-ID: <7v3bha8awl.fsf@assigned-by-dhcp.cox.net>
 References: <1143055072.4527.142.camel@cashmere.sps.mot.com>
-	 <20060322221630.e65baca0.tihirvon@gmail.com>
+	<20060322221630.e65baca0.tihirvon@gmail.com>
+	<1143059181.4527.162.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 22 21:29:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 22 21:47:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FM9vM-0000YA-Tr
-	for gcvg-git@gmane.org; Wed, 22 Mar 2006 21:27:22 +0100
+	id 1FMAEb-0005kQ-EC
+	for gcvg-git@gmane.org; Wed, 22 Mar 2006 21:47:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932699AbWCVU1P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 15:27:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932704AbWCVU1P
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 15:27:15 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:12030 "EHLO
-	az33egw02.freescale.net") by vger.kernel.org with ESMTP
-	id S932699AbWCVU1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Mar 2006 15:27:14 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k2MKfJ5E023011;
-	Wed, 22 Mar 2006 13:41:19 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k2MKbDgW006572;
-	Wed, 22 Mar 2006 14:37:13 -0600 (CST)
-To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060322221630.e65baca0.tihirvon@gmail.com>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S932295AbWCVUrK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 15:47:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932713AbWCVUrK
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 15:47:10 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:16102 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932295AbWCVUrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Mar 2006 15:47:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060322204707.HTYV15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 22 Mar 2006 15:47:07 -0500
+To: Jon Loeliger <jdl@freescale.com>
+In-Reply-To: <1143059181.4527.162.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Wed, 22 Mar 2006 14:26:21 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17828>
 
-On Wed, 2006-03-22 at 14:16, Timo Hirvonen wrote:
-> On Wed, 22 Mar 2006 13:17:52 -0600
-> Jon Loeliger <jdl@freescale.com> wrote:
-> 
-> > Folks,
-> > 
-> > So, I feel like I missed a step in the grand
-> > "How To Publish A Repository" scheme of things.
-> > 
-> > I made a repo visible over on jdl.com.  No problem.
-> > But cloning it took forever.  So I ran "git-repack"
-> > on it.  Now cloning only takes hours, not forever.
-> > 
-> > All this on the linux kernel over HTTP.
-> 
-> Use git:// protocol (git-daemon) if possible.  It is much faster.
+Jon Loeliger <jdl@freescale.com> writes:
 
-Trust me, if it were an option, I would.  It isn't.
+> On Wed, 2006-03-22 at 14:16, Timo Hirvonen wrote:
+>> Jon Loeliger <jdl@freescale.com> wrote:
+>>
+>> > All this on the linux kernel over HTTP.
+>> 
+>> Use git:// protocol (git-daemon) if possible.  It is much faster.
+>
+> Trust me, if it were an option, I would.  It isn't.
+>
+> So, I think git-prune-packed was the answer here...
 
-So, I think git-prune-packed was the answer here...
-jdl
+It really depends on who your audiences are.  By packing
+everything in a single pack, you are optimizing for the initial
+cloners but punishing incremental updaters.
+
+Since your tree is derived from Linus tree, anybody who is
+interested in your tree is very likely nterested in Linus tree
+and chances are that she has a recent copy of it locally.  In
+such a case, I would not be surprised if:
+
+	$ git clone -l -s -n /local-linux-2.6.git/ jdl-linux.git
+        $ cd jdl-linux.git
+        $ git fetch http://jdl.com/jdl-linux.git master:refs/heads/jdl
+
+goes a lot faster if you have loose objects around in the
+repository.
