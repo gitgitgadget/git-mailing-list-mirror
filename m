@@ -1,102 +1,86 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Question about possible git races
-Date: Thu, 23 Mar 2006 00:28:30 +0100
-Message-ID: <4421DD9E.7030201@op5.se>
-References: <200603201724.12442.astralstorm@o2.pl>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Wed, 22 Mar 2006 15:39:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
+References: <20060322133337.GU20746@lug-owl.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 00:28:38 2006
+X-From: git-owner@vger.kernel.org Thu Mar 23 00:39:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMCkm-0003oh-E2
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 00:28:36 +0100
+	id 1FMCv0-0007vt-RD
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 00:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932532AbWCVX2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 18:28:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932539AbWCVX2d
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 18:28:33 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:28870 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932532AbWCVX2c
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Mar 2006 18:28:32 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id DC73D6BCFE; Thu, 23 Mar 2006 00:28:30 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Radoslaw Szkodzinski <astralstorm@o2.pl>
-In-Reply-To: <200603201724.12442.astralstorm@o2.pl>
+	id S932622AbWCVXjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 18:39:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932632AbWCVXjH
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 18:39:07 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:54462 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932622AbWCVXjF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 18:39:05 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2MNd1DZ017561
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 22 Mar 2006 15:39:01 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2MNd0Ol032766;
+	Wed, 22 Mar 2006 15:39:00 -0800
+To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+In-Reply-To: <20060322133337.GU20746@lug-owl.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17832>
-
-Radoslaw Szkodzinski wrote:
-> I'd like to write a multithreaded application using git,
-
-Why on earth? The git tools aren't written to be thread-safe in that 
-manner, so you'll run into all sorts of problems. Unless you're talking 
-about managing the code for a multithreaded application with git, in 
-which case you should just go read the tutorial. However, feeling 
-slightly tipsy and in a distinctly good mood, I shall try to answer your 
-questions anyway.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17833>
 
 
-> so I'd like to see if 
-> there are any races:
+
+On Wed, 22 Mar 2006, Jan-Benedict Glaw wrote:
 > 
-> - push vs pull
-> One thread pushes to the repository while another is pulling from it at the 
-> same time. I should get the older commit.
-> 
+> I'm currently working a lot with Binutils and GCC and wanted to import
+> those two projects into GIT trees, but both of them failed. If anybody
+> wants to have access to the half-finished GIT trees, please let me
+> know:
 
-You will. Git atomizes (atomicizes? atomicifies?) pushes by updating the 
-branch head being pushed to after all the commit-, tree- and 
-blob-objects are written. Tags are handled separately but equally 
-atomically.
+Well, I can re-create your error..
 
+> Switching from origin to gdb-4_18-branch
+> usage: git-read-tree (<sha> | -m [--aggressive] [-u | -i] <sha1> [<sha2> [<sha3>]])
+> read-tree failed: 33024
 
-> - push vs push
-> Both threads push at the same time. What happens?
-> Any good way to merge those pushes?
-> (I have full access to both repos)
-> 
-> Possibly those two aren't fast-forward of each other.
-> I think one of the pushes should abort in this case unless I force it.
-> 
+That's a horrible error message, and the reason for it is that no 
+"gdb-4_18-branch" exists.
 
-Read the source to find out if it's locking the repo while updating or 
-not (I think it is, but I'm not sure). If it isn't the last one to 
-finish pushing wins out since the branch head update from that push will 
-overwrite the previous one.
+There's a _tag_ called "gdb-4_18", and there's a branch called "GDB_4_18", 
+and they actually point to two _different_ commits (both "Initial creation 
+of sourceware repository"). The commits actually have identical trees, but 
+they're different, because they have different times - by 50 seconds. 
 
+Gaah.
 
-> - fetch vs fetch
-> I mean that two threads try to fetch from different repositories to a single 
-> one. Possibly those two aren't fast-forward of each other.
-> Any good way to merge those fetches?
-> (I have full access to both repos)
-> 
+Looking at cvsps output (from
 
-git help octopus
+	cvsps --norc -u -A -v -d --cvsdirect
+		--root :pserver:anoncvs@sourceware.org:/cvs/src
+		src > cvsps.out 2> cvsps.err
 
-You can fetch those two remote branch heads to local branches 
-simultaneously and then do the octopus in the master-thread while no 
-other updates are happening. Doing several simultanous merges to a 
-single branch is quite frankly so insane I have to go get myself a drink 
-just from thinking about it.
+it's "PatchSet 104" (well, for me it is, I have a hacked cvsps, so it 
+might not be that for you), which creates the "gdb-4_18-branch", but it 
+appears that cvsps hasn't actually figured out any "Ancestor branch" for 
+that commit.
 
-> I'm meaning really bare git there, w/o bash+perl scripts.
-> 
+What a crock.
 
-I don't think you can do it without Python. The default merge strategy 
-is written in python, so.
+Anyway, it's clearly a cvsps bug (mentioning a new branch without the 
+_source_ of that branch). Equally clearly, "git cvsimport" is being an ass 
+about then failing so totally on it.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I'll try to take a look at why cvsps does that.
+
+		Linus
