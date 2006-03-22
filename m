@@ -1,122 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Warning: fetch updated the current branch head.
-Date: Wed, 22 Mar 2006 01:48:37 -0800
-Message-ID: <7v4q1qajyi.fsf@assigned-by-dhcp.cox.net>
+From: Francis Daly <francis@daoine.org>
+Subject: [PATCH] Format tweaks for asciidoc.
+Date: Wed, 22 Mar 2006 09:53:57 +0000
+Message-ID: <20060322095357.GA27793@craic.sysops.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Mar 22 10:48:55 2006
+X-From: git-owner@vger.kernel.org Wed Mar 22 10:55:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FLzxQ-0002nN-JG
-	for gcvg-git@gmane.org; Wed, 22 Mar 2006 10:48:48 +0100
+	id 1FM03k-0004BX-56
+	for gcvg-git@gmane.org; Wed, 22 Mar 2006 10:55:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751169AbWCVJso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 04:48:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbWCVJso
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 04:48:44 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:28846 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751169AbWCVJso (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Mar 2006 04:48:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060322094843.TCEF15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 22 Mar 2006 04:48:43 -0500
+	id S1751171AbWCVJzH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 04:55:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbWCVJzH
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 04:55:07 -0500
+Received: from craic.sysops.org ([217.75.2.2]:54158 "EHLO craic.sysops.org")
+	by vger.kernel.org with ESMTP id S1751171AbWCVJzG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 04:55:06 -0500
+Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
+	by craic.sysops.org (8.12.11/8.12.11) with SMTP id k2M9rvT8028037
+	for <git@vger.kernel.org>; Wed, 22 Mar 2006 09:53:57 GMT
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Virus-Scanned: ClamAV 0.87.1/1349/Tue Mar 21 22:54:43 2006 on craic.sysops.org
+X-Virus-Status: Clean
+X-Spam-Status: No, hits=-1.2 required=2.0
+	tests=HTML_00_10,HTML_MESSAGE,USER_AGENT_MUTT
+	version=2.55
+X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17810>
 
-I was helping somebody who:
 
- * had a clone of git.git repository;
- * had "next" checked out a week or so ago;
- * did not have any development on his own;
- * tried to pull using the default .git/remotes/origin from me.
-
-Somehow the index was out of sync before that pull but there was
-no change in the working tree (i.e. just the cached stat was
-different), and it refused to fast-forward the index and the
-working tree, because if there _were_ real changes in the
-working tree, they would have been lost by a fast-forward.
-
-This patch will be in "next" and does two things:
-
- * runs "git update-index --refresh" before the fast-forwarding,
-   to prevent stat-only difference from interfering;
-
- * if there really is a local change in the working tree, show
-   the original branch head information in the message, to allow
-   the user to decide what to do next.
-
-The first one would have made his working tree to fast-forward
-correctly.  If the fast-forward is still prevented, that means
-there really was a change, and in such a case, the way to recover
-would be:
-
- * Examine "git diff $orig_head" output, to make sure there is
-   no local change since the last pull.  If there is none, you
-   can run "git reset --hard" (you do not have to name "next",
-   because that is the branch you are already on) and you are
-   done.
-
- * If there are local changes, stash them away as a patch,
-   "git reset --hard" and re-apply if they are precious.
-
-I've considered rewinding the tracking branch to match
-$orig_head in such a case just before "die", but that would be a
-disservice to people behind a narrow pipe -- it would require
-them to re-download the objects to update the branch.
-
-I now realize that the "die" message is a bit confusing, after
-writing the above recovery procedure.  Especially, the new
-"git-update-index --refresh" would say "foo: needs update", but
-"update your working tree" does not mean "git update-index foo"
-after such a failure.  Maybe this phrasing is better:
-
-	die 'Cannot fast-forward your working tree.
-After making sure that you saved anything precious from
-$ git diff '$orig_head'
-output, and run 
-$ git reset --hard
-to recover.'
-
-Opinions?
-
--- >8 --
-[PATCH] git-pull: further safety while on tracking branch.
-
-Running 'git pull' while on the tracking branch has a built-in
-safety valve to fast-forward the index and working tree to match
-the branch head, but it errs on the safe side too cautiously.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Some documentation "options" were followed by independent preformatted
+paragraphs. Now they are associated plain text paragraphs. The
+difference is clear in the generated html.
 
 ---
 
- git-pull.sh |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ Documentation/git-grep.txt        |   14 +++++++-------
+ Documentation/git-whatchanged.txt |    6 +++---
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-cf46e7b8999f25d5d7f2acd64701a100e403ee03
-diff --git a/git-pull.sh b/git-pull.sh
-index 29c14e1..d90f7c9 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -55,7 +55,9 @@ then
- 	# First update the working tree to match $curr_head.
+b833629d00b95554b23d2239cf8d42262a7a6db6
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index fbd2394..d55456a 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -24,13 +24,13 @@ OPTIONS
  
- 	echo >&2 "Warning: fetch updated the current branch head."
--	echo >&2 "Warning: fast forwarding your working tree."
-+	echo >&2 "Warning: fast forwarding your working tree from"
-+	echo >&2 "Warning: $orig_head commit."
-+	git-update-index --refresh 2>/dev/null
- 	git-read-tree -u -m "$orig_head" "$curr_head" ||
- 		die "You need to first update your working tree."
- fi
+ <option>...::
+ 	Either an option to pass to `grep` or `git-ls-files`.
+-
+-	The following are the specific `git-ls-files` options
+-	that may be given: `-o`, `--cached`, `--deleted`, `--others`,
+-	`--killed`, `--ignored`, `--modified`, `--exclude=*`,
+-	`--exclude-from=*`, and `--exclude-per-directory=*`.
+-
+-	All other options will be passed to `grep`.
+++
++The following are the specific `git-ls-files` options
++that may be given: `-o`, `--cached`, `--deleted`, `--others`,
++`--killed`, `--ignored`, `--modified`, `--exclude=\*`,
++`--exclude-from=\*`, and `--exclude-per-directory=\*`.
+++
++All other options will be passed to `grep`.
+ 
+ <pattern>::
+ 	The pattern to look for.  The first non option is taken
+diff --git a/Documentation/git-whatchanged.txt b/Documentation/git-whatchanged.txt
+index f02f939..641cb7e 100644
+--- a/Documentation/git-whatchanged.txt
++++ b/Documentation/git-whatchanged.txt
+@@ -47,9 +47,9 @@ OPTIONS
+ 	By default, differences for merge commits are not shown.
+ 	With this flag, show differences to that commit from all
+ 	of its parents.
+-
+-	However, it is not very useful in general, although it
+-	*is* useful on a file-by-file basis.
+++
++However, it is not very useful in general, although it
++*is* useful on a file-by-file basis.
+ 
+ Examples
+ --------
 -- 
-1.2.4.gfd45
+1.2.GIT
+
+-- 
+Francis Daly        francis@daoine.org
