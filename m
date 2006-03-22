@@ -1,67 +1,146 @@
 From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Don't use merge labels in the ed scripts
-Date: Tue, 21 Mar 2006 23:07:29 -0500
-Message-ID: <1143000449.23183.8.camel@dv>
-References: <20060321205414.8301.97041.stgit@dv.roinet.com>
-	 <20060321205956.GX19263@pasky.or.cz> <1142977465.8712.4.camel@dv>
-	 <20060321214818.GY19263@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH] Clean up after failed "git merge" in the tutorial script
+Date: Tue, 21 Mar 2006 23:07:33 -0500
+Message-ID: <20060322040733.29189.75397.stgit@dv.roinet.com>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 22 05:07:50 2006
+X-From: git-owner@vger.kernel.org Wed Mar 22 05:07:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FLudL-0004ZC-KO
+	id 1FLudM-0004ZC-6S
 	for gcvg-git@gmane.org; Wed, 22 Mar 2006 05:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750739AbWCVEHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Mar 2006 23:07:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbWCVEHj
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Mar 2006 23:07:39 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:62181 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750739AbWCVEHj
+	id S1750737AbWCVEHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Mar 2006 23:07:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbWCVEHk
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Mar 2006 23:07:40 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:62437 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750737AbWCVEHj
 	(ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 21 Mar 2006 23:07:39 -0500
 Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FLudS-00077y-Oq
-	for git@vger.kernel.org; Tue, 21 Mar 2006 23:07:50 -0500
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FLud7-0007aj-M4; Tue, 21 Mar 2006 23:07:29 -0500
+	id 1FLudS-000780-SW
+	for git@vger.kernel.org; Tue, 21 Mar 2006 23:07:51 -0500
+Received: from localhost.roinet.com ([127.0.0.1] helo=dv.roinet.com)
+	by dv.roinet.com with esmtp (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1FLudB-0007bE-Vn; Tue, 21 Mar 2006 23:07:33 -0500
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060321214818.GY19263@pasky.or.cz>
-X-Mailer: Evolution 2.6.0 (2.6.0-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17801>
 
-Hi, Petr!
+From: Pavel Roskin <proski@gnu.org>
 
-On Tue, 2006-03-21 at 22:48 +0100, Petr Baudis wrote:
-> > > Well, I sincerely hope that they won't change again. ;-)
-> > 
-> > Actually, it would be nice to never expose labels starting with
-> > ".merge_file_" - cogito should provide more meaningful labels instead.
-> 
->   we shouldn't ever expose them, though. If we do, that's a bug.
+Failed "git merge" in the tutorial script leaves some damage to the
+working directory.  Use cg-reset to clean up the mess.
 
-It turns out those labels were produced by "git merge".  Either "git
-merge" should be removed from the test, or "cg-reset" should be used
-after the failure.  I prefer the later since it's another test for
-Cogito.
+This eliminates conflicts in the final merge.  Adjust code accordingly,
+remove unused fixup scripts.
 
-Once the mess from "git merge" is cleaned up, it turns out that the last
-merge in the testsuite doesn't fail, and several final fixups are no
-longer needed.  I think it should be OK to remove corresponding code.
-It has no Cogito commands other than cg-commit, which is already tested
-elsewhere.
+Adjust 0017-alice-bob-fixup.ed to deal with merge conflict from cg-merge
+rather than "git merge".
 
-I'm sending you the new patch.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
--- 
-Regards,
-Pavel Roskin
+ .../tutorial-script/0017-alice-bob-fixup.ed        |    4 ++--
+ .../tutorial-script/0021-bob-alice-fixup1.ed       |    4 ----
+ .../tutorial-script/0022-bob-alice-fixup2.ed       |    5 -----
+ .../tutorial-script/0023-bob-alice-fixup3.ed       |    4 ----
+ Documentation/tutorial-script/script.sh            |   18 ++++--------------
+ 5 files changed, 6 insertions(+), 29 deletions(-)
+
+diff --git a/Documentation/tutorial-script/0017-alice-bob-fixup.ed b/Documentation/tutorial-script/0017-alice-bob-fixup.ed
+index ad04eb7..1b06f4e 100644
+--- a/Documentation/tutorial-script/0017-alice-bob-fixup.ed
++++ b/Documentation/tutorial-script/0017-alice-bob-fixup.ed
+@@ -1,5 +1,5 @@
+-/^<<<<<<< Makefile/d
++/^<<<<<<< master/d
+ /^=======/,/^=======/+1d
+-/^>>>>>>> \.merge_file_/d
++/^>>>>>>> bob/d
+ w
+ q
+diff --git a/Documentation/tutorial-script/0021-bob-alice-fixup1.ed b/Documentation/tutorial-script/0021-bob-alice-fixup1.ed
+deleted file mode 100644
+index df703d5..0000000
+--- a/Documentation/tutorial-script/0021-bob-alice-fixup1.ed
++++ /dev/null
+@@ -1,4 +0,0 @@
+-/^<<<<<<< master/,/^=======/d
+-/^>>>>>>> origin/d
+-w
+-q
+diff --git a/Documentation/tutorial-script/0022-bob-alice-fixup2.ed b/Documentation/tutorial-script/0022-bob-alice-fixup2.ed
+deleted file mode 100644
+index d8c5746..0000000
+--- a/Documentation/tutorial-script/0022-bob-alice-fixup2.ed
++++ /dev/null
+@@ -1,5 +0,0 @@
+-/^#include "stack\.h"/+1d
+-/^#include "lexer\.h"/+1,/^#include "stack\.h"/d
+-/^<<<<<<< master/-1,/^>>>>>>> origin/d
+-w
+-q
+diff --git a/Documentation/tutorial-script/0023-bob-alice-fixup3.ed b/Documentation/tutorial-script/0023-bob-alice-fixup3.ed
+deleted file mode 100644
+index fea2fc7..0000000
+--- a/Documentation/tutorial-script/0023-bob-alice-fixup3.ed
++++ /dev/null
+@@ -1,4 +0,0 @@
+-/^#endif/s;^#endif.*;#endif /* STACK_H */;
+-w
+-q
+-
+diff --git a/Documentation/tutorial-script/script.sh b/Documentation/tutorial-script/script.sh
+index 0401954..f07dfc1 100755
+--- a/Documentation/tutorial-script/script.sh
++++ b/Documentation/tutorial-script/script.sh
+@@ -222,12 +222,13 @@ git merge "Integrate changes from Bob an
+ 
+ # Automatic 3-way merge fails! Have to do it step by step
+ 
++cg-reset
+ cg-merge bob && should_fail
+ 
+ # Merge fails:
+ 
+ #: ...
+-#: <<<<<<< Makefile
++#: <<<<<<< master
+ #:	$(CC) $(CFLAGS) $^ -lm -o $@
+ #: =======
+ #:	$(CC) $(CFLAGS) $^ -o $@
+@@ -235,7 +236,7 @@ cg-merge bob && should_fail
+ #: rpn.o: stack.h
+ #: stack.o: stack.h
+ #: lexer.o:	
+-#: >>>>>>> .merge_file_iNhznP
++#: >>>>>>> bob
+ 
+ ed Makefile < $TOP/0017-alice-bob-fixup.ed
+ 
+@@ -313,18 +314,7 @@ cg-fetch
+ git verify-tag rpn-0.4 && should_fail
+ 
+ # Everything's OK, integrate the changes
+-echo "Merge with 0.4" | cg-merge && should_fail
+-
+-# Merge conflicts in Makefile, rpn.c
+-ed Makefile < $TOP/0021-bob-alice-fixup1.ed
+-ed rpn.c    < $TOP/0022-bob-alice-fixup2.ed
+-# Resolve conflicting addition of two versions of stack.h
+-rm stack.h~master
+-mv stack.h~origin stack.h
+-cg-add stack.h
+-
+-# Now commit the whole
+-cg-commit -m "Merge with 0.4"
++cg-merge
+ 
+ # Great, we are done.
+ trap - exit
