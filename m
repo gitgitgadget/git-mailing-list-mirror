@@ -1,54 +1,69 @@
-From: "David S. Miller" <davem@davemloft.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Errors GITtifying GCC and Binutils
-Date: Thu, 23 Mar 2006 13:31:20 -0800 (PST)
-Message-ID: <20060323.133120.69312511.davem@davemloft.net>
-References: <Pine.LNX.4.64.0603230758260.26286@g5.osdl.org>
-	<BAYC1-PASMTP0912D2287AB923F3338969AEDE0@CEZ.ICE>
-	<Pine.LNX.4.64.0603231134160.26286@g5.osdl.org>
+Date: Thu, 23 Mar 2006 13:39:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603231319120.26286@g5.osdl.org>
+References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
+ <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <44223B90.3040500@zytor.com>
+ <1143128751.6850.35.camel@neko.keithp.com> <Pine.LNX.4.64.0603230758260.26286@g5.osdl.org>
+ <20060323210215.GH26071@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: seanlkml@sympatico.ca, keithp@keithp.com, hpa@zytor.com,
-	jbglaw@lug-owl.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 22:32:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Keith Packard <keithp@keithp.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 23 22:39:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMXPc-0005cL-9i
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 22:32:08 +0100
+	id 1FMXWz-00008b-Ul
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 22:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932065AbWCWVba (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 16:31:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932101AbWCWVba
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 16:31:30 -0500
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:32697
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S932065AbWCWVba (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Mar 2006 16:31:30 -0500
-Received: from localhost ([127.0.0.1] ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.60)
-	(envelope-from <davem@davemloft.net>)
-	id 1FMXOq-0003et-Eo; Thu, 23 Mar 2006 13:31:20 -0800
-To: torvalds@osdl.org
-In-Reply-To: <Pine.LNX.4.64.0603231134160.26286@g5.osdl.org>
-X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S932177AbWCWVjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 16:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932181AbWCWVjn
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 16:39:43 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:2532 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932177AbWCWVjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 16:39:42 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2NLdYDZ020222
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 23 Mar 2006 13:39:34 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2NLdX8U027868;
+	Thu, 23 Mar 2006 13:39:33 -0800
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20060323210215.GH26071@mythryan2.michonline.com>
+X-Spam-Status: No, hits=2 required=5 tests=PORN_WORD_OSDL4
+X-Spam-Level: **
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17875>
 
-From: Linus Torvalds <torvalds@osdl.org>
-Date: Thu, 23 Mar 2006 12:38:33 -0800 (PST)
 
-> Yeah, I'm not counting things like Eclipse etc. I'm talking about "plain 
-> SCM" environments, ie just basic SVN or CVS. What are we missing in that 
-> department? (The only thing I can think of is a diff colorizer, which some 
-> prople seem to really want).
 
-gitk does color the diffs already, or are we talking about some
-"side-by-side" multiple window thing showing "before" on the
-left and "after" on the right?
+On Thu, 23 Mar 2006, Ryan Anderson wrote:
+> 
+> Scott Collins (QT evangelist, incredibly smart guy) commented to me
+> sometime over the summer, that every new SCM was born out of someone's
+> desire to implement a new merge algorithm.  While I think that's too
+> simple, I think there have been an awful lot of academic SCMs out there.
 
-Given that the gitk author has also written diff colorizers in the
-past, I don't see providing this as being much of a problem :)
+The exact details are lost in antiquity, but I'm sure one of the defining 
+moments in time for CVS was Dick Grune saying "Merges? We don't need no 
+steenking merges! We'll just make branching difficult! Yeah, that's it! 
+Mwhahahhahhaaaa!".
+
+The rest is history.
+
+[ Really, the sad part is that you're probably right even when it comes to 
+  CVS. The #1 feature of CVS as defined by Brian Berliner in his CVS II 
+  paper was 'Concurrent access and conflict-resolution algorithms to 
+  guarantee that source changes are not "lost"'. ]
+
+			Linus
