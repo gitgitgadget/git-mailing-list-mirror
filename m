@@ -1,68 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cloning from sites with 404 overridden
-Date: Thu, 23 Mar 2006 12:45:19 -0800
-Message-ID: <7vwtek51r4.fsf@assigned-by-dhcp.cox.net>
-References: <20060322025921.1722.qmail@science.horizon.com>
-	<20060322172227.GO3997@reactrix.com>
-	<20060322183621.GP3997@reactrix.com>
-	<7vslpa8fld.fsf@assigned-by-dhcp.cox.net>
-	<7vacbi8eu1.fsf@assigned-by-dhcp.cox.net>
-	<20060323184351.GA3892@reactrix.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Thu, 23 Mar 2006 15:48:25 -0500
+Message-ID: <20060323204825.GE30176@spearce.org>
+References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org> <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <44223B90.3040500@zytor.com> <1143128751.6850.35.camel@neko.keithp.com> <Pine.LNX.4.64.0603230758260.26286@g5.osdl.org> <BAYC1-PASMTP0912D2287AB923F3338969AEDE0@CEZ.ICE> <Pine.LNX.4.64.0603231134160.26286@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 21:46:13 2006
+Cc: sean <seanlkml@sympatico.ca>, keithp@keithp.com, hpa@zytor.com,
+	jbglaw@lug-owl.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 23 21:49:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMWhA-0003Cl-0W
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 21:46:12 +0100
+	id 1FMWjp-0004IL-Il
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 21:48:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422691AbWCWUp0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 15:45:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422685AbWCWUp0
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 15:45:26 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:37092 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1422691AbWCWUpW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Mar 2006 15:45:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060323204520.QTGO6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 23 Mar 2006 15:45:20 -0500
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20060323184351.GA3892@reactrix.com> (Nick Hengeveld's message of
-	"Thu, 23 Mar 2006 10:43:51 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1422685AbWCWUsx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 15:48:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422692AbWCWUsx
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 15:48:53 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:19400 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1422685AbWCWUsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Mar 2006 15:48:51 -0500
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FMWjE-0002e6-0B; Thu, 23 Mar 2006 15:48:20 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 51A2320FB89; Thu, 23 Mar 2006 15:48:25 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0603231134160.26286@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17870>
 
-Nick Hengeveld <nickh@reactrix.com> writes:
+Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> On Thu, 23 Mar 2006, sean wrote:
+> > 
+> > lol, that sounds like a really good plan.  Perhaps as a two pronged effort
+> > its worth changing the notion that git is primarily "plumbing".   Adding
+> > some of the nice features of cogito and other "porcelains" into the core
+> > git might go a ways toward converting the few naysayers we don't kill.
+> 
+> Actually, as far as I can tell, git already has a hell of a lot more 
+> porcelain than pretty much any non-IDE type traditional SCM. Certainly 
+> more than CVS.
+> 
+> Yeah, I'm not counting things like Eclipse etc. I'm talking about "plain 
+> SCM" environments, ie just basic SVN or CVS. What are we missing in that 
+> department? (The only thing I can think of is a diff colorizer, which some 
+> prople seem to really want).
 
-> Seems like there are three cases to worry about:
->
-> 1) the server returns a 200 status and a text/html response instead of a
->    404, and the server's default content type is not text/html
-> 2) the server returns a 200 status and a text/html response instead of a
->    404, and the server's default content type is text/html
-> 3) the server returns a corrupt object from the repository
+A pretty native point-and-click Windows GUI so Windows users can
+use GIT without knowing how to actually use their computer.  :-)
 
-> I don't think there's a way to distinguish between #2 and #3, so all we
-> can really do is display as helpful an error message as possible.
+I'm not trying to bash Windows users.  I'm just saying that there's
+definately a large user base for SCMs such as CVS who just want
+to check in the latest version of a file they have to maintain.
+Many of these people are afraid of a command prompt.  Asking them
+to install Cygwin just to check in a file is a difficult challenge.
 
-The code behaves correctly the same way whether the server says
-404 or 200 with human readable "No such object", and this is
-just for formatting error messages, and to be honest I do not
-really care at this point.  I think the existing error message
-at the end of transfer we added recently should be sufficient.
+And even if a user is perfectly comfortable with a command prompt
+and could write one-line scripts faster than anyone else, sometimes
+users just prefer a GUI interface.
 
-> On a related note, I noticed that http-fetch will continue to try
-> inflating/sha1_updating the response after an inflate error has been
-> detected.  It's probably not a huge deal, but we could just error out
-> immediately at that point or at least stop the unnecessary processing.
+qgit probably comes close in this department but hasn't been packaged
+up into a pretty Windows installer.  :-)
 
-That would probably be more helpful.
+
+But your definately right; once the blame/annotate war settles out
+GIT will have pretty much everything one might need - except a good
+distributed bug/issue tracking type system.  :-)
+
+-- 
+Shawn.
