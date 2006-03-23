@@ -1,184 +1,125 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: Cloning from sites with 404 overridden
-Date: Thu, 23 Mar 2006 10:43:51 -0800
-Message-ID: <20060323184351.GA3892@reactrix.com>
-References: <20060322025921.1722.qmail@science.horizon.com> <20060322172227.GO3997@reactrix.com> <20060322183621.GP3997@reactrix.com> <7vslpa8fld.fsf@assigned-by-dhcp.cox.net> <7vacbi8eu1.fsf@assigned-by-dhcp.cox.net>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Thu, 23 Mar 2006 21:03:06 +0100
+Message-ID: <20060323200306.GG31387@lug-owl.de>
+References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org> <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <Pine.LNX.4.64.0603221717120.26286@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jt0yj30bxbg11sci"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 19:44:12 2006
+X-From: git-owner@vger.kernel.org Thu Mar 23 21:04:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMUmw-0004hO-4T
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 19:44:03 +0100
+	id 1FMW2K-0004nA-D8
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 21:04:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422647AbWCWSn7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 13:43:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422653AbWCWSn7
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 13:43:59 -0500
-Received: from 241.37.26.69.virtela.com ([69.26.37.241]:6255 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1422647AbWCWSn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Mar 2006 13:43:58 -0500
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k2NIhpqA007385;
-	Thu, 23 Mar 2006 10:43:51 -0800
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k2NIhpA0007383;
-	Thu, 23 Mar 2006 10:43:51 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1422670AbWCWUDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 15:03:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422672AbWCWUDJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 15:03:09 -0500
+Received: from lug-owl.de ([195.71.106.12]:28098 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S1422670AbWCWUDH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 15:03:07 -0500
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id 87748F003D; Thu, 23 Mar 2006 21:03:06 +0100 (CET)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7vacbi8eu1.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <Pine.LNX.4.64.0603221717120.26286@g5.osdl.org>
+X-Operating-System: Linux mail 2.6.12.3lug-owl
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17865>
-
-On Wed, Mar 22, 2006 at 11:22:14AM -0800, Junio C Hamano wrote:
-
-> You probably need only one bit here,...
-> ... and note if that is an HTML document or not.
-
-/me smacks self...
-
-> However the patch would not help when such a server also did a
-> "Sorry, did you mistype the URL?" HTML response, and I was
-> wondering how typical that would be.
-
-Seems like there are three cases to worry about:
-
-1) the server returns a 200 status and a text/html response instead of a
-   404, and the server's default content type is not text/html
-2) the server returns a 200 status and a text/html response instead of a
-   404, and the server's default content type is text/html
-3) the server returns a corrupt object from the repository
-
-I don't think there's a way to distinguish between #2 and #3, so all we
-can really do is display as helpful an error message as possible.
-
-We can detect #1 if there has been a previous successful loose object
-transfer by tracking whether the repo's default content type is
-text/html.  In such a case should http-fetch behave as if the server
-returned 404?  If there have been no successful loose object transfers,
-we'd have to respond as with #2.  This approach could potentially break
-if requests are load-balanced to servers with different
-misconfigurations - but I think trying to detect that is bending
-backwards a little too far.
-
-On a related note, I noticed that http-fetch will continue to try
-inflating/sha1_updating the response after an inflate error has been
-detected.  It's probably not a huge deal, but we could just error out
-immediately at that point or at least stop the unnecessary processing.
-
-Something like this?  Tested by cloning
-http://digilander.libero.it/mcostalba/scm/qgit.git
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17866>
 
 
-[PATCH] http-fetch: try to detect 404s from misconfigured servers
+--jt0yj30bxbg11sci
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Some HTTP server environments return a 200 status and text/html error
-document or a redirect to one rather than a 404 status if a loose
-object does not exist.  This patch tries to detect such a response
-and treat it as a 404.
+On Wed, 2006-03-22 17:28:23 -0800, Linus Torvalds <torvalds@osdl.org> wrote:
+> On Wed, 22 Mar 2006, Linus Torvalds wrote:
+> > This one-liner to cvsps.c seems to make sure we have an ancestor branch=
+=20
+> > for that "gdb-4.18-branch" branch, at least according to the cvsps outp=
+ut.=20
+>=20
+> The "git cvsimport" is still running, but at least it seems to be happily=
+=20
+> running further past the point it broke earlier.
 
-Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
+I've started it once again, too, with the one-liner added to Debian
+unstable's version of cvsps:
 
+Fetching gas/ChangeLog   v 1.479
+Update gas/ChangeLog: 250329 bytes
+Tree ID a6b48ebac02a4158d37bab17c54c667223ecd971
+Parent ID 4cabd2962031fd7ec6416580d84fb30a304969f3
+Committed patch 3742 (origin 2000-07-29 03:23:31)
+Commit ID 1910c20a44455db916a5c040663716a7389219bc
+Fetching winsup/cygwin/fhandler.h   v 1.16
+Update winsup/cygwin/fhandler.h: 25992 bytes
+Fetching winsup/cygwin/include/cygwin/cygwin_dll.h   v 1.2
+Update winsup/cygwin/include/cygwin/cygwin_dll.h: 3050 bytes
+Fetching winsup/cygwin/lib/cygwin_crt0.c   v 1.5
+Update winsup/cygwin/lib/cygwin_crt0.c: 926 bytes
+Tree ID 0c2c7e9d0846e5f42b0bebad8b27ce439ddefb73
+Parent ID 1910c20a44455db916a5c040663716a7389219bc
+Committed patch 3743 (origin 2000-07-29 04:19:24)
+Commit ID a15aac16f12061fbfef1be8f21b80a5076c8d605
+Fetching winsup/cygwin/ChangeLog   v 1.235
+Update winsup/cygwin/ChangeLog: 75391 bytes
+Fetching winsup/cygwin/dtable.cc   v 1.11
+Update winsup/cygwin/dtable.cc: 14399 bytes
+Fetching winsup/cygwin/environ.cc   v 1.17
+Update winsup/cygwin/environ.cc: 17190 bytes
+Fetching winsup/cygwin/winsup.h   v 1.22
+Update winsup/cygwin/winsup.h: 15828 bytes
+Tree ID f777977c2b138952bc5a9bc431eec3de99a5f7db
+Parent ID a15aac16f12061fbfef1be8f21b80a5076c8d605
+Committed patch 3744 (origin 2000-07-29 16:01:23)
+Commit ID 38b0ed94ef1c402b7b78ac6cad6c89ce189cd223
+Switching from origin to #CVSPS_NO_BRANCH
+usage: git-read-tree (<sha> | -m [--aggressive] [-u | -i] <sha1> [<sha2> [<=
+sha3>]])
+read-tree failed: 33024
 
----
+It seems there's a patch like
+http://www.gelato.unsw.edu.au/archives/git/0602/16278.html is missing?
+=2E..or we need a better cvsps.  Shall I add it and try again / try to
+continue, or give up on it for now?  Though it would be nice to have
+these two large and important source trees under GIT control :-)
 
- http-fetch.c |   24 ++++++++++++++++++++++--
- 1 files changed, 22 insertions(+), 2 deletions(-)
+MfG, JBG
 
-ab97429c5b0a4b4466ee0072f75706399e42b675
-diff --git a/http-fetch.c b/http-fetch.c
-index dc67218..bb75050 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -16,6 +16,7 @@ struct alt_base
- {
- 	char *base;
- 	int got_indices;
-+	int default_html_content_type;
- 	struct packed_git *packs;
- 	struct alt_base *next;
- };
-@@ -41,6 +42,7 @@ struct object_request
- 	CURLcode curl_result;
- 	char errorstr[CURL_ERROR_SIZE];
- 	long http_code;
-+	char html_content_type;
- 	unsigned char real_sha1[20];
- 	SHA_CTX c;
- 	z_stream stream;
-@@ -249,6 +251,9 @@ static void finish_object_request(struct
- 		unlink(obj_req->tmpfile);
- 		return;
- 	}
-+	if (obj_req->repo->default_html_content_type == -1)
-+		obj_req->repo->default_html_content_type =
-+			obj_req->html_content_type;
- 	obj_req->rename =
- 		move_temp_to_file(obj_req->tmpfile, obj_req->filename);
- 
-@@ -258,9 +263,15 @@ static void finish_object_request(struct
- 
- static void process_object_response(void *callback_data)
- {
-+	char *content_type;
- 	struct object_request *obj_req =
- 		(struct object_request *)callback_data;
- 
-+	curl_easy_getinfo(obj_req->slot->curl, CURLINFO_CONTENT_TYPE,
-+			  &content_type);
-+	if (content_type && !strcmp(content_type, "text/html"))
-+		obj_req->html_content_type = 1;
-+
- 	obj_req->curl_result = obj_req->slot->curl_result;
- 	obj_req->http_code = obj_req->slot->http_code;
- 	obj_req->slot = NULL;
-@@ -340,6 +351,7 @@ void prefetch(unsigned char *sha1)
- 	memcpy(newreq->sha1, sha1, 20);
- 	newreq->repo = alt;
- 	newreq->url = NULL;
-+	newreq->html_content_type = 0;
- 	newreq->local = -1;
- 	newreq->state = WAITING;
- 	snprintf(newreq->filename, sizeof(newreq->filename), "%s", filename);
-@@ -539,6 +551,7 @@ static void process_alternates_response(
- 				newalt->next = NULL;
- 				newalt->base = target;
- 				newalt->got_indices = 0;
-+				newalt->default_html_content_type = -1;
- 				newalt->packs = NULL;
- 				while (tail->next != NULL)
- 					tail = tail->next;
-@@ -835,8 +848,14 @@ static int fetch_object(struct alt_base 
- 				    obj_req->errorstr, obj_req->curl_result,
- 				    obj_req->http_code, hex);
- 	} else if (obj_req->zret != Z_STREAM_END) {
--		corrupt_object_found++;
--		ret = error("File %s (%s) corrupt", hex, obj_req->url);
-+		if (obj_req->html_content_type &&
-+		    !obj_req->repo->default_html_content_type)
-+			ret = -1; /* Be silent, looks like a 404 */
-+		else {
-+			corrupt_object_found++;
-+			ret = error("File %s (%s) corrupt",
-+				    sha1_to_hex(obj_req->sha1), obj_req->url);
-+		}
- 	} else if (memcmp(obj_req->sha1, obj_req->real_sha1, 20)) {
- 		ret = error("File %s has bad hash", hex);
- 	} else if (obj_req->rename < 0) {
-@@ -985,6 +1004,7 @@ int main(int argc, char **argv)
- 	alt = xmalloc(sizeof(*alt));
- 	alt->base = url;
- 	alt->got_indices = 0;
-+	alt->default_html_content_type = -1;
- 	alt->packs = NULL;
- 	alt->next = NULL;
- 
--- 
-1.2.4.gb1bc1d-dirty
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
+m Irak!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--jt0yj30bxbg11sci
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEIv76Hb1edYOZ4bsRAmtXAJ4k2XUVqDH9AJolZiiee5uWtSRmVwCgjigD
+OLtNBGByxD0RZi8o3SgRfyM=
+=KK/B
+-----END PGP SIGNATURE-----
+
+--jt0yj30bxbg11sci--
