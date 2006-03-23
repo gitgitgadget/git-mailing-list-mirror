@@ -1,57 +1,55 @@
-From: Rob Landley <rob@landley.net>
-Subject: Who do I report bugs in the git source web browser thing to?
-Date: Thu, 23 Mar 2006 11:43:17 -0500
-Message-ID: <200603231143.17762.rob@landley.net>
+From: "Josh Boyer" <jwboyer@gmail.com>
+Subject: Re: Who do I report bugs in the git source web browser thing to?
+Date: Thu, 23 Mar 2006 10:51:52 -0600
+Message-ID: <625fc13d0603230851r54557c4ai5e65c04fef2bffe5@mail.gmail.com>
+References: <200603231143.17762.rob@landley.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-X-From: git-owner@vger.kernel.org Thu Mar 23 17:43:20 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 23 17:53:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMStn-0004kj-BW
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 17:42:59 +0100
+	id 1FMT2u-00029f-Vl
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 17:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932484AbWCWQmu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 11:42:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932479AbWCWQmu
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 11:42:50 -0500
-Received: from dsl092-053-140.phl1.dsl.speakeasy.net ([66.92.53.140]:49800
-	"EHLO grelber.thyrsus.com") by vger.kernel.org with ESMTP
-	id S932481AbWCWQmt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 11:42:49 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by grelber.thyrsus.com (8.13.4/8.13.4) with ESMTP id k2NIS36b006674
-	for <git@vger.kernel.org>; Thu, 23 Mar 2006 13:28:03 -0500
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.3
+	id S1751299AbWCWQv6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 11:51:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWCWQv5
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 11:51:57 -0500
+Received: from wproxy.gmail.com ([64.233.184.203]:18161 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751299AbWCWQvx convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Mar 2006 11:51:53 -0500
+Received: by wproxy.gmail.com with SMTP id 69so491075wra
+        for <git@vger.kernel.org>; Thu, 23 Mar 2006 08:51:52 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SDXksadaPtIl5kWEqtOKWy4875u8OfaL/1ZKSq8geenqrs+59vkJHgq5DSoI8DvtVZHhEfH7E1XxDptvpivD14qNl2l04SznIf2gOywElMO3veZwlhSw2ZV0efzZqTyeb5B8AKCUbfTC4cLc7tfIweCYDJcXF1JNKn2M3oG81cA=
+Received: by 10.54.143.9 with SMTP id q9mr1420638wrd;
+        Thu, 23 Mar 2006 08:51:52 -0800 (PST)
+Received: by 10.54.66.5 with HTTP; Thu, 23 Mar 2006 08:51:52 -0800 (PST)
+To: "Rob Landley" <rob@landley.net>
+In-Reply-To: <200603231143.17762.rob@landley.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17862>
 
-When I go to kernel.org, click the tiny C next to linus's name to get the git 
-browser for the tree, click "tree", click the "usr" directory, and then click 
-"history" next to the file gen_init_cpio.c, it says this file appeared out of 
-thin air 59 minutes ago.
+On 3/23/06, Rob Landley <rob@landley.net> wrote:
+> When I go to kernel.org, click the tiny C next to linus's name to get the git
+> browser for the tree, click "tree", click the "usr" directory, and then click
+> "history" next to the file gen_init_cpio.c, it says this file appeared out of
+> thin air 59 minutes ago.
+>
+> This is not the case.
 
-This is not the case.
+Linus' tree only goes back to 2.6.12 or so.  I think you're just
+seeing the fact that it's the first commit to that file since it was
+initially imported.
 
->From this link:
-
-http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=tree;h=bc589b0ffba8941b7f7574b71ddec795e2217107;hb=b0e6e962992b76580f4900b166a337bad7c1e81b;f=usr
-
-I wind up with this link:
-
-http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=history;h=b0e6e962992b76580f4900b166a337bad7c1e81b;f=usr/gen_init_cpio.c
-
-Which shows exactly one change.
-
-Am I doing something wrong?
-
-Rob
--- 
-Never bet against the cheap plastic solution.
+josh
