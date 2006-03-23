@@ -1,53 +1,84 @@
-From: Rob Landley <rob@landley.net>
-Subject: Re: Who do I report bugs in the git source web browser thing to?
-Date: Thu, 23 Mar 2006 17:47:31 -0500
-Message-ID: <200603231747.32166.rob@landley.net>
-References: <200603231143.17762.rob@landley.net> <Pine.LNX.4.64.0603230856250.26286@g5.osdl.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] doc: add clarification of existing GPLv2 license terms
+ to manual pages
+Date: Fri, 24 Mar 2006 11:18:06 +1200
+Message-ID: <44232CAE.2040102@vilain.net>
+References: <20060323015847.4624.61707.stgit@localhost.localdomain> <20060323215759.GW18185@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 23:47:37 2006
+X-From: git-owner@vger.kernel.org Fri Mar 24 00:18:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMYaY-0004mg-98
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 23:47:30 +0100
+	id 1FMZ4W-0005ub-7w
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 00:18:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932538AbWCWWr1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 17:47:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932545AbWCWWr1
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 17:47:27 -0500
-Received: from dsl092-053-140.phl1.dsl.speakeasy.net ([66.92.53.140]:58535
-	"EHLO grelber.thyrsus.com") by vger.kernel.org with ESMTP
-	id S932538AbWCWWr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Mar 2006 17:47:26 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by grelber.thyrsus.com (8.13.4/8.13.4) with ESMTP id k2O0WKrd015695;
-	Thu, 23 Mar 2006 19:32:21 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.8.3
-In-Reply-To: <Pine.LNX.4.64.0603230856250.26286@g5.osdl.org>
-Content-Disposition: inline
+	id S932555AbWCWXSW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 18:18:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932554AbWCWXSW
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 18:18:22 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36998 "EHLO
+	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S932555AbWCWXSV
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Mar 2006 18:18:21 -0500
+Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
+	id 2E9B15388; Fri, 24 Mar 2006 11:18:14 +1200 (NZST)
+Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by watts.utsl.gen.nz (Postfix) with ESMTP id 29ABF3938;
+	Fri, 24 Mar 2006 11:18:07 +1200 (NZST)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060323215759.GW18185@pasky.or.cz>
+X-Enigmail-Version: 0.92.1.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.watts.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17882>
 
-On Thursday 23 March 2006 12:03 pm, Linus Torvalds wrote:
-> On Thu, 23 Mar 2006, Rob Landley wrote:
-> Pick another file, like the Makefile, to see what real history looks like
-> (or, better yet, go into a different directory that actually sees more
-> real work, like kernel/, and look at the history of files there).
+Petr Baudis wrote:
+> Dear diary, on Thu, Mar 23, 2006 at 02:58:50AM CET, I got a letter
+> where Sam Vilain <sam.vilain@catalyst.net.nz> said that...
+> 
+>>The GPLv3 is less ambiguous on these things, but a decision on the use
+>>of GPLv3 has already been deferred.
+> 
+> 
+> Was it?
+> 
+> My fulltext =git mailbox search doesn't yield any matches at all.
 
-I was trying to find out when symlink support went in to gen_init_cpio.c, so 
-that was the only file that interested me.  I forgot that the bitkeeper 
-history never got moved over.
+I refer to this section from COPYING:
 
-Thanks,
+ Note that the only valid version of the GPL as far as this project
+ is concerned is _this_ particular version of the license (ie v2, not
+ v2.2 or v3.x or whatever), unless explicitly otherwise stated.
 
-Rob
--- 
-Never bet against the cheap plastic solution.
+ HOWEVER, in order to allow a migration to GPLv3 if that seems like
+ a good idea, I also ask that people involved with the project make
+ their preferences known. In particular, if you trust me to make that
+ decision, you might note so in your copyright message, ie something
+ like
+
+        This file is licensed under the GPL v2, or a later version
+        at the discretion of Linus.
+
+  might avoid issues. But we can also just decide to synchronize and
+  contact all copyright holders on record if/when the occasion arises.
+
+                        Linus Torvalds
+
+This may become problematic if any of the copyright holders start
+becoming Old Ones or otherwise not being contactable...
+
+Sam.
