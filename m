@@ -1,88 +1,87 @@
 From: Keith Packard <keithp@keithp.com>
-Subject: Re: [RFC] Make dot-counting ignore ".1" at the end
-Date: Wed, 22 Mar 2006 23:17:50 -0800
-Message-ID: <1143098270.6850.29.camel@neko.keithp.com>
-References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org>
-	 <Pine.LNX.4.64.0603221746300.26286@g5.osdl.org>
-	 <1143095182.6850.23.camel@neko.keithp.com>
-	 <Pine.LNX.4.64.0603222232210.26286@g5.osdl.org>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Thu, 23 Mar 2006 07:45:51 -0800
+Message-ID: <1143128751.6850.35.camel@neko.keithp.com>
+References: <20060322133337.GU20746@lug-owl.de>
+	 <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
+	 <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org>
+	 <44223B90.3040500@zytor.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-J3MKJ6sGm1ptNnGdgAqG"
-Cc: keithp@keithp.com, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 23 08:18:31 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-M/6r8Cr6FDLTLbpzbiya"
+Cc: keithp@keithp.com, Linus Torvalds <torvalds@osdl.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 23 16:46:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMK5L-0005ON-Ps
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 08:18:21 +0100
+	id 1FMS18-0005bs-FS
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 16:46:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965290AbWCWHSQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 02:18:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965291AbWCWHSQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 02:18:16 -0500
-Received: from home.keithp.com ([63.227.221.253]:23819 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S965290AbWCWHSQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 02:18:16 -0500
+	id S932118AbWCWPq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 10:46:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932290AbWCWPq1
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 10:46:27 -0500
+Received: from home.keithp.com ([63.227.221.253]:38672 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S932118AbWCWPq0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 10:46:26 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id BE2AD130020;
-	Wed, 22 Mar 2006 23:18:14 -0800 (PST)
+	by keithp.com (Postfix) with ESMTP id 20B78130020;
+	Thu, 23 Mar 2006 07:46:14 -0800 (PST)
 Received: from keithp.com ([127.0.0.1])
 	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 02219-03; Wed, 22 Mar 2006 23:18:14 -0800 (PST)
+	with LMTP id 05632-03; Thu, 23 Mar 2006 07:46:13 -0800 (PST)
 Received: by keithp.com (Postfix, from userid 1033)
-	id 0888B13001F; Wed, 22 Mar 2006 23:18:13 -0800 (PST)
+	id 6866913001F; Thu, 23 Mar 2006 07:46:13 -0800 (PST)
 Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id D0AC214001;
-	Wed, 22 Mar 2006 23:18:13 -0800 (PST)
+	by keithp.com (Postfix) with ESMTP id 4637914002;
+	Thu, 23 Mar 2006 07:46:13 -0800 (PST)
 Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 4FD8E6AC1BF; Wed, 22 Mar 2006 23:17:51 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603222232210.26286@g5.osdl.org>
+	id 837AE6AC1BF; Thu, 23 Mar 2006 07:45:52 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <44223B90.3040500@zytor.com>
 X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17859>
 
 
---=-J3MKJ6sGm1ptNnGdgAqG
+--=-M/6r8Cr6FDLTLbpzbiya
 Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2006-03-22 at 22:34 -0800, Linus Torvalds wrote:
+On Wed, 2006-03-22 at 22:09 -0800, H. Peter Anvin wrote:
+> Linus Torvalds wrote:
+> >=20
+> > It _seems_ that the reason for that is that cvsps considers a revision=20
+> > number of 1.1.1.1 to have a "dot depth" of 0, for some really strange=20
+> > reason (it's a total special case).
+> >=20
+>=20
+> Probably because in 99% of all cases, revision 1.1.1.1 is the result of=20
+> a "cvs import".
 
-> With that in place (the "make sure we have a proper ancestor branch"=20
-> thing), a "git cvsimport" of the binutils tree seems to be working, at=20
-> least to the point that it seems to have imported 1400+ commits without=20
-> undue complaints. But hey, I'm looking forward to something less=20
-> hacked-together.
+All odd branches are imports. Internal branches are even. So, 1.1.3.1
+would be the first import along the second vendor branch from the trunk.
 
-Yeah, me too. Attempts at importing some of the X.org trees have
-resulted in 'less than ideal' repositories.
-
-I stuck a couple of hacks in cvsps myself to get it to deal with=20
-X.org trees; the first was to increase a static buffer to 'large enough'
-to hold X.org-style commit messages (which are enormous).
-
-http://gitweb.freedesktop.org/?p=3Dfreedesktop-cvsps;a=3Dsummary
-
-shows both minor patches. I should have let people know about these
-earlier...
+Note that vendor branches are always made from the first revision along
+a branch, independent of when they occur, so you'll get 1.1.3.1 even if
+the head revision along the trunk is 1.246.
 
 --=20
 keith.packard@intel.com
 
---=-J3MKJ6sGm1ptNnGdgAqG
+--=-M/6r8Cr6FDLTLbpzbiya
 Content-Type: application/pgp-signature; name=signature.asc
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.2.2 (GNU/Linux)
 
-iD8DBQBEIkueQp8BWwlsTdMRAjLeAJ40vdgRECN1VVizl+Gqt6T4t9bwGQCfSAtb
-gfaW1Pg/64gDIVniEHlkOMc=
-=oSdP
+iD8DBQBEIsKvQp8BWwlsTdMRAqsiAJ908Cv3k8CDRUSGmdRVfOmsGnRC0QCeL3/R
+c5uK1iD7ptB9ft87bUbXO3k=
+=4Py0
 -----END PGP SIGNATURE-----
 
---=-J3MKJ6sGm1ptNnGdgAqG--
+--=-M/6r8Cr6FDLTLbpzbiya--
