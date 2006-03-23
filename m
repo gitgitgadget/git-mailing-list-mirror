@@ -1,56 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Question about possible git races
-Date: Wed, 22 Mar 2006 17:46:48 -0800
-Message-ID: <7vmzfi53w7.fsf@assigned-by-dhcp.cox.net>
-References: <200603201724.12442.astralstorm@o2.pl>
-	<7vacbi6m91.fsf@assigned-by-dhcp.cox.net>
-	<200603230222.38978.astralstorm@o2.pl>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: [RFC] Make dot-counting ignore ".1" at the end
+Date: Wed, 22 Mar 2006 17:50:23 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603221746300.26286@g5.osdl.org>
+References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 02:47:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 23 02:50:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMEun-0001nd-7e
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 02:47:06 +0100
+	id 1FMEyB-0004Lq-Oj
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 02:50:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbWCWBq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Mar 2006 20:46:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbWCWBq6
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 20:46:58 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:15059 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750705AbWCWBq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Mar 2006 20:46:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060323014650.RENP26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 22 Mar 2006 20:46:50 -0500
-To: Radoslaw Szkodzinski <astralstorm@o2.pl>
-In-Reply-To: <200603230222.38978.astralstorm@o2.pl> (Radoslaw Szkodzinski's
-	message of "Thu, 23 Mar 2006 02:22:34 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751053AbWCWBu3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Mar 2006 20:50:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbWCWBu3
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Mar 2006 20:50:29 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:231 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750990AbWCWBu3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Mar 2006 20:50:29 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2N1oNDZ024599
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 22 Mar 2006 17:50:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2N1oNwX006592;
+	Wed, 22 Mar 2006 17:50:23 -0800
+To: David Mansfield <cvsps@dm.cobite.com>
+In-Reply-To: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17845>
 
-Radoslaw Szkodzinski <astralstorm@o2.pl> writes:
 
-> For me fetch = git-*-fetch. Which in turn calls git-receive-pack.
+I'm not 100% sure this is appropriate, but in general, I think "<rev>" and 
+"<rev>.1" should be considered the same thing, no? Which implies that 
+"1.1" and "1.1.1.1" are all the same thing, and collapse to just "1", ie a 
+zero dot-count. They are all the same version, after all, no?
 
-Does anything other than git-send-pack call git-receive-pack?
+This gets rid of the insane (?) special case of "1.1.1.1" that exists 
+there now, since it's now no longer a special case.
 
-For fetch, git-fetch-pack is called from the core level, but it
-does not update refs itself.  It writes out enough information
-to its standard output so that the script calling it can update
-the refs.  So at the core level there cannot be any race, but
-that does not necessarily mean existing scripts are race free.
+I also wonder if trailing ".1" revisions should be ignored when comparing 
+two revisions.
 
-Our barebone Porcelainish scripts _do_ use update-ref to do the
-same lock - re-read - rename-to-update cycle when updating the
-refs using that information, but that is something you
-explicitly said you are not interested in ;-).
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+Yeah, I don't know RCS file logic. This may be completely broken.
+
+diff --git a/cvsps.c b/cvsps.c
+index 2695a0f..2ad1595 100644
+--- a/cvsps.c
++++ b/cvsps.c
+@@ -2357,9 +2357,16 @@ static int revision_affects_branch(CvsFi
+ static int count_dots(const char * p)
+ {
+     int dots = 0;
++    int len = strlen(p);
+ 
+-    while (*p)
+-	if (*p++ == '.')
++    while (len > 2) {
++	if (memcmp(p+len-2, ".1", 2))
++		break;
++	len -= 2;
++    }
++
++    while (len)
++	if (p[--len] == '.')
+ 	    dots++;
+ 
+     return dots;
+@@ -2613,7 +2620,7 @@ static void determine_branch_ancestor(Pa
+ 	/* HACK: we sometimes pretend to derive from the import branch.  
+ 	 * just don't do that.  this is the easiest way to prevent... 
+ 	 */
+-	d2 = (strcmp(rev->rev, "1.1.1.1") == 0) ? 0 : count_dots(rev->rev);
++	d2 = count_dots(rev->rev);
+ 	
+ 	if (d2 > d1)
+ 	    head_ps->ancestor_branch = rev->branch;
