@@ -1,53 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Thu, 23 Mar 2006 12:42:20 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603231239020.26286@g5.osdl.org>
-References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
- <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <Pine.LNX.4.64.0603221717120.26286@g5.osdl.org>
- <20060323200306.GG31387@lug-owl.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cloning from sites with 404 overridden
+Date: Thu, 23 Mar 2006 12:45:19 -0800
+Message-ID: <7vwtek51r4.fsf@assigned-by-dhcp.cox.net>
+References: <20060322025921.1722.qmail@science.horizon.com>
+	<20060322172227.GO3997@reactrix.com>
+	<20060322183621.GP3997@reactrix.com>
+	<7vslpa8fld.fsf@assigned-by-dhcp.cox.net>
+	<7vacbi8eu1.fsf@assigned-by-dhcp.cox.net>
+	<20060323184351.GA3892@reactrix.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 23 21:44:00 2006
+X-From: git-owner@vger.kernel.org Thu Mar 23 21:46:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMWet-00024A-TJ
-	for gcvg-git@gmane.org; Thu, 23 Mar 2006 21:43:52 +0100
+	id 1FMWhA-0003Cl-0W
+	for gcvg-git@gmane.org; Thu, 23 Mar 2006 21:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422680AbWCWUmr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 15:42:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422686AbWCWUmq
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 15:42:46 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:43984 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422680AbWCWUmj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 15:42:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2NKgMDZ016885
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 23 Mar 2006 12:42:22 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2NKgK88018628;
-	Thu, 23 Mar 2006 12:42:21 -0800
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20060323200306.GG31387@lug-owl.de>
-X-Spam-Status: No, hits=0.8 required=5 tests=UPPERCASE_25_50
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422691AbWCWUp0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 15:45:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422685AbWCWUp0
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 15:45:26 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:37092 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1422691AbWCWUpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Mar 2006 15:45:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060323204520.QTGO6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 23 Mar 2006 15:45:20 -0500
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20060323184351.GA3892@reactrix.com> (Nick Hengeveld's message of
+	"Thu, 23 Mar 2006 10:43:51 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17869>
 
+Nick Hengeveld <nickh@reactrix.com> writes:
 
-
-On Thu, 23 Mar 2006, Jan-Benedict Glaw wrote:
+> Seems like there are three cases to worry about:
 >
-> Switching from origin to #CVSPS_NO_BRANCH
+> 1) the server returns a 200 status and a text/html response instead of a
+>    404, and the server's default content type is not text/html
+> 2) the server returns a 200 status and a text/html response instead of a
+>    404, and the server's default content type is text/html
+> 3) the server returns a corrupt object from the repository
 
-Ahh. I had some other changes to my cvsps, so I never saw this. I just 
-turned the #CVSPS_NO_BRANCH thing into HEAD.
+> I don't think there's a way to distinguish between #2 and #3, so all we
+> can really do is display as helpful an error message as possible.
 
-		Linus
+The code behaves correctly the same way whether the server says
+404 or 200 with human readable "No such object", and this is
+just for formatting error messages, and to be honest I do not
+really care at this point.  I think the existing error message
+at the end of transfer we added recently should be sufficient.
+
+> On a related note, I noticed that http-fetch will continue to try
+> inflating/sha1_updating the response after an inflate error has been
+> detected.  It's probably not a huge deal, but we could just error out
+> immediately at that point or at least stop the unnecessary processing.
+
+That would probably be more helpful.
