@@ -1,76 +1,81 @@
-From: Panagiotis Issaris <takis@issaris.org>
-Subject: [BUG] make test (t3600-rm.sh) fails
-Date: Fri, 24 Mar 2006 11:14:25 +0100
-Message-ID: <4423C681.3000302@issaris.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cogito: Avoid slowness when timewarping large trees.
+Date: Fri, 24 Mar 2006 02:21:25 -0800
+Message-ID: <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net>
+References: <20060324084423.GA30213@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Mar 24 11:14:41 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 24 11:21:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMjJS-0007Oa-NT
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 11:14:35 +0100
+	id 1FMjQA-0008PX-NG
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 11:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751531AbWCXKOb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 05:14:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751538AbWCXKOb
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 05:14:31 -0500
-Received: from alpha.uhasselt.be ([193.190.2.30]:16839 "EHLO alpha.uhasselt.be")
-	by vger.kernel.org with ESMTP id S1751531AbWCXKOb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 05:14:31 -0500
-Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
-	by alpha.uhasselt.be (Postfix) with ESMTP id 4A3101AB1A2;
-	Fri, 24 Mar 2006 11:14:26 +0100 (CET)
-Received: from [172.18.16.239] (edm-006.edm.uhasselt.be [193.190.10.6])
-	by alpha.uhasselt.be (Postfix) with ESMTP id 9BFC01AB17E;
-	Fri, 24 Mar 2006 11:14:25 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
+	id S1751622AbWCXKV1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 05:21:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbWCXKV1
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 05:21:27 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54160 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751617AbWCXKV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 05:21:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060324102126.IEBY26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 24 Mar 2006 05:21:26 -0500
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060324084423.GA30213@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 24 Mar 2006 03:44:23 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17905>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Just a small report that "make test" fails on my system on the current 
-git git tree:
+> tree_timewarp was calling read, egrep, and rm in an O(N) loop where N is
+> the number of changed files between two trees. This caused a bottleneck
+> when seeking/switching/merging between trees with many changed files.
+>...
+> ---
+>
+>  cg-Xlib |    9 +++------
+>  1 files changed, 3 insertions(+), 6 deletions(-)
+>
+> a9a160c0bd63973c53ba3aa74650728135d23ac7
+> diff --git a/cg-Xlib b/cg-Xlib
+> index a2f28cf..ceddeeb 100644
+> --- a/cg-Xlib
+> +++ b/cg-Xlib
+> @@ -345,12 +345,9 @@ tree_timewarp()
+>  
+>  	# Kill gone files
+>  	git-diff-tree -r "$base" "$branch" |
+> ...
+> +		# match ":100755 000000 14d43b1abf... 000000000... D"
+> +		sed -ne 's/^:\([^ ][^ ]* \)\{4\}D\t//p' |
+> +		xargs rm --
+>  	git-checkout-index -u -f -a
 
-...
-* passed all 3 test(s)
-*** t3600-rm.sh ***
-Committing initial tree e5c556e46aae6124ff4a2a466c95004e92d9a2e4
-*   ok 1: Pre-check that foo exists and is in index before git-rm foo
-*   ok 2: Test that git-rm foo succeeds
-*   ok 3: Post-check that foo exists but is not in index after git-rm foo
-*   ok 4: Pre-check that bar exists and is in index before "git-rm -f bar"
-*   ok 5: Test that "git-rm -f bar" succeeds
-*   ok 6: Post-check that bar does not exist and is not in index after 
-"git-rm -f bar"
-*   ok 7: Test that "git-rm -- -q" succeeds (remove a file that looks 
-like an option)
-*   ok 8: Test that "git-rm -f" succeeds with embedded space, tab, or 
-newline characters.
-* FAIL 9: Test that "git-rm -f" fails if its rm fails
-        git-rm -f baz
-*   ok 10: When the rm in "git-rm -f" fails, it should not remove the 
-file from the index
-* failed 1 among 10 test(s)
-make[2]: *** [t3600-rm.sh] Error 1
-make[2]: Leaving directory `/usr/local/src/git/t'
-make[1]: *** [test] Error 2
-make[1]: Leaving directory `/usr/local/src/git'
-make: *** [build-arch-stamp] Error 2
+Metainformation fields are internally separated with SP and a
+TAB comes before pathname; you can just say:
 
+	sed -ne 's/^:[^	]* D	//p'
 
-My system:
-Ubuntu 5.10 aka Breezy
-Linux issaris 2.6.15.060103 #1 Tue Jan 3 14:27:55 CET 2006 i686 GNU/Linux
-model name      : Intel(R) Pentium(R) 4 CPU 3.20GHz
+there (whitespace inside [] and after D are TAB; one before D is
+a SP).  You might also want to consider "xargs rm -f --", BTW.
 
-With friendly regards,
-Takis
+However, I wonder why it does not do this instead:
+
+	... stash away the local changes
+	git-read-tree -m "$base" ;# reset the index to $base
+
+	# switch to $branch -- removing gone files as well
+	git-read-tree -m -u "$base" "$branch"
+
+Then you can also lose diff-tree and checkout-index there.
