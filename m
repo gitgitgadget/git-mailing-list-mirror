@@ -1,109 +1,60 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Thu, 23 Mar 2006 22:12:58 -0800
-Message-ID: <1143180778.6850.55.camel@neko.keithp.com>
-References: <20060322133337.GU20746@lug-owl.de>
-	 <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
-	 <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org>
-	 <Pine.LNX.4.64.0603221717120.26286@g5.osdl.org>
-	 <20060323200306.GG31387@lug-owl.de>  <20060324003944.GA28652@pe.Belkin>
+From: Greg KH <greg@kroah.com>
+Subject: Re: Fw: [PATCH 31/49] PCI: PCI/Cardbus cards hidden, needs pci=assign-busses to fix
+Date: Thu, 23 Mar 2006 22:17:06 -0800
+Message-ID: <20060324061706.GA11248@kroah.com>
+References: <20060323161521.28a874e6.akpm@osdl.org> <20060324002930.GA21184@kroah.com> <20060323163844.5fda7589.akpm@osdl.org> <20060324004654.GA19763@kroah.com> <7vbqvw3a62.fsf@assigned-by-dhcp.cox.net> <20060323175126.7ff71032.akpm@osdl.org> <7v3bh837cs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-50VyWrdbehkogJK4j0KN"
-Cc: keithp@keithp.com, Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 07:15:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Mar 24 07:19:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMfaA-0008ER-Ao
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 07:15:34 +0100
+	id 1FMfde-0000BE-Is
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 07:19:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423181AbWCXGO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 01:14:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423163AbWCXGN4
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 01:13:56 -0500
-Received: from home.keithp.com ([63.227.221.253]:24594 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1423181AbWCXGNa (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 01:13:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 922FC130020;
-	Thu, 23 Mar 2006 22:13:23 -0800 (PST)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 15087-01-4; Thu, 23 Mar 2006 22:13:23 -0800 (PST)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 47DFB13001F; Thu, 23 Mar 2006 22:13:23 -0800 (PST)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id ECA3B14001;
-	Thu, 23 Mar 2006 22:13:22 -0800 (PST)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 212D76AC1BF; Thu, 23 Mar 2006 22:13:00 -0800 (PST)
-To: Chris Shoemaker <c.shoemaker@cox.net>
-In-Reply-To: <20060324003944.GA28652@pe.Belkin>
-X-Mailer: Evolution 2.4.2.1 
+	id S1751022AbWCXGTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 01:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbWCXGTH
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 01:19:07 -0500
+Received: from mail.kroah.org ([69.55.234.183]:24029 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S1751022AbWCXGTF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 01:19:05 -0500
+Received: from [192.168.0.128] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k2O6J2K08493;
+	Thu, 23 Mar 2006 22:19:02 -0800
+Received: from greg by press.kroah.org with local (masqmail 0.2.19) id
+ 1FMfbf-30L-00; Thu, 23 Mar 2006 22:17:07 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v3bh837cs.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17900>
 
+On Thu, Mar 23, 2006 at 06:27:15PM -0800, Junio C Hamano wrote:
+> Andrew Morton <akpm@osdl.org> writes:
+> 
+> > We wouldn't want to attempt to mix this concept up with email envelopes or
+> > email headers or anything like that.  The authorship is an attribute of the
+> > patch, and has nothing to do with how it was transported, stored or
+> > anything like that.
+> 
+> Fair enough.  This is the approach I called "the second best" in
+> my message but I am inclined to agree with you.
+> 
+> This was tested once by sending myself two patches.
 
---=-50VyWrdbehkogJK4j0KN
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Oops, just saw this after I sent out the last set of patches.  It looks
+good to me, I'll try it out next time.
 
-On Thu, 2006-03-23 at 19:39 -0500, Chris Shoemaker wrote:
-> On Thu, Mar 23, 2006 at 09:03:06PM +0100, Jan-Benedict Glaw wrote:
-> > On Wed, 2006-03-22 17:28:23 -0800, Linus Torvalds <torvalds@osdl.org> w=
-rote:
-> > > On Wed, 22 Mar 2006, Linus Torvalds wrote:
-> > > > This one-liner to cvsps.c seems to make sure we have an ancestor br=
-anch=20
-> > > > for that "gdb-4.18-branch" branch, at least according to the cvsps =
-output.=20
-> > >=20
-> > > The "git cvsimport" is still running, but at least it seems to be hap=
-pily=20
-> > > running further past the point it broke earlier.
-> >=20
-> > I've started it once again, too, with the one-liner added to Debian
-> > unstable's version of cvsps:
-> >=20
-> > It seems there's a patch like
-> > http://www.gelato.unsw.edu.au/archives/git/0602/16278.html is missing?
-> > ...or we need a better cvsps.  Shall I add it and try again / try to
-> > continue, or give up on it for now?  Though it would be nice to have
-> > these two large and important source trees under GIT control :-)
+And yes, I did write the original version of this perl script, but it's
+been fixed up and made useful by Ryan.
 
-I'm busy writing a new import tool to get X into git; I've got it
-generating complete revision trees in memory, and dumping them in
-graphviz form. I'd sure be interested to see how well this works with
-other ancient and broken CVS trees. Once I've got it dealing with
-current X.org CVS correctly (or, at least, reasonably), I'll finish it
-up and get it to actually generate the repository.
+thanks,
 
-git://git.freedesktop.org/~keithp/parsecvs
-
-Usage is completely lame at present -- a list of ,v file names either on
-the command line or via stdin (one name per line). The .dot file is
-output on stdout, with some diagnostics on stderr.
-
-Pipe this through 'dot -Tsvg' and you'll get a .svg file which can be
-viewed with inkscape. They're generally immense...
-
---=20
-keith.packard@intel.com
-
---=-50VyWrdbehkogJK4j0KN
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQBEI43qQp8BWwlsTdMRAmN5AJ4xkHesW4lQyNceOB9nZa8vQkJLZQCePNgi
-Wfmg3iQ7QOSTRprLvaA2RNU=
-=0zx/
------END PGP SIGNATURE-----
-
---=-50VyWrdbehkogJK4j0KN--
+greg k-h
