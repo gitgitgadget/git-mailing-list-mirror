@@ -1,58 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: History rewriting swiss army knife
-Date: Fri, 24 Mar 2006 14:47:43 -0800
-Message-ID: <7vek0rzchc.fsf@assigned-by-dhcp.cox.net>
-References: <20060324140831.GY18185@pasky.or.cz>
+From: Radoslaw Szkodzinski <astralstorm@o2.pl>
+Subject: Question about git-ls-files
+Date: Fri, 24 Mar 2006 23:49:47 +0100
+Message-ID: <200603242349.54578.astralstorm@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 23:48:12 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1383905.BrvFsiUK6t";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Mar 24 23:53:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMv4e-0004V5-G2
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 23:48:04 +0100
+	id 1FMv9z-0005NE-I8
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 23:53:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932175AbWCXWsA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 17:48:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWCXWsA
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 17:48:00 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:64944 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932175AbWCXWr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 17:47:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060324224759.DLCW20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 24 Mar 2006 17:47:59 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060324140831.GY18185@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 24 Mar 2006 15:08:31 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964801AbWCXWxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 17:53:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932196AbWCXWxc
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 17:53:32 -0500
+Received: from mx2.go2.pl ([193.17.41.42]:45011 "EHLO poczta.o2.pl")
+	by vger.kernel.org with ESMTP id S932194AbWCXWxb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 17:53:31 -0500
+Received: from zen.localdomain (host-81-190-201-167.gorzow.mm.pl [81.190.201.167])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by poczta.o2.pl (Postfix) with ESMTP id EA33A74807C
+	for <git@vger.kernel.org>; Fri, 24 Mar 2006 23:53:29 +0100 (CET)
+Received: from zen.localdomain ([192.168.0.1])
+	by zen.localdomain with esmtpa (Exim 4.60)
+	(envelope-from <astralstorm@o2.pl>)
+	id 1FMv6i-0007t6-V8
+	for git@vger.kernel.org; Fri, 24 Mar 2006 23:50:12 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17942>
 
-Petr Baudis <pasky@suse.cz> writes:
+--nextPart1383905.BrvFsiUK6t
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
->   It's never been so easy before - I've written cg-admin-rewritehist,
-> which will execute your filters for each commit (which can rewrite the
-> tree contents, just the tree itself through the index, committer/author
-> information and commit message) while the script will obviously preserve
-> all the other information like merges, author/committer information etc.
+git-ls-files is a very useful command to list various types of files.
 
-Hmph.  The above description sounds like you are not allowing
-the user's custom script to drop existing parent (or graft a new
-one) while rewriting.  I have not looked at how you are
-interfacing with user's custom script, but I sort-of expected
-you to throw a commit at it from older to newer (i.e. topo-order
-in reverse), along with the names of already re-written commit
-objects that are parents of taht commit, and have it build a
-rewritten commit and report its object name back to you.
+However, it has some weird behaviour.
 
-But it sounds like a useful tool in certain situations -- I
-sounded mildly negative last night, but after you gave an
-example of cleaning up a half-botched import, I changed my mind.
+Let's say someone removed the file and not updated the index yet.
+I want to get status for all files in the directory, so I launch git-ls-fil=
+es=20
+=2Dt -m -d -o, and I get:
+
+R removed-file
+C removed-file
+? something-else
+
+(it looks even better if I call it w/o -t)
+
+If the file is removed, then marking it as changed is redundant.
+A removed file cannot be unchanged.
+
+This behaviour makes for slow parsing, because to get the changed files whi=
+ch=20
+still exist one has to at least skip items (or uniquify the list). This=20
+shouldn't be needed.
+
+Removed files should of course still be listed as changed if there's no -d=
+=20
+parameter.
+
+=2D-=20
+GPG Key id:  0xD1F10BA2
+=46ingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
+
+--nextPart1383905.BrvFsiUK6t
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.1 (GNU/Linux)
+
+iD8DBQBEJHeSlUMEU9HxC6IRAn8sAJ40INXdvRNJsnvk3Ukghe0pFPq/uQCdH2Yl
+jEHrl1z+jNYPimxB7a6eqs0=
+=oFeE
+-----END PGP SIGNATURE-----
+
+--nextPart1383905.BrvFsiUK6t--
