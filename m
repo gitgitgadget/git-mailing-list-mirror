@@ -1,65 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC] Silent File Mods Being Committed
-Date: Fri, 24 Mar 2006 02:12:17 +0100
-Message-ID: <20060324011217.GP19263@pasky.or.cz>
-References: <E1FMH3o-0001B5-Dw@jdl.com> <7vek0t68we.fsf@assigned-by-dhcp.cox.net> <20060323214710.GV18185@pasky.or.cz> <7vk6ak4tzp.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Fw: [PATCH 31/49] PCI: PCI/Cardbus cards hidden, needs pci=assign-busses to fix
+Date: Thu, 23 Mar 2006 17:26:29 -0800
+Message-ID: <7vbqvw3a62.fsf@assigned-by-dhcp.cox.net>
+References: <20060323161521.28a874e6.akpm@osdl.org>
+	<20060324002930.GA21184@kroah.com>
+	<20060323163844.5fda7589.akpm@osdl.org>
+	<20060324004654.GA19763@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@jdl.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 02:12:31 2006
+Cc: Andrew Morton <akpm@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 24 02:26:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMaqm-0003Gq-07
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 02:12:24 +0100
+	id 1FMb4W-0005du-HE
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 02:26:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422946AbWCXBMT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 20:12:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422948AbWCXBMT
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 20:12:19 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:197 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422946AbWCXBMS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 20:12:18 -0500
-Received: (qmail 24511 invoked by uid 2001); 24 Mar 2006 02:12:17 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vk6ak4tzp.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1422969AbWCXB0d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 20:26:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422970AbWCXB0d
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 20:26:33 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:51946 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1422969AbWCXB0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Mar 2006 20:26:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060324012630.YYLI6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 23 Mar 2006 20:26:30 -0500
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20060324004654.GA19763@kroah.com> (Greg KH's message of "Thu, 23
+	Mar 2006 16:46:54 -0800")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17895>
 
-Dear diary, on Fri, Mar 24, 2006 at 12:32:58AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > Dear diary, on Thu, Mar 23, 2006 at 06:13:21AM CET, I got a letter
-> > where Junio C Hamano <junkio@cox.net> said that...
-> >>  (2) audit all the scripts to make sure they do not get upset if
-> >>      we add trailing +/- to the status letter, and do that
-> >>      unconditionally, like the attached patch does.
-> >
-> > Cogito will get upset since we assume the mode field is one-char in our
-> > regexps, and when we don't, we compare the mode field with strings and
-> > that would obviously fail if you add random stuff to it.
-> >
-> > Otherwise, I like this idea, though.
-> 
-> Likewise.  If it was not obvious, I am not going to commit that
-> myself.  If jdl or somebody cares enough, he or she can prepare
-> a a set of patches to git-core, Cogito and StGIT (at least these
-> three should be covered) to teach them the trailing +/- letter,
-> _and_ parrot my patch back at me.  Hint, hint...
+Greg KH <greg@kroah.com> writes:
 
-Well, or it can just add the option to Core Git. Just unconditional
-implementation of (2) is no-go because it would break backwards
-compatibility, which is baaad.
+> I'm using:
+> 	git format-patch -n origin..HEAD
+> to generate the raw patch files, and then:
+> 	git-send-email --in-reply-to "<some_message_id>" --to some_mailing_list@somewhere.com
+>
+> fixing the obvious message id and mailing list address to be the correct
+> one depending on the subsystem the patches are from.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+I think format-patch does the right thing (I wrote it), but I am
+not sure what send-email does wrt the From: header.  Who wrote
+the send-email anyway?  I see your name on it ;-)
+
+The cleanest way send-email should handle a patch authored by
+somebody other than you, I think, is to still use From: to name
+the author (format-patch output records the author on From:
+line), and use Sender: of the outgoing e-mail to record that the
+message is from you.  I suspect it probably doesn't.
+
+The second best would be to add the duplicated From: to name the
+author (who is _not_ you) to the top of the body of the message.
+I do not particularly like that format myself, though.  Sender:
+header was invented to send an e-mail authored by somebody other
+than the sender of the message at the mail transport level, long
+before Documentation/SubmittingPatches were written and git was
+invented, and somehow I think that is a more kosher way to
+handle that than the "extra From: at the beginning of the
+message" clutch recommended in SubmittingPatches document.  
+
+On the acceptance side, "git am" (or "git applymbox") should be
+able to handle either format.
