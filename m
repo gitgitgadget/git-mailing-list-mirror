@@ -1,69 +1,68 @@
-From: David Mansfield <centos@dm.cobite.com>
-Subject: Re: Fix branch ancestry calculation
-Date: Fri, 24 Mar 2006 09:45:45 -0500
-Message-ID: <44240619.20103@dm.cobite.com>
-References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Fri, 24 Mar 2006 16:12:57 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603241609510.6002@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org>
+ <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <44223B90.3040500@zytor.com>
+ <1143128751.6850.35.camel@neko.keithp.com> <Pine.LNX.4.64.0603230758260.26286@g5.osdl.org>
+ <BAYC1-PASMTP0912D2287AB923F3338969AEDE0@CEZ.ICE> <Pine.LNX.4.64.0603231134160.26286@g5.osdl.org>
+ <20060323204825.GE30176@spearce.org> <7vslp84u43.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Mansfield <cvsps@dm.cobite.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 24 15:45:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 24 16:13:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMnXx-0008UV-PG
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 15:45:50 +0100
+	id 1FMnyN-0005zK-Qr
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 16:13:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbWCXOpr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 09:45:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbWCXOpr
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 09:45:47 -0500
-Received: from iris.cobite.com ([208.222.83.2]:60378 "EHLO
-	email-pri.cobite.com") by vger.kernel.org with ESMTP
-	id S1751511AbWCXOpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 09:45:46 -0500
-Received: from localhost (iris.cobite.com [127.0.0.1])
-	by email-pri.cobite.com (Postfix) with ESMTP
-	id AF08197D5D; Fri, 24 Mar 2006 09:45:27 -0500 (EST)
-Received: from email-pri.cobite.com ([127.0.0.1])
- by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 02962-04; Fri, 24 Mar 2006 09:45:27 -0500 (EST)
-Received: by email-pri.cobite.com (Postfix, from userid 45000)
-	id 76BE1987B8; Fri, 24 Mar 2006 09:45:27 -0500 (EST)
-Received: from [208.222.80.105] (gandalf.cobite.com [208.222.80.105])
-	by email-pri.cobite.com (Postfix) with ESMTP
-	id 30B4A98304; Fri, 24 Mar 2006 09:45:27 -0500 (EST)
-User-Agent: Thunderbird 1.5 (X11/20060313)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new at cobite.com
+	id S1750802AbWCXPNE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 10:13:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbWCXPNE
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 10:13:04 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:52126 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750802AbWCXPNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 10:13:01 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id CD7A41D1E;
+	Fri, 24 Mar 2006 16:12:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id C099CA51;
+	Fri, 24 Mar 2006 16:12:57 +0100 (CET)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id A8FB11D1E;
+	Fri, 24 Mar 2006 16:12:57 +0100 (CET)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslp84u43.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17922>
 
-Linus Torvalds wrote:
-> Some branches don't get any ancestors at all, because their ancestor gets 
-> a "dotcount" value of 0, and are thus not considered any better than not 
-> having any ancestor. That's obviously wrong. Even a zero-dot-count 
-> ancestor is better than having none at all.
+Hi,
+
+On Thu, 23 Mar 2006, Junio C Hamano wrote:
+
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> This fixes the issue by making not having an ancestor branch have a 
-> goodness value of -1, avoiding the problem (because even a zero dot-count 
-> will be considered better).
+> > I'm not trying to bash Windows users.  I'm just saying that there's
+> > definately a large user base for SCMs such as CVS who just want
+> > to check in the latest version of a file they have to maintain.
+> > Many of these people are afraid of a command prompt.  Asking them
+> > to install Cygwin just to check in a file is a difficult challenge.
 > 
-> Alternatively, the special-case for the "1.1.1.1" revision should be 
-> removed (or made to imply a dot-count of 1).
-> 
+> Export your git repository via git-cvsserver and have them use
+> TortoiseCVS.  Such "maintain the tip and that is the only thing
+> what interest me" people do not even need to know the backend is
+> git.
 
+Now if I could only find a way to tell TortoiseCVS which CVS_SERVER to 
+use...
 
-Thanks for this.  I'll look at bundling this and some miscellaneous 
-other stuff this weekend (pray to gods for rain so I can stay in all 
-weekend ;-).
-
-Anyway, I'd like to nail down some of the other nagging ancestry/branch 
-point problems if possible.
-
-David
+Ciao,
+Dscho
