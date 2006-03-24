@@ -1,59 +1,92 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: History rewriting swiss army knife
-Date: Fri, 24 Mar 2006 15:08:31 +0100
-Message-ID: <20060324140831.GY18185@pasky.or.cz>
+From: David Mansfield <centos@dm.cobite.com>
+Subject: Re: [RFC] Make dot-counting ignore ".1" at the end
+Date: Fri, 24 Mar 2006 09:40:48 -0500
+Message-ID: <442404F0.80609@dm.cobite.com>
+References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org> <Pine.LNX.4.64.0603221746300.26286@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Mar 24 15:08:45 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Mansfield <cvsps@dm.cobite.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 24 15:41:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMmxs-00015D-V7
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 15:08:33 +0100
+	id 1FMnTC-0007Kx-BF
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 15:40:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932624AbWCXOIa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 09:08:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932630AbWCXOIa
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 09:08:30 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:58040 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932624AbWCXOI3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 09:08:29 -0500
-Received: (qmail 1956 invoked by uid 2001); 24 Mar 2006 15:08:31 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751501AbWCXOkv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 09:40:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbWCXOkv
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 09:40:51 -0500
+Received: from iris.cobite.com ([208.222.83.2]:52698 "EHLO
+	email-pri.cobite.com") by vger.kernel.org with ESMTP
+	id S1751501AbWCXOku (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 09:40:50 -0500
+Received: from localhost (iris.cobite.com [127.0.0.1])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 7224998304; Fri, 24 Mar 2006 09:40:31 -0500 (EST)
+Received: from email-pri.cobite.com ([127.0.0.1])
+ by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 02174-06; Fri, 24 Mar 2006 09:40:31 -0500 (EST)
+Received: by email-pri.cobite.com (Postfix, from userid 45000)
+	id 4239D987B8; Fri, 24 Mar 2006 09:40:31 -0500 (EST)
+Received: from [208.222.80.105] (gandalf.cobite.com [208.222.80.105])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 7DDF998304; Fri, 24 Mar 2006 09:40:30 -0500 (EST)
+User-Agent: Thunderbird 1.5 (X11/20060313)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603221746300.26286@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new at cobite.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17920>
 
-  Hi,
+Linus Torvalds wrote:
+> I'm not 100% sure this is appropriate, but in general, I think "<rev>" and 
+> "<rev>.1" should be considered the same thing, no? Which implies that 
+> "1.1" and "1.1.1.1" are all the same thing, and collapse to just "1", ie a 
+> zero dot-count. They are all the same version, after all, no?
 
-  it is not very frequent, but sometimes you really want to rewrite your
-history - you need to get rid of a copyright violation or a file with
-confidential information slipped through, or who knows what other good
-reason you might have. As long as you are aware of the implications of
-all the tree/commit ids getting different, why not.
 
-  It's never been so easy before - I've written cg-admin-rewritehist,
-which will execute your filters for each commit (which can rewrite the
-tree contents, just the tree itself through the index, committer/author
-information and commit message) while the script will obviously preserve
-all the other information like merges, author/committer information etc.
-The script will place the rewritten history on a newly created branch.
+Hmmm.  I'm not sure about this. Given x.y.z.q... the 'odd' nodes 
+(starting from x = position 1) represent branches, not revisions, and 
+don't refer to actual concrete objects (just tags if you will) in the 
+cvs world.
 
-  If you are interested, you can also look at the script at
+So if <rev> is something like x.y then x.y.z would refer to the 'z' branch.
 
-	http://kernel.org/git/?p=cogito/cogito.git;a=blob;f=cg-admin-rewritehist
+Furthermore, 'z' better be an even value 2 4 6 etc. because those are 
+the only branch id's cvs will create.  The odd values are for 'imported 
+source' branches.
 
-but it has few Cogito dependencies.
+The reason 1.1.1.1 exists is some lame-ass crap that CVS delivers to any 
+developer who imports his/her initial source code.
 
-  Have fun,
+It creates 1.1 as a placeholder, and I think in this special case it has 
+the same contents.  It also creates a .1 'import branch' then puts the
+imported revision onto that 'import' branch.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+In a normal situation, you have rev = x.y
+
+You branch, it 'registers' a branch x.y.z where z in {2,4,6...} (and 
+uses a special 'magic branch' syntax x.y.0.z in the symbolic tags 
+section).
+
+Only when you commit your first change does it create x.y.z.1.
+
+So we have:
+
+x.y != x.y.z.1 for sure, in the general case.
+
+Also x.y.z will never be x.y.1 for a user created branch because z must 
+be even number (except for import branches), in any case x.y.z is never 
+an actual file revision.  Now, it COULD be the fact there there needs to 
+be special handling for x.y.z where z == 1 because that is an import 
+branch and something devilish is happening there.
+
+I honestly don't know...
+
+David
