@@ -1,74 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fix branch ancestry calculation
-Date: Fri, 24 Mar 2006 07:46:28 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603240739360.26286@g5.osdl.org>
-References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org> <44240619.20103@dm.cobite.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Cogito asciidoc failure
+Date: 24 Mar 2006 08:17:43 -0800
+Message-ID: <86u09n4y1k.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Mansfield <cvsps@dm.cobite.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 24 16:46:55 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Mar 24 17:18:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMoUv-000408-Lv
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 16:46:46 +0100
+	id 1FMoz7-0002Xh-OE
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 17:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbWCXPqm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 10:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWCXPqm
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 10:46:42 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:25513 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751070AbWCXPqm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 10:46:42 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2OFkTDZ011636
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 24 Mar 2006 07:46:29 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2OFkSOQ013646;
-	Fri, 24 Mar 2006 07:46:29 -0800
-To: David Mansfield <centos@dm.cobite.com>
-In-Reply-To: <44240619.20103@dm.cobite.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932451AbWCXQRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 11:17:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932438AbWCXQRu
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 11:17:50 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:27441 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932461AbWCXQRt
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 11:17:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id DC13F8F826
+	for <git@vger.kernel.org>; Fri, 24 Mar 2006 08:17:44 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 20469-01-2 for <git@vger.kernel.org>;
+ Fri, 24 Mar 2006 08:17:44 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 083098F913; Fri, 24 Mar 2006 08:17:44 -0800 (PST)
+To: git@vger.kernel.org
+x-mayan-date: Long count = 12.19.13.2.16; tzolkin = 10 Cib; haab = 14 Cumku
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17924>
 
 
+asciidoc -b xhtml11 -d manpage -f asciidoc.conf cg-admin-rewritehist.1.txt
+ERROR: cg-admin-rewritehist.1.txt: line 54: title not allowed in list item continuation
+make[1]: *** [cg-admin-rewritehist.1.html] Error 1
+make: *** [doc] Error 2
 
-On Fri, 24 Mar 2006, David Mansfield wrote:
-> 
-> Anyway, I'd like to nail down some of the other nagging ancestry/branch point
-> problems if possible.
 
-What I considered doing was to just ignore the branch ancestry that cvsps 
-gives us, and instead use whatever branch that is closest (ie generates 
-the minimal diff). That's really wrong too (the data just _has_ to be in 
-CVS somehow), but I just don't know how CVS handles branches, and it's how 
-we'd have to do merges if we were to ever support them (since afaik, the 
-merge-back information simply doesn't exists in CVS).
-
-I actually went back to read some of the original CVS papers, and realized 
-that CVS _without_ branches actually makes perfect sense.
-
-Suddenly it was a perfectly reasonable system: the fact that you can only 
-merge once (between working tree and repo) is perfectly reasonable when 
-there is only one branch and checking in requires you to have updated 
-first. All the things I really hated about CVS just go away if you don't 
-do any branches at all.
-
-Of course, it's a much less powerful thing without branches, but what I'm 
-getting at is that the whole branch support seems to have been a total 
-crock added later on top of something that was never designed for it, and 
-where the data-structures aren't even set up for it.
-
-Live and learn. (Of course, maybe I'm wrong, and the thing doesn't make 
-sense even without branches).
-
-			Linus
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
