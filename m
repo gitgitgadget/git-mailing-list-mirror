@@ -1,108 +1,69 @@
-From: Takis <panagiotis.issaris@gmail.com>
-Subject: Re: [BUG] make test (t3600-rm.sh) fails
-Date: Fri, 24 Mar 2006 11:45:39 +0100
-Message-ID: <df33fe7c0603240245o516095b5m@mail.gmail.com>
-References: <4423C681.3000302@issaris.org>
-	 <7v7j6k16g2.fsf@assigned-by-dhcp.cox.net>
-Reply-To: takis@issaris.org
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] cogito: Avoid slowness when timewarping large trees.
+Date: Fri, 24 Mar 2006 05:55:44 -0500
+Message-ID: <20060324105543.GA2543@coredump.intra.peff.net>
+References: <20060324084423.GA30213@coredump.intra.peff.net> <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 11:45:53 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Mar 24 11:56:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMjnh-0003Qv-W6
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 11:45:50 +0100
+	id 1FMjxU-0004x0-2u
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 11:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422848AbWCXKpm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 05:45:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422845AbWCXKpm
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 05:45:42 -0500
-Received: from nproxy.gmail.com ([64.233.182.186]:14870 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1422849AbWCXKpm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 05:45:42 -0500
-Received: by nproxy.gmail.com with SMTP id n15so541392nfc
-        for <git@vger.kernel.org>; Fri, 24 Mar 2006 02:45:40 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OY/XI/eezhbabfoG64irGrdanu4J6fiW40oBL0f0zgq2Bm+saFZ9WFaMHElXeFF/FIhmHD+kRFPsKLYEhBB9BPS6sQjHfexvMcYVplK40LL6NXLffqDI+BLMKiC1Kcy5SUFCdv9fnBmuv+nHr5NiwTSwL7Axa0AzVsycKivksZ4=
-Received: by 10.48.163.5 with SMTP id l5mr210212nfe;
-        Fri, 24 Mar 2006 02:45:40 -0800 (PST)
-Received: by 10.49.1.8 with HTTP; Fri, 24 Mar 2006 02:45:39 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v7j6k16g2.fsf@assigned-by-dhcp.cox.net>
+	id S1422840AbWCXKzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 05:55:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422846AbWCXKzq
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 05:55:46 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:25052 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1422840AbWCXKzq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 05:55:46 -0500
+Received: (qmail 27764 invoked from network); 24 Mar 2006 10:55:44 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 24 Mar 2006 10:55:44 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2006 05:55:44 -0500
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17908>
 
-Hi,
+On Fri, Mar 24, 2006 at 02:21:25AM -0800, Junio C Hamano wrote:
 
-2006/3/24, Junio C Hamano <junkio@cox.net>:
-> Panagiotis Issaris <takis@issaris.org> writes:
->
-> > * FAIL 9: Test that "git-rm -f" fails if its rm fails
-> >        git-rm -f baz
-> >...
-> > My system:
-> > Ubuntu 5.10 aka Breezy
-> > Linux issaris 2.6.15.060103 #1 Tue Jan 3 14:27:55 CET 2006 i686 GNU/Linux
->
-> I wonder what your system shows if you run:
->
->         $ cd t && sh -x t3600-rm.sh -i -v
+> Metainformation fields are internally separated with SP and a
+> TAB comes before pathname; you can just say:
+> 
+> 	sed -ne 's/^:[^	]* D	//p'
 
-Here's the output:
+That is much cleaner (I stupidly just converted the original regex
+verbatim).
 
-takis@issaris:/usr/local/src/git$ cd t && sh -x t3600-rm.sh -i -v
-...
-*   ok 8: Test that "git-rm -f" succeeds with embedded space, tab, or
-newline characters.
-+ test y = y
-+ chmod u-w .
-+ test_expect_failure 'Test that "git-rm -f" fails if its rm fails'
-'git-rm -f baz'
-+ test 2 = 2
-+ say 'expecting failure: git-rm -f baz'
-+ echo '* expecting failure: git-rm -f baz'
-* expecting failure: git-rm -f baz
-+ test_run_ 'git-rm -f baz'
-+ eval 'git-rm -f baz'
-++ git-rm -f baz
-rm: cannot remove `baz': Permission denied
-+ eval_ret=0
-+ return 0
-+ '[' 0 = 0 -a 0 '!=' 0 ']'
-+ test_failure_ 'Test that "git-rm -f" fails if its rm fails' 'git-rm -f baz'
-++ expr 8 + 1
-+ test_count=9
-++ expr 0 + 1
-+ test_failure=1
-+ say 'FAIL 9: Test that "git-rm -f" fails if its rm fails'
-+ echo '* FAIL 9: Test that "git-rm -f" fails if its rm fails'
-* FAIL 9: Test that "git-rm -f" fails if its rm fails
-+ shift
-+ echo 'git-rm -f baz'
-+ sed -e 's/^/  /'
-        git-rm -f baz
-+ test t = ''
-+ trap - exit
-+ exit 1
+> a SP).  You might also want to consider "xargs rm -f --", BTW.
 
-> The test #9 makes the test directory unwritable before trying to
-> unlink a file there, and git-rm runs rm without -f which should
-> make it fail.  So either your "chmod u-w ." is broken, you are
-> running it as root and defeating "chmod u-w .", or you have a
-> broken rm that does not report failure with its exit status.
-I am running it as fakeroot, as part of the "dpkg-buildpackage
--rfakeroot -uc -us -b"
-command for building Debian packages. Would this be the problem (the fakeroot)?
+Oops, you're right. In particular, rm complains when there are no
+deletions. 
 
-With friendly regards,
-Takis
+> However, I wonder why it does not do this instead:
+> 
+> 	... stash away the local changes
+> 	git-read-tree -m "$base" ;# reset the index to $base
+> 
+> 	# switch to $branch -- removing gone files as well
+> 	git-read-tree -m -u "$base" "$branch"
+> 
+> Then you can also lose diff-tree and checkout-index there.
+
+This doesn't deal very well with local changes. The second read-tree
+complains about a not uptodate entry during the merge. Since we've
+already stashed the local changes as a diff, we should be able to simply
+ignore them during the read-tree. Should the first read-tree actually
+be:
+  git-read-tree --reset "$base"
+?
+
+-Peff
