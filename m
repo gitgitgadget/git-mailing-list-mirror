@@ -1,93 +1,58 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Bug encountered while comitting
-Date: Fri, 24 Mar 2006 20:34:57 +0100
-Message-ID: <442449E1.5060007@op5.se>
-References: <20060324183951.GA23193@spinlock.ch>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: History rewriting swiss army knife
+Date: Fri, 24 Mar 2006 14:47:43 -0800
+Message-ID: <7vek0rzchc.fsf@assigned-by-dhcp.cox.net>
+References: <20060324140831.GY18185@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 20:35:14 2006
+X-From: git-owner@vger.kernel.org Fri Mar 24 23:48:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMs3z-0007qs-Jt
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 20:35:11 +0100
+	id 1FMv4e-0004V5-G2
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 23:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932629AbWCXTfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 14:35:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932627AbWCXTfA
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 14:35:00 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:45800 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932629AbWCXTe7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 14:34:59 -0500
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id E2A5A6BD4E; Fri, 24 Mar 2006 20:34:57 +0100 (CET)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Matthias Kestenholz <lists@irregular.ch>
-In-Reply-To: <20060324183951.GA23193@spinlock.ch>
+	id S932175AbWCXWsA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 17:48:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWCXWsA
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 17:48:00 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:64944 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932175AbWCXWr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 17:47:59 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060324224759.DLCW20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 24 Mar 2006 17:47:59 -0500
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060324140831.GY18185@pasky.or.cz> (Petr Baudis's message of
+	"Fri, 24 Mar 2006 15:08:31 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17941>
 
-Matthias Kestenholz wrote:
-> Hello list,
-> 
-> I don't know if this is the right place to report a bug, but I'll
-> just try and see what comes back.
-> 
-> I am trying to build a Wiki [1] using PHP, a hacked version of Markdown,
-> and git for content tracking. I use the git core plumbing to do the
-> history work.
-> 
-> The PHP script created directories under .git/objects
+Petr Baudis <pasky@suse.cz> writes:
 
+>   It's never been so easy before - I've written cg-admin-rewritehist,
+> which will execute your filters for each commit (which can rewrite the
+> tree contents, just the tree itself through the index, committer/author
+> information and commit message) while the script will obviously preserve
+> all the other information like merges, author/committer information etc.
 
-Ouch... You're not really supposed to do that. The proper thing to do is 
-to do things in the working tree and commit them to git later.
+Hmph.  The above description sounds like you are not allowing
+the user's custom script to drop existing parent (or graft a new
+one) while rewriting.  I have not looked at how you are
+interfacing with user's custom script, but I sort-of expected
+you to throw a commit at it from older to newer (i.e. topo-order
+in reverse), along with the names of already re-written commit
+objects that are parents of taht commit, and have it build a
+rewritten commit and report its object name back to you.
 
-
-> which were
-> only writable by www-data. There were other directories which were
-> owned by user mk and group www-data, and they were group writable.
-> 
-> So, I had write access to only a part of the .git directory.
-> 
-
-Unless you're using the git tools (or things hooking in to the git core 
-C functions somehow), don't touch the .git directory.
-
-(this merits an exclamation marks, so brace yourselves) !
-
-
-> When I tried to commit, I got a message saying "Unable to write sha1
-> filename".
-> 
-
-What file were you trying to write?
-
-> The result was, that only part of the commit was recorded and that I
-> experienced repository corruption. refs/heads/master pointed to a
-> non-existant object.
-> 
-
-Did you use git tools to update .git/refs/heads/master ?
-
-
-> The expected behavior would have been an error message telling me I
-> had insufficient write privileges and surely no repository
-> corruption.
-> 
-
-Didn't you get the strerror(3) message from that? If so, I'd consider it 
-a bug.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+But it sounds like a useful tool in certain situations -- I
+sounded mildly negative last night, but after you gave an
+example of cleaning up a half-botched import, I changed my mind.
