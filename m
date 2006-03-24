@@ -1,78 +1,65 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: Fw: [PATCH 31/49] PCI: PCI/Cardbus cards hidden, needs pci=assign-busses to fix
-Date: Thu, 23 Mar 2006 16:55:19 -0800
-Message-ID: <20060324005519.GA28344@kroah.com>
-References: <20060323161521.28a874e6.akpm@osdl.org> <20060324002930.GA21184@kroah.com> <20060323163844.5fda7589.akpm@osdl.org> <20060324004654.GA19763@kroah.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC] Silent File Mods Being Committed
+Date: Fri, 24 Mar 2006 02:12:17 +0100
+Message-ID: <20060324011217.GP19263@pasky.or.cz>
+References: <E1FMH3o-0001B5-Dw@jdl.com> <7vek0t68we.fsf@assigned-by-dhcp.cox.net> <20060323214710.GV18185@pasky.or.cz> <7vk6ak4tzp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 01:55:55 2006
+Cc: Jon Loeliger <jdl@jdl.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 24 02:12:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMaaf-0000UB-31
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 01:55:45 +0100
+	id 1FMaqm-0003Gq-07
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 02:12:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbWCXAzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Mar 2006 19:55:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWCXAzm
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 19:55:42 -0500
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174]:3533 "EHLO
-	aria.kroah.org") by vger.kernel.org with ESMTP id S1751505AbWCXAzl
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Mar 2006 19:55:41 -0500
-Received: from [192.168.0.13] (helo=localhost)
-	by aria.kroah.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1FMaaU-0001oz-1v; Thu, 23 Mar 2006 16:55:34 -0800
-To: Andrew Morton <akpm@osdl.org>
+	id S1422946AbWCXBMT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Mar 2006 20:12:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422948AbWCXBMT
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Mar 2006 20:12:19 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:197 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422946AbWCXBMS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Mar 2006 20:12:18 -0500
+Received: (qmail 24511 invoked by uid 2001); 24 Mar 2006 02:12:17 +0100
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20060324004654.GA19763@kroah.com>
+In-Reply-To: <7vk6ak4tzp.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17894>
 
-On Thu, Mar 23, 2006 at 04:46:54PM -0800, Greg KH wrote:
-> On Thu, Mar 23, 2006 at 04:38:44PM -0800, Andrew Morton wrote:
-> > 
-> > (added Junio)
+Dear diary, on Fri, Mar 24, 2006 at 12:32:58AM CET, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Petr Baudis <pasky@suse.cz> writes:
 > 
-> Added the git mailing list as everyone should get involved :)
+> > Dear diary, on Thu, Mar 23, 2006 at 06:13:21AM CET, I got a letter
+> > where Junio C Hamano <junkio@cox.net> said that...
+> >>  (2) audit all the scripts to make sure they do not get upset if
+> >>      we add trailing +/- to the status letter, and do that
+> >>      unconditionally, like the attached patch does.
+> >
+> > Cogito will get upset since we assume the mode field is one-char in our
+> > regexps, and when we don't, we compare the mode field with strings and
+> > that would obviously fail if you add random stuff to it.
+> >
+> > Otherwise, I like this idea, though.
 > 
-> > recap: the patch emails which Greg sends to linux-kernel do not identify
-> > their actual Author.
-> > 
-> > 
-> > Greg KH <greg@kroah.com> wrote:
-> > >
-> > > On Thu, Mar 23, 2006 at 04:15:21PM -0800, Andrew Morton wrote:
-> > > > 
-> > > > It's unclear from this email who the patch author was?
-> > > 
-> > > Git seems to strip that off when it converts them to emails.  It was:
-> > > 	From: Bernhard Kaindl <bk@suse.de>
-> > > 
-> > > If you look at the git changeset, it got it correct.
-> > > 
-> > 
-> > OK.   We really should have a
-> > 
-> > 	From: Bernhard Kaindl <bk@suse.de>
-> > 
-> > right at the start of the email, IMO.  Can you describe how you're producing
-> > them please?
-> 
-> I'm using:
-> 	git format-patch -n origin..HEAD
-> to generate the raw patch files, and then:
-> 	git-send-email --in-reply-to "<some_message_id>" --to some_mailing_list@somewhere.com
+> Likewise.  If it was not obvious, I am not going to commit that
+> myself.  If jdl or somebody cares enough, he or she can prepare
+> a a set of patches to git-core, Cogito and StGIT (at least these
+> three should be covered) to teach them the trailing +/- letter,
+> _and_ parrot my patch back at me.  Hint, hint...
 
-Oops, forgot the "*.txt" at the end of that last line to specify the
-patches to send out.
+Well, or it can just add the option to Core Git. Just unconditional
+implementation of (2) is no-go because it would break backwards
+compatibility, which is baaad.
 
-thanks,
-
-greg k-h
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
