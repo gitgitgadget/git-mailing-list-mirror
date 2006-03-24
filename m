@@ -1,46 +1,65 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Fri, 24 Mar 2006 11:11:36 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrne27kv8.cp6.mdw@metalzone.distorted.org.uk>
-References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org> <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <44223B90.3040500@zytor.com> <1143128751.6850.35.camel@neko.keithp.com> <Pine.LNX.4.64.0603230758260.26286@g5.osdl.org> <BAYC1-PASMTP0912D2287AB923F3338969AEDE0@CEZ.ICE> <Pine.LNX.4.64.0603231134160.26286@g5.osdl.org> <20060323204825.GE30176@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Mar 24 12:11:44 2006
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] cogito: Avoid slowness when timewarping large trees.
+Date: Fri, 24 Mar 2006 06:22:46 -0500
+Message-ID: <20060324112246.GA5220@coredump.intra.peff.net>
+References: <20060324084423.GA30213@coredump.intra.peff.net> <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net> <20060324105543.GA2543@coredump.intra.peff.net> <7v3bh814z4.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 24 12:22:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMkCl-0007E4-Mx
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 12:11:44 +0100
+	id 1FMkNY-0000S2-Iz
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 12:22:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751638AbWCXLLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 06:11:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751639AbWCXLLk
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 06:11:40 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:23361 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S1751637AbWCXLLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 06:11:40 -0500
-Received: (qmail 4386 invoked by uid 110); 24 Mar 2006 11:11:36 -0000
-To: git@vger.kernel.org
-Received: (qmail 4372 invoked by uid 9); 24 Mar 2006 11:11:36 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1143198696 3669 172.29.199.2 (24 Mar 2006 11:11:36 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Fri, 24 Mar 2006 11:11:36 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1751660AbWCXLWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 06:22:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbWCXLWs
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 06:22:48 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1995 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1751660AbWCXLWr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 06:22:47 -0500
+Received: (qmail 28440 invoked from network); 24 Mar 2006 11:22:46 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 24 Mar 2006 11:22:46 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2006 06:22:46 -0500
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v3bh814z4.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17912>
 
-Shawn Pearce <spearce@spearce.org> wrote:
+On Fri, Mar 24, 2006 at 03:01:35AM -0800, Junio C Hamano wrote:
 
-> But your definately right; once the blame/annotate war settles out
-> GIT will have pretty much everything one might need - except a good
-> distributed bug/issue tracking type system.  :-)
+> >   git-read-tree --reset "$base"
+> Exactly.  That's what I meant.  Thanks.
 
-There ought to be such a thing.  And I hope it gets called `bugger'.
+Hmm. That doesn't actually work, though. If I have a history like this:
 
--- [mdw]
+$ cg-init -m "initial"
+$ cg-tag initial
+$ echo contents >file
+$ cg-add file
+$ cg-commit -m "added file"
+
+and I try this:
+$ echo changes >file
+$ git-read-tree --reset master
+$ git-read-tree -m -u master initial
+
+I get this:
+fatal: Entry 'file' not uptodate. Cannot merge.
+
+If I do an update-index before the second read-tree, then I simply get:
+fatal: Entry 'file' would be overwritten by merge. Cannot merge.
+
+Is there something I'm missing, or is a 'git reset --hard' really what
+we want here (in that case, the fact that git reset changes the HEAD
+might be a problem)?
+
+-Peff
