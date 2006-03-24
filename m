@@ -1,65 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] cogito: Avoid slowness when timewarping large trees.
-Date: Fri, 24 Mar 2006 06:22:46 -0500
-Message-ID: <20060324112246.GA5220@coredump.intra.peff.net>
-References: <20060324084423.GA30213@coredump.intra.peff.net> <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net> <20060324105543.GA2543@coredump.intra.peff.net> <7v3bh814z4.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Fri, 24 Mar 2006 12:29:12 +0100
+Message-ID: <4423D808.7070800@op5.se>
+References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org> <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <44223B90.3040500@zytor.com> <1143128751.6850.35.camel@neko.keithp.com> <Pine.LNX.4.64.0603230758260.26286@g5.osdl.org> <BAYC1-PASMTP0912D2287AB923F3338969AEDE0@CEZ.ICE> <Pine.LNX.4.64.0603231134160.26286@g5.osdl.org> <20060323204825.GE30176@spearce.org> <slrne27kv8.cp6.mdw@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 12:22:53 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Mar 24 12:29:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMkNY-0000S2-Iz
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 12:22:52 +0100
+	id 1FMkTq-0001aH-Lg
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 12:29:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbWCXLWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 06:22:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbWCXLWs
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 06:22:48 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1995 "EHLO
-	peff.net") by vger.kernel.org with ESMTP id S1751660AbWCXLWr (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 06:22:47 -0500
-Received: (qmail 28440 invoked from network); 24 Mar 2006 11:22:46 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 0 with SMTP; 24 Mar 2006 11:22:46 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2006 06:22:46 -0500
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v3bh814z4.fsf@assigned-by-dhcp.cox.net>
+	id S932492AbWCXL3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 06:29:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbWCXL3P
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 06:29:15 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:50909 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1422683AbWCXL3N
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 06:29:13 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id 7B3206BCFE
+	for <git@vger.kernel.org>; Fri, 24 Mar 2006 12:29:12 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <slrne27kv8.cp6.mdw@metalzone.distorted.org.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17913>
 
-On Fri, Mar 24, 2006 at 03:01:35AM -0800, Junio C Hamano wrote:
+Mark Wooding wrote:
+> Shawn Pearce <spearce@spearce.org> wrote:
+> 
+> 
+>>But your definately right; once the blame/annotate war settles out
+>>GIT will have pretty much everything one might need - except a good
+>>distributed bug/issue tracking type system.  :-)
+> 
+> 
+> There ought to be such a thing.  And I hope it gets called `bugger'.
+> 
 
-> >   git-read-tree --reset "$base"
-> Exactly.  That's what I meant.  Thanks.
+I'm working (slowly) on integrating it with Mantis (www.mantisbt.org), 
+which we use at work. It shouldn't be difficult to reuse that code with 
+Bugzilla and other similar trackers.
 
-Hmm. That doesn't actually work, though. If I have a history like this:
+The recognition thing is done in the update-script, looking for a hash 
+followed by a number (the bug-id) and then sending that commit to 
+another program, so it's simply a matter of including the bug-id, 
+prefixed with a hash, and the bug-topic somewhere in the commit message, 
+which is a fairly good practice anyways.
 
-$ cg-init -m "initial"
-$ cg-tag initial
-$ echo contents >file
-$ cg-add file
-$ cg-commit -m "added file"
-
-and I try this:
-$ echo changes >file
-$ git-read-tree --reset master
-$ git-read-tree -m -u master initial
-
-I get this:
-fatal: Entry 'file' not uptodate. Cannot merge.
-
-If I do an update-index before the second read-tree, then I simply get:
-fatal: Entry 'file' would be overwritten by merge. Cannot merge.
-
-Is there something I'm missing, or is a 'git reset --hard' really what
-we want here (in that case, the fact that git reset changes the HEAD
-might be a problem)?
-
--Peff
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
