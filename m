@@ -1,49 +1,52 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cogito asciidoc failure
-Date: Fri, 24 Mar 2006 20:02:37 +0100
-Message-ID: <20060324190237.GZ18185@pasky.or.cz>
-References: <86u09n4y1k.fsf@blue.stonehenge.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Errors GITtifying GCC and Binutils
+Date: Fri, 24 Mar 2006 20:10:55 +0100
+Message-ID: <4424443F.5090209@op5.se>
+References: <20060322133337.GU20746@lug-owl.de> <20060324182504.GI31387@lug-owl.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 24 20:02:50 2006
+X-From: git-owner@vger.kernel.org Fri Mar 24 20:11:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMrYc-0000fY-VF
-	for gcvg-git@gmane.org; Fri, 24 Mar 2006 20:02:47 +0100
+	id 1FMrga-0002Z7-M1
+	for gcvg-git@gmane.org; Fri, 24 Mar 2006 20:11:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964781AbWCXTCm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 14:02:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbWCXTCm
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 14:02:42 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:54219 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932599AbWCXTCl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 14:02:41 -0500
-Received: (qmail 2451 invoked by uid 2001); 24 Mar 2006 20:02:37 +0100
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-Content-Disposition: inline
-In-Reply-To: <86u09n4y1k.fsf@blue.stonehenge.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S964779AbWCXTK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 14:10:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964788AbWCXTK5
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 14:10:57 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:26600 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S964779AbWCXTK4
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 14:10:56 -0500
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id BFEBB6BD08; Fri, 24 Mar 2006 20:10:55 +0100 (CET)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+In-Reply-To: <20060324182504.GI31387@lug-owl.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17938>
 
-Dear diary, on Fri, Mar 24, 2006 at 05:17:43PM CET, I got a letter
-where "Randal L. Schwartz" <merlyn@stonehenge.com> said that...
+Jan-Benedict Glaw wrote:
+> On Wed, 2006-03-22 14:33:37 +0100, Jan-Benedict Glaw <jbglaw@lug-owl.de> wrote:
 > 
-> asciidoc -b xhtml11 -d manpage -f asciidoc.conf cg-admin-rewritehist.1.txt
-> ERROR: cg-admin-rewritehist.1.txt: line 54: title not allowed in list item continuation
-> make[1]: *** [cg-admin-rewritehist.1.html] Error 1
-> make: *** [doc] Error 2
+> Since it seems nobody looked at the GCC import run (which means to use
+> the svnimport), I ran it again, under strace control:
+> 
 
-Oh. Thanks, fixed.
+If you send me a bzipped tar-ball of the repo you're trying to import, 
+preferrably with all the patches to cvsps you've tried, I'll see what I 
+can do over the weekend.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
