@@ -1,103 +1,151 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: Fix branch ancestry calculation
-Date: Fri, 24 Mar 2006 20:45:32 -0500
-Message-ID: <20060325014532.GB32522@pe.Belkin>
-References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org> <44240619.20103@dm.cobite.com> <Pine.LNX.4.64.0603240739360.26286@g5.osdl.org> <1143218338.6850.68.camel@neko.keithp.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	David Mansfield <centos@dm.cobite.com>,
-	David Mansfield <cvsps@dm.cobite.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 25 02:46:12 2006
+From: Jon Loeliger <jdl@jdl.com>
+Subject: [PATCH] Clarify and expand some hook documentation.
+Date: Fri, 24 Mar 2006 21:21:07 -0600
+Message-ID: <E1FMzKt-0006ur-Gj@jdl.com>
+X-From: git-owner@vger.kernel.org Sat Mar 25 04:22:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMxqp-00082s-Qm
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 02:46:00 +0100
+	id 1FMzMB-00069W-BI
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 04:22:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbWCYBph (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 20:45:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751603AbWCYBph
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 20:45:37 -0500
-Received: from eastrmmtao06.cox.net ([68.230.240.33]:5518 "EHLO
-	eastrmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751462AbWCYBpg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 20:45:36 -0500
-Received: from localhost ([24.250.31.7]) by eastrmmtao06.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060325014523.NNWI9108.eastrmmtao06.cox.net@localhost>;
-          Fri, 24 Mar 2006 20:45:23 -0500
-Received: from chris by localhost with local (Exim 4.43)
-	id 1FMxqP-0008TH-0H; Fri, 24 Mar 2006 20:45:33 -0500
-To: Keith Packard <keithp@keithp.com>
-Content-Disposition: inline
-In-Reply-To: <1143218338.6850.68.camel@neko.keithp.com>
-User-Agent: Mutt/1.4.1i
+	id S1750706AbWCYDVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 22:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750703AbWCYDVl
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 22:21:41 -0500
+Received: from mail.jdl.com ([66.118.10.122]:59824 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1750706AbWCYDVk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 22:21:40 -0500
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1FMzKt-0006ur-Gj
+	for git@vger.kernel.org; Fri, 24 Mar 2006 21:21:08 -0600
+To: git@vger.kernel.org
+X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17948>
 
-On Fri, Mar 24, 2006 at 08:38:58AM -0800, Keith Packard wrote:
-> On Fri, 2006-03-24 at 07:46 -0800, Linus Torvalds wrote:
-> > 
-> > On Fri, 24 Mar 2006, David Mansfield wrote:
-> > > 
-> > > Anyway, I'd like to nail down some of the other nagging ancestry/branch point
-> > > problems if possible.
-> > 
-> > What I considered doing was to just ignore the branch ancestry that cvsps 
-> > gives us, and instead use whatever branch that is closest (ie generates 
-> > the minimal diff). That's really wrong too (the data just _has_ to be in 
-> > CVS somehow), but I just don't know how CVS handles branches, and it's how 
-> > we'd have to do merges if we were to ever support them (since afaik, the 
-> > merge-back information simply doesn't exists in CVS).
-> 
-> cvsps is more of a problem than cvs itself. Per-file branch information
-> is readily available in the ,v files; each version has a list of
-> branches from that version, and there are even tags marking the names of
-> them. One issue that I've discovered is when files have differing branch
-> structure in the same repository. That happens when a branch is created
-> while files are checked out on different branches.  I'm not quite sure
-> what to do in this case; I've been trying several approaches and none
-> seem optimal. One remaining plan is to just attach such branches by
-> date, but that assumes that the first commit along a branch occurs
-> shortly after the branch is created (which isn't required).
-> 
-> Of course, this branch information is only created when a change is made
-> to the file along said branch, so most of the repository will lack
-> precise branch information for each branch. When you create a child
-> branch, the files with no commits in the parent branch will never get
-> branch information, so the child branch will be numbered as if it were a
-> branch off of the grandparent. Globally, it is possible to reconstruct
-> the entire branch structure.
 
-If that last sentence was a typo then you already know this, but
-otherwise you may be disappointed to learn that it's not _always_
-possible to discern the correct ancestry tree.
+Clarify update and post-update hooks.
+Made a few references to the hooks documentation.
 
-The simplest counter-example is two branches where each adds one file
-and no files in common are modified.  If A and B both branched off of
-HEAD and each adds one file, then they should each only have one file.
-But if B branched from A which branched from HEAD, then B should also
-have the file that was added to A. (*)  However, the information to
-distinguish these two cases isn't recorded in CVS.  
+Signed-off-by: Jon Loeliger <jdl@jdl.com>
 
-I seem to have described this example more fully in the notes I took
-while writing the patch to cvsps that does the global inferrence
-you're describing.  You _usually_ can make a very good guess, and the
-more files that are modified, the better you can do.
+---
 
-BTW, those notes are still available here:
-http://www.codesifter.com/cvsps-notes.txt 
+ Documentation/git.txt               |    2 +
+ Documentation/hooks.txt             |   49 ++++++++++++++++++++++++++---------
+ Documentation/repository-layout.txt |    2 +
+ 3 files changed, 41 insertions(+), 12 deletions(-)
 
-If you end up comparing the ancestry tree discovered by your tool and
-the tree output by a patched cvsps, I would be very interested in the
-results.
-
--chris
-
-(*) You can distinguish between A->B->head and B->A->head simply by
-date.
+83472863b77cde6209ce01211500e2bd9b81ecc7
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index de3934d..0c424ff 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -531,6 +531,8 @@ File/Directory Structure
+ 
+ Please see link:repository-layout.html[repository layout] document.
+ 
++Read link:hooks.html[hooks] for more details about each hook.
++
+ Higher level SCMs may provide and manage additional information in the
+ `$GIT_DIR`.
+ 
+diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
+index 4ad1920..3824a95 100644
+--- a/Documentation/hooks.txt
++++ b/Documentation/hooks.txt
+@@ -97,16 +97,31 @@ send out a commit notification e-mail.
+ update
+ ------
+ 
+-This hook is invoked by `git-receive-pack`, which is invoked
+-when a `git push` is done against the repository.  It takes
+-three parameters, name of the ref being updated, old object name
+-stored in the ref, and the new objectname to be stored in the
+-ref.  Exiting with non-zero status from this hook prevents
+-`git-receive-pack` from updating the ref.
++This hook is invoked by `git-receive-pack` on the remote repository,
++which is happens when a `git push` is done on a local repository.
++Just before updating the ref on the remote repository, the update hook
++is invoked.  It's exit status determins the success or failure of
++the ref update.
++
++The hook executes once for each ref to be updated, and takes
++three parameters:
++    - the name of the ref being updated,
++    - the old object name stored in the ref,
++    - and the new objectname to be stored in the ref.
++
++A zero exit from the update hook allows the ref to be updated.
++Exiting with a non-zero status prevents `git-receive-pack`
++from updating the ref.
+ 
+-This can be used to prevent 'forced' update on certain refs by
++This hook can be used to prevent 'forced' update on certain refs by
+ making sure that the object name is a commit object that is a
+ descendant of the commit object named by the old object name.
++That is, to enforce a "fast forward only" policy.
++
++It could also be used to log the old..new status.  However, it
++does not know the entire set of branches, so it would end up
++firing one e-mail per ref when used naively, though.
++
+ Another use suggested on the mailing list is to use this hook to
+ implement access control which is finer grained than the one
+ based on filesystem group.
+@@ -115,20 +130,30 @@ The standard output of this hook is sent
+ want to report something to the git-send-pack on the other end,
+ you can redirect your output to your stderr.
+ 
++
+ post-update
+ -----------
+ 
+-This hook is invoked by `git-receive-pack`, which is invoked
+-when a `git push` is done against the repository.  It takes
+-variable number of parameters; each of which is the name of ref
+-that was actually updated.
++This hook is invoked by `git-receive-pack` on the remote repository,
++which is happens when a `git push` is done on a local repository.
++It executes on the remote repository once after all the refs have
++been updated.
++
++It takes a variable number of parameters, each of which is the
++name of ref that was actually updated.
+ 
+ This hook is meant primarily for notification, and cannot affect
+ the outcome of `git-receive-pack`.
+ 
++The post-update hook can tell what are the heads that were pushed,
++but it does not know what their original and updated values are,
++so it is a poor place to do log old..new.
++
+ The default post-update hook, when enabled, runs
+ `git-update-server-info` to keep the information used by dumb
+-transport up-to-date.
++transports (eg, http) up-to-date.  If you are publishing
++a git repository that is accessible via http, you should
++probably enable this hook.
+ 
+ The standard output of this hook is sent to /dev/null; if you
+ want to report something to the git-send-pack on the other end,
+diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
+index 1f19bf8..98fbe7d 100644
+--- a/Documentation/repository-layout.txt
++++ b/Documentation/repository-layout.txt
+@@ -89,6 +89,8 @@ hooks::
+ 	commands.  A handful of sample hooks are installed when
+ 	`git init-db` is run, but all of them are disabled by
+ 	default.  To enable, they need to be made executable.
++	Read link:hooks.html[hooks] for more details about
++	each hook.
+ 
+ index::
+ 	The current index file for the repository.  It is
+-- 
+1.2.4.gdd7be
