@@ -1,58 +1,80 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Sat, 25 Mar 2006 04:10:16 -0500
-Message-ID: <m31wwqritj.fsf@lugabout.jhcloos.org>
-References: <20060322133337.GU20746@lug-owl.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Use a *real* built-in diff generator
+Date: Sat, 25 Mar 2006 10:35:39 +0100
+Message-ID: <e5bfff550603250135h42b0da62x84973483798d969c@mail.gmail.com>
+References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 10:10:43 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Davide Libenzi" <davidel@xmailserver.org>
+X-From: git-owner@vger.kernel.org Sat Mar 25 10:35:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FN4n7-0007nY-UN
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:10:38 +0100
+	id 1FN5BV-0001jc-7X
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:35:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751119AbWCYJK3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 04:10:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWCYJK3
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:10:29 -0500
-Received: from ore.jhcloos.com ([64.240.156.239]:16902 "EHLO ore.jhcloos.com")
-	by vger.kernel.org with ESMTP id S1751113AbWCYJK2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 04:10:28 -0500
-Received: from lugabout.jhcloos.org (host-69-48-11-225.roc.choiceone.net [69.48.11.225])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
-	by ore.jhcloos.com (Postfix) with ESMTP
-	id E44871C2EE; Sat, 25 Mar 2006 03:10:21 -0600 (CST)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 6B2374DCB; Sat, 25 Mar 2006 09:10:16 +0000 (GMT)
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20060322133337.GU20746@lug-owl.de> (Jan-Benedict Glaw's message
-	of "Wed, 22 Mar 2006 14:33:37 +0100")
-Copyright: Copyright 2006 James Cloos
-X-Hashcash: 1:23:060325:jbglaw@lug-owl.de::AkDCjZWjeaL2IPdP:00000000000000000000000000000000000000000000DTop
-X-Hashcash: 1:23:060325:git@vger.kernel.org::/kO7QxstsO0urTr2:000000000000000000000000000000000000000000v2V6
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/23.0.0 (gnu/linux)
+	id S1751124AbWCYJfl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 04:35:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbWCYJfl
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:35:41 -0500
+Received: from wproxy.gmail.com ([64.233.184.232]:18544 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751124AbWCYJfk convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Mar 2006 04:35:40 -0500
+Received: by wproxy.gmail.com with SMTP id 57so1104430wri
+        for <git@vger.kernel.org>; Sat, 25 Mar 2006 01:35:39 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bWDuaX/8dLqQztQRFOpLleU+mZWdS2Qr2XyELLSPuqZ75/EG7pXBOUMuRZu6AJ7KHphl80XYg/Um6PlfVv+IEHdFqtbahJ5sMj47T8Geqdjs3yL7sEzaPicnecaIG4GcUK5a+V0sFLRtbyQOwjEUZnRzKF/BhHVVYYEdBWQazD8=
+Received: by 10.64.243.17 with SMTP id q17mr1437211qbh;
+        Sat, 25 Mar 2006 01:35:39 -0800 (PST)
+Received: by 10.64.142.5 with HTTP; Sat, 25 Mar 2006 01:35:39 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17966>
 
-Isn't gcc in svn nowadays?
+On 3/25/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> This uses a simplified libxdiff setup to generate unified diffs _without_
+> doing  fork/execve of GNU "diff".
+>
+> This has several huge advantages, for example:
+>
+> Before:
+>
+>         [torvalds@g5 linux]$ time git diff v2.6.16.. > /dev/null
+>
+>         real    0m24.818s
+>         user    0m13.332s
+>         sys     0m8.664s
+>
+> After:
+>
+>         [torvalds@g5 linux]$ time git diff v2.6.16.. > /dev/null
+>
+>         real    0m4.563s
+>         user    0m2.944s
+>         sys     0m1.580s
+>
 
-I'd try something like:
+Currently 'getting the diffs' is the second most important time
+consumer  of annotation calculation (just after getting the file
+history). On big and heavily modified files, as drivers/net/tg3.c in
+Linux tree, this can be very slow (around 10s on my box).
 
-rsync://gcc.gnu.org/gcc-svn gcc-svn
-git-svnimport -C gcc-git -i -v file:///$(pwd)/gcc-svn
+The profiling has been done on qgit, but I think  it is of general
+interest because qgit uses git-rev-list and git-diff-tree -p to get
+file's history and diffs respectively.
 
-unless you have write access, in which case you may prefer:
+So this patch is more then welcomed!  Thanks!
 
-mkdir gcc-svn && cd gcc-svn
-git-svn init svn+ssh://username@gcc.gnu.org/svn/gcc/trunk
-git-svn fetch
-
--JimC
--- 
-James H. Cloos, Jr. <cloos@jhcloos.com>
+Marco
