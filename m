@@ -1,58 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: Use a *real* built-in diff generator
-Date: Sat, 25 Mar 2006 09:28:47 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603250927410.15714@g5.osdl.org>
+Date: Sat, 25 Mar 2006 10:14:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603251009500.11968@alien.or.mcafeemobile.com>
 References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
- <7vk6ajxbe5.fsf@assigned-by-dhcp.cox.net>
+ <118833cc0603250544h289f385fo683ec7b40cdb0ed@mail.gmail.com>
+ <Pine.LNX.4.64.0603250734130.15714@g5.osdl.org> <Pine.LNX.4.64.0603250742340.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 18:29:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Morten Welinder <mwelinder@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 25 19:15:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNCZM-0000XC-8J
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 18:28:56 +0100
+	id 1FNDHi-0007w8-Ef
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 19:14:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750717AbWCYR2w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 12:28:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbWCYR2w
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 12:28:52 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:41381 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750717AbWCYR2w (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 12:28:52 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2PHSlDZ020387
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 25 Mar 2006 09:28:48 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2PHSl6U005519;
-	Sat, 25 Mar 2006 09:28:47 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6ajxbe5.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751608AbWCYSOl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 13:14:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbWCYSOl
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 13:14:41 -0500
+Received: from x35.xmailserver.org ([69.30.125.51]:58249 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1751599AbWCYSOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Mar 2006 13:14:40 -0500
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1C6A60> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sat, 25 Mar 2006 10:14:36 -0800
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603250742340.15714@g5.osdl.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17990>
+
+On Sat, 25 Mar 2006, Linus Torvalds wrote:
+
+> On Sat, 25 Mar 2006, Linus Torvalds wrote:
+>>
+>> I'll be taking a look at trying to fix it.
+>
+> Actually, it ended up being easier than I expected it to be.
+>
+> This (on top of the previous patch) should fix it.
+>
+> And yes, with this, I can pass the output of
+>
+> 	git diff v2.6.16..
+>
+> to "git-apply" and it not only passes the "--stat" thing (which verifies
+> that git-apply is happy with the diff) but it also results in exactly the
+> same tree when applied on top of v2.6.16 (and the patch has two cases
+> where the "no newline" test triggers).
+>
+> The speed-up is quite noticeable, especially when doing things like
+>
+> 	git diff v2.6.16.. | git-apply --stat
+>
+> which just _used_ to be painfully slow (25 seconds for me) and is now
+> under five seconds. That's the difference between "twiddling your thumbs"
+> and "ok, that wasn't too bad".
+
+Yeah, that works. It has never been an algorithm problem, but a diff 
+output one. And following what GNU diff does looks fine to me. I'll fix 
+libxdiff with that. I also have to teach libxdiff patch algo to recognize 
+the tag and do the right thing during the patch operation.
 
 
 
-On Fri, 24 Mar 2006, Junio C Hamano wrote:
-> 
-> Another thing I noticed is that while libxdiff always shows full
-> line counts "-n,m +l,k" GNU seems to omit them when it can (m,k
-> <=1).  I am not sure if apply.c is set up to grok what libxdiff
-> emits correctly.  Running t/t1200 shows some obvious examples.
+> Now, to be honest, the real reason I wanted a built-in diff wasn't the
+> speed advantage, but the fact that it's so much more flexible. The lack of
+> fork/exec just allows us to do things that weren't practical before.
 
-Actually, the GNU diff output is the special case, and git-apply handles 
-it as such. 
+I don't know if git is patch-forkexec sensitive or not, but if it is you 
+can take a look at libxdiff's xdl_patch(), or at libifying GNU patch.
 
-We could make libxdiff do the same @@-shortening, but it doesn't seem to 
-be huge deal.
 
-		Linus
+
+- Davide
