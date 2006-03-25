@@ -1,103 +1,124 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Sat, 25 Mar 2006 00:25:21 -0800
-Message-ID: <20060325082521.GA17473@hand.yhbt.net>
-References: <20060322133337.GU20746@lug-owl.de> <20060324182504.GI31387@lug-owl.de>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: Use a *real* built-in diff generator
+Date: Sat, 25 Mar 2006 01:03:38 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603250025550.1704@alien.or.mcafeemobile.com>
+References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 09:25:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 25 10:04:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FN45O-0003Dy-U4
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 09:25:27 +0100
+	id 1FN4gu-0007Cn-Mi
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756AbWCYIZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 03:25:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWCYIZX
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 03:25:23 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:52870 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750756AbWCYIZW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 03:25:22 -0500
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id 8C7497DC005; Sat, 25 Mar 2006 00:25:21 -0800 (PST)
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Content-Disposition: inline
-In-Reply-To: <20060324182504.GI31387@lug-owl.de>
-User-Agent: Mutt/1.5.9i
+	id S1750735AbWCYJD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 04:03:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbWCYJDz
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:03:55 -0500
+Received: from x35.xmailserver.org ([69.30.125.51]:39561 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1750735AbWCYJDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Mar 2006 04:03:54 -0500
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1C6923> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sat, 25 Mar 2006 01:03:43 -0800
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17964>
 
-Jan-Benedict Glaw <jbglaw@lug-owl.de> wrote:
-> On Wed, 2006-03-22 14:33:37 +0100, Jan-Benedict Glaw <jbglaw@lug-owl.de> wrote:
-> 
-> Since it seems nobody looked at the GCC import run (which means to use
-> the svnimport), I ran it again, under strace control:
+On Fri, 24 Mar 2006, Linus Torvalds wrote:
 
-If you don't care for automated branch handling, how about trying git-svn?
-under the contrib/ directory in git.git
+> - the libxdiff algorithm is different, and I bet GNU diff has gotten a
+>   lot more testing. And the thing is, generating a diff is not an exact
+>   science - you can get two different diffs (and you will), and they can
+>   both be perfectly valid. So it's not possible to "validate" the
+>   libxdiff output by just comparing it against GNU diff.
 
-	git-svn init svn://gcc.gnu.org/svn/gcc
-	git-svn fetch
+Correct, the diff(A, B) is not unique. If you look inside the test 
+directory, there's an xregression binary that does:
 
-> > GCC
-> > ~~~
-> > $ /home/jbglaw/bin/git svnimport -C gcc -v svn://gcc.gnu.org/svn/gcc
-> 
-> > Committed change 3936:/ 1993-03-31 05:44:03)
-> > Commit ID ceff85145f8671fb2a9d826a761cedc2a507bd1e
-> > Writing to refs/heads/origin
-> > DONE: 3936 origin ceff85145f8671fb2a9d826a761cedc2a507bd1e
-> > ... 3937 trunk/gcc/final.c ...
-> > Can't fork at /home/jbglaw/bin/git-svnimport line 379.
-> 
-> ... 4279 trunk/gcc/config/i386/xm-sco.h ...
-> 
-> This time it broke at a different revision, so I guess it's not a SVN
-> or git / git-svnimport problem, but rather a problem of my Perl
-> installation or the kernel itself?
+1) Random generate A
+2) Create B by random changing A
+3) Create D=A-B
+4) Verify that B+D==A and A-D==B (using the library patch function)
 
-I've known of SVN library bindings leaking memory in the past, but I
-thought it's been solved.  Afaik, any memory allocated by the Perl
-interpreter is never released back to the kernel, either.  (At least
-that seems to be the case with my setup (Debian unstable, Perl 5.8.8,
-2.6 kernel, x86 machine).
+It does and repeat this operation continuosly, for both text (using text 
+diff/patch) and binary (using binary diff/patch). It ran several days 
+w/out finding errors, so I've a good confidence about it.
 
-> What are possible reasons for clone() to fail with -ENOMEN? I have to
-> admit that the box _is_ loaded a bit all the time:
-> 
-> jbglaw@bixie:~/vax/git-conversion$ uptime
->  19:23:58 up 136 days,  7:46, 20 users,  load average: 4.45, 4.25, 3.05
-> jbglaw@bixie:~/vax/git-conversion$ free
->              total       used       free     shared    buffers     cached
-> Mem:        507308     501760       5548          0       2184      16900
-> -/+ buffers/cache:     482676      24632
-> Swap:      2441872    1295512    1146360
 
-Some importers (my own git-svn included) aren't amazingly efficient when
-handling lots of history which gcc has.   It looks like (from what I
-understand of the SVN api used in git-svnimport) is that the entire log
-for the 100k+ revisions in the tree is slurped down into memory before
-any processing is done.
 
-git-svn does this too, but by parsing the output of the svn binary
-instead of using the library, so at least it won't have issues with the
-svn bindings and libraries to worry about.
+> - GNU diff does some nice eye-candy, like trying to figure out what the
+>   last function was, and adding that information to the "@@ .." line.
+>   libxdiff doesn't do that.
 
-My git-svn process running on the SVN tree just finished parsing the svn
-log output, and it's maxed out at 74M RSS (on a 32-bit x86).  It'll
-probably take a while to import it all (which I won't do), but I could
-have just as easily done the following to reduce memory usage by ~half:
+This, I don't think is a natural part of a generic text/binary diff/patch 
+library. If you feel it is important, you could post-process the diff, but 
+IMO is kinda bogus.
 
-	git-svn fetch -r0:50000		# import the first 50000k
-	git-svn fetch			# now import the remaining
 
-Afaik, there's no way to do something like the above with git-svnimport
-for memory-starved setups.
 
--- 
-Eric Wong
+> - The libxdiff thing has some known deficiencies. In particular, it gets
+>   the "\No newline at end of file" case wrong. So this is currently for
+>   the experimental branch only. I hope Davide will help fix it.
+
+This, need fix. At the moment, in my projects I enforce the final EOL if 
+missing (look inside the file-load function inside the test directory).
+
+
+
+> Technical note: this is based on libxdiff-0.17, but I did some surgery to
+> get rid of the extraneous fat - stuff that git doesn't need, and seriously
+> cutting down on mmfile_t, which had much more capabilities than the diff
+> algorithm either needed or used. In this version, "mmfile_t" is just a
+> trivial <pointer,length> tuple.
+>
+> That said, I tried to keep the differences to simple removals, so that you
+> can do a diff between this and the libxdiff origin, and you'll basically
+> see just things getting deleted. Even the mmfile_t simplifications are
+> left in a state where the diffs should be readable.
+
+Here you have two options. Either you suck in the libxdiff code and change 
+it to drop/change the stuff you don't want (the whole libxdiff library 
+compiled with -O2 is 33KB though). Or you use the library as is, like 
+you'd use libz & co. Once you have your own load-mmfile, you can pretty 
+much feed libxdiff as is. Not my choice though, so pick the one you think 
+best for your project.
+I see you use XDF_NEED_MINIMAL. You might want to do some experiments with 
+and without, to see how diff size changes, versus time.
+
+
+
+> Apologies to Davide, whom I'd love to get feedback on this all from (I
+> wrote my own "fill_mmfile()" for the new simpler mmfile_t format: the old
+
+If you look inside the test directory, I use a similar function. The 
+reason of the mmfile born for a use I made of the library inside an 
+embedded device where there was no guarantee of contiguos memory, and dat 
+could have been generated in chunks. OTOH an mmfile with a single block is 
+a perfectly valid mmfile ;)
+
+
+
+PS: Another solution you have is to libify GNU diff by creating a
+     diff_main() & co., usual libification wrapping. You'd need to change
+     the exit() that diff throws with a setjmp/longjmp, and make it call
+     you own mem alloc/free functions, in order to free up memory diff does
+     not clear on return. I did it once, not many changes. This solution
+     will give you all the GNU diff crud, like function names, etc...
+
+
+
+- Davide
