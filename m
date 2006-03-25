@@ -1,64 +1,67 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH 3/4] send-email: lazy-load Email::Valid and make it optional
-Date: 25 Mar 2006 07:07:38 -0800
-Message-ID: <86zmje36md.fsf@blue.stonehenge.com>
-References: <11432834111972-git-send-email-normalperson@yhbt.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Use a *real* built-in diff generator
+Date: Sat, 25 Mar 2006 07:36:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603250734130.15714@g5.osdl.org>
+References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
+ <118833cc0603250544h289f385fo683ec7b40cdb0ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git <git@vger.kernel.org>,
-	Ryan Anderson <ryan@michonline.com>, Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Sat Mar 25 16:08:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Davide Libenzi <davidel@xmailserver.org>
+X-From: git-owner@vger.kernel.org Sat Mar 25 16:36:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNAN6-00040f-3E
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 16:08:08 +0100
+	id 1FNAom-00087K-4i
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 16:36:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbWCYPHo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 10:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbWCYPHo
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 10:07:44 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:5640 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751424AbWCYPHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 10:07:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 2BB468F5B5;
-	Sat, 25 Mar 2006 07:07:39 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 21502-01-9; Sat, 25 Mar 2006 07:07:38 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 2C1988F5CD; Sat, 25 Mar 2006 07:07:38 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
-x-mayan-date: Long count = 12.19.13.2.17; tzolkin = 11 Caban; haab = 15 Cumku
-In-Reply-To: <11432834111972-git-send-email-normalperson@yhbt.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751430AbWCYPg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 10:36:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbWCYPg2
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 10:36:28 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:62864 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751430AbWCYPg2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 10:36:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2PFaLDZ014039
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 25 Mar 2006 07:36:21 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2PFaJSs001462;
+	Sat, 25 Mar 2006 07:36:19 -0800
+To: Morten Welinder <mwelinder@gmail.com>
+In-Reply-To: <118833cc0603250544h289f385fo683ec7b40cdb0ed@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17986>
 
->>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
 
-Eric> +my $have_email_valid = eval { require Email::Valid or undef };
 
-This is not necessary... if eval fails, it returns undef by definition.  Your
-code presumes that the non-zero last-expression-evaluated of a require is also
-returned from the require, which I believe is only accidentally true, although
-the behavior may be recently documented and therefore promised.  (On perl 5.8,
-it looks a bit fishy to me at a quick glance.)
+On Sat, 25 Mar 2006, Morten Welinder wrote:
+>
+> The primary correctness concern is that patch understands
+> the output, ie., the libxdiff + patch brings out right back.
+> 
+> It ought to be fairly easy to script checking every file change
+> that ever went into a git repository.  You won't cover evil
+> cases that way, but it should provide some assurances that
+> nothing is too wrong.
 
-My favorite idiom for a possibly failing eval-step is:
+I did _some_ tests, and especially "git-apply" is very useful, since it is 
+actually a lot more anal than regular "patch".
 
-        my $can_I_do_this = eval { riskything; 1 };
+It all worked fine except for files that don't end with a newline. Davide 
+points out that he just forces the EOLN at the end in his test harness, 
+but that's not exactly acceptable for a real project that actually has 
+real cases.
 
-If riskything fails, eval returns undef.  If it succeeds, it evaluates the 1,
-and returns that.
+I'll be taking a look at trying to fix it. 
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+		Linus
