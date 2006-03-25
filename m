@@ -1,73 +1,44 @@
-From: Matthias Kestenholz <lists@irregular.ch>
-Subject: Re: Bug encountered while comitting
-Date: Sat, 25 Mar 2006 11:23:15 +0100
-Message-ID: <20060325102314.GA3825@spinlock.ch>
-References: <20060324183951.GA23193@spinlock.ch> <7vacbfzc3u.fsf@assigned-by-dhcp.cox.net> <20060325011527.GA23600@spinlock.ch> <7vwtejxd3u.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 11:23:43 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: send-email: dependency removal, cleanup, + small feature
+Date: Sat, 25 Mar 2006 02:43:30 -0800
+Message-ID: <11432834101430-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: git <git@vger.kernel.org>, Ryan Anderson <ryan@michonline.com>,
+	Greg KH <greg@kroah.com>
+X-From: git-owner@vger.kernel.org Sat Mar 25 11:44:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FN5vr-0006Ne-0k
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 11:23:43 +0100
+	id 1FN6Fv-00016M-01
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 11:44:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbWCYKXk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 05:23:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751157AbWCYKXk
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 05:23:40 -0500
-Received: from mail20.bluewin.ch ([195.186.19.65]:44487 "EHLO
-	mail20.bluewin.ch") by vger.kernel.org with ESMTP id S1750809AbWCYKXk
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 05:23:40 -0500
-Received: from spinlock.ch (83.77.185.119) by mail20.bluewin.ch (Bluewin 7.2.071)
-        id 441EA2F900120C11; Sat, 25 Mar 2006 10:23:25 +0000
-Received: (nullmailer pid 10688 invoked by uid 1000);
-	Sat, 25 Mar 2006 10:23:15 -0000
+	id S1751160AbWCYKn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 05:43:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbWCYKn6
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 05:43:58 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:19080 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751160AbWCYKn6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 05:43:58 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 7494C7DC005;
+	Sat, 25 Mar 2006 02:43:57 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vwtejxd3u.fsf@assigned-by-dhcp.cox.net>
-X-Editor: Vim http://www.vim.org/
-X-Operating-System: GNU/Linux 2.6.16-rc6 (i686)
-X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
-User-Agent: Mutt/1.5.11+cvs20060126
+X-Mailer: git-send-email
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17973>
 
-* Junio C Hamano (junkio@cox.net) wrote:
-> You are right.  commit-tree does not seem to check if it
-> successfully wrote the commit object.  How about this?
-> 
-> -- >8 --
-> diff --git a/commit-tree.c b/commit-tree.c
-> index 88871b0..16c1787 100644
-> --- a/commit-tree.c
-> +++ b/commit-tree.c
-> @@ -125,7 +125,10 @@ int main(int argc, char **argv)
->  	while (fgets(comment, sizeof(comment), stdin) != NULL)
->  		add_buffer(&buffer, &size, "%s", comment);
->  
-> -	write_sha1_file(buffer, size, "commit", commit_sha1);
-> -	printf("%s\n", sha1_to_hex(commit_sha1));
-> -	return 0;
-> +	if (!write_sha1_file(buffer, size, "commit", commit_sha1)) {
-> +		printf("%s\n", sha1_to_hex(commit_sha1));
-> +		return 0;
-> +	}
-> +	else
-> +		return 1;
->  }
 
-This patch fixes the problem I was encountering (git-update-ref is
-not executed anymore).
+1 - Change from Mail::Sendmail to Net::SMTP
+2 - use built-in time() instead of /bin/date '+%s'
+3 - lazy-load Email::Valid and make it optional
+4 - add support for mutt aliases files
 
-Thank you all for this really great tool!
-
+Patches 1 and 3 make git-send-email easily runnable with any
+reasonable Perl installation.  2 is just a good idea.  4 makes
+my life a lot easier.
 
 -- 
-:wq
+Eric Wong
