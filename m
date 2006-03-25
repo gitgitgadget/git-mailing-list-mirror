@@ -1,52 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Effective difference between git-rebase and git-resolve
-Date: Sat, 25 Mar 2006 10:37:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603251034550.14457@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060325035423.GB31504@buici.com> <Pine.LNX.4.64.0603242014160.15714@g5.osdl.org>
- <20060325043507.GA14644@buici.com> <7v1wwrys07.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] Avoid slowness when timewarping large trees.
+Date: Sat, 25 Mar 2006 04:39:57 -0500
+Message-ID: <20060325093957.GA27832@coredump.intra.peff.net>
+References: <20060324084423.GA30213@coredump.intra.peff.net> <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net> <20060324105543.GA2543@coredump.intra.peff.net> <7v3bh814z4.fsf@assigned-by-dhcp.cox.net> <20060324112246.GA5220@coredump.intra.peff.net> <20060324164352.GA20684@spearce.org> <20060325093641.GA26284@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 25 10:37:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: pasky@suse.cz
+X-From: git-owner@vger.kernel.org Sat Mar 25 10:40:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FN5Cy-0001sL-LP
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:37:21 +0100
+	id 1FN5Fe-0002Av-FT
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:40:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbWCYJhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 04:37:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbWCYJhQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:37:16 -0500
-Received: from mail.gmx.de ([213.165.64.20]:25491 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751133AbWCYJhO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 04:37:14 -0500
-Received: (qmail invoked by alias); 25 Mar 2006 09:37:13 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp031) with SMTP; 25 Mar 2006 10:37:13 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wwrys07.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751132AbWCYJkA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 04:40:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbWCYJkA
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:40:00 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:53467 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1751132AbWCYJj7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 04:39:59 -0500
+Received: (qmail 72534 invoked from network); 25 Mar 2006 09:39:57 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 25 Mar 2006 09:39:57 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Mar 2006 04:39:57 -0500
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org, pasky@suse.cz
+Content-Disposition: inline
+In-Reply-To: <20060325093641.GA26284@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17969>
 
-Hi,
 
-On Fri, 24 Mar 2006, Junio C Hamano wrote:
+tree_timewarp was calling read, egrep, and rm in an O(N) loop where N is
+the number of changed files between two trees. This caused a bottleneck
+when seeking/switching/merging between trees with many changed files.
 
-> If nobody in the upper echelon of kernel people (meaning, longest-time 
-> git users) use git-resolve anymore, I think we should mark it deprecated 
-> and remove it eventually.
+Signed-off-by: Jeff King <peff@peff.net>
 
-I am nowhere near kernel people, but I am using git on a machine where it 
-is too cumbersome to install python. If git-resolve goes, I am without a 
-merge strategy (at least until git-recursive is ported to C... was that 
-not the plan with git-merge-tree? What happened on that front?).
 
-Ciao,
-Dscho
+---
+
+This is a repost of the initial patch featuring a few cleanups suggested
+by Junio. 
+
+ cg-Xlib |    9 +++------
+ 1 files changed, 3 insertions(+), 6 deletions(-)
+
+5f79b37a0eb85ff4f643e70a7f2823e68e9d9ca4
+diff --git a/cg-Xlib b/cg-Xlib
+index 5896df7..1a9bd4f 100644
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -363,12 +363,9 @@ tree_timewarp()
+ 
+ 	# Kill gone files
+ 	git-diff-tree -r "$base" "$branch" |
+-		while IFS=$'\t' read header file; do
+-			# match ":100755 000000 14d43b1abf... 000000000... D"
+-			if echo "$header" | egrep "^:([^ ][^ ]* ){4}D" >/dev/null; then
+-				rm -- "$file"
+-			fi
+-		done
++		# match ":100755 000000 14d43b1abf... 000000000... D"
++		sed -ne 's/^:[^\t]* D\t//p' |
++		xargs rm -f --
+ 	git-checkout-index -u -f -a
+ 
+ 	# FIXME: Can produce bogus "contains only garbage" messages.
+-- 
+1.2.4
