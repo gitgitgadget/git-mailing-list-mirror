@@ -1,46 +1,52 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] cogito: Avoid slowness when timewarping large trees.
-Date: Sat, 25 Mar 2006 04:36:41 -0500
-Message-ID: <20060325093641.GA26284@coredump.intra.peff.net>
-References: <20060324084423.GA30213@coredump.intra.peff.net> <7vd5gc16u2.fsf@assigned-by-dhcp.cox.net> <20060324105543.GA2543@coredump.intra.peff.net> <7v3bh814z4.fsf@assigned-by-dhcp.cox.net> <20060324112246.GA5220@coredump.intra.peff.net> <20060324164352.GA20684@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Effective difference between git-rebase and git-resolve
+Date: Sat, 25 Mar 2006 10:37:09 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0603251034550.14457@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060325035423.GB31504@buici.com> <Pine.LNX.4.64.0603242014160.15714@g5.osdl.org>
+ <20060325043507.GA14644@buici.com> <7v1wwrys07.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Mar 25 10:36:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 25 10:37:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FN5CQ-0001oZ-Ix
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:36:46 +0100
+	id 1FN5Cy-0001sL-LP
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 10:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbWCYJgo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 04:36:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbWCYJgo
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:36:44 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:31711 "EHLO
-	peff.net") by vger.kernel.org with ESMTP id S1751126AbWCYJgn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 04:36:43 -0500
-Received: (qmail 72410 invoked from network); 25 Mar 2006 09:36:41 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 0 with SMTP; 25 Mar 2006 09:36:41 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Mar 2006 04:36:41 -0500
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060324164352.GA20684@spearce.org>
+	id S1751133AbWCYJhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 04:37:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbWCYJhQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 04:37:16 -0500
+Received: from mail.gmx.de ([213.165.64.20]:25491 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751133AbWCYJhO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 04:37:14 -0500
+Received: (qmail invoked by alias); 25 Mar 2006 09:37:13 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp031) with SMTP; 25 Mar 2006 10:37:13 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wwrys07.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17968>
 
-On Fri, Mar 24, 2006 at 11:43:52AM -0500, Shawn Pearce wrote:
+Hi,
 
-> Now that I think about it isn't this sort of where you were before
-> in cg-seek?
+On Fri, 24 Mar 2006, Junio C Hamano wrote:
 
-Yes, that's basically it. Short of Junio explaining how the manual file
-removal can be avoided, I think my original patch should be applied, as
-it causes an order of magnitude speed up. I will repost the cleaned-up
-version.
+> If nobody in the upper echelon of kernel people (meaning, longest-time 
+> git users) use git-resolve anymore, I think we should mark it deprecated 
+> and remove it eventually.
 
--Peff
+I am nowhere near kernel people, but I am using git on a machine where it 
+is too cumbersome to install python. If git-resolve goes, I am without a 
+merge strategy (at least until git-recursive is ported to C... was that 
+not the plan with git-merge-tree? What happened on that front?).
+
+Ciao,
+Dscho
