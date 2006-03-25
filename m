@@ -1,62 +1,69 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: git push refspec URL weirdness
-Date: Fri, 24 Mar 2006 21:42:47 -0600
-Message-ID: <E1FMzfr-0006xT-Uq@jdl.com>
-X-From: git-owner@vger.kernel.org Sat Mar 25 04:43:20 2006
+From: Marc Singer <elf@buici.com>
+Subject: Effective difference between git-rebase and git-resolve
+Date: Fri, 24 Mar 2006 19:54:23 -0800
+Message-ID: <20060325035423.GB31504@buici.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Mar 25 04:54:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMzgI-0008Ol-GR
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 04:43:14 +0100
+	id 1FMzrC-0000r4-Uf
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 04:54:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750743AbWCYDnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 22:43:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbWCYDnI
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 22:43:08 -0500
-Received: from colo.jdl.com ([66.118.10.122]:65456 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1750743AbWCYDnH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Mar 2006 22:43:07 -0500
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1FMzfr-0006xT-Uq
-	for git@vger.kernel.org; Fri, 24 Mar 2006 21:42:48 -0600
+	id S1750747AbWCYDyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 22:54:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbWCYDyY
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 22:54:24 -0500
+Received: from 206-124-142-26.buici.com ([206.124.142.26]:58848 "HELO
+	florence.buici.com") by vger.kernel.org with SMTP id S1750747AbWCYDyY
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 22:54:24 -0500
+Received: (qmail 11923 invoked by uid 1000); 25 Mar 2006 03:54:23 -0000
 To: git@vger.kernel.org
-X-Spam-Score: -5.9 (-----)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17951>
 
+The process I've been using to keep my patches current with the latest
+development is this:
 
-I wanted to git push some bits to a remote repo
-and set up this .git/refs/remotes/publish file:
+  git checkout linus && git pull linus
+  git checkout work
 
-    URL: git+ssh://www.example.com/some/path/repo.git
-    Push: my-branch:public-branch
+When I'm ready to merge,
 
-So that I could "git push publish".
+  git resolve work linus "Update with head"
+  git tag basis
 
-The ssh on the far side is listening on port 1234
-and not the default 22.  So I slapped this into my
-~/.ssh/config file on the local machine:
+This lets me diff against basis even when the linus branch continues
+to follow the latest developments.
 
-    Host www.example.com
-    Port 1234
+Today, I wanted to move everything forward.  But the resolve failed to
+merge some files.  In fact, one file was apparently so thorny that
+resolve just gave up and left no working file.  Bothersome, but I
+recovered by moving back to the previous work point.
 
-This worked great for a straight "ssh www.example.com"
-connection.  However, git still complained that port 22
-was refusing connections.  It was.  Git shouldn't have
-been trying to use it.
+Then, I found git-rebase which seems to be more what I'd like to use
+since it moves my patches along on top of the main development line.
 
-So Junio suggested taking advantage of the fact that the
-default refspec uses git+ssh and use this instead:
+  git rebase linus
 
-    URL: www.example.com:/pub/software/linux-2.6-86xx.git
-    Push: my-branch:public-branch
+This time, almost everything merged without a hitch except for the
+thorny file from before.  I edited the file, removing the conflict
+markers, and started a build.  But what I found was that some of the
+changes I'd made were no longer present.  Several files showed no sign
+of the patches even though the kernel versions hadn't changed.
 
-Which just worked.
+So, I have a couple of questions:
 
-So this is either a bug report or google food. :-)
-
-jdl
+  1) Am I using rebase correctly?
+  2) If not, did it leave some of my changes uncommitted and hidden
+     somewhere? git-ls-files --unmerged shows no sign of them.
+  3) Do I have to pull all of my patches off, apply them to the head
+     of the tree, and only use git-rebase to make this work?
+  4) Should I prefer rebase over resolve?
