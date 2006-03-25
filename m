@@ -1,71 +1,90 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: Errors GITtifying GCC and Binutils
-Date: Fri, 24 Mar 2006 19:37:12 -0500
-Message-ID: <20060325003712.GA32320@pe.Belkin>
-References: <20060322133337.GU20746@lug-owl.de> <Pine.LNX.4.64.0603221517210.26286@g5.osdl.org> <Pine.LNX.4.64.0603221607580.26286@g5.osdl.org> <Pine.LNX.4.64.0603221717120.26286@g5.osdl.org> <20060323200306.GG31387@lug-owl.de> <20060324003944.GA28652@pe.Belkin> <20060324075229.GH31387@lug-owl.de>
+From: Matthias Kestenholz <lists@irregular.ch>
+Subject: Re: Bug encountered while comitting
+Date: Sat, 25 Mar 2006 02:15:30 +0100
+Message-ID: <20060325011530.GA25951@spinlock.ch>
+References: <20060324183951.GA23193@spinlock.ch> <442449E1.5060007@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 01:37:24 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 25 02:15:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FMwmO-0004AH-9V
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 01:37:20 +0100
+	id 1FMxNk-00019r-8O
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 02:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbWCYAhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Mar 2006 19:37:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWCYAhP
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 19:37:15 -0500
-Received: from eastrmmtao01.cox.net ([68.230.240.38]:37609 "EHLO
-	eastrmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751221AbWCYAhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Mar 2006 19:37:14 -0500
-Received: from localhost ([24.250.31.7]) by eastrmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060325003706.IIW3988.eastrmmtao01.cox.net@localhost>;
-          Fri, 24 Mar 2006 19:37:06 -0500
-Received: from chris by localhost with local (Exim 4.43)
-	id 1FMwmG-0008Pv-Mr; Fri, 24 Mar 2006 19:37:12 -0500
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+	id S1751363AbWCYBPx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Mar 2006 20:15:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbWCYBPx
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Mar 2006 20:15:53 -0500
+Received: from mail13.bluewin.ch ([195.186.18.62]:51190 "EHLO
+	mail13.bluewin.ch") by vger.kernel.org with ESMTP id S1751363AbWCYBPw
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Mar 2006 20:15:52 -0500
+Received: from spinlock.ch (62.203.176.109) by mail13.bluewin.ch (Bluewin 7.2.071)
+        id 441EA1DA0013B55D; Sat, 25 Mar 2006 01:15:49 +0000
+Received: (nullmailer pid 26185 invoked by uid 1000);
+	Sat, 25 Mar 2006 01:15:30 -0000
+To: Andreas Ericsson <ae@op5.se>
+Mail-Followup-To: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060324075229.GH31387@lug-owl.de>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <442449E1.5060007@op5.se>
+X-Editor: Vim http://www.vim.org/
+X-Operating-System: GNU/Linux 2.6.16-rc6 (i686)
+X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17945>
 
-On Fri, Mar 24, 2006 at 08:52:29AM +0100, Jan-Benedict Glaw wrote:
-> On Thu, 2006-03-23 19:39:44 -0500, Chris Shoemaker <c.shoemaker@cox.net> wrote:
-> > On Thu, Mar 23, 2006 at 09:03:06PM +0100, Jan-Benedict Glaw wrote:
-> > > On Wed, 2006-03-22 17:28:23 -0800, Linus Torvalds <torvalds@osdl.org> wrote:
-> > > It seems there's a patch like
-> > > http://www.gelato.unsw.edu.au/archives/git/0602/16278.html is missing?
-> > > ...or we need a better cvsps.  Shall I add it and try again / try to
-> > > continue, or give up on it for now?  Though it would be nice to have
-> > > these two large and important source trees under GIT control :-)
-> > 
-> > You make want to try the cvsps patch I attached to the email here:
-> > 
-> > http://www.gelato.unsw.edu.au/archives/git/0511/11812.html
+* Andreas Ericsson (ae@op5.se) wrote:
+> Matthias Kestenholz wrote:
+> >
+> >The PHP script created directories under .git/objects
 > 
-> [...]
+> 
+> Ouch... You're not really supposed to do that. The proper thing to do is 
+> to do things in the working tree and commit them to git later.
+> 
 
-> invalid initial_branch for file bfd/po/BLD-POTFILES.in, probably
-> from old cache, run with -x.
+I think I did not express myself clearly. The PHP Script executes
+git commands which in turn create or modify the mentioned
+directories. I do not create them myself by hand.
 
-I guess that error message wasn't quite as obvious as I intended.
+> >When I tried to commit, I got a message saying "Unable to write sha1
+> >filename".
+> >
+> 
+> What file were you trying to write?
+> 
 
-That means you have old cvsps cache state hanging around.  You can
-either run cvsps with -x or delete the cache file manually.  Those are
-the files in ~/.cvsps.
+Some file I was updating (in this case, a file holding some wiki
+content)
 
-Incidentally, I'd recommend doing this in two stages during
-trouble-shooting.  Run cvsps first and verify that you can produce a
-valid ancestry tree.  If it's not-quite-right you can even edit the
-cvsps output to reparent the incorrect branches.  Then run
-git-cvsimport after you're satisfied with the ancestry.
+> >The result was, that only part of the commit was recorded and that I
+> >experienced repository corruption. refs/heads/master pointed to a
+> >non-existant object.
+> >
+> 
+> Did you use git tools to update .git/refs/heads/master ?
+> 
 
--chris
+Yes.
+
+> 
+> >The expected behavior would have been an error message telling me I
+> >had insufficient write privileges and surely no repository
+> >corruption.
+> >
+> 
+> Didn't you get the strerror(3) message from that? If so, I'd consider it 
+> a bug.
+
+As I (only now) wrote in the other email, I got the
+"Permission denied" message, and that was a sufficient hint what was
+wrong.
+
+-- 
+:wq
