@@ -1,83 +1,54 @@
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: [PATCH]: git-svnimport: if a limit is specified, respect it
-Date: Sun, 26 Mar 2006 09:43:46 +1100
-Message-ID: <11433266261442-git-send-email-wildfire@progsoc.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Anand Kumria <wildfire@progsoc.org>
-X-From: git-owner@vger.kernel.org Sat Mar 25 23:45:26 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Do not print header in diff-tree --root unless asked to
+Date: Sun, 26 Mar 2006 00:28:07 +0100
+Message-ID: <20060325232807.9146.12846.stgit@machine.or.cz>
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 26 00:28:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNHVW-000690-0s
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 23:45:18 +0100
+	id 1FNIBN-0004eI-Rk
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 00:28:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751959AbWCYWpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 17:45:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbWCYWpK
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 17:45:10 -0500
-Received: from 133.105.233.220.exetel.com.au ([220.233.105.133]:54949 "EHLO
-	giskard.kumria.com") by vger.kernel.org with ESMTP id S1751959AbWCYWpJ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 17:45:09 -0500
-Received: from eve.kumria.com ([203.7.227.147])
-	by giskard.kumria.com with esmtpa (Exim 4.50)
-	id 1FNHV6-0004CF-9c; Sun, 26 Mar 2006 08:44:57 +1000
-Received: from [127.0.0.1] (helo=eve)
-	by eve.kumria.com with smtp (Exim 4.60)
-	(envelope-from <wildfire@progsoc.org>)
-	id 1FNHU2-0002w9-T8; Sun, 26 Mar 2006 09:43:46 +1100
-In-Reply-To: 
-X-Mailer: git-send-email
-To: git@vger.kernel.org
-X-SA-Exim-Connect-IP: 203.7.227.147
-X-SA-Exim-Mail-From: wildfire@progsoc.org
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on giskard.kumria.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on giskard.kumria.com)
+	id S1751968AbWCYX2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 18:28:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbWCYX2A
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 18:28:00 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:4559 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751968AbWCYX17 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 18:27:59 -0500
+Received: (qmail 9165 invoked from network); 26 Mar 2006 00:28:07 +0100
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
+  by localhost with SMTP; 26 Mar 2006 00:28:07 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18006>
 
+Currently cg-log -f is broken (shows sha1 in files list for the initial
+commit) since git-diff-tree would always return the sha1 of the commit
+when --root was passed. I assume it should do this only when -v was also
+passed; I'm certain that I don't want it when processing the output.
 
-Hi,
-
-git-svnimport will import the same revision over and over again if a
-limit (-l <rev>) has been specified. Instead if that revision has already
-been processed, exit with an up-to-date message.
-
-Please apply.
-
-Thanks,
-Anand
-
-Signed-off-by: Anand Kumria <wildfire@progsoc.org>
-
-
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- git-svnimport.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ diff-tree.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-66e05a5854eb269e3e61fcaa9f53a4b2a45b17d8
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index 639aa41..114784f 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -851,7 +851,7 @@ sub commit_all {
+diff --git a/diff-tree.c b/diff-tree.c
+index f55a35a..8d82b5b 100644
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -107,7 +107,8 @@ static int diff_tree_commit(struct commi
  
- $opt_l = $svn->{'maxrev'} if not defined $opt_l or $opt_l > $svn->{'maxrev'};
+ 	/* Root commit? */
+ 	if (show_root_diff && !commit->parents) {
+-		header = generate_header(sha1, NULL, commit);
++		if (verbose_header)
++			header = generate_header(sha1, NULL, commit);
+ 		diff_root_tree(sha1, "");
+ 	}
  
--if ($svn->{'maxrev'} < $current_rev) {
-+if ($opt_l < $current_rev) {
-     print "Up to date: no new revisions to fetch!\n" if $opt_v;
-     unlink("$git_dir/SVN2GIT_HEAD");
-     exit;
--- 
-1.2.4
