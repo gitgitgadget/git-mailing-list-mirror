@@ -1,86 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: More "git-apply" safety fixes
-Date: Sat, 25 Mar 2006 13:28:28 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603251321330.15714@g5.osdl.org>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: starting completly new repository
+Date: Sat, 25 Mar 2006 16:45:19 -0500
+Message-ID: <BAYC1-PASMTP06D0D5B809FAC3DB5EABDCAEDC0@CEZ.ICE>
+References: <Pine.LNX.4.63.0603252148550.14361@alpha.polcom.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Mar 25 22:28:56 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 25 22:47:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNGJR-0001XH-Qj
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 22:28:46 +0100
+	id 1FNGc1-0004Zq-Qm
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 22:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbWCYV2e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 16:28:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbWCYV2e
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 16:28:34 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:2257 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751053AbWCYV2e (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 16:28:34 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2PLSTDZ031263
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 25 Mar 2006 13:28:30 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2PLSSSE012800;
-	Sat, 25 Mar 2006 13:28:28 -0800
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750869AbWCYVry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 16:47:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWCYVry
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 16:47:54 -0500
+Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]:41880 "EHLO
+	BAYC1-PASMTP06.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1750869AbWCYVry (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Mar 2006 16:47:54 -0500
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP06.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 25 Mar 2006 13:49:10 -0800
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 4DEB2644C17;
+	Sat, 25 Mar 2006 16:47:48 -0500 (EST)
+To: Grzegorz Kulewski <kangur@polcom.net>
+Message-Id: <20060325164519.1081e345.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.63.0603252148550.14361@alpha.polcom.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 25 Mar 2006 21:49:11.0125 (UTC) FILETIME=[F350F850:01C65055]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18001>
 
+On Sat, 25 Mar 2006 22:06:42 +0100 (CET)
+Grzegorz Kulewski <kangur@polcom.net> wrote:
 
-This was triggered by me testing the "@@" numbering shorthand by GNU 
-patch, which not only showed that git-apply thought it meant the number 
-was duplicated (when it means that the second number is 1), but my tests 
-showed than when git-apply mis-understood the number, it would then not 
-raise an alarm about it if the patch ended early.
+> (on the server)
+> mkdir main
+> git-init-db
+> touch .git/git-daemon-export-ok
+> 
+> (on my computer)
+> git-clone git://host/main main
+> 
+> But it looks like I must first do some commit on the server? But I can not 
+> make empty commit just to have things started? Or maybe there is some 
+> other way...
 
-Now, this doesn't actually _matter_, since with a three-line context, the 
-only case that "x,1" will be shorthanded to "x" is when x itself is 1 (in 
-which case git-apply got it right), but the fact that git-apply would also 
-silently accept truncated patches was a missed opportunity for additional 
-sanity-checking.
-
-So make git-apply refuse to look at a patch fragment that ends early.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-----
-
-If you already applied the first hunk, just ignore that part, and apply 
-the second one that adds the test for oldlines/newlines being zero after 
-the patch.
-
-Neither of these two changes should matter for a well-formed patch, but 
-it's definitely the right thing to do.
-
-diff --git a/apply.c b/apply.c
-index 2da225a..c50b3a6 100644
---- a/apply.c
-+++ b/apply.c
-@@ -693,7 +693,7 @@ static int parse_range(const char *line,
- 	line += digits;
- 	len -= digits;
+Did you actually start the git-daemon on the server?
  
--	*p2 = *p1;
-+	*p2 = 1;
- 	if (*line == ',') {
- 		digits = parse_num(line+1, p2);
- 		if (!digits)
-@@ -901,6 +901,8 @@ static int parse_fragment(char *line, un
- 			break;
- 		}
- 	}
-+	if (oldlines || newlines)
-+		return -1;
- 	/* If a fragment ends with an incomplete line, we failed to include
- 	 * it in the above loop because we hit oldlines == newlines == 0
- 	 * before seeing it.
+> Also I wonder if I can do push over git protocol or I must use real ssh 
+> account on the server? This is not clear from the docs... At least not for 
+> me. How should I set up my repo (on my computer) to be able to push 
+> commits into main repo?
+
+You can't commit over the git protocol, you'll need to use ssh.  
+No need to do anything to your repo in order to push.
+
+> Also what should I set up additionally? How can I easily set author name 
+> and email for each repo? 
+
+See below.
+
+> What is the difference between author and commiter and how should I 
+> set this up here?
+
+Just what you might imagine, the person who created the patch and
+the person who entered it into the repository respectively.
+ 
+> Is there any documentation about git config file? Can I set author name, 
+> email and preffered editor in it or must I use environment?
+
+$ git repo-config user.email "user@email.com"
+$ git repo-config user.name  "full name"
+
+use the EDITOR environment variable to choose your desired editor.
+
+> Is there some irc channel for asking dumb questions as above and having 
+> them anwsered fast or should I use this mailing list?
+ 
+#git on irc.freenode.net
+
+Sean
