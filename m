@@ -1,121 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Use a *real* built-in diff generator
-Date: Fri, 24 Mar 2006 23:39:08 -0800
-Message-ID: <7vu09nvuqr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
-	<7vk6ajxbe5.fsf@assigned-by-dhcp.cox.net>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: Fix branch ancestry calculation
+Date: Fri, 24 Mar 2006 23:54:16 -0800
+Message-ID: <1143273256.6850.86.camel@neko.keithp.com>
+References: <Pine.LNX.4.64.0603221723230.9196@g5.osdl.org>
+	 <44240619.20103@dm.cobite.com>
+	 <Pine.LNX.4.64.0603240739360.26286@g5.osdl.org>
+	 <1143218338.6850.68.camel@neko.keithp.com>
+	 <20060325014532.GB32522@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 08:39:22 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-/P/NyuIFzL/4YgbGdBUk"
+Cc: keithp@keithp.com, Linus Torvalds <torvalds@osdl.org>,
+	David Mansfield <centos@dm.cobite.com>,
+	David Mansfield <cvsps@dm.cobite.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 25 08:54:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FN3Mj-0007QX-Jq
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 08:39:17 +0100
+	id 1FN3bl-0000K6-DV
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 08:54:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbWCYHjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 02:39:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751102AbWCYHjM
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 02:39:12 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:10715 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751101AbWCYHjL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 02:39:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060325073910.YGLZ17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 25 Mar 2006 02:39:10 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750967AbWCYHyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 02:54:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbWCYHyq
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 02:54:46 -0500
+Received: from home.keithp.com ([63.227.221.253]:16391 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1750967AbWCYHyp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 02:54:45 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id BB4B1130020;
+	Fri, 24 Mar 2006 23:54:43 -0800 (PST)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 26756-03; Fri, 24 Mar 2006 23:54:43 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1033)
+	id E56C413001F; Fri, 24 Mar 2006 23:54:42 -0800 (PST)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 681C114001;
+	Fri, 24 Mar 2006 23:54:42 -0800 (PST)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 8B4536AC1E0; Fri, 24 Mar 2006 23:54:17 -0800 (PST)
+To: Chris Shoemaker <c.shoemaker@cox.net>
+In-Reply-To: <20060325014532.GB32522@pe.Belkin>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/17962>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> This uses a simplified libxdiff setup to generate unified diffs _without_ 
->> doing  fork/execve of GNU "diff".
->
-> Good stuff.
+--=-/P/NyuIFzL/4YgbGdBUk
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-The reason I like this is because I was thinking about doing
-in-core diffs for different purpose when I was driving to work
-this morning [*1*]  --- to make pickaxe a more useful building
-block.
+On Fri, 2006-03-24 at 20:45 -0500, Chris Shoemaker wrote:
 
-Currently, pickaxe tries to do an exact match to find the case
-where a given substring S appears in the version C of the file
-but not in the its parent C^n (1 <= n), and then it tells the
-diffcore to emit the differences.  The user (probably only me on
-this list?)  is expected to look at the change, make an
-intelligent decision to feed a matching substring S' found in
-C^n and restart from that commit.
+> If that last sentence was a typo then you already know this, but
+> otherwise you may be disappointed to learn that it's not _always_
+> possible to discern the correct ancestry tree.
 
-To be a useful "content movement tracker", the process of
-finding matching 'old shape' in the previous version and
-re-feeding it to pickaxe should be automated if possible, and
-in-core diff machinery would be one component to help that.
+Sure, it's possible to generate trees which can't be figured out. So
+far, I haven't found any which can't be pieced back together, except in
+cases where the tree was accidentally damaged (child branches created on
+two separate parent branches)
 
-For example, if I wanted to find when I stole 'ls-files -t'
-feature from Cogito, I would first run less ls-files.c; I see
-these and am reasonably sure these relate to what I am looking
-for:
+> If you end up comparing the ancestry tree discovered by your tool and
+> the tree output by a patched cvsps, I would be very interested in the
+> results.
 
-	...
-        static const char *tag_cached = "";
-        static const char *tag_unmerged = "";
-        static const char *tag_removed = "";
-        static const char *tag_other = "";
-        static const char *tag_killed = "";
-        static const char *tag_modified = "";
-	...
+So far, I've found several concrete trees where cvsps (in any form)
+assigns branch points many versions too early compared to the 'true'
+history. My tool is getting better answers, but still can't compute the
+tree for the X.org X server tree yet. That one has a wide variety of
+damage, including the direct copying of ,v files between repositories
+which had divered, and the accidental branching of files from different
+parent branches. I keep poking at it...
 
-So I run:
+> -chris
+>=20
+> (*) You can distinguish between A->B->head and B->A->head simply by
+> date.
 
-	$ git whatchanged -S'static const char *tag_other = "";
-        static const char *tag_killed = "";
-	static const char *tag_modified' -p master -- ls-files.c
+I'm doing a lot more date-based identification than I'm really
+comfortable with; the bad thing here is that branch points can occur
+long before any commits to that branch, when doing date-based
+operations, you have a range of possible matching branch points and it's
+hard to disambiguate.
 
-which finds:
+--=20
+keith.packard@intel.com
 
-        Author: Junio C Hamano <junkio@cox.net>
-        Date:   Mon Sep 19 15:11:15 2005 -0700
+--=-/P/NyuIFzL/4YgbGdBUk
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-            Show modified files in git-ls-files
-	...
-        @@ -28,6 +29,7 @@ static const char *tag_unmerged = "";
-         static const char *tag_removed = "";
-         static const char *tag_other = "";
-         static const char *tag_killed = "";
-        +static const char *tag_modified = "";
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
 
-but that is not what I am interested in; the matching "old
-shape" is the version before the tag_modified was added (and it
-already had other tag_xxx in there).  So with the current
-pickaxe, I manually re-run whatchanged starting from the found
-commit with modified string like this:
+iD8DBQBEJPcoQp8BWwlsTdMRAie7AKDMJMAKeW9aXWknPLN5yNNBkkNxyACaAn50
+hUjUh5rroLwHa6sx0abb/UM=
+=kvsW
+-----END PGP SIGNATURE-----
 
-	$ git whatchanged -S'static const char *tag_removed = "";
-        static const char *tag_other = "";
-        static const char *tag_killed = "";' -p $that_commit -- ls-files.c
-
-in order to further drill down.
-
-A truly useful pickaxe should take two line numbers and a
-filename (to name the range of lines I am interested in) from
-the starting version, notice when that range changes shape, and
-after showing the found commit, replace the range with the one
-matching from the older commit and continue.
-
-[Footnote]
-
-*1* When you are bogged down in a boring day-job, your brain
-tends to try to compensate by spending as much your waking time
-as possible on thinking about more interesting and more useful
-stuff -- like git ;-).
+--=-/P/NyuIFzL/4YgbGdBUk--
