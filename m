@@ -1,91 +1,98 @@
-From: sean <seanlkml@sympatico.ca>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: starting completly new repository
-Date: Sat, 25 Mar 2006 16:45:19 -0500
-Message-ID: <BAYC1-PASMTP06D0D5B809FAC3DB5EABDCAEDC0@CEZ.ICE>
+Date: Sat, 25 Mar 2006 22:49:31 +0100
+Message-ID: <20060325214931.GA18185@pasky.or.cz>
 References: <Pine.LNX.4.63.0603252148550.14361@alpha.polcom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 25 22:47:59 2006
+X-From: git-owner@vger.kernel.org Sat Mar 25 22:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNGc1-0004Zq-Qm
-	for gcvg-git@gmane.org; Sat, 25 Mar 2006 22:47:58 +0100
+	id 1FNGdZ-0004r2-70
+	for gcvg-git@gmane.org; Sat, 25 Mar 2006 22:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbWCYVry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 16:47:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWCYVry
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 16:47:54 -0500
-Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]:41880 "EHLO
-	BAYC1-PASMTP06.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1750869AbWCYVry (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 16:47:54 -0500
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP06.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 25 Mar 2006 13:49:10 -0800
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 4DEB2644C17;
-	Sat, 25 Mar 2006 16:47:48 -0500 (EST)
+	id S1751142AbWCYVta (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 16:49:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWCYVta
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 16:49:30 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:35494 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751142AbWCYVt3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 16:49:29 -0500
+Received: (qmail 9310 invoked by uid 2001); 25 Mar 2006 22:49:31 +0100
 To: Grzegorz Kulewski <kangur@polcom.net>
-Message-Id: <20060325164519.1081e345.seanlkml@sympatico.ca>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.63.0603252148550.14361@alpha.polcom.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 25 Mar 2006 21:49:11.0125 (UTC) FILETIME=[F350F850:01C65055]
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18003>
 
-On Sat, 25 Mar 2006 22:06:42 +0100 (CET)
-Grzegorz Kulewski <kangur@polcom.net> wrote:
+Hi,
 
-> (on the server)
-> mkdir main
-> git-init-db
-> touch .git/git-daemon-export-ok
-> 
-> (on my computer)
-> git-clone git://host/main main
-> 
+Dear diary, on Sat, Mar 25, 2006 at 10:06:42PM CET, I got a letter
+where Grzegorz Kulewski <kangur@polcom.net> said that...
+> First sorry if it is anwsered somewhere in the docs, but I am just 
+> (slowly) learning how to use git and reading the documentation. Any 
+> pointers to some article or tutorial that anwsers my questions will be 
+> appreciated.
+
+well, there's Documentation/tutorial.txt, but it doesn't cover your
+questions, it looks.
+
 > But it looks like I must first do some commit on the server? But I can not 
 > make empty commit just to have things started? Or maybe there is some 
 > other way...
 
-Did you actually start the git-daemon on the server?
- 
+You can of course make an empty commit, but it seems strange that you
+would want that - won't the people start working on some initial version
+of the project?
+
 > Also I wonder if I can do push over git protocol or I must use real ssh 
 > account on the server? This is not clear from the docs... At least not for 
 > me. How should I set up my repo (on my computer) to be able to push 
 > commits into main repo?
 
-You can't commit over the git protocol, you'll need to use ssh.  
-No need to do anything to your repo in order to push.
+You must use real ssh account on the server. You can limit the account
+to be able to do only git pushes/pulls by setting its shell to
+git-shell.
 
 > Also what should I set up additionally? How can I easily set author name 
-> and email for each repo? 
+> and email for each repo? What is the difference between author and 
+> commiter and how should I set this up here?
 
-See below.
+ From Cogito's cg-commit documentation:
 
-> What is the difference between author and commiter and how should I 
-> set this up here?
+Each commit has two user identification fields - commit author and
+committer.  By default, it is recorded that you authored the commit, but
+it is considered a good practice to change this to the actual author of
+the change if you are merely applying someone else's patch. It is always
+recorded that you were the patch committer.
 
-Just what you might imagine, the person who created the patch and
-the person who entered it into the repository respectively.
- 
 > Is there any documentation about git config file? Can I set author name, 
 > email and preffered editor in it or must I use environment?
 
-$ git repo-config user.email "user@email.com"
-$ git repo-config user.name  "full name"
+See git-commit-tree(1), the COMMIT INFORMATION section.
 
-use the EDITOR environment variable to choose your desired editor.
+One big problem with Git documentation (other than e.g. falling
+out-of-date occassionaly) is that information is scattered between
+porcelain and plumbing or even between several commands (e.g.
+git-whatchanged(1) which doesn't even directly mention where to gather
+the full list of available options).
+
+Thankfully, the plumbing documentation is mostly coherent. ;-)
 
 > Is there some irc channel for asking dumb questions as above and having 
 > them anwsered fast or should I use this mailing list?
- 
-#git on irc.freenode.net
 
-Sean
+#git on Freenode (surprisingly ;)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
