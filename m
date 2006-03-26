@@ -1,193 +1,110 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Optionally do not list empty directories in git-ls-files --others
-Date: Sun, 26 Mar 2006 16:59:52 +0200
-Message-ID: <20060326145952.GM18185@pasky.or.cz>
-References: <3afbacad0602270643k9fdd255w8f3769ad77c54e65@mail.gmail.com> <20060326142505.GL18185@pasky.or.cz>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: Following renames
+Date: Sun, 26 Mar 2006 19:08:36 +0300
+Message-ID: <20060326190836.dbe95a72.tihirvon@gmail.com>
+References: <20060326014946.GB18185@pasky.or.cz>
+	<7virq1sywj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 16:59:54 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 18:09:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNWif-0003Mi-Ox
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 16:59:54 +0200
+	id 1FNXo1-0005cd-H6
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 18:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750785AbWCZO7l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 09:59:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbWCZO7l
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 09:59:41 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:45973 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750785AbWCZO7k (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 09:59:40 -0500
-Received: (qmail 9702 invoked by uid 2001); 26 Mar 2006 16:59:52 +0200
-To: junkio@cox.net, Jim MacBaine <jmacbaine@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20060326142505.GL18185@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751362AbWCZQId (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 11:08:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbWCZQId
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 11:08:33 -0500
+Received: from nproxy.gmail.com ([64.233.182.187]:34312 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751362AbWCZQIc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 11:08:32 -0500
+Received: by nproxy.gmail.com with SMTP id o63so694650nfa
+        for <git@vger.kernel.org>; Sun, 26 Mar 2006 08:08:31 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=ITQBVJvOqOwmBPbQ4q549soPKIB7wLf4k7cBXYDf9ihNIdT55XF2d2tdTltgipgXzO170LuLlvQQYcikjS1WQE615Uc2bQjiY4tSKBNlszcfYmkeMPFmgoUM0zhg9QJkdjTgvS8SALYEoEKwtwptADSXScYojpaIGDpV8vmsTiQ=
+Received: by 10.49.6.13 with SMTP id j13mr1247714nfi;
+        Sun, 26 Mar 2006 08:08:30 -0800 (PST)
+Received: from garlic.home.net ( [82.128.203.117])
+        by mx.gmail.com with ESMTP id q28sm21424nfc.2006.03.26.08.08.29;
+        Sun, 26 Mar 2006 08:08:30 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7virq1sywj.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.15; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18042>
 
- Hi,
+On Sat, 25 Mar 2006 18:49:48 -0800
+Junio C Hamano <junkio@cox.net> wrote:
 
-Dear diary, on Sun, Mar 26, 2006 at 04:25:05PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> Dear diary, on Mon, Feb 27, 2006 at 03:43:32PM CET, I got a letter
-> where Jim MacBaine <jmacbaine@gmail.com> said that...
-> > Many packages put empty directories under /etc, and although only a
-> > few of those directories are actually needed, the automatic removal of
-> > those packages will fail if I remove the empty directories manually.  
-> > Equally, the removal will fail, if I put a .placeholder file into
-> > those direrectories and cg-add it.  Is there a simple way out?
-> 
->   this is caused by git-ls-files behaviour - we now call it with
-> the --directory argument which is nice since it will show a non-empty
-> unknown directory as a single entry and won't list all its contents.
-> What is not so nice is the side-effect you are describing, and I tend
-> to agree that if the directory is empty, it should not be listed.
+> Looking at the evolution of rev-list.c file itself was a good
+> exercise to realize that rename tracking (more specifically,
+> having whatchanged to follow renames) is not such a useful
+> thing (at least for me).
 
-  it turned out that cg-clean depends on the original behaviour (and it
-makes sense there, we want to purge even empty directories). Therefore
-this patch will preserve the old behaviour but add an option
---no-empty-directory. When that gets propagated to Git releases, I will
-use it in cg-status.
+It would be useful for me.  I had all files organized in subdirectories,
+but then noticed it was not good idea because make does not play nicely
+with subdirs, so I moved all files to top level directory.
 
----
+Now
 
-Without the --directory flag, git-ls-files wouldn't ever list directories,
-producing no output for empty directories, which is good since they cannot
-be added and they bear no content, even untracked one (if Git ever starts
-tracking directories on their own, this should obviously change since the
-content notion will change).
+    git-whatchanged -p file.c
 
-With the --directory flag however, git-ls-files would list even empty
-directories. This may be good in some situations but sometimes you want to
-prevent that. This patch adds a --no-empty-directory option which makes
-git-ls-files omit empty directories.
+stops at the big rename. To continue I have to do
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+    git-whatchanged -p -- <some-commit> <old-filename>
 
- Documentation/git-ls-files.txt |    3 +++
- ls-files.c                     |   33 +++++++++++++++++++++++++--------
- 2 files changed, 28 insertions(+), 8 deletions(-)
+> Another example.  Today's tar-tree updates have one interesting
+> function I think should belong to strbuf.c, and before merging
+> it to the mainline, I may move that function from tar-tree.c to
+> strbuf.c.  After that happens, if I run "whatchanged strbuf.c"
+> to see where that function came from, I would want it to notice
+> it came from tar-tree.c, although it is not a rename at all.
+> Just one function moved from a file to another.
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index e813f84..980c5c9 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -52,6 +52,9 @@ OPTIONS
- 	If a whole directory is classified as "other", show just its
- 	name (with a trailing slash) and not its whole contents.
- 
-+--no-empty-directory::
-+	Do not list empty directories. Has no effect without --directory.
-+
- -u|--unmerged::
- 	Show unmerged files in the output (forces --stage)
- 
-diff --git a/ls-files.c b/ls-files.c
-index e42119c..83b0a3b 100644
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -20,6 +20,7 @@ static int show_unmerged = 0;
- static int show_modified = 0;
- static int show_killed = 0;
- static int show_other_directories = 0;
-+static int hide_empty_directories = 0;
- static int show_valid_bit = 0;
- static int line_terminator = '\n';
- 
-@@ -258,11 +259,12 @@ static int dir_exists(const char *dirnam
-  * Also, we ignore the name ".git" (even if it is not a directory).
-  * That likely will not change.
-  */
--static void read_directory(const char *path, const char *base, int baselen)
-+static int read_directory(const char *path, const char *base, int baselen)
- {
--	DIR *dir = opendir(path);
-+	DIR *fdir = opendir(path);
-+	int contents = 0;
- 
--	if (dir) {
-+	if (fdir) {
- 		int exclude_stk;
- 		struct dirent *de;
- 		char fullname[MAXPATHLEN + 1];
-@@ -270,7 +272,7 @@ static void read_directory(const char *p
- 
- 		exclude_stk = push_exclude_per_directory(base, baselen);
- 
--		while ((de = readdir(dir)) != NULL) {
-+		while ((de = readdir(fdir)) != NULL) {
- 			int len;
- 
- 			if ((de->d_name[0] == '.') &&
-@@ -288,6 +290,7 @@ static void read_directory(const char *p
- 
- 			switch (DTYPE(de)) {
- 			struct stat st;
-+			int subdir, rewind_base;
- 			default:
- 				continue;
- 			case DT_UNKNOWN:
-@@ -301,22 +304,32 @@ static void read_directory(const char *p
- 			case DT_DIR:
- 				memcpy(fullname + baselen + len, "/", 2);
- 				len++;
-+				rewind_base = nr_dir;
-+				subdir = read_directory(fullname, fullname,
-+				                        baselen + len);
- 				if (show_other_directories &&
--				    !dir_exists(fullname, baselen + len))
-+				    (subdir || !hide_empty_directories) &&
-+				    !dir_exists(fullname, baselen + len)) {
-+					// Rewind the read subdirectory
-+					while (nr_dir > rewind_base)
-+						free(dir[--nr_dir]);
- 					break;
--				read_directory(fullname, fullname,
--					       baselen + len);
-+				}
-+				contents += subdir;
- 				continue;
- 			case DT_REG:
- 			case DT_LNK:
- 				break;
- 			}
- 			add_name(fullname, baselen + len);
-+			contents++;
- 		}
--		closedir(dir);
-+		closedir(fdir);
- 
- 		pop_exclude_per_directory(exclude_stk);
- 	}
-+
-+	return contents;
- }
- 
- static int cmp_name(const void *p1, const void *p2)
-@@ -696,6 +709,10 @@ int main(int argc, const char **argv)
- 			show_other_directories = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--no-empty-directory")) {
-+			hide_empty_directories = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "-u") || !strcmp(arg, "--unmerged")) {
- 			/* There's no point in showing unmerged unless
- 			 * you also show the stage information.
+Yes in this case you can do
+
+$ git-whatchanged strbuf.c
+$ git-whatchanged tar-tree.c
+
+but after rename...
+
+$ git-whatchanged old-file.c
+fatal: 'old-file.c': No such file or directory
+
+$ touch old-file.c
+$ git-whatchanged old-file.c
+
+Hah, it worked!
 
 
+Hmm... this works too without the touch-hack:
+
+$ git-whatchanged file.c old-file.c
+
+I wish I had known this before.
+
+> What this suggests is that switching the set of paths to follow
+> while traversing ancestry chain needs to depend on which part of
+> the original file you are interested in.  Marking "this commit
+> renames (or copies) file A to file B" is not that useful -- for
+> that matter, detecting at runtime like we currently do is not
+> better either.  If a file A and file B were cleaned up and
+> merged into a single file C, which is in the tip of the tree,
+> which one you would want whatchanged to switch following depends
+> on which part of the C you were interested in.
+
+OK, maybe following renames is not such a good idea.  But for GUIs
+(gitk, qgit) following renames or even file merges (select a file to
+follow by clicking it) would be big plus.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+http://onion.dynserv.net/~timo/
