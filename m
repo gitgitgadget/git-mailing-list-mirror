@@ -1,37 +1,36 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Following renames
-Date: Sun, 26 Mar 2006 08:33:13 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603260829550.15714@g5.osdl.org>
-References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
- <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz>
- <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <20060326100717.GD18185@pasky.or.cz>
+Date: Sun, 26 Mar 2006 08:43:10 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603260836050.15714@g5.osdl.org>
+References: <20060326014946.GB18185@pasky.or.cz> <7virq1sywj.fsf@assigned-by-dhcp.cox.net>
+ <20060326190836.dbe95a72.tihirvon@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 18:33:33 2006
+Cc: Junio C Hamano <junkio@cox.net>, pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 18:43:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNYBH-0001D0-UT
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 18:33:32 +0200
+	id 1FNYKn-0002z9-Oh
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 18:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbWCZQd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 11:33:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbWCZQd3
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 11:33:29 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:18864 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751452AbWCZQd2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 11:33:28 -0500
+	id S1751474AbWCZQnS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 11:43:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbWCZQnS
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 11:43:18 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:17586 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751474AbWCZQnS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 11:43:18 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2QGXEDZ024044
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2QGhBDZ024435
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 26 Mar 2006 08:33:15 -0800
+	Sun, 26 Mar 2006 08:43:11 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2QGXEw0010404;
-	Sun, 26 Mar 2006 08:33:14 -0800
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060326100717.GD18185@pasky.or.cz>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2QGhA0X010676;
+	Sun, 26 Mar 2006 08:43:10 -0800
+To: Timo Hirvonen <tihirvon@gmail.com>
+In-Reply-To: <20060326190836.dbe95a72.tihirvon@gmail.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
 X-MIMEDefang-Filter: osdl$Revision: 1.133 $
@@ -39,32 +38,67 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18045>
 
 
 
-On Sun, 26 Mar 2006, Petr Baudis wrote:
+On Sun, 26 Mar 2006, Timo Hirvonen wrote:
+>
+> $ git-whatchanged old-file.c
+> fatal: 'old-file.c': No such file or directory
 > 
-> Huh? I don't see that now (and caps don't help me see it better). That's
-> certainly not what is in [1], and I don't see _how_ to detect the
-> renames in this case, and what would I be actually doing git-ls-tree for
-> when I've already detected the rename. Based on [1], I'd be doing
-> git-ls-tree merely to detect that a file _disappeared_ in the first
-> place, I have to do other stuff to detect the renames themselves.
+> $ touch old-file.c
+> $ git-whatchanged old-file.c
+> 
+> Hah, it worked!
 
-No, the point is that "git-rev-list" already does all of [1] in the core.
+It worked even before:
 
-If you do
+	git-whatchanged -- old-file.c
 
-	git-rev-list --parents --remove-empty $REV -- $filename
+always works.
 
-then you'll get the whole history for that filename. When it ends, you 
-know the file went away, and then you do basically _one_ "where the hell 
-did it go" thing.
+If you think of the "filename spec" as _always_ having to have a "--" to 
+separate the filenames from the other arguments, you're thinking the right 
+way. Then, there's a _shorthand_ for existing files, where we allow users 
+being lazy (because _I_ am very lazy indeed), which allows dropping of the 
+"--", but then the code requires that the filenames are real filenames as 
+of now.
 
-And yes, it's not git-ls-tree (unless you only want to follow pure 
-renames), it's actually one "git-diff-tree -M $lastrev". Then you just 
-continue with the new filename (and do another "git-rev-list" until you 
-hit the next rename).
+> Hmm... this works too without the touch-hack:
+> 
+> $ git-whatchanged file.c old-file.c
+> 
+> I wish I had known this before.
+
+Actually, it -shouldn't- work. It's just that "git-rev-parse" isn't as 
+anal as it should be.
+
+Here's a fix.
 
 		Linus
+----
+diff --git a/rev-parse.c b/rev-parse.c
+index f90e999..104b1e2 100644
+--- a/rev-parse.c
++++ b/rev-parse.c
+@@ -172,7 +172,9 @@ int main(int argc, char **argv)
+ 		char *dotdot;
+ 	
+ 		if (as_is) {
+-			show_file(arg);
++			if (show_file(arg) && as_is < 2)
++				if (lstat(arg, &st) < 0)
++					die("'%s': %s", arg, strerror(errno));
+ 			continue;
+ 		}
+ 		if (!strcmp(arg,"-n")) {
+@@ -192,7 +194,7 @@ int main(int argc, char **argv)
+ 
+ 		if (*arg == '-') {
+ 			if (!strcmp(arg, "--")) {
+-				as_is = 1;
++				as_is = 2;
+ 				/* Pass on the "--" if we show anything but files.. */
+ 				if (filter & (DO_FLAGS | DO_REVS))
+ 					show_file(arg);
