@@ -1,65 +1,102 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Why would merge fail on a one-line addition?
-Date: Sat, 25 Mar 2006 16:31:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603251629330.15714@g5.osdl.org>
-References: <20060325222601.GA1500@buici.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 26 01:31:46 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] send-email: lazy-load Email::Valid and make it optional
+Date: Sat, 25 Mar 2006 16:47:12 -0800
+Message-ID: <11433340323396-git-send-email-normalperson@yhbt.net>
+References: <7v8xqyuuvo.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: git <git@vger.kernel.org>, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Mar 26 01:47:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNJAX-0005NP-C4
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 01:31:45 +0100
+	id 1FNJQ1-0007Sf-Lf
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 01:47:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751982AbWCZAba (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 19:31:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbWCZAba
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 19:31:30 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:48000 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751982AbWCZAb3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 19:31:29 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2Q0VRDZ006979
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 25 Mar 2006 16:31:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2Q0VQr7018300;
-	Sat, 25 Mar 2006 16:31:26 -0800
-To: Marc Singer <elf@buici.com>
-In-Reply-To: <20060325222601.GA1500@buici.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932103AbWCZArl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 19:47:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932166AbWCZArl
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 19:47:41 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:15758 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932103AbWCZArk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 19:47:40 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id EBFD52DC033;
+	Sat, 25 Mar 2006 16:47:39 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email
+In-Reply-To: <7v8xqyuuvo.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18010>
 
+It's not installed on enough machines, and is overkill most of
+the time.  We'll fallback to a very basic regexp just in case,
+but nothing like the monster regexp Email::Valid has to offer :)
 
+Small cleanup from Merlyn.
 
-On Sat, 25 Mar 2006, Marc Singer wrote:
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-> One of the unmerged files leaves this trail.
-> 
->   elf@florence ~...git/linux-2.6 > git-ls-files --unmerged
->   100644 6262d449120cdcde5db1b079806dcc0d9b5e6b7c 1       arch/arm/mach-lh7a40x/irq-lpd7a40x.c
->   100644 dcb4e17b941990eabe8992680c9aa9b67afb6fd4 3       arch/arm/mach-lh7a40x/irq-lpd7a40x.c
-> 
->   elf@florence ~...git/linux-2.6 > git-cat-file blob 6262d449120cdcde5db1b079806dcc0d9b5e6b7c > a
->   elf@florence ~...git/linux-2.6 > git-cat-file blob dcb4e17b941990eabe8992680c9aa9b67afb6fd4 > b
->   elf@florence ~...git/linux-2.6 > diff a b                                       21a22
->   > #include "common.h"
-> 
-> Why would git have a problem with this?
+---
 
-That whole file was apparently removed in the branch you are merging into 
-(no stage 2). So what should the merge do? Throw away the one-liner 
-addition (likely the correct thing) or maybe it should go somewhere else 
-(ie maybe it wasn't removed outright, but the contents moved into another 
-file, which would now need the one-line addition).
+ git-send-email.perl |   16 +++++++++++++---
+ 1 files changed, 13 insertions(+), 3 deletions(-)
 
-		Linus
+3f09a822e3871eeae521da80c748602862fc52ce
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 5e08817..7cbf11d 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -22,12 +22,12 @@ use Term::ReadLine;
+ use Getopt::Long;
+ use Data::Dumper;
+ use Net::SMTP;
+-use Email::Valid;
+ 
+ # most mail servers generate the Date: header, but not all...
+ $ENV{LC_ALL} = 'C';
+ use POSIX qw/strftime/;
+ 
++my $have_email_valid = eval { require Email::Valid; 1 };
+ my $smtp;
+ 
+ sub unique_email_list(@);
+@@ -250,6 +250,16 @@ EOT
+ # Variables we set as part of the loop over files
+ our ($message_id, $cc, %mail, $subject, $reply_to, $message);
+ 
++sub extract_valid_address {
++	my $address = shift;
++	if ($have_email_valid) {
++		return Email::Valid->address($address);
++	} else {
++		# less robust/correct than the monster regexp in Email::Valid,
++		# but still does a 99% job, and one less dependency
++		return ($address =~ /([^\"<>\s]+@[^<>\s]+)/);
++	}
++}
+ 
+ # Usually don't need to change anything below here.
+ 
+@@ -259,7 +269,7 @@ our ($message_id, $cc, %mail, $subject, 
+ # 1 second since the last time we were called.
+ 
+ # We'll setup a template for the message id, using the "from" address:
+-my $message_id_from = Email::Valid->address($from);
++my $message_id_from = extract_valid_address($from);
+ my $message_id_template = "<%s-git-send-email-$message_id_from>";
+ 
+ sub make_message_id
+@@ -412,7 +422,7 @@ sub unique_email_list(@) {
+ 	my @emails;
+ 
+ 	foreach my $entry (@_) {
+-		my $clean = Email::Valid->address($entry);
++		my $clean = extract_valid_address($entry);
+ 		next if $seen{$clean}++;
+ 		push @emails, $entry;
+ 	}
+-- 
+1.2.4.gb622a
