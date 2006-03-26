@@ -1,78 +1,113 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: Use a *real* built-in diff generator
-Date: Sat, 25 Mar 2006 21:33:36 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603252130190.12437@alien.or.mcafeemobile.com>
-References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
- <118833cc0603250544h289f385fo683ec7b40cdb0ed@mail.gmail.com>
- <Pine.LNX.4.64.0603250734130.15714@g5.osdl.org> <Pine.LNX.4.64.0603250742340.15714@g5.osdl.org>
- <Pine.LNX.4.64.0603251009500.11968@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0603251040190.15714@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Sat, 25 Mar 2006 22:00:03 -0800
+Message-ID: <7v1wwprbj0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 26 07:34:05 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Mar 26 08:00:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNNt2-0004Zi-Ae
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 07:34:00 +0200
+	id 1FNOIV-0008Oa-EE
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 08:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750716AbWCZFdq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 00:33:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750717AbWCZFdq
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 00:33:46 -0500
-Received: from x35.xmailserver.org ([69.30.125.51]:13706 "EHLO
-	x35.xmailserver.org") by vger.kernel.org with ESMTP
-	id S1750716AbWCZFdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Mar 2006 00:33:46 -0500
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
-	id <S1C6B64> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Sat, 25 Mar 2006 21:33:41 -0800
-X-X-Sender: davide@alien.or.mcafeemobile.com
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603251040190.15714@g5.osdl.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1750743AbWCZGAG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 01:00:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWCZGAG
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 01:00:06 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:9873 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750743AbWCZGAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Mar 2006 01:00:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060326060004.ZIIH25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 26 Mar 2006 01:00:04 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18028>
 
-On Sat, 25 Mar 2006, Linus Torvalds wrote:
+* The 'master' branch has these since the last announcement.
 
-> Btw, git-apply does it, and it's actually quite simple: the code to handle
-> the "\ No newline" case is literally just this:
->
->                /*
->                 * "plen" is how much of the line we should use for
->                 * the actual patch data. Normally we just remove the
->                 * first character on the line, but if the line is
->                 * followed by "\ No newline", then we also remove the
->                 * last one (which is the newline, of course).
->                 */
->                plen = len-1;
->                if (len < size && patch[len] == '\\')
->                        plen--;
->
-> if we just remove the last '\n' on a line, if the _next_ line starts with
-> a '\\' (so the git-apply code actually depends on knowing that the patch
-> text is dense, and that it's also padded out so that you can look one byte
-> past the end of the diff and it won't be a '\\').
->
-> I don't know how well that fits into xpatch (I never looked at the patch
-> side, since I already had my own ;), but my point being that handling this
-> special case _can_ be very simple if the data structures are just set up
-> for it.
+ - git-svn memory usage reduction (Eric Wong)
+ - documentation updates (Francis Daly, Jon Loeliger)
+ - fix updating working tree after cvsimport reads from CVS
+ - fetch exits non-zero when fast-forward check fails.
+ - improve git-pull's failur case when pulling into the tracking branch.
+ - commit-tree checks return value from write_sha1_file().
+ - git-apply understands "@@ -l, +m @@" correctly.
 
-Yeah, should be a pretty trivial fix in the xpatch parsing code. Thanks 
-for remembering me the missing-eol issue, that fell forgotten somewhere in 
-my todo list :D
+----------------------------------------------------------------
 
+* The 'next' branch, in addition, has these.
 
+These are harmless and useful to be pushed into "master"; I just
+have not gotten around to.
 
-- Davide
+ - updates around git-clone:
+   . --use-separate-remote
+   . --reference <repo>
+   . fetch,parse-remote,fmt-merge-msg: refs/remotes/* support (Eric Wong)
+   . sha1_name() understands refs/remotes/$foo/HEAD
+
+ - sha1_name safety and core.warnambiguousrefs
+ - git-merge knows some strategies want to skip trivial merges
+
+------------
+
+I really should do some more stats on this and push it out.
+Just haven't got around to do so.
+
+ - insanely fast rename detection (Linus and me)
+
+------------
+
+These look very good, but people depend on them, so I'd like to
+simmer them in "next" for a couple of days to hear success
+stories, or "ah crap I got burned" story ;-).
+
+ - tar-tree updates (Rene Scharfe)
+ - send-email updates (Eric Wong)
+
+------------
+
+Hot off the press.  I smell the beginning of a good stuff here.
+
+ - truly built-in diff (Linus with Davide)
+
+------------
+
+This is harmless to be pushed into "master" but is staying here
+only because nobody expressed urgency.
+
+ - ls-{files,tree} --abbrev (Eric Wong)
+
+----------------------------------------------------------------
+
+* The 'pu' branch, in addition, has these.
+
+Since I do not have a good guinea pig case to use this, I
+haven't read and understood the code being patched enough to
+comment on the change this one introduces; it looks obviously
+correct, though.
+
+I'd like an ACK or two from people who works with SVN gateway
+before I apply this to "master".
+
+ - git-svnimport: if a limit is specified, respect it (Anand Kumria)
+
+------------
+
+This script does what it claims to do, but I do not think of a
+useful use case for this.  When I have packs with garbage
+objects in them (because I rewind my "pu" branch I usually end
+up having a handful in my packs), I just run "repack -a -d" and
+that is good enough.  So I need a bit of convincing to keep
+this.
+
+ - Add git-explode-packs (Martin Atukunda)
