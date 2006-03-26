@@ -1,61 +1,91 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: Use a *real* built-in diff generator
-Date: Sun, 26 Mar 2006 12:09:35 +0100
-Message-ID: <20060326110934.GA3774@linux-mips.org>
-References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org> <118833cc0603250544h289f385fo683ec7b40cdb0ed@mail.gmail.com> <Pine.LNX.4.64.0603250734130.15714@g5.osdl.org> <Pine.LNX.4.64.0603250742340.15714@g5.osdl.org> <Pine.LNX.4.64.0603251009500.11968@alien.or.mcafeemobile.com> <Pine.LNX.4.64.0603251030340.15714@g5.osdl.org>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: [PATCH] Add git-explode-packs
+Date: Sun, 26 Mar 2006 14:54:50 +0200
+Message-ID: <20060326125450.GT31387@lug-owl.de>
+References: <11432881443149-git-send-email-matlads@dsmagic.com> <7vwtehpwdd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Davide Libenzi <davidel@xmailserver.org>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 26 13:10:06 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="OowMmFE4aK71mEhh"
+Cc: Martin Atukunda <matlads@dsmagic.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 14:54:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNT8H-0000rg-1C
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 13:10:05 +0200
+	id 1FNUlk-0000cN-Nq
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 14:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750720AbWCZLJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 06:09:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255AbWCZLJx
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 06:09:53 -0500
-Received: from ftp.linux-mips.org ([194.74.144.162]:44778 "EHLO
-	ftp.linux-mips.org") by vger.kernel.org with ESMTP id S1750720AbWCZLJx
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Mar 2006 06:09:53 -0500
-Received: from localhost.localdomain ([127.0.0.1]:52448 "EHLO bacchus.dhis.org")
-	by ftp.linux-mips.org with ESMTP id S8133444AbWCZK7f (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 11:59:35 +0100
-Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
-	by bacchus.dhis.org (8.13.6/8.13.4) with ESMTP id k2QB9leP005107;
-	Sun, 26 Mar 2006 12:09:47 +0100
-Received: (from ralf@localhost)
-	by denk.linux-mips.net (8.13.6/8.13.6/Submit) id k2QB9ZdR005105;
-	Sun, 26 Mar 2006 12:09:35 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+	id S932073AbWCZMyx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 07:54:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932076AbWCZMyw
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 07:54:52 -0500
+Received: from lug-owl.de ([195.71.106.12]:23985 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S932073AbWCZMyw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 07:54:52 -0500
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id E8C65F0032; Sun, 26 Mar 2006 14:54:50 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0603251030340.15714@g5.osdl.org>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <7vwtehpwdd.fsf@assigned-by-dhcp.cox.net>
+X-Operating-System: Linux mail 2.6.12.3lug-owl
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18038>
 
-On Sat, Mar 25, 2006 at 10:39:03AM -0800, Linus Torvalds wrote:
 
-> Besides, I hate how GNU patch bends over backwards in applying crap that 
-> isn't a proper patch at all (whitespace-corruption, you name it: GNU patch 
-> will accept it). Also, I made "git-apply" be all-or-nothing: either it 
-> applies the _whole_ patch (across many different files) or it applies none 
-> of it. With GNU patch, if you get an error on the fifth file, the four 
-> first files have been modified already - aarrgghhh..
+--OowMmFE4aK71mEhh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Which is apply's greatest strength - and weakness.  GNU diff doesn't
-understand the file renamings bits of git diffs, so they they need to be
-used with apply.  So if a patch doesn't apply?  Apply doesn't even have
-an option to apply things as good as it can and leave the rest in
-reject files.  Yuck.
+On Sat, 2006-03-25 22:12:46 -0800, Junio C Hamano <junkio@cox.net> wrote:
+> Martin Atukunda <matlads@dsmagic.com> writes:
+> > This script does the opposite of git repack -a -d.
+>=20
+> The script seems to do what it claims to, but now why would one
+> need to use this?  In other words what's the situation one would
+> find this useful?
 
-  Ralf
+It's possibly useful if you oftenly access old objects with
+git-cat-file or git-ls-tree.
+
+Not being a Perl hacker, a friend and I eg. started to hack GIT
+support into LXR. I've just posted some very early patches on the LXR
+mailing list
+(http://sourceforge.net/mailarchive/forum.php?forum_id=3D1734). What
+would be even more interesting is to not unpack _all_ objects, but
+only those belonging to specifically mentioned commits or tags. I
+think LXR could make _good_ use of that.
+
+MfG, JBG
+
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
+m Irak!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--OowMmFE4aK71mEhh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEJo8aHb1edYOZ4bsRAgjCAKCAXZapOEp44a+qkhbbeCJ/w7A8TwCfVbDP
+JIhmRiq60suCIvFBG83OZio=
+=M9HJ
+-----END PGP SIGNATURE-----
+
+--OowMmFE4aK71mEhh--
