@@ -1,75 +1,77 @@
 From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: Use a *real* built-in diff generator
-Date: Sat, 25 Mar 2006 20:11:14 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603252005360.12437@alien.or.mcafeemobile.com>
+Date: Sat, 25 Mar 2006 21:33:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603252130190.12437@alien.or.mcafeemobile.com>
 References: <Pine.LNX.4.64.0603241938510.15714@g5.osdl.org>
  <118833cc0603250544h289f385fo683ec7b40cdb0ed@mail.gmail.com>
  <Pine.LNX.4.64.0603250734130.15714@g5.osdl.org> <Pine.LNX.4.64.0603250742340.15714@g5.osdl.org>
  <Pine.LNX.4.64.0603251009500.11968@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0603251030340.15714@g5.osdl.org>
+ <Pine.LNX.4.64.0603251040190.15714@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: Morten Welinder <mwelinder@gmail.com>,
 	Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 26 06:11:25 2006
+X-From: git-owner@vger.kernel.org Sun Mar 26 07:34:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNMb5-0003Fs-Jy
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 06:11:23 +0200
+	id 1FNNt2-0004Zi-Ae
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 07:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbWCZELV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 23:11:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbWCZELV
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 23:11:21 -0500
-Received: from x35.xmailserver.org ([69.30.125.51]:7562 "EHLO
+	id S1750716AbWCZFdq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 00:33:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750717AbWCZFdq
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 00:33:46 -0500
+Received: from x35.xmailserver.org ([69.30.125.51]:13706 "EHLO
 	x35.xmailserver.org") by vger.kernel.org with ESMTP
-	id S1751581AbWCZELU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 23:11:20 -0500
+	id S1750716AbWCZFdq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Mar 2006 00:33:46 -0500
 X-AuthUser: davidel@xmailserver.org
 Received: from alien.or.mcafeemobile.com
 	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
-	id <S1C6B54> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Sat, 25 Mar 2006 20:11:19 -0800
+	id <S1C6B64> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sat, 25 Mar 2006 21:33:41 -0800
 X-X-Sender: davide@alien.or.mcafeemobile.com
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603251030340.15714@g5.osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603251040190.15714@g5.osdl.org>
 X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
 X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18027>
 
 On Sat, 25 Mar 2006, Linus Torvalds wrote:
 
-> I don't need "patch", since I wrote my own anyway. It's just called
-> "apply" instead of "patch".
-
-Oh, ok. I thought you were calling out GNU patch for the task.
-
-
-> Doing "apply" is not only much simpler than doing "diff", but I needed my
-> own much earlier: it's much more timing-critical for me (applying 200
-> patches in one go), and git needed something that could honor renames and
-> copies, and the mode bits too.
+> Btw, git-apply does it, and it's actually quite simple: the code to handle
+> the "\ No newline" case is literally just this:
 >
-> Besides, I hate how GNU patch bends over backwards in applying crap that
-> isn't a proper patch at all (whitespace-corruption, you name it: GNU patch
-> will accept it). Also, I made "git-apply" be all-or-nothing: either it
-> applies the _whole_ patch (across many different files) or it applies none
-> of it. With GNU patch, if you get an error on the fifth file, the four
-> first files have been modified already - aarrgghhh..
+>                /*
+>                 * "plen" is how much of the line we should use for
+>                 * the actual patch data. Normally we just remove the
+>                 * first character on the line, but if the line is
+>                 * followed by "\ No newline", then we also remove the
+>                 * last one (which is the newline, of course).
+>                 */
+>                plen = len-1;
+>                if (len < size && patch[len] == '\\')
+>                        plen--;
 >
-> See "apply.c" for details if you care. It's stupid, but it works (and it
-> _only_ handles unified diffs - with the git extensions, of course).
+> if we just remove the last '\n' on a line, if the _next_ line starts with
+> a '\\' (so the git-apply code actually depends on knowing that the patch
+> text is dense, and that it's also padded out so that you can look one byte
+> past the end of the diff and it won't be a '\\').
+>
+> I don't know how well that fits into xpatch (I never looked at the patch
+> side, since I already had my own ;), but my point being that handling this
+> special case _can_ be very simple if the data structures are just set up
+> for it.
 
-So is xdl_patch(). It handles unified diffs, a simple ignore whitespace 
-changes, and all (methink) the fuzzy merge features of GNU patch.
-Okie then, drop me an email if you find bugs in the libxdiff code, so I 
-can fix the main library.
+Yeah, should be a pretty trivial fix in the xpatch parsing code. Thanks 
+for remembering me the missing-eol issue, that fell forgotten somewhere in 
+my todo list :D
 
 
 
