@@ -1,45 +1,96 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-explode-packs
-Date: Sat, 25 Mar 2006 22:12:46 -0800
-Message-ID: <7vwtehpwdd.fsf@assigned-by-dhcp.cox.net>
-References: <11432881443149-git-send-email-matlads@dsmagic.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: Following renames
+Date: Sun, 26 Mar 2006 02:35:02 -0500
+Message-ID: <44264426.8010608@michonline.com>
+References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 08:12:53 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigFD27DDFDE582FAA2C36C2816"
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 09:35:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNOUd-0001Q2-UR
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 08:12:52 +0200
+	id 1FNPmY-0004Fn-4g
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 09:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbWCZGMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 01:12:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750756AbWCZGMs
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 01:12:48 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:61414 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750735AbWCZGMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Mar 2006 01:12:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060326061247.UXNZ6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 26 Mar 2006 01:12:47 -0500
-To: Martin Atukunda <matlads@dsmagic.com>
-In-Reply-To: <11432881443149-git-send-email-matlads@dsmagic.com> (Martin
-	Atukunda's message of "Sat, 25 Mar 2006 15:02:24 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751146AbWCZHfU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 02:35:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWCZHfU
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 02:35:20 -0500
+Received: from mail.autoweb.net ([198.172.237.26]:42469 "EHLO
+	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
+	id S1751146AbWCZHfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Mar 2006 02:35:19 -0500
+Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
+	by mail.internal.autoweb.net with esmtp (Exim 4.50)
+	id 1FNPmI-00063S-P3; Sun, 26 Mar 2006 02:35:12 -0500
+Received: from [10.254.251.12] (helo=mythryan.michonline.com)
+	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FNPmU-0000sd-PT; Sun, 26 Mar 2006 02:35:22 -0500
+Received: from localhost ([127.0.0.1])
+	by mythryan.michonline.com with esmtp (Exim 4.60)
+	(envelope-from <ryan@michonline.com>)
+	id 1FNPmD-0004d2-Vw; Sun, 26 Mar 2006 02:35:06 -0500
+User-Agent: Mail/News 1.5 (X11/20060228)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
+X-Enigmail-Version: 0.94.0.0
+X-h4x0r5.com-MailScanner: Found to be clean
+X-h4x0r5.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18030>
 
-Martin Atukunda <matlads@dsmagic.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigFD27DDFDE582FAA2C36C2816
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-> This script does the opposite of git repack -a -d.
+Linus Torvalds wrote:
+> On Sun, 26 Mar 2006, Petr Baudis wrote:
+>  =20
+>>   In [1], Linus suggests a non-core solution. Unfortunately, it doesn'=
+t
+>> fly - it requires at least two git-ls-tree calls per revision which
+>> would bog things down awfully (to roughly half of the original speed).=
 
-The script seems to do what it claims to, but now why would one
-need to use this?  In other words what's the situation one would
-find this useful?
+>>    =20
+>
+> No it doesn't. It requires one git-ls-tree WHEN SOMETHING IS RENAMED.
+>
+> In other words, basically never.
+>  =20
+
+A simple example is the first loop in git-annotate.perl.  (Which was
+basically written by Linus, I just translated it from a
+shell/pseudo-code example into Perl)
+
+
+--=20
+
+Ryan Anderson
+  sometimes Pug Majere
+
+
+
+--------------enigFD27DDFDE582FAA2C36C2816
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEJkQpfhVDhkBuUKURApU5AKCIGQP++aUGVSy1aXHXviCE7F63NgCgxExW
+gE1ctJYtvQBPPiikmNT2ybg=
+=kVth
+-----END PGP SIGNATURE-----
+
+--------------enigFD27DDFDE582FAA2C36C2816--
