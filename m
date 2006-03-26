@@ -1,83 +1,65 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH 1/4] send-email: Change from Mail::Sendmail to Net::SMTP
-Date: Sat, 25 Mar 2006 18:58:59 -0500
-Message-ID: <20060325235859.GO26071@mythryan2.michonline.com>
-References: <11432834101430-git-send-email-normalperson@yhbt.net> <11432834102700-git-send-email-normalperson@yhbt.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Why would merge fail on a one-line addition?
+Date: Sat, 25 Mar 2006 16:31:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603251629330.15714@g5.osdl.org>
+References: <20060325222601.GA1500@buici.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git <git@vger.kernel.org>,
-	Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Sun Mar 26 01:00:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 26 01:31:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNIg1-0000ok-Kl
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 01:00:14 +0100
+	id 1FNJAX-0005NP-C4
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 01:31:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979AbWCZAAG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 19:00:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbWCZAAG
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 19:00:06 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:14545 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1751979AbWCZAAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 19:00:01 -0500
-Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1FNIfm-0002w3-GP; Sat, 25 Mar 2006 18:59:59 -0500
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FNIfr-0007Id-AI; Sat, 25 Mar 2006 19:00:03 -0500
-Received: from ryan by mythical with local (Exim 4.60)
-	(envelope-from <ryan@mythryan2.michonline.com>)
-	id 1FNIfE-0005wc-Et; Sat, 25 Mar 2006 18:59:24 -0500
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <11432834102700-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.11+cvs20060126
-X-h4x0r5.com-MailScanner: Found to be clean
-X-h4x0r5.com-MailScanner-From: ryan@michonline.com
+	id S1751982AbWCZAba (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 19:31:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbWCZAba
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 19:31:30 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:48000 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751982AbWCZAb3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 19:31:29 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2Q0VRDZ006979
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 25 Mar 2006 16:31:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2Q0VQr7018300;
+	Sat, 25 Mar 2006 16:31:26 -0800
+To: Marc Singer <elf@buici.com>
+In-Reply-To: <20060325222601.GA1500@buici.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18009>
 
-On Sat, Mar 25, 2006 at 02:43:30AM -0800, Eric Wong wrote:
-> Net::SMTP is in the base Perl distribution, so users are more
-> likely to have it.  Net::SMTP also allows reusing the SMTP
-> connection, so sending multiple emails is faster.
 
-Overall, I like this set of cleanups, just one thing struck me as,
-"why?"
 
->  	if ($quiet) {
-> -		printf "Sent %s\n", $subject;
-> +		print "Sent $subject\n";
+On Sat, 25 Mar 2006, Marc Singer wrote:
 
-This seems to be a pointless change, and actually, might be long-term
-counterproductive.
+> One of the unmerged files leaves this trail.
+> 
+>   elf@florence ~...git/linux-2.6 > git-ls-files --unmerged
+>   100644 6262d449120cdcde5db1b079806dcc0d9b5e6b7c 1       arch/arm/mach-lh7a40x/irq-lpd7a40x.c
+>   100644 dcb4e17b941990eabe8992680c9aa9b67afb6fd4 3       arch/arm/mach-lh7a40x/irq-lpd7a40x.c
+> 
+>   elf@florence ~...git/linux-2.6 > git-cat-file blob 6262d449120cdcde5db1b079806dcc0d9b5e6b7c > a
+>   elf@florence ~...git/linux-2.6 > git-cat-file blob dcb4e17b941990eabe8992680c9aa9b67afb6fd4 > b
+>   elf@florence ~...git/linux-2.6 > diff a b                                       21a22
+>   > #include "common.h"
+> 
+> Why would git have a problem with this?
 
-Assumption: Eventually, we're going to want to internationalize git.
+That whole file was apparently removed in the branch you are merging into 
+(no stage 2). So what should the merge do? Throw away the one-liner 
+addition (likely the correct thing) or maybe it should go somewhere else 
+(ie maybe it wasn't removed outright, but the contents moved into another 
+file, which would now need the one-line addition).
 
-If that is true, we'll eventually do something like this to lines like
-that:
-	printf( gettext("Send %s\n"), $subject);
-
-The alternative:
-	print gettext("Send $subject\n");
-does not work.
-
-(The line that xgettext will see is 'Send $subject\n', but when the
-program actually runs, gettext will see the interpolated version, which
-fails.)
-
-Internationalization may still be a ways off, but I think we're reaching
-the point where it might be something we care to think about.
-
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
+		Linus
