@@ -1,95 +1,145 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: History rewriting swiss army knife
-Date: Sun, 26 Mar 2006 15:17:43 +0200
-Message-ID: <20060326131743.GK18185@pasky.or.cz>
-References: <20060324140831.GY18185@pasky.or.cz> <7vek0rzchc.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Do not ever list empty directories in git-ls-files --others
+Date: Sun, 26 Mar 2006 16:25:05 +0200
+Message-ID: <20060326142505.GL18185@pasky.or.cz>
+References: <3afbacad0602270643k9fdd255w8f3769ad77c54e65@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 15:17:38 2006
+X-From: git-owner@vger.kernel.org Sun Mar 26 16:25:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNV7h-0003zt-03
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 15:17:37 +0200
+	id 1FNWB1-0006FX-PA
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 16:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbWCZNRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 08:17:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750916AbWCZNRd
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 08:17:33 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:51344 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750802AbWCZNRd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 08:17:33 -0500
-Received: (qmail 8299 invoked by uid 2001); 26 Mar 2006 15:17:43 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1751251AbWCZOYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 09:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbWCZOYz
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 09:24:55 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:3483 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751251AbWCZOYy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 09:24:54 -0500
+Received: (qmail 18984 invoked by uid 2001); 26 Mar 2006 16:25:05 +0200
+To: junkio@cox.net, Jim MacBaine <jmacbaine@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vek0rzchc.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <3afbacad0602270643k9fdd255w8f3769ad77c54e65@mail.gmail.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18040>
 
-Dear diary, on Fri, Mar 24, 2006 at 11:47:43PM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> >   It's never been so easy before - I've written cg-admin-rewritehist,
-> > which will execute your filters for each commit (which can rewrite the
-> > tree contents, just the tree itself through the index, committer/author
-> > information and commit message) while the script will obviously preserve
-> > all the other information like merges, author/committer information etc.
-> 
-> Hmph.  The above description sounds like you are not allowing
-> the user's custom script to drop existing parent (or graft a new
-> one) while rewriting.  I have not looked at how you are
-> interfacing with user's custom script, but I sort-of expected
-> you to throw a commit at it from older to newer (i.e. topo-order
-> in reverse), along with the names of already re-written commit
-> objects that are parents of taht commit, and have it build a
-> rewritten commit and report its object name back to you.
+  Hi,
 
-There are rather several "filters" (user scripts) which are called at
-various stages of the commit rewrite. In sum they are doing the same
-thing as the single user script would, but cg-admin-rewritehist will
-prepare some things to you so that everyone does not have to write the
-common stuff again and again.
+Dear diary, on Mon, Feb 27, 2006 at 03:43:32PM CET, I got a letter
+where Jim MacBaine <jmacbaine@gmail.com> said that...
+> Many packages put empty directories under /etc, and although only a
+> few of those directories are actually needed, the automatic removal of
+> those packages will fail if I remove the empty directories manually.  
+> Equally, the removal will fail, if I put a .placeholder file into
+> those direrectories and cg-add it.  Is there a simple way out?
 
-The net flexibility loss was zero, except two things:
+  this is caused by git-ls-files behaviour - we now call it with
+the --directory argument which is nice since it will show a non-empty
+unknown directory as a single entry and won't list all its contents.
+What is not so nice is the side-effect you are describing, and I tend
+to agree that if the directory is empty, it should not be listed.
 
-* The parents list construction was hardcoded. Now I added a parent
-  filter which gets the parent string on stdin (including the -p bits,
-  but life's tough) and let it rewrite it (e.g. add stuff at the end).
-  So to "etch a graft":
+---
 
-	cg-admin-rewritehist --parent-filter sed\ 's/^$/-p graftcommitid/' newbranch
+Without the --directory flag, git-ls-files wouldn't ever list directories,
+producing no output for empty directories, which is good since they cannot
+be added and they bear no content, even untracked one (if Git ever starts
+tracking directories on their own, this should obviously change since the
+content notion will change).
 
-  assuming single-root history; but you have current commit id in
-  $GIT_COMMIT so you can go wild:
+With the --directory flag however, git-ls-files would list even empty
+directories. This patch fixes this.
 
-	cg-admin-rewritehist --parent-filter 'cat; [ "$GIT_COMMIT" = "COMMIT" ] && echo "-p GRAFTCOMMIT"' newbranch
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-* A new commit would be always created. Sometimes you might want to
-  omit some commits. Now I added a commit filter which would be
-  called instead of the git-commit-tree command.
+ ls-files.c |   19 ++++++++++++++-----
+ 1 files changed, 14 insertions(+), 5 deletions(-)
 
-  To remove commits authored by "Darl McBribe" from the history:
+diff --git a/ls-files.c b/ls-files.c
+index e42119c..4502b51 100644
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -258,11 +258,12 @@ static int dir_exists(const char *dirnam
+  * Also, we ignore the name ".git" (even if it is not a directory).
+  * That likely will not change.
+  */
+-static void read_directory(const char *path, const char *base, int baselen)
++static int read_directory(const char *path, const char *base, int baselen)
+ {
+-	DIR *dir = opendir(path);
++	DIR *fdir = opendir(path);
++	int contents = 0;
+ 
+-	if (dir) {
++	if (fdir) {
+ 		int exclude_stk;
+ 		struct dirent *de;
+ 		char fullname[MAXPATHLEN + 1];
+@@ -270,7 +271,7 @@ static void read_directory(const char *p
+ 
+ 		exclude_stk = push_exclude_per_directory(base, baselen);
+ 
+-		while ((de = readdir(dir)) != NULL) {
++		while ((de = readdir(fdir)) != NULL) {
+ 			int len;
+ 
+ 			if ((de->d_name[0] == '.') &&
+@@ -288,6 +289,7 @@ static void read_directory(const char *p
+ 
+ 			switch (DTYPE(de)) {
+ 			struct stat st;
++			int subdir, rewind_base;
+ 			default:
+ 				continue;
+ 			case DT_UNKNOWN:
+@@ -301,22 +303,31 @@ static void read_directory(const char *p
+ 			case DT_DIR:
+ 				memcpy(fullname + baselen + len, "/", 2);
+ 				len++;
+-				if (show_other_directories &&
+-				    !dir_exists(fullname, baselen + len))
++				rewind_base = nr_dir;
++				subdir = read_directory(fullname, fullname,
++				                        baselen + len);
++				if (show_other_directories && subdir &&
++				    !dir_exists(fullname, baselen + len)) {
++					// Rewind the read subdirectory
++					while (nr_dir > rewind_base)
++						free(dir[--nr_dir]);
+ 					break;
+-				read_directory(fullname, fullname,
+-					       baselen + len);
++				}
++				contents += subdir;
+ 				continue;
+ 			case DT_REG:
+ 			case DT_LNK:
+ 				break;
+ 			}
+ 			add_name(fullname, baselen + len);
++			contents++;
+ 		}
+-		closedir(dir);
++		closedir(fdir);
+ 
+ 		pop_exclude_per_directory(exclude_stk);
+ 	}
++
++	return contents;
+ }
+ 
+ static int cmp_name(const void *p1, const void *p2)
 
-	cg-admin-rewritehist --commit-filter '
-		if [ "$GIT_AUTHOR_NAME" = "Darl McBribe" ]; then
-			shift
-			while [ -n "$1" ]; do
-				shift; echo "$1"; shift
-			done
-		else
-			git-commit-tree "$@"
-		fi' newbranch
-
-  (note that this will handle even Darl's merges).
-
-Thanks for the inspiration,
 
 -- 
 				Petr "Pasky" Baudis
