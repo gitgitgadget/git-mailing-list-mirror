@@ -1,46 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Optionally do not list empty directories in git-ls-files --others
-Date: Sun, 26 Mar 2006 13:32:31 -0800
-Message-ID: <7vslp4q4cw.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-status and empty directories
+Date: Sun, 26 Mar 2006 23:37:33 +0200
+Message-ID: <20060326213733.GT18185@pasky.or.cz>
 References: <3afbacad0602270643k9fdd255w8f3769ad77c54e65@mail.gmail.com>
-	<20060326142505.GL18185@pasky.or.cz>
-	<20060326145952.GM18185@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, Jim MacBaine <jmacbaine@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 23:33:02 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 23:37:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNcqz-0002gF-BA
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 23:32:54 +0200
+	id 1FNcvM-0003RU-GT
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 23:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132AbWCZVcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 16:32:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932133AbWCZVcu
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 16:32:50 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:38305 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932132AbWCZVcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Mar 2006 16:32:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060326213247.NOCK20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 26 Mar 2006 16:32:47 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060326145952.GM18185@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 26 Mar 2006 16:59:52 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932137AbWCZVhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 16:37:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932136AbWCZVhV
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 16:37:21 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:13527 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932137AbWCZVhV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 16:37:21 -0500
+Received: (qmail 9402 invoked by uid 2001); 26 Mar 2006 23:37:33 +0200
+To: Jim MacBaine <jmacbaine@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <3afbacad0602270643k9fdd255w8f3769ad77c54e65@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18060>
 
-Petr Baudis <pasky@suse.cz> writes:
+  Hi,
 
->   it turned out that cg-clean depends on the original behaviour...
+Dear diary, on Mon, Feb 27, 2006 at 03:43:32PM CET, I got a letter
+where Jim MacBaine <jmacbaine@gmail.com> said that...
+> Many packages put empty directories under /etc, and although only a
+> few of those directories are actually needed, the automatic removal of
+> those packages will fail if I remove the empty directories manually.  
+> Equally, the removal will fail, if I put a .placeholder file into
+> those direrectories and cg-add it.  Is there a simple way out?
 
-Supporting both sounds sensible.
+  BTW, with Cogito-0.17.1 the simple way out should be cg-status -S
+which restores the original behaviour.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
