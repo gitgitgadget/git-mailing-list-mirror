@@ -1,65 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Following renames
-Date: Sun, 26 Mar 2006 14:23:57 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603261422280.15714@g5.osdl.org>
-References: <20060326014946.GB18185@pasky.or.cz>  <7virq1sywj.fsf@assigned-by-dhcp.cox.net>
- <e06fl8$p9f$1@sea.gmane.org>  <Pine.LNX.4.64.0603260843250.15714@g5.osdl.org>
-  <e06hts$1ne$1@sea.gmane.org>  <Pine.LNX.4.64.0603260947100.15714@g5.osdl.org>
- <e5bfff550603261122m5e680c62ye1290f3e601e947e@mail.gmail.com>
+Date: Mon, 27 Mar 2006 00:31:54 +0200
+Message-ID: <20060326223154.GU18185@pasky.or.cz>
+References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <20060326100717.GD18185@pasky.or.cz> <Pine.LNX.4.64.0603260829550.15714@g5.osdl.org> <20060326191445.GQ18185@pasky.or.cz> <Pine.LNX.4.64.0603261415390.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 27 00:24:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 27 00:31:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNden-0002hV-1p
-	for gcvg-git@gmane.org; Mon, 27 Mar 2006 00:24:21 +0200
+	id 1FNdm2-0003wB-PS
+	for gcvg-git@gmane.org; Mon, 27 Mar 2006 00:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751142AbWCZWYE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 17:24:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWCZWYE
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 17:24:04 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:18058 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751142AbWCZWYB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 17:24:01 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2QMNwDZ006420
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 26 Mar 2006 14:23:59 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2QMNvUc020255;
-	Sun, 26 Mar 2006 14:23:58 -0800
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550603261122m5e680c62ye1290f3e601e947e@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932085AbWCZWbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 17:31:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbWCZWbs
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 17:31:48 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:2434 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932085AbWCZWbr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 17:31:47 -0500
+Received: (qmail 14411 invoked by uid 2001); 27 Mar 2006 00:31:54 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0603261415390.15714@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18063>
 
+Dear diary, on Mon, Mar 27, 2006 at 12:22:04AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> So commit "6" is uninteresting, and commit "5" will never even be
+> looked at, since we decided that the history of "d" comes from the
+> first parent with the same contents.
 
+And this is the thing I have a problem with - this does not make much
+sense to me, why can't we just follow all parents instead of arbitrarily
+choosing one of them?
 
-On Sun, 26 Mar 2006, Marco Costalba wrote:
-> 
-> FIRST WAY
-> 
-> After annotating a file history (double click on a file name in
-> bottom-right window or directly from tree view), you see the whole
-> file annotated. If you have the diff window open you see also the
-> corresponding patch (scrolled to selected file name).
+> which is correct (now, there are other histories _too_ that get us to the 
+> same point, but the one you found this way was _a_ history).
 
-The problem is that this step is already _way_ too expensive.
+Ok, in that case I want the _full_ history. :-)
 
-I don't want to work with any tool that makes "Step 1" take a minute or 
-two for a project that has a few years of history. Try it on the linux 
-historic project with some file that gets lots of modifications.
+> No, it's the expected output just because you expected merges to always 
+> show up. Merges get ignored if any of the parents have the same content 
+> already.
 
-In other words, starting off with "annotate" is MUCH too expensive. You 
-should start off basically with "git-whatchanged".
+Eek. Can I avoid that? What was the reason for choosing this behavior?
 
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
