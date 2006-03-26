@@ -1,94 +1,132 @@
-From: Petr Baudis <pasky@suse.cz>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: Following renames
-Date: Sun, 26 Mar 2006 21:14:45 +0200
-Message-ID: <20060326191445.GQ18185@pasky.or.cz>
-References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <20060326100717.GD18185@pasky.or.cz> <Pine.LNX.4.64.0603260829550.15714@g5.osdl.org>
+Date: Sun, 26 Mar 2006 21:22:06 +0200
+Message-ID: <e5bfff550603261122m5e680c62ye1290f3e601e947e@mail.gmail.com>
+References: <20060326014946.GB18185@pasky.or.cz>
+	 <7virq1sywj.fsf@assigned-by-dhcp.cox.net> <e06fl8$p9f$1@sea.gmane.org>
+	 <Pine.LNX.4.64.0603260843250.15714@g5.osdl.org>
+	 <e06hts$1ne$1@sea.gmane.org>
+	 <Pine.LNX.4.64.0603260947100.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 21:14:50 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 21:22:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNahG-00056x-18
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 21:14:43 +0200
+	id 1FNaoV-0006M3-DR
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 21:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234AbWCZTOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 14:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbWCZTOd
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 14:14:33 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:41112 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751234AbWCZTOd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 14:14:33 -0500
-Received: (qmail 25859 invoked by uid 2001); 26 Mar 2006 21:14:45 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751247AbWCZTWI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 14:22:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbWCZTWI
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 14:22:08 -0500
+Received: from zproxy.gmail.com ([64.233.162.198]:27933 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751247AbWCZTWH convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Mar 2006 14:22:07 -0500
+Received: by zproxy.gmail.com with SMTP id 13so1148369nzp
+        for <git@vger.kernel.org>; Sun, 26 Mar 2006 11:22:06 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KrlJcmcjRl8kR4VyywTChFdk4ZkWEY2/FdK2laPQpCd81PPa+7hAVdYsiyRlFtrA8zsUbzA818QIzFYNY7UIpQWFcJHT36LIEeRMnmUPsNSmp0ibETv+gJurvwiydOfrpCRyxA67l3n9dAQORcXennpA2OSKYhsG0JB71C6Biio=
+Received: by 10.65.215.10 with SMTP id s10mr258940qbq;
+        Sun, 26 Mar 2006 11:22:06 -0800 (PST)
+Received: by 10.65.163.13 with HTTP; Sun, 26 Mar 2006 11:22:06 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603260947100.15714@g5.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0603260829550.15714@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18055>
 
-Dear diary, on Sun, Mar 26, 2006 at 06:33:13PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> If you do
-> 
-> 	git-rev-list --parents --remove-empty $REV -- $filename
-> 
-> then you'll get the whole history for that filename. When it ends, you 
-> know the file went away, and then you do basically _one_ "where the hell 
-> did it go" thing.
-> 
-> And yes, it's not git-ls-tree (unless you only want to follow pure 
-> renames), it's actually one "git-diff-tree -M $lastrev". Then you just 
-> continue with the new filename (and do another "git-rev-list" until you 
-> hit the next rename).
+On 3/26/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+>
+> So wouldn't it be _much_ nicer to have a "graphical git-whatchanged",
+> where you just delve deeper (and you don't even look at the whole file
+> like git-whatchanged does, but you ask for a very particular region).
+>
+> Ie, what I imagine would be something gitk/qgit like, where you see the
+> file content, select a line or two (or a whole function), and it goes back
+> in history and shows you the last diff that changed that
+> line/two/function. We can do that EFFICIENTLY. Much more efficiently than
+> git-annotate, in fact. And then when you see the diff, you might say "I'm
+> not interested in this one, that was just a re-indent" and then continue
+> back.
+>
+> THAT is the kind of graphical tool I'd want. And dammit, it should even be
+> _easy_. I'm just a total clutz myself when it comes to doing things like
+> QT or nice tcl/tk text-panes, and this really does have to be visual,
+> since the whole point is that "select text" and interactive part.
+>
+> So if somebody wants to be a hero, and feels comfortable with those kinds
+> of things, this really should be a fairly straightforward thing to do (it
+> would be useful even without rename detection or data movement detection,
+> but it's also something where you really _could_ do efficient data
+> movement detection by just looking at the "whole diff" when something
+> changed in that small area).
+>
 
-I wrote a long rant but then it all suddenly fit together and I have now
-an idea how to implement it reasonably elegantly.
+I am a thousand miles away from being an hero (and glad of it), but....
 
-So only a bugreport remains:
+I really need a bit of feedback or comment about this because IMHO
+qgit annotate is *almost* very similar to what you would ask, so I
+need to understand well the difference:
 
-My current target is to support this tree (letters are filenames,
-numbers are commit ids; I'll translate any git output to those digits):
+FIRST WAY
 
-    2    4
-    b -- d
-1 /        \ 6
-a            d
-  \ 3    5 /
-    c -- d
+After annotating a file history (double click on a file name in
+bottom-right window or directly from tree view), you see the whole
+file annotated. If you have the diff window open you see also the
+corresponding patch (scrolled to selected file name).
 
-With the commits created in the numerical order (so log shows
-1,2,3,4,5,6, and my target is cg-log d showing the same output). If
-anyone wants the sample history, it's at
+Now, double clicking on the chosen code line in file content makes
+currently two things:
 
-	http://pasky.or.cz/~xpasky/renametree1.git/
+  - Diff window is updated to show corresponding revision patch, i.e.
+the last patch that modified that line of code.
 
-Curiously, git-rev-list does something totally strange when trying to
-list per-file history at this point:
+- File content, as well as file annotation, changes to show the
+content of the file just after the patch was applied, from there it is
+normally possible to go back in the history of that code region in the
+same way, i.e. double clicking on interesting lines.
 
-	$ git-rev-list HEAD -- d
-	4
+Biggest limitation of 'annotation browsing' is that 'code removing
+only' patches are not annotated and you need to check them  directly
+in diff window.
 
-Huh? (It should list 6, 5, 4 instead.)
+SECOND WAY
 
-I worked it around by recording a change in d in the merge 6:
+Without opening the file viewer it is possible to select a file (or
+more then one or one directory) from tree view and press magic wand
+button. This causes main view to be updated with git-rev-list  --
+<selected paths>  content, i.e. a filtered view.
 
-	http://pasky.or.cz/~xpasky/renametree2.git/
+With diff viewer window open you can browse across file patch history
+related to chosen file.
 
-	$ git-rev-list --parents --remove-empty HEAD -- d
-	6 4 5
-	5
-	4
+Biggest limitation is that all the revisions who touch the file are
+shown, not only the ones limited to a selected region.
 
-Which is the expected output.
+IF I HAVE UNDERSTOOD...
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+If I have understood what you would like to see it something like the following:
+
+- From diff/file viewer window select a code region.
+
+- Press Magic wand button and feed git-rev-list with <selected path>
+_and_  <selected content>
+
+- Show git-rev-list output on main window as usual, but now selected
+revisions are filtered out not only for path but also for region of
+code touched.
+
+
+Am I guessing correctly?
+
+Marco
