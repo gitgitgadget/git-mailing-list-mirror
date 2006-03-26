@@ -1,97 +1,84 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Union diff
-Date: Sun, 26 Mar 2006 12:21:00 +0200
-Message-ID: <20060326102100.GF18185@pasky.or.cz>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: Following renames
+Date: Sun, 26 Mar 2006 12:34:11 +0200
+Message-ID: <20060326103411.GA4483@c165.ib.student.liu.se>
+References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <20060326100717.GD18185@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Mar 26 12:21:06 2006
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 12:34:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNSMm-0001e1-NG
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 12:21:01 +0200
+	id 1FNSZj-0003YW-Ru
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 12:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbWCZKUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 05:20:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWCZKUw
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 05:20:52 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:9382 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751240AbWCZKUv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 05:20:51 -0500
-Received: (qmail 9026 invoked by uid 2001); 26 Mar 2006 12:21:00 +0200
-To: git@vger.kernel.org
+	id S1751245AbWCZKeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 05:34:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWCZKeS
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 05:34:18 -0500
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:15011 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1751245AbWCZKeS
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Mar 2006 05:34:18 -0500
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 11CA140FD; Sun, 26 Mar 2006 12:50:46 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1FNSZX-0001FB-00; Sun, 26 Mar 2006 12:34:11 +0200
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20060326100717.GD18185@pasky.or.cz>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18034>
 
-  Hello,
+On Sun, Mar 26, 2006 at 12:07:17PM +0200, Petr Baudis wrote:
+> Dear diary, on Sun, Mar 26, 2006 at 05:19:50AM CEST, I got a letter
+> where Linus Torvalds <torvalds@osdl.org> said that...
+> > On Sun, 26 Mar 2006, Petr Baudis wrote:
+> > > 
+> > >   In [1], Linus suggests a non-core solution. Unfortunately, it doesn't
+> > > fly - it requires at least two git-ls-tree calls per revision which
+> > > would bog things down awfully (to roughly half of the original speed).
+> > 
+> > No it doesn't. It requires one git-ls-tree WHEN SOMETHING IS RENAMED.
+> > 
+> > In other words, basically never.
+> 
+> Huh? I don't see that now (and caps don't help me see it better). That's
+> certainly not what is in [1], and I don't see _how_ to detect the
+> renames in this case, and what would I be actually doing git-ls-tree for
+> when I've already detected the rename. Based on [1], I'd be doing
+> git-ls-tree merely to detect that a file _disappeared_ in the first
+> place, I have to do other stuff to detect the renames themselves.
+> 
+> Dear diary, on Sun, Mar 26, 2006 at 09:35:02AM CEST, I got a letter
+> where Ryan Anderson <ryan@michonline.com> said that...
+> > A simple example is the first loop in git-annotate.perl.  (Which was
+> > basically written by Linus, I just translated it from a
+> > shell/pseudo-code example into Perl)
+> 
+> Thanks for the hint. Unfortunately, this is precisely the thing I want
+> to avoid, that is essentially reimplementing part of git-rev-list - to
+> do something good, I would have to do my own toposort and merge by date
+> between parallel lines. OTOH, I might just construct a large revlist
+> commandline specifying all the segments I'm interested in and see what
+> happens when I run that.
+> 
+> Besides, doing it in shell would be pretty ugly job (forcing me to
+> finally rewrite it in perl is not a bad thing but that'd be a somewhat
+> larger project since I share various common routines with other cg
+> tools, etc).
+> 
 
-  sorry for possibly a silly question, but can I get a diff of a merge
-commit with _union_ of changes against all the parents?
+If you decide to modify rev-list to do rename tracking you might want
+to have a look at how this is done in blame.c. git-blame only tracks
+one file (since that is what it needs) but I think it should be
+possible to track multiple files with a similar approach.
 
-	$ git-diff-tree --abbrev -r -m --pretty=raw badfc383b
-
-	diff-tree badfc38... (from 1ee6c84...)
-	tree 29d81f18912328df4f4104e9b9cc355424ced04d
-	parent 1ee6c84efda742eda8b4b200491341125d8d9639
-	parent 453b160f03c8c6d450879482f617412c257e5889
-	author Petr Baudis <pasky@suse.cz> 1143328578 +0100
-	committer Petr Baudis <xpasky@machine.or.cz> 1143328578 +0100
-
-	    Merge with v0.17
-
-	:100755 100755 743c19f... b05900d... M	Documentation/make-cogito-asciidoc
-	:100644 100644 5896df7... 6f06c35... M	cg-Xlib
-
-	diff-tree badfc38... (from 453b160...)
-	tree 29d81f18912328df4f4104e9b9cc355424ced04d
-	parent 1ee6c84efda742eda8b4b200491341125d8d9639
-	parent 453b160f03c8c6d450879482f617412c257e5889
-	author Petr Baudis <pasky@suse.cz> 1143328578 +0100
-	committer Petr Baudis <xpasky@machine.or.cz> 1143328578 +0100
-
-	    Merge with v0.17
-
-	:100644 100644 24ce0a4... d540853... M	TODO
-	:100755 100755 6005083... f7efa9d... M	cg-log
-
-  I would like something like:
-
-	diff-tree badfc38... (from parents)
-	tree 29d81f18912328df4f4104e9b9cc355424ced04d
-	parent 1ee6c84efda742eda8b4b200491341125d8d9639
-	parent 453b160f03c8c6d450879482f617412c257e5889
-	author Petr Baudis <pasky@suse.cz> 1143328578 +0100
-	committer Petr Baudis <xpasky@machine.or.cz> 1143328578 +0100
-
-	    Merge with v0.17
-
-	:100755 100755 743c19f... b05900d... M	Documentation/make-cogito-asciidoc
-	:100644 100644 24ce0a4... d540853... M	TODO
-	:100644 100644 5896df7... 6f06c35... M	cg-Xlib
-	:100755 100755 6005083... f7efa9d... M	cg-log
-
-  Now, the -c option documentation says:
-
-	  It shows the differences from each of the parents to the merge
-	result simultaneously, instead of showing pairwise diff between
-	a parent and the result one at a time, which '-m' option output
-	does.
-
-  This sounds as exactly what I want. Well, the only problem is that the
-same diff command as above with -c option added produces no diff at all,
-just the header and commit messages. Did I misunderstand the -c
-description and does it do something different?
-
-  Thanks,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+- Fredrik
