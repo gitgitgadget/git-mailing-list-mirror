@@ -1,96 +1,77 @@
-From: Ryan Anderson <ryan@michonline.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Following renames
-Date: Sun, 26 Mar 2006 02:35:02 -0500
-Message-ID: <44264426.8010608@michonline.com>
-References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
+Date: Sun, 26 Mar 2006 12:07:17 +0200
+Message-ID: <20060326100717.GD18185@pasky.or.cz>
+References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigFD27DDFDE582FAA2C36C2816"
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 09:35:32 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 12:07:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNPmY-0004Fn-4g
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 09:35:26 +0200
+	id 1FNS9m-0007uw-TE
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 12:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbWCZHfU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 02:35:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWCZHfU
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 02:35:20 -0500
-Received: from mail.autoweb.net ([198.172.237.26]:42469 "EHLO
-	mail.internal.autoweb.net") by vger.kernel.org with ESMTP
-	id S1751146AbWCZHfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Mar 2006 02:35:19 -0500
-Received: from c-68-60-186-73.hsd1.mi.comcast.net ([68.60.186.73] helo=h4x0r5.com)
-	by mail.internal.autoweb.net with esmtp (Exim 4.50)
-	id 1FNPmI-00063S-P3; Sun, 26 Mar 2006 02:35:12 -0500
-Received: from [10.254.251.12] (helo=mythryan.michonline.com)
-	by h4x0r5.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FNPmU-0000sd-PT; Sun, 26 Mar 2006 02:35:22 -0500
-Received: from localhost ([127.0.0.1])
-	by mythryan.michonline.com with esmtp (Exim 4.60)
-	(envelope-from <ryan@michonline.com>)
-	id 1FNPmD-0004d2-Vw; Sun, 26 Mar 2006 02:35:06 -0500
-User-Agent: Mail/News 1.5 (X11/20060228)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
-X-Enigmail-Version: 0.94.0.0
-X-h4x0r5.com-MailScanner: Found to be clean
-X-h4x0r5.com-MailScanner-From: ryan@michonline.com
+	id S1751204AbWCZKHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 05:07:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbWCZKHJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 05:07:09 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:25255 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751204AbWCZKHH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 05:07:07 -0500
+Received: (qmail 6884 invoked by uid 2001); 26 Mar 2006 12:07:17 +0200
+To: Linus Torvalds <torvalds@osdl.org>,
+	Ryan Anderson <ryan@michonline.com>
+Content-Disposition: inline
+In-Reply-To: <44264426.8010608@michonline.com> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18031>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigFD27DDFDE582FAA2C36C2816
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-
-Linus Torvalds wrote:
+Dear diary, on Sun, Mar 26, 2006 at 05:19:50AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
 > On Sun, 26 Mar 2006, Petr Baudis wrote:
->  =20
->>   In [1], Linus suggests a non-core solution. Unfortunately, it doesn'=
-t
->> fly - it requires at least two git-ls-tree calls per revision which
->> would bog things down awfully (to roughly half of the original speed).=
-
->>    =20
->
+> > 
+> >   In [1], Linus suggests a non-core solution. Unfortunately, it doesn't
+> > fly - it requires at least two git-ls-tree calls per revision which
+> > would bog things down awfully (to roughly half of the original speed).
+> 
 > No it doesn't. It requires one git-ls-tree WHEN SOMETHING IS RENAMED.
->
+> 
 > In other words, basically never.
->  =20
 
-A simple example is the first loop in git-annotate.perl.  (Which was
-basically written by Linus, I just translated it from a
-shell/pseudo-code example into Perl)
+Huh? I don't see that now (and caps don't help me see it better). That's
+certainly not what is in [1], and I don't see _how_ to detect the
+renames in this case, and what would I be actually doing git-ls-tree for
+when I've already detected the rename. Based on [1], I'd be doing
+git-ls-tree merely to detect that a file _disappeared_ in the first
+place, I have to do other stuff to detect the renames themselves.
 
+Dear diary, on Sun, Mar 26, 2006 at 09:35:02AM CEST, I got a letter
+where Ryan Anderson <ryan@michonline.com> said that...
+> A simple example is the first loop in git-annotate.perl.  (Which was
+> basically written by Linus, I just translated it from a
+> shell/pseudo-code example into Perl)
 
---=20
+Thanks for the hint. Unfortunately, this is precisely the thing I want
+to avoid, that is essentially reimplementing part of git-rev-list - to
+do something good, I would have to do my own toposort and merge by date
+between parallel lines. OTOH, I might just construct a large revlist
+commandline specifying all the segments I'm interested in and see what
+happens when I run that.
 
-Ryan Anderson
-  sometimes Pug Majere
+Besides, doing it in shell would be pretty ugly job (forcing me to
+finally rewrite it in perl is not a bad thing but that'd be a somewhat
+larger project since I share various common routines with other cg
+tools, etc).
 
-
-
---------------enigFD27DDFDE582FAA2C36C2816
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFEJkQpfhVDhkBuUKURApU5AKCIGQP++aUGVSy1aXHXviCE7F63NgCgxExW
-gE1ctJYtvQBPPiikmNT2ybg=
-=kVth
------END PGP SIGNATURE-----
-
---------------enigFD27DDFDE582FAA2C36C2816--
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
