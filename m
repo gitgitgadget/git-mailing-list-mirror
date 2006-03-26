@@ -1,63 +1,101 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Do not print header in diff-tree --root unless asked to
-Date: Sun, 26 Mar 2006 03:50:24 +0200
-Message-ID: <20060326015024.GC18185@pasky.or.cz>
-References: <20060325232807.9146.12846.stgit@machine.or.cz> <7vu09mt4ij.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] send-email: address expansion for common mailers
+Date: Sat, 25 Mar 2006 18:44:16 -0800
+Message-ID: <20060326024416.GA14234@localdomain>
+References: <20060325235017.GN26071@mythryan2.michonline.com> <11433354063582-git-send-email-normalperson@yhbt.net> <7vlkuyt2ku.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 03:50:30 2006
+X-From: git-owner@vger.kernel.org Sun Mar 26 04:44:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNKOa-0007Mt-Nq
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 03:50:21 +0200
+	id 1FNLFJ-0007sS-BO
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 04:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118AbWCZBuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 20:50:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbWCZBuR
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 20:50:17 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:51102 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751118AbWCZBuP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 20:50:15 -0500
-Received: (qmail 29792 invoked by uid 2001); 26 Mar 2006 03:50:24 +0200
+	id S1751337AbWCZCoq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 21:44:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbWCZCoq
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 21:44:46 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:7567 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751337AbWCZCoq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 21:44:46 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id BD9102DC033;
+	Sat, 25 Mar 2006 18:44:43 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 25 Mar 2006 18:44:16 -0800
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vu09mt4ij.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <7vlkuyt2ku.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18020>
 
-Dear diary, on Sun, Mar 26, 2006 at 01:48:36AM CET, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> > ... git-diff-tree would always return the sha1 of the commit
-> > when --root was passed.
+> > Two git repo-config keys are required for this
+> > (as suggested by Ryan Anderson):
+> >
+> > 	sendemail.aliasesfile = <filename of aliases file>
+> > 	sendemail.aliasfiletype = (mutt|gnus|pine|mailrc)
+> >
+> > I was initially working on auto-detection, but mailrc and mutt formats
+> > tend to throw each other off (they're alike, but handle multiple
+> > addresses per-alias differently).
 > 
-> I am not sure why this change is needed.
-> 
-> The output from "git-diff-tree --root e83c51" (the very initial
-> "git") and "git-diff-tree 8bc9a0" (the second commit) without
-> any other parameters (specifically, there is no '-v') look
-> comparable right now, but I suspect this change would break it.
+> I think specifying the type explicitly is probably not too much
+> hassle for the end user, so that is fine.  Now, do we want to
+> support more than one aliases file?
 
-I was confused by the fact that
+If they're different types, probably not.  But if it's the same type,
+it's pretty easy and I don't see why not.  This patch applies on top
+of the previous one.
 
-	git-diff-tree --root rev1
+Subject: [PATCH] send-email: allow more than one alias file to be used
 
-gives a different output than
+The aliasfiletype must be the same for all aliasesfiles, though.
 
-	git-diff-tree --root rev1 rev2
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-Sorry for the noise,
+---
 
+ git-send-email.perl |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
+
+16306f761b34505672a04bff333d6342724756c8
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d3e1768..5d1e95c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -90,7 +90,7 @@ my ($author) = gitvar_ident('GIT_AUTHOR_
+ my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
+ 
+ my %aliases;
+-chomp(my $aliases_file = `git-repo-config sendemail.aliasesfile`);
++chomp(my @alias_files = `git-repo-config --get-all sendemail.aliasesfile`);
+ chomp(my $aliasfiletype = `git-repo-config sendemail.aliasfiletype`);
+ my %parse_alias = (
+ 	# multiline formats can be supported in the future
+@@ -116,10 +116,12 @@ my %parse_alias = (
+ 		}}}
+ );
+ 
+-if ($aliases_file && defined $parse_alias{$aliasfiletype}) {
+-	open my $fh, '<', $aliases_file or die "opening $aliases_file: $!\n";
+-	$parse_alias{$aliasfiletype}->($fh);
+-	close $fh;
++if (@alias_files && defined $parse_alias{$aliasfiletype}) {
++	foreach my $file (@alias_files) {
++		open my $fh, '<', $file or die "opening $file: $!\n";
++		$parse_alias{$aliasfiletype}->($fh);
++		close $fh;
++	}
+ }
+ 
+ my $prompting = 0;
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+1.2.4.gb622a
