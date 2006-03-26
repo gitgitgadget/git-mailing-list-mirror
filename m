@@ -1,49 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Do not print header in diff-tree --root unless asked to
-Date: Sat, 25 Mar 2006 16:48:36 -0800
-Message-ID: <7vu09mt4ij.fsf@assigned-by-dhcp.cox.net>
-References: <20060325232807.9146.12846.stgit@machine.or.cz>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/4] send-email: Change from Mail::Sendmail to Net::SMTP
+Date: Sat, 25 Mar 2006 16:54:24 -0800
+Message-ID: <20060326005424.GA1773@localdomain>
+References: <11432834101430-git-send-email-normalperson@yhbt.net> <11432834102700-git-send-email-normalperson@yhbt.net> <20060325235859.GO26071@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 26 01:48:43 2006
+Cc: Junio C Hamano <junkio@cox.net>, git <git@vger.kernel.org>,
+	Greg KH <greg@kroah.com>
+X-From: git-owner@vger.kernel.org Sun Mar 26 01:54:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNJQv-0007ah-QV
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 01:48:42 +0100
+	id 1FNJWW-0008NZ-Nb
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 01:54:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbWCZAsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 19:48:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932166AbWCZAsj
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 19:48:39 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:48328 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932095AbWCZAsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 19:48:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060326004838.QUWT6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 25 Mar 2006 19:48:38 -0500
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060325232807.9146.12846.stgit@machine.or.cz> (Petr Baudis's
-	message of "Sun, 26 Mar 2006 00:28:07 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932167AbWCZAy0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 19:54:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932181AbWCZAy0
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 19:54:26 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:19854 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932167AbWCZAyZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 19:54:25 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 55A5E2DC033;
+	Sat, 25 Mar 2006 16:54:24 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 25 Mar 2006 16:54:24 -0800
+To: Ryan Anderson <ryan@michonline.com>
+Content-Disposition: inline
+In-Reply-To: <20060325235859.GO26071@mythryan2.michonline.com>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18012>
 
-Petr Baudis <pasky@suse.cz> writes:
+Ryan Anderson <ryan@michonline.com> wrote:
+> On Sat, Mar 25, 2006 at 02:43:30AM -0800, Eric Wong wrote:
+> > Net::SMTP is in the base Perl distribution, so users are more
+> > likely to have it.  Net::SMTP also allows reusing the SMTP
+> > connection, so sending multiple emails is faster.
+> 
+> Overall, I like this set of cleanups, just one thing struck me as,
+> "why?"
+> 
+> >  	if ($quiet) {
+> > -		printf "Sent %s\n", $subject;
+> > +		print "Sent $subject\n";
+> 
+> This seems to be a pointless change, and actually, might be long-term
+> counterproductive.
 
-> ... git-diff-tree would always return the sha1 of the commit
-> when --root was passed.
+Force of habit, I think.  I originally rewrote that portion but thought
+I reverted it back to the way it was.  Besides, it's even slightly
+faster this way :)  It could still be faster(!) if I just printed a list
+(like below).
 
-I am not sure why this change is needed.
+> Assumption: Eventually, we're going to want to internationalize git.
+> 
+> If that is true, we'll eventually do something like this to lines like
+> that:
+> 	printf( gettext("Send %s\n"), $subject);
+> 
+> The alternative:
+> 	print gettext("Send $subject\n");
+> does not work.
 
-The output from "git-diff-tree --root e83c51" (the very initial
-"git") and "git-diff-tree 8bc9a0" (the second commit) without
-any other parameters (specifically, there is no '-v') look
-comparable right now, but I suspect this change would break it.
+print gettext('Send '),$subject,"\n";
+
+> (The line that xgettext will see is 'Send $subject\n', but when the
+> program actually runs, gettext will see the interpolated version, which
+> fails.)
+> 
+> Internationalization may still be a ways off, but I think we're reaching
+> the point where it might be something we care to think about.
+
+-- 
+Eric Wong
