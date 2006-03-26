@@ -1,87 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Why would merge fail on a one-line addition?
-Date: Sat, 25 Mar 2006 17:32:30 -0800
-Message-ID: <7vfyl6t2hd.fsf@assigned-by-dhcp.cox.net>
-References: <20060325222601.GA1500@buici.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Following renames
+Date: Sun, 26 Mar 2006 03:49:47 +0200
+Message-ID: <20060326014946.GB18185@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 03:32:39 2006
+X-From: git-owner@vger.kernel.org Sun Mar 26 03:49:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNK7S-00056R-J5
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 03:32:38 +0200
+	id 1FNKNx-0007HZ-NV
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 03:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbWCZBcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 20:32:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbWCZBcd
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 20:32:33 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:9118 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751261AbWCZBcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Mar 2006 20:32:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060326013231.RLLY26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 25 Mar 2006 20:32:31 -0500
-To: Marc Singer <elf@buici.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751236AbWCZBtj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 20:49:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbWCZBti
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 20:49:38 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:50334 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751236AbWCZBti (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 20:49:38 -0500
+Received: (qmail 29597 invoked by uid 2001); 26 Mar 2006 03:49:47 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18018>
 
-Marc Singer <elf@buici.com> writes:
+  Hi,
 
-> One of the unmerged files leaves this trail.
->
->   elf@florence ~...git/linux-2.6 > git-ls-files --unmerged
->   100644 6262d449120cdcde5db1b079806dcc0d9b5e6b7c 1       arch/arm/mach-lh7a40x/irq-lpd7a40x.c
->   100644 dcb4e17b941990eabe8992680c9aa9b67afb6fd4 3       arch/arm/mach-lh7a40x/irq-lpd7a40x.c
+  so, now that I've put up with the fuzzy rename autodetection (for
+now), I'd like to make cg-log auto-follow renames and I'm wondering
+about the best implementation (it seems that I won't do without core
+Git cooperation). I think it should be possible to implement in a way
+so that it has minimal performance impact and therefore I can have it
+turned on by default.
 
-> Why would git have a problem with this?
+  Now I'm using the notorious
 
-Your change and the change in the other branch are conflicting
-and git is helping you notice that.
+	git-rev-list listoffiles | git-diff-tree --stdin
 
-The index has different #1 and #3 with #2 missing.  This means
-the common ancestor (#1) had it, you (#2) _removed_ it, while
-the other branch (#3) modified it.  Should it carry forward the
-modification (one line addition) made by the other branch and
-then remove the file to match yours, or should it remove it to
-match yours and ignore what the other branch did?
+pipeline in cg-log, and I'm wondering about the best way to add rename
+detection there.
 
-If you do not want to have that file in the result, record the
-path as such and make a commit.  Since there is no #2, your
-working tree probably do not have that path, so:
+  In [1], Linus suggests a non-core solution. Unfortunately, it doesn't
+fly - it requires at least two git-ls-tree calls per revision which
+would bog things down awfully (to roughly half of the original speed).
 
-        $ git update-index --remove arch/arm/mach-lh7a40x/irq-lpa7a40x.c
+  But even if git-rev-list reported disappearing files, Cogito would
+have to do a lot of complicated bookkeeping in order to properly track
+renames in parallel branches - for each 'head' commit at any point of
+the history traversal, you need to record a separate set of interesting
+files. It would also have to restart git-rev-list at any moment when a
+rename happens on any of the head commits. Scales well not.
 
-to resolve the path, resolve other conflicts if you have any and
-then commit the result.
+  An obvious solution would be to have git-diff-tree --follow which
+updates its interesting path set based on seen renames, and now that
+I've written about non-linear history, it's obvious that it's incorrect.
+The other obvious way to go is then to add rename detection support to
+git-rev-list, and it's less obvious that this is a dead end too - I
+didn't inspect the code myself yet, but for now I trust Linus in [2]
+(I didn't quite understand the argument, I guess I need to sleep on it).
 
-However, this _might_ be a case where your line of development
-somewhere between the common ancestor and your tip moved that
-file somewhere else in which case you may want to do three-way
-merge between 6262d4 blob, your tip and dcb4e1 blob _and_ commit
-the result at the path you have.  I do not know if that is the
-case and even if so I do not know where you have the
-corresponding file in your tree, but just as an example if you
-have it in arch/arm/mach-foo/irq-lpd7a40x.c, you would:
+  So, any thoughts about how to approach this? Either git-diff-tree
+would have to be taught about the heads bookkeeping, or the git-rev-list
+hurdles would have to be overcome, or we might have a
+git-rev-rename-filter or something, but that feels quite redundant and
+might meet with the same problems as git-rev-list.
 
-	$ cd arch/arm/mach-foo/
-	$ common=$(git unpack-file 6262d4)
-        $ his=$(git unpack-file dcb4e1)
-        $ merge irq-lpd7a40x.c $common $his
-        $ rm -f $common $his
+  == References ==
 
-And then eyeball the result of the merge, fix it up as
-necessary, and then:
+  [1] Oct 21 <Pine.LNX.4.64.0510211814050.10477@g5.osdl.org>
+  [2] Oct 22 <Pine.LNX.4.64.0510221251330.10477@g5.osdl.org>
 
-	$ git update-index --remove arch/arm/mach-lh7a40x/irq-lpa7a40x.c
-        $ git update-index arch/arm/mach-foo/irq-lpd7a40x.c
-
-before committing.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
