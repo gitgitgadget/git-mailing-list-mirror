@@ -1,49 +1,85 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Following renames
-Date: Sun, 26 Mar 2006 22:31:16 +0200
-Message-ID: <20060326203116.GR18185@pasky.or.cz>
-References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <20060326100717.GD18185@pasky.or.cz> <Pine.LNX.4.64.0603260829550.15714@g5.osdl.org> <20060326191445.GQ18185@pasky.or.cz>
+Date: Sun, 26 Mar 2006 23:09:56 +0200
+Message-ID: <20060326210956.GS18185@pasky.or.cz>
+References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 22:31:22 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 26 23:10:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNbtH-0000VB-7Q
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 22:31:11 +0200
+	id 1FNcUi-00079b-7P
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 23:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751538AbWCZUbE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Mar 2006 15:31:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751544AbWCZUbE
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 15:31:04 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:5258 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751543AbWCZUbD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 15:31:03 -0500
-Received: (qmail 1604 invoked by uid 2001); 26 Mar 2006 22:31:16 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751162AbWCZVJp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Mar 2006 16:09:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbWCZVJo
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Mar 2006 16:09:44 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:17056 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751162AbWCZVJn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Mar 2006 16:09:43 -0500
+Received: (qmail 6951 invoked by uid 2001); 26 Mar 2006 23:09:56 +0200
+To: Ryan Anderson <ryan@michonline.com>
 Content-Disposition: inline
-In-Reply-To: <20060326191445.GQ18185@pasky.or.cz>
+In-Reply-To: <44264426.8010608@michonline.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18058>
 
-Dear diary, on Sun, Mar 26, 2006 at 09:14:45PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> Curiously, git-rev-list does something totally strange when trying to
-> list per-file history at this point:
+Dear diary, on Sun, Mar 26, 2006 at 09:35:02AM CEST, I got a letter
+where Ryan Anderson <ryan@michonline.com> said that...
+> Linus Torvalds wrote:
+> > On Sun, 26 Mar 2006, Petr Baudis wrote:
+> >   
+> >>   In [1], Linus suggests a non-core solution. Unfortunately, it doesn't
+> >> fly - it requires at least two git-ls-tree calls per revision which
+> >> would bog things down awfully (to roughly half of the original speed).
+> >>     
+> >
+> > No it doesn't. It requires one git-ls-tree WHEN SOMETHING IS RENAMED.
+> >
+> > In other words, basically never.
+> >   
 > 
-> 	$ git-rev-list HEAD -- d
-> 	4
-> 
-> Huh? (It should list 6, 5, 4 instead.)
+> A simple example is the first loop in git-annotate.perl.  (Which was
+> basically written by Linus, I just translated it from a
+> shell/pseudo-code example into Perl)
 
-Obviously not 6 since the file was not changed in that revision, but I'd
-still expect it to list 5.
+One case it does not handle:
+
+         2
+      -- b --
+  1 /         \ 6
+  a             d
+    \ 3     5 /
+      c --- d
+
+git-rev-list at 6 will (understandably) show
+
+        6 5
+        5
+
+and you will never detect the d -> b rename leading to 2.
+
+This is one reason why I'm actually not using --parents and pipe stuff
+directly to git-diff-tree --stdin -M and then read its output. This also
+lets me merge parallel lines of development based on date and I don't
+have to fork per each file deletion.
+
+With any luck I'll have the first draft of my (also perlish) script done
+this evening yet. (BTW, it has the same output format as
+
+	git-rev-list | git-diff-tree --pretty=raw -M
+
+so with some tweaking it could also serve as a git-whatchanged backend.
+Actually, it would be nice to have it in core Git in the long term so
+that it gets all the portability tweaks and such.)
 
 -- 
 				Petr "Pasky" Baudis
