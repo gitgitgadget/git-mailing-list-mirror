@@ -1,101 +1,99 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] send-email: address expansion for common mailers
-Date: Sat, 25 Mar 2006 18:44:16 -0800
-Message-ID: <20060326024416.GA14234@localdomain>
-References: <20060325235017.GN26071@mythryan2.michonline.com> <11433354063582-git-send-email-normalperson@yhbt.net> <7vlkuyt2ku.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Following renames
+Date: Sat, 25 Mar 2006 18:49:48 -0800
+Message-ID: <7virq1sywj.fsf@assigned-by-dhcp.cox.net>
+References: <20060326014946.GB18185@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 26 04:44:50 2006
+X-From: git-owner@vger.kernel.org Sun Mar 26 04:50:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNLFJ-0007sS-BO
-	for gcvg-git@gmane.org; Sun, 26 Mar 2006 04:44:50 +0200
+	id 1FNLKD-000085-M9
+	for gcvg-git@gmane.org; Sun, 26 Mar 2006 04:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbWCZCoq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Mar 2006 21:44:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbWCZCoq
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 21:44:46 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:7567 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751337AbWCZCoq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 21:44:46 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id BD9102DC033;
-	Sat, 25 Mar 2006 18:44:43 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 25 Mar 2006 18:44:16 -0800
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vlkuyt2ku.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1751363AbWCZCtu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Mar 2006 21:49:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751358AbWCZCtu
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 21:49:50 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:8136 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751363AbWCZCtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Mar 2006 21:49:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060326024949.SJYS26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 25 Mar 2006 21:49:49 -0500
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20060326014946.GB18185@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 26 Mar 2006 03:49:47 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18021>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > Two git repo-config keys are required for this
-> > (as suggested by Ryan Anderson):
-> >
-> > 	sendemail.aliasesfile = <filename of aliases file>
-> > 	sendemail.aliasfiletype = (mutt|gnus|pine|mailrc)
-> >
-> > I was initially working on auto-detection, but mailrc and mutt formats
-> > tend to throw each other off (they're alike, but handle multiple
-> > addresses per-alias differently).
-> 
-> I think specifying the type explicitly is probably not too much
-> hassle for the end user, so that is fine.  Now, do we want to
-> support more than one aliases file?
+Petr Baudis <pasky@ucw.cz> writes:
 
-If they're different types, probably not.  But if it's the same type,
-it's pretty easy and I don't see why not.  This patch applies on top
-of the previous one.
+>   An obvious solution would be to have git-diff-tree --follow which
+> updates its interesting path set based on seen renames, and now that
+> I've written about non-linear history, it's obvious that it's incorrect.
+> The other obvious way to go is then to add rename detection support to
+> git-rev-list, and it's less obvious that this is a dead end too - I
+> didn't inspect the code myself yet, but for now I trust Linus in [2]
+> (I didn't quite understand the argument, I guess I need to sleep on it).
 
-Subject: [PATCH] send-email: allow more than one alias file to be used
+I'd have to sleep on how the core side can help Porcelains, but
+I think it is a good thing that you, one of the most vocal
+advocate on the list for doing rename recording, are thinking
+about this issue and probably would look into rev-list.c soon.
 
-The aliasfiletype must be the same for all aliasesfiles, though.
+Looking at the evolution of rev-list.c file itself was a good
+exercise to realize that rename tracking (more specifically,
+having whatchanged to follow renames) is not such a useful
+thing (at least for me).
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+If I am interested in rev-list.c's evolution from "the set of
+command line flags it supported" point of view, then whatchanged
+to show the history of rev-list.c file itself would be a very
+good way to show that to me.  rev-list_usage[] = "..." stayed
+there almost from the beginning.
 
----
+However, if I am interested in the way how it traverses the
+commits has changed over time, I would need to start from
+revision.c and switch to rev-list.c when that part of the code
+was split out from it, because the current rev-list.c does not
+have the main part of the traversal logic at all.
 
- git-send-email.perl |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
+Another example.  Today's tar-tree updates have one interesting
+function I think should belong to strbuf.c, and before merging
+it to the mainline, I may move that function from tar-tree.c to
+strbuf.c.  After that happens, if I run "whatchanged strbuf.c"
+to see where that function came from, I would want it to notice
+it came from tar-tree.c, although it is not a rename at all.
+Just one function moved from a file to another.
 
-16306f761b34505672a04bff333d6342724756c8
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d3e1768..5d1e95c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -90,7 +90,7 @@ my ($author) = gitvar_ident('GIT_AUTHOR_
- my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
- 
- my %aliases;
--chomp(my $aliases_file = `git-repo-config sendemail.aliasesfile`);
-+chomp(my @alias_files = `git-repo-config --get-all sendemail.aliasesfile`);
- chomp(my $aliasfiletype = `git-repo-config sendemail.aliasfiletype`);
- my %parse_alias = (
- 	# multiline formats can be supported in the future
-@@ -116,10 +116,12 @@ my %parse_alias = (
- 		}}}
- );
- 
--if ($aliases_file && defined $parse_alias{$aliasfiletype}) {
--	open my $fh, '<', $aliases_file or die "opening $aliases_file: $!\n";
--	$parse_alias{$aliasfiletype}->($fh);
--	close $fh;
-+if (@alias_files && defined $parse_alias{$aliasfiletype}) {
-+	foreach my $file (@alias_files) {
-+		open my $fh, '<', $file or die "opening $file: $!\n";
-+		$parse_alias{$aliasfiletype}->($fh);
-+		close $fh;
-+	}
- }
- 
- my $prompting = 0;
--- 
-1.2.4.gb622a
+What this suggests is that switching the set of paths to follow
+while traversing ancestry chain needs to depend on which part of
+the original file you are interested in.  Marking "this commit
+renames (or copies) file A to file B" is not that useful -- for
+that matter, detecting at runtime like we currently do is not
+better either.  If a file A and file B were cleaned up and
+merged into a single file C, which is in the tip of the tree,
+which one you would want whatchanged to switch following depends
+on which part of the C you were interested in.
+
+Unless you are interested in the _entire_ contents of the file,
+that is.  Then tracking or even recording renames becomes
+useful, but that is a special case.
+
+That is the reason I am not so enthused about recording renames.
+I think the time is better spent on enhancing what pickaxe tries
+to do (currently it does very little), which I hinted in a
+separate message late last night.
+
+But that does not have to stop you, and does not have to stop me
+from thinking about ways to help you either.
