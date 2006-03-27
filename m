@@ -1,51 +1,75 @@
-From: Chris Wright <chrisw@redhat.com>
-Subject: Re: git-svn name
-Date: Mon, 27 Mar 2006 09:48:24 -0800
-Message-ID: <20060327174824.GT15997@sorel.sous-sol.org>
-References: <20060326030425.GA6306@hand.yhbt.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Reintroduce svn pools to solve the memory leak.
+Date: Mon, 27 Mar 2006 10:16:58 -0800
+Message-ID: <7vhd5joiqt.fsf@assigned-by-dhcp.cox.net>
+References: <8aa486160603270326i3a8ddcfau61ca84cdac036ff9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>, Gerrit Pape <pape@smarden.org>,
-	Chris Wright <chrisw@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Mar 27 19:47:54 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Jan-Benedict Glaw" <jbglaw@lug-owl.de>, git@vger.kernel.org,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Mar 27 20:17:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNvoX-0003d4-AG
-	for gcvg-git@gmane.org; Mon, 27 Mar 2006 19:47:37 +0200
+	id 1FNwH4-00013c-Oa
+	for gcvg-git@gmane.org; Mon, 27 Mar 2006 20:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWC0Rrd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Mar 2006 12:47:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750925AbWC0Rrd
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 12:47:33 -0500
-Received: from 216-99-217-87.dsl.aracnet.com ([216.99.217.87]:62594 "EHLO
-	sorel.sous-sol.org") by vger.kernel.org with ESMTP id S1750905AbWC0Rrd
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Mar 2006 12:47:33 -0500
-Received: from sorel.sous-sol.org (localhost.localdomain [127.0.0.1])
-	by sorel.sous-sol.org (8.13.6/8.13.1) with ESMTP id k2RHmSYZ000771;
-	Mon, 27 Mar 2006 09:48:29 -0800
-Received: (from chrisw@localhost)
-	by sorel.sous-sol.org (8.13.6/8.13.6/Submit) id k2RHmOYj000739;
-	Mon, 27 Mar 2006 09:48:24 -0800
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <20060326030425.GA6306@hand.yhbt.net>
-User-Agent: Mutt/1.4.2.1i
+	id S1750815AbWC0SRD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Mar 2006 13:17:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbWC0SRD
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 13:17:03 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:10747 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750815AbWC0SRB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Mar 2006 13:17:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060327181659.GQWB3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 27 Mar 2006 13:16:59 -0500
+To: =?iso-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+In-Reply-To: <8aa486160603270326i3a8ddcfau61ca84cdac036ff9@mail.gmail.com>
+	(Santi =?iso-8859-1?Q?B=E9jar's?= message of "Mon, 27 Mar 2006 13:26:01
+ +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18086>
 
-* Eric Wong (normalperson@yhbt.net) wrote:
-> Would distro package maintainers also be willing to add my git-svn
-> script to their git-svn binary packages when a new release of git is
-> made, too?  It's quite different from git-svnimport (see
-> contrib/git-svn/git-svn.txt for details).
+"Santi B=E9jar" <sbejar@gmail.com> writes:
 
-I think your script name is fine.  Best way to handle this is with a
-patch to make your git-svn part of the git-svn packaging.
+> On 3/24/06, Santi B=E9jar <sbejar@gmail.com> wrote:
+>> Jan-Benedict Glaw <jbglaw@lug-owl.de> writes:
+>>
+>> diff-tree 4802426... (from 525c0d7...)
+>> Author: Karl  Hasselstr=F6m <kha@treskal.com>
+>> Date:   Sun Feb 26 06:11:27 2006 +0100
+>>
+>>     svnimport: Convert executable flag
+>>
+>>     Convert the svn:executable property to file mode 755 when conver=
+ting
+>>     an SVN repository to GIT.
+>>
+>>     Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+>>     Signed-off-by: Junio C Hamano <junkio@cox.net>
+>>
+>> :100755 100755 ee2940f... 6603b96... M  git-svnimport.perl
+>
+> And this patch fixes my problems.
 
-thanks,
--chris
+Jan-Benedict, thanks for pinpointing the regression, and Santi,
+thanks for the patch.
+
+I should have looked a bit more closely when applying the patch
+-- it is clear that the patch is doing more than what its log
+says.  My fault.
+
+Karl, were there other reasons you needed to disable the pool
+here (maybe to work around a problem with incompatible version
+of SVN module)?  I see some other uses of SVN::Pool still there
+in the code, so I am assuming this was a simple typo, but just
+in case...
