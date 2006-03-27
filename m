@@ -1,93 +1,136 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Following renames
-Date: Mon, 27 Mar 2006 13:19:02 +0200
-Message-ID: <e5bfff550603270319w20796918wc8f8fe30a6c5627@mail.gmail.com>
-References: <20060326014946.GB18185@pasky.or.cz>
-	 <7virq1sywj.fsf@assigned-by-dhcp.cox.net> <e06fl8$p9f$1@sea.gmane.org>
-	 <Pine.LNX.4.64.0603260843250.15714@g5.osdl.org>
-	 <e06hts$1ne$1@sea.gmane.org>
-	 <Pine.LNX.4.64.0603260947100.15714@g5.osdl.org>
-	 <e5bfff550603261122m5e680c62ye1290f3e601e947e@mail.gmail.com>
-	 <Pine.LNX.4.64.0603261422280.15714@g5.osdl.org>
-	 <e5bfff550603262147t3aec8da6p6bf2a333e2d35f1d@mail.gmail.com>
-	 <Pine.LNX.4.64.0603270005330.15714@g5.osdl.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: [PATCH] Reintroduce svn pools to solve the memory leak.
+Date: Mon, 27 Mar 2006 13:26:01 +0200
+Message-ID: <8aa486160603270326i3a8ddcfau61ca84cdac036ff9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 27 13:19:10 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 27 13:26:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNpkb-0002ek-9u
-	for gcvg-git@gmane.org; Mon, 27 Mar 2006 13:19:09 +0200
+	id 1FNprT-0003b5-3T
+	for gcvg-git@gmane.org; Mon, 27 Mar 2006 13:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750886AbWC0LTF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Mar 2006 06:19:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbWC0LTE
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 06:19:04 -0500
-Received: from wproxy.gmail.com ([64.233.184.227]:9883 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750886AbWC0LTE convert rfc822-to-8bit
+	id S1750900AbWC0L0E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Mar 2006 06:26:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750903AbWC0L0E
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 06:26:04 -0500
+Received: from xproxy.gmail.com ([66.249.82.204]:41814 "EHLO xproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750900AbWC0L0C convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Mar 2006 06:19:04 -0500
-Received: by wproxy.gmail.com with SMTP id i7so1452278wra
-        for <git@vger.kernel.org>; Mon, 27 Mar 2006 03:19:03 -0800 (PST)
+	Mon, 27 Mar 2006 06:26:02 -0500
+Received: by xproxy.gmail.com with SMTP id t10so835469wxc
+        for <git@vger.kernel.org>; Mon, 27 Mar 2006 03:26:01 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qk3b3rhkcImVMpQiTxzW4lvqfTLgwAg8SjBGp+/wnWMeMVDa2QFSaypiFMMLMrwOhza2P33ITFRpYdg6cI1tQ83s+T0JyeDEQEhLY915Tt8WuBwKlP1vmoF+UfJkLNBQwDwpiCY1ag3djHMpPtHUi4qn2A+8+UNbXdfpbGNVlMU=
-Received: by 10.64.151.4 with SMTP id y4mr2269524qbd;
-        Mon, 27 Mar 2006 03:19:02 -0800 (PST)
-Received: by 10.65.163.13 with HTTP; Mon, 27 Mar 2006 03:19:02 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603270005330.15714@g5.osdl.org>
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=OyO2/umS48zmFRlSy1v5t+bvky+Le2CpexUOSQxZum7nOUaHJEr7sXWmQxLq4oy9jpzThxeERR5doxMt9XhXhCagWq2/G+XfJp9W0agz9h+DOKaXemqSEmEZ2e6qvfbfdk2Y8YkdbWIhn2TZWDLRmE7W+tn+Li39py8epdskbZQ=
+Received: by 10.70.16.15 with SMTP id 15mr3733520wxp;
+        Mon, 27 Mar 2006 03:26:01 -0800 (PST)
+Received: by 10.70.46.19 with HTTP; Mon, 27 Mar 2006 03:26:01 -0800 (PST)
+To: "Jan-Benedict Glaw" <jbglaw@lug-owl.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18080>
 
-On 3/27/06, Linus Torvalds <torvalds@osdl.org> wrote:
+On 3/24/06, Santi B=E9jar <sbejar@gmail.com> wrote:
+> Jan-Benedict Glaw <jbglaw@lug-owl.de> writes:
 >
->
-> On Mon, 27 Mar 2006, Marco Costalba wrote:
+> > On Wed, 2006-03-22 14:33:37 +0100, Jan-Benedict Glaw <jbglaw@lug-ow=
+l.de> wrote:
 > >
-> > Historic Linux test (63428 revisions)
+> > Since it seems nobody looked at the GCC import run (which means to =
+use
+> > the svnimport), I ran it again, under strace control:
 > >
-> > File: drivers/net/tg3.c
-> > Revisions that modify tg3.c : 292
+> >> GCC
+> >> ~~~
+> >> $ /home/jbglaw/bin/git svnimport -C gcc -v svn://gcc.gnu.org/svn/g=
+cc
 > >
-> > With qgit
-> > 15s to retrieve file history (git-rev-list)
-> > 19.5s to annotate (git-diff-tree -p, current GNU algorithm, not new faster one)
+> >> Committed change 3936:/ 1993-03-31 05:44:03)
+> >> Commit ID ceff85145f8671fb2a9d826a761cedc2a507bd1e
+> >> Writing to refs/heads/origin
+> >> DONE: 3936 origin ceff85145f8671fb2a9d826a761cedc2a507bd1e
+> >> ... 3937 trunk/gcc/final.c ...
+> >> Can't fork at /home/jbglaw/bin/git-svnimport line 379.
+> >
 >
-> .. and it does absolutely _nothing_ while it's doing that, does it?
+> I have the same (?) problem with one of my svn repository. It worked
+> before (I've redone the import with the -r flag), so I bisected it.
+> The problematic commit seems to be:
 >
-
-yes, it's true.
-
-> > $ time git-whatchanged HEAD drivers/net/tg3.c > /dev/null
-> > 98.01user 2.44system 1:46.19elapsed 94%CPU (0avgtext+0avgdata 0maxresident)k
-> > 0inputs+0outputs (797major+43033minor)pagefaults 0swaps
+> diff-tree 4802426... (from 525c0d7...)
+> Author: Karl  Hasselstr=F6m <kha@treskal.com>
+> Date:   Sun Feb 26 06:11:27 2006 +0100
 >
-> In contrast, git-whatchanged will start outputting the recent changes
-> immediately.
+>     svnimport: Convert executable flag
 >
-> And that's the point. Almost always, we're interested in the _recent_
-> stuff. The fact that it takes longer to get the old history  is not very
-> important. You generally don't ask "what changed in this file" for a file
-> that hasn't changed in five years.
+>     Convert the svn:executable property to file mode 755 when convert=
+ing
+>     an SVN repository to GIT.
 >
+>     Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+>     Signed-off-by: Junio C Hamano <junkio@cox.net>
+>
+> :100755 100755 ee2940f... 6603b96... M  git-svnimport.perl
+>
+> I think it has a memory leak, it used up to 140m of memory.
+>
+> $ git reset --hard 4802426^
+> $ time ../git-svnimport.perl file:///path/
+> Use of uninitialized value in string eq at ../git-svnimport.perl line=
+ 463.
+> Use of uninitialized value in substitution (s///) at ../git-svnimport=
+=2Eperl line 466.
+> real    0m55.801s
+> user    0m30.578s
+> sys     0m23.084s
+>
+> $ git reset --hard 4802426
+> $ time ../git-svnimport.perl file:///path/
+> Use of uninitialized value in string eq at ../git-svnimport.perl line=
+ 463.
+> Use of uninitialized value in substitution (s///) at ../git-svnimport=
+=2Eperl line 466.
+> Can't fork at /home/santi/usr/src/scm/git/git-svnimport.perl line 331=
+=2E
+> real    6m2.163s
+> user    0m20.332s
+> sys     0m50.180s
+>
+> and it didn't finished. Hope it helps.
 
-We could run git-rev-list with a time range specifier (changes of last
-year as example) by default so to have fast results and run all time
-history _only_  on request.
+And this patch fixes my problems.
 
-This perhaps could solve the fast output for recent revs problem, if
-this is the problem.
+---
 
-I still think the problem with annotation is that you don't see
-patches that _remove_ lines of code, you need the whole diff for this.
+Introduced in 4802426.
 
-Marco
+Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
+---
+ git-svnimport.perl |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index 639aa41..f2cf062 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -135,8 +135,10 @@
+
+        print "... $rev $path ...\n" if $opt_v;
+        my (undef, $properties);
++       my $pool =3D SVN::Pool->new();
+        eval { (undef, $properties)
+-                  =3D $self->{'svn'}->get_file($path,$rev,$fh); };
++                  =3D $self->{'svn'}->get_file($path,$rev,$fh,$pool); =
+};
++       $pool->clear;
+        if($@) {
+                return undef if $@ =3D~ /Attempted to get checksum/;
+                die $@;
