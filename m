@@ -1,62 +1,50 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH] cogito: Push tags over http
-Date: Mon, 27 Mar 2006 21:12:11 +0200
-Message-ID: <20060327191211.G54ad5023@leonov.stosberg.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Following renames
+Date: Mon, 27 Mar 2006 23:59:56 +0200
+Message-ID: <20060327215956.GB27689@pasky.or.cz>
+References: <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <44264426.8010608@michonline.com> <20060326014946.GB18185@pasky.or.cz> <Pine.LNX.4.64.0603251919170.15714@g5.osdl.org> <20060326100717.GD18185@pasky.or.cz> <Pine.LNX.4.64.0603260829550.15714@g5.osdl.org> <20060326191445.GQ18185@pasky.or.cz> <20060326232649.GV18185@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Mar 27 21:13:05 2006
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 28 00:00:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FNx8X-00032Q-UK
-	for gcvg-git@gmane.org; Mon, 27 Mar 2006 21:12:22 +0200
+	id 1FNzkm-0001Gs-KB
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 00:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbWC0TMR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Mar 2006 14:12:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbWC0TMR
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 14:12:17 -0500
-Received: from ncs.stosberg.net ([217.195.44.246]:62905 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1751212AbWC0TMQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Mar 2006 14:12:16 -0500
-Received: from leonov (p213.54.74.77.tisdip.tiscali.de [213.54.74.77])
-	by ncs.stosberg.net (Postfix) with ESMTP id 71951AEBA007
-	for <git@vger.kernel.org>; Mon, 27 Mar 2006 21:12:04 +0200 (CEST)
-Received: by leonov (Postfix, from userid 500)
-	id 189A9E73D8; Mon, 27 Mar 2006 21:12:12 +0200 (CEST)
-To: git@vger.kernel.org
+	id S1751485AbWC0V74 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Mar 2006 16:59:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbWC0V74
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 16:59:56 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:63418 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751485AbWC0V74 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Mar 2006 16:59:56 -0500
+Received: (qmail 8368 invoked by uid 2001); 27 Mar 2006 23:59:56 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1) with LMTP; Mon, 27 Mar 2006 21:03:46 +0200
-X-Sieve: CMU Sieve 2.2
-User-Agent: mutt-ng/devel-r796 (Debian)
+In-Reply-To: <20060326232649.GV18185@pasky.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18088>
 
+Dear diary, on Mon, Mar 27, 2006 at 01:26:49AM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> To quickly see what it does, you can try it e.g. on the git-log.sh file
+> in the Git repository.
 
-A trivial patch for cg-push allows to push tags over http.
+By the way, the cg-log in master uses it now to automagically follow
+file renames (in case you call it per-file like cg-log FILENAME). If you
+hate it, you can prevent it by cg-log --no-renames (cg-log -R).
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
+Looks pretty slick.
 
----
-
- cg-push |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-e9540d5f524c54102a93570031fb59156cec4188
-diff --git a/cg-push b/cg-push
-index b6b8954..4332b28 100755
---- a/cg-push
-+++ b/cg-push
-@@ -70,7 +70,7 @@ sprembranch=":refs/heads/$rembranch"
- 
- if [ "${uri#http://}" != "$uri" -o "${uri#https://}" != "$uri" ]; then
- 	# git-http-push doesn't like $sprembranch
--	git-http-push "$uri/" "$locbranch:$rembranch"
-+	git-http-push "$uri/" "$locbranch:$rembranch" "${tags[@]}"
- elif [ "${uri#git+ssh://}" != "$uri" ]; then
- 	send_pack_update "$name" "$(echo "$uri" | sed 's#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" "$locbranch$sprembranch" "${tags[@]}"
- elif [ "${uri#rsync://}" != "$uri" ]; then
 -- 
-1.2.GIT
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
