@@ -1,57 +1,68 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cherry-pick particular object
-Date: Wed, 29 Mar 2006 00:54:29 +0200
-Message-ID: <20060328225429.GD27689@pasky.or.cz>
-References: <20060328113107.20ab4c21.sebastien@xprima.com> <BAYC1-PASMTP02B05019F52DE48793CB39AED30@CEZ.ICE> <Pine.LNX.4.64.0603281435410.15714@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Add ALL_LDFLAGS to the git target.
+Date: Tue, 28 Mar 2006 15:03:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603281500280.15714@g5.osdl.org>
+References: <15693.1143575188@lotus.CS.Berkeley.EDU>
+ <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sean <seanlkml@sympatico.ca>,
-	=?iso-8859-1?Q?S=E9bastien?= Pierre <sebastien@xprima.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 00:54:39 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 01:03:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FON57-0000Ct-Vu
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 00:54:35 +0200
+	id 1FONDi-0001VU-9d
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 01:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964775AbWC1Wyb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 17:54:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964776AbWC1Wyb
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 17:54:31 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:19074 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964775AbWC1Wyb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 17:54:31 -0500
-Received: (qmail 25851 invoked by uid 2001); 29 Mar 2006 00:54:29 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0603281435410.15714@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S964792AbWC1XDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 18:03:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964794AbWC1XDQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 18:03:16 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:53696 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964792AbWC1XDO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 18:03:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2SN35Co030605
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Mar 2006 15:03:06 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2SN352Y030714;
+	Tue, 28 Mar 2006 15:03:05 -0800
+To: Mark Wooding <mdw@distorted.org.uk>
+In-Reply-To: <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18138>
 
-Dear diary, on Wed, Mar 29, 2006 at 12:44:02AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> Ie you can have a tree like this:
-> 
-> 	100644 blob f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f    abc
-> 	120000 blob f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f    file
-> 
-> where the first one is a regular file called "abc" (which contains the 
-> string "abc"), and the second is the _symlink_ that points to "abc".
-> 
-> They share the exact same blob, and what distinguishes them is the 
-> filemode info from git-read-tree.
 
-Huh? Didn't you rather want to say that "file" will point to a blob
-containing just the "abc" string (the symlink target)? ;-)
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+On Tue, 28 Mar 2006, Mark Wooding wrote:
+
+> Jason Riedy <ejr@EECS.Berkeley.EDU> wrote:
+> 
+> > P.S. For the whole finding-a-function-name business, some of 
+> > us are using git on fixed-format Fortran.  Every non-comment
+> > line begins with whitespace...  ;)  And in free format, many
+> > people don't add that first indentation within subroutines.
+> 
+> Urgh.  So, which regex library do people want to use? ;-)  (My vote's
+> for pcre.)
+
+I'd really just prefer to make the "-p" switch configurable, the way it 
+was before. No regexps, just the same rules as for GNU diff, perhaps with 
+the difference being that it would be on by default.
+
+Another possible approach is to say
+ - if the first line of the real diff matches the rules, do NOT add 
+   another line that matches the rule at the @@-line.
+
+since the simple @@-line rule really doesn't make sense for any file that 
+is "dense" (ie where most lines start with non-whitespace).
+
+		Linus
