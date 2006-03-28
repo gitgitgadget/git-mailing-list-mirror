@@ -1,75 +1,64 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Gitk strangeness..
-Date: Mon, 27 Mar 2006 18:57:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603271856070.15714@g5.osdl.org>
-References: <7v64lzo1j7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0603271802030.15714@g5.osdl.org> <17448.40941.256361.866229@cargo.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 28 04:58:00 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [PATCH] Add ALL_LDFLAGS to the git target.
+Date: Mon, 27 Mar 2006 19:11:43 -0800
+Message-ID: <13360.1143515503@lotus.CS.Berkeley.EDU>
+References: <7v1wwnnyvt.fsf@assigned-by-dhcp.cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 28 05:12:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FO4P1-000755-Re
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 04:57:52 +0200
+	id 1FO4ci-0008VK-SV
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 05:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbWC1C5t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Mar 2006 21:57:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbWC1C5s
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 21:57:48 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:49117 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751209AbWC1C5s (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Mar 2006 21:57:48 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2S2vhDZ023675
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 27 Mar 2006 18:57:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2S2vggY011724;
-	Mon, 27 Mar 2006 18:57:43 -0800
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17448.40941.256361.866229@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751219AbWC1DLp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Mar 2006 22:11:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbWC1DLp
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 22:11:45 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:12185 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1751219AbWC1DLo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Mar 2006 22:11:44 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k2S3BigH013362
+	for <git@vger.kernel.org>; Mon, 27 Mar 2006 19:11:44 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k2S3Bi9B013361
+	for <git@vger.kernel.org>; Mon, 27 Mar 2006 19:11:44 -0800 (PST)
+To: git@vger.kernel.org
+In-reply-to: <7v1wwnnyvt.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18107>
 
+And Junio C Hamano writes:
+ - I wonder what the dependency is, since ALL_LDFLAGS is not
+ - modified on AIX, [...]
 
+Specifically, -lcrypto.  Mine is in a funny place, so I need
+LDFLAGS passed in.
 
-On Tue, 28 Mar 2006, Paul Mackerras wrote:
->
-> The other option would be to make git-rev-list list the open-circle
-> commits explicitly, with an indication that they are not in the
-> requested set but are parents of commits in the requested set.
+ - > Once it builds, only one test "fails" on AIX 5.1 with 
+ - > 1.3.0.rc1, t5500-fetch-pack.sh, but it looks like it's some
+ - > odd tool problem in the tester + my setup and not a real bug.
+ - 
+ - Curious and would appreciate more details.
 
-Just as an indication of _how_ simple that is, here's a stupid patch.
+I just found it.  The progress meter stuff in pack-objects
+splats all over the output.  So trash/client/log.txt is
+completely mangled.  Everything functions correctly, but
+the textual output is garbage.  If I set progress to 0 in 
+pack-objects.c, everthing's happy.
 
-It just puts a "-" after a parent that isn't going to be shown.
+There's no way to pass -q through fetch-pack to upload-pack...
+Gee, look, a comment that says "Yeah, yeah, fixme."  I have
+no real desire to add an args argument and propagate that
+change through all the connect routines.  An alternative is
+to add a "quiet" command to the protocol.  Another would be 
+to dup all three file descriptors.  yech.  Preference?
 
-Play with it (and it probably needs a new flag to enable it, since doing 
-it unconditionally like this will break old versions of gitk and 
-probably anything else that uses the "--parent" flag).
+(I haven't updated git in a while on this platform.  
+Recompiling and testing takes a while on a 375 MHz Power3.)
 
-		Linus
-
-----
-diff --git a/rev-list.c b/rev-list.c
-index 441c437..822a740 100644
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -60,6 +60,8 @@
- 			if (o->flags & TMP_MARK)
- 				continue;
- 			printf(" %s", sha1_to_hex(o->sha1));
-+			if (o->flags & UNINTERESTING)
-+				putchar('-');
- 			o->flags |= TMP_MARK;
- 		}
- 		/* TMP_MARK is a general purpose flag that can
+Jason
