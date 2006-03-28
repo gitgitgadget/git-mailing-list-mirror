@@ -1,68 +1,49 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: "Tony Luck" <tony.luck@intel.com>
 Subject: Re: Cherry-pick particular object
-Date: Tue, 28 Mar 2006 16:37:44 -0500
-Message-ID: <20060328213744.GD14457@spearce.org>
+Date: Tue, 28 Mar 2006 13:38:13 -0800
+Message-ID: <12c511ca0603281338q503638bfo66fa0a5da19942e2@mail.gmail.com>
 References: <20060328113107.20ab4c21.sebastien@xprima.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 28 23:38:05 2006
+X-From: git-owner@vger.kernel.org Tue Mar 28 23:38:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOLsy-0004IZ-6C
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 23:37:56 +0200
+	id 1FOLtS-0004NX-9L
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 23:38:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221AbWC1Vhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 16:37:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932227AbWC1Vhx
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 16:37:53 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:6035 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932221AbWC1Vhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Mar 2006 16:37:52 -0500
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FOLsg-0001aJ-OC; Tue, 28 Mar 2006 16:37:38 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E56F720FBB4; Tue, 28 Mar 2006 16:37:44 -0500 (EST)
-To: =?iso-8859-1?Q?S=E9bastien?= Pierre <sebastien@xprima.com>
-Content-Disposition: inline
+	id S932227AbWC1ViY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 16:38:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWC1ViX
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 16:38:23 -0500
+Received: from zproxy.gmail.com ([64.233.162.206]:17796 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932227AbWC1ViX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Mar 2006 16:38:23 -0500
+Received: by zproxy.gmail.com with SMTP id m22so29667nzf
+        for <git@vger.kernel.org>; Tue, 28 Mar 2006 13:38:22 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KGlIsgcGKiY1hR8P2Io/uerdem2xZW2yU7Umv8SWsFlZaSMQbnJx2dcpkiIA5Wr9TgkU5jwhdU5h9e2QsHXHK9jSqBBiyJmc+wom1LUpnzwAz3pgbznS6eMO2JM63qDYVbLZ0EEfsWJ1o3izsdJ7kv12EdZBinFuhzSa41Yz5PM=
+Received: by 10.65.239.5 with SMTP id q5mr19584qbr;
+        Tue, 28 Mar 2006 13:38:13 -0800 (PST)
+Received: by 10.64.27.14 with HTTP; Tue, 28 Mar 2006 13:38:13 -0800 (PST)
+To: "=?ISO-8859-1?Q?S=E9bastien_Pierre?=" <sebastien@xprima.com>
 In-Reply-To: <20060328113107.20ab4c21.sebastien@xprima.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18131>
 
-S?bastien Pierre <sebastien@xprima.com> wrote:
-> Hi all,
-> 
-> This is a newbie question.
-> 
-> I recently wanted to "cherry" pick a particular file from my
-> git-managed project history. Using gitk, I identified which was
-> the revision I wanted (95ba0c74e03874e8c1721b91f92f161e9061621f),
-> and then using git ls-tree, I managed to get the id of the file I
-> wanted (78132af26431e649a0f85f22dc27e5787d80700f).
-> 
-> Now, what I simply wanted was to do something like:
-> 
-> "get the file corresponding to
-> 78132af26431e649a0f85f22dc27e5787d80700f and save it as myfile.txt"
-> 
+> "get the file corresponding to 78132af26431e649a0f85f22dc27e5787d80700f and save it as myfile.txt"
+>
 > How would one properly do that with core git ?
 
-git cat-file blob 78132af26431e649a0f85f22dc27e5787d80700f >myfile.txt
+$ git cat-file blob 78132af2643 > myfile.txt
 
--- 
-Shawn.
+-Tony
