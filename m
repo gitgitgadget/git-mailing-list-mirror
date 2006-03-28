@@ -1,57 +1,53 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Selecting the minor revs
-Date: Mon, 27 Mar 2006 19:18:43 -0500
-Message-ID: <BAYC1-PASMTP1277D14C35B0D95512243BAED30@CEZ.ICE>
-References: <BAYC1-PASMTP12827905B389678EB07BDAAED30@CEZ.ICE>
-	<0e7d01c651fb$fa11ceb0$a100a8c0@casabyte.com>
+From: "Tony Luck" <tony.luck@intel.com>
+Subject: Re: Problem with git bisect between 2.6.15 and 2.6.16
+Date: Mon, 27 Mar 2006 16:22:33 -0800
+Message-ID: <12c511ca0603271622n6e4614b2s6f936469863efd9d@mail.gmail.com>
+References: <BAYC1-PASMTP036F0DBE8F7101BCAD5470AED30@CEZ.ICE>
+	 <0e7e01c651fc$e30a2860$a100a8c0@casabyte.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 28 02:21:36 2006
+Content-Transfer-Encoding: 7BIT
+Cc: sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 28 02:23:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FO1xm-0006no-PR
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 02:21:35 +0200
+	id 1FO1z7-0006yF-CD
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 02:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158AbWC1AVV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Mar 2006 19:21:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWC1AVV
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 19:21:21 -0500
-Received: from bayc1-pasmtp12.bayc1.hotmail.com ([65.54.191.172]:50780 "EHLO
-	BAYC1-PASMTP12.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1751158AbWC1AVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Mar 2006 19:21:21 -0500
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP12.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 27 Mar 2006 16:26:44 -0800
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 9908E644C28;
-	Mon, 27 Mar 2006 19:21:19 -0500 (EST)
-To: "Greg Lee" <glee@swspec.com>
-Message-Id: <20060327191843.15787836.seanlkml@sympatico.ca>
-In-Reply-To: <0e7d01c651fb$fa11ceb0$a100a8c0@casabyte.com>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 28 Mar 2006 00:26:44.0765 (UTC) FILETIME=[4AF374D0:01C651FE]
+	id S1751178AbWC1AWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Mar 2006 19:22:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbWC1AWf
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 19:22:35 -0500
+Received: from zproxy.gmail.com ([64.233.162.201]:5548 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751165AbWC1AWe convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Mar 2006 19:22:34 -0500
+Received: by zproxy.gmail.com with SMTP id m22so1497887nzf
+        for <git@vger.kernel.org>; Mon, 27 Mar 2006 16:22:33 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IyjDsedU/QVJrZLleFlTqF2skUqphKehS0i1bl1fEtkpbVJe3dMvl9/lsiD/l0XGvIxzdWbFunbYqLylowe6bUsDap0Eoeu7ucllwwpHbypfik3gjqsq/251VkYGzuvnJgzh58CsOuesVDZtZX+A2g8ftFgCIqjwTv2ETpxlvkM=
+Received: by 10.65.176.8 with SMTP id d8mr2913198qbp;
+        Mon, 27 Mar 2006 16:22:33 -0800 (PST)
+Received: by 10.64.27.14 with HTTP; Mon, 27 Mar 2006 16:22:33 -0800 (PST)
+To: "Greg Lee" <glee@casabyte.com>
+In-Reply-To: <0e7e01c651fc$e30a2860$a100a8c0@casabyte.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18096>
 
-On Mon, 27 Mar 2006 19:10:09 -0500
-"Greg Lee" <glee@swspec.com> wrote:
+> No, the problem was fixed in 2.6.16 and I'm trying to figure out what fixed it so that I
+> can back-port the fix into a previous kernel version, so 2.6.16 is good and 2.6.15 is bad.
 
-> > If you're interested in the stable-series releases of the 
-> > kernel, unfortunately they're not in the git repository.
-> 
-> As I feared ... I'm curious, why?
+You'll need to invert "good" and bad" for this.  I.e. mark 2.6.15 as
+good, 2.6.16 as bad, and
+then as you test mark kernels with the bug as good, and ones without
+as bad.  Try not to go
+insane while working in this inverted parallel universe :-)
 
-Because the stable-series is maintained by people other than Linus.   
-
-They may have their own git tree, i'm not sure.  Even if they don't, 
-you could create a stable-series branch and import the patches
-into your git repo if it was something you needed often.
-
-Sean
+-Tony
