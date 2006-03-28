@@ -1,136 +1,108 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: [PATCH] xdiff: Show function names in hunk headers.
-Date: Tue, 28 Mar 2006 15:03:14 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrne2ik1i.s3g.mdw@metalzone.distorted.org.uk>
-References: <11435126113456-git-send-email-mdw@distorted.org.uk> <7vfyl3m7vy.fsf@assigned-by-dhcp.cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 28 17:03:45 2006
+From: Radoslaw Szkodzinski <astralstorm@o2.pl>
+Subject: Re: git pull fails
+Date: Tue, 28 Mar 2006 16:00:11 +0100
+Message-ID: <200603281700.17233.astralstorm@o2.pl>
+References: <20060328162831.af1bd4c0.tihirvon@gmail.com> <20060328141140.GC3113@linux-mips.org> <20060328173827.3d64d91e.tihirvon@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2008450.MXpIZsGnfp";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Timo Hirvonen <tihirvon@gmail.com>,
+	Ralf Baechle <ralf@linux-mips.org>
+X-From: git-owner@vger.kernel.org Tue Mar 28 17:04:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOFjA-0002Pt-Ud
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 17:03:25 +0200
+	id 1FOFk0-0002a6-39
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 17:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750741AbWC1PDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 10:03:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbWC1PDU
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 10:03:20 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:43103 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S1750741AbWC1PDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Mar 2006 10:03:19 -0500
-Received: (qmail 510 invoked by uid 110); 28 Mar 2006 15:03:14 -0000
+	id S1750778AbWC1PEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 10:04:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbWC1PEN
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 10:04:13 -0500
+Received: from mx2.go2.pl ([193.17.41.42]:37564 "EHLO poczta.o2.pl")
+	by vger.kernel.org with ESMTP id S1750778AbWC1PEM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 10:04:12 -0500
+Received: from zen.localdomain (host-81-190-201-167.gorzow.mm.pl [81.190.201.167])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by poczta.o2.pl (Postfix) with ESMTP id DEC1F748072;
+	Tue, 28 Mar 2006 17:04:04 +0200 (CEST)
+Received: from zen.localdomain ([192.168.0.1])
+	by zen.localdomain with esmtpa (Exim 4.60)
+	(envelope-from <astralstorm@o2.pl>)
+	id 1FOFgV-0001Il-Da; Tue, 28 Mar 2006 17:00:39 +0200
 To: git@vger.kernel.org
-Received: (qmail 497 invoked by uid 9); 28 Mar 2006 15:03:14 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1143558194 495 172.29.199.2 (28 Mar 2006 15:03:14 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Tue, 28 Mar 2006 15:03:14 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+User-Agent: KMail/1.9.1
+In-Reply-To: <20060328173827.3d64d91e.tihirvon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18124>
 
-Junio C Hamano <junkio@cox.net> wrote:
+--nextPart2008450.MXpIZsGnfp
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> GNU diff -p does "^[[:alpha:]$_]"; personally I think any line
-> that does not begin with a whitespace is good enough.
+On Tuesday 28 March 2006 16:38, Timo Hirvonen wrote yet:
+> Thanks, but forcing everyone to edit their git/remotes/origin file
+> is not very nice solution.  I think git-fetch should update refs for the
+> other non-'broken' branches and leave "pu" and "next" refs untouched.
 
-Hmm.  I think my approach is wrong.  I've noticed that targets of the
-form `$(FOO): ...' in Makefiles would make nice hunk headers, but my
-current hack won't notice them.  Without a shift of approach, I think
-I run the risk of deluging the list with little fixes to this bit of
-code, which sounds like a pile of no fun.
+How do you know a non-broken branch from something weird?
+All git knows is that the history is non-linear. You can do at least three=
+=20
+things:
+=2D discard older history
+=2D merge older history with newer
+=2D add another branch
 
-So, I have two main suggestions.  The first is /very/ stupid, and just
-asks for two non-whitespace characters at the start of a line.
+Or instead provide a more useful error message, like what is attached.
+(I hope kmail doesn't mangle the tabs.)
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index ad5bfb1..822f991 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -83,11 +83,9 @@ static void xdl_find_func(xdfile_t *xf, 
-        *ll = 0;
-        while (i-- > 0) {
-                len = xdl_get_rec(xf, i, &rec);
--               if (len > 0 &&
--                   (isalpha((unsigned char)*rec) || /* identifier? */
--                    *rec == '_' ||     /* also identifier? */
--                    *rec == '(' ||     /* lisp defun? */
--                    *rec == '#')) {    /* #define? */
-+               if (len >= 2 &&
-+                   !isspace((unsigned char)rec[0]) &&
-+                   !isspace((unsigned char)rec[1])) {
-                        if (len > sz)
-                                len = sz;
-                        if (len && rec[len - 1] == '\n')
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 0346d4a..88df7f4 100755
+=2D-- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -172,13 +172,15 @@ fast_forward_local () {
+ 		;;
+ 	    esac || {
+ 		echo >&2 "* $1: does not fast forward to $3;"
++		echo >&2 "  If the branch is known to roll back often,"
++		echo >&2 "  add + before the branch name in $GIT_DIR/$1."
+ 		case ",$force,$single_force," in
+ 		*,t,*)
+=2D			echo >&2 "  forcing update."
++			echo >&2 "  Forcing update."
+ 			git-update-ref "$1" "$2" "$local"
+ 			;;
+ 		*)
+=2D			echo >&2 "  not updating."
++			echo >&2 "  Not updating."
+ 			;;
+ 		esac
+ 	    }
 
-The second suggestion is slightly refined, but a little more
-complicated.  We ask for a line which starts /either/ with two
-non-whitespace characters, or with an alphanumeric.  Why?  Because text
-documents have a tendency to have headings of the form `7 Heading!' and
-I want to catch them.
+=2D-=20
+GPG Key id:  0xD1F10BA2
+=46ingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index ad5bfb1..bcb3e47 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -83,11 +83,10 @@ static void xdl_find_func(xdfile_t *xf, 
-        *ll = 0;
-        while (i-- > 0) {
-                len = xdl_get_rec(xf, i, &rec);
--               if (len > 0 &&
--                   (isalpha((unsigned char)*rec) || /* identifier? */
--                    *rec == '_' ||     /* also identifier? */
--                    *rec == '(' ||     /* lisp defun? */
--                    *rec == '#')) {    /* #define? */
-+               if (len && !isspace((unsigned char)*rec) &&
-+                   ((len >= 2 && !isspace((unsigned char)rec[1])) ||
-+                    isalnum((unsigned char)*rec) ||
-+                    *rec == '_')) {
-                        if (len > sz)
-                                len = sz;
-                        if (len && rec[len - 1] == '\n')
+AstralStorm
 
-Another possibility I just thought of: insist that the line starts with
-a non-space, and contains another non-space somewhere.  This will get
-caught out by `{       /* ... rest of comment */', which I've seen a few
-places, though.
+--nextPart2008450.MXpIZsGnfp
+Content-Type: application/pgp-signature
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index ad5bfb1..81b38ce 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -79,15 +79,18 @@ static void xdl_find_func(xdfile_t *xf, 
- 
-        const char *rec;
-        long len;
-+       long j;
- 
-        *ll = 0;
-        while (i-- > 0) {
-                len = xdl_get_rec(xf, i, &rec);
--               if (len > 0 &&
--                   (isalpha((unsigned char)*rec) || /* identifier? */
--                    *rec == '_' ||     /* also identifier? */
--                    *rec == '(' ||     /* lisp defun? */
--                    *rec == '#')) {    /* #define? */
-+               if (len && !isspace((unsigned char)*rec)) {
-+                       for (j = 1; j < len; j++) {
-+                               if (!isspace((unsigned char)rec[j]))
-+                                       goto good;
-+                       }
-+                       continue;
-+               good:
-                        if (len > sz)
-                                len = sz;
-                        if (len && rec[len - 1] == '\n')
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.1 (GNU/Linux)
 
-I think I like option 2 best, as a nice compromise between stupidity and
-actually working.  Opinions, anyone?
+iD8DBQBEKU+BlUMEU9HxC6IRAni/AKCZUYZ63EH+SwQVhQZ8Ixa4mHgFIwCfXclh
+zdZX4o2Ri9xlcdLger0zLYs=
+=ByuT
+-----END PGP SIGNATURE-----
 
--- [mdw]
+--nextPart2008450.MXpIZsGnfp--
