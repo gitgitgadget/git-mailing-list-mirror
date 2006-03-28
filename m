@@ -1,70 +1,97 @@
-From: "Noel Connolly" <y_artem@inbox.ru>
-Subject: increase in sexual desire
-Date: Tue, 28 Mar 2006 22:05:26 -0200
-Message-ID: <200603281905.k2SJ4xt9018870@zeus2.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Mar 28 21:05:48 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [PATCH] Add ALL_LDFLAGS to the git target.
+Date: Tue, 28 Mar 2006 11:46:28 -0800
+Message-ID: <15693.1143575188@lotus.CS.Berkeley.EDU>
+References: <7vu09jks1u.fsf@assigned-by-dhcp.cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 28 21:46:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOJVN-0001tQ-4w
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 21:05:25 +0200
+	id 1FOK9A-0001AS-St
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 21:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbWC1TFU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 14:05:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWC1TFU
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 14:05:20 -0500
-Received: from zeus2.kernel.org ([204.152.191.36]:58300 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1751256AbWC1TFT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 14:05:19 -0500
-Received: from nadk2bo.bpcx.optonline.net ([88.233.135.56])
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k2SJ4xt9018870;
-	Tue, 28 Mar 2006 19:05:17 GMT
-Received: from unknown (HELO mxs.mail.ru) (194.67.23.20)
-        by nadk2bo.bpcx.optonline.net with SMTP; Tue, 28 Mar 2006 22:05:26 -0200
-To: <geogirb@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: CU4WCcQlVCZO8STmroSS9reFGkwwpO5yXbxs
-X-Virus-Scanned: ClamAV 0.88/1359/Tue Mar 28 11:49:08 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+	id S1751310AbWC1Tq3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 14:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbWC1Tq3
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 14:46:29 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:26777 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1751310AbWC1Tq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Mar 2006 14:46:28 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k2SJkSgH015695
+	for <git@vger.kernel.org>; Tue, 28 Mar 2006 11:46:28 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k2SJkSb7015694
+	for <git@vger.kernel.org>; Tue, 28 Mar 2006 11:46:28 -0800 (PST)
+To: git@vger.kernel.org
+In-reply-to: <7vu09jks1u.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 15.7 points;
- *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
- *  2.4 MORE_SEX BODY: Talks about a bigger drive for sex
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: webgoodnews.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: webgoodnews.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: webgoodnews.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: webgoodnews.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: webgoodnews.com]
- *  0.1 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18127>
 
-Carefully chosen herbal ingredients are the key to peniis enlargement success. 
-Not only the precise blend of ingredients but also many other factors have effect
-on the overall potency and strength of peniis enlargement formula.
+And Junio C Hamano writes:
+ - Hmph.  We do fprintf(stderr, "blah\r") to draw them.  The
+ - standard says that "standard error stream is not fully
+ - buffered", but I guess it does not necessarily mean it is
+ - unbuffered, so we probably need to fflush(3) there.  Would
+ - something like this help?
 
-Some of these factors include growing conditions, geographical location where herbs are grown, 
-harvest time, the way herbs are stored before processing, the way herbs are processed. 
+I suppose I should have mentioned that I tried flushing 
+stderr.  Your more comprehensive flushing also does not 
+fix it, giving outputs like:
+> Unpacking Total 3333 objects
+> , written 33 (delta 1), reused 0 (delta 0)
 
-http://ihkmde.webgoodnews.com/?abcfgjldexwqowyizpphkm
+The problem is that stderr from a child is not tied to any 
+stream of its parent.  Generally, as far as I know, you 
+cannot make any assumptions about how pipes from separate 
+processes are interleaved in the output.  Some standard may 
+say something, but I have no idea what or if anyone listens.
+And this particular system is a busy SMP node, making the
+problem worse.
 
+Line-buffered streams like stdout tend to work, but not 
+unbuffered streams like stderr.  We can't make stderr line-
+buffered without breaking the status indicator...
 
+If I add a third fd to all the pipes and dup it to stderr,
+the tests work.  I never read from that fd, so I never get
+the status output...  Progress needs to be part of the 
+protocol so front ends can handle it cleanly rather than 
+using stderr tricks.
 
+So some possibilities:
+  1) Add the ability to pass options through the whole
+     connect system.  Then pass -q in the tester.
+  2) Add a specific "quiet" command to the protocol for
+     just passing -q from git-fetch-pack.  Pass -q in the 
+     tester.
+  3) Add an option to pack-objects that dumps progress
+     output to stdout in a special packet format.  Then
+     update everyone who talks through upload-pack to
+     expect another phase of informational messages after
+     negotiating object differences and before the pack
+     data.
 
+The first two are cosmetic fixes only, and #2 is a cheap,
+ugly, but easy hack.
 
+This problem is (to me) low priority.  It unfortunately 
+breaks a test case on AIX, but I can live with it for now.
+If others here start to listen to the gospel of git, well,
+I'll need to fix it.  (But I once recommended Arch, and
+people stopped listening after they tried it.)
 
-op
+Folks using moderately-loaded SMPs may experience similar 
+problems.  But if they're fetching large packs, the problem
+likely won't appear at all.
+
+Jason
+
+P.S. For the whole finding-a-function-name business, some of 
+us are using git on fixed-format Fortran.  Every non-comment
+line begins with whitespace...  ;)  And in free format, many
+people don't add that first indentation within subroutines.
