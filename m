@@ -1,63 +1,86 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: [PATCH] Add ALL_LDFLAGS to the git target.
-Date: Tue, 28 Mar 2006 23:21:54 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrne2jh8i.s3g.mdw@metalzone.distorted.org.uk>
-References: <15693.1143575188@lotus.CS.Berkeley.EDU> <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603281500280.15714@g5.osdl.org>
-X-From: git-owner@vger.kernel.org Wed Mar 29 01:22:20 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cherry-pick particular object
+Date: Tue, 28 Mar 2006 15:24:13 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603281512260.15714@g5.osdl.org>
+References: <20060328113107.20ab4c21.sebastien@xprima.com>
+ <BAYC1-PASMTP02B05019F52DE48793CB39AED30@CEZ.ICE> <Pine.LNX.4.64.0603281435410.15714@g5.osdl.org>
+ <20060328225429.GD27689@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: sean <seanlkml@sympatico.ca>,
+	=?ISO-8859-1?Q?S=E9bastien_Pierre?= <sebastien@xprima.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 01:24:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FONVt-0004U8-Ck
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 01:22:13 +0200
+	id 1FONY5-0004p8-2j
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 01:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbWC1XV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 18:21:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964823AbWC1XV5
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 18:21:57 -0500
-Received: from excessus.demon.co.uk ([83.105.60.35]:34146 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S964820AbWC1XV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Mar 2006 18:21:56 -0500
-Received: (qmail 16211 invoked by uid 110); 28 Mar 2006 23:21:54 -0000
-To: git@vger.kernel.org
-Received: (qmail 16195 invoked by uid 9); 28 Mar 2006 23:21:54 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1143588114 16193 172.29.199.2 (28 Mar 2006 23:21:54 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Tue, 28 Mar 2006 23:21:54 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S964823AbWC1XY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 18:24:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964824AbWC1XY0
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 18:24:26 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:51399 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964823AbWC1XYZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 18:24:25 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2SNOECo032376
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Mar 2006 15:24:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2SNODKo000876;
+	Tue, 28 Mar 2006 15:24:13 -0800
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060328225429.GD27689@pasky.or.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18141>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
 
-> I'd really just prefer to make the "-p" switch configurable, the way
-> it was before. No regexps, just the same rules as for GNU diff,
 
-The rules for GNU diff aren't actually good enough if you can't
-configure them.  We used to be able to put runes in GIT_DIFF_OPTS.
+On Wed, 29 Mar 2006, Petr Baudis wrote:
 
-> perhaps with the difference being that it would be on by default.
+> Dear diary, on Wed, Mar 29, 2006 at 12:44:02AM CEST, I got a letter
+> where Linus Torvalds <torvalds@osdl.org> said that...
+> > Ie you can have a tree like this:
+> > 
+> > 	100644 blob f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f    abc
+> > 	120000 blob f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f    file
+> > 
+> > where the first one is a regular file called "abc" (which contains the 
+> > string "abc"), and the second is the _symlink_ that points to "abc".
+> > 
+> > They share the exact same blob, and what distinguishes them is the 
+> > filemode info from git-read-tree.
+> 
+> Huh? Didn't you rather want to say that "file" will point to a blob
+> containing just the "abc" string (the symlink target)? ;-)
 
-I thought it /was/ on by default:
+Well no, maybe I should have called the first file something else.
 
-: static const char *diff_opts = "-pu";
+Both "abc" and "file" from a git perspective have the same _contents_ (the 
+blob containing the data 'abc'). 
 
-(killed in cebff98db).
+But the filemode means that those contents have totally different meaning. 
+For the pth "file", it means that it's a _symlink_ to "abc", while for the 
+path "abc" it's a regular file that just has the _contents_ "abc".
 
-> Another possible approach is to say
->  - if the first line of the real diff matches the rules, do NOT add 
->    another line that matches the rule at the @@-line.
->
-> since the simple @@-line rule really doesn't make sense for any file that 
-> is "dense" (ie where most lines start with non-whitespace).
+So the end _result_ of this is that "file" points to a file called "abc" 
+that also has the contents "abc", and "cat file abc" will result in 
+"abcabc".
 
-It's true, and that's an easy fix.  But it doesn't do any actual harm.
+IOW, this is the result of doing
 
--- [mdw]
+	echo -n abc > abc
+	ln -s abc file
+
+and importing the mess into git.
+
+		Linus
