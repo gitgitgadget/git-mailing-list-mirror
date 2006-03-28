@@ -1,53 +1,80 @@
-From: "Tony Luck" <tony.luck@intel.com>
-Subject: Re: Problem with git bisect between 2.6.15 and 2.6.16
-Date: Mon, 27 Mar 2006 16:22:33 -0800
-Message-ID: <12c511ca0603271622n6e4614b2s6f936469863efd9d@mail.gmail.com>
-References: <BAYC1-PASMTP036F0DBE8F7101BCAD5470AED30@CEZ.ICE>
-	 <0e7e01c651fc$e30a2860$a100a8c0@casabyte.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Mon, 27 Mar 2006 16:28:44 -0800
+Message-ID: <7v64lzo1j7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 28 02:23:03 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Mar 28 02:29:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FO1z7-0006yF-CD
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 02:22:57 +0200
+	id 1FO24o-0007ig-0H
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 02:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbWC1AWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Mar 2006 19:22:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbWC1AWf
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 19:22:35 -0500
-Received: from zproxy.gmail.com ([64.233.162.201]:5548 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751165AbWC1AWe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Mar 2006 19:22:34 -0500
-Received: by zproxy.gmail.com with SMTP id m22so1497887nzf
-        for <git@vger.kernel.org>; Mon, 27 Mar 2006 16:22:33 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IyjDsedU/QVJrZLleFlTqF2skUqphKehS0i1bl1fEtkpbVJe3dMvl9/lsiD/l0XGvIxzdWbFunbYqLylowe6bUsDap0Eoeu7ucllwwpHbypfik3gjqsq/251VkYGzuvnJgzh58CsOuesVDZtZX+A2g8ftFgCIqjwTv2ETpxlvkM=
-Received: by 10.65.176.8 with SMTP id d8mr2913198qbp;
-        Mon, 27 Mar 2006 16:22:33 -0800 (PST)
-Received: by 10.64.27.14 with HTTP; Mon, 27 Mar 2006 16:22:33 -0800 (PST)
-To: "Greg Lee" <glee@casabyte.com>
-In-Reply-To: <0e7e01c651fc$e30a2860$a100a8c0@casabyte.com>
-Content-Disposition: inline
+	id S1751176AbWC1A2r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Mar 2006 19:28:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbWC1A2r
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Mar 2006 19:28:47 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34026 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751176AbWC1A2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Mar 2006 19:28:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060328002845.ZMZK20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 27 Mar 2006 19:28:45 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18097>
 
-> No, the problem was fixed in 2.6.16 and I'm trying to figure out what fixed it so that I
-> can back-port the fix into a previous kernel version, so 2.6.16 is good and 2.6.15 is bad.
+GIT 1.3.0-rc1 is pushed out and will be mirrored out soon.
 
-You'll need to invert "good" and bad" for this.  I.e. mark 2.6.15 as
-good, 2.6.16 as bad, and
-then as you test mark kernels with the bug as good, and ones without
-as bad.  Try not to go
-insane while working in this inverted parallel universe :-)
+All of the things that were not in the "master" branch were
+either cooked long enough in "next" without causing problems
+(e.g. insanely fast rename detector or true built-in diff) or
+isolated in a specific subsystem (e.g. tar-tree and svnimport).
 
--Tony
+So I am clearing the deck to prepare for a 1.3.0.  Remaining
+wrinkles, if any, will be ironed out in the "master" branch.
+
+------------
+Changes since the last announcement:
+
+ - updates around git-clone:
+   . --use-separate-remote
+   . --reference <repo>
+   . fetch,parse-remote,fmt-merge-msg: refs/remotes/* support (Eric Wong)
+   . sha1_name() understands refs/remotes/$foo/HEAD
+
+ - sha1_name safety and core.warnambiguousrefs
+
+ - git-merge knows some strategies want to skip trivial merges
+
+ - insanely fast rename detection (Linus and me)
+
+ - tar-tree updates (Rene Scharfe)
+
+ - send-email updates (Eric Wong)
+
+ - truly built-in diff (Linus with Davide)
+
+ - ls-{files,tree} --abbrev (Eric Wong)
+
+ - git-svnimport: if a limit is specified, respect it (Anand Kumria)
+
+ - documentation (J. Bruce Fields)
+
+ - build fix (Johannes Schindelin)
+
+ - git-ls-files --others --directory --no-empty-directory (Petr Baudis)
+
+ - gitk updates (Martin Mares, Paul Mackerras)
+
+ - GIT 1.3.0 rc1 (me)
+
+Currently "next" and "pu" are empty.
