@@ -1,76 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cherry-pick particular object
-Date: Tue, 28 Mar 2006 14:44:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603281435410.15714@g5.osdl.org>
-References: <20060328113107.20ab4c21.sebastien@xprima.com>
- <BAYC1-PASMTP02B05019F52DE48793CB39AED30@CEZ.ICE>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git pull fails
+Date: Wed, 29 Mar 2006 00:48:07 +0200
+Message-ID: <20060328224807.GC27689@pasky.or.cz>
+References: <20060328162831.af1bd4c0.tihirvon@gmail.com> <20060328141140.GC3113@linux-mips.org> <20060328173827.3d64d91e.tihirvon@gmail.com> <200603281700.17233.astralstorm@o2.pl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-1?Q?S=E9bastien_Pierre?= <sebastien@xprima.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 00:44:16 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Timo Hirvonen <tihirvon@gmail.com>,
+	Ralf Baechle <ralf@linux-mips.org>
+X-From: git-owner@vger.kernel.org Wed Mar 29 00:48:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOMv5-0006uh-O6
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 00:44:12 +0200
+	id 1FOMyu-0007Vf-6Y
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 00:48:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932472AbWC1WoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 17:44:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932476AbWC1WoI
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 17:44:08 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:61881 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932472AbWC1WoG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 17:44:06 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2SMi3Co029123
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 28 Mar 2006 14:44:04 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2SMi2bi029361;
-	Tue, 28 Mar 2006 14:44:03 -0800
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP02B05019F52DE48793CB39AED30@CEZ.ICE>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932483AbWC1WsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 17:48:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbWC1WsE
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 17:48:04 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:62617 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932483AbWC1WsD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 17:48:03 -0500
+Received: (qmail 24658 invoked by uid 2001); 29 Mar 2006 00:48:07 +0200
+To: Radoslaw Szkodzinski <astralstorm@o2.pl>
+Content-Disposition: inline
+In-Reply-To: <200603281700.17233.astralstorm@o2.pl>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18134>
 
-
-
-On Tue, 28 Mar 2006, sean wrote:
+Dear diary, on Tue, Mar 28, 2006 at 05:00:11PM CEST, I got a letter
+where Radoslaw Szkodzinski <astralstorm@o2.pl> said that...
+> On Tuesday 28 March 2006 16:38, Timo Hirvonen wrote yet:
+> > Thanks, but forcing everyone to edit their git/remotes/origin file
+> > is not very nice solution.  I think git-fetch should update refs for the
+> > other non-'broken' branches and leave "pu" and "next" refs untouched.
 > 
-> $ git cat-file -t 78132af2643
+> How do you know a non-broken branch from something weird?
 
-Side note: when using git-ls-tree, the "blob"ness information is already 
-in the tree output itself and you shouldn't even need to check the type 
-with "-t". So what is perhaps somewhat more interesting is actually the 
-mode of the file, since that determines whether the blob should be 
-interpreted as regular file content or as a symlink.
+If I understand it right, Timo complains that git-fetch got
+non-fastforward commits for "pu" and "next" and a good fastforward
+commit for "master", but it didn't update the ref for ANY head, not even
+the "master".
 
-Ie you can have a tree like this:
-
-	100644 blob f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f    abc
-	120000 blob f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f    file
-
-where the first one is a regular file called "abc" (which contains the 
-string "abc"), and the second is the _symlink_ that points to "abc".
-
-They share the exact same blob, and what distinguishes them is the 
-filemode info from git-read-tree.
-
-Of course, the symlink case isn't very common and likely not very 
-interesting in this case, but the fact that "git ls-files" is set up so 
-that you can just cut-and-paste the "blob <sha1-of-blob" part and feed it 
-to git-cat-file was definitely not just coincidence.
-
-(A number of the early stuff was set up so that I could do things by hand 
-by just doing cut-and-paste of the output of the previous command. Git has 
-come a long way in the last 12 months ;)
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
