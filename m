@@ -1,53 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] xdiff: Show function names in hunk headers.
-Date: Mon, 27 Mar 2006 21:54:25 -0800
-Message-ID: <7vfyl3m7vy.fsf@assigned-by-dhcp.cox.net>
-References: <11435126113456-git-send-email-mdw@distorted.org.uk>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Gitk strangeness..
+Date: Tue, 28 Mar 2006 17:18:06 +1100
+Message-ID: <17448.54558.865097.519248@cargo.ozlabs.ibm.com>
+References: <7v64lzo1j7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603271802030.15714@g5.osdl.org>
+	<17448.40941.256361.866229@cargo.ozlabs.ibm.com>
+	<7vr74nmg7e.fsf@assigned-by-dhcp.cox.net>
+	<17448.48143.764989.649462@cargo.ozlabs.ibm.com>
+	<7vmzfbm8m0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 28 07:54:31 2006
+X-From: git-owner@vger.kernel.org Tue Mar 28 08:18:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FO79y-0001Xu-F2
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 07:54:31 +0200
+	id 1FO7X1-00049J-HN
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 08:18:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357AbWC1Fy1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 00:54:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbWC1Fy1
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 00:54:27 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:53653 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751357AbWC1Fy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Mar 2006 00:54:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060328055426.JORV20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 28 Mar 2006 00:54:26 -0500
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <11435126113456-git-send-email-mdw@distorted.org.uk> (Mark
-	Wooding's message of "Tue, 28 Mar 2006 03:23:31 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932112AbWC1GSR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 01:18:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932201AbWC1GSQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 01:18:16 -0500
+Received: from ozlabs.org ([203.10.76.45]:16012 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932112AbWC1GSQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 01:18:16 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 21E5F67A06; Tue, 28 Mar 2006 17:18:15 +1100 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzfbm8m0.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18111>
 
-Mark Wooding <mdw@distorted.org.uk> writes:
+> > Would it be possible to put the '-' in only for the last child that
+> > has that parent?
+> 
+> Not trivially.  We do not keep track of who are children of a
+> commit.
 
-> The function names are parsed by a particularly stupid algorithm at the
-> moment: it just tries to find a line in the `old' file, from before the
-> start of the hunk, whose first character looks plausible.  Still, it's
-> most definitely a start.
+Hmmm... how does the --topo-order logic ensure that parents are shown
+after all of their children?  Essentially I want that logic applied to
+the boundary parent commits as well as the requested commits.
 
-> +		    (isalpha((unsigned char)*rec) || /* identifier? */
-> +		     *rec == '_' ||	/* also identifier? */
-> +		     *rec == '(' ||	/* lisp defun? */
-> +		     *rec == '#')) {	/* #define? */
+The other thing is that if git-rev-list can actually list those
+boundary parents, complete with the whole commit message if --header
+is given, then that will save gitk from having to do a git-cat-file to
+get that information.
 
-GNU diff -p does "^[[:alpha:]$_]"; personally I think any line
-that does not begin with a whitespace is good enough.  In either
-way, your patch is good.  Thanks.
+Paul.
