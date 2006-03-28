@@ -1,49 +1,54 @@
-From: "Tony Luck" <tony.luck@intel.com>
+From: =?ISO-8859-1?B?U+liYXN0aWVu?= Pierre <sebastien@xprima.com>
 Subject: Re: Cherry-pick particular object
-Date: Tue, 28 Mar 2006 13:38:13 -0800
-Message-ID: <12c511ca0603281338q503638bfo66fa0a5da19942e2@mail.gmail.com>
+Date: Tue, 28 Mar 2006 12:23:01 -0500
+Organization: XPRima Corp.
+Message-ID: <20060328122301.f74ee9c4.sebastien@xprima.com>
 References: <20060328113107.20ab4c21.sebastien@xprima.com>
+	<BAYC1-PASMTP02B05019F52DE48793CB39AED30@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 28 23:38:27 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 29 00:23:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOLtS-0004NX-9L
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 23:38:26 +0200
+	id 1FOMbA-0003TQ-OB
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 00:23:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932227AbWC1ViY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 16:38:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWC1ViX
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 16:38:23 -0500
-Received: from zproxy.gmail.com ([64.233.162.206]:17796 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932227AbWC1ViX convert rfc822-to-8bit
+	id S932453AbWC1WXd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 28 Mar 2006 17:23:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932452AbWC1WXd
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 17:23:33 -0500
+Received: from ritalin.autolinq.com ([207.96.225.42]:59306 "HELO
+	ritalin.autolinq.com") by vger.kernel.org with SMTP id S932453AbWC1WXc convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Mar 2006 16:38:23 -0500
-Received: by zproxy.gmail.com with SMTP id m22so29667nzf
-        for <git@vger.kernel.org>; Tue, 28 Mar 2006 13:38:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KGlIsgcGKiY1hR8P2Io/uerdem2xZW2yU7Umv8SWsFlZaSMQbnJx2dcpkiIA5Wr9TgkU5jwhdU5h9e2QsHXHK9jSqBBiyJmc+wom1LUpnzwAz3pgbznS6eMO2JM63qDYVbLZ0EEfsWJ1o3izsdJ7kv12EdZBinFuhzSa41Yz5PM=
-Received: by 10.65.239.5 with SMTP id q5mr19584qbr;
-        Tue, 28 Mar 2006 13:38:13 -0800 (PST)
-Received: by 10.64.27.14 with HTTP; Tue, 28 Mar 2006 13:38:13 -0800 (PST)
-To: "=?ISO-8859-1?Q?S=E9bastien_Pierre?=" <sebastien@xprima.com>
-In-Reply-To: <20060328113107.20ab4c21.sebastien@xprima.com>
-Content-Disposition: inline
+	Tue, 28 Mar 2006 17:23:32 -0500
+Received: (qmail-ldap/ctrl 31046 invoked from network); 28 Mar 2006 22:23:32 -0000
+Received: from unknown (HELO localhost.localdomain) ([207.96.159.2]) (envelope-sender <sebastien@xprima.com>)
+          by ritalin.autolinq.com (qmail-ldap-1.03) with SMTP
+          for <seanlkml@sympatico.ca>; 28 Mar 2006 22:23:32 -0000
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP02B05019F52DE48793CB39AED30@CEZ.ICE>
+X-Mailer: Sylpheed version 2.1.1 (GTK+ 2.8.16; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18132>
 
-> "get the file corresponding to 78132af26431e649a0f85f22dc27e5787d80700f and save it as myfile.txt"
->
-> How would one properly do that with core git ?
+On Tue, 28 Mar 2006 16:34:22 -0500
+sean <seanlkml@sympatico.ca> wrote:
 
-$ git cat-file blob 78132af2643 > myfile.txt
+> If you used:
+>=20
+> $ git cat-file -t 78132af2643
+>=20
+> It would tell you that this object is of type "blob".
+> To see the contents of blobs you can do something like:
+>=20
+> $ git cat-file blob 78132af2643
 
--Tony
+Thanks. That was exactly what I was looking for :)
+
+ -- S=E9bastien
