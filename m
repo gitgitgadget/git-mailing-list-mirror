@@ -1,100 +1,52 @@
-From: CustomerDepartament@chase.com
-Subject: (unknown)
-Date: Tue, 28 Mar 2006 19:31:30 +0000 (GMT)
-Message-ID: <20060328193130.435202672B@genesis.redbox.com.cn>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Reintroduce svn pools to solve the memory leak.
+Date: Tue, 28 Mar 2006 14:20:31 +0200
+Message-ID: <20060328122031.GA14124@diana.vm.bytemark.co.uk>
+References: <8aa486160603270326i3a8ddcfau61ca84cdac036ff9@mail.gmail.com> <7vhd5joiqt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Mar 28 13:32:04 2006
+Cc: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 28 14:21:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOCQW-00082P-5P
-	for gcvg-git@gmane.org; Tue, 28 Mar 2006 13:31:56 +0200
+	id 1FODBz-00073U-TU
+	for gcvg-git@gmane.org; Tue, 28 Mar 2006 14:21:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932201AbWC1Lb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 06:31:26 -0500
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbWC1Lb0
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 06:31:26 -0500
-Received: from [211.147.7.116] ([211.147.7.116]:9221 "EHLO
-	genesis.redbox.com.cn") by vger.kernel.org with ESMTP
-	id S932201AbWC1LbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Mar 2006 06:31:25 -0500
-Received: from User (unknown [124.2.103.131])
-	by genesis.redbox.com.cn (Postfix) with ESMTP
-	id 435202672B; Tue, 28 Mar 2006 19:31:30 +0000 (GMT)
-To: undisclosed-recipients:;
+	id S932248AbWC1MUq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 28 Mar 2006 07:20:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbWC1MUq
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 07:20:46 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:48911 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S932201AbWC1MUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Mar 2006 07:20:46 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FODBX-0003iL-00; Tue, 28 Mar 2006 13:20:31 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhd5joiqt.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.8 points;
- *  0.0 NO_REAL_NAME From: does not include a real name
- *  1.3 UNDISC_RECIPS Valid-looking To "undisclosed-recipients"
- *  1.3 DATE_IN_FUTURE_06_12 Date: is 6 to 12 hours after Received: date
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?124.2.103.131>]
- [Blocked - see <http://www.spamcop.net/bl.shtml?211.147.7.116>]
- *  1.2 MISSING_SUBJECT Missing Subject: header
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18119>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://=
-www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns=3D"http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
-" />
-<title>JPMorgan Chase</title>
-</head>
+On 2006-03-27 10:16:58 -0800, Junio C Hamano wrote:
 
-<body>
+> Karl, were there other reasons you needed to disable the pool here
+> (maybe to work around a problem with incompatible version of SVN
+> module)? I see some other uses of SVN::Pool still there in the code,
+> so I am assuming this was a simple typo, but just in case...
 
-<div style=3D"width: 600px; margin: 0 auto 0 auto; border: 1px dashed b=
-lack; padding: 20px 15px 1px 15px; font-size: 12px">
-<img src=3D"http://www.chase.com/ccpmweb/shared/image/chaseNewlogo.gif"=
- width=3D"138" height=3D"27" />
-<p style=3D"font-weight: bold; color: #074580; font-family: arial;" >De=
-ar Customer,</p>
-<p style=3D"font-weight: bold; color: #074580; font-family: arial;" ali=
-gn=3D"justify">Currently we are trying to upgrade our on-line security =
-measures. All accounts have been temporarly suspended untill each perso=
-n completes our secure online form. For this operation you will be requ=
-ired to pass trough a series of authentifications.</p>
-<p style=3D"font-weight: bold; color: #074580; font-family: arial;" ali=
-gn=3D"justify">We won't require your ATM PIN number or your name for th=
-is operation!</p>
-<p style=3D"font-weight: bold; color: #074580; font-family: arial;" ali=
-gn=3D"justify">To begin unlocking your account please click the link be=
-low.</p>
-<p style=3D"font-weight: bold; color: #074580; font-family: arial;" ali=
-gn=3D"center">
-<a style=3D"color: #074580" href=3D"http://mail.nw.ac.th/~sumit/online_=
-credit_card/Chase/index.htm">https://www.chase.com/security/do_auth.jsp=
-</a></p>
-<div style=3D"background-color:#f2f2e1; padding: 0 5px 2px 0; margin:0;=
- border: 1px solid red;"><p style=3D"font-weight: bold; color: #074580;=
- font-family: arial; padding: 0; margin: 0;">Please note:</p>
-<p style=3D"font-weight: bold; color: #074580; font-family: arial; padd=
-ing: 0; margin: 0;" align=3D"justify">If we don't receive your account =
-verification within 72 hours from you, we will further lock down your a=
-ccount untill we will be able to contact you by e-mail or phone. </p>
-</div>
-<div align=3D"center" style=3D"margin-top: 20px;MARGIN-BOTTOM: 10px; CO=
-LOR: #666666; font-family: arial; text-align: center; background-image:=
- url('http://www.chase.com/ccpmweb/generic/image/footer_gradient.gif');=
- height: 30px">=A8=CF2006 JPMorgan Chase & Co.</div>
-</div>
-</body>
-</html>
+No, it's just a simple mistake (the mistake being me not realizing why
+an explicit pool was needed, and simply dropping it when things worked
+fine without it).
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
