@@ -1,54 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Unclutter cg status with --directory as GIT does
-Date: Wed, 29 Mar 2006 17:08:40 +0200
-Message-ID: <20060329150840.GJ27689@pasky.or.cz>
-References: <20060329142559.12059.52795.stgit@zion.home.lan> <20060329145427.GI27689@pasky.or.cz> <200603291704.14870.blaisorblade@yahoo.it>
+From: =?ISO-8859-1?B?U+liYXN0aWVu?= Pierre <sebastien@xprima.com>
+Subject: Git terminology
+Date: Wed, 29 Mar 2006 05:21:13 -0500
+Organization: XPRima Corp.
+Message-ID: <20060329052113.6a773480.sebastien@xprima.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 17:08:53 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Mar 29 17:22:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOcHj-0001tA-3m
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 17:08:35 +0200
+	id 1FOcUf-0004b8-95
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 17:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750798AbWC2PIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 10:08:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbWC2PIc
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 10:08:32 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:52388 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750798AbWC2PIb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 10:08:31 -0500
-Received: (qmail 28821 invoked by uid 2001); 29 Mar 2006 17:08:40 +0200
-To: Blaisorblade <blaisorblade@yahoo.it>
-Content-Disposition: inline
-In-Reply-To: <200603291704.14870.blaisorblade@yahoo.it>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751171AbWC2PVp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Mar 2006 10:21:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751176AbWC2PVp
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 10:21:45 -0500
+Received: from ritalin.autolinq.com ([207.96.225.42]:13549 "HELO
+	ritalin.autolinq.com") by vger.kernel.org with SMTP
+	id S1751171AbWC2PVo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 10:21:44 -0500
+Received: (qmail-ldap/ctrl 5710 invoked from network); 29 Mar 2006 15:21:43 -0000
+Received: from unknown (HELO localhost.localdomain) ([207.96.159.2]) (envelope-sender <sebastien@xprima.com>)
+          by ritalin.autolinq.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 29 Mar 2006 15:21:43 -0000
+To: Git ML <git@vger.kernel.org>
+X-Mailer: Sylpheed version 2.1.1 (GTK+ 2.8.16; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18173>
 
-Dear diary, on Wed, Mar 29, 2006 at 05:04:14PM CEST, I got a letter
-where Blaisorblade <blaisorblade@yahoo.it> said that...
-> Sorry, that's just an old patch then, I didn't note you did it yourself.
-> 
-> I wrote it before you had the 1.1 dependency and didn't notice you made 
-> something similar.
+Hi all,
 
-Well, I've just applied your patch :-) :
+In the process of learning git, and browsing the docs, I realized that =
+many particular terms are used, but I had difficulties finding their de=
+finitions.=20
 
-commit 4e1cd8ac4815bdc3e6671a2a5a266a9ca675630d
-author Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it> Thu, 19 Jan 2006 22:16:46 +0100
-committer Petr Baudis <xpasky@machine.or.cz> Sat, 21 Jan 2006 02:21:13 +0100
+Among those I found a bit arcane, there are (in no particular order) "r=
+efspec", "rebase", "rewound", "pickaxe", "refnames", "objectnames" ,"re=
+fnames", "fast-forward update".
 
-Kind regards,
+Also, doing a "grep -rohE '<[a-z\-]+>' * | sort | uniq" in git source t=
+ree gave me the list of "parameter types" for git commands, where some =
+would benefit from a formal definition : <base>, <blob>, <branch>, <bra=
+nchname>, <comitish>, <tree>, <tree-ish>, <head>, <headsha>, <refspec>,=
+ and so on. Of course, some of these terms are already explained in the=
+ man pages, but it would be nice to have a "git terminlogy reference".
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+If some of you are willing to detail/explain/define those terms (and so=
+me others not mentioned here), I would be glad to collect the definitio=
+ns and make a "git terminology" document.
+
+ -- S=E9bastien
