@@ -1,70 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git pull fails
-Date: Wed, 29 Mar 2006 02:57:00 +0200
-Message-ID: <20060329005700.GC27631@pasky.or.cz>
-References: <20060328162831.af1bd4c0.tihirvon@gmail.com> <20060328141140.GC3113@linux-mips.org> <20060328173827.3d64d91e.tihirvon@gmail.com> <200603281700.17233.astralstorm@o2.pl> <20060328224807.GC27689@pasky.or.cz> <20060329031136.e0389c00.tihirvon@gmail.com> <20060329002415.GG27689@pasky.or.cz> <7vu09igk1t.fsf@assigned-by-dhcp.cox.net>
+From: Matt McCutchen <hashproduct@verizon.net>
+Subject: How to switch kernel customizations from 2.6.15.6 to 2.6.16?
+Date: Tue, 28 Mar 2006 20:43:42 -0500
+Message-ID: <1143596622.2481.10.camel@mattlaptop.metaesthetics.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 02:57:06 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Mar 29 03:44:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOOza-0004Mu-Fx
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 02:56:58 +0200
+	id 1FOPj4-0001tf-Ui
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 03:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750730AbWC2A44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Mar 2006 19:56:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbWC2A4z
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 19:56:55 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:31681 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750730AbWC2A4z (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Mar 2006 19:56:55 -0500
-Received: (qmail 11708 invoked by uid 2001); 29 Mar 2006 02:57:00 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vu09igk1t.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1750765AbWC2Bnr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Mar 2006 20:43:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWC2Bnr
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Mar 2006 20:43:47 -0500
+Received: from vms044pub.verizon.net ([206.46.252.44]:24990 "EHLO
+	vms044pub.verizon.net") by vger.kernel.org with ESMTP
+	id S1750766AbWC2Bnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Mar 2006 20:43:45 -0500
+Received: from [192.168.1.5] ([151.200.44.96])
+ by vms044.mailsrvcs.net (Sun Java System Messaging Server 6.2-4.02 (built Sep
+ 9 2005)) with ESMTPA id <0IWV00DSD8SVD507@vms044.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 28 Mar 2006 19:43:44 -0600 (CST)
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.6.0 (2.6.0-1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18153>
 
-Dear diary, on Wed, Mar 29, 2006 at 02:40:30AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > If your current branch would really be a remote branch and you simply
-> > git-fetched, your HEAD would change but not your working tree, and at
-> > that moment things would become very confusing. Cogito would start
-> > showing nonsensical stuff for cg-status and cg-diff (as well as
-> > git-diff-tree HEAD output), but your index would at least still be
-> > correct so I'm not sure how much attention do tools like git-diff pay to
-> > it, the level of messup would be proportional to that.
-> 
-> People want to leave tracking branches checked out, especially
-> when they are not developers but are "update to the latest and
-> compile the bleeding edge" types.  Support for that mode of
-> operation was invented long time ago and git-pull knows about
-> it, and the idea was ported to git-cvsimport recently.
+Dear git people,
 
-Why can't such people just have two branches, _especially_ if they are
-the "update to the latest and compile the bleeding edge" types?
-(Therefore well not likely to be familiar with the Git branching model
-at all.)
+I made a customized Linux kernel based on 2.6.15.6 by cloning the stable
+2.6.15 kernel repository (which was then at version 2.6.15.6) and making
+several commits.  Now I would like a Linux kernel based on 2.6.16 with
+the same customizations.  This seems to be a very simple task, but I
+have been trying various combinations of git commands for several days
+and have not figured out how to do it.
 
-I mean, sure, it's Core Git so the extra flexibility is nice. But I now
-wonder, can you think of any plausible workflow where having one branch
-instead of two would be an advantage?
+I believe that means I should pull the 2.6.16 kernel into the "origin"
+branch and then rebase the "master" branch, merging my customizations
+with 2.6.16.  To this end, I switched my remote file to point to the
+2.6.16 stable repository and tried to pull.  The result was not what I
+wanted.  The situation is complicated by the fact that 2.6.15.6 is not
+an ancestor of 2.6.16.  The warning in the man page about branches that
+are modified nonlinearly seems to apply.
 
-Waah, cg-log git-fetch.sh, /update-head just showed me the change in
-git-fetch-script from last August, with no extra work for me. The big
-rename barrier annoyances finally gone forever!
+How do I make my customized 2.6.16 kernel?
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+Matt McCutchen
+hashproduct@verizon.net
+http://hashproduct.metaesthetics.net/
