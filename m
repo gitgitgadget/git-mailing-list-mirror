@@ -1,50 +1,62 @@
-From: Romain Francoise <romain@orebokech.com>
-Subject: Re: Is 'merge' in your path?
-Date: Wed, 29 Mar 2006 12:14:08 +0200
-Organization: orebokech dot com
-Message-ID: <87mzf9eexb.fsf@pacem.orebokech.com>
-References: <CFF307C98FEABE47A452B27C06B85BB6046AA9@hdsmsx411.amr.corp.intel.com>
-	<tnxmzf9sh7k.fsf@arm.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add ALL_LDFLAGS to the git target.
+Date: Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0603291340570.1473@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <15693.1143575188@lotus.CS.Berkeley.EDU>
+ <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Andreas Ericsson" <ae@op5.se>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 29 12:14:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 13:42:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOXh1-0003h0-Jh
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 12:14:23 +0200
+	id 1FOZ42-0002Qv-N6
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 13:42:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751012AbWC2KOS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 05:14:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbWC2KOS
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 05:14:18 -0500
-Received: from yeast.orebokech.com ([82.67.41.165]:26256 "EHLO
-	yeast.orebokech.com") by vger.kernel.org with ESMTP
-	id S1750743AbWC2KOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Mar 2006 05:14:17 -0500
-Received: from pacem.orebokech.com (pacem.orebokech.com [192.168.1.3])
-	by yeast.orebokech.com (Postfix) with ESMTP id 75CFE12E60;
-	Wed, 29 Mar 2006 12:14:08 +0200 (CEST)
-Received: by pacem.orebokech.com (Postfix, from userid 1000)
-	id 2733F523E2; Wed, 29 Mar 2006 12:14:08 +0200 (CEST)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-Face: }9mYu,e_@+e!`Z-P5kVXa3\_b:hdJ"B)ww[&=b<2=awG:GOIM</2q'*t@MNa)R`k0h1KbUu "Ek%gXCQA(?k=Uf9}qgF_x#7/+Ql\R!NJ9[Z[ky\CTYI<H(kc][?[m%*rsf!OG11|f&H[VgX;),"!N JG6IziY\~""3M
-In-Reply-To: <tnxmzf9sh7k.fsf@arm.com> (Catalin Marinas's message of "Wed, 29
-	Mar 2006 11:01:03 +0100")
+	id S1750732AbWC2LmF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 06:42:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750741AbWC2LmF
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 06:42:05 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:21393 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750732AbWC2LmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Mar 2006 06:42:04 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id E702112AE;
+	Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id DB286A8A;
+	Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id BB3371BB9;
+	Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Mark Wooding <mdw@distorted.org.uk>
+In-Reply-To: <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18166>
 
-Catalin Marinas <catalin.marinas@arm.com> writes:
+Hi,
 
-> Are there any features in "merge" and not available in "diff3"?
+On Tue, 28 Mar 2006, Mark Wooding wrote:
 
-`merge' from GNU RCS is just a wrapper around diff3.
+> Jason Riedy <ejr@EECS.Berkeley.EDU> wrote:
+> 
+> > P.S. For the whole finding-a-function-name business, some of 
+> > us are using git on fixed-format Fortran.  Every non-comment
+> > line begins with whitespace...  ;)  And in free format, many
+> > people don't add that first indentation within subroutines.
+> 
+> Urgh.  So, which regex library do people want to use? ;-)  (My vote's
+> for pcre.)
 
--- 
-Romain Francoise <romain@orebokech.com> | The sea! the sea! the open
-it's a miracle -- http://orebokech.com/ | sea! The blue, the fresh, the
-                                        | ever free! --Bryan W. Procter
+My vote is against adding such a dependency for so little gain. We already 
+use regex.h (probably my fault).
+
+Ciao,
+Dscho
