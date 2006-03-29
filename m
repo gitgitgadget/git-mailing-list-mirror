@@ -1,55 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Support for pickaxe matching regular expressions
-Date: Wed, 29 Mar 2006 15:09:20 +0200
-Message-ID: <20060329130920.GH27689@pasky.or.cz>
-References: <15693.1143575188@lotus.CS.Berkeley.EDU> <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.63.0603291340570.1473@wbgn013.biozentrum.uni-wuerzburg.de> <15693.1143575188@lotus.CS.Berkeley.EDU> <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603281500280.15714@g5.osdl.org> <20060329001633.GF27689@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 15:09:32 2006
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+Subject: [PATCH] Unclutter cg status with --directory as GIT does
+Date: Wed, 29 Mar 2006 16:25:59 +0200
+Message-ID: <20060329142559.12059.52795.stgit@zion.home.lan>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 16:50:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOaQH-0001pE-So
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 15:09:18 +0200
+	id 1FObzS-0006Jj-GA
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 16:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750769AbWC2NJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 08:09:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbWC2NJM
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 08:09:12 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:22765 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750728AbWC2NJL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 08:09:11 -0500
-Received: (qmail 15409 invoked by uid 2001); 29 Mar 2006 15:09:20 +0200
-To: Linus Torvalds <torvalds@osdl.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0603291340570.1473@wbgn013.biozentrum.uni-wuerzburg.de> <20060329001633.GF27689@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1750735AbWC2Otk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 09:49:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbWC2Otk
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 09:49:40 -0500
+Received: from [151.97.230.9] ([151.97.230.9]:57014 "EHLO ssc.unict.it")
+	by vger.kernel.org with ESMTP id S1750735AbWC2Otj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 09:49:39 -0500
+Received: (qmail 16369 invoked by uid 508); 29 Mar 2006 16:49:37 +0200
+Received: from unknown (HELO ssc.unict.it) (151.97.230.9)
+  by ssc.unict.it with SMTP; 29 Mar 2006 16:49:37 +0200
+Received: from zion.home.lan (localhost [127.0.0.1])
+	by zion.home.lan (Postfix) with ESMTP id C97FC258CE;
+	Wed, 29 Mar 2006 16:25:59 +0200 (CEST)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18168>
 
-Dear diary, on Wed, Mar 29, 2006 at 02:16:33AM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> The regex.h library is a rather stupid interface and I like pcre too, but
-> with any luck it will be everywhere we will want to run Git on, it being
-> POSIX.2 and all. I'm not sure if we can expect platforms like AIX to
-> conform to POSIX.2 or if win32 has regex.h. We might add a flag to
-> Makefile if there is a portability trouble potential.
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 
-Dear diary, on Wed, Mar 29, 2006 at 01:42:00PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> We already use regex.h (probably my fault).
+From: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
 
-Indeed, and since noone complained yet, the portability consideration is
-apparently a non-issue.
+Pass the new --directory option (from git 1.1) to git-ls-others for
+list_untracked_files, as does git-status - it's very useful.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+Probably this must be deferred to when the git 1.1 dependency is added, however
+please queue it for then.
+
+Thanks.
+
+Signed-off-by: Paolo 'Blaisorblade' Giarrusso <blaisorblade@yahoo.it>
+---
+
+ cg-Xlib |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/cg-Xlib b/cg-Xlib
+index 2b93c11..3150470 100644
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -274,7 +274,7 @@ list_untracked_files()
+ 	fi
+ 	local listdirs=
+ 	[ "$squashflag" = "squashdirs" ] && listdirs=--directory
+-	git-ls-files -z --others $listdirs "${EXCLUDE[@]}"
++	git-ls-files -z --others --directory $listdirs "${EXCLUDE[@]}"
+ }
+ 
+ pick_id()
