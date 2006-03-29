@@ -1,62 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add ALL_LDFLAGS to the git target.
-Date: Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0603291340570.1473@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <15693.1143575188@lotus.CS.Berkeley.EDU>
- <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Support for pickaxe matching regular expressions
+Date: Wed, 29 Mar 2006 15:09:20 +0200
+Message-ID: <20060329130920.GH27689@pasky.or.cz>
+References: <15693.1143575188@lotus.CS.Berkeley.EDU> <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.63.0603291340570.1473@wbgn013.biozentrum.uni-wuerzburg.de> <15693.1143575188@lotus.CS.Berkeley.EDU> <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk> <Pine.LNX.4.64.0603281500280.15714@g5.osdl.org> <20060329001633.GF27689@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 13:42:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 15:09:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOZ42-0002Qv-N6
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 13:42:15 +0200
+	id 1FOaQH-0001pE-So
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 15:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750732AbWC2LmF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 06:42:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750741AbWC2LmF
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 06:42:05 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:21393 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750732AbWC2LmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Mar 2006 06:42:04 -0500
-Received: from virusscan.mail (mail03.mail [172.25.1.102])
-	by mailrelay.mail (Postfix) with ESMTP id E702112AE;
-	Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id DB286A8A;
-	Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id BB3371BB9;
-	Wed, 29 Mar 2006 13:42:00 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <slrne2jf9t.s3g.mdw@metalzone.distorted.org.uk>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750769AbWC2NJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 08:09:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbWC2NJM
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 08:09:12 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:22765 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750728AbWC2NJL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 08:09:11 -0500
+Received: (qmail 15409 invoked by uid 2001); 29 Mar 2006 15:09:20 +0200
+To: Linus Torvalds <torvalds@osdl.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0603291340570.1473@wbgn013.biozentrum.uni-wuerzburg.de> <20060329001633.GF27689@pasky.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18167>
 
-Hi,
+Dear diary, on Wed, Mar 29, 2006 at 02:16:33AM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> The regex.h library is a rather stupid interface and I like pcre too, but
+> with any luck it will be everywhere we will want to run Git on, it being
+> POSIX.2 and all. I'm not sure if we can expect platforms like AIX to
+> conform to POSIX.2 or if win32 has regex.h. We might add a flag to
+> Makefile if there is a portability trouble potential.
 
-On Tue, 28 Mar 2006, Mark Wooding wrote:
+Dear diary, on Wed, Mar 29, 2006 at 01:42:00PM CEST, I got a letter
+where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> We already use regex.h (probably my fault).
 
-> Jason Riedy <ejr@EECS.Berkeley.EDU> wrote:
-> 
-> > P.S. For the whole finding-a-function-name business, some of 
-> > us are using git on fixed-format Fortran.  Every non-comment
-> > line begins with whitespace...  ;)  And in free format, many
-> > people don't add that first indentation within subroutines.
-> 
-> Urgh.  So, which regex library do people want to use? ;-)  (My vote's
-> for pcre.)
+Indeed, and since noone complained yet, the portability consideration is
+apparently a non-issue.
 
-My vote is against adding such a dependency for so little gain. We already 
-use regex.h (probably my fault).
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
