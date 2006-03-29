@@ -1,94 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
+From: =?ISO-8859-1?B?U+liYXN0aWVu?= Pierre <sebastien@xprima.com>
 Subject: Re: Git terminology
-Date: Wed, 29 Mar 2006 07:59:16 -0800
-Message-ID: <7vodzp9r8r.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 29 Mar 2006 11:11:12 -0500
+Organization: XPRima Corp.
+Message-ID: <20060329111112.55bb8d44.sebastien@xprima.com>
 References: <20060329052113.6a773480.sebastien@xprima.com>
+	<7vodzp9r8r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 18:00:30 2006
+X-From: git-owner@vger.kernel.org Wed Mar 29 18:12:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOd51-0004Wu-Go
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 17:59:32 +0200
+	id 1FOdH2-0007fg-LN
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 18:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbWC2P7T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Mar 2006 10:59:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbWC2P7S
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 10:59:18 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:47347 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751185AbWC2P7S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 10:59:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060329155917.IEQR17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 29 Mar 2006 10:59:17 -0500
-To: =?iso-8859-1?Q?S=E9bastien?= Pierre <sebastien@xprima.com>
-In-Reply-To: <20060329052113.6a773480.sebastien@xprima.com>
- (=?iso-8859-1?Q?S=E9bastien?=
-	Pierre's message of "Wed, 29 Mar 2006 05:21:13 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751187AbWC2QLv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Mar 2006 11:11:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbWC2QLv
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 11:11:51 -0500
+Received: from ritalin.autolinq.com ([207.96.225.42]:24249 "HELO
+	ritalin.autolinq.com") by vger.kernel.org with SMTP
+	id S1751187AbWC2QLu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 11:11:50 -0500
+Received: (qmail-ldap/ctrl 21977 invoked from network); 29 Mar 2006 16:11:50 -0000
+Received: from unknown (HELO localhost.localdomain) ([207.96.159.2]) (envelope-sender <sebastien@xprima.com>)
+          by ritalin.autolinq.com (qmail-ldap-1.03) with SMTP
+          for <junkio@cox.net>; 29 Mar 2006 16:11:50 -0000
+To: Junio C Hamano <junkio@cox.net>, Git ML <git@vger.kernel.org>
+In-Reply-To: <7vodzp9r8r.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.1.1 (GTK+ 2.8.16; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18176>
 
-S=E9bastien Pierre <sebastien@xprima.com> writes:
+On Wed, 29 Mar 2006 07:59:16 -0800
+Junio C Hamano <junkio@cox.net> wrote:
+=20
+> Probably we can just say "ref" where we say "refname".
+>=20
+> A fast-forward is where you have a revision and you are
+> "merging" other's change that happen to be a descendant what you
+> have.  In such a case, you do not make a new merge commit but
+> just update to his revision.  That is:
+>=20
+>           o---o---o---o his               o---o---o---o his
+>          /                      ->       /             \
+>     o---o---o---o yours             o---o---o---o-------* yours
+>=20
+> updating to his needs a merge like above, but in this case:
+>=20
+>           o---o---o---o his               o---o---o---o his =3D yours
+>          /                      ->       /
+>     o---o yours                     o---o
+>=20
+> you just update to his.
 
-> In the process of learning git, and browsing the docs, I
-> realized that many particular terms are used, but I had
-> difficulties finding their definitions.
+Ah, ok. The diagrams are really helpful to get what "fast forward" is.
 
-I had difficulties reading your message.  Please fold your lines.
+Thanks !
 
-> Among those I found a bit arcane, there are (in no particular
-> order) "refspec", "rebase", "rewound", "pickaxe", "refnames",
-> "objectnames" ,"refnames", "fast-forward update".
-
-I see some are missing from our glossary but some others are
-found there.
-
-refspec is used by fetch and push to describe the mapping
-between remote ref and local ref.  E.g.  "git fetch $URL
-refs/heads/master:refs/heads/origin" means "grab the master
-branch head from there and store it as my origin branch head".
-"git push $URL refs/heads/master:refs/heads/to-upstream" for
-"publish my master branch head as to-upstream master head at
-$URL".
-
-Probably we can just say "ref" where we say "refname".
-
-Probably we can just say "ref" where we say "refname".
-
-A fast-forward is where you have a revision and you are
-"merging" other's change that happen to be a descendant what you
-have.  In such a case, you do not make a new merge commit but
-just update to his revision.  That is:
-
-          o---o---o---o his               o---o---o---o his
-         /                      ->       /             \
-    o---o---o---o yours             o---o---o---o-------* yours
-
-updating to his needs a merge like above, but in this case:
-
-          o---o---o---o his               o---o---o---o his =3D yours
-         /                      ->       /
-    o---o yours                     o---o
-
-you just update to his.
-
-A related concept is "being already up-to-date".  In the latter
-picture, if he attempts to "merge" your changes and notices he
-is simply ahead of you (i.e. his revision is a descendant of
-yours), nothing happens.
-
-> If some of you are willing to detail/explain/define those
-> terms (and some others not mentioned here), I would be glad to
-> collect the definitions and make a "git terminology" document.
-
-Thanks, and what J Bruce Fields already said.
+ -- S=E9bastien
