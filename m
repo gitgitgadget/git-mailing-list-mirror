@@ -1,64 +1,68 @@
-From: "Greg Lee" <glee@casabyte.com>
-Subject: RE: Problem with git bisect between 2.6.15 and 2.6.16
-Date: Wed, 29 Mar 2006 14:28:07 -0500
-Message-ID: <117a01c65366$e952dfd0$a100a8c0@casabyte.com>
-References: <12c511ca0603271622n6e4614b2s6f936469863efd9d@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: How to switch kernel customizations from 2.6.15.6 to 2.6.16?
+Date: Wed, 29 Mar 2006 11:39:06 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603291136100.15714@g5.osdl.org>
+References: <1143596622.2481.10.camel@mattlaptop.metaesthetics.net>
+ <Pine.LNX.4.64.0603281749060.15714@g5.osdl.org> <7vlkutc36w.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0603291102440.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'sean'" <seanlkml@sympatico.ca>,
-	"'Tony Luck'" <tony.luck@intel.com>
-X-From: git-owner@vger.kernel.org Wed Mar 29 21:30:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 21:39:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOgND-0006h2-GV
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 21:30:31 +0200
+	id 1FOgVf-0008V8-As
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 21:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750811AbWC2TaU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 14:30:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbWC2TaU
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 14:30:20 -0500
-Received: from mail.vtacs.com ([207.42.84.219]:17630 "EHLO mail.vtacs.com")
-	by vger.kernel.org with ESMTP id S1750811AbWC2TaS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 14:30:18 -0500
-Received: from GregDesktop (e242.vtacs.com [207.42.84.242])
-	by mail.vtacs.com (8.13.6/8.13.3) with ESMTP id k2TJU2jQ005594;
-	Wed, 29 Mar 2006 14:30:07 -0500
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook 11
-x-mimeole: Produced By Microsoft MimeOLE V6.00.2900.2670
-In-Reply-To: <12c511ca0603271622n6e4614b2s6f936469863efd9d@mail.gmail.com>
-Thread-Index: AcZR/bastIYtt6KrS1+Kc8O6HAm+fQBZffRA
-X-Virus-Scanned: by amavisd-new
+	id S1750836AbWC2TjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 14:39:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbWC2TjM
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 14:39:12 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:45289 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750836AbWC2TjK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 14:39:10 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2TJd7Co020921
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 29 Mar 2006 11:39:07 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2TJd6IQ011521;
+	Wed, 29 Mar 2006 11:39:06 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0603291102440.15714@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18179>
 
-> You'll need to invert "good" and bad" for this.  I.e. mark 2.6.15 as good, 2.6.16 as
-bad, and
-> then as you test mark kernels with the bug as good, and ones without as bad.  Try not to
-go
-> insane while working in this inverted parallel universe :-)
+
+
+On Wed, 29 Mar 2006, Linus Torvalds wrote:
 > 
-> -Tony
+> Right now, the sequence is:
+> 
+> 	git checkout mine			# if required
+> 	git rebase --onto his origin
 
-This was progressing fine until I ran into an issue that makes the kernel unstable causing
-it to crash at semi-random times.  I'm down to about 350 commits left in the bisect.  I've
-tried:
+vs
 
-git reset --hard HEAD~3
+> 	git checkout his
+> 	git cherry-pick origin..mine
 
-no luck, same problem, unstable
+Btw, I realize that the advantage of "git rebase" is that it doesn't 
+change somebody elses branch. However, we'd still be a lot better off with 
+us simply doing the equivalent of something like
 
-then I tried --hard HEAD~50
+    git checkout -b new-mine his && 
+	git cherry-pick origin..mine &&
+	git rename-branch -f new-mine mine
 
-no luck, same problem, unstable
+instead of what git-rebase does now.
 
-I'm concerned about moving too much further in the "~" direction, will this cause me other
-problems?
-
-Greg
+			Linus
