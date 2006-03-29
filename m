@@ -1,59 +1,104 @@
-From: "Luck, Tony" <tony.luck@intel.com>
-Subject: RE: Problem with git bisect between 2.6.15 and 2.6.16
-Date: Wed, 29 Mar 2006 11:43:20 -0800
-Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F06176441@scsmsx401.amr.corp.intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How to switch kernel customizations from 2.6.15.6 to 2.6.16?
+Date: Wed, 29 Mar 2006 12:24:33 -0800
+Message-ID: <7vd5g580e6.fsf@assigned-by-dhcp.cox.net>
+References: <1143596622.2481.10.camel@mattlaptop.metaesthetics.net>
+	<Pine.LNX.4.64.0603281749060.15714@g5.osdl.org>
+	<7vlkutc36w.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603291102440.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "sean" <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 29 21:44:08 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 29 22:24:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOgZi-0000uc-3J
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 21:43:26 +0200
+	id 1FOhDc-0001CH-HR
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 22:24:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbWC2TnX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 14:43:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750887AbWC2TnX
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 14:43:23 -0500
-Received: from mga02.intel.com ([134.134.136.20]:46741 "EHLO
-	orsmga101-1.jf.intel.com") by vger.kernel.org with ESMTP
-	id S1750879AbWC2TnW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 14:43:22 -0500
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101-1.jf.intel.com with ESMTP; 29 Mar 2006 11:43:22 -0800
-Received: from scsmsx332.sc.intel.com (HELO scsmsx332.amr.corp.intel.com) ([10.3.90.6])
-  by orsmga001.jf.intel.com with ESMTP; 29 Mar 2006 11:43:21 -0800
-X-IronPort-AV: i="4.03,144,1141632000"; 
-   d="scan'208"; a="16741898:sNHT238303527"
-Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by scsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 29 Mar 2006 11:43:21 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Problem with git bisect between 2.6.15 and 2.6.16
-Thread-Index: AcZR/bastIYtt6KrS1+Kc8O6HAm+fQBZffRAAAExqwA=
-To: "Greg Lee" <glee@casabyte.com>, <git@vger.kernel.org>
-X-OriginalArrivalTime: 29 Mar 2006 19:43:21.0648 (UTC) FILETIME=[09213300:01C65369]
+	id S1751184AbWC2UYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 15:24:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbWC2UYg
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 15:24:36 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:16778 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751184AbWC2UYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Mar 2006 15:24:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060329202435.YFFA20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 29 Mar 2006 15:24:35 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603291102440.15714@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 29 Mar 2006 11:27:46 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18181>
 
- 
-> This was progressing fine until I ran into an issue that makes the kernel unstable causing
-> it to crash at semi-random times.  I'm down to about 350 commits left in the bisect.  I've
-> tried:
-> 
-> git reset --hard HEAD~3
+Linus Torvalds <torvalds@osdl.org> writes:
+
+> In contrast, here's an alternate workflow that is much easier to explain, 
+> and doesn't involve "rebase" at all:
 >
->no luck, same problem, unstable
+> 	git checkout his
+> 	git cherry-pick origin..mine
 
-You can try "git bisect visualize" to invoke gitk on the remaining commits, and
-then pick a likely looking stable point for your next test.  This is documented
-reasonably well in the git Documentation/howto/isolate-bugs-with-bisect.txt
+Yes, I think it would be good to deprecate/discard the current
+rebase and make cherry-pick the recommended workflow.
 
--Tony
+Optionally.  I've been thinking about not using git-cherry while
+cherrypicking, because falling back to three-way merge seems to
+work equally well in dealing with "patch already applied" case.
+
+Anyway, teaching the range notation to cherry-pick would be
+something like this, I suppose.
+
+---
+diff --git a/git-cherry-pick.sh b/git-cherry-pick.sh
+new file mode 100755
+index 0000000..72a3828
+--- /dev/null
++++ b/git-cherry-pick.sh
+@@ -0,0 +1,6 @@
++#!/bin/sh
++
++. git-sh-setup
++
++git-format-patch --stdout --full-index -k "$@" |
++git-am --binary -3 -k
+diff --git a/Makefile b/Makefile
+index d945546..e130d8c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -114,7 +114,7 @@ ### --- END CONFIGURATION SECTION ---
+ 
+ SCRIPT_SH = \
+ 	git-add.sh git-bisect.sh git-branch.sh git-checkout.sh \
+-	git-cherry.sh git-clone.sh git-commit.sh \
++	git-cherry.sh git-cherry-pick.sh git-clone.sh git-commit.sh \
+ 	git-count-objects.sh git-diff.sh git-fetch.sh \
+ 	git-format-patch.sh git-log.sh git-ls-remote.sh \
+ 	git-merge-one-file.sh git-parse-remote.sh \
+@@ -139,7 +139,7 @@ SCRIPT_PYTHON = \
+ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+ 	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
+-	  git-cherry-pick git-show git-status
++	  git-show git-status
+ 
+ # The ones that do not have to link with lcrypto nor lz.
+ SIMPLE_PROGRAMS = \
+@@ -484,9 +484,6 @@ common-cmds.h: Documentation/git-*.txt
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    $@.py >$@
+ 	chmod +x $@
+-
+-git-cherry-pick: git-revert
+-	cp $< $@
+ 
+ git-show: git-whatchanged
+ 	cp $< $@
