@@ -1,54 +1,50 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Romain Francoise <romain@orebokech.com>
 Subject: Re: Is 'merge' in your path?
-Date: Wed, 29 Mar 2006 11:01:03 +0100
-Message-ID: <tnxmzf9sh7k.fsf@arm.com>
+Date: Wed, 29 Mar 2006 12:14:08 +0200
+Organization: orebokech dot com
+Message-ID: <87mzf9eexb.fsf@pacem.orebokech.com>
 References: <CFF307C98FEABE47A452B27C06B85BB6046AA9@hdsmsx411.amr.corp.intel.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+	<tnxmzf9sh7k.fsf@arm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: "Andreas Ericsson" <ae@op5.se>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 29 12:01:40 2006
+X-From: git-owner@vger.kernel.org Wed Mar 29 12:14:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOXUX-0001Rg-Do
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 12:01:29 +0200
+	id 1FOXh1-0003h0-Jh
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 12:14:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbWC2KB1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 05:01:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWC2KB1
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 05:01:27 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:8845 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S1751107AbWC2KB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Mar 2006 05:01:26 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k2TA15uc016500;
-	Wed, 29 Mar 2006 11:01:05 +0100 (BST)
-Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Wed, 29 Mar 2006 11:01:04 +0100
-To: "Brown, Len" <len.brown@intel.com>
-In-Reply-To: <CFF307C98FEABE47A452B27C06B85BB6046AA9@hdsmsx411.amr.corp.intel.com> (Len
- Brown's message of "Wed, 29 Mar 2006 04:06:40 -0500")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 29 Mar 2006 10:01:05.0040 (UTC) FILETIME=[B149E100:01C65317]
+	id S1751012AbWC2KOS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 05:14:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbWC2KOS
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 05:14:18 -0500
+Received: from yeast.orebokech.com ([82.67.41.165]:26256 "EHLO
+	yeast.orebokech.com") by vger.kernel.org with ESMTP
+	id S1750743AbWC2KOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Mar 2006 05:14:17 -0500
+Received: from pacem.orebokech.com (pacem.orebokech.com [192.168.1.3])
+	by yeast.orebokech.com (Postfix) with ESMTP id 75CFE12E60;
+	Wed, 29 Mar 2006 12:14:08 +0200 (CEST)
+Received: by pacem.orebokech.com (Postfix, from userid 1000)
+	id 2733F523E2; Wed, 29 Mar 2006 12:14:08 +0200 (CEST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-Face: }9mYu,e_@+e!`Z-P5kVXa3\_b:hdJ"B)ww[&=b<2=awG:GOIM</2q'*t@MNa)R`k0h1KbUu "Ek%gXCQA(?k=Uf9}qgF_x#7/+Ql\R!NJ9[Z[ky\CTYI<H(kc][?[m%*rsf!OG11|f&H[VgX;),"!N JG6IziY\~""3M
+In-Reply-To: <tnxmzf9sh7k.fsf@arm.com> (Catalin Marinas's message of "Wed, 29
+	Mar 2006 11:01:03 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18165>
 
-"Brown, Len" <len.brown@intel.com> wrote:
->>What does "which merge" tell you? If it turns up blank, you know the 
->>problem. The merge program is usually found in the rcs package.
->
-> blank indeed.  I guess I don't have rcs on this laptop.
+Catalin Marinas <catalin.marinas@arm.com> writes:
 
-Actually, I think git could use diff3 directly and not rely on "merge"
-from rcs which seems to be equivalent to "diff3 -m -E" (it might even
-call diff3, I'm not sure).
+> Are there any features in "merge" and not available in "diff3"?
 
-Are there any features in "merge" and not available in "diff3"?
+`merge' from GNU RCS is just a wrapper around diff3.
 
 -- 
-Catalin
+Romain Francoise <romain@orebokech.com> | The sea! the sea! the open
+it's a miracle -- http://orebokech.com/ | sea! The blue, the fresh, the
+                                        | ever free! --Bryan W. Procter
