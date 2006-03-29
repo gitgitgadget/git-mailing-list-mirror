@@ -1,68 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How to switch kernel customizations from 2.6.15.6 to 2.6.16?
-Date: Wed, 29 Mar 2006 11:39:06 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603291136100.15714@g5.osdl.org>
-References: <1143596622.2481.10.camel@mattlaptop.metaesthetics.net>
- <Pine.LNX.4.64.0603281749060.15714@g5.osdl.org> <7vlkutc36w.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0603291102440.15714@g5.osdl.org>
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: RE: Problem with git bisect between 2.6.15 and 2.6.16
+Date: Wed, 29 Mar 2006 11:43:20 -0800
+Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F06176441@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 29 21:39:37 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "sean" <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Wed Mar 29 21:44:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOgVf-0008V8-As
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 21:39:16 +0200
+	id 1FOgZi-0000uc-3J
+	for gcvg-git@gmane.org; Wed, 29 Mar 2006 21:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750836AbWC2TjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 14:39:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbWC2TjM
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 14:39:12 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:45289 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750836AbWC2TjK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 14:39:10 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2TJd7Co020921
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 29 Mar 2006 11:39:07 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2TJd6IQ011521;
-	Wed, 29 Mar 2006 11:39:06 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0603291102440.15714@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.68__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750879AbWC2TnX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 14:43:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750887AbWC2TnX
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 14:43:23 -0500
+Received: from mga02.intel.com ([134.134.136.20]:46741 "EHLO
+	orsmga101-1.jf.intel.com") by vger.kernel.org with ESMTP
+	id S1750879AbWC2TnW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 14:43:22 -0500
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101-1.jf.intel.com with ESMTP; 29 Mar 2006 11:43:22 -0800
+Received: from scsmsx332.sc.intel.com (HELO scsmsx332.amr.corp.intel.com) ([10.3.90.6])
+  by orsmga001.jf.intel.com with ESMTP; 29 Mar 2006 11:43:21 -0800
+X-IronPort-AV: i="4.03,144,1141632000"; 
+   d="scan'208"; a="16741898:sNHT238303527"
+Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by scsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 29 Mar 2006 11:43:21 -0800
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Problem with git bisect between 2.6.15 and 2.6.16
+Thread-Index: AcZR/bastIYtt6KrS1+Kc8O6HAm+fQBZffRAAAExqwA=
+To: "Greg Lee" <glee@casabyte.com>, <git@vger.kernel.org>
+X-OriginalArrivalTime: 29 Mar 2006 19:43:21.0648 (UTC) FILETIME=[09213300:01C65369]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18180>
 
-
-
-On Wed, 29 Mar 2006, Linus Torvalds wrote:
+ 
+> This was progressing fine until I ran into an issue that makes the kernel unstable causing
+> it to crash at semi-random times.  I'm down to about 350 commits left in the bisect.  I've
+> tried:
 > 
-> Right now, the sequence is:
-> 
-> 	git checkout mine			# if required
-> 	git rebase --onto his origin
+> git reset --hard HEAD~3
+>
+>no luck, same problem, unstable
 
-vs
+You can try "git bisect visualize" to invoke gitk on the remaining commits, and
+then pick a likely looking stable point for your next test.  This is documented
+reasonably well in the git Documentation/howto/isolate-bugs-with-bisect.txt
 
-> 	git checkout his
-> 	git cherry-pick origin..mine
-
-Btw, I realize that the advantage of "git rebase" is that it doesn't 
-change somebody elses branch. However, we'd still be a lot better off with 
-us simply doing the equivalent of something like
-
-    git checkout -b new-mine his && 
-	git cherry-pick origin..mine &&
-	git rename-branch -f new-mine mine
-
-instead of what git-rebase does now.
-
-			Linus
+-Tony
