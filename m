@@ -1,76 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] cvsimport: use git-update-ref when updating
-Date: Thu, 30 Mar 2006 14:06:15 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0603301405160.18852@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Mar 30 14:06:38 2006
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH] gitk: Use git wrapper to run git-ls-remote.
+Date: Thu, 30 Mar 2006 13:31:51 +0100
+Message-ID: <20060330123151.25779.73775.stgit@metalzone.distorted.org.uk>
+X-From: git-owner@vger.kernel.org Thu Mar 30 14:32:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOvv2-0005Oq-SA
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 14:06:29 +0200
+	id 1FOwJg-0001GQ-Rg
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 14:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186AbWC3MGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 07:06:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbWC3MGU
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 07:06:20 -0500
-Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:55695 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932186AbWC3MGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Mar 2006 07:06:19 -0500
-Received: from virusscan.mail (mail03.mail [172.25.1.102])
-	by mailrelay.mail (Postfix) with ESMTP id 119B3EA0;
-	Thu, 30 Mar 2006 14:06:16 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 05237ACD;
-	Thu, 30 Mar 2006 14:06:16 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E3AFEA73;
-	Thu, 30 Mar 2006 14:06:15 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750982AbWC3Mby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 07:31:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbWC3Mbx
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 07:31:53 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:55407 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1750982AbWC3Mbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Mar 2006 07:31:53 -0500
+Received: (qmail 25794 invoked from network); 30 Mar 2006 12:31:51 -0000
+Received: from localhost (HELO metalzone.distorted.org.uk) (127.0.0.1)
+  by localhost with SMTP; 30 Mar 2006 12:31:51 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18194>
 
+From: Mark Wooding <mdw@distorted.org.uk>
 
-This simplifies code, and also fixes a subtle bug: when importing in a
-shared repository, where another user last imported from CVS, cvsimport
-used to complain that it could not open <branch> for update.
+For some reason, the Cygwin Tcl's `exec' command has trouble running
+scripts.  Fix this by using the C `git' wrapper.  Other GIT programs run
+by gitk are written in C already, so we don't need to incur a
+performance hit of going via the wrapper (which I'll bet isn't pretty
+under Cygwin).
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
 ---
 
- git-cvsimport.perl |    7 ++-----
- 1 files changed, 2 insertions(+), 5 deletions(-)
+ gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 3728294..957af13 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -15,6 +15,7 @@ # You can change that with the '-o' opti
- 
- use strict;
- use warnings;
-+use Fcntl;
- use Getopt::Std;
- use File::Spec;
- use File::Temp qw(tempfile);
-@@ -677,11 +678,7 @@ my $commit = sub {
- 	waitpid($pid,0);
- 	die "Error running git-commit-tree: $?\n" if $?;
- 
--	open(C,">$git_dir/refs/heads/$branch")
--		or die "Cannot open branch $branch for update: $!\n";
--	print C "$cid\n"
--		or die "Cannot write branch $branch for update: $!\n";
--	close(C)
-+	system("git-update-ref refs/heads/$branch $cid") == 0
- 		or die "Cannot write branch $branch for update: $!\n";
- 
- 	if($tag) {
+diff --git a/gitk b/gitk
+index f4c6624..ac85d1c 100755
+--- a/gitk
++++ b/gitk
+@@ -359,7 +359,7 @@ proc readrefs {} {
+     foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
+ 	catch {unset $v}
+     }
+-    set refd [open [list | git-ls-remote [gitdir]] r]
++    set refd [open [list | git ls-remote [gitdir]] r]
+     while {0 <= [set n [gets $refd line]]} {
+ 	if {![regexp {^([0-9a-f]{40})	refs/([^^]*)$} $line \
+ 	    match id path]} {
