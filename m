@@ -1,100 +1,98 @@
 From: Krzysiek Pawlik <krzysiek.pawlik@people.pl>
-Subject: [PATCH] Ability to automaticaly push tags to remote repositories.
-Date: Thu, 30 Mar 2006 14:56:02 +0200
-Message-ID: <442BD562.3030207@people.pl>
+Subject: Re: [PATCH] Ability to automaticaly push tags to remote repositories.
+Date: Thu, 30 Mar 2006 16:18:42 +0200
+Message-ID: <442BE8C2.5000907@people.pl>
+References: <442BD562.3030207@people.pl>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030007070600020302090307"
-X-From: git-owner@vger.kernel.org Thu Mar 30 14:56:10 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig5E2E16DB9D1202917CEA81BE"
+X-From: git-owner@vger.kernel.org Thu Mar 30 16:18:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOwh6-0004zy-3i
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 14:56:08 +0200
+	id 1FOxz2-00027t-HN
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 16:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932196AbWC3Mz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 07:55:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932197AbWC3Mz6
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 07:55:58 -0500
-Received: from people.pl ([212.85.96.54]:58050 "HELO v00054.home.net.pl")
-	by vger.kernel.org with SMTP id S932196AbWC3Mz6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Mar 2006 07:55:58 -0500
+	id S932223AbWC3OSj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 09:18:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932220AbWC3OSj
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 09:18:39 -0500
+Received: from people.pl ([212.85.96.54]:35282 "HELO v00054.home.net.pl")
+	by vger.kernel.org with SMTP id S932223AbWC3OSi (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Mar 2006 09:18:38 -0500
 Received: from localhost (HELO ?192.168.1.1?) (krzysiek.pawlik.people@home@127.0.0.1)
-  by matrix01.home.net.pl with SMTP; Thu, 30 Mar 2006 12:55:54 -0000
+  by matrix01.home.net.pl with SMTP; Thu, 30 Mar 2006 14:18:34 -0000
 User-Agent: Mail/News 1.5 (X11/20060321)
 To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <442BD562.3030207@people.pl>
 X-Enigmail-Version: 0.94.0.0
 OpenPGP: id=BC555551
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18196>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig5E2E16DB9D1202917CEA81BE
+Content-Type: multipart/mixed;
+ boundary="------------070603090900010709000801"
 
 This is a multi-part message in MIME format.
---------------030007070600020302090307
+--------------070603090900010709000801
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Krzysiek Pawlik wrote:
+> Comments, suggestions?
 
+Broken when there are no tags. Attached patch fixes it.
 
-- From `cg-push --long-help`:
-
-- -t TAG::
-        Tells cg-push to also push the given tag. Note that in the
-        future, cg-push should push tags automatically. Also note
-        that even if you pass `cg-push` the '-t' arguments, your
-        HEAD is still pushed as well in addition to the tags.
-
-One of possible ways of doing it is in attached patch. Comments,
-suggestions?
-
-- --
+--=20
 Krzysiek Pawlik (Nelchael)
 RLU #322999 GPG Key ID: 0xBC555551
+
+
+--------------070603090900010709000801
+Content-Type: text/plain;
+ name="fix-no-tags.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="fix-no-tags.patch"
+
+Rml4IGF1dG8tcHVzaCBvZiB0YWdzIHdoZW4gdGhlcmUgYXJlIG5vIHRhZ3MuCgotLS0KY29t
+bWl0IGVmZjY3YmFmZTMzM2MyOGMyMzhmZWI2MTRmMDk4Yjk4NzIxNmZmYjAKdHJlZSA4NzU4
+YWU0YTJlYWNlOWM0ZmRmNjRlYzg5YzFmOTgzODcxMDk3YTc0CnBhcmVudCA2ZTU4MWNmNDNj
+Y2Y3MjM2ZWE0N2FjNGJhOWI1MWRmOWNkYTNjNjcxCmF1dGhvciBLcnp5c2llayBQYXdsaWsg
+PGtwYXdsaWtAc2lsdmVybWVkaWEucGw+IFRodSwgMzAgTWFyIDIwMDYgMTY6MTA6MjYgKzAy
+MDAKY29tbWl0dGVyIEtyenlzaWVrIFBhd2xpayA8a3Bhd2xpa0BzaWx2ZXJtZWRpYS5wbD4g
+VGh1LCAzMCBNYXIgMjAwNiAxNjoxMDoyNiArMDIwMAoKIGNnLXB1c2ggfCAgICAyICstCiAx
+IGZpbGVzIGNoYW5nZWQsIDEgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYg
+LS1naXQgYS9jZy1wdXNoIGIvY2ctcHVzaAppbmRleCA4NjVjYmQ1Li40MDAxNmMxIDEwMDc1
+NQotLS0gYS9jZy1wdXNoCisrKyBiL2NnLXB1c2gKQEAgLTYwLDcgKzYwLDcgQEAgaWYgWyAi
+JHthdXRvX3B1c2hfdGFnc30iID0gInllcyIgXTsgdGhlbgogCWlmIFsgISAtZCAiJF9naXQv
+Y29naXRvLXRhZ3MtcHVzaGVkIiBdOyB0aGVuCiAJCW1rZGlyICIkX2dpdC9jb2dpdG8tdGFn
+cy1wdXNoZWQiIHx8IGRpZSAiY2FuJ3QgY3JlYXRlIGNhY2hlIGZvciBwdXNoZWQgdGFncyIK
+IAlmaQotCWZvciBpIGluIGBjZy10YWctbHMgfCBhd2sgJ3twcmludCAkMX0nYDsgZG8KKwlm
+b3IgaSBpbiBgY2ctdGFnLWxzIDI+IC9kZXYvbnVsbCB8IGF3ayAne3ByaW50ICQxfSdgOyBk
+bwogCQlpZiBbICEgLWYgIiRfZ2l0L2NvZ2l0by10YWdzLXB1c2hlZC8ke2l9IiBdOyB0aGVu
+CiAJCQllY2hvICJBZGRpbmcgJHtpfSB0byBsaXN0IG9mIHRhZ3MgdG8gcHVzaCIKIAkJCXRh
+Z3NbJHsjdGFnc1tAXX1dPSJyZWZzL3RhZ3MvJHtpfSIKCgoMCiEtLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tZmxpcC0KCgo=
+--------------070603090900010709000801--
+
+--------------enig5E2E16DB9D1202917CEA81BE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.2.2 (GNU/Linux)
 
-iD8DBQFEK9Vigo/w9rxVVVERAvXkAJ42ESjs3REY0ECqIYlbz+9WX/3+ZQCfSQs/
-B4X6U2io0Wq0/0oiolpUW1g=
-=3ZR7
+iD8DBQFEK+jCgo/w9rxVVVERAlUUAJ9a0wXfjn4iUrLNtxqDgBcAfacHfQCfYNZf
+n6E/WCXxYbvsS1FZVlUxH5Q=
+=2mv5
 -----END PGP SIGNATURE-----
 
---------------030007070600020302090307
-Content-Type: text/plain;
- name="cg-push-tags.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="cg-push-tags.patch"
-
-QWJpbGl0eSB0byBhdXRvbWF0aWNhbHkgcHVzaCB0YWdzIHRvIHJlbW90ZSByZXBvc2l0b3Jp
-ZXMuCgotLS0KY29tbWl0IDZlNTgxY2Y0M2NjZjcyMzZlYTQ3YWM0YmE5YjUxZGY5Y2RhM2M2
-NzEKdHJlZSBiNDQwY2I4ZTQ2MjljNWM3N2UzOGZiNjE3OTk5MmI1MmVkZjhjODYxCnBhcmVu
-dCA4OTFjNmQ4NWYzOGEzMjZlOTFkNjI5MDZlMTY5NmEzOGQyOGZiMTA1CmF1dGhvciBLcnp5
-c2llayBQYXdsaWsgPGtwYXdsaWtAc2lsdmVybWVkaWEucGw+IFRodSwgMzAgTWFyIDIwMDYg
-MTQ6NDg6MzYgKzAyMDAKY29tbWl0dGVyIEtyenlzaWVrIFBhd2xpayA8a3Bhd2xpa0BzaWx2
-ZXJtZWRpYS5wbD4gVGh1LCAzMCBNYXIgMjAwNiAxNDo0ODozNiArMDIwMAoKIGNnLXB1c2gg
-fCAgIDE1ICsrKysrKysrKysrKysrKwogMSBmaWxlcyBjaGFuZ2VkLCAxNSBpbnNlcnRpb25z
-KCspLCAwIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2NnLXB1c2ggYi9jZy1wdXNoCmlu
-ZGV4IDQzMzJiMjguLjg2NWNiZDUgMTAwNzU1Ci0tLSBhL2NnLXB1c2gKKysrIGIvY2ctcHVz
-aApAQCAtNDMsMTcgKzQzLDMyIEBAIHNlbmRfcGFja191cGRhdGUoKQogCiBsb2NicmFuY2g9
-IiRfZ2l0X2hlYWQiCiB0YWdzPSgpCithdXRvX3B1c2hfdGFncz15ZXMKIHdoaWxlIG9wdHBh
-cnNlOyBkbwogCWlmIG9wdHBhcnNlIC1yPTsgdGhlbgogCQlsb2NicmFuY2g9IiRPUFRBUkci
-CiAJCVsgIiQoY2ctb2JqZWN0LWlkIC1jICIkbG9jYnJhbmNoIikiIF0gfHwgZXhpdCAxCiAJ
-ZWxpZiBvcHRwYXJzZSAtdD07IHRoZW4KIAkJdGFnc1skeyN0YWdzW0BdfV09InJlZnMvdGFn
-cy8kT1BUQVJHIgorCQlhdXRvX3B1c2hfdGFncz1ubwogCWVsc2UKIAkJb3B0ZmFpbAogCWZp
-CiBkb25lCiAKK2lmIFsgIiR7YXV0b19wdXNoX3RhZ3N9IiA9ICJ5ZXMiIF07IHRoZW4KKwlp
-ZiBbICEgLWQgIiRfZ2l0L2NvZ2l0by10YWdzLXB1c2hlZCIgXTsgdGhlbgorCQlta2RpciAi
-JF9naXQvY29naXRvLXRhZ3MtcHVzaGVkIiB8fCBkaWUgImNhbid0IGNyZWF0ZSBjYWNoZSBm
-b3IgcHVzaGVkIHRhZ3MiCisJZmkKKwlmb3IgaSBpbiBgY2ctdGFnLWxzIHwgYXdrICd7cHJp
-bnQgJDF9J2A7IGRvCisJCWlmIFsgISAtZiAiJF9naXQvY29naXRvLXRhZ3MtcHVzaGVkLyR7
-aX0iIF07IHRoZW4KKwkJCWVjaG8gIkFkZGluZyAke2l9IHRvIGxpc3Qgb2YgdGFncyB0byBw
-dXNoIgorCQkJdGFnc1skeyN0YWdzW0BdfV09InJlZnMvdGFncy8ke2l9IgorCQkJdG91Y2gg
-IiRfZ2l0L2NvZ2l0by10YWdzLXB1c2hlZC8ke2l9IgorCQlmaQorCWRvbmUKK2ZpCisKIFsg
-JHsjQVJHU1tAXX0gLWd0IDEgXSAmJiBkaWUgInRvbyBtYW55IGFyZ3VtZW50cywgSSBjYW4g
-cHVzaCBvbmx5IG9uZSBicmFuY2ggYXQgb25jZSIKIG5hbWU9IiR7QVJHU1swXX0iCiAKCgoM
-CiEtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tZmxpcC0KCgo=
---------------030007070600020302090307--
+--------------enig5E2E16DB9D1202917CEA81BE--
