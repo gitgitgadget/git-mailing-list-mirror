@@ -1,58 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: sending git-format-patch files with mailx.
-Date: Thu, 30 Mar 2006 01:14:45 -0800
-Message-ID: <7vodzo2t16.fsf@assigned-by-dhcp.cox.net>
-References: <4dd15d180603291236j4ca4654fvbe5b6375e8623081@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] cvsimport: use git-update-ref when updating
+Date: Thu, 30 Mar 2006 14:06:15 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0603301405160.18852@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 30 11:14:52 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Mar 30 14:06:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOtEx-0006NR-HI
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 11:14:51 +0200
+	id 1FOvv2-0005Oq-SA
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 14:06:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932125AbWC3JOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 04:14:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932128AbWC3JOs
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 04:14:48 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:33761 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932125AbWC3JOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Mar 2006 04:14:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060330091447.RUEC20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 30 Mar 2006 04:14:47 -0500
-To: "David Ho" <davidkwho@gmail.com>
-In-Reply-To: <4dd15d180603291236j4ca4654fvbe5b6375e8623081@mail.gmail.com>
-	(David Ho's message of "Wed, 29 Mar 2006 15:36:17 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932186AbWC3MGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 07:06:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbWC3MGU
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 07:06:20 -0500
+Received: from wrzx35.rz.uni-wuerzburg.de ([132.187.3.35]:55695 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932186AbWC3MGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Mar 2006 07:06:19 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id 119B3EA0;
+	Thu, 30 Mar 2006 14:06:16 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 05237ACD;
+	Thu, 30 Mar 2006 14:06:16 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E3AFEA73;
+	Thu, 30 Mar 2006 14:06:15 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18193>
 
-"David Ho" <davidkwho@gmail.com> writes:
 
-> Very stupid question.
->
-> I have patches created by git-format-patch.  However I suppose I can
-> send it off directly using mailx, but I have a hard time figuring how
-> this is done.
->
-> Someone here can probably answer this in a second.
+This simplifies code, and also fixes a subtle bug: when importing in a
+shared repository, where another user last imported from CVS, cvsimport
+used to complain that it could not open <branch> for update.
 
-Perhaps:
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-	$ mailx -s 'my subject' upstream@maintainer.example.com
-	~r 0001-my-patch.txt
+---
 
-(that's tilde r).
+ git-cvsimport.perl |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
-But I thought we had a command for that: git-send-email.  I
-admit I haven't used it for anything real, though, since I do
-not have an upstream maintainer anymore.
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 3728294..957af13 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -15,6 +15,7 @@ # You can change that with the '-o' opti
+ 
+ use strict;
+ use warnings;
++use Fcntl;
+ use Getopt::Std;
+ use File::Spec;
+ use File::Temp qw(tempfile);
+@@ -677,11 +678,7 @@ my $commit = sub {
+ 	waitpid($pid,0);
+ 	die "Error running git-commit-tree: $?\n" if $?;
+ 
+-	open(C,">$git_dir/refs/heads/$branch")
+-		or die "Cannot open branch $branch for update: $!\n";
+-	print C "$cid\n"
+-		or die "Cannot write branch $branch for update: $!\n";
+-	close(C)
++	system("git-update-ref refs/heads/$branch $cid") == 0
+ 		or die "Cannot write branch $branch for update: $!\n";
+ 
+ 	if($tag) {
