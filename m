@@ -1,52 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Mark Wooding <mdw@distorted.org.uk>
 Subject: Re: [PATCH] gitk: Use git wrapper to run git-ls-remote.
-Date: Thu, 30 Mar 2006 10:08:02 -0800
-Message-ID: <7v8xqr3iwt.fsf@assigned-by-dhcp.cox.net>
-References: <20060330123151.25779.73775.stgit@metalzone.distorted.org.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 30 20:08:12 2006
+Date: Thu, 30 Mar 2006 18:26:03 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrne2o8lr.l0.mdw@metalzone.distorted.org.uk>
+References: <20060330123151.25779.73775.stgit@metalzone.distorted.org.uk> <7v8xqr3iwt.fsf@assigned-by-dhcp.cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 30 20:26:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FP1Z3-00032G-9b
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 20:08:11 +0200
+	id 1FP1qY-0006Bl-CK
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 20:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbWC3SIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 13:08:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbWC3SIF
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 13:08:05 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:46845 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751350AbWC3SIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Mar 2006 13:08:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060330180803.NWHB17838.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 30 Mar 2006 13:08:03 -0500
-To: Mark Wooding <mdw@distorted.org.uk>
-In-Reply-To: <20060330123151.25779.73775.stgit@metalzone.distorted.org.uk>
-	(Mark Wooding's message of "Thu, 30 Mar 2006 13:31:51 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751359AbWC3S0L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 13:26:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbWC3S0L
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 13:26:11 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:50545 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1751359AbWC3S0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Mar 2006 13:26:09 -0500
+Received: (qmail 4452 invoked by uid 110); 30 Mar 2006 18:26:03 -0000
+To: git@vger.kernel.org
+Received: (qmail 4439 invoked by uid 9); 30 Mar 2006 18:26:03 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1143743163 4437 172.29.199.2 (30 Mar 2006 18:26:03 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Thu, 30 Mar 2006 18:26:03 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18202>
 
-Mark Wooding <mdw@distorted.org.uk> writes:
+Junio C Hamano <junkio@cox.net> wrote:
 
-> From: Mark Wooding <mdw@distorted.org.uk>
->
-> For some reason, the Cygwin Tcl's `exec' command has trouble running
-> scripts...
+> Does anybody know what is going on?
 
-Yup, I've seen this and have a "personal edition" workaround
-exactly like yours.  I haven't bothered to put it in even "pu",
-because I am reluctant to add an workaround to a problem I do
-not understand (and I haven't bothered to try understanding the
-problem which happens only on Windows ;-).
+I'll try staring at the Tcl source code some time.  I'm rather too busy
+tonight, though.
 
-Does anybody know what is going on?
+There's also some very strange geometry management oddness going on in
+gitk.  I'll try to sort that out too.
+
+-- [mdw]
