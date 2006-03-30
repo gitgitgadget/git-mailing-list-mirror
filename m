@@ -1,86 +1,56 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Possible --boundary bug
-Date: Thu, 30 Mar 2006 20:34:19 +0200
-Message-ID: <e5bfff550603301034r58b38500ie5897ed06fce6e9a@mail.gmail.com>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: [PATCH] gitk: Use git wrapper to run git-ls-remote.
+Date: Thu, 30 Mar 2006 15:13:43 -0500
+Message-ID: <20060330201343.GH28682@trixie.casa.cgf.cx>
+References: <20060330123151.25779.73775.stgit@metalzone.distorted.org.uk> <7v8xqr3iwt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 30 20:34:38 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Mar 30 22:13:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FP1yS-0007ds-TF
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 20:34:25 +0200
+	id 1FP3Wi-0008GZ-5A
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 22:13:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbWC3SeW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 13:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751364AbWC3SeW
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 13:34:22 -0500
-Received: from wproxy.gmail.com ([64.233.184.234]:57050 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751316AbWC3SeW convert rfc822-to-8bit
+	id S1750790AbWC3UNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 15:13:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWC3UNq
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 15:13:46 -0500
+Received: from pool-71-248-179-247.bstnma.fios.verizon.net ([71.248.179.247]:58496
+	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1750790AbWC3UNq
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Mar 2006 13:34:22 -0500
-Received: by wproxy.gmail.com with SMTP id 58so73460wri
-        for <git@vger.kernel.org>; Thu, 30 Mar 2006 10:34:21 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=b/1ElVwvVb7bCjLKisN6u/hMEopag4QCNU9q7bt9LcYBFPn+YZw9X9UPB5OIiwALcs51+VjMeNVUdPoFoJWUg2Al45OI/R1/L7OdFba2ZpAeNmAU1K1lgWHtZKYFUQBzRyArmQ9K2csAPS6qSNRuSr5uL786xV8yehDKBSm4taM=
-Received: by 10.65.216.18 with SMTP id t18mr541333qbq;
-        Thu, 30 Mar 2006 10:34:21 -0800 (PST)
-Received: by 10.65.163.20 with HTTP; Thu, 30 Mar 2006 10:34:19 -0800 (PST)
-To: junkio@cox.net
+	Thu, 30 Mar 2006 15:13:46 -0500
+Received: by cgf.cx (Postfix, from userid 201)
+	id 9B71A13C08F; Thu, 30 Mar 2006 15:13:43 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>,
+	Mark Wooding <mdw@distorted.org.uk>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7v8xqr3iwt.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18204>
 
-Trying to convert qgit to use the new and cool --boundary option I
-found this one:
+On Thu, Mar 30, 2006 at 10:08:02AM -0800, Junio C Hamano wrote:
+>Mark Wooding <mdw@distorted.org.uk> writes:
+>
+>> From: Mark Wooding <mdw@distorted.org.uk>
+>>
+>> For some reason, the Cygwin Tcl's `exec' command has trouble running
+>> scripts...
+>
+>Yup, I've seen this and have a "personal edition" workaround
+>exactly like yours.  I haven't bothered to put it in even "pu",
+>because I am reluctant to add an workaround to a problem I do
+>not understand (and I haven't bothered to try understanding the
+>problem which happens only on Windows ;-).
+>
+>Does anybody know what is going on?
 
->From git tree
+Currently, Cygwin's tcl is a pure windows version which uses
+CreateProcess to run stuff.  It doesn't know about scripts and possibly
+doesn't even know about cygwin paths.
 
-$ git-rev-list --boundary --topo-order --parents 5aa44d5..ab57c8d |
-grep eb38cc689e8
--e646de0d14bac20ef6e156c1742b9e62fb0b9020
-eb38cc689e84a8fd01c1856e889fe8d3b4f1bfb4
-4b953cdc04fec8783e2c654a671005492fda9b01
-5ca5396c9ecba947c8faac7673195d309a6ba2ea
-eb38cc689e84a8fd01c1856e889fe8d3b4f1bfb4
-
-and also
-
-$ git-rev-list --boundary --topo-order --parents 5aa44d5..ab57c8d |
-grep c64965750
-8c0db2f5193153ea8a51bb45b0512c5a3889023b
-21a02335f821c89a989cf0b533d2ae0adb6da16e
-c649657501bada28794a30102d9c13cc28ca0e5e
-
-But perhaps correct output should be:
-
-$ git-rev-list --boundary --topo-order --parents 5aa44d5..ab57c8d |
-grep eb38cc689e8
--e646de0d14bac20ef6e156c1742b9e62fb0b9020
-eb38cc689e84a8fd01c1856e889fe8d3b4f1bfb4
--4b953cdc04fec8783e2c654a671005492fda9b01
-5ca5396c9ecba947c8faac7673195d309a6ba2ea
-eb38cc689e84a8fd01c1856e889fe8d3b4f1bfb4
-
-and
-
-$ git-rev-list --boundary --topo-order --parents 5aa44d5..ab57c8d |
-grep c64965750
--8c0db2f5193153ea8a51bb45b0512c5a3889023b
-21a02335f821c89a989cf0b533d2ae0adb6da16e
-c649657501bada28794a30102d9c13cc28ca0e5e
-
-It seems the '-' flag is mistakenly missing because of boundary  revs:
-
-c649657501bada28794a30102d9c13cc28ca0e5e and
-eb38cc689e84a8fd01c1856e889fe8d3b4f1bfb4
-
-
-Marco
+cgf
