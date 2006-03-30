@@ -1,68 +1,58 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] contrib/git-svn: force GIT_DIR to an absolute path
-Date: Wed, 29 Mar 2006 22:37:18 -0800
-Message-ID: <1143700638461-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Mar 30 08:37:34 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: sending git-format-patch files with mailx.
+Date: Thu, 30 Mar 2006 01:14:45 -0800
+Message-ID: <7vodzo2t16.fsf@assigned-by-dhcp.cox.net>
+References: <4dd15d180603291236j4ca4654fvbe5b6375e8623081@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 30 11:14:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOqmZ-0001mw-8o
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 08:37:23 +0200
+	id 1FOtEx-0006NR-HI
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 11:14:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932072AbWC3GhU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 01:37:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932073AbWC3GhU
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 01:37:20 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:55741 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S932072AbWC3GhT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Mar 2006 01:37:19 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 4AB1E2DC035;
-	Wed, 29 Mar 2006 22:37:18 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>, <git@vger.kernel.org>
-X-Mailer: git-send-email
+	id S932125AbWC3JOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 04:14:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932128AbWC3JOs
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 04:14:48 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:33761 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932125AbWC3JOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Mar 2006 04:14:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060330091447.RUEC20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 30 Mar 2006 04:14:47 -0500
+To: "David Ho" <davidkwho@gmail.com>
+In-Reply-To: <4dd15d180603291236j4ca4654fvbe5b6375e8623081@mail.gmail.com>
+	(David Ho's message of "Wed, 29 Mar 2006 15:36:17 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18192>
 
-We chdir internally, so we need a consistent GIT_DIR variable.
+"David Ho" <davidkwho@gmail.com> writes:
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> Very stupid question.
+>
+> I have patches created by git-format-patch.  However I suppose I can
+> send it off directly using mailx, but I have a hard time figuring how
+> this is done.
+>
+> Someone here can probably answer this in a second.
 
----
+Perhaps:
 
- contrib/git-svn/git-svn.perl |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+	$ mailx -s 'my subject' upstream@maintainer.example.com
+	~r 0001-my-patch.txt
 
-40a9f8f87bbf041966c61431536186d03acefb50
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 3e5733e..59dd504 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -9,7 +9,11 @@ use vars qw/	$AUTHOR $VERSION
- 		$GIT_DIR $REV_DIR/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
- $VERSION = '0.11.0';
--$GIT_DIR = $ENV{GIT_DIR} || "$ENV{PWD}/.git";
-+
-+use Cwd qw/abs_path/;
-+$GIT_DIR = abs_path($ENV{GIT_DIR} || '.git');
-+$ENV{GIT_DIR} = $GIT_DIR;
-+
- # make sure the svn binary gives consistent output between locales and TZs:
- $ENV{TZ} = 'UTC';
- $ENV{LC_ALL} = 'C';
-@@ -69,7 +73,6 @@ GetOptions(%opts, 'help|H|h' => \$_help,
- 
- $GIT_SVN ||= $ENV{GIT_SVN_ID} || 'git-svn';
- $GIT_SVN_INDEX = "$GIT_DIR/$GIT_SVN/index";
--$ENV{GIT_DIR} ||= $GIT_DIR;
- $SVN_URL = undef;
- $REV_DIR = "$GIT_DIR/$GIT_SVN/revs";
- $SVN_WC = "$GIT_DIR/$GIT_SVN/tree";
--- 
-1.3.0.rc1.g709a5
+(that's tilde r).
+
+But I thought we had a command for that: git-send-email.  I
+admit I haven't used it for anything real, though, since I do
+not have an upstream maintainer anymore.
