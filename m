@@ -1,49 +1,68 @@
-From: "David Ho" <davidkwho@gmail.com>
-Subject: sending git-format-patch files with mailx.
-Date: Wed, 29 Mar 2006 15:36:17 -0500
-Message-ID: <4dd15d180603291236j4ca4654fvbe5b6375e8623081@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Rebase semantic and cherry-pick
+Date: Thu, 30 Mar 2006 03:59:16 +0200
+Organization: At home
+Message-ID: <e0fe1h$d5r$1@sea.gmane.org>
+References: <1143596622.2481.10.camel@mattlaptop.metaesthetics.net> <Pine.LNX.4.64.0603281749060.15714@g5.osdl.org> <7vlkutc36w.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603291102440.15714@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Mar 29 22:36:38 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Mar 30 03:59:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FOhOy-0003Hc-5F
-	for gcvg-git@gmane.org; Wed, 29 Mar 2006 22:36:24 +0200
+	id 1FOmRa-0008NS-Jz
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 03:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750913AbWC2UgT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Mar 2006 15:36:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbWC2UgT
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 15:36:19 -0500
-Received: from wproxy.gmail.com ([64.233.184.225]:38288 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750839AbWC2UgS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Mar 2006 15:36:18 -0500
-Received: by wproxy.gmail.com with SMTP id 57so267531wri
-        for <git@vger.kernel.org>; Wed, 29 Mar 2006 12:36:18 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=TmyllPWsW7mRR/ReWXUQbMboYKQsFPEsHeVVw8MIWlK5B3jtuxFd+7FIJt6nSQbUrAJ2gZGot/RdGK/ueXp0PguFHQdhC4+ghcVtsZfgMjqyZMDGFyYVj4m3+xdBeXbzrnbIFjOzAS/gcGzyHGlJqXXXA6pPyo0CU4SXLlxzd9w=
-Received: by 10.64.181.15 with SMTP id d15mr20957qbf;
-        Wed, 29 Mar 2006 12:36:17 -0800 (PST)
-Received: by 10.65.22.11 with HTTP; Wed, 29 Mar 2006 12:36:17 -0800 (PST)
+	id S1751432AbWC3B7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Mar 2006 20:59:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbWC3B7X
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Mar 2006 20:59:23 -0500
+Received: from main.gmane.org ([80.91.229.2]:29090 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751432AbWC3B7X (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Mar 2006 20:59:23 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FOmRS-0008Ls-5K
+	for git@vger.kernel.org; Thu, 30 Mar 2006 03:59:18 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Mar 2006 03:59:18 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Mar 2006 03:59:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18183>
 
-Very stupid question.
+Linus Torvalds wrote:
 
-I have patches created by git-format-patch.  However I suppose I can
-send it off directly using mailx, but I have a hard time figuring how
-this is done.
+> In contrast, here's an alternate workflow that is much easier to explain,
+> and doesn't involve "rebase" at all:
+> 
+> git checkout his
+> git cherry-pick origin..mine
+[...] 
+> Now, "git cherry-pick" doesn't actually support the above format, and I'm
+> not saying that the "git rebase" name itself is evil. I think we could fix
+> "git rebase" to work better, but the semantics - the way they are
+> _designed_ right now - are just horrible.
 
-Someone here can probably answer this in a second.
+Perhaps if possible also have
 
-Thanks in advance,
-David
+git cherry-pick --whole-branch branchname
+
+meaning
+
+git cherry-pick branchname:begining..branchname:HEAD
+
+-- 
+Jakub Narebski
