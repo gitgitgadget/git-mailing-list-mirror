@@ -1,70 +1,64 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Gitk strangeness..
-Date: Thu, 30 Mar 2006 22:57:59 +0200
-Message-ID: <20060330205759.GA27131@steel.home>
-References: <7v64lzo1j7.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0603271802030.15714@g5.osdl.org> <17448.40941.256361.866229@cargo.ozlabs.ibm.com> <7vr74nmg7e.fsf@assigned-by-dhcp.cox.net> <17448.48143.764989.649462@cargo.ozlabs.ibm.com> <7vmzfbm8m0.fsf@assigned-by-dhcp.cox.net> <17448.54558.865097.519248@cargo.ozlabs.ibm.com> <7vzmjbj9a1.fsf@assigned-by-dhcp.cox.net> <17449.48630.370867.10251@cargo.ozlabs.ibm.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Matt McCutchen <hashproduct@verizon.net>
+Subject: Re: How to switch kernel customizations from 2.6.15.6 to 2.6.16?
+Date: Thu, 30 Mar 2006 16:50:59 -0500
+Message-ID: <1143755459.2487.12.camel@mattlaptop.metaesthetics.net>
+References: <1143596622.2481.10.camel@mattlaptop.metaesthetics.net>
+	<7vmzfac7gn.fsf@assigned-by-dhcp.cox.net>
+	<1143687710.2524.1.camel@mattlaptop.metaesthetics.net>
+	<Pine.LNX.4.64.0603300919280.27203@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Mar 30 22:58:50 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 30 23:51:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FP4E5-0007L5-Ow
-	for gcvg-git@gmane.org; Thu, 30 Mar 2006 22:58:42 +0200
+	id 1FP52o-0008Cc-Ug
+	for gcvg-git@gmane.org; Thu, 30 Mar 2006 23:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750895AbWC3U6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 15:58:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbWC3U6i
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 15:58:38 -0500
-Received: from devrace.com ([198.63.210.113]:22283 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1750894AbWC3U6i (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Mar 2006 15:58:38 -0500
-Received: from tigra.home (p54A0538A.dip.t-dialin.net [84.160.83.138])
-	(authenticated bits=0)
-	by devrace.com (8.12.11/8.12.11) with ESMTP id k2UKw8Ej030821;
-	Thu, 30 Mar 2006 14:58:20 -0600 (CST)
-	(envelope-from fork0@users.sourceforge.net)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1FP4DQ-00066t-00; Thu, 30 Mar 2006 22:58:00 +0200
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FP4DP-0007ZW-Rd; Thu, 30 Mar 2006 22:57:59 +0200
-To: Paul Mackerras <paulus@samba.org>
-Content-Disposition: inline
-In-Reply-To: <17449.48630.370867.10251@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, score=1.9 required=4.5 tests=AWL,BAYES_50,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
+	id S1751014AbWC3VvD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 16:51:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbWC3VvD
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 16:51:03 -0500
+Received: from vms040pub.verizon.net ([206.46.252.40]:19944 "EHLO
+	vms040pub.verizon.net") by vger.kernel.org with ESMTP
+	id S1751014AbWC3VvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Mar 2006 16:51:01 -0500
+Received: from [192.168.1.5] ([68.239.98.224])
+ by vms040.mailsrvcs.net (Sun Java System Messaging Server 6.2-4.02 (built Sep
+ 9 2005)) with ESMTPA id <0IWY00JM8ND0UPE6@vms040.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 30 Mar 2006 15:51:01 -0600 (CST)
+In-reply-to: <Pine.LNX.4.64.0603300919280.27203@g5.osdl.org>
+To: Linus Torvalds <torvalds@osdl.org>
+X-Mailer: Evolution 2.6.0 (2.6.0-1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18207>
 
-Paul Mackerras, Wed, Mar 29, 2006 00:51:34 +0200:
-> Junio C Hamano writes:
-> 
-> > How about this alternative patch, then?  It turned out to be
-> > quite convoluted as I feared.
-> 
-> That's brilliant.  Thank you!  With the patch to gitk below, the
-> graph display on Linus' example looks much saner.
-> 
+On Thu, 2006-03-30 at 09:32 -0800, Linus Torvalds wrote:
+> The beauty of git should be (and maybe that's not entirely true simply 
+> because of practical concerns) that there really need not be any notion of 
+> "more official".
 
-Well... Could you take a look at these screenshots, please?
-http://home.arcor.de/fork0/bug/gitk1.jpg (this one is BIG, 400k, 2456x949)
-http://home.arcor.de/fork0/bug/gitk2.jpg
-http://home.arcor.de/fork0/bug/gitk3.jpg
+I understand this, and it is one of several reasons why I prefer git to
+other version control systems.  However, I thought there would be a
+single official kernel repository even if git didn't require it.  Junio
+explained to me that both yours and the stable one are official for
+different purposes.  I think I will use the stable one because it is
+current enough for my needs.
 
-The compressed repository is being uploaded there:
+>  - the more fundamental one is that when you start mixing branches, you 
+>    have to be very careful if you expect the upstream projects to pull the 
+>    changes _back_. [...]
 
-http://home.arcor.de/fork0/bug/ggg.tar.bz2 (~6Mb)
+True.  It might help several branches coordinate development if a commit
+could be marked as "equivalent" to another commit so that, if both were
+involved in a merge, one could be thrown out.
 
-The old gitk produced a denser graph, which wasn't perfect too, but
-had a higher count of visible commit titles (and this is two-monitor
-setup, too).
+-- 
+Matt McCutchen
+hashproduct@verizon.net
+http://hashproduct.metaesthetics.net/
