@@ -1,76 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFC 2/2] Make path-limiting be incremental when possible.
-Date: Fri, 31 Mar 2006 00:28:58 -0800
-Message-ID: <7v1wwjvwz9.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0603301648530.27203@g5.osdl.org>
-	<Pine.LNX.4.64.0603301652531.27203@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cvsimport: use git-update-ref when updating
+Date: Fri, 31 Mar 2006 12:08:11 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0603311207270.20122@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0603301405160.18852@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vk6ab1iy2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 31 10:29:10 2006
+X-From: git-owner@vger.kernel.org Fri Mar 31 12:10:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPF0C-0006vj-KM
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 10:29:04 +0200
+	id 1FPGZN-00074R-SQ
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 12:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751269AbWCaI3B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 03:29:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWCaI3A
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 03:29:00 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:54979 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751269AbWCaI3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Mar 2006 03:29:00 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060331082859.QEBA20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 31 Mar 2006 03:28:59 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0603301652531.27203@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 30 Mar 2006 17:05:25 -0800 (PST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932077AbWCaKIu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 05:08:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932095AbWCaKIS
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 05:08:18 -0500
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:50890 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932077AbWCaKIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Mar 2006 05:08:12 -0500
+Received: from virusscan.mail (mail03.mail [172.25.1.102])
+	by mailrelay.mail (Postfix) with ESMTP id B51AD1D46;
+	Fri, 31 Mar 2006 12:08:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id A8BB4A88;
+	Fri, 31 Mar 2006 12:08:11 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 8C6C59BE;
+	Fri, 31 Mar 2006 12:08:11 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6ab1iy2.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18224>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi,
 
-> This is an absolutely huge deal for anything like "git log -- <pathname>", 
-> but also for some things that we don't do yet - like the "find where 
-> things changed" logic I've described elsewhere, where we want to find the 
-> previous revision that changed a file.
->...
-> Btw, don't even bother testing this with the git archive. git itself is so 
-> small that parsing the whole revision history for it takes about a second 
-> even with path limiting.
+On Thu, 30 Mar 2006, Junio C Hamano wrote:
 
-By the way, I forgot to praise you ;-).  
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > This simplifies code, and also fixes a subtle bug: when importing in a
+> > shared repository, where another user last imported from CVS, cvsimport
+> > used to complain that it could not open <branch> for update.
+> 
+> The second hunk look sensible but I do not know about "use Fcntl"
+> since I do not see anything you are adding that starts to use it...
 
-Even on a fast machine, the old one was not very useful, but
-this one is _instantaneous_.  Very good job.
+O_EXCL. Without "use Fcntl;" perl says I am not allowed to use bareword 
+things in strict mode or some such.
 
-$ PAGER=cat GIT_DIR=/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
-  /usr/bin/time git log -1 --pretty=short -- drivers/
-commit ce362c009250340358a7221f3cdb7954cbf19c01
-Merge: 064c94f... cd7a920...
-Author: Linus Torvalds <torvalds@g5.osdl.org>
-
-    Merge git://git.kernel.org/pub/scm/linux/kernel/git/kyle/parisc-2.6
-
-15.44user 0.19system 0:25.11elapsed 62%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+18050minor)pagefaults 0swaps
-
-$ PAGER=cat GIT_DIR=/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
-  /usr/bin/time ./git.pu log -1 --pretty=short -- drivers/
-commit ce362c009250340358a7221f3cdb7954cbf19c01
-Merge: 064c94f... cd7a920...
-Author: Linus Torvalds <torvalds@g5.osdl.org>
-
-    Merge git://git.kernel.org/pub/scm/linux/kernel/git/kyle/parisc-2.6
-
-0.00user 0.00system 0:00.00elapsed 50%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+388minor)pagefaults 0swaps
+Ciao,
+Dscho
