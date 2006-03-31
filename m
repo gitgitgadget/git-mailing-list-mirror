@@ -1,69 +1,96 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: windows problems summary
-Date: Fri, 31 Mar 2006 12:25:47 -0700
-Message-ID: <m1acb6a01w.fsf@ebiederm.dsl.xmission.com>
-References: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH/RFC 2/2] Make path-limiting be incremental when possible.
+Date: Fri, 31 Mar 2006 11:39:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603311135290.27203@g5.osdl.org>
+References: <Pine.LNX.4.64.0603301648530.27203@g5.osdl.org>
+ <Pine.LNX.4.64.0603301652531.27203@g5.osdl.org> <Pine.LNX.4.64.0603302153350.27203@g5.osdl.org>
+ <7v3bgzxgbg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 31 21:26:57 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 31 21:39:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPPGq-0000Qg-Hn
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 21:26:56 +0200
+	id 1FPPT5-00039j-MD
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 21:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbWCaT0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 14:26:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbWCaT0i
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 14:26:38 -0500
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:11716 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1751435AbWCaT0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Mar 2006 14:26:37 -0500
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k2VJPm3A015620;
-	Fri, 31 Mar 2006 12:25:48 -0700
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k2VJPm6A015619;
-	Fri, 31 Mar 2006 12:25:48 -0700
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0603020649u99a2035i3b8adde8ddce9410@mail.gmail.com> (Alex
- Riesen's message of "Thu, 2 Mar 2006 15:49:24 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S932078AbWCaTjd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 14:39:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbWCaTjd
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 14:39:33 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:56536 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932078AbWCaTjc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Mar 2006 14:39:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2VJdSEX015239
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 31 Mar 2006 11:39:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2VJdRlm000901;
+	Fri, 31 Mar 2006 11:39:27 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bgzxgbg.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18229>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-> This is just to summarize all the problems which make porting to that
-> thing so boring. Maybe if we have them all on one page, it'd be easier
-> to locate the workarounds (it can be one thread, for example).
->
-> 1. opened and mmaped files can't be removed or renamed
->   (caused workaround with reading index in memory)
-> 2. command can safely contain only one argument
->   (breaks and complicates passing things between processes)
-> 3. no fork
->   (slows down and complicates passing things between processes)
-> 4. non-unix permissions model
->   (breaks x-attr)
-> 5. real slow filesystems and caching
->   (makes everything slow. I noticed I'm trying to avoid git status!).
->   Caused workaround with manual checkout)
-> 6. real slow program startup
->   (makes everything slow, eventually may cause everything being put
->   in one super-executable, just to avoid spawning new processes,
->   with all associated problems. Makes scripting harder)
->
-> I hope this message can be a start of a big porting thread,
-> even though it is only about windows at the moment.
 
-Not to forget make install gets confused when there
-is a file named INSTALL in the git directory.
+On Thu, 30 Mar 2006, Junio C Hamano wrote:
+> 
+> There already was a report that --boundary stuff is not quite
+> right, so what you are seeing might be that the new code exposes
+> its original breakage even more.  I haven't looked into the
+> breakage of the original version yet either, so I cannot really
+> say how your change breaks it.
 
-Eric
+[ Awake and thinking about this again ]
+
+No, I think the new breakage was just because I was being a stupid ass.
+
+When I converted get_revision() to do the parent parsing up at the top 
+instead of at the bottom, I just didn't think correctly about your new 
+BOUNDARY code, and my conversion for that was just wrong. Part of the "do 
+the parents early" code was also removing the current commit early, so 
+suddenly your BOUNDARY case for doing that thing was just removing some 
+other random commit instead, which was obviously wrong.
+
+The fix is trivial - with the new get_revision() organization, the 
+BOUNDARY case special-case actually goes away entirely, and this trivial 
+patch (on top of my 2/2 patch) should just fix it.
+
+At least it passes my tests again now, and looking at the code everything 
+seems sane.
+
+		Linus
+---
+diff --git a/revision.c b/revision.c
+index 0e3f074..753633e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -796,18 +796,6 @@ struct commit *get_revision(struct rev_i
+ 			if (revs->parents)
+ 				rewrite_parents(commit);
+ 		}
+-		/* More to go? */
+-		if (revs->max_count) {
+-			if (commit->object.flags & BOUNDARY) {
+-				/* this is already uninteresting,
+-				 * so there is no point popping its
+-				 * parents into the list.
+-				 */
+-				struct commit_list *it = revs->commits;
+-				revs->commits = it->next;
+-				free(it);
+-			}
+-		}
+ 		commit->object.flags |= SHOWN;
+ 		return commit;
+ 	} while (revs->commits);
