@@ -1,114 +1,76 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Possible --boundary bug
-Date: Thu, 30 Mar 2006 23:58:00 -0800
-Message-ID: <7v64lvvyev.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550603301034r58b38500ie5897ed06fce6e9a@mail.gmail.com>
-	<e5bfff550603301255j52c68963v4b8eebea697eeecf@mail.gmail.com>
+Subject: Re: [PATCH/RFC 2/2] Make path-limiting be incremental when possible.
+Date: Fri, 31 Mar 2006 00:28:58 -0800
+Message-ID: <7v1wwjvwz9.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0603301648530.27203@g5.osdl.org>
+	<Pine.LNX.4.64.0603301652531.27203@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Mar 31 09:58:18 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 31 10:29:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPEWG-0001y9-D7
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 09:58:08 +0200
+	id 1FPF0C-0006vj-KM
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 10:29:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbWCaH6E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 02:58:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbWCaH6E
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 02:58:04 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58062 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751258AbWCaH6C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Mar 2006 02:58:02 -0500
+	id S1751269AbWCaI3B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 03:29:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWCaI3A
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 03:29:00 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:54979 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751269AbWCaI3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Mar 2006 03:29:00 -0500
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060331075801.WXNV17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 31 Mar 2006 02:58:01 -0500
-To: "Marco Costalba" <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550603301255j52c68963v4b8eebea697eeecf@mail.gmail.com>
-	(Marco Costalba's message of "Thu, 30 Mar 2006 22:55:44 +0200")
+          id <20060331082859.QEBA20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 31 Mar 2006 03:28:59 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603301652531.27203@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 30 Mar 2006 17:05:25 -0800 (PST)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18223>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Sorry, the good description is below, please ignore the wrong previous one.
+> This is an absolutely huge deal for anything like "git log -- <pathname>", 
+> but also for some things that we don't do yet - like the "find where 
+> things changed" logic I've described elsewhere, where we want to find the 
+> previous revision that changed a file.
+>...
+> Btw, don't even bother testing this with the git archive. git itself is so 
+> small that parsing the whole revision history for it takes about a second 
+> even with path limiting.
 
-I think this patch should fix it.
+By the way, I forgot to praise you ;-).  
 
--- >8 --
-rev-list --boundary: fix re-injecting boundary commits.
+Even on a fast machine, the old one was not very useful, but
+this one is _instantaneous_.  Very good job.
 
-Marco reported that
+$ PAGER=cat GIT_DIR=/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
+  /usr/bin/time git log -1 --pretty=short -- drivers/
+commit ce362c009250340358a7221f3cdb7954cbf19c01
+Merge: 064c94f... cd7a920...
+Author: Linus Torvalds <torvalds@g5.osdl.org>
 
-	$ git rev-list --boundary --topo-order --parents 5aa44d5..ab57c8d
+    Merge git://git.kernel.org/pub/scm/linux/kernel/git/kyle/parisc-2.6
 
-misses these two boundary commits.
+15.44user 0.19system 0:25.11elapsed 62%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+18050minor)pagefaults 0swaps
 
-        c649657501bada28794a30102d9c13cc28ca0e5e
-        eb38cc689e84a8fd01c1856e889fe8d3b4f1bfb4
+$ PAGER=cat GIT_DIR=/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
+  /usr/bin/time ./git.pu log -1 --pretty=short -- drivers/
+commit ce362c009250340358a7221f3cdb7954cbf19c01
+Merge: 064c94f... cd7a920...
+Author: Linus Torvalds <torvalds@g5.osdl.org>
 
-Indeed, we can see that gitk shows these two commits at the
-bottom, because the --boundary code failed to output them.
+    Merge git://git.kernel.org/pub/scm/linux/kernel/git/kyle/parisc-2.6
 
-The code did not check to avoid pushing the same uninteresting
-commit twice to the result list.  I am not sure why this fixes
-the reported problem, but this seems to fix it.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/revision.c b/revision.c
-index abc8745..c2a95aa 100644
---- a/revision.c
-+++ b/revision.c
-@@ -420,24 +420,33 @@ static void limit_list(struct rev_info *
- 		p = &commit_list_insert(commit, p)->next;
- 	}
- 	if (revs->boundary) {
--		list = newlist;
--		while (list) {
-+		/* mark the ones that are on the result list first */
-+		for (list = newlist; list; list = list->next) {
- 			struct commit *commit = list->item;
-+			commit->object.flags |= TMP_MARK;
-+		}
-+		for (list = newlist; list; list = list->next) {
-+			struct commit *commit = list->item;
- 			struct object *obj = &commit->object;
--			struct commit_list *parent = commit->parents;
--			if (obj->flags & (UNINTERESTING|BOUNDARY)) {
--				list = list->next;
--				continue;
--			}
--			while (parent) {
-+			struct commit_list *parent;
-+			if (obj->flags & UNINTERESTING)
-+				continue;
-+			for (parent = commit->parents;
-+			     parent;
-+			     parent = parent->next) {
- 				struct commit *pcommit = parent->item;
--				parent = parent->next;
- 				if (!(pcommit->object.flags & UNINTERESTING))
- 					continue;
- 				pcommit->object.flags |= BOUNDARY;
-+				if (pcommit->object.flags & TMP_MARK)
-+					continue;
-+				pcommit->object.flags |= TMP_MARK;
- 				p = &commit_list_insert(pcommit, p)->next;
- 			}
--			list = list->next;
-+		}
-+		for (list = newlist; list; list = list->next) {
-+			struct commit *commit = list->item;
-+			commit->object.flags &= ~TMP_MARK;
- 		}
- 	}
- 	revs->commits = newlist;
+0.00user 0.00system 0:00.00elapsed 50%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+388minor)pagefaults 0swaps
