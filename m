@@ -1,74 +1,50 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH/RFC 2/2] Make path-limiting be incremental when possible.
-Date: Fri, 31 Mar 2006 11:44:51 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0603311139540.27203@g5.osdl.org>
+Date: Fri, 31 Mar 2006 12:35:41 -0800
+Message-ID: <7vfykyuzc2.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0603301648530.27203@g5.osdl.org>
- <Pine.LNX.4.64.0603301652531.27203@g5.osdl.org> <7v1wwjvwz9.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603301652531.27203@g5.osdl.org>
+	<Pine.LNX.4.64.0603302153350.27203@g5.osdl.org>
+	<7v3bgzxgbg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0603311135290.27203@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 31 21:45:13 2006
+X-From: git-owner@vger.kernel.org Fri Mar 31 22:39:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPPYK-0004HJ-08
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 21:45:00 +0200
+	id 1FPQOe-0005fl-2a
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 22:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932172AbWCaTo5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 14:44:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932248AbWCaTo5
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 14:44:57 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:40922 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932172AbWCaTo5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Mar 2006 14:44:57 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2VJiqEX015507
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 31 Mar 2006 11:44:53 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2VJipwU001107;
-	Fri, 31 Mar 2006 11:44:52 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wwjvwz9.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932192AbWCaUhN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 15:37:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932131AbWCaUhM
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 15:37:12 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:39125 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932110AbWCaUfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Mar 2006 15:35:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060331203542.BCZD3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 31 Mar 2006 15:35:42 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603311135290.27203@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 31 Mar 2006 11:39:26 -0800 (PST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18231>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> The fix is trivial - with the new get_revision() organization, the 
+> BOUNDARY case special-case actually goes away entirely, and this trivial 
+> patch (on top of my 2/2 patch) should just fix it.
 
-On Fri, 31 Mar 2006, Junio C Hamano wrote:
-
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > This is an absolutely huge deal for anything like "git log -- <pathname>", 
-> > but also for some things that we don't do yet - like the "find where 
-> > things changed" logic I've described elsewhere, where we want to find the 
-> > previous revision that changed a file.
-> >...
-> > Btw, don't even bother testing this with the git archive. git itself is so 
-> > small that parsing the whole revision history for it takes about a second 
-> > even with path limiting.
-> 
-> By the way, I forgot to praise you ;-).  
-> 
-> Even on a fast machine, the old one was not very useful, but
-> this one is _instantaneous_.  Very good job.
-
-Indeed. It's why I'd really like this to be merged before 1.3.0 - it moves 
-a certain class of problems from "it works" to "it's actually usable".
-
-Now, the _real_ usage I foresee (which just wasn't practical before) is 
-the interactive annotation thing - this won't help a _full_file_ annotate 
-(which usually needs to go back to the very first version of a file 
-anyway), but it should make it possible to play with an incremental one 
-(the "graphical git-whatchanged" kind).
-
-But even just the "git log" difference makes it worth it. 
-
-		Linus
+Yes, that is exactly the fix I have in "pu" -- I suspect you
+replied before getting to my response last night.
