@@ -1,103 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cvsimport: use git-update-ref when updating
-Date: Fri, 31 Mar 2006 13:14:45 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0603311310580.23287@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0603301405160.18852@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vk6ab1iy2.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0603311207270.20122@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060331103230.GB15159@hand.yhbt.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Possible --boundary bug
+Date: Fri, 31 Mar 2006 18:39:47 +0200
+Message-ID: <e5bfff550603310839u115eb06fj795ebc5cdf5bec24@mail.gmail.com>
+References: <e5bfff550603301034r58b38500ie5897ed06fce6e9a@mail.gmail.com>
+	 <e5bfff550603301255j52c68963v4b8eebea697eeecf@mail.gmail.com>
+	 <7v64lvvyev.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 31 13:14:59 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Paul Mackerras" <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Mar 31 18:40:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPHae-00048E-Up
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 13:14:53 +0200
+	id 1FPMfA-0005Dm-Ip
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 18:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbWCaLOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 06:14:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbWCaLOs
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 06:14:48 -0500
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43157 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750920AbWCaLOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Mar 2006 06:14:47 -0500
-Received: from virusscan.mail (mail04.mail [172.25.1.103])
-	by mailrelay.mail (Postfix) with ESMTP id 091821BC1;
-	Fri, 31 Mar 2006 13:14:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id F013561AB;
-	Fri, 31 Mar 2006 13:14:45 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id CF9E71BC1;
-	Fri, 31 Mar 2006 13:14:45 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20060331103230.GB15159@hand.yhbt.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750760AbWCaQjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 11:39:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbWCaQjs
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 11:39:48 -0500
+Received: from zproxy.gmail.com ([64.233.162.205]:10098 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750760AbWCaQjs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Mar 2006 11:39:48 -0500
+Received: by zproxy.gmail.com with SMTP id k1so888029nzf
+        for <git@vger.kernel.org>; Fri, 31 Mar 2006 08:39:47 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iAUowM7SVlvY92y8WqVGw99PhsG5v4mWDhgcFGZ+qUPDIlxyJzSrtL53Yk5hSQUI1bvcc57pq5dnYauVxJ8YRBCnM1DnEyms3fZVq6U07ZLlCbittWEEenEEpTsj2Yoq7ZFro+YPYFzLLUydpCX9WCpbgR6fpQe/rAuLZ0yP+Xk=
+Received: by 10.65.213.10 with SMTP id p10mr322210qbq;
+        Fri, 31 Mar 2006 08:39:47 -0800 (PST)
+Received: by 10.64.131.14 with HTTP; Fri, 31 Mar 2006 08:39:47 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7v64lvvyev.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18227>
 
-Hi,
+On 3/31/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Marco Costalba" <mcostalba@gmail.com> writes:
+>
+> > Sorry, the good description is below, please ignore the wrong previous one.
+>
+> I think this patch should fix it.
+>
 
-On Fri, 31 Mar 2006, Eric Wong wrote:
+Yes. It works for me.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> > 
-> > On Thu, 30 Mar 2006, Junio C Hamano wrote:
-> > 
-> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > > 
-> > > > This simplifies code, and also fixes a subtle bug: when importing in a
-> > > > shared repository, where another user last imported from CVS, cvsimport
-> > > > used to complain that it could not open <branch> for update.
-> > > 
-> > > The second hunk look sensible but I do not know about "use Fcntl"
-> > > since I do not see anything you are adding that starts to use it...
-> > 
-> > O_EXCL. Without "use Fcntl;" perl says I am not allowed to use bareword 
-> > things in strict mode or some such.
-> 
-> Huh?  I still don't see where O_EXCL is used.
-
-Yes. I did not make that point clear enough, I guess. My first approach 
-was to reimplement git-update-ref in perl, which worked well enough, until 
-I remembered that you could just call programs from perl :-)
-
-> > > > +       system("git-update-ref refs/heads/$branch $cid") == 0
-> 
-> Passing args to system() in list form is always preferable in case
-> there's a shell-unfriendly variable:
-> 
-> 	system("git-update-ref", "refs/heads/$branch", $cid) == 0
-
-Old habit dies hard.
-
----
-
- git-cvsimport.perl |    6 +-----
- 1 files changed, 1 insertions(+), 5 deletions(-)
-
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 3728294..fe6298b 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -677,11 +677,7 @@ my $commit = sub {
- 	waitpid($pid,0);
- 	die "Error running git-commit-tree: $?\n" if $?;
- 
--	open(C,">$git_dir/refs/heads/$branch")
--		or die "Cannot open branch $branch for update: $!\n";
--	print C "$cid\n"
--		or die "Cannot write branch $branch for update: $!\n";
--	close(C)
-+	system("git-update-ref", "refs/heads/$branch", $cid) == 0
- 		or die "Cannot write branch $branch for update: $!\n";
- 
- 	if($tag) {
+Thanks
+Marco
