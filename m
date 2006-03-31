@@ -1,53 +1,59 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Gitk strangeness..
-Date: Fri, 31 Mar 2006 10:46:34 +1100
-Message-ID: <17452.28122.129442.49226@cargo.ozlabs.ibm.com>
-References: <7v64lzo1j7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603271802030.15714@g5.osdl.org>
-	<17448.40941.256361.866229@cargo.ozlabs.ibm.com>
-	<7vr74nmg7e.fsf@assigned-by-dhcp.cox.net>
-	<17448.48143.764989.649462@cargo.ozlabs.ibm.com>
-	<7vmzfbm8m0.fsf@assigned-by-dhcp.cox.net>
-	<17448.54558.865097.519248@cargo.ozlabs.ibm.com>
-	<7vzmjbj9a1.fsf@assigned-by-dhcp.cox.net>
-	<17449.48630.370867.10251@cargo.ozlabs.ibm.com>
-	<20060330205759.GA27131@steel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Mar 31 01:46:46 2006
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH] cg-log: Remove unpleasant DEL characters.
+Date: Fri, 31 Mar 2006 01:08:13 +0100
+Message-ID: <20060331000813.18895.46855.stgit@metalzone.distorted.org.uk>
+X-From: git-owner@vger.kernel.org Fri Mar 31 02:08:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FP6qi-00019m-NE
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 01:46:45 +0200
+	id 1FP7Ba-0003nq-0h
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 02:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbWC3Xql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 18:46:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbWC3Xql
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 18:46:41 -0500
-Received: from ozlabs.org ([203.10.76.45]:26277 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1751156AbWC3Xql (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Mar 2006 18:46:41 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 064A3679EA; Fri, 31 Mar 2006 10:46:40 +1100 (EST)
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060330205759.GA27131@steel.home>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1751037AbWCaAIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Mar 2006 19:08:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbWCaAIP
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 19:08:15 -0500
+Received: from excessus.demon.co.uk ([83.105.60.35]:18547 "HELO
+	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
+	id S1751037AbWCaAIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Mar 2006 19:08:15 -0500
+Received: (qmail 18910 invoked from network); 31 Mar 2006 00:08:13 -0000
+Received: from localhost (HELO metalzone.distorted.org.uk) (127.0.0.1)
+  by localhost with SMTP; 31 Mar 2006 00:08:13 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18211>
 
-Alex Riesen writes:
+From: Mark Wooding <mdw@distorted.org.uk>
 
-> The old gitk produced a denser graph, which wasn't perfect too, but
-> had a higher count of visible commit titles (and this is two-monitor
-> setup, too).
+There's a Bash bug (I'm running 3.1.5(1)-release from Debian testing) as
+follows:
 
-I just pushed a new version which does better on this.
+  $ foo=@; echo "<${foo:1}>" | cat -v
+  <^?>
 
-Paul.
+Without this fix, less gives me ugly standout `^?' markers for every
+blank line in a commit message.
+
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+---
+
+ cg-log |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/cg-log b/cg-log
+index 5d5407b..b3374e4 100755
+--- a/cg-log
++++ b/cg-log
+@@ -181,7 +181,7 @@ process_commit_line()
+ {
+ 	if [ "$key" = "%" ] || [ "$key" = "%$colsignoff" ]; then
+ 		# The fast common case
+-		[ "$state" = silent ] || msg="$msg    ${rest:1}
++		[ "$state" = silent ] || msg="$msg    ${rest#?}
+ "
+ 		return
+ 	fi
