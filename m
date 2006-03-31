@@ -1,58 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Gitk strangeness..
-Date: Thu, 30 Mar 2006 17:50:57 -0800
-Message-ID: <7vek0j1iwu.fsf@assigned-by-dhcp.cox.net>
-References: <7v64lzo1j7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0603271802030.15714@g5.osdl.org>
-	<17448.40941.256361.866229@cargo.ozlabs.ibm.com>
-	<7vr74nmg7e.fsf@assigned-by-dhcp.cox.net>
-	<17448.48143.764989.649462@cargo.ozlabs.ibm.com>
-	<7vmzfbm8m0.fsf@assigned-by-dhcp.cox.net>
-	<17448.54558.865097.519248@cargo.ozlabs.ibm.com>
-	<7vzmjbj9a1.fsf@assigned-by-dhcp.cox.net>
-	<17449.48630.370867.10251@cargo.ozlabs.ibm.com>
-	<20060330205759.GA27131@steel.home>
-	<17452.28122.129442.49226@cargo.ozlabs.ibm.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH/RFC 2/2] Make path-limiting be incremental when possible.
+Date: Thu, 30 Mar 2006 22:05:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0603302153350.27203@g5.osdl.org>
+References: <Pine.LNX.4.64.0603301648530.27203@g5.osdl.org>
+ <Pine.LNX.4.64.0603301652531.27203@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Mar 31 03:51:06 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Mar 31 08:05:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FP8n0-0004sJ-Q5
-	for gcvg-git@gmane.org; Fri, 31 Mar 2006 03:51:03 +0200
+	id 1FPClL-0000tD-9V
+	for gcvg-git@gmane.org; Fri, 31 Mar 2006 08:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWCaBvA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Mar 2006 20:51:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbWCaBvA
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Mar 2006 20:51:00 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:59323 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751091AbWCaBu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Mar 2006 20:50:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060331015059.YRVE25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 30 Mar 2006 20:50:59 -0500
-To: Paul Mackerras <paulus@samba.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751021AbWCaGFc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 01:05:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbWCaGFc
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 01:05:32 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:10910 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751018AbWCaGFb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Mar 2006 01:05:31 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k2V65RCo020787
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 30 Mar 2006 22:05:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k2V65REJ009589;
+	Thu, 30 Mar 2006 22:05:27 -0800
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0603301652531.27203@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18216>
 
-Paul Mackerras <paulus@samba.org> writes:
 
-> Alex Riesen writes:
->
->> The old gitk produced a denser graph, which wasn't perfect too, but
->> had a higher count of visible commit titles (and this is two-monitor
->> setup, too).
->
-> I just pushed a new version which does better on this.
 
-Thanks.  Pulled, merged and pushed out..
+On Thu, 30 Mar 2006, Linus Torvalds wrote:
+> 
+> This makes git-rev-list able to do path-limiting without having to parse
+> all of history before it starts showing the results.
+> 
+> This makes it things like "git log -- pathname" much more pleasant to use.
+
+Sadly, it seems to react really badly to Junio's new --boundary logic for 
+some reason that I haven't quite figured out yet.
+
+That reaction is independent of the actual pathname restriction, and seems 
+to be related to how the --boundary logic expected 
+pop_most_recent_commit() to work. In particular:
+
+	...
+                        if (commit->object.flags & BOUNDARY) {
+                                /* this is already uninteresting,
+                                 * so there is no point popping its
+                                 * parents into the list.
+                                 */
+
+that code is magic, and seems to depend on something subtle going on with 
+the list, and the incremental thing already popped the parent earlier and 
+screwed up whatever magic that the BOUNDARY code depends on.
+
+Junio? I think you did some funky special case with BOUNDARY commits, and 
+I broke it for you, can you look at the patch and see if you can see it? 
+I'd really like to have the incremental path-limiter, because it really 
+makes a huge difference in the usability of "git log pathname".
+
+		Linus
