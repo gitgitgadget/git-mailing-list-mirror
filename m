@@ -1,62 +1,100 @@
-From: "David Ho" <davidkwho@gmail.com>
-Subject: Re: Moving a file back to an earlier revision.
-Date: Fri, 31 Mar 2006 17:21:48 -0500
-Message-ID: <4dd15d180603311421w7b48cfa4y80d3f9d565d4276f@mail.gmail.com>
-References: <4dd15d180603311313t7781f2ebk616276e9134f6472@mail.gmail.com>
-	 <4dd15d180603311332p60fa1867nc303bd92d515b4e0@mail.gmail.com>
-	 <7vacb6thc7.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Default remote branch for local branch
+Date: Fri, 31 Mar 2006 20:48:18 -0500
+Message-ID: <1143856098.3555.48.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 01 00:22:20 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Apr 01 03:48:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPS0M-0007sh-0b
-	for gcvg-git@gmane.org; Sat, 01 Apr 2006 00:22:06 +0200
+	id 1FPVEC-0001aK-5C
+	for gcvg-git@gmane.org; Sat, 01 Apr 2006 03:48:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbWCaWVu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 17:21:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbWCaWVu
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 17:21:50 -0500
-Received: from zproxy.gmail.com ([64.233.162.205]:33902 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751445AbWCaWVt convert rfc822-to-8bit
+	id S932076AbWDABsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 20:48:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbWDABsY
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 20:48:24 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:22417 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751468AbWDABsX
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Mar 2006 17:21:49 -0500
-Received: by zproxy.gmail.com with SMTP id k1so987916nzf
-        for <git@vger.kernel.org>; Fri, 31 Mar 2006 14:21:48 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fLqNqpZrN4Ns0AWuXQvFRUQ6yI+w+4D/51QN072IslgaDs3e3F3W1FiD39gAq58d7/delwq/MrHrdNa2Q6HNkEGTLkNY5d5sGQ716bcs9h1cE0b5OfF3HNVVayHYDagnC0Y7oOylh+ZSfGqfb2pOSCjb26DqbN/4jgmLMib9nog=
-Received: by 10.65.15.8 with SMTP id s8mr470387qbi;
-        Fri, 31 Mar 2006 14:21:48 -0800 (PST)
-Received: by 10.65.22.11 with HTTP; Fri, 31 Mar 2006 14:21:48 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vacb6thc7.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	Fri, 31 Mar 2006 20:48:23 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FPVDw-00018n-03
+	for git@vger.kernel.org; Fri, 31 Mar 2006 20:48:20 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FPVDv-0001M4-3V
+	for git@vger.kernel.org; Fri, 31 Mar 2006 20:48:19 -0500
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.6.0 (2.6.0-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18239>
 
-> Remember, a branch in git is very cheap, and is a powerful way
-> to keep track of things while you decide which alternate
-> universe to take.  And even after you decide, you could always
-> look at and even build on the other universe.
+Hello!
 
-I feel embarrassed to say this but in my branch there are commits to
-the driver and other commits for the board so it looks more like
+This is not a ready-to-use proposal, but I think my message can prompt
+useful changes in GIT or in the "porcelain".
 
----0---D1---B1---B2---D2---B3---B4---
+Let's see how remote changes end up in the head branch of the local
+repository (sorry for possible mistakes in terminology):
 
-D* - driver changes
-B* - board changes
+branch in          "remote"              local              index,
+a remote  -------> branch       -------> branch     ------> tree
+repository         (e.g. origin)         (e.g. master)
 
-So to go back to the 0 state I lose my board changes.  But I hope what
-I did (in my reply to Linus) is very close to your idea of having
-separate branches.
+Brought in sync by:
+           fetch                 merge              checkout
 
-David
+Relationship stored in:
+          .git/remotes           nowhere!!!         .git/HEAD
+
+If I fetch a remote branch, git knows where to get changes.  If I change
+the current branch, git remembers that.  But git doesn't remember the
+relationship between branches mirroring the remote branches and branches
+used for local development.
+
+There are situations when I want to work for a significant time on a
+certain branch.   Significant time means that changes are made by
+others, and I'm supposed to integrate them and make more changes.  Yet I
+may want to take advantage of some patches from another team that uses
+the other repository.
+
+I want GIT and porcelains work the same way if I'm working with
+repository 1 or repository 2.  As it stands now, git gives preferential
+treatment to the "origin" branch.  Whatever branch I'm on, "git-pull"
+will pull from "origin".  I believe the special role of the "origin"
+branch should be reduced to cg-clone and similar commands.
+
+I think it would be convenient to have git remember the remote branch
+for the given local branch.  git should know that if HEAD points to
+"local-B", "git-fetch" should fetch from "remote-B", not from "origin".
+
+To implement this, git would have to implement attributes for local
+branches (other ideas are welcome).  Currently, there are no attributes
+for local branches other than the top SHA1 in .git/refs/heads/
+
+Once at the topic of branch attributes, let's see what else could be
+useful?  I think that would be the creator of the branch and the comment
+(e.g. "this is for tested commits only, to be merged tomorrow" etc).
+Where can this data be stored?  Probably in blobs pointed to by refs in
+e.g. .git/refs/branch-data/ or just in plain files e.g.
+under .git/branch-data/
+
+I know, it sounds like a lot of work to save a few keystrokes.  But I
+think it may be worth it.  Working on different branches should have the
+same "look and feel".  Otherwise, git would repeat a design error of
+CVS, where the head branch was given preference e.g. for date based
+updates.
+
+I'm sorry, reading this mailing list is beyond my capabilities, so
+certain overlaps with other postings may be expected, unless I'm
+suggesting something totally off-base :-)
+
+-- 
+Regards,
+Pavel Roskin
