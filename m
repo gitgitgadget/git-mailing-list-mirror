@@ -1,61 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Default remote branch for local branch
-Date: Sat, 01 Apr 2006 07:38:44 +0200
-Organization: At home
-Message-ID: <e0l3l0$v4e$1@sea.gmane.org>
-References: <1143856098.3555.48.camel@dv>
+From: "Randy.Dunlap" <rdunlap@xenotime.net>
+Subject: Re: Moving to BK
+Date: Fri, 31 Mar 2006 22:42:28 -0800
+Organization: YPO4
+Message-ID: <20060331224228.aece94a8.rdunlap@xenotime.net>
+References: <200604010311.k313BYeS026266@hera.kernel.org>
+	<20060331.191416.108058500.davem@davemloft.net>
+	<Pine.LNX.4.64.0603312030060.27203@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Apr 01 07:39:07 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: davem@davemloft.net, pasky@kernel.org, junio@kernel.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 01 08:40:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPYpE-0003TN-VI
-	for gcvg-git@gmane.org; Sat, 01 Apr 2006 07:39:05 +0200
+	id 1FPZmf-0000Jf-Kd
+	for gcvg-git@gmane.org; Sat, 01 Apr 2006 08:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbWDAFix (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Apr 2006 00:38:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932121AbWDAFix
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Apr 2006 00:38:53 -0500
-Received: from main.gmane.org ([80.91.229.2]:34441 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932140AbWDAFiw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Apr 2006 00:38:52 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FPYoy-0003RF-TT
-	for git@vger.kernel.org; Sat, 01 Apr 2006 07:38:48 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Apr 2006 07:38:48 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Apr 2006 07:38:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.7.7
+	id S1750725AbWDAGkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Apr 2006 01:40:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbWDAGkP
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Apr 2006 01:40:15 -0500
+Received: from xenotime.net ([66.160.160.81]:39105 "HELO xenotime.net")
+	by vger.kernel.org with SMTP id S1750725AbWDAGkO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Apr 2006 01:40:14 -0500
+Received: from midway.site ([71.111.157.99]) by xenotime.net for <git@vger.kernel.org>; Fri, 31 Mar 2006 22:40:13 -0800
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0603312030060.27203@g5.osdl.org>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.3; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18247>
 
-Pavel Roskin wrote:
+On Fri, 31 Mar 2006 20:30:40 -0800 (PST) Linus Torvalds wrote:
 
-> I'm sorry, reading this mailing list is beyond my capabilities, so
-> certain overlaps with other postings may be expected, unless I'm
-> suggesting something totally off-base :-)
+> 
+> 
+> On Fri, 31 Mar 2006, David S. Miller wrote:
+> > 
+> > April 1st is upon us again.
+> 
+> I really like the new slashdot look. "OMG!!! Ponies!!!"
 
-You might want to read "Efficient cloning" thread where
---use-separate-remote and --reference options were introduced:
-  http://marc.theaimsgroup.com/?l=git&m=114280442802681&w=2
-  http://www.gelato.unsw.edu.au/archives/git/0603/18113.html
-  http://thread.gmane.org/gmane.comp.version-control.git/17724
-and which had discussion on similar subjects (somewhere).
+Goes with the sandals and pony tails.
 
--- 
-Jakub Narebski
-Warsaw, Poland
+> I hope they keep it after Apr 1st.
+
+---
+~Randy
