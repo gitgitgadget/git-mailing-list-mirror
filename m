@@ -1,54 +1,107 @@
-From: Alexander Litvinov <lan@academsoft.ru>
-Subject: Re: Moving to BK
-Date: Sat, 1 Apr 2006 09:17:32 +0600
-Organization: AcademSoft Ltd.
-Message-ID: <200604011017.33599.lan@academsoft.ru>
-References: <200604010311.k313BYeS026266@hera.kernel.org> <20060331.191416.108058500.davem@davemloft.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: Default remote branch for local branch
+Date: Fri, 31 Mar 2006 23:18:43 -0500
+Message-ID: <1143865123.14465.26.camel@dv>
+References: <1143856098.3555.48.camel@dv>
+	 <7vodzmngfp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: pasky@kernel.org, junio@kernel.org, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 01 05:17:57 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 01 06:19:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPWcb-0005PU-JF
-	for gcvg-git@gmane.org; Sat, 01 Apr 2006 05:17:53 +0200
+	id 1FPXZs-0004U3-AU
+	for gcvg-git@gmane.org; Sat, 01 Apr 2006 06:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864AbWDADRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Mar 2006 22:17:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbWDADRu
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 22:17:50 -0500
-Received: from gw.ac-sw.com ([81.1.223.2]:49054 "EHLO gw.ac-sw.com")
-	by vger.kernel.org with ESMTP id S1750864AbWDADRt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Mar 2006 22:17:49 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by gw.ac-sw.com (Postfix) with ESMTP
-	id 1EDAEBE19; Sat,  1 Apr 2006 10:17:40 +0700 (NOVST)
-Received: from gw.ac-sw.com ([127.0.0.1])
- by localhost (gw.ac-sw.com [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 22807-10; Sat,  1 Apr 2006 10:17:38 +0700 (NOVST)
-Received: from lan.ac-sw.lcl (lan.ac-sw.lcl [192.168.0.69])
-	by gw.ac-sw.com (Postfix) with ESMTP
-	id 0B122BDB8; Sat,  1 Apr 2006 10:17:38 +0700 (NOVST)
-Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
-	id 975CA8D9E683; Sat,  1 Apr 2006 10:17:37 +0700 (NOVST)
-Received: from localhost (localhost [127.0.0.1])
-	by lan.ac-sw.lcl (Postfix) with ESMTP id 5E92E8D9E682;
-	Sat,  1 Apr 2006 10:17:34 +0700 (NOVST)
-To: "David S. Miller" <davem@davemloft.net>
-User-Agent: KMail/1.8
-In-Reply-To: <20060331.191416.108058500.davem@davemloft.net>
-Content-Disposition: inline
-X-Virus-Scanned: amavisd-new at gw.ac-sw.com
+	id S1750801AbWDAESs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Mar 2006 23:18:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbWDAESs
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Mar 2006 23:18:48 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:54186 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750801AbWDAESs
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Mar 2006 23:18:48 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FPXZW-0004qB-Eq
+	for git@vger.kernel.org; Fri, 31 Mar 2006 23:18:46 -0500
+Received: from proski by dv.roinet.com with local (Exim 4.60)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FPXZU-0003sU-43; Fri, 31 Mar 2006 23:18:44 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodzmngfp.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.6.0 (2.6.0-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18244>
 
-> April 1st is upon us again.
+Hello, Junio!
 
-Damn, I have forgot about this. Good joke !
+On Fri, 2006-03-31 at 19:05 -0800, Junio C Hamano wrote:
+>  - Multiple subsystem maintainer trees tracked in the same local
+>    repository.  Most generally, two local branches per each
+>    remote head can be used (one tracking branch to fetch into,
+>    another to build your changes based on it).  Alternatively,
+>    you can use one local branch per each remote head without
+>    using any tracking branch.
+> 
+> Your proposal to give default branch to pull from per the local
+> branch would help only the last case.
+
+Exactly.  I tried to track the main Linus repository and Jeff Garzik's
+netdev in one place.  Then I discovered that my repository if full of
+unintended merges made by "stg pull".
+
+> The first one you do not
+> switch between local branches at all and pull from many
+> different places; the second is to merge from different topic
+> branches from time to time and does not benefit from fixed
+> configuration; the third does not even need configuration.
+> 
+> Maybe you would want something like this.
+>
+> In $GIT_DIR/config:
+> 
+> 	[pull]
+> 	origin = linus for master
+>         origin = irq-pio of libata for ata-irq-pio
+>         origin = pata-drivers of libata for ata-pata
+
+First of all, using "origin" on every line carries to little
+information.
+
+Secondly, I think the relationship should be between a local development
+branch and a local tracking branch.  After all, all remote data is
+placed on a local tracking branch first.  It's better not to jump over
+layers of abstraction.  Suppose I want to update "masterB".  I tell git
+to sync "originB" first.  git already has rules what to do if it should
+sync "originB".  Let's not supersede those rules.
+
+I would write the config like this:
+
+[branch-upstream]
+master = linus
+ata-irq-pio = irq-pio
+ata-pata = pata-drivers
+
+> While we are on the topic, it _might_ be worthwhile to think
+> about revamping the syntax of $GIT_DIR/remotes file, maybe even
+> breaking backward compatibility.  The Pull: lines can be
+> independently specified which gives flexibility, but I suspect
+> local tracking branches from the same remote tend to live in the
+> same place; IOW, you would probably not do something like:
+> 
+> 	URL: git://git.kernel.org/.../jgarzik/libata-dev.git
+> 	Pull: refs/heads/irq-pio:refs/remotes/libata/irq-pio
+> 	Pull: refs/heads/pata-drivers:refs/heads/pata-drivers
+> 
+> in practice.
+
+Sorry, I don't understand this part.
+
+-- 
+Regards,
+Pavel Roskin
