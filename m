@@ -1,57 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] pack-objects: be incredibly anal about stdio semantics
-Date: Sun, 02 Apr 2006 14:09:02 -0700
-Message-ID: <7vmzf3k7m9.fsf@assigned-by-dhcp.cox.net>
-References: <824.1144007555@lotus.CS.Berkeley.EDU>
-	<Pine.LNX.4.64.0604021312510.3050@g5.osdl.org>
-	<Pine.LNX.4.64.0604021328380.3050@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFH] xdiff shows trivially redundant diff.
+Date: Sun, 2 Apr 2006 14:16:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604021411300.23419@g5.osdl.org>
+References: <7v4q1cmj7l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604021035130.30097@alien.or.mcafeemobile.com>
+ <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 02 23:09:18 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Davide Libenzi <davidel@xmailserver.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 02 23:16:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQ9ow-0001yn-0p
-	for gcvg-git@gmane.org; Sun, 02 Apr 2006 23:09:14 +0200
+	id 1FQ9w0-0003Eu-FV
+	for gcvg-git@gmane.org; Sun, 02 Apr 2006 23:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932413AbWDBVJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 17:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932414AbWDBVJG
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 17:09:06 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:54927 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932413AbWDBVJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Apr 2006 17:09:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060402210903.UMUI20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Apr 2006 17:09:03 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965023AbWDBVQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 17:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965025AbWDBVQ3
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 17:16:29 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:30391 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965023AbWDBVQ2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 17:16:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k32LGOEX021459
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 2 Apr 2006 14:16:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k32LGOeh023354;
+	Sun, 2 Apr 2006 14:16:24 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18286>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> This is the "letter of the law" version of using fgets() properly in the
-> face of incredibly broken stdio implementations.  We can work around the
-> Solaris breakage with SA_RESTART, but in case anybody else is ever that
-> stupid, here's the "safe" (read: "insanely anal") way to use fgets.
 
-Thanks.
+On Sun, 2 Apr 2006, Junio C Hamano wrote:
+> 
+> I should have tried your pristine xdiff code myself before
+> bothering you, but I haven't (sorry).
 
-It's good that I can say "Oh, I think this is the part that is
-broken, but I am going to bed" to find the problem solved by
-capable others when I wake up the next day.  Global distributed
-development process at the finest, although I suspect Jason,
-Linus and myself are all in the same timezone ;-)
+It definitely happens with plain libxdiff-0.17 too.
 
-Did you mean this as a real change or a demonstration?  The
-sigaction change is a real fix, but somehow I find this one
-similar to the "(void*) NULL" thing you objected earlier (which
-was not merged because I agreed with your argument)...
+In general, unless it's related to the "\ No newline" or the extra stuff 
+on the "@@"-line, I'd be very surprised if we have any differences in the 
+diff output wrt libxdiff-0.17. I was really pretty careful, and didn't 
+change the code at all, just removed unnecessary files and functions.
+
+		Linus
