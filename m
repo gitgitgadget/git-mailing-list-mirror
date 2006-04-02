@@ -1,54 +1,63 @@
-From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: Re: [PATCH 2/2] pack-objects: be incredibly anal about stdio semantics
-Date: Sun, 02 Apr 2006 15:12:54 -0700
-Message-ID: <15051.1144015974@lotus.CS.Berkeley.EDU>
-References: <Pine.LNX.4.64.0604021417301.23419@g5.osdl.org>
-X-From: git-owner@vger.kernel.org Mon Apr 03 00:13:01 2006
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: [RFH] xdiff shows trivially redundant diff.
+Date: Sun, 2 Apr 2006 15:14:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604021454560.30205@alien.or.mcafeemobile.com>
+References: <7v4q1cmj7l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604021035130.30097@alien.or.mcafeemobile.com>
+ <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon Apr 03 00:14:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQAoc-0001Yx-Ch
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 00:12:58 +0200
+	id 1FQAq1-0001ir-8o
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 00:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932407AbWDBWMz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 18:12:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932423AbWDBWMz
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 18:12:55 -0400
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:10138 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S932407AbWDBWMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Apr 2006 18:12:54 -0400
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k32MCsgH015053
-	for <git@vger.kernel.org>; Sun, 2 Apr 2006 15:12:54 -0700 (PDT)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k32MCsPX015052
-	for <git@vger.kernel.org>; Sun, 2 Apr 2006 15:12:54 -0700 (PDT)
-To: git@vger.kernel.org
-In-reply-to: <Pine.LNX.4.64.0604021417301.23419@g5.osdl.org> 
+	id S932423AbWDBWOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 18:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932425AbWDBWOW
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 18:14:22 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:30124 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP id S932423AbWDBWOW
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 18:14:22 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1C8347> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sun, 2 Apr 2006 15:14:20 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18291>
 
-And Linus Torvalds writes:
- - 
- - I don't have any really strong opinions on it. I think that any libc that 
- - needs the "ferror()" test + EINTR loopback is totally broken. I would 
- - happily say that people should just not use a development platform that is 
- - that horrible.
+On Sun, 2 Apr 2006, Junio C Hamano wrote:
 
-If you consider stdio to be a low-level wrapper over syscalls
-that only adds buffering and simple parsing, then passing EINTR
-back to the application is a sensible choice.  I wouldn't be
-too surprised if L4, VxWorks, etc. do something similar.
+> I should have tried your pristine xdiff code myself before
+> bothering you, but I haven't (sorry).
+>
+> The problem is from the "stripped down" version we use in git,
+> so you may or may not see the problem in your version.  Attached
+> are the files.
 
- - So I _think_ we're safe with just the "sigaction()" diff.  Neither of the 
- - patches _should_ make any difference at all on a sane platform. 
+Yes, it does even vanilla libxdiff ;) It's not a problem though, since it 
+is created in xdl_cleanup_records() that tries to do a fast pass over the 
+records to try to simplify the real diff operation. In trying to be fast, 
+only hashes are compared, and it happens that the hash for "'')" collides 
+with another one (try to replace one of the "'')" chars with another one). 
+Why is this not a problem? Because what this lead to is only lines to be 
+marked as changed, with a probability of about N/2^(8 * sizeof(long) - 1), 
+even though they are not. And this happens only during sequential groups 
+of lines changed, that is when the hash-colliding line is either at the 
+begin or the end of the run.
 
-Anyone with an older HP/UX care to try these patches?  HP/UX 
-may not be sane, but I think it may lack SA_RESTART.  I don't 
-know if stdio calls need restarted, though.
 
-Jason
+
+- Davide
