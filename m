@@ -1,96 +1,84 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Multi-headed branches (hydra? :)) for basic patch calculus
-Date: Sun, 02 Apr 2006 16:07:32 +1200
-Message-ID: <1143950852.21233.23.camel@localhost.localdomain>
+From: Keith Packard <keithp@keithp.com>
+Subject: parsecvs tool now creates git repositories
+Date: Sat, 01 Apr 2006 21:36:28 -0800
+Message-ID: <1143956188.2303.39.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Apr 02 06:07:45 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-R8AzE/4NpWydfdeXDBxX"
+Cc: keithp@keithp.com
+X-From: git-owner@vger.kernel.org Sun Apr 02 07:37:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FPtsP-00072A-1D
-	for gcvg-git@gmane.org; Sun, 02 Apr 2006 06:07:45 +0200
+	id 1FPvHN-0001xK-JO
+	for gcvg-git@gmane.org; Sun, 02 Apr 2006 07:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750724AbWDBEHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Apr 2006 23:07:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750725AbWDBEHm
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Apr 2006 23:07:42 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:45456 "EHLO
-	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S1750724AbWDBEHl
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 1 Apr 2006 23:07:41 -0500
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 4D4465EF4; Sun,  2 Apr 2006 16:07:38 +1200 (NZST)
-Received: from localhost.localdomain (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 659E0104A
-	for <git@vger.kernel.org>; Sun,  2 Apr 2006 16:07:33 +1200 (NZST)
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.4.1 
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1750859AbWDBFhY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 00:37:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbWDBFhY
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 00:37:24 -0500
+Received: from home.keithp.com ([63.227.221.253]:51208 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1750815AbWDBFhX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 00:37:23 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id E98D9130022;
+	Sat,  1 Apr 2006 21:36:52 -0800 (PST)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 28176-07; Sat, 1 Apr 2006 21:36:52 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 56FF813001F; Sat,  1 Apr 2006 21:36:52 -0800 (PST)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 4182C14001;
+	Sat,  1 Apr 2006 21:36:52 -0800 (PST)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id ACAA354330; Sat,  1 Apr 2006 21:36:29 -0800 (PST)
+To: Git Mailing List <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18259>
 
->From a discussion on #git, the idea was raised of "multi-headed
-branches"
 
-Say you've got a sequence of changes like this:
+--=-R8AzE/4NpWydfdeXDBxX
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-1. add foo.c
-2. add bar.c
-3. modify foo.c
-4. modify bar.c
+I've hacked in cheesy system(3) calls to invoke various git tools to
+create a git repository from a parsed cvs repository. It's about the
+same speed as git-cvsimport now.
 
-The darcs-like operation of this would be to have two sequences of
-ordered patches that combine to a final result.  ie:
+The UI is a total disaster, sufficient for testing. You must create an
+Authors file in the current directory which looks like the git-cvsimport
+authors file. You must also have a edit-change-log program in your path
+which edits the commit message in place. /bin/true will work if you
+don't need to edit the messages.
 
-  1 -> 3
-  2 -> 4
+I should clearly steal the existing git-cvsimport command line arguments
+and use those.
 
-Unless you jump through hoops, git will represent it as:
+This tool successfully, and usefully, imports the X.org xserver CVS
+repository, along with correctly importing several other repositories
+I've tried. It doesn't quite manage to compute correct branch points for
+the postgresql CVS repository, so there is clearly work remaining to be
+done.
 
-  1 -> 2 -> 3 -> 4.
+CVS - your code's worst nightmare.
 
-However, you *could* represent it as:
+--=20
+keith.packard@intel.com
 
-  1 -> 3  \
-           >- head
-  2 -> 4  /
+--=-R8AzE/4NpWydfdeXDBxX
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-Where "head" is a merge commit that just combines the trees of 3 and 4.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
 
-If somebody adds a commit (5) that changes "foo.c" again, the darcs
-history would change to:
+iD8DBQBEL2LcQp8BWwlsTdMRAhBfAJ9LWlcatxeFvfJWKaazNejIcVThEACbBdkV
+Gv8oW+TUDjVjiQDdqMO1QvI=
+=q1H0
+-----END PGP SIGNATURE-----
 
-  1 -> 3 -> 5
-  2 -> 4
-
-To represent this in git you could just roll back the head merge commit,
-push commit 5 on that branch, then make a new head:
-
-  1 -> 3 -> 5 \
-               >- head
-  2 -> 4 -----/
-
-However, if there was support for "hydra", or heads that are multiple
-commit IDs (and necessarily, no blobs in corresponding paths in their
-trees that are not identical), then you would not need to destroy and
-recreate this dummy merge head commit to model your patch history in
-this manner.
-
-If the plumbing or a porcelain could be smart enough to automatically
-create hydra when patches are not dependent, then many of the benefits
-of patch calculus might come for free, without having to create these
-complicated sounding entities manually.
-
-Of course this doesn't give you the symbolic labelling of patches that
-can allow darcs to detect already applied, but "mutated" patches, but
-that might not matter in practice.
-
-Sam.
+--=-R8AzE/4NpWydfdeXDBxX--
