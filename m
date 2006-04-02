@@ -1,153 +1,194 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Default remote branch for local branch
-Date: Sun, 02 Apr 2006 14:40:48 -0700
-Message-ID: <7v7j67k65b.fsf@assigned-by-dhcp.cox.net>
-References: <1143856098.3555.48.camel@dv>
-	<7vodzmngfp.fsf@assigned-by-dhcp.cox.net>
-	<1143865123.14465.26.camel@dv>
-	<200604021817.30222.Josef.Weidendorfer@gmx.de>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: [PATCH] Documentation: revise top of git man page
+Date: Sun, 2 Apr 2006 17:54:34 -0400
+Message-ID: <20060402215434.GA22707@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 02 23:40:59 2006
+X-From: git-owner@vger.kernel.org Sun Apr 02 23:54:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQAJd-00064v-G6
-	for gcvg-git@gmane.org; Sun, 02 Apr 2006 23:40:58 +0200
+	id 1FQAWv-0007j7-4F
+	for gcvg-git@gmane.org; Sun, 02 Apr 2006 23:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964786AbWDBVku (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 17:40:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964789AbWDBVku
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 17:40:50 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:49309 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S964786AbWDBVkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Apr 2006 17:40:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060402214049.UWWJ20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Apr 2006 17:40:49 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200604021817.30222.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Sun, 2 Apr 2006 18:17:29 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964790AbWDBVyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 17:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965030AbWDBVyh
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 17:54:37 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:37306 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S964790AbWDBVyg
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 17:54:36 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.60)
+	(envelope-from <bfields@fieldses.org>)
+	id 1FQAWp-0001nU-2Z; Sun, 02 Apr 2006 17:54:35 -0400
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18289>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+I'm afraid I'll be accused of trying to suck all the jokes and the
+personality out of the git documentation.  I'm not!  Really!
 
-> On Saturday 01 April 2006 06:18, Pavel Roskin wrote:
->> On Fri, 2006-03-31 at 19:05 -0800, Junio C Hamano wrote:
->> > Maybe you would want something like this.
->> >
->> > In $GIT_DIR/config:
->> > 
->> > 	[pull]
->> > 	origin = linus for master
->> >         origin = irq-pio of libata for ata-irq-pio
->> >         origin = pata-drivers of libata for ata-pata
->
-> Let me try to understand this: the general idea is that
->
->   pull.origin = [<refspec> of] <remote> for <branch>
->
-> specifies the default action of git-pull if we are on <branch>, ie.
-> a "git pull" then runs "git pull <remote> [<refspec>]".
+That said, "man git" is one of the first things a new user is likely try,
+and it seems a little cruel to start off with a somewhat obscure joke
+about the architecture of git.
 
-Not quite.
+So instead I'm trying for a relatively straightforward description of what
+git does, and what features distinguish it from other systems, together
+with immediate links to introductory documentation.
 
-It will be (if this were a serious proposal -- I am not
-absolutely convinced this is a good idea) more like "git fetch
-<remote>" followed by "git-merge HEAD the-refspec-named-there".
-The implementation of the above would involve changes to
-git-fetch, because it needs to give ".not-for-merge" mark to
-different line in FETCH_HEAD depending on [<refspec> of] part.
+I also did some minor reorganization in an attempt to clarify the
+classification of commands.  And revised a bit for conciseness (as is
+obvious from the diffstat--hopefully I didn't cut anything important).
 
-> So the example above, if .git/remotes/linus would contain two
-> refspecs, and you are on the branch of the 2nd refspec, it would
-> do the wrong thing: merge the 1st refspec with current branch.
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
 
-Sorry I fail to visualize this part.
+---
 
->> Secondly, I think the relationship should be between a local development
->> branch and a local tracking branch.
->
-> Agree.
-> It is also useful to specify this relation if the upstream is purely a
-> local branch, e.g. when branching off a local branch, and you want to
-> pull in changes from the local upstream.
->
-> This works automatically if git-pull only does upstream fetching if
-> there is a remote branch associated. The default action of git-fetch
-> similar could be "fetch the upstream branch, if that tracks a remote
-> branch", using the same configuration.
+ Documentation/git.txt |  103 +++++++++++++++++++++++--------------------------
+ 1 files changed, 48 insertions(+), 55 deletions(-)
 
-Interesting.  
-
-You would need sanity checker for $GIT_DIR/remotes/* files if
-you do this to make sure no local tracking branch is by mistake
-configured to track two remote branches, which is a good change,
-but then:
-
-	git-pull, without parameter, would:
-
-        (1) check if this branch has any local branch it usually
-            merges from; if not, do whatever we traditionally
-            did (or barf).
-
-        (2) if there is a local branch it merges from, check if
-            it is a tracking branch for a remote, by looking at
-            remotes/* files.  It would be nice if we could
-            detect tracking branches fed from external svn/cvs
-            repositories via svn/cvs-import this way at this
-            time.  If not, skip the next step and go directly to
-            (4).
-
-        (3) run git-fetch (or svn/cvs-import) to update the
-            tracking branch;
-
-        (4) merge from that other local branch.
-
-> Junio's proposal has the advantage that you do not have to search in all
-> files in .git/remotes (and even .git/branches) for the remote branch that
-> maps to a given local branch.
-> But that is not the big issue.
-
-A bigger thing is that I am trying to avoid _requiring_ tracking
-branches.  If you are not micromanaging your subsystem
-maintainers, you should not have to care where they were the
-last time you pulled from them.  You should be able to just
-pull, examine what the merge brings in, and decide it is worth
-merging.  If it isn't, do a "reset", tell them "not good, please
-rework and let me know when you are ready," and forget about it.
-
-If we are going require tracking branches, we could do a bit
-more with them, like remembering where the tip was when we
-fetched the last time (or the time before that...) and diff with
-that, but the tracking branch heads are not set up to do things
-like that right now -- they are single pointers.
-
->> Perhaps you are missing a remotes editor command?
-
-Perhaps.  Also perhaps a remotes/ sanity checker.
-Something like this:
-
-	$ git branch --describe ata-pata
-        Typically merges from pata-drivers branch of
-        	git://.../jgarzik/libata-dev.git
-	which is tracked with local refs/remotes/libata/pata-drivers.
-
-	$ git branch --decribe refs/remotes/libata/pata-drivers
-	Tracking branch for pata-drivers branch of
-               	git://.../jgarzik/libata-dev.git
-
-	$ git checkout origin
-        warning: you are checking out a tracking branch for "master" branch of
-	warning:	git://.../torvalds/linux-2.6.git
-	warning: commit/pull/merge commands are disabled.
-	hint: you can still create a new branch from here.
+9fc3b77b82004356a6e5fa19e5e31a2b19f088d3
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index fe34f50..06b2e53 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -12,10 +12,14 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-'git' is both a program and a directory content tracker system.
+-The program 'git' is just a wrapper to reach the core git programs
+-(or a potty if you like, as it's not exactly porcelain but still
+-brings your stuff to the plumbing).
++Git is a fast, scalable, distributed revision control system with an
++unusually rich command set that provides both high-level operations
++and full access to internals.
++
++See this link:tutorial.html[tutorial] to get started, then see
++link:everyday.html[Everyday Git] for a useful minimum set of commands, and
++"man git-commandname" for documentation of each command.  CVS users may
++also want to read link:cvs-migration.html[CVS migration].
+ 
+ OPTIONS
+ -------
+@@ -35,55 +39,38 @@ OPTIONS
+ 	the current setting and then exit.
+ 
+ 
+-NOT LEARNING CORE GIT COMMANDS
+-------------------------------
++FURTHER DOCUMENTATION
++---------------------
++
++See the references above to get started using git.  The following is
++probably more detail than necessary for a first-time user.
++
++The <<Discussion,Discussion>> section below and the
++link:core-tutorial.html[Core tutorial] both provide introductions to the
++underlying git architecture.
++
++See also the link:howto-index.html[howto] documents for some useful
++examples.
++
++GIT COMMANDS
++------------
+ 
+-This manual is intended to give complete background information
+-and internal workings of git, which may be too much for most
+-people.  The <<Discussion>> section below contains much useful
+-definition and clarification - read that first.
+-
+-If you are interested in using git to manage (version control)
+-projects, use link:tutorial.html[The Tutorial] to get you started,
+-and then link:everyday.html[Everyday GIT] as a guide to the
+-minimum set of commands you need to know for day-to-day work.
+-Most likely, that will get you started, and you can go a long
+-way without knowing the low level details too much.
+-
+-The link:core-tutorial.html[Core tutorial] document covers how things
+-internally work.
+-
+-If you are migrating from CVS, link:cvs-migration.html[cvs
+-migration] document may be helpful after you finish the
+-tutorial.
+-
+-After you get the general feel from the tutorial and this
+-overview page, you may want to take a look at the
+-link:howto-index.html[howto] documents.
+-
+-
+-CORE GIT COMMANDS
+------------------
+-
+-If you are writing your own Porcelain, you need to be familiar
+-with most of the low level commands --- I suggest starting from
+-gitlink:git-update-index[1] and gitlink:git-read-tree[1].
+-
+-
+-Commands Overview
+------------------
+-The git commands can helpfully be split into those that manipulate
+-the repository, the index and the files in the working tree, those that
+-interrogate and compare them, and those that moves objects and
+-references between repositories.
+-
+-In addition, git itself comes with a spartan set of porcelain
+-commands.  They are usable but are not meant to compete with real
+-Porcelains.
+-
+-There are also some ancillary programs that can be viewed as useful
+-aids for using the core commands but which are unlikely to be used by
+-SCMs layered over git.
++We divide git into high level ("porcelain") commands and low level
++("plumbing") commands.
++
++Low-level commands (plumbing)
++-----------------------------
++
++Although git includes its
++own porcelain layer, its low-level commands are sufficient to support
++development of alternative porcelains.  Developers of such porcelains
++might start by reading about gitlink:git-update-index[1] and
++gitlink:git-read-tree[1].
++
++We divide the low-level commands into commands that manipulate objects (in
++the repository, index, and working tree), commands that interrogate and
++compare objects, and commands that move objects and references between
++repositories.
+ 
+ Manipulation commands
+ ~~~~~~~~~~~~~~~~~~~~~
+@@ -248,8 +235,14 @@ gitlink:git-upload-pack[1]::
+ 	what are asked for.
+ 
+ 
+-Porcelain-ish Commands
+-----------------------
++High-level commands (porcelain)
++-------------------------------
++
++We separate the porcelain commands into the main commands and some
++ancillary user utilities.
++
++Main porcelain commands
++~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ gitlink:git-add[1]::
+ 	Add paths to the index.
+@@ -346,7 +339,7 @@ gitlink:git-whatchanged[1]::
+ 
+ 
+ Ancillary Commands
+-------------------
++~~~~~~~~~~~~~~~~~~
+ Manipulators:
+ 
+ gitlink:git-applypatch[1]::
+-- 
+1.2.4.g0382
