@@ -1,185 +1,194 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Default remote branch for local branch
-Date: Mon, 3 Apr 2006 01:28:42 +0200
-Message-ID: <200604030128.42680.Josef.Weidendorfer@gmx.de>
-References: <1143856098.3555.48.camel@dv> <200604021817.30222.Josef.Weidendorfer@gmx.de> <7v7j67k65b.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-clone: fix handling of upsteram whose HEAD does not point at master.
+Date: Sun, 02 Apr 2006 16:29:46 -0700
+Message-ID: <7vu09bimj9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 01:29:04 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Apr 03 01:29:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQC0E-0002HD-JA
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 01:29:02 +0200
+	id 1FQC15-0002Kf-Ti
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 01:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbWDBX2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 19:28:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbWDBX2s
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 19:28:48 -0400
-Received: from mail.gmx.de ([213.165.64.20]:48060 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751522AbWDBX2r (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 19:28:47 -0400
-Received: (qmail invoked by alias); 02 Apr 2006 23:28:45 -0000
-Received: from p5496B76B.dip0.t-ipconnect.de (EHLO linux) [84.150.183.107]
-  by mail.gmx.net (mp041) with SMTP; 03 Apr 2006 01:28:45 +0200
-X-Authenticated: #352111
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-In-Reply-To: <7v7j67k65b.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1751547AbWDBX3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 19:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbWDBX3t
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 19:29:49 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:14829 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751546AbWDBX3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Apr 2006 19:29:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060402232948.FOGW3131.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Apr 2006 19:29:48 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18298>
 
-On Sunday 02 April 2006 23:40, you wrote:
-> > Let me try to understand this: the general idea is that
-> >
-> >   pull.origin = [<refspec> of] <remote> for <branch>
-> >
-> > specifies the default action of git-pull if we are on <branch>, ie.
-> > a "git pull" then runs "git pull <remote> [<refspec>]".
-> 
-> Not quite.
-> 
-> It will be (if this were a serious proposal -- I am not
-> absolutely convinced this is a good idea) more like "git fetch
-> <remote>" followed by "git-merge HEAD the-refspec-named-there".
+Here is a proposed fix to a problem discussed on #git yesterday.
 
-So it is not really a <refspec>, but a <localbranch> which has to
-appear in the .git/remotes file on the right side of a refspec on
-a Pull line.
-Then, I think it is redundant to specify the <remote>, as
-this can be detected by looking at the .git/remotes files and
-searching for <localbranch>.
+The change also contains an independent fix to deal with new
+style symref HEAD copied over HTTP (we incorrectly kept the code
+that assumes downloading $GIT_DIR/HEAD using curl/wget would
+give us the SHA1, which is not the case anymore), which was what
+started me, but it turns out the other transports share the
+problem the rest of the patch addresses.
 
-> > So the example above, if .git/remotes/linus would contain two
-> > refspecs, and you are on the branch of the 2nd refspec, it would
-> > do the wrong thing: merge the 1st refspec with current branch.
-> 
-> Sorry I fail to visualize this part.
+-- >8 --
 
-All I wanted to remark is, that, with
+When cloning from a remote repository that has master, main, and
+origin branches _and_ with the HEAD pointing at main branch, we
+did quite confused things during clone.  So this cleans things
+up.  The behaviour is a bit different between separate remotes/
+layout and the mixed branches layout.
 
- URL: <remote-URL>
- Pull: refs/head/master:refs/head/remote1
- Pull: refs/head/other:refs/head/remote2
+The newer layout with $GIT_DIR/refs/remotes/$origin/, things are
+simpler and more transparent:
 
-the config
+ - remote branches are copied to refs/remotes/$origin/.
+ - HEAD points at refs/heads/master, which starts at where the
+   remote HEAD points at.
+ - $GIT_DIR/remotes/$origin file is set up to fetch all remote
+   branches, and merge the branch HEAD pointed at at the time of
+   the cloning.
 
- pull.origin = <remote> for refs/head/my-devel-for-remote2
+Everything-in-refs/heads layout was the more confused one, but
+cleaned up like this:
 
-which does not use the [<refspec> of] part, always is bogus:
-We get remote1 merged into my-devel-for-remote2 on a git-pull,
-which is not what we want.
+ - remote branches are copied to refs/heads, but the branch
+   "$origin" is not copied, instead a copy of the branch the
+   remote HEAD points at is created there.
 
-> > It is also useful to specify this relation if the upstream is purely a
-> > local branch, e.g. when branching off a local branch, and you want to
-> > pull in changes from the local upstream.
+ - HEAD points at the branch with the same name as the remote
+   HEAD points at.
 
-> 
-> Interesting.
-> 
-> You would need sanity checker for $GIT_DIR/remotes/* files if
-> you do this to make sure no local tracking branch is by mistake
-> configured to track two remote branches,
+ - $GIT_DIR/remotes/$origin file is set up to fetch all remote
+   branches except "$origin", and merge the branch HEAD pointed
+   at at the time of the cloning.
 
-Why should this always be a mistake? If you have two developers
-doing topic branches for you, you could use this type of config
-to make "git-pull" fetching both remotes, and creating an
-octopus merge.
+With this, the remote has master, main and origin, and its HEAD
+points at main, you could:
 
-And for your "next", you could use this to make "git-pull" merge
-both from the stable branch and all topics.
+	git clone $URL --origin upstream
 
-> which is a good change, 
+to use refs/heads/upstream as the tracking branch for remote
+"main", and your primary working branch will also be "main".
+"master" and "origin" are used to track the corresponding remote
+branches and with this setup they do not have any special meaning.
 
-The sanity checker probably should be put into a branch attribute
-editor which allows to add the config discussed here. And it
-should only print a warning when you are trying to add multiple
-upstreams.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-> but then:
-> 
-> 	git-pull, without parameter, would:
-> 
->         (1) check if this branch has any local branch it usually
->             merges from; if not, do whatever we traditionally
->             did (or barf).
+---
 
-Yes. This is simply looking up the config.
-We could automatically add such a config when branching off to
-specify the upstream of a branch.
-And git-clone should set this, too, and: We get rid of the current
-"origin" hardcoded special handling.
+ git-clone.sh |   51 ++++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 32 insertions(+), 19 deletions(-)
 
-Optionally, branching <new> off from <old> could add <new> as
-topic branch of <old>: Thus, if you are on <old> and do git-pull,
-you get <new> merged in.
-
->         (2) if there is a local branch it merges from, check if
->             it is a tracking branch for a remote, by looking at
->             remotes/* files.  It would be nice if we could
->             detect tracking branches fed from external svn/cvs
->             repositories via svn/cvs-import this way at this
->             time.
-
-Good idea. I suppose this needs an entry in .git/remotes like
-
- URL: ...
- Type: SVN 
-
->             If not, skip the next step and go directly to 
->             (4).
-> 
->         (3) run git-fetch (or svn/cvs-import) to update the
->             tracking branch;
-
-If (1) found multiple branches, do (2)/(3) for every branch.
-
->         (4) merge from that other local branch.
-
-Or for multiple, do an octopus.
-
-
-> A bigger thing is that I am trying to avoid _requiring_ tracking
-> branches.
-
-I don't think you force anything when you add functionality to git-pull
-for the config discussed here. Nobody *has* to use this config - it's
-a porcelain thingie.
-
-Cogito could use this, too. AFAIK, it has the same origin/master hardcoded
-tracking behavior.
-
-> If you are not micromanaging your subsystem 
-> maintainers, you should not have to care where they were the
-> last time you pulled from them.  You should be able to just
-> pull, examine what the merge brings in, and decide it is worth
-> merging.  If it isn't, do a "reset", tell them "not good, please
-> rework and let me know when you are ready," and forget about it.
-> 
-> If we are going require tracking branches,
-
-I do not understand. Why should we require this?
-
-> we could do a bit 
-> more with them, like remembering where the tip was when we
-> fetched the last time (or the time before that...) and diff with
-> that, but the tracking branch heads are not set up to do things
-> like that right now -- they are single pointers.
-> 
-> >> Perhaps you are missing a remotes editor command?
-> 
-> Perhaps.  Also perhaps a remotes/ sanity checker.
-> Something like this:
-> ...
-
-Doing this as part of git-branch sounds good.
-
-Josef
+1fa378f885d2d3e391b2924a01f42dc38f87cc21
+diff --git a/git-clone.sh b/git-clone.sh
+index 823c74b..9cc374e 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -52,7 +52,8 @@ Perhaps git-update-server-info needs to 
+ 		git-http-fetch -v -a -w "$tname" "$name" "$1/" || exit 1
+ 	done <"$clone_tmp/refs"
+ 	rm -fr "$clone_tmp"
+-	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD"
++	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
++	rm -f "$GIT_DIR/REMOTE_HEAD"
+ }
+ 
+ # Read git-fetch-pack -k output and store the remote branches.
+@@ -324,7 +325,7 @@ test -d "$GIT_DIR/refs/reference-tmp" &&
+ 
+ if test -f "$GIT_DIR/CLONE_HEAD"
+ then
+-	# Figure out where the remote HEAD points at.
++	# Read git-fetch-pack -k output and store the remote branches.
+ 	perl -e "$copy_refs" "$GIT_DIR" "$use_separate_remote" "$origin"
+ fi
+ 
+@@ -332,22 +333,25 @@ cd "$D" || exit
+ 
+ if test -z "$bare" && test -f "$GIT_DIR/REMOTE_HEAD"
+ then
+-	head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
+ 	# Figure out which remote branch HEAD points at.
+ 	case "$use_separate_remote" in
+ 	'')	remote_top=refs/heads ;;
+ 	*)	remote_top="refs/remotes/$origin" ;;
+ 	esac
+ 
+-	# What to use to track the remote primary branch
+-	if test -n "$use_separate_remote"
+-	then
+-		origin_tracking="remotes/$origin/master"
+-	else
+-		origin_tracking="heads/$origin"
+-	fi
++	head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
++	case "$head_sha1" in
++	'ref: refs/'*)
++		# Uh-oh, the remote told us (http transport done against
++		# new style repository with a symref HEAD).
++		# Ideally we should skip the guesswork but for now
++		# opt for minimum change.
++		head_sha1=`expr "$head_sha1" : 'ref: refs/heads/\(.*\)'`
++		head_sha1=`cat "$GIT_DIR/$remote_top/$head_sha1"`
++		;;
++	esac
+ 
+-	# The name under $remote_top the remote HEAD seems to point at
++	# The name under $remote_top the remote HEAD seems to point at.
+ 	head_points_at=$(
+ 		(
+ 			echo "master"
+@@ -368,23 +372,32 @@ then
+ 		)
+ 	)
+ 
+-	# Write out remotes/$origin file.
++	# Write out remotes/$origin file, and update our "$head_points_at".
+ 	case "$head_points_at" in
+ 	?*)
+ 		mkdir -p "$GIT_DIR/remotes" &&
++		case "$use_separate_remote" in
++		# With separete-remote, our primary branch is always
++		# at 'master'
++		t)	origin_track="$remote_top/$head_points_at"
++			git-update-ref HEAD "$head_sha1" ;;
++		# Otherwise our primary branch is the same as the remote;
++		# we track upstream with $origin.
++		*)	origin_track="$remote_top/$origin"
++			git-symbolic-ref HEAD "refs/heads/$head_points_at"
++			git-update-ref "refs/heads/$origin" "$head_sha1" ;;
++		esac &&
+ 		echo >"$GIT_DIR/remotes/$origin" \
+ 		"URL: $repo
+-Pull: refs/heads/$head_points_at:refs/$origin_tracking" &&
+-		case "$use_separate_remote" in
+-		t) git-update-ref HEAD "$head_sha1" ;;
+-		*) git-update-ref "refs/heads/$origin" $(git-rev-parse HEAD) ;;
+-		esac &&
++Pull: refs/heads/$head_points_at:$origin_track" &&
+ 		(cd "$GIT_DIR/$remote_top" && find . -type f -print) |
+ 		while read dotslref
+ 		do
+ 			name=`expr "$dotslref" : './\(.*\)'` &&
+-			test "$head_points_at" = "$name" ||
+-			test "$origin" = "$name" ||
++			test "$use_separate_remote" = '' && {
++				test "$head_points_at" = "$name" ||
++				test "$origin" = "$name"
++			} ||
+ 			echo "Pull: refs/heads/${name}:$remote_top/${name}"
+ 		done >>"$GIT_DIR/remotes/$origin" &&
+ 		case "$use_separate_remote" in
+-- 
+1.3.0.rc1.gf0c97
