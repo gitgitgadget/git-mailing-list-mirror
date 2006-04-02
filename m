@@ -1,132 +1,96 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Subject: Re: parsecvs tool now creates git repositories
-Date: Sun, 2 Apr 2006 21:31:44 +0200
-Message-ID: <20060402193144.GK1259@lug-owl.de>
-References: <1143956188.2303.39.camel@neko.keithp.com> <20060402093906.GH1259@lug-owl.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jIYo0VRlfdMI9fLa"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 02 21:32:12 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: Solaris cloning woes partly diagnosed
+Date: Sun, 02 Apr 2006 12:52:35 -0700
+Message-ID: <824.1144007555@lotus.CS.Berkeley.EDU>
+References: <Pine.LNX.4.64.0604021159110.3050@g5.osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 02 21:52:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQ8J0-00050v-OG
-	for gcvg-git@gmane.org; Sun, 02 Apr 2006 21:32:11 +0200
+	id 1FQ8cp-0007on-Cv
+	for gcvg-git@gmane.org; Sun, 02 Apr 2006 21:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932295AbWDBTbu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 15:31:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932327AbWDBTbu
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 15:31:50 -0400
-Received: from lug-owl.de ([195.71.106.12]:46007 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S932295AbWDBTbs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 15:31:48 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id F00F5F0025; Sun,  2 Apr 2006 21:31:44 +0200 (CEST)
-To: Keith Packard <keithp@keithp.com>
-Content-Disposition: inline
-In-Reply-To: <20060402093906.GH1259@lug-owl.de>
-X-Operating-System: Linux mail 2.6.12.3lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-User-Agent: Mutt/1.5.9i
+	id S932364AbWDBTwg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 15:52:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbWDBTwg
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 15:52:36 -0400
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:922 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S932364AbWDBTwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Apr 2006 15:52:35 -0400
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k32JqZgH000826
+	for <git@vger.kernel.org>; Sun, 2 Apr 2006 12:52:35 -0700 (PDT)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k32JqZNU000825
+	for <git@vger.kernel.org>; Sun, 2 Apr 2006 12:52:35 -0700 (PDT)
+To: git@vger.kernel.org
+In-reply-to: <Pine.LNX.4.64.0604021159110.3050@g5.osdl.org> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18281>
 
+And Linus Torvalds writes:
+ - 
+ - so it really really looks like fgets() would have problems with a SIGALRM 
+ - coming in and doesn't just re-try on EINTR. Can Solaris stdio _really_ be 
+ - that broken? (Yeah, yeah, it may be "conforming". It's also so incredibly 
+ - programmer-unfriendly that it's not even funny)
 
---jIYo0VRlfdMI9fLa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, it is that broken.  I haven't encountered the problem 
+consistently in git myself, so I can't tell you if the patch 
+works.  Google finds similar reports and patches for BOINC, ruby,
+and a few other projects.
 
-On Sun, 2006-04-02 11:39:06 +0200, Jan-Benedict Glaw <jbglaw@lug-owl.de> wr=
-ote:
-> On Sat, 2006-04-01 21:36:28 -0800, Keith Packard <keithp@keithp.com> wrot=
-e:
-> > The UI is a total disaster, sufficient for testing. You must create an
-> > Authors file in the current directory which looks like the git-cvsimport
-> > authors file. You must also have a edit-change-log program in your path
-> > which edits the commit message in place. /bin/true will work if you
-> > don't need to edit the messages.
->=20
-> Well, at least this sounds quite promising. I'll give it a run once
-> I've arrived back home on the Binutils repository.
+Solaris folks will say you should be using sigaction with
+SA_RESTART.  IIRC, SA_RESTART isn't guaranteed to be there 
+or work, but all the systems I deal with right now have it.
+So an alternate patch for this one use is appended...  Other
+uses of signal could be changed to sigaction, too.  And
+progress_update "should" be sig_atomic_t.
 
-Doesn't build for me:
+Passes the pack-objects tests, but I can't make the problem 
+happen on demand.  (I have seen it occur before, but never
+during make test, and I'd not tracked it down...)
 
-jbglaw@bixie:~/vax/gittish/parsecvs$ make clean
-rm -f gram.o lex.o parsecvs.o cvsutil.o revlist.o atom.o revcvs.o git.o y.t=
-ab.h gram.c parsecvs
-jbglaw@bixie:~/vax/gittish/parsecvs$ make
-yacc -d gram.y=20
-mv -f y.tab.c gram.c
-cc -O0 -g -Wall -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -W=
-missing-declarations -Wnested-externs -fno-strict-aliasing   -c -o gram.o g=
-ram.c
-cc -O0 -g -Wall -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -W=
-missing-declarations -Wnested-externs -fno-strict-aliasing   -c -o lex.o le=
-x.c
-lex.l: In function =E2=80=98yylex=E2=80=99:
-lex.l:69: warning: implicit declaration of function =E2=80=98yyget_lineno=
-=E2=80=99
-lex.l:69: warning: nested extern declaration of =E2=80=98yyget_lineno=E2=80=
-=99
-<stdout>: At top level:
-<stdout>:1747: warning: no previous prototype for =E2=80=98yyget_lineno=E2=
-=80=99
-<stdout>:1756: warning: no previous prototype for =E2=80=98yyget_in=E2=80=99
-<stdout>:1764: warning: no previous prototype for =E2=80=98yyget_out=E2=80=
-=99
-<stdout>:1772: warning: no previous prototype for =E2=80=98yyget_leng=E2=80=
-=99
-<stdout>:1781: warning: no previous prototype for =E2=80=98yyget_text=E2=80=
-=99
-<stdout>:1790: warning: no previous prototype for =E2=80=98yyset_lineno=E2=
-=80=99
-<stdout>:1802: warning: no previous prototype for =E2=80=98yyset_in=E2=80=99
-<stdout>:1807: warning: no previous prototype for =E2=80=98yyset_out=E2=80=
-=99
-<stdout>:1812: warning: no previous prototype for =E2=80=98yyget_debug=E2=
-=80=99
-<stdout>:1817: warning: no previous prototype for =E2=80=98yyset_debug=E2=
-=80=99
-<stdout>:1823: warning: no previous prototype for =E2=80=98yylex_destroy=E2=
-=80=99
-lex.l: In function =E2=80=98parse_data=E2=80=99:
-lex.l:90: error: =E2=80=98yytext_ptr=E2=80=99 undeclared (first use in this=
- function)
-lex.l:90: error: (Each undeclared identifier is reported only once
-lex.l:90: error: for each function it appears in.)
-make: *** [lex.o] Error 1
-
-MfG, JBG
-
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
-_ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
-_ _ O
- f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
-m Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
-);
-
---jIYo0VRlfdMI9fLa
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEMCagHb1edYOZ4bsRAgxRAJ4p1Uo22NhGyDfAK30Bpq50u8aJtgCfbgre
-9YAOz74JEULeAMCR+83lByM=
-=QHvU
------END PGP SIGNATURE-----
-
---jIYo0VRlfdMI9fLa--
+Jason
+----
+diff --git a/pack-objects.c b/pack-objects.c
+index ccfaa5f..1faa0bb 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -877,10 +877,21 @@ static int try_delta(struct unpacked *cu
+ 	return 0;
+ }
+ 
+-static void progress_interval(int signum)
++static void progress_interval(int);
++
++static void setup_progress_signal(void)
++{
++	struct sigaction sa;
++	sa.sa_handler = progress_interval;
++	sigemptyset(&sa.sa_mask);
++	sa.sa_flags = SA_RESTART;
++	sigaction(SIGALRM, &sa, NULL);
++}
++
++void progress_interval(int signum)
+ {
+-	signal(SIGALRM, progress_interval);
+ 	progress_update = 1;
++	setup_progress_signal();
+ }
+ 
+ static void find_deltas(struct object_entry **list, int window, int depth)
+@@ -1094,7 +1105,7 @@ int main(int argc, char **argv)
+ 		v.it_interval.tv_sec = 1;
+ 		v.it_interval.tv_usec = 0;
+ 		v.it_value = v.it_interval;
+-		signal(SIGALRM, progress_interval);
++		setup_progress_signal();
+ 		setitimer(ITIMER_REAL, &v, NULL);
+ 		fprintf(stderr, "Generating pack...\n");
+ 	}
