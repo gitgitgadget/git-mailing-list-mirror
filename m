@@ -1,77 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Provide configurable UI font for gitk
-Date: Sun, 02 Apr 2006 03:57:20 -0700
-Message-ID: <7vodzkkzxr.fsf@assigned-by-dhcp.cox.net>
-References: <1143969814.2303.71.camel@neko.keithp.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [Patch] Key help for gitk
+Date: Sun, 2 Apr 2006 14:18:30 +0200
+Message-ID: <20060402121830.GA22717@steel.home>
+References: <cc9bf44d0604011616w18b9a7c3nc55a393f30a2b55a@mail.gmail.com> <cc9bf44d0604011621m1952b17er6f8c7e0fe1595b53@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Apr 02 12:57:28 2006
+Cc: paulus@samba.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 02 14:19:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQ0Gq-0003LS-RR
-	for gcvg-git@gmane.org; Sun, 02 Apr 2006 12:57:25 +0200
+	id 1FQ1YH-0006i5-AH
+	for gcvg-git@gmane.org; Sun, 02 Apr 2006 14:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932317AbWDBK5W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 06:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbWDBK5W
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 06:57:22 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:61132 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932317AbWDBK5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Apr 2006 06:57:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060402105721.RVUX17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Apr 2006 06:57:21 -0400
-To: Keith Packard <keithp@keithp.com>
-In-Reply-To: <1143969814.2303.71.camel@neko.keithp.com> (Keith Packard's
-	message of "Sun, 02 Apr 2006 01:23:34 -0800")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932325AbWDBMTL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 08:19:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932339AbWDBMTL
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 08:19:11 -0400
+Received: from devrace.com ([198.63.210.113]:29962 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S932325AbWDBMTJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 08:19:09 -0400
+Received: from tigra.home (p54A06E07.dip.t-dialin.net [84.160.110.7])
+	(authenticated bits=0)
+	by devrace.com (8.12.11/8.12.11) with ESMTP id k32CIcJG070324;
+	Sun, 2 Apr 2006 07:18:39 -0500 (CDT)
+	(envelope-from fork0@users.sourceforge.net)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1FQ1XK-0002If-00; Sun, 02 Apr 2006 14:18:30 +0200
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FQ1XK-000678-9A; Sun, 02 Apr 2006 14:18:30 +0200
+To: paul@mawsonlakes.org
+Content-Disposition: inline
+In-Reply-To: <cc9bf44d0604011621m1952b17er6f8c7e0fe1595b53@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, score=0.9 required=4.5 tests=AWL,BAYES_50,
+	RCVD_IN_NJABL_DUL autolearn=no version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on devrace.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18266>
 
-Keith Packard <keithp@keithp.com> writes:
+Paul Schulz, Sun, Apr 02, 2006 02:21:16 +0200:
+> +<Ctl-equal> - Incrument font size
+> +<Ctl-KP_Add> - Incrument font size
 
-> This makes the font used in the UI elements of gitk configurable in the
-> same way the other fonts are. The default fonts used in the Xft build of
-> tk8.5 are particularily horrific, making this change more important
-> there.
->
-> Signed-off-by: Keith Packard <keithp@neko.keithp.com>
-
-Thanks for the patch.  I haven't run it, but a quick eyeballing
-suggests what you did is sane.  However,..
-
->  proc makewindow {rargs} {
-> -    global canv canv2 canv3 linespc charspc ctext cflist textfont
-> +    global canv canv2 canv3 linespc charspc ctext cflist textfont
-> mainfont uifont
-
-Your MUA seems to be line-wrapping the patch here and there...
-
-> @@ -345,16 +345,20 @@ proc makewindow {rargs} {
->  
->      menu .bar
->      .bar add cascade -label "File" -menu .bar.file
-> +    .bar configure -font $uifont
->      menu .bar.file
->      .bar.file add command -label "Update" -command [list updatecommits
-> $rargs]
->      .bar.file add command -label "Reread references" -command
-> rereadrefs
->...
-
-so the patch does not apply X-<.
-
-Also, I prefer changes to gitk to be fed via Paul Mackerras
-tree.  If you send changes to gitk to me, I will forward patches
-with my Acked-by: to him and wait for him to bounce the change
-back to me through his tree, so it is not a big deal for me, and
-the changes will _not_ be lost anyway, but I'd still appreciate
-gitk patches to be sent to Paul first if possible.
+Typo: "IncrEment"
