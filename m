@@ -1,133 +1,185 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Multi-headed branches (hydra? :)) for basic patch calculus
-Date: Mon, 03 Apr 2006 11:15:43 +1200
-Message-ID: <44305B1F.7030509@vilain.net>
-References: <1143950852.21233.23.camel@localhost.localdomain> <e0ns59$uq2$1@sea.gmane.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Default remote branch for local branch
+Date: Mon, 3 Apr 2006 01:28:42 +0200
+Message-ID: <200604030128.42680.Josef.Weidendorfer@gmx.de>
+References: <1143856098.3555.48.camel@dv> <200604021817.30222.Josef.Weidendorfer@gmx.de> <7v7j67k65b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 01:16:05 2006
+X-From: git-owner@vger.kernel.org Mon Apr 03 01:29:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQBnc-0000c1-MT
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 01:16:01 +0200
+	id 1FQC0E-0002HD-JA
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 01:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932422AbWDBXP6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Apr 2006 19:15:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbWDBXP6
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 19:15:58 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:3729 "EHLO watts.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1751527AbWDBXP5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 19:15:57 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 7A19C5FE5; Mon,  3 Apr 2006 11:15:53 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 7B1201C21;
-	Mon,  3 Apr 2006 11:15:47 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e0ns59$uq2$1@sea.gmane.org>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751544AbWDBX2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 19:28:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbWDBX2s
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 19:28:48 -0400
+Received: from mail.gmx.de ([213.165.64.20]:48060 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751522AbWDBX2r (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 19:28:47 -0400
+Received: (qmail invoked by alias); 02 Apr 2006 23:28:45 -0000
+Received: from p5496B76B.dip0.t-ipconnect.de (EHLO linux) [84.150.183.107]
+  by mail.gmx.net (mp041) with SMTP; 03 Apr 2006 01:28:45 +0200
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.1
+In-Reply-To: <7v7j67k65b.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18297>
 
-Jakub Narebski wrote:
+On Sunday 02 April 2006 23:40, you wrote:
+> > Let me try to understand this: the general idea is that
+> >
+> >   pull.origin = [<refspec> of] <remote> for <branch>
+> >
+> > specifies the default action of git-pull if we are on <branch>, ie.
+> > a "git pull" then runs "git pull <remote> [<refspec>]".
+> 
+> Not quite.
+> 
+> It will be (if this were a serious proposal -- I am not
+> absolutely convinced this is a good idea) more like "git fetch
+> <remote>" followed by "git-merge HEAD the-refspec-named-there".
 
->>However, if there was support for "hydra", or heads that are multiple
->>commit IDs (and necessarily, no blobs in corresponding paths in their
->>trees that are not identical), then you would not need to destroy and
->>recreate this dummy merge head commit to model your patch history in
->>this manner.
->>   =20
->>
->[...]
->
->I'm not sure if "hydras", i.e. multi-commit 'heads' are what would mak=
-e
->GIT able to use some of Darcs patches calculus ideas. If I understand
->correctly in GIT 'head' (and 'tag') not only identifies commit (commit=
-s
->in hydra[1]) but also tree (in hydra it is result of trivial (?) merge=
-).
-> =20
->
+So it is not really a <refspec>, but a <localbranch> which has to
+appear in the .git/remotes file on the right side of a refspec on
+a Pull line.
+Then, I think it is redundant to specify the <remote>, as
+this can be detected by looking at the .git/remotes files and
+searching for <localbranch>.
 
-Whether it is stored as a procession of trees or as a sequence of
-patches does not actually make a difference to a mathematician.
+> > So the example above, if .git/remotes/linus would contain two
+> > refspecs, and you are on the branch of the 2nd refspec, it would
+> > do the wrong thing: merge the 1st refspec with current branch.
+> 
+> Sorry I fail to visualize this part.
 
-This might not sound right at first, but think that it does not matter
-whether you have the number "4" which came after "3" that you store it
-as "4 (3 was prior)" or "1+1+1+1".  =E2=84=95 (the set of natural numbe=
-rs) is
-itself defined by induction, yet this is not important for functions
-that deal with natural number elements.
+All I wanted to remark is, that, with
 
->Wouldn't it be better to somehow represent rather partial ordering bet=
-ween
->commits in history, to have something from Darcs in GIT?  Although I'm=
- not
->sure about efficiency, and if we should do detect commits dependency -=
-- or
->in other words partial ordering of commits/patches -- at commit or at
->merge.
->
+ URL: <remote-URL>
+ Pull: refs/head/master:refs/head/remote1
+ Pull: refs/head/other:refs/head/remote2
 
-That is more or less what I proposed, except that the ordering is built
-at commit time to pick a best head rather than when you try to pull the
-patch, which seems a trivial difference at best.
+the config
 
-I think git-commit --hydra is called for.
+ pull.origin = <remote> for refs/head/my-devel-for-remote2
 
-=46irst we define a "hydra leash", I can think of two definitions:
+which does not use the [<refspec> of] part, always is bogus:
+We get remote1 merged into my-devel-for-remote2 on a git-pull,
+which is not what we want.
 
- - a hydra leash is a specially marked commit
- - a hydra leash is a commit that has multiple parents, and is
-   the result of just an index merge of its parents
+> > It is also useful to specify this relation if the upstream is purely a
+> > local branch, e.g. when branching off a local branch, and you want to
+> > pull in changes from the local upstream.
 
-We must also define the concept of a commit being "against" the head(s)
-of a hydra.
+> 
+> Interesting.
+> 
+> You would need sanity checker for $GIT_DIR/remotes/* files if
+> you do this to make sure no local tracking branch is by mistake
+> configured to track two remote branches,
 
-With that term in mind, we can make "--hydra" do as follows:
+Why should this always be a mistake? If you have two developers
+doing topic branches for you, you could use this type of config
+to make "git-pull" fetching both remotes, and creating an
+octopus merge.
 
- a) find the head(s) of the hydra that the commit is against;
- b) apply the commit, and set its parents to those head(s)
- c) put the hydra leash back on.
+And for your "next", you could use this to make "git-pull" merge
+both from the stable branch and all topics.
 
-Ideally the leash should not have the previous leash as one of its
-parents; that leash was always transient and keeping its history is
-perhaps not required, and would break the latter leash detection method
-described above.
+> which is a good change, 
 
-Instead, git-pull et al should know what to do.
+The sanity checker probably should be put into a branch attribute
+editor which allows to add the config discussed here. And it
+should only print a warning when you are trying to add multiple
+upstreams.
 
-> And if we should remember (or cache) partial ordering/dependency
->info...
->
->[1] I've detected some confusion in this terminology. "Hydra" is
->multi-headed moster, yet in your ptoposal it is one head that has mult=
-iple
->bodies... and "octopus" is taken. I guess the terminology should be
->switched (octopus <-> hydra).
-> =20
->
+> but then:
+> 
+> 	git-pull, without parameter, would:
+> 
+>         (1) check if this branch has any local branch it usually
+>             merges from; if not, do whatever we traditionally
+>             did (or barf).
 
-A head is a head because there is only one of it, and it's at the top.=20
-If the leash is transient then it doesn't really exist, and therefore
-can't be called a head.  So, you look instead at the heads remaining,
-and where you expected to see an entity with a single head you see many
-heads.
+Yes. This is simply looking up the config.
+We could automatically add such a config when branching off to
+specify the upstream of a branch.
+And git-clone should set this, too, and: We get rid of the current
+"origin" hardcoded special handling.
 
-Sam.
+Optionally, branching <new> off from <old> could add <new> as
+topic branch of <old>: Thus, if you are on <old> and do git-pull,
+you get <new> merged in.
+
+>         (2) if there is a local branch it merges from, check if
+>             it is a tracking branch for a remote, by looking at
+>             remotes/* files.  It would be nice if we could
+>             detect tracking branches fed from external svn/cvs
+>             repositories via svn/cvs-import this way at this
+>             time.
+
+Good idea. I suppose this needs an entry in .git/remotes like
+
+ URL: ...
+ Type: SVN 
+
+>             If not, skip the next step and go directly to 
+>             (4).
+> 
+>         (3) run git-fetch (or svn/cvs-import) to update the
+>             tracking branch;
+
+If (1) found multiple branches, do (2)/(3) for every branch.
+
+>         (4) merge from that other local branch.
+
+Or for multiple, do an octopus.
+
+
+> A bigger thing is that I am trying to avoid _requiring_ tracking
+> branches.
+
+I don't think you force anything when you add functionality to git-pull
+for the config discussed here. Nobody *has* to use this config - it's
+a porcelain thingie.
+
+Cogito could use this, too. AFAIK, it has the same origin/master hardcoded
+tracking behavior.
+
+> If you are not micromanaging your subsystem 
+> maintainers, you should not have to care where they were the
+> last time you pulled from them.  You should be able to just
+> pull, examine what the merge brings in, and decide it is worth
+> merging.  If it isn't, do a "reset", tell them "not good, please
+> rework and let me know when you are ready," and forget about it.
+> 
+> If we are going require tracking branches,
+
+I do not understand. Why should we require this?
+
+> we could do a bit 
+> more with them, like remembering where the tip was when we
+> fetched the last time (or the time before that...) and diff with
+> that, but the tracking branch heads are not set up to do things
+> like that right now -- they are single pointers.
+> 
+> >> Perhaps you are missing a remotes editor command?
+> 
+> Perhaps.  Also perhaps a remotes/ sanity checker.
+> Something like this:
+> ...
+
+Doing this as part of git-branch sounds good.
+
+Josef
