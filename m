@@ -1,60 +1,48 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFH] xdiff shows trivially redundant diff.
-Date: Sun, 2 Apr 2006 21:19:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604022116060.3781@g5.osdl.org>
-References: <7v4q1cmj7l.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604021035130.30097@alien.or.mcafeemobile.com>
- <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604021454560.30205@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0604021749580.23419@g5.osdl.org>
- <Pine.LNX.4.64.0604022022390.10401@alien.or.mcafeemobile.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Use sigaction and SA_RESTART in read-tree.c; add option in Makefile.
+Date: Sun, 02 Apr 2006 21:20:04 -0700
+Message-ID: <7v7j67i93f.fsf@assigned-by-dhcp.cox.net>
+References: <17063.1144016974@lotus.CS.Berkeley.EDU>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 06:20:12 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 03 06:20:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQGXx-0007cP-Vw
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 06:20:10 +0200
+	id 1FQGY4-0007di-8U
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 06:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964809AbWDCEUF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 00:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964776AbWDCEUF
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 00:20:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:8605 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964809AbWDCEUC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 00:20:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k334JwEX004221
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 2 Apr 2006 21:19:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k334JvTt002374;
-	Sun, 2 Apr 2006 21:19:58 -0700
-To: Davide Libenzi <davidel@xmailserver.org>
-In-Reply-To: <Pine.LNX.4.64.0604022022390.10401@alien.or.mcafeemobile.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964776AbWDCEUK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 00:20:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbWDCEUK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 00:20:10 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:12183 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S964776AbWDCEUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Apr 2006 00:20:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060403042006.UYD20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Apr 2006 00:20:06 -0400
+To: Jason Riedy <ejr@EECS.Berkeley.EDU>
+In-Reply-To: <17063.1144016974@lotus.CS.Berkeley.EDU> (Jason Riedy's message
+	of "Sun, 02 Apr 2006 15:29:34 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18309>
 
+Jason Riedy <ejr@EECS.Berkeley.EDU> writes:
 
+> Also add a NO_SA_RESTART option in the Makefile in case someone
+> doesn't have SA_RESTART but does restart (maybe older HP/UX?).
+> We want the builder to chose this specifically in case the
+> system both lacks SA_RESTART and does not restart stdio calls;
+> a compat #define in git-compat-utils.h would silently allow
+> broken systems.
 
-On Sun, 2 Apr 2006, Davide Libenzi wrote:
-> 
-> Tomorrow I'll take a look at it.
-
-Thanks. I've made the first "release" (2.6.17-rc1) with the new built-in 
-diff, let's see if somebody has any issues.
-
-But just the fact that I could do an almost 24MB diff (6MB compressed) 
-with 738 _thousand_ lines in about 4 seconds is damn nice. The script I 
-use to cut releases (logs, diffstats, tar-files etc) used to take a long 
-time with BK, these days it's a couple of seconds.
-
-		Linus
+What am I missing...?
