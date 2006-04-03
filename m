@@ -1,69 +1,198 @@
-From: Jim Radford <radford@blackbean.org>
-Subject: [PATCH] fix repacking with lots of tags
-Date: Sun, 2 Apr 2006 20:50:17 -0700
-Message-ID: <20060403035017.GA9249@blackbean.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Multi-headed branches (hydra? :)) for basic patch calculus
+Date: Mon, 03 Apr 2006 06:10:33 +0200
+Organization: At home
+Message-ID: <e0q77o$9v5$1@sea.gmane.org>
+References: <1143950852.21233.23.camel@localhost.localdomain> <e0ns59$uq2$1@sea.gmane.org> <44305B1F.7030509@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Apr 03 05:50:30 2006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Apr 03 06:10:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQG5D-0004SZ-CT
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 05:50:27 +0200
+	id 1FQGP2-0006h5-E5
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 06:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932219AbWDCDuY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 23:50:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932276AbWDCDuY
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 23:50:24 -0400
-Received: from cpe-67-49-92-118.socal.res.rr.com ([67.49.92.118]:8939 "EHLO
-	mail.blackbean.org") by vger.kernel.org with ESMTP id S932219AbWDCDuX
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 23:50:23 -0400
-Received: from home.blackbean.org (localhost.localdomain [127.0.0.1])
-	by mail.blackbean.org (8.13.6/8.13.4) with ESMTP id k333oH2W009301
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sun, 2 Apr 2006 20:50:17 -0700
-Received: (from jim@localhost)
-	by home.blackbean.org (8.13.6/8.13.6/Submit) id k333oHR3009298
-	for git@vger.kernel.org; Sun, 2 Apr 2006 20:50:17 -0700
+	id S932295AbWDCEKl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Apr 2006 00:10:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932309AbWDCEKl
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 00:10:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:25472 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932295AbWDCEKl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 00:10:41 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FQGOk-0006fv-Jl
+	for git@vger.kernel.org; Mon, 03 Apr 2006 06:10:38 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Apr 2006 06:10:38 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Apr 2006 06:10:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on home.blackbean.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18306>
 
-Use git-rev-list's --all instead of git-rev-parse's to keep from
-hitting the shell's argument list length limits when repacking
-with lots of tags.
+Sam Vilain wrote:
 
-diff --git a/git-repack.sh b/git-repack.sh
-index bc90112..a5d349f 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -29,12 +29,10 @@ PACKDIR="$GIT_OBJECT_DIRECTORY/pack"
- case ",$all_into_one," in
- ,,)
- 	rev_list='--unpacked'
--	rev_parse='--all'
- 	pack_objects='--incremental'
- 	;;
- ,t,)
- 	rev_list=
--	rev_parse='--all'
- 	pack_objects=
- 
- 	# Redundancy check in all-into-one case is trivial.
-@@ -43,7 +41,7 @@ case ",$all_into_one," in
- 	;;
- esac
- pack_objects="$pack_objects $local $quiet $no_reuse_delta"
--name=$(git-rev-list --objects $rev_list $(git-rev-parse $rev_parse) 2>&1 |
-+name=$(git-rev-list --objects --all $rev_list 2>&1 |
- 	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
- 	exit 1
- if [ -z "$name" ]; then
+> Jakub Narebski wrote:
+
+>>Wouldn't it be better to somehow represent rather partial ordering be=
+tween
+>>commits in history, to have something from Darcs in GIT?  Although I'=
+m not
+>>sure about efficiency, and if we should do detect commits dependency =
+-- or
+>>in other words partial ordering of commits/patches -- at commit or at
+>>merge.
+>>
+>=20
+> That is more or less what I proposed, except that the ordering is bui=
+lt
+> at commit time to pick a best head rather than when you try to pull t=
+he
+> patch, which seems a trivial difference at best.
+>=20
+> I think git-commit --hydra is called for.
+>=20
+> First we define a "hydra leash", I can think of two definitions:
+>=20
+>  - a hydra leash is a specially marked commit
+>  - a hydra leash is a commit that has multiple parents, and is
+>    the result of just an index merge of its parents
+>=20
+> We must also define the concept of a commit being "against" the head(=
+s)
+> of a hydra.
+>=20
+> With that term in mind, we can make "git commit --hydra" do as follow=
+s:
+>=20
+>  a) find the head(s) of the hydra that the commit is against;
+>  b) apply the commit, and set its parents to those head(s)
+>  c) put the hydra leash back on.
+
+Let's reiterate to check if I understand that:
+
+You've got a sequence of changes like this:
+
+1. add foo.c
+2. add bar.c
+3. modify foo.c
+4. modify bar.c
+5. modify foo.c again
+
+You want patch/commit dependency, which is partial ordering of
+patches/commits/trees:
+
+=C2=A0=C2=A01=C2=A0->=C2=A03=C2=A0->=C2=A05
+=C2=A0=C2=A02=C2=A0->=C2=A04
+
+be represented as
+
+=C2=A0=C2=A01=C2=A0->=C2=A03=C2=A0->=C2=A05=C2=A0\
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0>-=C2=A0head
+=C2=A0=C2=A02=C2=A0->=C2=A04=C2=A0-----/
+
+
+=46irst, to clean up my error, head is not a commit. Head is floating p=
+ointer
+to the top commit (something like "last" pointer in the list, except we
+don't have list but directed acyclic graph). Getting head means getting=
+ the
+tree corresponding to that commit.
+
+Your hydra is a set of pointers to top commit. Getting hydra means gett=
+ing
+the tree which is trivial merge of top commits (no conflicts!). Ordinar=
+y
+head is just hydra with one top commit.
+
+Do I understand that hydra is constructed *at commit*?
+
+
+Second, to repeat my patches vs. trees arguments. In GIT now if one get=
+s
+(4), one would get tree with files foo.c and bar.c added, both modified=
+=2E
+With hydra, and with the arrows meaning that one commit is parent of th=
+e
+other (unless you modify commit structure too), one would get tree with
+only file bar.c added, and modified.
+
+BTW, the arrows should be in other direction to show how commits refers=
+ to
+toher commits.
+
+
+Third, let us consider different possible "git-commit --hydra" in above
+hydra [head] sitiation:
+
+a.) 6. modify bar.c dependent on 4
+
+=C2=A0=C2=A01=C2=A0->=C2=A03=C2=A0->=C2=A05=C2=A0\
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0>-=C2=A0head/hydra
+=C2=A0=C2=A02=C2=A0->=C2=A04=C2=A0-> 6 /
+
+b.) 6. modify foo.c independently of 5, depends on changes in 3:=20
+it is getting complicated.
+
+  1=C2=A0->=C2=A03=C2=A0->=C2=A05=C2=A0--\
+        \        \
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0->=C2=A06=C2=A0--=
+-->-=C2=A0head
+                 /
+=C2=A0=C2=A02=C2=A0->=C2=A04=C2=A0-------/
+
+c.) 6. moves some content from foo.c to bar.c, thus depending (at least=
+) on
+both 3 (let's assume that independently 5) and on 4. How to represent t=
+hat
+without modyfying commit structure (and not only head structure)? If we=
+ use
+multiple commits as parents for 6, how do we distinguish between 6 bein=
+g
+merge commit of commits 3 and 4, and 6 depending on commits 3 and 4?
+
+  1=C2=A0->=C2=A03=C2=A0->=C2=A05=C2=A0--\
+        \        \
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0(?) ->=C2=A06=C2=A0---->-=C2=A0head
+        /        /
+=C2=A0=C2=A02=C2=A0->=C2=A04=C2=A0-------/
+
+
+=46ourth, the fact that commits do not generate conflicts doesn't mean =
+that
+they are independent. Let's assume that we are introducing new function=
+ for
+example. If we change first header file foo.h, *commit* that change (no=
+t
+the best practice/workflow, I know) resulting in commit (1), then chang=
+e
+file foo.c resulting in commit (2), then commits (1) and (2) are
+independent in the sense of commits, and so would say the tool which
+detects dependencies (partial ordering). But actually commits (1) and (=
+2)
+depends on each other, and commiting both one after another to the same
+branch says so now.
+
+
+=46or more comments I would need to read theory of patches in more deta=
+il
+first.
+
+I hope that all the above makes sense...
+--=20
+Jakub Narebski
+Warsaw, Poland
