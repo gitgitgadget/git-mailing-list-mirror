@@ -1,64 +1,45 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cygwin can't handle huge packfiles?
-Date: Mon, 3 Apr 2006 17:12:55 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604031710440.9360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
- <Pine.LNX.4.63.0604031521170.4011@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: parsecvs tool now creates git repositories
+Date: Mon, 3 Apr 2006 11:32:33 -0400
+Message-ID: <20060403153233.GA6631@sigio.intra.peff.net>
+References: <1143956188.2303.39.camel@neko.keithp.com> <20060403140348.GE16823@harddisk-recovery.com> <1144075047.2303.97.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 17:13:22 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Apr 03 17:32:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQQjv-0007P6-9V
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 17:13:12 +0200
+	id 1FQR2q-0003Lb-Gy
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 17:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbWDCPNG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 11:13:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbWDCPNG
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 11:13:06 -0400
-Received: from mail.gmx.de ([213.165.64.20]:42718 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751659AbWDCPNF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 11:13:05 -0400
-Received: (qmail invoked by alias); 03 Apr 2006 15:13:03 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp035) with SMTP; 03 Apr 2006 17:13:03 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S1751727AbWDCPcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 11:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbWDCPcm
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 11:32:42 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:17364 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1751726AbWDCPcl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 11:32:41 -0400
+Received: (qmail 51727 invoked from network); 3 Apr 2006 15:32:34 -0000
+Received: from unknown (HELO sigio.intra.peff.net) (10.0.0.10)
+  by 0 with SMTP; 3 Apr 2006 15:32:34 -0000
+Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Mon,  3 Apr 2006 11:32:34 -0400
+To: Git Mailing List <git@vger.kernel.org>
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1144075047.2303.97.camel@neko.keithp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18338>
 
-Hi,
+On Mon, Apr 03, 2006 at 07:37:27AM -0700, Keith Packard wrote:
 
-On Mon, 3 Apr 2006, Linus Torvalds wrote:
+> You can't. You need to create a local copy of the repository. There is a
+> tool which can do that using the cvs protocol, but I don't recall the
+> name.
 
-> On Mon, 3 Apr 2006, Johannes Schindelin wrote:
-> > 
-> > The problem is not mmap() on cygwin, but that a fork() has to jump through 
-> > loops to reinstall the open file descriptors on cygwin. If the 
-> > corresponding file was deleted, that fails. Therefore, we work around that 
-> > on cygwin by actually reading the file into memory, *not* mmap()ing it.
-> 
-> Well, we could actually do a _real_ mmap on pack-files. The pack-files are 
-> much better mmap'ed - there we don't _want_ them to be removed while we're 
-> using them. It was the index file etc that was problematic.
-> 
-> Maybe the cygwin fake mmap should be triggered only for the index (and 
-> possibly the individual objects - if only because there doing a 
-> malloc+read may actually be faster).
+I believe you're thinking of CVSSuck:
+  http://cvs.m17n.org/~akr/cvssuck/
 
-I hit the problem *only* with "git-whatchanged -p". Which means that the 
-upcoming we-no-longer-write-temp-files-for-diff version should make that 
-gitfakemmap() hack obsolete. (I have not checked whether there are other 
-places where a file is mmap()ed and then used by a fork()ed process.)
-
-Ciao,
-Dscho
+-Peff
