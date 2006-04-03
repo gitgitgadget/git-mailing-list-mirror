@@ -1,62 +1,56 @@
-From: Nick Hengeveld <nickh@reactrix.com>
+From: Daniel Drake <dsd@gentoo.org>
 Subject: Re: HTTP repo referencing stale heads (can't clone)
-Date: Mon, 3 Apr 2006 11:09:30 -0700
-Message-ID: <20060403180929.GA14967@reactrix.com>
+Date: Mon, 03 Apr 2006 19:28:28 +0100
+Message-ID: <4431694C.4000007@gentoo.org>
 References: <443146EC.7060704@gentoo.org> <7virpqefp1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Drake <dsd@gentoo.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 20:09:59 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 03 20:17:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQTUq-0002J3-2d
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 20:09:48 +0200
+	id 1FQTc6-0003yo-Na
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 20:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964828AbWDCSJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 14:09:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964827AbWDCSJm
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 14:09:42 -0400
-Received: from 241.37.26.69.virtela.com ([69.26.37.241]:12624 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S964830AbWDCSJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Apr 2006 14:09:41 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k33I9Ucj019455;
-	Mon, 3 Apr 2006 11:09:30 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k33I9UB1019453;
-	Mon, 3 Apr 2006 11:09:30 -0700
+	id S964840AbWDCSRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 14:17:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964841AbWDCSRM
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 14:17:12 -0400
+Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:61682 "EHLO
+	mtaout01-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S964840AbWDCSRK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Apr 2006 14:17:10 -0400
+Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com with ESMTP
+          id <20060403181709.BXVI29343.mtaout01-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
+          Mon, 3 Apr 2006 19:17:09 +0100
+Received: from [192.168.0.2] (really [86.14.216.162])
+          by aamtaout01-winn.ispmail.ntl.com with ESMTP
+          id <20060403181706.TMMI19763.aamtaout01-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Mon, 3 Apr 2006 19:17:06 +0100
+User-Agent: Mail/News 1.5 (X11/20060401)
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
 In-Reply-To: <7virpqefp1.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18346>
 
-On Mon, Apr 03, 2006 at 10:23:22AM -0700, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> client$ wget http://dsd.object4.net/git/zd1211.git/info/refs
 
-> My standard answer would be
-> 
-> http-server$ cd /var/www/git/zd1211.git/ ;# or whereever
-> http-server$ GIT_DIR=. git-update-server-info
+Ah, should have known. I am behind a (lame) transparent proxy on port 80.
 
-Is there any interest in making the HTTP transport slighly less dumb by
-using DAV?
+I opened that file in my web browser and it showed the old heads. After 
+a force-refresh (ctrl+F5, which sends some additionally http headers to 
+refresh the page from the real server), the old heads disappeared, and 
+git now clones successfully.
 
-I have a working patch to http-fetch that tries to use PROPFIND to get a
-remote pack list and falls back to using objects/info/packs.  It's
-feasible to do something similar to get a remote ref list when cloning,
-although that's a bit more work as all refs would have to be fetched
-into a local repo and parsed to determine the object type.
+git-http-fetch should probably send those extra headers too. I'll try to 
+find some time to look at this next week.
 
-Long term, this could give a repo admin the choice of either making sure
-git-update-server-info has been run after every ref/pack change or
-enabling DAV once.  Assuming they need to use HTTP.
-
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+Thanks!
+Daniel
