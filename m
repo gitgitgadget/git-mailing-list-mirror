@@ -1,87 +1,77 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: n-heads and patch dependency chains
-Date: Tue, 04 Apr 2006 03:38:40 +1200
-Message-ID: <1144078720.15809.49.camel@localhost.localdomain>
-References: <4430D352.4010707@vilain.net>
-	 <Pine.LNX.4.64.0604030727250.3781@g5.osdl.org>
+From: Daniel Drake <dsd@gentoo.org>
+Subject: HTTP repo referencing stale heads (can't clone)
+Date: Mon, 03 Apr 2006 17:01:48 +0100
+Message-ID: <443146EC.7060704@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 03 17:39:21 2006
+X-From: git-owner@vger.kernel.org Mon Apr 03 17:50:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQR91-0004tl-8a
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 17:39:07 +0200
+	id 1FQRK2-0007K7-N5
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 17:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730AbWDCPjE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 11:39:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbWDCPjE
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 11:39:04 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:59793 "EHLO
-	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S1751730AbWDCPjC
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 11:39:02 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 7A2BA60D4; Tue,  4 Apr 2006 03:38:59 +1200 (NZST)
-Received: from localhost.localdomain (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 581DB60B5;
-	Tue,  4 Apr 2006 03:38:53 +1200 (NZST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604030727250.3781@g5.osdl.org>
-X-Mailer: Evolution 2.4.1 
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751744AbWDCPu1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 11:50:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbWDCPu1
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 11:50:27 -0400
+Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:42340 "EHLO
+	mtaout02-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S1751744AbWDCPu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Apr 2006 11:50:26 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com with ESMTP
+          id <20060403155025.KTHY29040.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>
+          for <git@vger.kernel.org>; Mon, 3 Apr 2006 16:50:25 +0100
+Received: from [192.168.0.2] (really [86.14.216.162])
+          by aamtaout03-winn.ispmail.ntl.com with ESMTP
+          id <20060403155024.OLSJ16286.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>
+          for <git@vger.kernel.org>; Mon, 3 Apr 2006 16:50:24 +0100
+User-Agent: Mail/News 1.5 (X11/20060401)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18340>
 
-On Mon, 2006-04-03 at 07:29 -0700, Linus Torvalds wrote:
-> I really think that darcs is just "nice theory", and has nothing to do 
-> with real life.
-> 
-> Terms like "patch calculus" may sound cool and useful, but let's face it, 
-> the proof is in the pudding, and quite frankly, I would bet that trying to 
-> do something like that on a real project would just be a total disaster.
->
-> I want my merges simple. I want them to take a couple of seconds. I 
-> don't want to see strange patch dependencies that nobody cares about.
+Hi,
 
-Dave really was right with his keynote comment about nomenclature in
-Dunedin.  I shouldn't even have put the term "patch calculus" in the
-e-mail body at all :-P
+I maintain a small git repo. I upload it over ssh (with git-push) to a 
+machine where it is distributed over http:
 
-Seriously, though, the rest of the report basically agrees with your
-position.  Sorry if it was rambling and that key message wasn't clear.
+http://dsd.object4.net/git/zd1211.git/
 
-We did kind of work out along the way that the best bits of patch
-calculus were probably obtained with good use of topic branches.  Likely
-if there are any key advances to be made, they will be found in the form
-of clever ways to manage topic branches.
+For some reason it is no longer possible to clone this repo over http:
 
->  And I very much don't want to see theory over practice.
+walk 35afe6b3a859242a18812e7485ea8b211e24abaf
+walk 93d9a9f469282e1e392c16ce571da4c08805e8bb
+error: Couldn't get 
+http://dsd.object4.net/git/zd1211.git/refs/heads/softmac-old for 
+heads/softmac-old
+The requested URL returned error: 404
+error: Could not interpret heads/softmac-old as something to pull
 
-Theory?  Do I *look* like a theorist?
+"softmac-old" is an old branch, which I have recently deleted. I deleted 
+it by removing the .git/refs/heads/softmac-old file, and relying on 
+git-prune to clear out old objects.
 
-(looks around sheepishly)
+Even on the server-side, there is no obvious reference to this old head:
 
-This was valuable cross-culture field research!
+$ find -name '*softmac*'
+$ grep -R softmac *
+(no results for either)
 
-(looks around at rather non-plussed eyes)
+"git-fsck-objects" reports nothing, "git-fsck-objects --full" reports:
+dangling commit 7cc423c942975005f96f308186537ad6e7808c2e
+dangling commit b36378de6231f1b5100b1517b9c8c243a21090fd
 
-Hey, I found it quite enlightening, and at least a few other people were
-amused by the ordeal.  And I learned a little bit more about git along
-the way.
+I have tried running git-prune and git-update-server-info, but that 
+doesn't help.
 
-(waits for a 'hear', 'hear'!  silence.)
+Any ideas? I'm still new to git.
+I am running git-1.2.4
 
-I'll get me coat.
-
-Sam.
+Thanks,
+Daniel
