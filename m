@@ -1,95 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Solaris cloning woes partly diagnosed
-Date: Sun, 2 Apr 2006 20:06:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604021951310.23419@g5.osdl.org>
-References: <7vy7yol0nk.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604021118210.3050@g5.osdl.org> <Pine.LNX.4.64.0604021159110.3050@g5.osdl.org>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: [RFH] xdiff shows trivially redundant diff.
+Date: Sun, 2 Apr 2006 20:26:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604022022390.10401@alien.or.mcafeemobile.com>
+References: <7v4q1cmj7l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604021035130.30097@alien.or.mcafeemobile.com>
+ <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604021454560.30205@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0604021749580.23419@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 05:06:27 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 03 05:27:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQFOY-0006w5-Hu
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 05:06:22 +0200
+	id 1FQFio-0001AN-Ml
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 05:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266AbWDCDGG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Apr 2006 23:06:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbWDCDGG
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 23:06:06 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:26767 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751266AbWDCDGF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Apr 2006 23:06:05 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k33361EX001543
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 2 Apr 2006 20:06:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k33360WJ032562;
-	Sun, 2 Apr 2006 20:06:00 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0604021159110.3050@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751199AbWDCD1E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Apr 2006 23:27:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbWDCD1D
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Apr 2006 23:27:03 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:38060 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1751199AbWDCD1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Apr 2006 23:27:02 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1C8397> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sun, 2 Apr 2006 20:26:58 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604021749580.23419@g5.osdl.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18303>
-
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18304>
 
 On Sun, 2 Apr 2006, Linus Torvalds wrote:
->  
-> -	while (fgets(line, sizeof(line), stdin) != NULL) {
-> +	for (;;) {
->  		unsigned char sha1[20];
-> +
-> +		if (!fgets(line, sizeof(line), stdin)) {
-> +			if (feof(stdin))
-> +				break;
-> +			if (!ferror(stdin))
-> +				die("fgets returned NULL, not EOF, not error!");
-> +			if (errno == EINTR)
-> +				continue;
-> +			die("fgets: %s", strerror(errno));
 
-While it shouldn't actually matter, I just realized that this incredibly 
-anal sequence isn't actually quite anal enough, sinceit really should have 
-a "clearerr(stdin)" for the continue case when we ignore the EINTR thing.
+>
+>
+> On Sun, 2 Apr 2006, Davide Libenzi wrote:
+>>
+>> Yes, it does even vanilla libxdiff ;) It's not a problem though, since it is
+>> created in xdl_cleanup_records() that tries to do a fast pass over the records
+>> to try to simplify the real diff operation. In trying to be fast, only hashes
+>> are compared, and it happens that the hash for "'')" collides with another one
+>> (try to replace one of the "'')" chars with another one). Why is this not a
+>> problem? Because what this lead to is only lines to be marked as changed, with
+>> a probability of about N/2^(8 * sizeof(long) - 1), even though they are not.
+>> And this happens only during sequential groups of lines changed, that is when
+>> the hash-colliding line is either at the begin or the end of the run.
+>
+> Hmm. It's still ugly, though. No possibility to have a "clean up identical
+> initial and final lines" stage to get rid of extraneous bogus diffs?
 
-Otherwise, some stdio implementation might just decide to continue to 
-return NULL from fgets(), since the error indicator is technically sticky. 
-I don't know if they do so, but it's entirely possible.
+It does ;) If you make the second hunk (the one with the '') line) to be 
+the first, the shrink-initial-and-final lines optimizations will make it 
+eat the '') line.
 
-So I'd almost suggest something like
 
-	char *safe_fgets(char *s, int size, FILE *stream)
-	{
-		for (;;) {
-			if (fgets(s, size, stream))
-				return s;
-			if (feof(stream))
-				return NULL;
-			if (!ferror(stream))
-				die("fgets returned NULL, not EOF, not error!");
-			if (errno != EINTR)
-				die("fgets: %s", strerror(errno));
-			clearerr(stream);
-		}
-	}
+> I look at diffs a lot, and while this may be rare, if I were to end up
+> having to wonder what the difference is and it turns out that it's just
+> due to a libxdelta thing, I'd be a bit irritated and wish it gave me a
+> proper diff..
 
-which sbould then hopefully work as a sane fgets()-replacement for broken 
-environments.
+Tomorrow I'll take a look at it.
 
-(And then we can just do
 
-	while (safe_fgets(..))
-
-like normal people again, and not be afraid of strange stdio 
-implementations).
-
-		Linus
+- Davide
