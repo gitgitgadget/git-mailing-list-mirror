@@ -1,89 +1,300 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: parsecvs tool now creates git repositories
-Date: Mon, 03 Apr 2006 07:37:27 -0700
-Message-ID: <1144075047.2303.97.camel@neko.keithp.com>
-References: <1143956188.2303.39.camel@neko.keithp.com>
-	 <20060403140348.GE16823@harddisk-recovery.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Cygwin can't handle huge packfiles?
+Date: Mon, 3 Apr 2006 16:38:32 +0200
+Message-ID: <81b0412b0604030738w3f61f34u8a56b1a6b0b5ef88@mail.gmail.com>
+References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-hSCX9LOyvlGeP4B3VBA3"
-Cc: keithp@keithp.com, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 03 16:38:10 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_8951_4085989.1144075112417"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 03 16:38:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQQBn-0007vx-Iy
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 16:37:55 +0200
+	id 1FQQCV-00085a-Vz
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 16:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbWDCOhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 10:37:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbWDCOhx
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 10:37:53 -0400
-Received: from home.keithp.com ([63.227.221.253]:64529 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1751547AbWDCOhw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 10:37:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 41C9113001F;
-	Mon,  3 Apr 2006 07:37:51 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 29478-03-2; Mon, 3 Apr 2006 07:37:51 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id EC4A213001E; Mon,  3 Apr 2006 07:37:50 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id E94AA14002;
-	Mon,  3 Apr 2006 07:37:50 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 0CD0E54386; Mon,  3 Apr 2006 07:37:28 -0700 (PDT)
-To: Erik Mouw <erik@harddisk-recovery.com>
-In-Reply-To: <20060403140348.GE16823@harddisk-recovery.com>
-X-Mailer: Evolution 2.4.2.1 
+	id S1751613AbWDCOih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 10:38:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751627AbWDCOih
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 10:38:37 -0400
+Received: from zproxy.gmail.com ([64.233.162.204]:16803 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751613AbWDCOig (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 10:38:36 -0400
+Received: by zproxy.gmail.com with SMTP id o37so1855362nzf
+        for <git@vger.kernel.org>; Mon, 03 Apr 2006 07:38:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=XjEmrq2DleMzwONuiuIeg5WS/xGebz2oocdyTNUTu3KdifyS2rcdhRh/i3G/hFUDnq8RdjihJvLka9vi7tYid9ecoK/xUJuyYAYqZjxlSXH+va+4ZvXafHq50CUYsYgvqq70o78kEmyc9DgCdhKHUnz3AGllMD4gWXiw0bGueoo=
+Received: by 10.35.78.9 with SMTP id f9mr1017225pyl;
+        Mon, 03 Apr 2006 07:38:32 -0700 (PDT)
+Received: by 10.35.41.18 with HTTP; Mon, 3 Apr 2006 07:38:32 -0700 (PDT)
+To: "Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com>
+In-Reply-To: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18335>
 
-
---=-hSCX9LOyvlGeP4B3VBA3
-Content-Type: text/plain
+------=_Part_8951_4085989.1144075112417
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Mon, 2006-04-03 at 16:03 +0200, Erik Mouw wrote:
-> On Sat, Apr 01, 2006 at 09:36:28PM -0800, Keith Packard wrote:
-> > The UI is a total disaster, sufficient for testing. You must create an
-> > Authors file in the current directory which looks like the git-cvsimpor=
-t
-> > authors file. You must also have a edit-change-log program in your path
-> > which edits the commit message in place. /bin/true will work if you
-> > don't need to edit the messages.
-> >=20
-> > I should clearly steal the existing git-cvsimport command line argument=
-s
-> > and use those.
->=20
-> What is the current way to use it? I get the impression it reads raw ,v
-> files, but how do I get along with a remote CVS repository?
+On 4/3/06, Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com> wrote:
+> I'm trying to get Git to manage a 5Gb source tree. Under linux, this
+> works like a charm. Under cygwin, however, I run in to difficulties.
+> For example:
+>
+> $ git-clone sgp-wa/ sgp-wa.clone
+> fatal: packfile
+> ./objects/pack/pack-56aa013a0234e198467ed37ae5db925764a6ee98.pack
+> cannot be mapped.
+> fatal: unexpected EOF
+> fetch-pack from '/cygdrive/e/Projects/sgp-wa/.git' failed.
+>
+> To figure out what is happening, I printed the value of errno, which
+> turns out to be 12 (Cannot allocate memory). I'm not sure how mmap is
 
-You can't. You need to create a local copy of the repository. There is a
-tool which can do that using the cvs protocol, but I don't recall the
-name.
+mmap in git on cygwin does not mmaps anything,
+but just reads the whole file in memory.
 
-It turns out that parsing the ,v files directly is both faster and more
-accurate than attempting to interpret the output of cvs log.
+> I'm not sure how to approach this problem. Any tips would be greatly
+> appreciated.
 
---=20
-keith.packard@intel.com
+I ended up hacking gitfakemmap like in the attached patches (sorry for mime=
+).
+It's very ugly and unsafe hack, and it's actually exactly the reason why it=
+ was
+never submitted. Still, it helps me (it speedups revlist, for
+instance), and maybe
+it'll help you.
+It is a really good example what stupid windows restrictions can do to
+a program.
 
---=-hSCX9LOyvlGeP4B3VBA3
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+The patch is against git as of 3-Apr-2005, ~10 CET
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
+------=_Part_8951_4085989.1144075112417
+Content-Type: text/x-patch; name=cygmmap.patch; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Attachment-Id: f_elkwr1kx
+Content-Disposition: attachment; filename="cygmmap.patch"
 
-iD8DBQBEMTMnQp8BWwlsTdMRAqKtAJ0ZBDaFEGiIyPa2FGCFrRMUmA3zlwCeOCo4
-b28PZZoL6NNkmAdlEkbspjs=
-=+pNR
------END PGP SIGNATURE-----
+diff --git a/Makefile b/Makefile
+index c79d646..8a46436
+--- a/Makefile
++++ b/Makefile
+@@ -389,7 +389,7 @@ ifdef NO_SETENV
+ endif
+ ifdef NO_MMAP
+ 	COMPAT_CFLAGS += -DNO_MMAP
+-	COMPAT_OBJS += compat/mmap.o
++	COMPAT_OBJS += compat/mmap.o compat/realmmap.o
+ endif
+ ifdef NO_IPV6
+ 	ALL_CFLAGS += -DNO_IPV6
+diff --git a/compat/realmmap.c b/compat/realmmap.c
+new file mode 100644
+index 0000000..8f26641
+--- /dev/null
++++ b/compat/realmmap.c
+@@ -0,0 +1,26 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <unistd.h>
++#include <errno.h>
++#include <sys/mman.h>
++#include "../git-compat-util.h"
++
++#undef mmap
++#undef munmap
++
++void *realmmap(void *start, size_t length, int prot , int flags, int fd, off_t offset)
++{
++	if (start != NULL || !(flags & MAP_PRIVATE)) {
++		errno = ENOTSUP;
++		return MAP_FAILED;
++	}
++	start = mmap(start, length, prot, flags, fd, offset);
++	return start;
++}
++
++int realmunmap(void *start, size_t length)
++{
++	return munmap(start, length);
++}
++
++
+diff --git a/diff.c b/diff.c
+index e496905..f1a2cf0 100644
+--- a/diff.c
++++ b/diff.c
+@@ -450,7 +450,7 @@ int diff_populate_filespec(struct diff_f
+ 		fd = open(s->path, O_RDONLY);
+ 		if (fd < 0)
+ 			goto err_empty;
+-		s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
++		s->data = realmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 		close(fd);
+ 		if (s->data == MAP_FAILED)
+ 			goto err_empty;
+@@ -482,7 +482,7 @@ void diff_free_filespec_data(struct diff
+ 	if (s->should_free)
+ 		free(s->data);
+ 	else if (s->should_munmap)
+-		munmap(s->data, s->size);
++		realmunmap(s->data, s->size);
+ 	s->should_free = s->should_munmap = 0;
+ 	s->data = NULL;
+ 	free(s->cnt_data);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5d543d2..85150f8 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -42,22 +42,28 @@ extern int error(const char *err, ...) _
+ 
+ #ifdef NO_MMAP
+ 
+-#ifndef PROT_READ
++#include <sys/mman.h>
++/*#ifndef PROT_READ
+ #define PROT_READ 1
+ #define PROT_WRITE 2
+ #define MAP_PRIVATE 1
+ #define MAP_FAILED ((void*)-1)
+-#endif
++#endif*/
+ 
+ #define mmap gitfakemmap
+ #define munmap gitfakemunmap
+ extern void *gitfakemmap(void *start, size_t length, int prot , int flags, int fd, off_t offset);
+ extern int gitfakemunmap(void *start, size_t length);
+ 
++extern void *realmmap(void *start, size_t length, int prot , int flags, int fd, off_t offset);
++extern int realmunmap(void *start, size_t length);
++
+ #else /* NO_MMAP */
+ 
+ #include <sys/mman.h>
+ 
++#define realmmap mmap
++#define realmunmap munmap
+ #endif /* NO_MMAP */
+ 
+ #ifdef NO_SETENV
+diff --git a/sha1_file.c b/sha1_file.c
+index 58edec0..712a068 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -330,14 +330,14 @@ void prepare_alt_odb(void)
+ 		close(fd);
+ 		return;
+ 	}
+-	map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	map = realmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 	if (map == MAP_FAILED)
+ 		return;
+ 
+ 	link_alt_odb_entries(map, map + st.st_size, '\n',
+ 			     get_object_directory());
+-	munmap(map, st.st_size);
++	realmunmap(map, st.st_size);
+ }
+ 
+ static char *find_sha1_file(const unsigned char *sha1, struct stat *st)
+@@ -378,7 +378,7 @@ static int check_packed_git_idx(const ch
+ 		return -1;
+ 	}
+ 	idx_size = st.st_size;
+-	idx_map = mmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	idx_map = realmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 	if (idx_map == MAP_FAILED)
+ 		return -1;
+@@ -423,7 +423,7 @@ static int unuse_one_packed_git(void)
+ 	}
+ 	if (!lru)
+ 		return 0;
+-	munmap(lru->pack_base, lru->pack_size);
++	realmunmap(lru->pack_base, lru->pack_size);
+ 	lru->pack_base = NULL;
+ 	return 1;
+ }
+@@ -460,7 +460,7 @@ int use_packed_git(struct packed_git *p)
+ 		}
+ 		if (st.st_size != p->pack_size)
+ 			die("packfile %s size mismatch.", p->pack_name);
+-		map = mmap(NULL, p->pack_size, PROT_READ, MAP_PRIVATE, fd, 0);
++		map = realmmap(NULL, p->pack_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 		close(fd);
+ 		if (map == MAP_FAILED)
+ 			die("packfile %s cannot be mapped.", p->pack_name);
+@@ -494,7 +494,7 @@ struct packed_git *add_packed_git(char *
+ 	/* do we have a corresponding .pack file? */
+ 	strcpy(path + path_len - 4, ".pack");
+ 	if (stat(path, &st) || !S_ISREG(st.st_mode)) {
+-		munmap(idx_map, idx_size);
++		realmunmap(idx_map, idx_size);
+ 		return NULL;
+ 	}
+ 	/* ok, it looks sane as far as we can check without
+@@ -647,7 +647,7 @@ static void *map_sha1_file_internal(cons
+ 		 */
+ 		sha1_file_open_flag = 0;
+ 	}
+-	map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	map = realmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 	if (map == MAP_FAILED)
+ 		return NULL;
+@@ -1184,7 +1184,7 @@ int sha1_object_info(const unsigned char
+ 			*sizep = size;
+ 	}
+ 	inflateEnd(&stream);
+-	munmap(map, mapsize);
++	realmunmap(map, mapsize);
+ 	return status;
+ }
+ 
+@@ -1210,7 +1210,7 @@ void * read_sha1_file(const unsigned cha
+ 	map = map_sha1_file_internal(sha1, &mapsize);
+ 	if (map) {
+ 		buf = unpack_sha1_file(map, mapsize, type, size);
+-		munmap(map, mapsize);
++		realmunmap(map, mapsize);
+ 		return buf;
+ 	}
+ 	return NULL;
+@@ -1493,7 +1493,7 @@ int write_sha1_to_fd(int fd, const unsig
+ 	} while (posn < objsize);
+ 
+ 	if (map)
+-		munmap(map, objsize);
++		realmunmap(map, objsize);
+ 	if (temp_obj)
+ 		free(temp_obj);
+ 
+@@ -1646,7 +1646,7 @@ int index_fd(unsigned char *sha1, int fd
+ 
+ 	buf = "";
+ 	if (size)
+-		buf = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
++		buf = realmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 	if (buf == MAP_FAILED)
+ 		return -1;
+@@ -1660,7 +1660,7 @@ int index_fd(unsigned char *sha1, int fd
+ 		ret = 0;
+ 	}
+ 	if (size)
+-		munmap(buf, size);
++		realmunmap(buf, size);
+ 	return ret;
+ }
+ 
 
---=-hSCX9LOyvlGeP4B3VBA3--
+
+------=_Part_8951_4085989.1144075112417--
