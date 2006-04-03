@@ -1,78 +1,60 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: parsecvs tool now creates git repositories
-Date: Sun, 02 Apr 2006 21:10:56 -0700
-Message-ID: <1144037456.2303.92.camel@neko.keithp.com>
-References: <1143956188.2303.39.camel@neko.keithp.com>
-	 <20060402093906.GH1259@lug-owl.de>  <20060402193144.GK1259@lug-owl.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFH] xdiff shows trivially redundant diff.
+Date: Sun, 2 Apr 2006 21:19:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604022116060.3781@g5.osdl.org>
+References: <7v4q1cmj7l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604021035130.30097@alien.or.mcafeemobile.com>
+ <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604021454560.30205@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0604021749580.23419@g5.osdl.org>
+ <Pine.LNX.4.64.0604022022390.10401@alien.or.mcafeemobile.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-p0pcV1fwhQmDNCd+43IQ"
-Cc: keithp@keithp.com, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 03 06:11:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 03 06:20:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQGPZ-0006k9-VP
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 06:11:30 +0200
+	id 1FQGXx-0007cP-Vw
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 06:20:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309AbWDCELY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 00:11:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbWDCELY
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 00:11:24 -0400
-Received: from home.keithp.com ([63.227.221.253]:62980 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S932309AbWDCELX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 00:11:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 7F98B13001F;
-	Sun,  2 Apr 2006 21:11:22 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 18822-05-3; Sun, 2 Apr 2006 21:11:22 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 44A4613001E; Sun,  2 Apr 2006 21:11:22 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 158A114001;
-	Sun,  2 Apr 2006 21:11:22 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 511D154386; Sun,  2 Apr 2006 21:10:57 -0700 (PDT)
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20060402193144.GK1259@lug-owl.de>
-X-Mailer: Evolution 2.4.2.1 
+	id S964809AbWDCEUF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 00:20:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964776AbWDCEUF
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 00:20:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:8605 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964809AbWDCEUC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 00:20:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k334JwEX004221
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 2 Apr 2006 21:19:59 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k334JvTt002374;
+	Sun, 2 Apr 2006 21:19:58 -0700
+To: Davide Libenzi <davidel@xmailserver.org>
+In-Reply-To: <Pine.LNX.4.64.0604022022390.10401@alien.or.mcafeemobile.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18308>
 
 
---=-p0pcV1fwhQmDNCd+43IQ
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, 2006-04-02 at 21:31 +0200, Jan-Benedict Glaw wrote:
+On Sun, 2 Apr 2006, Davide Libenzi wrote:
+> 
+> Tomorrow I'll take a look at it.
 
-> lex.l: In function =E2=80=98parse_data=E2=80=99:
-> lex.l:90: error: =E2=80=98yytext_ptr=E2=80=99 undeclared (first use in th=
-is function)
-> lex.l:90: error: (Each undeclared identifier is reported only once
-> lex.l:90: error: for each function it appears in.)
-> make: *** [lex.o] Error 1
+Thanks. I've made the first "release" (2.6.17-rc1) with the new built-in 
+diff, let's see if somebody has any issues.
 
-I think this is a bug in your version of flex; I'm using standard lex
-conventions here. I don't know how to make it work for you.
+But just the fact that I could do an almost 24MB diff (6MB compressed) 
+with 738 _thousand_ lines in about 4 seconds is damn nice. The script I 
+use to cut releases (logs, diffstats, tar-files etc) used to take a long 
+time with BK, these days it's a couple of seconds.
 
---=20
-keith.packard@intel.com
-
---=-p0pcV1fwhQmDNCd+43IQ
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQBEMKBQQp8BWwlsTdMRAoVeAKCa7qr03He6XUBcJMWDog9+ywFZJgCgl+wF
-b0m/nftSaQo9nK4VTfaCXeA=
-=qj+L
------END PGP SIGNATURE-----
-
---=-p0pcV1fwhQmDNCd+43IQ--
+		Linus
