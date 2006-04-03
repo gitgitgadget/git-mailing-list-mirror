@@ -1,60 +1,89 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cygwin can't handle huge packfiles?
-Date: Mon, 3 Apr 2006 07:36:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604030734440.3781@g5.osdl.org>
-References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
- <Pine.LNX.4.63.0604031521170.4011@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: parsecvs tool now creates git repositories
+Date: Mon, 03 Apr 2006 07:37:27 -0700
+Message-ID: <1144075047.2303.97.camel@neko.keithp.com>
+References: <1143956188.2303.39.camel@neko.keithp.com>
+	 <20060403140348.GE16823@harddisk-recovery.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 16:37:59 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-hSCX9LOyvlGeP4B3VBA3"
+Cc: keithp@keithp.com, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 03 16:38:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQQBE-0007pb-Q7
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 16:37:21 +0200
+	id 1FQQBn-0007vx-Iy
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 16:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751590AbWDCOg6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 10:36:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbWDCOg6
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 10:36:58 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42701 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751590AbWDCOg5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 10:36:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k33EasEX028630
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Apr 2006 07:36:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k33Earl1019494;
-	Mon, 3 Apr 2006 07:36:53 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751547AbWDCOhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 10:37:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbWDCOhx
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 10:37:53 -0400
+Received: from home.keithp.com ([63.227.221.253]:64529 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1751547AbWDCOhw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 10:37:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 41C9113001F;
+	Mon,  3 Apr 2006 07:37:51 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 29478-03-2; Mon, 3 Apr 2006 07:37:51 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id EC4A213001E; Mon,  3 Apr 2006 07:37:50 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id E94AA14002;
+	Mon,  3 Apr 2006 07:37:50 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 0CD0E54386; Mon,  3 Apr 2006 07:37:28 -0700 (PDT)
+To: Erik Mouw <erik@harddisk-recovery.com>
+In-Reply-To: <20060403140348.GE16823@harddisk-recovery.com>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18334>
 
 
+--=-hSCX9LOyvlGeP4B3VBA3
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 3 Apr 2006, Linus Torvalds wrote:
-> 
-> That said, I think git _does_ have problems with large pack-files. We have 
-> some 32-bit issues etc
+On Mon, 2006-04-03 at 16:03 +0200, Erik Mouw wrote:
+> On Sat, Apr 01, 2006 at 09:36:28PM -0800, Keith Packard wrote:
+> > The UI is a total disaster, sufficient for testing. You must create an
+> > Authors file in the current directory which looks like the git-cvsimpor=
+t
+> > authors file. You must also have a edit-change-log program in your path
+> > which edits the commit message in place. /bin/true will work if you
+> > don't need to edit the messages.
+> >=20
+> > I should clearly steal the existing git-cvsimport command line argument=
+s
+> > and use those.
+>=20
+> What is the current way to use it? I get the impression it reads raw ,v
+> files, but how do I get along with a remote CVS repository?
 
-I should clarify that. git _itself_ shouldn't have any 32-bit issues, but 
-the packfile data structure does. The index has 32-bit offsets into 
-individual pack-files. 
+You can't. You need to create a local copy of the repository. There is a
+tool which can do that using the cvs protocol, but I don't recall the
+name.
 
-That's not hugely fundamental, but I didn't expect people to hit it this 
-quickly. What kind of project has a 1.5GB pack-file _already_? I hope it's 
-fifteen years of history (so that we'll have another fifteen years before 
-we'll have to worry about 4GB pack-files ;)
+It turns out that parsing the ,v files directly is both faster and more
+accurate than attempting to interpret the output of cvs log.
 
-			Linus
+--=20
+keith.packard@intel.com
+
+--=-hSCX9LOyvlGeP4B3VBA3
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQBEMTMnQp8BWwlsTdMRAqKtAJ0ZBDaFEGiIyPa2FGCFrRMUmA3zlwCeOCo4
+b28PZZoL6NNkmAdlEkbspjs=
+=+pNR
+-----END PGP SIGNATURE-----
+
+--=-hSCX9LOyvlGeP4B3VBA3--
