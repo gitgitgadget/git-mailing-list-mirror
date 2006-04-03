@@ -1,78 +1,80 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn and svn sw --relocate
-Date: Mon, 3 Apr 2006 15:39:54 -0700
-Message-ID: <20060403223954.GB16726@hand.yhbt.net>
-References: <4430123E.5090605@iaglans.de> <20060402222100.GA17888@localdomain> <44314B41.3050902@iaglans.de>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: [RFH] xdiff shows trivially redundant diff.
+Date: Mon, 3 Apr 2006 15:50:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604031548150.30048@alien.or.mcafeemobile.com>
+References: <7v4q1cmj7l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604021035130.30097@alien.or.mcafeemobile.com>
+ <7vzmj3k7x9.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604021454560.30205@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0604021749580.23419@g5.osdl.org>
+ <Pine.LNX.4.64.0604022022390.10401@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0604022116060.3781@g5.osdl.org>
+ <Pine.LNX.4.64.0604022124440.10401@alien.or.mcafeemobile.com>
+ <7v4q1bglkp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604031222360.30048@alien.or.mcafeemobile.com>
+ <7vbqvictsc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 04 00:39:59 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 04 00:51:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQXiI-0006l6-0X
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 00:39:58 +0200
+	id 1FQXt3-0000Ys-UI
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 00:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964862AbWDCWjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 18:39:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbWDCWjz
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 18:39:55 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:15085 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S964868AbWDCWjy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 18:39:54 -0400
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id 122182DC01A; Mon,  3 Apr 2006 15:39:54 -0700 (PDT)
-To: Nicolas Vilz 'niv' <niv@iaglans.de>
-Content-Disposition: inline
-In-Reply-To: <44314B41.3050902@iaglans.de>
-User-Agent: Mutt/1.5.9i
+	id S964890AbWDCWvD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 18:51:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964891AbWDCWvC
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 18:51:02 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:64684 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP id S964890AbWDCWvA
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 18:51:00 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1C8645> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Mon, 3 Apr 2006 15:50:42 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqvictsc.fsf@assigned-by-dhcp.cox.net>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18360>
 
-Nicolas Vilz 'niv' <niv@iaglans.de> wrote:
-> Eric Wong wrote:
-> > Nicolas Vilz 'niv' <niv@iaglans.de> wrote:
-> >>i have now my repository locally and i want to get it remotely on a
-> >>server, in order to have a few collaborators...
-> >>
-> >>the steps on the svn-side are clear. But what do i have todo on the
-> >>git-svn-side of this life?
-> >>
-> >>does a simple "svn sw --relocate" do the job in the git-svn meta-dir?
-> > 
-> > 
-> > Yes, you'll need to do that in .git/git-svn/tree and also update
-> > .git/git-svn/info/url by hand.
-> 
-> Will there be any other sha1-sums for that repository so that i have to
-> merge them again and again? This issue occured to me the last time i
-> encountered the git-svn-change with the external sources, where i had to
-> repair my external git-svn-tree, which resulted in new sha1sums
-> somehow... that was very unpleasant to my collegue..
+On Mon, 3 Apr 2006, Junio C Hamano wrote:
 
-sha1-sums for commits? or trees?  I'm not sure that I follow, git-svn
-should make commits with at least two explicit parents (one being the
-commit you're using and, and the other remote/git-svn) back to
-remotes/git-svn.
+> Davide Libenzi <davidel@xmailserver.org> writes:
+>
+>>> For example, the first hunk says:
+>>>
+>>> 	@@ -0,0 +6 @@
+>>>        +#include "diff.h"
+>>>
+>>> Which is inconsistent with what GNU diff says:
+>>>
+>>> 	@@ -5,0 +6 @@
+>>>        +#include "diff.h"
+>>>
+>>> I've tried this patch but...
+>>
+>> The fix is fine, but you should do the same even in the s2 case. The
+>> correct hunk should have been:
+>>
+>> @@ -6,0 +6 @@
+>
+> You are right.  GNU says -5,0 not -6,0 so presumably "patch"
+> other people use expect it to say -5,0 not -6,0; even though we
+> could argue the insertion happens at 6th position and saying
+> -6,0 is more logical, it does not matter -- what incumbent does
+> wins X-<.  I notice that your fix shows -5,0 to match it ;-).
 
-The commit sha1s for the same svn tree do not necessary always match,
-and ac7490506418e3ec495775e432b7040a17449fa9 acknowledges that:
+Yeah, I had to make it such that GNU patch could swallow it, otherwise it 
+made no sense (being it right or not). Even the other issue is fixed now, 
+and I'll send you a libxdiff-based diff as soon as it passes some tests.
 
-    contrib/git-svn: allow rebuild to work on non-linear remote heads
-    
-    Because committing back to an SVN repository from different
-    machines can result in different lineages, two different
-    repositories running git-svn can result in different commit
-    SHA1s (but of the same tree).  Sometimes trees that are tracked
-    independently are merged together (usually via children),
-    resulting in non-unique git-svn-id: lines in rev-list.
 
-The tree sha1 should always match, however.  You can use the
---branch <refname/commit> option to do automatic branch joining
-based on tree sha1 checksums to combine history.
 
--- 
-Eric Wong
+- Davide
