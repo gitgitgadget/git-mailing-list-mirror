@@ -1,51 +1,78 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: parsecvs tool now creates git repositories
-Date: Tue, 4 Apr 2006 10:38:12 +1200
-Message-ID: <46a038f90604031538x3c94d86ap9f1400427513a3a7@mail.gmail.com>
-References: <1143956188.2303.39.camel@neko.keithp.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and svn sw --relocate
+Date: Mon, 3 Apr 2006 15:39:54 -0700
+Message-ID: <20060403223954.GB16726@hand.yhbt.net>
+References: <4430123E.5090605@iaglans.de> <20060402222100.GA17888@localdomain> <44314B41.3050902@iaglans.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 04 00:38:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 04 00:39:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQXgk-0006Q4-Kv
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 00:38:23 +0200
+	id 1FQXiI-0006l6-0X
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 00:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964867AbWDCWiO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 18:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbWDCWiO
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 18:38:14 -0400
-Received: from wproxy.gmail.com ([64.233.184.233]:24162 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964868AbWDCWiN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 18:38:13 -0400
-Received: by wproxy.gmail.com with SMTP id i22so1375790wra
-        for <git@vger.kernel.org>; Mon, 03 Apr 2006 15:38:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dtrKu0uPT5lGFpevo2LC4S6H5BRaTJ203vdsXYRlVaPW1FoqfvdcagB+Xxrz21Ssn0Wup7bgTFHtUljmFje+FLb1Vb76FW/xJjvHPwIcYDkhKeQR7lsGxPjUw8BN4QJy3AO6OCE9M7pK7tVcw5nVIZJVj6qXOHdQ65t300xGEy8=
-Received: by 10.54.70.12 with SMTP id s12mr646392wra;
-        Mon, 03 Apr 2006 15:38:12 -0700 (PDT)
-Received: by 10.54.72.7 with HTTP; Mon, 3 Apr 2006 15:38:12 -0700 (PDT)
-To: "Keith Packard" <keithp@keithp.com>
-In-Reply-To: <1143956188.2303.39.camel@neko.keithp.com>
+	id S964862AbWDCWjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 18:39:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbWDCWjz
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 18:39:55 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:15085 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S964868AbWDCWjy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 18:39:54 -0400
+Received: by hand.yhbt.net (Postfix, from userid 500)
+	id 122182DC01A; Mon,  3 Apr 2006 15:39:54 -0700 (PDT)
+To: Nicolas Vilz 'niv' <niv@iaglans.de>
 Content-Disposition: inline
+In-Reply-To: <44314B41.3050902@iaglans.de>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18359>
 
-Keith,
+Nicolas Vilz 'niv' <niv@iaglans.de> wrote:
+> Eric Wong wrote:
+> > Nicolas Vilz 'niv' <niv@iaglans.de> wrote:
+> >>i have now my repository locally and i want to get it remotely on a
+> >>server, in order to have a few collaborators...
+> >>
+> >>the steps on the svn-side are clear. But what do i have todo on the
+> >>git-svn-side of this life?
+> >>
+> >>does a simple "svn sw --relocate" do the job in the git-svn meta-dir?
+> > 
+> > 
+> > Yes, you'll need to do that in .git/git-svn/tree and also update
+> > .git/git-svn/info/url by hand.
+> 
+> Will there be any other sha1-sums for that repository so that i have to
+> merge them again and again? This issue occured to me the last time i
+> encountered the git-svn-change with the external sources, where i had to
+> repair my external git-svn-tree, which resulted in new sha1sums
+> somehow... that was very unpleasant to my collegue..
 
-Looks nifty. Though I thought you'd go for writing a smarter cvsps, so
-that git-cvsimport could take advantage of it.
+sha1-sums for commits? or trees?  I'm not sure that I follow, git-svn
+should make commits with at least two explicit parents (one being the
+commit you're using and, and the other remote/git-svn) back to
+remotes/git-svn.
 
-Looks like I'll have to brush up on my C to get to play... :-(
+The commit sha1s for the same svn tree do not necessary always match,
+and ac7490506418e3ec495775e432b7040a17449fa9 acknowledges that:
 
+    contrib/git-svn: allow rebuild to work on non-linear remote heads
+    
+    Because committing back to an SVN repository from different
+    machines can result in different lineages, two different
+    repositories running git-svn can result in different commit
+    SHA1s (but of the same tree).  Sometimes trees that are tracked
+    independently are merged together (usually via children),
+    resulting in non-unique git-svn-id: lines in rev-list.
 
+The tree sha1 should always match, however.  You can use the
+--branch <refname/commit> option to do automatic branch joining
+based on tree sha1 checksums to combine history.
 
-m
+-- 
+Eric Wong
