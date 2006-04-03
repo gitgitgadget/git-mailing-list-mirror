@@ -1,129 +1,82 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Default remote branch for local branch
-Date: Mon, 3 Apr 2006 15:57:35 +0200
-Message-ID: <200604031557.35660.Josef.Weidendorfer@gmx.de>
-References: <1143856098.3555.48.camel@dv> <200604030128.42680.Josef.Weidendorfer@gmx.de> <7vr74ff4oy.fsf@assigned-by-dhcp.cox.net>
+From: Erik Mouw <erik@harddisk-recovery.com>
+Subject: Re: parsecvs tool now creates git repositories
+Date: Mon, 3 Apr 2006 15:58:34 +0200
+Organization: Harddisk-recovery.com
+Message-ID: <20060403135834.GD16823@harddisk-recovery.com>
+References: <1143956188.2303.39.camel@neko.keithp.com> <20060402093906.GH1259@lug-owl.de> <20060402193144.GK1259@lug-owl.de> <1144037456.2303.92.camel@neko.keithp.com> <20060403072554.GN1259@lug-owl.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 15:58:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Keith Packard <keithp@keithp.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 03 15:59:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQPZ3-0007Mf-Gg
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 15:57:54 +0200
+	id 1FQPZo-0007a1-PD
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 15:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbWDCN5j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 09:57:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751170AbWDCN5j
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 09:57:39 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:11702 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1751213AbWDCN5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Apr 2006 09:57:38 -0400
-Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
-	by mail.in.tum.de (Postfix) with ESMTP id C92F02181;
-	Mon,  3 Apr 2006 15:57:36 +0200 (MEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-In-Reply-To: <7vr74ff4oy.fsf@assigned-by-dhcp.cox.net>
+	id S1751221AbWDCN6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 09:58:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbWDCN6g
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 09:58:36 -0400
+Received: from dtp.xs4all.nl ([80.126.206.180]:64924 "HELO abra2.bitwizard.nl")
+	by vger.kernel.org with SMTP id S1751221AbWDCN6g (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 09:58:36 -0400
+Received: (qmail 13614 invoked by uid 501); 3 Apr 2006 15:58:34 +0200
+To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+In-Reply-To: <20060403072554.GN1259@lug-owl.de>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18327>
 
-On Monday 03 April 2006 10:23, Junio C Hamano wrote:
-> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+On Mon, Apr 03, 2006 at 09:25:54AM +0200, Jan-Benedict Glaw wrote:
+> On Sun, 2006-04-02 21:10:56 -0700, Keith Packard <keithp@keithp.com> wrote:
+> > I think this is a bug in your version of flex; I'm using standard lex
+> > conventions here. I don't know how to make it work for you.
 > 
-> > On Sunday 02 April 2006 23:40, you wrote:
-> >> > Let me try to understand this: the general idea is that
-> >> >
-> >> >   pull.origin = [<refspec> of] <remote> for <branch>
-> >> >
-> >> > specifies the default action of git-pull if we are on <branch>, ie.
-> >> > a "git pull" then runs "git pull <remote> [<refspec>]".
-> >> 
-> >> Not quite.
-> >> 
-> >> It will be (if this were a serious proposal -- I am not
-> >> absolutely convinced this is a good idea) more like "git fetch
-> >> <remote>" followed by "git-merge HEAD the-refspec-named-there".
-> >
-> > So it is not really a <refspec>, but a <localbranch> which has to
-> > appear in the .git/remotes file on the right side of a refspec on
-> > a Pull line.
+> It compiles for me with this patch (thanks to Linus for the hint):
 > 
-> No, I meant <refspec> not <localbranch> here, because I do not
-> want to force people to have tracking local branch.
+> diff --git a/Makefile b/Makefile
 
-Oh, ok. I just had to look up the manual regarding refspecs when
-pulling/fetching again: "<ref>" is the same as "<ref>:" and does
-not create/use any local branch.
+[...]
 
-> > All I wanted to remark is, that, with
-> >
-> >  URL: <remote-URL>
-> >  Pull: refs/head/master:refs/head/remote1
-> >  Pull: refs/head/other:refs/head/remote2
-> >
-> > the config
-> >
-> >  pull.origin = <remote> for refs/head/my-devel-for-remote2
-> >
-> > which does not use the [<refspec> of] part, always is bogus:
-> > We get remote1 merged into my-devel-for-remote2 on a git-pull,
-> > which is not what we want.
-> 
-> I think we are on the same page, if you just think of not having
-> [<refspec> of] a short-hand for naming the first Pull: line.
+> Would you please verify that it doesn't break things for you?
 
-Yes, I understand this. But I do not think that such an optional
-shortcut is useful for config files entries. It complicates parsing/editors,
-and seems to make it more confusing. Despite, I agree that such optional
-shortcuts are nice for porcelain command lines.
+Almost there. I applied your patch and ran "make clean", but the
+Makefile forgets to remove lex.c. Here's an updated patch:
 
-As I see the use of "<refspec> of <remote>", I still think that specifying
-a local branch is useful, too. So what about
+diff --git a/Makefile b/Makefile
+index 639353a..5651e70 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,7 +3,8 @@ GCC_WARNINGS2=-Wmissing-prototypes -Wmis
+ GCC_WARNINGS3=-Wnested-externs -fno-strict-aliasing
+ GCC_WARNINGS=$(GCC_WARNINGS1) $(GCC_WARNINGS2) $(GCC_WARNINGS3)
+ CFLAGS=-O0 -g $(GCC_WARNINGS)
+-YFLAGS=-d
++YFLAGS=-d -l
++LFLAGS=-l
+ 
+ SRCS=gram.y lex.l cvs.h parsecvs.c cvsutil.c revlist.c atom.c revcvs.c git.c
+ 
+@@ -20,4 +21,4 @@ lex.o: lex.c
+ y.tab.h: gram.c
+ 
+ clean:
+-	rm -f $(OBJS) y.tab.h gram.c parsecvs
++	rm -f $(OBJS) y.tab.h gram.c lex.c parsecvs
 
-  pull.origin = (<refspec> of <remote> | <localbranch>) for <branch>	
 
-instead? We can distinguish the two cases by looking for the "of".
-When the <refspec> is of the form <src>:<dst> (where <dst> is the local
-branch), we probably want to sanity check against .git/remotes/.
 
-> > Optionally, branching <new> off from <old> could add <new> as
-> > topic branch of <old>: Thus, if you are on <old> and do git-pull,
-> > you get <new> merged in.
-> 
-> I agree with Andreas on this part.
+It compiles! Ship it! ;-)
 
-Yup. If we want to support topic branches with defaults, we should use
-another config option. And now, I am not convinced about the usefulness
-of this any more.
 
-> Not if you made the [<refspec> of] part <localbranch>.  Then
-> this configuration for default merge source per local branch
-> feature is available only to people who are willing to use
-> tracking branches.
+Erik
 
-Yes, I understand this now.
-
-> I just wanted to mention that it would be handy to be able to
-> take snapshots of tracking branch heads, but it does not really
-> matter whether they are "your" local development branches or
-> tracking branches.  Just a nightly or on-demand
-> 
->          d="$GIT_DIR/refs/snapshot/`date '+%Y-%m-%d'`" &&
->          mkdir "$GIT_DIR/refs/snapshot/$d" &&
->          tar Ccf "$GIT_DIR/refs/" - heads |
->          tar Cxf "$d" 
-
-Wow. For this, versioning of the /refs directory as subproject
-would be good ;-)
-
-Josef
+-- 
++-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
+| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
