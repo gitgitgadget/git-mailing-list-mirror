@@ -1,77 +1,72 @@
-From: Daniel Drake <dsd@gentoo.org>
-Subject: HTTP repo referencing stale heads (can't clone)
-Date: Mon, 03 Apr 2006 17:01:48 +0100
-Message-ID: <443146EC.7060704@gentoo.org>
+From: Nicolas Vilz 'niv' <niv@iaglans.de>
+Subject: Re: git-svn and svn sw --relocate
+Date: Mon, 03 Apr 2006 18:20:17 +0200
+Message-ID: <44314B41.3050902@iaglans.de>
+References: <4430123E.5090605@iaglans.de> <20060402222100.GA17888@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Apr 03 17:50:57 2006
+X-From: git-owner@vger.kernel.org Mon Apr 03 18:22:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQRK2-0007K7-N5
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 17:50:31 +0200
+	id 1FQRoT-0005lZ-Fx
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 18:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbWDCPu1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 11:50:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbWDCPu1
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 11:50:27 -0400
-Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:42340 "EHLO
-	mtaout02-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S1751744AbWDCPu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Apr 2006 11:50:26 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com with ESMTP
-          id <20060403155025.KTHY29040.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Mon, 3 Apr 2006 16:50:25 +0100
-Received: from [192.168.0.2] (really [86.14.216.162])
-          by aamtaout03-winn.ispmail.ntl.com with ESMTP
-          id <20060403155024.OLSJ16286.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>
-          for <git@vger.kernel.org>; Mon, 3 Apr 2006 16:50:24 +0100
-User-Agent: Mail/News 1.5 (X11/20060401)
-To: git@vger.kernel.org
+	id S1751779AbWDCQVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 12:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751782AbWDCQVy
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 12:21:54 -0400
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:24083 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S1751779AbWDCQVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Apr 2006 12:21:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 11C3F436F
+	for <git@vger.kernel.org>; Mon,  3 Apr 2006 18:21:51 +0200 (CEST)
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 19890-01 for <git@vger.kernel.org>;
+	Mon, 3 Apr 2006 18:21:51 +0200 (CEST)
+Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 8B9E2434A
+	for <git@vger.kernel.org>; Mon,  3 Apr 2006 18:21:50 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+X-Accept-Language: en-us, en
+To: git <git@vger.kernel.org>
+In-Reply-To: <20060402222100.GA17888@localdomain>
+X-Enigmail-Version: 0.92.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18341>
 
-Hi,
+Eric Wong wrote:
+> Nicolas Vilz 'niv' <niv@iaglans.de> wrote:
+>>i have now my repository locally and i want to get it remotely on a
+>>server, in order to have a few collaborators...
+>>
+>>the steps on the svn-side are clear. But what do i have todo on the
+>>git-svn-side of this life?
+>>
+>>does a simple "svn sw --relocate" do the job in the git-svn meta-dir?
+> 
+> 
+> Yes, you'll need to do that in .git/git-svn/tree and also update
+> .git/git-svn/info/url by hand.
 
-I maintain a small git repo. I upload it over ssh (with git-push) to a 
-machine where it is distributed over http:
+Will there be any other sha1-sums for that repository so that i have to
+merge them again and again? This issue occured to me the last time i
+encountered the git-svn-change with the external sources, where i had to
+repair my external git-svn-tree, which resulted in new sha1sums
+somehow... that was very unpleasant to my collegue..
 
-http://dsd.object4.net/git/zd1211.git/
+Although the uuids there should remain the same... so i think, that
+would be no problem to try.
 
-For some reason it is no longer possible to clone this repo over http:
+Thanks for the tip.
 
-walk 35afe6b3a859242a18812e7485ea8b211e24abaf
-walk 93d9a9f469282e1e392c16ce571da4c08805e8bb
-error: Couldn't get 
-http://dsd.object4.net/git/zd1211.git/refs/heads/softmac-old for 
-heads/softmac-old
-The requested URL returned error: 404
-error: Could not interpret heads/softmac-old as something to pull
-
-"softmac-old" is an old branch, which I have recently deleted. I deleted 
-it by removing the .git/refs/heads/softmac-old file, and relying on 
-git-prune to clear out old objects.
-
-Even on the server-side, there is no obvious reference to this old head:
-
-$ find -name '*softmac*'
-$ grep -R softmac *
-(no results for either)
-
-"git-fsck-objects" reports nothing, "git-fsck-objects --full" reports:
-dangling commit 7cc423c942975005f96f308186537ad6e7808c2e
-dangling commit b36378de6231f1b5100b1517b9c8c243a21090fd
-
-I have tried running git-prune and git-update-server-info, but that 
-doesn't help.
-
-Any ideas? I'm still new to git.
-I am running git-1.2.4
-
-Thanks,
-Daniel
+Nicolas
