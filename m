@@ -1,137 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Default remote branch for local branch
-Date: Mon, 03 Apr 2006 01:23:25 -0700
-Message-ID: <7vr74ff4oy.fsf@assigned-by-dhcp.cox.net>
-References: <1143856098.3555.48.camel@dv>
-	<200604021817.30222.Josef.Weidendorfer@gmx.de>
-	<7v7j67k65b.fsf@assigned-by-dhcp.cox.net>
-	<200604030128.42680.Josef.Weidendorfer@gmx.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Moving a file back to an earlier revision.
+Date: Mon, 3 Apr 2006 10:29:08 +0200
+Message-ID: <20060403082908.GA4541@diana.vm.bytemark.co.uk>
+References: <4dd15d180603311313t7781f2ebk616276e9134f6472@mail.gmail.com> <4dd15d180603311332p60fa1867nc303bd92d515b4e0@mail.gmail.com> <7vacb6thc7.fsf@assigned-by-dhcp.cox.net> <4dd15d180603311421w7b48cfa4y80d3f9d565d4276f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 03 10:23:40 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 03 10:29:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQKLT-0008Sh-Qp
-	for gcvg-git@gmane.org; Mon, 03 Apr 2006 10:23:32 +0200
+	id 1FQKRC-0000wQ-A1
+	for gcvg-git@gmane.org; Mon, 03 Apr 2006 10:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbWDCIX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 04:23:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932397AbWDCIX2
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 04:23:28 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:17295 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932374AbWDCIX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Apr 2006 04:23:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060403082326.GBAT25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 3 Apr 2006 04:23:26 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200604030128.42680.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Mon, 3 Apr 2006 01:28:42 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751515AbWDCI3W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Apr 2006 04:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbWDCI3V
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 04:29:21 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:56594 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S1751515AbWDCI3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Apr 2006 04:29:19 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FQKQu-0001KM-00; Mon, 03 Apr 2006 09:29:08 +0100
+To: David Ho <davidkwho@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <4dd15d180603311421w7b48cfa4y80d3f9d565d4276f@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18321>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+On 2006-03-31 17:21:48 -0500, David Ho wrote:
+[quoting junkio]
 
-> On Sunday 02 April 2006 23:40, you wrote:
->> > Let me try to understand this: the general idea is that
->> >
->> >   pull.origin = [<refspec> of] <remote> for <branch>
->> >
->> > specifies the default action of git-pull if we are on <branch>, ie.
->> > a "git pull" then runs "git pull <remote> [<refspec>]".
->> 
->> Not quite.
->> 
->> It will be (if this were a serious proposal -- I am not
->> absolutely convinced this is a good idea) more like "git fetch
->> <remote>" followed by "git-merge HEAD the-refspec-named-there".
+> > Remember, a branch in git is very cheap, and is a powerful way to
+> > keep track of things while you decide which alternate universe to
+> > take. And even after you decide, you could always look at and even
+> > build on the other universe.
 >
-> So it is not really a <refspec>, but a <localbranch> which has to
-> appear in the .git/remotes file on the right side of a refspec on
-> a Pull line.
-
-No, I meant <refspec> not <localbranch> here, because I do not
-want to force people to have tracking local branch.  The call to
-merge in pull that happens immediately after fetch does not use
-localbranch, but uses what's recorded in FETCH_HEAD, and if we
-were to do this change the above change would most likely to
-affect how each remote branch heads fetched are marked for (or
-not for) merges.
-
-> All I wanted to remark is, that, with
+> I feel embarrassed to say this but in my branch there are commits to
+> the driver and other commits for the board so it looks more like
 >
->  URL: <remote-URL>
->  Pull: refs/head/master:refs/head/remote1
->  Pull: refs/head/other:refs/head/remote2
+> ---0---D1---B1---B2---D2---B3---B4---
 >
-> the config
+> D* - driver changes
+> B* - board changes
 >
->  pull.origin = <remote> for refs/head/my-devel-for-remote2
->
-> which does not use the [<refspec> of] part, always is bogus:
-> We get remote1 merged into my-devel-for-remote2 on a git-pull,
-> which is not what we want.
+> So to go back to the 0 state I lose my board changes. But I hope
+> what I did (in my reply to Linus) is very close to your idea of
+> having separate branches.
 
-I think we are on the same page, if you just think of not having
-[<refspec> of] a short-hand for naming the first Pull: line.
+You could use either stgit or the cherry-picking stuff in git to
+create a new branch with these commits, but reordered any way you
+like. (Or, given what you want to use it for, maybe two separate topic
+branches -- one for board changes and one for driver changes -- that
+can be merged to produce the end result.)
 
-> Optionally, branching <new> off from <old> could add <new> as
-> topic branch of <old>: Thus, if you are on <old> and do git-pull,
-> you get <new> merged in.
-
-I agree with Andreas on this part.
-
->> A bigger thing is that I am trying to avoid _requiring_ tracking
->> branches.
->
-> I don't think you force anything when you add functionality to git-pull
-> for the config discussed here. Nobody *has* to use this config - it's
-> a porcelain thingie.
-
-Not if you made the [<refspec> of] part <localbranch>.  Then
-this configuration for default merge source per local branch
-feature is available only to people who are willing to use
-tracking branches.
-
->> If you are not micromanaging your subsystem 
->> maintainers, you should not have to care where they were the
->> last time you pulled from them....
->> [...why not needing to use tracking branches is good...]
-
->> If we are going require tracking branches,
->
-> I do not understand. Why should we require this?
-
-I forgot to say "on the other hand" before that "If".
-
->> we could do a bit 
->> more with them, like remembering where the tip was when we
->> fetched the last time (or the time before that...) and diff with
->> that, but the tracking branch heads are not set up to do things
->> like that right now -- they are single pointers.
-
-Actually I think this part is independent and I did not have to
-mention.  There is no point complicating only the tracking
-branches at all.
-
-I just wanted to mention that it would be handy to be able to
-take snapshots of tracking branch heads, but it does not really
-matter whether they are "your" local development branches or
-tracking branches.  Just a nightly or on-demand
-
-         d="$GIT_DIR/refs/snapshot/`date '+%Y-%m-%d'`" &&
-         mkdir "$GIT_DIR/refs/snapshot/$d" &&
-         tar Ccf "$GIT_DIR/refs/" - heads |
-         tar Cxf "$d" -
-
-would do, and then you should be able to ask "where was my
-'master' head yesterday?".
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
