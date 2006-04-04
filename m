@@ -1,98 +1,67 @@
-From: Radoslaw Szkodzinski <astralstorm@o2.pl>
-Subject: Re: [BUG] git-http-fetch segfault
-Date: Tue, 04 Apr 2006 22:25:26 +0200
-Message-ID: <4432D636.4050407@o2.pl>
-References: <4432A8CC.5020200@o2.pl> <20060404184935.GG14967@reactrix.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.2.5
+Date: Tue, 04 Apr 2006 15:38:24 -0700
+Message-ID: <7vzmj155lr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig0FB30B7F03325558F419408D"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 04 22:30:32 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 05 00:38:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQsAY-00021S-PG
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 22:30:31 +0200
+	id 1FQuAU-00071h-K9
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 00:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750840AbWDDUa1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 16:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbWDDUa1
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 16:30:27 -0400
-Received: from mx.go2.pl ([193.17.41.41]:12483 "EHLO poczta.o2.pl")
-	by vger.kernel.org with ESMTP id S1750840AbWDDUaZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 16:30:25 -0400
-Received: from zen.localdomain (host-81-190-200-101.gorzow.mm.pl [81.190.200.101])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by poczta.o2.pl (Postfix) with ESMTP id 7DAB113793E;
-	Tue,  4 Apr 2006 22:30:23 +0200 (CEST)
-Received: from zen.localdomain ([192.168.0.1])
-	by zen.localdomain with esmtpa (Exim 4.60)
-	(envelope-from <astralstorm@o2.pl>)
-	id 1FQs6B-0005lZ-Rm; Tue, 04 Apr 2006 22:25:59 +0200
-User-Agent: Mail/News 1.5 (X11/20060404)
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20060404184935.GG14967@reactrix.com>
-X-Enigmail-Version: 0.94.0.0
+	id S1750890AbWDDWi0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 18:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885AbWDDWi0
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 18:38:26 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:36511 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750831AbWDDWiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Apr 2006 18:38:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060404223825.OIXO17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 4 Apr 2006 18:38:25 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18409>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig0FB30B7F03325558F419408D
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The latest maintenance release GIT 1.2.5 is available at the
+usual places:
 
-Nick Hengeveld wrote:
-> On Tue, Apr 04, 2006 at 07:11:40PM +0200, Radoslaw Szkodzinski wrote:
->=20
->> I have some problems cloning stgit repository (maybe something's broke=
-n there).
->>
->> astralstorm@zen /home/devel $ git clone
->> http://homepage.ntlworld.com/cmarinas/stgit.git stgit
->> error: Unable to find adad46f365219e9bcc1a212826ca65eaac09729c under
->> http://homepage.ntlworld.com/cmarinas/stgit.git/
->> Cannot obtain needed blob adad46f365219e9bcc1a212826ca65eaac09729c
->> while processing commit 8847a11b3bbf5406f37a360e5466f0e392c56383.
->=20
-> That host name resolves to multiple IP addresses, is it possible that
-> one of the servers was out of sync?  I tried cloning directly from each=
+	http://www.kernel.org/pub/software/scm/git/
 
-> address and couldn't reproduce the problem.
->=20
+	git-1.2.5.tar.{gz,bz2}			(tarball)
+	RPMS/$arch/git-*-1.2.5-1.$arch.rpm	(RPM)
 
-Okay, I've nailed it. It's caused by Privoxy.
-It seems that Privoxy sends its 404 page with 200 OK reply.
-Clearly a broken response.
+This is primarily made to help Solaris folks who were bitten by
+pack-objects (hence cloning from a repository hosted on Solaris)
+broken by the progress-bar eye-candy.  People who follow the
+"master" branch, and people who run 1.2.4 on platforms with BSD
+signal semantics (which automatically restarts interrupted
+read() upon signal) need not worry.
 
-Does anyone have any better proxy supporting real SOCKS 4a/5 upstream pro=
-xy?
-(for Tor)
-Delegate doesn't count - it has broken HTTP code, 1.0 only and slow too.
+With the "master" branch work nearing 1.3.0, hopefully this will
+be the last 1.2.X release.
 
---=20
-GPG Key id:  0xD1F10BA2
-Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+----------------------------------------------------------------
 
-AstralStorm
+Changes since v1.2.4 are as follows:
 
+Jason Riedy:
+      Use sigaction and SA_RESTART in read-tree.c; add option in Makefile.
 
---------------enig0FB30B7F03325558F419408D
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Junio C Hamano:
+      read-tree --aggressive: remove deleted entry from the working tree.
+      tar-tree: file/dirmode fix.
+      safe_fgets() - even more anal fgets()
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFEMtY6lUMEU9HxC6IRAuGtAKCraNNsmgEDzd/h3i5PR/h/CmGOnwCghiWx
-/JeW/hEGUmGZAR/oZF03LxM=
-=Ttj0
------END PGP SIGNATURE-----
-
---------------enig0FB30B7F03325558F419408D--
+Linus Torvalds:
+      Fix Solaris stdio signal handling stupidities
+      pack-objects: be incredibly anal about stdio semantics
