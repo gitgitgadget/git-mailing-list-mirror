@@ -1,72 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] On some platforms, certain headers need to be included before
- regex.h
-Date: Wed, 5 Apr 2006 01:01:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604050059580.19712@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Tue, 04 Apr 2006 16:06:07 -0700
+Message-ID: <7v3bgt54bk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Apr 05 01:01:16 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Apr 05 01:06:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQuWO-0002Bc-Ac
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 01:01:12 +0200
+	id 1FQubF-0002sb-BR
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 01:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbWDDXBJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 19:01:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbWDDXBI
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 19:01:08 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6103 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750924AbWDDXBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Apr 2006 19:01:07 -0400
-Received: from virusscan.mail (mailrelay3.mail [172.25.1.42])
-	by mailrelay.mail (Postfix) with ESMTP id 06CB0BDA;
-	Wed,  5 Apr 2006 01:01:04 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id EE099BED;
-	Wed,  5 Apr 2006 01:01:03 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id D0A771AC0;
-	Wed,  5 Apr 2006 01:01:03 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750912AbWDDXGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 19:06:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbWDDXGJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 19:06:09 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:41374 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750912AbWDDXGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Apr 2006 19:06:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060404230608.YOCV17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 4 Apr 2006 19:06:08 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18411>
+
+I've tagged the tip of "master" as 1.3.0-rc2.  It has the
+following changes since the last announcement.
+
+ - enhancement and a minor fix to built-in xdiff
+   (Davide Libenzi and Mark Wooding)
+
+ - contrib/git-svn updates (Eric Wong)
+
+ - documentation updates (J. Bruce Fields)
+
+ - build and other assorted fixes and cleanups (Jason Riedy,
+   Peter Eriksen, Rene Scharfe, Yasushi SHOJI, and Jim Radford)
+
+ - Solaris "clone" fix (Linus and Jason Riedy with initial
+   reproduction help from Peter Eriksen)
+
+ - revision traversal latency improvements with paths and
+   max-age limiting (Linus and me)
+
+ - http-fetch updates (Nick Hengeveld)
+
+ - updated gitk (Paul Mackerras)
 
 
-Happily, these are already included in cache.h, which is included anyway...
-so: change the order of includes.
+* The 'next' branch, in addition, has these.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ - fix cloning of upsteram whose HEAD does not point at master
+   (me); this is an attempt to fix a real bug, but I haven't had
+   a chance to test it sufficiently enough to convince myself it
+   is ready.
 
----
+ - pickaxe enhancements that looks for needles matching regexp
+   (Petr Baudis)
 
- diffcore-pickaxe.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ - combine-diff that uses built-in xdiff (me)
 
-0dcea02390ab0a15e2dbb62b4b876046fe0b4e79
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index d89f314..cfcce31 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -1,11 +1,11 @@
- /*
-  * Copyright (C) 2005 Junio C Hamano
-  */
--#include <regex.h>
--
- #include "cache.h"
- #include "diff.h"
- #include "diffcore.h"
-+
-+#include <regex.h>
- 
- static unsigned int contains(struct diff_filespec *one,
- 			     const char *needle, unsigned long len,
--- 
-1.3.0.rc2.g7eaca-dirty
+* The 'pu' branch, in addition, has these.
+
+ - assorted gitk updates from the list (Johannes Schindelin,
+   Keith Packard and Mark Wooding); I am waiting for some of
+   them to trickle back from Paul's canonical gitk tree.
+
+ - beginning of new pickaxe (me); I've got busy before getting this
+   one to do anything interesting.  Currently it is just a bit
+   faster way to do 'rev-list | diff-tree --stdin path' for a
+   single path.
