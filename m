@@ -1,66 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
 Subject: Re: [PATCH] Add git-clean command
-Date: Tue, 04 Apr 2006 02:08:31 -0700
-Message-ID: <7vfykt908g.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 4 Apr 2006 11:17:19 +0200
+Message-ID: <81b0412b0604040217s3b8863d3w1b79400c42ca2b90@mail.gmail.com>
 References: <20060403221841.25097.18242.stgit@dv.roinet.com>
-	<20060404082002.GJ4663@admingilde.org>
+	 <20060404082002.GJ4663@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 04 11:08:57 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Pavel Roskin" <proski@gnu.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 04 11:17:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQhWo-0008Hn-Lc
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 11:08:47 +0200
+	id 1FQhfA-00011R-Js
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 11:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932356AbWDDJIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 05:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932396AbWDDJIe
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 05:08:34 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43991 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932356AbWDDJId (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Apr 2006 05:08:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060404090832.RHQN6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Apr 2006 05:08:32 -0400
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20060404082002.GJ4663@admingilde.org> (Martin Waitz's message of
-	"Tue, 4 Apr 2006 10:20:02 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932376AbWDDJRV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 05:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932405AbWDDJRV
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 05:17:21 -0400
+Received: from pproxy.gmail.com ([64.233.166.181]:53346 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932376AbWDDJRU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 05:17:20 -0400
+Received: by pproxy.gmail.com with SMTP id f25so1599810pyf
+        for <git@vger.kernel.org>; Tue, 04 Apr 2006 02:17:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DaFFxGcBk/eWzNJlGDC4WjZ8dh3+L0NPoiLEcamjgjPHSo/HxAI58+CFL1lMv/Dwsy37Gcs6vPFD7i7Yi7CpemIx8y2caV61HSZYkyk7961qvpyETmycB/OlGFksvDzoitdxYYzr1cxx+OGMeYsRxC0NgBiLYtaXXil7xjDb+6U=
+Received: by 10.35.96.11 with SMTP id y11mr740094pyl;
+        Tue, 04 Apr 2006 02:17:19 -0700 (PDT)
+Received: by 10.35.41.18 with HTTP; Tue, 4 Apr 2006 02:17:19 -0700 (PDT)
+To: "Martin Waitz" <tali@admingilde.org>
+In-Reply-To: <20060404082002.GJ4663@admingilde.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18380>
 
-Martin Waitz <tali@admingilde.org> writes:
+On 4/4/06, Martin Waitz <tali@admingilde.org> wrote:
+> What is the use case of cleaning up all untracked files without also
+> cleaning ignored files?
 
->> +-x::
->> +	Don't use the ignore rules.  This allows removing all untracked
->> +	files, including build products.  This can be used (possibly in
->> +	conjunction with gitlink:git-reset[1]) to create a pristine
->> +	working directory to test a clean build.
->
-> as ignored files are generally generated files, doesn't it make sense
-> to clean up the "ignored" files, and leave other untracked files
-> alone?  That way you don't loose files which you forgot to add to git.
-
-Sounds like a sane suggestion, but my previous comment about
-"make clean" broken for people who want this "git clean" feature
-applies here as well.
-
-One justification I can think of for "git clean" without -x flag
-is to make a clean tree that has only the source and build
-products, removing editor backup files, throwaway test output
-files and friends, but as you pointed out, this risks losing
-newly created source files that you forgot to add, so I would
-need a bit of convincing before I use such a command myself.
-
-Compared to that, removing only ignored files sounds like a much
-safer operation -- they are explicitly listed as expendable, so
-it is a lot less likely to lose anything important.  But again,
-that is what "make clean" is there for...
+Thinks of git's .gitignore: it has config.mak in it. Are you sure you want
+"clean" your build customizations?
