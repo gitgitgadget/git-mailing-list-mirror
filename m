@@ -1,57 +1,46 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [BUG] git-http-fetch segfault
-Date: Tue, 4 Apr 2006 11:49:36 -0700
-Message-ID: <20060404184935.GG14967@reactrix.com>
-References: <4432A8CC.5020200@o2.pl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 04 20:50:02 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [RFH] Solaris cloning woes...
+Date: Tue, 04 Apr 2006 11:53:45 -0700
+Message-ID: <24378.1144176825@lotus.CS.Berkeley.EDU>
+References: <7vu099916v.fsf@assigned-by-dhcp.cox.net>
+Cc: git@vger.kernel.org, Peter Eriksen <s022018@student.dtu.dk>
+X-From: git-owner@vger.kernel.org Tue Apr 04 20:53:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQqb7-0008GP-9g
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 20:49:49 +0200
+	id 1FQqf4-0000ee-RC
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 20:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750789AbWDDStq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 14:49:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbWDDStq
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 14:49:46 -0400
-Received: from 241.37.26.69.virtela.com ([69.26.37.241]:22628 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1750789AbWDDStq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Apr 2006 14:49:46 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k34Ina2X004238;
-	Tue, 4 Apr 2006 11:49:36 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k34Inaas004236;
-	Tue, 4 Apr 2006 11:49:36 -0700
-To: Radoslaw Szkodzinski <astralstorm@o2.pl>
-Content-Disposition: inline
-In-Reply-To: <4432A8CC.5020200@o2.pl>
-User-Agent: Mutt/1.4.1i
+	id S1750800AbWDDSxw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 14:53:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbWDDSxw
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 14:53:52 -0400
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:23450 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1750800AbWDDSxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Apr 2006 14:53:52 -0400
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k34IrkgH024392;
+	Tue, 4 Apr 2006 11:53:46 -0700 (PDT)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k34IrkHr024391;
+	Tue, 4 Apr 2006 11:53:46 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7vu099916v.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18404>
 
-On Tue, Apr 04, 2006 at 07:11:40PM +0200, Radoslaw Szkodzinski wrote:
+And Junio C Hamano writes:
+ - Once this is confirmed to fix the problem on Solaris boxes, I'd
+ - like to include and do an 1.2.5, just in case OpenSolaris folks
+ - would want to play with it, and also put them in the "master"
+ - branch.
 
-> I have some problems cloning stgit repository (maybe something's broken there).
-> 
-> astralstorm@zen /home/devel $ git clone
-> http://homepage.ntlworld.com/cmarinas/stgit.git stgit
-> error: Unable to find adad46f365219e9bcc1a212826ca65eaac09729c under
-> http://homepage.ntlworld.com/cmarinas/stgit.git/
-> Cannot obtain needed blob adad46f365219e9bcc1a212826ca65eaac09729c
-> while processing commit 8847a11b3bbf5406f37a360e5466f0e392c56383.
+I haven't run into the problem since, but I almost never saw
+it in the first place.  Have you been able to trigger it
+reliably?  Maybe I'm "lucky" that my Sun's so slow...
 
-That host name resolves to multiple IP addresses, is it possible that
-one of the servers was out of sync?  I tried cloning directly from each
-address and couldn't reproduce the problem.
-
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+Jason
