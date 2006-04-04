@@ -1,133 +1,75 @@
-From: Keith Packard <keithp@keithp.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: parsecvs tool now creates git repositories
-Date: Mon, 03 Apr 2006 20:51:49 -0700
-Message-ID: <1144122709.2303.153.camel@neko.keithp.com>
+Date: Mon, 03 Apr 2006 23:09:02 -0700
+Message-ID: <7vodzhc1oh.fsf@assigned-by-dhcp.cox.net>
 References: <1143956188.2303.39.camel@neko.keithp.com>
-	 <46a038f90604031538x3c94d86ap9f1400427513a3a7@mail.gmail.com>
-	 <1144116459.2303.129.camel@neko.keithp.com>
-	 <46a038f90604031916r4651b572lb9bae4c5a3d47bc9@mail.gmail.com>
-	 <1144117473.2303.132.camel@neko.keithp.com>
-	 <46a038f90604031942w779894b8p5ef221482a70a301@mail.gmail.com>
+	<46a038f90604031538x3c94d86ap9f1400427513a3a7@mail.gmail.com>
+	<1144116459.2303.129.camel@neko.keithp.com>
+	<46a038f90604031916r4651b572lb9bae4c5a3d47bc9@mail.gmail.com>
+	<1144117473.2303.132.camel@neko.keithp.com>
+	<46a038f90604031942w779894b8p5ef221482a70a301@mail.gmail.com>
+	<1144122709.2303.153.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-6s13FM04MAtaXrZxX1wD"
-Cc: keithp@keithp.com, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 04 05:52:27 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 04 08:09:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQcac-0007mF-Il
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 05:52:23 +0200
+	id 1FQeiz-0005a8-SJ
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 08:09:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbWDDDwS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 23:52:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbWDDDwS
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 23:52:18 -0400
-Received: from home.keithp.com ([63.227.221.253]:39432 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1751440AbWDDDwR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 23:52:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 2CC9E13001F;
-	Mon,  3 Apr 2006 20:52:16 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 09637-02; Mon, 3 Apr 2006 20:52:15 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id B504513001E; Mon,  3 Apr 2006 20:52:15 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id AA9BE14001;
-	Mon,  3 Apr 2006 20:52:15 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id DDFA76B428A; Mon,  3 Apr 2006 20:51:51 -0700 (PDT)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90604031942w779894b8p5ef221482a70a301@mail.gmail.com>
-X-Mailer: Evolution 2.4.2.1 
+	id S1751813AbWDDGJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 02:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbWDDGJG
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 02:09:06 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:47763 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751813AbWDDGJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Apr 2006 02:09:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060404060904.YMIT17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 4 Apr 2006 02:09:04 -0400
+To: Keith Packard <keithp@keithp.com>
+In-Reply-To: <1144122709.2303.153.camel@neko.keithp.com> (Keith Packard's
+	message of "Mon, 03 Apr 2006 20:51:49 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18375>
 
+Keith Packard <keithp@keithp.com> writes:
 
---=-6s13FM04MAtaXrZxX1wD
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> I've just changed parsecvs to generate blobs for every revision in
+> each ,v file right after they're read in; putting the necessary code
+> right into parsecvs should be reasonably straightforward; we don't need
+> the multi-patch logic as we do want to compute each intermediate version
+> of the file.
 
-On Tue, 2006-04-04 at 14:42 +1200, Martin Langhoff wrote:
+If you want to go really fast without extra fork, are writing it
+in C, and have the data for blob in core, you could link with
+libgit.a and call write_sha1_file() yourself:
 
-> Cool. What's the matter with the Pg repo? (Where can I get hold of that r=
-epo?)
+	unsigned char sha1[20];
+        void *buf;
+        unsigned long len;
 
-As usual, the detection of branch locations is messed up.
+	write_sha1_file(buf, len, "blob", sha1);
 
-The postgresql CVS tree is available at:
+instead of forking "hash-object -w".  You feed your blob data
+in buf, with its length in len, and you will get the blob object
+name back in sha1[].  buf is owned by you and after
+write_sha1_file() returns it is safe for you to scribble over it
+or free() it.  sha1[] stores binary object name (20 bytes, not
+40-byte hexadecimal), and you can use the helper function
+sha1_to_hex() if you need a hex representation:
 
-        rsync anoncvs.postgresql.org::pgsql-cvs/* postgresql.cvs
+	char *sha1_to_hex(sha1)
 
-It's a fairly hefty 300M.
-
-> > > Does it run incrementally? Can it discover non-binary files and pass =
--kk?
-> >
-> > It doesn't run incrementally, and it unconditionally passes -kk. It's
->=20
-> I thought that the .git-cvs directory it created was to be able to run
-> incrementally (btw, I think it's fair game to create subdirs inside
-> .git for this kind of status-tracking). And passing -kk uncoditionally
-> is destructive in some cases (I know... git-cvsimport does it, and I
-> want to fix that). If you can ask rcs about the mode if the file and
-> not pass -kk for binary files...
-
-nah, the .git-cvs directory is purely for debugging; I leave the various
-command outputs there so I can see what went wrong.
-
-I don't really have a good idea of how we'd do this process
-incrementally; that's not something I am personally interested in
-either, I want to run screaming from CVS as fast as I can at this point.
-
-> > currently using rcs to check out versions of the files, so it should
-> > deal with binary content as well as rcs does. Is there something magic =
-I
-> > need to do here? Like for DOS?
->=20
-> We'll let DOS take care of itself ;)
-
-I did discover that rcs has less sophisticated keyword substitution than
-cvs; not having any ability to customize stuff.
-
-I guess we need to figure out when to pass -ko and when to pass -kk. The
-other alternative I'd like to get around to trying is to directly
-generate all of the revision contents from the ,v file.
-
-I've just changed parsecvs to generate blobs for every revision in
-each ,v file right after they're read in; putting the necessary code
-right into parsecvs should be reasonably straightforward; we don't need
-the multi-patch logic as we do want to compute each intermediate version
-of the file.
-
-With the blobs all generated, the rest of the operation is a simple
-matter of building suitable indices and creating commits out of them.
-That's a reasonably fast operation now as it doesn't manipulate any file
-contents. Plus, I can do all of the index operations using a single
-git-update-index command, so I eliminate a pile of forking.
-
-Doing the file revision generation in-line would allow us to eliminate
-most of the remaining forks; we'd run one git-hash-object per file (or
-so), then a git-update-index, git-write-tree and git-commit-tree per
-resulting commit.
-
---=20
-keith.packard@intel.com
-
---=-6s13FM04MAtaXrZxX1wD
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQBEMe1VQp8BWwlsTdMRAqJdAKDb3fbul84pP9Ik2UaSoPRjndhTwwCfYpwl
-UE+hziPbeo6fRx81u+kLuGA=
-=DjKJ
------END PGP SIGNATURE-----
-
---=-6s13FM04MAtaXrZxX1wD--
+which returns a pointer to a static buffer that is valid until
+next call to sha1_to_hex(), so you need to strdup it if you want
+to retain it.
