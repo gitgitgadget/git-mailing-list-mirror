@@ -1,60 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 Subject: Re: n-heads and patch dependency chains
-Date: Tue, 04 Apr 2006 13:03:17 +0200
-Organization: At home
-Message-ID: <e0tjpk$ktu$1@sea.gmane.org>
-References: <4430D352.4010707@vilain.net> <7vsloucuxk.fsf@assigned-by-dhcp.cox.net> <4431B60E.3030008@vilain.net> <44323C52.2030803@op5.se>
+Date: Tue, 04 Apr 2006 12:05:55 +0100
+Message-ID: <tnxzmj1ppm4.fsf@arm.com>
+References: <4430D352.4010707@vilain.net>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Apr 04 13:03:36 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 04 13:06:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQjJu-0008MF-Bz
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 13:03:34 +0200
+	id 1FQjMU-0000I4-Im
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 13:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964954AbWDDLDb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 07:03:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbWDDLDb
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 07:03:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:21145 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751853AbWDDLDb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 07:03:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FQjJo-0008LV-FV
-	for git@vger.kernel.org; Tue, 04 Apr 2006 13:03:29 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Apr 2006 13:03:28 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Apr 2006 13:03:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S964971AbWDDLGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 07:06:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751853AbWDDLGM
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 07:06:12 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:60379 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1751848AbWDDLGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Apr 2006 07:06:10 -0400
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k34B5vuc012253;
+	Tue, 4 Apr 2006 12:05:57 +0100 (BST)
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Tue, 4 Apr 2006 12:05:57 +0100
+To: Sam Vilain <sam@vilain.net>
+In-Reply-To: <4430D352.4010707@vilain.net> (Sam Vilain's message of "Mon, 03
+ Apr 2006 19:48:34 +1200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 04 Apr 2006 11:05:57.0282 (UTC) FILETIME=[BFB96020:01C657D7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18387>
 
-Andreas Ericsson wrote:
+Sam Vilain <sam@vilain.net> wrote:
+> "Patch dependency chains", the best plain-English term we could find for
+> the scary sounding darcs term "patch calculus", are said by some to be a
+> very good reason to use a system like darcs, even to some its
+> fundamental advantage over systems such as git.
 
-> Wouldn't "git commit -M -b topic", for committing to a different branch
-> than what is checked out (-b) and also to the checked out branch (-M)
-> have the same beneficial effects, but without the complexity of hydras
-> and patch dependency theory? It would only remove the cherry-pick stage
-> though, but perhaps it's good enough. Although when I think about it, -b
-> <branch> for committing to another branch and -B <branch> for doing the
-> above probably makes more sense.
+As Linus pointed out, while darcs theory is interesting, it doesn't
+work properly in practice. Dependency tracking can create problems
+with merging. Darcs' patch commuting theory has (a big, IMHO) problem
+since every time you pull a patch (or more) it needs to commute all
+the patches back to the common ancestor. Over time, the merging
+becomes slower and slower (i.e. even much slower than what darcs shows
+in simple tests with the Linux kernel).
 
-Do you mean that you commit current state to the checked out (working)
-branch, and commit *changes* (i.e. apply patch) to a different branch?
+Inexact patch commuting can be achieved using diff3 (or merge) with 3
+snapshots of the tree (the bottom of the patch, the top of the patch
+and the current head on top of which the patch is being applied) which
+GIT handles very well and fast since there is no need to commute
+thousands of patches back to the common ancestor. The slight
+disadvantage is that diff3 merging is not as exact as Darcs' patch
+commuting but OK for 99% of the real cases.
+
+StGIT is based on this inexact patch commuting "theory" and, with the
+addition of upstream merging detection (based on reverse-applying), it
+is seems to behave properly in almost all the cases (though you can
+deliberately create some patches to break the algorithm).
+
+I've been thinking about adding patch dependency tracking to StGIT but
+only as a recommendation and not enforcement. The algorithm would be
+similar to the upstream merging detection.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
+Catalin
