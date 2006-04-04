@@ -1,139 +1,97 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: n-heads and patch dependency chains
-Date: Tue, 04 Apr 2006 11:55:58 +1200
-Message-ID: <4431B60E.3030008@vilain.net>
-References: <4430D352.4010707@vilain.net> <7vsloucuxk.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-clean command
+Date: Mon, 03 Apr 2006 17:06:36 -0700
+Message-ID: <7vzmj2b3w3.fsf@assigned-by-dhcp.cox.net>
+References: <20060403221841.25097.18242.stgit@dv.roinet.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 04 01:56:37 2006
+X-From: git-owner@vger.kernel.org Tue Apr 04 02:06:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQYuF-0003hU-Rq
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 01:56:24 +0200
+	id 1FQZ4E-0005PR-Un
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 02:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964886AbWDCX4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Apr 2006 19:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964887AbWDCX4U
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 19:56:20 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:1682 "EHLO watts.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S964886AbWDCX4T (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Apr 2006 19:56:19 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 2F5A26241; Tue,  4 Apr 2006 11:56:16 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 88EA1622B;
-	Tue,  4 Apr 2006 11:56:01 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vsloucuxk.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751092AbWDDAGj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Apr 2006 20:06:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbWDDAGj
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Apr 2006 20:06:39 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:45479 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751092AbWDDAGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Apr 2006 20:06:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060404000637.XPLA17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Apr 2006 20:06:37 -0400
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <20060403221841.25097.18242.stgit@dv.roinet.com> (Pavel Roskin's
+	message of "Mon, 03 Apr 2006 18:18:41 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18363>
 
-Junio C Hamano wrote:
+Pavel Roskin <proski@gnu.org> writes:
 
->I suspect people have hard time grasping _why_ you are jumping
->through hoops.  At least I do.  What problem are you trying to
->solve?  You perhaps described your mechanism well enough, but it
->is not quite clear to me what kind of operations are made easier
->with this exercise, against which possible downside of it, if
->any, would be judged.
->[...]
->So can you step back a bit and start from describing what
->problem you are trying to solve, before describing the
->mechanisms you think would help?
->  
->
+> This command removes untracked files from the working tree.  This
+> implementation is based on cg-clean with some simplifications.  The
+> documentation is included.
 
-As a research exercise the principle purpose was first to see if there
-is a natural fit with git's data model, and secondly to investigate what
-benefits were possible from it. In a sense it was "bottom-up" investigation.
+I am not opposed to the command in the sense that I do not want
+to forbid people from doing what they want to do, but on the
+other hand I do not see why people (apparently many people) want
+to have something like this.  Are their "make clean" broken?
 
->>  - the current tools make this style of development difficult.
->>    
->>
->Git was born from necessity, and we have been aiming to have
->tools to do what are commonly needed.  It is not surprising to
->see existing tools do not support modes of operations that are
->"unusual" (meaning, things we have not done with git so far).
->Also we do not tend to do things only because we can.
->  
->
+Having said that, just some nitpicks.
 
-And a good principle that is, too.
+> diff --git a/.gitignore b/.gitignore
+>...
+> +git-clean
 
->For example, the point jdl raised during the discussion is far
->easier to understand.  When working on multiple topics, he often
->needs to test them as a whole, so he pulls them into a test
->branch (can be a throwaway branch).  When he needs to do fixups,
->it is most efficient to do compile/run test while still in the
->test branch, but after things test out, in order to keep
->logically different things separate, he needs to go back to
->relevant topic branches and make a commit.  This is painful --
->are there ways to make this easier [*2*]?
->
->Would patch commutation calculus help with his problem?
->  
->
+I appreciate the attention to the detail; very nice to have
+a .gitignore entry along with addition of a command.
 
-I'd provisionally say "yes, that's the fit". It's just like having
-multiple topic branches all checked out at once, with commits going to
-the appropriate branch as necessary.
+> diff --git a/git-clean.sh b/git-clean.sh
+>...
+> +for arg in "$@"; do
 
-In my experiment, when a commit touched files on more than one head,
-then the heads would be collapsed to a single one, like a merge. As the
-nature of the setup was such that you didn't explicitly name heads, this
-was a natural thing to do. But if you're naming them, you probably would
-want some way to choose between applying the commit to just one head,
-both heads, or collapsing the two heads into one.
+	for arg
+        do
+        	...
 
-That approach actually offers the most flexibility - a porcelain could
-do full darcs-like patch calculus if it wanted, or saner explicit topic
-branching.
+> +	if [ "$arg" = "-d" ]; then
 
->One thing I can think of that could potentially come out of your
->approach would be an alternative implementation of what StGIT
->does.  Inside a local developer repository, being able to
->reorder patches and rewrite them flexibly is very useful.
->  
->
+	case "$arg" in -d)...
 
-Oh, I didn't think of that. Were you thinking of an extra head for each
-"uncommitted" chain of related patches? That's an interesting idea.
+> +excl1=
+> +excl2=
+> +if [ -z "$noexclude" ]; then
+> +	excl1="--exclude-per-directory=.gitignore"
+> +	if [ -f "$GIT_DIR/info/exclude" ]; then
+> +		excl2="--exclude-from=$GIT_DIR/info/exclude"
+> +	fi
+> +fi
+> +
+> +git-ls-files --others --directory "$excl1" "$excl2" |
+> +while read -r file; do
+> ...
 
-I think it might really help use cases like the -mm Linux tree, where
-bunches of related commits are typically applied in a series, but you
-especially want to track inter-set dependencies. Currently stgit takes a
-very long time to import the split -mm series :-)
+The $noexclude case passes two empty strings to git-ls-files,
+which may happen to be harmless with the current implementation,
+but does not feel quite right.
 
->Another obvious strategy would be to make commits on top of
->"test" and then cherry-pick them back on top of the relevant
->topics later.
->    
->        topicA                  You have three topics
->         o---o                  you need to test together...
->        /
->  [...]
->        \         /
->         o---o---2'
->        topicC
->  
->
+Maybe better to read ls-files -z to be really pathname safe, I
+dunno.
 
-That's a nice illustration of it, yes.
+> +		$echo1 "Removing $file"
+> +		[ "$cleandirhard" ] && chmod -R 700 "$file"
 
-Sam.
+I am not quite sure this chmod -R is a good idea.  If we are
+trying really hard would we need to also make sure we can rmdir
+the "$file" by chmod'ing its parent directory?  But once we
+start doing that where would we stop?
