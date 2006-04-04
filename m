@@ -1,82 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: n-heads and patch dependency chains
-Date: Tue, 04 Apr 2006 22:18:02 +0200
-Organization: At home
-Message-ID: <e0uk9o$oj6$1@sea.gmane.org>
-References: <4430D352.4010707@vilain.net> <7vsloucuxk.fsf@assigned-by-dhcp.cox.net> <4431B60E.3030008@vilain.net> <7vhd596ua0.fsf@assigned-by-dhcp.cox.net>
+From: Radoslaw Szkodzinski <astralstorm@o2.pl>
+Subject: Re: [BUG] git-http-fetch segfault
+Date: Tue, 04 Apr 2006 22:25:26 +0200
+Message-ID: <4432D636.4050407@o2.pl>
+References: <4432A8CC.5020200@o2.pl> <20060404184935.GG14967@reactrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Apr 04 22:18:44 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig0FB30B7F03325558F419408D"
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 04 22:30:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQryy-0008LS-LE
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 22:18:33 +0200
+	id 1FQsAY-00021S-PG
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 22:30:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750825AbWDDUS0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 16:18:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbWDDUS0
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 16:18:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:8859 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750825AbWDDUS0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 16:18:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FQryX-0008Es-Of
-	for git@vger.kernel.org; Tue, 04 Apr 2006 22:18:05 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Apr 2006 22:18:05 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Apr 2006 22:18:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.7.7
+	id S1750840AbWDDUa1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 16:30:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbWDDUa1
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 16:30:27 -0400
+Received: from mx.go2.pl ([193.17.41.41]:12483 "EHLO poczta.o2.pl")
+	by vger.kernel.org with ESMTP id S1750840AbWDDUaZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 16:30:25 -0400
+Received: from zen.localdomain (host-81-190-200-101.gorzow.mm.pl [81.190.200.101])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by poczta.o2.pl (Postfix) with ESMTP id 7DAB113793E;
+	Tue,  4 Apr 2006 22:30:23 +0200 (CEST)
+Received: from zen.localdomain ([192.168.0.1])
+	by zen.localdomain with esmtpa (Exim 4.60)
+	(envelope-from <astralstorm@o2.pl>)
+	id 1FQs6B-0005lZ-Rm; Tue, 04 Apr 2006 22:25:59 +0200
+User-Agent: Mail/News 1.5 (X11/20060404)
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20060404184935.GG14967@reactrix.com>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18408>
 
-Junio C Hamano wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig0FB30B7F03325558F419408D
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> I was re-reading the hydra stuff and realized I've seen the "a
-> cap that bundles independent tracks together" pattern somewhere
-> else in the history of git.
-> 
-> It is very similar to how "bind commit" would have worked.
-[...] 
-> A "bind commit" proposal was made to support subprojects living
-> in their own subdirectories.  The picture to describe the commit
-> ancestry chain would be almost the same as the above picture,
-> except that it did not uncap and recap, but would have built its
-> own ancestry chain.
+Nick Hengeveld wrote:
+> On Tue, Apr 04, 2006 at 07:11:40PM +0200, Radoslaw Szkodzinski wrote:
+>=20
+>> I have some problems cloning stgit repository (maybe something's broke=
+n there).
+>>
+>> astralstorm@zen /home/devel $ git clone
+>> http://homepage.ntlworld.com/cmarinas/stgit.git stgit
+>> error: Unable to find adad46f365219e9bcc1a212826ca65eaac09729c under
+>> http://homepage.ntlworld.com/cmarinas/stgit.git/
+>> Cannot obtain needed blob adad46f365219e9bcc1a212826ca65eaac09729c
+>> while processing commit 8847a11b3bbf5406f37a360e5466f0e392c56383.
+>=20
+> That host name resolves to multiple IP addresses, is it possible that
+> one of the servers was out of sync?  I tried cloning directly from each=
 
-One of versions of "hydra commit" proposals, in the mail which is yet to
-appear on Gmane git mailing list archive, and Gmane NNTP interface to git
-mailing list, was to define commit dependency (to which chain commit would
-get) in the terms of affecting files in the same directory. Simple
-generalization to subtree (directory and its subdirectories) gives "bind
-commit for subprojects".
+> address and couldn't reproduce the problem.
+>=20
 
-> It had two different kinds of commit relationships: parenthood
-> and directory structure binding.
+Okay, I've nailed it. It's caused by Privoxy.
+It seems that Privoxy sends its 404 page with 200 OK reply.
+Clearly a broken response.
 
-Great minds think alike :-P -- we (Sam and I) were talking on #git about
-adding "depends-on" field to commit.
+Does anyone have any better proxy supporting real SOCKS 4a/5 upstream pro=
+xy?
+(for Tor)
+Delegate doesn't count - it has broken HTTP code, 1.0 only and slow too.
 
-In the email to write I would propose that instead of adding "depends-on"
-field (or "bind") one can at least in prototype stage make parallel
-development, commiting simultaneously to the tree where history is history,
-and to the tree where history is dependence, or bind. I hope I will make
-myself clearer in upcoming message; see Sam post beginning this thread - we
-want to make both pictures (on the left and on the right) simultaneously.
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
 
--- 
-Jakub Narebski
-Warsaw, Poland
+AstralStorm
+
+
+--------------enig0FB30B7F03325558F419408D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEMtY6lUMEU9HxC6IRAuGtAKCraNNsmgEDzd/h3i5PR/h/CmGOnwCghiWx
+/JeW/hEGUmGZAR/oZF03LxM=
+=Ttj0
+-----END PGP SIGNATURE-----
+
+--------------enig0FB30B7F03325558F419408D--
