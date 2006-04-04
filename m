@@ -1,64 +1,51 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: n-heads and patch dependency chains
-Date: Tue, 04 Apr 2006 13:47:39 +0200
-Message-ID: <44325CDB.2000101@op5.se>
-References: <4430D352.4010707@vilain.net> <7vsloucuxk.fsf@assigned-by-dhcp.cox.net> <4431B60E.3030008@vilain.net> <44323C52.2030803@op5.se> <e0tjpk$ktu$1@sea.gmane.org>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: Re: HTTP repo referencing stale heads (can't clone)
+Date: Tue, 4 Apr 2006 05:10:57 -0700
+Message-ID: <20060404121056.GB14967@reactrix.com>
+References: <443146EC.7060704@gentoo.org> <7virpqefp1.fsf@assigned-by-dhcp.cox.net> <20060403180929.GA14967@reactrix.com> <20060404100035.GM27689@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 04 13:48:05 2006
+X-From: git-owner@vger.kernel.org Tue Apr 04 14:11:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQk0t-0006Q1-QD
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 13:48:00 +0200
+	id 1FQkNP-0001S6-Km
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 14:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932179AbWDDLrl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 07:47:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbWDDLrl
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 07:47:41 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:34506 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932179AbWDDLrk
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 07:47:40 -0400
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id A81336BCBC; Tue,  4 Apr 2006 13:47:39 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
-X-Accept-Language: en-us, en
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e0tjpk$ktu$1@sea.gmane.org>
+	id S964988AbWDDMLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 08:11:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964991AbWDDMLJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 08:11:09 -0400
+Received: from 241.37.26.69.virtela.com ([69.26.37.241]:37953 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S964988AbWDDMLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Apr 2006 08:11:08 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k34CAvBS014828;
+	Tue, 4 Apr 2006 05:10:57 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k34CAvW5014825;
+	Tue, 4 Apr 2006 05:10:57 -0700
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+In-Reply-To: <20060404100035.GM27689@pasky.or.cz>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18389>
 
-Jakub Narebski wrote:
-> Andreas Ericsson wrote:
-> 
-> 
->>Wouldn't "git commit -M -b topic", for committing to a different branch
->>than what is checked out (-b) and also to the checked out branch (-M)
->>have the same beneficial effects, but without the complexity of hydras
->>and patch dependency theory? It would only remove the cherry-pick stage
->>though, but perhaps it's good enough. Although when I think about it, -b
->><branch> for committing to another branch and -B <branch> for doing the
->>above probably makes more sense.
-> 
-> 
-> Do you mean that you commit current state to the checked out (working)
-> branch, and commit *changes* (i.e. apply patch) to a different branch?
-> 
+On Tue, Apr 04, 2006 at 12:00:35PM +0200, Petr Baudis wrote:
 
-No, I mean that this would commit both to the testing branch (being the 
-result of several merged topic-branches) and to the topic-branch merged 
-in. Commit as in regular commit, with a commit-message and a patch. The 
-resulting repository would be the exact same as if the change was 
-committed only to the topic-branch and then cherry-picked on to the 
-testing-branch.
+> Well, what is the actual advantage of DAV compared to
+> git-update-server-info? Why would I prefer enabling DAV?
+
+In theory, things should work the same either way.  It seems that in
+practice though, the server info files continue to surface as a source
+of fetch problems.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
