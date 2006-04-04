@@ -1,64 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: HTTP repo referencing stale heads (can't clone)
-Date: Tue, 04 Apr 2006 00:03:22 -0700
-Message-ID: <7vzmj1aklh.fsf@assigned-by-dhcp.cox.net>
-References: <443146EC.7060704@gentoo.org>
-	<7virpqefp1.fsf@assigned-by-dhcp.cox.net>
-	<20060403180929.GA14967@reactrix.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] Add git-clean command
+Date: Tue, 4 Apr 2006 10:20:02 +0200
+Message-ID: <20060404082002.GJ4663@admingilde.org>
+References: <20060403221841.25097.18242.stgit@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="E13BgyNx05feLLmH"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 04 09:03:58 2006
+X-From: git-owner@vger.kernel.org Tue Apr 04 10:20:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQfZn-0006qp-R3
-	for gcvg-git@gmane.org; Tue, 04 Apr 2006 09:03:44 +0200
+	id 1FQglr-0001Ck-N7
+	for gcvg-git@gmane.org; Tue, 04 Apr 2006 10:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbWDDHD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 03:03:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbWDDHD1
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 03:03:27 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:56790 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751827AbWDDHD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Apr 2006 03:03:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060404070326.YHVQ17437.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Apr 2006 03:03:26 -0400
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20060403180929.GA14967@reactrix.com> (Nick Hengeveld's message
-	of "Mon, 3 Apr 2006 11:09:30 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751837AbWDDIUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Apr 2006 04:20:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751839AbWDDIUH
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 04:20:07 -0400
+Received: from admingilde.org ([213.95.32.146]:26330 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1751837AbWDDIUF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Apr 2006 04:20:05 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1FQgle-0004uS-ET; Tue, 04 Apr 2006 10:20:02 +0200
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <20060403221841.25097.18242.stgit@dv.roinet.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18377>
 
-Nick Hengeveld <nickh@reactrix.com> writes:
 
-> Is there any interest in making the HTTP transport slighly less dumb by
-> using DAV?
+--E13BgyNx05feLLmH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I personally feel PROPFIND is the right way to do "wget -r", and
-very much welcome a patch to replace objects/info/packs with it
-when able.
+hoi :)
 
-> I have a working patch to http-fetch that tries to use PROPFIND to get a
-> remote pack list and falls back to using objects/info/packs.  It's
-> feasible to do something similar to get a remote ref list when cloning,
-> although that's a bit more work as all refs would have to be fetched
-> into a local repo and parsed to determine the object type.
+> +-x::
+> +	Don't use the ignore rules.  This allows removing all untracked
+> +	files, including build products.  This can be used (possibly in
+> +	conjunction with gitlink:git-reset[1]) to create a pristine
+> +	working directory to test a clean build.
 
-Faking info/refs with PROPFIND, if we do not have to peel the
-onion ^{}, should be relatively cheap operation, and could be
-done as an enhancement to git-ls-remote.sh.  If your faked
-info/refs file lacks ^{} entries, git-fetch cannot auto-follow
-tags, but git-clone should work as before.
+as ignored files are generally generated files, doesn't it make sense
+to clean up the "ignored" files, and leave other untracked files
+alone?  That way you don't loose files which you forgot to add to git.
 
-A clever sysadmins could mod_rewrite requests to info/refs and
-objects/info/packs with a custom CGI, but then probably they
-would be running git-daemon ;-).
+What is the use case of cleaning up all untracked files without also
+cleaning ignored files?
+
+--=20
+Martin Waitz
+
+--E13BgyNx05feLLmH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEMiwyj/Eaxd/oD7IRAvthAJ4oo5oTcy1ADZ27dVQFemrxgjo2XgCfRtHi
+A3oop4sVytySu39lIlIeOEQ=
+=J2JN
+-----END PGP SIGNATURE-----
+
+--E13BgyNx05feLLmH--
