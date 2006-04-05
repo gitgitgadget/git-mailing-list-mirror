@@ -1,89 +1,66 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-commit: document --append (amend really!)
-Date: Wed, 05 Apr 2006 12:55:32 -0700
-Message-ID: <7vacaz23wr.fsf@assigned-by-dhcp.cox.net>
-References: <20060405191608.GA20572@fiberbit.xs4all.nl>
-	<7vfykr24wi.fsf@assigned-by-dhcp.cox.net>
-	<20060405194607.GB20854@fiberbit.xs4all.nl>
+Subject: Re: How should I handle binary file with GIT
+Date: Wed, 05 Apr 2006 13:20:34 -0700
+Message-ID: <7vy7yjzsdp.fsf@assigned-by-dhcp.cox.net>
+References: <20060405073022.13054.qmail@web25806.mail.ukl.yahoo.com>
+	<7v3bgs4exz.fsf@assigned-by-dhcp.cox.net> <e10mn9$cjs$1@sea.gmane.org>
+	<Pine.LNX.4.64.0604051131010.2550@localhost.localdomain>
+	<86wte4rq3d.fsf@blue.stonehenge.com>
+	<7vslor27n4.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604051521480.2550@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 21:55:48 2006
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 05 22:20:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRE6L-0007hZ-K0
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 21:55:38 +0200
+	id 1FREUj-00041I-B1
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 22:20:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081AbWDETze (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 15:55:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932083AbWDETze
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 15:55:34 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:17338 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932081AbWDETzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 15:55:33 -0400
+	id S1751168AbWDEUUh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 16:20:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbWDEUUh
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 16:20:37 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:51900 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751168AbWDEUUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Apr 2006 16:20:37 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060405195533.JWVB17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 5 Apr 2006 15:55:33 -0400
-To: Marco Roeland <marco.roeland@xs4all.nl>
-In-Reply-To: <20060405194607.GB20854@fiberbit.xs4all.nl> (Marco Roeland's
-	message of "Wed, 5 Apr 2006 21:46:07 +0200")
+          id <20060405202035.QVEI20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 5 Apr 2006 16:20:35 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0604051521480.2550@localhost.localdomain> (Nicolas
+	Pitre's message of "Wed, 05 Apr 2006 15:31:05 -0400 (EDT)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18452>
 
-Marco Roeland <marco.roeland@xs4all.nl> writes:
+Nicolas Pitre <nico@cam.org> writes:
 
-> Here with asciidoc 7.1.2 (Debian 'sid') it looks good in the generated
-> man page. But I'll investigate if nobody beats me to it.
+> On Wed, 5 Apr 2006, Junio C Hamano wrote:
+>
+>> We've been trying to keep our diff output reversible (e.g. we
+>> show what the filemode of the preimage is), so if we take the
+>> above route, it probably should record deltas for both going
+>> from preimage to postimage _and_ going the other way (unless
+>> xdelta can be applied in-reverse, which I do not think is the
+>> case).
+>
+> You cannot reverse a delta.  However if you were able to apply a delta 
+> from preimage to postimage that means you must already have had preimage 
+> in your object store.  Therefore reverting such a patch would simply 
+> involve restoring preimage.
 
-Please see below for an example.
+The case I had in mind was where you shipped a tarball of the
+tip to somebody (or "a shallow clone"), and after seeing him
+having problems with that release, sending him a patch telling
+him "reverting this might help, could you please give it a try?"
 
-> Oops. Well I suppose I could use "git commit --amend" and then run "git
-> format-patch" again I suppose. ;-)
-
-Yup ;-).
-
-diff-tree b0d08a504bee17dfc46f761e166ff2c20c59a91a (from 3103cf9e1e09b0045a60542f24a2a1e4ed7b1237)
-Author: Francis Daly <francis@daoine.org>
-Date:   Wed Mar 22 09:53:57 2006 +0000
-
-    Format tweaks for asciidoc.
-    
-    Some documentation "options" were followed by independent preformatted
-    paragraphs. Now they are associated plain text paragraphs. The
-    difference is clear in the generated html.
-    
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index fbd2394..d55456a 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -24,13 +24,13 @@ OPTIONS
- 
- <option>...::
- 	Either an option to pass to `grep` or `git-ls-files`.
--
--	The following are the specific `git-ls-files` options
--	that may be given: `-o`, `--cached`, `--deleted`, `--others`,
--	`--killed`, `--ignored`, `--modified`, `--exclude=*`,
--	`--exclude-from=*`, and `--exclude-per-directory=*`.
--
--	All other options will be passed to `grep`.
-++
-+The following are the specific `git-ls-files` options
-+that may be given: `-o`, `--cached`, `--deleted`, `--others`,
-+`--killed`, `--ignored`, `--modified`, `--exclude=\*`,
-+`--exclude-from=\*`, and `--exclude-per-directory=\*`.
-++
-+All other options will be passed to `grep`.
- 
- <pattern>::
- 	The pattern to look for.  The first non option is taken
+Of course you could be nicer to him and generate the reverse
+diff on your end in such a case instead.
