@@ -1,108 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] diff_flush(): leakfix.
-Date: Wed, 05 Apr 2006 02:45:40 -0700
-Message-ID: <7vu0982w57.fsf@assigned-by-dhcp.cox.net>
+From: moreau francis <francis_moreau2000@yahoo.fr>
+Subject: Re: How should I handle binary file with GIT
+Date: Wed, 5 Apr 2006 14:21:13 +0200 (CEST)
+Message-ID: <20060405122113.60376.qmail@web25801.mail.ukl.yahoo.com>
+References: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 05 11:45:55 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 05 14:21:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR4aA-0001nd-8R
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 11:45:47 +0200
+	id 1FR70g-0004zu-K9
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 14:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbWDEJpn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 05:45:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbWDEJpn
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 05:45:43 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:54760 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751201AbWDEJpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 05:45:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060405094542.XBNB15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 5 Apr 2006 05:45:42 -0400
-To: git@vger.kernel.org
+	id S1751235AbWDEMVQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Apr 2006 08:21:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbWDEMVQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 08:21:16 -0400
+Received: from web25801.mail.ukl.yahoo.com ([217.12.10.186]:49334 "HELO
+	web25801.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751235AbWDEMVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Apr 2006 08:21:15 -0400
+Received: (qmail 60378 invoked by uid 60001); 5 Apr 2006 12:21:13 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.fr;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=BAB8yMc4NYVrL+W2/3e1VdFM5bdHtJ402KEw/z723s04jnQ6rRMg6VNRJEIqSqfwljgVmfAQUtDz+BqCriYI1FiqHXICx+QQaowmUdIym4Lx5kMmwIqLTCYnlURa1x8FmJYP3vQcabWVhUAzTTAe6vYmwLiwJG1EeMyTXLAGv6s=  ;
+Received: from [194.3.162.233] by web25801.mail.ukl.yahoo.com via HTTP; Wed, 05 Apr 2006 14:21:13 CEST
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18426>
 
-We were leaking filepairs when output-format was set to
-NO_OUTPUT.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+--- Junio C Hamano <junkio@cox.net> a =E9crit :
 
----
+> It _might_ make sense to adopt a well-defined binary patch
+> format (or if there is no prior art, introduce our own) and
+> support that format with both git-diff-* brothers and git-apply,
+> but that would be a bit longer term project.
+>=20
 
- * This is somewhat embarrassing that the original breakage was
-   in a commit on Aug 21, 2005 and the bug stayed there forever
-   in git timescale.
+well maybe it's just stupid, but why not simply transforming binary fil=
+es into
+ascii files (maybe by using uuencode) before  using git-diff-* brothers=
+ and
+git-apply ?
 
- diff.c |   44 +++++++++++++++++++++++++-------------------
- 1 files changed, 25 insertions(+), 19 deletions(-)
+=46rancis
 
-a12d2890e4d1ada6f9302dea10d151b819e0c0d0
-diff --git a/diff.c b/diff.c
-index e496905..fe4664c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1280,28 +1280,34 @@ void diff_flush(struct diff_options *opt
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
--		if ((diff_output_format == DIFF_FORMAT_NO_OUTPUT) ||
--		    (p->status == DIFF_STATUS_UNKNOWN))
--			continue;
--		if (p->status == 0)
--			die("internal error in diff-resolve-rename-copy");
--		switch (diff_output_format) {
--		case DIFF_FORMAT_PATCH:
--			diff_flush_patch(p, options);
--			break;
--		case DIFF_FORMAT_RAW:
--		case DIFF_FORMAT_NAME_STATUS:
--			diff_flush_raw(p, line_termination,
--				       inter_name_termination,
--				       options);
-+
-+		switch (p->status) {
-+		case DIFF_STATUS_UNKNOWN:
- 			break;
--		case DIFF_FORMAT_NAME:
--			diff_flush_name(p,
--					inter_name_termination,
--					line_termination);
-+		case 0:
-+			die("internal error in diff-resolve-rename-copy");
- 			break;
-+		default:
-+			switch (diff_output_format) {
-+			case DIFF_FORMAT_PATCH:
-+				diff_flush_patch(p, options);
-+				break;
-+			case DIFF_FORMAT_RAW:
-+			case DIFF_FORMAT_NAME_STATUS:
-+				diff_flush_raw(p, line_termination,
-+					       inter_name_termination,
-+					       options);
-+				break;
-+			case DIFF_FORMAT_NAME:
-+				diff_flush_name(p,
-+						inter_name_termination,
-+						line_termination);
-+				break;
-+			case DIFF_FORMAT_NO_OUTPUT:
-+				break;
-+			}
- 		}
--		diff_free_filepair(q->queue[i]);
-+		diff_free_filepair(p);
- 	}
- 	free(q->queue);
- 	q->queue = NULL;
--- 
-1.3.0.rc2.g110c
+
+=09
+
+=09
+	=09
+_______________________________________________________________________=
+____=20
+Nouveau : t=E9l=E9phonez moins cher avec Yahoo! Messenger ! D=E9couvez =
+les tarifs exceptionnels pour appeler la France et l'international.
+T=E9l=E9chargez sur http://fr.messenger.yahoo.com
