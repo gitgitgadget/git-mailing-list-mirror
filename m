@@ -1,78 +1,63 @@
-From: Mike McCormack <mike@codeweavers.com>
-Subject: [PATCH] Avoid a crash if realloc returns a different pointer.
-Date: Wed, 05 Apr 2006 23:22:19 +0900
-Organization: CodeWeavers
-Message-ID: <4433D29B.1080802@codeweavers.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How should I handle binary file with GIT
+Date: Wed, 05 Apr 2006 17:11:43 +0200
+Organization: At home
+Message-ID: <e10mn9$cjs$1@sea.gmane.org>
+References: <20060405073022.13054.qmail@web25806.mail.ukl.yahoo.com> <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------020405090009020301000909"
-X-From: git-owner@vger.kernel.org Wed Apr 05 16:44:20 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Apr 05 17:12:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR9E0-0003ma-NY
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 16:43:13 +0200
+	id 1FR9fx-0003Mo-Bl
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 17:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbWDEOm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 10:42:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbWDEOm4
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 10:42:56 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:34249 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1750776AbWDEOm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 10:42:56 -0400
-Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
-	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1FR8yX-0000iv-Qq
-	for git@vger.kernel.org; Wed, 05 Apr 2006 09:27:16 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
-X-Accept-Language: en, en-us, ko-kr
+	id S1750765AbWDEPMB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 11:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbWDEPMB
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 11:12:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:14535 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750765AbWDEPMA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 11:12:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FR9fl-0003Jl-Hd
+	for git@vger.kernel.org; Wed, 05 Apr 2006 17:11:53 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Apr 2006 17:11:53 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Apr 2006 17:11:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-X-SA-Exim-Connect-IP: 216.251.189.130
-X-SA-Exim-Mail-From: mike@codeweavers.com
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18437>
 
-This is a multi-part message in MIME format.
---------------020405090009020301000909
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+Junio C Hamano wrote:
 
----
+> It _might_ make sense to adopt a well-defined binary patch
+> format (or if there is no prior art, introduce our own) and
+> support that format with both git-diff-* brothers and git-apply,
+> but that would be a bit longer term project.
 
-  imap-send.c |    1 +
-  1 files changed, 1 insertions(+), 0 deletions(-)
+bsdiff? http://www.daemonology.net/bsdiff/
+EDelta? http://www.diku.dk/~jacobg/edelta/
+Xdelta? http://xdelta.blogspot.com/
 
+IIRC bsdiff is used by Firefox to distribute binary software updates.
+Xdelta is generic (not optimized for binaries like bsdiff and edelta), but
+supposedly offers worse compression (bigger diffs).
 
---------------020405090009020301000909
-Content-Type: text/x-patch;
- name="235cf581a853777fdb6886806ddbfcd9f782eb98.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="235cf581a853777fdb6886806ddbfcd9f782eb98.diff"
-
-235cf581a853777fdb6886806ddbfcd9f782eb98
-diff --git a/imap-send.c b/imap-send.c
-index f3cb79b..d04259a 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1202,6 +1202,7 @@ read_message( FILE *f, msg_data_t *msg )
- 			p = xrealloc(msg->data, len+1);
- 			if (!p)
- 				break;
-+			msg->data = p;
- 		}
- 		r = fread( &msg->data[msg->len], 1, len - msg->len, f );
- 		if (r <= 0)
-
-
---------------020405090009020301000909--
+-- 
+Jakub Narebski
+Warsaw, Poland
