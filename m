@@ -1,66 +1,72 @@
-From: Nicolas Pitre <nico@cam.org>
+From: moreau francis <francis_moreau2000@yahoo.fr>
 Subject: Re: How should I handle binary file with GIT
-Date: Wed, 05 Apr 2006 09:25:42 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0604050906590.2550@localhost.localdomain>
-References: <20060405122113.60376.qmail@web25801.mail.ukl.yahoo.com>
+Date: Wed, 5 Apr 2006 15:35:44 +0200 (CEST)
+Message-ID: <20060405133544.69578.qmail@web25802.mail.ukl.yahoo.com>
+References: <Pine.LNX.4.64.0604050906590.2550@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_vMXXSsRgGtrSOYJQ73jz4Q)"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 15:25:56 2006
+X-From: git-owner@vger.kernel.org Wed Apr 05 15:35:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR813-0001rR-UY
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 15:25:46 +0200
+	id 1FR8Ap-0004Bt-WB
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 15:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbWDENZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 09:25:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbWDENZn
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 09:25:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:62077 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751115AbWDENZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 09:25:43 -0400
-Received: from xanadu.home ([74.56.105.38]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IX900LVK3YUT380@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 05 Apr 2006 09:25:42 -0400 (EDT)
-In-reply-to: <20060405122113.60376.qmail@web25801.mail.ukl.yahoo.com>
-X-X-Sender: nico@localhost.localdomain
-To: moreau francis <francis_moreau2000@yahoo.fr>
+	id S1751141AbWDENfr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Apr 2006 09:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbWDENfr
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 09:35:47 -0400
+Received: from web25802.mail.ukl.yahoo.com ([217.12.10.187]:24940 "HELO
+	web25802.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751141AbWDENfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Apr 2006 09:35:46 -0400
+Received: (qmail 69580 invoked by uid 60001); 5 Apr 2006 13:35:44 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.fr;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=jSZJmCb+URtnXSEk39gAfMlOnRiZf/iv0qNipi/Y+OaDipY1xgCp6eJO464sAxp/rCNUGnfsAI9q2+SnX6soUQ/EnPjxyuhy2hVo1ymeRcByIuZW5v/q1Y/jJ+cs/N92AgYZdbr+ak/10IPw3sacVPdYQ/uoG9VAFK9fkYVf8Uo=  ;
+Received: from [194.3.162.233] by web25802.mail.ukl.yahoo.com via HTTP; Wed, 05 Apr 2006 15:35:44 CEST
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0604050906590.2550@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18431>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---Boundary_(ID_vMXXSsRgGtrSOYJQ73jz4Q)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
-
-On Wed, 5 Apr 2006, moreau francis wrote:
-
-> 
-> --- Junio C Hamano <junkio@cox.net> a écrit :
-> 
-> > It _might_ make sense to adopt a well-defined binary patch
-> > format (or if there is no prior art, introduce our own) and
-> > support that format with both git-diff-* brothers and git-apply,
-> > but that would be a bit longer term project.
-> > 
-> 
-> well maybe it's just stupid, but why not simply transforming binary files into
-> ascii files (maybe by using uuencode) before  using git-diff-* brothers and
-> git-apply ?
-
-Imagine if the only difference between two versions of the same file is 
-a single byte inserted at the very beginning.  The uuencode would then 
-be totally different between the two files.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18432>
 
 
-Nicolas
+--- Nicolas Pitre <nico@cam.org> a =E9crit :
 
---Boundary_(ID_vMXXSsRgGtrSOYJQ73jz4Q)--
+> On Wed, 5 Apr 2006, moreau francis wrote:
+> >=20
+> > well maybe it's just stupid, but why not simply transforming binary=
+ files
+> into
+> > ascii files (maybe by using uuencode) before  using git-diff-* brot=
+hers and
+> > git-apply ?
+>=20
+> Imagine if the only difference between two versions of the same file =
+is=20
+> a single byte inserted at the very beginning.  The uuencode would the=
+n=20
+> be totally different between the two files.
+>=20
+
+ok uuencode was just a bad example for encoding...
+
+=46rancis
+
+
+
+=09
+
+=09
+	=09
+_______________________________________________________________________=
+____=20
+Nouveau : t=E9l=E9phonez moins cher avec Yahoo! Messenger ! D=E9couvez =
+les tarifs exceptionnels pour appeler la France et l'international.
+T=E9l=E9chargez sur http://fr.messenger.yahoo.com
