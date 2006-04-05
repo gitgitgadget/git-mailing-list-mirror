@@ -1,65 +1,101 @@
-From: moreau francis <francis_moreau2000@yahoo.fr>
-Subject: Re: How should I handle binary file with GIT
-Date: Wed, 5 Apr 2006 14:21:13 +0200 (CEST)
-Message-ID: <20060405122113.60376.qmail@web25801.mail.ukl.yahoo.com>
-References: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
+From: Radoslaw Szkodzinski <astralstorm@o2.pl>
+Subject: Re: HTTP repo referencing stale heads (can't clone)
+Date: Wed, 05 Apr 2006 14:23:06 +0200
+Message-ID: <4433B6AA.6070407@o2.pl>
+References: <443146EC.7060704@gentoo.org> <7virpqefp1.fsf@assigned-by-dhcp.cox.net> <4431694C.4000007@gentoo.org> <20060404180130.GF14967@reactrix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 14:21:19 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig0920F82785CC1F1E5C15E8EA"
+Cc: Daniel Drake <dsd@gentoo.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 05 14:28:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR70g-0004zu-K9
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 14:21:19 +0200
+	id 1FR77B-00064J-Lw
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 14:28:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751235AbWDEMVQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Apr 2006 08:21:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbWDEMVQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 08:21:16 -0400
-Received: from web25801.mail.ukl.yahoo.com ([217.12.10.186]:49334 "HELO
-	web25801.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751235AbWDEMVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 08:21:15 -0400
-Received: (qmail 60378 invoked by uid 60001); 5 Apr 2006 12:21:13 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.fr;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=BAB8yMc4NYVrL+W2/3e1VdFM5bdHtJ402KEw/z723s04jnQ6rRMg6VNRJEIqSqfwljgVmfAQUtDz+BqCriYI1FiqHXICx+QQaowmUdIym4Lx5kMmwIqLTCYnlURa1x8FmJYP3vQcabWVhUAzTTAe6vYmwLiwJG1EeMyTXLAGv6s=  ;
-Received: from [194.3.162.233] by web25801.mail.ukl.yahoo.com via HTTP; Wed, 05 Apr 2006 14:21:13 CEST
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
+	id S1751204AbWDEM1w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 08:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbWDEM1w
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 08:27:52 -0400
+Received: from mx2.go2.pl ([193.17.41.42]:8325 "EHLO poczta.o2.pl")
+	by vger.kernel.org with ESMTP id S1751204AbWDEM1w (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 08:27:52 -0400
+Received: from zen.localdomain (host-81-190-200-101.gorzow.mm.pl [81.190.200.101])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by poczta.o2.pl (Postfix) with ESMTP id 9571474811D;
+	Wed,  5 Apr 2006 14:27:46 +0200 (CEST)
+Received: from zen.localdomain ([192.168.0.1])
+	by zen.localdomain with esmtpa (Exim 4.60)
+	(envelope-from <astralstorm@o2.pl>)
+	id 1FR72k-0006z0-Mg; Wed, 05 Apr 2006 14:23:26 +0200
+User-Agent: Mail/News 1.5 (X11/20060404)
+To: Nick Hengeveld <nickh@reactrix.com>
+In-Reply-To: <20060404180130.GF14967@reactrix.com>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18427>
 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig0920F82785CC1F1E5C15E8EA
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
---- Junio C Hamano <junkio@cox.net> a =E9crit :
+Nick Hengeveld wrote:
+> On Mon, Apr 03, 2006 at 07:28:28PM +0100, Daniel Drake wrote:
+>=20
+>> Ah, should have known. I am behind a (lame) transparent proxy on port =
+80.
+>>
+>> I opened that file in my web browser and it showed the old heads. Afte=
+r=20
+>> a force-refresh (ctrl+F5, which sends some additionally http headers t=
+o=20
+>> refresh the page from the real server), the old heads disappeared, and=
+=20
+>> git now clones successfully.
+>>
+>> git-http-fetch should probably send those extra headers too. I'll try =
+to=20
+>> find some time to look at this next week.
+>=20
+> git-http-fetch uses the "Pragma: no-cache" header when requesting
+> objects that shouldn't be cached.  Is this the additional header you're=
 
-> It _might_ make sense to adopt a well-defined binary patch
-> format (or if there is no prior art, introduce our own) and
-> support that format with both git-diff-* brothers and git-apply,
-> but that would be a bit longer term project.
+> referring to?
 >=20
 
-well maybe it's just stupid, but why not simply transforming binary fil=
-es into
-ascii files (maybe by using uuencode) before  using git-diff-* brothers=
- and
-git-apply ?
+As per HTTP 1.1, it should also send:
+Cache-Control: no-cache
 
-=46rancis
+Pragma: no-cache is the deprecated extension.
+It's safe to send both.
+
+--=20
+GPG Key id:  0xD1F10BA2
+Fingerprint: 96E2 304A B9C4 949A 10A0  9105 9543 0453 D1F1 0BA2
+
+AstralStorm
 
 
-=09
+--------------enig0920F82785CC1F1E5C15E8EA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-=09
-	=09
-_______________________________________________________________________=
-____=20
-Nouveau : t=E9l=E9phonez moins cher avec Yahoo! Messenger ! D=E9couvez =
-les tarifs exceptionnels pour appeler la France et l'international.
-T=E9l=E9chargez sur http://fr.messenger.yahoo.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEM7aulUMEU9HxC6IRAuyHAJ0ds4czgYpaQXSOH9T+sGXe2nKKlACfSB6m
+NVf9nHEkvhgZ6KjJl+TDBKY=
+=6Mrg
+-----END PGP SIGNATURE-----
+
+--------------enig0920F82785CC1F1E5C15E8EA--
