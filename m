@@ -1,98 +1,68 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Add git-clean command
-Date: Wed, 05 Apr 2006 02:00:44 -0400
-Message-ID: <1144216844.3793.10.camel@dv>
-References: <20060403221841.25097.18242.stgit@dv.roinet.com>
-	 <7vzmj2b3w3.fsf@assigned-by-dhcp.cox.net>
+From: Andrew Morton <akpm@osdl.org>
+Subject: Re: [PATCH] parse_date(): fix parsing 03/10/2006
+Date: Tue, 4 Apr 2006 23:16:06 -0700
+Message-ID: <20060404231606.219a4cc5.akpm@osdl.org>
+References: <7vodzg4l5n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 08:00:53 2006
+Cc: git@vger.kernel.org, len.brown@intel.com
+X-From: git-owner@vger.kernel.org Wed Apr 05 08:17:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR14X-0006dW-0M
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:00:53 +0200
+	id 1FR1KR-00005A-DC
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105AbWDEGAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 02:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbWDEGAu
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:00:50 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:62110 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751105AbWDEGAu
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 02:00:50 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FR14S-00066T-3i
-	for git@vger.kernel.org; Wed, 05 Apr 2006 02:00:48 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.60)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FR14O-0001jg-BS; Wed, 05 Apr 2006 02:00:44 -0400
+	id S1751103AbWDEGRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 02:17:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbWDEGRI
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:17:08 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:61070 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751103AbWDEGRH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 02:17:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k356H3tH006786
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 4 Apr 2006 23:17:03 -0700
+Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id k356H2fl027463;
+	Tue, 4 Apr 2006 23:17:03 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmj2b3w3.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.6.0 (2.6.0-1) 
+In-Reply-To: <7vodzg4l5n.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i386-redhat-linux-gnu)
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18415>
 
-On Mon, 2006-04-03 at 17:06 -0700, Junio C Hamano wrote:
-> > diff --git a/git-clean.sh b/git-clean.sh
-> >...
-> > +for arg in "$@"; do
+Junio C Hamano <junkio@cox.net> wrote:
+>
+> The comment associated with the date parsing code for three
+>  numbers separated with slashes or dashes implied we wanted to
+>  interpret using this order:
 > 
-> 	for arg
->         do
->         	...
-
-I checked other git shell scripts and copied the "while" construct from
-one of them - if it's good for other commands, it's good for git-clean.
-
-> > +	if [ "$arg" = "-d" ]; then
+>  	yyyy-mm-dd
+>  	yyyy-dd-mm
+>  	mm-dd-yy
+>  	dd-mm-yy
 > 
-> 	case "$arg" in -d)...
-> 
-> > +excl1=
-> > +excl2=
-> > +if [ -z "$noexclude" ]; then
-> > +	excl1="--exclude-per-directory=.gitignore"
-> > +	if [ -f "$GIT_DIR/info/exclude" ]; then
-> > +		excl2="--exclude-from=$GIT_DIR/info/exclude"
-> > +	fi
-> > +fi
-> > +
-> > +git-ls-files --others --directory "$excl1" "$excl2" |
-> > +while read -r file; do
-> > ...
-> 
-> The $noexclude case passes two empty strings to git-ls-files,
-> which may happen to be harmless with the current implementation,
-> but does not feel quite right.
+>  However, the actual code had the last two wrong, and making it
+>  prefer dd-mm-yy format over mm-dd-yy.
 
-Good catch.  This is needed since $GIT_DIR can contain spaces.  I
-believe ${excl2:+"$excl2"} would do the trick.
+But there was a second problem.  Once the parsing had misbehaved, Len
+managed to create a commit which was six months in the future:
 
-> Maybe better to read ls-files -z to be really pathname safe, I
-> dunno.
+commit 8313524a0d466f451a62709aaedf988d8257b21c
+Author: Bob Moore <robert.moore@intel.com>
+Date:   Tue Oct 3 00:00:00 2006 -0400
 
-I think "xargs -0" has its own problems (argument length limitations),
-and the other solution is to use perl.  While at that, I'd rather
-rewrite the whole script in Perl, or maybe in even C.
+    ACPI: ACPICA 20060310
 
-I think this should eventually happen to all git scripts, but I have no
-intention to do it right now unless you really want me to.
-
-> > +		$echo1 "Removing $file"
-> > +		[ "$cleandirhard" ] && chmod -R 700 "$file"
-> 
-> I am not quite sure this chmod -R is a good idea.  If we are
-> trying really hard would we need to also make sure we can rmdir
-> the "$file" by chmod'ing its parent directory?  But once we
-> start doing that where would we stop?
-
-OK, I was undecided on that.  I'm dropping this option.
-
--- 
-Regards,
-Pavel Roskin
+Will your fix prevent that from happening?  If not, perhaps some basic
+sanity checking might be appropriate.
