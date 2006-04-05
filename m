@@ -1,49 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
+From: moreau francis <francis_moreau2000@yahoo.fr>
 Subject: Re: How should I handle binary file with GIT
-Date: Wed, 05 Apr 2006 09:06:48 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0604050855080.2550@localhost.localdomain>
-References: <20060405073022.13054.qmail@web25806.mail.ukl.yahoo.com>
- <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 5 Apr 2006 15:18:34 +0200 (CEST)
+Message-ID: <20060405131834.60888.qmail@web25804.mail.ukl.yahoo.com>
+References: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: moreau francis <francis_moreau2000@yahoo.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 15:07:38 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 05 15:18:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR7iq-0005K9-TT
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 15:06:57 +0200
+	id 1FR7uB-00006V-9d
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 15:18:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbWDENGw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 09:06:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbWDENGw
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 09:06:52 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63269 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751103AbWDENGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 09:06:51 -0400
-Received: from xanadu.home ([74.56.105.38]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IX900LNM33CTA80@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 05 Apr 2006 09:06:49 -0400 (EDT)
-In-reply-to: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
+	id S1751114AbWDENSg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Apr 2006 09:18:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbWDENSg
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 09:18:36 -0400
+Received: from web25804.mail.ukl.yahoo.com ([217.12.10.189]:41550 "HELO
+	web25804.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751114AbWDENSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Apr 2006 09:18:35 -0400
+Received: (qmail 60890 invoked by uid 60001); 5 Apr 2006 13:18:34 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.fr;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=aqa28yt1hAsdFIGQEfdnRtsfxTTnoVmblxNpf+cJcI6Gk/8FdXA7RdkuJrtV7YMiW3rIcvE3YMzfCvOOsAe3skKXVzXrRgMmoIbLkhme/5oOiBOs+o2T+ae2sfT0Kth9Vk3xv6f6OTgPTp5marLBnwSku9Azt2lMdV5Pe+WVnE8=  ;
+Received: from [194.3.162.233] by web25804.mail.ukl.yahoo.com via HTTP; Wed, 05 Apr 2006 15:18:34 CEST
 To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bgs4exz.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18428>
-
-On Wed, 5 Apr 2006, Junio C Hamano wrote:
-
-> It _might_ make sense to adopt a well-defined binary patch
-> format (or if there is no prior art, introduce our own) and
-> support that format with both git-diff-* brothers and git-apply,
-> but that would be a bit longer term project.
-
-What about simply using diff-delta and encoding its output with base64?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18429>
 
 
-Nicolas
+--- Junio C Hamano <junkio@cox.net> a =E9crit :
+
+> If I were doing that today, I would be doing almost exactly the
+> above sequence, or:
+>=20
+> 	$ git am patch
+>         $ git add <new images>
+>         $ git commit -a --amend
+>=20
+
+BTW, what does "--amend" option do ? It doesn't seem to be documented a=
+nywhere.
+
+=46rancis
+
+
+=09
+
+=09
+	=09
+_______________________________________________________________________=
+____=20
+Nouveau : t=E9l=E9phonez moins cher avec Yahoo! Messenger ! D=E9couvez =
+les tarifs exceptionnels pour appeler la France et l'international.
+T=E9l=E9chargez sur http://fr.messenger.yahoo.com
