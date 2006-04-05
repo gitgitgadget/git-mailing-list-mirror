@@ -1,149 +1,76 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: n-heads and patch dependency chains
-Date: Wed, 05 Apr 2006 18:34:29 +1200
-Message-ID: <443364F5.2040504@vilain.net>
-References: <4430D352.4010707@vilain.net>	<7vsloucuxk.fsf@assigned-by-dhcp.cox.net>	<4431B60E.3030008@vilain.net> <7vhd596ua0.fsf@assigned-by-dhcp.cox.net>
+From: Andrew Morton <akpm@osdl.org>
+Subject: Re: [PATCH] parse_date(): fix parsing 03/10/2006
+Date: Tue, 4 Apr 2006 23:40:48 -0700
+Message-ID: <20060404234048.0236886e.akpm@osdl.org>
+References: <7vodzg4l5n.fsf@assigned-by-dhcp.cox.net>
+	<20060404231606.219a4cc5.akpm@osdl.org>
+	<7virpo4jxf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 08:35:05 2006
+X-From: git-owner@vger.kernel.org Wed Apr 05 08:42:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR1bV-00032v-9p
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:34:57 +0200
+	id 1FR1iB-0003sf-5x
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbWDEGeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 02:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbWDEGeq
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:34:46 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:19346 "EHLO
-	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S1751112AbWDEGeq
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 02:34:46 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 85A745A70; Wed,  5 Apr 2006 18:34:42 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 9C3E04D36;
-	Wed,  5 Apr 2006 18:34:33 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
+	id S1751119AbWDEGls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 02:41:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbWDEGls
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:41:48 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:53140 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751119AbWDEGls (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 02:41:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k356fitH007585
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 4 Apr 2006 23:41:45 -0700
+Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id k356fiUP028042;
+	Tue, 4 Apr 2006 23:41:44 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhd596ua0.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+In-Reply-To: <7virpo4jxf.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i386-redhat-linux-gnu)
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18419>
 
-Junio C Hamano wrote:
-
->A "bind commit" proposal was made to support subprojects living
->in their own subdirectories.  The picture to describe the commit
->ancestry chain would be almost the same as the above picture,
->except that it did not uncap and recap, but would have built its
->own ancestry chain.
->  
+Junio C Hamano <junkio@cox.net> wrote:
 >
+> Andrew Morton <akpm@osdl.org> writes:
+> 
+> > But there was a second problem.  Once the parsing had misbehaved, Len
+> > managed to create a commit which was six months in the future:
+> >
+> > commit 8313524a0d466f451a62709aaedf988d8257b21c
+> > Author: Bob Moore <robert.moore@intel.com>
+> > Date:   Tue Oct 3 00:00:00 2006 -0400
+> >
+> >     ACPI: ACPICA 20060310
+> >
+> > Will your fix prevent that from happening?  If not, perhaps some basic
+> > sanity checking might be appropriate.
+> 
+> You _might_ get an e-mail to fix kernel problems from yourself
+> in the future, in which case you would want to commit with
+> future author date, like this ;-).
+> 
+> People would often deal with dates in the past (way in the past
+> when talking about importing foreign SCM history), but probably
+> it would never make sense to do dates way into the future.  I'll
+> think about it.
+> 
 
-I had considered that this would make directory subprojects possible,
-but didn't want to draw attention to it.
+Well it doesn't have to be fatal, of course.  Some "do you really want to
+do this [y/n]?" prompt, with a command option to override it.  Or simply
+print a big warning.
 
-Actually I'm now of the thinking that the problem is that we are using
-'parent' for two things;
-
-1. the merge bases for this merge, if a merge
-(or the base for this change for a patch)
-
-2. the historical precedent(s) for this commit.
-
-In the single line of history case these are always the same. For an
-actual merge they are also the same. However, when you are superceding a
-merge with a newer merge, or mucking with history they are different.
-
-So, I think all we need to make this all work smashingly well is to have
-a new field called "prior" or perhaps "previous".
-
-As well as being mostly backwards compatible and supporting grouping
-your commits into topics in a single checkout, this would also have the
-side effect of:
-
-- directly supporting stgit / pg style patchset evolution, without
-needing to use seperate branches for each release of your patchset. This
-would not replace the need for stgit etc to wind the head - while
-revising a patchset you really don't want the system to record
-intermediate changes, just the ones you want to publish
-
-- supporting tree subprojects (as it is a more specific use case)
-
-- rewriting history! Without losing the old commits. Unless you wanted
-to - say, for archiving old commits by rebasing the whole project off a
-new revision.
-
-It also does not suffer from the 'problem' in Andreas' "dual head
-commit" approach that one commit will thenceforth be known by two commit
-IDs.
-
->It had two different kinds of commit relationships: parenthood
->and directory structure binding.  The component subprojects
->lived in their own subdirectories (so if you are maintaining an
->embedded Linux along with matching toolchain, you would have linux/
->subdirectory that has the kernel hierarchy, gcc/, libc/, ...),
->and commit objects had "bind commit-sha1 subdirectory-name"
->lines to express how the components are bundled together.  A
->commit object would have looked like this:
->
->	tree fc9957b0052df6a8248420395bc9febd66194252
->        parent 052df6a8248420395bc9febd66194252fc9957b0
->        bind f6a8248420395bc9febd66194252fc9957b0052d linux/
->        bind 20395bc9febd66194252fc9957b0052df6a82484 gcc/
->	author A U Thor <author@example.com> 1144111304 -0700
->
->The "parent" line is the commit ancestry as usual, and each
->"bind" line names a commit object of component project and where
->in the directory hierarchy the tree for that commit object would
->be checked out.  The "tree" line records the result of grafting
->the subprojects together.  So, for example, ls-tree -d fc9957
->linux in the above example would have shown the tree object
->f6a824^{tree}.
->  
->
-
-While the approach I outlined supports this in a way, it is subtly
-different.
-
-Firstly, the above approach makes it a hard requirement that the
-independent series of commits are in seperate paths, you mention a fix
-for this -
-
->The structure forbid you from binding two separate projects at
->the same directory in order to enforce clean separation of
->subprojects, but if you allow multiple commits to be bound at
->the root level, that could be used as a hydra cap.
->  
->
-
-- but this means you are not storing the 'merged' tree in the commit,
-which I think is a mistake. While we've been talking mostly about
-dealing with managing changes simple enough to merge plainly for
-simplicity of operations, this would *force* it to be so because you
-need to allow anyone to check it out.
-
-On the other hand - these bind commits enables tracking a sub-project in
-a sub-directory whilst retaining the same commit IDs, to make tracking
-easier.
-
-Even this works using "prior", too - though you'd have to use surrogate
-commits that link to the sub-project commit and wrapper tree object.
-
-How does that sound?
-
-Sam.
+Whatever.
