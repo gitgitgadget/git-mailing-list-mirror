@@ -1,80 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Tue, 04 Apr 2006 16:06:07 -0700
-Message-ID: <7v3bgt54bk.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] parse_date(): fix parsing 03/10/2006
+Date: Tue, 04 Apr 2006 23:00:04 -0700
+Message-ID: <7vodzg4l5n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 05 01:06:14 2006
+Cc: Andrew Morton <akpm@osdl.org>, "Brown, Len" <len.brown@intel.com>
+X-From: git-owner@vger.kernel.org Wed Apr 05 08:00:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FQubF-0002sb-BR
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 01:06:13 +0200
+	id 1FR13u-0006YT-LZ
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:00:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbWDDXGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Apr 2006 19:06:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbWDDXGJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Apr 2006 19:06:09 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:41374 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750912AbWDDXGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Apr 2006 19:06:09 -0400
+	id S1751104AbWDEGAJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 02:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbWDEGAJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:00:09 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:19181 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751104AbWDEGAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Apr 2006 02:00:07 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060404230608.YOCV17006.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Apr 2006 19:06:08 -0400
+          id <20060405060006.EQSC20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 5 Apr 2006 02:00:06 -0400
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18412>
 
-I've tagged the tip of "master" as 1.3.0-rc2.  It has the
-following changes since the last announcement.
+The comment associated with the date parsing code for three
+numbers separated with slashes or dashes implied we wanted to
+interpret using this order:
 
- - enhancement and a minor fix to built-in xdiff
-   (Davide Libenzi and Mark Wooding)
+	yyyy-mm-dd
+	yyyy-dd-mm
+	mm-dd-yy
+	dd-mm-yy
 
- - contrib/git-svn updates (Eric Wong)
+However, the actual code had the last two wrong, and making it
+prefer dd-mm-yy format over mm-dd-yy.
 
- - documentation updates (J. Bruce Fields)
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
- - build and other assorted fixes and cleanups (Jason Riedy,
-   Peter Eriksen, Rene Scharfe, Yasushi SHOJI, and Jim Radford)
+---
+ * Spotted, thanks to Len Brown and Andrew Morton.
 
- - Solaris "clone" fix (Linus and Jason Riedy with initial
-   reproduction help from Peter Eriksen)
+ date.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
- - revision traversal latency improvements with paths and
-   max-age limiting (Linus and me)
-
- - http-fetch updates (Nick Hengeveld)
-
- - updated gitk (Paul Mackerras)
-
-
-* The 'next' branch, in addition, has these.
-
- - fix cloning of upsteram whose HEAD does not point at master
-   (me); this is an attempt to fix a real bug, but I haven't had
-   a chance to test it sufficiently enough to convince myself it
-   is ready.
-
- - pickaxe enhancements that looks for needles matching regexp
-   (Petr Baudis)
-
- - combine-diff that uses built-in xdiff (me)
-
-* The 'pu' branch, in addition, has these.
-
- - assorted gitk updates from the list (Johannes Schindelin,
-   Keith Packard and Mark Wooding); I am waiting for some of
-   them to trickle back from Paul's canonical gitk tree.
-
- - beginning of new pickaxe (me); I've got busy before getting this
-   one to do anything interesting.  Currently it is just a bit
-   faster way to do 'rev-list | diff-tree --stdin path' for a
-   single path.
+f5cd7df6e8322a0b783668b31881ab95a5ce33bd
+diff --git a/date.c b/date.c
+index 416ea57..18a0710 100644
+--- a/date.c
++++ b/date.c
+@@ -257,10 +257,10 @@ static int match_multi_number(unsigned l
+ 				break;
+ 		}
+ 		/* mm/dd/yy ? */
+-		if (is_date(num3, num2, num, tm))
++		if (is_date(num3, num, num2, tm))
+ 			break;
+ 		/* dd/mm/yy ? */
+-		if (is_date(num3, num, num2, tm))
++		if (is_date(num3, num2, num, tm))
+ 			break;
+ 		return 0;
+ 	}
+-- 
+1.3.0.rc2.g110c
