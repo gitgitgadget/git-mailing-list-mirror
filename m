@@ -1,68 +1,61 @@
-From: Andrew Morton <akpm@osdl.org>
-Subject: Re: [PATCH] parse_date(): fix parsing 03/10/2006
-Date: Tue, 4 Apr 2006 23:16:06 -0700
-Message-ID: <20060404231606.219a4cc5.akpm@osdl.org>
-References: <7vodzg4l5n.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add git-clean command
+Date: Wed, 05 Apr 2006 08:25:52 +0200
+Organization: At home
+Message-ID: <e0vntc$slu$1@sea.gmane.org>
+References: <20060405060048.6694.65940.stgit@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, len.brown@intel.com
-X-From: git-owner@vger.kernel.org Wed Apr 05 08:17:20 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Apr 05 08:26:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FR1KR-00005A-DC
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:17:19 +0200
+	id 1FR1TK-0001Wh-G8
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 08:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbWDEGRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 02:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbWDEGRI
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:17:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:61070 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751103AbWDEGRH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 02:17:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k356H3tH006786
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 4 Apr 2006 23:17:03 -0700
-Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id k356H2fl027463;
-	Tue, 4 Apr 2006 23:17:03 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vodzg4l5n.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i386-redhat-linux-gnu)
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750910AbWDEG0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 02:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbWDEG0G
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 02:26:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:43654 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750910AbWDEG0F (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 02:26:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FR1Sq-0001RV-19
+	for git@vger.kernel.org; Wed, 05 Apr 2006 08:26:00 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Apr 2006 08:26:00 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Apr 2006 08:26:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18416>
 
-Junio C Hamano <junkio@cox.net> wrote:
->
-> The comment associated with the date parsing code for three
->  numbers separated with slashes or dashes implied we wanted to
->  interpret using this order:
-> 
->  	yyyy-mm-dd
->  	yyyy-dd-mm
->  	mm-dd-yy
->  	dd-mm-yy
-> 
->  However, the actual code had the last two wrong, and making it
->  prefer dd-mm-yy format over mm-dd-yy.
+Pavel Roskin wrote:
 
-But there was a second problem.  Once the parsing had misbehaved, Len
-managed to create a commit which was six months in the future:
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git-clean' [-d | -D] [-n] [-q] [-x]
 
-commit 8313524a0d466f451a62709aaedf988d8257b21c
-Author: Bob Moore <robert.moore@intel.com>
-Date:   Tue Oct 3 00:00:00 2006 -0400
+Shouldn't it be
+> +'git-clean' [-d] [-n] [-q] [-x | -X]
+like in below?
 
-    ACPI: ACPICA 20060310
+> +USAGE="[-d] [-n] [-q] [-x | -X]"
 
-Will your fix prevent that from happening?  If not, perhaps some basic
-sanity checking might be appropriate.
+-- 
+Jakub Narebski
+Warsaw, Poland
