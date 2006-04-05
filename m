@@ -1,62 +1,85 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: How should I handle binary file with GIT
-Date: 05 Apr 2006 11:51:39 -0700
-Message-ID: <86ek0bsvno.fsf@blue.stonehenge.com>
-References: <20060405073022.13054.qmail@web25806.mail.ukl.yahoo.com>
-	<7v3bgs4exz.fsf@assigned-by-dhcp.cox.net> <e10mn9$cjs$1@sea.gmane.org>
-	<Pine.LNX.4.64.0604051131010.2550@localhost.localdomain>
-	<86wte4rq3d.fsf@blue.stonehenge.com>
-	<7vslor27n4.fsf@assigned-by-dhcp.cox.net>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: [PATCH] git-commit: document --append
+Date: Wed, 5 Apr 2006 21:16:08 +0200
+Message-ID: <20060405191608.GA20572@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 05 20:51:58 2006
+Content-Type: text/plain; charset=iso-8859-1
+X-From: git-owner@vger.kernel.org Wed Apr 05 21:16:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRD6a-00037L-0l
-	for gcvg-git@gmane.org; Wed, 05 Apr 2006 20:51:48 +0200
+	id 1FRDUF-0008En-Gd
+	for gcvg-git@gmane.org; Wed, 05 Apr 2006 21:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbWDESvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 14:51:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWDESvp
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 14:51:45 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:36183 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751335AbWDESvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 14:51:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 0D7B48F3C2;
-	Wed,  5 Apr 2006 11:51:40 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 07457-02-29; Wed,  5 Apr 2006 11:51:39 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 8CE748F3D0; Wed,  5 Apr 2006 11:51:39 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.13.3.8; tzolkin = 9 Lamat; haab = 1 Pop
-In-Reply-To: <7vslor27n4.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751340AbWDETQM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 15:16:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWDETQM
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 15:16:12 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:18347 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1751338AbWDETQM
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2006 15:16:12 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
+	id 1FRDU8-0005Q6-P6
+	for git@vger.kernel.org; Wed, 05 Apr 2006 21:16:08 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18446>
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+The "--amend" option is used to amend the tip of the current branch. This
+documentation text was copied straight from the commit that implemented it.
 
-Junio> If we wanted to use the patch+diff (i.e. "format-patch,
-Junio> send-email, and then am" workflow) to transfer new version of
-Junio> binary files to a recipient, which I think is useful in some
-Junio> projects, the sanest way to handle this is probably to add
-Junio> Nico's delta, going from preimage to postimage, encoded for
-Junio> safer transport, to our diff output.
+Signed-off-by: Marco Roeland <marco.roeland@xs4all.nl>
 
-This is what I was looking for, and thanks for confirming that at least within
-a local respository, everything already works.  Yeay.
+---
 
+ Documentation/git-commit.txt |   22 +++++++++++++++++++++-
+ 1 files changed, 21 insertions(+), 1 deletions(-)
+
+ca7d3b4fdd0cb24b7353da312fb9306531468f54
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index d04b342..3701cb3 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -9,7 +9,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>]
+-	   [-e] [--author <author>] [--] [[-i | -o ]<file>...]
++	   [--no-verify] [--amend] [-e] [--author <author>]
++	   [--] [[-i | -o ]<file>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -70,6 +71,25 @@ OPTIONS
+ 	`-m`, and from file with `-C` are usually used as the
+ 	commit log message unmodified.  This option lets you
+ 	further edit the message taken from these sources.
++
++--amend::
++
++	Used to amend the tip of the current branch. Prepare the tree
++	object you would want to replace the latest commit as usual
++	(this includes the usual -i/-o and explicit paths), and the
++	commit log editor is seeded with the commit message from the
++	tip of the current branch. The commit you create replaces the
++	current tip -- if it was a merge, it will have the parents of
++	the current tip as parents -- so the current top commit is
++	discarded.
++
++	It is a rough equivalent for:
++
++		$ git reset --soft HEAD^
++		$ ... do something else to come up with the right tree ...
++		$ git commit -c ORIG_HEAD
++
++	but can be used to amend a merge commit.
+ 
+ -i|--include::
+ 	Instead of committing only the files specified on the
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+1.3.0.rc2.gca38
