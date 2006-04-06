@@ -1,82 +1,80 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: parsecvs tool now creates git repositories
-Date: Thu, 06 Apr 2006 13:12:36 -0700
-Message-ID: <1144354356.2303.270.camel@neko.keithp.com>
-References: <20060405174247.GA29758@blackbean.org>
-	 <1144262498.2303.231.camel@neko.keithp.com>
-	 <20060406181502.GA15741@blackbean.org>
+From: Jim Radford <radford@blackbean.org>
+Subject: [PATCH] fix gitk with lots of tags
+Date: Thu, 6 Apr 2006 13:36:37 -0700
+Message-ID: <20060406203637.GA15009@blackbean.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-O4DYk4UaIPow/V4v3OCm"
-Cc: keithp@keithp.com, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 06 22:13:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 06 22:37:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRaqw-0005IY-DF
-	for gcvg-git@gmane.org; Thu, 06 Apr 2006 22:13:14 +0200
+	id 1FRbEC-0001eG-KG
+	for gcvg-git@gmane.org; Thu, 06 Apr 2006 22:37:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751143AbWDFUNM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Apr 2006 16:13:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWDFUNM
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 16:13:12 -0400
-Received: from home.keithp.com ([63.227.221.253]:30729 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1751143AbWDFUNK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 16:13:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 952A1130020;
-	Thu,  6 Apr 2006 13:13:06 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 16684-02; Thu, 6 Apr 2006 13:13:06 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 1AB7613001F; Thu,  6 Apr 2006 13:13:06 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 8D3F114001;
-	Thu,  6 Apr 2006 13:13:05 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id B451E543DB; Thu,  6 Apr 2006 13:12:36 -0700 (PDT)
-To: Jim Radford <radford@blackbean.org>
-In-Reply-To: <20060406181502.GA15741@blackbean.org>
-X-Mailer: Evolution 2.4.2.1 
+	id S1751273AbWDFUhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Apr 2006 16:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbWDFUhH
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 16:37:07 -0400
+Received: from cpe-67-49-92-118.socal.res.rr.com ([67.49.92.118]:41914 "EHLO
+	mail.blackbean.org") by vger.kernel.org with ESMTP id S1751273AbWDFUhF
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 16:37:05 -0400
+Received: from home.blackbean.org (localhost.localdomain [127.0.0.1])
+	by mail.blackbean.org (8.13.6/8.13.4) with ESMTP id k36KacVI015081
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Apr 2006 13:36:38 -0700
+Received: (from jim@localhost)
+	by home.blackbean.org (8.13.6/8.13.6/Submit) id k36Kab3d015078;
+	Thu, 6 Apr 2006 13:36:37 -0700
+To: Paul Mackerras <paulus@samba.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on home.blackbean.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18480>
 
+Hi Paul,
 
---=-O4DYk4UaIPow/V4v3OCm
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+This fix allow gitk to be used on repositories with lots of tags.  It
+bypasses git-rev-parse and passes its arguments to git-rev-list
+directly to avoid the command line length restrictions.
 
-On Thu, 2006-04-06 at 11:15 -0700, Jim Radford wrote:
-> Hi Keith,
->=20
-> Here's one more build patch.  For some reason the Fedora lex doesn't
-> want a space after the -o.
+Signed-Off-By: Jim Radford <radford@blackbean.org>
 
-I probably shouldn't even use the -o flag; all it does is change the
-#line directives in the output file to point at lex.c instead of
-<stdout>. I'm sure it'll break something.
+-Jim
 
-> Almost all of the errors I was seeing in the last version were fixed
-> with your "branches that don't get merged back to the trunk" fix.
-
-That's good news at least.
-
---=20
-keith.packard@intel.com
-
---=-O4DYk4UaIPow/V4v3OCm
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQBENXY0Qp8BWwlsTdMRAsn4AJ0WmMG2BPTrOxfA+P3qc8A8eGGEbgCdG1te
-Q2rMKGIe5xhE1C3bjAK1jPw=
-=2Wqn
------END PGP SIGNATURE-----
-
---=-O4DYk4UaIPow/V4v3OCm--
+---
+diff --git a/gitk b/gitk
+index 26fa79a..40672fb 100755
+--- a/gitk
++++ b/gitk
+@@ -17,19 +17,11 @@ proc gitdir {} {
+ }
+ 
+ proc parse_args {rargs} {
+-    global parsed_args
+-
+-    if {[catch {
+-	set parse_args [concat --default HEAD $rargs]
+-	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
+-    }]} {
+-	# if git-rev-parse failed for some reason...
+-	if {$rargs == {}} {
+-	    set rargs HEAD
+-	}
+-	set parsed_args $rargs
++    if {$rargs == {}} {
++        return HEAD
++    } else {
++	return $rargs
+     }
+-    return $parsed_args
+ }
+ 
+ proc start_rev_list {rlargs} {
