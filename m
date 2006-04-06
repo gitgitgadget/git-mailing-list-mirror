@@ -1,78 +1,49 @@
-From: Rutger Nijlunsing <rutger@nospam.com>
-Subject: Re: Cygwin can't handle huge packfiles?
-Date: Thu, 6 Apr 2006 01:27:39 +0200
-Organization: M38c
-Message-ID: <20060405232739.GA18121@nospam.com>
-References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com> <Pine.LNX.4.63.0604031521170.4011@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0604030730040.3781@g5.osdl.org> <Pine.LNX.4.64.0604030734440.3781@g5.osdl.org> <fa0b6e200604050624h13ebd8deg241ae98cef1f5a74@mail.gmail.com> <Pine.LNX.4.63.0604051612200.25304@wbgn013.biozentrum.uni-wuerzburg.de> <20060405210844.GN26780@trixie.casa.cgf.cx>
-Reply-To: git@wingding.demon.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: blame not working well?
+Date: Wed, 05 Apr 2006 17:11:47 -0700
+Message-ID: <7vacazy33w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 06 01:28:12 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 06 02:12:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRHPz-0006kf-Le
-	for gcvg-git@gmane.org; Thu, 06 Apr 2006 01:28:08 +0200
+	id 1FRI6T-0004Jq-9B
+	for gcvg-git@gmane.org; Thu, 06 Apr 2006 02:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbWDEX14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 19:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932126AbWDEX14
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 19:27:56 -0400
-Received: from post-25.mail.nl.demon.net ([194.159.73.195]:6634 "EHLO
-	post-25.mail.nl.demon.net") by vger.kernel.org with ESMTP
-	id S1750971AbWDEX14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 19:27:56 -0400
-Received: from wingding.demon.nl ([82.161.27.36]:57652)
-	by post-25.mail.nl.demon.net with esmtp (Exim 4.51)
-	id 1FRHPg-0008Zj-VN; Wed, 05 Apr 2006 23:27:49 +0000
-Received: from rutger by wingding.demon.nl with local (Exim 4.60)
-	(envelope-from <rutger@wingding.demon.nl>)
-	id 1FRHPY-00054Z-AN; Thu, 06 Apr 2006 01:27:42 +0200
-To: Christopher Faylor <me@cgf.cx>
-Content-Disposition: inline
-In-Reply-To: <20060405210844.GN26780@trixie.casa.cgf.cx>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S932115AbWDFALt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Apr 2006 20:11:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbWDFALt
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 20:11:49 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:39357 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932115AbWDFALt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Apr 2006 20:11:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060406001148.MLZR15695.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 5 Apr 2006 20:11:48 -0400
+To: Fredrik Kuivinen <freku045@student.liu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18461>
 
-On Wed, Apr 05, 2006 at 05:08:44PM -0400, Christopher Faylor wrote:
-> On Wed, Apr 05, 2006 at 04:14:20PM +0200, Johannes Schindelin wrote:
-> >> Inspired by a patch of Alex Riesen (thanks, Alex), I tried to use the
-> >> regular mmap for mapping pack files, only to discover that I compile
-> >> without defining "NO_MMAP", so I've been using the stock mmap all
-> >> along. So now I'm thinking that the cygwin mmap also does a
-> >> malloc-and-read, just like git does with NO_MMAP. So I'll continue to
-> >> investigate in that direction.
-> >
-> >I think cygwin's mmap() is based on the Win32 API equivalent, which could 
-> >mean that it *is* memory mapped, but in a special area (which is smaller 
-> >than 1.5 gigabyte). In this case, it would make sense to limit the pack 
-> >size, thereby having several packs, and mmap() them as they are needed.
-> 
-> Yes, cygwin's mmap uses CreateFileMapping and MapViewOfFile.  IIRC,
-> Windows might have a 2G limitation lurking under the hood somewhere but
-> I think that might be tweakable with some registry setting.
+I was having fun updating blame.c to use the built-in xdiff
+instead of spawning and reading from external GNU diff (it is
+currently in "next" branch).  It seems to pass the trivial
+testsuite case but I noticed for example annotating Makefile,
+sha1_name.c, or blame.c in git.git repository seems to show
+quite bogus annotation.  One extreme case is the Makefile; for
+all but one line is blamed for the very initial commit made by
+Linus X-<.  One good news for me is that the version before this
+change has the same breakage.  One bad news is this seems to
+have been broken for some time.
 
-Windows places its DLLs criss-cross through the memory space because
-every DLL on the system has its own preferred place to be loaded (the
-base address). This severely limits the amount of largest contiguous
-memory block available, which is needed for one mmap() I think.
-
-Several solutions exist:
-  - enlarge the address space with the /3GB boot flag in boot.ini
-  - rebase all DLLs with REBASE.EXE (part of platform sdk) .
-    Just make them the same and fix them to a low address.
-    Problem is rebasing system dlls since those are locked by the system.
-  - at start of program before other DLLs are loaded,
-    reserve an as large part of the memory as possible with
-    VirtualAlloc()
-
--- 
-Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
-never attribute to a conspiracy which can be explained by incompetence
-----------------------------------------------------------------------
+Bisecting indicates 2a0925be3512451834ec9a3e023f4cff23c1cfb7 is
+the first bad commit, but I do not see how the change can break
+it.  I'll continue digging it, but if you have a chance, could
+you take a look, too?
