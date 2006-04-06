@@ -1,62 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cygwin can't handle huge packfiles?
-Date: Wed, 05 Apr 2006 21:13:36 -0700
-Message-ID: <7vfykrwdcf.fsf@assigned-by-dhcp.cox.net>
-References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
-	<Pine.LNX.4.63.0604031521170.4011@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
-	<Pine.LNX.4.64.0604030734440.3781@g5.osdl.org>
-	<fa0b6e200604050624h13ebd8deg241ae98cef1f5a74@mail.gmail.com>
+From: Keith Packard <keithp@keithp.com>
+Subject: Fixes to parsecvs
+Date: Wed, 05 Apr 2006 23:36:32 -0700
+Message-ID: <1144305392.2303.240.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 06 06:13:41 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-MtXQfFuBGDbBzsaEUHIf"
+Cc: keithp@keithp.com
+X-From: git-owner@vger.kernel.org Thu Apr 06 08:37:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRLsL-0004pl-C6
-	for gcvg-git@gmane.org; Thu, 06 Apr 2006 06:13:41 +0200
+	id 1FRO7B-0002Z4-Iy
+	for gcvg-git@gmane.org; Thu, 06 Apr 2006 08:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932144AbWDFENj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Apr 2006 00:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbWDFENi
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 00:13:38 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16321 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932144AbWDFENi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Apr 2006 00:13:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060406041337.JAGX25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 6 Apr 2006 00:13:37 -0400
-To: "Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com>
-In-Reply-To: <fa0b6e200604050624h13ebd8deg241ae98cef1f5a74@mail.gmail.com>
-	(Kees-Jan Dijkzeul's message of "Wed, 5 Apr 2006 15:24:05 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751126AbWDFGhG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Apr 2006 02:37:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbWDFGhG
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 02:37:06 -0400
+Received: from home.keithp.com ([63.227.221.253]:19729 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1751126AbWDFGhE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 02:37:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 7F8BD130020;
+	Wed,  5 Apr 2006 23:36:59 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 03503-04; Wed, 5 Apr 2006 23:36:59 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 1436013001F; Wed,  5 Apr 2006 23:36:58 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 0005114001;
+	Wed,  5 Apr 2006 23:36:58 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 4887B543DC; Wed,  5 Apr 2006 23:36:32 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18466>
 
-"Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com> writes:
 
-> I'm trying to get Git to manage my companies source tree. We're
-> writing software for digital TV sets. Anyway, the archive is about 5Gb
-> in size and contains binaries, zip files, excel sheets meeting minutes
-> and whatnot. So it doesn't compress very well. The 1.5Gb pack file
-> hardly contains any history at all (five commits or so). On the flip
-> side, for now I'll be the only one adding to the archive, so at least
-> it will not grow that fast ;-)
->
-> Anyway, to reconstitute the tree, I need very nearly the entire pack,
-> so limiting the pack size won't do much good, as git will still try to
-> allocate a total of 1.5Gb memory (which, unfortunately, isn't there
-> :-)
+--=-MtXQfFuBGDbBzsaEUHIf
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Right now we LRU the pack files and evict older ones when we
-mmap too many, but the unit of eviction is the whole file, so it
-would not help the case like yours at all.  It might be possible
-to mmap only part of a packfile, but it would involve fairly
-major surgery to sha1_file.c.
+note, parsecvs remains available from:
+
+	git://git.freedesktop.org/~keithp/parsecvs
+
+I've "fixed" the lexer to permit getc/ungetc in the data parsing
+functions. This should resolve the flex -l / -X problems.
+
+Jim Radford send a patch to add '/' as a legal tag character
+
+I added my custom edit-change-log script for people dealing with
+X.org-style commit messages.
+
+And, it deals with import branch revisions that aren't supposed to
+get merged back to the trunk, creating a custom branch name based on the
+branch revision (which must be global across all files).
+
+5e5f4c012aec2db012a08b1c7ed5219ed5100111
+
+--=20
+keith.packard@intel.com
+
+
+--=-MtXQfFuBGDbBzsaEUHIf
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQBENLbvQp8BWwlsTdMRAiXXAKDJ1FxWRhbNDGXpZFc58Hk96GXCfACgtGEs
+mXubt0xh1KqnngmV1N+4KJ4=
+=fL9X
+-----END PGP SIGNATURE-----
+
+--=-MtXQfFuBGDbBzsaEUHIf--
