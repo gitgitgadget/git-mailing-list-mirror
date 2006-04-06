@@ -1,137 +1,62 @@
-From: Mike McCormack <mike@codeweavers.com>
-Subject: [PATCH] Add documentation for git-imap-send.
-Date: Thu, 06 Apr 2006 12:32:19 +0900
-Organization: CodeWeavers
-Message-ID: <44348BC3.8050901@codeweavers.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cygwin can't handle huge packfiles?
+Date: Wed, 05 Apr 2006 21:13:36 -0700
+Message-ID: <7vfykrwdcf.fsf@assigned-by-dhcp.cox.net>
+References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
+	<Pine.LNX.4.63.0604031521170.4011@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
+	<Pine.LNX.4.64.0604030734440.3781@g5.osdl.org>
+	<fa0b6e200604050624h13ebd8deg241ae98cef1f5a74@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000100000608000908070009"
-X-From: git-owner@vger.kernel.org Thu Apr 06 05:37:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 06 06:13:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRLJD-00015j-M3
-	for gcvg-git@gmane.org; Thu, 06 Apr 2006 05:37:24 +0200
+	id 1FRLsL-0004pl-C6
+	for gcvg-git@gmane.org; Thu, 06 Apr 2006 06:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357AbWDFDhU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Apr 2006 23:37:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbWDFDhT
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Apr 2006 23:37:19 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:28320 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751357AbWDFDhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Apr 2006 23:37:17 -0400
-Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
-	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1FRLJ5-0000Ni-2a
-	for git@vger.kernel.org; Wed, 05 Apr 2006 22:37:16 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
-X-Accept-Language: en, en-us, ko-kr
-To: git@vger.kernel.org
-X-SA-Exim-Connect-IP: 216.251.189.130
-X-SA-Exim-Mail-From: mike@codeweavers.com
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+	id S932144AbWDFENj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Apr 2006 00:13:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbWDFENi
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 00:13:38 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16321 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932144AbWDFENi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Apr 2006 00:13:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060406041337.JAGX25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 6 Apr 2006 00:13:37 -0400
+To: "Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com>
+In-Reply-To: <fa0b6e200604050624h13ebd8deg241ae98cef1f5a74@mail.gmail.com>
+	(Kees-Jan Dijkzeul's message of "Wed, 5 Apr 2006 15:24:05 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18465>
 
-This is a multi-part message in MIME format.
---------------000100000608000908070009
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+"Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com> writes:
 
-Signed-off-by: Mike McCormack <mike@codeweavers.com>
+> I'm trying to get Git to manage my companies source tree. We're
+> writing software for digital TV sets. Anyway, the archive is about 5Gb
+> in size and contains binaries, zip files, excel sheets meeting minutes
+> and whatnot. So it doesn't compress very well. The 1.5Gb pack file
+> hardly contains any history at all (five commits or so). On the flip
+> side, for now I'll be the only one adding to the archive, so at least
+> it will not grow that fast ;-)
+>
+> Anyway, to reconstitute the tree, I need very nearly the entire pack,
+> so limiting the pack size won't do much good, as git will still try to
+> allocate a total of 1.5Gb memory (which, unfortunately, isn't there
+> :-)
 
-
----
-
-  Documentation/git-imap-send.txt |   60 
-+++++++++++++++++++++++++++++++++++++++
-  1 files changed, 60 insertions(+), 0 deletions(-)
-  create mode 100644 Documentation/git-imap-send.txt
-
-
---------------000100000608000908070009
-Content-Type: text/x-patch;
- name="39f36da01434f743e36a7b0d6e8f625ad7785b2b.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="39f36da01434f743e36a7b0d6e8f625ad7785b2b.diff"
-
-39f36da01434f743e36a7b0d6e8f625ad7785b2b
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-new file mode 100644
-index 0000000..cfc0d88
---- /dev/null
-+++ b/Documentation/git-imap-send.txt
-@@ -0,0 +1,60 @@
-+git-imap-send(1)
-+================
-+
-+NAME
-+----
-+git-imap-send - Dump a mailbox from stdin into an imap folder
-+
-+
-+SYNOPSIS
-+--------
-+'git-imap-send'
-+
-+
-+DESCRIPTION
-+-----------
-+This command uploads a mailbox generated with git-format-patch
-+into an imap drafts folder.  This allows patches to be sent as
-+other email is sent with mail clients that cannot read mailbox
-+files directly.
-+
-+Typical usage is something like:
-+
-+git-format-patch --signoff --stdout --attach origin | git-imap-send
-+
-+
-+CONFIGURATION
-+-------------
-+
-+git-imap-send requires the following values in the repository
-+configuration file (shown with examples):
-+
-+[imap]
-+    Folder = "INBOX.Drafts"
-+
-+[imap]
-+    Tunnel = "ssh -q user@server.com /usr/bin/imapd ./Maildir 2> /dev/null"
-+
-+[imap]
-+    Host = imap.server.com
-+    User = bob
-+    Password = pwd
-+    Port = 143
-+
-+
-+BUGS
-+----
-+Doesn't handle lines starting with "From " in the message body.
-+
-+
-+Author
-+------
-+Derived from isync 1.0.1 by Mike McCormack.
-+
-+Documentation
-+--------------
-+Documentation by Mike McCormack
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-
-
---------------000100000608000908070009--
+Right now we LRU the pack files and evict older ones when we
+mmap too many, but the unit of eviction is the whole file, so it
+would not help the case like yours at all.  It might be possible
+to mmap only part of a packfile, but it would involve fairly
+major surgery to sha1_file.c.
