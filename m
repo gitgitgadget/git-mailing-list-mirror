@@ -1,82 +1,54 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: parsecvs tool now creates git repositories
-Date: Fri, 7 Apr 2006 11:22:49 +1200
-Message-ID: <46a038f90604061622s5a7bee4eq6666d9b3796f70f6@mail.gmail.com>
-References: <20060405174247.GA29758@blackbean.org>
-	 <1144262498.2303.231.camel@neko.keithp.com>
-	 <20060406181502.GA15741@blackbean.org>
-	 <1144354356.2303.270.camel@neko.keithp.com>
-	 <46a038f90604061451m4522e3f3qceae2331751a307c@mail.gmail.com>
-	 <1144361968.2303.288.camel@neko.keithp.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cygwin can't handle huge packfiles?
+Date: Thu, 06 Apr 2006 16:53:29 -0700
+Message-ID: <7vk6a2uupy.fsf@assigned-by-dhcp.cox.net>
+References: <20060406205724.12216.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Jim Radford" <radford@blackbean.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 07 01:23:05 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 07 01:53:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRdoV-0005Kt-Im
-	for gcvg-git@gmane.org; Fri, 07 Apr 2006 01:22:56 +0200
+	id 1FReIF-0001I5-VD
+	for gcvg-git@gmane.org; Fri, 07 Apr 2006 01:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932208AbWDFXWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Apr 2006 19:22:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbWDFXWu
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 19:22:50 -0400
-Received: from wproxy.gmail.com ([64.233.184.239]:52772 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932208AbWDFXWu convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 19:22:50 -0400
-Received: by wproxy.gmail.com with SMTP id 57so256443wri
-        for <git@vger.kernel.org>; Thu, 06 Apr 2006 16:22:49 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=b091Gcpdnj15Rg+EZdhTUWUrvl/TxwHxAFfqu7iPsy0ctvlLgIAzHO7xKPjNzmLmRKYGezw0Xb81ffv804Wwtylpe1lw94M4Q89LqnQO+U9VSE+TWGgnb1SmHl9ennfQV9g5eOtRhiVw7VCEMS0pxFn4ubjQFJTGSXsYVW+Du2U=
-Received: by 10.54.72.9 with SMTP id u9mr1528278wra;
-        Thu, 06 Apr 2006 16:22:49 -0700 (PDT)
-Received: by 10.54.72.7 with HTTP; Thu, 6 Apr 2006 16:22:49 -0700 (PDT)
-To: "Keith Packard" <keithp@keithp.com>
-In-Reply-To: <1144361968.2303.288.camel@neko.keithp.com>
-Content-Disposition: inline
+	id S932229AbWDFXxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Apr 2006 19:53:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWDFXxc
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 19:53:32 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:50908 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932229AbWDFXxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Apr 2006 19:53:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060406235330.DFK20050.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 6 Apr 2006 19:53:30 -0400
+To: linux@horizon.com
+In-Reply-To: <20060406205724.12216.qmail@science.horizon.com>
+	(linux@horizon.com's message of "6 Apr 2006 16:57:24 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18487>
 
-On 4/7/06, Keith Packard <keithp@keithp.com> wrote:
-> On Fri, 2006-04-07 at 09:51 +1200, Martin Langhoff wrote:
+linux@horizon.com writes:
+
+>> Right now we LRU the pack files and evict older ones when we
+>> mmap too many, but the unit of eviction is the whole file, so it
+>> would not help the case like yours at all.  It might be possible
+>> to mmap only part of a packfile, but it would involve fairly
+>> major surgery to sha1_file.c.
 >
-> >  - file additions were recorded with one-commit-per-file. I am not
-> > sure how rcs is recording these, but hte user does enter a common
-> > message at "commit" time. Perhaps the file addition action could be
-> > ignored then?
->
-> If the log message is identical, and the dates are in-range, parsecvs
-> "should" put the adds in the same commit.
+> The simplest solution seems to be to limit pack file size to a reasonable
+> fraction of a 32-bit address space.  Say, 0.5 G.
 
-parsecvs is committing them with the "added file foo.x" message, not
-the actual commit message.
-
-> >  - some tags made on a branch show up in HEAD. This may be due to
-> > partial-tree branches, but I am not sure.
->
-> Finding branch points is not perfect; it's complicated by bizzarre
-> behaviour when adding files and casual CVS changes which make precise
-> branch points hard to detect. Can I get at this repository to play with?
-
-I fetch it with something along the lines of...
-
-while ( true ) ; do
-     wget -qc http://cvs.sourceforge.net/cvstarballs/moodle-cvsroot.tar.bz2 &&
-break
-     sleep 5
-done
-
-and then import the "moodle" module.
-
-cheers,
-
-
-m
+I do not think that would help the original poster's situation
+where only 5 revs result in a 1.5G pack.  I would _almost_ say
+"do not pack such a repository", but there is the initial
+cloning over git-aware transports which always results in a
+repository with a single pack.
