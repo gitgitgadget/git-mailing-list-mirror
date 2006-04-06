@@ -1,80 +1,89 @@
-From: Nicolas Vilz 'niv' <niv@iaglans.de>
-Subject: Re: git-clone and cg-clone
-Date: Fri, 07 Apr 2006 00:14:00 +0200
-Message-ID: <443592A8.4070203@iaglans.de>
-References: <44355978.3080205@itaapy.com>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: parsecvs tool now creates git repositories
+Date: Thu, 06 Apr 2006 15:19:28 -0700
+Message-ID: <1144361968.2303.288.camel@neko.keithp.com>
+References: <20060405174247.GA29758@blackbean.org>
+	 <1144262498.2303.231.camel@neko.keithp.com>
+	 <20060406181502.GA15741@blackbean.org>
+	 <1144354356.2303.270.camel@neko.keithp.com>
+	 <46a038f90604061451m4522e3f3qceae2331751a307c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 07 00:17:00 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-eO7XC2MYexaMWY+G0ndV"
+Cc: keithp@keithp.com, Jim Radford <radford@blackbean.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 07 00:27:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRcmZ-0002jB-6P
-	for gcvg-git@gmane.org; Fri, 07 Apr 2006 00:16:51 +0200
+	id 1FRcwe-0004Yw-0v
+	for gcvg-git@gmane.org; Fri, 07 Apr 2006 00:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932194AbWDFWQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Apr 2006 18:16:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932190AbWDFWQc
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 18:16:32 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:4109 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
-	id S932191AbWDFWQb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Apr 2006 18:16:31 -0400
+	id S932193AbWDFW1N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Apr 2006 18:27:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932196AbWDFW1N
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 18:27:13 -0400
+Received: from home.keithp.com ([63.227.221.253]:17681 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S932193AbWDFW1M (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 18:27:12 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id A66123E96
-	for <git@vger.kernel.org>; Fri,  7 Apr 2006 00:16:28 +0200 (CEST)
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 02712-04 for <git@vger.kernel.org>;
-	Fri, 7 Apr 2006 00:16:23 +0200 (CEST)
-Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 42B5A3E71
-	for <git@vger.kernel.org>; Fri,  7 Apr 2006 00:16:21 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
-X-Accept-Language: en-us, en
-In-Reply-To: <44355978.3080205@itaapy.com>
-X-Enigmail-Version: 0.92.0.0
-To: unlisted-recipients:; (no To-header on input)
+	by keithp.com (Postfix) with ESMTP id 72E44130020;
+	Thu,  6 Apr 2006 15:27:11 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 19104-05; Thu, 6 Apr 2006 15:27:11 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id EC78913001F; Thu,  6 Apr 2006 15:27:10 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 76B0514001;
+	Thu,  6 Apr 2006 15:27:10 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 75CBD6B428C; Thu,  6 Apr 2006 15:19:29 -0700 (PDT)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90604061451m4522e3f3qceae2331751a307c@mail.gmail.com>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18485>
 
-Belmar-Letelier wrote:
-> Since 0.17 to take benefit of cg-switch
-> 
-> I use:
-> 
-> $ git-clone  xxx
-> $ cg-branch-add origin xxx
-> 
-> instead of
-> 
-> $ cg-clone xxx
-> 
-> becauce cg-clone did not fetch all the heads.
-> 
-> Is there a better way to do this ?
-> 
 
-well, first I was also using cg clone... but i also realized, that there
-is only one branch being pulled from the repository.
+--=-eO7XC2MYexaMWY+G0ndV
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-If you use git clone, then all tags and branches will be pulled... so
-everytime i start using a fresh repository and start pulling origin of
-it, i use git clone instead of cg-clone.
+On Fri, 2006-04-07 at 09:51 +1200, Martin Langhoff wrote:
 
-i also use git checkout instead of cg-switch... well, i think i haven't
-had a use for the effekts, cg-switch does, and always wanted git
-checkout... and wondered about the files, which were missing in the
-index of the new branch..
+>  - file additions were recorded with one-commit-per-file. I am not
+> sure how rcs is recording these, but hte user does enter a common
+> message at "commit" time. Perhaps the file addition action could be
+> ignored then?
 
-i think thats the difference between porcelain and plumbing...
+If the log message is identical, and the dates are in-range, parsecvs
+"should" put the adds in the same commit.=20
 
-Sincerly
-Nicolas
+>  - some tags made on a branch show up in HEAD. This may be due to
+> partial-tree branches, but I am not sure.
+
+Finding branch points is not perfect; it's complicated by bizzarre
+behaviour when adding files and casual CVS changes which make precise
+branch points hard to detect. Can I get at this repository to play with?
+I'd like to see if we can't get the branch point detection more
+accurate.
+
+--=20
+keith.packard@intel.com
+
+--=-eO7XC2MYexaMWY+G0ndV
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQBENZPwQp8BWwlsTdMRAqpsAKCb8cwKx2v96KczFeieN4wX+GVR7gCgjGlF
+Sj4XJiWZ6yoPtZBGV/3yIck=
+=YrJ5
+-----END PGP SIGNATURE-----
+
+--=-eO7XC2MYexaMWY+G0ndV--
