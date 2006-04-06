@@ -1,99 +1,105 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Subject: Re: Fixes to parsecvs
-Date: Thu, 6 Apr 2006 18:09:21 +0200
-Message-ID: <20060406160921.GU13324@lug-owl.de>
-References: <1144305392.2303.240.camel@neko.keithp.com> <20060406120812.GO13324@lug-owl.de> <1144334896.2303.259.camel@neko.keithp.com> <Pine.LNX.4.63.0604061723410.23681@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: [PATCH] cg-rm: Add option to remove all files which are gone from the working copy
+Date: Thu, 6 Apr 2006 18:17:44 +0200
+Message-ID: <20060406161744.G5527deba@leonov.stosberg.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2tWkrNKppd65XSnD"
-Cc: Keith Packard <keithp@keithp.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 06 18:09:58 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Apr 06 18:18:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRX3H-0004oN-5r
-	for gcvg-git@gmane.org; Thu, 06 Apr 2006 18:09:43 +0200
+	id 1FRXBD-0006ZW-Vs
+	for gcvg-git@gmane.org; Thu, 06 Apr 2006 18:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254AbWDFQJZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Apr 2006 12:09:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbWDFQJZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 12:09:25 -0400
-Received: from lug-owl.de ([195.71.106.12]:46756 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S1751254AbWDFQJY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 12:09:24 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id 43CCFF005E; Thu,  6 Apr 2006 18:09:21 +0200 (CEST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S932187AbWDFQRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Apr 2006 12:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbWDFQRx
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Apr 2006 12:17:53 -0400
+Received: from ncs.stosberg.net ([217.195.44.246]:4757 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S932187AbWDFQRw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Apr 2006 12:17:52 -0400
+Received: from leonov (p213.54.80.25.tisdip.tiscali.de [213.54.80.25])
+	by ncs.stosberg.net (Postfix) with ESMTP id D26BCAEBC040
+	for <git@vger.kernel.org>; Thu,  6 Apr 2006 18:17:38 +0200 (CEST)
+Received: by leonov (Postfix, from userid 500)
+	id 4462EEB8A9; Thu,  6 Apr 2006 18:17:44 +0200 (CEST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0604061723410.23681@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Operating-System: Linux mail 2.6.12.3lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-User-Agent: Mutt/1.5.9i
+Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1) with LMTP; Thu, 06 Apr 2006 18:11:47 +0200
+X-Sieve: CMU Sieve 2.2
+User-Agent: mutt-ng/devel-r796 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18474>
+
+Add an -a option to cg-rm, which removes all files that have been
+physically deleted.
+
+Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
 
 
---2tWkrNKppd65XSnD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---
 
-On Thu, 2006-04-06 17:26:14 +0200, Johannes Schindelin <Johannes.Schindelin=
-@gmx.de> wrote:
-> On Thu, 6 Apr 2006, Keith Packard wrote:
-> > On Thu, 2006-04-06 at 14:08 +0200, Jan-Benedict Glaw wrote:
-> > > But it seems it now starts to really consume memory:
-> > The question is whether it needs to be more efficient so that people ca=
-n=20
-> > constantly convert repositories or whether moving the repository to a=
-=20
-> > sufficiently large machine for the one-time conversion is 'good enough'.
->=20
-> Keep in mind that there are many more valid uses for tracking a CVS=20
-> repository than to import it once.
+ cg-rm |   19 +++++++++++++++++--
+ 1 files changed, 17 insertions(+), 2 deletions(-)
 
-Even the most simplest usage case reveals this. (It's also what I'm
-about to do the the converted GCC repository.)
-
-Get the repo, locally track the changes (so the importet branches are
-all like "vendor branches") and do own work in local branches.
-
-I'll do this eg. to be able to easily re-diff patches, which I want to
-put into GIT, just because it's so much more convenient than SVN.
-However, this is only possible because I'm able to keep track of
-upstream SVN changes. They probably won't change their SCM again, just
-after they've introduced SVN.
-
-MfG, JBG
-
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
-_ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
-_ _ O
- f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
-m Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
-);
-
---2tWkrNKppd65XSnD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFENT0xHb1edYOZ4bsRAlsMAJ9hun4RVbUOinDs4ffQUmiOkmyVewCeJIwr
-AMl3CGziaCIsakuaWVWoGuk=
-=qkeT
------END PGP SIGNATURE-----
-
---2tWkrNKppd65XSnD--
+ac5fc0c8d9c9ccecba7cbf83a74a163bff79f8f4
+diff --git a/cg-rm b/cg-rm
+index 5ab5dc8..0276632 100755
+--- a/cg-rm
++++ b/cg-rm
+@@ -19,13 +19,18 @@ #
+ # -r:: Remove files recursively
+ #	If you pass cg-rm this flag and any directory names, it will try
+ #	to remove files in those directories recursively.
++#
++# -a:: Remove all files which are gone from the working copy
++#	Remove all files which have been deleted in the working copy
++#	from the index.
+ 
+-USAGE="cg-rm [-f] [-n] [-r] FILE..."
++USAGE="cg-rm [-f] [-n] [-r] [-a] FILE..."
+ 
+ . "${COGITO_LIB}"cg-Xlib || exit 1
+ 
+ delete=
+ recursive=
++rmgone=
+ while optparse; do
+ 	if optparse -f; then
+ 		delete=1
+@@ -33,12 +38,14 @@ while optparse; do
+ 		delete=
+ 	elif optparse -r; then
+ 		recursive=1
++	elif optparse -a; then
++		rmgone=1
+ 	else
+ 		optfail
+ 	fi
+ done
+ 
+-[ -n "${ARGS[*]}" ] || usage
++[ -n "${ARGS[*]}" -o "$rmgone" ] || usage
+ 
+ TMPFILE="$(mktemp -t gitrm.XXXXXX)" || exit 1
+ TMPDIRFILE="$(mktemp -t gitrm.XXXXXX)" || exit 1
+@@ -57,6 +64,14 @@ for file in "${ARGS[@]}"; do
+ 		echo "$file" >>"$TMPFILE"
+ 	fi
+ done
++
++if [ "$rmgone" ]; then
++	cg-status -s \! -n -w >>"$TMPFILE"
++	if [ ! $(cat "$TMPFILE" | sed -n "$=") ]; then
++		rm "$TMPFILE" "$TMPDIRFILE"
++		die "no files to remove"
++	fi
++fi
+ 
+ cat "$TMPFILE" | sed 's/^/Removing file /'
+ if [ "$delete" ]; then (
+-- 
+1.3-rc2.GIT
