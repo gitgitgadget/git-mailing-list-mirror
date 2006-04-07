@@ -1,95 +1,85 @@
-From: Karl =?ISO-8859-1?Q?=20Hasselstr=F6m?= <kha@treskal.com>
-Subject: [PATCH] git-svnimport: Don't assume that copied files haven't changed
-Date: Fri, 07 Apr 2006 08:06:09 +0200
-Message-ID: <20060407060609.9487.83229.stgit@backpacker.hemma.treskal.com>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: parsecvs tool now creates git repositories
+Date: Fri, 07 Apr 2006 00:24:57 -0700
+Message-ID: <1144394697.2303.307.camel@neko.keithp.com>
+References: <20060405174247.GA29758@blackbean.org>
+	 <1144262498.2303.231.camel@neko.keithp.com>
+	 <20060406181502.GA15741@blackbean.org>
+	 <1144354356.2303.270.camel@neko.keithp.com>
+	 <46a038f90604061451m4522e3f3qceae2331751a307c@mail.gmail.com>
+	 <1144361968.2303.288.camel@neko.keithp.com>
+	 <46a038f90604061622s5a7bee4eq6666d9b3796f70f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Apr 07 08:06:25 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-KXtM7q+9E5R+0UFIB+VE"
+Cc: keithp@keithp.com, Jim Radford <radford@blackbean.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 07 09:25:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRk6w-00064V-5m
-	for gcvg-git@gmane.org; Fri, 07 Apr 2006 08:06:22 +0200
+	id 1FRlLd-0006SO-Ga
+	for gcvg-git@gmane.org; Fri, 07 Apr 2006 09:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932289AbWDGGGT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Apr 2006 02:06:19 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbWDGGGT
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 02:06:19 -0400
-Received: from mxfep01.bredband.com ([195.54.107.70]:16114 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S932289AbWDGGGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Apr 2006 02:06:18 -0400
-Received: from backpacker.hemma.treskal.com ([83.227.180.148] [83.227.180.148])
-          by mxfep01.bredband.com with ESMTP
-          id <20060407060611.ZGGB16061.mxfep01.bredband.com@backpacker.hemma.treskal.com>
-          for <git@vger.kernel.org>; Fri, 7 Apr 2006 08:06:11 +0200
-Received: from backpacker.hemma.treskal.com (localhost.localdomain [127.0.0.1])
-	by backpacker.hemma.treskal.com (Postfix) with ESMTP id EE3BC16BC
-	for <git@vger.kernel.org>; Fri,  7 Apr 2006 08:06:09 +0200 (CEST)
-To: Git Mailing List <git@vger.kernel.org>
+	id S932325AbWDGHZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Apr 2006 03:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbWDGHZe
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 03:25:34 -0400
+Received: from home.keithp.com ([63.227.221.253]:14599 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S932325AbWDGHZe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Apr 2006 03:25:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id A6D66130020;
+	Fri,  7 Apr 2006 00:25:23 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 26568-01-7; Fri, 7 Apr 2006 00:25:23 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 6E93413001F; Fri,  7 Apr 2006 00:25:23 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 6BFC814001;
+	Fri,  7 Apr 2006 00:25:23 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 9B9FC6B42B7; Fri,  7 Apr 2006 00:24:57 -0700 (PDT)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90604061622s5a7bee4eq6666d9b3796f70f6@mail.gmail.com>
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18493>
 
-Don't assume that a file that SVN claims was copied from somewhere
-else is bit-for-bit identical with its parent, since SVN allows
-changes to copied files before they are committed.
 
-Without this fix, such copy-modify-commit operations causes the
-imported file to lack the "modify" part -- that is, we get subtle data
-corruption.
+--=-KXtM7q+9E5R+0UFIB+VE
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+On Fri, 2006-04-07 at 11:22 +1200, Martin Langhoff wrote:
 
----
+> parsecvs is committing them with the "added file foo.x" message, not
+> the actual commit message.
 
- git-svnimport.perl |   15 ++++++++++-----
- 1 files changed, 10 insertions(+), 5 deletions(-)
+heh. my cvs repositories are all so kludged that no files have ever been
+added, it appears. I'll fix this when I've got a copy of the moodle
+repository. sf.net is as useful as always.
 
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index 114784f..4d5371c 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -616,9 +616,7 @@ sub commit {
- 			}
- 			if(($action->[0] eq "A") || ($action->[0] eq "R")) {
- 				my $node_kind =3D node_kind($branch,$path,$revision);
--				if($action->[1]) {
--					copy_path($revision,$branch,$path,$action->[1],$action->[2],$node=
-_kind,\@new,\@parents);
--				} elsif ($node_kind eq $SVN::Node::file) {
-+				if ($node_kind eq $SVN::Node::file) {
- 					my $f =3D get_file($revision,$branch,$path);
- 					if ($f) {
- 						push(@new,$f) if $f;
-@@ -627,8 +625,15 @@ sub commit {
- 						print STDERR "$revision: $branch: could not fetch '$opath'\n";
- 					}
- 				} elsif ($node_kind eq $SVN::Node::dir) {
--					get_ignore(\@new, \@old, $revision,
--						   $branch,$path);
-+					if($action->[1]) {
-+						copy_path($revision, $branch,
-+							  $path, $action->[1],
-+							  $action->[2], $node_kind,
-+							  \@new, \@parents);
-+					} else {
-+						get_ignore(\@new, \@old, $revision,
-+							   $branch, $path);
-+					}
- 				}
- 			} elsif ($action->[0] eq "D") {
- 				push(@old,$path);
+I suspect the change is as simple as checking the format of the log
+message and time time stamps of the commits and then just dropping the
+1.1 revision from the tree entirely.
+
+--=20
+keith.packard@intel.com
+
+--=-KXtM7q+9E5R+0UFIB+VE
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQBENhPJQp8BWwlsTdMRAq90AJ9CO48n4Q9oCkuLlzxUVbNIp077EACgjgKN
+HjIozks2nW2PI4Wbg5zlPh0=
+=QgDY
+-----END PGP SIGNATURE-----
+
+--=-KXtM7q+9E5R+0UFIB+VE--
