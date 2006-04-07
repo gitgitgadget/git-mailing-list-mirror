@@ -1,105 +1,137 @@
-From: Eric Anholt <eric@anholt.net>
-Subject: [PATCH] Fix paths on FreeBSD by processing gitk like other scripts
-Date: Fri, 07 Apr 2006 14:03:51 -0700
-Message-ID: <1144443831.7017.72.camel@leguin>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [ANNOUNCE] Stacked GIT 0.9
+Date: Fri, 07 Apr 2006 23:05:57 +0100
+Message-ID: <4436E245.7010503@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-1HlOy4emlp6JYwnjwhJi"
-X-From: git-owner@vger.kernel.org Fri Apr 07 23:04:17 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Apr 08 00:06:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRy7i-0007po-FY
-	for gcvg-git@gmane.org; Fri, 07 Apr 2006 23:04:06 +0200
+	id 1FRz5i-0000n5-FL
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 00:06:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964847AbWDGVED (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Apr 2006 17:04:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964902AbWDGVED
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 17:04:03 -0400
-Received: from 69-30-77-85.dq1sn.easystreet.com ([69.30.77.85]:10751 "EHLO
-	leguin.anholt.net") by vger.kernel.org with ESMTP id S964847AbWDGVEB
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 7 Apr 2006 17:04:01 -0400
-Received: from leguin.anholt.net (localhost [127.0.0.1])
-	by leguin.anholt.net (8.13.4/8.13.1) with ESMTP id k37L3r4g024831
-	for <git@vger.kernel.org>; Fri, 7 Apr 2006 14:03:53 -0700 (PDT)
-	(envelope-from eric@anholt.net)
-Received: (from anholt@localhost)
-	by leguin.anholt.net (8.13.4/8.13.1/Submit) id k37L3qR5024830
-	for git@vger.kernel.org; Fri, 7 Apr 2006 14:03:53 -0700 (PDT)
-	(envelope-from eric@anholt.net)
-X-Authentication-Warning: leguin.anholt.net: anholt set sender to eric@anholt.net using -f
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.4.2.1 FreeBSD GNOME Team Port 
+	id S964983AbWDGWGD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 7 Apr 2006 18:06:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964989AbWDGWGD
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 18:06:03 -0400
+Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:31771 "EHLO
+	mtaout02-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S964983AbWDGWGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Apr 2006 18:06:01 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com with ESMTP
+          id <20060407220559.TABW29040.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Fri, 7 Apr 2006 23:05:59 +0100
+Received: from [192.168.1.100] (really [81.101.128.125])
+          by aamtaout03-winn.ispmail.ntl.com with ESMTP
+          id <20060407220559.RNYL16286.aamtaout03-winn.ispmail.ntl.com@[192.168.1.100]>;
+          Fri, 7 Apr 2006 23:05:59 +0100
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: git <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18507>
 
+Stacked GIT 0.9 release is available from http://www.procode.org/stgit/
 
---=-1HlOy4emlp6JYwnjwhJi
-Content-Type: multipart/mixed; boundary="=-R3GQ5WOvgiTLpYIzzaLe"
+StGIT is a Python application providing similar functionality to Quilt
+(i.e. pushing/popping patches to/from a stack) on top of GIT. These
+operations are performed using GIT commands and the patches are stored
+as GIT commit objects, allowing easy merging of the StGIT patches into
+other repositories using standard GIT functionality.
 
+The main features in this release:
 
---=-R3GQ5WOvgiTLpYIzzaLe
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+  # Faster three-way merge by using 'git-read-tree --aggressive' and
+    dealing with conflicts internally (gitmergeonefile.py removed)
+  # StGIT repositories are now 'git prune'-safe
+  # 'show' command for displaying a given patch
+  # 'uncommit' command for reversing the effects of 'commit'
+  # '--series' option added to the 'import' command
+  # '--merged' option added to the 'push' and 'pull' commands to check
+    for patches merged upstream
+  # '--undo' option added to 'refresh'
+  # Patch refreshing can be done for individual files only
+  # '--stdout' option added to 'export'
+  # '--mbox' option added to 'mail'
+  # 'smtpdelay' configuration option for delays between messages sendin=
+g
+  # $PAGER or the 'pager' configuration option used for the 'show' and
+    'diff' commands
+  # '--force' option removed from the 'new' command
+  # Bug fixes
 
-The paths for python and tk are not /usr/bin for FreeBSD, so I moved
-gitk to gitk.tk and added a rule to sed in the proper path to "wish" in
-making gitk, and also added the appropriate default path for python.
+Acknowledgements (generated with 'git shortlog'):
 
---=20
-Eric Anholt                     anholt@FreeBSD.org
-eric@anholt.net                 eric.anholt@intel.com
+Catalin Marinas:
+      Fix the clone command failure
+      Fix the 'status --reset' for individual files
+      Remove the --force option for new
+      Allow patch refreshing for some files only
+      Use the GIT-specific environment as default
+      Check whether the file exists in the fold command
+      Add prune-safety to StGIT
+      Allow tag objects to be passed on the command line
+      Add --stdout option to export
+      Add --mbox option to the 'mail' command
+      Fix the e-mail address escaping
+      Fix the reset command to set HEAD to a proper id
+      Allow stg to be loaded in pydb and not run main()
+      Print a shorter usage message with the --help option
+      Add a merged upstream test for pull and push
+      Add --series to import
+      Cache the base_dir value for subsequent calls
+      Pass the --aggressive flag to git-read-tree
+      gitmergeonefile.py should use git.get_base_dir()
+      Deal with merge conflicts directly
+      Add the --patch option to export
+      Add the --strip option to import
+      Fix the patch name stripping in import
+      Update the TODO file
+      The gitmergeonefile config section is deprecated
+      Add the "smtpdelay" config option
+      Create stgit/basedir.py for determining the .git directory
+      Remove the checking for the default configuration values
+      Add extra headers to the e-mail messages
+      Add the '--undo' option to 'refresh'
+      Add a 'show' command
+      Remove the basedir exception throwing
+      Use a pager for diff and show commands
+      Use 'git-*' instead of 'git *'
+      Release 0.9
 
---=-R3GQ5WOvgiTLpYIzzaLe
-Content-Disposition: attachment; filename=git-freebsd.diff
-Content-Type: text/x-patch; name=git-freebsd.diff; charset=us-ascii
-Content-Transfer-Encoding: base64
+Chuck Lever:
+      "stg pull" says "popping all patches" even when it doesn't
+      Use a separate directory for patches under each branch subdir
+      Add an option to "stg branch" to convert the internal format
 
-ZGlmZiAtLWdpdCBhLy5naXRpZ25vcmUgYi8uZ2l0aWdub3JlDQppbmRleCBiNTk1OWQ2Li5lOWQ1
-YTdiIDEwMDY0NA0KLS0tIGEvLmdpdGlnbm9yZQ0KKysrIGIvLmdpdGlnbm9yZQ0KQEAgLTEyMSw2
-ICsxMjEsNyBAQCBnaXQtdmVyaWZ5LXRhZw0KIGdpdC13aGF0Y2hhbmdlZA0KIGdpdC13cml0ZS10
-cmVlDQogZ2l0LWNvcmUtKi8/Kg0KK2dpdGsNCiB0ZXN0LWRhdGUNCiB0ZXN0LWRlbHRhDQogY29t
-bW9uLWNtZHMuaA0KZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUNCmluZGV4IDMzNjdi
-OGMuLmRlMjhkZWMgMTAwNjQ0DQotLS0gYS9NYWtlZmlsZQ0KKysrIGIvTWFrZWZpbGUNCkBAIC0x
-MzYsNiArMTM2LDkgQEAgU0NSSVBUX1BFUkwgPSBcDQogU0NSSVBUX1BZVEhPTiA9IFwNCiAJZ2l0
-LW1lcmdlLXJlY3Vyc2l2ZS5weQ0KIA0KK1NDUklQVF9USyA9IFwNCisJZ2l0ay50aw0KKw0KIFND
-UklQVFMgPSAkKHBhdHN1YnN0ICUuc2gsJSwkKFNDUklQVF9TSCkpIFwNCiAJICAkKHBhdHN1YnN0
-ICUucGVybCwlLCQoU0NSSVBUX1BFUkwpKSBcDQogCSAgJChwYXRzdWJzdCAlLnB5LCUsJChTQ1JJ
-UFRfUFlUSE9OKSkgXA0KQEAgLTE3NCw2ICsxNzcsMTUgQEAgIyBCYWNrd2FyZCBjb21wYXRpYmls
-aXR5IC0tIHRvIGJlIHJlbW92ZQ0KIFBST0dSQU1TICs9IGdpdC1zc2gtcHVsbCRYIGdpdC1zc2gt
-cHVzaCRYDQogDQogIyBTZXQgcGF0aHMgdG8gdG9vbHMgZWFybHkgc28gdGhhdCB0aGV5IGNhbiBi
-ZSB1c2VkIGZvciB2ZXJzaW9uIHRlc3RzLg0KK2lmZXEgKCQodW5hbWVfUyksRnJlZUJTRCkNCisJ
-aWZuZGVmIFBZVEhPTl9QQVRIDQorCQlQWVRIT05fUEFUSCA9IC91c3IvbG9jYWwvYmluL3B5dGhv
-bg0KKwllbmRpZg0KKwlpZm5kZWYgV0lTSF9QQVRIDQorCQlXSVNIX1BBVEggPSAvdXNyL2xvY2Fs
-L2Jpbi93aXNoOC40DQorCWVuZGlmCQ0KK2VuZGlmDQorDQogaWZuZGVmIFNIRUxMX1BBVEgNCiAJ
-U0hFTExfUEFUSCA9IC9iaW4vc2gNCiBlbmRpZg0KQEAgLTE4Myw2ICsxOTUsOSBAQCBlbmRpZg0K
-IGlmbmRlZiBQWVRIT05fUEFUSA0KIAlQWVRIT05fUEFUSCA9IC91c3IvYmluL3B5dGhvbg0KIGVu
-ZGlmDQoraWZuZGVmIFdJU0hfUEFUSA0KKwlXSVNIX1BBVEggPSB3aXNoDQorZW5kaWYNCiANCiBQ
-WU1PRFVMRVMgPSBcDQogCWdpdE1lcmdlQ29tbW9uLnB5DQpAQCAtNDg0LDYgKzQ5OSwxMiBAQCBj
-b21tb24tY21kcy5oOiBEb2N1bWVudGF0aW9uL2dpdC0qLnR4dA0KIAkgICAgLWUgJ3N8QEBHSVRf
-UFlUSE9OX1BBVEhAQHwkKEdJVF9QWVRIT05fRElSX1NRKXxnJyBcDQogCSAgICAtZSAncy9AQEdJ
-VF9WRVJTSU9OQEAvJChHSVRfVkVSU0lPTikvZycgXA0KIAkgICAgJEAucHkgPiRADQorCWNobW9k
-ICt4ICRADQorDQorJChwYXRzdWJzdCAlLnRrLCUsJChTQ1JJUFRfVEspKSA6ICUgOiAlLnRrDQor
-CXJtIC1mICRADQorCXNlZCAtZSAic3xleGVjIHdpc2h8ZXhlYyAkKFdJU0hfUEFUSCl8IiBcDQor
-CSAgICAkQC50ayA+JEANCiAJY2htb2QgK3ggJEANCiANCiBnaXQtY2hlcnJ5LXBpY2s6IGdpdC1y
-ZXZlcnQNCmRpZmYgLS1naXQgYS9naXRrIGIvZ2l0ay50aw0Kc2ltaWxhcml0eSBpbmRleCAxMDAl
-DQpyZW5hbWUgZnJvbSBnaXRrDQpyZW5hbWUgdG8gZ2l0ay50aw0K
+Karl Hasselstr=F6m:
+      [PATCH 2/2] Add 'stg uncommit' command
+      Use --refid option even when sending a cover mail
+      Change the signature start string to "-- \n"
+      Update .git/refs/heads/base after patch deletion
 
+Kirill Smelkov:
+      [trivial]  fix spelling typos
 
---=-R3GQ5WOvgiTLpYIzzaLe--
+Paolo 'Blaisorblade' Giarrusso:
+      Stgit - gitmergeonefile.py: handle removal vs. changes
+      Pass --directory to git-ls-files for stg status
 
---=-1HlOy4emlp6JYwnjwhJi
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+Pavel Roskin:
+      stgit: typo fixes
+      Make tutorial a valid asciidoc article.
+      stg export: check if there are any patches to export
+      Treat "stg --help cmd" and "stg help cmd" like "stg cmd
+      Improve "stg uncommit" help text.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (FreeBSD)
+Sam Vilain:
+      common: parse 'email (name)' correctly
 
-iD8DBQBENtO3HUdvYGzw6vcRAmpvAJ9RmZRjwDDCf1tHap7L+BEUZyHBWQCfeBbO
-yKq30L/D7csWUnuBd3EZaoQ=
-=SoU+
------END PGP SIGNATURE-----
-
---=-1HlOy4emlp6JYwnjwhJi--
+--
+Catalin
