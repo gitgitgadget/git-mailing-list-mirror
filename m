@@ -1,95 +1,83 @@
-From: Peter Baumann <peter.baumann@gmail.com>
-Subject: Can't export whole repo as patches
-Date: Fri, 7 Apr 2006 20:47:01 +0200
-Message-ID: <20060407184701.GA6686@xp.machine.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cygwin can't handle huge packfiles?
+Date: Fri, 07 Apr 2006 14:46:55 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0604071446010.2215@localhost.localdomain>
+References: <fa0b6e200604030246q21fccb9ar93004ac67d8b28b3@mail.gmail.com>
+ <Pine.LNX.4.63.0604031521170.4011@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604030730040.3781@g5.osdl.org>
+ <Pine.LNX.4.64.0604030734440.3781@g5.osdl.org>
+ <7vhd55ls24.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604071002530.2215@localhost.localdomain>
+ <7vhd55jkz0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 07 20:46:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 07 20:47:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FRvyY-0000oj-6d
-	for gcvg-git@gmane.org; Fri, 07 Apr 2006 20:46:30 +0200
+	id 1FRvz4-0000th-AB
+	for gcvg-git@gmane.org; Fri, 07 Apr 2006 20:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964861AbWDGSq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Apr 2006 14:46:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964863AbWDGSq1
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 14:46:27 -0400
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:35972 "HELO
-	mail.hofmann.stw.uni-erlangen.de") by vger.kernel.org with SMTP
-	id S964861AbWDGSq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Apr 2006 14:46:27 -0400
-Received: (qmail 1096 invoked by uid 0); 7 Apr 2006 18:46:22 -0000
-Received: from oed48.o.pppool.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@89.51.237.72)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 7 Apr 2006 18:46:22 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S964863AbWDGSq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Apr 2006 14:46:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964865AbWDGSq7
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 14:46:59 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:60087 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S964863AbWDGSq7
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 7 Apr 2006 14:46:59 -0400
+Received: from xanadu.home ([74.56.105.38]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IXD00MMA867A690@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 07 Apr 2006 14:46:56 -0400 (EDT)
+In-reply-to: <7vhd55jkz0.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18502>
 
-I'd like to export the whole history of a project of mine via patches
-but I can't get the inital commit.
+On Fri, 7 Apr 2006, Junio C Hamano wrote:
 
-How can I get the inital commit as a patch?
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > On Fri, 7 Apr 2006, Junio C Hamano wrote:
+> >
+> >> Linus Torvalds <torvalds@osdl.org> writes:
+> >> 
+> >> > On Mon, 3 Apr 2006, Linus Torvalds wrote:
+> >> >> 
+> >> >> That said, I think git _does_ have problems with large pack-files. We have 
+> >> >> some 32-bit issues etc
+> >> >
+> >> > I should clarify that. git _itself_ shouldn't have any 32-bit issues, but 
+> >> > the packfile data structure does. The index has 32-bit offsets into 
+> >> > individual pack-files. 
+> >> >
+> >> > That's not hugely fundamental,...
+> >> 
+> >> Linus _does_ understand what he means, but let me clarify and
+> >> outline a possible future direction.
+> >
+> > For the record, the delta code also has 32-bit limitations of its own 
+> > presently.  It cannot encode a delta against a buffer which is larger 
+> > than 4GB.
+> >
+> > I however made sure the byte 0 could be used as a prefix for future 
+> > encoding extensions, like 64-bit file offsets for example.
+> 
+> True the delta data representation, not just the "delta code",
+> has that limitation, but I do not think you issue "insert 0-byte
+> literal data" command from the deltifier side right now, so we
+> should be OK.
+> 
+> Maybe we would want to check (cmd == 0) case to detect delta
+> extension that we do not handle right now?
 
-That's what I tried:
-
-  git --version
-  git version 1.2.4				# debian sarge
-
-  mkdir /tmp/testrepo && cd /tmp/testrepo
-  git-init-db
-  echo a > a_file.txt
-  git-add a_file.txt
-  git-commit -a -m "a_file added"
-  echo b >> a_file.txt
-  git-commit -a -m "a_file modifed"
-  xp:/tmp/testrepo git-format-patch master~1
-  0001-a_file-modified.txt
-  cat 0001-a_file-modified.txt
-  From nobody Mon Sep 17 00:00:00 2001
-  From: Peter Baumann <peter.baumann@gmail.com>
-  Date: Fri Apr 7 12:20:54 2006 +0200
-  Subject: [PATCH] a_file modified
-
-  ---
-
-   a_file.txt |    1 +
-   1 files changed, 1 insertions(+), 0 deletions(-)
-
-  d8ceeed82a29004c066a98e0d390818e65fa9da7
-  diff --git a/a_file.txt b/a_file.txt
-  index 7898192..422c2b7 100644
-  --- a/a_file.txt
-  +++ b/a_file.txt
-  @@ -1 +1,2 @@
-   a
-  +b
-  --
-  1.2.4
+Good idea.  Will send you a patch.
 
 
-As you can see, there is only a patch of the second commit. But it seems that
-this behaviour is correct, because I asked for the diff between master^..master
-
-Obviously, I wanted a way to get the diff of master~2..master.
-
-Trying harder:
-
-  git-format-patch master~2
-  Not a valid rev master~2 (master~2..HEAD)
-
-Any hint to the correct way is appreciated.
-
-</me thinking loudly>
-The best would be if git would have an implicit tag or branch called "init"
-(name doesn't really matter) which is the root of an empty repository. In that case
-one can do git-format-patch root..master and it would the right thing.
-
-Greetings,
-  Peter Baumann
+Nicolas
