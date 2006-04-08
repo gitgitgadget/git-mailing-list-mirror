@@ -1,60 +1,68 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: How to create independent branches
-Date: Sat, 08 Apr 2006 13:49:04 -0700
-Message-ID: <7vsloneqtb.fsf@assigned-by-dhcp.cox.net>
-References: <20060407184701.GA6686@xp.machine.de>
-	<7vr749i48s.fsf@assigned-by-dhcp.cox.net>
-	<20060408180244.GA4807@xp.machine.de>
+Subject: Re: strange behavior when pulling updates / get uptodate with git.git
+Date: Sat, 08 Apr 2006 13:55:28 -0700
+Message-ID: <7vmzeveqin.fsf@assigned-by-dhcp.cox.net>
+References: <4438158C.1080208@iaglans.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 22:49:31 2006
+X-From: git-owner@vger.kernel.org Sat Apr 08 22:55:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSKMy-0002Mj-FV
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 22:49:20 +0200
+	id 1FSKT3-00035y-A1
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 22:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbWDHUtH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 16:49:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbWDHUtH
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 16:49:07 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:30636 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751426AbWDHUtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 16:49:06 -0400
+	id S1751428AbWDHUza (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 16:55:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751429AbWDHUza
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 16:55:30 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:10921 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751428AbWDHUz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Apr 2006 16:55:29 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060408204906.GMMD20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 8 Apr 2006 16:49:06 -0400
-To: Peter Baumann <peter.baumann@gmail.com>
-In-Reply-To: <20060408180244.GA4807@xp.machine.de> (Peter Baumann's message of
-	"Sat, 8 Apr 2006 20:02:44 +0200")
+          id <20060408205529.SMSG17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Apr 2006 16:55:29 -0400
+To: Nicolas Vilz 'niv' <niv@iaglans.de>
+In-Reply-To: <4438158C.1080208@iaglans.de> (Nicolas Vilz's message of "Sat, 08
+	Apr 2006 21:57:00 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18529>
 
-Peter Baumann <peter.baumann@gmail.com> writes:
+Nicolas Vilz 'niv' <niv@iaglans.de> writes:
 
-> Another question. I'd like to create a totaly independent branch (like
-> the "todo" branch in git). Is there a more user friendly way than doing
+> URL: git://git.kernel.org/pub/scm/git/git.git
+> Pull: refs/heads/master:refs/heads/origin
+> Pull: refs/heads/todo:refs/heads/todo
+> Pull: refs/heads/maint:refs/heads/maint
+> Pull: refs/heads/pu:refs/heads/pu
+> Pull: refs/heads/man:refs/heads/man
+> Pull: refs/heads/next:refs/heads/next
+> Pull: refs/heads/html:refs/heads/html
 >
-> git-checkout -b todo
-> rm .git/refs/heads/todo
-> rm .git/index
-> rm <all_files_in_your_workdir>
+> so i suppose, if i try to pull origin, and i am in master, i should be
+> able to pull these remote heads each in the correct local head...
 >
-> ... hack hack hack ...
-> git-commit -a
->
-> I looked all over the docs, but can't find anything obvious.
+> But I obviously don't.
 
-My "todo" branch is not even part of my main git repository.  I
-just have two independent repositories (git and todo) locally,
-and push into the same public repository.
+Most likely it is aborted by the "pu" branch not
+fast-forwarding.
 
-        
+	Pull: +refs/heads/pu:refs/heads/pu
+
+or dropping "pu" altogether if you are not interested in it,
+would help.  My repositories (the ones I fetch/pull from for
+testing) have only these:
+
+        URL: git://git.kernel.org/pub/scm/git/git.git
+        Pull: refs/heads/master:refs/heads/origin
+        Pull: refs/heads/next:refs/heads/next
+        Pull: +refs/heads/pu:refs/heads/pu
+        Pull: refs/heads/maint:refs/heads/maint
