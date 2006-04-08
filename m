@@ -1,82 +1,55 @@
-From: Nicholas Miell <nmiell@comcast.net>
-Subject: Re: [PATCH] Script for automated historical Git tree grafting
-Date: Sat, 08 Apr 2006 13:04:12 -0700
-Message-ID: <1144526652.2337.5.camel@entropy>
-References: <20060407004728.GA16588@pasky.or.cz>
-	 <20060406175246.3bd1c972.akpm@osdl.org>
-	 <20060408030936.GN27631@pasky.or.cz>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: [PATCH] Fix test for command line syntax.
+Date: Sat, 8 Apr 2006 22:24:50 +0200
+Message-ID: <20060408202450.GA5548@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Morton <akpm@osdl.org>, torvalds@osdl.org,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 22:04:29 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Apr 08 22:25:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSJfP-0005bO-MX
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 22:04:20 +0200
+	id 1FSJzU-0008HC-Vb
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 22:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbWDHUEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 16:04:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWDHUEQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 16:04:16 -0400
-Received: from rwcrmhc11.comcast.net ([216.148.227.151]:56266 "EHLO
-	rwcrmhc11.comcast.net") by vger.kernel.org with ESMTP
-	id S1751416AbWDHUEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 16:04:15 -0400
-Received: from [192.168.1.10] (c-67-171-1-120.hsd1.wa.comcast.net[67.171.1.120])
-          by comcast.net (rwcrmhc11) with SMTP
-          id <20060408200414m11005aou5e>; Sat, 8 Apr 2006 20:04:15 +0000
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20060408030936.GN27631@pasky.or.cz>
-X-Mailer: Evolution 2.6.0 (2.6.0-1.0.njm.1) 
+	id S1751379AbWDHUY4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 16:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbWDHUYz
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 16:24:55 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:48806 "HELO bohr.gbar.dtu.dk")
+	by vger.kernel.org with SMTP id S1751379AbWDHUYz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 16:24:55 -0400
+Received: (qmail 5595 invoked by uid 5842); 8 Apr 2006 22:24:50 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18524>
-
-On Sat, 2006-04-08 at 05:09 +0200, Petr Baudis wrote:
-> Dear diary, on Fri, Apr 07, 2006 at 02:52:46AM CEST, I got a letter
-> where Andrew Morton <akpm@osdl.org> said that...
-> > Petr Baudis <pasky@suse.cz> wrote:
-> > >
-> > > This script enables Git users to easily graft the historical Git tree
-> > >  (Bitkeeper history import) to the current history.
-> > 
-> > What impact will that have on the (already rather poor) performance of
-> > git-whatchanged, gitk, etc?
-> 
-> Negative. ;-)
-> 
-> I didn't try gitk myself, but according to Nick Riviera it eats 1.6G...
-> Otherwise, assuming that you have at least git-1.2.5, git-whatchanged on
-> the whole tree should be roughly equally fast as it was before grafting,
-> but git-whatchanged on individual paths is _significantly_ slower.
-> 
-> That said, 1.3.0rc2 should already have Linus' optimization which should
-> fix or at least mitigate the performance hit on narrowed-down
-> git-whatchanged.
-
-Actually, it ate more than 1.6G -- that was just the resident size, and
-it likes to allocate more memory in between you closing the window and
-it finally exiting (or, you killing it before it OOMs the box, whichever
-comes first).
-
-qgit has absolutely no problem with the grafted full history, though,
-and those previously mentioned rev-list changes by Linus should fix
-git-whatchanged.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18525>
 
 
+Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
 
 
+---
 
+ test-delta.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-
-Unfortunately, this does nothing to fix the disturbing lack of useless
-Simpsons trivia knowledge in the git community. Keith Packard made the
-same mistake last week.
-
+3e2552fff69fb01249fed53380e24e11754afcdf
+diff --git a/test-delta.c b/test-delta.c
+index 1be8ee0..94b47f0 100644
+--- a/test-delta.c
++++ b/test-delta.c
+@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
+ 	void *from_buf, *data_buf, *out_buf;
+ 	unsigned long from_size, data_size, out_size;
+ 
+-	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
++	if (argc != 5 || (strcmp(argv[1], "-d") || strcmp(argv[1], "-p"))) {
+ 		fprintf(stderr, "Usage: %s\n", usage);
+ 		return 1;
+ 	}
 -- 
-Nicholas Miell <nmiell@comcast.net>
+1.3.0.rc1.g40e9
