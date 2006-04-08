@@ -1,64 +1,51 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: How to create independent branches
-Date: Sat, 8 Apr 2006 22:57:47 +0200
-Message-ID: <20060408205747.GT27689@pasky.or.cz>
-References: <20060407184701.GA6686@xp.machine.de> <7vr749i48s.fsf@assigned-by-dhcp.cox.net> <20060408180244.GA4807@xp.machine.de> <7vsloneqtb.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 08 Apr 2006 14:00:14 -0700
+Message-ID: <7virpjeqap.fsf@assigned-by-dhcp.cox.net>
+References: <20060407184701.GA6686@xp.machine.de>
+	<7vr749i48s.fsf@assigned-by-dhcp.cox.net>
+	<20060408180244.GA4807@xp.machine.de>
+	<7vsloneqtb.fsf@assigned-by-dhcp.cox.net>
+	<20060408205747.GT27689@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Baumann <peter.baumann@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 22:56:54 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 08 23:00:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSKUG-0003FC-SW
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 22:56:53 +0200
+	id 1FSKXe-0003dM-10
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 23:00:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbWDHU4s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 16:56:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbWDHU4s
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 16:56:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:45234 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751404AbWDHU4r (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 16:56:47 -0400
-Received: (qmail 15856 invoked by uid 2001); 8 Apr 2006 22:57:47 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vsloneqtb.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932246AbWDHVAR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 17:00:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbWDHVAR
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 17:00:17 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:41103 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932246AbWDHVAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Apr 2006 17:00:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060408210015.YEBG20875.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Apr 2006 17:00:15 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060408205747.GT27689@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 8 Apr 2006 22:57:47 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18531>
 
-Dear diary, on Sat, Apr 08, 2006 at 10:49:04PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Peter Baumann <peter.baumann@gmail.com> writes:
-> 
-> > Another question. I'd like to create a totaly independent branch (like
-> > the "todo" branch in git). Is there a more user friendly way than doing
-> >
-> > git-checkout -b todo
-> > rm .git/refs/heads/todo
-> > rm .git/index
-> > rm <all_files_in_your_workdir>
-> >
-> > ... hack hack hack ...
-> > git-commit -a
-> >
-> > I looked all over the docs, but can't find anything obvious.
-> 
-> My "todo" branch is not even part of my main git repository.  I
-> just have two independent repositories (git and todo) locally,
-> and push into the same public repository.
+Petr Baudis <pasky@suse.cz> writes:
 
-Wouldn't it be better to separate it to two distinct public repositories
-as well? It's confusing people and encouraging a practice that really
-isn't very feasible and practical in Git.
+> Wouldn't it be better to separate it to two distinct public repositories
+> as well? It's confusing people and encouraging a practice that really
+> isn't very feasible and practical in Git.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+That's mainly historical.  I haven't bothered to check it
+recently, but /pub/scm/git was not writable by me on kernel.org
+machine, only /pub/scm/git/git.git/ was.
