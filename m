@@ -1,113 +1,84 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [ANNOUNCE] qgit-1.2rc1
-Date: Sat, 8 Apr 2006 11:44:37 +0200
-Message-ID: <e5bfff550604080244y40b36292ja5cfecac28e1e749@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Funny repack behaviour
+Date: Sat, 8 Apr 2006 12:41:15 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604081233170.3283@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 11:44:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Apr 08 12:41:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FS9zy-0004o1-Aa
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 11:44:55 +0200
+	id 1FSAsu-00030I-Fp
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 12:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbWDHJoj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 05:44:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbWDHJoi
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 05:44:38 -0400
-Received: from wproxy.gmail.com ([64.233.184.227]:29456 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751411AbWDHJoi convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 05:44:38 -0400
-Received: by wproxy.gmail.com with SMTP id 36so498798wra
-        for <git@vger.kernel.org>; Sat, 08 Apr 2006 02:44:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=JYt/FEWEqsXmlIouNOmQNCYclpjIry/zipKnbWKm2hWxQs7jxZRsQsEV5J50SONhvpZKFl21ZiF/32jhpDD/vWDOyteY9ek8b9bP0L8EehyCbOtaoU4/VzC2cHuYrTt9oRR1a6LbkTvffnByuzdYDafPfhuqTh2Hy2bN0hQYiLA=
-Received: by 10.65.253.12 with SMTP id f12mr2913764qbs;
-        Sat, 08 Apr 2006 02:44:37 -0700 (PDT)
-Received: by 10.64.131.14 with HTTP; Sat, 8 Apr 2006 02:44:37 -0700 (PDT)
+	id S964800AbWDHKlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 06:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbWDHKlU
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 06:41:20 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:28067 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964800AbWDHKlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Apr 2006 06:41:19 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 97B4ACC7
+	for <git@vger.kernel.org>; Sat,  8 Apr 2006 12:41:15 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 8BD51CC2
+	for <git@vger.kernel.org>; Sat,  8 Apr 2006 12:41:15 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 766A0B9F
+	for <git@vger.kernel.org>; Sat,  8 Apr 2006 12:41:15 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org
-Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18514>
 
-qgit is a very fast git GUI viewer with a lot of features .
+Hi,
 
-The biggest new feature this time is *code range filtering*
+I just accidentally reran "git-repack -a -d" on a repository, where I just 
+had run it. And I noticed a funny thing: Of about 4000 objects, it reused 
+all but 8. So I reran it, and it reused all but 2. I ran it once again, 
+and it reused all.
 
-Select a file and  open the file/annotation viewer, then wait for
-annotation finished and then select a history revision just to be sure
-annotation info is displayed.
+The really funny thing is: it created the same pack every time!
 
-You will see the new 'filter' button (in annotation window tool
-bar, not in main view tool bar) enabled. Press it and the file history
-will be shrinked to show only revisions that modified the selected lines.
+It is not critical, evidently, but I'd like to know what is causing this 
+rather undeterministic behaviour. (Before you ask: no, I did not make a 
+backup before running the tests, so I unfortunately cannot reproduce it).
 
-Selected code region is also highlighted for better browsing.
-Filter button is a toggle button, so just press again it to release the filter.
+Ciao,
+Dscho
 
-NOTE NOTE: Range filtering it's  _slippery_   code, there are a lot of
-subtle details involved, so may be something it's still missing/bogous,
-qgit-1.2rc1 it's here to let properly test before final release.
+P.S.: This is the output:
 
-
-DOWNLOAD
-
-Tarball is at
-http://prdownloads.sourceforge.net/qgit/qgit-1.2rc1.tar.bz2?download
-
-Git archive is at
-http://digilander.libero.it/mcostalba/scm/qgit.git
-
-See http://digilander.libero.it/mcostalba/  for detailed download information.
-
-
-INSTALLATION
-
-To install from tarball use:
-
-./configure
-make
-make install-strip
-
-To install from git archive:
-
-autoreconf -i
-./configure
-make
-make install-strip
-
-Or check the shipped README for detailed information.
-
-CHANGELOG
-
- - add support for code range filtering
-
-- much improved graph for partial repos views. Use new --boundary
-git-rev-list option
-
-- pressing ESC in startup dialog make application to quit
-
-- add support for quick open of latest visited repositories
-
-- add support for launching an external diff viewer
-
-- speed-up git commands execution using usleep() in external program launcher
-
-- highlight filter matches in revision logs
-
-- add git version compatibility check
-
-- fix duplicated unapplied patches in StGIT when qgit is called with
---all option
-
-- fix run from subdirectory regression
-
-
-             Marco
+$ git-repack -a -d
+Generating pack...
+Done counting 4259 objects.
+Deltifying 4259 objects.
+ 100% (4259/4259) done
+Writing 4259 objects.
+ 100% (4259/4259) done
+Total 4259, written 4259 (delta 3391), reused 4241 (delta 3379)
+Pack pack-66bd976bbdc2ac6da623b8af02037218ecd72ef0 created.
+$ git-repack -a -d
+Generating pack...
+Done counting 4259 objects.
+Deltifying 4259 objects.
+ 100% (4259/4259) done
+Writing 4259 objects.
+ 100% (4259/4259) done
+Total 4259, written 4259 (delta 3393), reused 4257 (delta 3391)
+Pack pack-66bd976bbdc2ac6da623b8af02037218ecd72ef0 created.
+$ git-repack -a -d
+Generating pack...
+Done counting 4259 objects.
+Deltifying 4259 objects.
+ 100% (4259/4259) done
+Writing 4259 objects.
+ 100% (4259/4259) done
+Total 4259, written 4259 (delta 3393), reused 4259 (delta 3393)
+Pack pack-66bd976bbdc2ac6da623b8af02037218ecd72ef0 created.
