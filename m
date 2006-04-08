@@ -1,68 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Funny repack behaviour
-Date: Sun, 9 Apr 2006 00:11:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604090010120.9176@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0604081233170.3283@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604081528070.2215@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: colin@horizon.com
+Subject: Re: How to create independent branches
+Date: 8 Apr 2006 19:15:20 -0400
+Message-ID: <20060408231520.27044.qmail@science.horizon.com>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 09 00:11:46 2006
+X-From: git-owner@vger.kernel.org Sun Apr 09 01:15:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSLee-00033C-C0
-	for gcvg-git@gmane.org; Sun, 09 Apr 2006 00:11:40 +0200
+	id 1FSMeW-0001VG-NT
+	for gcvg-git@gmane.org; Sun, 09 Apr 2006 01:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbWDHWLh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 18:11:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWDHWLh
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 18:11:37 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:10463 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751439AbWDHWLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 18:11:37 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id C9A12C94;
-	Sun,  9 Apr 2006 00:11:35 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id BE010C89;
-	Sun,  9 Apr 2006 00:11:35 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 9F28BC64;
-	Sun,  9 Apr 2006 00:11:35 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0604081528070.2215@localhost.localdomain>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S965045AbWDHXPV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 19:15:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965048AbWDHXPV
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 19:15:21 -0400
+Received: from science.horizon.com ([192.35.100.1]:23596 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S965045AbWDHXPV
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 19:15:21 -0400
+Received: (qmail 27045 invoked by uid 1000); 8 Apr 2006 19:15:20 -0400
+To: peter.baumann@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18535>
 
-Hi,
+  669  git-symbolic-ref HEAD refs/heads/slave
+  670  echo "ref: refs/heads/master" > .git/HEAD
+  671  git-symbolic-ref HEAD refs/heads/slave
+  672  git add bar
 
-On Sat, 8 Apr 2006, Nicolas Pitre wrote:
-
-> On Sat, 8 Apr 2006, Johannes Schindelin wrote:
+> Another question. I'd like to create a totaly independent branch (like
+> the "todo" branch in git). Is there a more user friendly way than doing
 > 
-> > Hi,
-> > 
-> > I just accidentally reran "git-repack -a -d" on a repository, where I just 
-> > had run it. And I noticed a funny thing: Of about 4000 objects, it reused 
-> > all but 8. So I reran it, and it reused all but 2. I ran it once again, 
-> > and it reused all.
-> > 
-> > The really funny thing is: it created the same pack every time!
+> git-checkout -b todo
+> rm .git/refs/heads/todo
+> rm .git/index
+> rm <all_files_in_your_workdir>
 > 
-> Probably not.  Subsequent packs were most probably even smaller !
+> ... hack hack hack ...
+> git-commit -a
+> 
+> I looked all over the docs, but can't find anything obvious.
 
-Oh, you're right. I was tricked by the identical pack-names. Somehow I 
-forgot that the pack name just reflects a hash of the _unpacked_ objects, 
-not the pack file itself.
+If I undertstand, you basically want to create a second
+initial commit, so you have two trees in your repository.
 
-Sorry for the noise.
+Well, an initial commit is just a commit object with no parents.
 
-Ciao,
-Dscho
+Try:
+- Set up the workdir the way you want.  You have to git-add
+  any newly added files, but git-update-index (called by
+  git-commit -a) will remove from the index any files
+  removed from the working directory, so you don't have to
+  worry about those.
+- Make sure refs/heads/todo doesn't exist
+- "git-symbolic-ref HEAD refs/heads/todo"
+  This makes HEAD a symlink (well, symref) to refs/heads/todo,
+  which doesn't exist.
+- git-commit -a
+  Since the HEAD link doesn't exist, this does an initial
+  commit.
+
+It's not supremely user friendly, because multiple initial commits can
+lead to problems down the road trying to merge, so you'd better know what
+you're doing.
+
+Another option is to just set up a second working directory, with a
+shared object store, and do the checkin from there.  You can have the
+.git/refs directories shared (via a symlink) or not.  If they're not
+shared, you can later make them shared by copying over the relevant refs.
+
+
+Oh, yes, note that if you fat-finger the "git-symbolic-ref HEAD" command,
+any attempts to fix it will complain "not a git repository".
+That's because a reference to refs/heads/ in HEAD is how git
+identifies a repository.  "echo ref: refs/heads/master > .git/HEAD"
+will fix it.
