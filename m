@@ -1,57 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.2.6
-Date: Fri, 07 Apr 2006 17:56:27 -0700
-Message-ID: <7vek08j35w.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] Cogito-0.17.2
+Date: Sat, 8 Apr 2006 03:06:26 +0200
+Message-ID: <20060408010626.GR27689@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 02:56:52 2006
+X-From: git-owner@vger.kernel.org Sat Apr 08 03:05:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FS1kx-00080n-IO
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 02:56:52 +0200
+	id 1FS1tU-0000VD-3D
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 03:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbWDHA4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Apr 2006 20:56:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbWDHA43
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 20:56:29 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:202 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751379AbWDHA43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Apr 2006 20:56:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060408005628.WCKO20441.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 7 Apr 2006 20:56:28 -0400
+	id S1751383AbWDHBFh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Apr 2006 21:05:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWDHBFh
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Apr 2006 21:05:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:18388 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751383AbWDHBFg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Apr 2006 21:05:36 -0400
+Received: (qmail 26058 invoked by uid 2001); 8 Apr 2006 03:06:26 +0200
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18509>
 
-The latest maintenance release GIT 1.2.6 is available at the
-usual places:
+  Hello,
 
-	http://www.kernel.org/pub/software/scm/git/
+  to join the series of git-related announcements, Cogito-0.17.2, the next
+maintenance release on the current stable (v0.17) branch of Cogito, the
+human-friendly version control system on top of Git, is available now.
 
-	git-1.2.6.tar.{gz,bz2}			(tarball)
-	RPMS/$arch/git-*-1.2.6-1.$arch.rpm	(RPM)
+  There are only very few changes, it looks that we are pretty stable:
 
-These fixes are my birthday present to git ;-).  I'll also do
-the 1.3.0-rc3 tonight.
+Chris Wright:
+      cogito spec BuildRequires update
 
-----------------------------------------------------------------
+Dennis Stosberg:
+      cogito: Push tags over http
 
-Changes since v1.2.5 are as follows:
+Petr Baudis:
+      Improved cg-version output (use cg-object-id -d)
+      cg-patch -c: Stop also at ^diff --git when slurping the commit message
+      Fixed embarassing cg-admin-rewritehist bug
+      Make cg-add/rm warnings less confusing: s/files/items/
+      cogito-0.17.2
 
-Junio C Hamano:
-      parse_date(): fix parsing 03/10/2006
-      diff_flush(): leakfix.
-      count-delta: match get_delta_hdr_size() changes.
 
-Nicolas Pitre:
-      check patch_delta bounds more carefully
+P.S.: Visit us at #git @ FreeNode!
+
+  Happy hacking,
+
+-- 
+				Petr "Stable Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
