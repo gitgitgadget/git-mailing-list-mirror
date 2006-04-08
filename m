@@ -1,89 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Funny repack behaviour
-Date: Sat, 08 Apr 2006 15:44:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0604081528070.2215@localhost.localdomain>
-References: <Pine.LNX.4.63.0604081233170.3283@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Nicolas Vilz 'niv' <niv@iaglans.de>
+Subject: strange behavior when pulling updates / get uptodate with git.git
+Date: Sat, 08 Apr 2006 21:57:00 +0200
+Message-ID: <4438158C.1080208@iaglans.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 21:45:34 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Apr 08 22:00:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSJND-0002tq-N2
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 21:45:32 +0200
+	id 1FSJbQ-00054Z-Gq
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 22:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbWDHToe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 15:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbWDHToe
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 15:44:34 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:50423 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751416AbWDHToe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 15:44:34 -0400
-Received: from xanadu.home ([74.56.105.38]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IXF00K9H5I70WK0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 08 Apr 2006 15:44:31 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.63.0604081233170.3283@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@localhost.localdomain
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1751382AbWDHUAE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 16:00:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbWDHUAE
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 16:00:04 -0400
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:5131 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S1751382AbWDHUAC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Apr 2006 16:00:02 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 7C7B23E9C
+	for <git@vger.kernel.org>; Sat,  8 Apr 2006 22:00:00 +0200 (CEST)
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 11609-03 for <git@vger.kernel.org>;
+	Sat, 8 Apr 2006 21:59:56 +0200 (CEST)
+Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 6F3A83E71
+	for <git@vger.kernel.org>; Sat,  8 Apr 2006 21:59:55 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
+X-Accept-Language: en-us, en
+To: git <git@vger.kernel.org>
+X-Enigmail-Version: 0.92.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18523>
 
-On Sat, 8 Apr 2006, Johannes Schindelin wrote:
+Hello guys,
 
-> Hi,
-> 
-> I just accidentally reran "git-repack -a -d" on a repository, where I just 
-> had run it. And I noticed a funny thing: Of about 4000 objects, it reused 
-> all but 8. So I reran it, and it reused all but 2. I ran it once again, 
-> and it reused all.
-> 
-> The really funny thing is: it created the same pack every time!
+I experience a loss of tags- and branch-updates, when I try to update my
+repository.
 
-Probably not.  Subsequent packs were most probably even smaller !
+I normaly do following
 
-> It is not critical, evidently, but I'd like to know what is causing this 
-> rather undeterministic behaviour. (Before you ask: no, I did not make a 
-> backup before running the tests, so I unfortunately cannot reproduce it).
+git checkout master
+git pull origin
 
-To reproduce, or rather to reset the pack state, just use
-"git-repack -a -f -d" then  "git-repack -a -d" multiple times again.
+my .git/remotes/origin-file looks like this:
 
-For example, on the current git archive:
+URL: git://git.kernel.org/pub/scm/git/git.git
+Pull: refs/heads/master:refs/heads/origin
+Pull: refs/heads/todo:refs/heads/todo
+Pull: refs/heads/maint:refs/heads/maint
+Pull: refs/heads/pu:refs/heads/pu
+Pull: refs/heads/man:refs/heads/man
+Pull: refs/heads/next:refs/heads/next
+Pull: refs/heads/html:refs/heads/html
 
-$ git-repack -a -f -d
-[...]
-Total 16548, written 16548 (delta 11007), reused 5390 (delta 0)
-Pack pack-af9d39abfcb5fd6fd554f7fc8d1704f8dd2329e0 created.
+so i suppose, if i try to pull origin, and i am in master, i should be
+able to pull these remote heads each in the correct local head...
 
-pack size = 6032083 bytes.
+But I obviously don't.
 
-$ git-repack -a -d
-[...]
-Total 16548, written 16548 (delta 11030), reused 16525 (delta 11007)
-Pack pack-af9d39abfcb5fd6fd554f7fc8d1704f8dd2329e0 created.
+after deleting the actual git-repository directory and recloning with
 
-pack size = 5976610 bytes
+git clone <url>
 
-$ git-repack -a -d
-[...]
-Total 16548, written 16548 (delta 11030), reused 16548 (delta 11030)
-Pack pack-af9d39abfcb5fd6fd554f7fc8d1704f8dd2329e0 created.
+I have obviously more tags than git was trying to merge before at git
+pull origin..
 
-Pack size =  5976610 bytes
+I use git version 1.3.0.rc1.g4c0f (located in the next-tree).
 
-So in this case it took 2 itterations before converging on a smaller 
-pack by 55473 bytes.
+Any hints how this could be better on my system?
 
-I thought the reuse logic might sacrifice a bit on compression given the 
-speed boost, but I don't get why it is the opposite in practice and that 
--f doesn't produce the smallest pack up front.
-
-
+Sincerly
 Nicolas
