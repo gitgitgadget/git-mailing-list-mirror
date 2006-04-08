@@ -1,84 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Funny repack behaviour
-Date: Sat, 8 Apr 2006 12:41:15 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604081233170.3283@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [ANNOUNCE] qgit-1.2rc1
+Date: Sat, 8 Apr 2006 13:07:09 +0200
+Message-ID: <e5bfff550604080407g7606d515qec566f83e0e2d7cb@mail.gmail.com>
+References: <e5bfff550604080244y40b36292ja5cfecac28e1e749@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Apr 08 12:41:41 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 08 13:07:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSAsu-00030I-Fp
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 12:41:40 +0200
+	id 1FSBHm-000688-32
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 13:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbWDHKlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 06:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbWDHKlU
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 06:41:20 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:28067 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964800AbWDHKlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 06:41:19 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 97B4ACC7
-	for <git@vger.kernel.org>; Sat,  8 Apr 2006 12:41:15 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 8BD51CC2
-	for <git@vger.kernel.org>; Sat,  8 Apr 2006 12:41:15 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 766A0B9F
-	for <git@vger.kernel.org>; Sat,  8 Apr 2006 12:41:15 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S964861AbWDHLHL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 07:07:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964892AbWDHLHL
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 07:07:11 -0400
+Received: from wproxy.gmail.com ([64.233.184.225]:18494 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964861AbWDHLHK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 07:07:10 -0400
+Received: by wproxy.gmail.com with SMTP id i11so474415wra
+        for <git@vger.kernel.org>; Sat, 08 Apr 2006 04:07:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FYI+lEFxO+LtKziiVINsyOY8b7Fw8/XAdFuC6bRGerGYh9mWZNanlie3vr2ntddghckzOt3fv3iLiophg35kAp505BWBiBac/T49EGwE6Pk2hWFHJEayzQaLfTcoz4Th2LM3KGUtuslG5Hie2i5fN+IvOv1EAAnaGCkBe6myOI4=
+Received: by 10.65.43.10 with SMTP id v10mr25538qbj;
+        Sat, 08 Apr 2006 04:07:09 -0700 (PDT)
+Received: by 10.64.131.14 with HTTP; Sat, 8 Apr 2006 04:07:09 -0700 (PDT)
 To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+In-Reply-To: <e5bfff550604080244y40b36292ja5cfecac28e1e749@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18515>
 
-Hi,
+On 4/8/06, Marco Costalba <mcostalba@gmail.com> wrote:
+> qgit is a very fast git GUI viewer with a lot of features .
+>
+> The biggest new feature this time is *code range filtering*
+>
 
-I just accidentally reran "git-repack -a -d" on a repository, where I just 
-had run it. And I noticed a funny thing: Of about 4000 objects, it reused 
-all but 8. So I reran it, and it reused all but 2. I ran it once again, 
-and it reused all.
+Before hitting the warning pop-up about git version compatibility at
+qgit launch,please note that a git with --boundary option support
+is required.
 
-The really funny thing is: it created the same pack every time!
+git-rev-list --boundary has been merged after git-1.3.0.rc1, so better
+upgrade git to latest upstream snapshot git-1.3.0rc3
 
-It is not critical, evidently, but I'd like to know what is causing this 
-rather undeterministic behaviour. (Before you ask: no, I did not make a 
-backup before running the tests, so I unfortunately cannot reproduce it).
+Of course final qgit-1.2 will be out only _after_  released git-1.3.0
 
-Ciao,
-Dscho
-
-P.S.: This is the output:
-
-$ git-repack -a -d
-Generating pack...
-Done counting 4259 objects.
-Deltifying 4259 objects.
- 100% (4259/4259) done
-Writing 4259 objects.
- 100% (4259/4259) done
-Total 4259, written 4259 (delta 3391), reused 4241 (delta 3379)
-Pack pack-66bd976bbdc2ac6da623b8af02037218ecd72ef0 created.
-$ git-repack -a -d
-Generating pack...
-Done counting 4259 objects.
-Deltifying 4259 objects.
- 100% (4259/4259) done
-Writing 4259 objects.
- 100% (4259/4259) done
-Total 4259, written 4259 (delta 3393), reused 4257 (delta 3391)
-Pack pack-66bd976bbdc2ac6da623b8af02037218ecd72ef0 created.
-$ git-repack -a -d
-Generating pack...
-Done counting 4259 objects.
-Deltifying 4259 objects.
- 100% (4259/4259) done
-Writing 4259 objects.
- 100% (4259/4259) done
-Total 4259, written 4259 (delta 3393), reused 4259 (delta 3393)
-Pack pack-66bd976bbdc2ac6da623b8af02037218ecd72ef0 created.
+    Marco
