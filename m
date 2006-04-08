@@ -1,59 +1,66 @@
-From: Nicolas Vilz 'niv' <niv@iaglans.de>
-Subject: Re: strange behavior when pulling updates / get uptodate with git.git
-Date: Sat, 08 Apr 2006 23:19:10 +0200
-Message-ID: <443828CE.4070707@iaglans.de>
-References: <4438158C.1080208@iaglans.de> <7vmzeveqin.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How to create independent branches
+Date: Sun, 9 Apr 2006 00:09:21 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604090006230.9176@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060407184701.GA6686@xp.machine.de> <7vr749i48s.fsf@assigned-by-dhcp.cox.net>
+ <20060408180244.GA4807@xp.machine.de> <7vsloneqtb.fsf@assigned-by-dhcp.cox.net>
+ <20060408205747.GT27689@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Apr 08 23:22:26 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 09 00:09:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSKsx-00067k-Lu
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 23:22:24 +0200
+	id 1FSLcX-0002mm-2R
+	for gcvg-git@gmane.org; Sun, 09 Apr 2006 00:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbWDHVWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 17:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbWDHVWN
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 17:22:13 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:42507 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
-	id S1751429AbWDHVWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 17:22:13 -0400
+	id S1751438AbWDHWJZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 18:09:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWDHWJZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 18:09:25 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:41400 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751438AbWDHWJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Apr 2006 18:09:25 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 9E8B812C9;
+	Sun,  9 Apr 2006 00:09:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id C51FA3E9C
-	for <git@vger.kernel.org>; Sat,  8 Apr 2006 23:22:09 +0200 (CEST)
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 13574-03 for <git@vger.kernel.org>;
-	Sat, 8 Apr 2006 23:22:06 +0200 (CEST)
-Received: from [192.168.100.26] (hermes.lan.home.vilz.de [192.168.100.26])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 94D4B3E71
-	for <git@vger.kernel.org>; Sat,  8 Apr 2006 23:22:05 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051204)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <7vmzeveqin.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.0.0
+	by virusscan.mail (Postfix) with ESMTP id 9008E1371;
+	Sun,  9 Apr 2006 00:09:23 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 7CD2D12C9;
+	Sun,  9 Apr 2006 00:09:21 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060408205747.GT27689@pasky.or.cz>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18533>
 
-Junio C Hamano wrote:
-> Most likely it is aborted by the "pu" branch not
-> fast-forwarding.
+Hi,
+
+On Sat, 8 Apr 2006, Petr Baudis wrote:
+
+> Dear diary, on Sat, Apr 08, 2006 at 10:49:04PM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+> > 
+> > My "todo" branch is not even part of my main git repository.  I
+> > just have two independent repositories (git and todo) locally,
+> > and push into the same public repository.
 > 
-> 	Pull: +refs/heads/pu:refs/heads/pu
-> 
-> or dropping "pu" altogether if you are not interested in it,
-> would help.  
+> Wouldn't it be better to separate it to two distinct public repositories
+> as well? It's confusing people and encouraging a practice that really
+> isn't very feasible and practical in Git.
 
-Thank you, the +-sign helped me out.
+How so? I find it highly practical, and do it myself. For example, I track 
+a project which is not version-controlled at all. So I have a "branch" in 
+git where I keep the tools to fake that version-controlling. And git makes 
+it easy to just fetch the changes of both the project and my tools.
 
-Sincerly
-Nicolas
+Ciao,
+Dscho
