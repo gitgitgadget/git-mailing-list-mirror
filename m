@@ -1,57 +1,59 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit-1.2rc1
-Date: Sat, 8 Apr 2006 13:07:09 +0200
-Message-ID: <e5bfff550604080407g7606d515qec566f83e0e2d7cb@mail.gmail.com>
-References: <e5bfff550604080244y40b36292ja5cfecac28e1e749@mail.gmail.com>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: blame now knows -S
+Date: Sat, 8 Apr 2006 13:42:40 +0200
+Message-ID: <20060408114240.GA10137@c165.ib.student.liu.se>
+References: <7v1ww9loon.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 08 13:07:22 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org,
+	Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Sat Apr 08 13:43:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSBHm-000688-32
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 13:07:22 +0200
+	id 1FSBqF-0001wb-0D
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 13:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964861AbWDHLHL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 07:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964892AbWDHLHL
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 07:07:11 -0400
-Received: from wproxy.gmail.com ([64.233.184.225]:18494 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964861AbWDHLHK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 07:07:10 -0400
-Received: by wproxy.gmail.com with SMTP id i11so474415wra
-        for <git@vger.kernel.org>; Sat, 08 Apr 2006 04:07:09 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FYI+lEFxO+LtKziiVINsyOY8b7Fw8/XAdFuC6bRGerGYh9mWZNanlie3vr2ntddghckzOt3fv3iLiophg35kAp505BWBiBac/T49EGwE6Pk2hWFHJEayzQaLfTcoz4Th2LM3KGUtuslG5Hie2i5fN+IvOv1EAAnaGCkBe6myOI4=
-Received: by 10.65.43.10 with SMTP id v10mr25538qbj;
-        Sat, 08 Apr 2006 04:07:09 -0700 (PDT)
-Received: by 10.64.131.14 with HTTP; Sat, 8 Apr 2006 04:07:09 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <e5bfff550604080244y40b36292ja5cfecac28e1e749@mail.gmail.com>
+	id S964918AbWDHLmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 07:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964922AbWDHLmv
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 07:42:51 -0400
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:61630 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S964918AbWDHLmu
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 07:42:50 -0400
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 6F7614119; Sat,  8 Apr 2006 14:00:01 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1FSBpw-0003JX-00; Sat, 08 Apr 2006 13:42:40 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7v1ww9loon.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18516>
 
-On 4/8/06, Marco Costalba <mcostalba@gmail.com> wrote:
-> qgit is a very fast git GUI viewer with a lot of features .
->
-> The biggest new feature this time is *code range filtering*
->
+On Fri, Apr 07, 2006 at 02:28:40AM -0700, Junio C Hamano wrote:
+> I've made a few changes to "git blame" myself:
+> 
+>  - fix breakage caused by recent revision walker reorganization;
+>  - use built-in xdiff instead of spawning GNU diff;
+>  - implement -S <ancestry-file> like annotate does.
+> 
+> Depending on the density of changes, it now appears that blame
+> is 10%-30% faster than annotate.  I thought CVS emulator might
+> be interested to give it a whirl..
+> 
 
-Before hitting the warning pop-up about git version compatibility at
-qgit launch,please note that a git with --boundary option support
-is required.
+Nice work!
 
-git-rev-list --boundary has been merged after git-1.3.0.rc1, so better
-upgrade git to latest upstream snapshot git-1.3.0rc3
+There is another possible optimisation with respect to xdiff. Instead
+of producing the diff on the xdiff side and parsing the diff in
+blame.c, we could add another call back which just gets the relevant
+information from the hunk header. I don't know how much we would gain
+from this, but it might be worth a try.
 
-Of course final qgit-1.2 will be out only _after_  released git-1.3.0
-
-    Marco
+- Fredrik
