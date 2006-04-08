@@ -1,74 +1,65 @@
-From: Peter Baumann <peter.baumann@gmail.com>
-Subject: How to create independent branches
-Date: Sat, 8 Apr 2006 20:02:44 +0200
-Message-ID: <20060408180244.GA4807@xp.machine.de>
-References: <20060407184701.GA6686@xp.machine.de> <7vr749i48s.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to create independent branches
+Date: Sat, 08 Apr 2006 20:28:58 +0200
+Organization: At home
+Message-ID: <e18vcv$rhf$1@sea.gmane.org>
+References: <20060407184701.GA6686@xp.machine.de> <7vr749i48s.fsf@assigned-by-dhcp.cox.net> <20060408180244.GA4807@xp.machine.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Apr 08 20:02:36 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Apr 08 20:29:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSHlV-00056V-Rc
-	for gcvg-git@gmane.org; Sat, 08 Apr 2006 20:02:30 +0200
+	id 1FSIBb-0000ca-2c
+	for gcvg-git@gmane.org; Sat, 08 Apr 2006 20:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbWDHSCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 14:02:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbWDHSCL
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 14:02:11 -0400
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:51076 "HELO
-	mail.hofmann.stw.uni-erlangen.de") by vger.kernel.org with SMTP
-	id S1751307AbWDHSCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 14:02:10 -0400
-Received: (qmail 8899 invoked by uid 0); 8 Apr 2006 18:02:03 -0000
-Received: from oed5e.o.pppool.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@89.51.237.94)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 8 Apr 2006 18:02:03 -0000
+	id S1751417AbWDHS3H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Apr 2006 14:29:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbWDHS3H
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 14:29:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:52971 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751417AbWDHS3G (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Apr 2006 14:29:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FSIB6-0000Wv-5P
+	for git@vger.kernel.org; Sat, 08 Apr 2006 20:28:56 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 08 Apr 2006 20:28:56 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 08 Apr 2006 20:28:56 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vr749i48s.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060126
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18521>
 
-On Fri, Apr 07, 2006 at 12:18:27PM -0700, Junio C Hamano wrote:
-> Peter Baumann <peter.baumann@gmail.com> writes:
-> 
-> > How can I get the inital commit as a patch?
-> 
-> format-patch is designed to get a patch to send to upstream, and
-> does not handle the root commit.  In your two revisions
-> repository, you could do something like this:
-> 
-> 	$ git diff-tree -p --root master~1
-> 
-> Or more in general:
-> 
-> 	$ git rev-list master |
->           git diff-tree --stdin --root --pretty=fuller -p
-> 
-> BTW, I've been meaning to add --pretty=patch to give
-> format-patch compatible output to diff-tree, but haven't got
-> around to actually do it.  Another thing I've been meaning to do
-> is "git log --diff" which is more or less "git whatchanged".
-> 
+Peter Baumann wrote:
 
-Ok. That did it.
+> Another question. I'd like to create a totaly independent branch (like
+> the "todo" branch in git). Is there a more user friendly way than doing
+> 
+> git-checkout -b todo
+> rm .git/refs/heads/todo
+> rm .git/index
+> rm <all_files_in_your_workdir>
+> 
+> ... hack hack hack ...
+> git-commit -a
 
-Another question. I'd like to create a totaly independent branch (like
-the "todo" branch in git). Is there a more user friendly way than doing
+Wouldn't it be better and more natural to go back to first commit, or even
+empty repository state at the beginning, and branch there? Or make separate
+repository?
 
-git-checkout -b todo
-rm .git/refs/heads/todo
-rm .git/index
-rm <all_files_in_your_workdir>
-
-... hack hack hack ...
-git-commit -a
-
-I looked all over the docs, but can't find anything obvious.
-
--Peter
+-- 
+Jakub Narebski
+Warsaw, Poland
