@@ -1,61 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git ident
-Date: Sun, 09 Apr 2006 12:01:38 -0700
-Message-ID: <7v7j5ybmjx.fsf@assigned-by-dhcp.cox.net>
-References: <44395711.7000902@jeremyenglish.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] git log [diff-tree options]...
+Date: Sun, 9 Apr 2006 12:02:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604091158310.9504@g5.osdl.org>
+References: <7v7j5zce7x.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604090950590.9504@g5.osdl.org> <7vbqvabn8f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 09 21:02:06 2006
+X-From: git-owner@vger.kernel.org Sun Apr 09 21:02:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSfAO-0007Zh-T8
-	for gcvg-git@gmane.org; Sun, 09 Apr 2006 21:01:45 +0200
+	id 1FSfBX-0007np-7o
+	for gcvg-git@gmane.org; Sun, 09 Apr 2006 21:02:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbWDITBl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Apr 2006 15:01:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbWDITBl
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Apr 2006 15:01:41 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:24982 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750897AbWDITBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Apr 2006 15:01:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060409190140.NJTY26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 9 Apr 2006 15:01:40 -0400
-To: Jeremy English <jhe@jeremyenglish.org>
-In-Reply-To: <44395711.7000902@jeremyenglish.org> (Jeremy English's message of
-	"Sun, 09 Apr 2006 13:48:49 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750904AbWDITCw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Apr 2006 15:02:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbWDITCw
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Apr 2006 15:02:52 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:8583 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750823AbWDITCw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Apr 2006 15:02:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k39J2jtH014502
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 9 Apr 2006 12:02:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k39J2i0m010814;
+	Sun, 9 Apr 2006 12:02:45 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqvabn8f.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18560>
 
-Jeremy English <jhe@jeremyenglish.org> writes:
 
-> What I don't like is that the error comes up
-> after I have typed in my comment, then my comment is lost, that's
-> frustrating.
 
-Sympathizable, but presumably a new user needs to be burned only
-once (set them either in $HOME/.profile or .git/config if you
-want to use separate identity per project).
+On Sun, 9 Apr 2006, Junio C Hamano wrote:
+> 
+> Also, I might have to rethink --max-count logic -- I think it is
+> reasonable to skip the commit when doing limiting by diff like
+> "whatchanged" does, but one thing I find suboptimal with the
+> current whatchanged is that it does not count commits that are
+> actually shown (it counts what the upstream rev-list feeds
+> diff-tree).  With the "git log --diff" based whatchanged, it
+> becomes trivial to skip the revs->max_count limiting and have
+> the caller count the commits it actually does something
+> user-visible to, instead of counting the commits it pulled out
+> of get_revision().
 
-> ....  The other thing is I don't care if the commit is coming
-> from a valid person, why require this?
+Well, on the other hand, the new "git log --diff" should get the revision 
+counting right even if it's _not_ done by the caller.
 
-Because public projects like the kernel wants to prevent
-otherwise good commits from a misconfigured repository to
-propagate into them.  We could have a separate per-repository
-configuration to say "broken identity is not a problem for this
-project", but if the user has to set that in the configuration,
-she would be better off setting her identity there.
+Really, the only reason "git-whatchanged" exists at all is that it used to 
+be originally impossible, and later on too expensive to do the commit- 
+limiting by pathname. With the new incremental path-limiting, the reason 
+for "git-whatchanged" simply goes away.
 
-And making it the default not to require the identity is going
-backwards. Our primary focus is to support public, multi-person,
-distributed development project.
+So I'd suggest:
+ - drop git-whatchanged entirely
+ - keep it - for historical reasons - as a internal shorthand, and just 
+   turn it into "git log --diff -cc"
+
+and everybody will be happy (yeah, it will show a few merge commits 
+without diffs, because the diffs end up being uninteresting, but that's 
+_fine_, even if it's not 100% the same thing git-whatchanged used to do)
+
+			Linus
