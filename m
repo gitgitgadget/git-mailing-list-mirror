@@ -1,108 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] diffcore-rename: fix merging back a broken pair.
-Date: Sat, 08 Apr 2006 20:30:56 -0700
-Message-ID: <7vr747ctn3.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20060409004605.GU27689@pasky.or.cz>
-	<7vwtdzcvhb.fsf@assigned-by-dhcp.cox.net>
+From: Peter Baumann <peter.baumann@gmail.com>
+Subject: Re: How to create independent branches
+Date: Sun, 9 Apr 2006 10:11:05 +0200
+Message-ID: <20060409081105.GA4798@xp.machine.de>
+References: <20060407184701.GA6686@xp.machine.de> <7vr749i48s.fsf@assigned-by-dhcp.cox.net> <20060408180244.GA4807@xp.machine.de> <e18vcv$rhf$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 09 05:31:11 2006
+Cc: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 09 10:10:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSQdq-0007wa-TJ
-	for gcvg-git@gmane.org; Sun, 09 Apr 2006 05:31:11 +0200
+	id 1FSV0c-0007dr-Fp
+	for gcvg-git@gmane.org; Sun, 09 Apr 2006 10:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964973AbWDIDa7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Apr 2006 23:30:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965066AbWDIDa7
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Apr 2006 23:30:59 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:24719 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S964973AbWDIDa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Apr 2006 23:30:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060409033058.NSNE6244.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 8 Apr 2006 23:30:58 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <7vwtdzcvhb.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 08 Apr 2006 19:51:12 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750700AbWDIIKc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Apr 2006 04:10:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbWDIIKc
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Apr 2006 04:10:32 -0400
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:54148 "HELO
+	mail.hofmann.stw.uni-erlangen.de") by vger.kernel.org with SMTP
+	id S1750700AbWDIIKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Apr 2006 04:10:32 -0400
+Received: (qmail 13913 invoked by uid 0); 9 Apr 2006 08:10:23 -0000
+Received: from pd9f80998.dip0.t-ipconnect.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@217.248.9.152)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 9 Apr 2006 08:10:23 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <e18vcv$rhf$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18540>
 
-When a broken pair is matched up by rename detector to be merged
-back, we do not want to say it is "dissimilar" with the
-similarity index.  The output should just say they were changed,
-taking the break score left by the earlier diffcore-break run if
-any.
+On Sat, Apr 08, 2006 at 08:28:58PM +0200, Jakub Narebski wrote:
+> Peter Baumann wrote:
+> 
+> > Another question. I'd like to create a totaly independent branch (like
+> > the "todo" branch in git). Is there a more user friendly way than doing
+> > 
+> > git-checkout -b todo
+> > rm .git/refs/heads/todo
+> > rm .git/index
+> > rm <all_files_in_your_workdir>
+> > 
+> > ... hack hack hack ...
+> > git-commit -a
+> 
+> Wouldn't it be better and more natural to go back to first commit? > 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+If I go back to the first commit, I'll get the following:
 
----
+	first
+	 / \
+	/   \
+   master    todo
 
- diffcore-rename.c |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+That's not what I want, because in the near future I want to merge
+master and todo, but in my case, todo consists of only of one file (lets
+call it file_a), and the master branch has severeal files (file_{a..z}).
+If I go back to first, I have to delete all files file_{b..z}.
+Further file_a from todo and file_a from master are not equal, the share
+just the same name. But in the near future, they will be merged
+together, so they are equal.
 
-c17de73d793ff20fce6bcc8427e5f10ab8a2a7c5
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index e992698..d57e865 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -54,12 +54,14 @@ static struct diff_rename_dst *locate_re
- /* Table of rename/copy src files */
- static struct diff_rename_src {
- 	struct diff_filespec *one;
-+	unsigned short score; /* to remember the break score */
- 	unsigned src_path_left : 1;
- } *rename_src;
- static int rename_src_nr, rename_src_alloc;
- 
- static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
--						   int src_path_left)
-+						   int src_path_left,
-+						   unsigned short score)
- {
- 	int first, last;
- 
-@@ -89,6 +91,7 @@ static struct diff_rename_src *register_
- 		memmove(rename_src + first + 1, rename_src + first,
- 			(rename_src_nr - first - 1) * sizeof(*rename_src));
- 	rename_src[first].one = one;
-+	rename_src[first].score = score;
- 	rename_src[first].src_path_left = src_path_left;
- 	return &(rename_src[first]);
- }
-@@ -198,7 +201,10 @@ static void record_rename_pair(int dst_i
- 	fill_filespec(two, dst->sha1, dst->mode);
- 
- 	dp = diff_queue(NULL, one, two);
--	dp->score = score;
-+	if (!strcmp(src->path, dst->path))
-+		dp->score = rename_src[src_index].score;
-+	else
-+		dp->score = score;
- 	dp->source_stays = rename_src[src_index].src_path_left;
- 	rename_dst[dst_index].pair = dp;
- }
-@@ -256,10 +262,10 @@ void diffcore_rename(struct diff_options
- 			 * that means the source actually stays.
- 			 */
- 			int stays = (p->broken_pair && !p->score);
--			register_rename_src(p->one, stays);
-+			register_rename_src(p->one, stays, p->score);
- 		}
- 		else if (detect_rename == DIFF_DETECT_COPY)
--			register_rename_src(p->one, 1);
-+			register_rename_src(p->one, 1, p->score);
- 	}
- 	if (rename_dst_nr == 0 || rename_src_nr == 0 ||
- 	    (0 < rename_limit && rename_limit < rename_dst_nr))
--- 
-1.2.6.gad0b
+If I go with the above branching, I'll _think_ (I may be wrong, please
+correct me if I am) I get a merge conflict or worse, all my other files
+file_a{b..z} are merged as "deleted", wich is wrong.
+
+> Or even empty repository state at the beginning, and branch there?
+
+This isn't possible because the repository already exists and I don't
+know how to go back to the empty repository state. Even 
+
+	git-init-db
+	git branch todo master
+
+didn't work.
+
+> Or make separate repository?
+
+Ok. You got it. In fact, the todo branch alread exists as a seperate
+repository and I'd like to integrate this in my master repository for
+easier handling (diff etc.)
+
+To import todo as a subproject doesn't seem right, because it's not
+something really independent in the view of the master repo and I'am
+going to merge todo _into_ master in the near future.
+
+Any further suggestions?
+
+-Peter
