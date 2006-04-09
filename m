@@ -1,75 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] git log [diff-tree options]...
-Date: Sun, 9 Apr 2006 12:02:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604091158310.9504@g5.osdl.org>
-References: <7v7j5zce7x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604090950590.9504@g5.osdl.org> <7vbqvabn8f.fsf@assigned-by-dhcp.cox.net>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: git ident
+Date: Sun, 9 Apr 2006 15:02:42 -0400
+Message-ID: <BAYC1-PASMTP08A5DFC9CAE6F26A5E3B68AECF0@CEZ.ICE>
+References: <44395711.7000902@jeremyenglish.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 09 21:02:57 2006
+X-From: git-owner@vger.kernel.org Sun Apr 09 21:06:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSfBX-0007np-7o
-	for gcvg-git@gmane.org; Sun, 09 Apr 2006 21:02:55 +0200
+	id 1FSfEg-0008E8-7P
+	for gcvg-git@gmane.org; Sun, 09 Apr 2006 21:06:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750904AbWDITCw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Apr 2006 15:02:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbWDITCw
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Apr 2006 15:02:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:8583 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750823AbWDITCw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Apr 2006 15:02:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k39J2jtH014502
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 9 Apr 2006 12:02:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k39J2i0m010814;
-	Sun, 9 Apr 2006 12:02:45 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqvabn8f.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750761AbWDITGH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Apr 2006 15:06:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbWDITGH
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Apr 2006 15:06:07 -0400
+Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:47414 "EHLO
+	BAYC1-PASMTP08.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1750761AbWDITGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Apr 2006 15:06:06 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP08.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 9 Apr 2006 12:09:54 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 33BC5644C28;
+	Sun,  9 Apr 2006 15:06:04 -0400 (EDT)
+To: Jeremy English <jhe@jeremyenglish.org>
+Message-Id: <20060409150242.1796c993.seanlkml@sympatico.ca>
+In-Reply-To: <44395711.7000902@jeremyenglish.org>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 09 Apr 2006 19:09:54.0843 (UTC) FILETIME=[2F864EB0:01C65C09]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18560>
 
+On Sun, 09 Apr 2006 13:48:49 -0500
+Jeremy English <jhe@jeremyenglish.org> wrote:
 
+> I keep a local project in a git archive.  After the last upgrade I get a 
+> ident error when trying to commit.  It works after I set the environment 
+> variables.  What I don't like is that the error comes up after I have 
+> typed in my comment, then my comment is lost, that's frustrating.  The 
+> other thing is I don't care if the commit is coming from a valid person, 
+> why require this?
 
-On Sun, 9 Apr 2006, Junio C Hamano wrote:
-> 
-> Also, I might have to rethink --max-count logic -- I think it is
-> reasonable to skip the commit when doing limiting by diff like
-> "whatchanged" does, but one thing I find suboptimal with the
-> current whatchanged is that it does not count commits that are
-> actually shown (it counts what the upstream rev-list feeds
-> diff-tree).  With the "git log --diff" based whatchanged, it
-> becomes trivial to skip the revs->max_count limiting and have
-> the caller count the commits it actually does something
-> user-visible to, instead of counting the commits it pulled out
-> of get_revision().
+Believe it is required to reduce the number of commits made in the 
+kernel project with incorrect attribution.   To remove the need to
+set environment variables, use the repo-config command to set some
+defaults:
 
-Well, on the other hand, the new "git log --diff" should get the revision 
-counting right even if it's _not_ done by the caller.
+$ git repo-config user.email "you@email.com"
+$ git repo-config user.name "your name"
 
-Really, the only reason "git-whatchanged" exists at all is that it used to 
-be originally impossible, and later on too expensive to do the commit- 
-limiting by pathname. With the new incremental path-limiting, the reason 
-for "git-whatchanged" simply goes away.
-
-So I'd suggest:
- - drop git-whatchanged entirely
- - keep it - for historical reasons - as a internal shorthand, and just 
-   turn it into "git log --diff -cc"
-
-and everybody will be happy (yeah, it will show a few merge commits 
-without diffs, because the diffs end up being uninteresting, but that's 
-_fine_, even if it's not 100% the same thing git-whatchanged used to do)
-
-			Linus
+HTH,
+Sean
