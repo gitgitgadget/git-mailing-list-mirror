@@ -1,56 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git pull origin doesn't update the master
-Date: Mon, 10 Apr 2006 00:24:42 -0700
-Message-ID: <7vmzetao5h.fsf@assigned-by-dhcp.cox.net>
-References: <cc723f590604092141q3517136cmc0a895a069021b8f@mail.gmail.com>
-	<7vr7469c4n.fsf@assigned-by-dhcp.cox.net>
-	<cc723f590604092345r7d0e2cedr8f9838d054ecb023@mail.gmail.com>
+From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+Subject: git commit broken ?
+Date: Mon, 10 Apr 2006 10:02:44 +0200
+Message-ID: <cda58cb80604100102p92e5258qf33a128f75f1b088@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 10 09:24:57 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Apr 10 10:03:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSqld-0007JX-2x
-	for gcvg-git@gmane.org; Mon, 10 Apr 2006 09:24:57 +0200
+	id 1FSrMe-00041U-50
+	for gcvg-git@gmane.org; Mon, 10 Apr 2006 10:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbWDJHYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 03:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbWDJHYo
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 03:24:44 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:62100 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751071AbWDJHYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Apr 2006 03:24:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060410072443.NGZM17690.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 10 Apr 2006 03:24:43 -0400
-To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-In-Reply-To: <cc723f590604092345r7d0e2cedr8f9838d054ecb023@mail.gmail.com>
-	(Aneesh Kumar's message of "Mon, 10 Apr 2006 12:15:36 +0530")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750903AbWDJIDD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 04:03:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbWDJIDD
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 04:03:03 -0400
+Received: from zproxy.gmail.com ([64.233.162.201]:47221 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750903AbWDJIDC convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 04:03:02 -0400
+Received: by zproxy.gmail.com with SMTP id o37so797229nzf
+        for <git@vger.kernel.org>; Mon, 10 Apr 2006 01:02:59 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=jsMWJ786eEbrRs1urg2A9MY+rr5Ps6J2PbmQSdxX7u62JO2iPg2cXVc7lAWiS3g3UcfWuFKw5UzWmfh0Y3Hxqvk5cbJb4G2qHmzayP6uXuLtoDmbvPYIS9uCg81y2st6qltmHwTBCyBw1aEXyxVppYfdgjLexbS+8XospDh9RCc=
+Received: by 10.36.221.61 with SMTP id t61mr5180710nzg;
+        Mon, 10 Apr 2006 01:02:59 -0700 (PDT)
+Received: by 10.36.50.4 with HTTP; Mon, 10 Apr 2006 01:02:44 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18583>
 
-"Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
+It seems that "git commit -a -c ORIG_HEAD" command do not work as
+expected.
 
-> Work flow is now a bit complicated. I clone the repository. Now i need
-> to edit remotes/origin to make sure what all branches i need to
-> follow. And then do a git pull origin. Earlier i just need to do a
-> clone and a git pull. I don't need to fast forward pu branch.
+Here is an example:
 
-What you are saying is that the previous round did a wrong thing
-without telling the user, and it just happened that you did not
-care about the wrong thing it did.
+	$ ls
+	a b c
 
-It is a gentle reminder that heads that are rewound need to be
-advertised as such.  It is conceivable that in future versions
-of git we might want to be able to mark some branches "this is
-expected to be rewound" explicitly and make the clone operation
-to take notice, to give you the plus sign automatically.
+	$ git status
+	nothing to commit
+
+	$ echo "good modif" > a
+	$ echo "temp modif" > c
+	$ git-update-index a
+	$ git commit -m "work in prog"
+
+	$ git reset --soft HEAD^
+	$ git status
+	#
+	# Updated but not checked in:
+	#   (will commit)
+	#
+	#       modified: a
+	#
+	#
+	# Changed but not updated:
+	#   (use git-update-index to mark for commit)
+	#
+	#       modified: c
+	#
+	
+	$ git commit -a -c ORIG_HEAD
+	$ git status
+	nothing to commit
+
+So it seems that c has been commmited this time...Is it the expected
+behaviour ?
+
+My git version:
+
+	$ git --version
+	git version 1.3.0.rc3.g0ed4
+
+Thanks
+--
+               Franck
