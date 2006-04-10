@@ -1,72 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git log [diff-tree options]...
-Date: Mon, 10 Apr 2006 10:22:52 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604101018530.31612@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7j5zce7x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604090950590.9504@g5.osdl.org> <7vbqvabn8f.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604091158310.9504@g5.osdl.org>
- <Pine.LNX.4.63.0604092312340.29136@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0604100000430.30000@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7ye9uk8.fsf@assigned-by-dhcp.cox.net>
+From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+Subject: Re: git commit broken ?
+Date: Mon, 10 Apr 2006 10:24:01 +0200
+Message-ID: <cda58cb80604100124k165307c3td84be984e607c6ae@mail.gmail.com>
+References: <cda58cb80604100102p92e5258qf33a128f75f1b088@mail.gmail.com>
+	 <7vhd51alti.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 10 10:23:07 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 10 10:24:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSrfp-0006qz-N2
-	for gcvg-git@gmane.org; Mon, 10 Apr 2006 10:23:02 +0200
+	id 1FSrh6-00073k-6Z
+	for gcvg-git@gmane.org; Mon, 10 Apr 2006 10:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbWDJIW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 04:22:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbWDJIW7
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 04:22:59 -0400
-Received: from mail.gmx.de ([213.165.64.20]:63433 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751084AbWDJIW6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Apr 2006 04:22:58 -0400
-Received: (qmail invoked by alias); 10 Apr 2006 08:22:55 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp026) with SMTP; 10 Apr 2006 10:22:55 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7ye9uk8.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751085AbWDJIYR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 04:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbWDJIYR
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 04:24:17 -0400
+Received: from zproxy.gmail.com ([64.233.162.199]:47964 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751085AbWDJIYR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 04:24:17 -0400
+Received: by zproxy.gmail.com with SMTP id o37so799661nzf
+        for <git@vger.kernel.org>; Mon, 10 Apr 2006 01:24:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hPoa8+rAuO3khRHfus8by6TX4AiDJ7T3Tu7l6vwJg5vrWhKg0Ee4fVA35cXpOlDdNimJBPRl1RKfKZfQjXGaNBj+a/mZbAzsHy2n9mYhU36PR0nz/zyrG7ryTT9021zJZzLXF0Kan3Yb+jNNxF3xgPORgdV86GEX+cC8IzDWVTs=
+Received: by 10.36.31.17 with SMTP id e17mr3371426nze;
+        Mon, 10 Apr 2006 01:24:16 -0700 (PDT)
+Received: by 10.36.50.4 with HTTP; Mon, 10 Apr 2006 01:24:01 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vhd51alti.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18587>
 
-Hi,
-
-On Sun, 9 Apr 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Hi,
+2006/4/10, Junio C Hamano <junkio@cox.net>:
+> "Franck Bui-Huu" <vagabon.xyz@gmail.com> writes:
+>
+> > It seems that "git commit -a -c ORIG_HEAD" command do not work as
+> > expected.
 > >
-> > On Sun, 9 Apr 2006, Johannes Schindelin wrote:
+> >       $ git commit -a -c ORIG_HEAD
+> >       $ git status
+> >       nothing to commit
 > >
-> >> On Sun, 9 Apr 2006, Linus Torvalds wrote:
-> >> 
-> >> >  - keep it - for historical reasons - as a internal shorthand, and just 
-> >> >    turn it into "git log --diff -cc"
-> >> 
-> >> It is "git log --cc", right?
-> >
-> > Like this?
-> 
-> I do not think so.  You should default to --cc only there is no
-> explicit command line stuff from the user.
+> > So it seems that c has been commmited this time...Is it the expected
+> > behaviour ?
+>
+> You said "git commit -a" to tell it to commit all your changes
+> in your working tree, using "-c ORIG_HEAD" which means "take the
+> commit log message and authorship information from that commit".
+>
+> So I do not understand what else, other than both a and c
+> getting committed (hence subsequent "git status" to report
+> "nothing to commit'), you are expecting...
 
-Well, my idea was to get rid of the whatchanged script, and deprecate the 
-internal whatchanged. IMHO "git log" is much faster typed than "git 
-whatchanged", especially if you have no completion installed. I, for one, 
-will never ever again use whatchanged.
+oops, I forgot that switch, sorry for the noise.
 
-But you and the list gave me bad marks for that patch, and rightfully so.
-
-Ciao,
-Dscho
+Thanks
+--
+               Franck
