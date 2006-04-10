@@ -1,95 +1,85 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: SVN_URL undocumented
-Date: Mon, 10 Apr 2006 17:22:42 -0400
-Message-ID: <1144704162.18727.30.camel@dv>
+From: Rutger Nijlunsing <rutger@nospam.com>
+Subject: Re: git-svnimport on OSX?
+Date: Tue, 11 Apr 2006 01:00:16 +0200
+Organization: M38c
+Message-ID: <20060410230016.GA28078@nospam.com>
+References: <86fyku2ltk.fsf@blue.stonehenge.com> <46a038f90604031911y415dd795nc1c8814f80a02ad7@mail.gmail.com>
+Reply-To: git@wingding.demon.nl
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 10 23:23:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 11 01:00:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FT3qc-0002ck-2L
-	for gcvg-git@gmane.org; Mon, 10 Apr 2006 23:22:58 +0200
+	id 1FT5Mu-0002dV-Le
+	for gcvg-git@gmane.org; Tue, 11 Apr 2006 01:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbWDJVWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 17:22:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWDJVWz
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 17:22:55 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:14255 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751202AbWDJVWy
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Apr 2006 17:22:54 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FT3qU-0004kM-O4
-	for git@vger.kernel.org; Mon, 10 Apr 2006 17:22:51 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.61)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FT3qN-0005Nh-5D; Mon, 10 Apr 2006 17:22:43 -0400
-To: Eric Wong <normalperson@yhbt.net>
-X-Mailer: Evolution 2.6.0 (2.6.0-1) 
+	id S932163AbWDJXAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 19:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932164AbWDJXAV
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 19:00:21 -0400
+Received: from post-23.mail.nl.demon.net ([194.159.73.193]:16603 "EHLO
+	post-23.mail.nl.demon.net") by vger.kernel.org with ESMTP
+	id S932163AbWDJXAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 19:00:20 -0400
+Received: from wingding.demon.nl ([82.161.27.36]:36144)
+	by post-23.mail.nl.demon.net with esmtp (Exim 4.51)
+	id 1FT5Mn-000853-5l; Mon, 10 Apr 2006 23:00:17 +0000
+Received: from rutger by wingding.demon.nl with local (Exim 4.60)
+	(envelope-from <rutger@wingding.demon.nl>)
+	id 1FT5Mm-0008Pp-Iu; Tue, 11 Apr 2006 01:00:16 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90604031911y415dd795nc1c8814f80a02ad7@mail.gmail.com>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18594>
 
-Hello, Eric!
+On Tue, Apr 04, 2006 at 02:11:02PM +1200, Martin Langhoff wrote:
+> On 03 Apr 2006 18:04:07 -0700, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
+> >
+> > Working for anyone?  Not working for me, and just wondered if it was me or a
+> > known thing.  Maybe I'm just holding my mouth wrong, and yes, I have SVN::Core
+> > installed.  If anyone wants details, I can provide.
+> 
+> I think I tried and gave up on it a month or two ago, but can't
+> remember the details. Fink's SVN::Core is too old, and having all the
+> SVN toolchain is a pain. What is the problem?
+> 
+> BTW, getting git-svnimport to work normally takes me quite a few tries
+> with different options, so OSX may be perfectly innocent this time...
 
-I'm trying to use git-svn, but the documentation seems to be quite
-unclear.  I'm using current git-svn from the git repository.
+Could you try http://www.wingding.demon.nl/git-svnconvert.rb on
+MacOSX? This one doesn't need SVN::Core, and I'm curious on what to
+change for MacOSX.
 
-I'm running "git-svn init" in a Subversion working directory:
+By default it imports all branches it can find (see in file itself):
 
-$ git-svn init
-SVN repository location required
- at /home/proski/bin/git-svn line 223
-        main::init() called at /home/proski/bin/git-svn line 104
+...
+$branch_dirs = %q{
+  /branches/*
+  /trunk
+}
+...
 
-The help shown by git-svn without arguments doesn't say anything about
-arguments for "init", unlike other subcommands.  I'm assuming that
-"git-svn init" is not taking any arguments.
+If your layout is different (for example, like
+http://svn.perl.org/perl6 where every subdir is a collection of
+branches itself), use something like:
 
-The manual page doesn't say anything about arguments, but it mentions
-that "the SVN_URL must be specified at this point".  This statement is
-unclear to me.
+...
+$branch_dirs = %q{
+  */branches/*
+  */trunk
+}
+...
 
-There are several references to SVN_URL in the manual, but there is no
-description what it is.  Is it supposed to be an environment variable,
-or an undocumented argument, or is it taken from "svn info" output?
 
-The environment variable has no effect:
-
-$ SVN_URL=http://svn.madwifi.org/trunk git-svn init
-SVN repository location required
- at /home/proski/bin/git-svn line 223
-        main::init() called at /home/proski/bin/git-svn line 104
-
-Looking at the sources, it looks like that SVN_URL is an undocumented
-argument for "git-cvs init".  "git-svn fetch" appears to be taking that
-value from the git repository, but it also takes care to protect the
-original value (I have no idea where it can come from).
-
-One of the "basic examples" further in the manual confirms that SVN_URL
-is set on the command line:
-
-git-svn init http://svn.foo.org/project/trunk
-
-I believe that the documentation should be updated to describe where
-SVN_URL comes from, and what arguments are accepted by "git-svn init".
-Basic examples shouldn't recommend using undocumented arguments.
-
-It seems to me that the current documentation describes the internals of
-git-svn instead of its user interface.  Rather than tell the user that
-"FOO must be specified at that point", the documentation should say what
-(an how) should (or can) be specified when the command is invoked on the
-command line.
-
-Also, it would be great to refer to the "additional fetch arguments" in
-the "fetch" description.  That section is easy to miss by somebody who
-is specifically looking for "fetch arguments".
 
 -- 
-Regards,
-Pavel Roskin
+Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
+never attribute to a conspiracy which can be explained by incompetence
+----------------------------------------------------------------------
