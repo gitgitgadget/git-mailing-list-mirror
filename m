@@ -1,85 +1,62 @@
-From: Rutger Nijlunsing <rutger@nospam.com>
-Subject: Re: git-svnimport on OSX?
-Date: Tue, 11 Apr 2006 01:00:16 +0200
-Organization: M38c
-Message-ID: <20060410230016.GA28078@nospam.com>
-References: <86fyku2ltk.fsf@blue.stonehenge.com> <46a038f90604031911y415dd795nc1c8814f80a02ad7@mail.gmail.com>
-Reply-To: git@wingding.demon.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git log [diff-tree options]...
+Date: Mon, 10 Apr 2006 16:42:44 -0700
+Message-ID: <7vodz980az.fsf@assigned-by-dhcp.cox.net>
+References: <7v7j5zce7x.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604090950590.9504@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 11 01:00:33 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 11 01:43:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FT5Mu-0002dV-Le
-	for gcvg-git@gmane.org; Tue, 11 Apr 2006 01:00:25 +0200
+	id 1FT626-0000qU-DX
+	for gcvg-git@gmane.org; Tue, 11 Apr 2006 01:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932163AbWDJXAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 19:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932164AbWDJXAV
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 19:00:21 -0400
-Received: from post-23.mail.nl.demon.net ([194.159.73.193]:16603 "EHLO
-	post-23.mail.nl.demon.net") by vger.kernel.org with ESMTP
-	id S932163AbWDJXAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Apr 2006 19:00:20 -0400
-Received: from wingding.demon.nl ([82.161.27.36]:36144)
-	by post-23.mail.nl.demon.net with esmtp (Exim 4.51)
-	id 1FT5Mn-000853-5l; Mon, 10 Apr 2006 23:00:17 +0000
-Received: from rutger by wingding.demon.nl with local (Exim 4.60)
-	(envelope-from <rutger@wingding.demon.nl>)
-	id 1FT5Mm-0008Pp-Iu; Tue, 11 Apr 2006 01:00:16 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90604031911y415dd795nc1c8814f80a02ad7@mail.gmail.com>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S932190AbWDJXmy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 19:42:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWDJXmy
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 19:42:54 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:5053 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932190AbWDJXmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 19:42:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20060410234245.PSWW25099.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 10 Apr 2006 19:42:45 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18595>
 
-On Tue, Apr 04, 2006 at 02:11:02PM +1200, Martin Langhoff wrote:
-> On 03 Apr 2006 18:04:07 -0700, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
-> >
-> > Working for anyone?  Not working for me, and just wondered if it was me or a
-> > known thing.  Maybe I'm just holding my mouth wrong, and yes, I have SVN::Core
-> > installed.  If anyone wants details, I can provide.
-> 
-> I think I tried and gave up on it a month or two ago, but can't
-> remember the details. Fink's SVN::Core is too old, and having all the
-> SVN toolchain is a pain. What is the problem?
-> 
-> BTW, getting git-svnimport to work normally takes me quite a few tries
-> with different options, so OSX may be perfectly innocent this time...
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Could you try http://www.wingding.demon.nl/git-svnconvert.rb on
-MacOSX? This one doesn't need SVN::Core, and I'm curious on what to
-change for MacOSX.
+> On Sun, 9 Apr 2006, Junio C Hamano wrote:
+>>
+>> And this makes "git log" to take common diff-tree options, so
+>> that it can be used as "git whatchanged".
+>
+> I wonder... This all looks fine, but there are actually two different 
+> "diffs" that can be shown for "git log --diff <pathlimiter>":
+>
+>  - the whole diff for a commit
+>
+>  - the path-limited diff
+>
+> and I think we'd likely want to have some way to select the output. 
+> Probably with the path-limited diff being the default (that's what 
+> "git-whatchanged" does), but perhaps with "--full-diff" showing the whole 
+> commit diff (which is what "gitk" does).
 
-By default it imports all branches it can find (see in file itself):
+Yes, but it turns out it is a bit tricky, given that the way
+tree-diff.c is written it pretty much assumes the same pathspec
+is used for diff operation during the lifetime of the process.
 
-...
-$branch_dirs = %q{
-  /branches/*
-  /trunk
-}
-...
-
-If your layout is different (for example, like
-http://svn.perl.org/perl6 where every subdir is a collection of
-branches itself), use something like:
-
-...
-$branch_dirs = %q{
-  */branches/*
-  */trunk
-}
-...
-
-
-
--- 
-Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
-never attribute to a conspiracy which can be explained by incompetence
-----------------------------------------------------------------------
+I think we should move (nr_paths, pathlens and paths) to struct
+diff_options.  Two patches to follow shortly.
