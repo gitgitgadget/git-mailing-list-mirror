@@ -1,67 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Implement limited context matching in git-apply.
-Date: Mon, 10 Apr 2006 08:25:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604100821340.9504@g5.osdl.org>
-References: <m1d5fqi23b.fsf@ebiederm.dsl.xmission.com>
- <m13bgmht9v.fsf@ebiederm.dsl.xmission.com> <m1irphhj1p.fsf_-_@ebiederm.dsl.xmission.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: git-svnimport on OSX?
+Date: 10 Apr 2006 07:43:09 -0700
+Message-ID: <861ww5ebk2.fsf@blue.stonehenge.com>
+References: <86fyku2ltk.fsf@blue.stonehenge.com>
+	<46a038f90604031911y415dd795nc1c8814f80a02ad7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 10 17:25:34 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 10 17:57:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSyGi-0000ux-Pu
-	for gcvg-git@gmane.org; Mon, 10 Apr 2006 17:25:33 +0200
+	id 1FSylV-0007Lf-Lo
+	for gcvg-git@gmane.org; Mon, 10 Apr 2006 17:57:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbWDJPZ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 11:25:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751051AbWDJPZ1
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 11:25:27 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:21951 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751012AbWDJPZ0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Apr 2006 11:25:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3AFPJtH025063
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 10 Apr 2006 08:25:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3AFPG8b014826;
-	Mon, 10 Apr 2006 08:25:18 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1irphhj1p.fsf_-_@ebiederm.dsl.xmission.com>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751122AbWDJP5J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 11:57:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbWDJP5J
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 11:57:09 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:59179 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751122AbWDJP5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 11:57:08 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 8919D8D536;
+	Mon, 10 Apr 2006 08:55:46 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 31595-01-12; Mon, 10 Apr 2006 08:55:46 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 358D08D642; Mon, 10 Apr 2006 07:43:09 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+x-mayan-date: Long count = 12.19.13.3.13; tzolkin = 1 Ben; haab = 6 Pop
+In-Reply-To: <46a038f90604031911y415dd795nc1c8814f80a02ad7@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18590>
 
+>>>>> "Martin" == Martin Langhoff <martin.langhoff@gmail.com> writes:
 
+Martin> BTW, getting git-svnimport to work normally takes me quite a few tries
+Martin> with different options, so OSX may be perfectly innocent this time...
 
-On Mon, 10 Apr 2006, Eric W. Biederman wrote:
-> 
-> If I just loop through all of Andrews patches in order
-> and run git-apply --index -C1 I process the entire patchset
-> in 1m53s or about 6 patches per second.  So running
-> git-mailinfo, git-write-tree, git-commit-tree, and
-> git-update-ref everytime has a measurable impact,
-> and shows things can be speeded up even more.
+Well, is there some combination of things that will give me what
+http://svn.perl.org/perl6/doc does?  Maybe it just resists all attempts. :)
 
-git-write-tree is actually a fairly expensive operation on the kernel. It 
-needs to write the 1000+ tree objects - and while _most_ of them already 
-exist (and thus don't actually need to be written out), we need to 
-generate the tree object and its SHA1 in order to notice that that is the 
-case.
-
-I'm almost certain that 90%+ of the overhead you see is the tree writing, 
-not the rest of the scripting.
-
-Your patch looks ok from a quick read-through:
-
-Acked-by: Linus Torvalds <torvalds@osdl.org>
-
-		Linus
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
