@@ -1,68 +1,72 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+From: sean <seanlkml@sympatico.ca>
 Subject: Re: git pull origin doesn't update the master
-Date: Mon, 10 Apr 2006 10:21:34 +0530
-Message-ID: <cc723f590604092151p7c8c44e3g14decc09c0e24383@mail.gmail.com>
+Date: Mon, 10 Apr 2006 01:03:16 -0400
+Message-ID: <BAYC1-PASMTP11D3D1D967525A6F029F85AECC0@CEZ.ICE>
 References: <cc723f590604092141q3517136cmc0a895a069021b8f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Apr 10 06:51:42 2006
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Mon Apr 10 07:06:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSoNG-00062f-Gx
-	for gcvg-git@gmane.org; Mon, 10 Apr 2006 06:51:39 +0200
+	id 1FSobw-0007aj-Oi
+	for gcvg-git@gmane.org; Mon, 10 Apr 2006 07:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbWDJEvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 00:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750876AbWDJEvf
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 00:51:35 -0400
-Received: from wproxy.gmail.com ([64.233.184.227]:44395 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750758AbWDJEvf convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Apr 2006 00:51:35 -0400
-Received: by wproxy.gmail.com with SMTP id i11so667812wra
-        for <git@vger.kernel.org>; Sun, 09 Apr 2006 21:51:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R1DbFAikX0FrP53Yn/hcDPmwDZ0YLK8RKpcdkYmwXgeF5lt97lX81OAY+CR1EBinD5HLcWu55N0u5YbJteYmgZu5Hai87sLa82DCKnE1p+IaDjsdAIpLsODNcGvruPsa1i8J3OxY6bghnYLIn2chcz57PoLHk+13fihawnzUbWE=
-Received: by 10.64.3.9 with SMTP id 9mr297892qbc;
-        Sun, 09 Apr 2006 21:51:34 -0700 (PDT)
-Received: by 10.64.114.13 with HTTP; Sun, 9 Apr 2006 21:51:34 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
+	id S1750982AbWDJFGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 01:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750985AbWDJFGq
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 01:06:46 -0400
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:60303 "EHLO
+	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1750982AbWDJFGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 01:06:45 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 9 Apr 2006 22:10:26 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 50805644C28;
+	Mon, 10 Apr 2006 01:06:39 -0400 (EDT)
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Message-Id: <20060410010316.2aec94ae.seanlkml@sympatico.ca>
 In-Reply-To: <cc723f590604092141q3517136cmc0a895a069021b8f@mail.gmail.com>
-Content-Disposition: inline
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 10 Apr 2006 05:10:26.0875 (UTC) FILETIME=[144A10B0:01C65C5D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18577>
 
-On 4/10/06, Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
+On Mon, 10 Apr 2006 10:11:05 +0530
+"Aneesh Kumar" <aneesh.kumar@gmail.com> wrote:
+
 > While updating the git code base the master branch is not getting
 > updated. First look tell me that the below commit is the issue
 > a9698bb22fb7b66e5882c3a5e7b2b8b53ea03f90
->
+> 
 > git-pull.sh does
 > git-fetch --update-head-ok "$@" || exit 1
->
+> 
 > and git-fetch.sh exit with status 1 printing the below message
->
+> 
 > * refs/heads/pu: does not fast forward to branch 'pu' of
 > http://git.kernel.org/pub/scm/git/git;
 >   not updating.
->
->
+> 
 
+The "pu" branch often won't fast forward because some commits have
+been completely deleted in it since the last time you pulled.
 
-I think the git-update-server-info is not run on kernel.org. I am
-using the http fetch
+If you want to track it, add a plus (+) sign to the proper line in 
+your .git/remotes/origin file, like this:
 
-562036a04223709de4922873238462007bcb529f	refs/heads/pu
-$ more pu
-c52d221ba03c84e0b818d19f7ec30cb4d75fe509
-$
+Pull: +refs/heads/pu:refs/heads/pu
 
--aneesh
+Which tells git to deal with the problem for you by merging instead
+of fast forwarding.   Or you can just delete that line completely
+if you don't want to track the pu branch at all.
+
+HTH,
+Sean
