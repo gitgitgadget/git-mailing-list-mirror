@@ -1,72 +1,273 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: git pull origin doesn't update the master
-Date: Mon, 10 Apr 2006 01:03:16 -0400
-Message-ID: <BAYC1-PASMTP11D3D1D967525A6F029F85AECC0@CEZ.ICE>
-References: <cc723f590604092141q3517136cmc0a895a069021b8f@mail.gmail.com>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: [PATCH] Implement --fuzz= option for git-apply.
+Date: Sun, 09 Apr 2006 23:52:12 -0600
+Message-ID: <m13bgmht9v.fsf@ebiederm.dsl.xmission.com>
+References: <m1d5fqi23b.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Apr 10 07:06:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 10 07:53:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FSobw-0007aj-Oi
-	for gcvg-git@gmane.org; Mon, 10 Apr 2006 07:06:49 +0200
+	id 1FSpL1-0004Ja-32
+	for gcvg-git@gmane.org; Mon, 10 Apr 2006 07:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982AbWDJFGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 01:06:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750985AbWDJFGq
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 01:06:46 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:60303 "EHLO
-	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1750982AbWDJFGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Apr 2006 01:06:45 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 9 Apr 2006 22:10:26 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 50805644C28;
-	Mon, 10 Apr 2006 01:06:39 -0400 (EDT)
-To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Message-Id: <20060410010316.2aec94ae.seanlkml@sympatico.ca>
-In-Reply-To: <cc723f590604092141q3517136cmc0a895a069021b8f@mail.gmail.com>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 10 Apr 2006 05:10:26.0875 (UTC) FILETIME=[144A10B0:01C65C5D]
+	id S1751017AbWDJFxU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 01:53:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWDJFxT
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 01:53:19 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:14050 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1751016AbWDJFxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 01:53:19 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k3A5qDRo003072;
+	Sun, 9 Apr 2006 23:52:13 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k3A5qCGL003071;
+	Sun, 9 Apr 2006 23:52:12 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <m1d5fqi23b.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's
+ message of "Sun, 09 Apr 2006 20:41:44 -0600")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18579>
 
-On Mon, 10 Apr 2006 10:11:05 +0530
-"Aneesh Kumar" <aneesh.kumar@gmail.com> wrote:
+ebiederm@xmission.com (Eric W. Biederman) writes:
 
-> While updating the git code base the master branch is not getting
-> updated. First look tell me that the below commit is the issue
-> a9698bb22fb7b66e5882c3a5e7b2b8b53ea03f90
-> 
-> git-pull.sh does
-> git-fetch --update-head-ok "$@" || exit 1
-> 
-> and git-fetch.sh exit with status 1 printing the below message
-> 
-> * refs/heads/pu: does not fast forward to branch 'pu' of
-> http://git.kernel.org/pub/scm/git/git;
->   not updating.
-> 
+> Currently to import the -mm tree I have to work around
+> git-apply by using patch.  Because some of Andrews
+> patches in quilt will only apply with fuzz.
+>
+> Allow git-apply to handle fuzz makes it much easier to import
+> the -mm tree into git.  I am still only processing about 1.5 patch a
+> second which for the 692 patches in 2.6.17-rc1-mm2 is still painful
+> but it does help.
+>
+> If I just apply the patches and don't run git-mailinfo
+> git-write-tree, and git-write-commit I get about 4 patches
+> per second.
+>
+> This patch defaults to leaving fuzz processing off so if you don't
+> want patches that only apply with fuzz you won't get them.
+>
+> If a patch does require fuzz to apply you will get a warning:
+>> Fragment applied at offset: +-#lines (fuzz: #context_lines_deleted)
 
-The "pu" branch often won't fast forward because some commits have
-been completely deleted in it since the last time you pulled.
+Bother I almost had it right the first time.
+I forgot to remove the context lines from the new lines that we
+apply, in addition to the old lines that we remove.  This updated
+patch fixes that problem.
 
-If you want to track it, add a plus (+) sign to the proper line in 
-your .git/remotes/origin file, like this:
+Context lines patching themselves in is a weird bug.
 
-Pull: +refs/heads/pu:refs/heads/pu
+Eric
 
-Which tells git to deal with the problem for you by merging instead
-of fast forwarding.   Or you can just delete that line completely
-if you don't want to track the pu branch at all.
 
-HTH,
-Sean
+diff --git a/apply.c b/apply.c
+index 33b4271..4faf365 100644
+--- a/apply.c
++++ b/apply.c
+@@ -32,8 +32,9 @@ static int apply = 1;
+ static int no_add = 0;
+ static int show_index_info = 0;
+ static int line_termination = '\n';
++static int p_fuzz = 0;
+ static const char apply_usage[] =
+-"git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [-z] [-pNUM] [--whitespace=<nowarn|warn|error|error-all|strip>] <patch>...";
++"git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [-z] [-pNUM] [--fuzz=NUM] [--whitespace=<nowarn|warn|error|error-all|strip>] <patch>...";
+ 
+ static enum whitespace_eol {
+ 	nowarn_whitespace,
+@@ -100,6 +101,7 @@ static int max_change, max_len;
+ static int linenr = 1;
+ 
+ struct fragment {
++	unsigned long context;
+ 	unsigned long oldpos, oldlines;
+ 	unsigned long newpos, newlines;
+ 	const char *patch;
+@@ -817,12 +819,15 @@ static int parse_fragment(char *line, un
+ 	int added, deleted;
+ 	int len = linelen(line, size), offset;
+ 	unsigned long oldlines, newlines;
++	unsigned long leading, trailing;
+ 
+ 	offset = parse_fragment_header(line, len, fragment);
+ 	if (offset < 0)
+ 		return -1;
+ 	oldlines = fragment->oldlines;
+ 	newlines = fragment->newlines;
++	leading = 0;
++	trailing = 0;
+ 
+ 	if (patch->is_new < 0) {
+ 		patch->is_new =  !oldlines;
+@@ -860,10 +865,14 @@ static int parse_fragment(char *line, un
+ 		case ' ':
+ 			oldlines--;
+ 			newlines--;
++			if (!deleted && !added)
++				leading++;
++			trailing++;
+ 			break;
+ 		case '-':
+ 			deleted++;
+ 			oldlines--;
++			trailing = 0;
+ 			break;
+ 		case '+':
+ 			/*
+@@ -887,6 +896,7 @@ static int parse_fragment(char *line, un
+ 			}
+ 			added++;
+ 			newlines--;
++			trailing = 0;
+ 			break;
+ 
+                 /* We allow "\ No newline at end of file". Depending
+@@ -904,6 +914,10 @@ static int parse_fragment(char *line, un
+ 	}
+ 	if (oldlines || newlines)
+ 		return -1;
++	fragment->context = leading;
++	if (leading > trailing)
++		fragment->context = trailing;
++
+ 	/* If a fragment ends with an incomplete line, we failed to include
+ 	 * it in the above loop because we hit oldlines == newlines == 0
+ 	 * before seeing it.
+@@ -1087,7 +1101,7 @@ static int read_old_data(struct stat *st
+ 	}
+ }
+ 
+-static int find_offset(const char *buf, unsigned long size, const char *fragment, unsigned long fragsize, int line)
++static int find_offset(const char *buf, unsigned long size, const char *fragment, unsigned long fragsize, int line, int *lines)
+ {
+ 	int i;
+ 	unsigned long start, backwards, forwards;
+@@ -1148,6 +1162,7 @@ static int find_offset(const char *buf, 
+ 		n = (i >> 1)+1;
+ 		if (i & 1)
+ 			n = -n;
++		*lines = n;
+ 		return try;
+ 	}
+ 
+@@ -1155,6 +1170,31 @@ static int find_offset(const char *buf, 
+ 	 * We should start searching forward and backward.
+ 	 */
+ 	return -1;
++}
++
++static void reduce_context(char **buf, int *size)
++{
++	char *ctx = *buf;
++	unsigned long ctxsize = *size;
++	unsigned long offset;
++
++	/* Remove the first line */
++	offset = 0;
++	while (offset <= ctxsize) {
++		if (ctx[offset++] == '\n')
++			break;
++	}
++	ctxsize -= offset;
++	ctx += offset;
++	/* Remove the last line */
++	offset = ctxsize - 1;
++	while (offset > 0) {
++		if (ctx[--offset] == '\n')
++			break;
++	}
++	ctxsize = offset + 1;
++	*buf = ctx;
++	*size = ctxsize;
+ }
+ 
+ struct buffer_desc {
+@@ -1192,7 +1232,10 @@ static int apply_one_fragment(struct buf
+ 	int offset, size = frag->size;
+ 	char *old = xmalloc(size);
+ 	char *new = xmalloc(size);
++	char *oldlines, *newlines;
+ 	int oldsize = 0, newsize = 0;
++	int lines;
++	int fuzz, max_fuzz;
+ 
+ 	while (size > 0) {
+ 		int len = linelen(patch, size);
+@@ -1241,23 +1284,42 @@ #ifdef NO_ACCURATE_DIFF
+ 		newsize--;
+ 	}
+ #endif
++
++	offset = -1; /* shutup gcc */
++	oldlines = old;
++	newlines = new;
++	lines = 0;
++	max_fuzz = (p_fuzz < frag->context) ? p_fuzz : frag->context;
++	for (fuzz = 0; fuzz <= max_fuzz; fuzz++) {
++		/* Reduce the number of context lines */
++		if (fuzz) {
++			reduce_context(&oldlines, &oldsize);
++			reduce_context(&newlines, &newsize);
++		}
+ 			
+-	offset = find_offset(buf, desc->size, old, oldsize, frag->newpos);
+-	if (offset >= 0) {
+-		int diff = newsize - oldsize;
+-		unsigned long size = desc->size + diff;
+-		unsigned long alloc = desc->alloc;
+-
+-		if (size > alloc) {
+-			alloc = size + 8192;
+-			desc->alloc = alloc;
+-			buf = xrealloc(buf, alloc);
+-			desc->buffer = buf;
++		offset = find_offset(buf, desc->size, oldlines, oldsize, frag->newpos + fuzz, &lines);
++		if (offset >= 0) {
++			int diff = newsize - oldsize;
++			unsigned long size = desc->size + diff;
++			unsigned long alloc = desc->alloc;
++
++			if (fuzz)
++				fprintf(stderr, "Fragment applied at offset: %d (fuzz: %d)\n",
++					lines, fuzz);
++
++			if (size > alloc) {
++				alloc = size + 8192;
++				desc->alloc = alloc;
++				buf = xrealloc(buf, alloc);
++				desc->buffer = buf;
++			}
++			desc->size = size;
++			memmove(buf + offset + newsize, buf + offset + oldsize, size - offset - newsize);
++			memcpy(buf + offset, newlines, newsize);
++			offset = 0;
++			
++			break;
+ 		}
+-		desc->size = size;
+-		memmove(buf + offset + newsize, buf + offset + oldsize, size - offset - newsize);
+-		memcpy(buf + offset, new, newsize);
+-		offset = 0;
+ 	}
+ 
+ 	free(old);
+@@ -1943,6 +2005,10 @@ int main(int argc, char **argv)
+ 		}
+ 		if (!strcmp(arg, "-z")) {
+ 			line_termination = 0;
++			continue;
++		}
++		if (!strncmp(arg, "--fuzz=", 7)) {
++			p_fuzz = atoi(arg + 7);
+ 			continue;
+ 		}
+ 		if (!strncmp(arg, "--whitespace=", 13)) {
