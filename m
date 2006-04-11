@@ -1,29 +1,29 @@
 From: Dennis Stosberg <dennis@stosberg.net>
-Subject: Build fixes for Solaris 9
-Date: Tue, 11 Apr 2006 18:37:58 +0200
-Message-ID: <20060411163758.G1237b62a@leonov.stosberg.net>
+Subject: t5501-old-fetch-and-upload.sh fails with NO_PYTHON=1
+Date: Tue, 11 Apr 2006 19:05:08 +0200
+Message-ID: <20060411170508.G14ba7e47@leonov.stosberg.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Apr 11 18:38:21 2006
+X-From: git-owner@vger.kernel.org Tue Apr 11 19:05:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTLsW-0005nf-Lw
-	for gcvg-git@gmane.org; Tue, 11 Apr 2006 18:38:09 +0200
+	id 1FTMIq-0002SI-TT
+	for gcvg-git@gmane.org; Tue, 11 Apr 2006 19:05:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbWDKQiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Apr 2006 12:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbWDKQiE
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Apr 2006 12:38:04 -0400
-Received: from ncs.stosberg.net ([217.195.44.246]:58287 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1751345AbWDKQiD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Apr 2006 12:38:03 -0400
+	id S1751372AbWDKRFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Apr 2006 13:05:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbWDKRFP
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Apr 2006 13:05:15 -0400
+Received: from ncs.stosberg.net ([217.195.44.246]:51642 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1751372AbWDKRFO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Apr 2006 13:05:14 -0400
 Received: from leonov (p213.54.77.13.tisdip.tiscali.de [213.54.77.13])
-	by ncs.stosberg.net (Postfix) with ESMTP id 95395AEBA0EE
-	for <git@vger.kernel.org>; Tue, 11 Apr 2006 18:37:52 +0200 (CEST)
+	by ncs.stosberg.net (Postfix) with ESMTP id D95C3AEBA0EE
+	for <git@vger.kernel.org>; Tue, 11 Apr 2006 19:05:02 +0200 (CEST)
 Received: by leonov (Postfix, from userid 500)
-	id 1B3CEEE722; Tue, 11 Apr 2006 18:37:58 +0200 (CEST)
+	id B8C17EE74A; Tue, 11 Apr 2006 19:05:08 +0200 (CEST)
 To: git@vger.kernel.org
 Content-Disposition: inline
 X-ICQ: 63537718
@@ -32,106 +32,44 @@ User-Agent: mutt-ng/devel-r796 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18614>
 
 Hello,
 
-The attached patch allows git to be built on Solaris 9, which does
-not have setenv() and unsetenv().
+t/t5501-old-fetch-and-upload.sh fails on Solaris 9 with NO_PYTHON=1.
+The test doesn't work correctly on Linux with NO_PYTHON=1, too, but it
+doesn't cause a failure there.
 
-Also, Solaris needs strings.h for index().  A few days ago there was
-a thread about this on the list and the result was that strchr() is
-more portable than index() and is used everywhere in git anyway.  So
-instead of including strings.h, this patch replaces all remaining
-calls to index() by strchr().
+When NO_PYTHON=1 is set, t/Makefile passes "--no-python" to the test as
+an argument.  That causes the $list variable to be set to "--no-python"
+instead of "fetch upload".  Since that string does not identify a
+program to be tested, $pgm remains unset.
+
+On Linux the return code of "which $pgm" is 1 in that case, which
+causes the test to do nothing and exit without failure.  In contrast,
+the return code of "which" without any argument is 0 on Solaris, so
+the test is being run and fails.
+
+I have attached a simple fix, but is this test still useful at all?
 
 Regards,
 Dennis
 
-
-diff --git a/Makefile b/Makefile
-index c0409f3..ff645d8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -248,6 +248,10 @@ ifeq ($(uname_S),SunOS)
- 		NO_UNSETENV = YesPlease
- 		NO_SETENV = YesPlease
- 	endif
-+	ifeq ($(uname_R),5.9)
-+		NO_UNSETENV = YesPlease
-+		NO_SETENV = YesPlease
-+	endif
- 	INSTALL = ginstall
- 	TAR = gtar
- 	ALL_CFLAGS += -D__EXTENSIONS__
-diff --git a/http-fetch.c b/http-fetch.c
-index 71a7daf..861644b 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -597,7 +597,7 @@ static void process_alternates_response(
- 				newalt->packs = NULL;
- 				path = strstr(target, "//");
- 				if (path) {
--					path = index(path+2, '/');
-+					path = strchr(path+2, '/');
- 					if (path)
- 						newalt->path_len = strlen(path);
- 				}
-@@ -678,7 +678,7 @@ static void
- xml_start_tag(void *userData, const char *name, const char **atts)
- {
- 	struct xml_ctx *ctx = (struct xml_ctx *)userData;
--	const char *c = index(name, ':');
-+	const char *c = strchr(name, ':');
- 	int new_len;
+diff --git a/t/t5501-old-fetch-and-upload.sh b/t/t5501-old-fetch-and-upload.sh
+index 596c88b..df69d97 100755
+--- a/t/t5501-old-fetch-and-upload.sh
++++ b/t/t5501-old-fetch-and-upload.sh
+@@ -13,10 +13,11 @@ tmp=`pwd`/.tmp$$
  
- 	if (c == NULL)
-@@ -707,7 +707,7 @@ static void
- xml_end_tag(void *userData, const char *name)
- {
- 	struct xml_ctx *ctx = (struct xml_ctx *)userData;
--	const char *c = index(name, ':');
-+	const char *c = strchr(name, ':');
- 	char *ep;
+ retval=0
  
- 	ctx->userFunc(ctx, 1);
-@@ -1261,7 +1261,7 @@ int main(int argc, char **argv)
- 	alt->next = NULL;
- 	path = strstr(url, "//");
- 	if (path) {
--		path = index(path+2, '/');
-+		path = strchr(path+2, '/');
- 		if (path)
- 			alt->path_len = strlen(path);
- 	}
-diff --git a/http-push.c b/http-push.c
-index 57cefde..994ee90 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1211,7 +1211,7 @@ static void
- xml_start_tag(void *userData, const char *name, const char **atts)
- {
- 	struct xml_ctx *ctx = (struct xml_ctx *)userData;
--	const char *c = index(name, ':');
-+	const char *c = strchr(name, ':');
- 	int new_len;
+-if [ -z "$1" ]; then
++tests=`echo "$@"| sed -e 's/--[a-zA-Z\-]*//g'`
++if [ -z "$tests" ]; then
+ 	list="fetch upload"
+ else
+-	list="$@"
++	list="$tests"
+ fi
  
- 	if (c == NULL)
-@@ -1240,7 +1240,7 @@ static void
- xml_end_tag(void *userData, const char *name)
- {
- 	struct xml_ctx *ctx = (struct xml_ctx *)userData;
--	const char *c = index(name, ':');
-+	const char *c = strchr(name, ':');
- 	char *ep;
- 
- 	ctx->userFunc(ctx, 1);
-@@ -2350,7 +2350,7 @@ int main(int argc, char **argv)
- 			char *path = strstr(arg, "//");
- 			remote->url = arg;
- 			if (path) {
--				path = index(path+2, '/');
-+				path = strchr(path+2, '/');
- 				if (path)
- 					remote->path_len = strlen(path);
- 			}
+ for i in $list; do
