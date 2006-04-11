@@ -1,86 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] diff-* --with-raw
-Date: Mon, 10 Apr 2006 17:35:11 -0700
-Message-ID: <7vr7456jb4.fsf@assigned-by-dhcp.cox.net>
-References: <7v7j5x7zh3.fsf@assigned-by-dhcp.cox.net>
-	<7v3bgl7z80.fsf@assigned-by-dhcp.cox.net>
-	<20060411002311.GW27689@pasky.or.cz>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] git log [diff-tree options]...
+Date: 10 Apr 2006 17:50:26 -0700
+Message-ID: <861ww5aqb1.fsf@blue.stonehenge.com>
+References: <7v7j5zce7x.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604090950590.9504@g5.osdl.org>
+	<7vbqvabn8f.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604091158310.9504@g5.osdl.org>
+	<Pine.LNX.4.63.0604092312340.29136@wbgn013.biozentrum.uni-wuerzburg.de>
+	<86k69xasg0.fsf@blue.stonehenge.com>
+	<7vveth6kdg.fsf@assigned-by-dhcp.cox.net>
+	<20060411003126.GX27689@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 11 02:35:37 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 11 02:50:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FT6qm-0000wT-RN
-	for gcvg-git@gmane.org; Tue, 11 Apr 2006 02:35:21 +0200
+	id 1FT75g-00074n-LD
+	for gcvg-git@gmane.org; Tue, 11 Apr 2006 02:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205AbWDKAfQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Apr 2006 20:35:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbWDKAfQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 20:35:16 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:23794 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932205AbWDKAfP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Apr 2006 20:35:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20060411003513.SEWT26964.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 10 Apr 2006 20:35:13 -0400
+	id S932207AbWDKAud (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Apr 2006 20:50:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932212AbWDKAuc
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Apr 2006 20:50:32 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:39290 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932207AbWDKAuc
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Apr 2006 20:50:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id AE12F8F3A1;
+	Mon, 10 Apr 2006 17:50:27 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 17179-01; Mon, 10 Apr 2006 17:50:26 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id C8D428F39D; Mon, 10 Apr 2006 17:50:26 -0700 (PDT)
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060411002311.GW27689@pasky.or.cz> (Petr Baudis's message of
-	"Tue, 11 Apr 2006 02:23:11 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+x-mayan-date: Long count = 12.19.13.3.13; tzolkin = 1 Ben; haab = 6 Pop
+In-Reply-To: <20060411003126.GX27689@pasky.or.cz>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18607>
 
-Petr Baudis <pasky@suse.cz> writes:
+>>>>> "Petr" == Petr Baudis <pasky@suse.cz> writes:
 
-> git-diff-* output is by default the raw format, and with the --with-raw
-> option you tell it to furthermore include the raw format... sounds
-> wrong, doesn't it? ;-) I'd call it --patch-with-raw or -P.
+Petr> Dear diary, on Tue, Apr 11, 2006 at 02:12:11AM CEST, I got a letter
+Petr> where Junio C Hamano <junkio@cox.net> said that...
+>> There is no reason for them to be *absolutely* identical
 
-Since --raw-with-raw would be oximoron, I would say --with-raw
-would naturally mean --patch-with-raw, but that's fine.
+Petr> One is that people expect them to be. It's been implied that "git xyzzy"
+Petr> is functionally fully equivalent to "git-xyzzy" for too long to silently
+Petr> break this now.
 
-> Also, it would be nice to handle the -c case as well. Not strictly
-> necessary for cg-log right now, but other cg-Xfollowrenames users might
-> want to have that for merges... (Potentially, this might break renames
-> detection but the case is really obscure.)
+Yes, this is what I was referencing.  I would *never* have considered
+that git-log and "git log" be different things now that it's been firmly
+engrained that they are the same.  Please don't violate the model.
 
-This would cover that request, comes on top of the previous one.
-
---
-
-diff --git a/combine-diff.c b/combine-diff.c
-index eb0d757..748dc30 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -832,6 +832,7 @@ const char *diff_tree_combined_merge(con
- 
- 	diffopts = *opt;
- 	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diffopts.with_raw = 0;
- 	diffopts.recursive = 1;
- 
- 	/* count parents */
-@@ -858,6 +859,15 @@ const char *diff_tree_combined_merge(con
- 			num_paths++;
- 	}
- 	if (num_paths) {
-+		if (opt->with_raw) {
-+			opt->output_format = DIFF_FORMAT_RAW;
-+			for (p = paths; p; p = p->next) {
-+				if (show_combined_diff(p, num_parent, dense,
-+						       header, opt))
-+					header = NULL;
-+			}
-+			opt->output_format = DIFF_FORMAT_PATCH;
-+		}
- 		for (p = paths; p; p = p->next) {
- 			if (show_combined_diff(p, num_parent, dense,
- 					       header, opt))
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
