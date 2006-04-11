@@ -1,110 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Implement limited context matching in git-apply.
-Date: Tue, 11 Apr 2006 11:23:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604111100510.10745@g5.osdl.org>
-References: <m1d5fqi23b.fsf@ebiederm.dsl.xmission.com>
- <m13bgmht9v.fsf@ebiederm.dsl.xmission.com> <m1irphhj1p.fsf_-_@ebiederm.dsl.xmission.com>
- <Pine.LNX.4.64.0604100821340.9504@g5.osdl.org> <m1k69xffcz.fsf@ebiederm.dsl.xmission.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: cg-admin-rewritehist --tree-filter revives removed files
+Date: Tue, 11 Apr 2006 21:26:39 +0200
+Message-ID: <200604112126.39365.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 11 20:24:00 2006
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Apr 11 21:27:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTNWp-0000pj-9R
-	for gcvg-git@gmane.org; Tue, 11 Apr 2006 20:23:51 +0200
+	id 1FTOVv-0003bG-TB
+	for gcvg-git@gmane.org; Tue, 11 Apr 2006 21:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982AbWDKSXs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Apr 2006 14:23:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbWDKSXs
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Apr 2006 14:23:48 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:15240 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750980AbWDKSXr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Apr 2006 14:23:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3BINMtH030747
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Apr 2006 11:23:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3BINLbo002491;
-	Tue, 11 Apr 2006 11:23:21 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1k69xffcz.fsf@ebiederm.dsl.xmission.com>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751085AbWDKT04 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Apr 2006 15:26:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbWDKT04
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Apr 2006 15:26:56 -0400
+Received: from mail.nextra.at ([195.170.70.67]:48480 "EHLO mail.nextra.at")
+	by vger.kernel.org with ESMTP id S1751085AbWDKT0z (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Apr 2006 15:26:55 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by mail.nextra.at (8.13.6/8.13.6) with ESMTP id k3BJQjRQ018132
+	for <git@vger.kernel.org>; Tue, 11 Apr 2006 21:26:47 +0200 (MEST)
+X-Abuse-Info: Please report abuse to abuse@eunet.co.at, see http://www.eunet.at/support/service
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id B3CD849863
+	for <git@vger.kernel.org>; Tue, 11 Apr 2006 21:26:39 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18618>
 
+I ran this on a small project:
 
+  cg-admin-rewritehist --tree-filter ':' testbranch
 
-On Mon, 10 Apr 2006, Eric W. Biederman wrote:
-> 
-> So at a quick inspection it looks to me like:
-> About .059s to perform to check for missing files.
-> About .019s to write the new tree.
-> About .155s in start up overhead, read_cache, and sanity checks.
-> 
-> So at a first glance it looks like librification to
-> allow the redundant work to be skipped, is where
-> the big speed win on my machine would be.
+Thereafter, the tree in testbranch has all files that had been removed in the 
+original history. I used cg-switch testbranch to check this.
 
-That sounded wrong to me, so I did a stupid patch to datestamp the 
-different phases of git-write-tree, and here's what it says for me:
+The main loop in cg-admin-rewritehist does this (among others) for each commit 
+in the original history:
 
-     0.000479 setup_git_directory
-     0.008333 read_cache
-     0.000813 ce_stage check
-     0.001838 tree validity check
-     0.037233 write_tree itself
+if [ "$filter_tree" ]; then
+	git-checkout-index -f -u -a
+	eval "$filter_tree"
+	git-diff-index -r $commit | cut -f 2- | tr '\n' '\0' | \
+		xargs -0 git-update-index --add --replace --remove
+	git-ls-files --others | tr '\n' '\0' | \
+		xargs -0 git-update-index --add --replace --remove
+fi
 
-	real    0m0.051s
-	user    0m0.044s
-	sys     0m0.008s
+Appearently, once files are checked out, they stay in the working directory 
+and are readded in all subsequent iterations if the current commit's tree 
+does not contain them.
 
-all times are in seconds. 
+I'm not proficient enough to fix this problem myself, so I hope for help from 
+the list.
 
-There is some overhead from the actual process startup (the timestamp 
-numbers add up to 0.048696 seconds, which is less than the 0.051 reported 
-by "time" - since I didn't datestamp everything), but the biggest chunk by 
-far (about three quarters of the total time, including _all_ the setup 
-like executing the process) is the actual call to write_tree() itself.
-
-So it probably wouldn't actually be that big a win performance-wise to 
-make write_tree() a library and call it directly from git-apply with some 
-flag.
-
-To really speed up write-tree, you'd have to know which trees to write, 
-and just skip the rest (and know what SHA1's the ones you skipped had: 
-it's not enough to just skip them, since you need the SHA1's of even the 
-trees you skipped to write the parent tree, and you _will_ change at 
-least the top parent tree if you had a valid patch).
-
-Which would imply pretty major surgery - you'd have to add the tree entry 
-information to the index file, and make sure they got invalidated properly 
-(all the way to the root) whenever adding/deleting/updating a path in the 
-index file.
-
-Quite frankly, I don't think it's really worth it.
-
-Yes, it would speed up applying of huge patch-sets, but it's not like 
-we're really slow at that even now, and I suspect you'd be better off 
-trying to either live with it, or trying to see if you could change your 
-workflow. There clearly _are_ tools that are better at handling pure 
-patches, with quilt being the obvious example.
-
-I routinely apply 100-200 patches in a go, and that's fast enough to not 
-even be an issue. Yes, I have reasonably fast hardware, but we're likely 
-talking thousands of patches in a series for it to be _really_ painful 
-even on pretty basic developer hardware. Even a slow machine should do a 
-few hundred patches in a couple of minutes.
-
-Maybe enough time to get a cup of coffee, but no more than it would take 
-to compile the project.
-
-			Linus
+Thanks,
+-- Hannes
