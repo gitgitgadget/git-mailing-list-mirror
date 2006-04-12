@@ -1,77 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: how to make a git-format patch
-Date: Wed, 12 Apr 2006 13:12:44 +0200
-Organization: At home
-Message-ID: <e1inb0$o7n$1@sea.gmane.org>
-References: <6d6a94c50604120328ufa09f0do76c04472206ae15f@mail.gmail.com>
+From: Darrin Thompson <darrint@progeny.com>
+Subject: Some Commit Messages Scare git-rev-list
+Date: Wed, 12 Apr 2006 09:11:02 -0400
+Message-ID: <1144847462.5213.6.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Wed Apr 12 13:13:12 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Apr 12 15:11:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTdHY-0006uK-5N
-	for gcvg-git@gmane.org; Wed, 12 Apr 2006 13:13:08 +0200
+	id 1FTf7v-00060G-AG
+	for gcvg-git@gmane.org; Wed, 12 Apr 2006 15:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932154AbWDLLNA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 12 Apr 2006 07:13:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932157AbWDLLNA
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 07:13:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:24709 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932154AbWDLLM7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Apr 2006 07:12:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FTdHE-0006rI-Vs
-	for git@vger.kernel.org; Wed, 12 Apr 2006 13:12:49 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 12 Apr 2006 13:12:48 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 12 Apr 2006 13:12:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S932185AbWDLNLE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Apr 2006 09:11:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbWDLNLE
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 09:11:04 -0400
+Received: from zealot.progeny.com ([216.37.46.162]:37047 "EHLO
+	morimoto.progeny.com") by vger.kernel.org with ESMTP
+	id S932185AbWDLNLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Apr 2006 09:11:02 -0400
+Received: from localhost.localdomain (morimoto.progeny.com [192.168.1.53])
+	by morimoto.progeny.com (Postfix) with ESMTP id 6AD3D636A4
+	for <git@vger.kernel.org>; Wed, 12 Apr 2006 08:10:58 -0500 (EST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.7.7
+X-Mailer: Evolution 2.4.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18630>
 
-Aubrey wrote:
+This scripts exhibits some odd behavior. Apparently git-rev-list
+mishandles commit messages which do not end in a newline. This as best I
+can tell this is a problem introduced since 1.1.5.
 
-> But I saw most of the git-format patches have a header in the front o=
-f
-> the patch file, like:
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =A0*=A0Added=A0xxxxxx=A0support
->=20
-> Signed-off-by: xxxxxxxx <xxxxxxx@email.com>
-> ---
->=20
-> =A0net/packet/Kconfig=A0|=A0=A0=A011=A0++++++++++-
-> =A01=A0files=A0changed,=A010=A0insertions(+),=A01=A0deletions(-)
->=20
-> diff --git a/net/packet/Kconfig b/net/packet/Kconfig
-> index 34ff93f..959c272 100644
-> --- a/net/packet/Kconfig
-> +++ b/net/packet/Kconfig
->=20
-> ----snip----
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> Just want to know how this kind of patch format generated.
-> Thanks for any hints.
+Here is a script to reproduce the problem:
 
-Perhaps git-format-patch(1) is what you want?
+rm -rf git-test
+mkdir git-test
+cd git-test
+git-init-db
+echo hello > hello
+git-add hello
 
---=20
-Jakub Narebski
-Warsaw, Poland
+# send scary message to git-commit -F -
+echo -n "test commit" | git-commit -F - -a
+echo world > world
+git-add world
+git-update-index --add world
+treeid=$(git-write-tree)
+
+# send scary message directly to git-commit-tree
+commitid=$(echo -n "another-test" | git-commit-tree $treeid -p HEAD)
+git-update-ref HEAD $commitid
+
+# see the wreckage
+git-rev-list --pretty HEAD
+
+Running gitk will also show the problem.
+
+--
+Darrin
