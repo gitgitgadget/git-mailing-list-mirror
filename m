@@ -1,60 +1,87 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Adding color to git diff output.
-Date: Wed, 12 Apr 2006 17:52:36 +0200
-Message-ID: <81b0412b0604120852gaa61e91s5f9ae9f4e061bd56@mail.gmail.com>
-References: <BAYC1-PASMTP08B0DB32592225AAD0838AAECD0@CEZ.ICE>
-	 <7virpf4sg4.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0604111725590.14565@g5.osdl.org>
-	 <BAYC1-PASMTP119CAD2588D00764DB3EA3AEC20@CEZ.ICE>
-	 <Pine.LNX.4.64.0604111801270.14565@g5.osdl.org>
-	 <81b0412b0604120038q2e4aef8cn55ba4cfa68e18b34@mail.gmail.com>
-	 <Pine.LNX.4.64.0604120846000.14565@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Some Commit Messages Scare git-rev-list
+Date: Wed, 12 Apr 2006 10:23:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604121002220.14565@g5.osdl.org>
+References: <1144847462.5213.6.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: sean <seanlkml@sympatico.ca>, junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 12 17:52:46 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 12 19:24:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FThe4-0001Wu-Dz
-	for gcvg-git@gmane.org; Wed, 12 Apr 2006 17:52:40 +0200
+	id 1FTj4d-0005S2-N3
+	for gcvg-git@gmane.org; Wed, 12 Apr 2006 19:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbWDLPwh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Apr 2006 11:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbWDLPwh
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 11:52:37 -0400
-Received: from pproxy.gmail.com ([64.233.166.183]:39714 "EHLO pproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750945AbWDLPwh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Apr 2006 11:52:37 -0400
-Received: by pproxy.gmail.com with SMTP id i49so1723149pye
-        for <git@vger.kernel.org>; Wed, 12 Apr 2006 08:52:36 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=etoiKipkq3gORStx/WQ1xpY2+3J+Qk2LKy/H5by2GvQqDQ9AgxbX18/QGrd+RkXe/NDbJeZ89VW1pxemk6BEkmzpgnxWgqu1+MaR8Q4Tg8fc9r2vJzV1k01fzCleDKtn+lKNpF01Dgxio2uXHFetHqQiLA6J7FpjkBB/3nngEts=
-Received: by 10.35.12.13 with SMTP id p13mr126452pyi;
-        Wed, 12 Apr 2006 08:52:36 -0700 (PDT)
-Received: by 10.35.41.18 with HTTP; Wed, 12 Apr 2006 08:52:36 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604120846000.14565@g5.osdl.org>
-Content-Disposition: inline
+	id S932272AbWDLRYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Apr 2006 13:24:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932273AbWDLRYI
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 13:24:08 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:14815 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932272AbWDLRYH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Apr 2006 13:24:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3CHNftH026382
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Apr 2006 10:23:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3CHNckF012514;
+	Wed, 12 Apr 2006 10:23:40 -0700
+To: Darrin Thompson <darrint@progeny.com>
+In-Reply-To: <1144847462.5213.6.camel@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18634>
 
-On 4/12/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> >
-> > Maybe use "-t" here? I have at least one system which has no tty installed.
-> > Like this:
-> >
-> >   if [ -n "$GIT_DIFF_PAGER" -a -t ]; then
->
-> I assume you mean "-t 1". It needs the FD number. But yes.
->
 
-yes, tpyo
-(bash doesn't give an error here, btw. Just always 0)
+
+On Wed, 12 Apr 2006, Darrin Thompson wrote:
+>
+> This scripts exhibits some odd behavior. Apparently git-rev-list
+> mishandles commit messages which do not end in a newline. This as best I
+> can tell this is a problem introduced since 1.1.5.
+
+Fixed like so..
+
+However, your script shows another problem: the "#" added at the end of 
+the line for a 
+
+	echo -n "duh" | git-commit -F - -a
+
+seems to be because we append the "git status" output to it, and then we 
+drop the lines that start with a '#', but due to the "-n", the first # 
+ends up being at the end of the line. 
+
+I suspect that when we get the commit message like that, we should _not_ 
+do any of the commit message editing at all.
+
+That's a separate issue, though, and not fixed by this patch.
+
+		Linus
+
+---
+diff --git a/commit.c b/commit.c
+index d534c9b..c7bb8db 100644
+--- a/commit.c
++++ b/commit.c
+@@ -400,11 +400,11 @@ static int get_one_line(const char *msg,
+ 
+ 	while (len--) {
+ 		char c = *msg++;
++		if (!c)
++			break;
+ 		ret++;
+ 		if (c == '\n')
+ 			break;
+-		if (!c)
+-			return 0;
+ 	}
+ 	return ret;
+ }
