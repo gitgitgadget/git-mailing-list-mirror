@@ -1,55 +1,112 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH] Handle branch names with slashes
-Date: Wed, 12 Apr 2006 21:16:55 +0200
-Message-ID: <20060412191655.GD27397@nowhere.earth>
-References: <20060214173509.GA8666@diana.vm.bytemark.co.uk> <20060217014117.12525.21330.stgit@backpacker.hemma.treskal.com> <tnxbqx6z592.fsf@arm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Some Commit Messages Scare git-rev-list
+Date: Wed, 12 Apr 2006 12:39:25 -0700
+Message-ID: <7vy7ya37o2.fsf@assigned-by-dhcp.cox.net>
+References: <1144847462.5213.6.camel@localhost.localdomain>
+	<Pine.LNX.4.64.0604121002220.14565@g5.osdl.org>
+	<7v3bgi4op7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 12 21:08:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Darrin Thompson <darrint@progeny.com>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Apr 12 21:39:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTkh5-00085p-8K
-	for gcvg-git@gmane.org; Wed, 12 Apr 2006 21:07:59 +0200
+	id 1FTlBb-0004rq-V4
+	for gcvg-git@gmane.org; Wed, 12 Apr 2006 21:39:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064AbWDLTHk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 12 Apr 2006 15:07:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbWDLTHk
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 15:07:40 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:36226 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750918AbWDLTHj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Apr 2006 15:07:39 -0400
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 898FC27652;
-	Wed, 12 Apr 2006 21:07:38 +0200 (CEST)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.61)
-	(envelope-from <ydirson@altern.org>)
-	id 1FTkpk-0008JI-1o; Wed, 12 Apr 2006 21:16:56 +0200
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <tnxbqx6z592.fsf@arm.com>
-User-Agent: Mutt/1.5.11
+	id S932115AbWDLTj2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Apr 2006 15:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932155AbWDLTj2
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 15:39:28 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:23783 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932115AbWDLTj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Apr 2006 15:39:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060412193926.LFUM17757.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 12 Apr 2006 15:39:26 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7v3bgi4op7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 12 Apr 2006 11:46:12 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18637>
 
-On Fri, Feb 17, 2006 at 09:47:21AM +0000, Catalin Marinas wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > Let StGIT grok branch names with slashes in them. It used to fall f=
-lat
-> > on its face when confronted with them.
->=20
-> Thanks for the patches you sent. I'll have a look at them tomorrow.
+Junio C Hamano <junkio@cox.net> writes:
 
-Is this still being worked on ?
---=20
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Grati=
-s
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+> We still need the "do we have anything to commit?" check by
+> running "status" (which has to know what to do in different
+> cases with -i/-o/-a), but there is no point appending its output
+> to the proposed commit message given by the user.
+
+BTW, this does not quite work as expected if you did something
+like this:
+
+	echo -n 'incomplete line' | git commit -a -s -F -
+
+because we would want to append the Signed-off-by: line.  I am
+almost tempted to say "then do not do it", but it might make
+sense to do this as well.
+
+-- >8 --
+[PATCH] stripspace: make sure not to leave an incomplete line.
+
+When dealing with a commit log message for human consumption, it
+never makes sense to keep a log that ends with an incomplete
+line, so make it a part of the clean-up process done with
+git-stripspace.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/stripspace.c b/stripspace.c
+index 96cd0a8..dee1ef0 100644
+--- a/stripspace.c
++++ b/stripspace.c
+@@ -6,9 +6,9 @@ #include <ctype.h>
+  * Remove empty lines from the beginning and end.
+  *
+  * Turn multiple consecutive empty lines into just one
+- * empty line.
++ * empty line.  Return true if it is an incomplete line.
+  */
+-static void cleanup(char *line)
++static int cleanup(char *line)
+ {
+ 	int len = strlen(line);
+ 
+@@ -21,16 +21,19 @@ static void cleanup(char *line)
+ 			len--;
+ 			line[len] = 0;
+ 		} while (len > 1);
++		return 0;
+ 	}
++	return 1;
+ }
+ 
+ int main(int argc, char **argv)
+ {
+ 	int empties = -1;
++	int incomplete = 0;
+ 	char line[1024];
+ 
+ 	while (fgets(line, sizeof(line), stdin)) {
+-		cleanup(line);
++		incomplete = cleanup(line);
+ 
+ 		/* Not just an empty line? */
+ 		if (line[0] != '\n') {
+@@ -44,5 +47,7 @@ int main(int argc, char **argv)
+ 			continue;
+ 		empties++;
+ 	}
++	if (incomplete)
++		putchar('\n');
+ 	return 0;
+ }
