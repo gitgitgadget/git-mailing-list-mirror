@@ -1,60 +1,57 @@
-From: Mathieu Chouquet-Stringer <ml2news@free.fr>
-Subject: Re: how to make a git-format patch
-Date: 12 Apr 2006 16:04:16 +0200
-Organization: Uh?
-Message-ID: <m3sloiriu7.fsf@localhost.localdomain>
-References: <6d6a94c50604120328ufa09f0do76c04472206ae15f@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Adding color to git diff output.
+Date: Wed, 12 Apr 2006 08:46:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604120846000.14565@g5.osdl.org>
+References: <BAYC1-PASMTP08B0DB32592225AAD0838AAECD0@CEZ.ICE> 
+ <7virpf4sg4.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0604111725590.14565@g5.osdl.org>
+  <BAYC1-PASMTP119CAD2588D00764DB3EA3AEC20@CEZ.ICE> 
+ <Pine.LNX.4.64.0604111801270.14565@g5.osdl.org>
+ <81b0412b0604120038q2e4aef8cn55ba4cfa68e18b34@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 12 16:05:38 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: sean <seanlkml@sympatico.ca>, junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 12 17:47:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTfyH-0001kW-Bw
-	for gcvg-git@gmane.org; Wed, 12 Apr 2006 16:05:26 +0200
+	id 1FThYL-0000BI-LP
+	for gcvg-git@gmane.org; Wed, 12 Apr 2006 17:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbWDLOFV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Apr 2006 10:05:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbWDLOFV
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 10:05:21 -0400
-Received: from smtp13.wanadoo.fr ([193.252.22.54]:60427 "EHLO
-	smtp13.wanadoo.fr") by vger.kernel.org with ESMTP id S1751144AbWDLOFU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Apr 2006 10:05:20 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf1312.wanadoo.fr (SMTP Server) with ESMTP id 04FD3700009A
-	for <git@vger.kernel.org>; Wed, 12 Apr 2006 16:05:19 +0200 (CEST)
-Received: from bigip.bigip.mine.nu (AMarseille-252-1-124-143.w86-216.abo.wanadoo.fr [86.216.35.143])
-	by mwinf1312.wanadoo.fr (SMTP Server) with ESMTP id D09697000090;
-	Wed, 12 Apr 2006 16:05:18 +0200 (CEST)
-X-ME-UUID: 20060412140518854.D09697000090@mwinf1312.wanadoo.fr
-Received: from localhost.localdomain (shookaylt.bigip.mine.nu [10.0.1.11])
-	by bigip.bigip.mine.nu (8.13.6/8.13.6) with ESMTP id k3CE4H9Z031609;
-	Wed, 12 Apr 2006 16:04:17 +0200
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.6/8.13.6) with ESMTP id k3CE4HH9027014;
-	Wed, 12 Apr 2006 16:04:17 +0200
-Received: (from mchouque@localhost)
-	by localhost.localdomain (8.13.6/8.13.6/Submit) id k3CE4HJJ027011;
-	Wed, 12 Apr 2006 16:04:17 +0200
-X-Authentication-Warning: localhost.localdomain: mchouque set sender to ml2news@free.fr using -f
-To: aubreylee@gmail.com (Aubrey)
-X-Face: %JOeya=Dg!}[/#Go&*&cQ+)){p1c8}u\Fg2Q3&)kothIq|JnWoVzJtCFo~4X<uJ\9cHK'.w 3:{EoxBR
-In-Reply-To: <6d6a94c50604120328ufa09f0do76c04472206ae15f@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1750781AbWDLPqi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Apr 2006 11:46:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbWDLPqi
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 11:46:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:26302 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750846AbWDLPqh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Apr 2006 11:46:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3CFkTtH021470
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Apr 2006 08:46:30 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3CFkSiY008537;
+	Wed, 12 Apr 2006 08:46:28 -0700
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0604120038q2e4aef8cn55ba4cfa68e18b34@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18632>
 
-aubreylee@gmail.com (Aubrey) writes:
-> But I saw most of the git-format patches have a header in the front of
-> the patch file, like:
 
-I believe you're talking about 'git whatchanged -p' which not only displays
-the diffs but also the commit comments.
 
--- 
-Mathieu Chouquet-Stringer
+On Wed, 12 Apr 2006, Alex Riesen wrote:
+>
+> Maybe use "-t" here? I have at least one system which has no tty installed.
+> Like this:
+> 
+>   if [ -n "$GIT_DIFF_PAGER" -a -t ]; then
+
+I assume you mean "-t 1". It needs the FD number. But yes.
+
+		Linus
