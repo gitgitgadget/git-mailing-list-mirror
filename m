@@ -1,161 +1,165 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 4/4] Add a couple of safety checks to series creation
-Date: Thu, 13 Apr 2006 23:44:31 +0200
-Message-ID: <20060413214431.8806.4177.stgit@gandelf.nowhere.earth>
-References: <20060413213819.8806.53300.stgit@gandelf.nowhere.earth>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: [RFH] shifting xdiff hunks?
+Date: Thu, 13 Apr 2006 14:55:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604131452250.10564@alien.or.mcafeemobile.com>
+References: <7vmzeqyolw.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604122348010.7104@alien.or.mcafeemobile.com>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="1795850513-1851088477-1144965348=:10564"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 13 23:42:45 2006
+X-From: git-owner@vger.kernel.org Thu Apr 13 23:56:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FU9aH-0001m1-Dv
-	for gcvg-git@gmane.org; Thu, 13 Apr 2006 23:42:37 +0200
+	id 1FU9nD-0003n8-3E
+	for gcvg-git@gmane.org; Thu, 13 Apr 2006 23:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964985AbWDMVmW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Apr 2006 17:42:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964983AbWDMVmW
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 17:42:22 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:4314 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S964985AbWDMVmV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Apr 2006 17:42:21 -0400
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 24A2A731C3;
-	Thu, 13 Apr 2006 23:42:20 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1FU9j9-00004t-5Z; Thu, 13 Apr 2006 23:51:47 +0200
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <20060413213819.8806.53300.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.9
+	id S964992AbWDMVz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Apr 2006 17:55:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964993AbWDMVz4
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 17:55:56 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:62647 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP id S964992AbWDMVzz
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Apr 2006 17:55:55 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1C9EE3> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Thu, 13 Apr 2006 14:55:53 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0604122348010.7104@alien.or.mcafeemobile.com>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18675>
 
-From: Yann Dirson <ydirson@altern.org>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Check first whether the operation can complete, instead of
-bombing out halfway.
----
+--1795850513-1851088477-1144965348=:10564
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 
- stgit/commands/branch.py |    5 +++
- stgit/stack.py           |    7 ++++-
- t/t1000-branch-create.sh |   66 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 76 insertions(+), 2 deletions(-)
+On Wed, 12 Apr 2006, Davide Libenzi wrote:
 
-diff --git a/stgit/commands/branch.py b/stgit/commands/branch.py
-index c4b5945..c95e529 100644
---- a/stgit/commands/branch.py
-+++ b/stgit/commands/branch.py
-@@ -122,12 +122,15 @@ def func(parser, options, args):
-         check_conflicts()
-         check_head_top_equal()
- 
-+        if git.branch_exists(args[0]):
-+            raise CmdException, 'Branch "%s" already exists' % args[0]
-+        
-         tree_id = None
-         if len(args) == 2:
-             tree_id = git_id(args[1])
- 
--        git.create_branch(args[0], tree_id)
-         stack.Series(args[0]).init()
-+        git.create_branch(args[0], tree_id)
- 
-         print 'Branch "%s" created.' % args[0]
-         return
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 92407e7..236e67f 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -431,8 +431,13 @@ class Series:
-         """
-         bases_dir = os.path.join(self.__base_dir, 'refs', 'bases')
- 
--        if self.is_initialised():
-+        if os.path.exists(self.__patch_dir):
-             raise StackException, self.__patch_dir + ' already exists'
-+        if os.path.exists(self.__refs_dir):
-+            raise StackException, self.__refs_dir + ' already exists'
-+        if os.path.exists(self.__base_file):
-+            raise StackException, self.__base_file + ' already exists'
-+
-         os.makedirs(self.__patch_dir)
- 
-         if not os.path.isdir(bases_dir):
-diff --git a/t/t1000-branch-create.sh b/t/t1000-branch-create.sh
-new file mode 100755
-index 0000000..bee0b1c
---- /dev/null
-+++ b/t/t1000-branch-create.sh
-@@ -0,0 +1,66 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Yann Dirson
-+#
-+
-+test_description='Branch operations.
-+
-+Exercises the "stg branch" commands.
-+'
-+
-+. ./test-lib.sh
-+
-+test_stg_init
-+
-+test_expect_failure \
-+    'Try to create an stgit branch with a spurious refs/patches/ entry' \
-+    'find .git -name foo | xargs rm -rf &&
-+     touch .git/refs/patches/foo &&
-+     stg branch -c foo
-+'
-+
-+test_expect_success \
-+    'Check no part of the branch was created' \
-+    'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/patches/foo"
-+'
-+
-+
-+test_expect_failure \
-+    'Try to create an stgit branch with a spurious patches/ entry' \
-+    'find .git -name foo | xargs rm -rf &&
-+     touch .git/patches/foo &&
-+     stg branch -c foo
-+'
-+
-+test_expect_success \
-+    'Check no part of the branch was created' \
-+    'test "`find .git -name foo | tee /dev/stderr`" = ".git/patches/foo"
-+'
-+
-+
-+test_expect_failure \
-+    'Try to create an stgit branch with a spurious refs/bases/ entry' \
-+    'find .git -name foo | xargs rm -rf &&
-+     touch .git/refs/bases/foo &&
-+     stg branch -c foo
-+'
-+
-+test_expect_success \
-+    'Check no part of the branch was created' \
-+    'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/bases/foo"
-+'
-+
-+
-+# test_expect_failure \
-+#     'Try to create an stgit branch with a spurious refs/heads/ entry' \
-+#     'find .git -name foo | xargs rm -rf &&
-+#      touch .git/refs/heads/foo &&
-+#      stg branch -c foo
-+# '
-+
-+# test_expect_success \
-+#     'Check no part of the branch was created' \
-+#     'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/heads/foo"
-+# '
-+
-+test_done
+> Yes, this is what GNU diff does. It's a post-process of the edit script. Not 
+> a problem at all. Till this weekend (included) I'm pretty booked, but I'll do 
+> that in the following days.
+
+Dang, that was a short weekend. I found a lunch-time hour for this. Would 
+you try to see if this libxdiff-based diff merges on your tree?
+See also how it looks for you.
+
+
+
+- Davide
+
+
+--1795850513-1851088477-1144965348=:10564
+Content-Type: TEXT/plain; charset=US-ASCII; name=zzzz-pickydiff.diff
+Content-Transfer-Encoding: BASE64
+Content-Description: 
+Content-Disposition: attachment; filename=zzzz-pickydiff.diff
+
+LS0tIGEveGRpZmZpLmMNCisrKyBiL3hkaWZmaS5jDQpAQCAtNDUsNiArNDUs
+OCBAQA0KIAkJICAgICAgbG9uZyAqa3ZkZiwgbG9uZyAqa3ZkYiwgaW50IG5l
+ZWRfbWluLCB4ZHBzcGxpdF90ICpzcGwsDQogCQkgICAgICB4ZGFsZ29lbnZf
+dCAqeGVudik7DQogc3RhdGljIHhkY2hhbmdlX3QgKnhkbF9hZGRfY2hhbmdl
+KHhkY2hhbmdlX3QgKnhzY3IsIGxvbmcgaTEsIGxvbmcgaTIsIGxvbmcgY2hn
+MSwgbG9uZyBjaGcyKTsNCitzdGF0aWMgaW50IHhkbF9jaGFuZ2VfY29tcGFj
+dCh4ZGZpbGVfdCAqeGRmLCB4ZGZpbGVfdCAqeGRmbyk7DQorDQogDQogDQog
+DQpAQCAtMzk0LDYgKzM5NiwxMTAgQEANCiB9DQogDQogDQorc3RhdGljIGlu
+dCB4ZGxfY2hhbmdlX2NvbXBhY3QoeGRmaWxlX3QgKnhkZiwgeGRmaWxlX3Qg
+KnhkZm8pIHsNCisJbG9uZyBpeCwgaXhvLCBpeHMsIGl4cmVmLCBncnBzaXos
+IG5yZWMgPSB4ZGYtPm5yZWM7DQorCWNoYXIgKnJjaGcgPSB4ZGYtPnJjaGcs
+ICpyY2hnbyA9IHhkZm8tPnJjaGc7DQorCXhyZWNvcmRfdCAqKnJlY3MgPSB4
+ZGYtPnJlY3M7DQorDQorCS8qDQorCSAqIFRoaXMgaXMgdGhlIHNhbWUgb2Yg
+d2hhdCBHTlUgZGlmZiBkb2VzLiBNb3ZlIGJhY2sgYW5kIGZvcndhcmQNCisJ
+ICogY2hhbmdlIGdyb3VwcyBmb3IgYSBjb25zaXN0ZW50IGFuZCBwcmV0dHkg
+ZGlmZiBvdXRwdXQuIFRoaXMgYWxzbw0KKwkgKiBoZWxwcyBpbiBmaW5kaW5n
+IGpvaW5lYWJsZSBjaGFuZ2UgZ3JvdXBzIGFuZCByZWR1Y2UgdGhlIGRpZmYg
+c2l6ZS4NCisJICovDQorCWZvciAoaXggPSBpeG8gPSAwOzspIHsNCisJCS8q
+DQorCQkgKiBGaW5kIHRoZSBmaXJzdCBjaGFuZ2VkIGxpbmUgaW4gdGhlIHRv
+LWJlLWNvbXBhY3RlZCBmaWxlLg0KKwkJICogV2UgbmVlZCB0byBrZWVwIHRy
+YWNrIG9mIGJvdGggaW5kZXhlcywgc28gaWYgd2UgZmluZCBhDQorCQkgKiBj
+aGFuZ2VkIGxpbmVzIGdyb3VwIG9uIHRoZSBvdGhlciBmaWxlLCB3aGlsZSBz
+Y2FubmluZyB0aGUNCisJCSAqIHRvLWJlLWNvbXBhY3RlZCBmaWxlLCB3ZSBu
+ZWVkIHRvIHNraXAgaXQgcHJvcGVybHkuIE5vdGUNCisJCSAqIHRoYXQgbG9v
+cHMgdGhhdCBhcmUgdGVzdGluZyBmb3IgY2hhbmdlZCBsaW5lcyBvbiByY2hn
+KiBkbw0KKwkJICogbm90IG5lZWQgaW5kZXggYm91bmRpbmcgc2luY2UgdGhl
+IGFycmF5IGlzIHByZXBhcmVkIHdpdGgNCisJCSAqIGEgemVybyBhdCBwb3Np
+dGlvbiAtMSBhbmQgTi4NCisJCSAqLw0KKwkJZm9yICg7IGl4IDwgbnJlYyAm
+JiAhcmNoZ1tpeF07IGl4KyspDQorCQkJd2hpbGUgKHJjaGdvW2l4bysrXSk7
+DQorCQlpZiAoaXggPT0gbnJlYykNCisJCQlicmVhazsNCisNCisJCS8qDQor
+CQkgKiBSZWNvcmQgdGhlIHN0YXJ0IG9mIGEgY2hhbmdlZC1ncm91cCBpbiB0
+aGUgdG8tYmUtY29tcGFjdGVkIGZpbGUNCisJCSAqIGFuZCBmaW5kIHRoZSBl
+bmQgb2YgaXQsIG9uIGJvdGggdG8tYmUtY29tcGFjdGVkIGFuZCBvdGhlciBm
+aWxlDQorCQkgKiBpbmRleGVzIChpeCBhbmQgaXhvKS4NCisJCSAqLw0KKwkJ
+aXhzID0gaXg7DQorCQlmb3IgKGl4Kys7IHJjaGdbaXhdOyBpeCsrKTsNCisJ
+CWZvciAoOyByY2hnb1tpeG9dOyBpeG8rKyk7DQorDQorCQlkbyB7DQorCQkJ
+Z3Jwc2l6ID0gaXggLSBpeHM7DQorDQorCQkJLyoNCisJCQkgKiBJZiB0aGUg
+bGluZSBiZWZvcmUgdGhlIGN1cnJlbnQgY2hhbmdlIGdyb3VwLCBpcyBlcXVh
+bCB0bw0KKwkJCSAqIHRoZSBsYXN0IGxpbmUgb2YgdGhlIGN1cnJlbnQgY2hh
+bmdlIGdyb3VwLCBzaGlmdCBiYWNrd2FyZA0KKwkJCSAqIHRoZSBncm91cC4N
+CisJCQkgKi8NCisJCQl3aGlsZSAoaXhzID4gMCAmJiByZWNzW2l4cyAtIDFd
+LT5oYSA9PSByZWNzW2l4IC0gMV0tPmhhICYmDQorCQkJICAgICAgIFhETF9S
+RUNNQVRDSChyZWNzW2l4cyAtIDFdLCByZWNzW2l4IC0gMV0pKSB7DQorCQkJ
+CXJjaGdbLS1peHNdID0gMTsNCisJCQkJcmNoZ1stLWl4XSA9IDA7DQorDQor
+CQkJCS8qDQorCQkJCSAqIFRoaXMgY2hhbmdlIG1pZ2h0IGhhdmUgam9pbmVk
+IHR3byBjaGFuZ2UgZ3JvdXBzLA0KKwkJCQkgKiBzbyB3ZSB0cnkgdG8gdGFr
+ZSB0aGlzIHNjZW5hcmlvIGluIGFjY291bnQgYnkgbW92aW5nDQorCQkJCSAq
+IHRoZSBzdGFydCBpbmRleCBhY2NvcmRpbmdseSAoYW5kIHNvIHRoZSBvdGhl
+ci1maWxlDQorCQkJCSAqIGVuZC1vZi1ncm91cCBpbmRleCkuDQorCQkJCSAq
+Lw0KKwkJCQlmb3IgKDsgcmNoZ1tpeHMgLSAxXTsgaXhzLS0pOw0KKwkJCQl3
+aGlsZSAocmNoZ29bLS1peG9dKTsNCisJCQl9DQorDQorCQkJLyoNCisJCQkg
+KiBSZWNvcmQgdGhlIGVuZC1vZi1ncm91cCBwb3NpdGlvbiBpbiBjYXNlIHdl
+IGFyZSBtYXRjaGVkDQorCQkJICogd2l0aCBhIGdyb3VwIG9mIGNoYW5nZXMg
+aW4gdGhlIG90aGVyIGZpbGUgKHRoYXQgaXMsIHRoZQ0KKwkJCSAqIGNoYW5n
+ZSByZWNvcmQgYmVmb3JlIHRoZSBlbmYtb2YtZ3JvdXAgaW5kZXggaW4gdGhl
+IG90aGVyDQorCQkJICogZmlsZSBpcyBzZXQpLg0KKwkJCSAqLw0KKwkJCWl4
+cmVmID0gcmNoZ29baXhvIC0gMV0gPyBpeDogbnJlYzsNCisNCisJCQkvKg0K
+KwkJCSAqIElmIHRoZSBmaXJzdCBsaW5lIG9mIHRoZSBjdXJyZW50IGNoYW5n
+ZSBncm91cCwgaXMgZXF1YWwgdG8NCisJCQkgKiB0aGUgbGluZSBuZXh0IG9m
+IHRoZSBjdXJyZW50IGNoYW5nZSBncm91cCwgc2hpZnQgZm9yd2FyZA0KKwkJ
+CSAqIHRoZSBncm91cC4NCisJCQkgKi8NCisJCQl3aGlsZSAoaXggPCBucmVj
+ICYmIHJlY3NbaXhzXS0+aGEgPT0gcmVjc1tpeF0tPmhhICYmDQorCQkJICAg
+ICAgIFhETF9SRUNNQVRDSChyZWNzW2l4c10sIHJlY3NbaXhdKSkgew0KKwkJ
+CQlyY2hnW2l4cysrXSA9IDA7DQorCQkJCXJjaGdbaXgrK10gPSAxOw0KKw0K
+KwkJCQkvKg0KKwkJCQkgKiBUaGlzIGNoYW5nZSBtaWdodCBoYXZlIGpvaW5l
+ZCB0d28gY2hhbmdlIGdyb3VwcywNCisJCQkJICogc28gd2UgdHJ5IHRvIHRh
+a2UgdGhpcyBzY2VuYXJpbyBpbiBhY2NvdW50IGJ5IG1vdmluZw0KKwkJCQkg
+KiB0aGUgc3RhcnQgaW5kZXggYWNjb3JkaW5nbHkgKGFuZCBzbyB0aGUgb3Ro
+ZXItZmlsZQ0KKwkJCQkgKiBlbmQtb2YtZ3JvdXAgaW5kZXgpLiBLZWVwIHRy
+YWNraW5nIHRoZSByZWZlcmVuY2UNCisJCQkJICogaW5kZXggaW4gY2FzZSB3
+ZSBhcmUgc2hpZnRpbmcgdG9nZXRoZXIgd2l0aCBhDQorCQkJCSAqIGNvcnJl
+c3BvbmRpbmcgZ3JvdXAgb2YgY2hhbmdlcyBpbiB0aGUgb3RoZXIgZmlsZS4N
+CisJCQkJICovDQorCQkJCWZvciAoOyByY2hnW2l4XTsgaXgrKyk7DQorCQkJ
+CXdoaWxlIChyY2hnb1srK2l4b10pDQorCQkJCQlpeHJlZiA9IGl4Ow0KKwkJ
+CX0NCisJCX0gd2hpbGUgKGdycHNpeiAhPSBpeCAtIGl4cyk7DQorDQorCQkv
+Kg0KKwkJICogVHJ5IHRvIG1vdmUgYmFjayB0aGUgcG9zc2libHkgbWVyZ2Vk
+IGdyb3VwIG9mIGNoYW5nZXMsIHRvIG1hdGNoDQorCQkgKiB0aGUgcmVjb3Jk
+ZWQgcG9zdGlvbiBpbiB0aGUgb3RoZXIgZmlsZS4NCisJCSAqLw0KKwkJd2hp
+bGUgKGl4cmVmIDwgaXgpIHsNCisJCQlyY2hnWy0taXhzXSA9IDE7DQorCQkJ
+cmNoZ1stLWl4XSA9IDA7DQorCQkJd2hpbGUgKHJjaGdvWy0taXhvXSk7DQor
+CQl9DQorCX0NCisNCisJcmV0dXJuIDA7DQorfQ0KKw0KKw0KIGludCB4ZGxf
+YnVpbGRfc2NyaXB0KHhkZmVudl90ICp4ZSwgeGRjaGFuZ2VfdCAqKnhzY3Ip
+IHsNCiAJeGRjaGFuZ2VfdCAqY3NjciA9IE5VTEwsICp4Y2g7DQogCWNoYXIg
+KnJjaGcxID0geGUtPnhkZjEucmNoZywgKnJjaGcyID0geGUtPnhkZjIucmNo
+ZzsNCkBAIC00MzksMTMgKzU0NSwxMyBAQA0KIA0KIAkJcmV0dXJuIC0xOw0K
+IAl9DQotDQotCWlmICh4ZGxfYnVpbGRfc2NyaXB0KCZ4ZSwgJnhzY3IpIDwg
+MCkgew0KKwlpZiAoeGRsX2NoYW5nZV9jb21wYWN0KCZ4ZS54ZGYxLCAmeGUu
+eGRmMikgPCAwIHx8DQorCSAgICB4ZGxfY2hhbmdlX2NvbXBhY3QoJnhlLnhk
+ZjIsICZ4ZS54ZGYxKSA8IDAgfHwNCisJICAgIHhkbF9idWlsZF9zY3JpcHQo
+JnhlLCAmeHNjcikgPCAwKSB7DQogDQogCQl4ZGxfZnJlZV9lbnYoJnhlKTsN
+CiAJCXJldHVybiAtMTsNCiAJfQ0KLQ0KIAlpZiAoeHNjcikgew0KIAkJaWYg
+KHhkbF9lbWl0X2RpZmYoJnhlLCB4c2NyLCBlY2IsIHhlY2ZnKSA8IDApIHsN
+CiANCkBAIC00NTMsMTAgKzU1OSw4IEBADQogCQkJeGRsX2ZyZWVfZW52KCZ4
+ZSk7DQogCQkJcmV0dXJuIC0xOw0KIAkJfQ0KLQ0KIAkJeGRsX2ZyZWVfc2Ny
+aXB0KHhzY3IpOw0KIAl9DQotDQogCXhkbF9mcmVlX2VudigmeGUpOw0KIA0K
+IAlyZXR1cm4gMDsNCg0KDQoNCg==
+
+--1795850513-1851088477-1144965348=:10564--
