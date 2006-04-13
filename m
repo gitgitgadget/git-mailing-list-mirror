@@ -1,98 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Test fails on ubuntu breezy
-Date: Thu, 13 Apr 2006 11:56:40 -0700
-Message-ID: <7vpsjl1ezb.fsf@assigned-by-dhcp.cox.net>
-References: <20060413115447.11819.qmail@science.horizon.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] diff-options: add --stat
+Date: Thu, 13 Apr 2006 12:18:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604131216500.14565@g5.osdl.org>
+References: <Pine.LNX.4.63.0604130301240.28688@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v64ld2uyv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604131138080.14565@g5.osdl.org>
+ <7vwtdt1f10.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Thu Apr 13 20:56:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 13 21:18:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FU6zm-0004Zg-EG
-	for gcvg-git@gmane.org; Thu, 13 Apr 2006 20:56:46 +0200
+	id 1FU7Ki-00007F-4X
+	for gcvg-git@gmane.org; Thu, 13 Apr 2006 21:18:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932446AbWDMS4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Apr 2006 14:56:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932447AbWDMS4n
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 14:56:43 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:36757 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932446AbWDMS4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Apr 2006 14:56:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060413185642.DBQP20694.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Apr 2006 14:56:42 -0400
-To: linux@horizon.com, "Peter Eriksen" <s022018@student.dtu.dk>,
-	"Aneesh Kumar" <aneesh.kumar@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932456AbWDMTST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Apr 2006 15:18:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932457AbWDMTST
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 15:18:19 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:25028 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932456AbWDMTSS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Apr 2006 15:18:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3DJIBtH027672
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 13 Apr 2006 12:18:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3DJIALE027841;
+	Thu, 13 Apr 2006 12:18:11 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtdt1f10.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18668>
 
-linux@horizon.com writes:
 
-> I've recently encountered the same problem with t/t3600-rm.sh step 9,
-> but I put it down to compiling as root.
->
-> Basically, the chmod of the directory didn't stop the delete from
-> happening, since I had umask 002 and it was g+w.
->
-> Anyway, that test is fragile.
 
-Indeed.  I am not sure about test #5, but here is my stab at
-fixing test #9.
+On Thu, 13 Apr 2006, Junio C Hamano wrote:
+> 
+> Yes that happens to be the case _now_.  I just did not want to
+> worry about future breakage, in case if Davide ever wants to
+> change how mb[] is prepared for whatever reason.
 
--- >8 --
-[PATCH] t3600-rm: skip failed-remove test when we cannot make an unremovable file
+I'd be worried if we depended on an external version of xdiff, but as it 
+is, we'd see all changes to our local xdiff implementation, so...
 
-When running t3600-rm test under fakeroot (or as root), we
-cannot make a file unremovable with "chmod a-w .".  Detect this
-case early and skip that test.
+It's not like either of the statements
+ - we always get whole lines
+ - the first memory block is always non-empty
+is really very controversial ;)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index d1947e1..acaa4d6 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -23,6 +23,16 @@ else
-     test_tabs=n
- fi
- 
-+# Later we will try removing an unremovable path to make sure
-+# git-rm barfs, but if the test is run as root that cannot be
-+# arranged.
-+: >test-file
-+chmod a-w .
-+rm -f test-file
-+test -f test-file && test_failed_remove=y
-+chmod 775 .
-+rm -f test-file
-+
- test_expect_success \
-     'Pre-check that foo exists and is in index before git-rm foo' \
-     '[ -f foo ] && git-ls-files --error-unmatch foo'
-@@ -56,12 +66,14 @@ test "$test_tabs" = y && test_expect_suc
-     "git-rm -f 'space embedded' 'tab	embedded' 'newline
- embedded'"
- 
--if test "$test_tabs" = y; then
--chmod u-w .
-+if test "$test_failed_remove" = y; then
-+chmod a-w .
- test_expect_failure \
-     'Test that "git-rm -f" fails if its rm fails' \
-     'git-rm -f baz'
--chmod u+w .
-+chmod 775 .
-+else
-+    test_expect_success 'skipping removal failure (perhaps running as root?)' :
- fi
- 
- test_expect_success \
+		Linus
