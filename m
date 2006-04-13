@@ -1,60 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] diff-options: add --stat
-Date: Thu, 13 Apr 2006 12:18:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604131216500.14565@g5.osdl.org>
+Date: Thu, 13 Apr 2006 22:00:56 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604132151040.29391@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0604130301240.28688@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v64ld2uyv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604131138080.14565@g5.osdl.org>
- <7vwtdt1f10.fsf@assigned-by-dhcp.cox.net>
+ <7v64ld2uyv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 13 21:18:25 2006
+X-From: git-owner@vger.kernel.org Thu Apr 13 22:01:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FU7Ki-00007F-4X
-	for gcvg-git@gmane.org; Thu, 13 Apr 2006 21:18:24 +0200
+	id 1FU7zz-0007ep-Kf
+	for gcvg-git@gmane.org; Thu, 13 Apr 2006 22:01:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932456AbWDMTST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Apr 2006 15:18:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932457AbWDMTST
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 15:18:19 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:25028 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932456AbWDMTSS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Apr 2006 15:18:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3DJIBtH027672
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 13 Apr 2006 12:18:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3DJIALE027841;
-	Thu, 13 Apr 2006 12:18:11 -0700
+	id S964960AbWDMUA6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Apr 2006 16:00:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964962AbWDMUA6
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 16:00:58 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:41629 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964960AbWDMUA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Apr 2006 16:00:58 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 12DB41FDE;
+	Thu, 13 Apr 2006 22:00:57 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 070591FDF;
+	Thu, 13 Apr 2006 22:00:57 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id D203A1FD5;
+	Thu, 13 Apr 2006 22:00:56 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtdt1f10.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <7v64ld2uyv.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18669>
 
-
+Hi,
 
 On Thu, 13 Apr 2006, Junio C Hamano wrote:
-> 
-> Yes that happens to be the case _now_.  I just did not want to
-> worry about future breakage, in case if Davide ever wants to
-> change how mb[] is prepared for whatever reason.
 
-I'd be worried if we depended on an external version of xdiff, but as it 
-is, we'd see all changes to our local xdiff implementation, so...
+> For an added line, xdl_emit_diffrec(rec, size, " ", 1, ecb) is
+> called, which gives mb[0].ptr = " " and mb[1].ptr = <the
+> contents of the line>; fn_diffstat() is called with (nbuf == 2).
 
-It's not like either of the statements
- - we always get whole lines
- - the first memory block is always non-empty
-is really very controversial ;)
+Silly me. I did not check that code, but assumed that mb Just Contains 
+Whole Lines...
 
-		Linus
+> Instead of driving diffstat code from run_diff(),
+> run_diff_cmd(), and builtin_diff(), I think it would be much
+> cleaner to define diff_flush_stat() as a sibling to
+> diff_flush_raw() and diff_flush_patch(), and bypass the
+> run_diff() chain.
+
+I guess you're right. It is also more work :-(
+
+There is another bug: if a file is created, you see "ev/null" as filename. 
+Ugly.
+
+I'll try to fix it.
+
+Ciao,
+Dscho
