@@ -1,314 +1,491 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 1/3] Add a testsuite framework copied from git-core
-Date: Wed, 12 Apr 2006 23:21:10 +0200
-Message-ID: <20060412212110.14579.45807.stgit@gandelf.nowhere.earth>
-References: <20060412211633.14579.98008.stgit@gandelf.nowhere.earth>
-X-From: git-owner@vger.kernel.org Wed Apr 12 23:19:32 2006
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] diff-options: add --stat
+Date: Thu, 13 Apr 2006 03:02:10 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604130301240.28688@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Apr 13 03:02:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTmkB-0004mx-9i
-	for gcvg-git@gmane.org; Wed, 12 Apr 2006 23:19:19 +0200
+	id 1FTqDy-0003dX-58
+	for gcvg-git@gmane.org; Thu, 13 Apr 2006 03:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315AbWDLVTF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Apr 2006 17:19:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932314AbWDLVTF
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 17:19:05 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:9932 "EHLO smtp1-g19.free.fr")
-	by vger.kernel.org with ESMTP id S932315AbWDLVTE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Apr 2006 17:19:04 -0400
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 06FAB9A5FD
-	for <git@vger.kernel.org>; Wed, 12 Apr 2006 23:19:03 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1FTmsz-0008P4-Ps
-	for git@vger.kernel.org; Wed, 12 Apr 2006 23:28:25 +0200
-To: git@vger.kernel.org
-In-Reply-To: <20060412211633.14579.98008.stgit@gandelf.nowhere.earth>
+	id S932341AbWDMBCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Apr 2006 21:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932394AbWDMBCP
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Apr 2006 21:02:15 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:2741 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932341AbWDMBCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Apr 2006 21:02:14 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id BFA2D1F71;
+	Thu, 13 Apr 2006 03:02:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id B39CF1EB0;
+	Thu, 13 Apr 2006 03:02:10 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 8A1AB1D78;
+	Thu, 13 Apr 2006 03:02:10 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18643>
 
-From:  <>
 
+Now you can say "git diff --stat" (to get an idea how many changes are
+uncommitted), or "git log --stat" (to get an idea how many changes were
+committed).
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- t/Makefile       |   25 ++++++
- t/t0000-dummy.sh |   17 ++++
- t/test-lib.sh    |  209 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 251 insertions(+), 0 deletions(-)
+	Probably it would be nicer to pass down the diff_options to
+	builtin_diff(), run_diff() and run_diff_cmd(), but I am *way*
+	too tired to change that now.
 
-diff --git a/t/Makefile b/t/Makefile
-new file mode 100644
-index 0000000..d5d7b6f
---- /dev/null
-+++ b/t/Makefile
-@@ -0,0 +1,25 @@
-+# Run tests
-+#
-+# Copyright (c) 2005 Junio C Hamano
-+#
+	It would have been nice to not just rip out and modify the diffstat
+	code from apply.c, but I did not want to fake patch structures.
+	Maybe someone more intelligent than me wants to fix this...
+
+ Documentation/diff-options.txt |    3 
+ diff.c                         |  250 ++++++++++++++++++++++++++++++++++------
+ diff.h                         |    3 
+ git-diff.sh                    |    6 +
+ 4 files changed, 222 insertions(+), 40 deletions(-)
+
+c706aa10bc5e2e2e22fb07aeaff1418f3d4caee0
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 338014c..447e522 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -7,6 +7,9 @@
+ --patch-with-raw::
+ 	Generate patch but keep also the default raw diff output.
+ 
++--stat::
++	Generate a diffstat instead of a patch.
 +
-+#GIT_TEST_OPTS=--verbose --debug
-+SHELL_PATH ?= $(SHELL)
-+TAR ?= $(TAR)
+ -z::
+ 	\0 line termination on output
+ 
+diff --git a/diff.c b/diff.c
+index a14e664..7f2b652 100644
+--- a/diff.c
++++ b/diff.c
+@@ -177,6 +177,7 @@ static int fill_mmfile(mmfile_t *mf, str
+ 
+ struct emit_callback {
+ 	const char **label_path;
++	struct diffstat_t *diffstat;
+ };
+ 
+ static int fn_out(void *priv, mmbuffer_t *mb, int nbuf)
+@@ -195,6 +196,150 @@ static int fn_out(void *priv, mmbuffer_t
+ 	return 0;
+ }
+ 
++struct diffstat_t {
++	int nr;
++	int alloc;
++	struct diffstat_file {
++		char *name;
++		unsigned int added, deleted;
++	} **files;
++};
 +
-+# Shell quote;
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
++static int fn_diffstat(void *priv, mmbuffer_t *mb, int nbuf)
++{
++	int i;
++	struct emit_callback *data = priv;
++	struct diffstat_file *x;
++	struct diffstat_t *diffstat = data->diffstat;
 +
-+T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
++	if (data->label_path[0]) {
++		x = xcalloc(sizeof (*x), 1);
++		if (diffstat->nr == diffstat->alloc) {
++			diffstat->alloc = alloc_nr(diffstat->alloc);
++			diffstat->files = xrealloc(diffstat->files,
++					diffstat->alloc * sizeof(x));
++		}
++		diffstat->files[diffstat->nr++] = x;
++		x->name = strdup(data->label_path[0] + 2);
++		data->label_path[0] = data->label_path[1] = NULL;
++	} else
++		x = diffstat->files[diffstat->nr - 1];
 +
-+all: $(T) clean
-+
-+$(T):
-+	@echo "*** $@ ***"; '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+
-+clean:
-+	rm -fr trash
-+
-+.PHONY: $(T) clean
-+.NOPARALLEL:
-+
-diff --git a/t/t0000-dummy.sh b/t/t0000-dummy.sh
-new file mode 100755
-index 0000000..ae4f838
---- /dev/null
-+++ b/t/t0000-dummy.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Yann Dirson
-+#
-+
-+test_description='dummy test.
-+
-+Only to test the testing environment.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+    'check stgit can be run' \
-+    'stg version'
-+
-+test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-new file mode 100755
-index 0000000..b1ac350
---- /dev/null
-+++ b/t/test-lib.sh
-@@ -0,0 +1,209 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Junio C Hamano
-+# Copyright (c) 2006 Yann Dirson
-+#
-+
-+# For repeatability, reset the environment to known value.
-+LANG=C
-+LC_ALL=C
-+PAGER=cat
-+TZ=UTC
-+export LANG LC_ALL PAGER TZ
-+unset AUTHOR_DATE
-+unset AUTHOR_EMAIL
-+unset AUTHOR_NAME
-+unset COMMIT_AUTHOR_EMAIL
-+unset COMMIT_AUTHOR_NAME
-+unset GIT_ALTERNATE_OBJECT_DIRECTORIES
-+unset GIT_AUTHOR_DATE
-+GIT_AUTHOR_EMAIL=author@example.com
-+GIT_AUTHOR_NAME='A U Thor'
-+unset GIT_COMMITTER_DATE
-+GIT_COMMITTER_EMAIL=committer@example.com
-+GIT_COMMITTER_NAME='C O Mitter'
-+unset GIT_DIFF_OPTS
-+unset GIT_DIR
-+unset GIT_EXTERNAL_DIFF
-+unset GIT_INDEX_FILE
-+unset GIT_OBJECT_DIRECTORY
-+unset SHA1_FILE_DIRECTORIES
-+unset SHA1_FILE_DIRECTORY
-+export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
-+export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
-+
-+# Each test should start with something like this, after copyright notices:
-+#
-+# test_description='Description of this test...
-+# This test checks if command xyzzy does the right thing...
-+# '
-+# . ./test-lib.sh
-+
-+error () {
-+	echo "* error: $*"
-+	trap - exit
-+	exit 1
++	for (i = 0; i < nbuf; i++)
++		if (mb[i].ptr[0] == '+')
++			x->added++;
++		else if (mb[i].ptr[0] == '-')
++			x->deleted++;
++	return 0;
 +}
 +
-+say () {
-+	echo "* $*"
++static void diffstat_binary(struct diffstat_t *diffstat, const char *name)
++{
++	struct diffstat_file *x = xcalloc(sizeof (*x), 1);
++	if (diffstat->nr == diffstat->alloc) {
++		diffstat->alloc = alloc_nr(diffstat->alloc);
++		diffstat->files = xrealloc(diffstat->files,
++				diffstat->alloc * sizeof(x));
++	}
++	diffstat->files[diffstat->nr++] = x;
++	x->name = strdup(name + 2);
++	x->added = -1;
 +}
 +
-+test "${test_description}" != "" ||
-+error "Test script did not set test_description."
++static const char pluses[] = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
++static const char minuses[]= "----------------------------------------------------------------------";
 +
-+while test "$#" -ne 0
-+do
-+	case "$1" in
-+	-d|--d|--de|--deb|--debu|--debug)
-+		debug=t; shift ;;
-+	-i|--i|--im|--imm|--imme|--immed|--immedi|--immedia|--immediat|--immediate)
-+		immediate=t; shift ;;
-+	-h|--h|--he|--hel|--help)
-+		echo "$test_description"
-+		exit 0 ;;
-+	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
-+		verbose=t; shift ;;
-+	*)
-+		break ;;
-+	esac
-+done
++static void show_stats(struct diffstat_t* data)
++{
++	char *prefix = "";
++	int i, len, add, del, total, adds = 0, dels = 0;
++	int max, max_change = 0, max_len = 0;
++	int total_files = data->nr;
 +
-+exec 5>&1
-+if test "$verbose" = "t"
-+then
-+	exec 4>&2 3>&1
-+else
-+	exec 4>/dev/null 3>/dev/null
-+fi
++	if (data->nr == 0)
++		return;
 +
-+test_failure=0
-+test_count=0
++	printf("---\n");
 +
-+trap 'echo >&5 "FATAL: Unexpected exit with code $?"; exit 1' exit
++	for (i = 0; i < data->nr; i++) {
++		struct diffstat_file *file = data->files[i];
++		
++		if (max_change < file->added + file->deleted)
++			max_change = file->added + file->deleted;
++		len = strlen(file->name);
++		if (max_len < len)
++			max_len = len;
++	}
 +
++	for (i = 0; i < data->nr; i++) {
++		char *name = data->files[i]->name;
++		int added = data->files[i]->added;
++		int deleted = data->files[i]->deleted;
 +
-+# You are not expected to call test_ok_ and test_failure_ directly, use
-+# the text_expect_* functions instead.
++		if (0 < (len = quote_c_style(name, NULL, NULL, 0))) {
++			char *qname = xmalloc(len + 1);
++			quote_c_style(name, qname, NULL, 0);
++			free(name);
++			name = qname;
++		}
 +
-+test_ok_ () {
-+	test_count=$(expr "$test_count" + 1)
-+	say "  ok $test_count: $@"
++		/*
++		 * "scale" the filename
++		 */
++		len = strlen(name);
++		max = max_len;
++		if (max > 50)
++			max = 50;
++		if (len > max) {
++			char *slash;
++			prefix = "...";
++			max -= 3;
++			name += len - max;
++			slash = strchr(name, '/');
++			if (slash)
++				name = slash;
++		}
++		len = max;
++
++		/*
++		 * scale the add/delete
++		 */
++		max = max_change;
++		if (max + len > 70)
++			max = 70 - len;
++
++		if (added < 0) {
++			/* binary file */
++			printf(" %s%-*s |  Bin\n", prefix, len, name);
++			continue;
++		} else if (added + deleted == 0) {
++			total_files--;
++			continue;
++		}
++
++		add = added;
++		del = deleted;
++		total = add + del;
++		adds += add;
++		dels += del;
++
++		if (max_change > 0) {
++			total = (total * max + max_change / 2) / max_change;
++			add = (add * max + max_change / 2) / max_change;
++			del = total - add;
++		}
++		/* TODO: binary */
++		printf(" %s%-*s |%5d %.*s%.*s\n", prefix,
++				len, name, added + deleted,
++				add, pluses, del, minuses);
++		free(name);
++		free(data->files[i]);
++	}
++	free(data->files);
++	printf(" %d files changed, %d insertions(+), %d deletions(-)\n",
++			total_files, adds, dels);
 +}
 +
-+test_failure_ () {
-+	test_count=$(expr "$test_count" + 1)
-+	test_failure=$(expr "$test_failure" + 1);
-+	say "FAIL $test_count: $1"
-+	shift
-+	echo "$@" | sed -e 's/^/	/'
-+	test "$immediate" = "" || { trap - exit; exit 1; }
-+}
+ #define FIRST_FEW_BYTES 8000
+ static int mmfile_is_binary(mmfile_t *mf)
+ {
+@@ -211,7 +356,8 @@ static void builtin_diff(const char *nam
+ 			 struct diff_filespec *one,
+ 			 struct diff_filespec *two,
+ 			 const char *xfrm_msg,
+-			 int complete_rewrite)
++			 int complete_rewrite,
++			 struct diffstat_t* diffstat)
+ {
+ 	mmfile_t mf1, mf2;
+ 	const char *lbl[2];
+@@ -221,43 +367,49 @@ static void builtin_diff(const char *nam
+ 	b_two = quote_two("b/", name_b);
+ 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
+ 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
+-	printf("diff --git %s %s\n", a_one, b_two);
+-	if (lbl[0][0] == '/') {
+-		/* /dev/null */
+-		printf("new file mode %06o\n", two->mode);
+-		if (xfrm_msg && xfrm_msg[0])
+-			puts(xfrm_msg);
+-	}
+-	else if (lbl[1][0] == '/') {
+-		printf("deleted file mode %06o\n", one->mode);
+-		if (xfrm_msg && xfrm_msg[0])
+-			puts(xfrm_msg);
+-	}
+-	else {
+-		if (one->mode != two->mode) {
+-			printf("old mode %06o\n", one->mode);
+-			printf("new mode %06o\n", two->mode);
++	if (!diffstat) {
++		printf("diff --git %s %s\n", a_one, b_two);
++		if (lbl[0][0] == '/') {
++			/* /dev/null */
++			printf("new file mode %06o\n", two->mode);
++			if (xfrm_msg && xfrm_msg[0])
++				puts(xfrm_msg);
+ 		}
+-		if (xfrm_msg && xfrm_msg[0])
+-			puts(xfrm_msg);
+-		/*
+-		 * we do not run diff between different kind
+-		 * of objects.
+-		 */
+-		if ((one->mode ^ two->mode) & S_IFMT)
+-			goto free_ab_and_return;
+-		if (complete_rewrite) {
+-			emit_rewrite_diff(name_a, name_b, one, two);
+-			goto free_ab_and_return;
++		else if (lbl[1][0] == '/') {
++			printf("deleted file mode %06o\n", one->mode);
++			if (xfrm_msg && xfrm_msg[0])
++				puts(xfrm_msg);
+ 		}
++		else {
++			if (one->mode != two->mode) {
++				printf("old mode %06o\n", one->mode);
++				printf("new mode %06o\n", two->mode);
++			}
++			if (xfrm_msg && xfrm_msg[0])
++				puts(xfrm_msg);
++			/*
++			 * we do not run diff between different kind
++			 * of objects.
++			 */
++			if ((one->mode ^ two->mode) & S_IFMT)
++				goto free_ab_and_return;
++			if (complete_rewrite) {
++				emit_rewrite_diff(name_a, name_b, one, two);
++				goto free_ab_and_return;
++			}
++		}
+ 	}
+ 
+ 	if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
+ 		die("unable to read files to diff");
+ 
+-	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2))
+-		printf("Binary files %s and %s differ\n", lbl[0], lbl[1]);
+-	else {
++	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2)) {
++		if (diffstat)
++			diffstat_binary(diffstat, lbl[0]);
++		else
++			printf("Binary files %s and %s differ\n",
++					lbl[0], lbl[1]);
++	} else {
+ 		/* Crazy xdl interfaces.. */
+ 		const char *diffopts = getenv("GIT_DIFF_OPTS");
+ 		xpparam_t xpp;
+@@ -266,6 +418,7 @@ static void builtin_diff(const char *nam
+ 		struct emit_callback ecbdata;
+ 
+ 		ecbdata.label_path = lbl;
++		ecbdata.diffstat = diffstat;
+ 		xpp.flags = XDF_NEED_MINIMAL;
+ 		xecfg.ctxlen = 3;
+ 		xecfg.flags = XDL_EMIT_FUNCNAMES;
+@@ -275,7 +428,7 @@ static void builtin_diff(const char *nam
+ 			xecfg.ctxlen = strtoul(diffopts + 10, NULL, 10);
+ 		else if (!strncmp(diffopts, "-u", 2))
+ 			xecfg.ctxlen = strtoul(diffopts + 2, NULL, 10);
+-		ecb.outf = fn_out;
++		ecb.outf = diffstat ? fn_diffstat : fn_out;
+ 		ecb.priv = &ecbdata;
+ 		xdl_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
+ 	}
+@@ -690,16 +843,19 @@ static void run_diff_cmd(const char *pgm
+ 			 struct diff_filespec *one,
+ 			 struct diff_filespec *two,
+ 			 const char *xfrm_msg,
+-			 int complete_rewrite)
++			 int complete_rewrite,
++			 struct diffstat_t *diffstat)
+ {
+ 	if (pgm) {
++		if (diffstat)
++			die ("Cannot use diffstat with external diff");
+ 		run_external_diff(pgm, name, other, one, two, xfrm_msg,
+ 				  complete_rewrite);
+ 		return;
+ 	}
+ 	if (one && two)
+ 		builtin_diff(name, other ? other : name,
+-			     one, two, xfrm_msg, complete_rewrite);
++			     one, two, xfrm_msg, complete_rewrite, diffstat);
+ 	else
+ 		printf("* Unmerged path %s\n", name);
+ }
+@@ -733,7 +889,8 @@ static void run_diff(struct diff_filepai
+ 
+ 	if (DIFF_PAIR_UNMERGED(p)) {
+ 		/* unmerged */
+-		run_diff_cmd(pgm, p->one->path, NULL, NULL, NULL, NULL, 0);
++		run_diff_cmd(pgm, p->one->path, NULL, NULL, NULL, NULL, 0,
++			o->diffstat);
+ 		return;
+ 	}
+ 
+@@ -805,15 +962,17 @@ static void run_diff(struct diff_filepai
+ 		 * needs to be split into deletion and creation.
+ 		 */
+ 		struct diff_filespec *null = alloc_filespec(two->path);
+-		run_diff_cmd(NULL, name, other, one, null, xfrm_msg, 0);
++		run_diff_cmd(NULL, name, other, one, null, xfrm_msg, 0,
++			o->diffstat);
+ 		free(null);
+ 		null = alloc_filespec(one->path);
+-		run_diff_cmd(NULL, name, other, null, two, xfrm_msg, 0);
++		run_diff_cmd(NULL, name, other, null, two, xfrm_msg, 0,
++			o->diffstat);
+ 		free(null);
+ 	}
+ 	else
+ 		run_diff_cmd(pgm, name, other, one, two, xfrm_msg,
+-			     complete_rewrite);
++			     complete_rewrite, o->diffstat);
+ 
+ 	free(name_munged);
+ 	free(other_munged);
+@@ -866,6 +1025,8 @@ int diff_opt_parse(struct diff_options *
+ 		options->output_format = DIFF_FORMAT_PATCH;
+ 		options->with_raw = 1;
+ 	}
++	else if (!strcmp(arg, "--stat"))
++		options->output_format = DIFF_FORMAT_DIFFSTAT;
+ 	else if (!strcmp(arg, "-z"))
+ 		options->line_termination = 0;
+ 	else if (!strncmp(arg, "-l", 2))
+@@ -1291,6 +1452,7 @@ static void flush_one_pair(struct diff_f
+ 		break;
+ 	default:
+ 		switch (diff_output_format) {
++		case DIFF_FORMAT_DIFFSTAT:
+ 		case DIFF_FORMAT_PATCH:
+ 			diff_flush_patch(p, options);
+ 			break;
+@@ -1316,6 +1478,12 @@ void diff_flush(struct diff_options *opt
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	int i;
+ 	int diff_output_format = options->output_format;
++	struct diffstat_t *diffstat = NULL;
 +
++	if (diff_output_format == DIFF_FORMAT_DIFFSTAT) {
++		diffstat = xcalloc(sizeof (struct diffstat_t), 1);
++		options->diffstat = diffstat;
++	}
+ 
+ 	if (options->with_raw) {
+ 		for (i = 0; i < q->nr; i++) {
+@@ -1329,6 +1497,12 @@ void diff_flush(struct diff_options *opt
+ 		flush_one_pair(p, diff_output_format, options);
+ 		diff_free_filepair(p);
+ 	}
 +
-+test_debug () {
-+	test "$debug" = "" || eval "$1"
-+}
++	if (diffstat) {
++		show_stats(diffstat);
++		free(diffstat);
++	}
 +
-+test_run_ () {
-+	eval >&3 2>&4 "$1"
-+	eval_ret="$?"
-+	return 0
-+}
-+
-+test_expect_failure () {
-+	test "$#" = 2 ||
-+	error "bug in the test script: not 2 parameters to test-expect-failure"
-+	say >&3 "expecting failure: $2"
-+	test_run_ "$2"
-+	if [ "$?" = 0 -a "$eval_ret" != 0 ]
-+	then
-+		test_ok_ "$1"
-+	else
-+		test_failure_ "$@"
-+	fi
-+}
-+
-+test_expect_success () {
-+	test "$#" = 2 ||
-+	error "bug in the test script: not 2 parameters to test-expect-success"
-+	say >&3 "expecting success: $2"
-+	test_run_ "$2"
-+	if [ "$?" = 0 -a "$eval_ret" = 0 ]
-+	then
-+		test_ok_ "$1"
-+	else
-+		test_failure_ "$@"
-+	fi
-+}
-+
-+test_expect_code () {
-+	test "$#" = 3 ||
-+	error "bug in the test script: not 3 parameters to test-expect-code"
-+	say >&3 "expecting exit code $1: $3"
-+	test_run_ "$3"
-+	if [ "$?" = 0 -a "$eval_ret" = "$1" ]
-+	then
-+		test_ok_ "$2"
-+	else
-+		test_failure_ "$@"
-+	fi
-+}
-+
-+# Most tests can use the created repository, but some amy need to create more.
-+# Usage: test_create_repo <directory>
-+test_create_repo () {
-+	test "$#" = 1 ||
-+	error "bug in the test script: not 1 parameter to test-create-repo"
-+	owd=`pwd`
-+	repo="$1"
-+	mkdir "$repo"
-+	cd "$repo" || error "Cannot setup test environment"
-+	git-init-db 2>/dev/null ||
-+	error "cannot run git-init-db -- have you installed git-core?"
-+	mv .git/hooks .git/hooks-disabled
-+	cd "$owd"
-+}
-+
-+test_stg_init () {
-+	touch .empty
-+	git-update-index --add .empty
-+	git-commit -m "nearly empty start" 2>/dev/null ||
-+	error "cannot run git-commit -- is your git-core funtionning?"
-+	stg init ||
-+	error "cannot run stg init -- have you built things yet?"
-+}
-+
-+test_done () {
-+	trap - exit
-+	case "$test_failure" in
-+	0)
-+		# We could:
-+		# cd .. && rm -fr trash
-+		# but that means we forbid any tests that use their own
-+		# subdirectory from calling test_done without coming back
-+		# to where they started from.
-+		# The Makefile provided will clean this test area so
-+		# we will leave things as they are.
-+
-+		say "passed all $test_count test(s)"
-+		exit 0 ;;
-+
-+	*)
-+		say "failed $test_failure among $test_count test(s)"
-+		exit 1 ;;
-+
-+	esac
-+}
-+
-+# Test the binaries we have just built.  The tests are kept in
-+# t/ subdirectory and are run in trash subdirectory.
-+PATH=$(pwd)/..:$PATH
-+export PATH
-+
-+
-+# Test repository
-+test=trash
-+rm -fr "$test"
-+test_create_repo $test
-+cd "$test"
+ 	free(q->queue);
+ 	q->queue = NULL;
+ 	q->nr = q->alloc = 0;
+diff --git a/diff.h b/diff.h
+index 236095f..5c1526c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -44,6 +44,7 @@ struct diff_options {
+ 	int *pathlens;
+ 	change_fn_t change;
+ 	add_remove_fn_t add_remove;
++	struct diffstat_t *diffstat;
+ };
+ 
+ extern void diff_tree_setup_paths(const char **paths, struct diff_options *);
+@@ -119,6 +120,7 @@ #define COMMON_DIFF_OPTIONS_HELP \
+ "  -u            synonym for -p.\n" \
+ "  --patch-with-raw\n" \
+ "                output both a patch and the diff-raw format.\n" \
++"  --stat        show diffstat instead of patch.\n" \
+ "  --name-only   show only names of changed files.\n" \
+ "  --name-status show names and status of changed files.\n" \
+ "  --full-index  show full object name on index lines.\n" \
+@@ -142,6 +144,7 @@ #define DIFF_FORMAT_PATCH	2
+ #define DIFF_FORMAT_NO_OUTPUT	3
+ #define DIFF_FORMAT_NAME	4
+ #define DIFF_FORMAT_NAME_STATUS	5
++#define DIFF_FORMAT_DIFFSTAT	6
+ 
+ extern void diff_flush(struct diff_options*);
+ 
+diff --git a/git-diff.sh b/git-diff.sh
+index dc0dd31..0fe6770 100755
+--- a/git-diff.sh
++++ b/git-diff.sh
+@@ -30,9 +30,11 @@ case " $flags " in
+ 	cc_or_p=--cc ;;
+ esac
+ 
+-# If we do not have --name-status, --name-only, -r, or -c default to --cc.
++# If we do not have --name-status, --name-only, -r, -c or --stat,
++# default to --cc.
+ case " $flags " in
+-*" '--name-status' "* | *" '--name-only' "* | *" '-r' "* | *" '-c' "* )
++*" '--name-status' "* | *" '--name-only' "* | *" '-r' "* | *" '-c' "* | \
++*" '--stat' "*)
+ 	;;
+ *)
+ 	flags="$flags'$cc_or_p' " ;;
+-- 
+1.2.0.gd507-dirty
