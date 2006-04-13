@@ -1,333 +1,411 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: [PATCH] Shell utilities: Guard against expr' magic tokens.
-Date: Thu, 13 Apr 2006 22:01:24 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrne3tihk.1dq.mdw@metalzone.distorted.org.uk>
-X-From: git-owner@vger.kernel.org Fri Apr 14 00:01:45 2006
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] diff-options: add --stat (take 2)
+Date: Fri, 14 Apr 2006 00:15:30 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604140012560.10924@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Apr 14 00:15:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FU9sk-0004kE-BA
-	for gcvg-git@gmane.org; Fri, 14 Apr 2006 00:01:42 +0200
+	id 1FUA6C-0007My-Ju
+	for gcvg-git@gmane.org; Fri, 14 Apr 2006 00:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964995AbWDMWBj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Apr 2006 18:01:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964996AbWDMWBj
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 18:01:39 -0400
-Received: from excessus.demon.co.uk ([83.105.60.35]:1589 "HELO
-	metalzone.distorted.org.uk") by vger.kernel.org with SMTP
-	id S964995AbWDMWBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Apr 2006 18:01:38 -0400
-Received: (qmail 8098 invoked by uid 110); 13 Apr 2006 22:01:24 -0000
-To: git@vger.kernel.org
-Received: (qmail 8083 invoked by uid 9); 13 Apr 2006 22:01:24 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1144965684 8081 172.29.199.2 (13 Apr 2006 22:01:24 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Thu, 13 Apr 2006 22:01:24 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S932472AbWDMWPd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Apr 2006 18:15:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932473AbWDMWPd
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 18:15:33 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4069 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932472AbWDMWPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Apr 2006 18:15:33 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 9941C1C5B;
+	Fri, 14 Apr 2006 00:15:31 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 8D6931C53;
+	Fri, 14 Apr 2006 00:15:31 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 5D13C1C37;
+	Fri, 14 Apr 2006 00:15:31 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18677>
 
-From: Mark Wooding <mdw@distorted.org.uk>
 
-Some words, e.g., `match', are special to expr(1), and cause strange
-parsing effects.  Track down all uses of expr and mangle the arguments
-so that this isn't a problem.
-
-Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
----
-Amusing one, this.  I hacked on one of my projects, messing with a
-simple glob matching function.  Being uncreative, I called my topic
-branch `match'.  When I was ready, I switched back to my master branch
-and said
-
-  $ git pull . match
-  Already up-to-date.
-
-Oh.  I checked.  Nope, not up-to-date.  I tried 
-
-  $ git merge fast HEAD match, and that
-
-and that did the right thing.  But I was puzzled.  I fired up the
-git-bisect machinery and tried to find a good version to no avail.  And
-then, comparing `sh -x' traces of git-fetch, I noticed what had gone
-wrong.
-
-There's a line in git-parse-remote.sh, in canon_refs_list_for_fetch,
-which says
-
-  expr "$ref" : '.*:' >/dev/null || ref="${ref}:"
-
-In my case, $ref is `match', so this expands to
-
-  expr match : '.*:' >...
-
-Unfortunately, GNU expr has a magic keyword `match'.  So what this does
-is compare `:' to the regexp `.*:', which /succeeds/, even though POSIX
-expr without the `match' keyword would do the right thing and fail.  So
-$ref never has a `:' appended, which makes the later parsing fail, and
-all sorts of strange things happen.
-
-This patch puts magical extra characters in expr regexp calls
-throughout the shell bits of GIT, to robustify them against this kind of
-crapness.
-
-There's a small chance I got something wrong while making this fix.  I
-was fairly careful, though, and ran the test suite without any
-problems.  I also checked Cogito, though that has no truck with expr.
+Now, you can say "git diff --stat" (to get an idea how many changes are
+uncommitted), or "git log --stat".
+    
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- git-cherry.sh         |    2 +-
- git-clone.sh          |    6 +++---
- git-commit.sh         |    4 ++--
- git-fetch.sh          |   18 +++++++++---------
- git-format-patch.sh   |    4 ++--
- git-merge-one-file.sh |    2 +-
- git-parse-remote.sh   |   20 ++++++++++----------
- git-rebase.sh         |    2 +-
- git-tag.sh            |    2 +-
- 9 files changed, 30 insertions(+), 30 deletions(-)
+	Thanks to Junio's comments, this looks much better now; I am
+	reasonably happy about it (it even lost some pounds: 31 lines).
 
-diff --git a/git-cherry.sh b/git-cherry.sh
-index 1a62320..f0e8831 100755
---- a/git-cherry.sh
-+++ b/git-cherry.sh
-@@ -20,7 +20,7 @@ case "$1" in -v) verbose=t; shift ;; esa
+	I still did not find a way to share code with git-apply's diffstat
+	code, though. But then, it is only one function (show_stats).
+
+ Documentation/diff-options.txt |    3 +
+ diff.c                         |  220 +++++++++++++++++++++++++++++++++++++++-
+ diff.h                         |    2 
+ git-diff.sh                    |    6 +
+ 4 files changed, 225 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 338014c..447e522 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -7,6 +7,9 @@
+ --patch-with-raw::
+ 	Generate patch but keep also the default raw diff output.
  
- case "$#,$1" in
- 1,*..*)
--    upstream=$(expr "$1" : '\(.*\)\.\.') ours=$(expr "$1" : '.*\.\.\(.*\)$')
-+    upstream=$(expr "z$1" : 'z\(.*\)\.\.') ours=$(expr "z$1" : '.*\.\.\(.*\)$')
-     set x "$upstream" "$ours"
-     shift ;;
- esac
-diff --git a/git-clone.sh b/git-clone.sh
-index c013e48..0805168 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -38,12 +38,12 @@ Perhaps git-update-server-info needs to 
++--stat::
++	Generate a diffstat instead of a patch.
++
+ -z::
+ 	\0 line termination on output
+ 
+diff --git a/diff.c b/diff.c
+index a14e664..ad8478b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -8,7 +8,7 @@ #include "cache.h"
+ #include "quote.h"
+ #include "diff.h"
+ #include "diffcore.h"
+-#include "xdiff/xdiff.h"
++#include "xdiff-interface.h"
+ 
+ static int use_size_cache;
+ 
+@@ -195,6 +195,137 @@ static int fn_out(void *priv, mmbuffer_t
+ 	return 0;
+ }
+ 
++struct diffstat_t {
++	struct xdiff_emit_state xm;
++
++	int nr;
++	int alloc;
++	struct diffstat_file {
++		char *name;
++		unsigned int added, deleted;
++	} **files;
++};
++
++static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
++		const char *name)
++{
++	struct diffstat_file *x;
++	x = xcalloc(sizeof (*x), 1);
++	if (diffstat->nr == diffstat->alloc) {
++		diffstat->alloc = alloc_nr(diffstat->alloc);
++		diffstat->files = xrealloc(diffstat->files,
++				diffstat->alloc * sizeof(x));
++	}
++	diffstat->files[diffstat->nr++] = x;
++	x->name = strdup(name);
++	return x;
++}
++
++static void diffstat_consume(void *priv, char *line, unsigned long len)
++{
++	struct diffstat_t *diffstat = priv;
++	struct diffstat_file *x = diffstat->files[diffstat->nr - 1];
++
++	if (line[0] == '+')
++		x->added++;
++	else if (line[0] == '-')
++		x->deleted++;
++}
++
++static const char pluses[] = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
++static const char minuses[]= "----------------------------------------------------------------------";
++
++static void show_stats(struct diffstat_t* data)
++{
++	char *prefix = "";
++	int i, len, add, del, total, adds = 0, dels = 0;
++	int max, max_change = 0, max_len = 0;
++	int total_files = data->nr;
++
++	if (data->nr == 0)
++		return;
++
++	printf("---\n");
++
++	for (i = 0; i < data->nr; i++) {
++		struct diffstat_file *file = data->files[i];
++		
++		if (max_change < file->added + file->deleted)
++			max_change = file->added + file->deleted;
++		len = strlen(file->name);
++		if (max_len < len)
++			max_len = len;
++	}
++
++	for (i = 0; i < data->nr; i++) {
++		char *name = data->files[i]->name;
++		int added = data->files[i]->added;
++		int deleted = data->files[i]->deleted;
++
++		if (0 < (len = quote_c_style(name, NULL, NULL, 0))) {
++			char *qname = xmalloc(len + 1);
++			quote_c_style(name, qname, NULL, 0);
++			free(name);
++			name = qname;
++		}
++
++		/*
++		 * "scale" the filename
++		 */
++		len = strlen(name);
++		max = max_len;
++		if (max > 50)
++			max = 50;
++		if (len > max) {
++			char *slash;
++			prefix = "...";
++			max -= 3;
++			name += len - max;
++			slash = strchr(name, '/');
++			if (slash)
++				name = slash;
++		}
++		len = max;
++
++		/*
++		 * scale the add/delete
++		 */
++		max = max_change;
++		if (max + len > 70)
++			max = 70 - len;
++
++		if (added < 0) {
++			/* binary file */
++			printf(" %s%-*s |  Bin\n", prefix, len, name);
++			continue;
++		} else if (added + deleted == 0) {
++			total_files--;
++			continue;
++		}
++
++		add = added;
++		del = deleted;
++		total = add + del;
++		adds += add;
++		dels += del;
++
++		if (max_change > 0) {
++			total = (total * max + max_change / 2) / max_change;
++			add = (add * max + max_change / 2) / max_change;
++			del = total - add;
++		}
++		/* TODO: binary */
++		printf(" %s%-*s |%5d %.*s%.*s\n", prefix,
++				len, name, added + deleted,
++				add, pluses, del, minuses);
++		free(name);
++		free(data->files[i]);
++	}
++	free(data->files);
++	printf(" %d files changed, %d insertions(+), %d deletions(-)\n",
++			total_files, adds, dels);
++}
++
+ #define FIRST_FEW_BYTES 8000
+ static int mmfile_is_binary(mmfile_t *mf)
+ {
+@@ -285,7 +416,36 @@ static void builtin_diff(const char *nam
+ 	free(b_two);
+ 	return;
+ }
++
++static void builtin_diffstat(const char *name_a, const char *name_b,
++		struct diff_filespec *one, struct diff_filespec *two,
++		struct diffstat_t *diffstat)
++{
++	mmfile_t mf1, mf2;
++	struct diffstat_file *data;
+ 
++	data = diffstat_add(diffstat, name_a ? name_a : name_b);
++
++	if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
++		die("unable to read files to diff");
++
++	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2))
++		data->added = -1;
++	else {
++		/* Crazy xdl interfaces.. */
++		xpparam_t xpp;
++		xdemitconf_t xecfg;
++		xdemitcb_t ecb;
++
++		xpp.flags = XDF_NEED_MINIMAL;
++		xecfg.ctxlen = 3;
++		xecfg.flags = XDL_EMIT_FUNCNAMES;
++		ecb.outf = xdiff_outf;
++		ecb.priv = diffstat;
++		xdl_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
++	}
++}
++
+ struct diff_filespec *alloc_filespec(const char *path)
+ {
+ 	int namelen = strlen(path);
+@@ -818,7 +978,28 @@ static void run_diff(struct diff_filepai
+ 	free(name_munged);
+ 	free(other_munged);
+ }
++
++static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
++		struct diffstat_t *diffstat)
++{
++	const char *name;
++	const char *other;
+ 
++	if (DIFF_PAIR_UNMERGED(p)) {
++		/* unmerged */
++		builtin_diffstat(p->one->path, NULL, NULL, NULL, diffstat);
++		return;
++	}
++
++	name = p->one->path;
++	other = (strcmp(name, p->two->path) ? p->two->path : NULL);
++
++	diff_fill_sha1_info(p->one);
++	diff_fill_sha1_info(p->two);
++
++	builtin_diffstat(name, other, p->one, p->two, diffstat);
++}
++
+ void diff_setup(struct diff_options *options)
+ {
+ 	memset(options, 0, sizeof(*options));
+@@ -866,6 +1047,8 @@ int diff_opt_parse(struct diff_options *
+ 		options->output_format = DIFF_FORMAT_PATCH;
+ 		options->with_raw = 1;
  	}
- 	while read sha1 refname
- 	do
--		name=`expr "$refname" : 'refs/\(.*\)'` &&
-+		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
- 		case "$name" in
- 		*^*)	continue;;
- 		esac
- 		if test -n "$use_separate_remote" &&
--		   branch_name=`expr "$name" : 'heads/\(.*\)'`
-+		   branch_name=`expr "z$name" : 'zheads/\(.*\)'`
- 		then
- 			tname="remotes/$origin/$branch_name"
- 		else
-@@ -346,7 +346,7 @@ then
- 		# new style repository with a symref HEAD).
- 		# Ideally we should skip the guesswork but for now
- 		# opt for minimum change.
--		head_sha1=`expr "$head_sha1" : 'ref: refs/heads/\(.*\)'`
-+		head_sha1=`expr "z$head_sha1" : 'zref: refs/heads/\(.*\)'`
- 		head_sha1=`cat "$GIT_DIR/$remote_top/$head_sha1"`
- 		;;
- 	esac
-diff --git a/git-commit.sh b/git-commit.sh
-index bd3dc71..01c73bd 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -549,8 +549,8 @@ fi >>"$GIT_DIR"/COMMIT_EDITMSG
- # Author
- if test '' != "$force_author"
- then
--	GIT_AUTHOR_NAME=`expr "$force_author" : '\(.*[^ ]\) *<.*'` &&
--	GIT_AUTHOR_EMAIL=`expr "$force_author" : '.*\(<.*\)'` &&
-+	GIT_AUTHOR_NAME=`expr "z$force_author" : 'z\(.*[^ ]\) *<.*'` &&
-+	GIT_AUTHOR_EMAIL=`expr "z$force_author" : '.*\(<.*\)'` &&
- 	test '' != "$GIT_AUTHOR_NAME" &&
- 	test '' != "$GIT_AUTHOR_EMAIL" ||
- 	die "malformatted --author parameter"
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 954901d..711650f 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -112,7 +112,7 @@ append_fetch_head () {
-     *)
- 	note_="$remote_name of " ;;
-     esac
--    remote_1_=$(expr "$remote_" : '\(.*\)\.git/*$') &&
-+    remote_1_=$(expr "z$remote_" : 'z\(.*\)\.git/*$') &&
- 	remote_="$remote_1_"
-     note_="$note_$remote_"
++	else if (!strcmp(arg, "--stat"))
++		options->output_format = DIFF_FORMAT_DIFFSTAT;
+ 	else if (!strcmp(arg, "-z"))
+ 		options->line_termination = 0;
+ 	else if (!strncmp(arg, "-l", 2))
+@@ -1163,6 +1346,19 @@ static void diff_flush_patch(struct diff
+ 		return; /* no tree diffs in patch format */ 
  
-@@ -245,22 +245,22 @@ fetch_main () {
+ 	run_diff(p, o);
++}
++
++static void diff_flush_stat(struct diff_filepair *p, struct diff_options *o,
++		struct diffstat_t *diffstat)
++{
++	if (diff_unmodified_pair(p))
++		return;
++
++	if ((DIFF_FILE_VALID(p->one) && S_ISDIR(p->one->mode)) ||
++	    (DIFF_FILE_VALID(p->two) && S_ISDIR(p->two->mode)))
++		return; /* no tree diffs in patch format */ 
++
++	run_diffstat(p, o, diffstat);
+ }
  
-       # These are relative path from $GIT_DIR, typically starting at refs/
-       # but may be HEAD
--      if expr "$ref" : '\.' >/dev/null
-+      if expr "z$ref" : 'z\.' >/dev/null
-       then
- 	  not_for_merge=t
--	  ref=$(expr "$ref" : '\.\(.*\)')
-+	  ref=$(expr "z$ref" : 'z\.\(.*\)')
-       else
- 	  not_for_merge=
-       fi
--      if expr "$ref" : '\+' >/dev/null
-+      if expr "z$ref" : 'z\+' >/dev/null
-       then
- 	  single_force=t
--	  ref=$(expr "$ref" : '\+\(.*\)')
-+	  ref=$(expr "z$ref" : 'z\+\(.*\)')
-       else
- 	  single_force=
-       fi
--      remote_name=$(expr "$ref" : '\([^:]*\):')
--      local_name=$(expr "$ref" : '[^:]*:\(.*\)')
-+      remote_name=$(expr "z$ref" : 'z\([^:]*\):')
-+      local_name=$(expr "z$ref" : 'z[^:]*:\(.*\)')
+ int diff_queue_is_empty(void)
+@@ -1276,7 +1472,8 @@ static void diff_resolve_rename_copy(voi
  
-       rref="$rref$LF$remote_name"
+ static void flush_one_pair(struct diff_filepair *p,
+ 			   int diff_output_format,
+-			   struct diff_options *options)
++			   struct diff_options *options,
++			   struct diffstat_t *diffstat)
+ {
+ 	int inter_name_termination = '\t';
+ 	int line_termination = options->line_termination;
+@@ -1291,6 +1488,9 @@ static void flush_one_pair(struct diff_f
+ 		break;
+ 	default:
+ 		switch (diff_output_format) {
++		case DIFF_FORMAT_DIFFSTAT:
++			diff_flush_stat(p, options, diffstat);
++			break;
+ 		case DIFF_FORMAT_PATCH:
+ 			diff_flush_patch(p, options);
+ 			break;
+@@ -1316,19 +1516,31 @@ void diff_flush(struct diff_options *opt
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	int i;
+ 	int diff_output_format = options->output_format;
++	struct diffstat_t *diffstat = NULL;
  
-@@ -276,7 +276,7 @@ fetch_main () {
- 	      print "$u";
- 	  ' "$remote_name")
- 	  head=$(curl -nsfL $curl_extra_args "$remote/$remote_name_quoted") &&
--	  expr "$head" : "$_x40\$" >/dev/null ||
-+	  expr "z$head" : "z$_x40\$" >/dev/null ||
- 		  die "Failed to fetch $remote_name from $remote"
- 	  echo >&2 Fetching "$remote_name from $remote" using http
- 	  git-http-fetch -v -a "$head" "$remote/" || exit
-@@ -362,7 +362,7 @@ fetch_main () {
- 		  break ;;
- 	      esac
- 	  done
--	  local_name=$(expr "$found" : '[^:]*:\(.*\)')
-+	  local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
- 	  append_fetch_head "$sha1" "$remote" \
- 		  "$remote_name" "$remote_nick" "$local_name" "$not_for_merge"
-       done
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index 2ebf7e8..c7133bc 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -126,8 +126,8 @@ for revpair
- do
- 	case "$revpair" in
- 	?*..?*)
--		rev1=`expr "$revpair" : '\(.*\)\.\.'`
--		rev2=`expr "$revpair" : '.*\.\.\(.*\)'`
-+		rev1=`expr "z$revpair" : 'z\(.*\)\.\.'`
-+		rev2=`expr "z$revpair" : 'z.*\.\.\(.*\)'`
- 		;;
- 	*)
- 		rev1="$revpair^"
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index 5349a1c..5619409 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -26,7 +26,7 @@ #
- 	fi
- 	if test -f "$4"; then
- 		rm -f -- "$4" &&
--		rmdir -p "$(expr "$4" : '\(.*\)/')" 2>/dev/null || :
-+		rmdir -p "$(expr "z$4" : 'z\(.*\)/')" 2>/dev/null || :
- 	fi &&
- 		exec git-update-index --remove -- "$4"
- 	;;
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 63f2281..65c66d5 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -8,8 +8,8 @@ get_data_source () {
- 	case "$1" in
- 	*/*)
- 		# Not so fast.	This could be the partial URL shorthand...
--		token=$(expr "$1" : '\([^/]*\)/')
--		remainder=$(expr "$1" : '[^/]*/\(.*\)')
-+		token=$(expr "z$1" : 'z\([^/]*\)/')
-+		remainder=$(expr "z$1" : 'z[^/]*/\(.*\)')
- 		if test -f "$GIT_DIR/branches/$token"
- 		then
- 			echo branches-partial
-@@ -43,8 +43,8 @@ get_remote_url () {
- 	branches)
- 		sed -e 's/#.*//' "$GIT_DIR/branches/$1" ;;
- 	branches-partial)
--		token=$(expr "$1" : '\([^/]*\)/')
--		remainder=$(expr "$1" : '[^/]*/\(.*\)')
-+		token=$(expr "z$1" : 'z\([^/]*\)/')
-+		remainder=$(expr "z$1" : 'z[^/]*/\(.*\)')
- 		url=$(sed -e 's/#.*//' "$GIT_DIR/branches/$token")
- 		echo "$url/$remainder"
- 		;;
-@@ -77,13 +77,13 @@ canon_refs_list_for_fetch () {
- 		force=
- 		case "$ref" in
- 		+*)
--			ref=$(expr "$ref" : '\+\(.*\)')
-+			ref=$(expr "z$ref" : 'z\+\(.*\)')
- 			force=+
- 			;;
- 		esac
--		expr "$ref" : '.*:' >/dev/null || ref="${ref}:"
--		remote=$(expr "$ref" : '\([^:]*\):')
--		local=$(expr "$ref" : '[^:]*:\(.*\)')
-+		expr "z$ref" : 'z.*:' >/dev/null || ref="${ref}:"
-+		remote=$(expr "z$ref" : 'z\([^:]*\):')
-+		local=$(expr "z$ref" : 'z[^:]*:\(.*\)')
- 		case "$remote" in
- 		'') remote=HEAD ;;
- 		refs/heads/* | refs/tags/* | refs/remotes/*) ;;
-@@ -97,7 +97,7 @@ canon_refs_list_for_fetch () {
- 		*) local="refs/heads/$local" ;;
- 		esac
++	if (diff_output_format == DIFF_FORMAT_DIFFSTAT) {
++		diffstat = xcalloc(sizeof (struct diffstat_t), 1);
++		diffstat->xm.consume = diffstat_consume;
++	}
++
+ 	if (options->with_raw) {
+ 		for (i = 0; i < q->nr; i++) {
+ 			struct diff_filepair *p = q->queue[i];
+-			flush_one_pair(p, DIFF_FORMAT_RAW, options);
++			flush_one_pair(p, DIFF_FORMAT_RAW, options, NULL);
+ 		}
+ 		putchar(options->line_termination);
+ 	}
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+-		flush_one_pair(p, diff_output_format, options);
++		flush_one_pair(p, diff_output_format, options, diffstat);
+ 		diff_free_filepair(p);
+ 	}
++
++	if (diffstat) {
++		show_stats(diffstat);
++		free(diffstat);
++	}
++
+ 	free(q->queue);
+ 	q->queue = NULL;
+ 	q->nr = q->alloc = 0;
+diff --git a/diff.h b/diff.h
+index 236095f..2f8aff2 100644
+--- a/diff.h
++++ b/diff.h
+@@ -119,6 +119,7 @@ #define COMMON_DIFF_OPTIONS_HELP \
+ "  -u            synonym for -p.\n" \
+ "  --patch-with-raw\n" \
+ "                output both a patch and the diff-raw format.\n" \
++"  --stat        show diffstat instead of patch.\n" \
+ "  --name-only   show only names of changed files.\n" \
+ "  --name-status show names and status of changed files.\n" \
+ "  --full-index  show full object name on index lines.\n" \
+@@ -142,6 +143,7 @@ #define DIFF_FORMAT_PATCH	2
+ #define DIFF_FORMAT_NO_OUTPUT	3
+ #define DIFF_FORMAT_NAME	4
+ #define DIFF_FORMAT_NAME_STATUS	5
++#define DIFF_FORMAT_DIFFSTAT	6
  
--		if local_ref_name=$(expr "$local" : 'refs/\(.*\)')
-+		if local_ref_name=$(expr "z$local" : 'zrefs/\(.*\)')
- 		then
- 		   git-check-ref-format "$local_ref_name" ||
- 		   die "* refusing to create funny ref '$local_ref_name' locally"
-@@ -171,7 +171,7 @@ get_remote_refs_for_fetch () {
+ extern void diff_flush(struct diff_options*);
  
- resolve_alternates () {
- 	# original URL (xxx.git)
--	top_=`expr "$1" : '\([^:]*:/*[^/]*\)/'`
-+	top_=`expr "z$1" : 'z\([^:]*:/*[^/]*\)/'`
- 	while read path
- 	do
- 		case "$path" in
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5956f06..86dfe9c 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -94,7 +94,7 @@ case "$#" in
+diff --git a/git-diff.sh b/git-diff.sh
+index dc0dd31..0fe6770 100755
+--- a/git-diff.sh
++++ b/git-diff.sh
+@@ -30,9 +30,11 @@ case " $flags " in
+ 	cc_or_p=--cc ;;
+ esac
+ 
+-# If we do not have --name-status, --name-only, -r, or -c default to --cc.
++# If we do not have --name-status, --name-only, -r, -c or --stat,
++# default to --cc.
+ case " $flags " in
+-*" '--name-status' "* | *" '--name-only' "* | *" '-r' "* | *" '-c' "* )
++*" '--name-status' "* | *" '--name-only' "* | *" '-r' "* | *" '-c' "* | \
++*" '--stat' "*)
  	;;
  *)
- 	branch_name=`git symbolic-ref HEAD` || die "No current branch"
--	branch_name=`expr "$branch_name" : 'refs/heads/\(.*\)'`
-+	branch_name=`expr "z$branch_name" : 'zrefs/heads/\(.*\)'`
- 	;;
- esac
- branch=$(git-rev-parse --verify "${branch_name}^0") || exit
-diff --git a/git-tag.sh b/git-tag.sh
-index 76e51ed..dc6aa95 100755
---- a/git-tag.sh
-+++ b/git-tag.sh
-@@ -75,7 +75,7 @@ git-check-ref-format "tags/$name" ||
- object=$(git-rev-parse --verify --default HEAD "$@") || exit 1
- type=$(git-cat-file -t $object) || exit 1
- tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
--: ${username:=$(expr "$tagger" : '\(.*>\)')}
-+: ${username:=$(expr "z$tagger" : 'z\(.*>\)')}
- 
- trap 'rm -f "$GIT_DIR"/TAG_TMP* "$GIT_DIR"/TAG_FINALMSG "$GIT_DIR"/TAG_EDITMSG' 0
- 
-
-
-
--- [mdw]
+ 	flags="$flags'$cc_or_p' " ;;
