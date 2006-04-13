@@ -1,92 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff-options: add --stat
-Date: Thu, 13 Apr 2006 10:29:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604131023250.13970@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0604130301240.28688@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7ya13e3.fsf@assigned-by-dhcp.cox.net> <7vek02ynif.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Re: Test fails on ubuntu breezy
+Date: Thu, 13 Apr 2006 12:20:01 +0200
+Message-ID: <20060413102001.GA3185@bohr.gbar.dtu.dk>
+References: <cc723f590604130053k6896c0cfkd8ea648e91d50d0e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 13 10:29:11 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Apr 13 12:20:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FTxCP-00089P-NK
-	for gcvg-git@gmane.org; Thu, 13 Apr 2006 10:29:10 +0200
+	id 1FTyvq-0008MC-Un
+	for gcvg-git@gmane.org; Thu, 13 Apr 2006 12:20:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbWDMI3G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Apr 2006 04:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbWDMI3F
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 04:29:05 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:41104 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751196AbWDMI3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Apr 2006 04:29:04 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 8EAC31D78;
-	Thu, 13 Apr 2006 10:29:03 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 7FE202056;
-	Thu, 13 Apr 2006 10:29:03 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 6129B1D78;
-	Thu, 13 Apr 2006 10:29:03 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek02ynif.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S964872AbWDMKUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Apr 2006 06:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964873AbWDMKUG
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Apr 2006 06:20:06 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:21675 "HELO bohr.gbar.dtu.dk")
+	by vger.kernel.org with SMTP id S964872AbWDMKUF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Apr 2006 06:20:05 -0400
+Received: (qmail 3306 invoked by uid 5842); 13 Apr 2006 12:20:01 +0200
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <cc723f590604130053k6896c0cfkd8ea648e91d50d0e@mail.gmail.com>
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18658>
 
-Hi,
+On Thu, Apr 13, 2006 at 01:23:07PM +0530, Aneesh Kumar wrote:
+> kvaneesh@home:~/git-work/git.build/t$ ./t3600-rm.sh
+> Committing initial tree e5c556e46aae6124ff4a2a466c95004e92d9a2e4
+> *   ok 1: Pre-check that foo exists and is in index before git-rm foo
+> *   ok 2: Test that git-rm foo succeeds
+> *   ok 3: Post-check that foo exists but is not in index after git-rm foo
+> *   ok 4: Pre-check that bar exists and is in index before "git-rm -f bar"
+> *   ok 5: Test that "git-rm -f bar" succeeds
+> *   ok 6: Post-check that bar does not exist and is not in index after
+> "git-rm -f bar"
+> *   ok 7: Test that "git-rm -- -q" succeeds (remove a file that looks
+> like an option)
+> *   ok 8: Test that "git-rm -f" succeeds with embedded space, tab, or
+> newline characters.
+> * FAIL 9: Test that "git-rm -f" fails if its rm fails
+>         git-rm -f baz
+> *   ok 10: When the rm in "git-rm -f" fails, it should not remove the
+> file from the index
+> * failed 1 among 10 test(s)
+> kvaneesh@home:~/git-work/git.build/t$
 
-On Wed, 12 Apr 2006, Junio C Hamano wrote:
+On solaris 10 too, only test 5 also fails.
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > I wonder if you can also make this an independent option that
-> > prepends diffstat in front of the patch, just like the way the
-> > new flag --patch-with-raw flag prepends raw output in front of
-> > the patch.
-> 
-> Clarification.
-> 
-> Traditionally, we had diff-raw and diff-patch formats.
-> We can think of --name-status and --name-only variants of
-> diff-raw (just like different --abbrev settings give different
-> visuals for diff-raw).  Until very recently, these were either-or
-> output formats, but for Cogito we added an option to show both.
-> 
-> We could reorganize the output format options to:
-> 
-> 	- diff-raw and its name variants
-> 	- diff-stat
->         - diff-patch
-> 
-> and have (internally) three bools to specify which ones to
-> output, in the above order.  The recent --patch-with-raw would
-> flip bit #0 (show raw) and bit #2 (show patch) on.  It is very
-> likely that diff-stat followed by diff-patch would be a popular
-> format (that is what git-format-patch does), and it also is
-> conceivable that diff-raw with diff-stat but without diff-patch
-> might turn out to be useful for some people.
-
-That sounds plausible. Note that if diff-stat and diff-patch are turned 
-on, the patch generating code will be called twice. I do not think it is 
-sensible (or robust, for that matter) to cache the patch for this case.
-
-> Also, I forgot to mention, but would it be useful to have a
-> diffstat to show --cc?  It is unclear, without much thinking,
-> what the numbers would mean, though...
-
-I thought long and hard about that. But how would you display it? You can 
-have lines starting with "+ ", " +", "--", etc. The only half-way 
-reasonable approach I found was to display the diffstat against each 
-parent individually. Since it would be a bit involved to implement that, I 
-wanted to think about it a bit longer, if it really makes sense.
-
-Ciao,
-Dscho
+Peter
