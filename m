@@ -1,98 +1,87 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Default remote branch for local branch
-Date: Fri, 14 Apr 2006 20:26:43 +0200
-Message-ID: <200604142026.44070.Josef.Weidendorfer@gmx.de>
-References: <1143856098.3555.48.camel@dv> <200604021817.30222.Josef.Weidendorfer@gmx.de> <20060414161627.GA27689@pasky.or.cz>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] cg-admin-rewritehist: Seed the commit map with the parents specified with -r.
+Date: Fri, 14 Apr 2006 20:54:35 +0200
+Message-ID: <200604142054.36501.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 14 20:26:55 2006
+X-From: git-owner@vger.kernel.org Fri Apr 14 20:55:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUT0M-0005SK-JN
-	for gcvg-git@gmane.org; Fri, 14 Apr 2006 20:26:50 +0200
+	id 1FUTRa-0001le-Sm
+	for gcvg-git@gmane.org; Fri, 14 Apr 2006 20:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbWDNS0s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Apr 2006 14:26:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbWDNS0s
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 14:26:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:20907 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751388AbWDNS0r (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Apr 2006 14:26:47 -0400
-Received: (qmail invoked by alias); 14 Apr 2006 18:26:46 -0000
-Received: from p5496B49F.dip0.t-ipconnect.de (EHLO linux) [84.150.180.159]
-  by mail.gmx.net (mp001) with SMTP; 14 Apr 2006 20:26:46 +0200
-X-Authenticated: #352111
-To: Petr Baudis <pasky@suse.cz>
+	id S1751410AbWDNSy4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Apr 2006 14:54:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbWDNSy4
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 14:54:56 -0400
+Received: from mail.nextra.at ([195.170.70.100]:44071 "EHLO mail.nextra.at")
+	by vger.kernel.org with ESMTP id S1751410AbWDNSyz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Apr 2006 14:54:55 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by mail.nextra.at (8.13.6/8.13.6) with ESMTP id k3EIsd53009919
+	for <git@vger.kernel.org>; Fri, 14 Apr 2006 20:54:43 +0200 (MEST)
+X-Abuse-Info: Please report abuse to abuse@eunet.co.at, see http://www.eunet.at/support/service
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 32FE449CA1
+	for <git@vger.kernel.org>; Fri, 14 Apr 2006 20:54:37 +0200 (CEST)
+To: git@vger.kernel.org
 User-Agent: KMail/1.9.1
-In-Reply-To: <20060414161627.GA27689@pasky.or.cz>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18695>
 
-On Friday 14 April 2006 18:16, you wrote:
-> Dear diary, on Sun, Apr 02, 2006 at 06:17:29PM CEST, I got a letter
-> where Josef Weidendorfer <Josef.Weidendorfer@gmx.de> said that...
-> > > I would write the config like this:
-> > > 
-> > > [branch-upstream]
-> > > master = linus
-> > > ata-irq-pio = irq-pio
-> > > ata-pata = pata-drivers
-> > 
-> > That is not working, as said above. But with above syntax extension,
-> > with s/=/for/ it would be fine.
-> 
-> I'm sorry but I'm slow and I don't see it - why wouldn't this work?
-> (Except that the key name is case insensitive, which isn't too big a
-> deal IMHO.)
+When the first commit is manufactured, its parents are looked up in the
+commit map. However, without this patch the map is always empty at that time.
+If the entire history is rewritten, this is no problem because the first
+commit does not have any parents anyway. However, if -r is used to constrain
+rewriting to only part of the history, this first commit is manufactured
+incorrectly without parents because 'cat' fails.
 
-Hmm...
-* IMHO "keys are case insensitive" is enough to not qualify for branch
-names: currently, branch names are case sensitive, and with above syntax you
-effectively change this rule (you can not distinguish upstreams for "master"
-vs. "MASTER").
-* a dot currently seems to be allowed in branch names. For config keys, the
-dot separates subkeys.
-* I thought it is a convention for config keys to be alphanum only,
-eg. "/" isn't allowed, too (which is mandatory for branch names).
-Unfortunately, I found nothing about allowed chars for config keys in the
-documentation.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+
+---
+
+ cg-admin-rewritehist |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+ec09427d1fb4097c15fd6df4f07049a536bb7d2c
+diff --git a/cg-admin-rewritehist b/cg-admin-rewritehist
+index 9c49d80..b72c641 100755
+--- a/cg-admin-rewritehist
++++ b/cg-admin-rewritehist
+@@ -138,6 +138,7 @@ _git_requires_root=1
  
-> I for one think that the 'for'-syntax is insane - it's unreadable (your
-> primary query is by far most likely to be "what's the upstream when on
-> branch X", not "what branches is this upstream for"), would convolute
-> the configuration file syntax unnecessarily and would possibly also
-> complicate the git-repo-config interface.
-
-As far as I remember, the "... for ..." syntax was suggested by Linus for the
-proxy.command config a long time ago. The original proposal there was to
-use an URL as key part (as far as I can remember).
-
-That said,
-
-> Pavel's syntax is much nicer. 
-
-... I agree with you here.
-
-My suggestion would be to allow an optional syntax in the config file which is mapped
-by git-repo-config to the normalized "... for ..."-scheme.
-Eg. it should not be mandatory to specify "for ..." after the value of a key.
-So instead of
-
-  branch.upstream = linus for master
-
-you should be able to say
-
-  [branch]
-  upstream for master = linus
-
-
-Josef
+ tempdir=.git-rewrite
+ startrev=
++startrevparents=
+ filter_env=
+ filter_tree=
+ filter_index=
+@@ -149,6 +150,7 @@ while optparse; do
+ 		tempdir="$OPTARG"
+ 	elif optparse -r=; then
+ 		startrev="^$OPTARG $OPTARG $startrev"
++		startrevparents="$OPTARG $startrevparents"
+ 	elif optparse --env-filter=; then
+ 		filter_env="$OPTARG"
+ 	elif optparse --tree-filter=; then
+@@ -182,6 +184,11 @@ ret=0
+ 
+ 
+ mkdir ../map # map old->new commit ids for rewriting parents
++
++# seed with identity mappings for the parents where we start off
++for commit in $startrevparents; do
++	echo $commit > ../map/$commit
++done
+ 
+ git-rev-list --topo-order HEAD $startrev | tac >../revs
+ commits=$(cat ../revs | wc -l)
+-- 
+1.3.0.rc2
