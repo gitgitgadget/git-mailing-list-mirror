@@ -1,84 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
+From: =?ISO-8859-1?Q?S=E9bastien?= Pierre <sebastien@xprima.com>
 Subject: Re: git log is a bit antisocial
-Date: Fri, 14 Apr 2006 14:28:02 -0700
-Message-ID: <7vhd4vq23h.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 14 Apr 2006 17:44:32 -0400
+Organization: XPrima
+Message-ID: <1145051072.27704.1.camel@localhost.localdomain>
 References: <Pine.LNX.4.64.0604141647360.2215@localhost.localdomain>
-	<7vlku7q3k7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604141719290.2215@localhost.localdomain>
+	 <7vlku7q3k7.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0604141719290.2215@localhost.localdomain>
+	 <7vhd4vq23h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 14 23:28:11 2006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Apr 14 23:44:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUVpn-0001Vk-VC
-	for gcvg-git@gmane.org; Fri, 14 Apr 2006 23:28:08 +0200
+	id 1FUW5g-0004SU-4B
+	for gcvg-git@gmane.org; Fri, 14 Apr 2006 23:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965178AbWDNV2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Apr 2006 17:28:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965179AbWDNV2E
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 17:28:04 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:49822 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S965178AbWDNV2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Apr 2006 17:28:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060414212803.JEPC26035.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Apr 2006 17:28:03 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0604141719290.2215@localhost.localdomain> (Nicolas
-	Pitre's message of "Fri, 14 Apr 2006 17:20:13 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751435AbWDNVo2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 14 Apr 2006 17:44:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbWDNVo2
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 17:44:28 -0400
+Received: from ritalin.autolinq.com ([207.96.225.42]:62442 "HELO
+	ritalin.autolinq.com") by vger.kernel.org with SMTP
+	id S1751435AbWDNVo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Apr 2006 17:44:28 -0400
+Received: (qmail-ldap/ctrl 14009 invoked from network); 14 Apr 2006 21:44:27 -0000
+Received: from unknown (HELO ?10.0.0.14?) ([207.96.159.2]) (envelope-sender <sebastien@xprima.com>)
+          by ritalin.autolinq.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 14 Apr 2006 21:44:27 -0000
+To: git@vger.kernel.org
+In-Reply-To: <7vhd4vq23h.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18704>
 
-Nicolas Pitre <nico@cam.org> writes:
+Le vendredi 14 avril 2006 =C3=A0 14:28 -0700, Junio C Hamano a =C3=A9cr=
+it :
 
-> On Fri, 14 Apr 2006, Junio C Hamano wrote:
->
->> Nicolas Pitre <nico@cam.org> writes:
->> 
->> > $  git log -h
->> > fatal: unrecognized argument: -h
->> > $ git log --help
->> > fatal: unrecognized argument: --help
->> >
->> > Maybe the usage string could be printed in those cases?
->> 
->> Perhaps.  Alternatively, "git help log", perhaps.
->
-> What about git-log then?
+> What about it?
+>=20
+> Asking for help on log could be spelled as "git log --help" with
+> a patch like the attached, but I am not sure that is worth it...
 
-What about it?
+I would say that it is very useful to newbies, or simply not to
+frustrate users trying to get help. It is really worth it, at least for
+me.
 
-Asking for help on log could be spelled as "git log --help" with
-a patch like the attached, but I am not sure that is worth it...
-
--- >8 --
-diff --git a/git.c b/git.c
-index 78ed403..7fdacdd 100644
---- a/git.c
-+++ b/git.c
-@@ -497,6 +497,16 @@ int main(int argc, const char **argv, ch
- 	}
- 	argv[0] = cmd;
- 
-+	/* It could be git blah --help or git boo -h, but be
-+	 * careful; most commands have their own '-h' and '--help'.
-+	 */
-+	if (argc == 2 &&
-+	    (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))) {
-+		argv[0] = "help";
-+		argv[1] = cmd;
-+		exit(cmd_help(1, argv, envp));
-+	}
-+
- 	/*
- 	 * We search for git commands in the following order:
- 	 *  - git_exec_path()
+ -- S=C3=A9bastien
