@@ -1,44 +1,48 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: git log is a bit antisocial
-Date: Fri, 14 Apr 2006 16:50:07 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0604141647360.2215@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git log is a bit antisocial
+Date: Fri, 14 Apr 2006 13:56:24 -0700
+Message-ID: <7vlku7q3k7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0604141647360.2215@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Apr 14 22:50:42 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 14 22:56:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUVFR-0004Hu-AC
-	for gcvg-git@gmane.org; Fri, 14 Apr 2006 22:50:34 +0200
+	id 1FUVLB-0005Xa-8J
+	for gcvg-git@gmane.org; Fri, 14 Apr 2006 22:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965161AbWDNUuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Apr 2006 16:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965160AbWDNUuQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 16:50:16 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:5499 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S965159AbWDNUuH
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Apr 2006 16:50:07 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IXQ00A6VCJJBF70@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 14 Apr 2006 16:50:07 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: git@vger.kernel.org
+	id S965160AbWDNU40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Apr 2006 16:56:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965162AbWDNU40
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 16:56:26 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:24532 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S965160AbWDNU40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Apr 2006 16:56:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060414205625.IWBF18224.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 14 Apr 2006 16:56:25 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0604141647360.2215@localhost.localdomain> (Nicolas
+	Pitre's message of "Fri, 14 Apr 2006 16:50:07 -0400 (EDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18701>
 
+Nicolas Pitre <nico@cam.org> writes:
 
-$  git log -h
-fatal: unrecognized argument: -h
-$ git log --help
-fatal: unrecognized argument: --help
+> $  git log -h
+> fatal: unrecognized argument: -h
+> $ git log --help
+> fatal: unrecognized argument: --help
+>
+> Maybe the usage string could be printed in those cases?
 
-Maybe the usage string could be printed in those cases?
-
-
-Nicolas
+Perhaps.  Alternatively, "git help log", perhaps.
