@@ -1,62 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [WISH] prepend diffstat in front of the patch
-Date: Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604151346270.25269@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] diff-options: add --patch-with-stat
+Date: Sat, 15 Apr 2006 13:50:21 +0200
+Message-ID: <e5bfff550604150450u37ce1660u2db4f6e97c586e13@mail.gmail.com>
+References: <Pine.LNX.4.63.0604151340210.24303@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 15 13:48:57 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Apr 15 13:50:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUjGo-0004lL-Jr
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 13:48:55 +0200
+	id 1FUjIH-0004yW-Ff
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 13:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbWDOLsv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 07:48:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbWDOLsv
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 07:48:51 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:63136 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932495AbWDOLsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 07:48:50 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 7E8ED1886;
-	Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 723C81847;
-	Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 45779BED;
-	Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932496AbWDOLuX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 07:50:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932497AbWDOLuW
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 07:50:22 -0400
+Received: from wproxy.gmail.com ([64.233.184.238]:38753 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932496AbWDOLuW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Apr 2006 07:50:22 -0400
+Received: by wproxy.gmail.com with SMTP id i6so377398wra
+        for <git@vger.kernel.org>; Sat, 15 Apr 2006 04:50:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EPGtE1kMDVUVFFUL6wDPta1ah6mN0GPRo62XxgsKMv8MtusMikTAXFX6/RrWAdM2RKUj5FtPq6VI+c5JjASJd+Rqcnhdnt0W8vKGNrXQdaoBhp5Si4ZWWL0JZbn4y/dEXU9QIuKwrpT6BkSdD5q8yz+MZwYC08wNwvn/Frk8eJc=
+Received: by 10.64.204.12 with SMTP id b12mr1271479qbg;
+        Sat, 15 Apr 2006 04:50:21 -0700 (PDT)
+Received: by 10.64.131.14 with HTTP; Sat, 15 Apr 2006 04:50:21 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0604151340210.24303@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18740>
 
-Hi,
+On 4/15/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> With this option, git prepends a diffstat in front of the patch.
+>
 
-On Sat, 15 Apr 2006, Marco Costalba wrote:
+Thanks!  qgit will set this as default!
 
-> Perhaps I missed something, but I would like to see --stat and -p as 
-> _cumulative_ options .
-> 
-> Would be great if git-diff-tree -r -c --stat -p 84981f9 prepends
-> diffstat in front of the patch as Junio suggested some days ago.
-> 
-> Is it already planned?
+>
+>         Buggeth, and you shall be given.
+>
+>         BTW I really would like to have a diffstat for combined diffs.
+>         Any ideas?
+>
 
-We are a little impatient, aren't we?
+Well..hem..why do not  count  the (shifted) + and - in the combined diffs ouput?
 
-Anyway, as you probably saw already, I sent out a patch which does that. I 
-wanted to wait a little to introduce it, because I had the feeling that 
-the option parsing would be volatile for a few days.
+I suspect this can be a total idiocy, but now I'm missing why.  :-)
 
-Ciao,
-Dscho
+Marco
