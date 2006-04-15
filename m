@@ -1,66 +1,78 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [WISH] prepend diffstat in front of the patch
-Date: Sat, 15 Apr 2006 11:23:56 +0200
-Message-ID: <e5bfff550604150223i1ceaee5am9d3ec30f34166c01@mail.gmail.com>
-References: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
-	 <7vejzzi4ft.fsf@assigned-by-dhcp.cox.net>
+From: Rutger Nijlunsing <rutger@nospam.com>
+Subject: Re: git-svn and Author files question
+Date: Sat, 15 Apr 2006 11:25:10 +0200
+Organization: M38c
+Message-ID: <20060415092510.GA4539@nospam.com>
+References: <m21wvzx5e6.fsf@ziti.fhcrc.org>
+Reply-To: git@wingding.demon.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 15 11:24:06 2006
+X-From: git-owner@vger.kernel.org Sat Apr 15 11:25:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUh0d-0000DR-7L
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 11:24:04 +0200
+	id 1FUh1t-0000MU-5W
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 11:25:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbWDOJX6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 05:23:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbWDOJX6
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 05:23:58 -0400
-Received: from wproxy.gmail.com ([64.233.184.227]:17928 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751612AbWDOJX6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 05:23:58 -0400
-Received: by wproxy.gmail.com with SMTP id i6so369404wra
-        for <git@vger.kernel.org>; Sat, 15 Apr 2006 02:23:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Rn+TtKszwrpRZwd+xbq7iwEdrapuOlijxd7vI5rCWJkVQe/iH2meyQPP3woKAzwDeqLEv5xNHvYMvgX9rGU4zReFR1A9tixdqTjijvZmyKCc7mYQtkhJEf3uZyTuTgTr3vXXCm5jlABMCmjPv9rlJqdnG9WbB/Z2pf55d5PU0QU=
-Received: by 10.64.250.10 with SMTP id x10mr1254521qbh;
-        Sat, 15 Apr 2006 02:23:56 -0700 (PDT)
-Received: by 10.64.131.14 with HTTP; Sat, 15 Apr 2006 02:23:56 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vejzzi4ft.fsf@assigned-by-dhcp.cox.net>
+	id S1751611AbWDOJZS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 05:25:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbWDOJZR
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 05:25:17 -0400
+Received: from post-23.mail.nl.demon.net ([194.159.73.193]:3033 "EHLO
+	post-23.mail.nl.demon.net") by vger.kernel.org with ESMTP
+	id S1751611AbWDOJZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Apr 2006 05:25:16 -0400
+Received: from wingding.demon.nl ([82.161.27.36]:58455)
+	by post-23.mail.nl.demon.net with esmtp (Exim 4.51)
+	id 1FUh1j-000Kkm-Er; Sat, 15 Apr 2006 09:25:11 +0000
+Received: from rutger by wingding.demon.nl with local (Exim 4.60)
+	(envelope-from <rutger@wingding.demon.nl>)
+	id 1FUh1i-0002KH-Rn; Sat, 15 Apr 2006 11:25:10 +0200
+To: Seth Falcon <sethfalcon@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <m21wvzx5e6.fsf@ziti.fhcrc.org>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18736>
 
-On 4/15/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Marco Costalba" <mcostalba@gmail.com> writes:
->
-> > Perhaps I missed something, but I would like to see --stat and -p as
-> > _cumulative_ options .
->
-> Yes, you missed my write-up on "Recent unresolved issues",
-> especially this entry:
->
->     * Message-ID: <7vek02ynif.fsf@assigned-by-dhcp.cox.net>
->       diff --with-raw, --with-stat? (me)
->
-> and the thread that introduced the --stat option.
->
-> It is also what I want, but there is only 24 hours in a day and
-> there is this thing called day-job.
->
+On Fri, Apr 14, 2006 at 01:34:57PM -0700, Seth Falcon wrote:
+> Hi all,
+> 
+> I've been using git to manually track changes to a project that uses
+> svn as its primary SCM.
+> 
+> git-svn looks like it can help me streamline my workflow, but I'm
+> getting stuck with the following:
+> 
+>     mkdir foo
+>     cd foo
+>     git-svn init $URL  <--- the svn URL
+>     git-svn fetch
+>     Author: dfcimm3 not defined in  file
+> 
+> :-(
+> 
+> Can someone point me to the file and the place that describes what I
+> should put in it?  There are many committers to the svn project.  I'm
+> hoping that I will not have to enumerate all of their names in some
+> file.
 
-Sorry, I  didn't mean to force anything, just asking.
+I'm not familiar with git-svn, but the $GIT_DIR/svn-authors file used
+by git-svnimport.perl and
+http://www.wingding.demon.nl/git-svnconvert.rb contains lines like:
 
-Day-job thing is not unknown to me too.
+svn-author = Full Name <email@domain>
 
-Marco
+And yes, you've got to enumerate the names you want
+transformed. Another option is to give no authors, but then the SVN
+author names will be used (with email 'unknown' or something).
+
+
+-- 
+Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
+never attribute to a conspiracy which can be explained by incompetence
+----------------------------------------------------------------------
