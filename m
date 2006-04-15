@@ -1,78 +1,53 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [WISH] prepend diffstat in front of the patch
-Date: Sat, 15 Apr 2006 11:07:40 +0200
-Message-ID: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [WISH] prepend diffstat in front of the patch
+Date: Sat, 15 Apr 2006 02:16:54 -0700
+Message-ID: <7vejzzi4ft.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 15 11:07:45 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 15 11:17:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUgkq-00064K-Vg
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 11:07:45 +0200
+	id 1FUgtn-0007V3-7f
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 11:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbWDOJHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 05:07:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbWDOJHl
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 05:07:41 -0400
-Received: from wproxy.gmail.com ([64.233.184.226]:29940 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751599AbWDOJHl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 05:07:41 -0400
-Received: by wproxy.gmail.com with SMTP id i6so368578wra
-        for <git@vger.kernel.org>; Sat, 15 Apr 2006 02:07:40 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=d1bskhEhHngQ8w4s3JGGSxNswpEo1yxZrgv4DuxzUjSm3Mwd6BgICW8T8mP2eEpPwyoZC1FMulN2qcA/sxjQ44RSIYZ5YejjUfcJp7Bny7FKZYULOJSvZQ4aFg2Lqpq4pLwYEAeEu2qvwS2EO3Y/gCVR4/0Np67K06x874PvKII=
-Received: by 10.65.61.14 with SMTP id o14mr1260663qbk;
-        Sat, 15 Apr 2006 02:07:40 -0700 (PDT)
-Received: by 10.64.131.14 with HTTP; Sat, 15 Apr 2006 02:07:40 -0700 (PDT)
-To: Johannes.Schindelin@gmx.de
-Content-Disposition: inline
+	id S932424AbWDOJQ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 05:16:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbWDOJQ4
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 05:16:56 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:6577 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751605AbWDOJQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Apr 2006 05:16:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060415091655.ONAG18351.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 15 Apr 2006 05:16:55 -0400
+To: "Marco Costalba" <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
+	(Marco Costalba's message of "Sat, 15 Apr 2006 11:07:40 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18734>
 
->From today git tree
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-$ git-diff-tree -r -c -p --stat 84981f9
-84981f9ad963f050abf4fe33ac07d36b4ea90c6d
----
- diff.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> Perhaps I missed something, but I would like to see --stat and -p as 
+> _cumulative_ options .
 
+Yes, you missed my write-up on "Recent unresolved issues",
+especially this entry:
 
-$ git-diff-tree -r -c --stat -p 84981f9
-84981f9ad963f050abf4fe33ac07d36b4ea90c6d
-diff --git a/diff.c b/diff.c
-index c120239..f1b672d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -438,8 +438,8 @@ static void builtin_diffstat(const char
-                xdemitcb_t ecb;
+    * Message-ID: <7vek02ynif.fsf@assigned-by-dhcp.cox.net>
+      diff --with-raw, --with-stat? (me)
 
-                xpp.flags = XDF_NEED_MINIMAL;
--               xecfg.ctxlen = 3;
--               xecfg.flags = XDL_EMIT_FUNCNAMES;
-+               xecfg.ctxlen = 0;
-+               xecfg.flags = 0;
-                ecb.outf = xdiff_outf;
-                ecb.priv = diffstat;
-                xdl_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
+and the thread that introduced the --stat option.
 
-
-Perhaps I missed something, but I would like to see --stat and -p as 
-_cumulative_ options .
-
-Would be great if git-diff-tree -r -c --stat -p 84981f9 prepends
-diffstat in front of the patch as Junio suggested some days ago.
-
-Is it already planned?
-
-Thanks
-Marco
+It is also what I want, but there is only 24 hours in a day and
+there is this thing called day-job.
