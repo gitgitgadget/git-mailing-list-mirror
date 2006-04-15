@@ -1,65 +1,62 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Recent unresolved issues
-Date: Sat, 15 Apr 2006 13:46:02 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604151343010.25269@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604141637230.3701@g5.osdl.org> <7vlku7n05x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604141748070.3701@g5.osdl.org> <Pine.LNX.4.64.0604141751270.3701@g5.osdl.org>
- <7vu08vjra5.fsf@assigned-by-dhcp.cox.net> <7vk69ri5cp.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [WISH] prepend diffstat in front of the patch
+Date: Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604151346270.25269@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 15 13:46:18 2006
+X-From: git-owner@vger.kernel.org Sat Apr 15 13:48:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUjED-0004Sg-1p
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 13:46:16 +0200
+	id 1FUjGo-0004lL-Jr
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 13:48:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbWDOLqE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 07:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932494AbWDOLqE
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 07:46:04 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27807 "EHLO
+	id S932495AbWDOLsv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 07:48:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbWDOLsv
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 07:48:51 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:63136 "EHLO
 	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932493AbWDOLqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 07:46:03 -0400
+	id S932495AbWDOLsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Apr 2006 07:48:50 -0400
 Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 1E4EAD17;
-	Sat, 15 Apr 2006 13:46:02 +0200 (CEST)
+	by mailrelay.mail (Postfix) with ESMTP id 7E8ED1886;
+	Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 12480CFE;
-	Sat, 15 Apr 2006 13:46:02 +0200 (CEST)
+	by virusscan.mail (Postfix) with ESMTP id 723C81847;
+	Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E9D83BB3;
-	Sat, 15 Apr 2006 13:46:01 +0200 (CEST)
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 45779BED;
+	Sat, 15 Apr 2006 13:48:49 +0200 (CEST)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk69ri5cp.fsf@assigned-by-dhcp.cox.net>
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550604150207h6fdb0042x3a9bbfa63269a8c8@mail.gmail.com>
 X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18739>
 
 Hi,
 
-On Sat, 15 Apr 2006, Junio C Hamano wrote:
+On Sat, 15 Apr 2006, Marco Costalba wrote:
 
-> Honestly, the longer I look at it, the more I feel that this way
-> might break more things than it fixes.  I haven't even looked at
-> blame.c or http-push.c to see what's broken yet.
+> Perhaps I missed something, but I would like to see --stat and -p as 
+> _cumulative_ options .
+> 
+> Would be great if git-diff-tree -r -c --stat -p 84981f9 prepends
+> diffstat in front of the patch as Junio suggested some days ago.
+> 
+> Is it already planned?
 
-I do not have time to look at this closely, but it sounds to me like you 
-need a two-stage approach:
+We are a little impatient, aren't we?
 
-setup_diff_options(&options);
-[... set defaults ...]
-handle_cmdline_arguments(&options);
-[... possibly check if the user overrode some defaults ...]
-
-I think that the unified option parsing is the right approach.
+Anyway, as you probably saw already, I sent out a patch which does that. I 
+wanted to wait a little to introduce it, because I had the feeling that 
+the option parsing would be volatile for a few days.
 
 Ciao,
 Dscho
