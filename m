@@ -1,64 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Recent unresolved issues
-Date: Fri, 14 Apr 2006 19:22:34 -0700
-Message-ID: <7vsloflgr9.fsf@assigned-by-dhcp.cox.net>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604141637230.3701@g5.osdl.org>
-	<7vlku7n05x.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604141748070.3701@g5.osdl.org>
-	<Pine.LNX.4.64.0604141751270.3701@g5.osdl.org>
-	<Pine.LNX.4.64.0604141808480.3701@g5.osdl.org>
+From: Mike McCormack <mike@codeweavers.com>
+Subject: [PATCH] Fix a warning.
+Date: Sat, 15 Apr 2006 12:50:14 +0900
+Organization: CodeWeavers
+Message-ID: <44406D76.1020102@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 15 04:23:03 2006
+Content-Type: multipart/mixed;
+ boundary="------------090701090507040900000205"
+X-From: git-owner@vger.kernel.org Sat Apr 15 05:55:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUaRB-0007z0-UZ
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 04:23:02 +0200
+	id 1FUbsq-0004vf-HD
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 05:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750889AbWDOCWh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Apr 2006 22:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751564AbWDOCWg
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 22:22:36 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:53503 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750889AbWDOCWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Apr 2006 22:22:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060415022235.JVGJ8241.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Apr 2006 22:22:35 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604141808480.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 14 Apr 2006 18:09:20 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030229AbWDODz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Apr 2006 23:55:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030230AbWDODz2
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 23:55:28 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:61656 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S1030229AbWDODz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Apr 2006 23:55:28 -0400
+Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
+	by mail.codeweavers.com with esmtp (Exim 4.50)
+	id 1FUbsX-0007Hw-9v
+	for git@vger.kernel.org; Fri, 14 Apr 2006 22:55:27 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
+X-Accept-Language: en, en-us, ko-kr
+To: git@vger.kernel.org
+X-SA-Exim-Connect-IP: 216.251.189.130
+X-SA-Exim-Mail-From: mike@codeweavers.com
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18723>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+This is a multi-part message in MIME format.
+--------------090701090507040900000205
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> Ok, fourth time lucky?
->
-> 		Linus
+Signed-off-by: Mike McCormack <mike@codeweavers.com>
 
-With this, perhaps.
 
 ---
-diff --git a/revision.c b/revision.c
-index 2061ca8..1d26e0d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -792,6 +792,7 @@ int setup_revisions(int argc, const char
- 	}
- 	if (revs->diffopt.output_format == DIFF_FORMAT_PATCH)
- 		revs->diffopt.recursive = 1;
-+	revs->diffopt.abbrev = revs->abbrev;
- 	diff_setup_done(&revs->diffopt);
+
+  diff-tree.c |    2 +-
+  1 files changed, 1 insertions(+), 1 deletions(-)
+
+
+--------------090701090507040900000205
+Content-Type: text/x-patch;
+ name="2fa977d19bee245aef86d9beb307d742111890d7.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="2fa977d19bee245aef86d9beb307d742111890d7.diff"
+
+2fa977d19bee245aef86d9beb307d742111890d7
+diff --git a/diff-tree.c b/diff-tree.c
+index 2b79dd0..7015b06 100644
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -120,7 +120,7 @@ int main(int argc, const char **argv)
+ 	if (opt->diffopt.output_format == DIFF_FORMAT_PATCH)
+ 		opt->diffopt.recursive = 1;
  
- 	return left;
+-	diff_tree_setup_paths(get_pathspec(prefix, argv), opt);
++	diff_tree_setup_paths(get_pathspec(prefix, argv), &opt->diffopt);
+ 	diff_setup_done(&opt->diffopt);
+ 
+ 	switch (nr_sha1) {
+
+
+--------------090701090507040900000205--
