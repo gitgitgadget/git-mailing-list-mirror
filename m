@@ -1,82 +1,87 @@
-From: Mike McCormack <mike@codeweavers.com>
-Subject: [PATCH] Fix a warning.
-Date: Sat, 15 Apr 2006 12:50:14 +0900
-Organization: CodeWeavers
-Message-ID: <44406D76.1020102@codeweavers.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Recent unresolved issues
+Date: Fri, 14 Apr 2006 21:09:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604142104140.3701@g5.osdl.org>
+References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604141637230.3701@g5.osdl.org> <7vlku7n05x.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604141748070.3701@g5.osdl.org> <7vacanmxhe.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090701090507040900000205"
-X-From: git-owner@vger.kernel.org Sat Apr 15 05:55:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 15 06:09:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUbsq-0004vf-HD
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 05:55:40 +0200
+	id 1FUc6W-0006Mi-9O
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 06:09:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030229AbWDODz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Apr 2006 23:55:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030230AbWDODz2
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Apr 2006 23:55:28 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:61656 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1030229AbWDODz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Apr 2006 23:55:28 -0400
-Received: from foghorn.codeweavers.com ([216.251.189.130] helo=[127.0.0.1])
-	by mail.codeweavers.com with esmtp (Exim 4.50)
-	id 1FUbsX-0007Hw-9v
-	for git@vger.kernel.org; Fri, 14 Apr 2006 22:55:27 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050923
-X-Accept-Language: en, en-us, ko-kr
-To: git@vger.kernel.org
-X-SA-Exim-Connect-IP: 216.251.189.130
-X-SA-Exim-Mail-From: mike@codeweavers.com
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on mail.codeweavers.com)
+	id S1030221AbWDOEJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 00:09:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030230AbWDOEJi
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 00:09:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:20956 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030221AbWDOEJi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Apr 2006 00:09:38 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3F49XtH017936
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 14 Apr 2006 21:09:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3F49VGc023582;
+	Fri, 14 Apr 2006 21:09:32 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vacanmxhe.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18723>
-
-This is a multi-part message in MIME format.
---------------090701090507040900000205
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Signed-off-by: Mike McCormack <mike@codeweavers.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18724>
 
 
----
 
-  diff-tree.c |    2 +-
-  1 files changed, 1 insertions(+), 1 deletions(-)
+On Fri, 14 Apr 2006, Junio C Hamano wrote:
+> 
+> Another thing is that some revision.c users are not interested
+> in taking diff options at all.
 
+Well, it's easy enough to do something like
 
---------------090701090507040900000205
-Content-Type: text/x-patch;
- name="2fa977d19bee245aef86d9beb307d742111890d7.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="2fa977d19bee245aef86d9beb307d742111890d7.diff"
+	if (rev->diff)
+		usage(no_diff_cmd_usage);
 
-2fa977d19bee245aef86d9beb307d742111890d7
-diff --git a/diff-tree.c b/diff-tree.c
-index 2b79dd0..7015b06 100644
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -120,7 +120,7 @@ int main(int argc, const char **argv)
- 	if (opt->diffopt.output_format == DIFF_FORMAT_PATCH)
- 		opt->diffopt.recursive = 1;
- 
--	diff_tree_setup_paths(get_pathspec(prefix, argv), opt);
-+	diff_tree_setup_paths(get_pathspec(prefix, argv), &opt->diffopt);
- 	diff_setup_done(&opt->diffopt);
- 
- 	switch (nr_sha1) {
+for something like that.
 
+> I was going to suggest a new structure that captures struct
+> rev_info, struct log_tree_opt and miscellaneous bits cmd_log
+> uses such as do_diff, full_diff, etc., and move the option
+> parser out of cmd_log() to a separate function, and have that
+> shared across cmd_log(), cmd_show(), cmd_whatchanged(), and
+> cmd_diff() without affecting any of the existing revision.c
+> users.  That way, "rev-list --cc HEAD" will remain nonsense.
 
---------------090701090507040900000205--
+Well, I actually was going to make git-rev-list just take the diff 
+options, and it ends up doing the same thing as "git log" with them. 
+There's no real downside.
+
+> One nice property your approach has is that it makes
+> "git diff-tree a..b" magically starts working, unlike what
+> I suggested above.
+
+Yeah. It just fell out automatically from using the rev-list parsing.
+
+Although, the thing is, once we have a built-in "git diff", there's 
+actually little enough reason to ever use the old "git-diff-tree" vs 
+"git-diff-index" vs "git-diff-files" at all. 
+
+It might actually be nice to prune some of the tons of git commands. At 
+some point, the fact that
+
+	echo bin/git-* | wc -w
+
+returns 122 just makes you go "Hmm..".
+
+		Linus
