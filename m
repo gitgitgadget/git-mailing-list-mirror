@@ -1,112 +1,89 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] diff-options: add --patch-with-stat
-Date: Sat, 15 Apr 2006 15:01:43 +0200
-Message-ID: <e5bfff550604150601n335205actb0e1955884e76582@mail.gmail.com>
-References: <Pine.LNX.4.63.0604151340210.24303@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v64lbggrd.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0604151436280.6147@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [RFC/PATCH] pager: do not fork a pager if environment variable PAGER
+ is set to NONE
+Date: Sat, 15 Apr 2006 15:16:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604151516150.6563@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 15 15:01:57 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Apr 15 15:16:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUkPN-0005wN-Dk
-	for gcvg-git@gmane.org; Sat, 15 Apr 2006 15:01:49 +0200
+	id 1FUkdp-0007tJ-UH
+	for gcvg-git@gmane.org; Sat, 15 Apr 2006 15:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030227AbWDONBq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 09:01:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030234AbWDONBq
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 09:01:46 -0400
-Received: from wproxy.gmail.com ([64.233.184.235]:4497 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1030227AbWDONBq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 09:01:46 -0400
-Received: by wproxy.gmail.com with SMTP id i6so382348wra
-        for <git@vger.kernel.org>; Sat, 15 Apr 2006 06:01:45 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KprkIG+RBaYoX4y6DwI5yCrR2Sd9cztCcq+ydB3+gKvLMEqHwQ5ZHHPpuFBCMCZlTKqN02PO8zHkXbxS3BFy2PbwkGn8Yo0hNK0DV/6kZbDQhXAa7/Mr5eohnMkZhNpIEP4wJnvbkpt7xzB5/GtlEPPsmMvCCqSL3xrwpV7pzOY=
-Received: by 10.65.43.9 with SMTP id v9mr1305587qbj;
-        Sat, 15 Apr 2006 06:01:43 -0700 (PDT)
-Received: by 10.64.131.14 with HTTP; Sat, 15 Apr 2006 06:01:43 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0604151436280.6147@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1030239AbWDONQi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 09:16:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030238AbWDONQi
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 09:16:38 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6117 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1030239AbWDONQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Apr 2006 09:16:37 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 4BEF3BBD
+	for <git@vger.kernel.org>; Sat, 15 Apr 2006 15:16:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 401D3BB3
+	for <git@vger.kernel.org>; Sat, 15 Apr 2006 15:16:36 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 234B2B69
+	for <git@vger.kernel.org>; Sat, 15 Apr 2006 15:16:36 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18749>
 
-On 4/15/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Sat, 15 Apr 2006, Junio C Hamano wrote:
->
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> > >     BTW I really would like to have a diffstat for combined diffs.
-> > >     Any ideas?
-> >
- Just another idea, from current git:
 
-$ git-diff-tree -r -m --stat 4da8cbc23
-4da8cbc234177d6a8cf749d4ef60bd05ec843898
+This helps debugging tremendously.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
 ---
- blame.c     |   20 ++++++++++++++------
- diff-tree.c |    2 +-
- diff.h      |    6 +++++-
- git.c       |   15 +++++++++++++--
- http-push.c |    1 +
- rev-list.c  |    1 +
- revision.c  |   26 ++++++++++++--------------
- revision.h  |    7 +++++--
- tree-diff.c |   46 +++++++++++++++++++++++++---------------------
- 9 files changed, 77 insertions(+), 47 deletions(-)
-4da8cbc234177d6a8cf749d4ef60bd05ec843898
----
- Documentation/diff-options.txt |    3 +
- Documentation/git-apply.txt    |    8 ++-
- Makefile                       |   14 ++++-
- apply.c                        |  123 ++++++++++++++++++++++++++++++++++------
- combine-diff.c                 |   12 ++++
- diff.c                         |   83 ++++++++++++++++-----------
- diff.h                         |    3 +
- http-fetch.c                   |    8 +--
- http-push.c                    |    6 +-
- 9 files changed, 199 insertions(+), 61 deletions(-)
 
-$ git-diff-tree -r -c  4da8cbc23
-4da8cbc234177d6a8cf749d4ef60bd05ec843898
-::100644 100644 100644 c5372b984a457d0e5bddcf0b334a1a3cdc149cec
-cc7cc627c88d135c3f8d814449813e73c1ea3430
-236095fc9a1a6ffc056be8616c0f83e4e8c7ec2f MM        diff.h
-::100644 100644 100644 994ee90035c4ae5e055df79cea8621d294190a3f
-aa0bc1f6f6a51fb39d54dc81b93805f86d19aa46
-19a0f772e7bf729755c66ab38f5dfb64ae784f00 MM        http-push.c
+ pager.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-
-PROPOSED OUTPUT:
-
-$ git-diff-tree -r -c --stat 4da8cbc23
-
-4da8cbc234177d6a8cf749d4ef60bd05ec843898
----
- diff.h      |    6 +++++-
- http-push.c |    1 +
- 2 files changed, 6 insertions(+), 1 deletions(-)
-4da8cbc234177d6a8cf749d4ef60bd05ec843898
----
- diff.h      |    3 +++
- http-push.c |    6 +++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
-
-
-I agree Junio ouput is nicer, this one is perhaps more consistent with
-git-diff-tree -m --stat output.
-
-Marco
+a91a9371e117555a03cfe7d24515787fb13005b6
+diff --git a/pager.c b/pager.c
+index 1364e15..1136adf 100644
+--- a/pager.c
++++ b/pager.c
+@@ -5,9 +5,8 @@ #include "cache.h"
+  * something different on Windows, for example.
+  */
+ 
+-static void run_pager(void)
++static void run_pager(const char *prog)
+ {
+-	const char *prog = getenv("PAGER");
+ 	if (!prog)
+ 		prog = "less";
+ 	setenv("LESS", "-S", 0);
+@@ -16,10 +15,11 @@ static void run_pager(void)
+ 
+ void setup_pager(void)
+ {
++	const char *prog = getenv("PAGER");
+ 	pid_t pid;
+ 	int fd[2];
+ 
+-	if (!isatty(1))
++	if (!isatty(1) || (prog != NULL && !strcmp(prog, "NONE")))
+ 		return;
+ 	if (pipe(fd) < 0)
+ 		return;
+@@ -43,6 +43,6 @@ void setup_pager(void)
+ 	close(fd[0]);
+ 	close(fd[1]);
+ 
+-	run_pager();
++	run_pager(prog);
+ 	exit(255);
+ }
+-- 
+1.3.0.rc4.g667c
