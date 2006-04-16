@@ -1,77 +1,69 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: git-svn and Author files question
-Date: Sat, 15 Apr 2006 18:57:27 -0700
-Message-ID: <m2ejzys2ns.fsf@ziti.fhcrc.org>
-References: <m21wvzx5e6.fsf@ziti.fhcrc.org>
-	<20060415215850.GB20468@hand.yhbt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] pager: do not fork a pager if environment variable
+ PAGER is set to NONE
+Date: Sun, 16 Apr 2006 04:01:30 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604160357460.31461@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0604151516150.6563@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vwtdqef6u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Apr 16 03:57:48 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 16 04:01:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUwWH-0000R4-MG
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 03:57:46 +0200
+	id 1FUwa3-0000m1-BO
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 04:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189AbWDPB5a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 21:57:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbWDPB5a
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 21:57:30 -0400
-Received: from nz-out-0102.google.com ([64.233.162.200]:34243 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932189AbWDPB5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 21:57:30 -0400
-Received: by nz-out-0102.google.com with SMTP id o37so339338nzf
-        for <git@vger.kernel.org>; Sat, 15 Apr 2006 18:57:29 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=RmgMIHZ3pRb3BYGo2jVX0QbMqi2/YkTDF4v3YlsYtfaCMVwdBR+5h/A8UrT+iYxsnQNBerpj3jn0r3tE78F4Qm7uTzgPbsYy2MxxYQVwDe5TLtCKgTXwvxmmboxFXLdbPbvS5Y3vtXakQxi1kmNOD6CvcJTamF7YkHZLE5cKgog=
-Received: by 10.36.145.2 with SMTP id s2mr4428605nzd;
-        Sat, 15 Apr 2006 18:57:29 -0700 (PDT)
-Received: from ziti.fhcrc.org ( [67.171.24.140])
-        by mx.gmail.com with ESMTP id 36sm1925146nzk.2006.04.15.18.57.28;
-        Sat, 15 Apr 2006 18:57:28 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <20060415215850.GB20468@hand.yhbt.net> (Eric Wong's message of "Sat, 15 Apr 2006 14:58:50 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S932188AbWDPCBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Apr 2006 22:01:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932191AbWDPCBf
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 22:01:35 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43161 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932188AbWDPCBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Apr 2006 22:01:34 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 342C11B10;
+	Sun, 16 Apr 2006 04:01:31 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 28E741A66;
+	Sun, 16 Apr 2006 04:01:31 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id F3096199F;
+	Sun, 16 Apr 2006 04:01:30 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtdqef6u.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18770>
 
-Eric Wong <normalperson@yhbt.net> writes:
-> There were some embarassing bugs between the git-svn in rc1 and rc2.
-> Current versions should work.  Rutger was right about the file format,
-> same as the other importers.
+Hi,
 
-Thanks for the explanation (and thanks to Rutger as well for the
-reply!).
+On Sat, 15 Apr 2006, Junio C Hamano wrote:
 
-I managed to get git-svn fetch to work by specifying an author file
-with -A.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > This helps debugging tremendously.
+> >
+> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> 
+> I like what this wants to do.  I am not so sure PAGER=NONE is a
+> good convention, however.
 
-I'm a bit confused about why I have to do this.  Is there a way around
-this?  Or perhaps a way to force a bogus email address based on svn
-user name?
+I am sure it is not.
 
-[ok, maybe I'm less confused than I'm letting on: the email
-requirement is, I think, because that's what suits the main git
-"customers".  If I was using git for a project's primary SCM, I would
-have no problem with this.  In fact, we started using email addresses
-as user names in svn a long time ago.  
+One solution would be to introduce yet another command line option 
+"--no-pager", but I find that ugly.
 
-But it seems to me that (1) using git to track a project that uses a
-less featureful SCM is way cool, and (2) having to manually muck with
-an authors file is kinda uncool.]
+Another solution would be to check if the environment variable NO_PAGER is 
+set.
 
-> Sorry about so long to reply to questions this week, left hand/wrist is
-> wrecked.
+Wishes?
 
-Hope it heals quickly!
-
-
-Thanks for listening and again for the help,
-
-+ seth
+Ciao,
+Dscho
