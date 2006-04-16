@@ -1,176 +1,90 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Make cg-commit work with accented letters.
-Date: Sun, 16 Apr 2006 19:57:00 +0200
-Message-ID: <20060416175700.29745.26898.stgit@gandelf.nowhere.earth>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: path limiting broken
+Date: Sun, 16 Apr 2006 10:58:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604161052310.3701@g5.osdl.org>
+References: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604160850230.3701@g5.osdl.org>
+ <Pine.LNX.4.63.0604161835410.17985@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604161000550.3701@g5.osdl.org>
+ <Pine.LNX.4.63.0604161931530.19020@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 16 19:54:47 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 19:58:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVBSQ-0004FD-27
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 19:54:46 +0200
+	id 1FVBWT-0004kS-9u
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 19:58:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbWDPRyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 13:54:43 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbWDPRyn
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 13:54:43 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:30947 "EHLO smtp6-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750778AbWDPRym (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 13:54:42 -0400
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 7D8161EACE;
-	Sun, 16 Apr 2006 19:54:41 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1FVBbf-0003z9-D4; Sun, 16 Apr 2006 20:04:19 +0200
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: StGIT/0.9
+	id S1750776AbWDPR6y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 13:58:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbWDPR6y
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 13:58:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34435 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750776AbWDPR6x (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 13:58:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3GHwotH007104
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 16 Apr 2006 10:58:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3GHwoEo011457;
+	Sun, 16 Apr 2006 10:58:50 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0604161931530.19020@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18798>
 
 
-git-diff-index in default mode has an annoying behaviour wrt filenames
-containing non-ascii chars.  As suggested by Pasky, we can use -z
-mode, which gives us a much better way of handling all other special
-chars.  With associated testcases ensuring it works with simple and
-double quotes, backslashes, and spaces as well.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+On Sun, 16 Apr 2006, Johannes Schindelin wrote:
+> 
+> I finally found the commit which removed parse_whatchanged_opt() from 
+> log-tree.c by
+> 
+> 	git-rev-list 4a617..next | while read commit; do \
+> 		echo $commit; \
+> 		git diff $commit^..$commit log-tree.c | \
+> 			grep parse_whatchanged; \
+> 	done | less
 
- cg-commit               |   10 ++++----
- t/t9900-specialchars.sh |   59 +++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 64 insertions(+), 5 deletions(-)
+Heh. You really should learn about "-m -p", which does the above, but 
+better (it compares against _all_ parents - you would have missed the 
+thing _again_ if the "lt/logopt" branch had been the main branch ;)
 
-diff --git a/cg-commit b/cg-commit
-index 8dac57c..9ec8289 100755
---- a/cg-commit
-+++ b/cg-commit
-@@ -274,8 +274,8 @@ if [ "$ARGS" -o "$_git_relpath" ]; then
- 		echo "${_git_relpath}$file" >>"$filter"
- 	done
-=20
--	eval "commitfiles=3D($(cat "$filter" | path_xargs git-diff-index -r -=
-m HEAD -- | \
--		sed -e 's/"\|\\/\\&/g' -e 's/^\([^	]*\)\(.\)	\(.*\)\(	.*\)*$/"\2 \3"=
-/'))"
-+	eval "commitfiles=3D($(cat "$filter" | path_xargs git-diff-index -z -=
-r -m HEAD -- | \
-+		perl -n0e 'if (defined $meta) { s/([\"\\])/\\\1/; print "\"$meta $_\=
-"\n"; $meta=3Dundef } else { $meta =3D (split(/\s/))[4] }'))"
- 	customfiles=3D1
-=20
- 	[ "$review" ] && cat "$filter" | path_xargs git-diff-index -r -m -p H=
-EAD -- > "$PATCH"
-@@ -292,8 +292,8 @@ else
- 	if [ ! "$ignorecache" ]; then
- 		# \t instead of the tab character itself works only with new
- 		# sed versions.
--		eval "commitfiles=3D($(git-diff-index -r -m HEAD | \
--			sed -e 's/"\|\\/\\&/g' -e 's/^\([^	]*\)\(.\)	\(.*\)\(	.*\)*$/"\2 \3=
-"/'))"
-+		eval "commitfiles=3D($(git-diff-index -z -r -m HEAD | \
-+			perl -n0e 'if (defined $meta) { s/([\"\\])/\\\1/; print "\"$meta $_=
-\"\n"; $meta=3Dundef } else { $meta =3D (split(/\s/))[4] }'))"
-=20
- 		if [ -s "$_git/commit-ignore" ]; then
- 			newcommitfiles=3D()
-@@ -439,7 +439,7 @@ __END__
- 		exit 1
- 	fi
- 	if [ ! "$ignorecache" ] && [ ! "$merging" ] && [ ! "$review" ]; then
--		eval "newcommitfiles=3D($(grep ^CG:F "$LOGMSG2" | sed 's/^CG:F *\(.*=
-\)$/"\1"/'))"
-+		eval "newcommitfiles=3D($(grep ^CG:F "$LOGMSG2" | sed -e 's/\"/\\&/g=
-' -e 's/^CG:F *\(.*\)$/"\1"/'))"
- 		if [ ! "$force" ] && [ ! "${newcommitfiles[*]}" ]; then
- 			rm "$LOGMSG" "$LOGMSG2"
- 			[ "$quiet" ] && exit 0 || die 'Nothing to commit'
-diff --git a/t/t9900-specialchars.sh b/t/t9900-specialchars.sh
-new file mode 100755
-index 0000000..a705052
---- /dev/null
-+++ b/t/t9900-specialchars.sh
-@@ -0,0 +1,59 @@
-+#!/usr/bin/env bash
-+#
-+# Copyright (c) 2006 Yann Dirson
-+#
-+test_description=3D"Tests various commands with shell-special chars.
-+
-+Filenames with embedded spaces, quotes, non-ascii letter, you name it.=
-"
-+
-+. ./test-lib.sh
-+
-+rm -rf .git
-+cg-init -m .
-+
-+touch "a space"
-+test_expect_success 'add file with space' 'cg-add "a space"'
-+test_expect_success 'commit file with space' 'cg-commit -m . "a space"=
-'
-+
-+touch "a'quote"
-+test_expect_success 'add file with quote' "cg-add \"a'quote\""
-+test_expect_success 'commit file with quote' "cg-commit -m . \"a'quote=
-\""
-+
-+touch "d\"quote"
-+test_expect_success 'add file with accent' 'cg-add "d\"quote"'
-+test_expect_success 'commit file with quote' 'cg-commit -m . "d\"quote=
-"'
-+
-+touch "back\\slash"
-+test_expect_success 'add file with accent' 'cg-add "back\\slash"'
-+test_expect_success 'commit file with quote' 'cg-commit -m . "back\\sl=
-ash"'
-+
-+touch "acc=E9nt"
-+test_expect_success 'add file with accent' "cg-add acc=E9nt"
-+test_expect_success 'commit file with quote' "cg-commit -m . acc=E9nt"
-+
-+## same without a file arg to cg-commit
-+
-+rm -rf * .git
-+cg-init -m .
-+
-+touch "a space"
-+test_expect_success 'add file with space' 'cg-add "a space"'
-+test_expect_success 'commit file with space' 'cg-commit -m .'
-+
-+touch "a'quote"
-+test_expect_success 'add file with quote' "cg-add \"a'quote\""
-+test_expect_success 'commit file with quote' "cg-commit -m ."
-+
-+touch "d\"quote"
-+test_expect_success 'add file with accent' 'cg-add "d\"quote"'
-+test_expect_success 'commit file with quote' 'cg-commit -m .'
-+
-+touch "back\\slash"
-+test_expect_success 'add file with accent' 'cg-add "back\\slash"'
-+test_expect_success 'commit file with quote' 'cg-commit -m .'
-+
-+touch "acc=E9nt"
-+test_expect_success 'add file with accent' "cg-add acc=E9nt"
-+test_expect_success 'commit file with quote' "cg-commit -m ."
-+
-+test_done
+> However, the combined diff of that commit does not show it, while the diff 
+> to the first parent does:
+> 
+> 	git-show --cc 43f934aa90 | grep parse_whatchanged
+
+Combined merges really only show conflicts where the different parents do 
+something different from the end result. Since the whole file was taken 
+from the lt/logopt branch, even
+
+	git show -c 43f934aa90
+
+won't show that "log-tree.c" file AT ALL, because there was no content 
+conflict: the whole file was taken from one branch, unmodified. 
+
+If you want to see all changes against all parents, you really do need 
+"-m -p" (or just "-m", which will show the raw diffs, and which will 
+show how the file changes from one parent, but not the other).
+
+Note that NORMALLY, you'd really never want to use "-m -p". It's a very 
+very inconvenient format, since normally you want to see only the stuff 
+that changed wrt the end result.
+
+So "--cc" really does ignore everything that is irrelevant for the end 
+result, and in this case you are very much trying to find somethign that 
+is totally irrelevant for the end result, since the function you look for 
+had never even _existed_ in the file as far as the end result goes..
+
+		Linus
