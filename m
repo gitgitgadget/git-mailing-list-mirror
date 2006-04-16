@@ -1,62 +1,77 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [BUG] comments in grafts file broken in current master
-Date: Sun, 16 Apr 2006 14:35:35 +0200
-Message-ID: <20060416123535.GT12638@nowhere.earth>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: path limiting broken
+Date: Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Apr 16 14:26:26 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Apr 16 14:26:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FV6KZ-0005Cy-RQ
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 14:26:20 +0200
+	id 1FV6Ky-0005Fb-Bd
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 14:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750719AbWDPM0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 08:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbWDPM0F
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 08:26:05 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:47821 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750719AbWDPM0E (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 08:26:04 -0400
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 4E1616DB72
-	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:25:58 +0200 (CEST)
-Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.61)
-	(envelope-from <ydirson@altern.org>)
-	id 1FV6TY-0004EU-5m
-	for git@vger.kernel.org; Sun, 16 Apr 2006 14:35:36 +0200
-To: GIT list <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1750720AbWDPM0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 08:26:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750724AbWDPM0j
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 08:26:39 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:61584 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750720AbWDPM0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Apr 2006 08:26:39 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 5972F1F4B
+	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 4E5E81F4A
+	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 3AE081F3C
+	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18789>
 
-While looking at allowing empty lines in grafts files, I discovered
-that comments had already been implemented.  However, current
-git-read-tree segfaults when there is a comment line in info/grafts:
+Hi,
 
-dwitch@gandelf:/export/work/yann/git/git$ cat .git/info/grafts 
-c118c026e44f02c3dbad00d924285eef2340f700
-# foo
-dwitch@gandelf:/export/work/yann/git/git$ git-read-tree master
-Segmentation fault
+I just tried to find out when certain changes percolated into log-tree.c. 
+So I issued "git log --cc next log-tree.c". Wonders of wonders, the 
+patches did not contain *anything* about what I tried to find, even if the 
+file contains the key words. Because the path limiting is overeager (I 
+finally found what I looked for in commit f4235f8b):
 
+	git-name-rev $(git-rev-list --pretty=oneline \
+	f4235f8b2ef875b85ead74ffa199d827f9ee9d8d..next log-tree.c | \
+	sed "s/ .*$//")
 
-The commit introducing the problem is
-5040f17eba15504bad66b14a645bddd9b015ebb7 (blame -S <ancestry-file>),
-which changes quite some things in the grafts area.
-    
+yields
 
-BTW, after segfaulting, .git/index.lock is still there, and the
-"unable to create new cachefile" is not so helpful - I had to strace
-to see what was happenning.
+	cb8f64b4e3f263c113b7a2f156af74b810e969ff next^2
+	cd2bdc5309461034e5cc58e1d3e87535ed9e093b next~10^2~2
 
-Hope this helps,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+while without path limiting,
+
+	git-name-rev $(git-whatchanged.sh --pretty=oneline \
+	f4235f8b2ef875b85ead74ffa199d827f9ee9d8d^..next log-tree.c | \
+	sed -n "s/^diff-tree \([^ ]*\).*$/\1/p")
+
+I get
+
+	cb8f64b4e3f263c113b7a2f156af74b810e969ff next^2
+	c5ccd8be43df4b916752a176512a9adaf3b94df9 next~4^2
+	f4235f8b2ef875b85ead74ffa199d827f9ee9d8d next~6^2
+	183df63940bf92ea626af64d0057165b8aad24f6 next~8^2
+	cd2bdc5309461034e5cc58e1d3e87535ed9e093b next~10^2~2
+
+I am not intelligent enough to find out why there are three revisions 
+which get culled.
+
+Ideas?
+
+Ciao,
+Dscho
