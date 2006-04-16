@@ -1,98 +1,119 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fixes for option parsing
-Date: Sun, 16 Apr 2006 15:17:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: path limiting broken
+Date: Mon, 17 Apr 2006 01:49:07 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604170138470.824@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604160850230.3701@g5.osdl.org>
+ <Pine.LNX.4.63.0604161835410.17985@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604161000550.3701@g5.osdl.org>
+ <Pine.LNX.4.63.0604161931530.19020@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604161052310.3701@g5.osdl.org>
+ <Pine.LNX.4.63.0604162006050.19560@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0604161117360.3701@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Apr 17 00:17:40 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 17 01:49:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVFYo-0005vC-K2
-	for gcvg-git@gmane.org; Mon, 17 Apr 2006 00:17:38 +0200
+	id 1FVGzV-0000Ke-KA
+	for gcvg-git@gmane.org; Mon, 17 Apr 2006 01:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbWDPWR3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 18:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750811AbWDPWR3
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 18:17:29 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41135 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750809AbWDPWR2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 18:17:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3GMHOtH015204
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 16 Apr 2006 15:17:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3GMHNR0017424;
-	Sun, 16 Apr 2006 15:17:23 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750855AbWDPXtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 19:49:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750856AbWDPXtO
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 19:49:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:9959 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750854AbWDPXtN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 19:49:13 -0400
+Received: (qmail invoked by alias); 16 Apr 2006 23:49:12 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp033) with SMTP; 17 Apr 2006 01:49:12 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604161117360.3701@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18808>
 
+Hi,
 
-Make sure "git show" always show the header, regardless of whether there 
-is a diff or not.
+On Sun, 16 Apr 2006, Linus Torvalds wrote:
 
-Also, make sure "always_show_header" actually works, since generate_header 
-only tested it in one out of three return paths.
+> On Sun, 16 Apr 2006, Johannes Schindelin wrote:
+> > 
+> > Thanks for all your help, but in this case it was not irrelevant. Because 
+> > I *had* the function in my working copy. And I had changed it. So I had to 
+> > find out where to move the change.
+> 
+> Right, but it was irrelevant as far as "top-of-head" was concerned (which 
+> is all that "git log" shows you - it doesn't care about your working 
+> tree).
+> 
+> The fact that it _had_ been relevant in the state you used to be at is not 
+> something "git log" and friends know or care about.
+> 
+> Now, I'm not disputing that we might want to make it easier to see what 
+> _had_ been relevant at some earlier time. But you'd have to specify that 
+> earlier time somehow.
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/git.c b/git.c
-index c5de8d3..fc4e429 100644
---- a/git.c
-+++ b/git.c
-@@ -373,6 +373,7 @@ static int cmd_show(int argc, const char
- 	rev.diffopt.recursive = 1;
- 	rev.combine_merges = 1;
- 	rev.dense_combined_merges = 1;
-+	rev.always_show_header = 1;
- 	rev.ignore_merges = 0;
- 	rev.no_walk = 1;
- 	return cmd_log_wc(argc, argv, envp, &rev);
-diff --git a/log-tree.c b/log-tree.c
-index 7d9f41e..81dff8f 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -43,7 +43,7 @@ static int diff_root_tree(struct rev_inf
- 	return retval;
- }
- 
--static const char *generate_header(struct rev_info *opt,
-+static const char *get_header(struct rev_info *opt,
- 				   const unsigned char *commit_sha1,
- 				   const unsigned char *parent_sha1,
- 				   const struct commit *commit)
-@@ -75,11 +75,21 @@ static const char *generate_header(struc
- 	offset += pretty_print_commit(opt->commit_format, commit, len,
- 				      this_header + offset,
- 				      sizeof(this_header) - offset, abbrev);
-+	return this_header;
-+}
-+
-+static const char *generate_header(struct rev_info *opt,     
-+					const unsigned char *commit_sha1,
-+					const unsigned char *parent_sha1,
-+					const struct commit *commit)
-+{
-+	const char *header = get_header(opt, commit_sha1, parent_sha1, commit);
-+
- 	if (opt->always_show_header) {
--		puts(this_header);
--		return NULL;
-+		puts(header);
-+		header = NULL;
- 	}
--	return this_header;
-+	return header;
- }
- 
- static int do_diff_combined(struct rev_info *opt, struct commit *commit)
+Since quite some time, I wanted to have a way to git-rev-list just the 
+revs between commit1 and commit2, i.e. all commits which are ancestors of 
+commit2, and which have commit1 as ancestor. With this, my task would have 
+been more than simple.
+
+> I assume you had tried to do a "git rebase", and the problem with that 
+> is that git rebase really doesn't help you at all when things go wrong, 
+> exactly because "rebase" - by design - screws up the history and loses 
+> that information for you.
+
+Nope. Was a merge.
+
+> If your problem state had been as a result of a "git merge", you'd 
+> actually have had much better tools available to you, exactly because 
+> merge doesn't screw up history, so you've got both sides of the merge you 
+> can look at (HEAD and MERGE_HEAD, and "git diff --ours" and "--theirs").
+
+That outputs too much. I really wanted to find just the commit which 
+removed the function, in order to know where the code was moved to.
+
+ORIG_HEAD would not help, because that commit is not an ancestor.
+
+> [...] In particular, you can do
+> 
+> 	gitk ORIG_HEAD.. 
+
+... and it will say
+
+	Error: expected integer but got ""
+	    while executing
+	"clock format $d -format "%Y-%m-%d %H:%M:%S ""
+	    (procedure "formatdate" line 2)
+	    invoked from within
+	"formatdate $date"
+	    (procedure "drawcmittext" line 28)
+	    invoked from within
+	"drawcmittext $id $row $col $rmx"
+	    (procedure "drawcmitrow" line 41)
+	    invoked from within
+	"drawcmitrow $row"
+	    (procedure "showstuff" line 35)
+	    invoked from within
+	"showstuff $canshow"
+	    (procedure "layoutmore" line 15)
+	    invoked from within
+	"layoutmore"
+	    (procedure "getcommitlines" line 91)
+	    invoked from within
+	"getcommitlines file7"
+
+Sorry, I am too tired now to investigate, have been working already to 
+long. Tomorrow's another day.
+
+Ciao,
+Dscho
