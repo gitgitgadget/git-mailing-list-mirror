@@ -1,131 +1,210 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 6/9] Fix a seriously bad interaction between .git caching and repo cloning
-Date: Sun, 16 Apr 2006 12:52:39 +0200
-Message-ID: <20060416105239.9884.5212.stgit@gandelf.nowhere.earth>
+Subject: [PATCH 3/9] Add a couple of safety checks to series creation
+Date: Sun, 16 Apr 2006 12:52:32 +0200
+Message-ID: <20060416105232.9884.62033.stgit@gandelf.nowhere.earth>
 References: <20060416104144.9884.28167.stgit@gandelf.nowhere.earth>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 16 12:50:45 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 12:50:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FV4py-0001JH-HV
+	id 1FV4px-0001JH-Uq
 	for gcvg-git@gmane.org; Sun, 16 Apr 2006 12:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750711AbWDPKu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 06:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWDPKu0
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 06:50:26 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:55232 "EHLO smtp6-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750711AbWDPKuV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 06:50:21 -0400
+	id S1750712AbWDPKuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 06:50:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750707AbWDPKuS
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 06:50:18 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:18908 "EHLO smtp3-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750708AbWDPKuO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 06:50:14 -0400
 Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 24A732221C;
-	Sun, 16 Apr 2006 12:50:20 +0200 (CEST)
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 8150744446;
+	Sun, 16 Apr 2006 12:50:13 +0200 (CEST)
 Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
 	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
 	(envelope-from <ydirson@altern.org>)
-	id 1FV4yz-0004AW-Q1; Sun, 16 Apr 2006 12:59:57 +0200
+	id 1FV4ys-0004AN-Vm; Sun, 16 Apr 2006 12:59:51 +0200
 To: Catalin Marinas <catalin.marinas@gmail.com>
 In-Reply-To: <20060416104144.9884.28167.stgit@gandelf.nowhere.earth>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18786>
 
 
-Testcase 2 exhibits a problem with caching the location of .git while
-cloning a repository.  Since basedir.get() is called before the clone is
-built, a value may get stored in the cache if we are within a
-git-controlled tree already.  Then when constructing the object for the
-clone, a bogus .git is used, which can lead, when running tests in t/trash,
-to corruption of the stgit .git repository.
+- we must check first whether the operation can complete, instead of
+  bombing out halfway.  That means checking that nothing will prevent
+  the creation of stgit data (note that calling is_initialised() is
+  not enough, as it does not catch a bogus file), which is tested by
+  the 3 first couple of testcases, and fixed in stack.py
 
-Testcase 1 does not show any problem by chance, because since we have a
-./.git prepared for use by the testsuite, value ".git" get cached, and it
-happens that this value will be still valid after chdir'ing into the
-newborn clone.
+- creating the git branch unconditionally before knowing whether
+  creation of the stgit stuff can be completed is a problem as well:
+  being atomic would be much much better.  To emulate atomicity (which
+  comeds in the next patch), this patch does a somewhat dirty hack to
+  branch.py: we first attempt to create the stgit stuff, and if that
+  succeeds, we create the git branch: it is much easier to do at first
+  a quick check that the latter will succeed.  Testcase 7/8 ensure
+  that such a safety check has not been forgotten.
 
-Clearing the cache at the appropriate place fixes the problem.
+- when git already reports a problem with that head we would like to
+  create, we should catch it.  Testcase 9/10 creates such a situation,
+  and the fix to git.py allows to catch the error spit out by
+  git-rev-parse.  I cannot tell why the stderr lines were not included
+  by the Popen3 object.
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
- stgit/basedir.py        |    6 ++++++
- stgit/commands/clone.py |    3 +++
- t/t1100-clone-under.sh  |   36 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 0 deletions(-)
+ stgit/commands/branch.py |    5 ++-
+ stgit/git.py             |    4 ++
+ stgit/stack.py           |    7 +++-
+ t/t1000-branch-create.sh |   82 ++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 95 insertions(+), 3 deletions(-)
 
-diff --git a/stgit/basedir.py b/stgit/basedir.py
-index c394572..81f2b40 100644
---- a/stgit/basedir.py
-+++ b/stgit/basedir.py
-@@ -42,3 +42,9 @@ def get():
-             __base_dir = __output('git-rev-parse --git-dir 2> /dev/null')
+diff --git a/stgit/commands/branch.py b/stgit/commands/branch.py
+index c4b5945..be501a8 100644
+--- a/stgit/commands/branch.py
++++ b/stgit/commands/branch.py
+@@ -126,8 +126,11 @@ def func(parser, options, args):
+         if len(args) == 2:
+             tree_id = git_id(args[1])
  
-     return __base_dir
+-        git.create_branch(args[0], tree_id)
++        if git.branch_exists(args[0]):
++            raise CmdException, 'Branch "%s" already exists' % args[0]
++        
+         stack.Series(args[0]).init()
++        git.create_branch(args[0], tree_id)
+ 
+         print 'Branch "%s" created.' % args[0]
+         return
+diff --git a/stgit/git.py b/stgit/git.py
+index d75b54e..8523455 100644
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -272,9 +272,11 @@ def rev_parse(git_id):
+ def branch_exists(branch):
+     """Existence check for the named branch
+     """
+-    for line in _output_lines(['git-rev-parse', '--symbolic', '--all']):
++    for line in _output_lines('git-rev-parse --symbolic --all 2>&1'):
+         if line.strip() == branch:
+             return True
++        if re.compile('[ |/]'+branch+' ').search(line):
++            raise GitException, 'Bogus branch: %s' % line
+     return False
+ 
+ def create_branch(new_branch, tree_id = None):
+diff --git a/stgit/stack.py b/stgit/stack.py
+index f4d7490..c14e029 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -431,8 +431,13 @@ class Series:
+         """
+         bases_dir = os.path.join(self.__base_dir, 'refs', 'bases')
+ 
+-        if self.is_initialised():
++        if os.path.exists(self.__patch_dir):
+             raise StackException, self.__patch_dir + ' already exists'
++        if os.path.exists(self.__refs_dir):
++            raise StackException, self.__refs_dir + ' already exists'
++        if os.path.exists(self.__base_file):
++            raise StackException, self.__base_file + ' already exists'
 +
-+def clear_cache():
-+    """Clear the cached location of .git
-+    """
-+    global __base_dir
-+    __base_dir = None
-diff --git a/stgit/commands/clone.py b/stgit/commands/clone.py
-index 9ad76a6..455dd6e 100644
---- a/stgit/commands/clone.py
-+++ b/stgit/commands/clone.py
-@@ -51,6 +51,9 @@ def func(parser, options, args):
-     os.chdir(local_dir)
-     git.checkout(tree_id = 'HEAD')
+         os.makedirs(self.__patch_dir)
  
-+    # be sure to forget any cached value for .git, since we're going
-+    # to work on a brand new repository
-+    basedir.clear_cache()
-     stack.Series().init()
- 
-     print 'done'
-diff --git a/t/t1100-clone-under.sh b/t/t1100-clone-under.sh
+         if not os.path.isdir(bases_dir):
+diff --git a/t/t1000-branch-create.sh b/t/t1000-branch-create.sh
 new file mode 100755
-index 0000000..c86ef61
+index 0000000..f0c2367
 --- /dev/null
-+++ b/t/t1100-clone-under.sh
-@@ -0,0 +1,36 @@
++++ b/t/t1000-branch-create.sh
+@@ -0,0 +1,82 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2006 Yann Dirson
 +#
 +
-+test_description='Check cloning in a repo subdir
++test_description='Branch operations.
 +
-+Check that "stg clone" works in a subdir of a git tree.
-+This ensures (to some point) that a clone within a tree does
-+not corrupt the enclosing repo.
-+
-+This test must be run before any tests making use of clone.
++Exercises the "stg branch" commands.
 +'
 +
 +. ./test-lib.sh
 +
-+# Here we are in a repo, we have a ./.git
-+# Do not get rid of it, or a bug may bite out stgit repo hard
++stg init
 +
-+# Need a repo to clone
-+test_create_repo foo
-+
-+test_expect_success \
-+    'stg clone right inside a git tree' \
-+    "stg clone foo bar"
-+
-+# now work in a subdir
-+mkdir sub
-+mv foo sub
-+cd sub
++test_expect_failure \
++    'Try to create an stgit branch with a spurious refs/patches/ entry' \
++    'find .git -name foo | xargs rm -rf &&
++     touch .git/refs/patches/foo &&
++     stg branch -c foo
++'
 +
 +test_expect_success \
-+    'stg clone deeper under a git tree' \
-+    "stg clone foo bar"
++    'Check no part of the branch was created' \
++    'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/patches/foo" &&
++     ( grep foo .git/HEAD; test $? = 1 )
++'
++
++test_expect_failure \
++    'Try to create an stgit branch with a spurious patches/ entry' \
++    'find .git -name foo | xargs rm -rf &&
++     touch .git/patches/foo &&
++     stg branch -c foo
++'
++
++test_expect_success \
++    'Check no part of the branch was created' \
++    'test "`find .git -name foo | tee /dev/stderr`" = ".git/patches/foo" &&
++     ( grep foo .git/HEAD; test $? = 1 )
++'
++
++test_expect_failure \
++    'Try to create an stgit branch with a spurious refs/bases/ entry' \
++    'find .git -name foo | xargs rm -rf &&
++     touch .git/refs/bases/foo &&
++     stg branch -c foo
++'
++
++test_expect_success \
++    'Check no part of the branch was created' \
++    'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/bases/foo" &&
++     ( grep foo .git/HEAD; test $? = 1 )
++'
++
++
++test_expect_failure \
++    'Try to create an stgit branch with an existing git branch by that name' \
++    'find .git -name foo | xargs rm -rf &&
++     cp .git/refs/heads/master .git/refs/heads/foo &&
++     stg branch -c foo
++'
++
++test_expect_success \
++    'Check no part of the branch was created' \
++    'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/heads/foo" &&
++     ( grep foo .git/HEAD; test $? = 1 )
++'
++
++
++test_expect_failure \
++    'Try to create an stgit branch with an invalid refs/heads/ entry' \
++    'find .git -name foo | xargs rm -rf &&
++     touch .git/refs/heads/foo &&
++     stg branch -c foo
++'
++
++test_expect_success \
++    'Check no part of the branch was created' \
++    'test "`find .git -name foo | tee /dev/stderr`" = ".git/refs/heads/foo" &&
++     ( grep foo .git/HEAD; test $? = 1 )
++'
 +
 +test_done
