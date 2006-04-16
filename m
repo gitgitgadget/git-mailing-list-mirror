@@ -1,64 +1,75 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 8/9] Exercise "stg pull" on patches just appending lines.
-Date: Sun, 16 Apr 2006 12:52:44 +0200
-Message-ID: <20060416105244.9884.26316.stgit@gandelf.nowhere.earth>
+Subject: [PATCH 7/9] Test that pulls a patch creating a file that got modified afterwards
+Date: Sun, 16 Apr 2006 12:52:41 +0200
+Message-ID: <20060416105241.9884.16429.stgit@gandelf.nowhere.earth>
 References: <20060416104144.9884.28167.stgit@gandelf.nowhere.earth>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 16 12:50:42 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 12:50:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FV4q1-0001JH-CY
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 12:50:41 +0200
+	id 1FV4pz-0001JH-2q
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 12:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750708AbWDPKua (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 06:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWDPKu3
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 06:50:29 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:57792 "EHLO smtp6-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750708AbWDPKu0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 06:50:26 -0400
+	id S1750707AbWDPKu2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 06:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWDPKu2
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 06:50:28 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:7091 "EHLO smtp4-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750707AbWDPKuY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 06:50:24 -0400
 Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 2B62122114;
-	Sun, 16 Apr 2006 12:50:25 +0200 (CEST)
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 83C7C545CB;
+	Sun, 16 Apr 2006 12:50:23 +0200 (CEST)
 Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
 	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
 	(envelope-from <ydirson@altern.org>)
-	id 1FV4z4-0004As-In; Sun, 16 Apr 2006 13:00:02 +0200
+	id 1FV4z2-0004AZ-6m; Sun, 16 Apr 2006 13:00:00 +0200
 To: Catalin Marinas <catalin.marinas@gmail.com>
 In-Reply-To: <20060416104144.9884.28167.stgit@gandelf.nowhere.earth>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18784>
 
 
-It indeed reveals a problem in "push": appended lines are appended
-again, as the already-applied patch is not detected.
+This demonstrates an issue wite has bitten me more than once: the stg
+branch adds a file in one patch, and modifies it in a later patch; then all
+patches get integrated in upstream tree, and at "stg pull" time, stgit
+believes there is a conflict, even one the patches are exactly the same.
+
+"stg push" apparently does not consider patches one by one, or it
+would have noticed that the patches were "already applied".  It reports:
+
+ Pushing patch "p1"...Error: File "file2" added in branches but different
+ The merge failed during "push". Use "refresh" after fixing the conflicts
+ stg push: GIT index merging failed (possible conflicts)
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
- t/t1201-pull-trailing.sh |   48 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 48 insertions(+), 0 deletions(-)
+ t/t1200-push-modified.sh |   51 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 51 insertions(+), 0 deletions(-)
 
-diff --git a/t/t1201-pull-trailing.sh b/t/t1201-pull-trailing.sh
+diff --git a/t/t1200-push-modified.sh b/t/t1200-push-modified.sh
 new file mode 100755
-index 0000000..142f894
+index 0000000..18a4df2
 --- /dev/null
-+++ b/t/t1201-pull-trailing.sh
-@@ -0,0 +1,48 @@
++++ b/t/t1200-push-modified.sh
+@@ -0,0 +1,51 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2006 Yann Dirson
 +#
 +
-+test_description='test
++test_description='Exercise pushing patches applied upstream.
 +
++Especially, consider the case of a patch that adds a file,
++while a subsequent one modifies it.
 +'
 +
 +. ./test-lib.sh
@@ -70,13 +81,12 @@ index 0000000..142f894
 +test_create_repo foo
 +
 +test_expect_success \
-+    'Setup and clone tree, and setup changes' \
-+    "(cd foo &&
-+      printf 'a\nb\n' > file && git add file && git commit -m .
-+     ) &&
-+     stg clone foo bar &&
++    'Clone tree and setup changes' \
++    "stg clone foo bar &&
 +     (cd bar && stg new p1 -m p1
-+      printf 'c\n' >> file && stg refresh
++      printf 'a\nc\n' > file && stg add file && stg refresh &&
++      stg new p2 -m p2
++      printf 'a\nb\nc\n' > file && stg refresh
 +     )
 +"
 +
@@ -89,14 +99,16 @@ index 0000000..142f894
 +"
 +
 +test_expect_success \
-+    'Pull those patches applied upstream' \
-+    "(cd bar && stg pull
++    'Pull to sync with parent, preparing for the problem' \
++    "(cd bar && stg pop --all &&
++      stg pull
 +     )
 +"
 +
 +test_expect_success \
-+    'Check that all went well' \
-+    "diff -u foo/file bar/file
++    'Now attempt to push those patches applied upstream' \
++    "(cd bar && stg push --all
++     )
 +"
 +
 +test_done
