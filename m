@@ -1,112 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] pager: do not fork a pager if environment variable
- PAGER is set to NONE
-Date: Sun, 16 Apr 2006 04:44:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604160438370.32484@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0604151516150.6563@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vwtdqef6u.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0604160357460.31461@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4q0udzwg.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Recent unresolved issues
+Date: Sun, 16 Apr 2006 01:14:17 -0700
+Message-ID: <7vlku6c4yu.fsf@assigned-by-dhcp.cox.net>
+References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604141637230.3701@g5.osdl.org>
+	<7vlku7n05x.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604141748070.3701@g5.osdl.org>
+	<Pine.LNX.4.64.0604141751270.3701@g5.osdl.org>
+	<7vu08vjra5.fsf@assigned-by-dhcp.cox.net>
+	<7vk69ri5cp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604150958140.3701@g5.osdl.org>
+	<Pine.LNX.4.64.0604151016220.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 16 04:44:39 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 10:14:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FUxFe-0004xR-Cs
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 04:44:38 +0200
+	id 1FV2Ot-0001Co-8m
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 10:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932172AbWDPCo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Apr 2006 22:44:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbWDPCo1
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Apr 2006 22:44:27 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:65475 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932172AbWDPCo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Apr 2006 22:44:27 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id C0FDB1FA9;
-	Sun, 16 Apr 2006 04:44:25 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id B55251FA8;
-	Sun, 16 Apr 2006 04:44:25 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 95E391F9C;
-	Sun, 16 Apr 2006 04:44:25 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q0udzwg.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751314AbWDPIOU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 04:14:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbWDPIOT
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 04:14:19 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:8151 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751314AbWDPIOT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Apr 2006 04:14:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060416081418.GZTE7053.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 16 Apr 2006 04:14:18 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604151016220.3701@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 15 Apr 2006 10:17:05 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18775>
 
-Hi,
+Linus Torvalds <torvalds@osdl.org> writes:
 
-On Sat, 15 Apr 2006, Junio C Hamano wrote:
+> Btw, I can certainly understand if you don't want to do this before 1.3.x. 
+> Since there's no actual user-visible advantage to it, it's probably worth 
+> dropping for now.
 
-> A somewhat related topic; I often set PAGER=cat when I do not
-> want the --[More]-- prompt and I thing many Emacs users do this.
-> It might also be good to detect it and omit piping in such a
-> case, but that is independent, so if you are going to do this as
-> well, please make it a separate patch.
+Well, I bit the bullet, fixed-up the remaining issues I found in
+rev-list in your grand unified version, reverted the revert, and
+ported the changes for log/whatchanged/show.
 
-I was not quite sure if PAGER=cat could be taken as "user does not want 
-any pager to be fork()ed", but you are probably right: PAGER=cat means 
-that stdout is forwarded to stdout, i.e. we are better off not fork()ing 
-and calling "cat":
-
----
-[PATCH] pager: do not fork a pager if PAGER=cat
-
-This helps debugging tremendously.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
- pager.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-4a617a436bba9288cec5d3918d02c5b0e652df98
-diff --git a/pager.c b/pager.c
-index 1364e15..86e93b3 100644
---- a/pager.c
-+++ b/pager.c
-@@ -5,9 +5,8 @@ #include "cache.h"
-  * something different on Windows, for example.
-  */
- 
--static void run_pager(void)
-+static void run_pager(const char *prog)
- {
--	const char *prog = getenv("PAGER");
- 	if (!prog)
- 		prog = "less";
- 	setenv("LESS", "-S", 0);
-@@ -16,10 +15,11 @@ static void run_pager(void)
- 
- void setup_pager(void)
- {
-+	const char *prog = getenv("PAGER");
- 	pid_t pid;
- 	int fd[2];
- 
--	if (!isatty(1))
-+	if (!isatty(1) || (prog != NULL && !strcmp(prog, "cat")))
- 		return;
- 	if (pipe(fd) < 0)
- 		return;
-@@ -43,6 +43,6 @@ void setup_pager(void)
- 	close(fd[0]);
- 	close(fd[1]);
- 
--	run_pager();
-+	run_pager(prog);
- 	exit(255);
- }
--- 
-1.3.0.rc4.gb6b20-dirty
+For now this lives in the "next" branch and _will_ not graduate
+before 1.3.0, of course.
