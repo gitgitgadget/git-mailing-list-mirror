@@ -1,30 +1,30 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: path limiting broken
-Date: Sun, 16 Apr 2006 18:45:29 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604161835410.17985@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sun, 16 Apr 2006 19:05:07 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604161905010.18184@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
  <Pine.LNX.4.64.0604160850230.3701@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 16 18:45:59 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 19:05:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVANq-0001nD-2G
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 18:45:58 +0200
+	id 1FVAgc-0004m0-AF
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 19:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbWDPQpl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 12:45:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbWDPQpl
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 12:45:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58532 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750748AbWDPQpk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 12:45:40 -0400
-Received: (qmail invoked by alias); 16 Apr 2006 16:45:39 -0000
+	id S1750757AbWDPRFP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 13:05:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750755AbWDPRFO
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 13:05:14 -0400
+Received: from mail.gmx.de ([213.165.64.20]:3819 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750757AbWDPRFN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 13:05:13 -0400
+Received: (qmail invoked by alias); 16 Apr 2006 17:05:11 -0000
 Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp029) with SMTP; 16 Apr 2006 18:45:39 +0200
+  by mail.gmx.net (mp035) with SMTP; 16 Apr 2006 19:05:11 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Linus Torvalds <torvalds@osdl.org>
@@ -33,32 +33,25 @@ X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18792>
 
 Hi,
 
-On Sun, 16 Apr 2006, Linus Torvalds wrote:
+just to make it clearer what I want:
 
-> On Sun, 16 Apr 2006, Johannes Schindelin wrote:
-> > 
-> > I am not intelligent enough to find out why there are three revisions 
-> > which get culled.
-> 
-> Path limiting by default looks at all parents of a merge, and if any of 
-> them is identical to the child (within the path limiter), it will pick 
-> _that_ parent, and that parent only, and drop all other parents.
+	git-whatchanged -p next | grep parse_whatchanged
 
-That's okay.
+as well as
 
-But you missed my point. The file log-tree.c had some opt handling. I 
-changed it (as can be seen in my patch for combined diffstat), so the 
-merge did not go well with next, which removed that code.
+	git log -p next | grep parse_whatchanged
 
-So I tried to be clever and find the (non-merge) commit where this 
-happened. With what you describe, I should have hit *exactly one* commit 
-removing the code.
+do not find that any line like
 
-But I hit *exactly none* with "git log --cc master log-tree.c".
+	int parse_whatchanged_opt(int ac, [...]
+
+was removed, but they find that this line was added. However, in the 
+working tree (which has a fresh checkout of next), there is no such line 
+in log-tree.c. So I really would like to know where it vanished!
 
 Ciao,
 Dscho
