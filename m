@@ -1,77 +1,143 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: path limiting broken
-Date: Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: path limiting broken
+Date: Sun, 16 Apr 2006 09:06:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604160850230.3701@g5.osdl.org>
+References: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Apr 16 14:26:49 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 16 18:06:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FV6Ky-0005Fb-Bd
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 14:26:44 +0200
+	id 1FV9m0-0003rI-36
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 18:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750720AbWDPM0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 08:26:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750724AbWDPM0j
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 08:26:39 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:61584 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750720AbWDPM0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Apr 2006 08:26:39 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 5972F1F4B
-	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 4E5E81F4A
-	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 3AE081F3C
-	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:26:38 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750739AbWDPQGd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 12:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbWDPQGd
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 12:06:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:25311 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750739AbWDPQGd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 12:06:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3GG6StH003790
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 16 Apr 2006 09:06:29 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3GG6SZB008836;
+	Sun, 16 Apr 2006 09:06:28 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18790>
 
-Hi,
 
-I just tried to find out when certain changes percolated into log-tree.c. 
-So I issued "git log --cc next log-tree.c". Wonders of wonders, the 
-patches did not contain *anything* about what I tried to find, even if the 
-file contains the key words. Because the path limiting is overeager (I 
-finally found what I looked for in commit f4235f8b):
 
-	git-name-rev $(git-rev-list --pretty=oneline \
-	f4235f8b2ef875b85ead74ffa199d827f9ee9d8d..next log-tree.c | \
-	sed "s/ .*$//")
+On Sun, 16 Apr 2006, Johannes Schindelin wrote:
+> 
+> I am not intelligent enough to find out why there are three revisions 
+> which get culled.
+> 
+> Ideas?
 
-yields
+Path limiting by default looks at all parents of a merge, and if any of 
+them is identical to the child (within the path limiter), it will pick 
+_that_ parent, and that parent only, and drop all other parents.
 
-	cb8f64b4e3f263c113b7a2f156af74b810e969ff next^2
-	cd2bdc5309461034e5cc58e1d3e87535ed9e093b next~10^2~2
+(If there are multiple identical parents, it will pick the first one).
 
-while without path limiting,
+For example, if you do
 
-	git-name-rev $(git-whatchanged.sh --pretty=oneline \
-	f4235f8b2ef875b85ead74ffa199d827f9ee9d8d^..next log-tree.c | \
-	sed -n "s/^diff-tree \([^ ]*\).*$/\1/p")
+		 HEAD
+		   |
+		   a
+		  / \
+		 b   c
+		 |  /|
+		 | / d
+		 |/  |
+		 e   f
+		 |  /
+		 g /
+		 |/
+		 h
 
-I get
+and the file was modified in commit "b" and nowhere else, then think about 
+what the final history should look like.. Since it was modified in "b", 
+it's going to be the same in "a" and "b", so the path limiting will 
+totally drop the whole "c" subtree, and will only ever look at the tree 
+a->b->e->g->h.
 
-	cb8f64b4e3f263c113b7a2f156af74b810e969ff next^2
-	c5ccd8be43df4b916752a176512a9adaf3b94df9 next~4^2
-	f4235f8b2ef875b85ead74ffa199d827f9ee9d8d next~6^2
-	183df63940bf92ea626af64d0057165b8aad24f6 next~8^2
-	cd2bdc5309461034e5cc58e1d3e87535ed9e093b next~10^2~2
+After that, it will simplify the history by dropping commits that don't 
+change the path, and the whole history will end up being just "b".
 
-I am not intelligent enough to find out why there are three revisions 
-which get culled.
+Which is exactly what you want.
 
-Ideas?
+Now, realize that if the exact _same_ change is done in "f", the same 
+thing will happen. "f" will never be shown, because "f" simply isn't 
+interesting. We picked up the same change in "b", and while the merge "a" 
+had _both_ parents identical in the file, it would pick only the first 
+one. So we'll never even _look_ at "f".
 
-Ciao,
-Dscho
+Now, this is _important_. Pruning merges is really fundamental to giving a 
+reasonable file history, and not just a performance optimization. If the 
+same change came from two branches, we really don't care who did it: we'll 
+hit _one_ of the changes even after pruning. But yes, it could miss the 
+other one.
+
+Here's a patch to show what an unpruned history ends up looking like.
+
+With this patch applied, try the following:
+
+	gitk -- ls-tree.c &
+	gitk --no-prune-merges -- ls-tree.c &
+
+and compare the two. You'll see _immediately_ why I think merge pruning is 
+not just a good idea, it's something we _have_ to do.
+
+		Linus
+----
+diff --git a/revision.c b/revision.c
+index 0505f3f..25338b6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -291,7 +291,7 @@ static void try_to_simplify_commit(struc
+ 		parse_commit(p);
+ 		switch (rev_compare_tree(revs, p->tree, commit->tree)) {
+ 		case REV_TREE_SAME:
+-			if (p->object.flags & UNINTERESTING) {
++			if (revs->no_merge_pruning || (p->object.flags & UNINTERESTING)) {
+ 				/* Even if a merge with an uninteresting
+ 				 * side branch brought the entire change
+ 				 * we are interested in, we do not want
+@@ -640,6 +640,10 @@ int setup_revisions(int argc, const char
+ 				revs->unpacked = 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--no-prune-merges")) {
++				revs->no_merge_pruning = 1;
++				continue;
++			}
+ 			*unrecognized++ = arg;
+ 			left++;
+ 			continue;
+diff --git a/revision.h b/revision.h
+index 8970b57..a116305 100644
+--- a/revision.h
++++ b/revision.h
+@@ -26,6 +26,7 @@ struct rev_info {
+ 	/* Traversal flags */
+ 	unsigned int	dense:1,
+ 			no_merges:1,
++			no_merge_pruning:1,
+ 			remove_empty_trees:1,
+ 			lifo:1,
+ 			topo_order:1,
