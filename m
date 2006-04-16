@@ -1,51 +1,58 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [BUG] gitk: breaks with both version and file limits
-Date: Sun, 16 Apr 2006 13:54:03 +0200
-Message-ID: <20060416115403.GS12638@nowhere.earth>
+Subject: [BUG] comments in grafts file broken in current master
+Date: Sun, 16 Apr 2006 14:35:35 +0200
+Message-ID: <20060416123535.GT12638@nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Apr 16 13:44:43 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 14:26:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FV5g7-0008MC-41
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 13:44:31 +0200
+	id 1FV6KZ-0005Cy-RQ
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 14:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750723AbWDPLo2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 07:44:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750724AbWDPLo2
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 07:44:28 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:899 "EHLO smtp1-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750723AbWDPLo1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 07:44:27 -0400
+	id S1750719AbWDPM0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 08:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbWDPM0F
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 08:26:05 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:47821 "EHLO smtp2-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750719AbWDPM0E (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 08:26:04 -0400
 Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9FDCF9AA60;
-	Sun, 16 Apr 2006 13:44:26 +0200 (CEST)
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 4E1616DB72
+	for <git@vger.kernel.org>; Sun, 16 Apr 2006 14:25:58 +0200 (CEST)
 Received: from dwitch by nan92-1-81-57-214-146 with local (Exim 4.61)
 	(envelope-from <ydirson@altern.org>)
-	id 1FV5pL-0004Cu-Uh; Sun, 16 Apr 2006 13:54:04 +0200
-To: Paul Mackerras <paulus@samba.org>, GIT list <git@vger.kernel.org>
+	id 1FV6TY-0004EU-5m
+	for git@vger.kernel.org; Sun, 16 Apr 2006 14:35:36 +0200
+To: GIT list <git@vger.kernel.org>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18788>
 
-As an example, on a current git tree, the following command triggers
-an 'Error: expected boolean value but got ""' dialog when scrolling to
-the bottom of the graph, and leaves the bottom of the graph not drawn.
-This happens with current master, but not with 1.2.4.
+While looking at allowing empty lines in grafts files, I discovered
+that comments had already been implemented.  However, current
+git-read-tree segfaults when there is a comment line in info/grafts:
 
-gitk --all ^v1.0.6 -- Makefile 
+dwitch@gandelf:/export/work/yann/git/git$ cat .git/info/grafts 
+c118c026e44f02c3dbad00d924285eef2340f700
+# foo
+dwitch@gandelf:/export/work/yann/git/git$ git-read-tree master
+Segmentation fault
 
-While checking with git-bisect while limiting to path gitk, I noticed
-the amusing detail that "git-bisect visualize" is impacted by this bug.
 
-git-bisect shows that the commit triggering the problem is
-79b2c75e043ad85f9a6b1a8d890b601a2f761a0e ("gitk: replace parent and
-children arrays with lists" on Apr 2)
+The commit introducing the problem is
+5040f17eba15504bad66b14a645bddd9b015ebb7 (blame -S <ancestry-file>),
+which changes quite some things in the grafts area.
+    
+
+BTW, after segfaulting, .git/index.lock is still there, and the
+"unable to create new cachefile" is not so helpful - I had to strace
+to see what was happenning.
 
 Hope this helps,
 -- 
