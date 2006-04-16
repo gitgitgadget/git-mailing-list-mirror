@@ -1,114 +1,131 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 7/9] Test that pulls a patch creating a file that got modified afterwards
-Date: Sun, 16 Apr 2006 12:52:41 +0200
-Message-ID: <20060416105241.9884.16429.stgit@gandelf.nowhere.earth>
+Subject: [PATCH 6/9] Fix a seriously bad interaction between .git caching and repo cloning
+Date: Sun, 16 Apr 2006 12:52:39 +0200
+Message-ID: <20060416105239.9884.5212.stgit@gandelf.nowhere.earth>
 References: <20060416104144.9884.28167.stgit@gandelf.nowhere.earth>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 16 12:50:43 2006
+X-From: git-owner@vger.kernel.org Sun Apr 16 12:50:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FV4pz-0001JH-2q
-	for gcvg-git@gmane.org; Sun, 16 Apr 2006 12:50:39 +0200
+	id 1FV4py-0001JH-HV
+	for gcvg-git@gmane.org; Sun, 16 Apr 2006 12:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750707AbWDPKu2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 06:50:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWDPKu2
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 06:50:28 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:7091 "EHLO smtp4-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750707AbWDPKuY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 06:50:24 -0400
+	id S1750711AbWDPKu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 06:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWDPKu0
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 06:50:26 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:55232 "EHLO smtp6-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750711AbWDPKuV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 06:50:21 -0400
 Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 83C7C545CB;
-	Sun, 16 Apr 2006 12:50:23 +0200 (CEST)
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 24A732221C;
+	Sun, 16 Apr 2006 12:50:20 +0200 (CEST)
 Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
 	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
 	(envelope-from <ydirson@altern.org>)
-	id 1FV4z2-0004AZ-6m; Sun, 16 Apr 2006 13:00:00 +0200
+	id 1FV4yz-0004AW-Q1; Sun, 16 Apr 2006 12:59:57 +0200
 To: Catalin Marinas <catalin.marinas@gmail.com>
 In-Reply-To: <20060416104144.9884.28167.stgit@gandelf.nowhere.earth>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18785>
 
 
-This demonstrates an issue wite has bitten me more than once: the stg
-branch adds a file in one patch, and modifies it in a later patch; then all
-patches get integrated in upstream tree, and at "stg pull" time, stgit
-believes there is a conflict, even one the patches are exactly the same.
+Testcase 2 exhibits a problem with caching the location of .git while
+cloning a repository.  Since basedir.get() is called before the clone is
+built, a value may get stored in the cache if we are within a
+git-controlled tree already.  Then when constructing the object for the
+clone, a bogus .git is used, which can lead, when running tests in t/trash,
+to corruption of the stgit .git repository.
 
-"stg push" apparently does not consider patches one by one, or it
-would have noticed that the patches were "already applied".  It reports:
+Testcase 1 does not show any problem by chance, because since we have a
+./.git prepared for use by the testsuite, value ".git" get cached, and it
+happens that this value will be still valid after chdir'ing into the
+newborn clone.
 
- Pushing patch "p1"...Error: File "file2" added in branches but different
- The merge failed during "push". Use "refresh" after fixing the conflicts
- stg push: GIT index merging failed (possible conflicts)
+Clearing the cache at the appropriate place fixes the problem.
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
- t/t1200-push-modified.sh |   51 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 51 insertions(+), 0 deletions(-)
+ stgit/basedir.py        |    6 ++++++
+ stgit/commands/clone.py |    3 +++
+ t/t1100-clone-under.sh  |   36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 0 deletions(-)
 
-diff --git a/t/t1200-push-modified.sh b/t/t1200-push-modified.sh
+diff --git a/stgit/basedir.py b/stgit/basedir.py
+index c394572..81f2b40 100644
+--- a/stgit/basedir.py
++++ b/stgit/basedir.py
+@@ -42,3 +42,9 @@ def get():
+             __base_dir = __output('git-rev-parse --git-dir 2> /dev/null')
+ 
+     return __base_dir
++
++def clear_cache():
++    """Clear the cached location of .git
++    """
++    global __base_dir
++    __base_dir = None
+diff --git a/stgit/commands/clone.py b/stgit/commands/clone.py
+index 9ad76a6..455dd6e 100644
+--- a/stgit/commands/clone.py
++++ b/stgit/commands/clone.py
+@@ -51,6 +51,9 @@ def func(parser, options, args):
+     os.chdir(local_dir)
+     git.checkout(tree_id = 'HEAD')
+ 
++    # be sure to forget any cached value for .git, since we're going
++    # to work on a brand new repository
++    basedir.clear_cache()
+     stack.Series().init()
+ 
+     print 'done'
+diff --git a/t/t1100-clone-under.sh b/t/t1100-clone-under.sh
 new file mode 100755
-index 0000000..18a4df2
+index 0000000..c86ef61
 --- /dev/null
-+++ b/t/t1200-push-modified.sh
-@@ -0,0 +1,51 @@
++++ b/t/t1100-clone-under.sh
+@@ -0,0 +1,36 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2006 Yann Dirson
 +#
 +
-+test_description='Exercise pushing patches applied upstream.
++test_description='Check cloning in a repo subdir
 +
-+Especially, consider the case of a patch that adds a file,
-+while a subsequent one modifies it.
++Check that "stg clone" works in a subdir of a git tree.
++This ensures (to some point) that a clone within a tree does
++not corrupt the enclosing repo.
++
++This test must be run before any tests making use of clone.
 +'
 +
 +. ./test-lib.sh
 +
-+# don't need this repo, but better not drop it, see t1100
-+#rm -rf .git
++# Here we are in a repo, we have a ./.git
++# Do not get rid of it, or a bug may bite out stgit repo hard
 +
 +# Need a repo to clone
 +test_create_repo foo
 +
 +test_expect_success \
-+    'Clone tree and setup changes' \
-+    "stg clone foo bar &&
-+     (cd bar && stg new p1 -m p1
-+      printf 'a\nc\n' > file && stg add file && stg refresh &&
-+      stg new p2 -m p2
-+      printf 'a\nb\nc\n' > file && stg refresh
-+     )
-+"
++    'stg clone right inside a git tree' \
++    "stg clone foo bar"
++
++# now work in a subdir
++mkdir sub
++mv foo sub
++cd sub
 +
 +test_expect_success \
-+    'Port those patches to orig tree' \
-+    "(cd foo &&
-+      GIT_DIR=../bar/.git git-format-patch --stdout bases/master..HEAD |
-+      git-am -3 -k
-+     )
-+"
-+
-+test_expect_success \
-+    'Pull to sync with parent, preparing for the problem' \
-+    "(cd bar && stg pop --all &&
-+      stg pull
-+     )
-+"
-+
-+test_expect_success \
-+    'Now attempt to push those patches applied upstream' \
-+    "(cd bar && stg push --all
-+     )
-+"
++    'stg clone deeper under a git tree' \
++    "stg clone foo bar"
 +
 +test_done
