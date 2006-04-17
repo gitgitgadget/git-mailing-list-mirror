@@ -1,119 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: path limiting broken
-Date: Mon, 17 Apr 2006 01:49:07 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604170138470.824@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0604161411120.15345@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604160850230.3701@g5.osdl.org>
- <Pine.LNX.4.63.0604161835410.17985@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604161000550.3701@g5.osdl.org>
- <Pine.LNX.4.63.0604161931530.19020@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604161052310.3701@g5.osdl.org>
- <Pine.LNX.4.63.0604162006050.19560@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0604161117360.3701@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Fixes for option parsing
+Date: Sun, 16 Apr 2006 17:29:13 -0700
+Message-ID: <7vbqv1oxie.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 17 01:49:18 2006
+X-From: git-owner@vger.kernel.org Mon Apr 17 02:29:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVGzV-0000Ke-KA
-	for gcvg-git@gmane.org; Mon, 17 Apr 2006 01:49:17 +0200
+	id 1FVHcG-0005an-AX
+	for gcvg-git@gmane.org; Mon, 17 Apr 2006 02:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750855AbWDPXtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 19:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750856AbWDPXtO
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 19:49:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:9959 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750854AbWDPXtN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 19:49:13 -0400
-Received: (qmail invoked by alias); 16 Apr 2006 23:49:12 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp033) with SMTP; 17 Apr 2006 01:49:12 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1750871AbWDQA3R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 20:29:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750876AbWDQA3R
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 20:29:17 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:13032 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750870AbWDQA3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Apr 2006 20:29:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060417002915.HBBZ20694.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 16 Apr 2006 20:29:15 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604161117360.3701@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 16 Apr 2006 15:17:23 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18809>
 
-Hi,
+Thanks for fixing this.  I've applied and merged it to the
+"next" branch.
 
-On Sun, 16 Apr 2006, Linus Torvalds wrote:
+In the mid-term, I am hoping we can drop the generate_header()
+callchain _and_ the custom code that formats commit log in-core,
+found in cmd_log_wc().  rev->use_precomputed_header and perhaps
+rev->header can be dropped and replaced with a call to a
+function to print formatted log to stdout (or perhaps a FILE *,
+because I want to reuse this to make output part of
+"git-format-patch" internal) from log-tree.
 
-> On Sun, 16 Apr 2006, Johannes Schindelin wrote:
-> > 
-> > Thanks for all your help, but in this case it was not irrelevant. Because 
-> > I *had* the function in my working copy. And I had changed it. So I had to 
-> > find out where to move the change.
-> 
-> Right, but it was irrelevant as far as "top-of-head" was concerned (which 
-> is all that "git log" shows you - it doesn't care about your working 
-> tree).
-> 
-> The fact that it _had_ been relevant in the state you used to be at is not 
-> something "git log" and friends know or care about.
-> 
-> Now, I'm not disputing that we might want to make it easier to see what 
-> _had_ been relevant at some earlier time. But you'd have to specify that 
-> earlier time somehow.
+For that, I'd need to define a new CMIT_FMT for the format-patch
+output.  Another thing needed is to clean up the commit_prefix
+local variable defined in cmd_log_wc() -- it should use
+rev->header_prefix, but before that the part that rewrites
+opt->header_prefix to have a blank line between commits, in
+log-tree.c::do_diff_combined() and log_tree_commit() need to be
+cleaned up.
 
-Since quite some time, I wanted to have a way to git-rev-list just the 
-revs between commit1 and commit2, i.e. all commits which are ancestors of 
-commit2, and which have commit1 as ancestor. With this, my task would have 
-been more than simple.
+For the header_prefix line, there also is a subtle difference
+between the one-commit diff-tree and log.  The former lists
+"this commit (from that commit)", which is perhaps useful for
+cut and paste purposes.  The latter just says "this commit".
 
-> I assume you had tried to do a "git rebase", and the problem with that 
-> is that git rebase really doesn't help you at all when things go wrong, 
-> exactly because "rebase" - by design - screws up the history and loses 
-> that information for you.
+I wish this "diff-tree SHA1 (from ANOTHERSHA1)" format can be
+dropped and replaced with "commit SHA1" format like "git log"
+does uniformly, but it might be already depended upon by
+Porcelains.
 
-Nope. Was a merge.
-
-> If your problem state had been as a result of a "git merge", you'd 
-> actually have had much better tools available to you, exactly because 
-> merge doesn't screw up history, so you've got both sides of the merge you 
-> can look at (HEAD and MERGE_HEAD, and "git diff --ours" and "--theirs").
-
-That outputs too much. I really wanted to find just the commit which 
-removed the function, in order to know where the code was moved to.
-
-ORIG_HEAD would not help, because that commit is not an ancestor.
-
-> [...] In particular, you can do
-> 
-> 	gitk ORIG_HEAD.. 
-
-... and it will say
-
-	Error: expected integer but got ""
-	    while executing
-	"clock format $d -format "%Y-%m-%d %H:%M:%S ""
-	    (procedure "formatdate" line 2)
-	    invoked from within
-	"formatdate $date"
-	    (procedure "drawcmittext" line 28)
-	    invoked from within
-	"drawcmittext $id $row $col $rmx"
-	    (procedure "drawcmitrow" line 41)
-	    invoked from within
-	"drawcmitrow $row"
-	    (procedure "showstuff" line 35)
-	    invoked from within
-	"showstuff $canshow"
-	    (procedure "layoutmore" line 15)
-	    invoked from within
-	"layoutmore"
-	    (procedure "getcommitlines" line 91)
-	    invoked from within
-	"getcommitlines file7"
-
-Sorry, I am too tired now to investigate, have been working already to 
-long. Tomorrow's another day.
-
-Ciao,
-Dscho
+If the commit is not a merge, "commit SHA1" means the same thing
+as "diff-tree SHA1 (from SHA1^)", and if it _is_ a merge, then
+the merge parents are listed on the "Merge: " line anyway for
+all formats other than --pretty=oneline, so unless this change
+breaks an Porcelain, there is really no downside.
