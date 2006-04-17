@@ -1,135 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fixes for option parsing
-Date: Sun, 16 Apr 2006 20:03:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604161952500.3701@g5.osdl.org>
-References: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org>
- <7vbqv1oxie.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604161938070.3701@g5.osdl.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: [PATCH] Makefile fixups.
+Date: Sun, 16 Apr 2006 20:17:38 -0700
+Message-ID: <444308D2.7080705@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 17 05:04:13 2006
+X-From: git-owner@vger.kernel.org Mon Apr 17 05:17:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVK27-0005hd-2I
-	for gcvg-git@gmane.org; Mon, 17 Apr 2006 05:04:11 +0200
+	id 1FVKFN-0007Ac-84
+	for gcvg-git@gmane.org; Mon, 17 Apr 2006 05:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbWDQDEA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Apr 2006 23:04:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750993AbWDQDEA
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 23:04:00 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60639 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750966AbWDQDEA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Apr 2006 23:04:00 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3H33ttH024150
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 16 Apr 2006 20:03:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3H33sax024648;
-	Sun, 16 Apr 2006 20:03:55 -0700
+	id S1751000AbWDQDRr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Apr 2006 23:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbWDQDRr
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Apr 2006 23:17:47 -0400
+Received: from nz-out-0102.google.com ([64.233.162.200]:48437 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751000AbWDQDRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Apr 2006 23:17:46 -0400
+Received: by nz-out-0102.google.com with SMTP id o37so465952nzf
+        for <git@vger.kernel.org>; Sun, 16 Apr 2006 20:17:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=Sya5T/jAvAge/b5mZOVQYnuebeY9y/AjHDL2FQwuhtNd6GjmSLCRZ2O+cbcDGorKoErKDb6tnFYNvuQZLwKH2+y54GRFGPX9ibSjwawpdRMhwJKn2j7X+513L01LuN7dMZPGnyyV+ETt4W7EJ8yeIwlX+OVUi8ejAK9dCjcQ/fE=
+Received: by 10.36.72.17 with SMTP id u17mr1443495nza;
+        Sun, 16 Apr 2006 20:17:45 -0700 (PDT)
+Received: from ?10.0.0.6? ( [68.234.187.236])
+        by mx.gmail.com with ESMTP id 7sm5020959nzo.2006.04.16.20.17.44;
+        Sun, 16 Apr 2006 20:17:45 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0604161938070.3701@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18815>
 
 
+Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
 
-On Sun, 16 Apr 2006, Linus Torvalds wrote:
-> 
-> Maybe. I'm not convinced, though. The reason? cmd_log_wc needs to generate 
-> it regardless, for the "always" case.
-
-Of course, you could just have the "diff" logic unconditionally do the 
-call-back. That would be clean enough.
-
-> Also, I think the "---" printing should be removed, and moved into the 
-> "diffstat" flushing code. Right now it does the wrong thing entirely if 
-> no diff exists, but we have always_show_header: it will print the "---" 
-> for no good reason.
-
-The alternative is to do something like this, but because the "diffstat" 
-doesn't flush the header priperly, it doesn't add the "---" for merges 
-(and it used to not show the log at all, even for "git log", before I 
-fixed it).
-
-Try it with
-
-	git log --cc --patch-with-stat
-
-to see what I mean.
-
-I do agree that this would be much cleaner with a "print header" callback 
-in the diffopt structure. This patch is the really hacky "continue to do 
-things the ugly way" approach to fix some of the uglier output.
-
-Only meant as a RFC and to illustrate what I think the output should look 
-like (modulo the lack of "---" before a diffstat with no patch - for 
-merges). Not meant to actually be applied, I think this can be done much 
-more cleanly with the callback.
-
-		Linus
 
 ---
-diff --git a/git.c b/git.c
-index fc4e429..dc577fa 100644
---- a/git.c
-+++ b/git.c
-@@ -284,7 +284,7 @@ static int cmd_log_wc(int argc, const ch
- 	struct commit *commit;
- 	char *buf = xmalloc(LOGSIZE);
- 	const char *commit_prefix = "commit ";
--	int shown = 0;
-+	int shown = 0, always_show_header;
+
+ Makefile   |    2 +-
+ t/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+bb576e0c102e68cc55691fa4a5fc7e793e6e1219
+diff --git a/Makefile b/Makefile
+index 1130af4f3809610436f4c5d17c3970a947ddae5c..8371f7f522b6b02039af2a9d1684a8137197526e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -653,7 +653,7 @@ ### Cleaning rules
+ clean:
+ 	rm -f *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o xdiff/*.o \
+ 		$(LIB_FILE) $(XDIFF_LIB)
+-	rm -f $(ALL_PROGRAMS) git$X
++	rm -f $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
+ 	rm -rf $(GIT_TARNAME)
+ 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+diff --git a/t/Makefile b/t/Makefile
+index fe65f53c5fbcf07bb69214b0f0cff8aef551e906..549598575b9fdcefe857ddef1b6d980a9773b033 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -25,5 +25,5 @@ clean:
+ 	rm -fr trash
  
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
-@@ -295,13 +295,19 @@ static int cmd_log_wc(int argc, const ch
- 	if (rev->commit_format == CMIT_FMT_ONELINE)
- 		commit_prefix = "";
+ .PHONY: $(T) clean
+-.NOPARALLEL:
++.NOTPARALLEL:
  
-+	/*
-+	 * We handle always_show_header outselves, and leave the
-+	 * "---" handling to log_tree_commit
-+	 */
-+	always_show_header = rev->always_show_header;
-+	rev->always_show_header = 0;
-+
- 	prepare_revision_walk(rev);
- 	setup_pager();
- 	while ((commit = get_revision(rev)) != NULL) {
- 		unsigned long ofs = 0;
- 
--		if (shown && rev->diff &&
--		    rev->commit_format != CMIT_FMT_ONELINE)
-+		if (shown && rev->commit_format != CMIT_FMT_ONELINE)
- 			putchar('\n');
- 
- 		ofs = sprintf(buf, "%s", commit_prefix);
-@@ -338,14 +344,16 @@ static int cmd_log_wc(int argc, const ch
- 					   buf + ofs,
- 					   LOGSIZE - ofs - 20,
- 					   rev->abbrev);
-+		if (always_show_header || !rev->diff) {
-+			fputs(buf, stdout);
-+			ofs = 0;
-+		}
- 
- 		if (rev->diff) {
-+			strcpy(buf + ofs, rev->diffopt.with_stat ? "---" : "\n");
- 			rev->use_precomputed_header = buf;
--			strcpy(buf + ofs, "\n---\n");
- 			log_tree_commit(rev, commit);
- 		}
--		else
--			printf("%s\n", buf);
- 		shown = 1;
- 		free(commit->buffer);
- 		commit->buffer = NULL;
+-- 
+1.3.0.rc4.g5bc4
