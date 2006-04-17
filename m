@@ -1,59 +1,90 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Allow empty lines in info/grafts
-Date: Mon, 17 Apr 2006 13:41:49 +0200
-Message-ID: <20060417114149.28696.59020.stgit@gandelf.nowhere.earth>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Apr 17 13:39:35 2006
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-rev-list: fix --header
+Date: Mon, 17 Apr 2006 14:51:39 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604171443300.18017@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Apr 17 14:53:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVS4r-0006sf-RM
-	for gcvg-git@gmane.org; Mon, 17 Apr 2006 13:39:34 +0200
+	id 1FVTDp-0000b7-Gg
+	for gcvg-git@gmane.org; Mon, 17 Apr 2006 14:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbWDQLjb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Apr 2006 07:39:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbWDQLjb
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Apr 2006 07:39:31 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:47778 "EHLO smtp3-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750782AbWDQLjb (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Apr 2006 07:39:31 -0400
-Received: from nan92-1-81-57-214-146 (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 1CF4E48A02
-	for <git@vger.kernel.org>; Mon, 17 Apr 2006 13:39:30 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by nan92-1-81-57-214-146 with esmtp (Exim 4.60)
-	(envelope-from <ydirson@altern.org>)
-	id 1FVSE9-0006Ts-Gd
-	for git@vger.kernel.org; Mon, 17 Apr 2006 13:49:09 +0200
-To: git@vger.kernel.org
-User-Agent: StGIT/0.9
+	id S1750734AbWDQMvn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Apr 2006 08:51:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbWDQMvn
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Apr 2006 08:51:43 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:14013 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750734AbWDQMvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Apr 2006 08:51:42 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 5E3DD1CB4;
+	Mon, 17 Apr 2006 14:51:39 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 52EAB1C52;
+	Mon, 17 Apr 2006 14:51:39 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 3EAAA115B;
+	Mon, 17 Apr 2006 14:51:39 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18819>
 
 
-In addition to the existing comment support, that just allows the user
-to use a convention that works pretty much everywhere else.
+gitk expects raw verbose headers limited by \0. Meet these expectations.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
 ---
 
- commit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+	This fixes the "clock format" bug I mentioned in another thread: 
+	git-rev-list printed non-raw headers (lacking "author", 
+	"committer", and the other lines), and thus, the author date was
+	empty.
 
-diff --git a/commit.c b/commit.c
-index 05c4c92..2717dd8 100644
---- a/commit.c
-+++ b/commit.c
-@@ -160,7 +160,7 @@ struct commit_graft *read_graft_line(cha
+ rev-list.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+18f897509cd95b7e55c63e75fa40655c532507f6
+diff --git a/rev-list.c b/rev-list.c
+index 9d8db25..54e92f7 100644
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -293,6 +293,7 @@ int main(int argc, const char **argv)
+ {
+ 	struct commit_list *list;
+ 	int i;
++	int header = 0;
  
- 	if (buf[len-1] == '\n')
- 		buf[--len] = 0;
--	if (buf[0] == '#')
-+	if (buf[0] == '#' || buf[0] == '\0')
- 		return NULL;
- 	if ((len + 1) % 41) {
- 	bad_graft_data:
+ 	init_revisions(&revs);
+ 	revs.abbrev = 0;
+@@ -303,7 +304,8 @@ int main(int argc, const char **argv)
+ 		const char *arg = argv[i];
+ 
+ 		if (!strcmp(arg, "--header")) {
+-			revs.verbose_header = 1;
++			header = 1;
++			revs.commit_format = CMIT_FMT_UNSPECIFIED;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--timestamp")) {
+@@ -324,6 +326,10 @@ int main(int argc, const char **argv)
+ 			revs.header_prefix = "";
+ 		else
+ 			revs.header_prefix = "commit ";
++	} else if (header) {
++		revs.verbose_header = 1;
++		revs.commit_format = CMIT_FMT_RAW;
++		hdr_termination = 0;
+ 	}
+ 
+ 	list = revs.commits;
+-- 
+1.2.0.ga8a6
