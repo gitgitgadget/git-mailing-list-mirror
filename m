@@ -1,80 +1,106 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Fix filename scaling for binary files
-Date: Tue, 18 Apr 2006 23:26:43 +0200
-Message-ID: <20060418212643.GA30478@diku.dk>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] gitk: Add a visual tag for remote refs
+Date: Tue, 18 Apr 2006 23:53:07 +0200
+Message-ID: <200604182353.07759.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Apr 18 23:27:04 2006
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 18 23:53:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVxis-0002PW-ON
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 23:26:59 +0200
+	id 1FVy8J-0006r4-HX
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 23:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750709AbWDRV0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 17:26:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbWDRV0r
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 17:26:47 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:29407 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1750709AbWDRV0r (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 17:26:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id DB1D1770002;
-	Tue, 18 Apr 2006 23:26:45 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08442-13; Tue, 18 Apr 2006 23:26:44 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 5AC2F770001;
-	Tue, 18 Apr 2006 23:26:44 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 21CB16DF835; Tue, 18 Apr 2006 23:24:29 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2C36D62179; Tue, 18 Apr 2006 23:26:44 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1750720AbWDRVxM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 17:53:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750721AbWDRVxM
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 17:53:12 -0400
+Received: from mail.gmx.de ([213.165.64.20]:64916 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750720AbWDRVxK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 17:53:10 -0400
+Received: (qmail invoked by alias); 18 Apr 2006 21:53:09 -0000
+Received: from p5496A6BA.dip0.t-ipconnect.de (EHLO linux) [84.150.166.186]
+  by mail.gmx.net (mp043) with SMTP; 18 Apr 2006 23:53:09 +0200
+X-Authenticated: #352111
+To: Paul Mackerras <paulus@samba.org>
+User-Agent: KMail/1.9.1
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18882>
 
-Set maximum filename length for binary files so that scaling won't be
-triggered and result in invalid string access.
+This patch partly changes the background color for remote refs.
+It makes it easy to quickly distinguish remote refs from local
+developer branches.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+I ignore remote HEADs, as these really should be drawn as
+aliases to other heads. But there is no simple way to
+detect that HEADs really are aliases for other refs via
+"git-ls-remote".
+
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 
 ---
 
- diff.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+To see the effect of this patch, you need remote refs in your
+repository. Such refs are created when using "--use-separate-remote"
+with git-clone.
 
-diff --git a/diff.c b/diff.c
-index b54bbfa..ddcfb84 100644
---- a/diff.c
-+++ b/diff.c
-@@ -250,13 +250,14 @@ static void show_stats(struct diffstat_t
- 	for (i = 0; i < data->nr; i++) {
- 		struct diffstat_file *file = data->files[i];
- 
-+		len = strlen(file->name);
-+		if (max_len < len)
-+			max_len = len;
-+
- 		if (file->is_binary || file->is_unmerged)
- 			continue;
- 		if (max_change < file->added + file->deleted)
- 			max_change = file->added + file->deleted;
--		len = strlen(file->name);
--		if (max_len < len)
--			max_len = len;
+IMHO showing HEAD refs as aliases to real refs would be nice to
+have in gitk (What is the current branch?). Unfortunately,
+"git-ls-remote", which is used in gitk, does not give the info
+whether a ref is a symbolic link to another.
+So for this time, I ignore remote HEADs, too. They are only confusing
+as they would have been drawn now.
+
+Josef
+
+
+ gitk |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
+
+f073dd11d6f2d473797b4c85cd4ac9758b6141b6
+diff --git a/gitk b/gitk
+index 87e7162..b642326 100755
+--- a/gitk
++++ b/gitk
+@@ -290,10 +290,16 @@ proc readrefs {} {
+ 	    match id path]} {
+ 	    continue
  	}
- 
- 	for (i = 0; i < data->nr; i++) {
-
++	if {[regexp {^remotes/.*/HEAD$} $path match]} {
++	    continue
++	}
+ 	if {![regexp {^(tags|heads)/(.*)$} $path match type name]} {
+ 	    set type others
+ 	    set name $path
+ 	}
++	if {[regexp {^remotes/} $path match]} {
++	    set type heads
++	}
+ 	if {$type == "tags"} {
+ 	    set tagids($name) $id
+ 	    lappend idtags($id) $name
+@@ -1718,6 +1724,14 @@ proc drawtags {id x xt y1} {
+ 	    set xl [expr {$xl - $delta/2}]
+ 	    $canv create polygon $x $yt $xr $yt $xr $yb $x $yb \
+ 		-width 1 -outline black -fill $col -tags tag.$id
++	    if {[regexp {^(remotes/.*/|remotes/)} $tag match remoteprefix]} {
++	        set rwid [font measure $mainfont $remoteprefix]
++		set xi [expr {$x + 1}]
++		set yti [expr {$yt + 1}]
++		set xri [expr {$x + $rwid}]
++		$canv create polygon $xi $yti $xri $yti $xri $yb $xi $yb \
++			-width 0 -fill "#ffddaa" -tags tag.$id
++	    }
+ 	}
+ 	set t [$canv create text $xl $y1 -anchor w -text $tag \
+ 		   -font $mainfont -tags tag.$id]
 -- 
-Jonas Fonseca
+1.3.0.rc4.g8060-dirty
