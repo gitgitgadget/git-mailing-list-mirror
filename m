@@ -1,128 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] diff --stat: make sure to set recursive.
-Date: Tue, 18 Apr 2006 11:33:19 -0700
-Message-ID: <7v7j5mg2ds.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org>
-	<7vbqv1oxie.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604171149330.3701@g5.osdl.org>
-	<7vodyzkehq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604171647380.3701@g5.osdl.org>
-	<7vejzvka09.fsf@assigned-by-dhcp.cox.net>
-	<7v7j5nk9bf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604171751540.3701@g5.osdl.org>
-	<7vd5ffig70.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604180827040.3701@g5.osdl.org>
-	<Pine.LNX.4.64.0604180854550.3701@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RESEND] [PATCH] fix gitk with lots of tags
+Date: Tue, 18 Apr 2006 11:38:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604181132440.3701@g5.osdl.org>
+References: <20060406203637.GA15009@blackbean.org> <20060418180614.GA31543@blackbean.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 18 20:33:35 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 18 20:39:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVv10-0004N0-TF
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 20:33:31 +0200
+	id 1FVv6H-0005GZ-4E
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 20:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101AbWDRSdV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 14:33:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbWDRSdV
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 14:33:21 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:22403 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932101AbWDRSdU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Apr 2006 14:33:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060418183320.XKF17757.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 18 Apr 2006 14:33:20 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604180854550.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 18 Apr 2006 09:06:02 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932270AbWDRSis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 14:38:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932275AbWDRSis
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 14:38:48 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:31652 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932270AbWDRSir (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 14:38:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3IIcXtH013367
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 18 Apr 2006 11:38:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3IIcW5R020898;
+	Tue, 18 Apr 2006 11:38:33 -0700
+To: Jim Radford <radford@blackbean.org>
+In-Reply-To: <20060418180614.GA31543@blackbean.org>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18869>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> Junio, I just tested the "master" branch, and "git log --stat" doesn't 
-> work there. You may _think_ it works because you've tested it on the git 
-> tree, were it looks like it is working, but it's missing setting 
-> "recursive", so it won't actually go into any subdirectories (so it mostly 
-> works for git itself which has most stuff in the top-level directory, but 
-> it almost completely doesn't work for linux)
 
-True.  It shows that I usually install and use "next" version
-exclusively, which is fine during the normal development phase,
-but it was a wrong thing to keep doing just before the release.
+On Tue, 18 Apr 2006, Jim Radford wrote:
+> 
+> I've gotten no reposnse from Paul on this patch[1].  If it seems ok to
+> you, would you mind putting it in your queue for him?  I hate to see
+> gitk die with "argument list too long" messages.  They're so 640k.
 
-I think diff-tree --stat has the same problem in "master", so
-I'd do it slightly differently.
+Don't do this patch. It's wrong.
 
--- >8 --
-Just like "patch" format always needs recursive, "diffstat"
-format does not make sense without setting recursive.
+However, this simpler patch might be ok.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+It just depends on the fact that git-rev-list can parse everything that 
+git-rev-parse used to do these days, and thus the git-rev-parse call 
+really isn't needed any more (and if that isn't true for some odd 
+argument, we should make it true).
+
+So the only thing we need to do is to add the "--default HEAD" thing to 
+the front of the argument list.
+
+		Linus
 
 ---
-
- diff-tree.c |    3 ---
- diff.c      |   10 ++++++++++
- git.c       |    2 --
- 3 files changed, 10 insertions(+), 5 deletions(-)
-
-f56ef54174598d5362d0446c5a560cb5892537c2
-diff --git a/diff-tree.c b/diff-tree.c
-index 7015b06..d1c61c8 100644
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -117,9 +117,6 @@ int main(int argc, const char **argv)
- 	if (opt->dense_combined_merges)
- 		opt->diffopt.output_format = DIFF_FORMAT_PATCH;
+diff --git a/gitk b/gitk
+index 87e7162..5d95779 100755
+--- a/gitk
++++ b/gitk
+@@ -19,16 +19,7 @@ proc gitdir {} {
+ proc parse_args {rargs} {
+     global parsed_args
  
--	if (opt->diffopt.output_format == DIFF_FORMAT_PATCH)
--		opt->diffopt.recursive = 1;
--
- 	diff_tree_setup_paths(get_pathspec(prefix, argv), &opt->diffopt);
- 	diff_setup_done(&opt->diffopt);
+-    if {[catch {
+-	set parse_args [concat --default HEAD $rargs]
+-	set parsed_args [split [eval exec git-rev-parse $parse_args] "\n"]
+-    }]} {
+-	# if git-rev-parse failed for some reason...
+-	if {$rargs == {}} {
+-	    set rargs HEAD
+-	}
+-	set parsed_args $rargs
+-    }
++    set parsed_args [concat --default HEAD $rargs]
+     return $parsed_args
+ }
  
-diff --git a/diff.c b/diff.c
-index b54bbfa..3a1e6ce 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1029,6 +1029,16 @@ int diff_setup_done(struct diff_options 
- 	     options->detect_rename != DIFF_DETECT_COPY) ||
- 	    (0 <= options->rename_limit && !options->detect_rename))
- 		return -1;
-+
-+	/*
-+	 * These cases always need recursive; we do not drop caller-supplied
-+	 * recursive bits for other formats here.
-+	 */
-+	if ((options->output_format == DIFF_FORMAT_PATCH) ||
-+	    (options->output_format == DIFF_FORMAT_DIFFSTAT) ||
-+	    (options->with_stat))
-+		options->recursive = 1;
-+
- 	if (options->detect_rename && options->rename_limit < 0)
- 		options->rename_limit = diff_rename_limit_default;
- 	if (options->setup & DIFF_SETUP_USE_CACHE) {
-diff --git a/git.c b/git.c
-index 140ed18..5209b04 100644
---- a/git.c
-+++ b/git.c
-@@ -344,8 +344,6 @@ static int cmd_log(int argc, const char 
- 			opt.ignore_merges = 0;
- 		if (opt.dense_combined_merges)
- 			opt.diffopt.output_format = DIFF_FORMAT_PATCH;
--		if (opt.diffopt.output_format == DIFF_FORMAT_PATCH)
--			opt.diffopt.recursive = 1;
- 		if (!full_diff && rev.prune_data)
- 			diff_tree_setup_paths(rev.prune_data, &opt.diffopt);
- 		diff_setup_done(&opt.diffopt);
--- 
-1.3.0.rc4.g8060
