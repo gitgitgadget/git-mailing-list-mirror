@@ -1,77 +1,141 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Log message printout cleanups
-Date: Mon, 17 Apr 2006 17:57:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604171751540.3701@g5.osdl.org>
+Date: Mon, 17 Apr 2006 22:52:03 -0700
+Message-ID: <7vd5ffig70.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org>
- <7vbqv1oxie.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604171149330.3701@g5.osdl.org>
- <7vodyzkehq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604171647380.3701@g5.osdl.org>
- <7vejzvka09.fsf@assigned-by-dhcp.cox.net> <7v7j5nk9bf.fsf@assigned-by-dhcp.cox.net>
+	<7vbqv1oxie.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604171149330.3701@g5.osdl.org>
+	<7vodyzkehq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604171647380.3701@g5.osdl.org>
+	<7vejzvka09.fsf@assigned-by-dhcp.cox.net>
+	<7v7j5nk9bf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604171751540.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 18 02:57:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 18 07:52:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVeX8-0007ME-LH
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 02:57:35 +0200
+	id 1FVj8Q-0005iF-OQ
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 07:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098AbWDRA51 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Apr 2006 20:57:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbWDRA51
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Apr 2006 20:57:27 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43152 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932098AbWDRA51 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Apr 2006 20:57:27 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3I0vLtH012628
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 17 Apr 2006 17:57:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3I0vK6S029454;
-	Mon, 17 Apr 2006 17:57:20 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j5nk9bf.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932237AbWDRFwI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 01:52:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751395AbWDRFwI
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 01:52:08 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:15563 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751340AbWDRFwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 01:52:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060418055206.IXKH17757.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Apr 2006 01:52:06 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18847>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> There's actually something _wrong_ with "git log --stat". 
+>
+> What happens is that "git log" will enable "rev.combine_merges" by 
+> default, and that means that together with "--stat" ignoring merges by 
+> default, it will _instead_ generate a "--cc" diff for that merge.
+>
+> I'll leave that up to you, I'm getting pretty fed up with "git log" right 
+> now ;)
 
-On Mon, 17 Apr 2006, Junio C Hamano wrote:
-> 
-> These days I find myself running "git log --stat" more often
-> than "git whatchanged"; it looks so much nicer ;-).
-> 
-> Thanks for a job well done.
+The primary problem is that the code in "next" was before the
+"fancy diffstat for combined" work by Johannes; it punts and
+always shows the patch output even when stat is asked for.
 
-There's actually something _wrong_ with "git log --stat". 
+I think this does what both of us want.  One thing I noticed is
+that log-tree-diff-flush does "---\n" under --patch-with-stat
+but not under --stat; I matched that here.
 
-What happens is that "git log" will enable "rev.combine_merges" by 
-default, and that means that together with "--stat" ignoring merges by 
-default, it will _instead_ generate a "--cc" diff for that merge.
+-- >8 --
+combine-diff: show diffstat with the first parent.
 
-I think that behaviour was introduced by the "--stat" code by Dscho, and 
-not by my rewrite.
+Even under combine-diff, asking for stat (either with --stat or
+--patch-with-stat) gives you diffstat for the first parent.
 
-You can see it on the kernel archive on commit 88dd9c16, for example:
+While the combined patch is useful to highlight the complexity
+and interaction of the parts touched by all branches when
+reviewing a merge commit, diffstat is a tool to assess the
+extent of damage the merge brings in, and showing stat with the
+first parent is more sensible than clever per-parent diffstat.
 
-	git log --stat 88dd9c16
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-will make it pretty obvious what I'm talking about.
+---
 
-I still haven't looked a lot at what the diffstat code does, so I don't 
-know what the obvious fix is. Maybe setting "ignore_merges". And maybe 
-just making the diffstat thing do the right thing for merges. 
+ combine-diff.c |   24 +++++++++++++++++++-----
+ 1 files changed, 19 insertions(+), 5 deletions(-)
 
-I'll leave that up to you, I'm getting pretty fed up with "git log" right 
-now ;)
-
-		Linus
+diff --git a/combine-diff.c b/combine-diff.c
+index aef9006..27f6f57 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -831,10 +831,11 @@ void show_combined_diff(struct combine_d
+ 	case DIFF_FORMAT_NAME:
+ 		show_raw_diff(p, num_parent, rev);
+ 		return;
+-
+-	default:
+ 	case DIFF_FORMAT_PATCH:
+ 		show_patch_diff(p, num_parent, dense, rev);
++		return;
++	default:
++		return;
+ 	}
+ }
+ 
+@@ -847,10 +848,13 @@ void diff_tree_combined_merge(const unsi
+ 	struct commit_list *parents;
+ 	struct combine_diff_path *p, *paths = NULL;
+ 	int num_parent, i, num_paths;
++	int do_diffstat;
+ 
++	do_diffstat = (opt->output_format == DIFF_FORMAT_DIFFSTAT ||
++		       opt->with_stat);
+ 	diffopts = *opt;
+-	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diffopts.with_raw = 0;
++	diffopts.with_stat = 0;
+ 	diffopts.recursive = 1;
+ 
+ 	/* count parents */
+@@ -864,14 +868,24 @@ void diff_tree_combined_merge(const unsi
+ 	     parents;
+ 	     parents = parents->next, i++) {
+ 		struct commit *parent = parents->item;
++		/* show stat against the first parent even
++		 * when doing combined diff.
++		 */
++		if (i == 0 && do_diffstat)
++			diffopts.output_format = DIFF_FORMAT_DIFFSTAT;
++		else
++			diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 		diff_tree_sha1(parent->object.sha1, commit->object.sha1, "",
+ 			       &diffopts);
+ 		diffcore_std(&diffopts);
+ 		paths = intersect_paths(paths, i, num_parent);
+ 
+-		if (diffopts.with_stat && rev->loginfo)
+-			show_log(rev, rev->loginfo, "---\n");
++		if (do_diffstat && rev->loginfo)
++			show_log(rev, rev->loginfo,
++				 opt->with_stat ? "---\n" : "\n");
+ 		diff_flush(&diffopts);
++		if (opt->with_stat)
++			putchar('\n');
+ 	}
+ 
+ 	/* find out surviving paths */
