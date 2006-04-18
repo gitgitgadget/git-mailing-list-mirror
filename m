@@ -1,66 +1,68 @@
-From: smurf@smurf.noris.de
-Subject: Re: [PATCH] git-svnimport symlink support
-Date: Tue, 18 Apr 2006 11:11:08 +0200
-Message-ID: <20060418091108.GC6650@smurf.noris.de>
-References: <E1FVRRH-0003Wz-6w@fencepost.gnu.org> <7v3bgcngqc.fsf@assigned-by-dhcp.cox.net>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: [BUG] gitk draws a wrong line
+Date: Tue, 18 Apr 2006 12:40:14 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060418104014.GA2299@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="SFyWQ0h3ruR435lw"
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Herbert Valerio Riedel <hvr@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 18 11:12:15 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Apr 18 12:40:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVmFr-00014T-HJ
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 11:12:15 +0200
+	id 1FVnd8-0006hH-B9
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 12:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbWDRJMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 05:12:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbWDRJMN
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 05:12:13 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:29368 "EHLO smurf.noris.de")
-	by vger.kernel.org with ESMTP id S1750972AbWDRJMM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 05:12:12 -0400
-Received: from smurf by smurf.noris.de with local (Exim 4.60)
-	(envelope-from <smurf@smurf.noris.de>)
-	id 1FVmEm-0004hh-OI; Tue, 18 Apr 2006 11:11:08 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S932175AbWDRKkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 06:40:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932177AbWDRKkS
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 06:40:18 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:31124 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S932175AbWDRKkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 06:40:16 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1FVnd1-0007D7-04
+	for git@vger.kernel.org; Tue, 18 Apr 2006 12:40:15 +0200
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k3IAeEW02742
+	for git@vger.kernel.org; Tue, 18 Apr 2006 12:40:14 +0200 (MEST)
+To: git@vger.kernel.org
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7v3bgcngqc.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18850>
 
+Hallo,
 
---SFyWQ0h3ruR435lw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm using 1.3.0.rc4.g2855d in Linus Linux tree. When doing
 
-Hi,
+	$ gitk v2.6.16..v2.6.17-rc1
 
-Junio C Hamano:
-> Karl, Martin, Smurf, Comments?
-OK with me.
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+and then going to commit 10c2df65060e1ab57b2f75e0749de0ee9b8f4810, 
+I see a small superfluous line between the two commits under 10c2df.
 
---SFyWQ0h3ruR435lw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+But still worse, if I select the line going down from 10c2df and then
+select it's parent (i.e c76b6b) I get a big line ending in the commit
+descriptions and four lines ending in midair.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
+See screenshots at 
 
-iD8DBQFERK0s8+hUANcKr/kRAssqAJ48Cnyt2ZSSYYVSOdfqFuVJkv57qQCbBjYA
-gkvZz4kjgbA5GU3WHPeErMg=
-=yTjq
------END PGP SIGNATURE-----
+	http://www.informatik.uni-freiburg.de/~zeisberg/bug-gitk/
 
---SFyWQ0h3ruR435lw--
+Best regards
+Uwe
+
+-- 
+Uwe Zeisberger
+
+cat /*dev/null; echo 'Hello World!';
+cat > /dev/null <<*/ 
+() { } int main() { printf("Hello World!\n");}
+/* */
