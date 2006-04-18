@@ -1,141 +1,65 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Log message printout cleanups
-Date: Mon, 17 Apr 2006 22:52:03 -0700
-Message-ID: <7vd5ffig70.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0604161433000.3701@g5.osdl.org>
-	<7vbqv1oxie.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604171149330.3701@g5.osdl.org>
-	<7vodyzkehq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604171647380.3701@g5.osdl.org>
-	<7vejzvka09.fsf@assigned-by-dhcp.cox.net>
-	<7v7j5nk9bf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604171751540.3701@g5.osdl.org>
+Subject: What's in git.git
+Date: Tue, 18 Apr 2006 01:44:09 -0700
+Message-ID: <7vslobff3a.fsf@assigned-by-dhcp.cox.net>
+References: <7vodz4tx4s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 18 07:52:23 2006
+X-From: git-owner@vger.kernel.org Tue Apr 18 10:44:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVj8Q-0005iF-OQ
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 07:52:23 +0200
+	id 1FVlox-000521-NN
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 10:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932237AbWDRFwI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 01:52:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751395AbWDRFwI
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 01:52:08 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:15563 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751340AbWDRFwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Apr 2006 01:52:07 -0400
+	id S1750829AbWDRIoM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 04:44:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbWDRIoM
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 04:44:12 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43947 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750829AbWDRIoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 04:44:11 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060418055206.IXKH17757.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 18 Apr 2006 01:52:06 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+          id <20060418084410.PXDK18224.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Apr 2006 04:44:10 -0400
+To: git@vger.kernel.org
+X-master-at: 2855d58079cd56361879cc03f7c769409bb445e5
+In-Reply-To: <7vodz4tx4s.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 14 Apr 2006 00:49:23 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18848>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+* The 'master' branch has these since the last announcement.
 
-> There's actually something _wrong_ with "git log --stat". 
->
-> What happens is that "git log" will enable "rev.combine_merges" by 
-> default, and that means that together with "--stat" ignoring merges by 
-> default, it will _instead_ generate a "--cc" diff for that merge.
->
-> I'll leave that up to you, I'm getting pretty fed up with "git log" right 
-> now ;)
+ - Update xdiff (Davide Libenzi)
+ - Add diff --stat and --patch-with-stat (Johannes Schindelin)
+ - Miscellaneous fixes (A Large Angry SCM, Linus, Serge
+   E. Hallyn, Yann Dirson, me)
+ - Fix rev-list --boundary (me)
+ - Update gitk (Paul Mackerras)
 
-The primary problem is that the code in "next" was before the
-"fancy diffstat for combined" work by Johannes; it punts and
-always shows the patch output even when stat is asked for.
+* The 'next' branch, in addition, has these.
 
-I think this does what both of us want.  One thing I noticed is
-that log-tree-diff-flush does "---\n" under --patch-with-stat
-but not under --stat; I matched that here.
+ - Common option parsing for "git log --diff" and friends (Linus)
+ - Log message printout cleanups (Linus)
+ - Log/show/whatchanged commands are now built-in (Linus and me)
+ - Similarity fingerprint (Geert Bosch)
+ - Define "log --stat" to be "stat with first parent" (Linus and me)
 
--- >8 --
-combine-diff: show diffstat with the first parent.
+The commits on the lt/logopt branch (part of "next" branch) are
+proving to be more stable and safe enough to use.  It cleans up
+the code quote a lot,
 
-Even under combine-diff, asking for stat (either with --stat or
---patch-with-stat) gives you diffstat for the first parent.
+I'm really resisting the temptation to merge these before 1.3.0.
+There is a slight output format change from diff-tree --pretty;
+while I would not expect no Porcelains is affected in practice,
+technically this is a backward incompatible change, so...
 
-While the combined patch is useful to highlight the complexity
-and interaction of the parts touched by all branches when
-reviewing a merge commit, diffstat is a tool to assess the
-extent of damage the merge brings in, and showing stat with the
-first parent is more sensible than clever per-parent diffstat.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- combine-diff.c |   24 +++++++++++++++++++-----
- 1 files changed, 19 insertions(+), 5 deletions(-)
-
-diff --git a/combine-diff.c b/combine-diff.c
-index aef9006..27f6f57 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -831,10 +831,11 @@ void show_combined_diff(struct combine_d
- 	case DIFF_FORMAT_NAME:
- 		show_raw_diff(p, num_parent, rev);
- 		return;
--
--	default:
- 	case DIFF_FORMAT_PATCH:
- 		show_patch_diff(p, num_parent, dense, rev);
-+		return;
-+	default:
-+		return;
- 	}
- }
- 
-@@ -847,10 +848,13 @@ void diff_tree_combined_merge(const unsi
- 	struct commit_list *parents;
- 	struct combine_diff_path *p, *paths = NULL;
- 	int num_parent, i, num_paths;
-+	int do_diffstat;
- 
-+	do_diffstat = (opt->output_format == DIFF_FORMAT_DIFFSTAT ||
-+		       opt->with_stat);
- 	diffopts = *opt;
--	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	diffopts.with_raw = 0;
-+	diffopts.with_stat = 0;
- 	diffopts.recursive = 1;
- 
- 	/* count parents */
-@@ -864,14 +868,24 @@ void diff_tree_combined_merge(const unsi
- 	     parents;
- 	     parents = parents->next, i++) {
- 		struct commit *parent = parents->item;
-+		/* show stat against the first parent even
-+		 * when doing combined diff.
-+		 */
-+		if (i == 0 && do_diffstat)
-+			diffopts.output_format = DIFF_FORMAT_DIFFSTAT;
-+		else
-+			diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 		diff_tree_sha1(parent->object.sha1, commit->object.sha1, "",
- 			       &diffopts);
- 		diffcore_std(&diffopts);
- 		paths = intersect_paths(paths, i, num_parent);
- 
--		if (diffopts.with_stat && rev->loginfo)
--			show_log(rev, rev->loginfo, "---\n");
-+		if (do_diffstat && rev->loginfo)
-+			show_log(rev, rev->loginfo,
-+				 opt->with_stat ? "---\n" : "\n");
- 		diff_flush(&diffopts);
-+		if (opt->with_stat)
-+			putchar('\n');
- 	}
- 
- 	/* find out surviving paths */
+Anyway, they will be merged immediately after the big release.
