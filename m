@@ -1,86 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: GIT_OBJECT_DIRECTORY
-Date: Tue, 18 Apr 2006 11:08:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604181104420.3701@g5.osdl.org>
-References: <20060418133847.GC4720@wohnheim.fh-wedel.de>
- <Pine.LNX.4.64.0604180822470.3701@g5.osdl.org> <20060418175853.GA25688@wohnheim.fh-wedel.de>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Confused about tracking git master
+Date: Tue, 18 Apr 2006 11:08:48 -0700
+Message-ID: <m2wtdmg3in.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="21872808-154787241-1145383720=:3701"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 18 20:09:18 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Apr 18 20:09:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVudH-0008OM-Eb
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 20:09:00 +0200
+	id 1FVudG-0008OM-MX
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 20:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932254AbWDRSIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 14:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbWDRSIn
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 14:08:43 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:64923 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932267AbWDRSIm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 14:08:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3II8ftH011836
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 18 Apr 2006 11:08:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3II8eLL019775;
-	Tue, 18 Apr 2006 11:08:40 -0700
-To: =?ISO-8859-1?Q?J=F6rn_Engel?= <joern@wohnheim.fh-wedel.de>
-In-Reply-To: <20060418175853.GA25688@wohnheim.fh-wedel.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932264AbWDRSIy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 14:08:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932267AbWDRSIy
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 14:08:54 -0400
+Received: from nz-out-0102.google.com ([64.233.162.194]:49025 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932264AbWDRSIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 14:08:53 -0400
+Received: by nz-out-0102.google.com with SMTP id o37so871241nzf
+        for <git@vger.kernel.org>; Tue, 18 Apr 2006 11:08:52 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:from:date:message-id:user-agent:mime-version:content-type;
+        b=DFFyHjycRVNRWPwLokexbFVUpAQ9snI1mL8+HmSBqiShA2rWVt5ZW9IJHcXd/DTA1ps/3c7M5DZNDag5ClbckrMrs+9cDdpCLB8EDlqqn1hm84l92GSx/V0QrrbksvqRvqZAce0gZ1kwy5Zt/nPUvUVxFtw0iiWItjSvypjbKg8=
+Received: by 10.36.108.11 with SMTP id g11mr7006463nzc;
+        Tue, 18 Apr 2006 11:08:52 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [67.171.24.140])
+        by mx.gmail.com with ESMTP id 40sm122879nzf.2006.04.18.11.08.51;
+        Tue, 18 Apr 2006 11:08:52 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18865>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---21872808-154787241-1145383720=:3701
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+I'm tracking git and somehow getting confused about how to get
+updates.
 
+To start, I did: git clone git://git.kernel.org/pub/scm/git/git.git
 
+To get updates, I _think_ all I have to do is 'git pull'.  Doing so I
+get:
 
-On Tue, 18 Apr 2006, Jörn Engel wrote:
-> > 
-> > 	git clone git://git.kernel.org/... foo/
-> 
-> Is it possible for non-owners of a kernel.org account to do this?
+    Unpacking 157 objects
+     100% (157/157) done
+    * refs/heads/todo: same as branch 'todo' of git://git.kernel.org/pub/scm/git/git
+    * refs/heads/maint: same as branch 'maint' of git://git.kernel.org/pub/scm/git/git
+    * refs/heads/origin: same as branch 'master' of git://git.kernel.org/pub/scm/git/git
+    * refs/heads/pu: does not fast forward to branch 'pu' of git://git.kernel.org/pub/scm/git/git;
+      not updating.       
 
-Yes, kernel.org runs the git daemon.
+Then when I do git whatchanged, the last change is on Saturday the
+15th.  I'm figuring there has probably been at least one commit since
+then?  So I tried 'git checkout origin' and then repeated the
+whatchanged call and see:
 
-If a repo isn't packed enough, the git protocol can be pretty CPU 
-intensive, but I'm hoping that everybody keeps their repos mostly packed, 
-at which point the git protocol should actually be a lot faster than 
-rsync.
+    diff-tree 2855d58... (from bb99661...)
+    Author: Junio C Hamano <junkio@cox.net>
+    Date:   Mon Apr 17 17:46:07 2006 -0700   
 
-> > GIT_OBJECT_DIRECTORY, and it makes a lot less sense with pack-files than 
-> > it did originally, so it's not getting any testing).
-> 
-> Well, .git/objects for your kernel still consumes 121M.  It's not
-> gigabytes but I still wouldn't want too many copies of that lying
-> around.
+Is there a step I'm missing?  Or am I just misunderstanding what to
+expect?  Clarification on either of those would be appreciated.
 
-Right. However, these days we have better approaches than 
-GIT_OBJECT_DIRECTORY for that.
+Thanks,
 
-In particular, if you create local clones, use "git clone -l -s", which 
-shares its base objects with the thing you clone from. It makes the clone 
-incredibly fast too (the only real cost is the check-out, which can 
-obviously be pretty expensive), and you can then use
-
-	git repack -a -d -l
-
-on all the to repack just the _local_ objects to avoid having packs 
-duplicate objects unnecessarily.
-
-		Linus
---21872808-154787241-1145383720=:3701--
++ seth
