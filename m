@@ -1,68 +1,55 @@
-From: =?iso-8859-1?Q?J=F6rn?= Engel <joern@wohnheim.fh-wedel.de>
-Subject: Next problem: empty ident  <joern@limerick.(none)> not allowed
-Date: Tue, 18 Apr 2006 22:25:25 +0200
-Message-ID: <20060418202525.GD25688@wohnheim.fh-wedel.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Next problem: empty ident  <joern@limerick.(none)> not allowed
+Date: Tue, 18 Apr 2006 13:37:19 -0700
+Message-ID: <7vu08qei2o.fsf@assigned-by-dhcp.cox.net>
+References: <20060418202525.GD25688@wohnheim.fh-wedel.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Apr 18 22:25:33 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 18 22:37:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FVwlM-0008NS-DX
-	for gcvg-git@gmane.org; Tue, 18 Apr 2006 22:25:28 +0200
+	id 1FVwx0-00022u-L3
+	for gcvg-git@gmane.org; Tue, 18 Apr 2006 22:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932323AbWDRUZZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 18 Apr 2006 16:25:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbWDRUZZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 16:25:25 -0400
-Received: from wohnheim.fh-wedel.de ([213.39.233.138]:52884 "EHLO
-	wohnheim.fh-wedel.de") by vger.kernel.org with ESMTP
-	id S932323AbWDRUZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Apr 2006 16:25:24 -0400
-Received: from joern by wohnheim.fh-wedel.de with local (Exim 3.36 #1 (Debian))
-	id 1FVwlJ-0003mm-00
-	for <git@vger.kernel.org>; Tue, 18 Apr 2006 22:25:25 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S932315AbWDRUhY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 18 Apr 2006 16:37:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932327AbWDRUhX
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 16:37:23 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:9869 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932315AbWDRUhV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 16:37:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060418203721.DDNP8241.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Apr 2006 16:37:21 -0400
+To: =?iso-8859-1?Q?J=F6rn?= Engel <joern@wohnheim.fh-wedel.de>
+In-Reply-To: <20060418202525.GD25688@wohnheim.fh-wedel.de>
+ (=?iso-8859-1?Q?J=F6rn?= Engel's
+	message of "Tue, 18 Apr 2006 22:25:25 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18877>
 
-After successfully using a central object store with git://... instead
-of rsync://... (thanks to Sam and Linus), I've run into the next
-problem:
+J=F6rn Engel <joern@wohnheim.fh-wedel.de> writes:
 
-$ env | grep GIT
-GIT_AUTHOR_NAME=3DJoern Engel
-GIT_OBJECT_DIRECTORY=3D/home/joern/.git
-GIT_AUTHOR_EMAIL=3Djoern@wh.fh-wedel.de
+> And now I have some questions:
+> 1. Why didn't the environment variables work?
+> 2. Why is there a check for commit information when I pull from some
+> tree?
 
-$ git pull git://git.infradead.org/mtd-2.6.git
-Unpacking 74 objects
- 100% (74/74) done
-Trying really trivial in-index merge...
-Wonderful.
-fatal: empty ident  <joern@limerick.(none)> not allowed
+Because "pull" means "fetch and merge the local modifications if
+any".  When you merge (and you _did_ merge), you create a new
+commit of your own, and the commit records who committed it.
 
-Adding this to .git/config solved the problem:
-[user]
-	name =3D "Joern Engel"
-	email =3D "joern@foo.bar"
+You need GIT_COMMITTER_EMAIL.
 
-
-And now I have some questions:
-1. Why didn't the environment variables work?
-2. Why is there a check for commit information when I pull from some
-tree?
-
-J=F6rn
-
---=20
-I've never met a human being who would want to read 17,000 pages of
-documentation, and if there was, I'd kill him to get him out of the
-gene pool.
--- Joseph Costello
+Now, the normal "git log" does not verbosely show committer and
+author,
