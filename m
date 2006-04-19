@@ -1,57 +1,90 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: git-daemon memory usage, disconnection.
-Date: Wed, 19 Apr 2006 14:22:46 +0100
-Message-ID: <1145452967.13200.92.camel@pmac.infradead.org>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: Re: cg-clone produces "___" file and no working tree
+Date: Wed, 19 Apr 2006 07:16:56 -0700
+Message-ID: <20060419141656.GC4104@tumblerings.org>
+References: <20060419053640.GA16334@tumblerings.org> <7vd5feawel.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Apr 19 15:23:34 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 19 16:17:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWCe0-0007X0-8Q
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 15:22:57 +0200
+	id 1FWDUK-0001x8-KX
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 16:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbWDSNWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 09:22:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750739AbWDSNWx
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 09:22:53 -0400
-Received: from canuck.infradead.org ([205.233.218.70]:20934 "EHLO
-	canuck.infradead.org") by vger.kernel.org with ESMTP
-	id S1750748AbWDSNWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Apr 2006 09:22:52 -0400
-Received: from pmac.infradead.org ([81.187.2.168])
-	by canuck.infradead.org with esmtpsa (Exim 4.61 #1 (Red Hat Linux))
-	id 1FWCdt-00074R-V8
-	for git@vger.kernel.org; Wed, 19 Apr 2006 09:22:50 -0400
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1750788AbWDSOQ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 10:16:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbWDSOQ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 10:16:57 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:62679 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S1750788AbWDSOQ5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 10:16:57 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.60)
+	(envelope-from <zbrown@tumblerings.org>)
+	id 1FWDUG-0002nE-9g; Wed, 19 Apr 2006 07:16:56 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vd5feawel.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18924>
 
-I'm running git-daemon from xinetd and it seems a little greedy...
+On Tue, Apr 18, 2006 at 11:53:38PM -0700, Junio C Hamano wrote:
+> Zack Brown <zbrown@tumblerings.org> writes:
+> 
+> > What is going on? I'm completely unable to clone a repository.
+> 
+> I have no idea how cg-* is broken, so I'll let Pasky answer
+> that, but I suspect your git installation is broken.
+> 
+> > If I try
+> > "git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git",
+> > I get this error: "git: 'clone' is not a git-command", and it prints a usage
+> > page, but "clone" is listed on that usage page.
+> 
+> That sounds intersting.  Although rsync is deprecated for a long
+> time and git:// is the preferred transport, I do not get "is not
+> a git-command" error.  Are you installing things correctly?
 
-Cpu(s):  2.7% us,  6.4% sy,  0.0% ni,  1.7% id, 87.7% wa,  1.4% hi,  0.0% si
-Mem:    253680k total,   250076k used,     3604k free,      568k buffers
-Swap:   500960k total,   500864k used,       96k free,    24696k cached
+I think so. I was able to reproduce this behavior using the tarballs that are
+used to start out a new user with git and cogito; as well as with the latest
+version in the repository.
 
-  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
-31232 nobody    18   0  155m  29m 7224 D  1.3 11.9   0:25.56 git-rev-list
-30743 nobody    18   0  179m  29m 9480 D  0.7 11.9   0:42.60 git-rev-list
-31277 nobody    18   0  147m  28m 7476 D  2.6 11.4   0:20.90 git-rev-list
-30314 nobody    18   0  233m  26m 7696 D  0.0 10.6   1:20.24 git-rev-list
-30612 nobody    18   0  204m  23m 7432 D  1.3  9.4   0:59.19 git-rev-list
-30574 nobody    18   0  190m  20m 7608 D  0.3  8.3   0:50.77 git-rev-list
-30208 nobody    18   0  140m  14m 7632 D  0.3  5.9   0:15.23 git-pack-object
+But I also thought the rsync deprecation was not really true. Wasn't that
+discussed here recently? I thought the conclusion was that folks *wanted*
+to deprecate it, but at the moment it was still the best way to accomplish
+certain things.
 
-Now, this wouldn't be _so_ bad if there were only two of them running.
-The clients for the other four have actually given up and disconnected
-long ago, but git-daemon doesn't seem to have reacted to that.
+> 
+> For example, as the first paragraph of INSTALL says, if you
+> override prefix= from the make command line, you need to do so
+> consistently when you build and when you install.
+> 
+> What do these command say?
+> 
+> 	$ git --exec-path
+> 	$ ls -l "`git --exec-path`/git-clone"
+
+22:07:05 [zbrown] ~$ git --exec-path
+/home/zbrown/bin
+07:10:34 [zbrown] ~$ ls -l "`git --exec-path`/git-clone"
+ls: /home/zbrown/bin/git-clone: No such file or directory
+
+Does that mean it's looking in /home/zbrown/bin for the git binaries? That's
+weird. I have /home/zbrown/git/git and /home/zbrown/git/cogito in my $PATH
+specifically to hold those executables. There's no git stuff in
+/home/zbrown/bin.
+
+Be well,
+Zack
+
+
+> 
 
 -- 
-dwmw2
+Zack Brown
