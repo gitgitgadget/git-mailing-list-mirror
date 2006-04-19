@@ -1,67 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix uninteresting tags in new revision parsing
-Date: Tue, 18 Apr 2006 20:31:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604182027460.3701@g5.osdl.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
+Date: Wed, 19 Apr 2006 15:51:47 +1200
+Message-ID: <46a038f90604182051n4a16ee9atd2577d658befc335@mail.gmail.com>
+References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
+	 <7vpsjecriu.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0604181805080.3701@g5.osdl.org>
+	 <7vd5fecpyd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Apr 19 05:32:31 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 19 05:51:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FW3QV-0003rO-RM
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 05:32:24 +0200
+	id 1FW3jM-0006gY-0S
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 05:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750714AbWDSDbu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 23:31:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbWDSDbu
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 23:31:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43203 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750714AbWDSDbu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 23:31:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3J3VgtH000665
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 18 Apr 2006 20:31:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3J3VfMd007174;
-	Tue, 18 Apr 2006 20:31:41 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750719AbWDSDvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 23:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbWDSDvt
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 23:51:49 -0400
+Received: from wproxy.gmail.com ([64.233.184.225]:51891 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750719AbWDSDvs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 23:51:48 -0400
+Received: by wproxy.gmail.com with SMTP id i12so84630wra
+        for <git@vger.kernel.org>; Tue, 18 Apr 2006 20:51:47 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lINXj+3qWHFSnaXFmeZhJw99FZ/Q7YHQ8iTBtLibeGo9FAfpsSDqyHDTfcvlWe1Nh/I4tTCwvlwY1BpbevWMJcSJj1tG7+9iKgEEia2toeWlmc+DYebyyENnaBAuEbYLZAAlYLUXhVu/ZtLpcCCnMtG9eZSZMtKEwhh7YGTetEA=
+Received: by 10.54.82.2 with SMTP id f2mr3921768wrb;
+        Tue, 18 Apr 2006 20:51:47 -0700 (PDT)
+Received: by 10.54.127.4 with HTTP; Tue, 18 Apr 2006 20:51:47 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vd5fecpyd.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18902>
+
+<wishlist>
+  What about support for diffing a subtree?
+
+      git diff v2.2:net/appletalk v2.9:net/appletalk-ng
+
+</whishlist>
+
+cheers,
 
 
-When I unified the revision argument parsing, I introduced a simple bug 
-wrt tags that had been marked uninteresting. When it was preparing for the 
-revision walk, it would mark all the parent commits of an uninteresting 
-tag correctly uninteresting, but it would forget about the commit itself.
-
-This means that when I just did my 2.6.17-rc2 release, and my scripts 
-generated the log for "v2.6.17-rc1..v2.6.17-rc2", everything was fine, 
-except the commit pointed to by 2.6.17-rc1 (which shouldn't have been 
-there) was included. Even though it should obviously have been marked as 
-being uninteresting.
-
-Not a huge deal, and the fix is trivial.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/revision.c b/revision.c
-index dbd54da..113dd5a 100644
---- a/revision.c
-+++ b/revision.c
-@@ -152,6 +152,7 @@ static struct commit *handle_commit(stru
- 		if (parse_commit(commit) < 0)
- 			die("unable to parse commit %s", name);
- 		if (flags & UNINTERESTING) {
-+			commit->object.flags |= UNINTERESTING;
- 			mark_parents_uninteresting(commit);
- 			revs->limited = 1;
- 		}
+martin
