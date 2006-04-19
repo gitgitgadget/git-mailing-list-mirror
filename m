@@ -1,89 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
-Date: Tue, 18 Apr 2006 21:02:11 -0700
-Message-ID: <7v8xq2ciws.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
-	<7vpsjecriu.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604181805080.3701@g5.osdl.org>
-	<7vd5fecpyd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604181836400.3701@g5.osdl.org>
+Date: Tue, 18 Apr 2006 21:04:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604182101360.3701@g5.osdl.org>
+References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org> 
+ <7vpsjecriu.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0604181805080.3701@g5.osdl.org>
+  <7vd5fecpyd.fsf@assigned-by-dhcp.cox.net> <46a038f90604182051n4a16ee9atd2577d658befc335@mail.gmail.com>
+ <Pine.LNX.4.64.0604182056390.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 06:02:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 19 06:04:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FW3tR-0007jC-Ke
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 06:02:17 +0200
+	id 1FW3vP-0007vb-U8
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 06:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756AbWDSECP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 00:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbWDSECP
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 00:02:15 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45754 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750756AbWDSECO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Apr 2006 00:02:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060419040213.QRGO20694.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Apr 2006 00:02:13 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604181836400.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 18 Apr 2006 18:43:00 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750763AbWDSEER (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 00:04:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbWDSEER
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 00:04:17 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:19403 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750763AbWDSEEQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Apr 2006 00:04:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3J445tH001724
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 18 Apr 2006 21:04:05 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3J444NL007959;
+	Tue, 18 Apr 2006 21:04:04 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <Pine.LNX.4.64.0604182056390.3701@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18905>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> Actually, it's not ambiguous. Just take the named file. If you want to 
-> diff it against HEAD:<named-file>, you should just say so.
->
-> Now, if you _really_ want to be difficult, there's a third option: to diff 
-> it against the named file as named in the index. "git diff" does have the 
-> "--cached" option that would make that case unambiguous too, of course.
->
-> Ie:
->
->  (a) diff against the current HEAD:
->
-> 	git diff v0.99.6:git-commit-script HEAD:git-commit.sh
->
->  (b) diff against the current index contents for "git-commit.sh":
->
-> 	git diff --cached v0.99.6:git-commit-script git-commit.sh
->
->  (c) diff against a random file (which may not even be in the index):
->
-> 	git diff v0.99.6:git-commit-script git-commit.sh
->
-> are all sensible operations, and unambiguous.
 
-A small fry in the ointment.  What should the parts that are
-output with --name-only say for such a diff?
+On Tue, 18 Apr 2006, Linus Torvalds wrote:
+> 
+> And no, I didn't actually test it. But it really _should_ work with that 
+> trivial diff, including with the "a..b" format.
 
-Blob references like v0.99.6:git-commit-script are resolved by
-the extended SHA1 interpreter, and all what the caller of
-setup_revisions() can see and feed the diff machinery with has
-are their object names.  Something like this is a possibility,
-but is ugly.
+Ok, tested and verified.
 
-        diff --git a/a2455b0... b/01c73bd...
-        index a2455b0..01c73bd 100644
-        --- a/a2455b0...
-        +++ b/01c73bd...
-        @@ -1,118 +1,509 @@
-         #!/bin/sh
-         #
-         # Copyright (c) 2005 Linus Torvalds
-        +# Copyright (c) 2006 Junio C Hamano
-        +
-        +USAGE='[-a] [-s] [-v] [--no-verify] [-m <message>...
-        +SUBDIRECTORY_OK=Yes
-        ...
+On the kernel:
+
+	git diff v2.6.13:drivers/block/..HEAD:block/ -- ll_rw_blk.c
+
+actually does the right thing - it shows the diff for ll_rw_blk.c which 
+got moved from drivers/block/ into block/ between 2.6.13 and current.
+
+Note that the "--" is required, since ll_rw_blk.c doesn't exist in the 
+top-level directory where we run the command (but does exist in the git 
+trees that we have specified manually with the new shorthand).
+
+		Linus
