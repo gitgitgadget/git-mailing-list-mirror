@@ -1,90 +1,79 @@
-From: Ray Lehtiniemi <rayl@shawcable.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
-Date: Tue, 18 Apr 2006 19:20:34 -0600
-Message-ID: <200604181920.35223.rayl@shawcable.com>
+Date: Tue, 18 Apr 2006 18:30:02 -0700
+Message-ID: <7vd5fecpyd.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
- <46a038f90604181714j6fce1867wc17952d898f8e7ae@mail.gmail.com>
- <20060419002159.GD8915@spearce.org>
+	<7vpsjecriu.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604181805080.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 19 03:21:41 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 19 03:30:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FW1Nz-0003iD-Ls
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 03:21:40 +0200
+	id 1FW1WD-0004f2-FE
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 03:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750932AbWDSBVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 21:21:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750933AbWDSBVg
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 21:21:36 -0400
-Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:54579 "EHLO
-	pd2mo1so.prod.shaw.ca") by vger.kernel.org with ESMTP
-	id S1750931AbWDSBVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Apr 2006 21:21:36 -0400
-Received: from pd4mr6so.prod.shaw.ca (pd4mr6so-qfe3.prod.shaw.ca [10.0.141.69])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0IXY004NL3QBD110@l-daemon> for git@vger.kernel.org; Tue,
- 18 Apr 2006 19:20:35 -0600 (MDT)
-Received: from pn2ml9so.prod.shaw.ca ([10.0.121.7])
- by pd4mr6so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
- 15 2004)) with ESMTP id <0IXY005923QA2R70@pd4mr6so.prod.shaw.ca> for
- git@vger.kernel.org; Tue, 18 Apr 2006 19:20:34 -0600 (MDT)
-Received: from s0106001109ed07db.cg.shawcable.net ([68.147.121.172])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0IXY00AY63QA0U20@l-daemon> for git@vger.kernel.org; Tue,
- 18 Apr 2006 19:20:34 -0600 (MDT)
-In-reply-to: <20060419002159.GD8915@spearce.org>
-To: Shawn Pearce <spearce@spearce.org>
-Content-disposition: inline
-User-Agent: KMail/1.8.2
+	id S1750942AbWDSBaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 21:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbWDSBaE
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 21:30:04 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:22501 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750942AbWDSBaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 21:30:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060419013003.OONH15879.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Apr 2006 21:30:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604181805080.3701@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 18 Apr 2006 18:16:10 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18899>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-one more lightweight vote in favor....  such a feature would eliminate a few 
-shell scripts i cobbled together which essentially allow me to say
-
-  git diff 8a6352:path/to/module 5f3461:moved/and/hacked/copy
-
-
-On Tuesday 18 April 2006 18:21, Shawn Pearce wrote:
-> Not that my voice carries much weight, but a coworker has been
-> asking for this feature to be added to pg for months.  I've just
-> been too lazy to get around to writing the shell code to do it.
-> Making it part of git cat-file seems like a good idea, making it
-> usable by other tools like git diff just rocks.  :-)
+> Now, the thing that an internal "git diff" could do better is to notice 
+> when it gets _one_ blob revision, and one filename, ie we could do
 >
-> I think its a very worthwhile addition.
+> 	git diff v0.99.6:git-commit-script git-commit.sh
 >
-> Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > On 4/19/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> > >   What do people think? Have you ever wanted to
-> > >   access individual files in some random revision? Do you think this is
-> > >   useful?
-> >
-> > Definitely, I've several times had to go through contortions to do
-> > this easily, and I've ended up turning to gitweb often to quickly see
-> > the state of a file at a given revision.
-> >
-> > > With this, you can do something like
-> > >
-> > >         git cat-file blob v1.2.4:Makefile
-> > >
-> > > to get the contents of "Makefile" at revision v1.2.4.
-> > >
-> > > Now, this isn't necessarily something you really need all that often,
-> > > but the concept itself is actually pretty powerful. We could, for
-> > > example, allow things like
-> > >
-> > >         git diff v0.99.6:git-commit-script..v1.3.0:git-commit.sh
-> >
-> > These two examples are more than enough -- I buy ;-)
+> which parses as one SHA1 of a blob (put onto the rev.pending_objects 
+> list), and one filename (in the rev.prune_data array). We could decide to 
+> automatically do the "right thing" for that case too.
+
+The "right thing" is ambiguous, I am afraid.
+
+I think it would be natural to interpret the request as a diff
+between the blob from v0.99.6 and a random working tree file, 
+which may not even exist in the index.
+
+However I suspect what you are getting at is to act as if the
+user said:
+
+	git diff v0.99.6:git-commit-script HEAD:git-commit.sh
+
+Oh, another possibility is to act as if the user said
+
+	git diff v0.99.6:this :git-commit.sh
+
+where "(empty):" would stand for "look up in the index, not in a
+tree".
+
+I think these are all valid interpretations and there are useful
+use cases (admittably the last one is "diff-cache --cached").
+
+Unfortunatly, I do not think this parses well:
+
+	git diff git-commit.sh v0.99.6:git-commit-script
+
+but you could always say:
+
+	git diff -R v0.99.6:git-commit-script git-commit.sh
