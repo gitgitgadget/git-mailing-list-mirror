@@ -1,62 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cg-clone produces "___" file and no working tree
-Date: Tue, 18 Apr 2006 23:53:38 -0700
-Message-ID: <7vd5feawel.fsf@assigned-by-dhcp.cox.net>
-References: <20060419053640.GA16334@tumblerings.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
+Date: Wed, 19 Apr 2006 10:15:44 +0200
+Message-ID: <4445F1B0.4060105@op5.se>
+References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org> <7vy7y2csv8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604181735480.3701@g5.osdl.org> <Pine.LNX.4.64.0604181745410.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 08:53:45 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 19 10:16:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FW6ZL-0001St-JP
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 08:53:43 +0200
+	id 1FW7qy-0006z0-Gu
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 10:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbWDSGxk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 02:53:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750824AbWDSGxk
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 02:53:40 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:30915 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750809AbWDSGxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Apr 2006 02:53:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060419065339.TSTA20694.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Apr 2006 02:53:39 -0400
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20060419053640.GA16334@tumblerings.org> (Zack Brown's message of
-	"Tue, 18 Apr 2006 22:36:40 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750756AbWDSIPr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 04:15:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbWDSIPr
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 04:15:47 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:57017 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750760AbWDSIPq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 04:15:46 -0400
+Received: from [192.168.1.2] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 19BC76BCC2; Wed, 19 Apr 2006 10:15:45 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604181745410.3701@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18912>
 
-Zack Brown <zbrown@tumblerings.org> writes:
+Linus Torvalds wrote:
+> 
+> On Tue, 18 Apr 2006, Linus Torvalds wrote:
+> 
+>>And I thought we already disallowed ':' in branch names because cogito 
+>>uses them for the strange <rev>:<rev> syntax.. 
+> 
+> 
+> Btw, pathnames with ':' in them aren't a problem. It's only revision
+> names that can't have ':' in them and still be used together with this 
+> syntax.
+> 
+> If you have a pathname with ':', it's fine to do
+> 
+> 	git cat-file v1.2.4:pathname:with:colon
+> 
+> because the magic revision parsing only cares about the _first_ colon, and 
+> will split that into "v1.2.4" and "pathname:with:colon" without ever even 
+> looking at the other ones.
+> 
 
-> What is going on? I'm completely unable to clone a repository.
+Except that you'll have to explicitly state HEAD:pathname:with:colon, or 
+does it try finding a file with the argument verbatim first?
 
-I have no idea how cg-* is broken, so I'll let Pasky answer
-that, but I suspect your git installation is broken.
-
-> If I try
-> "git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git",
-> I get this error: "git: 'clone' is not a git-command", and it prints a usage
-> page, but "clone" is listed on that usage page.
-
-That sounds intersting.  Although rsync is deprecated for a long
-time and git:// is the preferred transport, I do not get "is not
-a git-command" error.  Are you installing things correctly?
-
-For example, as the first paragraph of INSTALL says, if you
-override prefix= from the make command line, you need to do so
-consistently when you build and when you install.
-
-What do these command say?
-
-	$ git --exec-path
-	$ ls -l "`git --exec-path`/git-clone"
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
