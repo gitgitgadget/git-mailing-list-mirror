@@ -1,51 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Josh Boyer" <jwboyer@gmail.com>
 Subject: Re: Default refspec for branches
-Date: Wed, 19 Apr 2006 10:45:16 -0700
-Message-ID: <7v3bg9bgsz.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 19 Apr 2006 12:52:21 -0500
+Message-ID: <625fc13d0604191052r15226583qf145172cea67429b@mail.gmail.com>
 References: <625fc13d0604190558tf0e8b69n5f5a830a3131f1d4@mail.gmail.com>
+	 <7v3bg9bgsz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 19:45:34 2006
+X-From: git-owner@vger.kernel.org Wed Apr 19 19:52:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWGjy-0004yq-Vt
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 19:45:23 +0200
+	id 1FWGqo-0006I6-LQ
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 19:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbWDSRpT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 13:45:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWDSRpT
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 13:45:19 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:26240 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751017AbWDSRpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Apr 2006 13:45:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060419174517.YDQU18351.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Apr 2006 13:45:17 -0400
-To: "Josh Boyer" <jwboyer@gmail.com>
-In-Reply-To: <625fc13d0604190558tf0e8b69n5f5a830a3131f1d4@mail.gmail.com>
-	(Josh Boyer's message of "Wed, 19 Apr 2006 07:58:58 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751026AbWDSRwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 13:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbWDSRwY
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 13:52:24 -0400
+Received: from uproxy.gmail.com ([66.249.92.175]:39058 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751026AbWDSRwX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 13:52:23 -0400
+Received: by uproxy.gmail.com with SMTP id c2so868346ugf
+        for <git@vger.kernel.org>; Wed, 19 Apr 2006 10:52:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oERb+WrSin0tD7q2+uisdpIaxL4awxbE0JcHXS0DNsNKZlYM7UA2Z/YNpAjyBJgtxF+HTIXeUK7x7IR9Tmi7ego4xyx3e88mZKCqIXzH1SZDeQPeTm2cfJld4e1yK/nMs5mLIsNmyZJTGNVtm71mSJb/Uh+/Q2iwmXdj2E3mqPE=
+Received: by 10.78.40.10 with SMTP id n10mr107942hun;
+        Wed, 19 Apr 2006 10:52:21 -0700 (PDT)
+Received: by 10.78.15.16 with HTTP; Wed, 19 Apr 2006 10:52:21 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7v3bg9bgsz.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18934>
 
-"Josh Boyer" <jwboyer@gmail.com> writes:
+On 4/19/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Josh Boyer" <jwboyer@gmail.com> writes:
+>
+> > Is there a way to change the default refspec that git pull uses on a
+> > per branch basis?
+>
+> No.
+>
+> But it is a _very_ reasonable thing people would want to be able
+> to.  Please look at the last entry in:
+>
+>         Subject: Recent unresolved issues
+>         Date: Fri, 14 Apr 2006 02:31:36 -0700
+>         Message-ID: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
 
-> Is there a way to change the default refspec that git pull uses on a
-> per branch basis?
+Hm, ok.
 
-No.
+I'd offer to work on that, but I have a bit of a learning curve in
+front of me before I could make something useful.  If others beat me
+to it, I certainly wouldn't mind ;)
 
-But it is a _very_ reasonable thing people would want to be able
-to.  Please look at the last entry in:
-
-        Subject: Recent unresolved issues
-        Date: Fri, 14 Apr 2006 02:31:36 -0700
-	Message-ID: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
+josh
