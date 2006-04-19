@@ -1,55 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
-Date: Wed, 19 Apr 2006 14:49:20 -0700
-Message-ID: <7v3bg96xsv.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
-	<7vpsjecriu.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604181805080.3701@g5.osdl.org>
-	<7vd5fecpyd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604181836400.3701@g5.osdl.org>
-	<7v8xq2ciws.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604182108070.3701@g5.osdl.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: GIT Error issue
+Date: Thu, 20 Apr 2006 09:53:45 +1200
+Message-ID: <46a038f90604191453q567192b0l9a35d50f96f8705d@mail.gmail.com>
+References: <3857255c0604190416j62abeae8va164896c5100f6ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 23:49:31 2006
+X-From: git-owner@vger.kernel.org Wed Apr 19 23:53:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWKYA-0003Bi-4T
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 23:49:29 +0200
+	id 1FWKcR-0004D4-GW
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 23:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbWDSVtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 17:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbWDSVtX
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 17:49:23 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:55209 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751258AbWDSVtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Apr 2006 17:49:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060419214922.ZSLP24981.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 19 Apr 2006 17:49:22 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604182108070.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 18 Apr 2006 21:14:01 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751262AbWDSVxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 17:53:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbWDSVxs
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 17:53:48 -0400
+Received: from wproxy.gmail.com ([64.233.184.231]:26795 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751262AbWDSVxr convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 17:53:47 -0400
+Received: by wproxy.gmail.com with SMTP id i2so405519wra
+        for <git@vger.kernel.org>; Wed, 19 Apr 2006 14:53:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YukMjiu+5WZJhdMhlHWDH2fw2Im6BdznEoNxhssAWBxMcn8Eu6dp1Y5jyOQE6BTjSKokWOTFI+9wIqWcAKtGfEoS4zQTwL6O7KNhvfOqryrobox7KQT2xivmpw4fMJ2Vf7hAR0BpbCuVXoSp7Krj0fYKxTmjrC4uXbb21o1uJTU=
+Received: by 10.54.60.26 with SMTP id i26mr119411wra;
+        Wed, 19 Apr 2006 14:53:45 -0700 (PDT)
+Received: by 10.54.127.4 with HTTP; Wed, 19 Apr 2006 14:53:45 -0700 (PDT)
+To: "Shyamal Sadanshio" <shyamal.sadanshio@gmail.com>
+In-Reply-To: <3857255c0604190416j62abeae8va164896c5100f6ee@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18943>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+If you are using Debian or a derivative, just do
 
-> On Tue, 18 Apr 2006, Junio C Hamano wrote:
->> 
->> A small fry in the ointment.  What should the parts that are
->> output with --name-only say for such a diff?
->
-> I have no idea, I have to say ;)
+   apt-get install git-core
 
-Another small one ;-).  Bare blobs do not have modes, so diffcore
-needs to be told "do not bother comparing mode for this pair".
+which will remove the 'git' package (GNU Interactive Tools) and
+install the git SCM. On RPM systems, probably
+
+   yum install git-core
+
+will do the trick.
+
+cheers,
+
+
+martin
