@@ -1,51 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
-Date: Tue, 18 Apr 2006 17:27:07 -0700
-Message-ID: <7vy7y2csv8.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 18 Apr 2006 17:44:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604181735480.3701@g5.osdl.org>
 References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
+ <7vy7y2csv8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 02:27:19 2006
+X-From: git-owner@vger.kernel.org Wed Apr 19 02:44:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FW0XJ-0002UD-5c
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 02:27:13 +0200
+	id 1FW0nt-00077I-KQ
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 02:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750788AbWDSA1J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 20:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbWDSA1J
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 20:27:09 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:12004 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750788AbWDSA1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Apr 2006 20:27:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060419002708.FYYL24981.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 18 Apr 2006 20:27:08 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 18 Apr 2006 16:45:16 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750855AbWDSAoS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 20:44:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbWDSAoS
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 20:44:18 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:48033 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750834AbWDSAoS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 20:44:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3J0iEtH028273
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 18 Apr 2006 17:44:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3J0iDmk000412;
+	Tue, 18 Apr 2006 17:44:13 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy7y2csv8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18893>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> [ NOTE! The reason I put "RFC" in the subject rather than "PATCH" is that 
->   I'm not 100% sure this isn't just a "shiny object" of mine rather than a 
->   really useful thing to do. What do people think? Have you ever wanted to 
->   access individual files in some random revision? Do you think this is 
->   useful? I think it's cool and _may_ be useful, but I'm not going to 
->   really push this patch. Consider it a throw-away patch unless somebody 
->   else finds it intriguing enough.. ]
 
-Yes, I wanted to do this myself for a while.  The only issue I
-might have is what the separator character between rev and path
-should be.
+On Tue, 18 Apr 2006, Junio C Hamano wrote:
+> 
+> Yes, I wanted to do this myself for a while.  The only issue I
+> might have is what the separator character between rev and path
+> should be.
+
+I didn't put a lot of thought into it, but using ':' not only is pretty 
+visually pleasing, it also means that shell completion automatically works 
+at least on bash, even without any git-specific completion rules.
+
+That's not true for a lot of other special characters: colon really is 
+special, exactly because it has been used for things like PATH separators, 
+etc.
+
+I'm a total filename completion junkie - I simply cannot type in a 
+filename any more. I'll literally press <tab> to complete even short 
+filenames, just because it gives me that nice confirmation of the 
+existence of the filename (ie I've typed it all in, and the <tab> adds the 
+space after the filename).
+
+So to me, ':' is just clearly superior. I can't think of any other 
+separator that works with filename completion and has no shell issues, 
+_and_ looks logical.
+
+And I thought we already disallowed ':' in branch names because cogito 
+uses them for the strange <rev>:<rev> syntax.. 
+
+		Linus
