@@ -1,55 +1,57 @@
-From: "Josh Boyer" <jwboyer@gmail.com>
-Subject: Default refspec for branches
-Date: Wed, 19 Apr 2006 07:58:58 -0500
-Message-ID: <625fc13d0604190558tf0e8b69n5f5a830a3131f1d4@mail.gmail.com>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: git-daemon memory usage, disconnection.
+Date: Wed, 19 Apr 2006 14:22:46 +0100
+Message-ID: <1145452967.13200.92.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Apr 19 14:59:16 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Apr 19 15:23:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWCGt-0003Wh-Re
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 14:59:04 +0200
+	id 1FWCe0-0007X0-8Q
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 15:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750744AbWDSM7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 08:59:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbWDSM7A
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 08:59:00 -0400
-Received: from uproxy.gmail.com ([66.249.92.175]:51693 "EHLO uproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750749AbWDSM67 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Apr 2006 08:58:59 -0400
-Received: by uproxy.gmail.com with SMTP id c2so810517ugf
-        for <git@vger.kernel.org>; Wed, 19 Apr 2006 05:58:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=fTEi1/oW5+yTMxK/4gkvR0n6RnBXryZgew1Fth+6LUTqIiQVjBkUdw5q7c9e9RttnVkKMegVCA9T2AKOp0GYenvvgI1shOaJ7PnCAyN5TH0KrPr+gUIgYcIky/OJh/TkSmuAcfWsXw5GmydzjeQ+vP63eE3uc1REFx+vFz14F6A=
-Received: by 10.78.32.14 with SMTP id f14mr88713huf;
-        Wed, 19 Apr 2006 05:58:58 -0700 (PDT)
-Received: by 10.78.15.16 with HTTP; Wed, 19 Apr 2006 05:58:58 -0700 (PDT)
+	id S1750748AbWDSNWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 09:22:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750739AbWDSNWx
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 09:22:53 -0400
+Received: from canuck.infradead.org ([205.233.218.70]:20934 "EHLO
+	canuck.infradead.org") by vger.kernel.org with ESMTP
+	id S1750748AbWDSNWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 09:22:52 -0400
+Received: from pmac.infradead.org ([81.187.2.168])
+	by canuck.infradead.org with esmtpsa (Exim 4.61 #1 (Red Hat Linux))
+	id 1FWCdt-00074R-V8
+	for git@vger.kernel.org; Wed, 19 Apr 2006 09:22:50 -0400
 To: git@vger.kernel.org
-Content-Disposition: inline
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18923>
 
-Is there a way to change the default refspec that git pull uses on a
-per branch basis?  I know that you can create .git/remotes/<foo> and
-do 'git pull <foo>' to pull from whatever is listed in there, but that
-isn't quite what I'm looking for.
+I'm running git-daemon from xinetd and it seems a little greedy...
 
-What I'd like to be able to do is create a branch and have 'git pull'
-simply pull from the remote tree.  I tried listing multiple refspecs
-in .git/remotes/origin, but git didn't seem to like that.
+Cpu(s):  2.7% us,  6.4% sy,  0.0% ni,  1.7% id, 87.7% wa,  1.4% hi,  0.0% si
+Mem:    253680k total,   250076k used,     3604k free,      568k buffers
+Swap:   500960k total,   500864k used,       96k free,    24696k cached
 
-For example, I clone Linus' tree.  Then I create a branch called mtd. 
-When I'm working in that branch, I want 'git pull' to pull from
-git://git.infradead.org/mtd-2.6.git.
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+31232 nobody    18   0  155m  29m 7224 D  1.3 11.9   0:25.56 git-rev-list
+30743 nobody    18   0  179m  29m 9480 D  0.7 11.9   0:42.60 git-rev-list
+31277 nobody    18   0  147m  28m 7476 D  2.6 11.4   0:20.90 git-rev-list
+30314 nobody    18   0  233m  26m 7696 D  0.0 10.6   1:20.24 git-rev-list
+30612 nobody    18   0  204m  23m 7432 D  1.3  9.4   0:59.19 git-rev-list
+30574 nobody    18   0  190m  20m 7608 D  0.3  8.3   0:50.77 git-rev-list
+30208 nobody    18   0  140m  14m 7632 D  0.3  5.9   0:15.23 git-pack-object
 
-Any ideas?
+Now, this wouldn't be _so_ bad if there were only two of them running.
+The clients for the other four have actually given up and disconnected
+long ago, but git-daemon doesn't seem to have reacted to that.
 
-josh
+-- 
+dwmw2
