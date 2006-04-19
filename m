@@ -1,62 +1,46 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC] get_sha1() shorthands for blob/tree objects
-Date: Tue, 18 Apr 2006 17:47:50 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604181745410.3701@g5.osdl.org>
+Date: Tue, 18 Apr 2006 17:56:09 -0700
+Message-ID: <7vpsjecriu.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
- <7vy7y2csv8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604181735480.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 02:48:01 2006
+X-From: git-owner@vger.kernel.org Wed Apr 19 02:56:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FW0rO-0008UN-31
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 02:47:58 +0200
+	id 1FW0zP-00010E-LE
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 02:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870AbWDSArz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 18 Apr 2006 20:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbWDSArz
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 20:47:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:15011 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750780AbWDSAry (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Apr 2006 20:47:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3J0lptH028355
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 18 Apr 2006 17:47:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3J0lowY000493;
-	Tue, 18 Apr 2006 17:47:50 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0604181735480.3701@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750936AbWDSA4M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 18 Apr 2006 20:56:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbWDSA4M
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Apr 2006 20:56:12 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:25296 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750936AbWDSA4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Apr 2006 20:56:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060419005610.OAQH18566.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 18 Apr 2006 20:56:10 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 18 Apr 2006 16:45:16 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18895>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> 	git diff v0.99.6:git-commit-script..v1.3.0:git-commit.sh
 
-On Tue, 18 Apr 2006, Linus Torvalds wrote:
-> 
-> And I thought we already disallowed ':' in branch names because cogito 
-> uses them for the strange <rev>:<rev> syntax.. 
+This is interesting.
 
-Btw, pathnames with ':' in them aren't a problem. It's only revision
-names that can't have ':' in them and still be used together with this 
-syntax.
-
-If you have a pathname with ':', it's fine to do
-
-	git cat-file v1.2.4:pathname:with:colon
-
-because the magic revision parsing only cares about the _first_ colon, and 
-will split that into "v1.2.4" and "pathname:with:colon" without ever even 
-looking at the other ones.
-
-		Linus
+Yet to be born "internal diff".  Should I start one, or are you
+already hacking on it?
