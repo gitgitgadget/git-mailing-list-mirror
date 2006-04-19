@@ -1,69 +1,55 @@
-From: Erik Mouw <erik@harddisk-recovery.com>
-Subject: Re: GIT Error issue
-Date: Wed, 19 Apr 2006 13:21:36 +0200
-Organization: Harddisk-recovery.com
-Message-ID: <20060419112135.GA24807@harddisk-recovery.com>
-References: <3857255c0604190416j62abeae8va164896c5100f6ee@mail.gmail.com>
+From: "Josh Boyer" <jwboyer@gmail.com>
+Subject: Default refspec for branches
+Date: Wed, 19 Apr 2006 07:58:58 -0500
+Message-ID: <625fc13d0604190558tf0e8b69n5f5a830a3131f1d4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 19 13:21:52 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Apr 19 14:59:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWAkh-0003Ur-6z
-	for gcvg-git@gmane.org; Wed, 19 Apr 2006 13:21:43 +0200
+	id 1FWCGt-0003Wh-Re
+	for gcvg-git@gmane.org; Wed, 19 Apr 2006 14:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbWDSLVk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 07:21:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbWDSLVk
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 07:21:40 -0400
-Received: from dtp.xs4all.nl ([80.126.206.180]:100 "HELO abra2.bitwizard.nl")
-	by vger.kernel.org with SMTP id S1750891AbWDSLVj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Apr 2006 07:21:39 -0400
-Received: (qmail 17827 invoked by uid 501); 19 Apr 2006 13:21:36 +0200
-To: Shyamal Sadanshio <shyamal.sadanshio@gmail.com>
+	id S1750744AbWDSM7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 08:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbWDSM7A
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 08:59:00 -0400
+Received: from uproxy.gmail.com ([66.249.92.175]:51693 "EHLO uproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750749AbWDSM67 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 08:58:59 -0400
+Received: by uproxy.gmail.com with SMTP id c2so810517ugf
+        for <git@vger.kernel.org>; Wed, 19 Apr 2006 05:58:58 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fTEi1/oW5+yTMxK/4gkvR0n6RnBXryZgew1Fth+6LUTqIiQVjBkUdw5q7c9e9RttnVkKMegVCA9T2AKOp0GYenvvgI1shOaJ7PnCAyN5TH0KrPr+gUIgYcIky/OJh/TkSmuAcfWsXw5GmydzjeQ+vP63eE3uc1REFx+vFz14F6A=
+Received: by 10.78.32.14 with SMTP id f14mr88713huf;
+        Wed, 19 Apr 2006 05:58:58 -0700 (PDT)
+Received: by 10.78.15.16 with HTTP; Wed, 19 Apr 2006 05:58:58 -0700 (PDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <3857255c0604190416j62abeae8va164896c5100f6ee@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18922>
 
-On Wed, Apr 19, 2006 at 04:46:57PM +0530, Shyamal Sadanshio wrote:
-> I am newbie to GIT and facing some problem with the GIT usage. I am
-> trying to clone a repository at www.linux-mips.org with the
-> following command, I get error message as below:
-> 
-> **************************************************************************
-> [root@sshyamal git-tutorial]# git clone
-> git://ftp.linux-mips.org/pub/scm/linux-malta.git linux-malta.git
-> git: warning: invalid extra options ignored
-> 
-> GNU Interactive Tools 4.3.20 (i686-pc-linux-gnu), 12:39:46 Apr 18 2006
-> GIT is free software; you can redistribute it and/or modify it under the
-> terms of the GNU General Public License as published by the Free
-> Software
-> Foundation; either version 2, or (at your option) any later version.
-> Copyright (C) 1993-1999 Free Software Foundation, Inc.
-> Written by Tudor Hulubei and Andrei Pitis, Bucharest, Romania
-> 
-> git: fatal error: `chdir' failed: permission denied.
+Is there a way to change the default refspec that git pull uses on a
+per branch basis?  I know that you can create .git/remotes/<foo> and
+do 'git pull <foo>' to pull from whatever is listed in there, but that
+isn't quite what I'm looking for.
 
-You're using the wrong GIT. Remove the GNU Interactive Tools and use
-git from kernel.org.
+What I'd like to be able to do is create a branch and have 'git pull'
+simply pull from the remote tree.  I tried listing multiple refspecs
+in .git/remotes/origin, but git didn't seem to like that.
 
-> ***************************************************************************
-> 
-> I am exercising this command in root mode.
+For example, I clone Linus' tree.  Then I create a branch called mtd. 
+When I'm working in that branch, I want 'git pull' to pull from
+git://git.infradead.org/mtd-2.6.git.
 
-There is absolutely zero reason to run git as root.
+Any ideas?
 
-
-Erik
-
--- 
-+-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
-| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
+josh
