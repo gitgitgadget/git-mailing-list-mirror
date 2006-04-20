@@ -1,123 +1,105 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: 1.3.0 creating bigger packs than 1.2.3
-Date: Thu, 20 Apr 2006 12:43:51 -0400
-Message-ID: <20060420164351.GB31738@spearce.org>
-References: <20060420133640.GA31198@spearce.org> <Pine.LNX.4.64.0604200745550.3701@g5.osdl.org> <20060420150315.GB31198@spearce.org> <Pine.LNX.4.64.0604200857460.3701@g5.osdl.org>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: Re: cg-clone produces "___" file and no working tree
+Date: Thu, 20 Apr 2006 09:49:08 -0700
+Message-ID: <20060420164908.GA540@tumblerings.org>
+References: <20060419053640.GA16334@tumblerings.org> <20060419094916.GD27689@pasky.or.cz> <20060419142131.GD4104@tumblerings.org> <20060419144827.GX27631@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 18:44:25 2006
+X-From: git-owner@vger.kernel.org Thu Apr 20 18:49:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWcG7-0002TO-DX
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 18:44:00 +0200
+	id 1FWcLO-0003eR-CU
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 18:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090AbWDTQn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 12:43:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbWDTQn4
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 12:43:56 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50869 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751090AbWDTQnz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Apr 2006 12:43:55 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FWcFv-0005Bw-6h; Thu, 20 Apr 2006 12:43:47 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 67A8620FBB4; Thu, 20 Apr 2006 12:43:51 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751097AbWDTQtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 12:49:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbWDTQtX
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 12:49:23 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:21210 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S1751097AbWDTQtW
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Apr 2006 12:49:22 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.61)
+	(envelope-from <zbrown@tumblerings.org>)
+	id 1FWcL6-0000IM-QP; Thu, 20 Apr 2006 09:49:08 -0700
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0604200857460.3701@g5.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20060419144827.GX27631@pasky.or.cz>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18979>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
+Hi Petr,
+
+On Wed, Apr 19, 2006 at 04:48:27PM +0200, Petr Baudis wrote:
+>   Hi,
 > 
-> 
-> On Thu, 20 Apr 2006, Shawn Pearce wrote:
+> Dear diary, on Wed, Apr 19, 2006 at 04:21:31PM CEST, I got a letter
+> where Zack Brown <zbrown@tumblerings.org> said that...
+> > On Wed, Apr 19, 2006 at 11:49:16AM +0200, Petr Baudis wrote:
+> > > Dear diary, on Wed, Apr 19, 2006 at 07:36:40AM CEST, I got a letter
+> > > where Zack Brown <zbrown@tumblerings.org> said that...
+> > > > When I do something like
+> > > > cg-clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
+> > > > 
+> > > > The first few lines of output are:
+> > > > 
+> > > > defaulting to local storage area
+> > > > warning: templates not found /home/zbrown/share/git-core/templates/
+> > > > /home/zbrown/git/cogito/cg-clone: line 137: .git/info/cg-fetch-earlydie: No such file or directory
+> > > > /home/zbrown/git/cogito/cg-clone: line 148: .git/info/cg-fetch-initial: No such file or directory
+> > > 
+> > > Could you please list the contents of the .git subdirectory? It seems
+> > > that git-init-db did not create the .git/info subdirectory.
 > > 
-> > So with 1.3.0.g56c1 "git repack -a -d -f" did worse:
-> > 
-> >   Total 46391, written 46391 (delta 6649), reused 39742 (delta 0)
-> >   129M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-> > 
-> > I just tried -f on v1.2.3 and it did slightly better then before:
-> > 
-> >   Total 46391, written 46391 (delta 6847), reused 38012 (delta 0)
-> >    59M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-
-Oddly enough repacking the v1.2.3 pack using 1.3.0.g56c1 created an
-even smaller pack ("git-repack -a -d"):
-
-  Total 46391, written 46391 (delta 8253), reused 44985 (delta 6847)
-   49M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-
-and repacking again with "git-repack -a -d" chopped another 1M:
-
-  Total 46391, written 46391 (delta 8258), reused 46386 (delta 8253)
-   48M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pac
-  
-but then adding -f definately gives us the 2x explosion again:
-
-  Total 46391, written 46391 (delta 6649), reused 37894 (delta 0)
-  129M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-
-> Interesting. The bigger packs do generate fewer deltas, but they don't 
-> seem to be _that_ much fewer. And the deltas themselves certainly 
-> shouldn't be bigger.
+> > 07:19:57 [zbrown] ~/git/trees/tmp/git/.git$ ls -F
+> > total 28
+> > 4 HEAD  4 branches/  4 config  4 index  4 info/  4 objects/  4 refs/
 > 
-> It almost sounds like there's a problem with choosing what to delta 
-> against, not necessarily a delta algorithm problem. Although that sounds a 
-> bit strange, because I wouldn't have thought we actually changed the 
-> packing algorithm noticeably since 1.2.3.
-> 
-> Hmm. Doing "gitk v1.2.3.. -- pack-objects.c" shows that I was wrong. Junio 
-> did the "hash basename and direname a bit differently" thing, which would 
-> appear to change the "find objects to delta against" a lot. That could be 
-> it. 
-> 
-> You could try to revert that change:
-> 
-> 	git revert eeef7135fed9b8784627c4c96e125241c06c65e1
-> 
-> which needs a trivial manual fixup (remove the conflict entirely: 
-> everything between the "<<<<" and ">>>>>" lines should go), and see if 
-> that's it.
+>   hmm, could you please do this just after running git-init-db in an
+> empty directory? I just realized cg-fetch will mkdir -p the .git/info/
+> directory.
 
-Whoa.  I did that revert and fixup on top of 'next'.  The pack
-from "git-repack -a -d -f" is now even larger due to even less
-delta reuse:
+You're right, the "info" directory is not there if I just run git-init-db in an
+empty directory.
 
-  Total 46391, written 46391 (delta 5148), reused 39565 (delta 0)
-  171M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
+> error. If the .git/info/ directory is not there after git-init-db,
+> either it is somehow broken in git-1.3.0, or it belongs to a much older
+> git version.
 
-> You can also try to see if
+I just downloaded the latest versions of git and cogito from kernel.org:
+cogito-0.17.2 and git-1.3.0; put their directories in my path, and ran "make" on
+both of them. There's no other version in my path.
+
+I see the same behavior: git-init-db does not create the .git/info directory.
+
 > 
-> 	git repack -a -d -f --window=50
+> > 07:18:38 [zbrown] ~$ which git-init-db
+> > /home/zbrown/git/git//git-init-db
+> > 07:18:52 [zbrown] ~$ which git        
+> > /home/zbrown/git/git//git
 > 
-> makes for a better pack (at the cost of a much slower repack). It makes 
-> git try more objects to delta against, and can thus hide a bad sort order.
+>   It might be a good idea to compare the ctimes.
 
-With --window=50 on 'next' (without the revert'):
+09:46:55 [zbrown] ~/git/trees$ "ls" -ltc `which git; which git-init-db`
+-rwxrwxr-x 2 zbrown zbrown 452312 Apr 20 09:44 /home/zbrown/git/git//git
+-rwxrwxr-x 1 zbrown zbrown 235282 Apr 20 09:43 /home/zbrown/git/git//git-init-db
+09:47:29 [zbrown] ~/git/trees$ 
 
-  Total 46391, written 46391 (delta 6666), reused 39723 (delta 0)
-  129M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
+Be well,
+Zack
 
-For added measure I tried --window=100 and 500 with pretty much
-the same result (slightly higher delta but still a 129M pack).
+> 
+> -- 
+> 				Petr "Pasky" Baudis
+> Stuff: http://pasky.or.cz/
+> Right now I am having amnesia and deja-vu at the same time.  I think
+> I have forgotten this before.
 
 -- 
-Shawn.
+Zack Brown
