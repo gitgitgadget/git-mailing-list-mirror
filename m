@@ -1,50 +1,65 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: t1001-read-tree-m-2way.sh failed
-Date: Thu, 20 Apr 2006 15:53:58 +0200
-Message-ID: <20060420135358.GQ11428MdfPADPa@greensroom.kotnet.org>
-References: <20060420130121.GO11428MdfPADPa@greensroom.kotnet.org>
- <4447882F.8080304@op5.se>
-Reply-To: skimo@liacs.nl
+From: Pander <pander@users.sourceforge.net>
+Subject: Plain view on image in tree in gitweb results in binary output in
+ browser
+Date: Thu, 20 Apr 2006 15:57:05 +0200
+Organization: Atopia
+Message-ID: <44479331.2090305@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 15:54:38 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Apr 20 15:57:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWZbi-0001ng-Ov
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 15:54:07 +0200
+	id 1FWZek-0002WV-0F
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 15:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750741AbWDTNyD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 09:54:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWDTNyD
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 09:54:03 -0400
-Received: from smtp15.wxs.nl ([195.121.247.6]:49574 "EHLO smtp15.wxs.nl")
-	by vger.kernel.org with ESMTP id S1750741AbWDTNyC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Apr 2006 09:54:02 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp15.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0IY00071MX9X35@smtp15.wxs.nl> for git@vger.kernel.org; Thu,
- 20 Apr 2006 15:53:58 +0200 (CEST)
-Received: (qmail 10725 invoked by uid 500); Thu, 20 Apr 2006 13:53:58 +0000
-In-reply-to: <4447882F.8080304@op5.se>
-To: Andreas Ericsson <ae@op5.se>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1750743AbWDTN5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 09:57:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750755AbWDTN5K
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 09:57:10 -0400
+Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:260 "EHLO
+	smtp-vbr5.xs4all.nl") by vger.kernel.org with ESMTP
+	id S1750743AbWDTN5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Apr 2006 09:57:09 -0400
+Received: from tsuki.nfg.nl (nfg3.nfgs.net [80.126.246.87])
+	by smtp-vbr5.xs4all.nl (8.13.6/8.13.6) with ESMTP id k3KDv8kj051214
+	for <git@vger.kernel.org>; Thu, 20 Apr 2006 15:57:08 +0200 (CEST)
+	(envelope-from pander@users.sourceforge.net)
+Received: from nfg3.nfgs.net (localhost [127.0.0.1])
+	by tsuki.nfg.nl (Postfix) with ESMTP id C6F035C084
+	for <git@vger.kernel.org>; Thu, 20 Apr 2006 15:57:07 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by tsuki.nfg.nl (Postfix) with ESMTP id F21D45C08A
+	for <git@vger.kernel.org>; Thu, 20 Apr 2006 15:57:06 +0200 (CEST)
+Received: from tsuki.nfg.nl ([127.0.0.1])
+	by localhost (nfg3.nfgs.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 06178-10 for <git@vger.kernel.org>;
+	Thu, 20 Apr 2006 15:57:06 +0200 (CEST)
+Received: from [172.16.3.9] (ws3.dojo [172.16.3.9])
+	by tsuki.nfg.nl (Postfix) with ESMTP id F1E0D5C084
+	for <git@vger.kernel.org>; Thu, 20 Apr 2006 15:57:05 +0200 (CEST)
+User-Agent: Mail/News 1.5 (X11/20060318)
+To: git@vger.kernel.org
+X-Virus-Scanned: by XS4ALL Virus Scanner
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.007587, version=1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18971>
 
-On Thu, Apr 20, 2006 at 03:10:07PM +0200, Andreas Ericsson wrote:
-> Keyboard color?
+Hi all,
 
-I think "beige" comes closest.
+Plain and head view on an image in a tree in gitweb results in binary 
+output in browser. One gets numbered lines with exotic characters.
 
-In any case, it turns out that apparently make was confused
-by the rename from diff.c to diff-lib.c.
-After a make clean, everything was ok.
+Is it suppose to be like this in gitweb would it be better to, according 
+to the mime type of the file, show the actual image in the plain or head 
+view?
 
-skimo
+Is this configurable or a feature request?
+
+Regards,
+
+Pander
