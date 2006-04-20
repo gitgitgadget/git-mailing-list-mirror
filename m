@@ -1,105 +1,96 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: cg-clone produces "___" file and no working tree
-Date: Thu, 20 Apr 2006 09:49:08 -0700
-Message-ID: <20060420164908.GA540@tumblerings.org>
-References: <20060419053640.GA16334@tumblerings.org> <20060419094916.GD27689@pasky.or.cz> <20060419142131.GD4104@tumblerings.org> <20060419144827.GX27631@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: 1.3.0 creating bigger packs than 1.2.3
+Date: Thu, 20 Apr 2006 10:03:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604200954440.3701@g5.osdl.org>
+References: <20060420133640.GA31198@spearce.org> <Pine.LNX.4.64.0604200745550.3701@g5.osdl.org>
+ <20060420150315.GB31198@spearce.org> <Pine.LNX.4.64.0604200857460.3701@g5.osdl.org>
+ <20060420164351.GB31738@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 18:49:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Apr 20 19:04:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWcLO-0003eR-CU
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 18:49:26 +0200
+	id 1FWcZb-0006Vq-Lx
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 19:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbWDTQtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 12:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbWDTQtX
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 12:49:23 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:21210 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S1751097AbWDTQtW
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Apr 2006 12:49:22 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.61)
-	(envelope-from <zbrown@tumblerings.org>)
-	id 1FWcL6-0000IM-QP; Thu, 20 Apr 2006 09:49:08 -0700
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20060419144827.GX27631@pasky.or.cz>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1751126AbWDTRED (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 13:04:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWDTRED
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 13:04:03 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:48306 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751126AbWDTREB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Apr 2006 13:04:01 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3KH3WtH021767
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 20 Apr 2006 10:03:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3KH3V3r000700;
+	Thu, 20 Apr 2006 10:03:31 -0700
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060420164351.GB31738@spearce.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18980>
 
-Hi Petr,
 
-On Wed, Apr 19, 2006 at 04:48:27PM +0200, Petr Baudis wrote:
->   Hi,
+
+On Thu, 20 Apr 2006, Shawn Pearce wrote:
 > 
-> Dear diary, on Wed, Apr 19, 2006 at 04:21:31PM CEST, I got a letter
-> where Zack Brown <zbrown@tumblerings.org> said that...
-> > On Wed, Apr 19, 2006 at 11:49:16AM +0200, Petr Baudis wrote:
-> > > Dear diary, on Wed, Apr 19, 2006 at 07:36:40AM CEST, I got a letter
-> > > where Zack Brown <zbrown@tumblerings.org> said that...
-> > > > When I do something like
-> > > > cg-clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
-> > > > 
-> > > > The first few lines of output are:
-> > > > 
-> > > > defaulting to local storage area
-> > > > warning: templates not found /home/zbrown/share/git-core/templates/
-> > > > /home/zbrown/git/cogito/cg-clone: line 137: .git/info/cg-fetch-earlydie: No such file or directory
-> > > > /home/zbrown/git/cogito/cg-clone: line 148: .git/info/cg-fetch-initial: No such file or directory
-> > > 
-> > > Could you please list the contents of the .git subdirectory? It seems
-> > > that git-init-db did not create the .git/info subdirectory.
+> Oddly enough repacking the v1.2.3 pack using 1.3.0.g56c1 created an
+> even smaller pack ("git-repack -a -d"):
+
+That's "normal". Repacking without -f will always pack _more_, never less. 
+So a different packing algorithm can only improve (of course, usually not 
+by a huge margin, and it quickly diminishes).
+
+> but then adding -f definately gives us the 2x explosion again:
+> 
+>   Total 46391, written 46391 (delta 6649), reused 37894 (delta 0)
+>   129M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
+
+Right. Doing the -f will discard any old packing info, so if the new 
+packing algorithm has problems (and it obviously does), then using -f will 
+show them.
+
+> > You could try to revert that change:
 > > 
-> > 07:19:57 [zbrown] ~/git/trees/tmp/git/.git$ ls -F
-> > total 28
-> > 4 HEAD  4 branches/  4 config  4 index  4 info/  4 objects/  4 refs/
+> > 	git revert eeef7135fed9b8784627c4c96e125241c06c65e1
 > 
->   hmm, could you please do this just after running git-init-db in an
-> empty directory? I just realized cg-fetch will mkdir -p the .git/info/
-> directory.
+> Whoa.  I did that revert and fixup on top of 'next'.  The pack
+> from "git-repack -a -d -f" is now even larger due to even less
+> delta reuse:
 
-You're right, the "info" directory is not there if I just run git-init-db in an
-empty directory.
+Ok, so that wasn't it, and the new sort order is superior.
 
-> error. If the .git/info/ directory is not there after git-init-db,
-> either it is somehow broken in git-1.3.0, or it belongs to a much older
-> git version.
+That means that it probably _is_ the delta changes themselves (probably 
+commit c13c6bf7 "diff-delta: bound hash list length to avoid O(m*n) 
+behavior". You can try
 
-I just downloaded the latest versions of git and cogito from kernel.org:
-cogito-0.17.2 and git-1.3.0; put their directories in my path, and ran "make" on
-both of them. There's no other version in my path.
+	git revert c13c6bf7
 
-I see the same behavior: git-init-db does not create the .git/info directory.
+to see if that's it. Although Nico already showed interest, and if you 
+make the archive available to him, he's sure to figure it out.
 
+> With --window=50 on 'next' (without the revert'):
 > 
-> > 07:18:38 [zbrown] ~$ which git-init-db
-> > /home/zbrown/git/git//git-init-db
-> > 07:18:52 [zbrown] ~$ which git        
-> > /home/zbrown/git/git//git
-> 
->   It might be a good idea to compare the ctimes.
+>   Total 46391, written 46391 (delta 6666), reused 39723 (delta 0)
+>   129M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
 
-09:46:55 [zbrown] ~/git/trees$ "ls" -ltc `which git; which git-init-db`
--rwxrwxr-x 2 zbrown zbrown 452312 Apr 20 09:44 /home/zbrown/git/git//git
--rwxrwxr-x 1 zbrown zbrown 235282 Apr 20 09:43 /home/zbrown/git/git//git-init-db
-09:47:29 [zbrown] ~/git/trees$ 
+Yeah, that didn't do much. Slightly more deltas than without, but not a 
+lot, and it didn't matter much size-wise.
 
-Be well,
-Zack
+You can try "--depth=50" (slogan: more "hot delta on delta action"), but 
+it's looking less and less like a delta selection issue, and more and more 
+like the deltas themselves are deproved.
 
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> Right now I am having amnesia and deja-vu at the same time.  I think
-> I have forgotten this before.
-
--- 
-Zack Brown
+			Linus
