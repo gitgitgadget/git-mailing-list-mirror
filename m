@@ -1,95 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: using git on flash media
-Date: Wed, 19 Apr 2006 17:23:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604191651110.3701@g5.osdl.org>
-References: <20060419233125.89318.qmail@web86912.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH] Add git-unresolve <paths>...
+Date: Wed, 19 Apr 2006 17:33:02 -0700
+Message-ID: <7vacah3x35.fsf@assigned-by-dhcp.cox.net>
+References: <7vu08p72sn.fsf@assigned-by-dhcp.cox.net>
+	<87acah6zk6.wl%cworth@cworth.org>
+	<7v8xq16y31.fsf@assigned-by-dhcp.cox.net>
+	<87wtdl2o5o.wl%cworth@cworth.org>
+	<7vmzeh3ypu.fsf@assigned-by-dhcp.cox.net>
+	<87r73t2jd3.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 02:23:20 2006
+X-From: git-owner@vger.kernel.org Thu Apr 20 02:33:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWMx1-00043I-Nq
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 02:23:16 +0200
+	id 1FWN6a-0005um-1r
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 02:33:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbWDTAXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Apr 2006 20:23:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbWDTAXN
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 20:23:13 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18151 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751156AbWDTAXM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Apr 2006 20:23:12 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3K0NAtH018086
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 19 Apr 2006 17:23:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3K0N9dE009457;
-	Wed, 19 Apr 2006 17:23:10 -0700
-To: David Tweed <tweed314@yahoo.co.uk>
-In-Reply-To: <20060419233125.89318.qmail@web86912.mail.ukl.yahoo.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751168AbWDTAdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Apr 2006 20:33:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbWDTAdF
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Apr 2006 20:33:05 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:8693 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751168AbWDTAdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Apr 2006 20:33:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060420003303.LFXU20694.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 19 Apr 2006 20:33:03 -0400
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87r73t2jd3.wl%cworth@cworth.org> (Carl Worth's message of "Wed,
+	19 Apr 2006 17:14:48 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18954>
 
+Carl Worth <cworth@cworth.org> writes:
 
+> Thanks for the careful explanation.
 
-On Thu, 20 Apr 2006, David Tweed wrote:
->
-> What I'm basically checking is that it doesn't, I dunno, rewrite files 
-> so frequently that on a modern flash drive it would wear out the entire 
-> drive unreasonably quickly.
+You're welcome.  You owe me a patch that typo-fixes and
+pretty-prints my message, and drop it somewhere in
+Documentation/howto hierarchy for future reference ;-).
 
-The largely write-once nature of git should mean that the only files that 
-get rewritten a lot are
- - the directories get rewritten to, since git creates new objects at a 
-   reasonable pace
- - the branch references get rewritten.
+> So there's the final piece I'd like here. I think "git status -a -v"
+> should provide a multi-parent diff when merging, as should "git status
+> -v" after manually doing an update-index while merging.
 
-In general, I'd say that git probably does less writing than most other 
-SCM's are likely to do.
+I'll keep that in mind, but honestly I am not very interested in
+that particular use case, if only because you can already do
+that by committing, and running "git show".
 
-That said, when you say "modern flash drive", I really suspect you 
-shouldn't care deeply any more. Modern flash devices can be rewritten a 
-lot more than old ones could (by an order of magnitude or more), and they 
-almost always have wear levelling in hw, making it even less of an issue 
-(but if they don't, your biggest issue will be that you should use a 
-filesystem that does it for you).
+If you do not like how the resulting merge commit looks like, we
+have "git commit --amend" and "git reset --hard HEAD^" for you
+already.
 
-That said, if you want to be safe, I think flash memory card vendors 
-guarantee only up to 10,000 write cycles (and it used to be much less). 
-
-That's _complete_ rewrites, though, which is more than just a single 
-sector write. They tend to guarantee 100,000 single-sector re-writes (ie 
-more like the "directory update" things when you create a new object).
-
-And assuming you'd count one commit as one "total rewrite" (which sounds 
-unlikely - but it's certainly more than one sector - I don't know what 
-they consider a total rewrite when they make up their numbers), that 
-implies that to be really safe, you shouldn't do more than 10,000 commits 
-before you replace your flash. Quite frankly, I suspect that's _way_ more 
-conservative than you should be, but hey, since you asked..
-
-10,000 commits is actually a fair number. The kernel has gotten 25,000 in 
-a year, but the kernel is a pretty active and large project. I suspect 
-that 10,000 commits is quite a lot of years for most projects.
-
-One rule: NEVER mount your flash with the "sync" option, and use "noatime" 
-to avoid unnecessary inode access time updates (that's especially true for 
-git, where archive atimes aren't interesting, but it's usually a good idea 
-for flash in general). Otherwise you'll get normal accesses ending up 
-doign "writes" too and writes will do a lot more of them, and the above 
-"one commit = one rewrite" rule-of-thumb is suddenly not at all 
-conservative.
-
-Btw, backups are still good. Flash or no flash, and whether you're very 
-conservative in your flash usage or not.
-
-		Linus
+I (or Linus) _may_ end up doing "git diff tree1 tree2 tree3..."
+as part of the planned diff rewrite, but that would be only
+if/when doing things in such a generic way is not much more
+trouble than the current "we only do one of index-vs-files,
+tree-vs-index, tree-vs-files-via-index or tree-vs-tree and
+nothing else" model.
