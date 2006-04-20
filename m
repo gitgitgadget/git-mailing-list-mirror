@@ -1,54 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: cg-clone produces "___" file and no working tree
-Date: Thu, 20 Apr 2006 13:17:38 -0700
-Message-ID: <7vslo8xaql.fsf@assigned-by-dhcp.cox.net>
-References: <20060419053640.GA16334@tumblerings.org>
-	<20060419094916.GD27689@pasky.or.cz>
-	<20060419142131.GD4104@tumblerings.org>
-	<20060419144827.GX27631@pasky.or.cz>
-	<20060420164908.GA540@tumblerings.org>
-	<7vejzsywrq.fsf@assigned-by-dhcp.cox.net>
-	<20060420200849.GA3653@tumblerings.org>
+Date: Thu, 20 Apr 2006 22:19:15 +0200
+Message-ID: <20060420201915.GF27689@pasky.or.cz>
+References: <20060419053640.GA16334@tumblerings.org> <20060419094916.GD27689@pasky.or.cz> <20060419142131.GD4104@tumblerings.org> <20060419144827.GX27631@pasky.or.cz> <20060420164908.GA540@tumblerings.org> <7vejzsywrq.fsf@assigned-by-dhcp.cox.net> <20060420200849.GA3653@tumblerings.org> <7vslo8xaql.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 22:17:49 2006
+Cc: Zack Brown <zbrown@tumblerings.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 20 22:19:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWfay-0000Oe-9e
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 22:17:44 +0200
+	id 1FWfcU-0000fG-Gd
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 22:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248AbWDTURl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 16:17:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWDTURk
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 16:17:40 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:46059 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751248AbWDTURk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Apr 2006 16:17:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060420201739.BKVQ24981.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 20 Apr 2006 16:17:39 -0400
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20060420200849.GA3653@tumblerings.org> (Zack Brown's message of
-	"Thu, 20 Apr 2006 13:08:49 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751255AbWDTUTO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 16:19:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbWDTUTN
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 16:19:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58064 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751255AbWDTUTM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Apr 2006 16:19:12 -0400
+Received: (qmail 4565 invoked by uid 2001); 20 Apr 2006 22:19:15 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vslo8xaql.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18993>
 
-Zack Brown <zbrown@tumblerings.org> writes:
+Dear diary, on Thu, Apr 20, 2006 at 10:17:38PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Zack Brown <zbrown@tumblerings.org> writes:
+> 
+> > Not true. I went into the git source directory, and ran "make". Nothing more.
+> 
+> Ah, I misunderstood.  You are trying to run it _without_
+> installing it.
+> 
+> Well, then probably you do not have templates installed
+> anywhere, especially not where git-init-db expects them to be
+> found.
 
-> Not true. I went into the git source directory, and ran "make". Nothing more.
+Duh, but shouldn't git-init-db create .git/info at any rate, even when
+no templates are installed?
 
-Ah, I misunderstood.  You are trying to run it _without_
-installing it.
-
-Well, then probably you do not have templates installed
-anywhere, especially not where git-init-db expects them to be
-found.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
