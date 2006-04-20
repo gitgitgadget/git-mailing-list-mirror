@@ -1,68 +1,50 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: 1.3.0 creating bigger packs than 1.2.3
-Date: Thu, 20 Apr 2006 09:36:40 -0400
-Message-ID: <20060420133640.GA31198@spearce.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: t1001-read-tree-m-2way.sh failed
+Date: Thu, 20 Apr 2006 15:53:58 +0200
+Message-ID: <20060420135358.GQ11428MdfPADPa@greensroom.kotnet.org>
+References: <20060420130121.GO11428MdfPADPa@greensroom.kotnet.org>
+ <4447882F.8080304@op5.se>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Apr 20 15:37:41 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 20 15:54:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWZL4-0006LY-CQ
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 15:36:55 +0200
+	id 1FWZbi-0001ng-Ov
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 15:54:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbWDTNgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 09:36:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbWDTNgv
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 09:36:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45719 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750956AbWDTNgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Apr 2006 09:36:50 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FWZKn-0006sl-Qf
-	for git@vger.kernel.org; Thu, 20 Apr 2006 09:36:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3FBC320FBB4; Thu, 20 Apr 2006 09:36:40 -0400 (EDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750741AbWDTNyD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 09:54:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWDTNyD
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 09:54:03 -0400
+Received: from smtp15.wxs.nl ([195.121.247.6]:49574 "EHLO smtp15.wxs.nl")
+	by vger.kernel.org with ESMTP id S1750741AbWDTNyC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Apr 2006 09:54:02 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp15.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
+ with SMTP id <0IY00071MX9X35@smtp15.wxs.nl> for git@vger.kernel.org; Thu,
+ 20 Apr 2006 15:53:58 +0200 (CEST)
+Received: (qmail 10725 invoked by uid 500); Thu, 20 Apr 2006 13:53:58 +0000
+In-reply-to: <4447882F.8080304@op5.se>
+To: Andreas Ericsson <ae@op5.se>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18970>
 
-Apparently I have created a repository which v1.2.3 packs about 50%
-smaller than 'next' does:
+On Thu, Apr 20, 2006 at 03:10:07PM +0200, Andreas Ericsson wrote:
+> Keyboard color?
 
-  v1.2.3 (tag):
-   60M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
+I think "beige" comes closest.
 
-  1.2.3.gf3a4 (an older 'next'):
-  128M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
+In any case, it turns out that apparently make was confused
+by the rename from diff.c to diff-lib.c.
+After a make clean, everything was ok.
 
-  1.3.0.rc4.g8060 (a fairly recent 'next'):
-  118M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-
-Repeated packing with 1.3.0.rc4.g8060 doesn't seem to change the
-size of the pack file, its pretty consistent at 118M.
-
-Given that disk is pretty cheap these days I'm not concerned about
-the 2x increase but thought I'd let folks know that the packing
-improvements in 1.3.0 seem to have taken a small step backwards
-with regards to this particular dataset.
-
-I can make the repository available if somebody wants to look at it.
-
--- 
-Shawn.
+skimo
