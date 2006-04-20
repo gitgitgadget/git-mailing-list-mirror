@@ -1,97 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Branch metainformation
-Date: Thu, 20 Apr 2006 13:41:17 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604201335070.13022@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <e27dqv$u6f$1@sea.gmane.org>
- <Pine.LNX.4.63.0604201131240.9099@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vwtdkzh1u.fsf@assigned-by-dhcp.cox.net>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: [PATCH] colored diff.
+Date: Thu, 20 Apr 2006 13:52:38 +0200
+Message-ID: <20060420115238.GA4681@cip.informatik.uni-erlangen.de>
+References: <7vpsjczh1k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 13:41:36 2006
+X-From: git-owner@vger.kernel.org Thu Apr 20 13:52:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWXXK-0002NE-7k
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 13:41:26 +0200
+	id 1FWXiI-0004AY-5s
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 13:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750716AbWDTLlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 07:41:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750708AbWDTLlT
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 07:41:19 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:39580 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750735AbWDTLlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Apr 2006 07:41:18 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id B65E6CBC;
-	Thu, 20 Apr 2006 13:41:17 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id AA6B1CB3;
-	Thu, 20 Apr 2006 13:41:17 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 94E2FBA3;
-	Thu, 20 Apr 2006 13:41:17 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1750729AbWDTLwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 07:52:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbWDTLwl
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 07:52:41 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:250 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S1750729AbWDTLwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Apr 2006 07:52:40 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id DA26C3061B; Thu, 20 Apr 2006 13:52:38 +0200 (CEST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtdkzh1u.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+Content-Disposition: inline
+In-Reply-To: <7vpsjczh1k.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18966>
 
-Hi,
+Hello Junio,
 
-On Thu, 20 Apr 2006, Junio C Hamano wrote:
+* Junio C Hamano <junkio@cox.net> [060420 12:22]:
+> With configuration option diff.usecolor, this colorizes the diff
+> output.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > However, this all depends on my (rejected) patch to move the remotes 
-> > information into the config file.
-> 
-> You seem to keep saying rejected, but IIRC you did not finish it
+I use a long time the following combination, which served me and a few
+others very well:
 
-I had another impression: people seemed less than enthusiastic about it. 
-But maybe I misunderstood, and only the automatic rewriting part was 
-disliked. I'll try to find time to clean the patch and resend it...
+        bourne shell function:
 
-> While we are talking about per branch property, some issues
-> raised on the list (and #git) recently would be helped by a
-> convention (and perhaps some core side support) for per-branch
-> property.  Here is a short list.
-> 
->  + When I am on branch X, I would want "git pull" to pull
->    (i.e. fetch and merge) from repository Y, not always "origin".
-> 
->  + When I am on branch X, I would want "git push" to push to
->    repository Y (we do not even use "origin" as the default for
->    push).
-> 
->  + This branch is not to be rebased (you could do this using
->    custom pre-rebase hook but having a standard "branch property"
->    would make it easy for such a hook to decide.
-> 
->  - Do not merge and base your work on this branch -- this is
->    "view only" and unstable (e.g. "pu" in git.git).
-> 
-> If we were to do a remote to config reorganization (for that we
-> need a migration plan and a period that we support both), the
-> per-branch configuration should be designed to support at least
-> the commonly asked ones.
+        BLACK="^[[0;30m"
+        RED="^[[0;31m"
+        GREEN="^[[0;32m"
+        YELLO="^[[0;33m"
+        BLUE="^[[0;34m"
+        PURPLE="^[[0;35m"
+        CYAN="^[[0;36m"
+        WHITE="^[[0;37m"
+        END="^[[0m"
+        REVERSE="^[[7m"
 
-Hmm. ATM the syntax I use is
+        cdiff()
+        {
+                cat $1 | \
+                sed -e " \
+                        s/^\(diff-tree\)\(.*\)/\1${RED}\2${END}/; \
+                        s/^+.*/$RED&$END/;  \
+                        s/^-.*/$BLUE&$END/;  \
+                        s/^@.*/$GREEN&$END/;  \
+                        s/^Date.*/$RED&$END/;  \
+                        s/^Author.*/$RED&$END/; \
+                        " | less -R -i -p "^diff-tree"
 
-	[remote.company]
-		url = company.com:gits/daproject
-		pull = origin
-		push = master
+                        # This would highlight manpages but the last line clashes with cdiff
+                        # --tg 00:52 05-05-26
+                        #s/^[A-Z]\+[A-Z ]\+$/$RED&$END/; \
+                        #s/[A-Z]\+([0-9])/$RED&$END/g; \
+                        # s/\W--\?[0-9a-zA-Z=-]\+/$BLUE&$END/g; \
+        }
 
-Some bits of your wishes could be written as
+# with 'n' you simply jump to the next commit
+# with 'N' to the previous
 
-	[branch.pu]
-		rebase = no
-		pull = company
+git-whatchanged -p | cdiff
 
-Ciao,
-Dscho
+screenshot: http://wwwcip.informatik.uni-erlangen.de/~sithglan/shot.png
+
+Thanks for the enegery you put in git,
+                                   Thomas
