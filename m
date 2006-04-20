@@ -1,69 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: 1.3.0 creating bigger packs than 1.2.3
-Date: Thu, 20 Apr 2006 07:47:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604200745550.3701@g5.osdl.org>
-References: <20060420133640.GA31198@spearce.org>
+From: "Shyamal Sadanshio" <shyamal.sadanshio@gmail.com>
+Subject: Re: GIT Error issue
+Date: Thu, 20 Apr 2006 20:28:29 +0530
+Message-ID: <3857255c0604200758h20d7e3eel253fd5a916be4309@mail.gmail.com>
+References: <3857255c0604190416j62abeae8va164896c5100f6ee@mail.gmail.com>
+	 <46a038f90604191453q567192b0l9a35d50f96f8705d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 16:48:15 2006
+X-From: git-owner@vger.kernel.org Thu Apr 20 16:58:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWaRm-0003y0-O6
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 16:47:55 +0200
+	id 1FWac8-0006Kw-F4
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 16:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbWDTOrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 10:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750947AbWDTOrv
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 10:47:51 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:6125 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750945AbWDTOru (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Apr 2006 10:47:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3KElktH014505
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 20 Apr 2006 07:47:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3KEljic029009;
-	Thu, 20 Apr 2006 07:47:46 -0700
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060420133640.GA31198@spearce.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
-X-MIMEDefang-Filter: osdl$Revision: 1.133 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750965AbWDTO6c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 10:58:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbWDTO6c
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 10:58:32 -0400
+Received: from pproxy.gmail.com ([64.233.166.176]:35332 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750960AbWDTO6c convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Apr 2006 10:58:32 -0400
+Received: by pproxy.gmail.com with SMTP id i49so221912pye
+        for <git@vger.kernel.org>; Thu, 20 Apr 2006 07:58:31 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=j0tWHfj+aU2n8at6seaP9v3EHFCgReKllYs+OnPZ7PSuEurkpbRPB2sbzeg7rYIMYqqFvLmmyqNKtht1w0NMIJ6MV/bKA1332nE2VrteVSNFgC1dyPS31I6JIR5XrrPJBTIsxxZO/20JWONfjGIy5+C3kXLv4PcDcWvlR7hLRGk=
+Received: by 10.35.101.9 with SMTP id d9mr957889pym;
+        Thu, 20 Apr 2006 07:58:29 -0700 (PDT)
+Received: by 10.35.60.20 with HTTP; Thu, 20 Apr 2006 07:58:29 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90604191453q567192b0l9a35d50f96f8705d@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18973>
+
+Thanks a lot for the pointer!
+It worked now!!
+
+Thanks and Regards,
+Shyamal
 
 
 
-On Thu, 20 Apr 2006, Shawn Pearce wrote:
-
-> Apparently I have created a repository which v1.2.3 packs about 50%
-> smaller than 'next' does:
-> 
->   v1.2.3 (tag):
->    60M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-> 
->   1.2.3.gf3a4 (an older 'next'):
->   128M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-> 
->   1.3.0.rc4.g8060 (a fairly recent 'next'):
->   118M pack-7f766f5af5547554bacb28c0294bd562589dc5e7.pack
-> 
-> Repeated packing with 1.3.0.rc4.g8060 doesn't seem to change the
-> size of the pack file, its pretty consistent at 118M.
-
-First try "git repack -a -d f", where the "-f" is the magic one.
-
-Without the -f, git repack will re-use old pack information, which is much 
-much faster, but not as space-efficient.
-
-If that doesn't help, it might be time to look at the actual repo, but try 
-that first.
-
-		Linus
+On 4/20/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> If you are using Debian or a derivative, just do
+>
+>    apt-get install git-core
+>
+> which will remove the 'git' package (GNU Interactive Tools) and
+> install the git SCM. On RPM systems, probably
+>
+>    yum install git-core
+>
+> will do the trick.
+>
+> cheers,
+>
+>
+> martin
+>
