@@ -1,80 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: 1.3.0 creating bigger packs than 1.2.3
-Date: Thu, 20 Apr 2006 11:49:16 -0700
-Message-ID: <7v8xq0yteb.fsf@assigned-by-dhcp.cox.net>
-References: <20060420133640.GA31198@spearce.org>
-	<Pine.LNX.4.64.0604200745550.3701@g5.osdl.org>
-	<20060420150315.GB31198@spearce.org>
-	<Pine.LNX.4.64.0604200857460.3701@g5.osdl.org>
-	<20060420164351.GB31738@spearce.org>
-	<Pine.LNX.4.64.0604200954440.3701@g5.osdl.org>
-	<20060420175554.GH31738@spearce.org>
-	<Pine.LNX.4.64.0604201414490.2215@localhost.localdomain>
+Subject: Re: n-heads and patch dependency chains
+Date: Thu, 20 Apr 2006 11:55:31 -0700
+Message-ID: <7v4q0oyt3w.fsf@assigned-by-dhcp.cox.net>
+References: <4430D352.4010707@vilain.net>
+	<7vsloucuxk.fsf@assigned-by-dhcp.cox.net>
+	<4431B60E.3030008@vilain.net> <44323C52.2030803@op5.se>
+	<e0tjpk$ktu$1@sea.gmane.org> <44325CDB.2000101@op5.se>
+	<1145556505.5314.149.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 20 20:49:25 2006
+X-From: git-owner@vger.kernel.org Thu Apr 20 20:55:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWeDT-0001CW-4l
-	for gcvg-git@gmane.org; Thu, 20 Apr 2006 20:49:23 +0200
+	id 1FWeJY-0002KG-EY
+	for gcvg-git@gmane.org; Thu, 20 Apr 2006 20:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbWDTStS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Apr 2006 14:49:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbWDTStS
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 14:49:18 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:27269 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751171AbWDTStS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Apr 2006 14:49:18 -0400
+	id S1750863AbWDTSzd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Apr 2006 14:55:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbWDTSzd
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 14:55:33 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:63656 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750742AbWDTSzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Apr 2006 14:55:32 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060420184917.TDXH18566.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 20 Apr 2006 14:49:17 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0604201414490.2215@localhost.localdomain> (Nicolas
-	Pitre's message of "Thu, 20 Apr 2006 14:24:34 -0400 (EDT)")
+          id <20060420185532.ZXAM24981.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 20 Apr 2006 14:55:32 -0400
+To: git@vger.kernel.org
+In-Reply-To: <1145556505.5314.149.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Thu, 20 Apr 2006 13:08:25 -0500")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18990>
 
-Nicolas Pitre <nico@cam.org> writes:
+Jon Loeliger <jdl@freescale.com> writes:
 
-> On Thu, 20 Apr 2006, Shawn Pearce wrote:
+> On Tue, 2006-04-04 at 06:47, Andreas Ericsson wrote:
 >
->> The more that I think about it the more it seems possible that the
->> pathname hashing is what may be causing the problem.  Not only did
->> bisect point to 1d6b38cc76c348e2477506ca9759fc241e3d0d46 but the
->> directory which contains the bulk of the space has many files with
->> the same name located in different directories:
-> [...]
->
-> But the bad commit according to your bisection talks about "thin" packs 
-> which are not involved in your case.  So something looks fishy with that 
-> commit which should not have touched path hashing in the non-thin pack 
-> case...  I think...
+>> No, I mean that this would commit both to the testing branch (being the 
+>> result of several merged topic-branches) and to the topic-branch merged 
+>> in. Commit as in regular commit, with a commit-message and a patch. The 
+>> resulting repository would be the exact same as if the change was 
+>> committed only to the topic-branch and then cherry-picked on to the 
+>> testing-branch.
 
-I think this explains it.  The new code hashes full-path, but
-places bins for the paths with the same basename next to each
-other, so before Makefile and doc/Makefile and t/Makefile were
-all in the same bin, but now they are in three different bins
-next to each other.
+To be consistent, I think the result should be "as if the change
+was commited only to the topic-branch and then the topic-branch
+was *merged* into the testing-branch", since you start your
+testing branch as "being the result of several merged topic-branches".
 
-I originally thought, with one single notable exception of
-Makefile, having the identically named file in many different
-directories is not common nor sane, and the new code favors to
-delta with the exact same path for deeper history over wasting
-delta window for making delta with objects with the same name in
-different places in more recent history.  I think I benched this
-with kernel repository (git.git was too small for that).
+I do that (manually) all the time, with:
 
-But I suspect we have a built-in "we sort bigger to smaller, and
-we cut off when we switch bins" somewhere in find_delta() loop,
-which I do not recall touching when I did that change, so that
-may be interfering and preventing 0-11-AdjLite.deg from all over
-the place to delta against each other.
+	$ git checkout next
+        $ hack hack hack
+
+        $ git checkout -m one/topic
+        $ git commit -o this-path that-path
+        $ git checkout next
+        $ git pull . one/topic
+
+Giving a short-hand for the last four-command sequence would
+certainly be nice.
+
+> I am your number one fan!  If I finish reading these 600+
+> messages, will I find out you have already implemented it,
+> it's committed, and you just need me to test it now? :-)
+
+Likewise... ;-)
