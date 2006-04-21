@@ -1,105 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git-log produces no output
-Date: Fri, 21 Apr 2006 13:05:58 -0700
-Message-ID: <7vpsjasnh5.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 21 Apr 2006 13:25:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604211322140.3701@g5.osdl.org>
 References: <20060421184815.22939.qmail@web60319.mail.yahoo.com>
-	<Pine.LNX.4.64.0604211214560.3701@g5.osdl.org>
-	<Pine.LNX.4.64.0604211223561.3701@g5.osdl.org>
+ <Pine.LNX.4.64.0604211214560.3701@g5.osdl.org> <Pine.LNX.4.64.0604211223561.3701@g5.osdl.org>
+ <7vpsjasnh5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 21 22:06:17 2006
+X-From: git-owner@vger.kernel.org Fri Apr 21 22:26:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FX1tH-0008HD-GH
-	for gcvg-git@gmane.org; Fri, 21 Apr 2006 22:06:07 +0200
+	id 1FX2CQ-0002td-Dr
+	for gcvg-git@gmane.org; Fri, 21 Apr 2006 22:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384AbWDUUGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Apr 2006 16:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWDUUGD
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Apr 2006 16:06:03 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:57278 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932384AbWDUUGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Apr 2006 16:06:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060421200600.YDTU24981.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 21 Apr 2006 16:06:00 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604211223561.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 21 Apr 2006 12:25:13 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751149AbWDUUZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Apr 2006 16:25:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWDUUZv
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Apr 2006 16:25:51 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15016 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751149AbWDUUZv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Apr 2006 16:25:51 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3LKPctH015116
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 21 Apr 2006 13:25:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3LKPbmc012578;
+	Fri, 21 Apr 2006 13:25:37 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpsjasnh5.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19031>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Fri, 21 Apr 2006, Linus Torvalds wrote:
->> 
->> This patch would have made things a lot more obvious.
+
+On Fri, 21 Apr 2006, Junio C Hamano wrote:
 >
-> Actually, scratch that one, and use this one instead. Much better, and 
-> actually allows Bob's crazy PAGER environment variable to work, rather 
-> than just reporting an error about it.
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > On Fri, 21 Apr 2006, Linus Torvalds wrote:
+> >> 
+> >> This patch would have made things a lot more obvious.
+> >
+> > Actually, scratch that one, and use this one instead. Much better, and 
+> > actually allows Bob's crazy PAGER environment variable to work, rather 
+> > than just reporting an error about it.
+> 
+> Agreed, this is much better than just punting.  Sign-off?
 
-Agreed, this is much better than just punting.  Sign-off?
+Yup, you can just go wild with the 
 
-BTW: The extended extended SHA1 is a great addition.  I do not
-usually have contrib/colordiff checked out (it is in "pu", not
-in "next"), but I can easily do:
+	Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 
-	git tar-tree pu:contrib/colordiff colordiff | tar xf -
+lines. My employment contract requires that everything I produce is open 
+source ;)
 
-Of course "git tar-tree pu | tar xf - contrib/colordiff" would
-work for this particular case, but that is besides the point.
+> BTW: The extended extended SHA1 is a great addition.  I do not
+> usually have contrib/colordiff checked out (it is in "pu", not
+> in "next"), but I can easily do:
+> 
+> 	git tar-tree pu:contrib/colordiff colordiff | tar xf -
 
-BTW: Allow me to try "git fmt-patch -1" ;-).
+Ahh, yes. That is one situation where a sub-tree SHA1 makes more sense 
+than most (the fact that it works with "git diff" and directory renames is 
+likely more of a curiosity than anything widely useful, I think)
 
--- >8 --
-From 34fd1c9ac5845d541e3196983df7f993e751b544  Thu Apr 7 15:13:13 2005
-From: Linus Torvalds <torvalds@osdl.org>
-Date: Fri Apr 21 12:25:13 2006 -0700
-Subject: git-log produces no output
+> BTW: Allow me to try "git fmt-patch -1" ;-).
 
-When $PAGER is set to 'less -i', we used to fail because we
-assumed the $PAGER is a command and simply exec'ed it.
+Looks good to me.
 
-Try exec first, and then run it through shell if it fails.  This
-allows even funkier PAGERs like these ;-):
-
-	PAGER='sed -e "s/^/`date`: /" | more'
-	PAGER='contrib/colordiff.perl | less -RS'
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- pager.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/pager.c b/pager.c
-index e5ba273..f7b8e78 100644
---- a/pager.c
-+++ b/pager.c
-@@ -8,6 +8,7 @@ #include "cache.h"
- static void run_pager(const char *pager)
- {
- 	execlp(pager, pager, NULL);
-+	execl("/bin/sh", "sh", "-c", pager, NULL);
- }
- 
- void setup_pager(void)
-@@ -47,5 +48,6 @@ void setup_pager(void)
- 
- 	setenv("LESS", "-S", 0);
- 	run_pager(pager);
-+	die("unable to execute pager '%s'", pager);
- 	exit(255);
- }
--- 
-1.3.0.gd1e3
+		Linus
