@@ -1,61 +1,56 @@
-From: Paul Mackerras <paulus@samba.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [RESEND] [PATCH] fix gitk with lots of tags
-Date: Fri, 21 Apr 2006 21:48:29 +1000
-Message-ID: <17480.50829.466038.316769@cargo.ozlabs.ibm.com>
-References: <20060406203637.GA15009@blackbean.org>
-	<20060418180614.GA31543@blackbean.org>
+Date: Fri, 21 Apr 2006 08:19:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604210817570.3701@g5.osdl.org>
+References: <20060406203637.GA15009@blackbean.org> <20060418180614.GA31543@blackbean.org>
+ <17480.50829.466038.316769@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jim Radford <radford@blackbean.org>,
+	Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 21 14:07:39 2006
+X-From: git-owner@vger.kernel.org Fri Apr 21 17:20:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FWuPV-0002bQ-SX
-	for gcvg-git@gmane.org; Fri, 21 Apr 2006 14:06:54 +0200
+	id 1FWxQg-0004ke-JC
+	for gcvg-git@gmane.org; Fri, 21 Apr 2006 17:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbWDUMGu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Apr 2006 08:06:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbWDUMGt
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Apr 2006 08:06:49 -0400
-Received: from ozlabs.org ([203.10.76.45]:23707 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932095AbWDUMGt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Apr 2006 08:06:49 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id EF804679F8; Fri, 21 Apr 2006 22:06:44 +1000 (EST)
-To: Jim Radford <radford@blackbean.org>
-In-Reply-To: <20060418180614.GA31543@blackbean.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S932359AbWDUPUN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Apr 2006 11:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbWDUPUM
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Apr 2006 11:20:12 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15803 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932355AbWDUPUJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Apr 2006 11:20:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3LFJrtH003553
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 21 Apr 2006 08:19:53 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3LFJq2H004694;
+	Fri, 21 Apr 2006 08:19:52 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17480.50829.466038.316769@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.72__
+X-MIMEDefang-Filter: osdl$Revision: 1.133 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19020>
 
-Jim Radford writes:
 
-> I've gotten no reposnse from Paul on this patch[1].  If it seems ok to
-> you, would you mind putting it in your queue for him?  I hate to see
-> gitk die with "argument list too long" messages.  They're so 640k.
 
-The reservation I have about this is that I need to be able to tell
-the file/directory names from the tags/heads/SHA1 IDs.  After the pass
-through git-rev-parse it's easy; I just take the things that match
-^[a-f0-9]{40}$ as IDs and the rest as file/directory names or
-switches.
+On Fri, 21 Apr 2006, Paul Mackerras wrote:
+> 
+> Junio, did you tell me some time ago about a flag to git-rev-parse
+> that spits out just the file/directory names?  What was it again?
 
-Junio, did you tell me some time ago about a flag to git-rev-parse
-that spits out just the file/directory names?  What was it again?
+	git-rev-parse --no-flags --no-revs "$@"
 
-> [1] Maybe he judges people by the color of their IP address?
+should fo what you want.
 
-As in _black_bean.org? :)
-
->     Then again, he could just be busy.
-
-Yeah.  Or just returned from international travel, or something like
-that. :)
-
-Paul.
+		Linus
