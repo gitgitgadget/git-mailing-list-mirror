@@ -1,85 +1,90 @@
-From: Geert Bosch <bosch@adacore.com>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 Subject: Re: RFC: New diff-delta.c implementation
-Date: Sat, 22 Apr 2006 08:35:14 -0400
-Message-ID: <6794F5B2-A277-4CD9-9BA8-509F86378E68@adacore.com>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <Pine.LNX.4.64.0604212308080.2215@localhost.localdomain> <A856A2C5-2BD7-4DC5-9CCC-CD53E9A2623C@adacore.com> <7v7j5hkglq.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v749.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 22 22:11:55 2006
+Date: Sat, 22 Apr 2006 14:36:04 +0200
+Message-ID: <444A2334.3030501@lsrfire.ath.cx>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 22 22:12:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXOSQ-0008H3-NI
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:11:55 +0200
+	id 1FXOSZ-0008Iy-SK
+	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbWDVULv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 16:11:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbWDVULu
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:11:50 -0400
+	id S1751132AbWDVULy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 22 Apr 2006 16:11:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbWDVULx
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:11:53 -0400
 Received: from zeus1.kernel.org ([204.152.191.4]:18633 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751121AbWDVULt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 16:11:49 -0400
-Received: from nile.gnat.com (nile.gnat.com [205.232.38.5])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3MCZlRG030890
-	for <git@vger.kernel.org>; Sat, 22 Apr 2006 12:35:48 GMT
-Received: from localhost (localhost [127.0.0.1])
-	by filtered-nile.gnat.com (Postfix) with ESMTP id 6B9FE48CEEA;
-	Sat, 22 Apr 2006 08:35:17 -0400 (EDT)
-Received: from nile.gnat.com ([127.0.0.1])
- by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 25174-01-2; Sat, 22 Apr 2006 08:35:17 -0400 (EDT)
-Received: from [172.16.1.2] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	by nile.gnat.com (Postfix) with ESMTP id 21DBD48CEE4;
-	Sat, 22 Apr 2006 08:35:17 -0400 (EDT)
-In-Reply-To: <7v7j5hkglq.fsf@assigned-by-dhcp.cox.net>
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: Apple Mail (2.749.3)
+	by vger.kernel.org with ESMTP id S1751132AbWDVULv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 16:11:51 -0400
+Received: from neapel230.server4you.de (static-ip-217-172-187-230.inaddr.intergenia.de [217.172.187.230])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3MCadFF031567
+	for <git@vger.kernel.org>; Sat, 22 Apr 2006 12:36:40 GMT
+Received: from [10.0.1.3] (p508E6DDF.dip.t-dialin.net [80.142.109.223])
+	by neapel230.server4you.de (Postfix) with ESMTP id 9B3DE100A8;
+	Sat, 22 Apr 2006 14:36:07 +0200 (CEST)
+User-Agent: Thunderbird 1.5 (Windows/20051201)
+To: Geert Bosch <bosch@adacore.com>
+In-Reply-To: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
 X-Virus-Scanned: ClamAV 0.88/1414/Fri Apr 21 22:58:39 2006 on zeus1.kernel.org
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19051>
 
+Hello Geert,
 
-On Apr 22, 2006, at 07:13, Junio C Hamano wrote:
-> (Please line-wrap sensibly).
-Apologies. I'm using a broken mailer, which insists
-on breaking longish lines. I'll try to avoid this.
+Geert Bosch schrieb:
+> I wrote a new binary differencing algorithm that is both faster and
+> generates smaller deltas than the current implementation. The format
+> is compatible with that used by patch-delta, so it should be easy to
+> integrate.
+[...]
+> Initial testing seems quite positive, take for example git-1.2.5.tar
+> vs git-1.2.6.tar on my PowerBook (both with -O2 -DNDEBUG):
+>=20
+> current: 2.281s, patch size 36563
+> new    : 0.109s, patch size 16199
+>=20
+> Please feel free to play around with this code, and give feedback.=20
+> Keep in mind this wasn't originally written for GIT, and C is not my
+> native language, so don't mind my formatting etc.
 
-> I think we tried that with Nico/Davide's delta already, and IIRC
-> we had mixed results.
->
-> It really depends on how big an index for a source is.  Keep
-> in mind that we keep --window (default=10) of the source
-> text in-core, and you are suggesting to keep index in-core
-> as well, so we need to take memory pressure into account.
-The point is that if we do the following comparisons:
+nice speedup!  Though I cannot comment on what it actually does, I have
+some comments on style. B-)
 
-   diff A B
-   diff A C
-   diff A D
+Could you please send your code inline, not as an attachment?  And
+possibly as a patch with a Signed-off-by: tag (see
+Documentation/SubmittingPatches)?
 
-then we should keep A and its index in core for all
-three comparisons. Discarding and recreating can never
-be better :)
-> Having said that, the initial number you posted suggests the
-> algorithm is very fast, in which case reusing index may not
-> matter.  We will see ;-).
+Regarding your FIXME comment about endianess: I think you are looking
+for htonl().  Use it to convert the values from host byte order to
+network byte order (=3D big endian) and you can get rid of those ugly
+branches.
 
-BTW, after applying the obvious fixes, I get the following
-message:
-potomac%./git-pack-objects --no-reuse-delta --stdout <lst
-Generating pack...
-Done counting 16984 objects.
-Deltifying 16984 objects.
-100% (16984/16984) done
-fatal: delta size changed
+You can use "indent -npro -kr -i8 -ts8 -l80 -ss -ncs" to reformat your
+code into a similar style as used in the rest of git (settings taken
+from Lindent which is shipped with the Linux source).
 
-Is this expected now I have a different algorithm?
+After converting to htonl() "make test" ran fine on my x86 box.  Here i=
+s
+what I get when I try to repack the git repo, though:
 
-   -Geert
+   $ git repack -a -d
+   Generating pack...
+   Done counting 18985 objects.
+   Deltifying 18985 objects.
+   git-pack-objects: diff-delta.c:766: create_delta: Assertion `ptr -
+delta =3D=3D (int)delta_size' failed.
+
+Please let me know if you need more details.
+
+Thanks,
+Ren=E9
