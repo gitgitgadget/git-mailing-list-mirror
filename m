@@ -1,118 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Libified diff-index: backward compatibility fix.
-Date: Sat, 22 Apr 2006 04:04:25 -0700
-Message-ID: <7vbqutkh1i.fsf@assigned-by-dhcp.cox.net>
-References: <7v64l1lxwj.fsf@assigned-by-dhcp.cox.net>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: RFC: New diff-delta.c implementation
+Date: Sat, 22 Apr 2006 13:36:07 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604221333470.23166@alien.or.mcafeemobile.com>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Sat Apr 22 22:34:45 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 22 22:36:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXOoQ-00039C-AH
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:34:38 +0200
+	id 1FXOpx-0003S1-UF
+	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbWDVUef (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 16:34:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWDVUef
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:34:35 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:46799 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751162AbWDVUee (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 16:34:34 -0400
-Received: from fed1rmmtao01.cox.net (fed1rmmtao01.cox.net [68.230.241.38])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3MB5YvB005054
-	for <git@vger.kernel.org>; Sat, 22 Apr 2006 11:05:35 GMT
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060422110429.JPQS24981.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 22 Apr 2006 07:04:29 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7v64l1lxwj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 22 Apr 2006 03:14:52 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.88/1414/Fri Apr 21 22:58:39 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+	id S1751162AbWDVUgL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Apr 2006 16:36:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWDVUgL
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:36:11 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:38306 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1751162AbWDVUgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Apr 2006 16:36:10 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1CB7DC> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Sat, 22 Apr 2006 13:36:08 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Geert Bosch <bosch@adacore.com>
+In-Reply-To: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19054>
 
-"diff-index -m" does not mean "do not ignore merges", but means
-"pretend missing files match the index".
+On Fri, 21 Apr 2006, Geert Bosch wrote:
 
-The previous round tried to address this, but failed because
-setup_revisions() ate "-m" flag before the caller had a chance
-to intervene.
+> I wrote a new binary differencing algorithm that is both faster
+> and generates smaller deltas than the current implementation.
+> The format is compatible with that used by patch-delta, so
+> it should be easy to integrate.
+>
+> Originally, I wrote this for the GDIFF format, see 
+> http://www.w3.org/TR/NOTE-gdiff-19970901.
+> The adaptation for GIT format was relatively simple, but is not thoroughly 
+> tested.
+> The code is not derived from libxdiff, but uses the rabin_slide function 
+> written
+> by David Mazieres (dm@uun.org). Also the tables are generated using his code.
+> Finally, this was developed on Darwin, and not a Linux system, so some 
+> changes may be needed.
+>
+> Initial testing seems quite positive, take for example git-1.2.5.tar vs 
+> git-1.2.6.tar
+> on my PowerBook (both with -O2 -DNDEBUG):
+>
+> current: 2.281s, patch size 36563
+> new    : 0.109s, patch size 16199
+>
+> Please feel free to play around with this code, and give feedback.
+> Keep in mind this wasn't originally written for GIT, and C is not
+> my native language, so don't mind my formatting etc.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- diff-index.c |    6 ++----
- diff-lib.c   |   10 +++++++++-
- diff.h       |    2 +-
- 3 files changed, 12 insertions(+), 6 deletions(-)
+Geert, I saw you're using a shift of 55 bits, that gives an degree of the 
+root polynomial of 63, that is not prime. Where did you get the root 
+polynomial, and why you did not chose 61 as degree of the root?
+Just curious ...
 
-diff --git a/diff-index.c b/diff-index.c
-index 4a243b3..8694012 100644
---- a/diff-index.c
-+++ b/diff-index.c
-@@ -23,9 +23,7 @@ int main(int argc, const char **argv)
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 			
--		if (!strcmp(arg, "-m"))
--			match_missing = 1; 
--		else if (!strcmp(arg, "--cached"))
-+		if (!strcmp(arg, "--cached"))
- 			cached = 1;
- 		else
- 			usage(diff_cache_usage);
-@@ -37,5 +35,5 @@ int main(int argc, const char **argv)
- 	if (!rev.pending_objects || rev.pending_objects->next ||
- 	    rev.max_count != -1 || rev.min_age != -1 || rev.max_age != -1)
- 		usage(diff_cache_usage);
--	return run_diff_index(&rev, cached, match_missing);
-+	return run_diff_index(&rev, cached);
- }
-diff --git a/diff-lib.c b/diff-lib.c
-index 63da3b5..2183b41 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -308,12 +308,20 @@ static void mark_merge_entries(void)
- 	}
- }
- 
--int run_diff_index(struct rev_info *revs, int cached, int match_missing)
-+int run_diff_index(struct rev_info *revs, int cached)
- {
- 	int ret;
- 	struct object *ent;
- 	struct tree *tree;
- 	const char *tree_name;
-+	int match_missing = 0;
-+
-+	/* 
-+	 * Backward compatibility wart - "diff-index -m" does
-+	 * not mean "do not ignore merges", but totally different.
-+	 */
-+	if (!revs->ignore_merges)
-+		match_missing = 1;
- 
- 	if (read_cache() < 0) {
- 		perror("read_cache");
-diff --git a/diff.h b/diff.h
-index 837d449..7150b90 100644
---- a/diff.h
-+++ b/diff.h
-@@ -171,6 +171,6 @@ extern const char *diff_unique_abbrev(co
- 
- extern int run_diff_files(struct rev_info *revs, int silent_on_removed);
- 
--extern int run_diff_index(struct rev_info *revs, int cached, int match_missing);
-+extern int run_diff_index(struct rev_info *revs, int cached);
- 
- #endif /* DIFF_H */
--- 
-1.3.0.g0bc6
+
+
+- Davide
