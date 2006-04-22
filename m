@@ -1,156 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC] Loosening path argument check a little bit in revision.c
-Date: Sat, 22 Apr 2006 03:15:05 -0700
-Message-ID: <7vzmidkjbq.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: RFC: New diff-delta.c implementation
+Date: Fri, 21 Apr 2006 23:19:31 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0604212308080.2215@localhost.localdomain>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Apr 22 22:50:59 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 22 22:59:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXP4B-0005Ro-VM
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:50:56 +0200
+	id 1FXPC9-0006T8-9a
+	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbWDVUuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 16:50:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbWDVUuw
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:50:52 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:52180 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751168AbWDVUuv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 16:50:51 -0400
-Received: from fed1rmmtao09.cox.net (fed1rmmtao09.cox.net [68.230.241.30])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3MAFbJE010184
-	for <git@vger.kernel.org>; Sat, 22 Apr 2006 10:15:38 GMT
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060422101506.PXBB18566.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 22 Apr 2006 06:15:06 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751194AbWDVU7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Apr 2006 16:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbWDVU7F
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:59:05 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:11735 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751194AbWDVU7E (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 16:59:04 -0400
+Received: from relais.videotron.ca (relais.videotron.ca [24.201.245.36])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3M3N9CJ006008
+	for <git@vger.kernel.org>; Sat, 22 Apr 2006 03:23:10 GMT
+Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IY300MMMT8C0830@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 21 Apr 2006 23:19:24 -0400 (EDT)
+In-reply-to: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
+X-X-Sender: nico@localhost.localdomain
+To: Geert Bosch <bosch@adacore.com>
 X-Virus-Scanned: ClamAV 0.88/1414/Fri Apr 21 22:58:39 2006 on zeus1.kernel.org
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19060>
 
-The argument parser revision.c::setup_revisions() insists on
-path arguments that do not follow the double-dash marker to be
-paths (either files or directories) that exist in the working
-tree.  As the fact that diff-files and update-index have
-explicit options to ignore "missing" files reminds us,
-traditionally we allowed a sparsely populated working tree, so
-this check is not very user friendly.
+On Fri, 21 Apr 2006, Geert Bosch wrote:
 
-This patch allows non-existing paths to be given without the
-double-dash marker as long as they exist in the index, or they
-are leading paths of blobs that exist in the index.
+> I wrote a new binary differencing algorithm that is both faster
+> and generates smaller deltas than the current implementation.
+> The format is compatible with that used by patch-delta, so
+> it should be easy to integrate.
 
-A misspelled tag v2.6.16 is not a very likely name to have only
-in the index and not in the working tree, so this should not
-break the case the original code wanted to fix ;-).
+It looks really interesting.
 
----
+It ignores the max_size argument but that is trivially fixed.
 
- * I noticed a breakage in out test scripts while libifying
-   diff-files.  The two-tree fast-forward merge test stuffs an
-   entry DF/DF in the index while having a working tree file DF,
-   and run "diff-files DF/DF" to make sure two-way read-tree
-   left the index dirty.  The libified diff-files naturally uses
-   revision infrastructure to get its parameters, and the path
-   argument check causes the test to fail without this patch.
+Then it triggers some assertions in the code when running the test 
+suite.
 
-   This is just an RFC.  We can easily rewrite the particular
-   test to use the double-dash marker, but I suspect existing
-   porcelains share the same problem, expecting to be able to do
-   something like this:
+> Originally, I wrote this for the GDIFF format, see
+> http://www.w3.org/TR/NOTE-gdiff-19970901.
+> The adaptation for GIT format was relatively simple, but is not thoroughly
+> tested.
 
-   	$ names=`git diff-files --name-only`
-        $ git diff-index HEAD $names
+Some trivial tests look fine but it fail on some others.
 
-   Of course, the kosher way is to always use double-dash, like
-   this:
+> The code is not derived from libxdiff, but uses the rabin_slide function
+> written
+> by David Mazieres (dm@uun.org). Also the tables are generated using his code.
+> Finally, this was developed on Darwin, and not a Linux system, so some changes
+> may be needed.
 
-	$ git diff-files -z --name-only |
-          xargs -0 git diff-index HEAD --
+It does compile out of the box on Linux.
 
-   So I am not pushing this too strongly.  Comments?
+> Please feel free to play around with this code, and give feedback.
+> Keep in mind this wasn't originally written for GIT, and C is not
+> my native language, so don't mind my formatting etc.
 
- revision.c |   48 ++++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 44 insertions(+), 4 deletions(-)
+I did reformat it a bit to be more inline with the rest of GIT's coding 
+style (and to help me read it).  I'll look at fixing the issues I can 
+fix and post it back.
 
-diff --git a/revision.c b/revision.c
-index 113dd5a..9f6dd24 100644
---- a/revision.c
-+++ b/revision.c
-@@ -504,6 +504,43 @@ void init_revisions(struct rev_info *rev
- 	diff_setup(&revs->diffopt);
- }
- 
-+static int check_path_arg(const char *path)
-+{
-+	struct stat st;
-+	int tmp = lstat(path, &st);
-+	if (!tmp)
-+		return 0;
-+	tmp = errno;
-+	if (!active_cache)
-+		read_cache();
-+	if (active_cache) {
-+		int namelen = strlen(path);
-+		int pos = cache_name_pos(path, namelen);
-+		if (pos < 0)
-+			pos = -pos - 1;
-+		if (pos < active_nr) {
-+			struct cache_entry *ce = active_cache[pos];
-+			if (ce_namelen(ce) == namelen &&
-+			    !memcmp(ce->name, path, namelen))
-+				return 0;
-+		}
-+		/* Try it as a directory name - "foo/" */
-+		while (++pos < active_nr) {
-+			struct cache_entry *ce = active_cache[pos];
-+			if (namelen < ce_namelen(ce) &&
-+			    !memcmp(ce->name, path, namelen)) {
-+				/* prefix still matches */
-+				if (ce->name[namelen] == '/')
-+					return 0;
-+			}
-+			else
-+				break; /* prefix does not match anymore */
-+		}
-+	}
-+	errno = tmp;
-+	return -1;
-+}
-+
- /*
-  * Parse revision information, filling in the "rev_info" structure,
-  * and removing the used arguments from the argument list.
-@@ -752,16 +789,19 @@ int setup_revisions(int argc, const char
- 			arg++;
- 		}
- 		if (get_sha1(arg, sha1) < 0) {
--			struct stat st;
- 			int j;
- 
- 			if (seen_dashdash || local_flags)
- 				die("bad revision '%s'", arg);
- 
--			/* If we didn't have a "--", all filenames must exist */
-+			/* If we didn't have a "--", all filenames must
-+			 * exist, either in the working tree or in the
-+			 * cache.
-+			 */
- 			for (j = i; j < argc; j++) {
--				if (lstat(argv[j], &st) < 0)
--					die("'%s': %s", argv[j], strerror(errno));
-+				if (check_path_arg(argv[j]))
-+					die("'%s': %s", argv[j],
-+					    strerror(errno));
- 			}
- 			revs->prune_data = get_pathspec(revs->prefix, argv + i);
- 			break;
+
+Nicolas
