@@ -1,81 +1,92 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: RFC: New diff-delta.c implementation
-Date: Fri, 21 Apr 2006 23:19:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0604212308080.2215@localhost.localdomain>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
+From: "Tim O'Callaghan" <timo@dspsrv.com>
+Subject: Problem with Git in Cygwin on x86-64 platform
+Date: Sat, 22 Apr 2006 04:30:30 +0200
+Message-ID: <20060422023029.GC2444@Zangband>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 22 22:59:21 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Apr 22 23:06:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXPC9-0006T8-9a
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 22:59:10 +0200
+	id 1FXPIx-0007Tj-8z
+	for gcvg-git@gmane.org; Sat, 22 Apr 2006 23:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbWDVU7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 16:59:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbWDVU7F
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 16:59:05 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:11735 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751194AbWDVU7E (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 16:59:04 -0400
-Received: from relais.videotron.ca (relais.videotron.ca [24.201.245.36])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3M3N9CJ006008
-	for <git@vger.kernel.org>; Sat, 22 Apr 2006 03:23:10 GMT
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IY300MMMT8C0830@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 21 Apr 2006 23:19:24 -0400 (EDT)
-In-reply-to: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
-X-X-Sender: nico@localhost.localdomain
-To: Geert Bosch <bosch@adacore.com>
+	id S1751207AbWDVVFz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Apr 2006 17:05:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbWDVVFz
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 17:05:55 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:62680 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751212AbWDVVFh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 17:05:37 -0400
+Received: from dspsrv.com (vir.dspsrv.com [193.120.211.34])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3M2VdZj031192
+	for <git@vger.kernel.org>; Sat, 22 Apr 2006 02:31:40 GMT
+Received: from [213.46.16.78] (helo=localhost)
+	by dspsrv.com with asmtp (Exim 3.36 #1)
+	id 1FX7tO-00023P-00
+	for git@vger.kernel.org; Sat, 22 Apr 2006 03:30:38 +0100
+To: git@vger.kernel.org
+Mail-Followup-To: Tim O'Callaghan <timo@dspsrv.com>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: mutt-ng/devel-r655 (CYGWIN_NT-5.1)
 X-Virus-Scanned: ClamAV 0.88/1414/Fri Apr 21 22:58:39 2006 on zeus1.kernel.org
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19061>
 
-On Fri, 21 Apr 2006, Geert Bosch wrote:
+When running a 'make test' under cygwin on my 64bit machine, and got
+the output below. The reason i cite the 64bit cygwin platform being a
+difference is that i have run 'make test' on the exact same codebase
+on a 32 bit machine. The only difference in compile environment is
+that the cygwin install on the 64 bit machine is as of today, and the
+32 bit machine was about three days ago.
 
-> I wrote a new binary differencing algorithm that is both faster
-> and generates smaller deltas than the current implementation.
-> The format is compatible with that used by patch-delta, so
-> it should be easy to integrate.
+----
 
-It looks really interesting.
+*** t0000-basic.sh ***
+*   ok 1: .git/objects should be empty after git-init-db in an empty repo.
+*   ok 2: .git/objects should have 3 subdirectories.
+*   ok 3: git-update-index without --add should fail adding.
+*   ok 4: git-update-index with --add should succeed.
+*   ok 5: writing tree out with git-write-tree
+*   ok 6: validate object ID of a known tree.
+*   ok 7: git-update-index without --remove should fail removing.
+* FAIL 8: git-update-index with --remove should be able to remove.
+        git-update-index --remove should-be-empty
+*   ok 9: git-write-tree should be able to write an empty tree.
+* FAIL 10: validate object ID of a known tree.
+        test "$tree" = 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+* FAIL 11: adding various types of objects with git-update-index --add.
+        find path* ! -type d -print | xargs git-update-index --add
+*   ok 12: showing stage with git-ls-files --stage
+* FAIL 13: validate git-ls-files output for a known tree.
+        diff current expected
+*   ok 14: writing tree out with git-write-tree.
+* FAIL 15: validate object ID for a known tree.
+        test "$tree" = 087704a96baf1c2d1c869a8b084481e121c88b5b
+*   ok 16: showing tree with git-ls-tree
+* FAIL 17: git-ls-tree output for a known tree.
+        diff current expected
+*   ok 18: showing tree with git-ls-tree -r
+* FAIL 19: git-ls-tree -r output for a known tree.
+        diff current expected
+* FAIL 20: git-read-tree followed by write-tree should be idempotent.
+        git-read-tree $tree &&
+             test -f .git/index &&
+             newtree=$(git-write-tree) &&
+             test "$newtree" = "$tree"
+* FAIL 21: validate git-diff-files output for a know cache/work tree state.
+        git-diff-files >current && diff >/dev/null -b current expected
+* FAIL 22: git-update-index --refresh should succeed.
+        git-update-index --refresh
+*   ok 23: no diff after checkout and git-update-index --refresh.
+* failed 10 among 23 test(s)
 
-It ignores the max_size argument but that is trivially fixed.
+-----
 
-Then it triggers some assertions in the code when running the test 
-suite.
+Any ideas on how to start tracking this one down?
 
-> Originally, I wrote this for the GDIFF format, see
-> http://www.w3.org/TR/NOTE-gdiff-19970901.
-> The adaptation for GIT format was relatively simple, but is not thoroughly
-> tested.
-
-Some trivial tests look fine but it fail on some others.
-
-> The code is not derived from libxdiff, but uses the rabin_slide function
-> written
-> by David Mazieres (dm@uun.org). Also the tables are generated using his code.
-> Finally, this was developed on Darwin, and not a Linux system, so some changes
-> may be needed.
-
-It does compile out of the box on Linux.
-
-> Please feel free to play around with this code, and give feedback.
-> Keep in mind this wasn't originally written for GIT, and C is not
-> my native language, so don't mind my formatting etc.
-
-I did reformat it a bit to be more inline with the rest of GIT's coding 
-style (and to help me read it).  I'll look at fixing the issues I can 
-fix and post it back.
-
-
-Nicolas
+Tim.
