@@ -1,145 +1,153 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC] get_sha1(): :path and :[0-3]:path to extract from index.
-Date: Fri, 21 Apr 2006 17:49:40 -0700
-Message-ID: <7v7j5iph7f.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
+Subject: What's in git.git
+Date: Fri, 21 Apr 2006 17:52:00 -0700
+Message-ID: <7vzmieo2j3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 22 02:51:11 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 22 02:52:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FX6L4-0001cS-UG
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 02:51:07 +0200
+	id 1FX6Ma-0001lP-8A
+	for gcvg-git@gmane.org; Sat, 22 Apr 2006 02:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbWDVAuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Apr 2006 20:50:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbWDVAuT
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Apr 2006 20:50:19 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45727 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750792AbWDVAuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Apr 2006 20:50:17 -0400
+	id S1750800AbWDVAwf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 21 Apr 2006 20:52:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbWDVAwf
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Apr 2006 20:52:35 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:22943 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750800AbWDVAwe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Apr 2006 20:52:34 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060422005016.TVFZ20694.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 21 Apr 2006 20:50:16 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+          id <20060422005233.MALJ16517.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 21 Apr 2006 20:52:33 -0400
+To: git@vger.kernel.org
+X-maint-at: 34fd1c9ac5845d541e3196983df7f993e751b544
+X-master-at: 70827b15bfb11f7aea52c6995956be9d149233e1
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19034>
 
-[ NOTE! The reason I put "RFC" in the subject rather than "PATCH" is that 
-  I'm not 100% sure this isn't just a "shiny object" of mine rather than a 
-  really useful thing to do. What do people think? Have you ever wanted to 
-  access individual files in some random revision? Do you think this is 
-  useful? I think it's cool and _may_ be useful, but I'm not going to 
-  really push this patch. Consider it a throw-away patch unless somebody 
-  else finds it intriguing enough.. ]
+* The 'maint' branch has these fixes since the last announcement.
+  They will be part of 1.3.1 early next week.
 
-This is a fairly straightforward patch to allow "get_sha1()" to
-also have shorthands for blob objects in the current index.
+  - Fix diff --stat filename output when binary files with long
+    names are involved (Jonas Fonseca)
 
-The syntax is very simple and intuitive: you can specify a blob
-from the current index by simply specifying :<stage>:<path> or
-:<path>, and get_sha1() will do the SHA1 lookup from the index
-for you.
+  - git-merge gives a bit more readable user guidance upon conflicts.
 
-You can currently do it with "git ls-files -s <path>" and parsing the 
-output, but that's actually pretty awkward.
+  - The example pre-commit hook complains about conflict markers.
 
-With this, you can do something like
+  - Two fixes to git-commit --amend.
 
-	git cat-file blob :3:Makefile
+  - Fix pack-objects.  This was discussed in this thread:
 
-to get the contents of "Makefile" from their version during a
-conflicted merge.
+    http://thread.gmane.org/gmane.comp.version-control.git/19021
 
-This does not do trees like <ent>:<path> version does.  We could
-do that by writing out a temporary tree object if we wanted to,
-but that would smudge the object database, so I refrained from
-doing that as part of this patch.  If we did that,
+  - mailinfo: decode underscore used in "Q" encoding properly.
 
-	git diff-tree :2: :3:
+    The versions before this fix broke some peoples names;
+    apologies to Santi and Lukas.
 
-would be an inefficient equivalent to "git diff-stages 2 3".
+  - Fix spawning of PAGER (Linus Torvalds).  This was discussed
+    in this thread:
 
----
- sha1_name.c |   54 ++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 files changed, 46 insertions(+), 8 deletions(-)
+    http://thread.gmane.org/gmane.comp.version-control.git/18969
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 345935b..ec5cd2c 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -458,17 +458,55 @@ int get_sha1(const char *name, unsigned 
- {
- 	int ret;
- 	unsigned unused;
-+	int namelen = strlen(name);
-+	const char *cp;
- 
- 	prepare_alt_odb();
--	ret = get_sha1_1(name, strlen(name), sha1);
--	if (ret < 0) {
--		const char *cp = strchr(name, ':');
--		if (cp) {
--			unsigned char tree_sha1[20];
--			if (!get_sha1_1(name, cp-name, tree_sha1))
--				return get_tree_entry(tree_sha1, cp+1, sha1,
--						      &unused);
-+	ret = get_sha1_1(name, namelen, sha1);
-+	if (!ret)
-+		return ret;
-+	/* sha1:path --> object name of path in ent sha1
-+	 * :path -> object name of path in index
-+	 * :[0-3]:path -> object name of path in index at stage
-+	 */
-+	if (name[0] == ':') {
-+		int stage = 0;
-+		struct cache_entry *ce;
-+		int pos;
-+		if (namelen < 3 ||
-+		    name[2] != ':' ||
-+		    name[1] < '0' || '3' < name[1])
-+			cp = name + 1;
-+		else {
-+			stage = name[1] - '0';
-+			cp = name + 3;
- 		}
-+		namelen = namelen - (cp - name);
-+		if (!active_cache)
-+			read_cache();
-+		if (active_nr < 0)
-+			return -1;
-+		pos = cache_name_pos(cp, namelen);
-+		if (pos < 0)
-+			pos = -pos - 1;
-+		while (pos < active_nr) {
-+			ce = active_cache[pos];
-+			if (ce_namelen(ce) != namelen ||
-+			    memcmp(ce->name, cp, namelen))
-+				break;
-+			if (ce_stage(ce) == stage) {
-+				memcpy(sha1, ce->sha1, 20);
-+				return 0;
-+			}
-+		}
-+		return -1;
-+	}
-+	cp = strchr(name, ':');
-+	if (cp) {
-+		unsigned char tree_sha1[20];
-+		if (!get_sha1_1(name, cp-name, tree_sha1))
-+			return get_tree_entry(tree_sha1, cp+1, sha1,
-+					      &unused);
- 	}
- 	return ret;
- }
--- 
-1.3.0.g6082
+  - Fix pack-object buffer size (Nicolas Pitre)
+
+  - Reintroduce svn pools to solve the memory leak (Santi B=E9jar)
+
+  - Document git-clone --reference (Shawn Pearce)
+
+
+* The 'master' branch has these since the last announcement.
+  All the 'maint' fixes are included.
+
+  - Big 'revision.c/log-tree.c' option parsing unification (Linus).
+  - Big log formatting unification (Linus).
+  - Built-in git-whatchanged.
+  - Do not fork PAGER=3Dcat
+  - combine-diff --stat: show diffstat with the first parent.
+  - get_sha1() shorthands for blob/tree objects (Linus)
+  - Allow "git repack" users to specify repacking window/depth (Linus)
+  - Split up builtin commands into separate files from git.c (Linus)
+
+    Most of the above happened immediately after 1.3.0, and will
+    not be part of 1.3.X series, which is maintenance fixes only.
+
+    The general direction is that many commands we used to
+    implement as one liner pipe from git-rev-list to
+    git-diff-tree are converted into built-in C implementation.
+
+* The 'next' branch, in addition, has these.
+
+  - daemon::socksetup: don't return on set_reuse_addr() error (Serge E.=
+ Hallyn)
+
+    Comments?
+
+  - Tentative built-in format-patch
+
+    This is meant to be the next in the "internalize rev-list
+    piped to diff-tree" series.  Currently it does only --stdout
+    form and does not take any options.  It needs more work in
+    the core area to spit things out into separate files with
+    munged filenames.
+
+  - git-update-index --unresolve.  This was discussed in this
+    thread:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/18936
+
+    This thread was fruitful; three patches came out of it.
+
+  - diff --stat: do not drop rename information.
+
+    I think this is ready to graduate to "master"; I just
+    haven't got around to it.
+
+    Johannes suggested "file =3D> /dev/null" to show a deleted
+    file as if a rename was done.  While I think it makes some
+    sense, I am afraid it diverges too much from the traditional
+    diffstat output.  I am undecided, somewhat negative, about
+    the suggestion.
+
+* The 'pu' branch, in addition, has these.
+
+  - gitk: Fix geometry on rootless X (Johannes Schindelin)
+
+  - "bind commit" resurrected.
+
+    Somebody off-list volunteered to look into adding
+    subprojects support, so I merged the old codebase and placed
+    it here.  The merge conflict was not too bad, to my
+    surprise.  Subpro.txt file in the "todo" branch describes
+    one suggested plan, but who he codes gets to decide the
+    details of the implementation and semantics, so we will see
+    what emerges.  One big piece still missing from the core
+    side to implement Subpro.txt plan is an enhancement to the
+    index file format to do "update-index --bind/--unbind".  I
+    may have to fill that gap over the weekend, but no firm
+    promises.
+
+  - contrib/colordiff.
+
+    This is an external colorizer you can use by saying:
+   =20
+	PAGER=3D"colordiff | less -RS" git log --cc
+
+  - colored diff with diff.usecolor configuration option.
+
+    I'll not be using colorization myself, so there is no strong
+    incentive on my part to carry this forward, but this is here
+    just in case if people are interested.  Currently it does
+    not do color for combined diffs.
