@@ -1,125 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC] Suffix /HEAD everywhere.
-Date: Fri, 21 Apr 2006 22:55:47 -0700
-Message-ID: <7vhd4mnogs.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Apr 22 21:10:28 2006
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: RFC: New diff-delta.c implementation
+Date: Sat, 22 Apr 2006 10:17:01 -0400
+Message-ID: <67A687D6-8C1D-4028-9770-DC86867BF6B5@adacore.com>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <Pine.LNX.4.64.0604212308080.2215@localhost.localdomain> <A856A2C5-2BD7-4DC5-9CCC-CD53E9A2623C@adacore.com> <7v7j5hkglq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604220835190.2215@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v749.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 22 21:18:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXNUo-0006jS-5W
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 21:10:18 +0200
+	id 1FXNcU-0007xf-70
+	for gcvg-git@gmane.org; Sat, 22 Apr 2006 21:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977AbWDVTKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 15:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbWDVTKG
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 15:10:06 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:12471 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1750969AbWDVTKC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 15:10:02 -0400
-Received: from fed1rmmtao06.cox.net (fed1rmmtao06.cox.net [68.230.241.33])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3M5uHj6022294
-	for <git@vger.kernel.org>; Sat, 22 Apr 2006 05:56:17 GMT
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060422055548.VPSG24510.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 22 Apr 2006 01:55:48 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.88/1414/Fri Apr 21 22:58:39 2006 on zeus1.kernel.org
+	id S1750984AbWDVTSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Apr 2006 15:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751009AbWDVTQx
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 15:16:53 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:29113 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1750974AbWDVTQe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 15:16:34 -0400
+Received: from nile.gnat.com (nile.gnat.com [205.232.38.5])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k3MEHXv6023747
+	for <git@vger.kernel.org>; Sat, 22 Apr 2006 14:17:44 GMT
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP id D569A48CE15;
+	Sat, 22 Apr 2006 10:17:02 -0400 (EDT)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 07628-01-7; Sat, 22 Apr 2006 10:17:02 -0400 (EDT)
+Received: from [172.16.1.2] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	by nile.gnat.com (Postfix) with ESMTP id 8C12548CDC5;
+	Sat, 22 Apr 2006 10:17:02 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0604220835190.2215@localhost.localdomain>
+To: Nicolas Pitre <nico@cam.org>
+X-Mailer: Apple Mail (2.749.3)
+X-Virus-Scanned: ClamAV 0.88/1415/Sat Apr 22 11:34:01 2006 on zeus1.kernel.org
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19044>
 
-This is another throw-away idea, but people doing Porcelain
-might be interested.
 
-We currently allow "origin" to mean $GIT_DIR/refs/remotes/origin/HEAD,
-to give consistent "git fetch origin" semantics for repositories
-cloned with the --use-separate-remote option.
+On Apr 22, 2006, at 08:45, Nicolas Pitre wrote:
+> The idea to avoid memory pressure is to reverse the window processing
+> such that the object to delta against is constant for the entire  
+> window
+> instead of the current logic where the target object is constant.   
+> This
+> way there would be only one index in memory at all time.
 
-Why not extend this to places other than "refs/remotes/*"?  
+Right, this is essential. In my measurements, diff-delta
+spends about 70% of time generating the index, and 30%
+matching.
 
-With this patch, I could arrange the refs like this:
+Right now, for 10 candidates per file, we'd do 11 units of
+work, since we repeat the final delta. When reusing the
+index, and keeping the smallest delta around, we'd use
+0.7 + 3 = 3.7 units of work. This is almost a 3x speedup.
+There's no way we can get decent performance without this.
+With the similarity fingerprints, another factor 2x should
+be attainable, by only considering the 3 files with the
+nearest fingerprints.
 
-	$GIT_DIR/refs/heads/master/
-        $GIT_DIR/refs/heads/master/HEAD (symref points at somewhere)
-	$GIT_DIR/refs/heads/master/master (perhaps here)
-        $GIT_DIR/refs/heads/master/topic1 (topic branched from "master")
-        $GIT_DIR/refs/heads/master/topic2 (another)
-
-and I can just say "master" to mean refs/heads/master/master,
-and say "master/topic1", "master/topic1" to name the topic
-branches.
-
-This patch only does the reading side, and when somebody tries
-to implement creation/update side, some unsurmountable problems
-may be discovered, but it just seemed an interesting idea.  I do
-not know how useful it is, tho.
-
--jc
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 345935b..ab2eaf7 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -237,13 +237,15 @@ static int ambiguous_path(const char *pa
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- {
- 	static const char *fmt[] = {
--		"%.*s",
--		"refs/%.*s",
--		"refs/tags/%.*s",
--		"refs/heads/%.*s",
--		"refs/remotes/%.*s",
--		"refs/remotes/%.*s/HEAD",
--		NULL
-+		"%.*s%s",
-+		"refs/%.*s%s",
-+		"refs/tags/%.*s%s",
-+		"refs/heads/%.*s%s",
-+		"refs/remotes/%.*s%s",
-+	};
-+	static const char *sfx[] = {
-+		"",
-+		"/HEAD",
- 	};
- 	const char **p;
- 	const char *warning = "warning: refname '%.*s' is ambiguous.\n";
-@@ -259,17 +261,21 @@ static int get_sha1_basic(const char *st
- 	if (ambiguous_path(str, len))
- 		return -1;
- 
--	for (p = fmt; *p; p++) {
--		this_result = already_found ? sha1_from_ref : sha1;
--		pathname = git_path(*p, len, str);
--		if (!read_ref(pathname, this_result)) {
--			if (warn_ambiguous_refs) {
--				if (already_found)
--					fprintf(stderr, warning, len, str);
--				already_found++;
-+	for (p = fmt; p < fmt + ARRAY_SIZE(fmt); p++) {
-+		const char **s;
-+		for (s = sfx; s < sfx + ARRAY_SIZE(sfx); s++) {
-+			this_result = already_found ? sha1_from_ref : sha1;
-+			pathname = git_path(*p, len, str, *s);
-+			if (!read_ref(pathname, this_result)) {
-+				if (warn_ambiguous_refs) {
-+					if (already_found)
-+						fprintf(stderr, warning,
-+							len, str);
-+					already_found++;
-+				}
-+				else
-+					return 0;
- 			}
--			else
--				return 0;
- 		}
- 	}
- 	if (already_found)
+   -Geert
