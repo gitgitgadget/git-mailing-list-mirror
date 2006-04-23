@@ -1,55 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Problem with Git in Cygwin on x86-64 platform
-Date: Sat, 22 Apr 2006 23:17:33 +0200
-Message-ID: <20060422211733.GB7676@steel.home>
-References: <20060422023029.GC2444@Zangband>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: make update-index --chmod work with multiple files and --stdin
+Date: Sat, 22 Apr 2006 17:54:51 -0700
+Message-ID: <7v1wvpi010.fsf@assigned-by-dhcp.cox.net>
+References: <20060422204642.GA7676@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Apr 22 23:17:46 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 23 02:55:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXPU3-0000kW-Dr
-	for gcvg-git@gmane.org; Sat, 22 Apr 2006 23:17:39 +0200
+	id 1FXSsR-0007Hn-C7
+	for gcvg-git@gmane.org; Sun, 23 Apr 2006 02:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbWDVVRg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 17:17:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbWDVVRg
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 17:17:36 -0400
-Received: from devrace.com ([198.63.210.113]:38155 "EHLO devrace.com")
-	by vger.kernel.org with ESMTP id S1751218AbWDVVRf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 17:17:35 -0400
-Received: from tigra.home (p54A06533.dip.t-dialin.net [84.160.101.51])
-	by devrace.com (Postfix) with ESMTP id CEAD2154;
-	Sat, 22 Apr 2006 16:17:35 -0500 (CDT)
-Received: from steel.home ([192.168.1.2])
-	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
-	id 1FXPTx-00033l-00; Sat, 22 Apr 2006 23:17:33 +0200
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FXPTx-0000qU-Dm; Sat, 22 Apr 2006 23:17:33 +0200
-To: Tim O'Callaghan <timo@dspsrv.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060422023029.GC2444@Zangband>
-User-Agent: Mutt/1.5.6i
+	id S1751279AbWDWAyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Apr 2006 20:54:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbWDWAyy
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 20:54:54 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:49365 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751279AbWDWAyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Apr 2006 20:54:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060423005453.FZCH8241.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 22 Apr 2006 20:54:53 -0400
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060422204642.GA7676@steel.home> (Alex Riesen's message of
+	"Sat, 22 Apr 2006 22:46:42 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19063>
 
-Tim O'Callaghan, Sat, Apr 22, 2006 04:30:30 +0200:
-> When running a 'make test' under cygwin on my 64bit machine, and got
-> the output below. The reason i cite the 64bit cygwin platform being a
-> difference is that i have run 'make test' on the exact same codebase
-> on a 32 bit machine. The only difference in compile environment is
-> that the cygwin install on the 64 bit machine is as of today, and the
-> 32 bit machine was about three days ago.
-> 
-> *** t0000-basic.sh ***
-...
-> * FAIL 8: git-update-index with --remove should be able to remove.
-...
-> Any ideas on how to start tracking this one down?
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Start by going into git/t and running "./t0000-basic.sh -d -v"
+> I had a project where lots of files were "accidentally" marked +x, and
+> doing plain "git-update-index --chmod=-x" for each file was too slow.
+> Besides, it's somewhat inconsistent, that --chmod does work only for
+> one subsequent file.
+
+If you are doing that on the command line, people may want to
+have a way to mean "from here on do not do chmod, just do normal
+update-index and nothing else" by resetting the chmod_mode thing
+back to zero.  Nothing major, and we do not do that to allow_add
+and allow_remove either, but just a thought.
+
+> +	char chmod_mode = 0;
+
+Perhaps "set_executable_bit"?
+
+> +		if ( chmod_mode ) {
+
+Please lose ( extra ) whitespaces around parentheses.
+
+> +			if ( chmod_mode ) {
+
+Likewise.
+
+> +				if (chmod_path(chmod_mode, p))
+> +					die("git-update-index: cannot chmod %cx %s",
+> +					    chmod_mode, p);
+> +			}
+
+Might make sense to die inside chmod_path() instead of repeating
+the if () { die() } sequence twice?  I dunno.
