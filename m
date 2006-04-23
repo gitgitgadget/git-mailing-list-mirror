@@ -1,251 +1,147 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: RFC: New diff-delta.c implementation
-Date: Sat, 22 Apr 2006 22:31:44 -0400
-Message-ID: <20060423023144.GA17704@adacore.com>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <Pine.LNX.4.64.0604221333470.23166@alien.or.mcafeemobile.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: make update-index --chmod work with multiple files and --stdin
+Date: Sun, 23 Apr 2006 09:01:29 +0200
+Message-ID: <20060423070129.GA5802@steel.home>
+References: <20060422204642.GA7676@steel.home> <7v1wvpi010.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 23 04:32:07 2006
+X-From: git-owner@vger.kernel.org Sun Apr 23 09:01:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXUOJ-00033N-Lj
-	for gcvg-git@gmane.org; Sun, 23 Apr 2006 04:32:04 +0200
+	id 1FXYbC-0005Ks-Ag
+	for gcvg-git@gmane.org; Sun, 23 Apr 2006 09:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbWDWCbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Apr 2006 22:31:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbWDWCbs
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Apr 2006 22:31:48 -0400
-Received: from nile.gnat.com ([205.232.38.5]:30625 "EHLO nile.gnat.com")
-	by vger.kernel.org with ESMTP id S1750761AbWDWCbr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Apr 2006 22:31:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtered-nile.gnat.com (Postfix) with ESMTP id F03B048CBF1;
-	Sat, 22 Apr 2006 22:31:44 -0400 (EDT)
-Received: from nile.gnat.com ([127.0.0.1])
- by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 11976-01-3; Sat, 22 Apr 2006 22:31:44 -0400 (EDT)
-Received: by nile.gnat.com (Postfix, from userid 4190)
-	id C5F3748CBDE; Sat, 22 Apr 2006 22:31:44 -0400 (EDT)
-To: Davide Libenzi <davidel@xmailserver.org>
+	id S1751353AbWDWHBe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Apr 2006 03:01:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbWDWHBe
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Apr 2006 03:01:34 -0400
+Received: from devrace.com ([198.63.210.113]:11533 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1751353AbWDWHBd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Apr 2006 03:01:33 -0400
+Received: from tigra.home (p54A074BC.dip.t-dialin.net [84.160.116.188])
+	by devrace.com (Postfix) with ESMTP id C1302357;
+	Sun, 23 Apr 2006 02:01:34 -0500 (CDT)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1FXYb4-0006tP-00; Sun, 23 Apr 2006 09:01:30 +0200
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FXYb4-0003R5-1R; Sun, 23 Apr 2006 09:01:30 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0604221333470.23166@alien.or.mcafeemobile.com>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <7v1wvpi010.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19066>
 
-On Sat, Apr 22, 2006 at 01:36:07PM -0700, Davide Libenzi wrote:
-> Geert, I saw you're using a shift of 55 bits, that gives an degree of the 
-> root polynomial of 63, that is not prime. Where did you get the root 
-> polynomial, and why you did not chose 61 as degree of the root?
-> Just curious ...
+Junio C Hamano, Sun, Apr 23, 2006 02:54:51 +0200:
+> > I had a project where lots of files were "accidentally" marked +x, and
+> > doing plain "git-update-index --chmod=-x" for each file was too slow.
+> > Besides, it's somewhat inconsistent, that --chmod does work only for
+> > one subsequent file.
+> 
+> If you are doing that on the command line, people may want to
+> have a way to mean "from here on do not do chmod, just do normal
+> update-index and nothing else" by resetting the chmod_mode thing
+> back to zero.  Nothing major, and we do not do that to allow_add
+> and allow_remove either, but just a thought.
 
-The polynomial was randomly created using code by David Mazieres, that
-is part of LBFS. I chose a (irreducible) polynomial of degree 63 as
-that was the same as LBFS did. As for my purposes it's best to have
-a constant polynomial and I wanted to have all the code for
-the computations in the same compilation unit for performance,
-I decided to just have a little program print out the tables
-and include it directly. The chosen polynomial was 0xb15e234bd3792f63.
+Not sure about that, but did it anyway (as separate patches).
 
-Later on I haven't revisited this decision, although I agree that
-it'd probably be a good idea to use a polynomial of prime degree,
-even though we're not looking for cryptographically strong hashes here.
+I updated the patch with the other remarks regarding
+set_executable_bit, whitespaces and die in chmod_path (thought about
+this one myself, but was lazy).
 
-Below I include new tables for degree 61. The window size of 22 was
-found by plotting graphs on a number of largish test cases (30-100MB)
-and seeing how the size of the compressed output changed. It is
-essential to do all comparisons using gzipped output. I've been
-tempted a number of times to include new optimizations, only
-to find out that the uncompressed size reduced, but final compressed
-size grew. More smaller copies and literal data segments is generally
-worse.
+---
 
-  -Geert
+ update-index.c |   23 ++++++++++++++++-------
+ 1 files changed, 16 insertions(+), 7 deletions(-)
 
-#define RABIN_POLY 0x25bd5331c0d7096dULL
-#define RABIN_DEGREE 61
-#define RABIN_SHIFT 53
-#define RABIN_WINDOW_SIZE 22
-
-unsigned long long T[256] =
-{ 0x0000000000000000ULL, 0x25bd5331c0d7096dULL, 0x4b7aa66381ae12daULL,
-  0x6ec7f55241791bb7ULL, 0x96f54cc7035c25b4ULL, 0xb3481ff6c38b2cd9ULL,
-  0xdd8feaa482f2376eULL, 0xf832b99542253e03ULL, 0x0857cabfc66f4205ULL,
-  0x2dea998e06b84b68ULL, 0x432d6cdc47c150dfULL, 0x66903fed871659b2ULL,
-  0x9ea28678c53367b1ULL, 0xbb1fd54905e46edcULL, 0xd5d8201b449d756bULL,
-  0xf065732a844a7c06ULL, 0x10af957f8cde840aULL, 0x3512c64e4c098d67ULL,
-  0x5bd5331c0d7096d0ULL, 0x7e68602dcda79fbdULL, 0x865ad9b88f82a1beULL,
-  0xa3e78a894f55a8d3ULL, 0xcd207fdb0e2cb364ULL, 0xe89d2ceacefbba09ULL,
-  0x18f85fc04ab1c60fULL, 0x3d450cf18a66cf62ULL, 0x5382f9a3cb1fd4d5ULL,
-  0x763faa920bc8ddb8ULL, 0x8e0d130749ede3bbULL, 0xabb04036893aead6ULL,
-  0xc577b564c843f161ULL, 0xe0cae6550894f80cULL, 0x04e279ced96a0179ULL,
-  0x215f2aff19bd0814ULL, 0x4f98dfad58c413a3ULL, 0x6a258c9c98131aceULL,
-  0x92173509da3624cdULL, 0xb7aa66381ae12da0ULL, 0xd96d936a5b983617ULL,
-  0xfcd0c05b9b4f3f7aULL, 0x0cb5b3711f05437cULL, 0x2908e040dfd24a11ULL,
-  0x47cf15129eab51a6ULL, 0x627246235e7c58cbULL, 0x9a40ffb61c5966c8ULL,
-  0xbffdac87dc8e6fa5ULL, 0xd13a59d59df77412ULL, 0xf4870ae45d207d7fULL,
-  0x144decb155b48573ULL, 0x31f0bf8095638c1eULL, 0x5f374ad2d41a97a9ULL,
-  0x7a8a19e314cd9ec4ULL, 0x82b8a07656e8a0c7ULL, 0xa705f347963fa9aaULL,
-  0xc9c20615d746b21dULL, 0xec7f55241791bb70ULL, 0x1c1a260e93dbc776ULL,
-  0x39a7753f530cce1bULL, 0x5760806d1275d5acULL, 0x72ddd35cd2a2dcc1ULL,
-  0x8aef6ac99087e2c2ULL, 0xaf5239f85050ebafULL, 0xc195ccaa1129f018ULL,
-  0xe4289f9bd1fef975ULL, 0x09c4f39db2d402f2ULL, 0x2c79a0ac72030b9fULL,
-  0x42be55fe337a1028ULL, 0x670306cff3ad1945ULL, 0x9f31bf5ab1882746ULL,
-  0xba8cec6b715f2e2bULL, 0xd44b19393026359cULL, 0xf1f64a08f0f13cf1ULL,
-  0x0193392274bb40f7ULL, 0x242e6a13b46c499aULL, 0x4ae99f41f515522dULL,
-  0x6f54cc7035c25b40ULL, 0x976675e577e76543ULL, 0xb2db26d4b7306c2eULL,
-  0xdc1cd386f6497799ULL, 0xf9a180b7369e7ef4ULL, 0x196b66e23e0a86f8ULL,
-  0x3cd635d3fedd8f95ULL, 0x5211c081bfa49422ULL, 0x77ac93b07f739d4fULL,
-  0x8f9e2a253d56a34cULL, 0xaa237914fd81aa21ULL, 0xc4e48c46bcf8b196ULL,
-  0xe159df777c2fb8fbULL, 0x113cac5df865c4fdULL, 0x3481ff6c38b2cd90ULL,
-  0x5a460a3e79cbd627ULL, 0x7ffb590fb91cdf4aULL, 0x87c9e09afb39e149ULL,
-  0xa274b3ab3beee824ULL, 0xccb346f97a97f393ULL, 0xe90e15c8ba40fafeULL,
-  0x0d268a536bbe038bULL, 0x289bd962ab690ae6ULL, 0x465c2c30ea101151ULL,
-  0x63e17f012ac7183cULL, 0x9bd3c69468e2263fULL, 0xbe6e95a5a8352f52ULL,
-  0xd0a960f7e94c34e5ULL, 0xf51433c6299b3d88ULL, 0x057140ecadd1418eULL,
-  0x20cc13dd6d0648e3ULL, 0x4e0be68f2c7f5354ULL, 0x6bb6b5beeca85a39ULL,
-  0x93840c2bae8d643aULL, 0xb6395f1a6e5a6d57ULL, 0xd8feaa482f2376e0ULL,
-  0xfd43f979eff47f8dULL, 0x1d891f2ce7608781ULL, 0x38344c1d27b78eecULL,
-  0x56f3b94f66ce955bULL, 0x734eea7ea6199c36ULL, 0x8b7c53ebe43ca235ULL,
-  0xaec100da24ebab58ULL, 0xc006f5886592b0efULL, 0xe5bba6b9a545b982ULL,
-  0x15ded593210fc584ULL, 0x306386a2e1d8cce9ULL, 0x5ea473f0a0a1d75eULL,
-  0x7b1920c16076de33ULL, 0x832b99542253e030ULL, 0xa696ca65e284e95dULL,
-  0xc8513f37a3fdf2eaULL, 0xedec6c06632afb87ULL, 0x1389e73b65a805e4ULL,
-  0x3634b40aa57f0c89ULL, 0x58f34158e406173eULL, 0x7d4e126924d11e53ULL,
-  0x857cabfc66f42050ULL, 0xa0c1f8cda623293dULL, 0xce060d9fe75a328aULL,
-  0xebbb5eae278d3be7ULL, 0x1bde2d84a3c747e1ULL, 0x3e637eb563104e8cULL,
-  0x50a48be72269553bULL, 0x7519d8d6e2be5c56ULL, 0x8d2b6143a09b6255ULL,
-  0xa8963272604c6b38ULL, 0xc651c7202135708fULL, 0xe3ec9411e1e279e2ULL,
-  0x03267244e97681eeULL, 0x269b217529a18883ULL, 0x485cd42768d89334ULL,
-  0x6de18716a80f9a59ULL, 0x95d33e83ea2aa45aULL, 0xb06e6db22afdad37ULL,
-  0xdea998e06b84b680ULL, 0xfb14cbd1ab53bfedULL, 0x0b71b8fb2f19c3ebULL,
-  0x2eccebcaefceca86ULL, 0x400b1e98aeb7d131ULL, 0x65b64da96e60d85cULL,
-  0x9d84f43c2c45e65fULL, 0xb839a70dec92ef32ULL, 0xd6fe525fadebf485ULL,
-  0xf343016e6d3cfde8ULL, 0x176b9ef5bcc2049dULL, 0x32d6cdc47c150df0ULL,
-  0x5c1138963d6c1647ULL, 0x79ac6ba7fdbb1f2aULL, 0x819ed232bf9e2129ULL,
-  0xa42381037f492844ULL, 0xcae474513e3033f3ULL, 0xef592760fee73a9eULL,
-  0x1f3c544a7aad4698ULL, 0x3a81077bba7a4ff5ULL, 0x5446f229fb035442ULL,
-  0x71fba1183bd45d2fULL, 0x89c9188d79f1632cULL, 0xac744bbcb9266a41ULL,
-  0xc2b3beeef85f71f6ULL, 0xe70eeddf3888789bULL, 0x07c40b8a301c8097ULL,
-  0x227958bbf0cb89faULL, 0x4cbeade9b1b2924dULL, 0x6903fed871659b20ULL,
-  0x9131474d3340a523ULL, 0xb48c147cf397ac4eULL, 0xda4be12eb2eeb7f9ULL,
-  0xfff6b21f7239be94ULL, 0x0f93c135f673c292ULL, 0x2a2e920436a4cbffULL,
-  0x44e9675677ddd048ULL, 0x61543467b70ad925ULL, 0x99668df2f52fe726ULL,
-  0xbcdbdec335f8ee4bULL, 0xd21c2b917481f5fcULL, 0xf7a178a0b456fc91ULL,
-  0x1a4d14a6d77c0716ULL, 0x3ff0479717ab0e7bULL, 0x5137b2c556d215ccULL,
-  0x748ae1f496051ca1ULL, 0x8cb85861d42022a2ULL, 0xa9050b5014f72bcfULL,
-  0xc7c2fe02558e3078ULL, 0xe27fad3395593915ULL, 0x121ade1911134513ULL,
-  0x37a78d28d1c44c7eULL, 0x5960787a90bd57c9ULL, 0x7cdd2b4b506a5ea4ULL,
-  0x84ef92de124f60a7ULL, 0xa152c1efd29869caULL, 0xcf9534bd93e1727dULL,
-  0xea28678c53367b10ULL, 0x0ae281d95ba2831cULL, 0x2f5fd2e89b758a71ULL,
-  0x419827bada0c91c6ULL, 0x6425748b1adb98abULL, 0x9c17cd1e58fea6a8ULL,
-  0xb9aa9e2f9829afc5ULL, 0xd76d6b7dd950b472ULL, 0xf2d0384c1987bd1fULL,
-  0x02b54b669dcdc119ULL, 0x270818575d1ac874ULL, 0x49cfed051c63d3c3ULL,
-  0x6c72be34dcb4daaeULL, 0x944007a19e91e4adULL, 0xb1fd54905e46edc0ULL,
-  0xdf3aa1c21f3ff677ULL, 0xfa87f2f3dfe8ff1aULL, 0x1eaf6d680e16066fULL,
-  0x3b123e59cec10f02ULL, 0x55d5cb0b8fb814b5ULL, 0x7068983a4f6f1dd8ULL,
-  0x885a21af0d4a23dbULL, 0xade7729ecd9d2ab6ULL, 0xc32087cc8ce43101ULL,
-  0xe69dd4fd4c33386cULL, 0x16f8a7d7c879446aULL, 0x3345f4e608ae4d07ULL,
-  0x5d8201b449d756b0ULL, 0x783f528589005fddULL, 0x800deb10cb2561deULL,
-  0xa5b0b8210bf268b3ULL, 0xcb774d734a8b7304ULL, 0xeeca1e428a5c7a69ULL,
-  0x0e00f81782c88265ULL, 0x2bbdab26421f8b08ULL, 0x457a5e74036690bfULL,
-  0x60c70d45c3b199d2ULL, 0x98f5b4d08194a7d1ULL, 0xbd48e7e14143aebcULL,
-  0xd38f12b3003ab50bULL, 0xf6324182c0edbc66ULL, 0x065732a844a7c060ULL,
-  0x23ea61998470c90dULL, 0x4d2d94cbc509d2baULL, 0x6890c7fa05dedbd7ULL,
-  0x90a27e6f47fbe5d4ULL, 0xb51f2d5e872cecb9ULL, 0xdbd8d80cc655f70eULL,
-  0xfe658b3d0682fe63ULL
-};
-
-unsigned long long U[256] =
-{ 0x0000000000000000ULL, 0x067b86c43d6a6cb0ULL, 0x0cf70d887ad4d960ULL,
-  0x0a8c8b4c47beb5d0ULL, 0x19ee1b10f5a9b2c0ULL, 0x1f959dd4c8c3de70ULL,
-  0x151916988f7d6ba0ULL, 0x1362905cb2170710ULL, 0x166165102b846cedULL,
-  0x101ae3d416ee005dULL, 0x1a9668985150b58dULL, 0x1cedee5c6c3ad93dULL,
-  0x0f8f7e00de2dde2dULL, 0x09f4f8c4e347b29dULL, 0x03787388a4f9074dULL,
-  0x0503f54c99936bfdULL, 0x097f991197dfd0b7ULL, 0x0f041fd5aab5bc07ULL,
-  0x05889499ed0b09d7ULL, 0x03f3125dd0616567ULL, 0x1091820162766277ULL,
-  0x16ea04c55f1c0ec7ULL, 0x1c668f8918a2bb17ULL, 0x1a1d094d25c8d7a7ULL,
-  0x1f1efc01bc5bbc5aULL, 0x19657ac58131d0eaULL, 0x13e9f189c68f653aULL,
-  0x1592774dfbe5098aULL, 0x06f0e71149f20e9aULL, 0x008b61d57498622aULL,
-  0x0a07ea993326d7faULL, 0x0c7c6c5d0e4cbb4aULL, 0x12ff32232fbfa16eULL,
-  0x1484b4e712d5cddeULL, 0x1e083fab556b780eULL, 0x1873b96f680114beULL,
-  0x0b112933da1613aeULL, 0x0d6aaff7e77c7f1eULL, 0x07e624bba0c2caceULL,
-  0x019da27f9da8a67eULL, 0x049e5733043bcd83ULL, 0x02e5d1f73951a133ULL,
-  0x08695abb7eef14e3ULL, 0x0e12dc7f43857853ULL, 0x1d704c23f1927f43ULL,
-  0x1b0bcae7ccf813f3ULL, 0x118741ab8b46a623ULL, 0x17fcc76fb62cca93ULL,
-  0x1b80ab32b86071d9ULL, 0x1dfb2df6850a1d69ULL, 0x1777a6bac2b4a8b9ULL,
-  0x110c207effdec409ULL, 0x026eb0224dc9c319ULL, 0x041536e670a3afa9ULL,
-  0x0e99bdaa371d1a79ULL, 0x08e23b6e0a7776c9ULL, 0x0de1ce2293e41d34ULL,
-  0x0b9a48e6ae8e7184ULL, 0x0116c3aae930c454ULL, 0x076d456ed45aa8e4ULL,
-  0x140fd532664daff4ULL, 0x127453f65b27c344ULL, 0x18f8d8ba1c997694ULL,
-  0x1e835e7e21f31a24ULL, 0x004337779fa84bb1ULL, 0x0638b1b3a2c22701ULL,
-  0x0cb43affe57c92d1ULL, 0x0acfbc3bd816fe61ULL, 0x19ad2c676a01f971ULL,
-  0x1fd6aaa3576b95c1ULL, 0x155a21ef10d52011ULL, 0x1321a72b2dbf4ca1ULL,
-  0x16225267b42c275cULL, 0x1059d4a389464becULL, 0x1ad55fefcef8fe3cULL,
-  0x1caed92bf392928cULL, 0x0fcc49774185959cULL, 0x09b7cfb37ceff92cULL,
-  0x033b44ff3b514cfcULL, 0x0540c23b063b204cULL, 0x093cae6608779b06ULL,
-  0x0f4728a2351df7b6ULL, 0x05cba3ee72a34266ULL, 0x03b0252a4fc92ed6ULL,
-  0x10d2b576fdde29c6ULL, 0x16a933b2c0b44576ULL, 0x1c25b8fe870af0a6ULL,
-  0x1a5e3e3aba609c16ULL, 0x1f5dcb7623f3f7ebULL, 0x19264db21e999b5bULL,
-  0x13aac6fe59272e8bULL, 0x15d1403a644d423bULL, 0x06b3d066d65a452bULL,
-  0x00c856a2eb30299bULL, 0x0a44ddeeac8e9c4bULL, 0x0c3f5b2a91e4f0fbULL,
-  0x12bc0554b017eadfULL, 0x14c783908d7d866fULL, 0x1e4b08dccac333bfULL,
-  0x18308e18f7a95f0fULL, 0x0b521e4445be581fULL, 0x0d29988078d434afULL,
-  0x07a513cc3f6a817fULL, 0x01de95080200edcfULL, 0x04dd60449b938632ULL,
-  0x02a6e680a6f9ea82ULL, 0x082a6dcce1475f52ULL, 0x0e51eb08dc2d33e2ULL,
-  0x1d337b546e3a34f2ULL, 0x1b48fd9053505842ULL, 0x11c476dc14eeed92ULL,
-  0x17bff01829848122ULL, 0x1bc39c4527c83a68ULL, 0x1db81a811aa256d8ULL,
-  0x173491cd5d1ce308ULL, 0x114f170960768fb8ULL, 0x022d8755d26188a8ULL,
-  0x04560191ef0be418ULL, 0x0eda8adda8b551c8ULL, 0x08a10c1995df3d78ULL,
-  0x0da2f9550c4c5685ULL, 0x0bd97f9131263a35ULL, 0x0155f4dd76988fe5ULL,
-  0x072e72194bf2e355ULL, 0x144ce245f9e5e445ULL, 0x12376481c48f88f5ULL,
-  0x18bbefcd83313d25ULL, 0x1ec06909be5b5195ULL, 0x00866eef3f509762ULL,
-  0x06fde82b023afbd2ULL, 0x0c71636745844e02ULL, 0x0a0ae5a378ee22b2ULL,
-  0x196875ffcaf925a2ULL, 0x1f13f33bf7934912ULL, 0x159f7877b02dfcc2ULL,
-  0x13e4feb38d479072ULL, 0x16e70bff14d4fb8fULL, 0x109c8d3b29be973fULL,
-  0x1a1006776e0022efULL, 0x1c6b80b3536a4e5fULL, 0x0f0910efe17d494fULL,
-  0x0972962bdc1725ffULL, 0x03fe1d679ba9902fULL, 0x05859ba3a6c3fc9fULL,
-  0x09f9f7fea88f47d5ULL, 0x0f82713a95e52b65ULL, 0x050efa76d25b9eb5ULL,
-  0x03757cb2ef31f205ULL, 0x1017ecee5d26f515ULL, 0x166c6a2a604c99a5ULL,
-  0x1ce0e16627f22c75ULL, 0x1a9b67a21a9840c5ULL, 0x1f9892ee830b2b38ULL,
-  0x19e3142abe614788ULL, 0x136f9f66f9dff258ULL, 0x151419a2c4b59ee8ULL,
-  0x067689fe76a299f8ULL, 0x000d0f3a4bc8f548ULL, 0x0a8184760c764098ULL,
-  0x0cfa02b2311c2c28ULL, 0x12795ccc10ef360cULL, 0x1402da082d855abcULL,
-  0x1e8e51446a3bef6cULL, 0x18f5d780575183dcULL, 0x0b9747dce54684ccULL,
-  0x0decc118d82ce87cULL, 0x07604a549f925dacULL, 0x011bcc90a2f8311cULL,
-  0x041839dc3b6b5ae1ULL, 0x0263bf1806013651ULL, 0x08ef345441bf8381ULL,
-  0x0e94b2907cd5ef31ULL, 0x1df622cccec2e821ULL, 0x1b8da408f3a88491ULL,
-  0x11012f44b4163141ULL, 0x177aa980897c5df1ULL, 0x1b06c5dd8730e6bbULL,
-  0x1d7d4319ba5a8a0bULL, 0x17f1c855fde43fdbULL, 0x118a4e91c08e536bULL,
-  0x02e8decd7299547bULL, 0x049358094ff338cbULL, 0x0e1fd345084d8d1bULL,
-  0x086455813527e1abULL, 0x0d67a0cdacb48a56ULL, 0x0b1c260991dee6e6ULL,
-  0x0190ad45d6605336ULL, 0x07eb2b81eb0a3f86ULL, 0x1489bbdd591d3896ULL,
-  0x12f23d1964775426ULL, 0x187eb65523c9e1f6ULL, 0x1e0530911ea38d46ULL,
-  0x00c55998a0f8dcd3ULL, 0x06bedf5c9d92b063ULL, 0x0c325410da2c05b3ULL,
-  0x0a49d2d4e7466903ULL, 0x192b428855516e13ULL, 0x1f50c44c683b02a3ULL,
-  0x15dc4f002f85b773ULL, 0x13a7c9c412efdbc3ULL, 0x16a43c888b7cb03eULL,
-  0x10dfba4cb616dc8eULL, 0x1a533100f1a8695eULL, 0x1c28b7c4ccc205eeULL,
-  0x0f4a27987ed502feULL, 0x0931a15c43bf6e4eULL, 0x03bd2a100401db9eULL,
-  0x05c6acd4396bb72eULL, 0x09bac08937270c64ULL, 0x0fc1464d0a4d60d4ULL,
-  0x054dcd014df3d504ULL, 0x03364bc57099b9b4ULL, 0x1054db99c28ebea4ULL,
-  0x162f5d5dffe4d214ULL, 0x1ca3d611b85a67c4ULL, 0x1ad850d585300b74ULL,
-  0x1fdba5991ca36089ULL, 0x19a0235d21c90c39ULL, 0x132ca8116677b9e9ULL,
-  0x15572ed55b1dd559ULL, 0x0635be89e90ad249ULL, 0x004e384dd460bef9ULL,
-  0x0ac2b30193de0b29ULL, 0x0cb935c5aeb46799ULL, 0x123a6bbb8f477dbdULL,
-  0x1441ed7fb22d110dULL, 0x1ecd6633f593a4ddULL, 0x18b6e0f7c8f9c86dULL,
-  0x0bd470ab7aeecf7dULL, 0x0daff66f4784a3cdULL, 0x07237d23003a161dULL,
-  0x0158fbe73d507aadULL, 0x045b0eaba4c31150ULL, 0x0220886f99a97de0ULL,
-  0x08ac0323de17c830ULL, 0x0ed785e7e37da480ULL, 0x1db515bb516aa390ULL,
-  0x1bce937f6c00cf20ULL, 0x114218332bbe7af0ULL, 0x17399ef716d41640ULL,
-  0x1b45f2aa1898ad0aULL, 0x1d3e746e25f2c1baULL, 0x17b2ff22624c746aULL,
-  0x11c979e65f2618daULL, 0x02abe9baed311fcaULL, 0x04d06f7ed05b737aULL,
-  0x0e5ce43297e5c6aaULL, 0x082762f6aa8faa1aULL, 0x0d2497ba331cc1e7ULL,
-  0x0b5f117e0e76ad57ULL, 0x01d39a3249c81887ULL, 0x07a81cf674a27437ULL,
-  0x14ca8caac6b57327ULL, 0x12b10a6efbdf1f97ULL, 0x183d8122bc61aa47ULL,
-  0x1e4607e6810bc6f7ULL
-};
+92d1372fd0358811a5f2670b99a6a304dadb7864
+diff --git a/update-index.c b/update-index.c
+index 1efac27..a8582ea 100644
+--- a/update-index.c
++++ b/update-index.c
+@@ -328,7 +328,7 @@ static int add_cacheinfo(unsigned int mo
+ 	return 0;
+ }
+ 
+-static int chmod_path(int flip, const char *path)
++static void chmod_path(int flip, const char *path)
+ {
+ 	int pos;
+ 	struct cache_entry *ce;
+@@ -336,21 +336,24 @@ static int chmod_path(int flip, const ch
+ 
+ 	pos = cache_name_pos(path, strlen(path));
+ 	if (pos < 0)
+-		return -1;
++		goto _fail;
+ 	ce = active_cache[pos];
+ 	mode = ntohl(ce->ce_mode);
+ 	if (!S_ISREG(mode))
+-		return -1;
++		goto _fail;
+ 	switch (flip) {
+ 	case '+':
+ 		ce->ce_mode |= htonl(0111); break;
+ 	case '-':
+ 		ce->ce_mode &= htonl(~0111); break;
+ 	default:
+-		return -1;
++		goto _fail;
+ 	}
+ 	active_cache_changed = 1;
+-	return 0;
++	report("chmod %cx '%s'", flip, path);
++	return;
++_fail:
++	die("git-update-index: cannot chmod %cx '%s'", flip, path);
+ }
+ 
+ static struct cache_file cache_file;
+@@ -478,6 +481,7 @@ int main(int argc, const char **argv)
+ 	int read_from_stdin = 0;
+ 	const char *prefix = setup_git_directory();
+ 	int prefix_length = prefix ? strlen(prefix) : 0;
++	char set_executable_bit = 0;
+ 
+ 	git_config(git_default_config);
+ 
+@@ -544,8 +548,7 @@ int main(int argc, const char **argv)
+ 			    !strcmp(path, "--chmod=+x")) {
+ 				if (argc <= i+1)
+ 					die("git-update-index: %s <path>", path);
+-				if (chmod_path(path[8], argv[++i]))
+-					die("git-update-index: %s cannot chmod %s", path, argv[i]);
++				set_executable_bit = path[8];
+ 				continue;
+ 			}
+ 			if (!strcmp(path, "--assume-unchanged")) {
+@@ -594,6 +597,8 @@ int main(int argc, const char **argv)
+ 			die("unknown option %s", path);
+ 		}
+ 		update_one(path, prefix, prefix_length);
++		if (set_executable_bit)
++			chmod_path(set_executable_bit, path);
+ 	}
+ 	if (read_from_stdin) {
+ 		struct strbuf buf;
+@@ -608,6 +613,10 @@ int main(int argc, const char **argv)
+ 			else
+ 				path_name = buf.buf;
+ 			update_one(path_name, prefix, prefix_length);
++			if (set_executable_bit) {
++				const char *p = prefix_path(prefix, prefix_length, path_name);
++				chmod_path(set_executable_bit, p);
++			}
+ 			if (path_name != buf.buf)
+ 				free(path_name);
+ 		}
+-- 
+1.3.0.gc2941
