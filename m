@@ -1,66 +1,72 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: weird pull behavior as of late
-Date: Mon, 24 Apr 2006 13:29:22 +0400
-Message-ID: <20060424132922.6e634188.vsu@altlinux.ru>
-References: <20060423.175953.52710961.davem@davemloft.net>
+From: "Bertrand Jacquin" <beber.mailing@gmail.com>
+Subject: Push over HTTP now works with refs/heads/foo instead of foo
+Date: Mon, 24 Apr 2006 11:36:13 +0200
+Message-ID: <4fb292fa0604240236m44bf1c0bm21f851a1f834f070@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="pgp-sha1";
- boundary="Signature=_Mon__24_Apr_2006_13_29_22_+0400_anQ9ln.HdBB7HFOV"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 24 11:29:36 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 24 11:36:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXxNu-0005Gc-2q
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 11:29:35 +0200
+	id 1FXxUR-0006KI-7E
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 11:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbWDXJ3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Apr 2006 05:29:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbWDXJ3b
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 05:29:31 -0400
-Received: from mivlgu.ru ([81.18.140.87]:42456 "EHLO mail.mivlgu.ru")
-	by vger.kernel.org with ESMTP id S932095AbWDXJ3a (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Apr 2006 05:29:30 -0400
-Received: from master.mivlgu.local (master.mivlgu.local [192.168.1.230])
-	by mail.mivlgu.ru (Postfix) with SMTP
-	id 4C6FC8053; Mon, 24 Apr 2006 13:29:25 +0400 (MSD)
-To: "David S. Miller" <davem@davemloft.net>
-In-Reply-To: <20060423.175953.52710961.davem@davemloft.net>
-X-Mailer: Sylpheed version 1.0.0beta4 (GTK+ 1.2.10; i586-alt-linux-gnu)
+	id S932099AbWDXJgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Apr 2006 05:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932100AbWDXJgP
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 05:36:15 -0400
+Received: from nproxy.gmail.com ([64.233.182.190]:31835 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932099AbWDXJgP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Apr 2006 05:36:15 -0400
+Received: by nproxy.gmail.com with SMTP id l24so858793nfc
+        for <git@vger.kernel.org>; Mon, 24 Apr 2006 02:36:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=PegKRer4pHgwODYXfI4dfktIhDIIwxe9G0fOGqagvUXqKrosoifu5fEtPxuLgefkteBqGNNRguWNZDspJfnSLVzgiyOu/d0xzHRUX07O6Bvzbnd6DyxTQkUjhvzFZ92W17SHzltII7YY0IPQ3HKkenGnllApab9HE8tZWAj48RE=
+Received: by 10.48.246.10 with SMTP id t10mr2622496nfh;
+        Mon, 24 Apr 2006 02:36:13 -0700 (PDT)
+Received: by 10.49.5.5 with HTTP; Mon, 24 Apr 2006 02:36:13 -0700 (PDT)
+To: pasky@suse.cz
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19094>
 
---Signature=_Mon__24_Apr_2006_13_29_22_+0400_anQ9ln.HdBB7HFOV
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hi,
 
-On Sun, 23 Apr 2006 17:59:53 -0700 (PDT) David S. Miller wrote:
+git-http-push now accept :
+git-http-push http://doo.com/git/bar.git/ master:refs/heads/pr/my_passwd
 
-> Fast forward
->  MAINTAINERS |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> I got 446 objects and this amounted to just a 4 line change to the
-> MAINTAINERS file? :-)
+instead of :
+git-http-push http://doo.com/git/bar.git/ master:pr/my_passwd
 
-I got the same problem recently and tracked it down to a stale diff.o
-object file inside libgit.a - apparently "ar rcs" does not recreate the
-archive from scratch.  After "make clean" the problem has vanished.
+And old syntax doesn't work anymore (unable to create remote branches).
 
---Signature=_Mon__24_Apr_2006_13_29_22_+0400_anQ9ln.HdBB7HFOV
-Content-Type: application/pgp-signature
+Here is a patch :
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+diff -Nur cogito-0.17.2/cg-push cogito-0.17.2-mine/cg-push
+--- cogito-0.17.2/cg-push	2006-04-08 03:02:49.000000000 +0200
++++ cogito-0.17.2-mine/cg-push	2006-04-24 11:33:34.748845600 +0200
+@@ -69,8 +69,7 @@
+ sprembranch=":refs/heads/$rembranch"
 
-iD8DBQFETJp1W82GfkQfsqIRApEjAJ4u17SqIVeIWErsh7K5HAPuTRi00gCeM/m+
-lKGSg/GCVvjXt3OU0LpCubA=
-=Y1Qo
------END PGP SIGNATURE-----
+ if [ "${uri#http://}" != "$uri" -o "${uri#https://}" != "$uri" ]; then
+-	# git-http-push doesn't like $sprembranch
+-	git-http-push "$uri/" "$locbranch:$rembranch" "${tags[@]}"
++	git-http-push "$uri/" "$locbranch$sprembranch" "${tags[@]}"
+ elif [ "${uri#git+ssh://}" != "$uri" ]; then
+  send_pack_update "$name" "$(echo "$uri" | sed
+'s#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" "$locbranch$sprembranch"
+"${tags[@]}"
+ elif [ "${uri#rsync://}" != "$uri" ]; then
 
---Signature=_Mon__24_Apr_2006_13_29_22_+0400_anQ9ln.HdBB7HFOV--
+
+--
+Beber
+#e.fr@freenode
