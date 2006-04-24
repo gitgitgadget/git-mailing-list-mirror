@@ -1,96 +1,140 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: RFC: New diff-delta.c implementation
-Date: Sun, 23 Apr 2006 22:57:41 -0400
-Message-ID: <20060424025741.GA636@adacore.com>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <444A2334.3030501@lsrfire.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 5/4] Minimum fixups to cache-tree
+Date: Sun, 23 Apr 2006 20:03:27 -0700
+Message-ID: <7v8xpvd69s.fsf_-_@assigned-by-dhcp.cox.net>
+References: <7v3bg3etnv.fsf@assigned-by-dhcp.cox.net>
+	<7vodyrdas9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 24 04:57:57 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 24 05:03:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXrGs-0002z9-PG
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 04:57:55 +0200
+	id 1FXrMN-0003h4-QT
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 05:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbWDXC5m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Apr 2006 22:57:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbWDXC5m
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Apr 2006 22:57:42 -0400
-Received: from nile.gnat.com ([205.232.38.5]:12974 "EHLO nile.gnat.com")
-	by vger.kernel.org with ESMTP id S1751495AbWDXC5l (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Apr 2006 22:57:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtered-nile.gnat.com (Postfix) with ESMTP id 4BB7A48CDCC;
-	Sun, 23 Apr 2006 22:57:41 -0400 (EDT)
-Received: from nile.gnat.com ([127.0.0.1])
- by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 00208-01-2; Sun, 23 Apr 2006 22:57:41 -0400 (EDT)
-Received: by nile.gnat.com (Postfix, from userid 4190)
-	id 246D348CC09; Sun, 23 Apr 2006 22:57:41 -0400 (EDT)
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Content-Disposition: inline
-In-Reply-To: <444A2334.3030501@lsrfire.ath.cx>
-User-Agent: Mutt/1.4.2.1i
+	id S1751498AbWDXDDa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Apr 2006 23:03:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbWDXDDa
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Apr 2006 23:03:30 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4531 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751498AbWDXDD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Apr 2006 23:03:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060424030329.MFO16517.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 23 Apr 2006 23:03:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vodyrdas9.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 23 Apr 2006 18:25:58 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19084>
 
-On Sat, Apr 22, 2006 at 02:36:04PM +0200, Rene Scharfe wrote:
-> Could you please send your code inline, not as an attachment?  And
-> possibly as a patch with a Signed-off-by: tag (see
-> Documentation/SubmittingPatches)?
-For various reasons, mostly to do with managing and searching huge
-mailboxes, I'm using Apple Mail. What sucks though is that automatic
-line wrapping can't be turned off. This never got fixed, so it's useless
-for posting inline patches. That said, I now leave a synchronized copy
-of the git repository on my mailserver and use mutt for this reply.
-Hopefully things will be better.
+The first hunk is the repeat of the previous "oops".  The second
+is a real fix.
 
-Note that I sent this code as a RFC, with explicit disclaimers about
-style. So, I did not want to sign off on this code, since I pretty
-much knew there would be some problems with the undocumented
-("proprietary", according the libxdiff site) file format. In contrast
-the GDIFF fileformat was documented very well, and I have a version
-of this code that works flawlessly with that format.
+With this applied, 100-patch series (going from present to past
+at the Linux 2.6 kernel tip) applies correctly with the
+following stats:
 
-> Regarding your FIXME comment about endianess: I think you are looking
-> for htonl().  Use it to convert the values from host byte order to
-> network byte order (= big endian) and you can get rid of those ugly
-> branches.
-Ah, I'll use that. It's of course a slight change that all processing
-now is big-endian centric, but that might actually even result in
-better code in this case. I'm just assuming any decent system has
-some highly optimized macro for this and will never do a function call.
-This is used in the most performance critical loops, and doing function
-calls here will lead to horrendous performance.
-> 
-> You can use "indent -npro -kr -i8 -ts8 -l80 -ss -ncs" to reformat your
-> code into a similar style as used in the rest of git (settings taken
-> from Lindent which is shipped with the Linux source).
-Although I cringe at 8-space indenting, and find much of the GIT
-code close to unreadable for lack of design-level comments, I'll
-gladly reformat any code to conform to existing code standards.
-Please let me know if you've got documentation on that, as it would
-be helpful for me to know what the standard is. (No flame intended. :-)
-> 
-> After converting to htonl() "make test" ran fine on my x86 box.  Here is
-> what I get when I try to repack the git repo, though:
-> 
->    $ git repack -a -d
->    Generating pack...
->    Done counting 18985 objects.
->    Deltifying 18985 objects.
->    git-pack-objects: diff-delta.c:766: create_delta: Assertion `ptr -
-> delta == (int)delta_size' failed.
-> 
-> Please let me know if you need more details.
-This was a result of incorrect calculation of the size of copy and
-data commands. I fixed this in a follow-up patch sent to the list.
-For any bug reports, they're easiest to fix if you can find a reproducer
-using test-delta.
+Trying w/o the patch...
+24.57user 4.48system 0:34.47elapsed 84%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+322156minor)pagefaults 0swaps
+Trying w/ the patch...
+15.81user 3.00system 0:20.84elapsed 90%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+252063minor)pagefaults 0swaps
 
-  -Geert
+So there definitely is an improvement.  *Grin*.
+
+The script used to bench this is attached at the end.  "linus" is the tracking
+branch and currently it points at v2.6.17-rc2-g6b426e7
+$HOME/git-master/bin is where I installed the "master" version,
+and $J (aka ../git.junio/) is the freshly compiled area with the
+patch series applied (all five of four ;-).
+
+-- >8 --
+Minimum fixups to make things usable.
+
+---
+diff --git a/apply.c b/apply.c
+index 5fa2c1e..e283df3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1935,8 +1935,6 @@ static int apply_patch(int fd, const cha
+ 				  active_cache_sha1) ||
+ 		    commit_index_file(&cache_file))
+ 			die("Unable to write new cachefile");
+-		cache_tree_update(active_cache_tree,
+-				  active_cache, active_nr, 1);
+ 		write_cache_tree(active_cache_sha1, active_cache_tree);
+ 	}
+ 
+diff --git a/cache-tree.c b/cache-tree.c
+index 4dbdb65..f6d1dd1 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -348,10 +348,7 @@ #endif
+ 	}
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		struct cache_tree_sub *down = it->down[i];
+-		int len = pathlen + down->namelen;
+-		memcpy(path + pathlen, down->name, down->namelen);
+-		path[len] = '/';
+-		buffer = write_one(down->cache_tree, path, len+1,
++		buffer = write_one(down->cache_tree, down->name, down->namelen,
+ 				   buffer, size, offset);
+ 	}
+ 	return buffer;
+
+--
+
+#!/bin/sh
+J=../git.junio
+M=$HOME/git-master/bin
+export J M
+
+git reset --hard linus
+
+previous=
+git rev-list -n 100 HEAD |
+while read commit
+do
+	if test -n "$previous"
+	then
+		git-diff-tree -p "$previous" "$commit" >"$commit-$previous"
+		echo "$commit $previous"
+	fi
+	previous="$commit"
+done >series
+
+git reset --hard linus
+echo "Trying w/o the patch..."
+/usr/bin/time sh -c '
+	while read commit previous
+	do
+		$M/git-apply --whitespace=nowarn --index "$commit-$previous"
+		$M/git-write-tree
+	done <series
+' >out-1
+tree1=`git write-tree`
+
+git reset --hard linus
+echo "Trying w/ the patch..."
+$J/git-write-tree
+/usr/bin/time sh -c '
+	while read commit previous
+	do
+		$J/git-apply --whitespace=nowarn --index "$commit-$previous"
+		$J/git-write-tree
+	done <series
+' >out-2
+tree2=`git write-tree`
+test "$tree1" = "$tree2" || exit 1
+cmp out-1 out-2
