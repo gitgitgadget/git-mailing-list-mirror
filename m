@@ -1,55 +1,69 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: weird pull behavior as of late
-Date: Mon, 24 Apr 2006 12:46:00 -0700 (PDT)
-Message-ID: <20060424.124600.93277140.davem@davemloft.net>
-References: <20060423.175953.52710961.davem@davemloft.net>
-	<20060424132922.6e634188.vsu@altlinux.ru>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: RFC: New diff-delta.c implementation
+Date: Mon, 24 Apr 2006 22:37:34 +0200
+Message-ID: <20060424203734.GH27689@pasky.or.cz>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <444A2334.3030501@lsrfire.ath.cx> <20060424025741.GA636@adacore.com> <Pine.LNX.4.64.0604232327500.3603@localhost.localdomain> <20060424151901.GA2663@adacore.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 24 21:46:16 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 24 22:37:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FY70h-0005BX-AP
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 21:46:15 +0200
+	id 1FY7oO-0006EA-V6
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 22:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177AbWDXTqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Apr 2006 15:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbWDXTqM
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 15:46:12 -0400
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:40353
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S1751177AbWDXTqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Apr 2006 15:46:11 -0400
-Received: from localhost ([127.0.0.1] ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.60)
-	(envelope-from <davem@davemloft.net>)
-	id 1FY70V-0008At-38; Mon, 24 Apr 2006 12:46:03 -0700
-To: vsu@altlinux.ru
-In-Reply-To: <20060424132922.6e634188.vsu@altlinux.ru>
-X-Mailer: Mew version 4.2.53 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S1751257AbWDXUhO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Apr 2006 16:37:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbWDXUhN
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 16:37:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:31170 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751152AbWDXUhM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Apr 2006 16:37:12 -0400
+Received: (qmail 17095 invoked by uid 2001); 24 Apr 2006 22:37:34 +0200
+To: Geert Bosch <bosch@adacore.com>
+Content-Disposition: inline
+In-Reply-To: <20060424151901.GA2663@adacore.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19108>
 
-From: Sergey Vlasov <vsu@altlinux.ru>
-Date: Mon, 24 Apr 2006 13:29:22 +0400
-
-> On Sun, 23 Apr 2006 17:59:53 -0700 (PDT) David S. Miller wrote:
+Dear diary, on Mon, Apr 24, 2006 at 05:19:01PM CEST, I got a letter
+where Geert Bosch <bosch@adacore.com> said that...
+> > But here comes the sad part.  Even after simplifying the code as much as 
+> > I could, performance is still significantly worse than the current 
+> > diff-delta.c code.  Repacking again the same Linux kernel repository 
+> > with the current code:
+> That's unexpected, but I can see how this could be if most files have
+> very few differences and are relatively small. For such cases, almost
+> any hash will do, and the more complicated hashing will be more compute
+> intensive.
 > 
-> > Fast forward
-> >  MAINTAINERS |    4 ++++
-> >  1 files changed, 4 insertions(+), 0 deletions(-)
-> > 
-> > I got 446 objects and this amounted to just a 4 line change to the
-> > MAINTAINERS file? :-)
 > 
-> I got the same problem recently and tracked it down to a stale diff.o
-> object file inside libgit.a - apparently "ar rcs" does not recreate the
-> archive from scratch.  After "make clean" the problem has vanished.
+> I have benchmarked my original diff code on a set of large files with
+> lots of changes. These are hardest to get right, and hardest to get
+> good performance with. Just try diffing any two large (uncompressed)
+> tar files, and you'll see. On many of such large files, the new code
+> is orders of magnitude faster. On these cases, the resulting deltas
+> are also much smaller.
+> 
+> The comparison is a bit between a O(n^2) sort that is fast on small
+> or mostly sorted inputs (but horrible on large ones) and a more
+> complex O(nlogn) algorithm that is a bit slower for the simple
+> cases, but far faster for more complex cases.
 
-Thanks, I'll give that a try.
+Can't you just switch between different delta algorithms based on some
+heuristic like the blob size?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
