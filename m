@@ -1,68 +1,65 @@
-From: Rutger Nijlunsing <rutger@nospam.com>
+From: Geert Bosch <bosch@adacore.com>
 Subject: Re: RFC: New diff-delta.c implementation
-Date: Mon, 24 Apr 2006 21:21:33 +0200
-Organization: M38c
-Message-ID: <20060424192133.GA6446@nospam.com>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <444A2334.3030501@lsrfire.ath.cx> <20060424025741.GA636@adacore.com> <Pine.LNX.4.64.0604232327500.3603@localhost.localdomain> <20060424151901.GA2663@adacore.com> <Pine.LNX.4.64.0604241123490.18520@localhost.localdomain>
-Reply-To: git@wingding.demon.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Geert Bosch <bosch@adacore.com>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 24 21:21:51 2006
+Date: Mon, 24 Apr 2006 15:23:15 -0400
+Message-ID: <0C184231-78A3-4517-89B2-2AE5C2CC9752@adacore.com>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <Pine.LNX.4.64.0604221333470.23166@alien.or.mcafeemobile.com> <20060423023144.GA17704@adacore.com> <Pine.LNX.4.64.0604241155000.18685@alien.or.mcafeemobile.com>
+Mime-Version: 1.0 (Apple Message framework v749.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 24 21:23:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FY6d3-0000mB-FO
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 21:21:49 +0200
+	id 1FY6eX-00011b-N7
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 21:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbWDXTVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Apr 2006 15:21:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751148AbWDXTVp
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 15:21:45 -0400
-Received: from post-23.mail.nl.demon.net ([194.159.73.193]:37837 "EHLO
-	post-23.mail.nl.demon.net") by vger.kernel.org with ESMTP
-	id S1751146AbWDXTVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Apr 2006 15:21:44 -0400
-Received: from wingding.demon.nl ([82.161.27.36]:37304)
-	by post-23.mail.nl.demon.net with esmtp (Exim 4.51)
-	id 1FY6cs-000Dk7-L0; Mon, 24 Apr 2006 19:21:39 +0000
-Received: from rutger by wingding.demon.nl with local (Exim 4.60)
-	(envelope-from <rutger@wingding.demon.nl>)
-	id 1FY6cn-0007dZ-Sw; Mon, 24 Apr 2006 21:21:34 +0200
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0604241123490.18520@localhost.localdomain>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1751150AbWDXTXT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Apr 2006 15:23:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751148AbWDXTXT
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 15:23:19 -0400
+Received: from nile.gnat.com ([205.232.38.5]:32194 "EHLO nile.gnat.com")
+	by vger.kernel.org with ESMTP id S1751150AbWDXTXS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Apr 2006 15:23:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP id EA5CD48CDF4;
+	Mon, 24 Apr 2006 15:23:17 -0400 (EDT)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 14527-01-9; Mon, 24 Apr 2006 15:23:17 -0400 (EDT)
+Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
+	by nile.gnat.com (Postfix) with ESMTP id C540E48CE3C;
+	Mon, 24 Apr 2006 15:23:17 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0604241155000.18685@alien.or.mcafeemobile.com>
+To: Davide Libenzi <davidel@xmailserver.org>
+X-Mailer: Apple Mail (2.749.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19103>
-
-On Mon, Apr 24, 2006 at 11:57:38AM -0400, Nicolas Pitre wrote:
-> On Mon, 24 Apr 2006, Geert Bosch wrote:
-> > 
-> > The comparison is a bit between a O(n^2) sort that is fast on small
-> > or mostly sorted inputs (but horrible on large ones) and a more
-> > complex O(nlogn) algorithm that is a bit slower for the simple
-> > cases, but far faster for more complex cases.
-> 
-> Indeed.  And since the primary goal for GIT is to manage relatively 
-> small files with relatively few differences then we have to optimize for 
-> that case while trying to simply limit the dammage in the other cases.
-
-Like others (the large-Maildir-storage thread comes to mind), I am
-looking into storing more diverse data (say, $HOME) into git repo's
-and I would mind the O(n log n) instead of O(n^2) where the constant
-factor of the first is larger than the constant factor of the second.
-
-...but then again, I'm just a user ;)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19104>
 
 
--- 
-Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
-never attribute to a conspiracy which can be explained by incompetence
-----------------------------------------------------------------------
+On Apr 24, 2006, at 15:10, Davide Libenzi wrote:
+> Right, but you are looking at highest equal-probability  
+> distribution over your hash buckets ;)
+> Anyway, thanks for bringing Rabin's polynomial fingerprint up from  
+> the forgotten lands. Performance and delta size are quite amazing,  
+> and I decided to add Rabin's delta to libxdiff.
+> I hacked some code (attached) to generate T/U tables. Since  
+> libxdiff must be portable everywhere, even on system w/out 64 bits  
+> support, I use xrabin to create both 64 bits tables (poly degree  
+> 61) and 32 bits tables (poly degree 31), and store them in a .c  
+> file letting the build environment to pick the correct one for the  
+> platform.
+
+It might actually make sense to use the 32-bit code for GIT
+as well, since it turns out that on the typical small source files
+with few differences, the full 64-bit Rabin is a problem for
+performance.
+
+When diffing large files (my main interest), this is more than
+offset by the better hash quality. For tiny files with few changes
+it appears to be overkill...
+
+   -Geert
