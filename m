@@ -1,80 +1,61 @@
-From: Kyle McMartin <kyle@parisc-linux.org>
-Subject: Re: weird pull behavior as of late
-Date: Sun, 23 Apr 2006 21:28:36 -0400
-Message-ID: <20060424012836.GC19550@quicksilver.road.mcmartin.ca>
-References: <20060423.175953.52710961.davem@davemloft.net> <7vy7xvdb3x.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/4] Invalidate cache-tree entries for touched paths in git-apply.
+Date: Sun, 23 Apr 2006 19:47:21 -0700
+Message-ID: <7vk69fd70m.fsf@assigned-by-dhcp.cox.net>
+References: <7v3bg3etnv.fsf@assigned-by-dhcp.cox.net>
+	<7vodyrdas9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "David S. Miller" <davem@davemloft.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 24 03:29:13 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 24 04:47:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FXpsz-0006z8-CS
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 03:29:09 +0200
+	id 1FXr6l-0001Zi-Bb
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 04:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbWDXB3G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Apr 2006 21:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbWDXB3G
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Apr 2006 21:29:06 -0400
-Received: from stout.engsoc.carleton.ca ([134.117.69.22]:57045 "EHLO
-	stout.engsoc.carleton.ca") by vger.kernel.org with ESMTP
-	id S1751477AbWDXB3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Apr 2006 21:29:05 -0400
-Received: from localhost (stout [127.0.0.1])
-	by stout.engsoc.carleton.ca (Postfix) with ESMTP id F07155840B0;
-	Sun, 23 Apr 2006 21:29:01 -0400 (EDT)
-Received: from fattire.cabal.ca (cabal.ca [134.117.69.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by stout.engsoc.carleton.ca (Postfix) with ESMTP id 63EEA5840A8;
-	Sun, 23 Apr 2006 21:29:01 -0400 (EDT)
-Received: from localhost (fattire.cabal.ca [127.0.0.1])
-	by fattire.cabal.ca (Postfix) with ESMTP id DD0ED23E83;
-	Sun, 23 Apr 2006 21:29:00 -0400 (EDT)
-Received: from fattire.cabal.ca ([127.0.0.1])
-	by localhost (fattire [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 15207-03; Sun, 23 Apr 2006 21:29:00 -0400 (EDT)
-Received: from quicksilver.road.mcmartin.ca (CPE0013d4367761-CM0012c9a9a56e.cpe.net.cable.rogers.com [70.25.68.171])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "quicksilver.road.mcmartin.ca", Issuer "There Is No Cabal Certificate Authority" (verified OK))
-	by fattire.cabal.ca (Postfix) with ESMTP id 9425923E82;
-	Sun, 23 Apr 2006 21:29:00 -0400 (EDT)
-Received: by quicksilver.road.mcmartin.ca (Postfix, from userid 1000)
-	id BB7663B04F; Sun, 23 Apr 2006 21:28:36 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy7xvdb3x.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at cabal.ca
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at engsoc.carleton.ca
+	id S1751493AbWDXCrY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Apr 2006 22:47:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbWDXCrY
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Apr 2006 22:47:24 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:49832 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751493AbWDXCrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Apr 2006 22:47:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060424024723.FKA16517.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 23 Apr 2006 22:47:23 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vodyrdas9.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 23 Apr 2006 18:25:58 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19082>
 
-On Sun, Apr 23, 2006 at 06:18:58PM -0700, Junio C Hamano wrote:
-> "David S. Miller" <davem@davemloft.net> writes:
-> 
-> > Updating from f4ffaa452e71495a06376f12f772342bc57051fc to 6b426e785cb81e53dc2fc4dcf997661472b470ef
-> > Fast forward
-> >  MAINTAINERS |    4 ++++
-> >  1 files changed, 4 insertions(+), 0 deletions(-)
-> >
-> > I got 446 objects and this amounted to just a 4 line change to the
-> > MAINTAINERS file? :-)
-> 
-> That is weird, certainly, and does not match what I am getting...
+Junio C Hamano <junkio@cox.net> writes:
+
+> Junio C Hamano <junkio@cox.net> writes:
 >
+>>  * ... then the big rock falls.  With this, I tried to apply and
+>>    then write-tree "diff-tree -p $commit^1 $commit" on top of
+>>    "$commit^1" for the last 20 or so commits in the kernel tree.
+>>    The "master" version takes 0.15 second per patch on my Duron
+>>    750 with 700MB, while this one does that in 0.06 second.
+>>    This also helps the memory pressure because we do not have to
+>>    regenerate unchanged trees.  810 minor faults with the patch
+>>    vs 2150 minor faults without.
+>
+> Sorry, but not really.  The patch is wrong and the measurement
+> was flawed.
 
-Hmm, I saw this when I did a git diff linus..master on my tree on hera
-before I sent the pull request, but when I did git request-pull it 
-had All The Right Stuff (tm), so I assumed I just mucked something up
-with my command-line options. When I looked at the tree in gitk,
-everything looked sane as well.
+Again, sorry, but there are some more bugs in the cache-tree
+code that I need to fix and re-measure.
 
-Hope I didn't break anything...
-
-Cheers,
-	Kyle 
+In the meantime, please do not use it on your production
+repositories.  It does not seem to produce corrupt trees, but it
+creates broken index.aux for no good reason.
