@@ -1,69 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: RFC: New diff-delta.c implementation
-Date: Mon, 24 Apr 2006 22:37:34 +0200
-Message-ID: <20060424203734.GH27689@pasky.or.cz>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <444A2334.3030501@lsrfire.ath.cx> <20060424025741.GA636@adacore.com> <Pine.LNX.4.64.0604232327500.3603@localhost.localdomain> <20060424151901.GA2663@adacore.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-stash to stash the working tree to a new tagged name
+Date: Mon, 24 Apr 2006 13:54:39 -0700
+Message-ID: <7vfyk27kz4.fsf@assigned-by-dhcp.cox.net>
+References: <8764kyzrwq.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 24 22:37:48 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 24 22:54:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FY7oO-0006EA-V6
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 22:37:37 +0200
+	id 1FY84x-00013d-Oc
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 22:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbWDXUhO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Apr 2006 16:37:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbWDXUhN
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 16:37:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31170 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751152AbWDXUhM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Apr 2006 16:37:12 -0400
-Received: (qmail 17095 invoked by uid 2001); 24 Apr 2006 22:37:34 +0200
-To: Geert Bosch <bosch@adacore.com>
-Content-Disposition: inline
-In-Reply-To: <20060424151901.GA2663@adacore.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751264AbWDXUyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Apr 2006 16:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWDXUyl
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 16:54:41 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:46523 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751264AbWDXUyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Apr 2006 16:54:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060424205440.IUKR17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 24 Apr 2006 16:54:40 -0400
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <8764kyzrwq.wl%cworth@cworth.org> (Carl Worth's message of "Mon,
+	24 Apr 2006 12:37:25 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19109>
 
-Dear diary, on Mon, Apr 24, 2006 at 05:19:01PM CEST, I got a letter
-where Geert Bosch <bosch@adacore.com> said that...
-> > But here comes the sad part.  Even after simplifying the code as much as 
-> > I could, performance is still significantly worse than the current 
-> > diff-delta.c code.  Repacking again the same Linux kernel repository 
-> > with the current code:
-> That's unexpected, but I can see how this could be if most files have
-> very few differences and are relatively small. For such cases, almost
-> any hash will do, and the more complicated hashing will be more compute
-> intensive.
-> 
-> 
-> I have benchmarked my original diff code on a set of large files with
-> lots of changes. These are hardest to get right, and hardest to get
-> good performance with. Just try diffing any two large (uncompressed)
-> tar files, and you'll see. On many of such large files, the new code
-> is orders of magnitude faster. On these cases, the resulting deltas
-> are also much smaller.
-> 
-> The comparison is a bit between a O(n^2) sort that is fast on small
-> or mostly sorted inputs (but horrible on large ones) and a more
-> complex O(nlogn) algorithm that is a bit slower for the simple
-> cases, but far faster for more complex cases.
+Carl Worth <cworth@cworth.org> writes:
 
-Can't you just switch between different delta algorithms based on some
-heuristic like the blob size?
+> Stashing (on branch 'feature'):
+>
+> 	git commit -a -m 'snapshot WIP'
+>
+> Recovering:
+>
+> 	git checkout feature
+> 	git reset --soft HEAD^
+> 	git reset
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+If I were doing this today, I would probably do this:
+
+	git commit -a -m 'WIP'
+
+        git checkout elsewhere ;# interrupted
+        ... hack hack hack ...
+
+        git checkout feature ;# come back
+        ... hack hack hack ...
+        git commit --amend
+
+But I wonder why the originally suggested sequence is reset soft
+to the state we want and then another reset.  Without
+experimenting myself or thinking hard about it, I would expect
+"git reset HEAD^" should do what we want, in which case:
+
+Stashing (on branch 'feature'):
+
+	git commit -a -m 'snapshot WIP'
+
+Recovering:
+
+	git checkout feature
+	git reset HEAD^
