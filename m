@@ -1,73 +1,253 @@
-From: Geert Bosch <bosch@adacore.com>
+From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: RFC: New diff-delta.c implementation
-Date: Mon, 24 Apr 2006 14:44:24 -0400
-Message-ID: <A175169A-0875-4DEF-BE97-C556325EB6DB@adacore.com>
-References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <444A2334.3030501@lsrfire.ath.cx> <20060424025741.GA636@adacore.com> <Pine.LNX.4.64.0604232327500.3603@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v749.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 24 20:44:53 2006
+Date: Mon, 24 Apr 2006 12:10:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604241155000.18685@alien.or.mcafeemobile.com>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com>
+ <Pine.LNX.4.64.0604221333470.23166@alien.or.mcafeemobile.com>
+ <20060423023144.GA17704@adacore.com>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="1795850513-1644844784-1145905832=:18685"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 24 21:11:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FY62t-00020X-NW
-	for gcvg-git@gmane.org; Mon, 24 Apr 2006 20:44:28 +0200
+	id 1FY6SX-0007AN-7i
+	for gcvg-git@gmane.org; Mon, 24 Apr 2006 21:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbWDXSoY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Apr 2006 14:44:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbWDXSoY
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 14:44:24 -0400
-Received: from nile.gnat.com ([205.232.38.5]:6588 "EHLO nile.gnat.com")
-	by vger.kernel.org with ESMTP id S1750705AbWDXSoY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Apr 2006 14:44:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtered-nile.gnat.com (Postfix) with ESMTP id 7E81A48CC5A;
-	Mon, 24 Apr 2006 14:44:23 -0400 (EDT)
-Received: from nile.gnat.com ([127.0.0.1])
- by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 21579-01-2; Mon, 24 Apr 2006 14:44:23 -0400 (EDT)
-Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
-	by nile.gnat.com (Postfix) with ESMTP id 5200948CC13;
-	Mon, 24 Apr 2006 14:44:23 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0604232327500.3603@localhost.localdomain>
-To: Nicolas Pitre <nico@cam.org>
-X-Mailer: Apple Mail (2.749.3)
+	id S1751135AbWDXTKg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Apr 2006 15:10:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbWDXTKg
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Apr 2006 15:10:36 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:33716 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1751135AbWDXTKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Apr 2006 15:10:35 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1CBD2C> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Mon, 24 Apr 2006 12:10:32 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Geert Bosch <bosch@adacore.com>
+In-Reply-To: <20060423023144.GA17704@adacore.com>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19101>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--1795850513-1644844784-1145905832=:18685
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+
+On Sat, 22 Apr 2006, Geert Bosch wrote:
+
+> On Sat, Apr 22, 2006 at 01:36:07PM -0700, Davide Libenzi wrote:
+>> Geert, I saw you're using a shift of 55 bits, that gives an degree of the
+>> root polynomial of 63, that is not prime. Where did you get the root
+>> polynomial, and why you did not chose 61 as degree of the root?
+>> Just curious ...
+>
+> The polynomial was randomly created using code by David Mazieres, that
+> is part of LBFS. I chose a (irreducible) polynomial of degree 63 as
+> that was the same as LBFS did. As for my purposes it's best to have
+> a constant polynomial and I wanted to have all the code for
+> the computations in the same compilation unit for performance,
+> I decided to just have a little program print out the tables
+> and include it directly. The chosen polynomial was 0xb15e234bd3792f63.
+>
+> Later on I haven't revisited this decision, although I agree that
+> it'd probably be a good idea to use a polynomial of prime degree,
+> even though we're not looking for cryptographically strong hashes here.
+
+Right, but you are looking at highest equal-probability distribution over 
+your hash buckets ;)
+Anyway, thanks for bringing Rabin's polynomial fingerprint up from the 
+forgotten lands. Performance and delta size are quite amazing, and I 
+decided to add Rabin's delta to libxdiff.
+I hacked some code (attached) to generate T/U tables. Since libxdiff must 
+be portable everywhere, even on system w/out 64 bits support, I use xrabin 
+to create both 64 bits tables (poly degree 61) and 32 bits tables (poly 
+degree 31), and store them in a .c file letting the build environment to 
+pick the correct one for the platform.
 
 
-On Apr 24, 2006, at 01:27, Nicolas Pitre wrote:
-> But here comes the sad part.  Even after simplifying the code as  
-> much as
-> I could, performance is still significantly worse than the current
-> diff-delta.c code.  Repacking again the same Linux kernel repository
-> with the current code:
 
-Changing the level parameter in the call to init_idx to 0
-gives a significant speedup. After that, by far the most
-time is spent computing hashes. I have some ideas of
-cutting down on that for this test case.
-> The final pack is smaller with your code but not significantly:
-> 117867049 bytes vs 118824550 bytes with the current code, i.e. less  
-> than
-> 1% difference.
+- Davide
 
-I'm doing tests on the git.git repository now, and even though
-I see similar performance, I noted that the new algorithm packs
-more files, so the pack size is not the only thing to look at.
-Still, it remains the case that when you compare two files with
-just one or two changes, the simplest algorithm is still good
-enough.
 
-It will be very interesting how things will work out when
-comparing 10 files at a time. Then the extra cost of building the
-index isn't that significant, and the higher quality of the index
-may then pay off.
+--1795850513-1644844784-1145905832=:18685
+Content-Type: TEXT/x-csrc; charset=US-ASCII; name=xrabin.c
+Content-Transfer-Encoding: BASE64
+Content-Description: 
+Content-Disposition: attachment; filename=xrabin.c
 
-   -Geert
+LyoNCiAqICB4cmFiaW4gYnkgRGF2aWRlIExpYmVuemkgKFJhYmluJ3MgcG9s
+eW5vbWlhbCBnZW5lcmF0b3IpDQogKiAgQ29weXJpZ2h0IChDKSAyMDA2ICBE
+YXZpZGUgTGliZW56aQ0KICoNCiAqICBUaGlzIHByb2dyYW0gaXMgZnJlZSBz
+b2Z0d2FyZTsgeW91IGNhbiByZWRpc3RyaWJ1dGUgaXQgYW5kL29yIG1vZGlm
+eQ0KICogIGl0IHVuZGVyIHRoZSB0ZXJtcyBvZiB0aGUgR05VIEdlbmVyYWwg
+UHVibGljIExpY2Vuc2UgYXMgcHVibGlzaGVkIGJ5DQogKiAgdGhlIEZyZWUg
+U29mdHdhcmUgRm91bmRhdGlvbjsgZWl0aGVyIHZlcnNpb24gMiBvZiB0aGUg
+TGljZW5zZSwgb3INCiAqICAoYXQgeW91ciBvcHRpb24pIGFueSBsYXRlciB2
+ZXJzaW9uLg0KICoNCiAqICBUaGlzIHByb2dyYW0gaXMgZGlzdHJpYnV0ZWQg
+aW4gdGhlIGhvcGUgdGhhdCBpdCB3aWxsIGJlIHVzZWZ1bCwNCiAqICBidXQg
+V0lUSE9VVCBBTlkgV0FSUkFOVFk7IHdpdGhvdXQgZXZlbiB0aGUgaW1wbGll
+ZCB3YXJyYW50eSBvZg0KICogIE1FUkNIQU5UQUJJTElUWSBvciBGSVRORVNT
+IEZPUiBBIFBBUlRJQ1VMQVIgUFVSUE9TRS4gIFNlZSB0aGUNCiAqICBHTlUg
+R2VuZXJhbCBQdWJsaWMgTGljZW5zZSBmb3IgbW9yZSBkZXRhaWxzLg0KICoN
+CiAqICBZb3Ugc2hvdWxkIGhhdmUgcmVjZWl2ZWQgYSBjb3B5IG9mIHRoZSBH
+TlUgR2VuZXJhbCBQdWJsaWMgTGljZW5zZQ0KICogIGFsb25nIHdpdGggdGhp
+cyBwcm9ncmFtOyBpZiBub3QsIHdyaXRlIHRvIHRoZSBGcmVlIFNvZnR3YXJl
+DQogKiAgRm91bmRhdGlvbiwgSW5jLiwgNTkgVGVtcGxlIFBsYWNlLCBTdWl0
+ZSAzMzAsIEJvc3RvbiwgTUEgIDAyMTExLTEzMDcgIFVTQQ0KICoNCiAqICBE
+YXZpZGUgTGliZW56aSA8ZGF2aWRlbEB4bWFpbHNlcnZlci5vcmc+DQogKg0K
+ICoNCiAqICBIaW50cywgaWRlYXMgYW5kIGNvZGUgZm9yIHRoZSBpbXBsZW1l
+bnRhdGlvbiBjYW1lIGZyb206DQogKg0KICogIFJhYmluJ3Mgb3JpZ2luYWwg
+cGFwZXI6IGh0dHA6Ly93d3cueG1haWxzZXJ2ZXIub3JnL3JhYmluLnBkZg0K
+ICogIENoYW4gJiBMdSdzIHBhcGVyOiAgICAgIGh0dHA6Ly93d3cueG1haWxz
+ZXJ2ZXIub3JnL3JhYmluX2ltcGwucGRmDQogKiAgQnJvZGVyJ3MgcGFwZXI6
+ICAgICAgICAgaHR0cDovL3d3dy54bWFpbHNlcnZlci5vcmcvcmFiaW5fYXBw
+cy5wZGYNCiAqICBMQkZTIHNvdXJjZSBjb2RlOiAgICAgICBodHRwOi8vd3d3
+LmZzLm5ldC9zZnN3d3cvbGJmcy8NCiAqICBHZWVydCBCb3NjaCdzIHBvc3Q6
+ICAgICBodHRwOi8vbWFyYy50aGVhaW1zZ3JvdXAuY29tLz9sPWdpdCZtPTEx
+NDU2NTQyNDYyMDc3MSZ3PTINCiAqDQogKi8NCg0KI2luY2x1ZGUgPHN0ZGlv
+Lmg+DQojaW5jbHVkZSA8c3RkbGliLmg+DQojaW5jbHVkZSA8c3RyaW5nLmg+
+DQojaW5jbHVkZSA8dGltZS5oPg0KDQoNCg0KI2lmIGRlZmluZWQoV0lOMzIp
+DQojZGVmaW5lIHN0cnRvbGwgX3N0cnRvaTY0DQojZW5kaWYNCg0KDQojaWYg
+IWRlZmluZWQoWFJBQl9XT1JEX1RZUEUpDQojaWYgZGVmaW5lZChXSU4zMikN
+CiNkZWZpbmUgWFJBQl9XT1JEX1RZUEUgX19pbnQ2NA0KDQojZWxzZSAvKiAj
+aWYgZGVmaW5lZChXSU4zMikgKi8NCiNkZWZpbmUgWFJBQl9XT1JEX1RZUEUg
+bG9uZyBsb25nDQoNCiNlbmRpZiAvKiAjaWYgZGVmaW5lZChXSU4zMikgKi8N
+CiNlbmRpZiAvKiAjaWYgIWRlZmluZWQoWFJBQl9XT1JEX1RZUEUpICovDQoN
+CiNpZiAhZGVmaW5lZChYUkFCX1dPUkRfUEZNVCkNCiNpZiBkZWZpbmVkKFdJ
+TjMyKQ0KI2RlZmluZSBYUkFCX1dPUkRfUEZNVCAiMHglSTY0eCINCg0KI2Vs
+c2UgLyogI2lmIGRlZmluZWQoV0lOMzIpICovDQojZGVmaW5lIFhSQUJfV09S
+RF9QRk1UICIweCVsbHgiDQoNCiNlbmRpZiAvKiAjaWYgZGVmaW5lZChXSU4z
+MikgKi8NCiNlbmRpZiAvKiAjaWYgIWRlZmluZWQoWFJBQl9XT1JEX1BGTVQp
+ICovDQoNCiNkZWZpbmUgWFBMWVdfQklUUyAoc2l6ZW9mKHhwbHlfd29yZCkg
+KiA4KQ0KI2RlZmluZSBYUExZV19NU0IgKCh4cGx5X3dvcmQpIDEgPDwgKHNp
+emVvZih4cGx5X3dvcmQpICogOCAtIDEpKQ0KDQoNCg0KdHlwZWRlZiB1bnNp
+Z25lZCBYUkFCX1dPUkRfVFlQRSB4cGx5X3dvcmQ7DQoNCg0KDQoNCnN0YXRp
+YyBpbnQgeHJhYl9pc3ByaW1lKGludCBuKSB7DQoNCglpZiAobiA+IDMpIHsN
+CgkJaWYgKG4gJiAxKSB7DQoJCQlpbnQgaSwgaG4gPSBuIC8gMjsNCg0KCQkJ
+Zm9yIChpID0gMzsgaSA8IGhuOyBpICs9IDIpDQoJCQkJaWYgKCEobiAlIGkp
+KQ0KCQkJCQlyZXR1cm4gMDsNCgkJfSBlbHNlDQoJCQlyZXR1cm4gMDsNCgl9
+DQoNCglyZXR1cm4gMTsNCn0NCg0Kc3RhdGljIGludCB4cmFiX2Zscyh4cGx5
+X3dvcmQgdikgew0KCWludCByLCBzOw0KCXhwbHlfd29yZCBtYXNrID0gfigo
+KHhwbHlfd29yZCkgMSA8PCAoWFBMWVdfQklUUyAvIDIpKSAtIDEpOw0KDQoJ
+aWYgKHYgPT0gMCkNCgkJcmV0dXJuIDA7DQoJZm9yIChyID0gWFBMWVdfQklU
+UywgcyA9IHIgLyAyOyBzICE9IDA7KSB7DQoJCWlmICgodiAmIG1hc2spID09
+IDApIHsNCgkJCXYgPDw9IHM7DQoJCQlyIC09IHM7DQoJCX0NCgkJcyAvPSAy
+Ow0KCQltYXNrIDw8PSBzOw0KCX0NCg0KCXJldHVybiByOw0KfQ0KDQpzdGF0
+aWMgeHBseV93b3JkIHhyYWJfcG9seW1vZCh4cGx5X3dvcmQgbmgsIHhwbHlf
+d29yZCBubCwgeHBseV93b3JkIGQpIHsNCglpbnQgaSwgayA9IHhyYWJfZmxz
+KGQpIC0gMTsNCg0KCWQgPDw9IChYUExZV19CSVRTIC0gMSkgLSBrOw0KCWlm
+IChuaCkgew0KCQlpZiAobmggJiBYUExZV19NU0IpDQoJCQluaCBePSBkOw0K
+CQlmb3IgKGkgPSBYUExZV19CSVRTIC0gMjsgaSA+PSAwOyBpLS0pDQoJCQlp
+ZiAobmggJiAoKHhwbHlfd29yZCkgMSkgPDwgaSkgew0KCQkJCW5oIF49IGQg
+Pj4gKFhQTFlXX0JJVFMgLSAxKSAtIGk7DQoJCQkJbmwgXj0gZCA8PCBpICsg
+MTsNCgkJCX0NCgl9DQoJZm9yIChpID0gWFBMWVdfQklUUyAtIDE7IGkgPj0g
+azsgaS0tKQ0KCQlpZiAobmwgJiAoKHhwbHlfd29yZCkgMSA8PCBpKSkNCgkJ
+CW5sIF49IGQgPj4gKFhQTFlXX0JJVFMgLSAxKSAtIGk7DQoNCglyZXR1cm4g
+bmw7DQp9DQoNCnN0YXRpYyB4cGx5X3dvcmQgeHJhYl9wb2x5Z2NkKHhwbHlf
+d29yZCB4LCB4cGx5X3dvcmQgeSkgew0KDQoJZm9yICg7Oykgew0KCQlpZiAo
+IXkpDQoJCQlyZXR1cm4geDsNCgkJeCA9IHhyYWJfcG9seW1vZCgwLCB4LCB5
+KTsNCgkJaWYgKCF4KQ0KCQkJcmV0dXJuIHk7DQoJCXkgPSB4cmFiX3BvbHlt
+b2QoMCwgeSwgeCk7DQoJfQ0KfQ0KDQpzdGF0aWMgdm9pZCB4cmFiX3BvbHlt
+dWx0KHhwbHlfd29yZCAqcGhwLCB4cGx5X3dvcmQgKnBscCwgeHBseV93b3Jk
+IHgsDQoJCQkgIHhwbHlfd29yZCB5KSB7DQoJaW50IGk7DQoJeHBseV93b3Jk
+IHBoID0gMCwgcGwgPSAwOw0KDQoJaWYgKHggJiAxKQ0KCQlwbCA9IHk7DQoJ
+Zm9yIChpID0gMTsgaSA8IFhQTFlXX0JJVFM7IGkrKykNCgkJaWYgKHggJiAo
+KCh4cGx5X3dvcmQpIDEpIDw8IGkpKSB7DQoJCQlwaCBePSB5ID4+IChYUExZ
+V19CSVRTIC0gaSk7DQoJCQlwbCBePSB5IDw8IGk7DQoJCX0NCglpZiAocGhw
+KQ0KCQkqcGhwID0gcGg7DQoJaWYgKHBscCkNCgkJKnBscCA9IHBsOw0KfQ0K
+DQpzdGF0aWMgeHBseV93b3JkIHhyYWJfcG9seW1tdWx0KHhwbHlfd29yZCB4
+LCB4cGx5X3dvcmQgeSwgeHBseV93b3JkIGQpIHsNCgl4cGx5X3dvcmQgaCwg
+bDsNCg0KCXhyYWJfcG9seW11bHQoJmgsICZsLCB4LCB5KTsNCg0KCXJldHVy
+biB4cmFiX3BvbHltb2QoaCwgbCwgZCk7DQp9DQoNCnN0YXRpYyBpbnQgeHJh
+Yl9wb2x5aXJyZWR1Y2libGUoeHBseV93b3JkIGYpIHsNCgl4cGx5X3dvcmQg
+dSA9IDI7DQoJaW50IGksIG0gPSAoeHJhYl9mbHMoZikgLSAxKSA+PiAxOw0K
+DQoJZm9yIChpID0gMDsgaSA8IG07IGkrKykgew0KCQl1ID0geHJhYl9wb2x5
+bW11bHQodSwgdSwgZik7DQoJCWlmICh4cmFiX3BvbHlnY2QoZiwgdSBeIDIp
+ICE9IDEpDQoJCQlyZXR1cm4gMDsNCgl9DQoNCglyZXR1cm4gMTsNCn0NCg0K
+c3RhdGljIHZvaWQgeHJhYl9ybmRnZW4oeHBseV93b3JkICpmKSB7DQoJdW5z
+aWduZWQgaW50IGk7DQoJeHBseV93b3JkIGc7DQoNCglmb3IgKGkgPSAwLCBn
+ID0gMDsgaSA8IHNpemVvZih4cGx5X3dvcmQpOyBpKyspDQoJCWcgXj0gKGcg
+PDwgMTEpICsgKHVuc2lnbmVkIGludCkgcmFuZCgpICsgKGcgPj4gNyk7DQoJ
+KmYgPSBnOw0KfQ0KDQpzdGF0aWMgaW50IHhyYWJfcG9seWdlbihpbnQgZGVn
+cmVlLCB4cGx5X3dvcmQgKnBseSkgew0KCXhwbHlfd29yZCBtc2IsIG1hc2ss
+IGY7DQoNCglpZiAoZGVncmVlIDw9IDAgfHwgZGVncmVlID49IFhQTFlXX0JJ
+VFMpDQoJCXJldHVybiAtMTsNCgltc2IgPSAoKHhwbHlfd29yZCkgMSkgPDwg
+ZGVncmVlOw0KCW1hc2sgPSBtc2IgLSAxOw0KCXNyYW5kKHRpbWUoTlVMTCkp
+Ow0KCWRvIHsNCgkJeHJhYl9ybmRnZW4oJmYpOw0KCQlmID0gKGYgJiBtYXNr
+KSB8IG1zYjsNCgl9IHdoaWxlICgheHJhYl9wb2x5aXJyZWR1Y2libGUoZikp
+Ow0KCSpwbHkgPSBmOw0KDQoJcmV0dXJuIDA7DQp9DQoNCnN0YXRpYyBpbnQg
+eGFyYl9jYWxjX3R1KHhwbHlfd29yZCBwb2x5LCBpbnQgc2l6ZSwgeHBseV93
+b3JkICp0LCB4cGx5X3dvcmQgKnUpIHsNCglpbnQgaiwgeHNoaWZ0LCBzaGlm
+dDsNCgl4cGx5X3dvcmQgdDEsIHNzaDsNCg0KCXhzaGlmdCA9IHhyYWJfZmxz
+KHBvbHkpIC0gMTsNCglzaGlmdCA9IHhzaGlmdCAtIDg7DQoJaWYgKHNoaWZ0
+IDwgMCkNCgkJcmV0dXJuIC0xOw0KCXQxID0geHJhYl9wb2x5bW9kKDAsICgo
+eHBseV93b3JkKSAxKSA8PCB4c2hpZnQsIHBvbHkpOw0KCWZvciAoaiA9IDA7
+IGogPCAyNTY7IGorKykNCgkJdFtqXSA9IHhyYWJfcG9seW1tdWx0KGosIHQx
+LCBwb2x5KSB8ICgoeHBseV93b3JkKSBqIDw8IHhzaGlmdCk7DQoJZm9yIChq
+ID0gMSwgc3NoID0gMTsgaiA8IHNpemU7IGorKykNCgkJc3NoID0gKHNzaCA8
+PCA4KSBeIHRbc3NoID4+IHNoaWZ0XTsNCglmb3IgKGogPSAwOyBqIDwgMjU2
+OyBqKyspDQoJCXVbal0gPSB4cmFiX3BvbHltbXVsdChqLCBzc2gsIHBvbHkp
+Ow0KDQoJcmV0dXJuIDA7DQp9DQoNCmludCBtYWluKGludCBhYywgY2hhciAq
+KmF2KSB7DQoJaW50IGksIHNpemUgPSAyNCwgZGVncmVlID0gMCwgc2hpZnQ7
+DQoJeHBseV93b3JkIHBseSA9IDAsIHRbMjU2XSwgdVsyNTZdOw0KDQoJZm9y
+IChpID0gMTsgaSA8IGFjOyBpKyspIHsNCgkJaWYgKHN0cmNtcChhdltpXSwg
+Ii1zIikgPT0gMCkgew0KCQkJaWYgKCsraSA8IGFjKQ0KCQkJCXNpemUgPSBh
+dG9sKGF2W2ldKTsNCgkJfSBlbHNlIGlmIChzdHJjbXAoYXZbaV0sICItcCIp
+ID09IDApIHsNCgkJCWlmICgrK2kgPCBhYykNCgkJCQlwbHkgPSAoeHBseV93
+b3JkKSBzdHJ0b2xsKGF2W2ldLCBOVUxMLCAxNik7DQoJCX0gZWxzZSBpZiAo
+c3RyY21wKGF2W2ldLCAiLWQiKSA9PSAwKSB7DQoJCQlpZiAoKytpIDwgYWMp
+DQoJCQkJZGVncmVlID0gYXRvbChhdltpXSk7DQoJCX0NCgl9DQoJaWYgKGRl
+Z3JlZSAmJiAoZGVncmVlIDwgOCB8fCBkZWdyZWUgPj0gWFBMWVdfQklUUykp
+IHsNCgkJZnByaW50ZihzdGRlcnIsICJkZWdyZWUgKCVkKSBvdXQgb2YgYm91
+bmQgZm9yIHRoZSBwb2x5IHdvcmQgc2l6ZSAoOC4uJXUpXG4iLA0KCQkJZGVn
+cmVlLCBYUExZV19CSVRTKTsNCgkJcmV0dXJuIDE7DQoJfQ0KCWlmIChkZWdy
+ZWUgPT0gMCkNCgkJZm9yIChkZWdyZWUgPSBYUExZV19CSVRTIC0gMTsgIXhy
+YWJfaXNwcmltZShkZWdyZWUpOyBkZWdyZWUtLSk7DQoJaWYgKHBseSA9PSAw
+ICYmIHhyYWJfcG9seWdlbihkZWdyZWUsICZwbHkpIDwgMCkNCgkJcmV0dXJu
+IDI7DQoJc2hpZnQgPSAoeHJhYl9mbHMocGx5KSAtIDEpIC0gODsNCglmcHJp
+bnRmKHN0ZGVyciwgImZvdW5kIHBvbHkgPSAiIFhSQUJfV09SRF9QRk1UICIg
+IChzaGlmdCAlZClcbiIsDQoJCXBseSwgc2hpZnQpOw0KCWlmICh4YXJiX2Nh
+bGNfdHUocGx5LCBzaXplLCB0LCB1KSA8IDApDQoJCXJldHVybiAzOw0KDQoJ
+ZnByaW50ZihzdGRvdXQsICIjaWYgZGVmaW5lZChYUkFCUExZX1RZUEUlZClc
+blxuIiwgWFBMWVdfQklUUyk7DQoJZnByaW50ZihzdGRvdXQsICIjaWYgIWRl
+ZmluZWQoWFYlZClcbiIsIFhQTFlXX0JJVFMpOw0KCWZwcmludGYoc3Rkb3V0
+LCAiI2RlZmluZSBYViVkKHYpICgoeHBseV93b3JkKSB2ICMjIFVMTClcbiIs
+IFhQTFlXX0JJVFMpOw0KCWZwcmludGYoc3Rkb3V0LCAiI2VuZGlmXG5cbiIp
+Ow0KCWZwcmludGYoc3Rkb3V0LCAiI2RlZmluZSBYUkFCX1JPT1RQT0xZIFhW
+JWQoIiBYUkFCX1dPUkRfUEZNVCAiKVxuXG4iLA0KCQlYUExZV19CSVRTLCBw
+bHkpOw0KCWZwcmludGYoc3Rkb3V0LCAiI2RlZmluZSBYUkFCX1NISUZUICVk
+XG4iLCBzaGlmdCk7DQoJZnByaW50ZihzdGRvdXQsICIjZGVmaW5lIFhSQUJf
+V05EU0laRSAlZFxuXG4iLCBzaXplKTsNCglmcHJpbnRmKHN0ZG91dCwgInR5
+cGVkZWYgdW5zaWduZWQgWFJBQlBMWV9UWVBFJWQgeHBseV93b3JkO1xuXG4i
+LCBYUExZV19CSVRTKTsNCglmcHJpbnRmKHN0ZG91dCwgInN0YXRpYyBjb25z
+dCB4cGx5X3dvcmQgVFsyNTZdID0ge1xuIik7DQoJZm9yIChpID0gMDsgaSA8
+IDI1NjsgaSsrKSB7DQoJCWlmIChpKSB7DQoJCQlmcHV0cygiLCIsIHN0ZG91
+dCk7DQoJCQlpZiAoaSAlIDQgPT0gMCkNCgkJCQlmcHV0cygiXG5cdCIsIHN0
+ZG91dCk7DQoJCQllbHNlDQoJCQkJZnB1dHMoIiAiLCBzdGRvdXQpOw0KCQl9
+IGVsc2UNCgkJCWZwdXRzKCJcdCIsIHN0ZG91dCk7DQoJCWZwcmludGYoc3Rk
+b3V0LCAiWFYlZCgiIFhSQUJfV09SRF9QRk1UICIpIiwgWFBMWVdfQklUUywg
+dFtpXSk7DQoJfQ0KCWZwcmludGYoc3Rkb3V0LCAiXG59O1xuXG4iKTsNCg0K
+CWZwcmludGYoc3Rkb3V0LCAic3RhdGljIGNvbnN0IHhwbHlfd29yZCBVWzI1
+Nl0gPSB7XG4iKTsNCglmb3IgKGkgPSAwOyBpIDwgMjU2OyBpKyspIHsNCgkJ
+aWYgKGkpIHsNCgkJCWZwdXRzKCIsIiwgc3Rkb3V0KTsNCgkJCWlmIChpICUg
+NCA9PSAwKQ0KCQkJCWZwdXRzKCJcblx0Iiwgc3Rkb3V0KTsNCgkJCWVsc2UN
+CgkJCQlmcHV0cygiICIsIHN0ZG91dCk7DQoJCX0gZWxzZQ0KCQkJZnB1dHMo
+Ilx0Iiwgc3Rkb3V0KTsNCgkJZnByaW50ZihzdGRvdXQsICJYViVkKCIgWFJB
+Ql9XT1JEX1BGTVQgIikiLCBYUExZV19CSVRTLCB1W2ldKTsNCgl9DQoJZnBy
+aW50ZihzdGRvdXQsICJcbn07XG5cbiIpOw0KDQoJZnByaW50ZihzdGRvdXQs
+ICIjZW5kaWYgLyogaWYgZGVmaW5lZChYUkFCUExZX1RZUEUlZCkgKi9cblxu
+IiwgWFBMWVdfQklUUyk7DQoNCglyZXR1cm4gMDsNCn0NCg0K
+
+--1795850513-1644844784-1145905832=:18685--
