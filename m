@@ -1,56 +1,84 @@
-From: Jason Riedy <ejr@EECS.Berkeley.EDU>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and other commit links ideas)
-Date: Tue, 25 Apr 2006 15:17:08 -0700
-Message-ID: <8801.1146003428@lotus.CS.Berkeley.EDU>
-References: <e2lrk5$ed5$1@sea.gmane.org>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 26 00:17:36 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: maintenance of cache-tree data
+Date: Tue, 25 Apr 2006 16:05:56 -0700
+Message-ID: <7vy7xttfvv.fsf@assigned-by-dhcp.cox.net>
+References: <7v3bg3etnv.fsf@assigned-by-dhcp.cox.net>
+	<7vodyrdas9.fsf@assigned-by-dhcp.cox.net>
+	<7v8xpvd69s.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vvesz8r8o.fsf@assigned-by-dhcp.cox.net>
+	<7vodyq64p7.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vk69e61s4.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Apr 26 01:06:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYVqP-0006k9-Pn
-	for gcvg-git@gmane.org; Wed, 26 Apr 2006 00:17:18 +0200
+	id 1FYWbk-00072f-Ck
+	for gcvg-git@gmane.org; Wed, 26 Apr 2006 01:06:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624AbWDYWRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 18:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbWDYWRL
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 18:17:11 -0400
-Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:19882 "EHLO
-	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
-	id S1751349AbWDYWRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 18:17:10 -0400
-Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k3PMH9gH008830;
-	Tue, 25 Apr 2006 15:17:09 -0700 (PDT)
-Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
-	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k3PMH9sU008829;
-	Tue, 25 Apr 2006 15:17:09 -0700 (PDT)
-To: Jakub Narebski <jnareb@gmail.com>
-In-reply-to: <e2lrk5$ed5$1@sea.gmane.org> 
+	id S932104AbWDYXF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 19:05:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932242AbWDYXF6
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 19:05:58 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:64148 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932104AbWDYXF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Apr 2006 19:05:58 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060425230557.DQCT27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 25 Apr 2006 19:05:57 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7vk69e61s4.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 24 Apr 2006 15:34:35 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19177>
 
-And Jakub Narebski writes:
- - I don't mean we shouldn't define semantic for each use of "related" or
- - "note" header. Just like email X-* headres have detailed form and semantic
- - (long, long time ago Sender was X-Sender for example ;-). It's just a
- - toolkit.
+Junio C Hamano <junkio@cox.net> writes:
 
-You just proved Linus's point.  Ever have to parse
-archives of old mail?  There are many different ways
-of saying the same thing, and many of the same way
-of saying different things.  It's pure hell.
+> Well, I was blind ;-).  As long as the whole-file SHA1 matches,
+> read_cache() does not care if we have extra data after the
+> series of active_nr cache entry data in the index file.
+>
+> I'm working on a patch now.
 
-And people expect you to get the X-* headers correct
-for whatever definition of correct they happen to have
-at the moment.  ugh.  You have many de-facto semantics
-for the same headers, and no way to disambiguate them.
+So I did.
 
-People will need to parse and understand git archives
-thirty+ years from now.  Don't place this curse on
-them.
+There is one bad thing; so far "write-tree" was a read-only
+consumer of the index file, but now it primes the cache-tree
+structure and needs to update the index.  But that is minor.
 
-Jason
+While I was at it, I made this "stuffing extra cruft in the
+index" slightly more generic than I needed it for this
+particular application.  What I see this _might_ be useful for
+are:
+
+ - We would want to store which commit of a subproject a
+   particular subdirectory came from.  This was one missing
+   piece from the "bind commit" proposal that wasn't implemented
+   in the jc/bind branch.
+
+ - We might want to record "at this path there is a directory,
+   albeit empty"; this cannot be expressed with an usual index
+   entry.
+
+   We might be able to use cache-tree for that, but I think this
+   is something different at the logical level.  While
+   cache-tree is to be fully populated (by write-tree and
+   perhaps read-tree later) and invalidated partially when
+   update-index and friends smudge part of the tree, this is not
+   something we would want to even invalidate (IOW, it should
+   always be up-to-date), so they serve different purposes.
+
+
+I still haven't looked at the read-tree yet, but as I outlined
+in a previous message, its intra-index merge could take
+advantage of cache-tree.  "diff-index", especially "--cached"
+kind, also could use it to skip unchanged subtrees altogether.
