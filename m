@@ -1,107 +1,133 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: Re: [BUG] gitk draws a wrong line
-Date: Tue, 25 Apr 2006 09:54:29 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060425075429.GA1532@informatik.uni-freiburg.de>
-References: <20060418104014.GA2299@informatik.uni-freiburg.de> <17485.31716.452326.229628@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.3.1
+Date: Tue, 25 Apr 2006 01:04:55 -0700
+Message-ID: <7v1wvm13o8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 25 09:54:47 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 25 10:05:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYINa-0005Qb-Px
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 09:54:39 +0200
+	id 1FYIXf-0007Vk-Sf
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 10:05:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbWDYHyg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 03:54:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWDYHyg
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 03:54:36 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:40896 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S1751407AbWDYHyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 03:54:35 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1FYINW-0000zR-59; Tue, 25 Apr 2006 09:54:34 +0200
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k3P7sTr01950;
-	Tue, 25 Apr 2006 09:54:29 +0200 (MEST)
-To: Paul Mackerras <paulus@samba.org>
-Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <17485.31716.452326.229628@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.6+20040523i
+	id S1751421AbWDYIE6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 25 Apr 2006 04:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbWDYIE6
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 04:04:58 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:21220 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751416AbWDYIE5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 04:04:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060425080456.RBKH27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 25 Apr 2006 04:04:56 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19135>
 
-Hello Paul,
+The latest maintenance release GIT 1.3.1 is available at the
+usual places:
 
-Paul Mackerras wrote:
-> Uwe Zeisberger writes:
-> 
-> > and then going to commit 10c2df65060e1ab57b2f75e0749de0ee9b8f4810, 
-> > I see a small superfluous line between the two commits under 10c2df.
-> > 
-> > But still worse, if I select the line going down from 10c2df and then
-> > select it's parent (i.e c76b6b) I get a big line ending in the commit
-> > descriptions and four lines ending in midair.
-> 
-> That is an X server bug, it seems.  Tk already clips vertices that it
-> sends to the X server to be within a box that is no more than 32000
-> pixels wide or high, but that seems not to be enough with some X
-> servers.  What X server version are you using and what sort of video
-> card?
-It's a Debian system with XFree 4.3.0.dfsg.1-14 and according to lspci I
-have
+	http://www.kernel.org/pub/software/scm/git/
 
-	0000:01:00.0 VGA compatible controller: ATI Technologies Inc Radeon RV100 QY [Radeon 7000/VE]
+	git-1.3.1.tar.{gz,bz2}			(tarball)
+	RPMS/$arch/git-*-1.3.1-1.$arch.rpm	(RPM)
 
-> If you're feeling adventurous, you can rebuild Tk with the patch below
-> (courtesy of D. Richard Hipp) and see if that fixes it.  If it does it
-> proves that it is an X server bug.
-OK, I tried that and it helped. 
+Just to let people who are new to the game know, 1.3.X (1<=3DX)
+series is purely bugfix maintenance on top of 1.3.0 release, and
+no new features will be added unless there is a compelling
+reason (think of them like 2.6.16.X releases of the kernel,
+slightly looser updates criteria).
 
-I list my steps for people who want to "fix" it, too:
+There are four primary branches in git.git repository.
 
-	Note: You need a deb-src line in your sources.list.  Moreover
-	some packages are assumed to be installed (e.g. devscripts,
-	fakeroot, vim :-))
+ * Releases in the 1.3.X series come from the "maint" branch, which
+   was forked at 1.3.0.
 
-	~$ mkdir src; cd src
-	~/src$ apt-get build-dep tk8.4
-	~/src$ apt-get source tk8.4
-	~/src$ cd tk8.4-8.4.12
-	~/src/tk8.4-8.4.12$ vim generic/tkCanvUtil.c
+ * All the new features and improvements start their life as
+   topic branches that are merged to the "pu" (proposed updates)
+   branch.  They are often incomplete and/or unstable.  You can
+   think of "pu" as the -mm.
 
-	[ apply the patch provided by Paul/D. Richard Hipp ]
+ * When these topic branches become stable enough, they are
+   merged into "next" branch.  I personally run "next" branch
+   for my work to trust my data to it, until very close to the
+   next feature release.
 
-	~/src/tk8.4-8.4.12$ dch -n
+ * After being cooked for a few days to a week in "next", these
+   good changes graduate to the "master" branch.  Some of them
+   die while being cooked there, but that does not happen very
+   often (bad apples are culled while in "pu").
 
-	[ write a sensible changelog entry ]
+I make feature release out of "master" branch periodically,
+which are tagged as X.Y.0 releases.  At that point, "maint"
+branch is forked to prepare X.Y.1 and onward.
 
-	~/src/tk8.4-8.4.12$ fakeroot dpkg-buildpackage
-	...
+If you are an end user, the "maint" releases are the recommended
+stale releases, but you could miss out new features quickly.
+Please do send in bug reports for them, but do not expect new
+cool features to appear there.
 
-	~/src/tk8.4-8.4.12$ cd ..
-	~/src$ sudo dpkg -i tk8.4_8.4.12-1.1_i386.deb
+If you want to stay current and stable, I would recommend to
+track "master".
 
-I'm not entirely clear what this patch does.  From only reading it, I
-assume it should only have an effect on rather big windows, right?
+If you are a git developer, being aware of what is happening in
+"next" would often be very helpful.  The infrastructure you plan
+to base your change on may be in the process of being updated
+and your changes to "master" can become useless when that
+happens.
 
-Do you know some more details about the bug?  Do you know to who it
-should get reported?
+If you are a truly devoted git hacker, picking what is in "pu"
+can be exciting and useful from time to time.
 
-Thanks for your help
-Uwe
+Post 1.3.0 "master" branch development currently contains major
+rewrite of log/show/whatchanged infrastructure, and will be
+getting updated pack-objects, faster write-tree, consolidated
+"git diff" that is not a shell script, and hopefully many
+others.  To reiterate, they will be part of 1.4.0 and no 1.3.X
+series release will have them.
 
--- 
-Uwe Zeisberger
+----------------------------------------------------------------
 
-http://www.google.com/search?q=gravity+on+earth%3D
+Changes since v1.3.0 are as follows:
+
+Jonas Fonseca:
+      Fix filename scaling for binary files
+
+Junio C Hamano:
+      git-merge: a bit more readable user guidance.
+      pre-commit hook: complain about conflict markers.
+      git-commit --amend: two fixes.
+      pack-objects: do not stop at object that is "too small"
+      mailinfo: decode underscore used in "Q" encoding properly.
+
+Linus Torvalds:
+      git-log produces no output
+
+Nicolas Pitre:
+      fix pack-object buffer size
+
+Paul Mackerras:
+      rev-parse: better error message for ambiguous arguments
+
+Petr Baudis:
+      Document git-var -l listing also configuration variables
+      Document the configuration file
+
+Santi B=E9jar:
+      Reintroduce svn pools to solve the memory leak.
+
+Serge E. Hallyn:
+      socksetup: don't return on set_reuse_addr() error
+
+Shawn Pearce:
+      Document git-clone --reference
