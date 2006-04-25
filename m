@@ -1,71 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and other commit links ideas)
-Date: Tue, 25 Apr 2006 21:00:48 +0200
-Organization: At home
-Message-ID: <e2lrk5$ed5$1@sea.gmane.org>
-References: <20060425035421.18382.51677.stgit@localhost.localdomain> <e2kgga$d7q$1@sea.gmane.org> <7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604250811230.3701@g5.osdl.org> <Pine.LNX.4.64.0604250833540.3701@g5.osdl.org> <e2lijt$aco$1@sea.gmane.org> <Pine.LNX.4.64.0604251004410.3701@g5.osdl.org> <BAYC1-PASMTP091348C4C33C5A0E83C012AEBF0@CEZ.ICE> <Pine.LNX.4.64.0604251106400.3701@g5.osdl.org> <BAYC1-PASMTP04D82622D9D5DA7E352079AEBF0@CEZ.ICE> <Pine.LNX.4.64.0604251125010.3701@g5.osdl.org> <e2lqf1$a5k$1@sea.gmane.org> <Pine.LNX.4.64.0604251151350.3701@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
+ other commit links ideas)
+Date: Tue, 25 Apr 2006 12:09:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604251204320.3701@g5.osdl.org>
+References: <20060425035421.18382.51677.stgit@localhost.localdomain>
+ <e2kgga$d7q$1@sea.gmane.org> <7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604250811230.3701@g5.osdl.org> <Pine.LNX.4.64.0604250833540.3701@g5.osdl.org>
+ <e2lijt$aco$1@sea.gmane.org> <Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
+ <BAYC1-PASMTP091348C4C33C5A0E83C012AEBF0@CEZ.ICE> <Pine.LNX.4.64.0604251106400.3701@g5.osdl.org>
+ <BAYC1-PASMTP04D82622D9D5DA7E352079AEBF0@CEZ.ICE> <Pine.LNX.4.64.0604251125010.3701@g5.osdl.org>
+ <7vr73lwkdt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Apr 25 21:00:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 25 21:09:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYSmL-0000vR-Lo
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 21:00:54 +0200
+	id 1FYSut-0002Sz-T8
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 21:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385AbWDYTAv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 15:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbWDYTAv
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 15:00:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:15272 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751385AbWDYTAu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 15:00:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FYSm1-0000qe-8A
-	for git@vger.kernel.org; Tue, 25 Apr 2006 21:00:33 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Apr 2006 21:00:33 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Apr 2006 21:00:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.7.7
+	id S932181AbWDYTJk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 15:09:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbWDYTJk
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 15:09:40 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:967 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751267AbWDYTJj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 15:09:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3PJ9YtH019858
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 25 Apr 2006 12:09:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3PJ9XHQ001497;
+	Tue, 25 Apr 2006 12:09:33 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr73lwkdt.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19171>
 
-Linus Torvalds wrote:
 
+
+On Tue, 25 Apr 2006, Junio C Hamano wrote:
 > 
-> 
-> On Tue, 25 Apr 2006, Jakub Narebski wrote:
->> 
->> Additionally, in "related" links we require that object exist (core git),
->> regardless of detailed semantics.
+> Actually, it does help Porcelain to be able to mark unrelated
+> crud as 'note'. 
 
-And history browsers (gitk, qgit) can use it, drawing line, regardless of
-semantics.
+A "note" header that explicitly has no meaning _what-so-ever_ for git 
+would be fine. Then the semantics are well-defined, and they really do 
+boil down to: random strings that git will ignore, and that won't normally 
+be shown by "git log".
 
-> And as I've now mentioned a hundred times, that's just unacceptable to me.
-> No suggested use of this has actually been useful, that I can tell.
+Those are actually real semantics, the same way the current "content" is 
+real semantics: we don't care about it at all, and we _guarantee_ that we 
+don't care about it.
 
-I don't mean we shouldn't define semantic for each use of "related" or
-"note" header. Just like email X-* headres have detailed form and semantic
-(long, long time ago Sender was X-Sender for example ;-). It's just a
-toolkit.
+The problem with the proposed "related" thing was that it was somethign 
+that git was supposed to care about, but since it had no sane semantics, 
+there was no way to _make_ git care about it sanely. That was the problem.
 
-As to suggested "related" (requiring object to exists) headers: "bind",
-"prior", and perhaps "revert".
+So I'm not objecting to adding headers. I'm objecting to adding headers 
+that have insane or badly defined semantics where we might be asked to do 
+something for them and different versions of git migth do different 
+things. 
 
--- 
-Jakub Narebski
-Warsaw, Poland
+			Linus
