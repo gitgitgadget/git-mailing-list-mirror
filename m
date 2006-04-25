@@ -1,125 +1,127 @@
 From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH 4/5] git-commit-tree: add support for prior
+Subject: [PATCH 5/5] git-commit: add --prior to set prior link
 Date: Tue, 25 Apr 2006 16:31:07 +1200
-Message-ID: <20060425043107.18382.21313.stgit@localhost.localdomain>
+Message-ID: <20060425043107.18382.34865.stgit@localhost.localdomain>
 References: <20060425035421.18382.51677.stgit@localhost.localdomain>
-X-From: git-owner@vger.kernel.org Tue Apr 25 06:32:05 2006
+X-From: git-owner@vger.kernel.org Tue Apr 25 06:32:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYFDX-0000IJ-Pu
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 06:32:04 +0200
+	id 1FYFDT-0000IJ-T6
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 06:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373AbWDYEb5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 00:31:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbWDYEb4
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 00:31:56 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:49130 "EHLO
+	id S1751028AbWDYEbz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 00:31:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbWDYEby
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 00:31:54 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:49386 "EHLO
 	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1751261AbWDYEbw (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751028AbWDYEbw (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 25 Apr 2006 00:31:52 -0400
 Received: from samv by mail1.catalyst.net.nz with local (Exim 4.50)
-	id 1FYFDK-0004Dq-Ld
+	id 1FYFDK-0004Ds-NU
 	for git@vger.kernel.org; Tue, 25 Apr 2006 16:31:50 +1200
 To: git@vger.kernel.org
 In-Reply-To: <20060425035421.18382.51677.stgit@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19123>
 
 From: Sam Vilain <sam.vilain@catalyst.net.nz>
 
-Add support in git-commit-tree for -r as well as associated
-documentation.
+Add command-line support for --prior and add a description to the
+ASCIIDOC
 ---
 
- Documentation/git-commit-tree.txt |    6 ++++++
- commit-tree.c                     |   26 +++++++++++++++++++++-----
- 2 files changed, 27 insertions(+), 5 deletions(-)
+ Documentation/git-commit.txt |   10 ++++++++++
+ git-commit.sh                |   19 +++++++++++++++++--
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 27b3d12..e11ba1f 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -20,6 +20,9 @@ A commit object usually has 1 parent (a 
- to 16 parents.  More than one parent represents a merge of branches
- that led to them.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 6f2c495..ca5073c 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git-commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg>]
+ 	   [--no-verify] [--amend] [-e] [--author <author>]
++           [-p <commit>]
+ 	   [--] [[-i | -o ]<file>...]
  
-+A commit object can have 1 prior commit.  This represents the previous
-+commit that this one replaces (including history).
+ DESCRIPTION
+@@ -106,6 +107,15 @@ but can be used to amend a merge commit.
+ 	index and the latest commit does not match on the
+ 	specified paths to avoid confusion.
+ 
++-p|--prior <commit>::
++	Specify a commit that this new commit is the next version of.
++        Use when you want a branch to supercede another branch, but
++        with a new commit history.  It is also use for sub-projects,
++        where commits on the parent tree mirror commits in the
++        sub-project.  <commit> does not have to exist in the local
++        repository, if it is specified as a full 40-digit hex SHA1
++        sum.  Otherwise it is parsed as a local revision.
 +
- While a tree represents a particular directory state of a working
- directory, a commit represents that state in "time", and explains how
- to get there.
-@@ -38,6 +41,8 @@ OPTIONS
- -p <parent commit>::
- 	Each '-p' indicates the id of a parent commit object.
- 	
-+-r <other commit>::
-+	One '-r' indicates the id of a prior commit object.
+ --::
+ 	Do not interpret any more arguments as options.
  
- Commit Information
- ------------------
-@@ -45,6 +50,7 @@ Commit Information
- A commit encapsulates:
+diff --git a/git-commit.sh b/git-commit.sh
+index 26cd7ca..3feb60d 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -3,7 +3,7 @@ #
+ # Copyright (c) 2005 Linus Torvalds
+ # Copyright (c) 2006 Junio C Hamano
  
- - all parent object ids
-+- a prior object id (optional)
- - author name, email and date
- - committer name and email and the commit time.
+-USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>) [--amend] [-e] [--author <author>] [[-i | -o] <path>...]'
++USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>) [--amend] [-e] [--author <author>] [-p <commit>] [[-i | -o] <path>...]'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
  
-diff --git a/commit-tree.c b/commit-tree.c
-index 2d86518..6660b01 100644
---- a/commit-tree.c
-+++ b/commit-tree.c
-@@ -61,8 +61,9 @@ static void check_valid(unsigned char *s
-  */
- #define MAXPARENT (16)
- static unsigned char parent_sha1[MAXPARENT][20];
-+static unsigned char prior_sha1[21] = "\0";
- 
--static const char commit_tree_usage[] = "git-commit-tree <sha1> [-p <sha1>]* < changelog";
-+static const char commit_tree_usage[] = "git-commit-tree <sha1> [-p <sha1>]* [-r <sha1>] < changelog";
- 
- static int new_parent(int idx)
- {
-@@ -99,11 +100,22 @@ int main(int argc, char **argv)
- 	for (i = 2; i < argc; i += 2) {
- 		char *a, *b;
- 		a = argv[i]; b = argv[i+1];
--		if (!b || strcmp(a, "-p") || get_sha1(b, parent_sha1[parents]))
-+		if (!b)
- 			usage(commit_tree_usage);
--		check_valid(parent_sha1[parents], commit_type);
--		if (new_parent(parents))
--			parents++;
-+		if (!strcmp(a, "-p")) {
-+			if (get_sha1(b, parent_sha1[parents]) < 0)
-+				usage(commit_tree_usage);
-+			check_valid(parent_sha1[parents], commit_type);
-+			if (new_parent(parents))
-+				parents++;
-+		}
-+		else if (!strcmp(a, "-r")) {
-+			if (strcmp(&prior_sha1, "") || get_sha1(b, &prior_sha1) < 0)
-+				usage(commit_tree_usage);
-+		}
-+		else {
-+			usage(commit_tree_usage);
-+		}
- 	}
- 	if (!parents)
- 		fprintf(stderr, "Committing initial tree %s\n", argv[1]);
-@@ -118,6 +130,10 @@ int main(int argc, char **argv)
- 	 */
- 	for (i = 0; i < parents; i++)
- 		add_buffer(&buffer, &size, "parent %s\n", sha1_to_hex(parent_sha1[i]));
-+	if (strcmp(&prior_sha1, "")) {
-+		fprintf(stderr, "Setting prior to %s\n", sha1_to_hex(&prior_sha1));
-+		add_buffer(&buffer, &size, "prior %s\n", sha1_to_hex(&prior_sha1));
-+	}
- 
- 	/* Person/date information */
- 	add_buffer(&buffer, &size, "author %s\n", git_author_info(1));
+@@ -200,6 +200,7 @@ log_given=
+ log_message=
+ verify=t
+ verbose=
++prior=
+ signoff=
+ force_author=
+ only_include_assumed=
+@@ -344,6 +345,19 @@ do
+       shift
+       break
+       ;;
++  -p|--p|--pr|--pri|--prio|--prior)
++      shift
++      prior="$1"
++      if echo $prior | perl -ne 'exit 1 unless /^[0-9a-f]{40}$/i'
++      then
++          prior=`echo "$prior" | tr '[A-Z]' '[a-z]'`
++      else
++	  prior=`git-rev-parse "$prior"`
++	  [ -n "$prior" ] || exit 1
++      fi
++      PRIOR="-r $prior"
++      shift
++      ;;
+   -*)
+       usage
+       ;;
+@@ -602,6 +616,7 @@ then
+ 		PARENTS=$(git-cat-file commit HEAD |
+ 			sed -n -e '/^$/q' -e 's/^parent /-p /p')
+ 	fi
++	
+ 	current=$(git-rev-parse --verify HEAD)
+ else
+ 	if [ -z "$(git-ls-files)" ]; then
+@@ -673,7 +688,7 @@ then
+ 		tree=$(GIT_INDEX_FILE="$TMP_INDEX" git-write-tree) &&
+ 		rm -f "$TMP_INDEX"
+ 	fi &&
+-	commit=$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS) &&
++	commit=$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS $PRIOR) &&
+ 	git-update-ref HEAD $commit $current &&
+ 	rm -f -- "$GIT_DIR/MERGE_HEAD" &&
+ 	if test -f "$NEXT_INDEX"
