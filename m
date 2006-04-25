@@ -1,63 +1,106 @@
-From: Rocco Rutte <pdmef@gmx.net>
-Subject: Re: [PATCH] Make die() and error() prefix line with binary name if set
-Date: Tue, 25 Apr 2006 16:13:58 +0200
-Organization: Berlin University of Technology
-Message-ID: <20060425141358.GH5482@bolero.cs.tu-berlin.de>
-References: <20060425101207.GC5482@bolero.cs.tu-berlin.de> <e2kt7h$o4a$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links
+Date: Tue, 25 Apr 2006 08:10:36 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604250758000.3701@g5.osdl.org>
+References: <20060425035421.18382.51677.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-X-From: git-owner@vger.kernel.org Tue Apr 25 16:14:26 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 25 17:12:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYOIp-0006eR-Na
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 16:14:08 +0200
+	id 1FYPBm-0003bt-Kd
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 17:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbWDYOOD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 10:14:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWDYOOC
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 10:14:02 -0400
-Received: from mail.cs.tu-berlin.de ([130.149.17.13]:20376 "EHLO
-	mail.cs.tu-berlin.de") by vger.kernel.org with ESMTP
-	id S932215AbWDYOOA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 10:14:00 -0400
-Received: from mailhost.cs.tu-berlin.de (postfix@mail.cs.tu-berlin.de [130.149.17.13])
-	by mail.cs.tu-berlin.de (8.9.3p2/8.9.3) with ESMTP id QAA02979
-	for <git@vger.kernel.org>; Tue, 25 Apr 2006 16:13:59 +0200 (MEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mailhost.cs.tu-berlin.de (Postfix) with ESMTP id 35E6FF259
-	for <git@vger.kernel.org>; Tue, 25 Apr 2006 16:13:59 +0200 (MEST)
-Received: from mailhost.cs.tu-berlin.de ([127.0.0.1])
- by localhost (mail.cs.tu-berlin.de [127.0.0.1]) (amavisd-new, port 10224)
- with ESMTP id 00432-43 for <git@vger.kernel.org>;
- Tue, 25 Apr 2006 16:13:58 +0200 (MEST) 15020
-Received: from bolero.cs.tu-berlin.de (bolero.cs.tu-berlin.de [130.149.19.1])
-	by mailhost.cs.tu-berlin.de (Postfix) with ESMTP
-	for <git@vger.kernel.org>; Tue, 25 Apr 2006 16:13:58 +0200 (MEST)
-Received: (from pdmef@localhost)
-	by bolero.cs.tu-berlin.de (8.13.6+Sun/8.12.8/Submit) id k3PEDwJW011735
-	for git@vger.kernel.org; Tue, 25 Apr 2006 16:13:58 +0200 (MEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <e2kt7h$o4a$1@sea.gmane.org>
-X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
-X-System: bolero.cs.tu-berlin.de (SunOS 5.9 sun4u)
-User-Agent: mutt-ng/devel-r802 (SunOS)
-X-Virus-Scanned: by amavisd-new at cs.tu-berlin.de
+	id S932254AbWDYPKt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 11:10:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWDYPKs
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 11:10:48 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:31457 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932254AbWDYPKr (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 11:10:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3PFAbtH010280
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 25 Apr 2006 08:10:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3PFAahV026689;
+	Tue, 25 Apr 2006 08:10:37 -0700
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+In-Reply-To: <20060425035421.18382.51677.stgit@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19148>
 
-* Jakub Narebski <jnareb@gmail.com>:
 
->Wouldn't it be easier (and less idiomatic) to just do
 
-Oh, thanks for pointing it out. The second one I sent fixes it (and is 
-against an updated master branch).
+On Tue, 25 Apr 2006, Sam Vilain wrote:
+>
+> This patch series implements "prior" links in commit objects.  A
+> 'prior' link on a commit represents its historical precedent, as
+> opposed to the previous commit(s) that this commit builds upon.
 
-   bye, Rocco
--- 
-:wq!
+I really don't think this is worth it.
+
+We already have a very useful notion of "prior" commit that is used daily 
+(well, weekly) for the Linux kernel, and it's used for one of the few 
+places where this really makes unequivocal sense. "git revert".
+
+It's also implemented in the only way that has clear and unambiguous 
+semantics: by putting the prior link into the free-form part. The reason 
+this is clear and unambiguous is that it makes it clear that it has no 
+actual technical impact on any serious git strategy, ie there is never any 
+question of "What does it _mean_?".
+
+At the same time, it gives exactly what you actually _want_ for a prior 
+link: it makes it easy to look up the commit that was replaced, or fixed, 
+or that is related, or just any random semantics that you can explain 
+easily in the text.
+
+Both gitk and qgit already support it, and it's trivially 
+cut-and-pasteable from any log message to see what it is when you work on 
+the command line too.
+
+In contrast, adding a new header is serious trouble:
+
+ - What does it _mean_ from a technical angle? 
+
+   Does it matter for merging? One of your patches seems to make it so, 
+   which is _really_ confusing. Why should it? And does it affect anything 
+   else that git does?
+
+   Does "prior" have any meaning for "git-fsck-objects" and/or for object 
+   pruning? For "git fetch/pull"?
+
+ - What does it mean from a semantic standpoint?
+
+   Is "prior" a note that something was reverted? Fixed? Changed? 
+   Cherry-picked? And if it is Cherry-picked, than I would flat-out refuse 
+   to ever merge with a tree that has it, because it pretty much by 
+   definition means that the object that "prior" points to simply doesn't 
+   _exist_ in my tree (since it was cherry-picked from somebody elses 
+   tree). Or that it means that my history got tangled up with the history 
+   of the failed branch that needed cherry-picking to clean up..
+
+ - You say that there is just one "prior" parent, but why just one? 
+   There's no way to even _think_ about this, since it seems to have no 
+   actual semantic meaning.
+
+I think all the problems really boil down to "What does this mean?"
+
+Without an answer to that question, it's just a random feature. It's 
+something that you can use and mis-use, but that has no "meaning". It only 
+has whatever meaning you personally assign to it, but that implies that 
+git shouldn't parse it, and shouldn't care about it.
+
+Which again says that it should act like the current free-form thing does 
+so well - it has no meaning, but it allows easy lookups.
+
+		Linus
