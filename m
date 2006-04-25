@@ -1,62 +1,93 @@
 From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH 3/5] commit.c: parse 'prior' link
-Date: Tue, 25 Apr 2006 16:31:07 +1200
-Message-ID: <20060425043106.18382.7251.stgit@localhost.localdomain>
-References: <20060425035421.18382.51677.stgit@localhost.localdomain>
-X-From: git-owner@vger.kernel.org Tue Apr 25 06:32:09 2006
+Subject: [RFC] [PATCH 0/5] Implement 'prior' commit object links
+Date: Tue, 25 Apr 2006 15:54:21 +1200
+Message-ID: <20060425035421.18382.51677.stgit@localhost.localdomain>
+X-From: git-owner@vger.kernel.org Tue Apr 25 06:33:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYFDV-0000IJ-8L
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 06:32:01 +0200
+	id 1FYFF6-0000TO-1a
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 06:33:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbWDYEbx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 00:31:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbWDYEbx
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 00:31:53 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:48362 "EHLO
+	id S1751025AbWDYEdh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 00:33:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378AbWDYEdh
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 00:33:37 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:54231 "EHLO
 	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1751301AbWDYEbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 00:31:52 -0400
+	id S1751025AbWDYEdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Apr 2006 00:33:37 -0400
 Received: from samv by mail1.catalyst.net.nz with local (Exim 4.50)
-	id 1FYFDK-0004Do-K7
-	for git@vger.kernel.org; Tue, 25 Apr 2006 16:31:50 +1200
+	id 1FYFF2-0004GN-9U
+	for git@vger.kernel.org; Tue, 25 Apr 2006 16:33:36 +1200
 To: git@vger.kernel.org
-In-Reply-To: <20060425035421.18382.51677.stgit@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19126>
 
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
+This patch series implements "prior" links in commit objects.  A
+'prior' link on a commit represents its historical precedent, as
+opposed to the previous commit(s) that this commit builds upon.
 
-Parse for the 'prior' link in a commit
----
+This is a proof of concept only; there is an outstanding bug (I put
+the prior header right after parent, when it should really go after
+author/committer), and room for improvement no doubt remain elsewhere.
+Not to mention my shocking C coding style ;)
 
- commit.c |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+Examples of use cases this helps:
 
-diff --git a/commit.c b/commit.c
-index 2717dd8..e4bc396 100644
---- a/commit.c
-+++ b/commit.c
-@@ -260,6 +260,18 @@ int parse_commit_buffer(struct commit *i
- 			n_refs++;
- 		}
- 	}
-+	if (!memcmp(bufptr, "prior ", 6)) {
-+		unsigned char prior[20];
-+		if (get_sha1_hex(bufptr + 6, prior) || bufptr[46] != '\n')
-+			return error("bad prior in commit %s", sha1_to_hex(item->object.sha1));
-+		bufptr += 47;
-+
-+		item->prior = xmalloc(21);
-+		strncpy(item->prior, (char*)&prior, 20);
-+		item->prior[20] = '\0';
-+	} else {
-+		item->prior = 0;
-+	}
- 	if (graft) {
- 		int i;
- 		struct commit *new_parent;
+ 1. heads that represent topic branch merges
+
+    This is the "pu" branch case, where the head is a merge of several
+    topic branches that is continually moved forward.
+
+    topic branches     head
+      ,___.   ,___.
+     | TA1 | | TB1 |
+      `---'   `---'    ,__.
+         ^\_____^\____| H1 |
+                       `--'
+
+    + some topic branch changes and a republish:
+
+      ,___.   ,___.
+     | TA1 | | TB1 |
+      `---'   `---'^   ,__.
+        |^\_____^\____| H1 |
+        |       |      `--'
+      ,_|_.   ,_|_.      P
+     | TA2 | | TB2 |     |
+      `---'   `---'^     |
+        ^       ^        |
+      ,_|_.     |        |
+     | TA3 |    |        |
+      `---'     |      ,__.
+         ^\______\____| H2 |
+                       `--'
+
+    key:  ^ = parent   P = prior
+
+ 2. revising published commits / re-basing
+
+    This is what "stg" et al do.  The tools allow you to commit,
+    rewind, revise, recommit, fast forward, etc.
+
+    In this case, the "prior" link would point to the last revision of
+    a patch.  Tools would probably
+
+ 3. sub-projects
+
+    In this case, the commit on the "main" commit line would have a
+    "prior" link to the commit on the sub-project.  The sub-project
+    would effectively be its own head with copied commits objects on
+    the main head.
+
+ 4. tracking cherry picking
+
+    In this case, the "prior" link just points to the commit that was
+    cherry picked.  This is perhaps a little different, but an idea
+    that somebody else had for this feature.
+
+Sam.
