@@ -1,60 +1,76 @@
-From: sean <seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
  other commit links ideas)
-Date: Tue, 25 Apr 2006 13:52:50 -0400
-Message-ID: <BAYC1-PASMTP091348C4C33C5A0E83C012AEBF0@CEZ.ICE>
+Date: Tue, 25 Apr 2006 10:57:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604251053100.3701@g5.osdl.org>
 References: <20060425035421.18382.51677.stgit@localhost.localdomain>
-	<e2kgga$d7q$1@sea.gmane.org>
-	<7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604250811230.3701@g5.osdl.org>
-	<Pine.LNX.4.64.0604250833540.3701@g5.osdl.org>
-	<e2lijt$aco$1@sea.gmane.org>
-	<Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
+ <e2kgga$d7q$1@sea.gmane.org> <7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0604250811230.3701@g5.osdl.org> <Pine.LNX.4.64.0604250833540.3701@g5.osdl.org>
+ <e2lijt$aco$1@sea.gmane.org> <Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
+ <e2lmm3$rts$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: jnareb@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 25 19:57:24 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 25 19:58:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYRmn-0005ML-LA
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 19:57:18 +0200
+	id 1FYRnM-0005Rf-IH
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 19:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932099AbWDYR5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 13:57:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932100AbWDYR5O
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 13:57:14 -0400
-Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:28568 "EHLO
-	BAYC1-PASMTP09.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932099AbWDYR5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 13:57:14 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP09.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 25 Apr 2006 10:58:41 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 1AF1F644C28;
-	Tue, 25 Apr 2006 13:57:09 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060425135250.5fd889f4.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 25 Apr 2006 17:58:41.0875 (UTC) FILETIME=[E33F2230:01C66891]
+	id S932100AbWDYR5u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 13:57:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbWDYR5u
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 13:57:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:36015 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932100AbWDYR5t (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 13:57:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3PHvktH016718
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 25 Apr 2006 10:57:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3PHvjM5031773;
+	Tue, 25 Apr 2006 10:57:46 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e2lmm3$rts$1@sea.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19157>
 
-On Tue, 25 Apr 2006 10:11:13 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
 
-> Once you start adding data that has no clear semantics, you're screwed. At 
-> that point, it's a "track guesses" game, not a "track contents" game.
 
-Then shouldn't Git stop tracking commit comments; they're just developer
-guesses. ;o)   Adding a free-form header is no different than adding a 
-few more lines of free form text at the bottom of the commit message, in 
-neither case does it change the nice clean git semantics.
+On Tue, 25 Apr 2006, Jakub Narebski wrote:
+> 
+> Erm, further on we did agree 
 
-Sean
+Hell no "we" didn't.
+
+Since I totally refuse to touch anything like that.
+
+I even told you exactly why, for things like the suggested "cherry-pick" 
+thing.
+
+Which still remains the "best" example. And I say "best", because as an 
+example it totally sucks. Again, for reasons I made very clear.
+
+The fact is, there is _zero_ reason for this field to exist. Nobody has 
+actually mentioned a single use that is really valid and that people can 
+agree on across different uses.
+
+So here's the challenge: name _one_ thing that people actually can agree 
+on, and that adds real measurable _value_ from a core git standpoint. 
+Something where the semantics actually change what git does.
+
+The "track it with pull/push" thing is NOT one such thing, however much 
+you protest. We already _have_ that thing. It's called a "ref", and it's 
+really really easy to create anywhere in .git/refs/, and the tools already 
+know how to use it.
+
+		Linus
