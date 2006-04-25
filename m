@@ -1,145 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and other commit links ideas)
-Date: Tue, 25 Apr 2006 08:44:08 +0200
-Organization: At home
-Message-ID: <e2kgga$d7q$1@sea.gmane.org>
+Date: Tue, 25 Apr 2006 00:29:48 -0700
+Message-ID: <7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
 References: <20060425035421.18382.51677.stgit@localhost.localdomain>
+	<e2kgga$d7q$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Apr 25 08:45:01 2006
+Cc: jnareb@gmail.com
+X-From: git-owner@vger.kernel.org Tue Apr 25 09:30:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYHI3-0001IC-VP
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 08:44:52 +0200
+	id 1FYHzi-0000wz-2t
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 09:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366AbWDYGot (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 02:44:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbWDYGot
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 02:44:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:64197 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751366AbWDYGos (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 02:44:48 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FYHHt-0001GU-12
-	for git@vger.kernel.org; Tue, 25 Apr 2006 08:44:41 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Apr 2006 08:44:41 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Apr 2006 08:44:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751367AbWDYH3v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 03:29:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbWDYH3v
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 03:29:51 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:23494 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751367AbWDYH3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Apr 2006 03:29:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060425072950.KUDX18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 25 Apr 2006 03:29:50 -0400
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.7.7
+In-Reply-To: <e2kgga$d7q$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
+	25 Apr 2006 08:44:08 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19132>
 
-Sam Vilain wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> This patch series implements "prior" links in commit objects.  A
-> 'prior' link on a commit represents its historical precedent, as
-> opposed to the previous commit(s) that this commit builds upon.
-> 
-> This is a proof of concept only; there is an outstanding bug (I put
-> the prior header right after parent, when it should really go after
-> author/committer), and room for improvement no doubt remain elsewhere.
-> Not to mention my shocking C coding style ;)
+> Additionally for each of those cases we have to consider how to compute the
+> link and which commands should be modified, which commands can make use of
+> the link and should be modified, should the link be to commit, tag, tree or
+> blob, what we want to do with link when pulling/pushing/cloning into
+> another repository and which commands should be modified. Not only use case
+> scenarios.
 
-I think "prior" link concept is to generic and is used for quite unrelated
-things
+This last paragraph is a very good suggestion.  The alleged "use
+cases" are just laudary list of wishes, if they are not
+accompanied by descriptions on what the modified data structure
+and added attribute _means_ and how they are _used_.
 
-> Examples of use cases this helps:
-> 
->  1. heads that represent topic branch merges
-> 
->     This is the "pu" branch case, where the head is a merge of several
->     topic branches that is continually moved forward.
-> 
->     topic branches     head
->       ,___.   ,___.
->      | TA1 | | TB1 |
->       `---'   `---'    ,__.
->          ^\_____^\____| H1 |
->                        `--'
-> 
->     + some topic branch changes and a republish:
-> 
->       ,___.   ,___.
->      | TA1 | | TB1 |
->       `---'   `---'^   ,__.
->         |^\_____^\____| H1 |
->         |       |      `--'
->       ,_|_.   ,_|_.      P
->      | TA2 | | TB2 |     |
->       `---'   `---'^     |
->         ^       ^        |
->       ,_|_.     |        |
->      | TA3 |    |        |
->       `---'     |      ,__.
->          ^\______\____| H2 |
->                        `--'
-> 
->     key:  ^ = parent   P = prior
+Here is a related but not necessarily competing idle thought.
 
-This case is clear. You want to record previous head of "pu"-like branch,
-but you also want to drop the history, so you don't want to record it as
-one of parents. I'm not sure if this link would be informative only, or if
-it could be usefull e.g. in merge computing.
- 
->  2. revising published commits / re-basing
-> 
->     This is what "stg" et al do.  The tools allow you to commit,
->     rewind, revise, recommit, fast forward, etc.
-> 
->     In this case, the "prior" link would point to the last revision of
->     a patch.  Tools would probably support only doing this for selected, 
->     "published" patch chains 
+How about an ability to "attach" arbitrary objects to commit
+objects?  The commit object would look like:
 
-This case is quite different. If I understand it correctly prior either
-points to the previous patch in patch stack, or the bottom of the
-stack/patch stack attachment point. If this cannot be computed easily, it
-could I guess be added, but perhaps using other name for link.
+    tree 0aaa3fecff73ab428999cb9156f8abc075516abe
+    parent 5a6a8c0e012137a3f0059be40ec7b2f4aa614355
+    parent e1cbc46d12a0524fd5e710cbfaf3f178fc3da504
+    related a0e7d36193b96f552073558acf5fcc1f10528917 key
+    related 0032d548db56eac9ea09b4ba05843365f6325b85 cherrypick
+    author Junio C Hamano <junkio@cox.net> 1145943079 -0700
+    committer Junio C Hamano <junkio@cox.net> 1145943079 -0700
 
->  3. sub-projects
-> 
->     In this case, the commit on the "main" commit line would have a
->     "prior" link to the commit on the sub-project.  The sub-project
->     would effectively be its own head with copied commits objects on
->     the main head.
->
->  4. tracking cherry picking
-> 
->     In this case, the "prior" link just points to the commit that was
->     cherry picked.  This is perhaps a little different, but an idea
->     that somebody else had for this feature.
+    Merge branch 'pb/config' into next
 
-Those two are yet another case altogether, the "prior" link pointing to "the
-same" commit in another history line. I agree with Junio that for (3)
-"bind" proposal (if I understand correctly it points to tree rather than to
-commit) is more clean way to go. As to cherry picking (and perhaps
-"cherry-pick on steroids" aka rebase), there is truly 0-1 relation (either
-this link is not needed at all, or there is only one commit to link to),
-but I don't think it should have the same name as in case (1), as this is
-very different. And there is a problem that the link might be dangling if
-we deleted the branch we cherry-picked commit from, or did some history
-rewrite. Perhaps "cherry" would be better name for this link :-)
+    * pb/config:
+      Deprecate usage of git-var -l for getting config vars list
+      git-repo-config --list support
 
-Additionally for each of those cases we have to consider how to compute the
-link and which commands should be modified, which commands can make use of
-the link and should be modified, should the link be to commit, tag, tree or
-blob, what we want to do with link when pulling/pushing/cloning into
-another repository and which commands should be modified. Not only use case
-scenarios.
+The format of "related" attribute is, keyword "related", SP, 40-byte
+hexadecimal object name, SP, and arbitrary sequence of bytes
+except LF and NUL.  Let's call this arbitrary sequence of bytes
+"the nature of relation".
 
--- 
-Jakub Narebski
-Warsaw, Poland
+The semantics I would attach to these "related" links are as
+follows:
+
+ * To the "core" level git, they do not mean anything other than
+   "you must to have these objects, and objects reachable from
+   them, if you are going to have this commit and claim your
+   repository is without missing objects".
+
+That means "git-rev-list --objects" needs to list these objects
+(and if they are tags, commits, and trees, then what are
+reachable from them), and "git-fsck" needs to consider these
+related objects and objects reachable from them are reachable
+from this commit.  NOTHING ELSE NEEDS TO BE DONE by the core
+(obviously, cat-file needs to show them, and commit-tree needs to
+record them, but that goes without saying).
+
+Then porcelains can agree on what different kinds of nature of
+relation mean and do sensible things.  The earlier "omit the
+cherry-picked ones" example I gave can examine "cherrypick".
