@@ -1,76 +1,59 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
- other commit links ideas)
-Date: Tue, 25 Apr 2006 14:14:12 -0400
-Message-ID: <BAYC1-PASMTP04D82622D9D5DA7E352079AEBF0@CEZ.ICE>
-References: <20060425035421.18382.51677.stgit@localhost.localdomain>
-	<e2kgga$d7q$1@sea.gmane.org>
-	<7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604250811230.3701@g5.osdl.org>
-	<Pine.LNX.4.64.0604250833540.3701@g5.osdl.org>
-	<e2lijt$aco$1@sea.gmane.org>
-	<Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
-	<BAYC1-PASMTP091348C4C33C5A0E83C012AEBF0@CEZ.ICE>
-	<Pine.LNX.4.64.0604251106400.3701@g5.osdl.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: RFC: New diff-delta.c implementation
+Date: Tue, 25 Apr 2006 20:22:23 +0200
+Message-ID: <444E68DF.1020105@lsrfire.ath.cx>
+References: <602974A9-09A3-46E9-92D6-D30728923C11@adacore.com> <444A2334.3030501@lsrfire.ath.cx> <20060424025741.GA636@adacore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: jnareb@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 25 20:18:37 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 25 20:23:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYS7Q-0000tZ-7w
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 20:18:36 +0200
+	id 1FYSBQ-0001fR-59
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 20:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932200AbWDYSSd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 14:18:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbWDYSSd
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 14:18:33 -0400
-Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:32402 "EHLO
-	BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S932200AbWDYSSd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 14:18:33 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 25 Apr 2006 11:18:32 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 76D9D644C28;
-	Tue, 25 Apr 2006 14:18:31 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060425141412.5c115f51.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0604251106400.3701@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 25 Apr 2006 18:18:32.0860 (UTC) FILETIME=[A92105C0:01C66894]
+	id S932276AbWDYSWk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 25 Apr 2006 14:22:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbWDYSWk
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 14:22:40 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:29886
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S932276AbWDYSWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Apr 2006 14:22:39 -0400
+Received: from [10.0.1.3] (p508E7520.dip.t-dialin.net [80.142.117.32])
+	by neapel230.server4you.de (Postfix) with ESMTP id 0962B1C008;
+	Tue, 25 Apr 2006 20:22:37 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+To: Geert Bosch <bosch@adacore.com>
+In-Reply-To: <20060424025741.GA636@adacore.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19161>
 
-On Tue, 25 Apr 2006 11:08:31 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
+Geert Bosch schrieb:
+> On Sat, Apr 22, 2006 at 02:36:04PM +0200, Rene Scharfe wrote:
+>> You can use "indent -npro -kr -i8 -ts8 -l80 -ss -ncs" to reformat yo=
+ur
+>> code into a similar style as used in the rest of git (settings taken
+>> from Lindent which is shipped with the Linux source).
+> Although I cringe at 8-space indenting, and find much of the GIT
+> code close to unreadable for lack of design-level comments, I'll
+> gladly reformat any code to conform to existing code standards.
+> Please let me know if you've got documentation on that, as it would
+> be helpful for me to know what the standard is. (No flame intended. :=
+-)
 
-> Which is exactly what I told you to do. Just don't make it a git header. 
+I'm not aware of a document mandating a certain formatting.  The output
+of that indent call should come close to a "standard format", because
+Linus followed this style from the beginning and Junio didn't go astray=
+=2E
 
-Well I just don't see how making it a header, or plopping it at the
-end of a commit message makes an iota of difference to git, while it 
-can help porcelain.
+Don't worry too much about it.  I just wanted to point out an easy way
+to reformat your code to use sane indenting. :->
 
-> We do that already. Look at "git revert". Ooh. Aah. It works today.
-
-Nice.  Gotta love git.
- 
-> Just don't make it something that changes semantics, and that git parses 
-> and "understands". Because git clearly doesn't understand it at all, since 
-> you didn't define it to have any meaning that _can_ be understood.
-
-But that's exactly the point, it's no different than extending git to be
-able to store more than one comment.   Comment1 Comment2 Comment3.  
-Pure content that git need not give any semantic meaning.  Git has a 
-limitation of only a single comment today, there's no semantic damage
-to extending git to allow multiple comments.   And there are a few 
-applications, like bug tracking etc, which could use such a feature 
-to good effect.
-
-Sean
+Ren=E9
