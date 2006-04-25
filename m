@@ -1,78 +1,147 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
- other commit links ideas)
-Date: Tue, 25 Apr 2006 12:00:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604251155530.3701@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and other commit links ideas)
+Date: Tue, 25 Apr 2006 12:00:30 -0700
+Message-ID: <7vr73lwkdt.fsf@assigned-by-dhcp.cox.net>
 References: <20060425035421.18382.51677.stgit@localhost.localdomain>
- <e2kgga$d7q$1@sea.gmane.org> <7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0604250811230.3701@g5.osdl.org> <Pine.LNX.4.64.0604250833540.3701@g5.osdl.org>
- <e2lijt$aco$1@sea.gmane.org> <Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
- <BAYC1-PASMTP091348C4C33C5A0E83C012AEBF0@CEZ.ICE> <Pine.LNX.4.64.0604251106400.3701@g5.osdl.org>
- <BAYC1-PASMTP04D82622D9D5DA7E352079AEBF0@CEZ.ICE> <Pine.LNX.4.64.0604251125010.3701@g5.osdl.org>
- <BAYC1-PASMTP03E0B5376ACFF165B29ED1AEBF0@CEZ.ICE>
+	<e2kgga$d7q$1@sea.gmane.org> <7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604250811230.3701@g5.osdl.org>
+	<Pine.LNX.4.64.0604250833540.3701@g5.osdl.org>
+	<e2lijt$aco$1@sea.gmane.org>
+	<Pine.LNX.4.64.0604251004410.3701@g5.osdl.org>
+	<BAYC1-PASMTP091348C4C33C5A0E83C012AEBF0@CEZ.ICE>
+	<Pine.LNX.4.64.0604251106400.3701@g5.osdl.org>
+	<BAYC1-PASMTP04D82622D9D5DA7E352079AEBF0@CEZ.ICE>
+	<Pine.LNX.4.64.0604251125010.3701@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: jnareb@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 25 21:00:38 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 25 21:00:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYSlj-0000n5-TS
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 21:00:16 +0200
+	id 1FYSm2-0000rR-MA
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 21:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751383AbWDYTAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 15:00:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWDYTAL
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 15:00:11 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:58307 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751383AbWDYTAJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Apr 2006 15:00:09 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3PJ04tH019417
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 25 Apr 2006 12:00:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3PJ02Mq001251;
-	Tue, 25 Apr 2006 12:00:02 -0700
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP03E0B5376ACFF165B29ED1AEBF0@CEZ.ICE>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751483AbWDYTAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 15:00:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbWDYTAc
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 15:00:32 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:21953 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751483AbWDYTAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Apr 2006 15:00:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060425190030.FECD25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 25 Apr 2006 15:00:30 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604251125010.3701@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 25 Apr 2006 11:26:25 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19169>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Tue, 25 Apr 2006, sean wrote:
+>
+>> On Tue, 25 Apr 2006 11:08:31 -0700 (PDT)
+>> Linus Torvalds <torvalds@osdl.org> wrote:
+>> 
+>> > Which is exactly what I told you to do. Just don't make it a git header. 
+>> 
+>> Well I just don't see how making it a header, or plopping it at the
+>> end of a commit message makes an iota of difference to git, while it 
+>> can help porcelain.
+>
+> It can't help porcelain.
+>
+> If we have undefined or bad semantics for it, the only thing it can do is 
+> _hurt_ porcelain, because it will cause confusion down the line.
+>
+> Semantics for data objects are _the_ most important part of a SCM. Pretty 
+> much any project, in fact. 
+>
+> And bad or weakly defined semantics will invariably cause problems later.
+>
+>> But that's exactly the point, it's no different than extending git to be
+>> able to store more than one comment.
+>
+> So why argue for it?
+>
+> Just use the existing comment field.
 
-On Tue, 25 Apr 2006, sean wrote:
-> 
-> It's no different for a bug tracker or other 3rd party software that wants
-> to interface with git, it's bad design to force them to parse a single
-> free form text comment into individual pieces to extract their meta data.
-> Especially when git could easily add the ability to add multple comments
-> to each commit.  
+Actually, it does help Porcelain to be able to mark unrelated
+crud as 'note'.  Sane people (including git barebone
+Porcelainish) would just ignore it.  Unless --pretty=raw is used
+the 'note' headers will not be shown.  It would unclutter
+things for us.
 
-Git _does_ make that easy. It's called the "tree". It's where you add any 
-arbitrary files to a commit.
+If different Porcelains use "the existing comment field" by
+defining certain mark-up to embed their own data, it has the
+same "weak semantics causing confusion down the line" issue,
+_and_ the crud will be shown to the end user by "git log".
 
-The point here is that core git should do one thing, and one thing only. 
-You can then build up any policy you want on top of that. But in order for 
-core git to be stable, it has to have nice rules about what it cares 
-about, and what it does not.
+So I am starting to be actually in favor of the 'note' header.
 
-And the rule is: git cares about the commit header, but not about the 
-free-form. Which means that anything it doesn't care about, it goes into 
-the free-form section, not into some "X-header" section.
+Earlier somebody wondered if that has impact on merge semantics.
+I think we do _not_ care.  The core level does not track how
+things changed (the operation to make preimage to postimage),
+but tracks what the results of changes are (the content).
 
-Whatever you build on TOP of git can have its own rules in that free-form 
-section. For example, the kernel project has this "X-header" thing called 
-the "sign-off", and git itself picked it up. There's even some support to 
-add it automatically to commits (the same way we add the "revert" info 
-automatically to commits), but nobody claims that git should "parse" that 
-information, or that it should be part of the "header".
+Some "misguided" set of Porcelains may come up with a convention
+to record renames and token-replaces in the 'note' header to
+say:
 
-		Linus
+	tree 0000000000000000000000000000000000000000
+        parent 0000000000000000000000000000000000000000
+	author A U Thor <author@example.com> 000000000 +0000
+	committer C O Mitter <comitter@example.com> 000000000 +0000
+	note rename hello.c world.c
+        note token-replace s/cache/index/
+
+        Replaced old nomenclature 'cache' to 'index'.  Oh, while
+        at it, I renamed hello.c to world.c.
+
+But unlike systems that records the transformation from preimage
+to postimage, we record the postimage (on "tree" header) and
+preimage (by the way of "parent" header).  We (as the core and
+Porcelain that do not use "note") do not even need to look at
+what 'note' says.  The Porcelains that _do_ look at the note may
+try to take advantage of it, and if they make better result that
+would be a good thing.  I suspect such 'note rename' provided by
+the end user is not trustworthy at times, so a Porcelain that
+relies on that may make silent mismerge.  You may claim that is
+the reason why you do not want to pull from a tree managed with
+such a Porcelain.
+
+But at the end of the day what matters is the content, and
+people.
+
+You will not be using such a Porcelain yourself, but when you
+fetch the above commit, which records its tree and its parents,
+git barebone Porcelainish merge will just do what it has always
+done, without even looking at 'note'.  It's not like use of
+'note' on the other end is forcing you to take a note on them.
+
+Refusing to merge from a tree that is managed with a Porcelain
+that uses the information in 'note rename' for its own operation
+(maybe because we believe such Porcelain tends to make silent
+mismerges more often) does not make much more sense than
+refusing to merge from a tree whose developer uses vi (because
+it tends to lose "missing LF at the end of file").  The content
+matters, so you would check the merge result; and 'note' thing
+is opt-in, which we opt out.
+
+Also you ultimately trust people -- "I will pull from his tree,
+because I know he is careful and has good taste".  Now the tool
+they use _may_ be part of their taste, but any tool can be
+misused (remember you stayed away from pulling things that have
+Octopus?)
+
+I am less (a lot less) sure about the 'related' header now,
+which will be the topic of a separate message.
