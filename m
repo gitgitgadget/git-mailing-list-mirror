@@ -1,54 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] get_sha1(): :path and :[0-3]:path to extract from index.
-Date: Tue, 25 Apr 2006 01:46:21 -0700
-Message-ID: <7vr73myrdu.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0604181627101.3701@g5.osdl.org>
-	<7v7j5iph7f.fsf@assigned-by-dhcp.cox.net>
-	<20060425083724.GA1663@informatik.uni-freiburg.de>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
+ other commit links ideas)
+Date: Tue, 25 Apr 2006 04:57:52 -0400
+Message-ID: <BAYC1-PASMTP116C6B217F25F2ADAF0C67AEBF0@CEZ.ICE>
+References: <20060425035421.18382.51677.stgit@localhost.localdomain>
+	<e2kgga$d7q$1@sea.gmane.org>
+	<7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>
+	<e2kjul$ntq$1@sea.gmane.org>
+	<20060425043436.2ff53318.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 25 10:46:40 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Apr 25 11:02:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYJBj-0007Ag-8T
-	for gcvg-git@gmane.org; Tue, 25 Apr 2006 10:46:27 +0200
+	id 1FYJR4-0001ur-1T
+	for gcvg-git@gmane.org; Tue, 25 Apr 2006 11:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbWDYIqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Apr 2006 04:46:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWDYIqY
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 04:46:24 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:24818 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751464AbWDYIqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Apr 2006 04:46:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060425084622.LEON25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 25 Apr 2006 04:46:22 -0400
-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20060425083724.GA1663@informatik.uni-freiburg.de> (Uwe
-	Zeisberger's message of "Tue, 25 Apr 2006 10:37:24 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932153AbWDYJCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Apr 2006 05:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932150AbWDYJCO
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Apr 2006 05:02:14 -0400
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:57290 "EHLO
+	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S932154AbWDYJCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Apr 2006 05:02:14 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 25 Apr 2006 02:06:20 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 4C6CC644C28;
+	Tue, 25 Apr 2006 05:02:10 -0400 (EDT)
+To: jnareb@gmail.com, git@vger.kernel.org
+Message-Id: <20060425045752.0c6fbc21.seanlkml@sympatico.ca>
+In-Reply-To: <20060425043436.2ff53318.seanlkml@sympatico.ca>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 25 Apr 2006 09:06:20.0796 (UTC) FILETIME=[84E143C0:01C66847]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19139>
 
-Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
+On Tue, 25 Apr 2006 04:34:36 -0400
+sean <seanlkml@sympatico.ca> wrote:
 
->> This is a fairly straightforward patch to allow "get_sha1()" to
->> also have shorthands for blob objects in the current index.
->
-> I sometimes want to have something like that:
->
-> 	uzeisberger@io:~/gsrc/linux-2.6$ git cat-file blob v2.6.16:Makefile
->
-> That is not a shortcut for objects in the current index, but for blobs
-> in written trees.
+> If you're cherry-picking from a disposable branch, then you don't want to 
+> include a link to it in your new commit.  Once you include the link, the 
+> source commit should be protected from pruning just like any other piece 
+> of history.  Otherwise there's no way for fsck-objects to know if a missing 
+> object means corruption or not.  So you need a way at commit time to
+> request the explicit linkage.
 
-That's already present in the "master".  You are responding to a
-wrong message ;-).
+Actually this implies that anyone pulling just this branch would potentially
+also end up pulling large portions of other branches too.   So maybe making
+them optional is The Right Thing.  In which case, we'd just have to accept 
+these as weaker than the parentage links and fsck-objects et. al. would have 
+to tolerate such missing commits.
+
+So now that i've clearly come down in favor of both sides of this argument,
+i'll leave the decision to smarter people than me.
+
+Sean
