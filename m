@@ -1,90 +1,87 @@
-From: Sam Vilain <sam@vilain.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links
-Date: Wed, 26 Apr 2006 18:51:05 +1200
-Message-ID: <444F1859.8040504@vilain.net>
-References: <20060425035421.18382.51677.stgit@localhost.localdomain> <7vwtde2q1z.fsf@assigned-by-dhcp.cox.net> <444EAE7C.5010402@vilain.net> <e2mv30$k08$1@sea.gmane.org>
+Date: Wed, 26 Apr 2006 09:22:23 +0200
+Organization: At home
+Message-ID: <e2n72h$aqe$1@sea.gmane.org>
+References: <20060425035421.18382.51677.stgit@localhost.localdomain> <7vwtde2q1z.fsf@assigned-by-dhcp.cox.net> <444EAE7C.5010402@vilain.net> <e2mv30$k08$1@sea.gmane.org> <e2n01t$m8j$1@sea.gmane.org> <7vzmi8sxt1.fsf_-_@assigned-by-dhcp.cox.net> <e2n4am$1vn$1@sea.gmane.org> <7vlktssudl.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 26 08:51:24 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Apr 26 09:22:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYdru-0002sC-Tx
-	for gcvg-git@gmane.org; Wed, 26 Apr 2006 08:51:23 +0200
+	id 1FYeLz-00079x-GN
+	for gcvg-git@gmane.org; Wed, 26 Apr 2006 09:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750980AbWDZGvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Apr 2006 02:51:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbWDZGvU
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 02:51:20 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:9345 "EHLO watts.utsl.gen.nz")
-	by vger.kernel.org with ESMTP id S1750980AbWDZGvT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Apr 2006 02:51:19 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id A78347164; Wed, 26 Apr 2006 18:51:16 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id E0A3E4FA5;
-	Wed, 26 Apr 2006 18:51:09 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e2mv30$k08$1@sea.gmane.org>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751095AbWDZHWH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Apr 2006 03:22:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbWDZHWH
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 03:22:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:7864 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751095AbWDZHWG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Apr 2006 03:22:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FYeLZ-00075f-8O
+	for git@vger.kernel.org; Wed, 26 Apr 2006 09:22:01 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 Apr 2006 09:22:01 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 Apr 2006 09:22:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19190>
 
-Jakub Narebski wrote:
+Junio C Hamano wrote:
 
->>It would still support that. Each commit to the sub-project involves a
->>change to the tree of the "main" commit line (a copy of the commit into
->>a sub-directory of it). The advantage is that the "tree" in the main
->>commit is the combined tree, you don't need to treat the case specially
->>to just get the contents out.
->>    
->>
->
->As far as I understand, for subproject commit "bind" link (and perhaps the
->keyword/name "link" or "ref" would be better than "related") point to other
->subprojects commits (trees), while the Sam's "prior (3)" example link would
->point to the toplevel project (gathering all subprojects) commit, and it
->would probably be named/noted "toplevel", not "prior".
->
->Am I correct?
->  
->
+> (On topic again)
+> 
+> Link from subproject commit back to the toplevel might work for
+> some kind of subprojects, but it would not work for the
+> subproject support that frequently comes up on this list.  The
+> development of an embedded Linux device, where a Linux kernel
+> source tree is grafted at kernel/ subdirectory of the toplevel
+> project.  The "prior" link would be placed in the commit that
+> belong to the kernel subproject, but that would never be merged
+> to the Linus kernel (why should he care about one particular
+> embedded device's development history).  The link must go from
+> the toplevel to generic parts reusable out of the context of the
+> combined project.
 
-I don't think you quite get my meaning.
+Yes, I guess subproject support is most needed for the "third-party embedded
+(sub)project", when one sometimes have to modify (sub)project files, and
+perhaps have to watch for the (sub)project version. Hmmm... if one used
+Tailor (to allow for projects not managed under GIT, though I wonder if it
+would be possible to link up project without [externally available] SCM)
+one could use this approach for managing distribution packages, like RPMS
+or debs...
 
-What I'm saying is that with the right kind of general purpose relation
-between commits, you don't need "bind" at all.
+Do I understand correctly that toplevel (master project) commits have tree
+which points to combined tree, and "bind" links which points to the
+subprojects commits whose trees make up the overall tree, or does the
+master tree points to tree containing only toplevel files (overall Makefile
+for example, INSTALL or README for the whole project including
+subprojects,...)?
 
-Firstly, you would have your sub-project as its own commit line. That is
-a fairly straightforward thing.
 
-Secondly, the project that includes it has a corresponding commit for
-each commit on the sub-project. This commit changes the portion of the
-outer project's tree where the sub-project is bound.
+BTW. I have lately stumbled upon (somewhat Vault and Subversion biased)
+ http://software.ericsink.com/Beyond_CheckOut_and_CheckIn.html
+Read about Share and Pin -- it's about subprojects (when you edit out the
+flawed "branch as folder" approach of author). I wonder if it could be
+easily implemented in "subprojects for GIT" proposal... Of course we can do
+better, i.e. original subproject repository doesn't need to be on the same
+machine, we can use remote repository.
 
-This means that you don't need to understand this "bind" relation to be
-able to extract the tree, and keeps the model simple at the expense of
-an extra tree object or three per commit. It also does not restrict the
-manner of the "binding", porcelains or users are free to do it
-selectively, for instance.
-
-Actually there is large similarity to this and cherry-picking. In
-essence you're cherry picking every single commit from a different
-commit heirarchy, except that you are applying the patches into a
-sub-directory.
-
-Sam.
+-- 
+Jakub Narebski
+Warsaw, Poland
