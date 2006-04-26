@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and other commit links ideas)
-Date: Wed, 26 Apr 2006 14:01:41 +0200
+Subject: Re: [PATCH] Alter git-rebase command line options.
+Date: Wed, 26 Apr 2006 14:30:47 +0200
 Organization: At home
-Message-ID: <e2nne7$4sp$1@sea.gmane.org>
-References: <20060425035421.18382.51677.stgit@localhost.localdomain>	<e2kgga$d7q$1@sea.gmane.org>	<7v7j5e2jv7.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0604250811230.3701@g5.osdl.org>	<Pine.LNX.4.64.0604250833540.3701@g5.osdl.org> <BAYC1-PASMTP086A906CFB378AB229C2D8AEBF0@CEZ.ICE> <444F58B0.6090603@op5.se>
+Message-ID: <e2np4p$b9a$1@sea.gmane.org>
+References: <BAYC1-PASMTP0659C709B7FFCB63182FE1AEBC0@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Apr 26 14:02:29 2006
+X-From: git-owner@vger.kernel.org Wed Apr 26 14:31:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYiij-0003Zi-D7
-	for gcvg-git@gmane.org; Wed, 26 Apr 2006 14:02:13 +0200
+	id 1FYjB5-0000Zl-S4
+	for gcvg-git@gmane.org; Wed, 26 Apr 2006 14:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932407AbWDZMCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Apr 2006 08:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbWDZMCJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 08:02:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:33230 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932407AbWDZMCI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Apr 2006 08:02:08 -0400
+	id S932418AbWDZMbR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Apr 2006 08:31:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbWDZMbQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 08:31:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:22942 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932418AbWDZMbQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Apr 2006 08:31:16 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FYiiM-0003TS-0M
-	for git@vger.kernel.org; Wed, 26 Apr 2006 14:01:50 +0200
+	id 1FYjAR-0000QV-SI
+	for git@vger.kernel.org; Wed, 26 Apr 2006 14:30:52 +0200
 Received: from 193.0.122.19 ([193.0.122.19])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 26 Apr 2006 14:01:50 +0200
+        for <git@vger.kernel.org>; Wed, 26 Apr 2006 14:30:51 +0200
 Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 26 Apr 2006 14:01:50 +0200
+        for <git@vger.kernel.org>; Wed, 26 Apr 2006 14:30:51 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -40,46 +40,45 @@ User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19202>
 
-Andreas Ericsson wrote:
+sean wrote:
 
-> I've suggested before that arbitrary headers could be added to git
-> commits by prefixing them with X- (preferrably followed by an abbrev of
-> the porcelain name adding the note). This way it's easy to filter, you
-> get the free ride, and porcelains can do whatever they want while core
-> git can strip everything following the sequence "\nX-" up to and
-> including the next newline.
+>   git rebase [--branch <branch>] <newbase>
+>   git rebase --continue
+>   git rebase --abort
 > 
-> This way you have only one special byte-sequence with special meaning
-> that the plumbing has to know it should ignore, which is a lot more
-> extensible (not to mention easier to code).
+> Add "--continue" to restart the rebase process after
+> manually resolving conflicts.  The user is warned if
+> there are still differences between the index and the
+> working files.
 > 
-> In addition, if those X- lines aren't included in the sha1 computation
-> they can easily be removed and added to without affecting the ancestry
-> chain. This would probably have quite a performance impact though.
-> 
-> That said, I don't think even "X-" headers is a very good idea. Perhaps
-> i've just got poor imagination but I can't think of a good use for them.
+> Add "--abort" to restore the original branch, and
+> remove the .dotest working files.
 
-Well, the "note" headers are just that, but instead of prefixing 'extra'
-headers with "X-" you prefix them with "note ".
+Very nice.
 
-I think that the "note" (or X-) headers should be included in calculating
-sha1, as the free-form of commit (the comment) is.
+>  SYNOPSIS
+>  --------
+> -'git-rebase' [--onto <newbase>] <upstream> [<branch>]
+> +'git-rebase' [--branch <branch>] <newbase>
+> +
+> +'git-rebase' --continue
+> +
+> +'git-rebase' --abort
+>  
+>  DESCRIPTION
+>  -----------
+> -git-rebase applies to <upstream> (or optionally to <newbase>) commits
+> -from <branch> that do not appear in <upstream>. When <branch> is not
+> -specified it defaults to the current branch (HEAD).
+> +git-rebase replaces <branch> with a new branch of the same name having
+> +a HEAD of <newbase>.  It then attempts to make a new commit for each
+> +commit from the original <branch> that does not yet exist in this new
+> +<branch>.
 
-As to use: for now 'git cherry-pick' and 'git revert' records the commit
-picked or commit reverted in free form. It could be recorded in "note"
-header, or additionally as "note" header. 'git rebase' could also record
-the original commit e.g. as "note original <branchname> <sha1-of-commit>".
-
-And it would be the place for Porcelain to record simple information which
-is of use to them, but usualy not interesting to user, so it would be
-better if it wouldn't pollute free-form/comment area.
-
-
-The "prior" (for saving "pu"-like branches previous state) and "bind" (for
-managing subprojects) I think should be rather of "related"/"link" kind.
+What about 'git-rebase --onto <newbase> <upstream> <branch>' three options
+version?
 
 -- 
 Jakub Narebski
