@@ -1,56 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Fix filename verification when in a subdirectory
-Date: Wed, 26 Apr 2006 11:14:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604261112240.3701@g5.osdl.org>
-References: <17483.27938.890830.375324@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.64.0604230906370.3701@g5.osdl.org> <E1FYlwn-0005mf-CL@moooo.ath.cx>
- <Pine.LNX.4.64.0604260832240.3701@g5.osdl.org> <Pine.LNX.4.64.0604261010390.3701@g5.osdl.org>
- <20060426210541.5e145e88.tihirvon@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --continue and --abort options to git-rebase.
+Date: Wed, 26 Apr 2006 13:05:28 -0700
+Message-ID: <7v3bg0nlvb.fsf@assigned-by-dhcp.cox.net>
+References: <BAYC1-PASMTP0659C709B7FFCB63182FE1AEBC0@CEZ.ICE>
+	<e2np4p$b9a$1@sea.gmane.org>
+	<BAYC1-PASMTP025110BEB495EC4F07CDE2AEBC0@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net, matled@gmx.net, git@vger.kernel.org,
-	paulus@samba.org
-X-From: git-owner@vger.kernel.org Wed Apr 26 20:14:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 26 22:05:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYoX9-0007i6-Bq
-	for gcvg-git@gmane.org; Wed, 26 Apr 2006 20:14:39 +0200
+	id 1FYqGU-0007fA-3b
+	for gcvg-git@gmane.org; Wed, 26 Apr 2006 22:05:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964776AbWDZSOg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Apr 2006 14:14:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964793AbWDZSOg
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 14:14:36 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:51127 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964776AbWDZSOg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Apr 2006 14:14:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3QIE2tH004104
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 26 Apr 2006 11:14:02 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3QIE0FG002953;
-	Wed, 26 Apr 2006 11:14:01 -0700
-To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060426210541.5e145e88.tihirvon@gmail.com>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964830AbWDZUFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Apr 2006 16:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932391AbWDZUFa
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 16:05:30 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:28354 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932388AbWDZUFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Apr 2006 16:05:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060426200529.BGBY15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 26 Apr 2006 16:05:29 -0400
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP025110BEB495EC4F07CDE2AEBC0@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Wed, 26 Apr 2006 10:49:38 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19217>
 
+sean <seanlkml@sympatico.ca> writes:
 
+>   git rebase [--onto <newbase>] <upstream> [<branch>]
+>   git rebase --continue
+>   git rebase --abort
+>
+> ---
+>
+> Take 2.  Must simpler patch which doesn't trying to 
+> rejigger the command line too much.
 
-On Wed, 26 Apr 2006, Timo Hirvonen wrote:
-> 
-> Extra semicolon.
-
-Duh, indeed. It just didn't show up in any of the normal cases.
-
-Junio, just apply without that stupid semicolon..
-
-		Linus
+This second round seems to make more sense.  Sign-off?
