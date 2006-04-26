@@ -1,191 +1,64 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH] Fix filename verification when in a subdirectory
-Date: Wed, 26 Apr 2006 10:15:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604261010390.3701@g5.osdl.org>
-References: <17483.27938.890830.375324@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.64.0604230906370.3701@g5.osdl.org> <E1FYlwn-0005mf-CL@moooo.ath.cx>
- <Pine.LNX.4.64.0604260832240.3701@g5.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH/RFC] reverse the pack-objects delta window logic
+Date: Wed, 26 Apr 2006 13:48:13 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0604261341200.18520@localhost.localdomain>
+References: <Pine.LNX.4.64.0604252330190.18520@localhost.localdomain>
+ <7vpsj4sxer.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Apr 26 19:16:23 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 26 19:48:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FYncb-00044c-U9
-	for gcvg-git@gmane.org; Wed, 26 Apr 2006 19:16:14 +0200
+	id 1FYo7e-0001uU-Te
+	for gcvg-git@gmane.org; Wed, 26 Apr 2006 19:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932351AbWDZRQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Apr 2006 13:16:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbWDZRQH
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 13:16:07 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:39073 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932351AbWDZRQG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Apr 2006 13:16:06 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3QHFutH001598
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 26 Apr 2006 10:15:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3QHFsm4001066;
-	Wed, 26 Apr 2006 10:15:55 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <Pine.LNX.4.64.0604260832240.3701@g5.osdl.org>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932307AbWDZRsQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Apr 2006 13:48:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbWDZRsP
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Apr 2006 13:48:15 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:25020 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932307AbWDZRsP
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Apr 2006 13:48:15 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IYC00EK9C4D1O80@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 26 Apr 2006 13:48:13 -0400 (EDT)
+In-reply-to: <7vpsj4sxer.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19214>
 
+On Tue, 25 Apr 2006, Junio C Hamano wrote:
 
-When we are in a subdirectory of a git archive, we need to take the prefix 
-of that subdirectory into accoung when we verify filename arguments.
-
-Noted by Matthias Lederhofer
-
-This also uses the improved error reporting for all the other git commands 
-that use the revision parsing interfaces, not just git-rev-parse. Also, it 
-makes the error reporting for mixed filenames and argument flags clearer 
-(you cannot put flags after the start of the pathname list).
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-On Wed, 26 Apr 2006, Linus Torvalds wrote:
-> > 
-> > Shouldn't git rev-parse try to stat the file (additionally?) in the 
-> > current directory instead of the top git directory? git (diff|log|..) 
-> > seem to fail everytime in a subdirectory without --.
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> Good point. However, the reason for that is that it actually _does_ stat 
-> the file in the current directory, but it has done the 
+> > Note, this is a RFC particularly to Junio since the resulting pack is 
+> > larger than without the patch with git-repack -a -f.  However using a 
+> > subsequent git-repack -a brings the pack size down to expected size.  So 
+> > I'm not sure I've got everything right.
 > 
-> 	revs->prefix = setup_git_directory();
-> 
-> in the init path (and it does need to do that, since that's what figures 
-> out where the .git directory is, so that we can parse the revisions 
-> correctly).
-> 
-> And that "setup_git_directory()" will chdir() to the root of the project.
+> I haven't tested it seriously yet, but there is nothing that
+> looks obviously wrong that might cause the inflation problem,
+> from the cursory look after applying the patch on top of your
+> last round.
 
-diff --git a/cache.h b/cache.h
-index 69801b0..4d8fabc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -134,6 +134,7 @@ extern const char *setup_git_directory_g
- extern const char *setup_git_directory(void);
- extern const char *prefix_path(const char *prefix, int len, const char *path);
- extern const char *prefix_filename(const char *prefix, int len, const char *path);
-+extern void verify_filename(const char *prefix, const char *name);
- 
- #define alloc_nr(x) (((x)+16)*3/2)
- 
-diff --git a/rev-parse.c b/rev-parse.c
-index 7f66ae2..62e16af 100644
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -160,14 +160,6 @@ static int show_file(const char *arg)
- 	return 0;
- }
- 
--static void die_badfile(const char *arg)
--{
--	if (errno != ENOENT)
--		die("'%s': %s", arg, strerror(errno));
--	die("'%s' is ambiguous - revision name or file/directory name?\n"
--	    "Please put '--' before the list of filenames.", arg);
--}
--
- int main(int argc, char **argv)
- {
- 	int i, as_is = 0, verify = 0;
-@@ -177,14 +169,12 @@ int main(int argc, char **argv)
- 	git_config(git_default_config);
- 
- 	for (i = 1; i < argc; i++) {
--		struct stat st;
- 		char *arg = argv[i];
- 		char *dotdot;
- 
- 		if (as_is) {
- 			if (show_file(arg) && as_is < 2)
--				if (lstat(arg, &st) < 0)
--					die_badfile(arg);
-+				verify_filename(prefix, arg);
- 			continue;
- 		}
- 		if (!strcmp(arg,"-n")) {
-@@ -350,8 +340,7 @@ int main(int argc, char **argv)
- 			continue;
- 		if (verify)
- 			die("Needed a single revision");
--		if (lstat(arg, &st) < 0)
--			die_badfile(arg);
-+		verify_filename(prefix, arg);
- 	}
- 	show_default();
- 	if (verify && revs_count != 1)
-diff --git a/revision.c b/revision.c
-index f9c7d15..f2a9f25 100644
---- a/revision.c
-+++ b/revision.c
-@@ -752,17 +752,15 @@ int setup_revisions(int argc, const char
- 			arg++;
- 		}
- 		if (get_sha1(arg, sha1) < 0) {
--			struct stat st;
- 			int j;
- 
- 			if (seen_dashdash || local_flags)
- 				die("bad revision '%s'", arg);
- 
- 			/* If we didn't have a "--", all filenames must exist */
--			for (j = i; j < argc; j++) {
--				if (lstat(argv[j], &st) < 0)
--					die("'%s': %s", argv[j], strerror(errno));
--			}
-+			for (j = i; j < argc; j++)
-+				verify_filename(revs->prefix, argv[j]);
-+
- 			revs->prune_data = get_pathspec(revs->prefix, argv + i);
- 			break;
- 		}
-diff --git a/setup.c b/setup.c
-index 36ede3d..119ef7d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -62,6 +62,29 @@ const char *prefix_filename(const char *
- 	return path;
- }
- 
-+/*
-+ * Verify a filename that we got as an argument for a pathspec
-+ * entry. Note that a filename that begins with "-" never verifies
-+ * as true, because even if such a filename were to exist, we want
-+ * it to be preceded by the "--" marker (or we want the user to
-+ * use a format like "./-filename")
-+ */
-+void verify_filename(const char *prefix, const char *arg)
-+{
-+	const char *name;
-+	struct stat st;
-+
-+	if (*arg == '-')
-+		die("bad flag '%s' used after filename", arg);
-+	name = prefix ? prefix_filename(prefix, strlen(prefix), arg) : arg;
-+	if (!lstat(name, &st))
-+		return;
-+	if (errno == ENOENT);
-+		die("ambiguous argument '%s': unknown revision or filename\n"
-+		    "Use '--' to separate filenames from revisions", arg);
-+	die("'%s': %s", arg, strerror(errno));
-+}
-+
- const char **get_pathspec(const char *prefix, const char **pathspec)
- {
- 	const char *entry = *pathspec;
+Never mind.  I found a flaw in the determination of delta_limit when 
+reparenting a delta target.  The immediate parent's delta_limit is 
+readjusted when its longest delta is moved to another base, but if that 
+parent was itself a delta then the delta_limit adjustment is not 
+propagated back up to the top.  This means that some objects were 
+falsely credited with too high delta_limit.
+
+And actually I'm not sure how to solve that without walking the tree 
+up to the top each time, which I want to avoid as much as possible.
+
+
+Nicolas
