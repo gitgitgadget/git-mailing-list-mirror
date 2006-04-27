@@ -1,49 +1,182 @@
-From: Aubrey <aubreylee@gmail.com>
-Subject: how to trace the patch?
-Date: Thu, 27 Apr 2006 18:06:09 +0800
-Message-ID: <6d6a94c50604270306j44c280bdo283591f2f595f74e@mail.gmail.com>
+From: Peter Hagervall <hager@cs.umu.se>
+Subject: [PATCH] C version of git-count-objects
+Date: Thu, 27 Apr 2006 12:12:55 +0200
+Message-ID: <20060427101254.GA22769@peppar.cs.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Apr 27 12:06:19 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Apr 27 12:13:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZ3O3-0003i5-7V
-	for gcvg-git@gmane.org; Thu, 27 Apr 2006 12:06:15 +0200
+	id 1FZ3Ul-0004n2-Li
+	for gcvg-git@gmane.org; Thu, 27 Apr 2006 12:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965067AbWD0KGL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 06:06:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965068AbWD0KGL
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 06:06:11 -0400
-Received: from nproxy.gmail.com ([64.233.182.188]:58217 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965067AbWD0KGK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 06:06:10 -0400
-Received: by nproxy.gmail.com with SMTP id x30so1265172nfb
-        for <git@vger.kernel.org>; Thu, 27 Apr 2006 03:06:09 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=iS7+D6Y3RrvBOHV0N1NOsAHv8aFy9j5OFtXgdmzwMBU0Q4Q+CJX2QinRYZheBYzmqHa3Omp960iyc96m32gi4mir0gCDH/p41MXmbjssHq8KG1eiaD/rUVZIgdA12wGNs7ZbW93H6yOKO7/Tfhevx30ecWkXTiscycJDaboxN84=
-Received: by 10.49.42.6 with SMTP id u6mr699791nfj;
-        Thu, 27 Apr 2006 03:06:09 -0700 (PDT)
-Received: by 10.48.220.18 with HTTP; Thu, 27 Apr 2006 03:06:09 -0700 (PDT)
+	id S965074AbWD0KNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 06:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965076AbWD0KNH
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 06:13:07 -0400
+Received: from mail.cs.umu.se ([130.239.40.25]:44007 "EHLO mail.cs.umu.se")
+	by vger.kernel.org with ESMTP id S965070AbWD0KNG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Apr 2006 06:13:06 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id 19F292B98;
+	Thu, 27 Apr 2006 12:13:05 +0200 (MEST)
+Received: from mail.cs.umu.se ([127.0.0.1])
+ by localhost (mimmi.cs.umu.se [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 16047-02-5; Thu, 27 Apr 2006 12:12:55 +0200 (MEST)
+Received: from peppar.cs.umu.se (peppar.cs.umu.se [130.239.40.13])
+	by mail.cs.umu.se (Postfix) with ESMTP id 543F62B9E;
+	Thu, 27 Apr 2006 12:12:55 +0200 (MEST)
+Received: by peppar.cs.umu.se (Postfix, from userid 12006)
+	id 492B330BB; Thu, 27 Apr 2006 12:12:55 +0200 (MEST)
 To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.10i
+X-Virus-Scanned: amavisd-new at cs.umu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19226>
 
-Hi all,
+Answering the call Linus made[1], sort of, but for a completely
+different program.
 
-When I update the kernel git tree a few days later, you know, there
-could be a lot of patches. Then I found one file changed, how can I
-know which patch the modification belong to?
-How can I find the patch?
-Many thanks,
+Anyway, it ought to be at least as portable as the shell script, and a
+whole lot faster, however much that matters.
 
-Regards,
--Aubrey
+Signed-off-by: Peter Hagervall <hager@cs.umu.se>
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/19073
+
+---
+
+ Makefile             |    5 +--
+ count-objects.c      |   56 +++++++++++++++++++++++++++++++++++++
+ git-count-objects.sh |   31 --------------------
+ 3 files changed, 59 insertions(+), 33 deletions(-)
+
+
+diff --git a/Makefile b/Makefile
+index 8ce27a6..53e7591 100644
+--- a/Makefile
++++ b/Makefile
+@@ -115,7 +115,7 @@ ### --- END CONFIGURATION SECTION ---
+ SCRIPT_SH = \
+ 	git-add.sh git-bisect.sh git-branch.sh git-checkout.sh \
+ 	git-cherry.sh git-clean.sh git-clone.sh git-commit.sh \
+-	git-count-objects.sh git-diff.sh git-fetch.sh \
++	git-diff.sh git-fetch.sh \
+ 	git-format-patch.sh git-ls-remote.sh \
+ 	git-merge-one-file.sh git-parse-remote.sh \
+ 	git-prune.sh git-pull.sh git-push.sh git-rebase.sh \
+@@ -165,7 +165,8 @@ PROGRAMS = \
+ 	git-upload-pack$X git-verify-pack$X git-write-tree$X \
+ 	git-update-ref$X git-symbolic-ref$X git-check-ref-format$X \
+ 	git-name-rev$X git-pack-redundant$X git-repo-config$X git-var$X \
+-	git-describe$X git-merge-tree$X git-blame$X git-imap-send$X
++	git-describe$X git-merge-tree$X git-blame$X git-imap-send$X \
++	git-count-objects$X
+ 
+ BUILT_INS = git-log$X
+ 
+diff --git a/count-objects.c b/count-objects.c
+new file mode 100644
+index 0000000..67ab6f0
+--- /dev/null
++++ b/count-objects.c
+@@ -0,0 +1,56 @@
++#include "cache.h"
++#include "git-compat-util.h"
++
++static char pathname[PATH_MAX + 1];
++static int numobjects, numblocks;
++static const char hex_digits[] = "0123456789abcdef";
++
++void count_objects(void)
++{
++	char subdir[3];
++	int i, j;
++	struct stat statbuf;
++	struct dirent *dirp;
++	DIR *dp;
++	subdir[2] = '\0';
++	for (i = 0; i < 16; i++) {
++		subdir[0] = hex_digits[i];
++		for (j = 0; j < 16; j++) {
++			subdir[1] = hex_digits[j];
++			if (access(subdir, R_OK | X_OK))
++				continue;
++			chdir(subdir);
++			if (!(dp = opendir("."))) {
++				error("can't open subdir %s", subdir);
++				continue;
++			}
++			while ((dirp = readdir(dp))) {
++				if (!strcmp(dirp->d_name, ".") ||
++					!strcmp(dirp->d_name, ".."))
++					continue;
++				if (lstat(dirp->d_name, &statbuf)) {
++					error("can't stat file %s", dirp->d_name);
++					continue;
++				}
++				numblocks += statbuf.st_blocks;
++				numobjects++;
++			}
++			closedir(dp);
++			chdir("..");
++		}
++	}
++}
++
++int main(int argc, char **argv)
++{
++	setup_git_directory();
++
++	if (chdir(".git/objects"))
++		die("%s", strerror(errno));
++
++	count_objects();
++
++	printf("%d objects, %d kilobytes\n", numobjects, numblocks / 2);
++
++	return 0;
++}
+diff --git a/git-count-objects.sh b/git-count-objects.sh
+deleted file mode 100755
+index 40c58ef..0000000
+--- a/git-count-objects.sh
++++ /dev/null
+@@ -1,31 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2005 Junio C Hamano
+-#
+-
+-GIT_DIR=`git-rev-parse --git-dir` || exit $?
+-
+-dc </dev/null 2>/dev/null || {
+-	# This is not a real DC at all -- it just knows how
+-	# this script feeds DC and does the computation itself.
+-	dc () {
+-		while read a b
+-		do
+-			case $a,$b in
+-			0,)	acc=0 ;;
+-			*,+)	acc=$(($acc + $a)) ;;
+-			p,)	echo "$acc" ;;
+-			esac
+-		done
+-	}
+-}
+-
+-echo $(find "$GIT_DIR/objects"/?? -type f -print 2>/dev/null | wc -l) objects, \
+-$({
+-    echo 0
+-    # "no-such" is to help Darwin folks by not using xargs -r.
+-    find "$GIT_DIR/objects"/?? -type f -print 2>/dev/null |
+-    xargs du -k "$GIT_DIR/objects/no-such" 2>/dev/null |
+-    sed -e 's/[ 	].*/ +/'
+-    echo p
+-} | dc) kilobytes
