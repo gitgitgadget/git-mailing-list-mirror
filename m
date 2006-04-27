@@ -1,80 +1,49 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] change ent to tree in git-diff documentation
-Date: Thu, 27 Apr 2006 15:38:57 +0200
-Message-ID: <E1FZ6ht-0000st-TY@moooo.ath.cx>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: Two gitweb feature requests
+Date: Thu, 27 Apr 2006 14:47:06 +0100
+Message-ID: <1146145626.11909.452.camel@pmac.infradead.org>
+References: <1146144425.11909.450.camel@pmac.infradead.org>
+	 <E1FZ6eM-0000qC-HH@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Apr 27 15:39:29 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 27 15:48:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZ6i1-0002r2-GI
-	for gcvg-git@gmane.org; Thu, 27 Apr 2006 15:39:06 +0200
+	id 1FZ6q2-0004WV-ST
+	for gcvg-git@gmane.org; Thu, 27 Apr 2006 15:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965048AbWD0NjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 09:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965050AbWD0NjA
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 09:39:00 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:14822 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S965047AbWD0Ni7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Apr 2006 09:38:59 -0400
-To: Git Mailing List <git@vger.kernel.org>
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: mutt-ng/devel-r790 (Linux)
+	id S965068AbWD0NrU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 09:47:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965121AbWD0NrU
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 09:47:20 -0400
+Received: from canuck.infradead.org ([205.233.218.70]:47022 "EHLO
+	canuck.infradead.org") by vger.kernel.org with ESMTP
+	id S965068AbWD0NrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Apr 2006 09:47:19 -0400
+Received: from pmac.infradead.org ([81.187.2.168])
+	by canuck.infradead.org with esmtpsa (Exim 4.61 #1 (Red Hat Linux))
+	id 1FZ6pq-0003br-G8; Thu, 27 Apr 2006 09:47:17 -0400
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <E1FZ6eM-0000qC-HH@moooo.ath.cx>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19234>
 
----
-This is quite confusing for someone new to git who is not familiar
-with the vocabulary used with git. I don't think a man page is the
-right place for riddles :)
-Additionaly I changed two times 'is' to 'are', I hope this is correct.
+On Thu, 2006-04-27 at 15:35 +0200, Matthias Lederhofer wrote:
+> An easy way to do this is to put the git repository on the webserver
+> and tell the webserver to redirect to gitweb if the directory is
+> accessed directly, not a file in the git directory.
 
- Documentation/git-diff.txt |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+That's true, but isn't it much to use git:// instead of the 'dumb'
+http:// method?
 
-83ace740fdf1e064168f8438a6ad863986cf4832
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 890931c..41d85cf 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -8,24 +8,24 @@ git-diff - Show changes between commits,
- 
- SYNOPSIS
- --------
--'git-diff' [ --diff-options ] <ent>{0,2} [<path>...]
-+'git-diff' [ --diff-options ] <tree-ish>{0,2} [<path>...]
- 
- DESCRIPTION
- -----------
--Show changes between two ents, an ent and the working tree, an
--ent and the index file, or the index file and the working tree.
-+Show changes between two trees, a tree and the working tree, a
-+tree and the index file, or the index file and the working tree.
- The combination of what is compared with what is determined by
--the number of ents given to the command.
-+the number of trees given to the command.
- 
--* When no <ent> is given, the working tree and the index
--  file is compared, using `git-diff-files`.
-+* When no <tree-ish> is given, the working tree and the index
-+  file are compared, using `git-diff-files`.
- 
--* When one <ent> is given, the working tree and the named
--  tree is compared, using `git-diff-index`.  The option
-+* When one <tree-ish> is given, the working tree and the named
-+  tree are compared, using `git-diff-index`.  The option
-   `--cached` can be given to compare the index file and
-   the named tree.
- 
--* When two <ent>s are given, these two trees are compared
-+* When two <tree-ish>s are given, these two trees are compared
-   using `git-diff-tree`.
- 
- OPTIONS
 -- 
-1.3.1.g9af0
+dwmw2
