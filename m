@@ -1,66 +1,52 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: how to trace the patch?
-Date: Thu, 27 Apr 2006 06:57:28 -0400
-Message-ID: <BAYC1-PASMTP029B6CB13A6C0BA3956E17AEBD0@CEZ.ICE>
-References: <6d6a94c50604270306j44c280bdo283591f2f595f74e@mail.gmail.com>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: [PATCH] C version of git-count-objects
+Date: Thu, 27 Apr 2006 09:16:32 -0400
+Message-ID: <118833cc0604270616u2961ab10waef5807c429be784@mail.gmail.com>
+References: <20060427101254.GA22769@peppar.cs.umu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 27 13:01:59 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Apr 27 15:16:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZ4Fz-000520-3f
-	for gcvg-git@gmane.org; Thu, 27 Apr 2006 13:01:59 +0200
+	id 1FZ6MJ-0006a4-As
+	for gcvg-git@gmane.org; Thu, 27 Apr 2006 15:16:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964898AbWD0LB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 07:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWD0LB4
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 07:01:56 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:21536 "EHLO
-	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S964898AbWD0LBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 07:01:55 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 27 Apr 2006 04:01:54 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 7AEAB644C28;
-	Thu, 27 Apr 2006 07:01:53 -0400 (EDT)
-To: Aubrey <aubreylee@gmail.com>
-Message-Id: <20060427065728.35a4ae51.seanlkml@sympatico.ca>
-In-Reply-To: <6d6a94c50604270306j44c280bdo283591f2f595f74e@mail.gmail.com>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 27 Apr 2006 11:01:55.0107 (UTC) FILETIME=[FEE0A730:01C669E9]
+	id S965035AbWD0NQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 09:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965037AbWD0NQd
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 09:16:33 -0400
+Received: from pproxy.gmail.com ([64.233.166.177]:4848 "EHLO pproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965035AbWD0NQc convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Apr 2006 09:16:32 -0400
+Received: by pproxy.gmail.com with SMTP id i49so2058136pye
+        for <git@vger.kernel.org>; Thu, 27 Apr 2006 06:16:32 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rEcn/T5VW+YoS9SXmdCh1AS4wlrwxAiWLF0jg0a2bGvsjo9pK9nlaRIrtmXGN2o9SiBPkscRwP8hZEvFLL38MqeTGl5kBT63nxxr7UwxzJWY8+m+0b2hR8kAyN2CYIWe9VfxBRxXanA1Swf0P9eEhXFpNB6Kc6VQm21B4iZvyps=
+Received: by 10.35.17.8 with SMTP id u8mr88316pyi;
+        Thu, 27 Apr 2006 06:16:32 -0700 (PDT)
+Received: by 10.35.39.13 with HTTP; Thu, 27 Apr 2006 06:16:32 -0700 (PDT)
+To: "Peter Hagervall" <hager@cs.umu.se>
+In-Reply-To: <20060427101254.GA22769@peppar.cs.umu.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19229>
 
-On Thu, 27 Apr 2006 18:06:09 +0800
-Aubrey <aubreylee@gmail.com> wrote:
+> +                       if (access(subdir, R_OK | X_OK))
+> +                               continue;
+> +                       chdir(subdir);
 
-> When I update the kernel git tree a few days later, you know, there
-> could be a lot of patches. Then I found one file changed, how can I
-> know which patch the modification belong to?
-> How can I find the patch?
+You've got yourself a needless race condition right there.  Just
+do the chdir and check the return value.  (And besides, access
+checks with the wrong set of permissions, should this ever end
+up in set[ug]id context.)
 
-Hi Aubrey,
-
-$ git log -- <filename>
-
-To see a list of commits that affected the file you're interested in.
-
-$ git log -p -- <filename>
-
-Will include a diff after each commit showing you how the file was
-changed.  And if you want to see what other changes happened in each
-commit that modified your file, add "--full-diff" to the command above.
-
-Note that you can also replace the <filename> with a <directory> 
-to see a list of commits that affected any file below that directory.
-
-HTH,
-Sean
+Morten
