@@ -1,66 +1,66 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: cg-clone not fetching all tags?
-Date: Thu, 27 Apr 2006 12:52:51 +0200
-Message-ID: <20060427105251.AA4B2353DAC@atlas.denx.de>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: how to trace the patch?
+Date: Thu, 27 Apr 2006 06:57:28 -0400
+Message-ID: <BAYC1-PASMTP029B6CB13A6C0BA3956E17AEBD0@CEZ.ICE>
+References: <6d6a94c50604270306j44c280bdo283591f2f595f74e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Apr 27 12:54:45 2006
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 27 13:01:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZ48V-0003QF-LJ
-	for gcvg-git@gmane.org; Thu, 27 Apr 2006 12:54:17 +0200
+	id 1FZ4Fz-000520-3f
+	for gcvg-git@gmane.org; Thu, 27 Apr 2006 13:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965112AbWD0Kwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 06:52:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965111AbWD0Kwz
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 06:52:55 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:16819 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S965110AbWD0Kwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 06:52:53 -0400
-Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 59B2E70802
-	for <git@vger.kernel.org>; Thu, 27 Apr 2006 12:52:52 +0200 (CEST)
-X-Auth-Info: kH+dan83ChvGu1KhqN8dcRi0JpNJWmuYLZb+FZlnYrs=
-Received: from mail.denx.de (p54965C06.dip.t-dialin.net [84.150.92.6])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id 42B08909C1
-	for <git@vger.kernel.org>; Thu, 27 Apr 2006 12:52:52 +0200 (CEST)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id C31126D0112
-	for <git@vger.kernel.org>; Thu, 27 Apr 2006 12:52:51 +0200 (CEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id AA4B2353DAC
-	for <git@vger.kernel.org>; Thu, 27 Apr 2006 12:52:51 +0200 (MEST)
-To: Git Mailing List <git@vger.kernel.org>
+	id S964898AbWD0LB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 07:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWD0LB4
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 07:01:56 -0400
+Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:21536 "EHLO
+	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S964898AbWD0LBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Apr 2006 07:01:55 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 27 Apr 2006 04:01:54 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 7AEAB644C28;
+	Thu, 27 Apr 2006 07:01:53 -0400 (EDT)
+To: Aubrey <aubreylee@gmail.com>
+Message-Id: <20060427065728.35a4ae51.seanlkml@sympatico.ca>
+In-Reply-To: <6d6a94c50604270306j44c280bdo283591f2f595f74e@mail.gmail.com>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 27 Apr 2006 11:01:55.0107 (UTC) FILETIME=[FEE0A730:01C669E9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19227>
 
-Hi,
+On Thu, 27 Apr 2006 18:06:09 +0800
+Aubrey <aubreylee@gmail.com> wrote:
 
-it seems that "cg-clone" does not fetch all tags any more - only  the
-most  recent ones (modiufied in the last N days?) seem to be fetched?
-[Eventually the "N days"  might  correspond  to  "changing  tools  to
-version X", but I have no way to find out.]
+> When I update the kernel git tree a few days later, you know, there
+> could be a lot of patches. Then I found one file changed, how can I
+> know which patch the modification belong to?
+> How can I find the patch?
 
-This happens only when using HTTP; using ssh  or  rsync  works  fine.
-Also,  if  we follow the "cg-clone" by a "git-fetch -t" command, this
-will load the missing tags.
+Hi Aubrey,
 
-Is this intentional, or am I doing anything wrong?
+$ git log -- <filename>
 
-[For testing, try "cg-clone http://www.denx.de/git/u-boot.git"]
+To see a list of commits that affected the file you're interested in.
 
-Best regards,
+$ git log -p -- <filename>
 
-Wolfgang Denk
+Will include a diff after each commit showing you how the file was
+changed.  And if you want to see what other changes happened in each
+commit that modified your file, add "--full-diff" to the command above.
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-In theory, there is no difference between  theory  and  practice.  In
-practice, however, there is.
+Note that you can also replace the <filename> with a <directory> 
+to see a list of commits that affected any file below that directory.
+
+HTH,
+Sean
