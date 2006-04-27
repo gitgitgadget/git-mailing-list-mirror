@@ -1,65 +1,55 @@
-From: Ben Clifford <benc@hawaga.org.uk>
-Subject: Re: Two gitweb feature requests
-Date: Thu, 27 Apr 2006 22:54:46 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0604272250420.4963@mundungus.clifford.ac>
-References: <1146144425.11909.450.camel@pmac.infradead.org>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: [PATCH] Fix cg-status with recent git versions
+Date: Fri, 28 Apr 2006 01:46:22 +0200
+Message-ID: <20060427234621.GA13896@vsectoor.geht-ab-wie-schnitzel.de>
+References: <20060427223826.10772.55883.stgit@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1152309293-1384283113-1146178486=:4963"
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 28 00:57:09 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Apr 28 01:47:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZFPw-0004aR-5w
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 00:57:00 +0200
+	id 1FZGCT-0005hq-Du
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 01:47:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbWD0W45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 18:56:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbWD0W45
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 18:56:57 -0400
-Received: from mundungus.clifford.ac ([81.187.211.39]:6930 "EHLO
-	mundungus.clifford.ac") by vger.kernel.org with ESMTP
-	id S1751689AbWD0W44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 18:56:56 -0400
-Received: from mundungus.clifford.ac (localhost [127.0.0.1])
-	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id k3RMuCZa002871
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 27 Apr 2006 22:56:12 GMT
-Received: from localhost (benc@localhost)
-	by mundungus.clifford.ac (8.13.3/8.13.3/Submit) with ESMTP id k3RMu9WR002867;
-	Thu, 27 Apr 2006 22:56:11 GMT
-X-Authentication-Warning: mundungus.clifford.ac: benc owned process doing -bs
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1146144425.11909.450.camel@pmac.infradead.org>
+	id S1751756AbWD0XrG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 19:47:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbWD0XrG
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 19:47:06 -0400
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:52753 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S1751756AbWD0XrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Apr 2006 19:47:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 9C4673E67
+	for <git@vger.kernel.org>; Fri, 28 Apr 2006 01:47:03 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jD7NP0b566u6 for <git@vger.kernel.org>;
+	Fri, 28 Apr 2006 01:46:26 +0200 (CEST)
+Received: by vsectoor.geht-ab-wie-schnitzel.de (Postfix, from userid 1000)
+	id CE69C3F7C; Fri, 28 Apr 2006 01:46:23 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060427223826.10772.55883.stgit@dv.roinet.com>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19253>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Apr 27, 2006 at 06:38:26PM -0400, Pavel Roskin wrote:
+> From: Pavel Roskin <proski@gnu.org>
+> 
+> git-diff-index checks the arguments by lstat(), so an empty string would
+> fail to be recognized as a file.  Use "--" to separate files from
+> revisions, and also use "." instead of the empty string.
 
----1152309293-1384283113-1146178486=:4963
-Content-Type: TEXT/PLAIN; charset=utf-8; format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Thank you very much for recognizing... i was tempted to report that
+bug... but was not sure if it is fixed yet...
 
-On Thu, 27 Apr 2006, David Woodhouse wrote:
-
-> It would be useful if I could get away with giving just one URL --
-> probably the http:// one to gitweb. If gitweb were to have a mode in
-> which it gave a referral to the git:// URL, and if the git tools would
-> use that, then that would work well.
-
-HTML has a <link> element which can be used to indicate alternate forms of=
-=20
-a page. Gitweb already generates one already to point people at the RSS=20
-feeds.
-
-Kinda messy to make all the git tools learn how to read HTML, though...
-
---=20
-Ben =E3=81=B9=E3=83=B3 =D0=91=D1=8D=D0=BD
-http://www.hawaga.org.uk/ben/
-
----1152309293-1384283113-1146178486=:4963--
+Sincerly
+Nicolas
