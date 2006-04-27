@@ -1,50 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: bug: git-repack -a -d produces broken pack on NFS
-Date: Thu, 27 Apr 2006 15:44:15 -0700
-Message-ID: <7vzmi6iqps.fsf@assigned-by-dhcp.cox.net>
-References: <20060427213207.GA6709@steel.home>
-	<Pine.LNX.4.64.0604271500500.3701@g5.osdl.org>
-	<7v4q0ek6i3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0604271526140.3701@g5.osdl.org>
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: Two gitweb feature requests
+Date: Thu, 27 Apr 2006 22:54:46 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0604272250420.4963@mundungus.clifford.ac>
+References: <1146144425.11909.450.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 28 00:44:23 2006
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1152309293-1384283113-1146178486=:4963"
+Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 28 00:57:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZFDg-0002Qj-7Q
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 00:44:20 +0200
+	id 1FZFPw-0004aR-5w
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 00:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736AbWD0WoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 18:44:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751737AbWD0WoR
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 18:44:17 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:38791 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751735AbWD0WoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 18:44:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060427224416.MCSK25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 27 Apr 2006 18:44:16 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0604271526140.3701@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 27 Apr 2006 15:29:11 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751689AbWD0W45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 18:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbWD0W45
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 18:56:57 -0400
+Received: from mundungus.clifford.ac ([81.187.211.39]:6930 "EHLO
+	mundungus.clifford.ac") by vger.kernel.org with ESMTP
+	id S1751689AbWD0W44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Apr 2006 18:56:56 -0400
+Received: from mundungus.clifford.ac (localhost [127.0.0.1])
+	by mundungus.clifford.ac (8.13.3/8.13.3) with ESMTP id k3RMuCZa002871
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 27 Apr 2006 22:56:12 GMT
+Received: from localhost (benc@localhost)
+	by mundungus.clifford.ac (8.13.3/8.13.3/Submit) with ESMTP id k3RMu9WR002867;
+	Thu, 27 Apr 2006 22:56:11 GMT
+X-Authentication-Warning: mundungus.clifford.ac: benc owned process doing -bs
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1146144425.11909.450.camel@pmac.infradead.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19252>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Right now, if the pack-file is corrupt, it doesn't actually tell us so. It 
-> says that it doesn't match the index file. Which is likely wrong - it 
-> probably _does_ match the index file, but it's been corrupted.
->
-> See the difference?
+---1152309293-1384283113-1146178486=:4963
+Content-Type: TEXT/PLAIN; charset=utf-8; format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Makes perfect sense.  Thanks.
+On Thu, 27 Apr 2006, David Woodhouse wrote:
+
+> It would be useful if I could get away with giving just one URL --
+> probably the http:// one to gitweb. If gitweb were to have a mode in
+> which it gave a referral to the git:// URL, and if the git tools would
+> use that, then that would work well.
+
+HTML has a <link> element which can be used to indicate alternate forms of=
+=20
+a page. Gitweb already generates one already to point people at the RSS=20
+feeds.
+
+Kinda messy to make all the git tools learn how to read HTML, though...
+
+--=20
+Ben =E3=81=B9=E3=83=B3 =D0=91=D1=8D=D0=BD
+http://www.hawaga.org.uk/ben/
+
+---1152309293-1384283113-1146178486=:4963--
