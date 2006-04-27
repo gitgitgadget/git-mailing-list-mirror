@@ -1,80 +1,114 @@
-From: Peter Hagervall <hager@cs.umu.se>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] C version of git-count-objects
-Date: Thu, 27 Apr 2006 21:46:00 +0200
-Message-ID: <20060427194559.GA26386@brainysmurf.cs.umu.se>
-References: <20060427101254.GA22769@peppar.cs.umu.se> <Pine.LNX.4.64.0604270914570.18816@localhost.localdomain> <7vhd4ekfu1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604271535460.18816@localhost.localdomain>
+Date: Thu, 27 Apr 2006 13:07:27 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604271257010.3701@g5.osdl.org>
+References: <20060427101254.GA22769@peppar.cs.umu.se>
+ <Pine.LNX.4.64.0604270914570.18816@localhost.localdomain>
+ <7vhd4ekfu1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0604271535460.18816@localhost.localdomain>
+ <20060427194559.GA26386@brainysmurf.cs.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 27 21:46:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 27 22:08:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZCRK-0006Ig-Et
-	for gcvg-git@gmane.org; Thu, 27 Apr 2006 21:46:16 +0200
+	id 1FZCmO-000335-Eh
+	for gcvg-git@gmane.org; Thu, 27 Apr 2006 22:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964928AbWD0TqL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 15:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965069AbWD0TqL
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 15:46:11 -0400
-Received: from mail.cs.umu.se ([130.239.40.25]:13002 "EHLO mail.cs.umu.se")
-	by vger.kernel.org with ESMTP id S964928AbWD0TqK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Apr 2006 15:46:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by amavisd-new (Postfix) with ESMTP id CDCB22AA8;
-	Thu, 27 Apr 2006 21:46:09 +0200 (MEST)
-Received: from mail.cs.umu.se ([127.0.0.1])
- by localhost (mimmi.cs.umu.se [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 18008-03; Thu, 27 Apr 2006 21:46:01 +0200 (MEST)
-Received: from brainysmurf.cs.umu.se (brainysmurf.cs.umu.se [130.239.89.21])
-	by mail.cs.umu.se (Postfix) with ESMTP id 142192B9B;
-	Thu, 27 Apr 2006 21:46:01 +0200 (MEST)
-Received: by brainysmurf.cs.umu.se (Postfix, from userid 12006)
-	id 7B47A73C; Thu, 27 Apr 2006 21:46:00 +0200 (CEST)
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0604271535460.18816@localhost.localdomain>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: amavisd-new at cs.umu.se
+	id S1030212AbWD0UHx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 16:07:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965072AbWD0UHx
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 16:07:53 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:5037 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965060AbWD0UHx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Apr 2006 16:07:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3RK7WtH030932
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 27 Apr 2006 13:07:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3RK7SsK009927;
+	Thu, 27 Apr 2006 13:07:29 -0700
+To: Peter Hagervall <hager@cs.umu.se>
+In-Reply-To: <20060427194559.GA26386@brainysmurf.cs.umu.se>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19242>
 
-On Thu, Apr 27, 2006 at 03:39:14PM -0400, Nicolas Pitre wrote:
-> On Thu, 27 Apr 2006, Junio C Hamano wrote:
-> 
-> > Nicolas Pitre <nico@cam.org> writes:
+
+
+On Thu, 27 Apr 2006, Peter Hagervall wrote:
 > > 
-> > > On Thu, 27 Apr 2006, Peter Hagervall wrote:
-> > >
-> > >> Answering the call Linus made[1], sort of, but for a completely
-> > >> different program.
-> > >> 
-> > >> Anyway, it ought to be at least as portable as the shell script, and a
-> > >> whole lot faster, however much that matters.
-> > >> 
-> > > [...]
-> > >> +	for (i = 0; i < 16; i++) {
-> > >> +		subdir[0] = hex_digits[i];
-> > >> +		for (j = 0; j < 16; j++) {
-> > >> +			subdir[1] = hex_digits[j];
-> > >> +			if (access(subdir, R_OK | X_OK))
-> > >> +				continue;
-> > >> +			chdir(subdir);
-> > >> +			if (!(dp = opendir("."))) {
-> > >> +				error("can't open subdir %s", subdir);
-> > >> +				continue;
-> > >> +			}
-> > >
-> > > Looks like you're missing a chdir(".."); there.
-> > 
-> > Why would you even _need_ to chdir() anywhere, anyway?
+> > To avoid appending the filename to the path before each lstat() I'd 
+> > guess.
 > 
-> To avoid appending the filename to the path before each lstat() I'd 
-> guess.
+> Yes, that's pretty much the reason.
 
-Yes, that's pretty much the reason.
+It's a bad reason, though.
 
-	Peter
+For one thing, it just doesn't work. You'll have to chdir() back, and you 
+can't use ".." in case the user has set up some symlink thing. So you end 
+up doing other really strange things.
+
+You can do this much more efficiently with something like this:
+
+	const char *obj = git_object_directory();
+	int len = strlen(obj);
+	char *dir = malloc(len + 300);
+
+	memcpy(dir, obj, len);
+	if (len && obj[len-1] != '/')
+		dir[len++] = '/';
+	dir[len+2] = 0;
+	for (i = 0; i < 16; i++) {
+		dir[len] = hexdigit[i];
+		for (j = 0; j < 16; j+) {
+			dir[len+1] = hexdigit[j];
+			dir[len+2] = 0;
+			DIR *d = opendir(dir);
+			if (!d)
+				continue;
+			nr += count(d, dir, len+2);
+			closedir(d);
+		}
+	}
+
+where the "count()" function just ends up doing something like
+
+	int count(DIR *d, const char *prefix, int len)
+	{
+		int nr = 0;
+		struct dirent *de;
+
+		prefix[len++] = '/';
+		while ((de = readdir(d)) != NULL) {
+			int fd;
+			if (de->d_name[0] == '.')
+				continue;
+			strcpy(prefix + len, de->d_name);
+			fd = open(prefix, O_RDONLY);
+			.. check if it's ok, perhaps.. ?
+			if (ok)
+				nr++;
+			close(fd);
+		}
+		return nr;
+	}
+
+and you're done. Efficient, and it's easy to add the endign to the 
+pathname, because you're passing in a buffer that is big enough, and 
+you're telling people where they should put their suffixes..
+
+And no, the above has never been compiled or tested, and I wrote it with 
+one eye closed, while drinking heavily and experimenting with some funky 
+'shrooms. So caveat emptor.
+
+		Linus
