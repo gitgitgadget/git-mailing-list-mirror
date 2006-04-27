@@ -1,61 +1,50 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Fix cg-status with recent git versions
-Date: Thu, 27 Apr 2006 18:38:26 -0400
-Message-ID: <20060427223826.10772.55883.stgit@dv.roinet.com>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Fri Apr 28 00:38:41 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: bug: git-repack -a -d produces broken pack on NFS
+Date: Thu, 27 Apr 2006 15:44:15 -0700
+Message-ID: <7vzmi6iqps.fsf@assigned-by-dhcp.cox.net>
+References: <20060427213207.GA6709@steel.home>
+	<Pine.LNX.4.64.0604271500500.3701@g5.osdl.org>
+	<7v4q0ek6i3.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0604271526140.3701@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 28 00:44:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZF89-0001TD-6s
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 00:38:37 +0200
+	id 1FZFDg-0002Qj-7Q
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 00:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbWD0Wid (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 18:38:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbWD0Wid
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 18:38:33 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:56023 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751733AbWD0Wic
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 18:38:32 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FZF83-0000XR-Fp
-	for git@vger.kernel.org; Thu, 27 Apr 2006 18:38:31 -0400
-Received: from localhost.roinet.com ([127.0.0.1] helo=dv.roinet.com)
-	by dv.roinet.com with esmtp (Exim 4.61)
-	(envelope-from <proski@gnu.org>)
-	id 1FZF7y-0002nr-St; Thu, 27 Apr 2006 18:38:26 -0400
-To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-User-Agent: StGIT/0.9
+	id S1751736AbWD0WoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 18:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751737AbWD0WoR
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 18:44:17 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:38791 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751735AbWD0WoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Apr 2006 18:44:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060427224416.MCSK25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 27 Apr 2006 18:44:16 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0604271526140.3701@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 27 Apr 2006 15:29:11 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19251>
 
-From: Pavel Roskin <proski@gnu.org>
+Linus Torvalds <torvalds@osdl.org> writes:
 
-git-diff-index checks the arguments by lstat(), so an empty string would
-fail to be recognized as a file.  Use "--" to separate files from
-revisions, and also use "." instead of the empty string.
+> Right now, if the pack-file is corrupt, it doesn't actually tell us so. It 
+> says that it doesn't match the index file. Which is likely wrong - it 
+> probably _does_ match the index file, but it's been corrupted.
+>
+> See the difference?
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
----
-
- cg-status |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/cg-status b/cg-status
-index d11762e..0529ba2 100755
---- a/cg-status
-+++ b/cg-status
-@@ -233,7 +233,7 @@ if [ "$workstatus" ]; then
- 		commitignore=
- 		[ -s "$_git/commit-ignore" ] && commitignore=1
- 
--		git-diff-index HEAD "$basepath" | cut -f5- -d' ' | 
-+		git-diff-index HEAD -- "${basepath:-.}" | cut -f5- -d' ' | 
- 		while IFS=$'\t' read -r mode file; do
- 			if [ "$mode" = D ]; then
- 				[ "$(git-diff-files "$file")" ] && mode=!
+Makes perfect sense.  Thanks.
