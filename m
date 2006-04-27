@@ -1,55 +1,107 @@
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: Re: [PATCH] Fix cg-status with recent git versions
-Date: Fri, 28 Apr 2006 01:46:22 +0200
-Message-ID: <20060427234621.GA13896@vsectoor.geht-ab-wie-schnitzel.de>
-References: <20060427223826.10772.55883.stgit@dv.roinet.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: bug: git-repack -a -d produces broken pack on NFS
+Date: Thu, 27 Apr 2006 16:54:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604271630030.3701@g5.osdl.org>
+References: <20060427213207.GA6709@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 28 01:47:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 28 01:54:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZGCT-0005hq-Du
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 01:47:09 +0200
+	id 1FZGJu-00076Y-Lg
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 01:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756AbWD0XrG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Apr 2006 19:47:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbWD0XrG
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 19:47:06 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:52753 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
-	id S1751756AbWD0XrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Apr 2006 19:47:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 9C4673E67
-	for <git@vger.kernel.org>; Fri, 28 Apr 2006 01:47:03 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jD7NP0b566u6 for <git@vger.kernel.org>;
-	Fri, 28 Apr 2006 01:46:26 +0200 (CEST)
-Received: by vsectoor.geht-ab-wie-schnitzel.de (Postfix, from userid 1000)
-	id CE69C3F7C; Fri, 28 Apr 2006 01:46:23 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060427223826.10772.55883.stgit@dv.roinet.com>
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1751768AbWD0Xys (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Apr 2006 19:54:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbWD0Xyr
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Apr 2006 19:54:47 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34945 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751768AbWD0Xyr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Apr 2006 19:54:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3RNsZtH008670
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 27 Apr 2006 16:54:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3RNsYNk018165;
+	Thu, 27 Apr 2006 16:54:35 -0700
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060427213207.GA6709@steel.home>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19254>
 
-On Thu, Apr 27, 2006 at 06:38:26PM -0400, Pavel Roskin wrote:
-> From: Pavel Roskin <proski@gnu.org>
+
+Ok, trying to think some more about this..
+
+On Thu, 27 Apr 2006, Alex Riesen wrote:
 > 
-> git-diff-index checks the arguments by lstat(), so an empty string would
-> fail to be recognized as a file.  Use "--" to separate files from
-> revisions, and also use "." instead of the empty string.
+> $SRC/linux.git$ git repack -a -d
+> Generating pack...
+> Done counting 235947 objects.
+> Deltifying 235947 objects.
+>  100% (235947/235947) done
+> Writing 235947 objects.
+>  100% (235947/235947) done
+> Total 235947, written 235947 (delta 182131), reused 235466 (delta 181650)
+> Pack pack-6dcda5a7782864d57ec44bd30ebec13b07df2c87 created.
+> $SRC/linux.git$ git fsck-objects --full
+> git-fsck-objects: error: Packfile .git/objects/pack/pack-6dcda5a7782864d57ec44bd30ebec13b07df2c87.pack SHA1 mismatch with idx
 
-Thank you very much for recognizing... i was tempted to report that
-bug... but was not sure if it is fixed yet...
+This is interesting on so many levels.
 
-Sincerly
-Nicolas
+First off, the index file or the pack-file is clearly somehow corrupt, 
+because when you then try to do the "git clone" off the result later on 
+(which won't actually check the SHA1's), it gets
+
+> git-index-pack: fatal: packfile '/mnt/large/tmp/raa/tmp/.git/objects/pack/tmp-wcRvk5': bad object at offset 102601801: inflate returned -3
+
+which means that either the offset was wrong, or the data at that offset 
+was wrong.
+
+That made me suspect the object re-use code - it might have been broken in 
+the original pack, and then on re-use the broken data would have been just 
+copied over.
+
+HOWEVER - that doesn't actually fly as an explanation, because even if the 
+data itself was broken, the repack would have re-generated the SHA1, so if 
+the problem had been about copying an already broken pack over, you'd have 
+gotten the "git clone" error, but you would _not_ have gotten the "pack 
+SHA1 does not match index" error.
+
+So in order for the SHA1 to not match, we literally must have corrupted 
+things when we created the pack-file.
+
+However, I've stared and stared at the sha1file writing code, and I don't 
+see how you _could_ corrupt it. We use it with interruptible file 
+descriptors all the time (sockets - the exact same code is used to 
+transfer packs over the network), and that "intr" shouldn't matter one 
+whit. We're doing very safe things, as far as I can tell.
+
+The thing is, even if a wild pointer corrupts the write buffer for the 
+sha1file writing code somehow, we actually always do the "calculate the 
+SHA1" and "flush the buffer to the file" together. So even if somebody 
+corrupted the buffer, we'd still generate the "right" SHA1 (of the 
+corrupted buffer).
+
+So the only thing that I can see that can generate bad SHA1 checksums is
+ - actual problem in the SHA1 buffers themselves (ie a wild pointer 
+   corrupting the "SHA1_CTX" thing itself)
+ - real filesystem corruption. With NFS, the UDP checksums aren't all that 
+   strong, but the ethernet CRC should catch things (there have been 
+   reports of network cards that don't check the CRC well, but quite 
+   frankly, I haven't seen one in a _loong_ time)
+ - RAM corruption and/or kernel NFS bugs.
+
+I'll continue to stare at the code, but I can't see anything even remotely 
+suspicious in git itself so far.
+
+		Linus
