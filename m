@@ -1,145 +1,69 @@
 From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: [PATCH] Add a test case for rerere
-Date: Fri, 28 Apr 2006 09:56:05 +0200
-Message-ID: <20060428075604.GA30714@digi.com>
+Subject: Re: [PATCH] Add a test case for rerere
+Date: Fri, 28 Apr 2006 10:02:56 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060428080256.GA1877@informatik.uni-freiburg.de>
+References: <20060428075604.GA30714@digi.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 28 09:57:19 2006
+X-From: git-owner@vger.kernel.org Fri Apr 28 10:03:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZNqd-00071P-VJ
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 09:57:08 +0200
+	id 1FZNwN-0007pV-NM
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 10:03:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030311AbWD1H5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 03:57:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030313AbWD1H5E
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 03:57:04 -0400
-Received: from www2.levante.de ([212.101.151.130]:42887 "EHLO www.levante.de")
-	by vger.kernel.org with ESMTP id S1030311AbWD1H5D (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 03:57:03 -0400
-Received: from pd95b6420.dip0.t-ipconnect.de ([217.91.100.32] helo=mail.fsforth.de)
-	by www.levante.de with asmtp (Exim 3.36 #1 (Debian))
-	id 1FZNqX-0007sr-00
-	for <git@vger.kernel.org>; Fri, 28 Apr 2006 09:57:01 +0200
-Received: from io.fsforth.de ([192.168.40.169])
-	by mail.fsforth.de with esmtp (Exim 4.52)
-	id 1FZNqN-000265-6P
-	for git@vger.kernel.org; Fri, 28 Apr 2006 09:56:51 +0200
-Received: by io.fsforth.de (Postfix, from userid 1080)
-	id 6E681E287; Fri, 28 Apr 2006 09:56:05 +0200 (CEST)
+	id S1030305AbWD1IC7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Apr 2006 04:02:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030315AbWD1IC7
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 04:02:59 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:26273 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S1030305AbWD1IC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Apr 2006 04:02:58 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1FZNwH-0006fF-0F
+	for git@vger.kernel.org; Fri, 28 Apr 2006 10:02:57 +0200
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k3S82uG01967
+	for git@vger.kernel.org; Fri, 28 Apr 2006 10:02:56 +0200 (MEST)
 To: git <git@vger.kernel.org>
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	git <git@vger.kernel.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
-X-FS-MailScanner: Found to be clean
-X-MailScanner-From: uzeisberger@fsforth.de
+In-Reply-To: <20060428075604.GA30714@digi.com>
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19268>
 
-Currently this test fails because rerere is not able to record
-resolves for a file that don't exist in the merge base but in
-both branches to merge.
+Hello,
 
-Signed-off-by: Uwe Zeisberger <Uwe_Zeisberger@digi.com>
+Uwe Zeisberger wrote:
+> +echo "added in branch" >> file-common &&
+> +git add file-branch file-common &&
+> +git commit -m "branch1" -i file-base file-branch file-common &&
+> +git branch branch1'
+> +
+> ...
+> + 
+> +test_expect_failure 'pull branch1' \
+> +'git pull . branch1'
 
----
-
- t/t8003-rerere.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 66 insertions(+), 0 deletions(-)
- create mode 100644 t/t8003-rerere.sh
-
-It's the last command that fails because rerere didn't record the
-conflict between branch1:file-common and master:file-common.
-
-Please feel free to change the filename as I don't know/see the naming
-scheme of the tests.
+When typing the test I first tried to pull branch^, but this failed with
+"no such remote ref refs/heads/branch^".  Is it intended that one can
+only pull branches and not any rev?
 
 Best regards
 Uwe
 
-ff012a80cafa3fe905de72d0db8b616ff76d0038
-diff --git a/t/t8003-rerere.sh b/t/t8003-rerere.sh
-new file mode 100644
-index 0000000..1bb66ff
---- /dev/null
-+++ b/t/t8003-rerere.sh
-@@ -0,0 +1,66 @@
-+#!/bin/sh
-+
-+test_description='git-rerere'
-+. ./test-lib.sh
-+
-+
-+test_expect_success 'prepare repository' \
-+'mkdir .git/rr-cache &&
-+echo "content" > file-base &&
-+git add file-base &&
-+git commit -m "Initial commit" &&
-+git branch branch &&
-+echo "added after branch" >> file-base &&
-+echo "added after branch" >> file-common &&
-+git add file-common &&
-+git commit -m "master1" -i file-base file-common &&
-+git checkout branch &&
-+echo "added in branch" >> file-base &&
-+echo "only in branch" > file-branch &&
-+echo "added in branch" >> file-common &&
-+git add file-branch file-common &&
-+git commit -m "branch1" -i file-base file-branch file-common &&
-+git branch branch1'
-+
-+test_expect_failure 'pull master' \
-+'git pull . master'
-+
-+cat >> file-base-expect << EOF
-+content
-+<<<<<<< HEAD/file-base
-+added in branch
-+=======
-+added after branch
-+>>>>>>> `git rev-parse master`/file-base
-+EOF
-+
-+test_expect_success 'merge result' \
-+'cmp file-base file-base-expect &&
-+git cat-file blob HEAD:file-common | cmp file-common~HEAD - &&
-+git cat-file blob master:file-common | cmp file-common~`git rev-parse master` - &&
-+git cat-file blob HEAD:file-branch | cmp file-branch -'
-+
-+test_expect_success 'record and resolve confilcts' \
-+'git rerere &&
-+echo "content
-+added in branch
-+added after branch" > file-base &&
-+echo "added in branch
-+added after branch" > file-common &&
-+git rerere &&
-+git-ls-files -o | xargs rm &&
-+git commit -m "resolved conflicts" -i file-base file-common file-branch &&
-+git-checkout master
-+'
-+ 
-+test_expect_failure 'pull branch1' \
-+'git pull . branch1'
-+
-+test_expect_success 'reuse recorded resolve' \
-+'git rerere &&
-+git cat-file blob branch:file-branch | cmp file-branch - &&
-+git cat-file blob branch:file-base | cmp file-base - &&
-+git cat-file blob branch:file-common | cmp file-common -'
-+
-+test_done
-+
--- 
-1.3.1.gac92
-
+PS: I added a double blank line in the file.  Sorry for that...
 
 -- 
 Uwe Zeisberger
-FS Forth-Systeme GmbH, A Digi International Company
-Kueferstrasse 8, D-79206 Breisach, Germany
-Phone: +49 (7667) 908 0 Fax: +49 (7667) 908 200
-Web: www.fsforth.de, www.digi.com
+
+http://www.google.com/search?q=Planck%27s+constant%3D
