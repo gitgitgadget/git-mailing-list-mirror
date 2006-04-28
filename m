@@ -1,88 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: PATCH: New diff-delta.c implementation (updated)
-Date: Thu, 27 Apr 2006 21:28:30 -0700
-Message-ID: <7vfyjyfhn5.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.GSO.4.60.0604272132170.9650@nile.gnat.com>
-	<7v1wvigzka.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: new gitk feature
+Date: Thu, 27 Apr 2006 22:11:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604272209060.3701@g5.osdl.org>
+References: <17487.21137.344427.173131@cargo.ozlabs.ibm.com>
+ <Pine.LNX.4.64.0604260802050.3701@g5.osdl.org> <17489.22838.502099.575465@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 28 06:28:50 2006
+X-From: git-owner@vger.kernel.org Fri Apr 28 07:11:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZKay-0006qt-LZ
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 06:28:45 +0200
+	id 1FZLGC-00035C-VG
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 07:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056AbWD1E2f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 00:28:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbWD1E2f
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 00:28:35 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:63361 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751056AbWD1E2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Apr 2006 00:28:34 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060428042833.IFHH24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 28 Apr 2006 00:28:33 -0400
-To: Geert Bosch <bosch@gnat.com>
-In-Reply-To: <7v1wvigzka.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 27 Apr 2006 20:16:05 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965135AbWD1FLS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Apr 2006 01:11:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965159AbWD1FLS
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 01:11:18 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:50369 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965135AbWD1FLR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 01:11:17 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3S5BFtH018046
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 27 Apr 2006 22:11:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3S5BEnT025610;
+	Thu, 27 Apr 2006 22:11:15 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17489.22838.502099.575465@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19265>
-
-Junio C Hamano <junkio@cox.net> writes:
-
-> In the kernel repository (checked out is near the tip of the
-> source tree), the largest files are fs/nls/nls_cp949.c (900kB
-> korean character encoding), drivers/usb/misc/emi62_fw_s.h
-> (800kB, Emagic firmware blob), arch/m68k/ifpsp060/src/fpsp.S
-> (750kB, floating point emulation?), and nowhere near your
-> algorithm really should shine.
->
-> We would probably want some internal logic that says "if we see
-> that blobs larger than X MB is involved in the packing, we
-> should use this version of diff-delta, otherwise the other one."
-
-Third impression, synthetic workload.  A sequence of single file
-project, the file is tarball of git.git tree (that is,
-"git-tar-tree vX.Y.Z >tarball"), 120 objects or so (1 commit per
-rev, 1 tree to hold 1 blob).  The (uncompressed) size of the 40
-blobs in the pack are between 2.06MB - 2.86MB (average 2.30MB).
-
-(Nico)
-Total 123, written 123 (delta 38), reused 0 (delta 0)
-67.26user 1.03system 1:08.76elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+136066minor)pagefaults 0swaps
-
-1822079 pack-nico-26989d516c62197592d0d52db24dfc6a58b633eb.pack
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19266>
 
 
-(Geert)
-Total 123, written 123 (delta 38), reused 0 (delta 0)
-67.23user 1.35system 1:09.25elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+164124minor)pagefaults 0swaps
 
-1683139 pack-geert-26989d516c62197592d0d52db24dfc6a58b633eb.pack
+On Fri, 28 Apr 2006, Paul Mackerras wrote:
+> Linus Torvalds writes:
+> > Any possibility of something light that? I'd _love_ to be able to see the 
+> > whole tree, but with things that touch certain files or things that are 
+> > newer highlighted.
+> 
+> That should be quite doable.  How about I show the commits that are in
+> the highlight view in bold?  That won't conflict with the existing
+> yellow background for commits that match the find criteria.
 
-That's an 8% improvement in the same time, which is quite
-impressive.  But I am _very_ unhappy about this particular
-synthetic workload.  I wonder if there are projects with many
-large blobs that is updated often, so that we can use it as a
-yardstick.  Maybe Wine people have icons, background images and
-sounds perhaps?  But I suspect you would not update them that
-often.
+Bold sounds good to me.
 
-Thinking about it, it does not make much sense, at least to me,
-to store large tarballs or binary blobs or whatnot in a SCM (we
-are _not_ in the archival business) and keeping track of their
-changes.  The tarball is out of question -- it is not a source
-(in GPL sense of the word -- it is not a preferred way to make
-modification; you modify constituent files and bundle up the
-result as a new tarball).  Graphics images, perhaps.
+> > (Btw, the "revision information" is also cool things like "--unpacked". I 
+> > actually use "gitk --unpacked" every once in a while, just because it's 
+> > such a cool way to say "show me everything I've added since I packed the 
+> > repo last).
+> 
+> OK, I didn't know about --unpacked. :)  I plan to add stuff to the
+> view definition window to allow you to select commits to
+> include/exclude by reachability from given commits (by head/tag/ID)
+> and when I do I can add a way to say --unpacked too.
+
+It's more of a gimmick, but I find myself using it occasionally just to 
+decide whether it's time to repack. It falls out automatically - not 
+because I thought I'd ever want it, but because the --unpacked semantics 
+for git-rev-list are what incremental packing needed.
+
+(Of course, sane people probably just do "git count-objects" to decide to 
+repack).
+
+		Linus
