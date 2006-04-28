@@ -1,69 +1,73 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
-Subject: [PATCH] Fix trivial typo in git-log man page.
-Date: Fri, 28 Apr 2006 09:15:03 -0400
-Message-ID: <BAYC1-PASMTP0933E0E4DDF253A9478776AEB20@CEZ.ICE>
-Reply-To: Sean Estabrooks <seanlkml@sympatico.ca>
-Cc: Sean Estabrooks <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Fri Apr 28 15:19:57 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Fix asciidoc callouts in git man pages
+Date: Fri, 28 Apr 2006 16:06:06 +0200
+Organization: At home
+Message-ID: <e2t7f6$p1i$1@sea.gmane.org>
+References: <BAYC1-PASMTP1046BB48C01D83AC57A694AEB20@CEZ.ICE>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Apr 28 16:06:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZSso-0004Y7-Lj
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 15:19:43 +0200
+	id 1FZTbT-000587-5G
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 16:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030396AbWD1NTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 09:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030395AbWD1NTh
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 09:19:37 -0400
-Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:27645 "EHLO
-	BAYC1-PASMTP09.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1030392AbWD1NTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Apr 2006 09:19:36 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from guru.attic.local ([69.156.138.66]) by BAYC1-PASMTP09.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 28 Apr 2006 06:21:08 -0700
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by guru.attic.local (Postfix) with ESMTP id 7D07B7001EA;
-	Fri, 28 Apr 2006 09:15:06 -0400 (EDT)
+	id S1030410AbWD1OFs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 28 Apr 2006 10:05:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030412AbWD1OFs
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 10:05:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:62108 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030410AbWD1OFr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 10:05:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FZTbB-000552-3z
+	for git@vger.kernel.org; Fri, 28 Apr 2006 16:05:33 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Apr 2006 16:05:33 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Apr 2006 16:05:33 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Message-Id: <11462301062278-git-send-email-seanlkml@sympatico.ca>
-X-Mailer: git-send-email 1.3.1.gc672
-X-OriginalArrivalTime: 28 Apr 2006 13:21:08.0687 (UTC) FILETIME=[9C698DF0:01C66AC6]
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19280>
 
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+<opublikowany i wys=C5=82any>
 
+Sean Estabrooks wrote:
 
----
+> Started out just wanting to update the git-branch man page
+> to include the "-r" option but noticed that the asciidoc
+> callouts weren't being rendered in its man page.  Then
+> noticed the same was true for all the man pages where
+> they are used.
+>=20
+> It turns out we've not been following the guidelines
+> properly on how to use them.  The fact that they show up
+> in a useful way in the html docs is really an accident.
+> Even there they're not showing up as intended.
+>=20
+> Unfortunately, even after all the docs are fixed up to use
+> the proper format, they still don't render properly in the
+> man format.   Seems this is a missing feature in the "xmlto"
+> command.
+>=20
+> The final patch in this series adds an xsl fragment which
+> is passed to xmlto so that the callouts appear properly in
+> the man pages.
 
- Documentation/git-log.txt |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
+Have you sent bugreport/patch to the authors of asciidoc, by the way?
 
-0afa7822c6a0d6ffa82f9d9b64c78df8587e190d
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 76cb894..af378ff 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -14,13 +14,12 @@ DESCRIPTION
- -----------
- Shows the commit logs.
- 
--The command takes options applicable to the gitlink::git-rev-list[1]
-+The command takes options applicable to the gitlink:git-rev-list[1]
- command to control what is shown and how, and options applicable to
--the gitlink::git-diff-tree[1] commands to control how the change
-+the gitlink:git-diff-tree[1] commands to control how the change
- each commit introduces are shown.
- 
--This manual page describes only the most frequently used
--options.
-+This manual page describes only the most frequently used options.
- 
- 
- OPTIONS
--- 
-1.3.1.gc672
+--=20
+Jakub Narebski
+Warsaw, Poland
