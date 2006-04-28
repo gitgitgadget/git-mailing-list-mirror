@@ -1,82 +1,113 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Two gitweb feature requests
-Date: Fri, 28 Apr 2006 21:11:17 +0200
-Organization: At home
-Message-ID: <e2tpbc$ped$1@sea.gmane.org>
-References: <1146144425.11909.450.camel@pmac.infradead.org> <e2tjqm$83n$1@sea.gmane.org> <Pine.LNX.4.64.0604281116020.3701@g5.osdl.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: bug: git-repack -a -d produces broken pack on NFS
+Date: Sat, 29 Apr 2006 00:27:50 +0200
+Message-ID: <20060428222750.GA6462@steel.home>
+References: <20060427213207.GA6709@steel.home> <Pine.LNX.4.64.0604271500500.3701@g5.osdl.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Apr 28 21:11:30 2006
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 29 00:28:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZYMz-0001Wv-8d
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 21:11:13 +0200
+	id 1FZbRo-0000nm-CR
+	for gcvg-git@gmane.org; Sat, 29 Apr 2006 00:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794AbWD1TLD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 15:11:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbWD1TLD
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 15:11:03 -0400
-Received: from main.gmane.org ([80.91.229.2]:41417 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751794AbWD1TLB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 15:11:01 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FZYMa-0001SG-HN
-	for git@vger.kernel.org; Fri, 28 Apr 2006 21:10:48 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Apr 2006 21:10:48 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Apr 2006 21:10:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751777AbWD1W2V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Apr 2006 18:28:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbWD1W2V
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 18:28:21 -0400
+Received: from devrace.com ([198.63.210.113]:55815 "EHLO devrace.com")
+	by vger.kernel.org with ESMTP id S1751777AbWD1W2V (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 18:28:21 -0400
+Received: from tigra.home (p54A0512D.dip.t-dialin.net [84.160.81.45])
+	by devrace.com (Postfix) with ESMTP id 80EE04CE;
+	Fri, 28 Apr 2006 17:28:15 -0500 (CDT)
+Received: from steel.home ([192.168.1.2])
+	by tigra.home with esmtp (Exim 3.36 #1 (Debian))
+	id 1FZbRI-0000wp-00; Sat, 29 Apr 2006 00:27:52 +0200
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FZbRG-00028C-UY; Sat, 29 Apr 2006 00:27:51 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0604271500500.3701@g5.osdl.org>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19287>
 
-Linus Torvalds wrote:
-
-> On Fri, 28 Apr 2006, Jakub Narebski wrote:
->>
->> I'd like to have 'parent directory' link for trees ('..' link) at the top
->> of it's contents. I know it is possible to use browser history for that,
->> but it would give greater similarity with 'directory listing' mode of WWW
->> servers.
+Linus Torvalds, Fri, Apr 28, 2006 00:11:13 +0200:
+> > NFS server: 2.6.15
+> > Client: 2.6.17-rc2
+> > mount options: tigra:/home /net/home nfs rw,nosuid,nodev,noatime,vers=3,rsize=8192,wsize=32768,hard,intr,proto=udp,timeo=7,retrans=3,addr=tigra 0 0
 > 
-> Well, a git "tree" doesn't actually _have_ a parent. It potentially has
-> multiple.
+> It's repeatable? Can you check if it goes away if your remove "intr"?
 
-I have forgot about that. Sorry for the noise, then.
+It does not go away if I remove intr:
 
-[...]
+    $ grep 'nfs\>' /proc/mounts
+    tigra:/home /net/home nfs rw,nosuid,nodev,noatime,vers=3,rsize=8192,wsize=32768,hard,proto=udp,timeo=7,retrans=3,addr=tigra 0 0
 
-> So you do need that "browser history" one way or another. Either in the
-> browser (use the "back button") or by encoding the "how did we get here"
-> information in the URI and the dynamically generated page content.
+And this is really a broken packfile:
 
-Or use JavaScript via <a href="javascript:history.go(-1)">..</a>
-But that wouldn't help me, because when I open the link in new window (new
-tab), the new window (new tab) doesn't inherit history from parent... so
-browser's "back" button doesn't work. Ah, well...
+    $ git fsck-objects --full
+    git-fsck-objects: error: Packfile .git/objects/pack/pack-9021635f04e29bb9f3313a54124f64589eca5764.pack SHA1 mismatch with itself
+    git-fsck-objects: fatal: failed to read delta-pack base object a23816d3e9a1684794c8e5a8f1cc0cce26fb61d8
 
-> The downside is that you'd have two different web-pages for the same tree
-> depending on which commit it came from. Which is not a downside from a
-> user perspective, but it's a downside from a caching/server perspective,
-> since it means less reuse of pages (maybe gitweb already does that,
-> though).
+And I actually was kind of sure about the hardware (like in: "it
+worked flawlessly for in the past 2 years"). Until looked today in the
+logs and saw this:
 
-Perhaps if "how we get there" information was encoded via POST... but I
-don't know if there would be the difference in caching c.f. GET (encoding
-in URI).
+    Apr 19 11:49:35 tigra kernel: eth1: tx underrun with maximum tx threshold, txcfg 0xd0f0102e.
+    Apr 19 11:49:35 tigra kernel: eth1: Link wake-up event 0xffffffff
+    Apr 19 11:49:35 tigra kernel: eth1: PCI error 0xf00000
 
--- 
-Jakub Narebski
-Warsaw, Poland
+Well, this is actually not _that_ day. And this:
+
+    Apr 28 23:42:19 tigra kernel: eth1: tx underrun with maximum tx threshold, txcfg 0xd0f0102e.
+
+is not exactly the time of most recent test (the one without the "hard"
+mount option). But this _is_ that very same interface, and "PCI error"
+looks nasty. Ok, looking at the card... Seats kinda skewed in the
+slot, pressing on it... Wow! (lights go out):
+
+    Apr 29 00:13:35 tigra kernel: eth1: Link wake-up event 0x00020b
+    Apr 29 00:13:35 tigra kernel: eth1: PCI error 0xf00000
+    Apr 29 00:13:39 tigra kernel: NETDEV WATCHDOG: eth1: transmit timed out
+    Apr 29 00:13:39 tigra kernel: eth1: Transmit timed out, status 0x000000, resetting...
+    Apr 29 00:13:39 tigra kernel: eth1: DSPCFG accepted after 0 usec.
+    Apr 29 00:13:39 tigra kernel: eth1: Setting full-duplex based on negotiated link capability.
+
+Redoing test... (Two times only, it's late already):
+
+    $SRC/test2.git$ git repack -a -d
+    Generating pack...
+    Done counting 235775 objects.
+    Deltifying 235775 objects.
+     100% (235775/235775) done
+    Writing 235775 objects.
+     100% (235775/235775) done
+    Total 235775, written 235775 (delta 181885), reused 223766 (delta 171462)
+    Pack pack-9021635f04e29bb9f3313a54124f64589eca5764 created.
+    $SRC/test2.git$ git fsck-objects --full
+    dangling blob 419301f9bff67932cb9551f2d8436b277a3022b0
+    $SRC/test2.git$ git repack -a -d
+    Generating pack...
+    Done counting 235775 objects.
+    Deltifying 235775 objects.
+     100% (235775/235775) done
+    Writing 235775 objects.
+     100% (235775/235775) done
+    Total 235775, written 235775 (delta 181958), reused 235702 (delta 181885)
+    Pack pack-9021635f04e29bb9f3313a54124f64589eca5764 created.
+    $SRC/test2.git$ git fsck-objects --full
+    dangling blob 419301f9bff67932cb9551f2d8436b277a3022b0
+
+Hmm... Ok, apologies everyone, I'm just lazy and stupid.
+
+Still, would be nice not to loose a repository just because
+user is an idiot.
