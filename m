@@ -1,86 +1,70 @@
-From: Matthias Kestenholz <matthias@spinlock.ch>
-Subject: [PATCH] annotate: display usage information if no filename was given
-Date: Fri, 28 Apr 2006 10:41:19 +0200
-Message-ID: <20060428084119.GA4313@spinlock.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 28 11:48:53 2006
+From: Sean Estabrooks <seanlkml@sympatico.ca>
+Subject: Fix asciidoc callouts in git man pages
+Date: Fri, 28 Apr 2006 09:13:37 -0400
+Message-ID: <BAYC1-PASMTP1046BB48C01D83AC57A694AEB20@CEZ.ICE>
+Reply-To: Sean Estabrooks <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Fri Apr 28 15:18:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZPai-0001WI-Tt
-	for gcvg-git@gmane.org; Fri, 28 Apr 2006 11:48:49 +0200
+	id 1FZSrL-0004Dp-Nx
+	for gcvg-git@gmane.org; Fri, 28 Apr 2006 15:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030346AbWD1Jsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 05:48:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030349AbWD1Jsp
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 05:48:45 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:35960 "EHLO XSMTP0.ethz.ch")
-	by vger.kernel.org with ESMTP id S1030346AbWD1Jsp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 05:48:45 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.2499);
-	 Fri, 28 Apr 2006 11:48:43 +0200
-Received: from spinlock.ch ([129.132.210.92]) by xfe1.d.ethz.ch with Microsoft SMTPSVC(6.0.3790.2499);
-	 Fri, 28 Apr 2006 11:48:43 +0200
-Received: (nullmailer pid 5101 invoked by uid 1000);
-	Fri, 28 Apr 2006 08:41:19 -0000
-To: junkio@cox.net
-Mail-Followup-To: junkio@cox.net, git@vger.kernel.org
-Content-Disposition: inline
-X-Editor: Vim http://www.vim.org/
-X-Operating-System: GNU/Linux 2.6.16-rc6 (i686)
-X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
-User-Agent: Mutt/1.5.11+cvs20060403
-X-OriginalArrivalTime: 28 Apr 2006 09:48:43.0166 (UTC) FILETIME=[EF7D63E0:01C66AA8]
+	id S1030389AbWD1NSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Apr 2006 09:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030392AbWD1NSI
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 09:18:08 -0400
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:46579 "EHLO
+	BAYC1-PASMTP10.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1030389AbWD1NSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Apr 2006 09:18:08 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from guru.attic.local ([69.156.138.66]) by BAYC1-PASMTP10.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 28 Apr 2006 06:19:54 -0700
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by guru.attic.local (Postfix) with ESMTP id B1A1B7001EA
+	for <git@vger.kernel.org>; Fri, 28 Apr 2006 09:13:37 -0400 (EDT)
+To: git@vger.kernel.org
+Message-Id: <11462300171565-git-send-email-seanlkml@sympatico.ca>
+X-Mailer: git-send-email 1.3.1.gc672
+X-OriginalArrivalTime: 28 Apr 2006 13:19:54.0625 (UTC) FILETIME=[70449710:01C66AC6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19274>
 
 
-Signed-off-by: Matthias Kestenholz <matthias@spinlock.ch>
+Started out just wanting to update the git-branch man page
+to include the "-r" option but noticed that the asciidoc 
+callouts weren't being rendered in its man page.  Then 
+noticed the same was true for all the man pages where
+they are used. 
 
----
+It turns out we've not been following the guidelines 
+properly on how to use them.  The fact that they show up
+in a useful way in the html docs is really an accident.
+Even there they're not showing up as intended.
 
- git-annotate.perl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Unfortunately, even after all the docs are fixed up to use
+the proper format, they still don't render properly in the
+man format.   Seems this is a missing feature in the "xmlto"
+command.
 
-ec31877f02673ed1db9d1485ac0065d51cbb7039
-diff --git a/git-annotate.perl b/git-annotate.perl
-index 9df72a1..bf920a5 100755
---- a/git-annotate.perl
-+++ b/git-annotate.perl
-@@ -10,9 +10,10 @@ use warnings;
- use strict;
- use Getopt::Long;
- use POSIX qw(strftime gmtime);
-+use File::Basename qw(basename dirname);
- 
- sub usage() {
--	print STDERR 'Usage: ${\basename $0} [-s] [-S revs-file] file [ revision ]
-+	print STDERR "Usage: ${\basename $0} [-s] [-S revs-file] file [ revision ]
- 	-l, --long
- 			Show long rev (Defaults off)
- 	-t, --time
-@@ -23,7 +24,7 @@ sub usage() {
- 			Use revs from revs-file instead of calling git-rev-list
- 	-h, --help
- 			This message.
--';
-+";
- 
- 	exit(1);
- }
-@@ -35,7 +36,7 @@ my $rc = GetOptions(	"long|l" => \$longr
- 			"help|h" => \$help,
- 			"rename|r" => \$rename,
- 			"rev-file|S=s" => \$rev_file);
--if (!$rc or $help) {
-+if (!$rc or $help or !@ARGV) {
- 	usage();
- }
- 
--- 
-1.3.1.gc4586
+The final patch in this series adds an xsl fragment which
+is passed to xmlto so that the callouts appear properly in 
+the man pages.
+
+Sean
+
+ Documentation/Makefile             |    2 +
+ Documentation/callouts.xsl         |   16 ++++++++
+ Documentation/everyday.txt         |   45 +++++++++++------------
+ Documentation/git-branch.txt       |   57 ++++++++++++++++++++---------
+ Documentation/git-checkout.txt     |   18 +++++----
+ Documentation/git-diff.txt         |   38 ++++++++++---------
+ Documentation/git-init-db.txt      |    8 ++--
+ Documentation/git-log.txt          |    7 ++--
+ Documentation/git-reset.txt        |   72 ++++++++++++++++++------------------
+ Documentation/git-update-index.txt |   31 ++++++++--------
+ 10 files changed, 163 insertions(+), 131 deletions(-)
