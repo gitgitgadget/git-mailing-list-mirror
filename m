@@ -1,122 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: bug: git-repack -a -d produces broken pack on NFS
-Date: Fri, 28 Apr 2006 16:18:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0604281549380.3701@g5.osdl.org>
-References: <20060427213207.GA6709@steel.home> <Pine.LNX.4.64.0604271500500.3701@g5.osdl.org>
- <20060428222750.GA6462@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Do not use zlib 1.1.3 with git packs!
+Date: Sat, 29 Apr 2006 02:52:52 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0604290245510.30565@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 29 01:19:18 2006
+X-From: git-owner@vger.kernel.org Sat Apr 29 02:53:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZcF3-0000DP-4R
-	for gcvg-git@gmane.org; Sat, 29 Apr 2006 01:19:17 +0200
+	id 1FZdhh-0005x4-Kp
+	for gcvg-git@gmane.org; Sat, 29 Apr 2006 02:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932492AbWD1XTJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 19:19:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbWD1XTJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 19:19:09 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:16539 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932492AbWD1XTI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Apr 2006 19:19:08 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3SNIstH026559
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 28 Apr 2006 16:18:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3SNIrua024476;
-	Fri, 28 Apr 2006 16:18:54 -0700
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060428222750.GA6462@steel.home>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030270AbWD2Awy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Apr 2006 20:52:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030276AbWD2Awy
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 20:52:54 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:32975 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1030270AbWD2Awx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Apr 2006 20:52:53 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id AAB8414C2
+	for <git@vger.kernel.org>; Sat, 29 Apr 2006 02:52:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 9EDE81433
+	for <git@vger.kernel.org>; Sat, 29 Apr 2006 02:52:52 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 811DEBC2
+	for <git@vger.kernel.org>; Sat, 29 Apr 2006 02:52:52 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19289>
 
+Hi,
 
+I had a strange effect when trying to repack a git repository on my iBook: 
+first, "git-repack -a -d" would quit without an error message when about 
+57% of the objects were written (*not* when deltifying them!).
 
-On Sat, 29 Apr 2006, Alex Riesen wrote:
->
-> mount option). But this _is_ that very same interface, and "PCI error"
-> looks nasty. Ok, looking at the card... Seats kinda skewed in the
-> slot, pressing on it... Wow! (lights go out):
-> 
->     Apr 29 00:13:35 tigra kernel: eth1: Link wake-up event 0x00020b
->     Apr 29 00:13:35 tigra kernel: eth1: PCI error 0xf00000
->     Apr 29 00:13:39 tigra kernel: NETDEV WATCHDOG: eth1: transmit timed out
->     Apr 29 00:13:39 tigra kernel: eth1: Transmit timed out, status 0x000000, resetting...
->     Apr 29 00:13:39 tigra kernel: eth1: DSPCFG accepted after 0 usec.
->     Apr 29 00:13:39 tigra kernel: eth1: Setting full-duplex based on negotiated link capability.
+It became even stranger when I tracked it to a segmentation fault in 
+adler32(), where the debugger insisted that a buffer was NULL, but the 
+calling code insisted it was not.
 
-Ok, that "PCI error" meaning is not entirely clear, but it sounds like 
-noise on the line. The driver just has a comment saying
+Upgrading to zlib 1.2.3 helped. That is, after I had a complete systen 
+fsck-up, since virtually every binary, including su, login and getty, are 
+linked to zlib on Mac OS X. (Yeah, yeah, no Linux, I know.)
 
-        /* Hmmmmm, it's not clear how to recover from PCI faults. */
+Ciao,
+Dscho
 
-and it's actually pretty possible (and even likely) that whatever 
-corrupted the pack-file happened on the _send_ side, so by the time we get 
-a PCI error report, there's already a packet out the door that likely has 
-corrupted data.
-
-Now, corrupted data would normally be caught by the UDP checksum, but:
-
- - a lot of modern cards do the IP checksum on the card. Whether the 
-   natsemi driver does or not, I have no clue. If it does, it would always 
-   make the checksum match the (corrupted) data.
-
- - the IP-level checksums are really quite weak. Realistically, you really 
-   really _really_ want to have link-layer checksums working, but since 
-   the link-level checksum is _always_ computed by the card (and since a 
-   PCI error would have corrupted the packet data that the card saw), 
-   link-level checksums will always have the same error that the data got, 
-   and pass.
-
-   So even if we did the UDP checksum in software, it has a reasonable 
-   chance of not triggering. It's just 16 bits, and not a _good_ 16 bits 
-   at that.
-
-Anyway, definitely looks hw-induced.
-
-> Hmm... Ok, apologies everyone, I'm just lazy and stupid.
-
-Having flaky hw is just unhappy. I'm glad git caught it quickly.
-
-> Still, would be nice not to loose a repository just because
-> user is an idiot.
-
-Well, there's two sides to this:
-
- - packs are very much designed to be very very dense. That means that 
-   even the _slightest_ corruption will likely totally destroy them. Even 
-   a single-bit flip likely causes massive damage to an archive.
-
-   This is a direct and unavoidable consequence of compression and 
-   density.  A less dense format automatically has a lot more redundant 
-   data, and the less dense it is, the more likely you can recover from 
-   single-bit errors (or even worse ones).
-
-   So this is the downside to compression and packing. All forms of 
-   compression (and we do both traditional stream-compression with zlib 
-   and aggressive delta compression between objects) inevitably make the 
-   effects of corruption much worse, and much harder to recover from.
-
-   That's the bad part.
-
- - The good part is that replication is obviously trivial, and git is 
-   inherently very good at making incremental backups.
-
-Now, we could try to have something that tries to recover as much of a 
-corrupted pack-file as possible. Right now, git-unpack-objects just dies 
-(as early as possible) if the pack is corrupt. Having some mode where it 
-tries to recover from errors and continue would probably be a good 
-debugging and recovery tool.
-
-		Linus
+P.S.: This _might_ be related to the git-repack issue that came up a few 
+days ago.
