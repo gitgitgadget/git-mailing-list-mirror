@@ -1,74 +1,100 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: fatal: git-write-tree: not able to write tree
-Date: Sat, 29 Apr 2006 11:34:26 -0700
-Message-ID: <7v1wvg8c3x.fsf@assigned-by-dhcp.cox.net>
-References: <20060429132324.31638.qmail@science.horizon.com>
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
+Date: Sat, 29 Apr 2006 12:30:09 -0700
+Message-ID: <7vlkto6uym.fsf@assigned-by-dhcp.cox.net>
+References: <20060429165151.2570.qmail@science.horizon.com>
+	<Pine.LNX.4.64.0604291006270.3701@g5.osdl.org>
+	<e309vq$m2r$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 29 20:34:41 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 29 21:30:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZuH1-00072v-2s
-	for gcvg-git@gmane.org; Sat, 29 Apr 2006 20:34:31 +0200
+	id 1FZv98-00082r-Ty
+	for gcvg-git@gmane.org; Sat, 29 Apr 2006 21:30:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750779AbWD2Se2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Apr 2006 14:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWD2Se2
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Apr 2006 14:34:28 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:5285 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750779AbWD2Se2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Apr 2006 14:34:28 -0400
+	id S1750738AbWD2TaP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Apr 2006 15:30:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbWD2TaP
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Apr 2006 15:30:15 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7909 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750738AbWD2TaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Apr 2006 15:30:14 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060429183427.JKRH27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 29 Apr 2006 14:34:27 -0400
-To: colin@horizon.com
-In-Reply-To: <20060429132324.31638.qmail@science.horizon.com>
-	(colin@horizon.com's message of "29 Apr 2006 09:23:24 -0400")
+          id <20060429193014.HVWA25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 29 Apr 2006 15:30:14 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e309vq$m2r$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
+	29 Apr 2006 20:07:36 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19315>
 
-colin@horizon.com writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> diff --git a/git-am.sh b/git-am.sh
-> index eab4aa8..872145b 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -376,6 +376,13 @@ do
->  			echo "No changes - did you forget update-index?"
->  			stop_here $this
->  		fi
-> +		unmerged=$(git-ls-files -u)
-> +		if test -n "$unmerged"
-> +		then
-> +			echo "You still have unmerged paths in your index"
-> +			echo "did you forget update-index?"
-> +			stop_here $this
-> +		fi
->  		apply_status=0
->  		;;
->  	esac
->
-> Er... it's very non-obvious to me why you'd want to stick a workaround
-> here when you could instead fix git-write-tree to do it.  That seems
-> like The Right Thing.
+> IF (and that is big if) git commit header will be extended to have some
+> extra "link" (enforcing connectivity) headers, like proposed "bind" for
+> subprojects, "prev" for pu-like union branches, "merge-base" for merges,
+> there would be repeated work on enforcing connectivity. Hence generic
+> "link" header (formerly "related") proposal.
 
-As I said in an earlier message in the thread, I've considered
-it, but that is a very risky thing to do, and write-tree is
-definitely a wrong place to do it.  If we wanted to, the right
-way would be to update-index using the output of "ls-files -u".
+The "link <sha1> <type> <meta>" header extension was done
+primarily for that reason this way.  I carried it in my "pu"
+branch for a few days but Linus convinced me privately that it
+was a bad idea, so it is not merged in "pu" anymore.  Just to
+make it easy for people to view what we are discussing, I pushed
+the branch head to jc/bind-2 topic branch, but the code will
+_not_ be merged.
 
-However, it would invite the user to mistakenly say --resolved
-before resolving all paths.
+The code in commit.c to recognize and link the releated objects
+pointed by the "link" header to the commit looked like below
+(see 11bbee26 commit on that branch):
 
-> (It would also be helpful to mention at least one unmerged file by name.)
++       optr = &item->links;
++       while (!memcmp(bufptr, "link ", 5)) {
++               struct object *object;
++
++               if (!get_sha1_hex(bufptr + 5, parent) &&
++                   bufptr[45] == ' ' &&
++                   (object = lookup_unknown_object(parent)) != NULL) {
++                       struct object_list *l = xmalloc(sizeof(*l));
++                       l->item = object;
++                       l->next = *optr;
++                       l->name = NULL;
++                       *optr = l;
++                       optr = &l->next;
++                       n_refs++;
++                       bufptr += 45;
++               }
++               else
++                       return error("bad link in commit %s",
++                                    sha1_to_hex(item->object.sha1));
++               while (*bufptr++ != '\n')
++                       ; /* skip over subdirectory name */
++       }
 
-That is true.
+But if your are going to introduce "merge-base" and similar
+headers that have impact to connectivity traversal code, you can
+easily change the !memcmp(buptr, "link ", 5) with a sequence of
+"memcmp(foo) || memcmp(bar) || ...", and use the "l->name" field
+to point at the header itself, so that the user of the resulting
+commit object can easily tell what kind of link-like header it
+is, and enforce further semantics that are specific to each kind
+of such header on it.  The revision traversal change that was
+done in a later commit (7091fd commit) does not have to change.
+
+The code sharing aspect you brought up is a very important
+issue.  This is revision traversal, which is really the central
+part of git and needs deep thought to touch without breaking, so
+we would like to avoid risking breaking it by repeatedly
+touching it.  But that can be done without making the recorded
+header something like "link <sha1> <type> <metainfo>" which is
+too generic.
