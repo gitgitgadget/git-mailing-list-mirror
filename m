@@ -1,72 +1,81 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: cg-clone not fetching all tags?
-Date: Sat, 29 Apr 2006 23:42:16 +0200
-Message-ID: <200604292342.16306.johannes.sixt@telecom.at>
-References: <20060427105251.AA4B2353DAC@atlas.denx.de> <20060429140042.1FB37353DAC@atlas.denx.de> <20060429170542.GJ27689@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Apr 29 23:42:32 2006
+Subject: [PATCH] cg-admin-rewritehist: Seed the commit map with the parents specified with -r.
+Date: Sat, 29 Apr 2006 23:45:38 +0200 (CEST)
+Message-ID: <20060429214538.4E2D54A54D@dx.sixt.local>
+X-From: git-owner@vger.kernel.org Sat Apr 29 23:45:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZxCw-0003Eg-UH
-	for gcvg-git@gmane.org; Sat, 29 Apr 2006 23:42:31 +0200
+	id 1FZxG5-0003gl-Dy
+	for gcvg-git@gmane.org; Sat, 29 Apr 2006 23:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750811AbWD2VmV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Apr 2006 17:42:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbWD2VmV
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Apr 2006 17:42:21 -0400
-Received: from mail.nextra.at ([195.170.70.86]:53901 "EHLO mail.nextra.at")
-	by vger.kernel.org with ESMTP id S1750811AbWD2VmU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Apr 2006 17:42:20 -0400
+	id S1750813AbWD2Vpm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Apr 2006 17:45:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbWD2Vpm
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Apr 2006 17:45:42 -0400
+Received: from mail.nextra.at ([195.170.70.86]:56717 "EHLO mail.nextra.at")
+	by vger.kernel.org with ESMTP id S1750813AbWD2Vpm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Apr 2006 17:45:42 -0400
 Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by mail.nextra.at (8.13.6/8.13.6) with ESMTP id k3TLgHWB009678
-	for <git@vger.kernel.org>; Sat, 29 Apr 2006 23:42:18 +0200 (MEST)
+	by mail.nextra.at (8.13.6/8.13.6) with ESMTP id k3TLjdtP010239
+	for <git@vger.kernel.org>; Sat, 29 Apr 2006 23:45:40 +0200 (MEST)
 X-Abuse-Info: Please report abuse to abuse@eunet.co.at, see http://www.eunet.at/support/service
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 9E24049E03
-	for <git@vger.kernel.org>; Sat, 29 Apr 2006 23:42:16 +0200 (CEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-In-Reply-To: <20060429170542.GJ27689@pasky.or.cz>
-Content-Disposition: inline
+Received: by dx.sixt.local (Postfix, from userid 1000)
+	id 4E2D54A54D; Sat, 29 Apr 2006 23:45:38 +0200 (CEST)
+To: undisclosed-recipients:;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19320>
 
-On Saturday 29 April 2006 19:05, Petr Baudis wrote:
->   Hi,
->
-> Dear diary, on Sat, Apr 29, 2006 at 04:00:42PM CEST, I got a letter
-> where Wolfgang Denk <wd@denx.de> said that...
->
-> > it seems that "cg-clone" does not fetch all tags any more - only  the
-> > most  recent ones (modiufied in the last N days?) seem to be fetched?
-> > [Eventually the "N days"  might  correspond  to  "changing  tools  to
-> > version X", but I have no way to find out.]
-> >
-> > This happens only when using HTTP; using ssh  or  rsync  works  fine.
-> > Also,  if  we follow the "cg-clone" by a "git-fetch -t" command, this
-> > will load the missing tags.
-> >
-> > Is this intentional, or am I doing anything wrong?
-> >
-> > [For testing, try "cg-clone http://www.denx.de/git/u-boot.git"]
->
->   you need to run git-update-server-info every time you add or update a
-> tag (or best every time you push). See the NOTES section of
-> cg-admin-setuprepo documentation for details on how to set it up to be
-> called automagically at every push.
+When the first commit is manufactured, its parents are looked up in the
+commit map. However, without this patch the map is always empty at that time.
+If the entire history is rewritten, this is no problem because the first
+commit does not have any parents anyway. However, if -r is used to constrain
+rewriting to only part of the history, this first commit is manufactured
+incorrectly without parents because 'cat' fails.
 
-There are two types of tags: They can point to
-1. a commit object
-2. a proper tag object (which in turn references the commit)
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 
-git-update-server-info seems to generate info only for case 2, and so are the 
-only ones that http can fetch.
+---
 
--- Hannes
+ cg-admin-rewritehist |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+977fc81815877a1e72040355b221fe8d62593eb7
+diff --git a/cg-admin-rewritehist b/cg-admin-rewritehist
+index 9fa4c2a..7dd83cf 100755
+--- a/cg-admin-rewritehist
++++ b/cg-admin-rewritehist
+@@ -141,6 +141,7 @@ _git_requires_root=1
+ 
+ tempdir=.git-rewrite
+ startrev=
++startrevparents=
+ filter_env=
+ filter_tree=
+ filter_index=
+@@ -152,6 +153,7 @@ while optparse; do
+ 		tempdir="$OPTARG"
+ 	elif optparse -r=; then
+ 		startrev="^$OPTARG^ $OPTARG $startrev"
++		startrevparents="$OPTARG^ $startrevparents"
+ 	elif optparse --env-filter=; then
+ 		filter_env="$OPTARG"
+ 	elif optparse --tree-filter=; then
+@@ -186,6 +188,12 @@ ret=0
+ 
+ mkdir ../map # map old->new commit ids for rewriting parents
+ 
++# seed with identity mappings for the parents where we start off
++for commit in $startrevparents; do
++	commit="$(git-rev-parse $commit)"
++	echo $commit > ../map/$commit
++done
++
+ git-rev-list --topo-order HEAD $startrev | tac >../revs
+ commits=$(cat ../revs | wc -l)
+ 
+-- 
+1.3.1.gaa6b
