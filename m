@@ -1,68 +1,94 @@
-From: Huw Davies <huw@codeweavers.com>
-Subject: [PATCH] git-format-patch: Use rfc2822 compliant date.
-Date: Sat, 29 Apr 2006 15:50:28 +0000 (UTC)
-Message-ID: <S1750753AbWD2PuQ/20060429155016Z+1890@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 29 17:50:25 2006
+From: linux@horizon.com
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
+Date: 29 Apr 2006 12:51:51 -0400
+Message-ID: <20060429165151.2570.qmail@science.horizon.com>
+X-From: git-owner@vger.kernel.org Sat Apr 29 18:51:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZri9-0004jE-OT
-	for gcvg-git@gmane.org; Sat, 29 Apr 2006 17:50:22 +0200
+	id 1FZsfj-0005fb-Ud
+	for gcvg-git@gmane.org; Sat, 29 Apr 2006 18:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750750AbWD2PuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Apr 2006 11:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbWD2PuQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Apr 2006 11:50:16 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:16020 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1750750AbWD2PuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Apr 2006 11:50:15 -0400
-Received: from vineyard.dyndns.org ([82.152.46.94])
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1FZri2-0007IJ-5E
-	for git@vger.kernel.org; Sat, 29 Apr 2006 10:50:15 -0500
-Received: from daviesh by vineyard.dyndns.org with local (Exim 4.60)
-	(envelope-from <huw@codeweavers.com>)
-	id 1FZrhV-0000Yc-Uh
-	for git@vger.kernel.org; Sat, 29 Apr 2006 16:49:41 +0100
-Date: Sat Apr 29 15:55:01 2006 +0100
-Apparently-To: <huw@codeweavers.com>
+	id S1750758AbWD2Qvw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Apr 2006 12:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbWD2Qvw
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Apr 2006 12:51:52 -0400
+Received: from science.horizon.com ([192.35.100.1]:34617 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1750758AbWD2Qvw
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Apr 2006 12:51:52 -0400
+Received: (qmail 2571 invoked by uid 1000); 29 Apr 2006 12:51:51 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19308>
 
-Signed-off-by: Huw Davies <huw@codeweavers.com>
+Boy, this is an interesting discussion!
+On the one hand, it seems "obvious" to me that extra links might be
+useful.  But Linus's minimalist points have a lot of merit.
+
+I have to agree, it's important to think of a single practical use before
+adding the feature.  So let's do a little brainstorming...
 
 
----
+For just referring to another commit, there's no problem putting
+it in the body.  A sensible porcelain GUI will, when it seems something
+that looks like an object identifier in a comment, and that object
+identifier exists, make it a clickable link.  So a comment like:
 
- git-format-patch.sh |    9 ++++-----
- 1 files changed, 4 insertions(+), 5 deletions(-)
+"This fixes the same problem as <commit>, but is a cleaner
+(albeit more invasive) fix."
 
-fa12b0e43a0559101551d697866c01a92778c67f
-diff --git a/git-format-patch.sh b/git-format-patch.sh
-index c7133bc..c077f44 100755
---- a/git-format-patch.sh
-+++ b/git-format-patch.sh
-@@ -205,11 +205,10 @@ sub show_date {
-     }
-     my $t = $time + $minutes * 60;
-     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday) = gmtime($t);
--    return sprintf("%s %s %d %02d:%02d:%02d %d %+05d",
--		   $weekday_names[$wday],
--		   $month_names[$mon],
--		   $mday, $hour, $min, $sec,
--		   $year+1900, $tz);
-+    return sprintf("%s, %d %s %d %02d:%02d:%02d %+05d",
-+		   $weekday_names[$wday], $mday,
-+		   $month_names[$mon], $year+1900,
-+		   $hour, $min, $sec, $tz);
- }
- 
- print "From nobody Mon Sep 17 00:00:00 2001\n";
--- 
-1.3.0
+Would do the right thing: the user reading it could easily jump
+to the other comment.  A "header" link as opposed to a "comment"
+link just has the property of being unambiguous.  No heuristic
+will guess that a link should exist when there isn't.
+
+So, what is that property useful for?
+
+
+Now, one thing that porcelains provide, in addition to "parent" links,
+is "child" links.  Useful.  But it could be done with commit comment
+links as well, and it's not clear that having the link in the commit
+header as opposed to the comment would help much.  You still have to
+find and uncompress part of each commit to generate the history
+tree.  Does uncompressing the rest of it and running a heuristic
+over the text for really cost that much?
+
+I'm not convinced it's needed for that feature.  (I'd sooner argue for
+never compressing commit objects in packs on the grounds that the
+repeated uncompression while browsing is worth saving more than the
+relatively minor disk space.)
+
+
+So to be valuable, and inadvisable to express with a specially
+formatted comment, it has to be something that would be Very Bad
+to get wrong.  What qualifies?
+
+Maybe some merge algorithm information?  If the merge could be told that
+this change "is the same" as that change, so it can be skipped when
+cherry-picking that branch, and the information was wrong, that could
+cause lots of problems.
+
+But given that git-cherry already uses (imperfect) heuristics to
+detect already-merged patches, and they seem to work well enough, is
+that a strong enough argument?  Is there some other merge application
+where it would help?
+
+
+Now, the "this other object should exist in the repository, and it's an
+error if you can't fetch it" link obviously needs to be unambiguously
+distinguished from, say, a reference to the (Linux kernel) dodecapus merge
+in a git tree checkin comment.  But, as Linus says, what reason is there
+for including it?  What do you need the commit in the repository for?
+
+Well, the only reason that you need ANY commit in the repository is
+because it's part of history, and comparing it with other versions is
+meaningful.  So what trees, not already in the ancestry graph of a
+given commit, are useful to compare to?  In particular, useful for some
+automated process; manual comparisons can always be done manually.
+
+
+Nothing's jumping out at me.  Any suggestions?
