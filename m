@@ -1,65 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Do not use zlib 1.1.3 with git packs!
-Date: Sat, 29 Apr 2006 03:47:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0604290341380.22696@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 28 Apr 2006 23:20:29 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0604282316520.18816@localhost.localdomain>
 References: <Pine.LNX.4.63.0604290245510.30565@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0604290341380.22696@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Apr 29 03:47:42 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 29 05:20:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FZeYd-0008Fg-8V
-	for gcvg-git@gmane.org; Sat, 29 Apr 2006 03:47:39 +0200
+	id 1FZg0i-0003jJ-El
+	for gcvg-git@gmane.org; Sat, 29 Apr 2006 05:20:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751465AbWD2Br3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Apr 2006 21:47:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbWD2Br3
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 21:47:29 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:44964 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751465AbWD2Br2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Apr 2006 21:47:28 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 607801C79
-	for <git@vger.kernel.org>; Sat, 29 Apr 2006 03:47:27 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 546E31C85
-	for <git@vger.kernel.org>; Sat, 29 Apr 2006 03:47:27 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 380A81C62
-	for <git@vger.kernel.org>; Sat, 29 Apr 2006 03:47:27 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.63.0604290245510.30565@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932477AbWD2DUb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Apr 2006 23:20:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932481AbWD2DUa
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Apr 2006 23:20:30 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27277 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932477AbWD2DUa
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Apr 2006 23:20:30 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IYG00BWQRY5SV80@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 28 Apr 2006 23:20:29 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.63.0604290341380.22696@wbgn013.biozentrum.uni-wuerzburg.de>
+X-X-Sender: nico@localhost.localdomain
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19290>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19291>
 
 On Sat, 29 Apr 2006, Johannes Schindelin wrote:
 
-> Upgrading to zlib 1.2.3 helped.
+> Hi,
+> 
+> On Sat, 29 Apr 2006, Johannes Schindelin wrote:
+> 
+> > Upgrading to zlib 1.2.3 helped.
+> 
+> Apparently I was too enthusiastic to have a working system again.
+> 
+> The problem showed again, but with a different repository.
+> 
+> This time, though, I have an idea what could be the culprit.
+> 
+> In create_delta(), there might be illegal accesses. The function adler32() 
+> is called for BLK_SIZE bytes (which is 16 bytes at the moment), starting 
+> from data, which is initially trg_buf, and is incremented until it is 
+> (trg_buf + trg_size).
+> 
+> I gather that close to the end, adler32() tries to read 15 bytes after the 
+> end of the allocated target buffer.
+> 
+> Am I wrong?
 
-Apparently I was too enthusiastic to have a working system again.
+You're not.  My bad.
 
-The problem showed again, but with a different repository.
+(I'm testing a version where adler32 has been replaced with rabin 
+ polynomial so that issue will be gone at the same time.
+ A patch should be coming in less than an hour.)
 
-This time, though, I have an idea what could be the culprit.
 
-In create_delta(), there might be illegal accesses. The function adler32() 
-is called for BLK_SIZE bytes (which is 16 bytes at the moment), starting 
-from data, which is initially trg_buf, and is incremented until it is 
-(trg_buf + trg_size).
-
-I gather that close to the end, adler32() tries to read 15 bytes after the 
-end of the allocated target buffer.
-
-Am I wrong?
-
-Ciao,
-Dscho
+Nicolas
