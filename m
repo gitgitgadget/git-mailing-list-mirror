@@ -1,148 +1,82 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] builtin-push: resurrect parsing of Push: lines
-Date: Sun, 30 Apr 2006 15:59:05 -0700
-Message-ID: <7vvesqwtza.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0604301405150.2026@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7viroqyb69.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
+Date: Sun, 30 Apr 2006 16:19:44 -0700
+Message-ID: <7vfyjuwt0v.fsf@assigned-by-dhcp.cox.net>
+References: <20060429165151.2570.qmail@science.horizon.com>
+	<e30b48$ovk$1@sea.gmane.org> <7viros1585.fsf@assigned-by-dhcp.cox.net>
+	<e30k0n$ij5$1@sea.gmane.org> <e32kkf$amc$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 01 00:59:21 2006
+X-From: git-owner@vger.kernel.org Mon May 01 01:19:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaKsq-0007sY-Ga
-	for gcvg-git@gmane.org; Mon, 01 May 2006 00:59:20 +0200
+	id 1FaLCg-0002II-OC
+	for gcvg-git@gmane.org; Mon, 01 May 2006 01:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbWD3W7I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Apr 2006 18:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbWD3W7I
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 18:59:08 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:58504 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751231AbWD3W7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Apr 2006 18:59:07 -0400
+	id S1750759AbWD3XTr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 19:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbWD3XTr
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 19:19:47 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10426 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750759AbWD3XTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Apr 2006 19:19:46 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060430225906.HTUB25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 30 Apr 2006 18:59:06 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <7viroqyb69.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 30 Apr 2006 15:02:22 -0700")
+          id <20060430231945.XWB21197.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 30 Apr 2006 19:19:45 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e32kkf$amc$1@sea.gmane.org> (Jakub Narebski's message of "Sun,
+	30 Apr 2006 17:21:37 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19363>
 
-Junio C Hamano <junkio@cox.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>> This is not any different from usual "parent" at all (but you
+>>> have to think about it a bit to realize it).
+>> 
+>> I would say that "prior" is not THAT different from usual "parent",
+>> rather than it is not ANY different.
+>> 
+>> My doubts about recording previous head of a "union" (pu-like) branch
+>> is that for merge (e.g. 'pu' to 'next', cherrypick to/from 'pu', 'pu'
+>> rebase) is that for merge algorithm all parents are equivalent, with
+>> eventual exception of first which can be treated special ('ours').
 >
->> The C'ification of push left these behind.
->
->> +#define MAX_REFSPECS 10
->> +static int current_refspec = 0;
->> +static char *refspecs_[MAX_REFSPECS];
->
-> While this fix makes perfect sense, I think MAX_URI set to 16 is
-> reasonable hard limit, but I am not happy about giving hard
-> limit to MAX_REFSPECS -- that's a regression from the shell
-> script one.
+> Additionally with "prior" (or at least some convention on which of parents
+> is to prior head of "union (pu-like) branch) I think we could fast-forward
+> such branches...
 
-So how about this as a replacement?
+This is why I said you have to think about it a bit to realize
+that the "prior" is not _ANY_ different from the ordinary parent
+for something like "pu".
 
- - You are going to discard refspecs_[] if there were any
-   command line stuff anyway, so do not even bother storing them
-   in a separate array.  Just do add_refspec() on them if you
-   are going to use it after you are done.
+We can fast-forward if (1) you pulled from "pu" the last time,
+and (2) you haven't added anything on top of it on your own, and
+(3) you pull from "pu" again, if the previous "pu" (i.e. your
+"pu") is a parent of the updated "pu".  We do not need "prior"
+for that.  The old "pu" being _one_ _of_ the parents, not even
+necessarily be the first one, would do just fine.
 
- - The function get_uri() is not about URI anymore, so rename it
-   appropriately.
+If you have built on top of the last "pu", obviously we do not
+want to fast-forward with or without "prior".
 
- - Fix the double call to get_uri() Sean noticed.
+Your doubts about the merge is also unfounded.  The current "pu"
+head is (against my own recommendation not to do so) a hydra
+cap.  It is a direct child of the previous "pu" that merges all
+the leftover bits along with what was in 'next' when the commit
+was made, so you could do something like this to experiment:
 
--- >8 --
-diff --git a/builtin-push.c b/builtin-push.c
-index 4e659f0..9a861b5 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -68,14 +68,11 @@ static void set_refspecs(const char **re
- 	expand_refspecs();
- }
- 
--#define MAX_REFSPECS 10
--static int current_refspec = 0;
--static char *refspecs_[MAX_REFSPECS];
--
- static int get_remotes_uri(const char *repo, const char *uri[MAX_URI])
- {
- 	int n = 0;
- 	FILE *f = fopen(git_path("remotes/%s", repo), "r");
-+	int has_explicit_refspec = refspec_nr;
- 
- 	if (!f)
- 		return -1;
-@@ -103,10 +100,14 @@ static int get_remotes_uri(const char *r
- 		while (isspace(p[-1]))
- 			*--p = 0;
- 
--		if (!is_refspec && n < MAX_URI)
--			uri[n++] = strdup(s);
--		else if (is_refspec && current_refspec < MAX_REFSPECS)
--			refspecs_[current_refspec++] = strdup(s);
-+		if (!is_refspec) {
-+			if (n < MAX_URI)
-+				uri[n++] = strdup(s);
-+			else
-+				error("more than %d URL's specified, ignoreing the rest", MAX_URI);
-+		}
-+		else if (is_refspec && !has_explicit_refspec)
-+			add_refspec(strdup(s));
- 	}
- 	fclose(f);
- 	if (!n)
-@@ -146,13 +147,17 @@ static int get_branches_uri(const char *
- 	return 1;
- }
- 
--static int get_uri(const char *repo, const char *uri[MAX_URI])
-+/*
-+ * Read remotes and branches file, fill the push target URI
-+ * list.  If there is no command line refspecs, read Push: lines
-+ * to set up the *refspec list as well.
-+ * return the number of push target URIs
-+ */
-+static int read_config(const char *repo, const char *uri[MAX_URI])
- {
- 	int n;
- 
- 	if (*repo != '/') {
--		current_refspec = 0;
--
- 		n = get_remotes_uri(repo, uri);
- 		if (n > 0)
- 			return n;
-@@ -169,18 +174,15 @@ static int get_uri(const char *repo, con
- static int do_push(const char *repo)
- {
- 	const char *uri[MAX_URI];
--	int i, n = get_uri(repo, uri);
-+	int i, n;
- 	int remote;
- 	const char **argv;
- 	int argc;
- 
--	n = get_uri(repo, uri);
-+	n = read_config(repo, uri);
- 	if (n <= 0)
- 		die("bad repository '%s'", repo);
- 
--	if (refspec_nr == 0)
--		set_refspecs((const char**)refspecs_, current_refspec);
--
- 	argv = xmalloc((refspec_nr + 10) * sizeof(char *));
- 	argv[0] = "dummy-send-pack";
- 	argc = 1;
+	git branch test-1 pu^1
+	echo >>Makefile '# End of Makefile'
+        git commit -m 'build on top of previous "pu"' Makefile
+        git pull . pu ;# Merge whatever happened in "pu"
+        
