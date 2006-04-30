@@ -1,144 +1,101 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] git builtin "push"
-Date: Sun, 30 Apr 2006 05:40:49 -0400
-Message-ID: <BAYC1-PASMTP011ED54A1802BC6DF017AAAEB00@CEZ.ICE>
-References: <Pine.LNX.4.64.0604292111570.9901@g5.osdl.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: More qgit defects
+Date: Sun, 30 Apr 2006 12:13:22 +0200
+Message-ID: <e5bfff550604300313n5ebe84f7nf42c88789efe1@mail.gmail.com>
+References: <1145484284.22097.10.camel@dv>
+	 <e5bfff550604220416v592128fcj25185bbda3b4e493@mail.gmail.com>
+	 <1146115210.30763.40.camel@dv>
+	 <e5bfff550604270026q68ba8a4clfaf1b274a5b312cf@mail.gmail.com>
+	 <1146163863.5133.37.camel@dv>
+	 <e5bfff550604281021k60e0c0ebk7a89eb0c9c569c2a@mail.gmail.com>
+	 <1146383451.12323.41.camel@dv>
+	 <e5bfff550604300111n6db883d5w98c863efaab15b00@mail.gmail.com>
+	 <1146389204.12323.90.camel@dv> <1146390144.13634.9.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 30 11:45:38 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: ydirson@altern.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 30 12:13:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fa8Uc-0004qL-6Q
-	for gcvg-git@gmane.org; Sun, 30 Apr 2006 11:45:30 +0200
+	id 1Fa8vq-00007N-NY
+	for gcvg-git@gmane.org; Sun, 30 Apr 2006 12:13:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbWD3Jp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Apr 2006 05:45:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbWD3Jp1
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 05:45:27 -0400
-Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:54462 "EHLO
-	BAYC1-PASMTP01.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751084AbWD3Jp0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Apr 2006 05:45:26 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 30 Apr 2006 02:45:26 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id B2F6C644C28;
-	Sun, 30 Apr 2006 05:45:24 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060430054049.7856f24c.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0604292111570.9901@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 30 Apr 2006 09:45:26.0596 (UTC) FILETIME=[CF26B040:01C66C3A]
+	id S1750921AbWD3KNX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 06:13:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750938AbWD3KNX
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 06:13:23 -0400
+Received: from wproxy.gmail.com ([64.233.184.226]:60231 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750921AbWD3KNX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Apr 2006 06:13:23 -0400
+Received: by wproxy.gmail.com with SMTP id 58so399217wri
+        for <git@vger.kernel.org>; Sun, 30 Apr 2006 03:13:22 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CHUSuuVGo8EYd60Wo41iWntAsA+wHB93IVFIhhch7KCfO0PyEFJB5qXitTncd7EYvPcLEix64EXCsILpy583r+tlhZpqIb07feTIlTbidnFaJgESqP9xIh0d8zWYJOsoC4uNBhpKsdhiA10OmQXVd4s9kqdm++Zjxucpp48TL8Y=
+Received: by 10.65.23.20 with SMTP id a20mr1285475qbj;
+        Sun, 30 Apr 2006 03:13:22 -0700 (PDT)
+Received: by 10.65.163.11 with HTTP; Sun, 30 Apr 2006 03:13:22 -0700 (PDT)
+To: "Pavel Roskin" <proski@gnu.org>
+In-Reply-To: <1146390144.13634.9.camel@dv>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19333>
 
-On Sat, 29 Apr 2006 21:22:49 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
+On 4/30/06, Pavel Roskin <proski@gnu.org> wrote:
+> On Sun, 2006-04-30 at 05:26 -0400, Pavel Roskin wrote:
+> > No, something still feels wrong.  I think even the gurus of GUI cannot
+> > decide what to do if many frames need to be on screen.  Do you know that
+> > many graphic designers hate GIMP for the overuse of dockable toplevel
+> > windows?  Krita prefers dockable frames.  Photoshop uses non-dockable
+> > child windows, I believe.
+> >
+> > The difference for qgit is that is generally wants bigger windows.
+> > Whether the revision tree or the patch, having more space allows the
+> > frame to present a better picture to the users.
+>
+> Replying to myself, sorry.  How about tabs?
+>
+> One tab for the main view.  Basically what we have now.
+>
+> Then tabs for revisions.  We can have more than one revision open, with
+> the comment and with the patch, and and with affected files.  They will
+> have the GUI centered on the change made by the revision.  StGIT commits
+> would have an editable comment.
+>
+> Then tabs for files.  Again, possibly more than one.  Each tab about a
+> specific file.  The file history, annotations, maybe even an editor for
+> the file.
+>
+> The idea was inspired by Azureus.
+>
 
-> Comments?  I wrote it so that it _should_ be fairly easy to re-use at 
-> least the branches/remotes helper functions for a built-in "git fetch" as 
-> well. But I didn't have the multi-URI issue with anything but pushing.
+Throwing in the tabs is a *very* big change, but, just to discuss....I
+agree on the note that in qgit we have three different approaches:
+fixed frames (revisions, file tree, affected files), detachable frames
+(patch) and separate windows (annotations).
+
+This is a bit strange and could give an odd GUI feeling.
+
+I like the tab idea because it's clear and simple and fixes the 'many
+approaches' problem. What I would suggest is, at least at first step,
+do not change the main view and have only three tabs:
+
+Tab1: Main view with revisions, file tree (hide able), affected files.
+Tab2: Patch view with patch stat and diffs
+Tab3: File history + file content/annotation view
+
+In other words just put the frames/windows as are now in browse able
+tabs. In this way main view still gives a good amount of information
+without requiring changing the tab and the tabs are reserved for 'big
+space' needed infos only.
 
 
-> +	if (strncmp(ref, "tags/", 5))
-> +		return 0;
-[...]
-> +	for_each_ref(expand_one_ref);
-
-How about a for_each_tag() function?
-
-
-> +	int i, n = get_uri(repo, uri);
-[...]
-> +	n = get_uri(repo, uri);
-> +	if (n <= 0)
-> +		die("bad repository '%s'", repo);
-
-get_uri() called twice.
-
-
-The patch looks good and is easy to read, but wouldn't it be better
-to require new c code to be thread safe and not leak memory?  Assuming
-run-once-and-exit is making it difficult to push into a library.
-
-Sean
-
-builtin-push.c |   11 +++--------
-refs.c         |    5 +++++
-refs.h         |    1 +
-3 files changed, 9 insertions(+), 8 deletions(-)
-
-0e0e3cff71d65ac4cdc560ae143aded03acb4ceb
-diff --git a/builtin-push.c b/builtin-push.c
-index a0c1caa..0d74ed1 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -31,10 +31,6 @@ static int expand_one_ref(const char *re
- {
- 	/* Ignore the "refs/" at the beginning of the refname */
- 	ref += 5;
--
--	if (strncmp(ref, "tags/", 5))
--		return 0;
--
- 	add_refspec(strdup(ref));
- 	return 0;
- }
-@@ -51,9 +47,8 @@ static void expand_refspecs(void)
- 		 */
- 		return;
- 	}
--	if (!tags)
--		return;
--	for_each_ref(expand_one_ref);
-+	if (tags)
-+		for_each_tag(expand_one_ref);
- }
- 
- static void set_refspecs(const char **refs, int nr)
-@@ -156,7 +151,7 @@ static int get_uri(const char *repo, con
- static int do_push(const char *repo)
- {
- 	const char *uri[MAX_URI];
--	int i, n = get_uri(repo, uri);
-+	int i, n;
- 	int remote;
- 	const char **argv;
- 	int argc;
-diff --git a/refs.c b/refs.c
-index 03398cc..c5a2dd0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -178,6 +178,11 @@ int head_ref(int (*fn)(const char *path,
- 	return 0;
- }
- 
-+int for_each_tag(int (*fn)(const char *path, const unsigned char *sha1))
-+{
-+	return do_for_each_ref("refs/tags", fn);
-+}
-+
- int for_each_ref(int (*fn)(const char *path, const unsigned char *sha1))
- {
- 	return do_for_each_ref("refs", fn);
-diff --git a/refs.h b/refs.h
-index 2625596..b74cd4d 100644
---- a/refs.h
-+++ b/refs.h
-@@ -7,6 +7,7 @@ #define REFS_H
-  */
- extern int head_ref(int (*fn)(const char *path, const unsigned char *sha1));
- extern int for_each_ref(int (*fn)(const char *path, const unsigned char *sha1));
-+extern int for_each_tag(int (*fn)(const char *path, const unsigned char *sha1));
- 
- /** Reads the refs file specified into sha1 **/
- extern int get_ref_sha1(const char *ref, unsigned char *sha1);
--- 
-1.3.1.g9c203
+   Marco
