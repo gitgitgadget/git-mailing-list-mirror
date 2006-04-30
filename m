@@ -1,93 +1,79 @@
 From: sean <seanlkml@sympatico.ca>
 Subject: Re: [PATCH 3/3] fetch: optionally store the current remote
  information in the config
-Date: Sun, 30 Apr 2006 13:19:36 -0400
-Message-ID: <BAYC1-PASMTP054CF113E95D45B8778DACAEB00@CEZ.ICE>
+Date: Sun, 30 Apr 2006 13:28:19 -0400
+Message-ID: <BAYC1-PASMTP05AA5A3E9CB852B03EAC4DAEB00@CEZ.ICE>
 References: <Pine.LNX.4.63.0604301524080.2646@wbgn013.biozentrum.uni-wuerzburg.de>
 	<BAYC1-PASMTP08069B2CE6005391A1AFF9AEB00@CEZ.ICE>
 	<Pine.LNX.4.63.0604301743370.3641@wbgn013.biozentrum.uni-wuerzburg.de>
 	<BAYC1-PASMTP03034CC49FFA3042562BCBAEB00@CEZ.ICE>
-	<e32pto$p3a$1@sea.gmane.org>
+	<Pine.LNX.4.63.0604301859280.3977@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 30 19:24:23 2006
+X-From: git-owner@vger.kernel.org Sun Apr 30 19:33:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaFec-00027z-AY
-	for gcvg-git@gmane.org; Sun, 30 Apr 2006 19:24:18 +0200
+	id 1FaFnP-0003HF-S8
+	for gcvg-git@gmane.org; Sun, 30 Apr 2006 19:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbWD3RYP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 30 Apr 2006 13:24:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbWD3RYP
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 13:24:15 -0400
-Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165]:41876 "EHLO
+	id S1751196AbWD3RdD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 13:33:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbWD3RdB
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 13:33:01 -0400
+Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165]:6297 "EHLO
 	BAYC1-PASMTP05.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751186AbWD3RYO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Apr 2006 13:24:14 -0400
+	id S1751209AbWD3Rc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Apr 2006 13:32:57 -0400
 X-Originating-IP: [69.156.138.66]
 X-Originating-Email: [seanlkml@sympatico.ca]
 Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 30 Apr 2006 10:24:13 -0700
+	 Sun, 30 Apr 2006 10:32:57 -0700
 Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id E797E644C28;
-	Sun, 30 Apr 2006 13:24:12 -0400 (EDT)
-To: Jakub Narebski <jnareb@gmail.com>
-Message-Id: <20060430131936.43598f6f.seanlkml@sympatico.ca>
-In-Reply-To: <e32pto$p3a$1@sea.gmane.org>
+	by linux1.attic.local (Postfix) with ESMTP id 51F1A644C28;
+	Sun, 30 Apr 2006 13:32:56 -0400 (EDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-Id: <20060430132819.3af8e9d1.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.63.0604301859280.3977@wbgn013.biozentrum.uni-wuerzburg.de>
 X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 30 Apr 2006 17:24:14.0072 (UTC) FILETIME=[E6CE2F80:01C66C7A]
+X-OriginalArrivalTime: 30 Apr 2006 17:32:57.0514 (UTC) FILETIME=[1ECD18A0:01C66C7C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 30 Apr 2006 18:51:54 +0200
-Jakub Narebski <jnareb@gmail.com> wrote:
-=20
-> Well, it could also contain default head we merge to (instead of usin=
-g what
-> fetch set as FETCH_HEAD, usually current head while fetching), as
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0pull =3D master:origin:merger
+On Sun, 30 Apr 2006 19:09:18 +0200 (CEST)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-Then lets take a simple case; we clone a new repo, and it has:
+> > Which head does git-pull then use to merge, all of them?
+> 
+> The first one.
 
-	[remote.origin]
-	  url =3D git://outthere.com
-	  fetch =3D master:origin:master
-	  fetch =3D next:next
+Which can be confusing since you can only specify one "first one"
+in a remotes file (or .git/config)  yet you can pull while 
+having any random local branch being checkout out, each with
+a different merge branch being appropriate.
 
-And we create two new branches:
+> You are right. But you are also wrong. The patch uses
+> 
+> 	git-repo-config --get remote.$nick.url
+> 
+> which fails if there are more than one matching line. Note that 
+> "--get-all" is used to get _all_ remote.$nick.pull lines...
+> 
+> But of course, Linus "built git-push in" so that multiple urls are 
+> allowed and handled. It is probably confusing, if you can push but 
+> cannot fetch with the same remote information... But then, I fail to see 
+> how you could possibly specify the refspecs for the different urls.
 
-	git branch br1 next ; git branch br2 next
+Yeah, I was speaking only of git push, but see you were speaking of 
+fetch.
 
-Now say that we want a bare "git pull" to cause a merge from=20
-the "next" branch regardless of which new branch we have checked
-out.   In the above scheme we have to do something like:
+Anyway, thanks for helping me understand your proposal, it seems
+flexible enough to handle just about any case one might want to
+throw at it.
 
-	   fetch =3D next:next:br1:br2
-
-That doesn't look right.  It seems better to have:
-=09
-	[branch.origin]
-		description =3D "Pristine master from Junio"
-	[branch.br1]
-		description =3D "blah"
-		defaultMerge =3D "next"
-	[branch.br2]
-		description =3D "More blah"
-		LastMerge =3D 03/27/2008 3am
-		defaultMerge =3D "next"
-		qgitTagColor =3D Blue
-
-> The --store option is similar to using 'git checkout -b newbranch' as=
- a
-> shortcut for 'git branch newbranch' followed by 'git checkout newbran=
-ch'.
-
-Okay.
-
+Cheers,
 Sean
