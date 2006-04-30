@@ -1,60 +1,65 @@
-From: sean <seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] git builtin "push"
-Date: Sun, 30 Apr 2006 16:50:28 -0400
-Message-ID: <BAYC1-PASMTP037751CEC096DA29400513AEB00@CEZ.ICE>
-References: <Pine.LNX.4.64.0604292111570.9901@g5.osdl.org>
-	<445516F5.1090204@garzik.org>
-	<Pine.LNX.4.64.0604301303010.5231@g5.osdl.org>
+Date: Sun, 30 Apr 2006 14:05:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0604301405070.2922@g5.osdl.org>
+References: <Pine.LNX.4.64.0604292111570.9901@g5.osdl.org> <445516F5.1090204@garzik.org>
+ <Pine.LNX.4.64.0604301303010.5231@g5.osdl.org> <BAYC1-PASMTP037751CEC096DA29400513AEB00@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: jeff@garzik.org, junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 30 22:55:35 2006
+X-From: git-owner@vger.kernel.org Sun Apr 30 23:06:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaIwm-00079V-Ox
-	for gcvg-git@gmane.org; Sun, 30 Apr 2006 22:55:17 +0200
+	id 1FaJ7w-0000ao-NH
+	for gcvg-git@gmane.org; Sun, 30 Apr 2006 23:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751217AbWD3UzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Apr 2006 16:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbWD3UzI
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 16:55:08 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:65513 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751217AbWD3UzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Apr 2006 16:55:07 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 30 Apr 2006 13:55:06 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 46338644C28;
-	Sun, 30 Apr 2006 16:55:05 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060430165028.215d4fdf.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0604301303010.5231@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 30 Apr 2006 20:55:06.0562 (UTC) FILETIME=[5C46F220:01C66C98]
+	id S1751219AbWD3VGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 17:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWD3VGe
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 17:06:34 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:43974 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751219AbWD3VGd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Apr 2006 17:06:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k3UL5ZtH019745
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 30 Apr 2006 14:05:35 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k3UL5XSv011030;
+	Sun, 30 Apr 2006 14:05:34 -0700
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP037751CEC096DA29400513AEB00@CEZ.ICE>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19356>
 
-On Sun, 30 Apr 2006 13:07:42 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
 
-> The way it works is that
+
+On Sun, 30 Apr 2006, sean wrote:
+
+> On Sun, 30 Apr 2006 13:07:42 -0700 (PDT)
+> Linus Torvalds <torvalds@osdl.org> wrote:
 > 
-> 	"git push repo"
+> > The way it works is that
+> > 
+> > 	"git push repo"
+> > 
+> > with no branch specs will update all branches that are IN COMMON between 
+> > your tree and the repository you're pushing to. In other words, it's meant 
+> > to sync up the branches that you have already pushed.
 > 
-> with no branch specs will update all branches that are IN COMMON between 
-> your tree and the repository you're pushing to. In other words, it's meant 
-> to sync up the branches that you have already pushed.
+> True, as long as you don't have any Push: lines in your .git/remotes/repo
+> file.  Any such lines act just like you gave them on the command line
+> which afaik effectively removes the ability to say "update all branches
+> we have in common".
 
-True, as long as you don't have any Push: lines in your .git/remotes/repo
-file.  Any such lines act just like you gave them on the command line
-which afaik effectively removes the ability to say "update all branches
-we have in common".
+Ok, so my built-in version "fixes" that "feature". 
 
-Sean
+		Linus
