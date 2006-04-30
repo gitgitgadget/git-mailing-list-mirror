@@ -1,107 +1,144 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Fwd: More qgit defects 2/2
-Date: Sun, 30 Apr 2006 10:19:58 +0200
-Message-ID: <e5bfff550604300119s7afe7b0p1e808b85cab43f81@mail.gmail.com>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] git builtin "push"
+Date: Sun, 30 Apr 2006 05:40:49 -0400
+Message-ID: <BAYC1-PASMTP011ED54A1802BC6DF017AAAEB00@CEZ.ICE>
+References: <Pine.LNX.4.64.0604292111570.9901@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Apr 30 10:20:02 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 30 11:45:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fa79t-0001IB-Mi
-	for gcvg-git@gmane.org; Sun, 30 Apr 2006 10:20:02 +0200
+	id 1Fa8Uc-0004qL-6Q
+	for gcvg-git@gmane.org; Sun, 30 Apr 2006 11:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbWD3IT7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Apr 2006 04:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbWD3IT7
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 04:19:59 -0400
-Received: from wproxy.gmail.com ([64.233.184.229]:62994 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751053AbWD3IT6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Apr 2006 04:19:58 -0400
-Received: by wproxy.gmail.com with SMTP id 58so393061wri
-        for <git@vger.kernel.org>; Sun, 30 Apr 2006 01:19:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=M4KpIylAu7lUw9Ii/0zcBSgcgSSiZF3c2nXuK80P2s+RpyTh6rJO7G2yUpe+TM7VdIMxbG9HA55+D+VRLNf6CRfrNOtXpZ4Bf/oVJtMqrvfJEKM4dI6DqrjJXRnuQy0+ehq+2UALkXC6DuPBse866+KR88bB6tuv4RWySBVln1g=
-Received: by 10.64.178.16 with SMTP id a16mr1745677qbf;
-        Sun, 30 Apr 2006 01:19:58 -0700 (PDT)
-Received: by 10.65.163.11 with HTTP; Sun, 30 Apr 2006 01:19:58 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751084AbWD3Jp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 05:45:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbWD3Jp1
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 05:45:27 -0400
+Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:54462 "EHLO
+	BAYC1-PASMTP01.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S1751084AbWD3Jp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Apr 2006 05:45:26 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 30 Apr 2006 02:45:26 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id B2F6C644C28;
+	Sun, 30 Apr 2006 05:45:24 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Message-Id: <20060430054049.7856f24c.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.64.0604292111570.9901@g5.osdl.org>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 30 Apr 2006 09:45:26.0596 (UTC) FILETIME=[CF26B040:01C66C3A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19331>
 
-I would like to forward this thread to the list in case someone find
-it interesting and/or suggests improvements.
+On Sat, 29 Apr 2006 21:22:49 -0700 (PDT)
+Linus Torvalds <torvalds@osdl.org> wrote:
 
----------- Forwarded message ----------
-From: Marco Costalba <mcostalba@gmail.com>
-Date: Apr 30, 2006 10:11 AM
-Subject: Re: More qgit defects
-To: Pavel Roskin <proski@gnu.org>
-Cc: ydirson@altern.org
+> Comments?  I wrote it so that it _should_ be fairly easy to re-use at 
+> least the branches/remotes helper functions for a built-in "git fetch" as 
+> well. But I didn't have the multi-URI issue with anything but pushing.
 
 
-Hi Pavel,
->
-> I think the list items in the file window need a pop-up menu.  Without
-> it, the users would not be able to discover what e.g. the double click
-> would do.
->
+> +	if (strncmp(ref, "tags/", 5))
+> +		return 0;
+[...]
+> +	for_each_ref(expand_one_ref);
 
-yes, I agree.
+How about a for_each_tag() function?
 
-> More generally, I feel that something is wrong with the user interface.
-> I think gitk is doing it better with a single pane that has the comments
-> and the diff.  Splitting the window horizontally in three panes seems to
-> be too much, especially when one of the panes is used for diffs.
->
 
-Please Pavel pull from latest qgit repo. I just pushed a patch that,
-at least for my
-browsing style, fixes this and IMHO is better then gitk.
+> +	int i, n = get_uri(repo, uri);
+[...]
+> +	n = get_uri(repo, uri);
+> +	if (n <= 0)
+> +		die("bad repository '%s'", repo);
 
-Patch description is as follow:
-"Usability enhancement: use 'P' key to quick toggle patch viewer
+get_uri() called twice.
 
-   One of the limitation of patch browsing in qgit is the use of two
-   frames, one for revision logs and the other for patch viewer.
 
-   If patch viewer is docked the space is normally limited by revision
-   log frame. If patch viewer is undocked it is always at top level and
-   hides main view and revision logs.
+The patch looks good and is easy to read, but wouldn't it be better
+to require new c code to be thread safe and not leak memory?  Assuming
+run-once-and-exit is making it difficult to push into a library.
 
-   So this patch adds a new key binding 'P' that hides/unhides diff
-   viewer window.
+Sean
 
-   The intended use is simple: open patch viewer and undock it so to cover
-   a good chunk of screen space, then press 'P' key and diff viewer will
-   disappear.
+builtin-push.c |   11 +++--------
+refs.c         |    5 +++++
+refs.h         |    1 +
+3 files changed, 9 insertions(+), 8 deletions(-)
 
-   Now you can browse the revisions as usual and toggle diff viewer with 'P'
-   key so to easily view both logs and patches without any space constrains.
-"
-
-After a little bit of using I have found this way very natural, quick
-and, especially important for me, do not compromise patch view size.
-
-What I do is to size the undocked patch viewer on my left screen, and
-toggle the P key, but other adjustment are possible, see:
-
-http://digilander.libero.it/mcostalba/qgit_P_1.png
-http://digilander.libero.it/mcostalba/qgit_P_2.png
-
-Tip: let your mouse be always over main list view so that patch view
-does not steal the focus and you can browse only with keyboard arrows
-as well with new key bindings (see F1).
-
-Let me know what you think.
-
-               Marco
+0e0e3cff71d65ac4cdc560ae143aded03acb4ceb
+diff --git a/builtin-push.c b/builtin-push.c
+index a0c1caa..0d74ed1 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -31,10 +31,6 @@ static int expand_one_ref(const char *re
+ {
+ 	/* Ignore the "refs/" at the beginning of the refname */
+ 	ref += 5;
+-
+-	if (strncmp(ref, "tags/", 5))
+-		return 0;
+-
+ 	add_refspec(strdup(ref));
+ 	return 0;
+ }
+@@ -51,9 +47,8 @@ static void expand_refspecs(void)
+ 		 */
+ 		return;
+ 	}
+-	if (!tags)
+-		return;
+-	for_each_ref(expand_one_ref);
++	if (tags)
++		for_each_tag(expand_one_ref);
+ }
+ 
+ static void set_refspecs(const char **refs, int nr)
+@@ -156,7 +151,7 @@ static int get_uri(const char *repo, con
+ static int do_push(const char *repo)
+ {
+ 	const char *uri[MAX_URI];
+-	int i, n = get_uri(repo, uri);
++	int i, n;
+ 	int remote;
+ 	const char **argv;
+ 	int argc;
+diff --git a/refs.c b/refs.c
+index 03398cc..c5a2dd0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -178,6 +178,11 @@ int head_ref(int (*fn)(const char *path,
+ 	return 0;
+ }
+ 
++int for_each_tag(int (*fn)(const char *path, const unsigned char *sha1))
++{
++	return do_for_each_ref("refs/tags", fn);
++}
++
+ int for_each_ref(int (*fn)(const char *path, const unsigned char *sha1))
+ {
+ 	return do_for_each_ref("refs", fn);
+diff --git a/refs.h b/refs.h
+index 2625596..b74cd4d 100644
+--- a/refs.h
++++ b/refs.h
+@@ -7,6 +7,7 @@ #define REFS_H
+  */
+ extern int head_ref(int (*fn)(const char *path, const unsigned char *sha1));
+ extern int for_each_ref(int (*fn)(const char *path, const unsigned char *sha1));
++extern int for_each_tag(int (*fn)(const char *path, const unsigned char *sha1));
+ 
+ /** Reads the refs file specified into sha1 **/
+ extern int get_ref_sha1(const char *ref, unsigned char *sha1);
+-- 
+1.3.1.g9c203
