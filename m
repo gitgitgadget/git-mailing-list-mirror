@@ -1,78 +1,111 @@
-From: Sam Vilain <sam@vilain.net>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
-Date: Mon, 01 May 2006 12:05:24 +1200
-Message-ID: <445550C4.5020800@vilain.net>
-References: <20060429165151.2570.qmail@science.horizon.com>	<e30b48$ovk$1@sea.gmane.org> <7viros1585.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 30 Apr 2006 17:50:02 -0700
+Message-ID: <7v8xpmva9x.fsf@assigned-by-dhcp.cox.net>
+References: <20060429165151.2570.qmail@science.horizon.com>
+	<e30b48$ovk$1@sea.gmane.org> <7viros1585.fsf@assigned-by-dhcp.cox.net>
+	<e30k0n$ij5$1@sea.gmane.org> <e32kkf$amc$1@sea.gmane.org>
+	<7vfyjuwt0v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 01 02:05:58 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 01 02:50:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaLv7-0000S9-9W
-	for gcvg-git@gmane.org; Mon, 01 May 2006 02:05:46 +0200
+	id 1FaMc5-0001sn-27
+	for gcvg-git@gmane.org; Mon, 01 May 2006 02:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbWEAAFm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Apr 2006 20:05:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbWEAAFm
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 20:05:42 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:50310 "EHLO
-	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S1750700AbWEAAFl
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Apr 2006 20:05:41 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id E16B3595A; Mon,  1 May 2006 12:05:34 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 2BB401C9B;
-	Mon,  1 May 2006 12:05:26 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7viros1585.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751244AbWEAAuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 20:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWEAAuF
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 20:50:05 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:17390 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751244AbWEAAuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Apr 2006 20:50:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060501005003.NOAW19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 30 Apr 2006 20:50:03 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <7vfyjuwt0v.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 30 Apr 2006 16:19:44 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19366>
 
-Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
->> * "prior" - heads that represent topic branch merges
->>    
->>
->
->This is not any different from usual "parent" at all (but you
->have to think about it a bit to realize it).
-> [...]
->Once you start reading the commit parent to mean " considering
->what all of these commits have, what this new commit has suits
->my purpose better", it becomes clear that the "previous" pointer
->for a branch like my "pu" is just another "parent".
->  
->
+> We can fast-forward if (1) you pulled from "pu" the last time,
+> and (2) you haven't added anything on top of it on your own, and
+> (3) you pull from "pu" again, if the previous "pu" (i.e. your
+> "pu") is a parent of the updated "pu".  We do not need "prior"
+> for that.  The old "pu" being _one_ _of_ the parents, not even
+> necessarily be the first one, would do just fine.
 
-How can you look back at the merge history and determine which of these
-scenarios is the case?
+This part may want a bit more elaboration.  
 
-It still looks like to me that you are recording two distinct types of
-parent using the same type of link.  You're now just expanding the
-definition of parent so they look to be the same.
+Often, we see in the Linus kernel tree a fast forward of his tip
+from a recent commit Linus made to bunch of networking commits
+made by David S Miller.  For example, Linus fast forwarded to
+18118c from David's tree before making this commit:
 
-Actually it might be alright if you have an extra merge commit object. 
-ie, make a complete merge of the new tips, then make a second merge that
-merges the two heads.  It's still a little bit of a research topic to
-look at that mess and figure out which type of relationship each parent
-actually is, but if you really want to decide that is that and done is
-done then I guess we'll all just have to live with it or fork.
+    commit 454ac778459bc70f0a9818a6a8fd974ced11de66
+    Merge: 18118cd... 301dc3e...
+    Author:     Linus Torvalds <torvalds@g5.osdl.org>
+    AuthorDate: Mon Apr 24 20:08:08 2006 -0700
+    Commit:     Linus Torvalds <torvalds@g5.osdl.org>
+    CommitDate: Mon Apr 24 20:08:08 2006 -0700
 
-Sam.
+The first parent of this commit is one not made by Linus; that
+is how we can tell he fast forwarded.  We cannot easily tell
+where the tip of Linus tree was before he made this fast forward
+(it is not recorded anywhere), but if we look at 18118c commit:
+
+    commit 18118cdbfd1f855e09ee511d764d6c9df3d4f952
+    Author:     Patrick McHardy <kaber@trash.net>
+    AuthorDate: Mon Apr 24 17:18:59 2006 -0700
+    Commit:     David S. Miller <davem@sunset.davemloft.net>
+    CommitDate: Mon Apr 24 17:27:34 2006 -0700
+
+        [NETFILTER]: ipt action: use xt_check_target for basic verification
+
+we could sort-of make a guess, by looking at merge-base of
+18118c and 301dc3.  By looking at
+
+	gitk 6b426e..18118c 454ac7
+
+we can tell that David "forked" from Linus at 6b426e commit.
+
+What does it mean for Linus to fast-forward to the tip of David?
+Earlier I said that each branch has a purpose, and replacing the
+current tip commit of the branch with another commit is a
+statement by the repository owner that the new commit suits the
+purpose of the branch better.
+
+To David, the commits he has in the chain between 6b426e to
+18118c obviously suited the purpose of his tree better, and that
+was why these commits were made.  And the fact Linus fast
+forwarded to the tip of David is an implicit statement by Linus
+that that results suits the purpose of Linus tree better as well
+compared to his old tip, presumably 6b426e.
+
+Earlier I suggested (or at least may have sounded as if I was
+suggesting) that not recording that statement in fast-forward
+situation was a bad thing, but that is not necessarily so.
+Having 18118c commit as part of the history that leads to the
+tip is enough as such a statement by Linus.
+
+Now, David's tree has a tendency to be extra clean (no merges
+but straight commits on top of then-current tip of Linus), but
+if he had his own merge from Linus's tree, such a commit would
+have had a commit from Linus tree as its second parent.  If
+Linus tip remained at that "second parent" commit until David is
+done and asked Linus to pull, it would result in a fast forward
+via non-first-parent ancestry.  But even if that happened, the
+above discussion still applies.
