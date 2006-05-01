@@ -1,199 +1,265 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] builtin-grep: wildcard pathspec fixes
-Date: Mon, 01 May 2006 12:30:36 -0700
-Message-ID: <7v64kpsftv.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7v1wvetfuj.fsf@assigned-by-dhcp.cox.net>
-	<20060501140410.GA3505@mars.ravnborg.org>
-	<20060501140704.GA6096@mars.ravnborg.org>
-	<20060501145328.GA14856@mars.ravnborg.org>
-	<Pine.LNX.4.64.0605010842130.21189@g5.osdl.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] Transitively read alternatives
+Date: Mon, 1 May 2006 22:36:33 +0200
+Message-ID: <20060501203631.GH20847@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 01 21:30:51 2006
+X-From: git-owner@vger.kernel.org Mon May 01 22:36:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fae6W-0001lF-Og
-	for gcvg-git@gmane.org; Mon, 01 May 2006 21:30:45 +0200
+	id 1Faf8I-0003c4-QG
+	for gcvg-git@gmane.org; Mon, 01 May 2006 22:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbWEATai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 May 2006 15:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWEATai
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 May 2006 15:30:38 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:5053 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932199AbWEATah (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 May 2006 15:30:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060501193036.IQKD18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 1 May 2006 15:30:36 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605010842130.21189@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 1 May 2006 08:48:44 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932233AbWEAUgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 May 2006 16:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbWEAUgf
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 May 2006 16:36:35 -0400
+Received: from admingilde.org ([213.95.32.146]:16356 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S932233AbWEAUgf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 May 2006 16:36:35 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Faf8D-0004R4-Rp
+	for git@vger.kernel.org; Mon, 01 May 2006 22:36:33 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19386>
 
-This tweaks the pathspec wildcard used in builtin-grep to match
-that of ls-files.  With this:
+When adding an alternate object store then add entries from its
+info/alternates files, too.
 
-	git grep -e DEBUG -- '*/Kconfig*'
+Signed-off-by: Martin Waitz <tali@admingilde.org>
 
-would work like the shell script version, and you could even do:
-
-	git grep -e DEBUG --cached -- '*/Kconfig*' ;# from index
-	git grep -e DEBUG v2.6.12 -- '*/Kconfig*' ;# from rev
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- * Still haven't improved the "-e" issue (and to a lesser extent
-   I think requiring -- is not right in this context either), but
+ sha1_file.c |  165 +++++++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 93 insertions(+), 72 deletions(-)
 
- builtin-grep.c |   85 +++++++++++++++++++++++++++++++++++++++++---------------
- 1 files changed, 62 insertions(+), 23 deletions(-)
-
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 36150bf..653b65e 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -12,33 +12,66 @@ #include "diff.h"
- #include "revision.h"
- #include "builtin.h"
- #include <regex.h>
-+#include <fnmatch.h>
+7fabfb214a971b8b45ec36dcf47929f4bf0917eb
+diff --git a/sha1_file.c b/sha1_file.c
+index f2d33af..ff9c989 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -216,6 +216,8 @@ char *sha1_pack_index_name(const unsigne
+ struct alternate_object_database *alt_odb_list;
+ static struct alternate_object_database **alt_odb_tail;
  
-+/*
-+ * git grep pathspecs are somewhat different from diff-tree pathspecs;
-+ * pathname wildcards are allowed.
-+ */
- static int pathspec_matches(struct diff_options *opt, const char *name)
++static void read_info_alternates(const char * alternates);
++
+ /*
+  * Prepare alternate object database registry.
+  *
+@@ -231,13 +233,77 @@ static struct alternate_object_database 
+  * SHA1, an extra slash for the first level indirection, and the
+  * terminating NUL.
+  */
++static int link_alt_odb_entry(const char * entry, int len, const char * relative_base)
++{
++	struct stat st;
++	const char *objdir = get_object_directory();
++	struct alternate_object_database *ent;
++	struct alternate_object_database *alt;
++	/* 43 = 40-byte + 2 '/' + terminating NUL */
++	int pfxlen = len;
++	int entlen = pfxlen + 43;
++	int base_len = -1;
++
++	if (*entry != '/' && relative_base) {
++		/* Relative alt-odb */
++		if (base_len < 0)
++			base_len = strlen(relative_base) + 1;
++		entlen += base_len;
++		pfxlen += base_len;
++	}
++	ent = xmalloc(sizeof(*ent) + entlen);
++
++	if (*entry != '/' && relative_base) {
++		memcpy(ent->base, relative_base, base_len - 1);
++		ent->base[base_len - 1] = '/';
++		memcpy(ent->base + base_len, entry, len);
++	}
++	else
++		memcpy(ent->base, entry, pfxlen);
++
++	ent->name = ent->base + pfxlen + 1;
++	ent->base[pfxlen + 3] = '/';
++	ent->base[pfxlen] = ent->base[entlen-1] = 0;
++
++	/* Detect cases where alternate disappeared */
++	if (stat(ent->base, &st) || !S_ISDIR(st.st_mode)) {
++		error("object directory %s does not exist; "
++		      "check .git/objects/info/alternates.",
++		      ent->base);
++		free(ent);
++		return -1;
++	}
++
++	/* Prevent the common mistake of listing the same
++	 * thing twice, or object directory itself.
++	 */
++	for (alt = alt_odb_list; alt; alt = alt->next)
++		if (!memcmp(ent->base, alt->base, pfxlen)) {
++			free(ent);
++			return -1;
++		}
++	if (!memcmp(ent->base, objdir, pfxlen)) {
++		free(ent);
++		return -1;
++	}
++
++	/* recursively add alternates */
++	read_info_alternates(ent->base);
++
++	ent->base[pfxlen] = '/';
++
++	/* add the alternate entry */
++	*alt_odb_tail = ent;
++	alt_odb_tail = &(ent->next);
++	ent->next = NULL;
++
++	return 0;
++}
++
+ static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
+ 				 const char *relative_base)
  {
--	int i, j;
--	int namelen;
-+	int namelen, i;
- 	if (!opt->nr_paths)
- 		return 1;
- 	namelen = strlen(name);
- 	for (i = 0; i < opt->nr_paths; i++) {
- 		const char *match = opt->paths[i];
- 		int matchlen = opt->pathlens[i];
--		if (matchlen <= namelen) {
--			if (!strncmp(name, match, matchlen))
--				return 1;
-+		const char *slash, *cp;
-+
-+		if ((matchlen <= namelen) &&
-+		    !strncmp(name, match, matchlen) &&
-+		    (match[matchlen-1] == '/' ||
-+		     name[matchlen] == '\0' || name[matchlen] == '/'))
-+			return 1;
-+		if (!fnmatch(match, name, 0))
-+			return 1;
-+		if (name[namelen-1] != '/')
+ 	const char *cp, *last;
+-	struct alternate_object_database *ent;
+-	const char *objdir = get_object_directory();
+-	int base_len = -1;
+ 
+ 	last = alt;
+ 	while (last < ep) {
+@@ -248,61 +314,10 @@ static void link_alt_odb_entries(const c
+ 			last = cp + 1;
  			continue;
--		}
--		/* If name is "Documentation" and pathspec is
--		 * "Documentation/", they should match.  Maybe
--		 * we would want to strip it in get_pathspec()???
-+
-+		/* We are being asked if the name directory is worth
-+		 * descending into.
-+		 *
-+		 * Find the longest leading directory name that does
-+		 * not have metacharacter in the pathspec; the name
-+		 * we are looking at must overlap with that directory.
- 		 */
--		if (strncmp(name, match, namelen))
--			continue;
--		for (j = namelen; j < matchlen; j++)
--			if (match[j] != '/')
-+		for (cp = match, slash = NULL; cp - match < matchlen; cp++) {
-+			char ch = *cp;
-+			if (ch == '/')
-+				slash = cp;
-+			if (ch == '*' || ch == '[')
- 				break;
--		if (matchlen <= j)
--			return 1;
-+		}
-+		if (!slash)
-+			slash = match; /* toplevel */
-+		else
-+			slash++;
-+		if (namelen <= slash - match) {
-+			/* Looking at "Documentation/" and
-+			 * the pattern says "Documentation/howto/", or
-+			 * "Documentation/diff*.txt".
-+			 */
-+			if (!memcmp(match, name, namelen))
-+				return 1;
-+		}
-+		else {
-+			/* Looking at "Documentation/howto/" and
-+			 * the pattern says "Documentation/h*".
-+			 */
-+			if (!memcmp(match, name, slash - match))
-+				return 1;
-+		}
- 	}
- 	return 0;
- }
-@@ -232,17 +265,17 @@ static int grep_tree(struct grep_opt *op
- 	int hit = 0;
- 	const char *path;
- 	const unsigned char *sha1;
--	char *down_base;
-+	char *down;
- 	char *path_buf = xmalloc(PATH_MAX + strlen(tree_name) + 100);
- 
- 	if (tree_name[0]) {
- 		int offset = sprintf(path_buf, "%s:", tree_name);
--		down_base = path_buf + offset;
--		strcat(down_base, base);
-+		down = path_buf + offset;
-+		strcat(down, base);
- 	}
- 	else {
--		down_base = path_buf;
--		strcpy(down_base, base);
-+		down = path_buf;
-+		strcpy(down, base);
- 	}
- 	len = strlen(path_buf);
- 
-@@ -252,7 +285,14 @@ static int grep_tree(struct grep_opt *op
- 		pathlen = strlen(path);
- 		strcpy(path_buf + len, path);
- 
--		if (!pathspec_matches(&revs->diffopt, down_base))
-+		if (S_ISDIR(mode))
-+			/* Match "abc/" against pathspec to
-+			 * decide if we want to descend into "abc"
-+			 * directory.
-+			 */
-+			strcpy(path_buf + len + pathlen, "/");
-+
-+		if (!pathspec_matches(&revs->diffopt, down))
- 			;
- 		else if (S_ISREG(mode))
- 			hit |= grep_sha1(opt, sha1, path_buf);
-@@ -264,9 +304,8 @@ static int grep_tree(struct grep_opt *op
- 			if (!data)
- 				die("unable to read tree (%s)",
- 				    sha1_to_hex(sha1));
--			strcpy(path_buf + len + pathlen, "/");
- 			sub.buf = data;
--			hit = grep_tree(opt, revs, &sub, tree_name, down_base);
-+			hit |= grep_tree(opt, revs, &sub, tree_name, down);
- 			free(data);
  		}
- 		update_tree_entry(tree);
+-		for ( ; cp < ep && *cp != sep; cp++)
+-			;
++		while (cp < ep && *cp != sep)
++			cp++;
+ 		if (last != cp) {
+-			struct stat st;
+-			struct alternate_object_database *alt;
+-			/* 43 = 40-byte + 2 '/' + terminating NUL */
+-			int pfxlen = cp - last;
+-			int entlen = pfxlen + 43;
+-
+-			if (*last != '/' && relative_base) {
+-				/* Relative alt-odb */
+-				if (base_len < 0)
+-					base_len = strlen(relative_base) + 1;
+-				entlen += base_len;
+-				pfxlen += base_len;
+-			}
+-			ent = xmalloc(sizeof(*ent) + entlen);
+-
+-			if (*last != '/' && relative_base) {
+-				memcpy(ent->base, relative_base, base_len - 1);
+-				ent->base[base_len - 1] = '/';
+-				memcpy(ent->base + base_len,
+-				       last, cp - last);
+-			}
+-			else
+-				memcpy(ent->base, last, pfxlen);
+-
+-			ent->name = ent->base + pfxlen + 1;
+-			ent->base[pfxlen + 3] = '/';
+-			ent->base[pfxlen] = ent->base[entlen-1] = 0;
+-
+-			/* Detect cases where alternate disappeared */
+-			if (stat(ent->base, &st) || !S_ISDIR(st.st_mode)) {
+-				error("object directory %s does not exist; "
+-				      "check .git/objects/info/alternates.",
+-				      ent->base);
+-				goto bad;
+-			}
+-			ent->base[pfxlen] = '/';
+-
+-			/* Prevent the common mistake of listing the same
+-			 * thing twice, or object directory itself.
+-			 */
+-			for (alt = alt_odb_list; alt; alt = alt->next)
+-				if (!memcmp(ent->base, alt->base, pfxlen))
+-					goto bad;
+-			if (!memcmp(ent->base, objdir, pfxlen)) {
+-			bad:
+-				free(ent);
+-			}
+-			else {
+-				*alt_odb_tail = ent;
+-				alt_odb_tail = &(ent->next);
+-				ent->next = NULL;
+-			}
++			link_alt_odb_entry(last, cp - last, relative_base);
+ 		}
+ 		while (cp < ep && *cp == sep)
+ 			cp++;
+@@ -310,23 +325,14 @@ static void link_alt_odb_entries(const c
+ 	}
+ }
+ 
+-void prepare_alt_odb(void)
++static void read_info_alternates(const char * relative_base)
+ {
+-	char path[PATH_MAX];
+ 	char *map;
+-	int fd;
+ 	struct stat st;
+-	char *alt;
+-
+-	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
+-	if (!alt) alt = "";
+-
+-	if (alt_odb_tail)
+-		return;
+-	alt_odb_tail = &alt_odb_list;
+-	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL);
++	char path[PATH_MAX];
++	int fd;
+ 
+-	sprintf(path, "%s/info/alternates", get_object_directory());
++	sprintf(path, "%s/info/alternates", relative_base);
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+ 		return;
+@@ -339,11 +345,26 @@ void prepare_alt_odb(void)
+ 	if (map == MAP_FAILED)
+ 		return;
+ 
+-	link_alt_odb_entries(map, map + st.st_size, '\n',
+-			     get_object_directory());
++	link_alt_odb_entries(map, map + st.st_size, '\n', relative_base);
++
+ 	munmap(map, st.st_size);
+ }
+ 
++void prepare_alt_odb(void)
++{
++	char *alt;
++
++	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
++	if (!alt) alt = "";
++
++	if (alt_odb_tail)
++		return;
++	alt_odb_tail = &alt_odb_list;
++	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL);
++
++	read_info_alternates(get_object_directory());
++}
++
+ static char *find_sha1_file(const unsigned char *sha1, struct stat *st)
+ {
+ 	char *name = sha1_file_name(sha1);
 -- 
-1.3.1.gd233
+1.3.1.gc585-dirty
+
+-- 
+Martin Waitz
