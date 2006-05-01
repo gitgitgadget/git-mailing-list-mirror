@@ -1,80 +1,92 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
-Date: Mon, 01 May 2006 13:25:30 +1200
-Message-ID: <4455638A.3070802@vilain.net>
-References: <20060429165151.2570.qmail@science.horizon.com>	<e30b48$ovk$1@sea.gmane.org> <7viros1585.fsf@assigned-by-dhcp.cox.net>	<e30k0n$ij5$1@sea.gmane.org> <e32kkf$amc$1@sea.gmane.org>	<7vfyjuwt0v.fsf@assigned-by-dhcp.cox.net> <7v8xpmva9x.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: More qgit defects
+Date: Sun, 30 Apr 2006 22:20:35 -0400
+Message-ID: <1146450035.7879.26.camel@dv>
+References: <1145484284.22097.10.camel@dv>
+	 <e5bfff550604220416v592128fcj25185bbda3b4e493@mail.gmail.com>
+	 <1146115210.30763.40.camel@dv>
+	 <e5bfff550604270026q68ba8a4clfaf1b274a5b312cf@mail.gmail.com>
+	 <1146163863.5133.37.camel@dv>
+	 <e5bfff550604281021k60e0c0ebk7a89eb0c9c569c2a@mail.gmail.com>
+	 <1146383451.12323.41.camel@dv>
+	 <e5bfff550604300111n6db883d5w98c863efaab15b00@mail.gmail.com>
+	 <1146389204.12323.90.camel@dv> <1146390144.13634.9.camel@dv>
+	 <e5bfff550604300313n5ebe84f7nf42c88789efe1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 01 03:26:08 2006
+Cc: ydirson@altern.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 01 04:20:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaNAo-000461-0t
-	for gcvg-git@gmane.org; Mon, 01 May 2006 03:26:02 +0200
+	id 1FaO1y-0004Gf-3x
+	for gcvg-git@gmane.org; Mon, 01 May 2006 04:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750868AbWEABZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Apr 2006 21:25:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750867AbWEABZy
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 21:25:54 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52870 "EHLO
-	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S1750793AbWEABZx
+	id S1750702AbWEACUq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Apr 2006 22:20:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWEACUq
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Apr 2006 22:20:46 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:10402 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750702AbWEACUq
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Apr 2006 21:25:53 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 83CCE5968; Mon,  1 May 2006 13:25:42 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id AEC441C04;
-	Mon,  1 May 2006 13:25:31 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xpmva9x.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	Sun, 30 Apr 2006 22:20:46 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FaO1k-0000sN-P9
+	for git@vger.kernel.org; Sun, 30 Apr 2006 22:20:44 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.61)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FaO1b-0002ff-O5; Sun, 30 Apr 2006 22:20:35 -0400
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550604300313n5ebe84f7nf42c88789efe1@mail.gmail.com>
+X-Mailer: Evolution 2.6.1 (2.6.1-1.fc5.2) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19369>
 
-Junio C Hamano wrote:
+Hello, Marco!
 
->>We can fast-forward if (1) you pulled from "pu" the last time,
->>and (2) you haven't added anything on top of it on your own, and
->>(3) you pull from "pu" again, if the previous "pu" (i.e. your
->>"pu") is a parent of the updated "pu".  We do not need "prior"
->>for that.  The old "pu" being _one_ _of_ the parents, not even
->>necessarily be the first one, would do just fine.
->>    
->>
->
->This part may want a bit more elaboration.  
->
->Often, we see in the Linus kernel tree a fast forward of his tip
->from a recent commit Linus made to bunch of networking commits
->made by David S Miller.  For example, Linus fast forwarded to
->18118c from David's tree before making this commit:
-> [...]
->To David, the commits he has in the chain between 6b426e to
->18118c obviously suited the purpose of his tree better, and that
->was why these commits were made.  And the fact Linus fast
->forwarded to the tip of David is an implicit statement by Linus
->that that results suits the purpose of Linus tree better as well
->compared to his old tip, presumably 6b426e.
->  
->
+On Sun, 2006-04-30 at 12:13 +0200, Marco Costalba wrote:
+> Throwing in the tabs is a *very* big change, but, just to discuss....I
+> agree on the note that in qgit we have three different approaches:
+> fixed frames (revisions, file tree, affected files), detachable frames
+> (patch) and separate windows (annotations).
+> 
+> This is a bit strange and could give an odd GUI feeling.
 
-Aha, now I see reason in the madness. So, the "prior" head is not stored
-in the trees, and tracking the progress of actual head transitions is
-loosely defined / a research topic. But demonstrably derivable. That
-works for me.
+Agreed.
 
-Sam.
+> I like the tab idea because it's clear and simple and fixes the 'many
+> approaches' problem.
+
+I'm glad you liked my idea!  And thank you for copying to the list.
+qgit is meant for most git users, and they should have their voices
+heard.
+
+> What I would suggest is, at least at first step,
+> do not change the main view and have only three tabs:
+> 
+> Tab1: Main view with revisions, file tree (hide able), affected files.
+> Tab2: Patch view with patch stat and diffs
+> Tab3: File history + file content/annotation view
+
+Absolutely.  It's easier to make changes incrementally than to rewrite
+everything and hunt bugs for months.  This change alone would make it
+easier to work with qgit.
+
+Once qgit can deal with more than one patch view and more than one file
+view, this would provide the fix for qgit's "jumpiness".  Mere selection
+of objects in listboxes shouldn't affect other tabs.
+
+> In other words just put the frames/windows as are now in browse able
+> tabs. In this way main view still gives a good amount of information
+> without requiring changing the tab and the tabs are reserved for 'big
+> space' needed infos only.
+
+That would be great.  I'm eagerly waiting for new commits to test :-)
+
+-- 
+Regards,
+Pavel Roskin
