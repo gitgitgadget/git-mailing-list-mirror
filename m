@@ -1,265 +1,85 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH] Transitively read alternatives
-Date: Mon, 1 May 2006 22:36:33 +0200
-Message-ID: <20060501203631.GH20847@admingilde.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: cvsserver problem with eclipse?
+Date: Tue, 2 May 2006 08:38:45 +1200
+Message-ID: <46a038f90605011338i5498f857lf230d9a965aa759@mail.gmail.com>
+References: <4455B863.8040808@mobilereasoning.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 01 22:36:50 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 01 22:38:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Faf8I-0003c4-QG
-	for gcvg-git@gmane.org; Mon, 01 May 2006 22:36:39 +0200
+	id 1FafAP-00040m-Jr
+	for gcvg-git@gmane.org; Mon, 01 May 2006 22:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932233AbWEAUgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 May 2006 16:36:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbWEAUgf
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 May 2006 16:36:35 -0400
-Received: from admingilde.org ([213.95.32.146]:16356 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S932233AbWEAUgf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 May 2006 16:36:35 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Faf8D-0004R4-Rp
-	for git@vger.kernel.org; Mon, 01 May 2006 22:36:33 +0200
-To: git@vger.kernel.org
+	id S932237AbWEAUir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 May 2006 16:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932239AbWEAUiq
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 May 2006 16:38:46 -0400
+Received: from wproxy.gmail.com ([64.233.184.239]:20687 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932237AbWEAUiq convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 May 2006 16:38:46 -0400
+Received: by wproxy.gmail.com with SMTP id i21so2149859wra
+        for <git@vger.kernel.org>; Mon, 01 May 2006 13:38:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DEzStePGUcdR1rtr10N8hc9eKWoyh85Oer5GscfrCCidKiZlgfu0bkOQD0XYMmI2BJu4bW5TM3Zutfz2tLmkfqBPN1+vVeTnVX5kL2k5iU9YRSTDOI+n3ZAh7b/qH84DL6IXqmPXeqQdRgwjC6l6VCZ/6klik/do6cFKAa9T1A4=
+Received: by 10.54.127.13 with SMTP id z13mr1171984wrc;
+        Mon, 01 May 2006 13:38:45 -0700 (PDT)
+Received: by 10.54.127.4 with HTTP; Mon, 1 May 2006 13:38:45 -0700 (PDT)
+To: "Bill Burdick" <bill@mobilereasoning.com>
+In-Reply-To: <4455B863.8040808@mobilereasoning.com>
 Content-Disposition: inline
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19387>
 
-When adding an alternate object store then add entries from its
-info/alternates files, too.
+On 5/1/06, Bill Burdick <bill@mobilereasoning.com> wrote:
+> OK, I changed the way I was testing this to match your usage plan and I
+> still got the same results.  It works just fine for vanilla CVS; cvs
+> status shows the re revision in the repo and cvs update brings it in.
 
-Signed-off-by: Martin Waitz <tali@admingilde.org>
+That's a good start!
 
----
+> Eclipse has the same funky behavior: Compare with latest at the project
+> level shows no differences, but compare with latest on the changed file
+> actually does an update instead of popping up the Eclipse diff viewer.
 
- sha1_file.c |  165 +++++++++++++++++++++++++++++++++--------------------------
- 1 files changed, 93 insertions(+), 72 deletions(-)
+Hmmm. Eclipse does some weird funky sh*t sometimes. Can you ask it to
+get you a log? There's an option in Eclipse CVS control settings that
+will enable logging of cvs commands to the console. Enable it, and
+then start Eclipse from the commandline, piping stderr and stdout to a
+logfile.
 
-7fabfb214a971b8b45ec36dcf47929f4bf0917eb
-diff --git a/sha1_file.c b/sha1_file.c
-index f2d33af..ff9c989 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -216,6 +216,8 @@ char *sha1_pack_index_name(const unsigne
- struct alternate_object_database *alt_odb_list;
- static struct alternate_object_database **alt_odb_tail;
- 
-+static void read_info_alternates(const char * alternates);
-+
- /*
-  * Prepare alternate object database registry.
-  *
-@@ -231,13 +233,77 @@ static struct alternate_object_database 
-  * SHA1, an extra slash for the first level indirection, and the
-  * terminating NUL.
-  */
-+static int link_alt_odb_entry(const char * entry, int len, const char * relative_base)
-+{
-+	struct stat st;
-+	const char *objdir = get_object_directory();
-+	struct alternate_object_database *ent;
-+	struct alternate_object_database *alt;
-+	/* 43 = 40-byte + 2 '/' + terminating NUL */
-+	int pfxlen = len;
-+	int entlen = pfxlen + 43;
-+	int base_len = -1;
-+
-+	if (*entry != '/' && relative_base) {
-+		/* Relative alt-odb */
-+		if (base_len < 0)
-+			base_len = strlen(relative_base) + 1;
-+		entlen += base_len;
-+		pfxlen += base_len;
-+	}
-+	ent = xmalloc(sizeof(*ent) + entlen);
-+
-+	if (*entry != '/' && relative_base) {
-+		memcpy(ent->base, relative_base, base_len - 1);
-+		ent->base[base_len - 1] = '/';
-+		memcpy(ent->base + base_len, entry, len);
-+	}
-+	else
-+		memcpy(ent->base, entry, pfxlen);
-+
-+	ent->name = ent->base + pfxlen + 1;
-+	ent->base[pfxlen + 3] = '/';
-+	ent->base[pfxlen] = ent->base[entlen-1] = 0;
-+
-+	/* Detect cases where alternate disappeared */
-+	if (stat(ent->base, &st) || !S_ISDIR(st.st_mode)) {
-+		error("object directory %s does not exist; "
-+		      "check .git/objects/info/alternates.",
-+		      ent->base);
-+		free(ent);
-+		return -1;
-+	}
-+
-+	/* Prevent the common mistake of listing the same
-+	 * thing twice, or object directory itself.
-+	 */
-+	for (alt = alt_odb_list; alt; alt = alt->next)
-+		if (!memcmp(ent->base, alt->base, pfxlen)) {
-+			free(ent);
-+			return -1;
-+		}
-+	if (!memcmp(ent->base, objdir, pfxlen)) {
-+		free(ent);
-+		return -1;
-+	}
-+
-+	/* recursively add alternates */
-+	read_info_alternates(ent->base);
-+
-+	ent->base[pfxlen] = '/';
-+
-+	/* add the alternate entry */
-+	*alt_odb_tail = ent;
-+	alt_odb_tail = &(ent->next);
-+	ent->next = NULL;
-+
-+	return 0;
-+}
-+
- static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
- 				 const char *relative_base)
- {
- 	const char *cp, *last;
--	struct alternate_object_database *ent;
--	const char *objdir = get_object_directory();
--	int base_len = -1;
- 
- 	last = alt;
- 	while (last < ep) {
-@@ -248,61 +314,10 @@ static void link_alt_odb_entries(const c
- 			last = cp + 1;
- 			continue;
- 		}
--		for ( ; cp < ep && *cp != sep; cp++)
--			;
-+		while (cp < ep && *cp != sep)
-+			cp++;
- 		if (last != cp) {
--			struct stat st;
--			struct alternate_object_database *alt;
--			/* 43 = 40-byte + 2 '/' + terminating NUL */
--			int pfxlen = cp - last;
--			int entlen = pfxlen + 43;
--
--			if (*last != '/' && relative_base) {
--				/* Relative alt-odb */
--				if (base_len < 0)
--					base_len = strlen(relative_base) + 1;
--				entlen += base_len;
--				pfxlen += base_len;
--			}
--			ent = xmalloc(sizeof(*ent) + entlen);
--
--			if (*last != '/' && relative_base) {
--				memcpy(ent->base, relative_base, base_len - 1);
--				ent->base[base_len - 1] = '/';
--				memcpy(ent->base + base_len,
--				       last, cp - last);
--			}
--			else
--				memcpy(ent->base, last, pfxlen);
--
--			ent->name = ent->base + pfxlen + 1;
--			ent->base[pfxlen + 3] = '/';
--			ent->base[pfxlen] = ent->base[entlen-1] = 0;
--
--			/* Detect cases where alternate disappeared */
--			if (stat(ent->base, &st) || !S_ISDIR(st.st_mode)) {
--				error("object directory %s does not exist; "
--				      "check .git/objects/info/alternates.",
--				      ent->base);
--				goto bad;
--			}
--			ent->base[pfxlen] = '/';
--
--			/* Prevent the common mistake of listing the same
--			 * thing twice, or object directory itself.
--			 */
--			for (alt = alt_odb_list; alt; alt = alt->next)
--				if (!memcmp(ent->base, alt->base, pfxlen))
--					goto bad;
--			if (!memcmp(ent->base, objdir, pfxlen)) {
--			bad:
--				free(ent);
--			}
--			else {
--				*alt_odb_tail = ent;
--				alt_odb_tail = &(ent->next);
--				ent->next = NULL;
--			}
-+			link_alt_odb_entry(last, cp - last, relative_base);
- 		}
- 		while (cp < ep && *cp == sep)
- 			cp++;
-@@ -310,23 +325,14 @@ static void link_alt_odb_entries(const c
- 	}
- }
- 
--void prepare_alt_odb(void)
-+static void read_info_alternates(const char * relative_base)
- {
--	char path[PATH_MAX];
- 	char *map;
--	int fd;
- 	struct stat st;
--	char *alt;
--
--	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
--	if (!alt) alt = "";
--
--	if (alt_odb_tail)
--		return;
--	alt_odb_tail = &alt_odb_list;
--	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL);
-+	char path[PATH_MAX];
-+	int fd;
- 
--	sprintf(path, "%s/info/alternates", get_object_directory());
-+	sprintf(path, "%s/info/alternates", relative_base);
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		return;
-@@ -339,11 +345,26 @@ void prepare_alt_odb(void)
- 	if (map == MAP_FAILED)
- 		return;
- 
--	link_alt_odb_entries(map, map + st.st_size, '\n',
--			     get_object_directory());
-+	link_alt_odb_entries(map, map + st.st_size, '\n', relative_base);
-+
- 	munmap(map, st.st_size);
- }
- 
-+void prepare_alt_odb(void)
-+{
-+	char *alt;
-+
-+	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-+	if (!alt) alt = "";
-+
-+	if (alt_odb_tail)
-+		return;
-+	alt_odb_tail = &alt_odb_list;
-+	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL);
-+
-+	read_info_alternates(get_object_directory());
-+}
-+
- static char *find_sha1_file(const unsigned char *sha1, struct stat *st)
- {
- 	char *name = sha1_file_name(sha1);
--- 
-1.3.1.gc585-dirty
+There are also some weird differences depending on how you ask for the
+update or diff. I hate doing this but I'll have to ask you to tell me
+exactly how you ask for the diff and for the update.
 
--- 
-Martin Waitz
+And the platform you are running Eclipse on.
+
+> By the way, I had trouble at first accessing the repo with SSH because
+> of permissions on the sqlite db.  I'm not totally sure about the
+> implications for multiple users, but maybe just using a common group
+> will work fine?
+
+Yes, a common group is the thing to do.
+
+  $ chgrp gitusers *sqlite
+  $ chmod g+w *sqlite
+
+> I'm really happy with git and git-cvsserver!  I'm hoping to be able to
+> standardize on it for our Eclipse work.  It seems like it should be
+
+Great to hear that!
+
+cheers,
+
+
+
+martin
