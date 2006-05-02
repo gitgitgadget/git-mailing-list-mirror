@@ -1,172 +1,90 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH] gitweb: Add shorthand URLs for summary and a special html branch
-Date: Wed, 3 May 2006 01:25:23 +0200
-Message-ID: <20060502232523.GN20847@admingilde.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cache-tree: replace a sscanf() by two strtol() calls
+Date: Tue, 02 May 2006 16:26:18 -0700
+Message-ID: <7v1wvcknz9.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0605020327400.31493@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 03 01:25:31 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 01:26:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fb4FE-0000uX-MQ
-	for gcvg-git@gmane.org; Wed, 03 May 2006 01:25:29 +0200
+	id 1Fb4G6-00014D-NN
+	for gcvg-git@gmane.org; Wed, 03 May 2006 01:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750802AbWEBXZ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 19:25:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751006AbWEBXZ0
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 19:25:26 -0400
-Received: from admingilde.org ([213.95.32.146]:45195 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1750802AbWEBXZZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 19:25:25 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Fb4F9-0001un-FH
-	for git@vger.kernel.org; Wed, 03 May 2006 01:25:23 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1751006AbWEBX0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 19:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbWEBX0U
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 19:26:20 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:19189 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751006AbWEBX0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 19:26:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060502232619.KBPZ18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 2 May 2006 19:26:19 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19439>
 
-gitweb now supports URLs like .../gitweb.cgi/<projectpath> as a shortcut
-for the project summary page and .../gitweb.cgi/<projectpath>/<file.html>
-to access .html pages in an "html" branch.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Martin Waitz <tali@admingilde.org>
+> On one of my systems, sscanf() first calls strlen() on the buffer. But
+> this buffer is not terminated by NUL. So git crashed.
 
----
+Interesting.
 
- gitweb.cgi |   60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 56 insertions(+), 4 deletions(-)
+"git grep sscanf next -- '*.c'" reports handful sscanf() there.
+Most of them scan argv[], which are NUL terminated, so they
+should be OK.  The rest in convert-objects.c, tree-walk.c, and
+tree.c all scan the mode bits in tree objects, which will later
+have the pathname component terminated with NUL, so that would
+also be OK.
 
-05d0376478ccc273d12dbe177cf11c62c86ab848
-diff --git a/gitweb.cgi b/gitweb.cgi
-index c1bb624..959ca3e 100755
---- a/gitweb.cgi
-+++ b/gitweb.cgi
-@@ -20,6 +20,7 @@ my $cgi = new CGI;
- my $version =		"264";
- my $my_url =		$cgi->url();
- my $my_uri =		$cgi->url(-absolute => 1);
-+my $my_path =		$cgi->url(-path => 1);
- my $rss_link =		"";
+But I think your patch is wrong, and makes it ignore cache-tree
+structure; I suspect you have two off-by-one errors and are
+making buf and size out of sync.
+
+> 	Maybe, a better solution would be to store the integers in 
+> 	binary form. But I am not familiar with that part of git, and
+> 	further, it would break setups which already have an index
+> 	with cache-tree information.
+
+In theory, it is stashed in the extension section of index so we
+could define a new extension type, say "TRE2" and store the
+information in the new format.  But this is purely a cache used
+as optimiation, so we could just say, "make sure to save local
+modifications before doing an update, then run 'rm .git/index &&
+git-read-tree HEAD' please".
+
+I've applied a fixed up one, but I am actually thinking about
+ripping out the whole cache-tree thing and redoing it all in the
+index.
  
- # absolute fs-path which will be prepended to the project path
-@@ -42,8 +43,30 @@ # source of projects list
- #my $projects_list =	$projectroot;
- my $projects_list =	"index/index.aux";
- 
-+
-+my ($action, $project, $file_name, $hash);
-+
-+# rewrite to support direct access to .html files in the "html" branch
-+if ($my_path =~ /^$my_url\/(.*\.git)\/?$/) {
-+	$action = "summary";
-+	$project = validate_input($1);
-+} elsif ($my_path =~ /^$my_url\/(.*\.git)\/(.*\.html)$/) {
-+	$action = "blob_html";
-+	$project = validate_input($1);
-+	$file_name = validate_input($2);
-+	$hash = "html:$file_name";
-+} elsif ($my_path =~ /^$my_url\/(.*\.git)\/(HEAD|objects\/info\/packs|info\/refs|refs\/.*)$/) {
-+	$action = "direct_text";
-+	$project = validate_input($1);
-+	$file_name = validate_input($2);
-+} elsif ($my_path =~ /^$my_url\/(.*\.git)\/(objects\/.*)$/) {
-+	$action = "direct_object";
-+	$project = validate_input($1);
-+	$file_name = validate_input($2);
-+}
-+
- # input validation and dispatch
--my $action = $cgi->param('a');
-+$action ||= $cgi->param('a');
- if (defined $action) {
- 	if ($action =~ m/[^0-9a-zA-Z\.\-_]/) {
- 		undef $action;
-@@ -66,7 +89,7 @@ if (defined $order) {
- 	}
- }
- 
--my $project = $cgi->param('p');
-+$project ||= $cgi->param('p');
- if (defined $project) {
- 	$project = validate_input($project);
- 	if (!defined($project)) {
-@@ -88,7 +111,7 @@ if (defined $project) {
- 	exit;
- }
- 
--my $file_name = $cgi->param('f');
-+$file_name ||= $cgi->param('f');
- if (defined $file_name) {
- 	$file_name = validate_input($file_name);
- 	if (!defined($file_name)) {
-@@ -96,7 +119,7 @@ if (defined $file_name) {
- 	}
- }
- 
--my $hash = $cgi->param('h');
-+$hash ||= $cgi->param('h');
- if (defined $hash) {
- 	$hash = validate_input($hash);
- 	if (!defined($hash)) {
-@@ -167,6 +190,9 @@ if (!defined $action || $action eq "summ
- } elsif ($action eq "blob_plain") {
- 	git_blob_plain();
- 	exit;
-+} elsif ($action eq "blob_html") {
-+	git_blob_html();
-+	exit;
- } elsif ($action eq "tree") {
- 	git_tree();
- 	exit;
-@@ -203,6 +229,10 @@ if (!defined $action || $action eq "summ
- } elsif ($action eq "tag") {
- 	git_tag();
- 	exit;
-+} elsif ($action eq "direct_text") {
-+	git_direct_text();
-+} elsif ($action eq "direct_object") {
-+	git_direct_object();
- } else {
- 	undef $action;
- 	die_error(undef, "Unknown action.");
-@@ -1423,6 +1453,28 @@ sub git_blob_plain {
- 	close $fd;
- }
- 
-+sub git_blob_html {
-+	my $save_as = "$hash";
-+	if (defined $file_name) {
-+		$save_as = $file_name;
-+	}
-+	print $cgi->header(-type => "text/html", -charset => 'utf-8', '-content-disposition' => "inline; filename=\"$save_as\"");
-+	open my $fd, "-|", "$gitbin/git-cat-file blob $hash" or return;
-+	undef $/;
-+	print <$fd>;
-+	$/ = "\n";
-+	close $fd;
-+}
-+
-+sub git_direct_text {
-+	print $cgi->header(-type => "test/plain");
-+	exec("cat", "$projectroot/$project/$file_name");
-+}
-+sub git_direct_object {
-+	print $cgi->header(-type => "application/binary", -expires => "+1y");
-+	exec("cat", "$projectroot/$project/$file_name");
-+}
-+
- sub git_tree {
- 	if (!defined $hash) {
- 		$hash = git_read_head($project);
--- 
-1.3.1.g6ef7
+Currently the index stores set of blobs after flattening the
+hierarchical tree structure, losing the original "tree"
+information.  We could instead store something that looks like
+"ls-tree -t -r" output (plus the toplevel tree information which
+"ls-tree -t -r" does not give you).  Just like an update-index
+on the path t/t0000-basic.sh invalidates the cache-tree entry
+for "" and "t/", we could either invalidate or recompute (I am
+inclined to do the former to make things lazy) these "tree"
+entries in the index.  This would be more direct way to store
+what I am storing in the cache-tree.
 
-
--- 
-Martin Waitz
+Keeping the object names of unchanged subtrees available will
+allow us to walk the index and a tree (or two or more trees) in
+parallel in various applications.  "diff-index --cached" and
+"read-tree -m" extract one entry from tree and index for each
+blob, but when we have an up-to-date information for a subtree
+in the index, and when that subtree matches the corresponding
+subtree in the tree object diff-index or read-tree is reading,
+the application can short-cut without reading anything in the
+subtree.
