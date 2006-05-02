@@ -1,73 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] built-in "git grep" (git grip).
-Date: Tue, 02 May 2006 14:54:20 -0700
-Message-ID: <7vbqugks8j.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wvetfuj.fsf@assigned-by-dhcp.cox.net>
-	<e34bdf$ho4$1@sea.gmane.org> <7vhd4as00i.fsf@assigned-by-dhcp.cox.net>
-	<e34cb4$is1$1@sea.gmane.org> <44571967.7080807@op5.se>
-	<7vy7xkn6kd.fsf@assigned-by-dhcp.cox.net> <e378fs$lpc$1@sea.gmane.org>
-	<7v1wvcmejr.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605021422200.4086@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-mkpatch use case
+Date: Tue, 2 May 2006 23:57:03 +0200
+Message-ID: <20060502215703.GK27689@pasky.or.cz>
+References: <44570E8E.5070402@itaapy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 02 23:54:30 2006
+X-From: git-owner@vger.kernel.org Tue May 02 23:56:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fb2p7-0008Jo-3s
-	for gcvg-git@gmane.org; Tue, 02 May 2006 23:54:26 +0200
+	id 1Fb2qr-0000GB-9g
+	for gcvg-git@gmane.org; Tue, 02 May 2006 23:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965008AbWEBVyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 17:54:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965010AbWEBVyW
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 17:54:22 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:63955 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S965008AbWEBVyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 May 2006 17:54:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060502215421.HQBI27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 2 May 2006 17:54:21 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605021422200.4086@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 2 May 2006 14:23:05 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965010AbWEBV4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 17:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965012AbWEBV4H
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 17:56:07 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:19603 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S965011AbWEBV4G (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 17:56:06 -0400
+Received: (qmail 8200 invoked by uid 2001); 2 May 2006 23:57:03 +0200
+To: Belmar-Letelier <luis@itaapy.com>
+Content-Disposition: inline
+In-Reply-To: <44570E8E.5070402@itaapy.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19432>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+  Hi,
 
-> On Tue, 2 May 2006, Junio C Hamano wrote:
->> 
->>  - The shell-script one, if you use GNU grep, accepts more
->>    options to grep than what the current built-in one supports.
->>    Notable ones that are missing: fixed strings (-F), patterns
->>    from file (-f), count matches (-c), omit filenames (-h),
->>    skipping binary files (-I, -U), files without match (-L),
->>    pcre (-P), silent (-q), word expression (-w), NUL (-z).  They
->>    should be easy to add if somebody cares enough, and I plan to
->>    do a few myself before pushing it out to "master".
->
-> I use "-w" all the time, along with -5 or similar to get context for the 
-> grep.
+Dear diary, on Tue, May 02, 2006 at 09:47:26AM CEST, I got a letter
+where Belmar-Letelier <luis@itaapy.com> said that...
+> I have 3 questions about cg-mkpatch
+> 
+> 1. I've receive a file "xxx.patch", this content came from
+>   cg-mkpatch, but I can't apply it.
+>   For example if I try git-am I get::
+> 
+>     $ git-am --signoff xxx.patch
+>     Patch does not have a valid e-mail address.
+> 
+>   What is the Cogito way to apply the result of "cg-mkpatch"
 
-Noted; -w is missing; -A/-B/-C are already there so you could
-say -C 5 instead, and -<n> should be easy to add.
+  cg-mkpatch is a very old tool which has been long neglected and
+not many people actually use it nowadays, I believe. You can apply it
+back using cg-patch (or even patch itself, or git-apply if you are
+lucky), but it won't automagically extract the commit message and
+authorship information.
 
-On a related tangent, ever since I started using the built-in
-grep with ls-files like wildcard, I find myself typing something
-like this by mistake (this is from my day-job work project that
-has src/mx.js and src/mxstyle.css among other things):
+> 2. What are the difference between usecases with "cg-mkpatch"
+>   and "git-format-patch" ?
 
-	git diff 268a94 -- 'src/mx*'
+  git-format-patch outputs stuff in the mailbox format while cg-mkpatch
+outputs it in a more "human readable" (well, but quite historical)
+format, but really, you probably want to use git-format-patch in almost
+every case. In the (probably relatively near) future, cg-mkpatch might
+become merely a git-format-patch wrapper.
 
-I am tempted to suggest switching pathspecs used by diff and log
-family to do the same wildcarding, perhaps after tightening the
-wildcard vs directory prefix logic used in the builtin-grep of
-the current "next" tip, which is a bit looser than necessary.
+> 3. It seem that if a commit as a binary file they are no way to manage
+>   it by email patches. Any plan about this in Cogito ?
+
+  Not any clear plans. I will welcome patches but it is not high
+priority for me currently.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
