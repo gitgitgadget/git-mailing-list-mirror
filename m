@@ -1,78 +1,73 @@
-From: "Bertrand Jacquin" <beber.mailing@gmail.com>
-Subject: Re: Features ask for git-send-email
-Date: Wed, 3 May 2006 00:46:24 +0200
-Message-ID: <4fb292fa0605021546i45c740c4i42c64125b8c560e@mail.gmail.com>
-References: <4fb292fa0604290630r19edd7ejf88642e33b350d1d@mail.gmail.com>
-	 <1146573417.14059.21.camel@pmac.infradead.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] built-in "git grep" (git grip).
+Date: Tue, 2 May 2006 16:07:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605021603050.4086@g5.osdl.org>
+References: <7v1wvetfuj.fsf@assigned-by-dhcp.cox.net> <e34bdf$ho4$1@sea.gmane.org>
+ <7vhd4as00i.fsf@assigned-by-dhcp.cox.net> <e34cb4$is1$1@sea.gmane.org>
+ <44571967.7080807@op5.se> <7vy7xkn6kd.fsf@assigned-by-dhcp.cox.net>
+ <e378fs$lpc$1@sea.gmane.org> <7v1wvcmejr.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605021422200.4086@g5.osdl.org> <7vbqugks8j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 03 00:46:36 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 01:08:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fb3db-0002oL-TA
-	for gcvg-git@gmane.org; Wed, 03 May 2006 00:46:36 +0200
+	id 1Fb3yK-0006S0-B7
+	for gcvg-git@gmane.org; Wed, 03 May 2006 01:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965025AbWEBWq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 18:46:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965026AbWEBWq1
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 18:46:27 -0400
-Received: from nproxy.gmail.com ([64.233.182.187]:28473 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S965025AbWEBWq0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 18:46:26 -0400
-Received: by nf-out-0910.google.com with SMTP id n15so23033nfc
-        for <git@vger.kernel.org>; Tue, 02 May 2006 15:46:24 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kflk2r79PEk6ErXAhNYfZYuc/xYWB3xtX5qrTxLFjLfG5sPa9s0a6KsqwqLmA6uZI061W998XmCUx4QMlH53/BfZ7Et/mYY7YBoBr65RboViWMTEYHYv8i1skhfqaJYNtKEhIR6TB+yk0PLw5VItqe0L317H/L0u2PAZNxyFHWU=
-Received: by 10.48.217.17 with SMTP id p17mr252536nfg;
-        Tue, 02 May 2006 15:46:24 -0700 (PDT)
-Received: by 10.49.2.19 with HTTP; Tue, 2 May 2006 15:46:24 -0700 (PDT)
-To: "David Woodhouse" <dwmw2@infradead.org>
-In-Reply-To: <1146573417.14059.21.camel@pmac.infradead.org>
-Content-Disposition: inline
+	id S965037AbWEBXHv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 19:07:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965038AbWEBXHv
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 19:07:51 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:21961 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965037AbWEBXHu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 19:07:50 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k42N7ktH004970
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 2 May 2006 16:07:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k42N7kH4018349;
+	Tue, 2 May 2006 16:07:46 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqugks8j.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19436>
 
-On 5/2/06, David Woodhouse <dwmw2@infradead.org> wrote:
-> On Sat, 2006-04-29 at 15:30 +0200, Bertrand Jacquin wrote:
-> > Could it be possible to add a features in git-send-email.perl to
-> > accept a differrent charset as iso-8859-1 ? I would like to send
-> > fr_FR.utf8 mail as I use git to manager a latex files tree which are
-> > written in utf8.
-> >
-> > Any objection ?
->
-> Seems reasonable. I think we just forgot to include the Content-Type:
-> header. This fixes it...
 
-I tryed it. I used this patch again master git git release
 
-And I got the following with git-send-email :
+On Tue, 2 May 2006, Junio C Hamano wrote:
+> 
+> On a related tangent, ever since I started using the built-in
+> grep with ls-files like wildcard, I find myself typing something
+> like this by mistake (this is from my day-job work project that
+> has src/mx.js and src/mxstyle.css among other things):
+> 
+> 	git diff 268a94 -- 'src/mx*'
+> 
+> I am tempted to suggest switching pathspecs used by diff and log
+> family to do the same wildcarding, perhaps after tightening the
+> wildcard vs directory prefix logic used in the builtin-grep of
+> the current "next" tip, which is a bit looser than necessary.
 
-Use of uninitialized value in hash element at /usr/bin/git-send-email line 437.
-Use of uninitialized value in hash element at /usr/bin/git-send-email line 437.
-<>: missing or malformed local part
-Use of uninitialized value in hash element at /usr/bin/git-send-email line 437.
-Use of uninitialized value in hash element at /usr/bin/git-send-email line 437.
-<>: missing or malformed local part
+Yeah, the wildcarding is nice. You need to be very careful about it, 
+though, to make sure that you take full advantage of the path 
+component optimizations _before_ the wildcards, so that when you do 
+something like the above ('src/mx*'), you do the "src/" part with the 
+tree-level optimizations, and only the latter part with the pattern 
+matching (because you do _not_ want to expand the whole tree when you 
+don't want to).
 
-And with my smtp server :
+That "ls-files.c" thing already does part of this (that whole "prefix_len" 
+thing for the "longest common prefix").
 
-2006-05-03 00:44:01 unexpected disconnection while reading SMTP
-command from localhost (localhost.localdomain) [127.0.0.1]
-
-Is it a known bug ? I can't send mail with patch thow :/ I tried to
-add Mime-Version: 1.0 too but I got the sam.
-
---
-Beber
-#e.fr@freenode
+		Linus
