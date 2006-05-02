@@ -1,104 +1,118 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Features ask for git-send-email
-Date: Tue, 02 May 2006 13:36:57 +0100
-Message-ID: <1146573417.14059.21.camel@pmac.infradead.org>
-References: <4fb292fa0604290630r19edd7ejf88642e33b350d1d@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] fetch: optionally store the current remote information
+ in the config
+Date: Tue, 2 May 2006 14:42:14 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605021422520.7051@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0604301524080.2646@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3bfsol9j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 02 14:37:13 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 02 14:42:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fau7r-00042v-Tw
-	for gcvg-git@gmane.org; Tue, 02 May 2006 14:37:12 +0200
+	id 1FauCq-0004t0-Bx
+	for gcvg-git@gmane.org; Tue, 02 May 2006 14:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174AbWEBMhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 08:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932229AbWEBMhE
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 08:37:04 -0400
-Received: from canuck.infradead.org ([205.233.218.70]:49573 "EHLO
-	canuck.infradead.org") by vger.kernel.org with ESMTP
-	id S932174AbWEBMhC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 May 2006 08:37:02 -0400
-Received: from pmac.infradead.org ([81.187.2.168])
-	by canuck.infradead.org with esmtpsa (Exim 4.61 #1 (Red Hat Linux))
-	id 1Fau7f-0008ND-Cv; Tue, 02 May 2006 08:37:00 -0400
-To: Bertrand Jacquin <beber.mailing@gmail.com>
-In-Reply-To: <4fb292fa0604290630r19edd7ejf88642e33b350d1d@mail.gmail.com>
-X-Mailer: Evolution 2.6.1 (2.6.1-1.fc5.2.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S932232AbWEBMmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 08:42:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932234AbWEBMmQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 08:42:16 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:60593 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932232AbWEBMmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 08:42:15 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 7F1891F9F;
+	Tue,  2 May 2006 14:42:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 72F7A1EC0;
+	Tue,  2 May 2006 14:42:14 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 5FC211D7D;
+	Tue,  2 May 2006 14:42:14 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bfsol9j.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19418>
 
-On Sat, 2006-04-29 at 15:30 +0200, Bertrand Jacquin wrote:
-> Could it be possible to add a features in git-send-email.perl to
-> accept a differrent charset as iso-8859-1 ? I would like to send
-> fr_FR.utf8 mail as I use git to manager a latex files tree which are
-> written in utf8.
+Hi,
+
+On Tue, 2 May 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Any objection ?
+> > 	This is what the patch series is all about.
+> >
+> > 	If there is no interest in a feature like this, let's just forget
+> > 	about the whole "remote info in config" thing.
+> 
+> Well, I took the liberty of adjusting the first one in the
+> series and tonight's "pu" has that one and the second one.
+> I haven't touched the third one yet, though.
 
-Seems reasonable. I think we just forgot to include the Content-Type:
-header. This fixes it...
+I don't think it is worth introducing yet another way to specify 
+short-cuts for remote information, if there is not at least one problem 
+which can get solved easier with it than with the other two ways.
 
-Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+> About the second one, I think it probably is a good idea to
+> rename the "refspec used for fetch" as Sean suggested earlier.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ecfa347..1df75f5 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -37,7 +37,7 @@ # Constants (essentially)
- my $compose_filename = ".msg.$$";
- 
- # Variables we fill in automatically, or via prompting:
--my (@to,@cc,@initial_cc,$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
-+my (@to,@cc,@initial_cc,$initial_reply_to,$initial_subject,@files,$from,$compose,$time,$charset);
- 
- # Behavior modification variables
- my ($chain_reply_to, $smtp_server, $quiet, $suppress_from, $no_signed_off_cc) = (1, "localhost", 0, 0, 0);
-@@ -58,6 +58,7 @@ my $rc = GetOptions("from=s" => \$from,
- 		    "chain-reply-to!" => \$chain_reply_to,
- 		    "smtp-server=s" => \$smtp_server,
- 		    "compose" => \$compose,
-+		    "charset=s" => \$charset,
- 		    "quiet" => \$quiet,
- 		    "suppress-from" => \$suppress_from,
- 		    "no-signed-off-cc|no-signed-off-by-cc" => \$no_signed_off_cc,
-@@ -135,6 +136,10 @@ if (!defined $smtp_server) {
- 	$smtp_server = "localhost";
- }
- 
-+if (!defined $charset) {
-+	$charset = "UTF-8";
-+}
-+
- if ($compose) {
- 	# Note that this does not need to be secure, but we will make a small
- 	# effort to have it be unique
-@@ -214,6 +219,9 @@ Options:
-    --cc           Specify an initial "Cc:" list for the entire series
-                   of emails.
- 
-+   --charset      Specify a character set, if legacy character sets are
-+                  used in change logs instead of UTF-8.
-+
-    --compose      Use \$EDITOR to edit an introductory message for the
-                   patch series.
- 
-@@ -299,6 +307,7 @@ Subject: $subject
- Reply-To: $from
- Date: $date
- Message-Id: $message_id
-+Content-Type: text/plain; charset=$charset
- X-Mailer: git-send-email @@GIT_VERSION@@
- ";
- 	$header .= "In-Reply-To: $reply_to\n" if $reply_to;
+Okay.
 
--- 
-dwmw2
+> I do not like that hidden environment variable that sits in the
+> command I use everyday, waiting to be triggered to update my
+> .config file, possibly by my PEBCAK mistake when I did not want
+> it to do so.
+
+I will refactor it.
+
+> I am not quite sure what this bit is about in the second one:
+> 
+>         sed -n \
+>         -e "s/^URL: /remote.$name.url . /p" \
+>         -e "s/^Pull: /remote.$name.pull ^$ /p" \
+>         -e "s/^Push: /remote.$name.push ^$ /p" \
+> 	< "$f"
+
+That is obviously wrong. Will fix while refactoring.
+
+> I think easy conversion tool is a good idea, but I would sleep
+> better if it is outside of git-fetch/push chain and is available
+> elsewhere, perhaps in contrib/ area.
+
+Will do.
+
+> On a slightly related topic, I think my aversion to your "push
+> remotes into config" series the last time was primarily because
+> I do not trust repo-config.  Reading an already built config
+> seems to work OK and I do not worry too much, but I am still
+> wary of letting it write.  Typing "git repo-config" in a freshly
+> initialized empty repository seems to segfault, which does not
+> help my confidence level either.
+
+I fixed this error (see separate patch). This was reintroduced by 
+carelessly checking argv[1] for "--list" and "-l", even if argc < 2. I am 
+sorry that I did not review that patch.
+
+I tried to make really sure that repo-config works as expected by 
+introducing quite a few test cases into t1300, but evidently I forgot to 
+check for things that do not usually break, like calling without 
+arguments. This is fixed with the patch I just sent out.
+
+This patch also introduces the "--get-regexp" flag to repo-config, which 
+makes up for the lacking shell wildcards (you can ask questions like: 
+which keys in the config end in "coatl"?).
+
+As for the trust in repo-config writing the config: it is all done by 
+calling git_config_set() or git_config_set_multivar(), which you use 
+yourself to set core.repositoryformatversion, among other values.
+
+Ciao,
+Dscho
