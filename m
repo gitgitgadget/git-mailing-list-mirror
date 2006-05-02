@@ -1,113 +1,73 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH]: Allow misc https cert for git-svnimport
-Date: Tue, 2 May 2006 14:44:55 -0700
-Message-ID: <20060502214455.GA4591@hand.yhbt.net>
-References: <200604281801.07155.p_christ@hol.gr>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] built-in "git grep" (git grip).
+Date: Tue, 02 May 2006 14:54:20 -0700
+Message-ID: <7vbqugks8j.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wvetfuj.fsf@assigned-by-dhcp.cox.net>
+	<e34bdf$ho4$1@sea.gmane.org> <7vhd4as00i.fsf@assigned-by-dhcp.cox.net>
+	<e34cb4$is1$1@sea.gmane.org> <44571967.7080807@op5.se>
+	<7vy7xkn6kd.fsf@assigned-by-dhcp.cox.net> <e378fs$lpc$1@sea.gmane.org>
+	<7v1wvcmejr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605021422200.4086@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Tue May 02 23:45:07 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 02 23:54:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fb2fz-0006UN-Hj
-	for gcvg-git@gmane.org; Tue, 02 May 2006 23:44:59 +0200
+	id 1Fb2p7-0008Jo-3s
+	for gcvg-git@gmane.org; Tue, 02 May 2006 23:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964999AbWEBVo4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 17:44:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964996AbWEBVo4
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 17:44:56 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:51112 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S964994AbWEBVoz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 17:44:55 -0400
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id 81B692DC01A; Tue,  2 May 2006 14:44:55 -0700 (PDT)
-To: "P. Christeas" <p_christ@hol.gr>
-Content-Disposition: inline
-In-Reply-To: <200604281801.07155.p_christ@hol.gr>
-User-Agent: Mutt/1.5.9i
+	id S965008AbWEBVyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 17:54:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965010AbWEBVyW
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 17:54:22 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:63955 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965008AbWEBVyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 17:54:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060502215421.HQBI27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 2 May 2006 17:54:21 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605021422200.4086@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 2 May 2006 14:23:05 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19431>
 
-"P. Christeas" <p_christ@hol.gr> wrote:
-> Just had to access a server with a broken certificate (self signed), so I 
-> added that patch to git-svnimport.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Matthias should know more about git-svnimport than I do :)
+> On Tue, 2 May 2006, Junio C Hamano wrote:
+>> 
+>>  - The shell-script one, if you use GNU grep, accepts more
+>>    options to grep than what the current built-in one supports.
+>>    Notable ones that are missing: fixed strings (-F), patterns
+>>    from file (-f), count matches (-c), omit filenames (-h),
+>>    skipping binary files (-I, -U), files without match (-L),
+>>    pcre (-P), silent (-q), word expression (-w), NUL (-z).  They
+>>    should be easy to add if somebody cares enough, and I plan to
+>>    do a few myself before pushing it out to "master".
+>
+> I use "-w" all the time, along with -5 or similar to get context for the 
+> grep.
 
-I'm not fully up-to-date on how the SVN:: modules work for this, nor do
-I know off the top of my head an ssl svn server with a self-signed cert
-to test with.  I just copied the ssl stuff off svn-mirror a while ago :)
+Noted; -w is missing; -A/-B/-C are already there so you could
+say -C 5 instead, and -<n> should be easy to add.
 
-> --- /usr/bin/git-svnimport	2006-04-13 09:39:39.000000000 +0300
-> +++ /home/panos/bin/git-svnimport	2006-04-28 17:55:45.000000000 +0300
-> @@ -96,9 +96,14 @@
->  sub conn {
->  	my $self = shift;
->  	my $repo = $self->{'fullrep'};
-> -	my $auth = SVN::Core::auth_open ([SVN::Client::get_simple_provider,
-> +# 	my $auth = SVN::Core::auth_open ([SVN::Client::get_simple_provider,
-> +# 			  SVN::Client::get_ssl_server_trust_file_provider,
-> +# 			  SVN::Client::get_ssl_server_trust_prompt_provider(\&_trust_callback),
-> +# 			  SVN::Client::get_username_provider]);
-> +	my $auth = [SVN::Client::get_simple_provider,
->  			  SVN::Client::get_ssl_server_trust_file_provider,
-> -			  SVN::Client::get_username_provider]);
-> +			  SVN::Client::get_ssl_server_trust_prompt_provider(\&_trust_callback),
-> +			  SVN::Client::get_username_provider];
->  	my $s = SVN::Ra->new(url => $repo, auth => $auth);
->  	die "SVN connection to $repo: $!\n" unless defined $s;
->  	$self->{'svn'} = $s;
-> @@ -125,6 +130,45 @@
->  	return $name;
->  }
->  
-> +sub _trust_callback {
-> +	my ($cred,$realm,$ifailed,$server_cert_info,$may_save) = @_;
-> +	#$cred->accepted_failures($SVN::Auth::SSL::UNKNOWNCA);
-> +	print "SSL certificate is not trusted: $ifailed \n";
-> +	print "Fingerprint: " . $server_cert_info->fingerprint . "\n";
-> +	print "Hostname:    ". $server_cert_info->hostname ;
-> +	print " (MISMATCH)" if ( $ifailed & $SVN::Auth::SSL::CNMISMATCH);
-> +	print "\n";
-> +	
-> +	print "Valid from:  ". $server_cert_info->valid_from;
-> +	print " (NOT YET)" if ( $ifailed & $SVN::Auth::SSL::NOTYETVALID);
-> +	print "\n";
-> +	
-> +	print "Valid until: ". $server_cert_info->valid_until;
-> +	print " (EXPIRED)" if ( $ifailed & $SVN::Auth::SSL::EXPIRED);
-> +	print "\n";
-> +	
-> +	print "Issuer:      ". $server_cert_info->issuer_dname;
-> +	print " (UNKNOWN)" if ( $ifailed & $SVN::Auth::SSL::UNKNOWNCA);
-> +	print "\n\n";
-> +	
-> +	print "Do you still want to accept that certificate? [y/N] ";
-> +	my $accept = <STDIN>;
-> +	chomp($accept);
-> +	print "\n";
-> +	if (($accept eq "y") or ($accept eq "Y" )) {
-> +		$cred->accepted_failures($ifailed);
-> +	# 	print "Save cert, so that it is accepted in future calls? [y/N] ";
-> +	# 	my $mmsave = <STDIN>;
-> +	# 	chomp($mmsave);
-> +	# 	if (($mmsave eq "y") or ($mmsave eq "Y" )) {
-> +	# 		$may_save = 1;
-> +	# 	}
-> +		print "\n";
-> +	}
-> +
-> +}
-> +
-> +
->  package main;
->  use URI;
->  
+On a related tangent, ever since I started using the built-in
+grep with ls-files like wildcard, I find myself typing something
+like this by mistake (this is from my day-job work project that
+has src/mx.js and src/mxstyle.css among other things):
 
+	git diff 268a94 -- 'src/mx*'
 
--- 
-Eric Wong
+I am tempted to suggest switching pathspecs used by diff and log
+family to do the same wildcarding, perhaps after tightening the
+wildcard vs directory prefix logic used in the builtin-grep of
+the current "next" tip, which is a bit looser than necessary.
