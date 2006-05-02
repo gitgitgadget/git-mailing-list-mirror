@@ -1,79 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] built-in "git grep" (git grip).
-Date: Tue, 02 May 2006 10:44:57 +0200
-Organization: At home
-Message-ID: <e3764f$ea7$1@sea.gmane.org>
-References: <7v1wvetfuj.fsf@assigned-by-dhcp.cox.net> <e34bdf$ho4$1@sea.gmane.org> <7vhd4as00i.fsf@assigned-by-dhcp.cox.net> <e34cb4$is1$1@sea.gmane.org> <44571967.7080807@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] fetch: optionally store the current remote information in the config
+Date: Tue, 02 May 2006 01:59:04 -0700
+Message-ID: <7v3bfsol9j.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0604301524080.2646@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue May 02 10:44:49 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 02 10:59:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaqUs-0001M2-6k
-	for gcvg-git@gmane.org; Tue, 02 May 2006 10:44:42 +0200
+	id 1Faqiu-0003My-PP
+	for gcvg-git@gmane.org; Tue, 02 May 2006 10:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932136AbWEBIo0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 04:44:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932502AbWEBIoZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 04:44:25 -0400
-Received: from main.gmane.org ([80.91.229.2]:44488 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932136AbWEBIoZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 04:44:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FaqUQ-0001IQ-Mz
-	for git@vger.kernel.org; Tue, 02 May 2006 10:44:14 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 May 2006 10:44:14 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 May 2006 10:44:14 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S932520AbWEBI7J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 04:59:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932522AbWEBI7J
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 04:59:09 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:49042 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932520AbWEBI7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 04:59:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060502085905.OWUF25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 2 May 2006 04:59:05 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0604301524080.2646@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 30 Apr 2006 15:24:22 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19410>
 
-Andreas Ericsson wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Jakub Narebski wrote:
+> 	This is what the patch series is all about.
+>
+> 	If there is no interest in a feature like this, let's just forget
+> 	about the whole "remote info in config" thing.
 
->> Yes, I understand, but I just don't like using 'grip'. And it would be
->> nice to have some convention for further not-ready-yet built-in
->> replacements for script versions of commands, for example adding letter
->> 'b' as 'built-in' at the beginning of command name: 'bgrep', 'bdiff'. Or
->> use postfix 'n' or '-ng' to denote transitionary not-ready-yet new
->> version of command: 'grepn', 'diffn' or 'grep-ng', 'diff-ng'.
->> 
-> 
-> Forcing the user to remember what's implemented as built-ins is not a
-> good idea. It was for that exact reason the "git-<command>-script" were
-> all renamed "git-<command>" once upon a time.
-> 
-> "git grip" work just fine for me, since it's only intended for testing
-> and performance improvements so far. I also think it's clearer for
-> end-users looking for a grep command if they're not faced with
-> fgrep/egrep/ggrep/bgrep alongside plain "grep".
+Well, I took the liberty of adjusting the first one in the
+series and tonight's "pu" has that one and the second one.
+I haven't touched the third one yet, though.
 
-Well, scratch 'bgrep' idea, even if I had no intend for 'bgrep' to be
-persistent name; it was meant as transitionary name. Well, that doesn't
-matter much because someone interested in testing new, not-ready-yet
-versions of commands (I like 'grepn' idea) usually would follow git
-development, and would know (or not) about new version of 'git grep' being
-'git grip' (and not 'git grepn').
+About the second one, I think it probably is a good idea to
+rename the "refspec used for fetch" as Sean suggested earlier.
+I do not like that hidden environment variable that sits in the
+command I use everyday, waiting to be triggered to update my
+.config file, possibly by my PEBCAK mistake when I did not want
+it to do so.
 
+I am not quite sure what this bit is about in the second one:
 
-What about forcing using external grep, and the fact that grep is linked
-with libpcre?
+        sed -n \
+        -e "s/^URL: /remote.$name.url . /p" \
+        -e "s/^Pull: /remote.$name.pull ^$ /p" \
+        -e "s/^Push: /remote.$name.push ^$ /p" \
+	< "$f"
 
--- 
-Jakub Narebski
-Warsaw, Poland
+I am getting this out of the above:
+
+        remote.ko.url . xxx.kernel.org:/pub/scm/git/git.git/
+        remote.ko.pull ^$ master:refs/tags/ko-master
+        remote.ko.pull ^$ next:refs/tags/ko-next
+        remote.ko.pull ^$ +pu:refs/tags/ko-pu
+        remote.ko.pull ^$ maint:refs/tags/ko-maint
+        remote.ko.push ^$ heads/master
+        remote.ko.push ^$ heads/next
+        remote.ko.push ^$ +heads/pu
+        remote.ko.push ^$ heads/maint
+
+but I suspect that is not what you intended...
+
+I think easy conversion tool is a good idea, but I would sleep
+better if it is outside of git-fetch/push chain and is available
+elsewhere, perhaps in contrib/ area.
+
+On a slightly related topic, I think my aversion to your "push
+remotes into config" series the last time was primarily because
+I do not trust repo-config.  Reading an already built config
+seems to work OK and I do not worry too much, but I am still
+wary of letting it write.  Typing "git repo-config" in a freshly
+initialized empty repository seems to segfault, which does not
+help my confidence level either.
