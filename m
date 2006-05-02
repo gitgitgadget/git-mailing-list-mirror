@@ -1,248 +1,131 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] repo-config: support --get-regexp and fix crash
-Date: Tue, 2 May 2006 14:22:48 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605021422150.7051@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Robert Shearman <rob@codeweavers.com>
+Subject: [PATCH] Give the user a hint for how to continue in the case that
+ git-am fails because it requires user intervention
+Date: Tue, 02 May 2006 13:32:43 +0100
+Organization: CodeWeavers
+Message-ID: <4457516B.9010103@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue May 02 14:23:07 2006
+Content-Type: multipart/mixed;
+ boundary="------------010801050603070307060903"
+X-From: git-owner@vger.kernel.org Tue May 02 14:33:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fatu5-0001la-TJ
-	for gcvg-git@gmane.org; Tue, 02 May 2006 14:22:58 +0200
+	id 1Fau4C-0003Si-Ij
+	for gcvg-git@gmane.org; Tue, 02 May 2006 14:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964792AbWEBMWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 08:22:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964793AbWEBMWu
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 08:22:50 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11451 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964792AbWEBMWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 May 2006 08:22:49 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 4218BD95;
-	Tue,  2 May 2006 14:22:48 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 3543DCEF;
-	Tue,  2 May 2006 14:22:48 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 14F49B9B;
-	Tue,  2 May 2006 14:22:48 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932110AbWEBMdR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 08:33:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932174AbWEBMdR
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 08:33:17 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:8855 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S932110AbWEBMdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 08:33:16 -0400
+Received: from host86-141-84-223.range86-141.btcentralplus.com ([86.141.84.223] helo=[192.168.0.180])
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Fau43-0002mP-Gp
+	for git@vger.kernel.org; Tue, 02 May 2006 07:33:15 -0500
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19416>
 
+This is a multi-part message in MIME format.
+--------------010801050603070307060903
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-With --get-regexp, output all key/value pairs where the key matches a
-regexp. Example:
+Give the user a hint for how to continue in the case that git-am fails 
+because it requires user intervention.
 
-	git-repo-config --get-regexp remote.*.url
-
-will output something like
-
-	remote.junio.url git://git.kernel.org/pub/scm/git/git.git
-	remote.gitk.url git://git.kernel.org/pub/scm/gitk/gitk.git
-
-This also fixes a crash when no arguments are given, which was introduced
-with the "-l" and "--list" handling.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Robert Shearman <rob@codeweaves.com>
 
 ---
 
-	Junio made me aware of a crash, a fix for which was too easy to
-	merit a separate patch.
+When git-am fails because it needs user intervention, the user may not 
+know what they need to do to continue with applying the mailbox. This 
+patch gives them a hint to use git-am (as they may have started the 
+operation from another tool, such as git-rebase). As the threeway, 
+interactive and dotest options are not persisted, the user may also 
+forget to include them (or not realise at all that they should be 
+included), so we should also tell the user to include these options if 
+they were orignally specified.
 
-	Strange thing I realized: A value is white-space-trimmed at the end
-	only if the line does not end with a comment. This fact is accounted
-	for in the new tests.
+  git-am.sh |   26 +++++++++++++++++++++++---
+  1 files changed, 23 insertions(+), 3 deletions(-)
 
- Documentation/git-repo-config.txt |    5 +++-
- repo-config.c                     |   45 +++++++++++++++++++++++++++++--------
- t/t1300-repo-config.sh            |   23 +++++++++++++++++++
- 3 files changed, 62 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
-index 566cfa1..ddcf523 100644
---- a/Documentation/git-repo-config.txt
-+++ b/Documentation/git-repo-config.txt
-@@ -49,7 +49,7 @@ OPTIONS
- 
- --replace-all::
- 	Default behaviour is to replace at most one line. This replaces
--	all lines matching the key (and optionally the value_regex)
-+	all lines matching the key (and optionally the value_regex).
- 
- --get::
- 	Get the value for a given key (optionally filtered by a regex
-@@ -59,6 +59,9 @@ OPTIONS
- 	Like get, but does not fail if the number of values for the key
- 	is not exactly one.
- 
-+--get-regexp::
-+	Like --get-all, but interprets the name as a regular expression.
-+
- --unset::
- 	Remove the line matching the key from .git/config.
- 
-diff --git a/repo-config.c b/repo-config.c
-index fa8aba7..722153c 100644
---- a/repo-config.c
-+++ b/repo-config.c
-@@ -6,7 +6,10 @@ static const char git_config_set_usage[]
- 
- static char* key = NULL;
- static char* value = NULL;
-+static regex_t* key_regexp = NULL;
- static regex_t* regexp = NULL;
-+static int show_keys = 0;
-+static int use_key_regexp = 0;
- static int do_all = 0;
- static int do_not_match = 0;
- static int seen = 0;
-@@ -26,16 +29,18 @@ static int show_config(const char* key_,
- 	if (value_ == NULL)
- 		value_ = "";
- 
--	if (!strcmp(key_, key) &&
-+	if ((use_key_regexp || !strcmp(key_, key)) &&
-+			(!use_key_regexp ||
-+			 !regexec(key_regexp, key_, 0, NULL, 0)) &&
- 			(regexp == NULL ||
- 			 (do_not_match ^
- 			  !regexec(regexp, value_, 0, NULL, 0)))) {
--		if (do_all) {
--			printf("%s\n", value_);
--			return 0;
--		}
-+		if (show_keys)
-+			printf("%s ", key_);
- 		if (seen > 0) {
--			fprintf(stderr, "More than one value: %s\n", value);
-+			if (!do_all)
-+				fprintf(stderr, "More than one value: %s\n",
-+						value);
- 			free(value);
- 		}
- 
-@@ -50,6 +55,8 @@ static int show_config(const char* key_,
- 			value = strdup(value_);
- 		}
- 		seen++;
-+		if (do_all)
-+			printf("%s\n", value);
- 	}
- 	return 0;
+--------------010801050603070307060903
+Content-Type: text/x-patch;
+ name="ead48bae7157a30589791165b7b71208b68cf229.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="ead48bae7157a30589791165b7b71208b68cf229.diff"
+
+ead48bae7157a30589791165b7b71208b68cf229
+diff --git a/git-am.sh b/git-am.sh
+index 872145b..507ae4d 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -14,6 +14,26 @@ stop_here () {
+     exit 1
  }
-@@ -63,6 +70,14 @@ static int get_value(const char* key_, c
- 		key[i] = tolower(key_[i]);
- 	key[i] = 0;
  
-+	if (use_key_regexp) {
-+		key_regexp = (regex_t*)malloc(sizeof(regex_t));
-+		if (regcomp(key_regexp, key, REG_EXTENDED)) {
-+			fprintf(stderr, "Invalid key pattern: %s\n", regex_);
-+			return -1;
-+		}
-+	}
++stop_here_user_resolve () {
++    cmdline=$(basename $0)
++    if test '' != "$interactive"
++    then
++        cmdline="$cmdline -i"
++    fi
++    if test '' != "$threeway"
++    then
++        cmdline="$cmdline -3"
++    fi
++    if test '.dotest' != "$dotest"
++    then
++        cmdline="$cmdline -d=$dotest"
++    fi
++    echo "When you have resolved this problem run \"$cmdline --resolved\"."
++    echo "If you would prefer to skip this patch, instead run \"$cmdline --skip\"."
 +
- 	if (regex_) {
- 		if (regex_[0] == '!') {
- 			do_not_match = 1;
-@@ -78,7 +93,8 @@ static int get_value(const char* key_, c
- 
- 	git_config(show_config);
- 	if (value) {
--		printf("%s\n", value);
-+		if (!do_all)
-+			printf("%s\n", value);
- 		free(value);
- 	}
- 	free(key);
-@@ -102,15 +118,14 @@ int main(int argc, const char **argv)
- 			type = T_INT;
- 		else if (!strcmp(argv[1], "--bool"))
- 			type = T_BOOL;
-+		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
-+			return git_config(show_all_config);
- 		else
- 			break;
- 		argc--;
- 		argv++;
- 	}
- 
--	if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
--		return git_config(show_all_config);
--
- 	switch (argc) {
- 	case 2:
- 		return get_value(argv[1], NULL);
-@@ -124,6 +139,11 @@ int main(int argc, const char **argv)
- 		else if (!strcmp(argv[1], "--get-all")) {
- 			do_all = 1;
- 			return get_value(argv[2], NULL);
-+		} else if (!strcmp(argv[1], "--get-regexp")) {
-+			show_keys = 1;
-+			use_key_regexp = 1;
-+			do_all = 1;
-+			return get_value(argv[2], NULL);
- 		} else
- 
- 			return git_config_set(argv[1], argv[2]);
-@@ -137,6 +157,11 @@ int main(int argc, const char **argv)
- 		else if (!strcmp(argv[1], "--get-all")) {
- 			do_all = 1;
- 			return get_value(argv[2], argv[3]);
-+		} else if (!strcmp(argv[1], "--get-regexp")) {
-+			show_keys = 1;
-+			use_key_regexp = 1;
-+			do_all = 1;
-+			return get_value(argv[2], argv[3]);
- 		} else if (!strcmp(argv[1], "--replace-all"))
- 
- 			return git_config_set_multivar(argv[2], argv[3], NULL, 1);
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index ab4dd5c..52e8e33 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -247,6 +247,24 @@ EOF
- 
- test_expect_success 'hierarchical section value' 'cmp .git/config expect'
- 
-+cat > expect << EOF
-+beta.noindent=sillyValue 
-+nextsection.nonewline=wow2 for me
-+123456.a123=987
-+1.2.3.alpha=beta
-+EOF
++    stop_here $1
++}
 +
-+test_expect_success 'working --list' \
-+	'git-repo-config --list > output && cmp output expect'
-+
-+cat > expect << EOF
-+beta.noindent sillyValue 
-+nextsection.nonewline wow2 for me
-+EOF
-+
-+test_expect_success '--get-regexp' \
-+	'git-repo-config --get-regexp in > output && cmp output expect'
-+
- cat > .git/config << EOF
- [novalue]
- 	variable
-@@ -255,5 +273,10 @@ EOF
- test_expect_success 'get variable with no value' \
- 	'git-repo-config --get novalue.variable ^$'
+ go_next () {
+ 	rm -f "$dotest/$msgnum" "$dotest/msg" "$dotest/msg-clean" \
+ 		"$dotest/patch" "$dotest/info"
+@@ -374,14 +394,14 @@ do
+ 		if test '' = "$changed"
+ 		then
+ 			echo "No changes - did you forget update-index?"
+-			stop_here $this
++			stop_here_user_resolve $this
+ 		fi
+ 		unmerged=$(git-ls-files -u)
+ 		if test -n "$unmerged"
+ 		then
+ 			echo "You still have unmerged paths in your index"
+ 			echo "did you forget update-index?"
+-			stop_here $this
++			stop_here_user_resolve $this
+ 		fi
+ 		apply_status=0
+ 		;;
+@@ -407,7 +427,7 @@ do
+ 	if test $apply_status != 0
+ 	then
+ 		echo Patch failed at $msgnum.
+-		stop_here $this
++		stop_here_user_resolve $this
+ 	fi
  
-+git-repo-config > output 2>&1
-+
-+test_expect_success 'no arguments, but no crash' \
-+	"test $? = 129 && grep usage output"
-+
- test_done
- 
+ 	if test -x "$GIT_DIR"/hooks/pre-applypatch
+
+
+--------------010801050603070307060903--
