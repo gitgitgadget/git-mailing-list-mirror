@@ -1,130 +1,91 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
-Date: Tue, 02 May 2006 12:21:42 +1200
-Message-ID: <4456A616.6070402@vilain.net>
-References: <20060429165151.2570.qmail@science.horizon.com>	<e30b48$ovk$1@sea.gmane.org> <7viros1585.fsf@assigned-by-dhcp.cox.net>	<e30k0n$ij5$1@sea.gmane.org> <e32kkf$amc$1@sea.gmane.org>	<7vfyjuwt0v.fsf@assigned-by-dhcp.cox.net>	<7v8xpmva9x.fsf@assigned-by-dhcp.cox.net>	<4455638A.3070802@vilain.net> <7vlktms02x.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] cache-tree: replace a sscanf() by two strtol() calls
+Date: Tue, 2 May 2006 03:31:02 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605020327400.31493@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 02 02:22:09 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue May 02 03:31:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FaieR-0006IK-7e
-	for gcvg-git@gmane.org; Tue, 02 May 2006 02:22:03 +0200
+	id 1FajjO-0002ZT-Bn
+	for gcvg-git@gmane.org; Tue, 02 May 2006 03:31:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270AbWEBAV7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 May 2006 20:21:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbWEBAV7
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 May 2006 20:21:59 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:19080 "EHLO
-	watts.utsl.gen.nz") by vger.kernel.org with ESMTP id S1751270AbWEBAV6
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 May 2006 20:21:58 -0400
-Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
-	id 51E8A5A61; Tue,  2 May 2006 12:21:55 +1200 (NZST)
-Received: from [127.0.0.1] (longdrop.watts.utsl.gen.nz [192.168.255.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by watts.utsl.gen.nz (Postfix) with ESMTP id 896FD55A5;
-	Tue,  2 May 2006 12:21:43 +1200 (NZST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vlktms02x.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.92.1.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.watts.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S932340AbWEBBbE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 May 2006 21:31:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932344AbWEBBbE
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 May 2006 21:31:04 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21900 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932340AbWEBBbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 May 2006 21:31:03 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 17B8AD74;
+	Tue,  2 May 2006 03:31:02 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 0BA2BD71;
+	Tue,  2 May 2006 03:31:02 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id EA094C18;
+	Tue,  2 May 2006 03:31:01 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19396>
 
-Junio C Hamano wrote:
 
->>Aha, now I see reason in the madness. So, the "prior" head is not stored
->>in the trees, and tracking the progress of actual head transitions is
->>loosely defined / a research topic. But demonstrably derivable. That
->>works for me.
->>    
->>
->I do not think there is any madness involved here, but I should
->  
->
+On one of my systems, sscanf() first calls strlen() on the buffer. But
+this buffer is not terminated by NUL. So git crashed.
 
-Sorry, it was a figure of speech. It's more like, what appeared to be
-madness no longer looks so.
+strtol() does not share that problem, as it stops reading after the
+first non-digit.
 
->point out that the above example happens to work only because
->Linus and David are two different people.  If Linus did the
->David's work in a separate repository, or even in the same
->repository but on a separate branch, people following the Linus
->tip might still want to know about the fast-forward, but that is
->something you cannot truly tell by the digging like what I did
->in the previous message.
->
->That is why I earlier said this:
->
->    *1* IOW, we _are_ losing some information by not recording the
->    fact that fast-forward was done while doing so.  
->
->    That record should _not_ be in the commit chain.  At the
->    mechanical level, recording that in the commit chain means two
->    criss-crossing branches never converge at the commit chain
->    level, which is already bad.
->  
->
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Here I'm a little bit confused still. Surely criss-crossing branches
-already don't converge unless the commits are in the same order.
+---
 
-Oh, I see. Even if they *are* in the same order, the commit IDs would
-end up different due to these extra headers.
+	Maybe, a better solution would be to store the integers in 
+	binary form. But I am not familiar with that part of git, and
+	further, it would break setups which already have an index
+	with cache-tree information.
 
->  At the philosophical level, the
->    commit chain is a mesh of many possible "global" histories, and
->    the record that somebody (a particular branch in a particular
->    repository) was at what point in the mesh at given time does not
->    belong there.
->
->    But from the repository-owner's point of view, that _might_ be a
->    useful information to keep.  I am just saying this preemptively
->    so that if somebody wants to record it, that should not be
->    recorded in the commit object.
->  
->
+ cache-tree.c |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
 
-That makes sense.
-
->On the other hand, a "note" field that records on which branch
->of which repository each commit was made (you need to give each
->repository-branch an UUID) when you do create a new commit would
->be a sensible thing to have if somebody cares deeply enough.  It
->is an information that is global in nature, and with that, you
->could do the digging like I did without relying on the committer
->identity, but instead using the branch identity.
->  
->
-
-That sounds reasonable. The UUID doesn't need to replicate, either, just
-tag the commits that were made against it.
-
-This extra information falls into the informational, "forensic" history
-tracing category. ie, we don't know now whether we'll need it, but we'll
-store it anyway just to be sure to not make later operations impossible.
-
-I think the large remaining question is around what conventions apply to
-the use of the "note" field. We have perhaps the first example of a well
-formed piece of "forensic" information that belongs in the commit chain
-and could possibly be added by plumbing. I can't think of any more of
-those, but the rename/copy tracking case is a bit different. In this
-case, it doesn't belong in the plumbing, yet you want a reasonable
-convention for storing this information to apply. Also the other cases
-outlined in the original post might do well to have a common convention
-so that the information is more portable between porcelain.
-
-Sam.
+4325bb506d03a0e30a5d4dd197601a53f0375df9
+diff --git a/cache-tree.c b/cache-tree.c
+index 28b78f8..bd7c1aa 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -439,6 +439,7 @@ void *cache_tree_write(struct cache_tree
+ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ {
+ 	const char *buf = *buffer;
++	char *endptr;
+ 	unsigned long size = *size_p;
+ 	struct cache_tree *it;
+ 	int i, subtree_nr;
+@@ -453,8 +454,16 @@ static struct cache_tree *read_one(const
+ 		goto free_return;
+ 	buf++; size--;
+ 	it = cache_tree();
+-	if (sscanf(buf, "%d %d\n", &it->entry_count, &subtree_nr) != 2)
++	it->entry_count = strtol(buf, &endptr, 10);
++	if (buf == endptr)
+ 		goto free_return;
++	size -= (endptr - buf);
++	buf = endptr + 1;
++	subtree_nr = strtol(buf, &endptr, 10);
++	if (buf == endptr)
++		goto free_return;
++	size -= (endptr - buf);
++	buf = endptr + 1;
+ 	while (size && *buf && *buf != '\n') {
+ 		size--;
+ 		buf++;
+-- 
+1.3.1.g5d53-dirty
