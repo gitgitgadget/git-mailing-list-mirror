@@ -1,65 +1,54 @@
-From: Matthias Kestenholz <lists@irregular.ch>
-Subject: Re: Bug in git log
-Date: Tue, 2 May 2006 15:41:58 +0200
-Message-ID: <20060502134158.GC4592@spinlock.ch>
-References: <20060502075122.GA8203@spinlock.ch> <7virooomve.fsf@assigned-by-dhcp.cox.net>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: Features ask for git-send-email
+Date: Tue, 02 May 2006 15:14:15 +0100
+Message-ID: <1146579255.17934.8.camel@pmac.infradead.org>
+References: <4fb292fa0604290630r19edd7ejf88642e33b350d1d@mail.gmail.com>
+	 <1146573417.14059.21.camel@pmac.infradead.org> <e37km0$vav$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 02 15:44:45 2006
+X-From: git-owner@vger.kernel.org Tue May 02 16:14:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FavAw-0007dF-VS
-	for gcvg-git@gmane.org; Tue, 02 May 2006 15:44:27 +0200
+	id 1Favdw-00054S-2E
+	for gcvg-git@gmane.org; Tue, 02 May 2006 16:14:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964817AbWEBNoQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 09:44:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964822AbWEBNoQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 09:44:16 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:6867 "EHLO XSMTP0.ethz.ch")
-	by vger.kernel.org with ESMTP id S964817AbWEBNoP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 09:44:15 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.2499);
-	 Tue, 2 May 2006 15:44:14 +0200
-Received: from spinlock.ch ([129.132.210.115]) by xfe0.d.ethz.ch with Microsoft SMTPSVC(6.0.3790.2499);
-	 Tue, 2 May 2006 15:44:14 +0200
-Received: (nullmailer pid 10658 invoked by uid 1000);
-	Tue, 02 May 2006 13:41:58 -0000
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7virooomve.fsf@assigned-by-dhcp.cox.net>
-X-Editor: Vim http://www.vim.org/
-X-Operating-System: GNU/Linux 2.6.16-rc6 (i686)
-X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
-User-Agent: Mutt/1.5.11+cvs20060403
-X-OriginalArrivalTime: 02 May 2006 13:44:14.0112 (UTC) FILETIME=[7FD7A200:01C66DEE]
+	id S964836AbWEBOOU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 10:14:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964839AbWEBOOU
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 10:14:20 -0400
+Received: from canuck.infradead.org ([205.233.218.70]:29386 "EHLO
+	canuck.infradead.org") by vger.kernel.org with ESMTP
+	id S964836AbWEBOOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 10:14:20 -0400
+Received: from pmac.infradead.org ([81.187.2.168])
+	by canuck.infradead.org with esmtpsa (Exim 4.61 #1 (Red Hat Linux))
+	id 1Favdp-00011g-TX; Tue, 02 May 2006 10:14:18 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e37km0$vav$1@sea.gmane.org>
+X-Mailer: Evolution 2.6.1 (2.6.1-1.fc5.2.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19421>
 
-* Junio C Hamano (junkio@cox.net) wrote:
-> [...]
-> We used to have a build problem where we forgot to remove
-> libgit.a and an old object from the archive was used by
-> mistake.  Could you try rm -f libgit.a and rebuild your git to
-> see if it helps?
-> 
+On Tue, 2006-05-02 at 14:53 +0200, Jakub Narebski wrote:
+> Doesn't 
+>         Content-Type: text/plain; charset=$charset
+> header need also
+>         MIME-Version: 1.0 
 
-Ok I did that. I also removed all files which were installed by
-'make install' and did a complete rebuild and install of the current
-master branch. My git version is now 1.3.1.g7464
+Maybe. The use of Content-Type: actually predates RFC2045, and if we
+include a MIME-Version header then we should make 100% sure that we also
+conform to the rest of RFC2045, which I hadn't actually looked at. In
+particular, we should take care of Content-Transfer-Encoding.
 
-The "double dash" problem is not a big deal since it only happens
-with the deprecated shellscript-version of whatchanged.
-
-Does anyone get some output with the following command? That was the
-bug I tried to report (sorry for my bad/convoluted english)
-
-$ git log -- unresolve.c
+I'd prefer to leave MIME-Version out for now, I think.
 
 -- 
-:wq
+dwmw2
