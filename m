@@ -1,93 +1,193 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [RFC] [PATCH 0/5] Implement 'prior' commit object links (and
-Date: Tue, 2 May 2006 19:08:49 +1200
-Message-ID: <46a038f90605020008y7f4193d5vb35ec00e3aeb4b90@mail.gmail.com>
-References: <20060429165151.2570.qmail@science.horizon.com>
-	 <e30b48$ovk$1@sea.gmane.org> <7viros1585.fsf@assigned-by-dhcp.cox.net>
-	 <e30k0n$ij5$1@sea.gmane.org> <e32kkf$amc$1@sea.gmane.org>
-	 <7vfyjuwt0v.fsf@assigned-by-dhcp.cox.net>
-	 <7v8xpmva9x.fsf@assigned-by-dhcp.cox.net>
-	 <4455638A.3070802@vilain.net>
-	 <7vlktms02x.fsf@assigned-by-dhcp.cox.net>
-	 <4456A616.6070402@vilain.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-bisect broken in 1.2.4
+Date: Tue, 02 May 2006 00:25:52 -0700
+Message-ID: <7vpsiwopkv.fsf@assigned-by-dhcp.cox.net>
+References: <20060501181020.GA21263@suse.de>
+	<20060502070155.GA861@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	"Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 02 09:09:07 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue May 02 09:26:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fap0G-0004us-Hh
-	for gcvg-git@gmane.org; Tue, 02 May 2006 09:09:01 +0200
+	id 1FapGm-0007Fj-CK
+	for gcvg-git@gmane.org; Tue, 02 May 2006 09:26:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932411AbWEBHI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 03:08:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932427AbWEBHI5
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 03:08:57 -0400
-Received: from wproxy.gmail.com ([64.233.184.230]:2193 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932411AbWEBHI5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 May 2006 03:08:57 -0400
-Received: by wproxy.gmail.com with SMTP id i21so2229597wra
-        for <git@vger.kernel.org>; Tue, 02 May 2006 00:08:56 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fcW4w/QjIkNw2GKMKjbyDYjI6SLa7d5kPMrXYcgel3yXzqY5xsIjEuzipsNWkNHE5JR86ua1FTztzm7LCpZ2i9seYZi029vrwG3XPhi14IGzfyLLqYAUji/1WK5BPHx8JUh72uiaxE7LE8xYIeMvXYsLFpvfonesZ86QfQa0dKQ=
-Received: by 10.54.102.5 with SMTP id z5mr406786wrb;
-        Tue, 02 May 2006 00:08:46 -0700 (PDT)
-Received: by 10.54.127.4 with HTTP; Tue, 2 May 2006 00:08:49 -0700 (PDT)
-To: "Sam Vilain" <sam@vilain.net>
-In-Reply-To: <4456A616.6070402@vilain.net>
-Content-Disposition: inline
+	id S932473AbWEBHZ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 03:25:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932372AbWEBHZ4
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 03:25:56 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:54704 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932473AbWEBHZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 03:25:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060502072554.WNYM27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 2 May 2006 03:25:54 -0400
+To: Olaf Hering <olh@suse.de>
+In-Reply-To: <20060502070155.GA861@informatik.uni-freiburg.de> (Uwe
+	Zeisberger's message of "Tue, 2 May 2006 09:01:55 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19402>
 
-On 5/2/06, Sam Vilain <sam@vilain.net> wrote:
-> Here I'm a little bit confused still. Surely criss-crossing branches
-> already don't converge unless the commits are in the same order.
+Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
 
-They do under GIT. No matter how much you criss-cross, every time you
-identify a merge base for the next merge, you are identifying the last
-commit in common on both branches.
+> Olaf Hering wrote:
+>> Did SuSE just pick up a bad version of git, 1.2.4?
+>> git-bisect doesnt work correctly in the kernel sources, .git/HEAD doesnt
+>> contain the commit id anymore, but 'ref: refs/heads/bisect'
+>> 
+>> CONFIG_LOCALVERSION_AUTO depends on the id.
+> Probably you should update to at least linux-v2.6.15-g117a93d.  The
+> script to determine the localversion[1] depends on .git/HEAD being a
+> symlink.
+>
+> Since 
+>
+> 	git-1.1.4-g2fabd21
+>
+> .git/HEAD isn't a symlink any more (per default at least).
 
-While maybe you didn't have that commit being the tip of a head in
-your repo, it _is_ the last common point. If your criss-crossing is
-messy and a few commits are out of order or cherry picked, git-merge
-has a good chance of spotting it. The whole mechanism tends pulls
-quite consistently towards convergence.
+Ouch.  Although what Uwe says is all correct, we should not say
+"don't try kernel older than 2615-117a".  That makes bisect
+rather useless.
 
-If the notes in the commit msg aren't consistent and we lose the
-natural tendency towards convergence that's a major drawback. On the
-other hand, if two branches have exchanged patches "out of band",
-git-merge still gets it right most of the time, so perhaps slightly
-different headers in the commit messages are tolerable?
+> You can rebuild git with USE_SYMLINK_HEAD if you really want the old
+> behaviour.
 
-Junio had written:
-> >On the other hand, a "note" field that records on which branch
-> >of which repository each commit was made (you need to give each
-> >repository-branch an UUID) when you do create a new commit would
-> >be a sensible thing to have if somebody cares deeply enough.
+That probably is a sane thing to do.
 
-I really don't like that -- goes against the grain of really simple,
-portable repos. I cp -pr repo{,_tmp} all the time to do risky merges
-or save a heavy download from a remote server. Let me run away from
-this idea... quick before Linus kills us all ;-)
+We should introduce prefer_symlink_refs configuration to work
+with projects whose older version of build infrastructure
+depends on symlink refs.
 
-I did feel a couple of times the need of remembering where I had
-checked this in -- but it went away quite quickly, must have been a
-leftover of my Arch days ;-). And it actually got solved by agreeing
-within my team to a commit message format pretty much like what's used
-in the kernel. Because the truth is that most of my heads and branches
-have very "local" names.
+The patch is on top of post 1.3.1 git, but .c and .h part should
+apply more-or-less cleanly to older code base.  You should 
+be able to say:
 
-cheers,
+	[core]
+        prefersymlinkrefs = true
 
+in .git/config file, maybe do "git checkout -f master" to switch
+branch and make .git/HEAD into symlink, and do the bisect again.
 
+Sorry for the screwup.
 
-martin
+-- >8 --
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index b27b0d5..d1a4bec 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -64,9 +64,11 @@ core.ignoreStat::
+ 	slow, such as Microsoft Windows.  See gitlink:git-update-index[1].
+ 	False by default.
+ 
+-core.onlyUseSymrefs::
+-	Always use the "symref" format instead of symbolic links for HEAD
+-	and other symbolic reference files. True by default.
++core.preferSymlinkRefs::
++	Instead of the default "symref" format for HEAD
++	and other symbolic reference files, use symbolic links.
++	This is sometimes needed to work with old scripts that
++	expect HEAD to be a symbolic link.
+ 
+ core.repositoryFormatVersion::
+ 	Internal variable identifying the repository format and layout
+diff --git a/Makefile b/Makefile
+index 2374335..ecbdde6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -28,8 +28,8 @@ # Define NO_STRCASESTR if you don't have
+ #
+ # Define NO_SETENV if you don't have setenv in the C library.
+ #
+-# Define USE_SYMLINK_HEAD if you want .git/HEAD to be a symbolic link.
+-# Don't enable it on Windows.
++# Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
++# Enable it on Windows.  By default, symrefs are still used.
+ #
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
+@@ -265,6 +265,7 @@ ifeq ($(uname_O),Cygwin)
+ 	NO_D_TYPE_IN_DIRENT = YesPlease
+ 	NO_D_INO_IN_DIRENT = YesPlease
+ 	NO_STRCASESTR = YesPlease
++	NO_SYMLINK_HEAD = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	# There are conflicting reports about this.
+ 	# On some boxes NO_MMAP is needed, and not so elsewhere.
+@@ -388,6 +389,9 @@ endif
+ ifdef NO_D_INO_IN_DIRENT
+ 	ALL_CFLAGS += -DNO_D_INO_IN_DIRENT
+ endif
++ifdef NO_SYMLINK_HEAD
++	ALL_CFLAGS += -DNO_SYMLINK_HEAD
++endif
+ ifdef NO_STRCASESTR
+ 	COMPAT_CFLAGS += -DNO_STRCASESTR
+ 	COMPAT_OBJS += compat/strcasestr.o
+diff --git a/cache.h b/cache.h
+index a0cf8ca..d186b44 100644
+--- a/cache.h
++++ b/cache.h
+@@ -170,7 +170,7 @@ extern void rollback_index_file(struct c
+ /* Environment bits from configuration mechanism */
+ extern int trust_executable_bit;
+ extern int assume_unchanged;
+-extern int only_use_symrefs;
++extern int prefer_symlink_refs;
+ extern int warn_ambiguous_refs;
+ extern int diff_rename_limit_default;
+ extern int shared_repository;
+diff --git a/config.c b/config.c
+index 4e1f0c2..6cd31a3 100644
+--- a/config.c
++++ b/config.c
+@@ -227,8 +227,8 @@ int git_default_config(const char *var, 
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp(var, "core.symrefsonly")) {
+-		only_use_symrefs = git_config_bool(var, value);
++	if (!strcmp(var, "core.prefersymlinkrefs")) {
++		prefer_symlink_refs = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 
+diff --git a/environment.c b/environment.c
+index 6df6478..444c99e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -13,7 +13,7 @@ char git_default_email[MAX_GITNAME];
+ char git_default_name[MAX_GITNAME];
+ int trust_executable_bit = 1;
+ int assume_unchanged = 0;
+-int only_use_symrefs = 0;
++int prefer_symlink_refs = 0;
+ int warn_ambiguous_refs = 1;
+ int repository_format_version = 0;
+ char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
+diff --git a/refs.c b/refs.c
+index 03398cc..275b914 100644
+--- a/refs.c
++++ b/refs.c
+@@ -76,8 +76,8 @@ int create_symref(const char *git_HEAD, 
+ 	char ref[1000];
+ 	int fd, len, written;
+ 
+-#ifdef USE_SYMLINK_HEAD
+-	if (!only_use_symrefs) {
++#ifndef NO_SYMLINK_HEAD
++	if (prefer_symlink_refs) {
+ 		unlink(git_HEAD);
+ 		if (!symlink(refs_heads_master, git_HEAD))
+ 			return 0;
