@@ -1,52 +1,82 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 3 May 2006 22:07:00 +0200
-Message-ID: <20060503200700.GO27689@pasky.or.cz>
-References: <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com> <Pine.LNX.4.64.0605030856540.4086@g5.osdl.org> <e3al00$1dj$1@sea.gmane.org> <Pine.LNX.4.62.0605031218570.12716@qynat.qvtvafvgr.pbz> <20060503193013.GN27689@pasky.or.cz> <Pine.LNX.4.62.0605031243230.12716@qynat.qvtvafvgr.pbz>
+Date: Wed, 03 May 2006 13:58:24 -0700
+Message-ID: <7vy7xibzbj.fsf@assigned-by-dhcp.cox.net>
+References: <20060502232553.GL27689@pasky.or.cz>
+	<7virooj92i.fsf@assigned-by-dhcp.cox.net>
+	<4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com>
+	<20060503090007.GM27689@pasky.or.cz>
+	<4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
+	<Pine.LNX.4.64.0605030934220.28543@localhost.localdomain>
+	<20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se>
+	<Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 22:06:11 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 22:58:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbNbn-00080S-PL
-	for gcvg-git@gmane.org; Wed, 03 May 2006 22:06:04 +0200
+	id 1FbOQv-0001JB-Ph
+	for gcvg-git@gmane.org; Wed, 03 May 2006 22:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750774AbWECUF7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 16:05:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWECUF7
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 16:05:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:28094 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750774AbWECUF7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 16:05:59 -0400
-Received: (qmail 1146 invoked by uid 2001); 3 May 2006 22:07:00 +0200
-To: David Lang <dlang@digitalinsight.com>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.62.0605031243230.12716@qynat.qvtvafvgr.pbz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751116AbWECU60 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 16:58:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751157AbWECU60
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 16:58:26 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:8131 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751116AbWECU6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 16:58:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060503205825.DHHC18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 May 2006 16:58:25 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 May 2006 08:30:26 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19518>
 
-Dear diary, on Wed, May 03, 2006 at 09:46:33PM CEST, I got a letter
-where David Lang <dlang@digitalinsight.com> said that...
-> as for keeping it in sync, the ideal situation would be for a 
-> documentation manager to take that job ;-) but lacking that just put the 
-> documentation in a non-editable page somewhere and link to it from the 
-> wiki (this could even be pages at kernel.org or wherever you have the raw 
-> source available outside of git itself)
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Well, that one is pretty easy.
+> Which brings me to the final point, which is that I think the hg team was 
+> very active and supporting, perhaps Matt himself. That's _important_ - the 
+> OpenSolaris people probably felt very comfortable with strong support from 
+> the developers. It can often be _the_ best (and biggest) reason to choose 
+> any product - regardless of anything else.
 
-	http://www.kernel.org/pub/software/scm/git/docs/
-	http://www.kernel.org/pub/software/scm/cogito/docs/
+I agree with this 100%.  I happened to be talking with Eric
+about the clone breakage he was having on #git channel, and I
+asked him to help me diagnose the problem, which resulted in the
+solution we saw on the list.  It turned out to be the same
+"1.2.2 works but 1.2.4 not" problem OpenSolaris evaluator was
+having.  I was never contacted from somebody in the OpenSolaris
+circle during the whole exercise.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+But reading their Mercurial report apparently suggests that
+their hg evaluator was with direct contact with the right
+community from early on.  I still do not even know (I've seen it
+once in _their_ report) who the git evaluator on their end was.
+I am not surprised that the difference in depth of involvements
+and contact between the development community and the respective
+evaluator contributed to the result in a major way.
+
+> Even if I think the git mailing list itself is very responsive, I think 
+> the hg people were just more directly and actively involved. For git, they 
+> had to come to us.
+
+That is _very_ unfair to me.  It is not like git and hg both
+submitted proposals to be chosen by them and then we dropped the
+ball by not supporting them properly.  They have to come to us.
+
+The time I personally became aware about their DSCM selection
+contest was when its initial phase was almost over; even if I
+were willing to help them, it was too late.  And no, I do not
+have enough time to go fishing for such opportunities everywhere
+to help many random projects, either.
