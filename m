@@ -1,71 +1,60 @@
-From: Panagiotis Issaris <takis@lumumba.uhasselt.be>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: Problem using GIT CVS-server
-Date: Wed, 03 May 2006 13:41:27 +0200
-Message-ID: <445896E7.1070306@lumumba.uhasselt.be>
-References: <445865A5.5030700@lumumba.uhasselt.be> <46a038f90605030311s4e05de2dr90277f97a3a5c223@mail.gmail.com>
+Date: Wed, 3 May 2006 23:42:45 +1200
+Message-ID: <46a038f90605030442k5c4eee9dj25d4a467942b0f74@mail.gmail.com>
+References: <445865A5.5030700@lumumba.uhasselt.be>
+	 <46a038f90605030311s4e05de2dr90277f97a3a5c223@mail.gmail.com>
+	 <46a038f90605030411o29af1d1bra3276353347516f6@mail.gmail.com>
+	 <445895AC.6070109@lumumba.uhasselt.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 13:41:42 2006
+X-From: git-owner@vger.kernel.org Wed May 03 13:42:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbFjX-0000fk-Ve
-	for gcvg-git@gmane.org; Wed, 03 May 2006 13:41:32 +0200
+	id 1FbFkm-0000st-OS
+	for gcvg-git@gmane.org; Wed, 03 May 2006 13:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965156AbWECLl3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 07:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965155AbWECLl3
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 07:41:29 -0400
-Received: from alpha.uhasselt.be ([193.190.2.30]:48365 "EHLO alpha.uhasselt.be")
-	by vger.kernel.org with ESMTP id S965156AbWECLl2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 07:41:28 -0400
-Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
-	by alpha.uhasselt.be (Postfix) with ESMTP id C4B6E1AB171;
-	Wed,  3 May 2006 13:41:27 +0200 (CEST)
-X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
-Received: from [172.18.16.239] (edm-006.edm.uhasselt.be [193.190.10.6])
-	by alpha.uhasselt.be (Postfix) with ESMTP id 043741AB137;
-	Wed,  3 May 2006 13:41:27 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
-X-Accept-Language: en-us, en
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605030311s4e05de2dr90277f97a3a5c223@mail.gmail.com>
+	id S965155AbWECLmq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 07:42:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965157AbWECLmq
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 07:42:46 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:54394 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S965155AbWECLmp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 07:42:45 -0400
+Received: by wr-out-0506.google.com with SMTP id 67so113635wri
+        for <git@vger.kernel.org>; Wed, 03 May 2006 04:42:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=F4TfMTImyZpfr1Yx51H7nUL/rRjMElpsV4Mu3v5ZrobifTHD84jmO5oD9eb4uPhHB1BLFg04dIYYXn/XDBAP2j7FYciEN82LWMvnh0eiJMk21oXYDQI0AwgClR7r4A43eYliXQhsAqDP004lMgisUSZCKUPjimYtOH/fxUeWH+I=
+Received: by 10.54.93.20 with SMTP id q20mr984913wrb;
+        Wed, 03 May 2006 04:42:45 -0700 (PDT)
+Received: by 10.54.127.4 with HTTP; Wed, 3 May 2006 04:42:45 -0700 (PDT)
+To: "Panagiotis Issaris" <takis@lumumba.uhasselt.be>
+In-Reply-To: <445895AC.6070109@lumumba.uhasselt.be>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19473>
 
-Hi,
+On 5/3/06, Panagiotis Issaris <takis@lumumba.uhasselt.be> wrote:
+> Yes, I installed 1.3.0 using "make prefix=/tmp/testje install"
+> but, I'm getting the same problem (other then my failing typing
+> skills ;-) :
 
-Martin Langhoff wrote:
+The problem is that, while you are executing git-cvsserver from
+/tmp/testje, git-cvsserver invokes git-log from the path, and that is
+the "bad" git-log. Change your PATH in .bashrc so that the /tmp/testje
+install takes precedence...
 
-> [...]
-> thanks a lot for the feedback! cvsserver has mainly been
-> tried/debugged with a few repositories, mainly the moodle.git
-> repository that we host, which is an import from a CVS repo.
+cheers,
 
-I didnt even know it existed! :) I was looking for an Eclipse plugin
-(anyone heard anything about such a beast after 20060313?), when
-I accidently stumbled upon the git-cvsserver manpage, somewhere
-on the web.
 
-> [...]
-> That warning is harmless, and always there. I did look once at
-> implementing gzip compression, but in some cases it implies creating
-> extra temp files to calculate the size, so I've opted to leave it for
-> some other day.
->
-> OTOH, we could declare that we handle it, and never actually send a
-> gzipped file ;-) as long as we can handle gzipped content from the
-> client.
-
-Not really an issue imho :) I just automatically type -z3 whenever I do
-a CVS update :)
-
-BTW, thanks for writing git-cvsserver!
-
-With friendly regards,
-Takis
+martin
