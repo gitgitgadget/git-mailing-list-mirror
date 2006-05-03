@@ -1,55 +1,82 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitk highlight feature
-Date: Tue, 2 May 2006 17:23:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605021721540.4086@g5.osdl.org>
-References: <17495.61142.677439.171773@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] fetch: optionally store the current remote information in the config
+Date: Tue, 02 May 2006 17:36:24 -0700
+Message-ID: <7vmze0hrlj.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0604301524080.2646@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v3bfsol9j.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0605021422520.7051@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 02:23:33 2006
+X-From: git-owner@vger.kernel.org Wed May 03 02:36:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fb593-0002Gi-09
-	for gcvg-git@gmane.org; Wed, 03 May 2006 02:23:09 +0200
+	id 1Fb5M5-0005Ep-F9
+	for gcvg-git@gmane.org; Wed, 03 May 2006 02:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbWECAXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 20:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbWECAXF
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 20:23:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:49627 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751033AbWECAXE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 20:23:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k430N1tH007424
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 2 May 2006 17:23:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k430N0br020124;
-	Tue, 2 May 2006 17:23:00 -0700
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965054AbWECAg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 20:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965055AbWECAg1
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 20:36:27 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:8642 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S965054AbWECAg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 May 2006 20:36:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060503003625.WLGF27327.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 2 May 2006 20:36:25 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605021422520.7051@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 2 May 2006 14:42:14 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19450>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+>> Well, I took the liberty of adjusting the first one in the
+>> series and tonight's "pu" has that one and the second one.
+>> I haven't touched the third one yet, though.
+>
+> I don't think it is worth introducing yet another way to specify 
+> short-cuts for remote information, if there is not at least one problem 
+> which can get solved easier with it than with the other two ways.
 
-On Tue, 2 May 2006, Linus Torvalds wrote:
-> 
-> Ie not a separate menu, but having the current "view" radio buttons be 
-> more flexible. 
+I think the biggest contribution this series might bring in is
+to send a message that we would want to have things in config,
+not outside -- otherwise people might be tempted to do "while on
+this branch use this remote to fetch/pull from by default"
+outside config (perhaps abusing .git/branches, which _is_ per
+branch configuration).
 
-The obvious way to do it would be to just have two buttons per view: one 
-exclusive one (for the main view - only one selected at a time), and the 
-other one for the "highlight" one where you could allow multiple views to 
-be selected for highlighting.
+>> I do not like that hidden environment variable that sits in the
+>> command I use everyday, waiting to be triggered to update my
+>> .config file, possibly by my PEBCAK mistake when I did not want
+>> it to do so.
+>
+> I will refactor it.
 
-		Linus
+Thanks.
+
+> I fixed this error (see separate patch). This was reintroduced by 
+> carelessly checking argv[1] for "--list" and "-l", even if argc < 2.
+
+Thanks.
+
+> As for the trust in repo-config writing the config: it is all done by 
+> calling git_config_set() or git_config_set_multivar(), which you use 
+> yourself to set core.repositoryformatversion, among other values.
+
+Since that happens in a freshly created empty config, I do not
+have to have a high confidence for that case, compared to the
+case it has to muck with random configuration files people
+already have populated with arbitrary gunk.  In any case, I
+haven't seen breakage myself recently so hopefully it is safe
+enough now ;-).
