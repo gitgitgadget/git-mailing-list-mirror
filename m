@@ -1,81 +1,84 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 3 May 2006 11:13:04 +0200
-Message-ID: <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
-References: <20060502232553.GL27689@pasky.or.cz>
-	 <7virooj92i.fsf@assigned-by-dhcp.cox.net>
-	 <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com>
-	 <20060503090007.GM27689@pasky.or.cz>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Problem using GIT CVS-server
+Date: Wed, 3 May 2006 22:11:58 +1200
+Message-ID: <46a038f90605030311s4e05de2dr90277f97a3a5c223@mail.gmail.com>
+References: <445865A5.5030700@lumumba.uhasselt.be>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 11:13:39 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 12:12:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbDQD-0000wE-8D
-	for gcvg-git@gmane.org; Wed, 03 May 2006 11:13:26 +0200
+	id 1FbEL1-0001mC-2l
+	for gcvg-git@gmane.org; Wed, 03 May 2006 12:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965129AbWECJNH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 05:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965133AbWECJNH
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 05:13:07 -0400
-Received: from pproxy.gmail.com ([64.233.166.176]:35116 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S965129AbWECJNF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 05:13:05 -0400
-Received: by py-out-1112.google.com with SMTP id x31so155727pye
-        for <git@vger.kernel.org>; Wed, 03 May 2006 02:13:04 -0700 (PDT)
+	id S965140AbWECKL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 06:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965141AbWECKL7
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 06:11:59 -0400
+Received: from wr-out-0506.google.com ([64.233.184.231]:31021 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S965140AbWECKL6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 06:11:58 -0400
+Received: by wr-out-0506.google.com with SMTP id 67so102289wri
+        for <git@vger.kernel.org>; Wed, 03 May 2006 03:11:58 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Hr/P5WDSQOKbfncHFmRZFIVcqCHBgXb4iui7/Z+B8KRImupM7PJ3YSxQBcj+ChQ9cLBi7Qg3q5NTzwu2+zR8w76hTgox2pEHUckr2HPPDvByq3wuVpsnnAgnQwTAIEvmtSHK4nsrccYQA8KiQbi/lJmrqYjfU5SuepF8MChphVM=
-Received: by 10.35.9.2 with SMTP id m2mr20975pyi;
-        Wed, 03 May 2006 02:13:04 -0700 (PDT)
-Received: by 10.35.26.15 with HTTP; Wed, 3 May 2006 02:13:04 -0700 (PDT)
-To: "Petr Baudis" <pasky@suse.cz>
-In-Reply-To: <20060503090007.GM27689@pasky.or.cz>
+        b=Y54t3MhTWhrBb3nsMYW3TSxOdRi0031Dz+GT+rbF1NuNu4Oz8gN13/iACOLhKRZOfYpaUPduZPNGMI9XpAR5Rm9lY52MmeazGX8tkeFqkvioQ49+EbRTA3N1JW8xLAVbTlI8hBT6YxHet58WGR5ciKLIu59tAmUbRAj/Y0KK9mA=
+Received: by 10.54.121.18 with SMTP id t18mr1729731wrc;
+        Wed, 03 May 2006 03:11:58 -0700 (PDT)
+Received: by 10.54.127.4 with HTTP; Wed, 3 May 2006 03:11:58 -0700 (PDT)
+To: "Panagiotis Issaris" <takis@lumumba.uhasselt.be>
+In-Reply-To: <445865A5.5030700@lumumba.uhasselt.be>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19467>
 
-On 5/3/06, Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Wed, May 03, 2006 at 10:39:07AM CEST, I got a letter
-> where Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> said that...
-> > On 5/3/06, Junio C Hamano <junkio@cox.net> wrote:
-> > >I'd love to see somebody volunteer to act as an editor to feed
-> > >cooked topics for inclusion of the Documentation/ set.  Anybody?
->
-> I think this has time and someone might emerge naturally.
->
-> > Junio, would be possible for you to write a Roadmap in a Wiki page,
-> > similar to what Mercurial did here:
-> > http://www.selenic.com/mercurial/wiki/index.cgi/RoadMap ?
->
-> You can already find a similar (albeit a bit more low-level) document at
->
->         http://kernel.org/git/?p=git/git.git;a=blob;hb=todo;f=TODO
->
-> but you can certainly add a link to it to the wiki. ;-)
+On 5/3/06, Panagiotis Issaris <takis@lumumba.uhasselt.be> wrote:
 
-I was looking for something more "high level but I'll try to add that
-link to the wiki as soon as I back home from work.
+> I've tried using git-cvsserver, but keep running into problems:
 
-> > BTW, do you know why GIT has not been selected as SCM for OpenSolaris?
-> > (they choose Mercurial).
->
-> I think it's explained somewhere in their forums (or mailing lists or
-> whatever they actually _are_).
+Panagiotis,
 
-I only found the announcement, not the rationales.
+thanks a lot for the feedback! cvsserver has mainly been
+tried/debugged with a few repositories, mainly the moodle.git
+repository that we host, which is an import from a CVS repo.
 
-Ciao,
+> When doing a checkout, it only checks out a small subset of
+> the total amount of files in the repository and reports a warning/error.
 
---
-Paolo
-http://paolociarrocchi.googlepages.com
+Hmmm. 100% reproduceable -- looking at it now.
+
+> When doing a subsequent update, it doesn't seem to do anything,
+> but reports two error messages/warnings.
+...
+
+> closing dbh with active statement handles
+
+I thought we had gotten rid of those. In any case, I don't see that
+error, and it's just a silly warning from DBI, as we are using cached
+statements. As it happens when cvsserver is shutting down, it doesn't
+actually break the protocol.
+
+> server doesn't support gzip-file-contents
+
+That warning is harmless, and always there. I did look once at
+implementing gzip compression, but in some cases it implies creating
+extra temp files to calculate the size, so I've opted to leave it for
+some other day.
+
+OTOH, we could declare that we handle it, and never actually send a
+gzipped file ;-) as long as we can handle gzipped content from the
+client.
+
+cheers,
+
+
+martin
