@@ -1,48 +1,46 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [RFC] Terms to add to glossary
-Date: Wed, 03 May 2006 16:41:35 -0500
-Message-ID: <1146692495.24239.183.camel@cashmere.sps.mot.com>
-References: <e332g6$hpl$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [WARNING] please stop using git.git "next" for now
+Date: Wed, 03 May 2006 14:53:31 -0700
+Message-ID: <7virombwro.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 03 23:42:33 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 23:53:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbP70-0000nH-CX
-	for gcvg-git@gmane.org; Wed, 03 May 2006 23:42:22 +0200
+	id 1FbPHv-0002YT-Ns
+	for gcvg-git@gmane.org; Wed, 03 May 2006 23:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361AbWECVmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 17:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbWECVmT
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 17:42:19 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:22940 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1751361AbWECVmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 17:42:19 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k43M1W9C019643;
-	Wed, 3 May 2006 15:01:32 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k43LrWP2022445;
-	Wed, 3 May 2006 16:53:32 -0500 (CDT)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e332g6$hpl$1@sea.gmane.org>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S1751368AbWECVxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 17:53:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbWECVxe
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 17:53:34 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:21720 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751368AbWECVxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 17:53:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060503215332.CNJP25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 May 2006 17:53:32 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19524>
 
-On Sun, 2006-04-30 at 14:18, Jakub Narebski wrote:
-> I'd like the following terms to be added to and described in git glossary:
-> Any takers?
+I just noticed there is a breakage in write-tree optimization
+that uses the new cache-tree data structure in the "next"
+branch.  Switching branches with "git checkout anotherbranch"
+when your index exactly matches the current HEAD commit and then
+immediately doing write-tree produces a nonsense tree, and
+commits on top of that results in tree objects that have
+duplicated entries.
 
-If someone hasn't beaten me to it, I have (most)
-of them read to be sent in...  Lemme go home 
-and dig around some...
-
-jdl
+I will be working on a fix now, but in the meantime please do
+not use the "next" branch for real work.  Sorry for the
+breakage.
