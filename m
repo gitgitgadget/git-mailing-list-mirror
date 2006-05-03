@@ -1,52 +1,55 @@
-From: Paul Mackerras <paulus@samba.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: gitk highlight feature
-Date: Wed, 3 May 2006 10:17:01 +1000
-Message-ID: <17495.63101.163740.649150@cargo.ozlabs.ibm.com>
+Date: Tue, 2 May 2006 17:23:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605021721540.4086@g5.osdl.org>
 References: <17495.61142.677439.171773@cargo.ozlabs.ibm.com>
-	<7vejzcj8da.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 02:17:18 2006
+X-From: git-owner@vger.kernel.org Wed May 03 02:23:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fb53I-0001PM-Fg
-	for gcvg-git@gmane.org; Wed, 03 May 2006 02:17:12 +0200
+	id 1Fb593-0002Gi-09
+	for gcvg-git@gmane.org; Wed, 03 May 2006 02:23:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965051AbWECARI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 May 2006 20:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965052AbWECARI
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 20:17:08 -0400
-Received: from ozlabs.org ([203.10.76.45]:7114 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S965051AbWECARH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 20:17:07 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id BE00267B82; Wed,  3 May 2006 10:17:06 +1000 (EST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejzcj8da.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1751033AbWECAXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 May 2006 20:23:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbWECAXF
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 May 2006 20:23:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49627 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751033AbWECAXE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 May 2006 20:23:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k430N1tH007424
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 2 May 2006 17:23:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k430N0br020124;
+	Tue, 2 May 2006 17:23:00 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19449>
 
-Junio C Hamano writes:
 
-> Eh, the string entered by me is quoted by the program, or do I
-> have to quote it myself?  I suspect it should not be so bad to
-> code, even if you have to do it with tcl ;-).
 
-It's split up into arguments at whitespace unless the whitespace is
-quoted, just like the shell does.  I wrote tcl code to do the
-splitting and quoting according to the shell rules.  So you can, for
-example, put:
+On Tue, 2 May 2006, Linus Torvalds wrote:
+> 
+> Ie not a separate menu, but having the current "view" radio buttons be 
+> more flexible. 
 
-	--unpacked --since='2 days ago'
+The obvious way to do it would be to just have two buttons per view: one 
+exclusive one (for the main view - only one selected at a time), and the 
+other one for the "highlight" one where you could allow multiple views to 
+be selected for highlighting.
 
-in there and it will pass two arguments to git-rev-list, the second
-containing the embedded spaces (but without the single-quotes).
-
-Paul.
+		Linus
