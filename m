@@ -1,82 +1,62 @@
-From: "Haruki Dai-r35557" <Dai.Haruki@freescale.com>
-Subject: RE: problem with plain git clone
-Date: Wed, 3 May 2006 09:24:40 -0700
-Message-ID: <18AEF66AFDF06F4CAAA1D419D000FD3349E710@az33exm24.fsl.freescale.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Wed, 03 May 2006 18:46:57 +0200
+Organization: At home
+Message-ID: <e3amo1$86v$1@sea.gmane.org>
+References: <20060502232553.GL27689@pasky.or.cz> <20060503090007.GM27689@pasky.or.cz> <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com> <Pine.LNX.4.64.0605030856540.4086@g5.osdl.org> <e3al00$1dj$1@sea.gmane.org> <4d8e3fd30605030919xf54e1c2j1e27c4ce04b6864d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 03 18:25:29 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed May 03 18:46:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbK9p-0000yd-Sy
-	for gcvg-git@gmane.org; Wed, 03 May 2006 18:24:58 +0200
+	id 1FbKUp-0004vo-EL
+	for gcvg-git@gmane.org; Wed, 03 May 2006 18:46:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030236AbWECQYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 12:24:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965237AbWECQYz
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 12:24:55 -0400
-Received: from de01egw01.freescale.net ([192.88.165.102]:45030 "EHLO
-	de01egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S965236AbWECQYy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 12:24:54 -0400
-Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id k43He2lv006208
-	for <git@vger.kernel.org>; Wed, 3 May 2006 11:40:02 -0600 (MDT)
-Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id k43GQxTg024605
-	for <git@vger.kernel.org>; Wed, 3 May 2006 11:27:00 -0500 (CDT)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: problem with plain git clone
-Thread-Index: AcZuyN/HthY5TG7qQUihHacOY3Q76wABQfIQ
-To: "Kumar Gala" <galak@kernel.crashing.org>
+	id S1030247AbWECQqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 12:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030248AbWECQqa
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 12:46:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:22500 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030247AbWECQqa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 12:46:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FbKUL-0004qY-Ic
+	for git@vger.kernel.org; Wed, 03 May 2006 18:46:09 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 May 2006 18:46:09 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 May 2006 18:46:09 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19499>
 
-Hi Kumar,
- Could you enable post update hook? I couldn't clone through http:. 
-Thanks,
-Dai 
+Paolo Ciarrocchi wrote:
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org 
-> [mailto:git-owner@vger.kernel.org] On Behalf Of Kumar Gala
-> Sent: Wednesday, May 03, 2006 10:46 AM
-> To: Shawn Pearce
-> Cc: git@vger.kernel.org
-> Subject: Re: problem with plain git clone
+> On 5/3/06, Jakub Narebski <jnareb@gmail.com> wrote:
+
+>> As to content, we could I think use material found at Wikipedia Git page,
+>> and on External Links in Wikipedia Git_(software) article, not repeating
+>> of course what is in official Git Documentation/
 > 
-> 
-> On May 3, 2006, at 9:31 AM, Shawn Pearce wrote:
-> 
-> > Kumar Gala <galak@kernel.crashing.org> wrote:
-> >> Anyone see an issues like the following:
-> >>
-> >> [kgala@kgala_lnx z]$ git clone 
-> git://git.kernel.org:/pub/scm/boot/u-
-> >> boot/galak/u-boot.git
-> >> git clone 
-> git://git.kernel.org:/pub/scm/boot/u-boot/galak/u-boot.git
-> >> fatal: unable to connect a socket (Connection timed out)
-> >
-> > There's no GIT daemon running on the empty port.  Notice the ':'
-> > appearing right after '.org'.
-> >
-> > Hmm, that sounds like a bug in the protocol URL parser...
-> 
-> Yeah, that was it. thanks.
-> 
-> - kumar
-> -
-> To unsubscribe from this list: send the line "unsubscribe 
-> git" in the body of a message to majordomo@vger.kernel.org 
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> I just added the TODO list link but I'm not a wiki expert, if you know
+> how to link to the article from Wikipedia please do it ;-)
+
+I thought about copying contents, not making a link to WikiPedia article.
+I tried to make InterWiki link, WikiPedia:Git_(software) but MoinMoin engine
+doesn't deal well with parentheses.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
