@@ -1,54 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 03 May 2006 17:30:50 +0200
-Organization: At home
-Message-ID: <e3ai99$mqh$1@sea.gmane.org>
-References: <20060502232553.GL27689@pasky.or.cz> <7virooj92i.fsf@assigned-by-dhcp.cox.net> <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com> <20060503090007.GM27689@pasky.or.cz> <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> <4d8e3fd30605030824v40017178o366a9d8aa83557e8@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed May 03 17:32:00 2006
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Add a simple makefile
+Date: Wed, 03 May 2006 11:34:31 -0400
+Message-ID: <20060503153431.9246.64487.stgit@dv.roinet.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed May 03 17:35:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbJJz-0006kl-2L
-	for gcvg-git@gmane.org; Wed, 03 May 2006 17:31:23 +0200
+	id 1FbJND-0007ZE-Sq
+	for gcvg-git@gmane.org; Wed, 03 May 2006 17:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965220AbWECPbT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 11:31:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965221AbWECPbT
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 11:31:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:27782 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965220AbWECPbT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 11:31:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FbJJG-0006Zm-IY
-	for git@vger.kernel.org; Wed, 03 May 2006 17:30:38 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 May 2006 17:30:38 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 May 2006 17:30:38 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S965225AbWECPel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 11:34:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965221AbWECPel
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 11:34:41 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:48809 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965225AbWECPek
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 3 May 2006 11:34:40 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FbJN7-0007S7-Jy
+	for git@vger.kernel.org; Wed, 03 May 2006 11:34:38 -0400
+Received: from localhost.roinet.com ([127.0.0.1] helo=dv.roinet.com)
+	by dv.roinet.com with esmtp (Exim 4.61)
+	(envelope-from <proski@gnu.org>)
+	id 1FbJN1-0002PF-P3; Wed, 03 May 2006 11:34:31 -0400
+To: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19492>
 
-Paolo Ciarrocchi wrote:
+From: Pavel Roskin <proski@gnu.org>
 
-> Would be fantastic to see a fair comparison of the two tools but I
-> can't find anything useful on the web.
 
-Three tools: Git/Cogito, Mercurial and Monotone.
+---
 
--- 
-Jakub Narebski
-Warsaw, Poland
+ Makefile |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..df77d97
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,23 @@
++PREFIX = $(HOME)
++DESTDIR = /
++PYTHON = python
++
++all:
++	$(PYTHON) setup.py build
++
++install:
++	$(PYTHON) setup.py install --prefix=$(PREFIX) --root=$(DESTDIR)
++
++doc:
++	cd doc && $(MAKE) all
++
++test:
++	cd t && $(MAKE) all
++
++clean:
++	for dir in doc t; do \
++		(cd $$dir && $(MAKE) clean); \
++	done
++	rm -rf build
++	rm -f stgit/*.pyc
++	rm -f stgit/commands/*.pyc
