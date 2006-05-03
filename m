@@ -1,79 +1,75 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] Transitively read alternatives
-Date: Wed, 3 May 2006 09:51:33 +0200
-Message-ID: <20060503075133.GO20847@admingilde.org>
-References: <20060501203631.GH20847@admingilde.org> <7v1wvdsbuj.fsf@assigned-by-dhcp.cox.net> <20060501225335.GI20847@admingilde.org> <20060502073847.GK20847@admingilde.org> <7v8xpjhguu.fsf@assigned-by-dhcp.cox.net>
+From: Panagiotis Issaris <takis@lumumba.uhasselt.be>
+Subject: Problem using GIT CVS-server
+Date: Wed, 03 May 2006 10:11:17 +0200
+Message-ID: <445865A5.5030700@lumumba.uhasselt.be>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ijf6z65S790CMqo8"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 09:51:45 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed May 03 10:12:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbC94-0005B6-Ib
-	for gcvg-git@gmane.org; Wed, 03 May 2006 09:51:38 +0200
+	id 1FbCSV-00080h-3Q
+	for gcvg-git@gmane.org; Wed, 03 May 2006 10:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965047AbWECHvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 03:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965116AbWECHvf
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 03:51:35 -0400
-Received: from admingilde.org ([213.95.32.146]:46992 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S965047AbWECHvf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 03:51:35 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1FbC8z-0005PY-LY; Wed, 03 May 2006 09:51:33 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v8xpjhguu.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S965112AbWECILU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 04:11:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965059AbWECILT
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 04:11:19 -0400
+Received: from alpha.uhasselt.be ([193.190.2.30]:19684 "EHLO alpha.uhasselt.be")
+	by vger.kernel.org with ESMTP id S965116AbWECILS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 04:11:18 -0400
+Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
+	by alpha.uhasselt.be (Postfix) with ESMTP id E04821AB18B
+	for <git@vger.kernel.org>; Wed,  3 May 2006 10:11:17 +0200 (CEST)
+X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
+Received: from [172.18.16.239] (edm-006.edm.uhasselt.be [193.190.10.6])
+	by alpha.uhasselt.be (Postfix) with ESMTP id 262021AB137
+	for <git@vger.kernel.org>; Wed,  3 May 2006 10:11:17 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051013)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19457>
 
+Hi,
 
---ijf6z65S790CMqo8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I've tried using git-cvsserver, but keep running into problems:
+When doing a checkout, it only checks out a small subset of
+the total amount of files in the repository and reports a warning/error.
+When doing a subsequent update, it doesn't seem to do anything,
+but reports two error messages/warnings.
 
-hoi :)
+I'm using yesterdays GIT and try to serve my local copy of the GIT
+repository using git-cvsserver.
 
-On Tue, May 02, 2006 at 09:28:25PM -0700, Junio C Hamano wrote:
-> > +	if (*entry !=3D '/' && relative_base) {
-> > +		/* Relative alt-odb */
-> > +		if (base_len < 0)
-> > +			base_len =3D strlen(relative_base) + 1;
->=20
-> Wouldn't base_len be always -1 here?
+export CVSROOT=:ext:takis@localhost:/usr/local/src/git/.git
+export CVS_SERVER=git-cvsserver
 
-hmm, I just moved that part around.
+takis@issaris:/tmp/a/b$ cvs co -d project-master master
+takis@localhost's password:
+cvs checkout: Updating project-master
+U project-master/Makefile
+U project-master/README
+U project-master/cache.h
+U project-master/cat-file.c
+U project-master/commit-tree.c
+U project-master/init-db.c
+U project-master/read-cache.c
+U project-master/read-tree.c
+U project-master/show-diff.c
+U project-master/update-cache.c
+U project-master/write-tree.c
+closing dbh with active statement handles
+takis@issaris:/tmp/a/b$ cd project-master/
+takis@issaris:/tmp/a/b/project-master$ cvs -z3 update -PAd
+takis@localhost's password:
+server doesn't support gzip-file-contents
+closing dbh with active statement handles
+takis@issaris:/tmp/a/b/project-master$
 
-> Maybe it is easier not to do the recursive thing unless the alternate
-> is absolute path, and also as a purely safety measure, limit the
-> maximum recursion depth to something low like 5, similar to recursive
-> symlink resolution.
-
-Agreed.
-Lets see if I have some free time in the evening ;-)
-
---=20
-Martin Waitz
-
---ijf6z65S790CMqo8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEWGEFj/Eaxd/oD7IRAss6AJwMpTW+XGZMhnT+jVXz56A7hiqhYgCfYYYS
-VpvUQwLJqdF9pLqRqEC8TuQ=
-=coft
------END PGP SIGNATURE-----
-
---ijf6z65S790CMqo8--
+With friendly regards,
+Takis
