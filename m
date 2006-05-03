@@ -1,113 +1,97 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-log --parents broken post v1.3.0
-Date: Wed, 3 May 2006 07:59:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605030745550.4086@g5.osdl.org>
-References: <46a038f90605030456q679ceebcsa037b834bced9ca2@mail.gmail.com>
- <46a038f90605030510x6d582804w6c0d2fec60bd56e5@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Wed, 03 May 2006 17:01:43 +0200
+Message-ID: <4458C5D7.8010501@op5.se>
+References: <20060502232553.GL27689@pasky.or.cz> <7virooj92i.fsf@assigned-by-dhcp.cox.net> <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com> <20060503090007.GM27689@pasky.or.cz> <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 03 16:59:36 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 17:03:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbIoq-0000Us-4B
-	for gcvg-git@gmane.org; Wed, 03 May 2006 16:59:12 +0200
+	id 1FbIrM-00011W-Iq
+	for gcvg-git@gmane.org; Wed, 03 May 2006 17:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965211AbWECO7J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 10:59:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965214AbWECO7J
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 10:59:09 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:32705 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965211AbWECO7I (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 10:59:08 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k43Ex1tH002316
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 3 May 2006 07:59:02 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k43Ex1Ro003129;
-	Wed, 3 May 2006 07:59:01 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605030510x6d582804w6c0d2fec60bd56e5@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965213AbWECPBq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 11:01:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965214AbWECPBq
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 11:01:46 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:18412 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965213AbWECPBp
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 3 May 2006 11:01:45 -0400
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id C44CD6BCF4; Wed,  3 May 2006 17:01:43 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.7-1.1.fc4 (X11/20050929)
+X-Accept-Language: en-us, en
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060503142957.GA9056@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19488>
 
-
-
-On Thu, 4 May 2006, Martin Langhoff wrote:
-
-> On 5/3/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > Soon after v1.3.0 git-log --parents got broken. When using --parents,
+Shawn Pearce wrote:
+> Nicolas Pitre <nico@cam.org> wrote:
 > 
-> Ok -- perhaps that was a bit of a rushed statement. Reading back on
-> the archives, it seems like it may have been intentional.
+>>On Wed, 3 May 2006, Paolo Ciarrocchi wrote:
+>>
+>>>On 5/3/06, Petr Baudis <pasky@suse.cz> wrote:
+>>>
+>>>>Dear diary, on Wed, May 03, 2006 at 10:39:07AM CEST, I got a letter
+>>>>where Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> said that...
+>>>>
+>>>>>On 5/3/06, Junio C Hamano <junkio@cox.net> wrote:
+>>>>>
+>>>>>BTW, do you know why GIT has not been selected as SCM for OpenSolaris?
+>>>>>(they choose Mercurial).
+>>>>
+>>>>I think it's explained somewhere in their forums (or mailing lists or
+>>>>whatever they actually _are_).
+>>>
+>>>I only found the announcement, not the rationales.
+>>
+>>http://mail.opensolaris.org/pipermail/tools-discuss/2006-April/000366.html
+>>
+>>Looks like they didn't buy the argument about the uselessness of 
+>>recording file renames.
+> 
+> 
+> The final evaluations are available from here (at the very bottom
+> of the page):
+> 
+>   http://opensolaris.org/os/community/tools/scm/
+> 
+> It looks like Mercurial doesn't support renames either, but a lot
+> of users are asking for it to be supported.  So I don't think that's
+> the reason.  It looks more like they didn't enjoy porting GIT 1.2.2
+> (as 1.2.4 was found to not work in all cases) to Solaris and the
+> tester ran into some problems with the conflict resolution support.
+> 
+> My own reading of the two final evaluations for GIT and Mercurial
+> leaves me feeling like GIT is a more mature tool which is faster
+> and more stable then Mercurial.  GIT seemed to be more reliable
+> during testing then Mercurial was, despite the cloning issue.
+> Which makes me surprised that OpenSolaris selected Mercurial instead.
+> 
 
-No it wasn't. "git log --parents" was definitely supposed to still work. 
+Considering Sun's CEO's common comments on Solaris' superiority over 
+Linux I think it's safe to assume that the same CEO wouldn't exactly 
+jump of joy if his employees started depending on a tool fathered by Linus.
 
-That said, I suspect a git-cvsserver kind of usage is better off using 
-"git-rev-list --parents HEAD" instead, which didn't break in the first 
-place.
+No offence intended to Mercurial or its developers. Although I don't 
+know anything about how it works I'm fairly sure Sun's developers would 
+never agree to be forced to use an inferior tool (congrats Mercurial 
+devs). However, I *do* think that in a tie-break Mercurial would win for 
+political reasons.
 
-> I have to confess, I don't quite follow the changes happening in that
-> series of commits. If --parents is really not coming back I'll change
-> the log entry parsing in cvsserver. However, I suspect git-log should
-> error out on it ("fatal: deprecated option") so porcelains break
-> explicitly, rather than silently.
-
-No, the option really isn't deprecated, it was just missed because nothing 
-seemed to use it.. How about this diff?
-
-Signed-off-by: Yadda yadda
-
-		Linus
-
----
-diff --git a/log-tree.c b/log-tree.c
-index 9634c46..f9c6f7c 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -3,6 +3,15 @@ #include "diff.h"
- #include "commit.h"
- #include "log-tree.h"
- 
-+static void show_parents(struct commit *commit, int abbrev)
-+{
-+	struct commit_list *p;
-+	for (p = commit->parents; p ; p = p->next) {
-+		struct commit *parent = p->item;
-+		printf(" %s", diff_unique_abbrev(parent->object.sha1, abbrev));
-+	}
-+}
-+
- void show_log(struct rev_info *opt, struct log_info *log, const char *sep)
- {
- 	static char this_header[16384];
-@@ -14,7 +23,10 @@ void show_log(struct rev_info *opt, stru
- 
- 	opt->loginfo = NULL;
- 	if (!opt->verbose_header) {
--		puts(sha1_to_hex(commit->object.sha1));
-+		fputs(diff_unique_abbrev(commit->object.sha1, abbrev_commit), stdout);
-+		if (opt->parents)
-+			show_parents(commit, abbrev_commit);
-+		putchar('\n');
- 		return;
- 	}
- 
-@@ -40,6 +52,8 @@ void show_log(struct rev_info *opt, stru
- 	printf("%s%s",
- 		opt->commit_format == CMIT_FMT_ONELINE ? "" : "commit ",
- 		diff_unique_abbrev(commit->object.sha1, abbrev_commit));
-+	if (opt->parents)
-+		show_parents(commit, abbrev_commit);
- 	if (parent) 
- 		printf(" (from %s)", diff_unique_abbrev(parent->object.sha1, abbrev_commit));
- 	putchar(opt->commit_format == CMIT_FMT_ONELINE ? ' ' : '\n');
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
