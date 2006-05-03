@@ -1,85 +1,74 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: segfault bug in internal git grep from next
-Date: Wed, 3 May 2006 10:32:29 +0200
-Message-ID: <20060503083229.GA15579@fiberbit.xs4all.nl>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Wed, 3 May 2006 10:39:07 +0200
+Message-ID: <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com>
+References: <20060502232553.GL27689@pasky.or.cz>
+	 <7virooj92i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="/04w6evG8XlLl3ft"
-X-From: git-owner@vger.kernel.org Wed May 03 10:32:38 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 10:39:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbCmg-00031u-MI
-	for gcvg-git@gmane.org; Wed, 03 May 2006 10:32:35 +0200
+	id 1FbCtA-00041E-9v
+	for gcvg-git@gmane.org; Wed, 03 May 2006 10:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965123AbWECIcc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 04:32:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965124AbWECIcb
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 04:32:31 -0400
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:51367 "EHLO
-	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S965123AbWECIcb
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 3 May 2006 04:32:31 -0400
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.54)
-	id 1FbCmb-0002xG-Qj
-	for git@vger.kernel.org; Wed, 03 May 2006 10:32:29 +0200
-To: git@vger.kernel.org
+	id S965124AbWECIjJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 04:39:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965126AbWECIjJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 04:39:09 -0400
+Received: from pproxy.gmail.com ([64.233.166.176]:12768 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S965124AbWECIjI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 04:39:08 -0400
+Received: by py-out-1112.google.com with SMTP id x31so148647pye
+        for <git@vger.kernel.org>; Wed, 03 May 2006 01:39:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bTu28sOl5629p2ZecGXnpdxtPieKpHlN17Xn3nJEN0JzuM0c4doUFjQE2NLBjiMCvF7PhKOwhoNwfKgAf8Ng2Fzg9/6ds/chXBl0JGBycs6y1OjVE+LHrIaNVLdGD4/BacFzP1PD0B/1WYCgZBy0/Fy6In0A+YeIan0K030Nb+8=
+Received: by 10.35.60.15 with SMTP id n15mr866247pyk;
+        Wed, 03 May 2006 01:39:07 -0700 (PDT)
+Received: by 10.35.26.15 with HTTP; Wed, 3 May 2006 01:39:07 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7virooj92i.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19463>
 
+On 5/3/06, Junio C Hamano <junkio@cox.net> wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+>
+> >   I'm personally not exceptionally fond of wikis (other than Wikipedia)
+> > but a wish to have one has been expressed several times and I hope it
+> > will be helpful for the Git community; not only the newbies might dig
+> > (and especially exchange!) some useful information, tips'n'trick and
+> > such.  Ideally, it could become a melting pot for the Documentation/
+> > directories or the rather austere (I take patches) Git homepage - or
+> > something entirely different. Whatever _you_ make from it.
+>
+> Thanks for doing this.  I am not a Wiki person myself, and
+> would rather want to see we have useful and authoritative bits
+> in the Documentation set, but this would help the community.
+>
+> I'd love to see somebody volunteer to act as an editor to feed
+> cooked topics for inclusion of the Documentation/ set.  Anybody?
 
---/04w6evG8XlLl3ft
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Junio, would be possible for you to write a Roadmap in a Wiki page,
+similar to what Mercurial did here:
+http://www.selenic.com/mercurial/wiki/index.cgi/RoadMap ?
 
-Hello!
+BTW, do you know why GIT has not been selected as SCM for OpenSolaris?
+(they choose Mercurial).
 
-I'm using the next branch as of commit 6a40327d242dac9f85c6d63c94d537b45ba86e89
+Ciao,
 
-A segfault occurs in using the new builtin grep when using it on a
-binary file, so no regular \n endings.
-
-A testcase is the attached (if it survives the vger filters) "git.png"
-icon as it is used for example on the http://www.kernel.org/git website.
-
-I tried the obvious, this is the line that gives the segfault:
-
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 09e3677..5d4f319 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -121,7 +121,7 @@ static void compile_patterns(struct grep
- static char *end_of_line(char *cp, unsigned long *left)
- {
- 	unsigned long l = *left;
--	while (l && *cp != '\n') {
-+	while (l && *cp && *cp != '\n') {
- 		l--;
- 		cp++;
- 	}
-
-but it did not solve the problem. Unfortunately I have no time at the
-moment to investigate further, so just this report at the moment.
-
-On a side-note it might be handy to add the icon to the main git
-repository and to use it in (new) test cases for git grep. Of course
-grepping in binary files is mostly not very useful, but lots of
-real-world repo's have some binaries.
--- 
-Marco Roeland
-
---/04w6evG8XlLl3ft
-Content-Type: image/png
-Content-Description: git.png
-Content-Disposition: attachment; filename="git.png"
-Content-Transfer-Encoding: base64
-
-iVBORw0KGgoAAAANSUhEUgAAAEgAAAAbBAMAAAAt2dQtAAAAGFBMVEX///9gYF2wr6oAgADO
-zcfAAADo6Ob39/aVDKdHAAAAc0lEQVQoz2NIZyAESlwYCggqYlNhIAIIDWlFrKGhATAMk2A2
-JlKRsQER1uFVZGxszGxsDKIMcCpiBirBYh2zAQJTpAjoAAMYJlYR1OEglxvgtA41JHEpgpkw
-uJMKEblFiMGNoKJEIQYnQYJAhcFFiSBwAQCkPSHFEhya/gAAAABJRU5ErkJggg==
-
---/04w6evG8XlLl3ft--
+--
+Paolo
+http://paolociarrocchi.googlepages.com
