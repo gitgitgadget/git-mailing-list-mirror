@@ -1,83 +1,63 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 3 May 2006 17:39:57 +0200
-Message-ID: <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com>
-References: <20060502232553.GL27689@pasky.or.cz>
-	 <7virooj92i.fsf@assigned-by-dhcp.cox.net>
-	 <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com>
-	 <20060503090007.GM27689@pasky.or.cz>
-	 <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
-	 <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain>
-	 <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se>
-	 <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Shawn Pearce" <spearce@spearce.org>,
-	"Nicolas Pitre" <nico@cam.org>, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 17:40:29 2006
+From: Kumar Gala <galak@kernel.crashing.org>
+Subject: Re: problem with plain git clone
+Date: Wed, 3 May 2006 10:46:18 -0500
+Message-ID: <7814FB77-0073-40F3-BF1C-E2C7CEC7412D@kernel.crashing.org>
+References: <7CAB7A96-2C63-4B05-B0C6-72FC5B74D960@kernel.crashing.org> <20060503143130.GA9172@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v749.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 17:46:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbJSL-0000Lj-HB
-	for gcvg-git@gmane.org; Wed, 03 May 2006 17:40:02 +0200
+	id 1FbJYZ-0001hS-Od
+	for gcvg-git@gmane.org; Wed, 03 May 2006 17:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965226AbWECPj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 11:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965227AbWECPj6
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 11:39:58 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:24038 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S965226AbWECPj6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 11:39:58 -0400
-Received: by py-out-1112.google.com with SMTP id x31so251245pye
-        for <git@vger.kernel.org>; Wed, 03 May 2006 08:39:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rXTPdPwLOaOYOmjeLD7CJUM82/6wHq94vy7RsDWFrUx2mgZIMvv+ByLTE7ztcc++QeEZPbl0e9Avfyx5PtEG+TwjvC9T5joP2ZFNrRyhbnLt2/kbcLcMguGE6qhw0B13QlROwE6cZ3uKXcY6eykyAjR4mhbuPLYk9pPTKk2T2w4=
-Received: by 10.35.109.2 with SMTP id l2mr1407717pym;
-        Wed, 03 May 2006 08:39:57 -0700 (PDT)
-Received: by 10.35.26.15 with HTTP; Wed, 3 May 2006 08:39:57 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
-Content-Disposition: inline
+	id S965229AbWECPqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 11:46:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965232AbWECPqY
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 11:46:24 -0400
+Received: from nommos.sslcatacombnetworking.com ([67.18.224.114]:38174 "EHLO
+	nommos.sslcatacombnetworking.com") by vger.kernel.org with ESMTP
+	id S965229AbWECPqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 11:46:23 -0400
+Received: from [140.242.26.81] (helo=[172.26.64.92])
+	by nommos.sslcatacombnetworking.com with esmtp (Exim 4.52)
+	id 1FbJYR-0003Ji-Oq; Wed, 03 May 2006 10:46:20 -0500
+In-Reply-To: <20060503143130.GA9172@spearce.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-Mailer: Apple Mail (2.749.3)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - nommos.sslcatacombnetworking.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - kernel.crashing.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19494>
 
-On 5/3/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 3 May 2006, Andreas Ericsson wrote:
-> >
-> > Considering Sun's CEO's common comments on Solaris' superiority over Linux I
-> > think it's safe to assume that the same CEO wouldn't exactly jump of joy if
-> > his employees started depending on a tool fathered by Linus.
+
+On May 3, 2006, at 9:31 AM, Shawn Pearce wrote:
+
+> Kumar Gala <galak@kernel.crashing.org> wrote:
+>> Anyone see an issues like the following:
+>>
+>> [kgala@kgala_lnx z]$ git clone git://git.kernel.org:/pub/scm/boot/u-
+>> boot/galak/u-boot.git
+>> git clone git://git.kernel.org:/pub/scm/boot/u-boot/galak/u-boot.git
+>> fatal: unable to connect a socket (Connection timed out)
 >
-> I doubt it went that high up, but with any kind of politics it's obviously
-> possible that somebody consciously or unconsciously felt it might become a
-> political problem, and it might have made a difference.
+> There's no GIT daemon running on the empty port.  Notice the ':'
+> appearing right after '.org'.
 >
-> However, I think the _real_ issue is that Mercurial has a much nicer
-> introductory phase. The standard mercurial web-page is so much more
-> professional and nice to look at than any git page I have ever seen, and
-> let's face it: first looks _do_ count.
+> Hmm, that sounds like a bug in the protocol URL parser...
 
-I can only agree.
+Yeah, that was it. thanks.
 
-I'm not a git developer, I'm even not a _real_ developer, I only hack
-for fun during my very poor spare time but web pages, wiki and
-introduction offered by Mercurial are really a lot nicer to what git
-is offering at the moment.
-
-Perhaps is just a silly idea, but would be possible for OSDL to host a
-web site (www.git.org) where we can host pages/wiki an so on?
-
-Ciao,
---
-Paolo
-http://paolociarrocchi.googlepages.com
+- kumar
