@@ -1,63 +1,58 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 03 May 2006 09:41:40 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain>
-References: <20060502232553.GL27689@pasky.or.cz>
- <7virooj92i.fsf@assigned-by-dhcp.cox.net>
- <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com>
- <20060503090007.GM27689@pasky.or.cz>
- <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 15:42:48 2006
+From: Kumar Gala <galak@kernel.crashing.org>
+Subject: problem with plain git clone
+Date: Wed, 3 May 2006 09:18:48 -0500
+Message-ID: <7CAB7A96-2C63-4B05-B0C6-72FC5B74D960@kernel.crashing.org>
+Mime-Version: 1.0 (Apple Message framework v749.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed May 03 16:19:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbHbs-0008AU-3a
-	for gcvg-git@gmane.org; Wed, 03 May 2006 15:41:44 +0200
+	id 1FbIBu-0000Hz-FM
+	for gcvg-git@gmane.org; Wed, 03 May 2006 16:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030184AbWECNll (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 09:41:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030208AbWECNll
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 09:41:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18597 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1030184AbWECNlk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 09:41:40 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IYO009LCZDGV4B0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 03 May 2006 09:41:40 -0400 (EDT)
-In-reply-to: <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
-X-X-Sender: nico@localhost.localdomain
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+	id S964887AbWECOSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 10:18:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965094AbWECOSz
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 10:18:55 -0400
+Received: from nommos.sslcatacombnetworking.com ([67.18.224.114]:22552 "EHLO
+	nommos.sslcatacombnetworking.com") by vger.kernel.org with ESMTP
+	id S964887AbWECOSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 10:18:55 -0400
+Received: from cpe-66-69-212-100.austin.res.rr.com ([66.69.212.100] helo=[192.168.1.101])
+	by nommos.sslcatacombnetworking.com with esmtp (Exim 4.52)
+	id 1FbIBm-0001NE-CF
+	for git@vger.kernel.org; Wed, 03 May 2006 09:18:51 -0500
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.749.3)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - nommos.sslcatacombnetworking.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - kernel.crashing.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19483>
 
-On Wed, 3 May 2006, Paolo Ciarrocchi wrote:
-> On 5/3/06, Petr Baudis <pasky@suse.cz> wrote:
-> > Dear diary, on Wed, May 03, 2006 at 10:39:07AM CEST, I got a letter
-> > where Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> said that...
-> > > On 5/3/06, Junio C Hamano <junkio@cox.net> wrote:
-> > > 
-> > > BTW, do you know why GIT has not been selected as SCM for OpenSolaris?
-> > > (they choose Mercurial).
-> > 
-> > I think it's explained somewhere in their forums (or mailing lists or
-> > whatever they actually _are_).
-> 
-> I only found the announcement, not the rationales.
+Anyone see an issues like the following:
 
-http://mail.opensolaris.org/pipermail/tools-discuss/2006-April/000366.html
+[kgala@kgala_lnx z]$ git clone git://git.kernel.org:/pub/scm/boot/u- 
+boot/galak/u-boot.git
+git clone git://git.kernel.org:/pub/scm/boot/u-boot/galak/u-boot.git
+fatal: unable to connect a socket (Connection timed out)
+fetch-pack from 'git://git.kernel.org:/pub/scm/boot/u-boot/galak/u- 
+boot.git' failed.
 
-Looks like they didn't buy the argument about the uselessness of 
-recording file renames.
+I've clearly done something crazy, but I setup this repository today  
+with a simple:
 
+git clone -n rsync://rsync.denx.de/git/u-boot.git
+mv u-boot/.git/ u-boot.git
 
-Nicolas
+- kumar
