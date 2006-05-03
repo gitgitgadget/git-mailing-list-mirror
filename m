@@ -1,63 +1,71 @@
-From: Kumar Gala <galak@kernel.crashing.org>
-Subject: Re: problem with plain git clone
-Date: Wed, 3 May 2006 10:46:18 -0500
-Message-ID: <7814FB77-0073-40F3-BF1C-E2C7CEC7412D@kernel.crashing.org>
-References: <7CAB7A96-2C63-4B05-B0C6-72FC5B74D960@kernel.crashing.org> <20060503143130.GA9172@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v749.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 17:46:31 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Wed, 3 May 2006 09:06:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605030856540.4086@g5.osdl.org>
+References: <20060502232553.GL27689@pasky.or.cz>  <7virooj92i.fsf@assigned-by-dhcp.cox.net>
+  <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com> 
+ <20060503090007.GM27689@pasky.or.cz>  <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
+  <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> 
+ <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> 
+ <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
+ <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Shawn Pearce <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 18:06:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbJYZ-0001hS-Od
-	for gcvg-git@gmane.org; Wed, 03 May 2006 17:46:28 +0200
+	id 1FbJrq-00063N-VU
+	for gcvg-git@gmane.org; Wed, 03 May 2006 18:06:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965229AbWECPqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 11:46:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965232AbWECPqY
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 11:46:24 -0400
-Received: from nommos.sslcatacombnetworking.com ([67.18.224.114]:38174 "EHLO
-	nommos.sslcatacombnetworking.com") by vger.kernel.org with ESMTP
-	id S965229AbWECPqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 11:46:23 -0400
-Received: from [140.242.26.81] (helo=[172.26.64.92])
-	by nommos.sslcatacombnetworking.com with esmtp (Exim 4.52)
-	id 1FbJYR-0003Ji-Oq; Wed, 03 May 2006 10:46:20 -0500
-In-Reply-To: <20060503143130.GA9172@spearce.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-Mailer: Apple Mail (2.749.3)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - nommos.sslcatacombnetworking.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - kernel.crashing.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030233AbWECQGT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 12:06:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030234AbWECQGT
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 12:06:19 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:61910 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030233AbWECQGS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 12:06:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k43G61tH005131
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 3 May 2006 09:06:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k43G60c4005216;
+	Wed, 3 May 2006 09:06:01 -0700
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+In-Reply-To: <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19495>
 
 
-On May 3, 2006, at 9:31 AM, Shawn Pearce wrote:
 
-> Kumar Gala <galak@kernel.crashing.org> wrote:
->> Anyone see an issues like the following:
->>
->> [kgala@kgala_lnx z]$ git clone git://git.kernel.org:/pub/scm/boot/u-
->> boot/galak/u-boot.git
->> git clone git://git.kernel.org:/pub/scm/boot/u-boot/galak/u-boot.git
->> fatal: unable to connect a socket (Connection timed out)
->
-> There's no GIT daemon running on the empty port.  Notice the ':'
-> appearing right after '.org'.
->
-> Hmm, that sounds like a bug in the protocol URL parser...
+On Wed, 3 May 2006, Paolo Ciarrocchi wrote:
+> 
+> Perhaps is just a silly idea, but would be possible for OSDL to host a
+> web site (www.git.org) where we can host pages/wiki an so on?
 
-Yeah, that was it. thanks.
+I don't think hosting it would be a problem (it probably would be the same 
+kernel.org thing - OSDL is partly involved in maintaining it). The problem 
+is the content, and the artistic talent.
 
-- kumar
+_I_ personally have what I'd call "negative artistic talent". I think I'm 
+occasionally good at designing beautiful data structures (and I think git 
+is that, including the pack-files), but that clearly doesn't translate to 
+any visual ability what-so-ever. None. Nada. Zilch.
+
+Maybe the new Wiki can evolve into that. It sure looks better today than 
+it looked yesterday (now, when I first saw it, it was so ugly that I had 
+to dig my eyeballs out with a spoon, so that's not necessarily saying all 
+that much ;)
+
+		Linus
