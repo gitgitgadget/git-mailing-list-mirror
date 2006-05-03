@@ -1,91 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Add a conversion tool to migrate remote information into
- the config
-Date: Wed, 3 May 2006 15:27:26 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605031526280.6975@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Wed, 03 May 2006 09:41:40 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain>
+References: <20060502232553.GL27689@pasky.or.cz>
+ <7virooj92i.fsf@assigned-by-dhcp.cox.net>
+ <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com>
+ <20060503090007.GM27689@pasky.or.cz>
+ <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed May 03 15:28:20 2006
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 15:42:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbHO6-0005C3-P8
-	for gcvg-git@gmane.org; Wed, 03 May 2006 15:27:31 +0200
+	id 1FbHbs-0008AU-3a
+	for gcvg-git@gmane.org; Wed, 03 May 2006 15:41:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030202AbWECN12 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 09:27:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030199AbWECN12
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 09:27:28 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:48079 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1030202AbWECN11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 09:27:27 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id B53201613;
-	Wed,  3 May 2006 15:27:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id A98871578;
-	Wed,  3 May 2006 15:27:26 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 84559ED0;
-	Wed,  3 May 2006 15:27:26 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1030184AbWECNll (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 09:41:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030208AbWECNll
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 09:41:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18597 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1030184AbWECNlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 09:41:40 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IYO009LCZDGV4B0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 03 May 2006 09:41:40 -0400 (EDT)
+In-reply-to: <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
+X-X-Sender: nico@localhost.localdomain
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19482>
+
+On Wed, 3 May 2006, Paolo Ciarrocchi wrote:
+> On 5/3/06, Petr Baudis <pasky@suse.cz> wrote:
+> > Dear diary, on Wed, May 03, 2006 at 10:39:07AM CEST, I got a letter
+> > where Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> said that...
+> > > On 5/3/06, Junio C Hamano <junkio@cox.net> wrote:
+> > > 
+> > > BTW, do you know why GIT has not been selected as SCM for OpenSolaris?
+> > > (they choose Mercurial).
+> > 
+> > I think it's explained somewhere in their forums (or mailing lists or
+> > whatever they actually _are_).
+> 
+> I only found the announcement, not the rationales.
+
+http://mail.opensolaris.org/pipermail/tools-discuss/2006-April/000366.html
+
+Looks like they didn't buy the argument about the uselessness of 
+recording file renames.
 
 
-Use this tool to rewrite the .git/remotes/* files into the config.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
- contrib/remotes2config.sh |   35 +++++++++++++++++++++++++++++++++++
- 1 files changed, 35 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/remotes2config.sh b/contrib/remotes2config.sh
-new file mode 100644
-index 0000000..25901e2
---- /dev/null
-+++ b/contrib/remotes2config.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+
-+# Use this tool to rewrite your .git/remotes/ files into the config.
-+
-+. git-sh-setup
-+
-+if [ -d "$GIT_DIR"/remotes ]; then
-+	echo "Rewriting $GIT_DIR/remotes" >&2
-+	error=0
-+	# rewrite into config
-+	{
-+		cd "$GIT_DIR"/remotes
-+		ls | while read f; do
-+			name=$(echo -n "$f" | tr -c "A-Za-z0-9" ".")
-+			sed -n \
-+			-e "s/^URL: \(.*\)$/remote.$name.url \1 ./p" \
-+			-e "s/^Pull: \(.*\)$/remote.$name.fetch \1 ^$ /p" \
-+			-e "s/^Push: \(.*\)$/remote.$name.push \1 ^$ /p" \
-+			< "$f"
-+		done
-+		echo done
-+	} | while read key value regex; do
-+		case $key in
-+		done)
-+			if [ $error = 0 ]; then
-+				mv "$GIT_DIR"/remotes "$GIT_DIR"/remotes.old
-+			fi ;;
-+		*)
-+			echo "git-repo-config $key "$value" $regex"
-+			git-repo-config $key "$value" $regex || error=1 ;;
-+		esac
-+	done
-+fi
-+
-+
+Nicolas
