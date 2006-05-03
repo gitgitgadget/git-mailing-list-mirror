@@ -1,54 +1,110 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Thu, 4 May 2006 01:05:02 +0200
-Message-ID: <20060503230502.GM27631@pasky.or.cz>
-References: <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> <20060503164732.GB9820@thunk.org> <Pine.LNX.4.64.0605030958370.4086@g5.osdl.org> <20060503223932.GA28081@mars.ravnborg.org> <20060503224645.GR27689@pasky.or.cz> <20060503225056.GT4226@ca-server1.us.oracle.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk highlight feature
+Date: Thu, 4 May 2006 09:08:23 +1000
+Message-ID: <17497.14311.121872.249120@cargo.ozlabs.ibm.com>
+References: <17495.61142.677439.171773@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
+	<Pine.LNX.4.64.0605021721540.4086@g5.osdl.org>
+	<17496.7073.507895.484698@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.64.0605030946260.4086@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 04 01:04:21 2006
+X-From: git-owner@vger.kernel.org Thu May 04 01:08:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbQOL-0004A1-11
-	for gcvg-git@gmane.org; Thu, 04 May 2006 01:04:21 +0200
+	id 1FbQSP-0004nU-NH
+	for gcvg-git@gmane.org; Thu, 04 May 2006 01:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751020AbWECXEG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 19:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbWECXEG
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 19:04:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63459 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751020AbWECXEF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 19:04:05 -0400
-Received: (qmail 28677 invoked by uid 2001); 4 May 2006 01:05:02 +0200
-To: Joel Becker <Joel.Becker@oracle.com>
-Content-Disposition: inline
-In-Reply-To: <20060503225056.GT4226@ca-server1.us.oracle.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751385AbWECXIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 19:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWECXIb
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 19:08:31 -0400
+Received: from ozlabs.org ([203.10.76.45]:2439 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1751385AbWECXIa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 19:08:30 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 1F09967B23; Thu,  4 May 2006 09:08:29 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605030946260.4086@g5.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19532>
 
-Dear diary, on Thu, May 04, 2006 at 12:50:56AM CEST, I got a letter
-where Joel Becker <Joel.Becker@oracle.com> said that...
-> On Thu, May 04, 2006 at 12:46:45AM +0200, Petr Baudis wrote:
-> > I think git ls-files isn't used directly very frequently. OTOH, you
-> > don't use cg-log or git log and cg-status/git status? :) Also, most
-> > people will pull.
+Linus Torvalds writes:
+
+> So far, what I've wanted to highlight by is:
 > 
-> 	I use git ls-files, becuase it's the only way I know how to
-> blow away dirty state that added files.  I ran into this just yesterday,
-> actually.  git checkout -f won't remove files that are unknown.
+>  - "does it touch this file/directory/pathspec"
 > 
->     $ git ls-files -o | xargs rm -rf
+>    This is _close_ to "git-rev-list", and you can (and do) actually 
+>    implement it as that, but it's stupid to do it that way. You just spend 
+>    extra time. It's literally much better to do
+> 
+> 	cat commit-list | git-diff-tree -s --stdin -- <pathspec>
+> 
+>    which is a hell of a lot more efficient, since you already have the 
 
-You can use cg-clean, and I think Git has got git-clean added recently.
+On my G5:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+$ git-rev-list HEAD >all-revs
+$ time git-rev-list HEAD -- arch/powerpc >ppc-revs
+real    0m2.463s
+user    0m2.265s
+sys     0m0.191s
+$ time git-diff-tree -s --stdin -- arch/powerpc <all-revs >ppc-revs2
+real    0m5.269s
+user    0m4.794s
+sys     0m0.462s
+$ wc ppc-revs*
+   892    892  36572 ppc-revs
+  5875   5875 240875 ppc-revs2
+
+Why does git-diff-tree -s --stdin produce so many more revisions than
+git-rev-list?  The git-diff-tree output includes commits such as
+6ba815de, which only affects arch/i386/kernel/timers/timer_tsc.c.
+Confused.
+
+>    commit-list you're interested in (and, in fact, this allows you to do 
+>    things efficiently only for the current _visible_ commits, if you want 
+>    to, which might be an important optimization for large views).
+
+I'd have to try it.  The overhead of fork/exec/process startup might
+be too much to do every time the user scrolls the window, though.
+Maybe what we need is some way to have git-diff-tree run as a helper
+process where I can write some commits to it, then write something
+that says "that's all for now" and have it finish what it's doing,
+write some "end of output" indicator and flush its output buffers -
+and still have the process and the pipes to/from it available for
+another round later.
+
+>  - "Does the author/committer match xyz*"
+> 
+>    I ended up using the "search" button for this, and it worked, but the 
+>    highlight feature would just have done it much better. Especially if 
+>    there was a way to do "go to next highlight", instead of just "go to 
+>    next commit"
+
+The "/" and "?" keys go to the next and previous find hit.  It sounds
+like the search function is actually what you want for this, since it
+does highlight the commits that match, but maybe the problem is that
+the yellow highlighting tends to go away too easily.
+
+How about a way to do a search and use the results to create a
+bold highlight, which will persist even if you do another search?
+Either a separate "find & highlight" button, or a way to transfer the
+current find hits to the highlight?
+
+As for "go to next/previous highlight", that sounds useful.  Rusty
+wants "go to next/previous commit that is a child/parent of this one"
+and "go to next/previous commit that is a descendent/ancestor of this
+one and has a ref (tag, head, etc.)".
+
+How about shift-up and shift-down for "go to previous/next highlight"?
+
+Paul.
