@@ -1,114 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Wed, 03 May 2006 11:54:18 -0700
-Message-ID: <7vac9zdjmt.fsf@assigned-by-dhcp.cox.net>
+From: David Lang <dlang@digitalinsight.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Wed, 3 May 2006 12:21:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0605031218570.12716@qynat.qvtvafvgr.pbz>
+References: <20060502232553.GL27689@pasky.or.cz>  <7virooj92i.fsf@assigned-by-dhcp.cox.net>
+  <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com> 
+ <20060503090007.GM27689@pasky.or.cz>  <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
+  <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> 
+ <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> 
+ <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> 
+ <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com> 
+ <Pine.LNX.4.64.0605030856540.4086@g5.osdl.org> <e3al00$1dj$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 03 20:54:29 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 03 21:22:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbMUR-0003AB-4n
-	for gcvg-git@gmane.org; Wed, 03 May 2006 20:54:23 +0200
+	id 1FbMvE-0008EB-RU
+	for gcvg-git@gmane.org; Wed, 03 May 2006 21:22:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750733AbWECSyU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 14:54:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750735AbWECSyU
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 14:54:20 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38106 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750733AbWECSyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 14:54:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060503185418.QKYD15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 3 May 2006 14:54:18 -0400
-To: git@vger.kernel.org
-X-maint-at: e923effb43fa952f9cb72ffe4c3625fce7655bff
-X-master-at: 3d990f110c2e5b8df83f6ab3ef83497f43c7fd47
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750743AbWECTV6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 15:21:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbWECTV6
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 15:21:58 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:60632 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP
+	id S1750743AbWECTV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 15:21:57 -0400
+Received: from no.name.available by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 3 May 2006 12:21:57 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 03 May 2006 12:21:55 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e3al00$1dj$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19513>
 
-* The 'maint' branch has these fixes since the last announcement.
+On Wed, 3 May 2006, Jakub Narebski wrote:
 
- - Documentation cleanups (Sean Estabrooks)
- - git-format-patch uses rfc2822 compliant date (Huw Davies).
- - git-am usability fixes (Robert Shearman and me)
- - Fix filename verification when in a subdirectory (Linus)
- - git-send-email debuggability improvements (Martin Langhoff)
- - annotate fixes (Matthias Kestenholz)
- - rebase: typofix.
- - commit-tree.c: check_valid() microoptimization.
- - verify-pack: check integrity in a saner order.
+> As to content, we could I think use material found at Wikipedia Git page,
+> and on External Links in Wikipedia Git_(software) article, not repeating of
+> course what is in official Git Documentation/
 
+please go ahead and put a lot of the info that is in the GIT 
+Documentation/ on the wiki. it's far easier to go to one site and browse 
+around to find things then to run into issues where you have to go 
+somewhere else (with different tools) to find the info.
 
-* The 'master' branch has these since the last announcement, in
-  addition to the above fixes.
+even if you just put all the documentation files there, as-is (as text 
+files even, no hyperlinks in them) they should still be there.
 
- - gitk views and highlights enhancements (Paul Mackerras).
- - repo-config -l (Petr Baudis and Johannes Schindelin)
- - repo-config white-space fix (Johannes Schindelin)
- - diff --stat fix.
- - revision parsing more strictly checks "rev -- paths"
- - t0000-basic: more commit-tree tests.
- - Extended SHA1 -- "rev^@" syntax to mean "all parents"
- - Fix "git help -a" terminal autosizing (Linus)
- - git-fetch: resolve remote symrefs for HTTP transport (Nick Hengeveld)
- - daemon: socksetup: don't return on set_reuse_addr() error (Serge E. Hallyn)
+David Lang
 
-
-* The 'next' branch, in addition, has these.
-
- - built-in git-count-objects
- - built-in git-diff.
- - built-in git-push (Linus with fix by Johannes Schindelin).
- - built-in git-log.
- - built-in git-grep.
-
-   These not only implement them built-in, but remove the
-   corresponding shell script versions.  I think all of them are
-   ready to be pushed out, so expect them soon in your "master"
-   branch ;-).
-
- - repo-config: support --get-regexp (Johannes Schindelin)
- - core.prefersymlinkrefs: use symlinks for .git/HEAD
- - get_sha1(): :path and :[0-3]:path to extract from index.
- 
-  Needs a bit more testing.
-
- - further diff-delta improvements (Nicolas Pitre)
-
-   Benchmark impressions are welcome on this.  
-
- - cache-tree optimization
-
-   This yields a nice speedup to (apply then write-tree)+
-   sequence, but is rather intrusive and risky (if somebody
-   forgets to invalidate a cached information the next write
-   tree can write out corrupt data).  I am hoping we can redo
-   this inside the index.
-
- - built-in git-fmt-patch
-
-   This is not ready as format-patch replacement yet; it only
-   does --stdout.
-
-* The 'pu' branch, in addition, has these.
-
- - read-tree: --prefix=<path> option.
- - write-tree: --exclude=<prefix>
- - write-tree: --prefix=<path>
-      
-   These were originally done as part of "bind commit" series,
-   but are useful outside the context of subproject support.
-   read-tree --prefix=<path> allows you to graft a tree object
-   at a subdirectory in an already populated index, and
-   write-tree --prefix=<path> allows you to write out only a
-   subdirectory out of an index as a tree object.  I am not in
-   an urgent need for these features, but if some Porcelain
-   finds them useful, they can be merged to "next".
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
