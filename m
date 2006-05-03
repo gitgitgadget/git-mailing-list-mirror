@@ -1,84 +1,92 @@
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 3 May 2006 12:46:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0605031243230.12716@qynat.qvtvafvgr.pbz>
-References: <20060503090007.GM27689@pasky.or.cz> 
- <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> 
- <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> 
- <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> 
- <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> 
- <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com> 
- <Pine.LNX.4.64.0605030856540.4086@g5.osdl.org> <e3al00$1dj$1@sea.gmane.org>
-  <Pine.LNX.4.62.0605031218570.12716@qynat.qvtvafvgr.pbz>
- <20060503193013.GN27689@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Problem using GIT CVS-server
+Date: Wed, 03 May 2006 12:49:15 -0700
+Message-ID: <7v1wvaevno.fsf@assigned-by-dhcp.cox.net>
+References: <445865A5.5030700@lumumba.uhasselt.be>
+	<46a038f90605030311s4e05de2dr90277f97a3a5c223@mail.gmail.com>
+	<46a038f90605030411o29af1d1bra3276353347516f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 21:47:09 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	"Panagiotis Issaris" <takis@lumumba.uhasselt.be>
+X-From: git-owner@vger.kernel.org Wed May 03 21:49:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbNJC-0004nR-RC
-	for gcvg-git@gmane.org; Wed, 03 May 2006 21:46:51 +0200
+	id 1FbNLd-0005Hv-Uq
+	for gcvg-git@gmane.org; Wed, 03 May 2006 21:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750763AbWECTql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 15:46:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750767AbWECTql
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 15:46:41 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:62953 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP
-	id S1750763AbWECTql (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 15:46:41 -0400
-Received: from no.name.available by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 3 May 2006 12:46:41 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 03 May 2006 12:46:33 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060503193013.GN27689@pasky.or.cz>
+	id S1750767AbWECTtR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 15:49:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbWECTtR
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 15:49:17 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:49574 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750767AbWECTtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 15:49:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060503194916.DOND9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 May 2006 15:49:16 -0400
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90605030411o29af1d1bra3276353347516f6@mail.gmail.com>
+	(Martin Langhoff's message of "Wed, 3 May 2006 23:11:17 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19516>
 
-On Wed, 3 May 2006, Petr Baudis wrote:
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> Dear diary, on Wed, May 03, 2006 at 09:21:54PM CEST, I got a letter
-> where David Lang <dlang@digitalinsight.com> said that...
->> On Wed, 3 May 2006, Jakub Narebski wrote:
->>
->>> As to content, we could I think use material found at Wikipedia Git page,
->>> and on External Links in Wikipedia Git_(software) article, not repeating of
->>> course what is in official Git Documentation/
->>
->> please go ahead and put a lot of the info that is in the GIT
->> Documentation/ on the wiki. it's far easier to go to one site and browse
->> around to find things then to run into issues where you have to go
->> somewhere else (with different tools) to find the info.
->>
->> even if you just put all the documentation files there, as-is (as text
->> files even, no hyperlinks in them) they should still be there.
+> On 5/3/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+>> Hmmm. 100% reproduceable -- looking at it now.
 >
-> Then who will keep it in sync (BOTH ways)? That would be quite a lot of
-> work, I think.
->
-> That said, having the documentation in a wiki is not a bad idea per se,
-> but you need to keep things consistent and converging. And I believe
-> (and hope) that killing Documentation/ directory is no option - I hate
-> it when documentation of software I installed just tells me "look at
-> this URI" (which documents a different version anyway, and it's all very
-> useful when I'm sitting in a train with my notebook).
+> Grumble. Some recent change has broken cvsserver -- if I rewind to the
+> commit I made of cvsserver, the checkout works correctly. I suspect
+> changes to git-diff-tree. However, I'll play dumb and try bisect to
+> see where it leads...
 
-I agree with this completely.
+Ah, the "master" git-log is C-rewrite version and does not show
+the parents on the "commit (.*)" line itself with --parents.
 
-as for keeping it in sync, the ideal situation would be for a 
-documentation manager to take that job ;-) but lacking that just put the 
-documentation in a non-editable page somewhere and link to it from the 
-wiki (this could even be pages at kernel.org or wherever you have the raw 
-source available outside of git itself)
+Could you see if the attached patch helps?
 
-David Lang
+When Linus and I did the rewrite, we tried to be somewhat
+careful not to break people's expectations, but at the same
+time, we considered that the log/show/whatchanged frontends to
+rev-list are primarily for human consumption, so we "improved"
+the details a bit [*1*], which obviously broke cvsserver's use
+of git-log.
 
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+*1* Another difference I know about is that whatchanged used to
+start an entry with "diff-tree" but now says "commit" like
+others in "log" family of frontends.
+
+-- >8 --
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 11d153c..71e384c 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2076,14 +2076,15 @@ sub update
+     # TODO: log processing is memory bound
+     # if we can parse into a 2nd file that is in reverse order
+     # we can probably do something really efficient
+-    my @git_log_params = ('--parents', '--topo-order');
++    my @git_rl_params = ('--parents', '--topo-order', '--pretty');
+ 
+     if (defined $lastcommit) {
+-        push @git_log_params, "$lastcommit..$self->{module}";
++        push @git_rl_params, "$lastcommit..$self->{module}";
+     } else {
+-        push @git_log_params, $self->{module};
++        push @git_rl_params, $self->{module};
+     }
+-    open(GITLOG, '-|', 'git-log', @git_log_params) or die "Cannot call git-log: $!";
++    open(GITLOG, '-|', 'git-rev-list',
++	 @git_rl_params) or die "Cannot call git-rev-list: $!";
+ 
+     my @commits;
+ 
