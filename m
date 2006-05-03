@@ -1,56 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem using GIT CVS-server
-Date: Wed, 03 May 2006 14:21:22 -0700
-Message-ID: <7vmzdyby99.fsf@assigned-by-dhcp.cox.net>
-References: <445865A5.5030700@lumumba.uhasselt.be>
-	<46a038f90605030311s4e05de2dr90277f97a3a5c223@mail.gmail.com>
-	<46a038f90605030411o29af1d1bra3276353347516f6@mail.gmail.com>
-	<7v1wvaevno.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90605031412s363b4a79p548c75956b00adbf@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 03 23:21:56 2006
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH] blame: Fix path pruning
+Date: Wed, 03 May 2006 23:28:46 +0200
+Message-ID: <20060503212846.19769.18688.stgit@c165>
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed May 03 23:28:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbOml-0005v1-BK
-	for gcvg-git@gmane.org; Wed, 03 May 2006 23:21:27 +0200
+	id 1FbOtw-00078N-AB
+	for gcvg-git@gmane.org; Wed, 03 May 2006 23:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbWECVVY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 17:21:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbWECVVY
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 17:21:24 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:46506 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751355AbWECVVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 17:21:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060503212123.DLDG19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 3 May 2006 17:21:23 -0400
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605031412s363b4a79p548c75956b00adbf@mail.gmail.com>
-	(Martin Langhoff's message of "Thu, 4 May 2006 09:12:39 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751356AbWECV2t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 17:28:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbWECV2s
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 17:28:48 -0400
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:22764 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1751356AbWECV2s
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 3 May 2006 17:28:48 -0400
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 1184840FD; Wed,  3 May 2006 23:47:37 +0200 (CEST)
+Received: from c165 ([127.0.0.1])
+	by c165 with esmtp (Exim 3.36 #1 (Debian))
+	id 1FbOtq-00058y-00; Wed, 03 May 2006 23:28:46 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19522>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
->> Could you see if the attached patch helps?
->
-> Will try it in a moment. Having thought about it, git-log is always
-> going to be tweaked for human consumption, so I should use something
-> geared for porcelains instead. git-rev-list does honour --parent, so
-> perhaps I should switch to using that instead?
+This makes git-blame useable again, it has been totally broken for
+some time on larger repositories.
 
-I think that reasoning is prudent, but at the same time I think
-the patch by Linus is also right, so I think we should do both
-for this particular case.
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
-Sorry about the breakage.
+---
+
+ blame.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/blame.c b/blame.c
+index 07d2d27..99ceea8 100644
+--- a/blame.c
++++ b/blame.c
+@@ -515,9 +515,9 @@ static int compare_tree_path(struct rev_
+ 	paths[1] = NULL;
+ 
+ 	diff_tree_setup_paths(get_pathspec(revs->prefix, paths),
+-			      &revs->diffopt);
++			      &revs->pruning);
+ 	ret = rev_compare_tree(revs, c1->tree, c2->tree);
+-	diff_tree_release_paths(&revs->diffopt);
++	diff_tree_release_paths(&revs->pruning);
+ 	return ret;
+ }
+ 
+@@ -531,9 +531,9 @@ static int same_tree_as_empty_path(struc
+ 	paths[1] = NULL;
+ 
+ 	diff_tree_setup_paths(get_pathspec(revs->prefix, paths),
+-			      &revs->diffopt);
++			      &revs->pruning);
+ 	ret = rev_same_tree_as_empty(revs, t1);
+-	diff_tree_release_paths(&revs->diffopt);
++	diff_tree_release_paths(&revs->pruning);
+ 	return ret;
+ }
+ 
+@@ -834,7 +834,7 @@ int main(int argc, const char **argv)
+ 
+ 	args[0] = filename;
+ 	args[1] = NULL;
+-	diff_tree_setup_paths(args, &rev.diffopt);
++	diff_tree_setup_paths(args, &rev.pruning);
+ 	prepare_revision_walk(&rev);
+ 	process_commits(&rev, filename, &initial);
+ 
