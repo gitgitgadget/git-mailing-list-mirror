@@ -1,68 +1,64 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] cg-admin-rewritehist: fix reappearing files with --filter-tree.
-Date: Thu,  4 May 2006 21:36:09 +0200 (CEST)
-Message-ID: <20060504193609.94E1E4AEEC@dx.sixt.local>
-X-From: git-owner@vger.kernel.org Thu May 04 21:36:50 2006
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Unresolved issues #2
+Date: Thu, 4 May 2006 16:41:58 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605041627310.6713@iabervon.org>
+References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 04 22:41:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fbjco-0003RU-Bf
-	for gcvg-git@gmane.org; Thu, 04 May 2006 21:36:34 +0200
+	id 1Fbkdj-0006Mq-GE
+	for gcvg-git@gmane.org; Thu, 04 May 2006 22:41:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbWEDTgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 15:36:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbWEDTgb
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 15:36:31 -0400
-Received: from mail.nextra.at ([195.170.70.86]:6717 "EHLO mail.nextra.at")
-	by vger.kernel.org with ESMTP id S1750843AbWEDTga (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 May 2006 15:36:30 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by mail.nextra.at (8.13.6/8.13.6) with ESMTP id k44JaFdr012875;
-	Thu, 4 May 2006 21:36:16 +0200 (MEST)
-X-Abuse-Info: Please report abuse to abuse@eunet.co.at, see http://www.eunet.at/support/service
-Received: by dx.sixt.local (Postfix, from userid 1000)
-	id 94E1E4AEEC; Thu,  4 May 2006 21:36:09 +0200 (CEST)
-To: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+	id S1030322AbWEDUlS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 16:41:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030323AbWEDUlS
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 16:41:18 -0400
+Received: from iabervon.org ([66.92.72.58]:18440 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1030322AbWEDUlR (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 May 2006 16:41:17 -0400
+Received: (qmail 14343 invoked by uid 1000); 4 May 2006 16:41:58 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 May 2006 16:41:58 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19576>
 
-With --filter-tree a working copy is checked out for each commit.
-However, if a file is removed by a commit, the file is _not_ removed
-from the working copy by git-checkout-index. This must be done explicitly,
-otherwise the file becomes added back again.
+On Thu, 4 May 2006, Junio C Hamano wrote:
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> * Message-ID: <Pine.LNX.4.63.0604301524080.2646@wbgn013.biozentrum.uni-wuerzburg.de>
+> 
+>   An optional "git fetch --store newname URL refspecs..." to
+>   create an equivalent of remotes file so newname can then be
+>   used as a short-hand.  I still have somewhat negative reaction
+>   to it, but I am willing to apply it if there are enough people
+>   who want this.
 
----
+I was just about to suggest something for this general use. It's currently 
+kind of a pain to deal with the situation where you've got stuff on your 
+workstation that you want to version control in a shared repository on a 
+server.
 
-I'm posting this again, because I haven't received any feedback nor has
-the patch been applied.
+I think it shouldn't be on fetch, though; I think a "git remote" command 
+for describing, creating, and modifying remotes would be better, since you 
+also sometimes want to add a "Push:" line.
 
- cg-admin-rewritehist |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+Maybe:
 
-26bb71a2d3d583d9eee10f4e950ff1b7d400e975
-diff --git a/cg-admin-rewritehist b/cg-admin-rewritehist
-index 7dd83cf..13ffb5d 100755
---- a/cg-admin-rewritehist
-+++ b/cg-admin-rewritehist
-@@ -213,10 +213,13 @@ while read commit; do
- 
- 	if [ "$filter_tree" ]; then
- 		git-checkout-index -f -u -a
-+		# files that $commit removed are now still in the working tree;
-+		# remove them, else they would be added again
-+		git-ls-files -z --others | xargs -0 rm -f
- 		eval "$filter_tree"
- 		git-diff-index -r $commit | cut -f 2- | tr '\n' '\0' | \
- 			xargs -0 git-update-index --add --replace --remove
--		git-ls-files --others | tr '\n' '\0' | \
-+		git-ls-files -z --others | \
- 			xargs -0 git-update-index --add --replace --remove
- 	fi
- 
--- 
-1.3.1.gaa6b
+ git remote <name>: Print info about <name>
+ git remote add <name> <URL> [<direction> ...]: create a remote
+ git remote <name> <direction> ...: modify a remote
+
+ where <direction> is either:
+  pull <remote> <local> or
+  push <local> <remote>
+
+	-Daniel
+*This .sig left intentionally blank*
