@@ -1,81 +1,72 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: [PATCH] Be elaborate when specifying the debs on the download page.
-Date: Thu, 04 May 2006 14:37:24 +0300
-Message-ID: <12477.7874014855$1146742720@news.gmane.org>
-Reply-To: Martin Atukunda <matlads@dsmagic.com>
-Cc: Martin Atukunda <matlads@igloo.ds.co.ug>
-X-From: git-owner@vger.kernel.org Thu May 04 13:38:38 2006
+From: "Josh Boyer" <jwboyer@gmail.com>
+Subject: Re: git-unpack-objects
+Date: Thu, 4 May 2006 06:58:16 -0500
+Message-ID: <625fc13d0605040458q1018c7ccl79e8effe23edf7d8@mail.gmail.com>
+References: <625fc13d0605011552j4189338bx14083657acffc18e@mail.gmail.com>
+	 <7vu089qr4t.fsf@assigned-by-dhcp.cox.net>
+	 <625fc13d0605031035l721ab08dmee6f870abb49f4e4@mail.gmail.com>
+	 <Pine.LNX.4.64.0605031041150.4086@g5.osdl.org>
+	 <625fc13d0605031044y2ff03ed2h261db5455b234254@mail.gmail.com>
+	 <Pine.LNX.4.64.0605031054300.4086@g5.osdl.org>
+	 <625fc13d0605031731v7b65a738r6fc0169958235928@mail.gmail.com>
+	 <20060504100237.GA10548@fiberbit.xs4all.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 04 13:58:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fbc9x-0001YX-S6
-	for gcvg-git@gmane.org; Thu, 04 May 2006 13:38:20 +0200
+	id 1FbcTU-0005Bv-Tr
+	for gcvg-git@gmane.org; Thu, 04 May 2006 13:58:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932070AbWEDLiM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 07:38:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932077AbWEDLiM
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 07:38:12 -0400
-Received: from metronet39.infocom.co.ug ([217.113.73.39]:15876 "EHLO
-	entandikwa.ds.co.ug") by vger.kernel.org with ESMTP id S932070AbWEDLiL
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 May 2006 07:38:11 -0400
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP id 91B655255
-	for <git@vger.kernel.org>; Thu,  4 May 2006 14:40:14 +0300 (EAT)
-Received: from [127.0.0.1] (helo=localhost.localdomain)
-	by igloo.ds.co.ug with esmtp (Exim 4.61)
-	(envelope-from <matlads@dsmagic.com>)
-	id 1Fbc97-0001S1-Hf
-	for git@vger.kernel.org; Thu, 04 May 2006 14:37:25 +0300
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.3.1.g7464
+	id S1750946AbWEDL6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 07:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbWEDL6S
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 07:58:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:27837 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750945AbWEDL6R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 May 2006 07:58:17 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so271694ugc
+        for <git@vger.kernel.org>; Thu, 04 May 2006 04:58:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eE1IfqkjLnx4+2nBBdsQliwLCglYOU6lQfOXYrbysH3mjWMCxN0QmW8LSBXX67elqqJ3TOJMd65TiKcYuOx4qsD/xPjeUOkPyt5hNjOwiaXk3V0jdms2cm7J35t2P9qQESbRNWeMK22UggzTw+59ZX8+GqjZTNrXf4a5oLboCHs=
+Received: by 10.78.21.7 with SMTP id 7mr68672huu;
+        Thu, 04 May 2006 04:58:16 -0700 (PDT)
+Received: by 10.78.29.19 with HTTP; Thu, 4 May 2006 04:58:16 -0700 (PDT)
+To: "Marco Roeland" <marco.roeland@xs4all.nl>
+In-Reply-To: <20060504100237.GA10548@fiberbit.xs4all.nl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19566>
 
-From: Martin Atukunda <matlads@igloo.ds.co.ug>
+On 5/4/06, Marco Roeland <marco.roeland@xs4all.nl> wrote:
+> On Wednesday May 3rd 2006 Josh Boyer wrote:
+>
+> > >It does. That's what the "-a" (for "all") does.
+> >
+> > Odd.  On one of my repos, I was seeing the correct behavior.  On
+> > another, there were multiple packs left after doing the 'git repack -a
+> > -d'.  Were there ever some packing bugs in older versions of git that
+> > would have maybe produced some packs that wouldn't get deleted or
+> > something?
+>
+> Have you checked with "git fsck-objects" that maybe the "remaining"
+> packs contained non-reachable objects like dangling commits from resets
+> or from following volatile branches like +pu?
 
-Junio hasn't done the debian packages for git in a while, and as
-such the location specified on the site is outdated. Incidentally
-git-core _is_ packaged for debian and versions of it are in unstable
-and testing. There is a version for stable maintained at backports.org.
+This was on a kernel repo, so no branches.  But dangling commits from
+resets might have been present.  I can't tell now since I undid all
+that packs and redid them into a single.  Thanks for the suggestion
+though, that sounds like a perfectly reasonable explanation.
 
-This commit modifies the downloads page to reflect these changes.
-
-Signed-Off-By: Martin Atukunda <matlads@dsmagic.com>
-
----
-
- download.html |   15 ++++++++++++++-
- 1 files changed, 14 insertions(+), 1 deletions(-)
-
-e3416893f5aaa3fe464bc1f8a0add75deb3fb0f5
-diff --git a/download.html b/download.html
-index 3a3d4e6..315dff1 100644
---- a/download.html
-+++ b/download.html
-@@ -56,7 +56,20 @@
- <dd><a href="http://kernel.org/pub/software/scm/git/RPMS/">http://kernel.org/pub/software/scm/git/RPMS/</a></dd>
- 
- <dt>Debs</dt>
--<dd><a href="http://kernel.org/pub/software/scm/git/debian/">http://kernel.org/pub/software/scm/git/debian/</a></dd>
-+<dd>
-+	<dl>
-+		<dt>Stable</dt>
-+		<dd><a href="http://www.backports.org/debian/pool/g/git-core/">http://www.backports.org/debian/pool/main/g/git-core/</a></dd>
-+	</dl>
-+	<dl>
-+		<dt>Testing</dt>
-+		<dd><a href="http://packages.debian.org/testing/devel/git-core/">http://packages.debian.org/testing/devel/git-core/</a></dd>
-+	</dl>
-+	<dl>
-+		<dt>Unstable</dt>
-+		<dd><a href="http://packages.debian.org/unstable/devel/git-core/">http://packages.debian.org/unstable/devel/git-core/</a></dd>
-+	</dl>
-+</dd>
- 
- </dl>
- 
--- 
-1.3.1.g7464
+josh
