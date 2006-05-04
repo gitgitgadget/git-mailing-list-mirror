@@ -1,80 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Wed, 3 May 2006 20:53:50 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605032045510.6713@iabervon.org>
-References: <20060503090007.GM27689@pasky.or.cz>
- <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com>
- <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain>
- <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se>
- <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
- <4d8e3fd30605030839i2bb5de8dka8a4af27755051cf@mail.gmail.com>
- <Pine.LNX.4.64.0605030856540.4086@g5.osdl.org> <e3al00$1dj$1@sea.gmane.org>
- <Pine.LNX.4.62.0605031218570.12716@qynat.qvtvafvgr.pbz> <20060503193013.GN27689@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Revamped Git homepage
+Date: Thu, 04 May 2006 03:01:33 +0200
+Organization: At home
+Message-ID: <e3bjnb$72o$1@sea.gmane.org>
+References: <20060502232553.GL27689@pasky.or.cz> <7virooj92i.fsf@assigned-by-dhcp.cox.net> <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com> <20060503090007.GM27689@pasky.or.cz> <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org> <20060504003518.GT27689@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Lang <dlang@digitalinsight.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 04 02:53:20 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu May 04 03:01:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbS5j-0006Y8-80
-	for gcvg-git@gmane.org; Thu, 04 May 2006 02:53:15 +0200
+	id 1FbSDC-0007Fm-OW
+	for gcvg-git@gmane.org; Thu, 04 May 2006 03:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830AbWEDAxM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 20:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbWEDAxM
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 20:53:12 -0400
-Received: from iabervon.org ([66.92.72.58]:6675 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750830AbWEDAxL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 20:53:11 -0400
-Received: (qmail 8345 invoked by uid 1000); 3 May 2006 20:53:50 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 3 May 2006 20:53:50 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060503193013.GN27689@pasky.or.cz>
+	id S1750833AbWEDBAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 21:00:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbWEDBAr
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 21:00:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:28811 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750833AbWEDBAr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 21:00:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FbSCu-0007DO-0U
+	for git@vger.kernel.org; Thu, 04 May 2006 03:00:40 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 May 2006 03:00:39 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 May 2006 03:00:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19543>
 
-On Wed, 3 May 2006, Petr Baudis wrote:
+Petr Baudis wrote:
 
-> Dear diary, on Wed, May 03, 2006 at 09:21:54PM CEST, I got a letter
-> where David Lang <dlang@digitalinsight.com> said that...
-> > On Wed, 3 May 2006, Jakub Narebski wrote:
-> > 
-> > >As to content, we could I think use material found at Wikipedia Git page,
-> > >and on External Links in Wikipedia Git_(software) article, not repeating of
-> > >course what is in official Git Documentation/
-> > 
-> > please go ahead and put a lot of the info that is in the GIT 
-> > Documentation/ on the wiki. it's far easier to go to one site and browse 
-> > around to find things then to run into issues where you have to go 
-> > somewhere else (with different tools) to find the info.
-> > 
-> > even if you just put all the documentation files there, as-is (as text 
-> > files even, no hyperlinks in them) they should still be there.
+> Well, here we go, I've just uploaded a new version of the Git homepage;
+> I wonder how you feel about it now.
 > 
-> Then who will keep it in sync (BOTH ways)? That would be quite a lot of
-> work, I think.
+> Obviously, it still feels rather empty and I'm certainly not much of
+> a webmaster myself, but I take patches and pull requests; see
+> http://git.or.cz/community.html for the Git homepage git repository
+> information.
 > 
-> That said, having the documentation in a wiki is not a bad idea per se,
-> but you need to keep things consistent and converging. And I believe
-> (and hope) that killing Documentation/ directory is no option - I hate
-> it when documentation of software I installed just tells me "look at
-> this URI" (which documents a different version anyway, and it's all very
-> useful when I'm sitting in a train with my notebook).
+> I've borrowed Jonas Fonseca's ELinks homepage design first, but the
+> contents ended up almost entirely rewritten as well (except the Related
+> Tools section, which stayed mostly as it was). Git now poses as a real
+> version control system and the plumbing stuff is mentioned only in the
+> bottom paragraphs. ;-)
 
-Clearly the solution is a wiki with a git backend and asciidoc for the 
-formatting language. Then the wiki just has to pull from kernel.org 
-occasionally, and Junio can pull from the wiki's repository when there are 
-good changes there.
+Very nice, although earlier version had the advantage of having everything
+on one page. I hope that no information was lost.
 
-I'm actually only somewhat joking; I wrote a Python CGI for this at one 
-point, and got as far as having it basically work, but then I couldn't 
-come up with a way to safely use asciidoc to format an attacker's file.
+What it lacks is the link in menu bar to Home (or News), 
+i.e. http://git.or.cz/ or http://git.or.cz/index.html page.
 
-	-Daniel
-*This .sig left intentionally blank*
+About Download page (http://git.or.cz/download.html) - it would be nice to
+have in comments about firewalls told which port git uses for git://
+protocol.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
