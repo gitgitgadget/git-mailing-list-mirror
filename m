@@ -1,50 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [WARNING] please stop using git.git "next" for now
-Date: Wed, 03 May 2006 17:46:42 -0700
-Message-ID: <7vwtd2aa6l.fsf@assigned-by-dhcp.cox.net>
-References: <7virombwro.fsf@assigned-by-dhcp.cox.net>
-	<7vejzabt2b.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Fetching a tree from a remote server
+Date: Thu, 4 May 2006 02:48:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605040247460.24675@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0605032026070.6713@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu May 04 02:46:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 04 02:48:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbRzS-0002hJ-HI
-	for gcvg-git@gmane.org; Thu, 04 May 2006 02:46:46 +0200
+	id 1FbS0o-0003gj-BM
+	for gcvg-git@gmane.org; Thu, 04 May 2006 02:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750828AbWEDAqn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 20:46:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbWEDAqn
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 20:46:43 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:30647 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1750828AbWEDAqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 May 2006 20:46:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060504004642.MFCW18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 3 May 2006 20:46:42 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vejzabt2b.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 03 May 2006 16:13:32 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750831AbWEDAsH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 20:48:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbWEDAsH
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 20:48:07 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:52702 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750831AbWEDAsG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 May 2006 20:48:06 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 153551BB8;
+	Thu,  4 May 2006 02:48:05 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 09A911B2E;
+	Thu,  4 May 2006 02:48:05 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id D4F3417F8;
+	Thu,  4 May 2006 02:48:04 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0605032026070.6713@iabervon.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19541>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
->> I will be working on a fix now, but in the meantime please do
->> not use the "next" branch for real work.  Sorry for the
->> breakage.
->
-> Two-way merge by read-tree forgot to invalidate the directories
-> a new element was added underneath.  The fix is simple and will
-> be in the "next" I'll push out tonight.
+On Wed, 3 May 2006, Daniel Barkalow wrote:
 
-OK, done.  Will be looking into "binary grep segfault" problem
-next.
+> Is there something to do the opposite of git clone -n? That is, I want to 
+> fill a directory with a treeish ref, and I don't care about any history or 
+> bookkeeping.
+
+Is git-tar-tree your friend or what?
+
+Ciao,
+Dscho
