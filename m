@@ -1,51 +1,58 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: git-unpack-objects
-Date: Thu, 4 May 2006 12:02:37 +0200
-Message-ID: <20060504100237.GA10548@fiberbit.xs4all.nl>
-References: <625fc13d0605011552j4189338bx14083657acffc18e@mail.gmail.com> <7vu089qr4t.fsf@assigned-by-dhcp.cox.net> <625fc13d0605031035l721ab08dmee6f870abb49f4e4@mail.gmail.com> <Pine.LNX.4.64.0605031041150.4086@g5.osdl.org> <625fc13d0605031044y2ff03ed2h261db5455b234254@mail.gmail.com> <Pine.LNX.4.64.0605031054300.4086@g5.osdl.org> <625fc13d0605031731v7b65a738r6fc0169958235928@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] Alphabetize the glossary.
+Date: Thu, 4 May 2006 12:41:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605041238240.26488@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <E1FbVFi-0004Tt-Aw@jdl.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 04 12:02:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 04 12:41:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbafW-0000jy-Je
-	for gcvg-git@gmane.org; Thu, 04 May 2006 12:02:46 +0200
+	id 1FbbGz-00084G-DY
+	for gcvg-git@gmane.org; Thu, 04 May 2006 12:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbWEDKCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 06:02:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWEDKCo
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 06:02:44 -0400
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:28901 "EHLO
-	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1751477AbWEDKCn
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 May 2006 06:02:43 -0400
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.62)
-	(envelope-from <marco.roeland@xs4all.nl>)
-	id 1FbafN-0002ko-Sk; Thu, 04 May 2006 12:02:37 +0200
-To: Josh Boyer <jwboyer@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <625fc13d0605031731v7b65a738r6fc0169958235928@mail.gmail.com>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1751487AbWEDKlX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 06:41:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbWEDKlX
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 06:41:23 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:54972 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751487AbWEDKlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 May 2006 06:41:22 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id B48D4D75;
+	Thu,  4 May 2006 12:41:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id A88C4D53;
+	Thu,  4 May 2006 12:41:21 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 7EEE2CC3;
+	Thu,  4 May 2006 12:41:19 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jon Loeliger <jdl@jdl.com>
+In-Reply-To: <E1FbVFi-0004Tt-Aw@jdl.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19564>
 
-On Wednesday May 3rd 2006 Josh Boyer wrote:
+Hi,
 
-> >It does. That's what the "-a" (for "all") does.
-> 
-> Odd.  On one of my repos, I was seeing the correct behavior.  On
-> another, there were multiple packs left after doing the 'git repack -a
-> -d'.  Were there ever some packing bugs in older versions of git that
-> would have maybe produced some packs that wouldn't get deleted or
-> something?
+On Wed, 3 May 2006, Jon Loeliger wrote:
 
-Have you checked with "git fsck-objects" that maybe the "remaining"
-packs contained non-reachable objects like dangling commits from resets
-or from following volatile branches like +pu?
--- 
-Marco Roeland
+> Yeah, there is a script that also alphabetize the glossary.
+> But let's just be explicit and complete here.
+
+The idea of having it not alphabetized, but doing it by a script, was to 
+let people actually _read_ it. There is nothing more annoying than having 
+to jump forward and backward and eventually be lost.
+
+glossary, as I started it, was topologically ordered: no Git term was used 
+before it was described (at least that was the plan).
+
+Ciao,
+Dscho
