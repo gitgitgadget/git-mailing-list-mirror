@@ -1,132 +1,180 @@
 From: Jon Loeliger <jdl@jdl.com>
-Subject: [PATCH 2/3] Added definitions for a few words:
-Date: Wed, 03 May 2006 23:18:59 -0500
-Message-ID: <E1FbVIp-0004UB-1f@jdl.com>
-X-From: git-owner@vger.kernel.org Thu May 04 06:19:08 2006
+Subject: [PATCH 3/3] Add a few more words to the glossary.
+Date: Wed, 03 May 2006 23:19:54 -0500
+Message-ID: <E1FbVJi-0004UJ-59@jdl.com>
+X-From: git-owner@vger.kernel.org Thu May 04 06:20:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbVIx-00032y-D1
-	for gcvg-git@gmane.org; Thu, 04 May 2006 06:19:07 +0200
+	id 1FbVJn-0003BC-5e
+	for gcvg-git@gmane.org; Thu, 04 May 2006 06:19:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbWEDETC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 00:19:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWEDETB
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 00:19:01 -0400
-Received: from jdl.com ([66.118.10.122]:62187 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S1751201AbWEDETA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 May 2006 00:19:00 -0400
+	id S1751211AbWEDET4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 00:19:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWEDET4
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 00:19:56 -0400
+Received: from www.jdl.com ([66.118.10.122]:62443 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1751211AbWEDET4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 May 2006 00:19:56 -0400
 Received: from jdl (helo=jdl.com)
 	by jdl.com with local-esmtp (Exim 4.44)
-	id 1FbVIp-0004UB-1f
-	for git@vger.kernel.org; Wed, 03 May 2006 23:19:00 -0500
+	id 1FbVJi-0004UJ-59
+	for git@vger.kernel.org; Wed, 03 May 2006 23:19:55 -0500
 To: git@vger.kernel.org
 X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19549>
 
 
-    fast forward
-    pickaxe
-    refspec
-    tracking branch
+Clean up a few entries and fix typos.
 
-Wild hack allows "link:git-" prefix to reference commands too.
+    bare repository
+    cherry-picking
+    hook
+    symbolic ref
+    topic branch
 
 Signed-off-by: Jon Loeliger <jdl@jdl.com>
 
 
 ---
 
-Yep, this pickaxe entry is b0rked.
-Apply the next patch too.
+ Documentation/glossary.txt |   68 ++++++++++++++++++++++++++++++++++++--------
+ 1 files changed, 55 insertions(+), 13 deletions(-)
 
-
- Documentation/glossary.txt     |   33 +++++++++++++++++++++++++++++++++
- Documentation/sort_glossary.pl |    2 +-
- 2 files changed, 34 insertions(+), 1 deletions(-)
-
-b63f925f5f88549581324257d3b2030163389a98
+b7524dc93e17807a3657f017adcbe129e16c4b94
 diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
-index 075c078..86196c4 100644
+index 86196c4..f166d4f 100644
 --- a/Documentation/glossary.txt
 +++ b/Documentation/glossary.txt
-@@ -68,6 +68,14 @@ ent::
- 	`http://en.wikipedia.org/wiki/Ent_(Middle-earth)` for an in-depth
- 	explanation.
+@@ -3,6 +3,17 @@ alternate object database::
+ 	object database from another object database, which is called
+ 	"alternate".
  
-+fast forward::
-+	A fast-forward is a special type of merge where you have
-+	a revision and you are "merging" another branch's changes
-+	that happen to be a descendant of what you have.
-+	In such these cases, you do not make a new merge commit but
-+	instead just update to his revision. This will happen
-+	frequently on a tracking branch of a remote repository.
++bare repository::
++	A bare repository is normally an appropriately named
++	directory with a `.git` suffix that does not have a
++	locally checked-out copy of any of the files under revision
++	control.  That is, all of the `git` administrative and
++	control files that would normally be present in the
++	hidden `.git` sub-directory are directly present in
++	the `repository.git` directory instead, and no other files
++	are present and checked out.  Usually publishers of public
++	repositories make bare repositories available.
 +
- fetch::
- 	Fetching a branch means to get the branch's head ref from a
- 	remote repository, to find out which objects are missing from
-@@ -160,6 +168,12 @@ parent::
+ blob object::
+ 	Untyped object, e.g. the contents of a file.
+ 
+@@ -28,6 +39,15 @@ checkout::
+ 	The action of updating the working tree to a revision which was
+ 	stored in the object database.
+ 
++cherry-picking::
++	In SCM jargon, "cherry pick" means to choose a subset of
++	changes out of a series of changes (typically commits)
++	and record them as a new series of changes on top of
++	different codebase.  In GIT, this is performed by
++	"git cherry-pick" command to extract the change
++	introduced by an existing commit and to record it based
++	on the tip of the current branch as a new commit.
++
+ clean::
+ 	A working tree is clean, if it corresponds to the revision
+ 	referenced by the current head.  Also see "dirty".
+@@ -100,6 +120,16 @@ head ref::
+ 	A ref pointing to a head. Often, this is abbreviated to "head".
+ 	Head refs are stored in `$GIT_DIR/refs/heads/`.
+ 
++hook::
++	During the normal execution of several git commands,
++	call-outs are made to optional scripts that allow
++	a developer to add functionality or checking.
++	Typically, the hooks allow for a command to be pre-verified
++	and potentially aborted, and allow for a post-notification
++	after the operation is done.
++	The hook scripts are found in the `$GIT_DIR/hooks/` directory,
++	and are enabled by simply making them executable.
++
+ index::
+ 	A collection of files with stat information, whose contents are
+ 	stored as objects. The index is a stored version of your working
+@@ -113,10 +143,10 @@ index entry::
+ 	that file).
+ 
+ master::
+-	The default branch. Whenever you create a git repository, a branch
+-	named "master" is created, and becomes the active branch. In most
+-	cases, this contains the local development.
+-
++	The default development branch. Whenever you create a git
++	repository, a branch named "master" is created, and becomes
++	the active branch. In most cases, this contains the local
++	development, though that is purely conventional and not required.
+ 
+ merge::
+ 	To merge branches means to try to accumulate the changes since a
+@@ -151,10 +181,11 @@ octopus::
+ 	predator.
+ 
+ origin::
+-	The default upstream branch. Most projects have one upstream
+-	project which they track, and by default 'origin' is used for
+-	that purpose.  New updates from upstream will be fetched into
+-	this branch; you should never commit to it yourself.
++	The default upstream tracking branch. Most projects have at
++	least one upstream project which they track. By default
++	'origin' is used for that purpose.  New upstream updates
++	will be fetched into this branch; you should never commit
++	to it yourself.
+ 
+ pack::
+ 	A set of objects which have been compressed into one file (to save
+@@ -168,7 +199,8 @@ parent::
  	A commit object contains a (possibly empty) list of the logical
  	predecessor(s) in the line of development, i.e. its parents.
  
-+pickaxe:: The term pickaxe refers to an option to the diffcore routines
-+	that help select changes that add or delete a given text string.
-+	With the --pickaxe-all option, it can be used to view the
-+	full changeset that introduced or removed, say, a particular
-+	line of text.  See gitlink:git-diff[1].
-+
- plumbing::
- 	Cute name for core git.
+-pickaxe:: The term pickaxe refers to an option to the diffcore routines
++pickaxe::
++	The term pickaxe refers to an option to the diffcore routines
+ 	that help select changes that add or delete a given text string.
+ 	With the --pickaxe-all option, it can be used to view the
+ 	full changeset that introduced or removed, say, a particular
+@@ -204,8 +236,8 @@ rebase::
+ 	changes from that branch.
  
-@@ -193,6 +207,18 @@ ref::
- 	A 40-byte hex representation of a SHA1 pointing to a particular
- 	object. These may be stored in `$GIT_DIR/refs/`.
+ ref::
+-	A 40-byte hex representation of a SHA1 pointing to a particular
+-	object. These may be stored in `$GIT_DIR/refs/`.
++	A 40-byte hex representation of a SHA1 or a name that denotes
++	a particular object. These may be stored in `$GIT_DIR/refs/`.
  
-+refspec::
-+	A refspec is used by fetch and push to describe the mapping
-+	between remote ref and local ref.  They are combined with
-+	a colon in the format <src>:<dst>, preceded by an optional
-+	plus sign, +.  For example:
-+	`git fetch $URL refs/heads/master:refs/heads/origin`
-+	means "grab the master branch head from the $URL and store
-+	it as my origin branch head".
-+	And `git push $URL refs/heads/master:refs/heads/to-upstream`
-+	means "publish my master branch head as to-upstream master head
-+	at $URL".   See also gitlink:git-push[1]
-+
- repository::
- 	A collection of refs together with an object database containing
- 	all objects, which are reachable from the refs, possibly accompanied
-@@ -217,6 +243,13 @@ SCM::
+ refspec::
+ 	A refspec is used by fetch and push to describe the mapping
+@@ -243,10 +275,20 @@ SCM::
  SHA1::
  	Synonym for object name.
  
-+tracking branch::
-+	A regular git branch that is used to follow changes from
-+	another repository.  A tracking branch should not contain
-+	direct modifications or made commits made locally.
-+	A tracking branch can usually be identified as the
-+	right-hand-side ref in a Pull: refspec.
++symbolic ref::
++	See "ref".
 +
- tree object::
- 	An object containing a list of file names and modes along with refs
- 	to the associated blob and/or tree objects. A tree is equivalent
-diff --git a/Documentation/sort_glossary.pl b/Documentation/sort_glossary.pl
-index e57dc78..e0bc552 100644
---- a/Documentation/sort_glossary.pl
-+++ b/Documentation/sort_glossary.pl
-@@ -48,7 +48,7 @@ This list is sorted alphabetically:
- ';
++topic branch::
++	A regular git branch that is used by a developer to
++	identify a conceptual line of development.  Since branches
++	are very easy and inexpensive, it is often desirable to
++	have several small branches that each contain very well
++	defined concepts or small incremental yet related changes.
++
+ tracking branch::
+-	A regular git branch that is used to follow changes from
++	A regular git branch that is used to follow changes frompointing
+ 	another repository.  A tracking branch should not contain
+-	direct modifications or made commits made locally.
++	direct modifications or have local commits made to it.
+ 	A tracking branch can usually be identified as the
+ 	right-hand-side ref in a Pull: refspec.
  
- @keys=sort {uc($a) cmp uc($b)} keys %terms;
--$pattern='(\b'.join('\b|\b',reverse @keys).'\b)';
-+$pattern='(\b(?<!link:git-)'.join('\b|\b(?<!link:git-)',reverse @keys).'\b)';
- foreach $key (@keys) {
- 	$terms{$key}=~s/$pattern/sprintf "<<ref_".no_spaces($1).",$1>>";/eg;
- 	print '[[ref_'.no_spaces($key).']]'.$key."::\n"
 -- 
 1.3.1.g3d990
