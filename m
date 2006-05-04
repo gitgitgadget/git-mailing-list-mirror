@@ -1,59 +1,51 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Unresolved issues #2
-Date: Thu, 4 May 2006 11:58:27 +0200
-Message-ID: <20060504095827.GW27689@pasky.or.cz>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: git-unpack-objects
+Date: Thu, 4 May 2006 12:02:37 +0200
+Message-ID: <20060504100237.GA10548@fiberbit.xs4all.nl>
+References: <625fc13d0605011552j4189338bx14083657acffc18e@mail.gmail.com> <7vu089qr4t.fsf@assigned-by-dhcp.cox.net> <625fc13d0605031035l721ab08dmee6f870abb49f4e4@mail.gmail.com> <Pine.LNX.4.64.0605031041150.4086@g5.osdl.org> <625fc13d0605031044y2ff03ed2h261db5455b234254@mail.gmail.com> <Pine.LNX.4.64.0605031054300.4086@g5.osdl.org> <625fc13d0605031731v7b65a738r6fc0169958235928@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mj@ucw.cz
-X-From: git-owner@vger.kernel.org Thu May 04 11:57:30 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 04 12:02:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbaaN-0008FU-My
-	for gcvg-git@gmane.org; Thu, 04 May 2006 11:57:28 +0200
+	id 1FbafW-0000jy-Je
+	for gcvg-git@gmane.org; Thu, 04 May 2006 12:02:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbWEDJ5X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 05:57:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbWEDJ5X
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 05:57:23 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:1999 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751475AbWEDJ5X (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 May 2006 05:57:23 -0400
-Received: (qmail 19620 invoked by uid 2001); 4 May 2006 11:58:27 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1751477AbWEDKCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 06:02:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWEDKCo
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 06:02:44 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:28901 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1751477AbWEDKCn
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 May 2006 06:02:43 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.62)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1FbafN-0002ko-Sk; Thu, 04 May 2006 12:02:37 +0200
+To: Josh Boyer <jwboyer@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <625fc13d0605031731v7b65a738r6fc0169958235928@mail.gmail.com>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19563>
 
-Dear diary, on Thu, May 04, 2006 at 10:15:03AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> * Message-ID: <1143856098.3555.48.camel@dv>
->   Per branch property, esp. where to merge from (Pavel Roskin)
+On Wednesday May 3rd 2006 Josh Boyer wrote:
+
+> >It does. That's what the "-a" (for "all") does.
 > 
->   This involves user-level "world model" design, which is more
->   Porcelainish than Plumbing, and as people know I do not do
->   Porcelain well; interested parties need to come up with what
->   they want and how they want to use it.
+> Odd.  On one of my repos, I was seeing the correct behavior.  On
+> another, there were multiple packs left after doing the 'git repack -a
+> -d'.  Were there ever some packing bugs in older versions of git that
+> would have maybe produced some packs that wouldn't get deleted or
+> something?
 
-Oh, my holey memory. In Cogito, I have just implemented a solution
-suggested by Martin Mares, which is pretty simple, non-obtrusive
-and will work equally fine with remotes as well as remote branches:
-
-	if [ $branch != master ] && [ -s .git/branches/$branch-origin ]
-		origin=.git/branches/$branch-origin
-	else
-		origin=.git/branches/origin
-	fi
-
+Have you checked with "git fsck-objects" that maybe the "remaining"
+packs contained non-reachable objects like dangling commits from resets
+or from following volatile branches like +pu?
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Right now I am having amnesia and deja-vu at the same time.  I think
-I have forgotten this before.
+Marco Roeland
