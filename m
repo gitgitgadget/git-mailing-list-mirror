@@ -1,69 +1,72 @@
-From: "Josh Boyer" <jwboyer@gmail.com>
-Subject: Re: git-unpack-objects
-Date: Wed, 3 May 2006 19:31:12 -0500
-Message-ID: <625fc13d0605031731v7b65a738r6fc0169958235928@mail.gmail.com>
-References: <625fc13d0605011552j4189338bx14083657acffc18e@mail.gmail.com>
-	 <7vu089qr4t.fsf@assigned-by-dhcp.cox.net>
-	 <625fc13d0605031035l721ab08dmee6f870abb49f4e4@mail.gmail.com>
-	 <Pine.LNX.4.64.0605031041150.4086@g5.osdl.org>
-	 <625fc13d0605031044y2ff03ed2h261db5455b234254@mail.gmail.com>
-	 <Pine.LNX.4.64.0605031054300.4086@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] Revamped Git homepage
+Date: Thu, 4 May 2006 02:35:18 +0200
+Message-ID: <20060504003518.GT27689@pasky.or.cz>
+References: <20060502232553.GL27689@pasky.or.cz> <7virooj92i.fsf@assigned-by-dhcp.cox.net> <4d8e3fd30605030139k33c5a404k54861fdd02c87134@mail.gmail.com> <20060503090007.GM27689@pasky.or.cz> <4d8e3fd30605030213r625ce87fw5cbee554f1c20fbd@mail.gmail.com> <Pine.LNX.4.64.0605030934220.28543@localhost.localdomain> <20060503142957.GA9056@spearce.org> <4458C5D7.8010501@op5.se> <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 04 02:31:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Shawn Pearce <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 04 02:34:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbRkT-00070P-0K
-	for gcvg-git@gmane.org; Thu, 04 May 2006 02:31:17 +0200
+	id 1FbRnR-0007oB-Qm
+	for gcvg-git@gmane.org; Thu, 04 May 2006 02:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbWEDAbO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 May 2006 20:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbWEDAbO
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 20:31:14 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:25053 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750783AbWEDAbN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 20:31:13 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so191253ugc
-        for <git@vger.kernel.org>; Wed, 03 May 2006 17:31:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L9zlkDD4i190Dn2Qi4twtS6pP+Xg8CNsRF2DZMXkaT0YoBfOm2RPvTEgNLKOwAVAE/SXpV0KUEkoAPL90iqGkXxb/oorGzgfTfO2jCb9LOr4q4L/5xXS0l+nLHb2iMzgTiB7umVueDRvrv4uczknK6aOKeM9Fin7sayChaFjrek=
-Received: by 10.78.31.18 with SMTP id e18mr16734hue;
-        Wed, 03 May 2006 17:31:12 -0700 (PDT)
-Received: by 10.78.29.19 with HTTP; Wed, 3 May 2006 17:31:12 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605031054300.4086@g5.osdl.org>
+	id S1750805AbWEDAeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 May 2006 20:34:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbWEDAeT
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 May 2006 20:34:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44489 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750805AbWEDAeS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 May 2006 20:34:18 -0400
+Received: (qmail 11549 invoked by uid 2001); 4 May 2006 02:35:18 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0605030817580.4086@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19537>
 
-On 5/3/06, Linus Torvalds <torvalds@osdl.org> wrote:
->
->
-> On Wed, 3 May 2006, Josh Boyer wrote:
-> > >
-> > > That's what you just do "git repack -a -d" for.
-> >
-> > But that doesn't roll exsisting packs into a new pack, does it?
->
-> It does. That's what the "-a" (for "all") does.
+Dear diary, on Wed, May 03, 2006 at 05:30:26PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> However, I think the _real_ issue is that Mercurial has a much nicer 
+> introductory phase. The standard mercurial web-page is so much more 
+> professional and nice to look at than any git page I have ever seen, and 
+> let's face it: first looks _do_ count.
 
-Odd.  On one of my repos, I was seeing the correct behavior.  On
-another, there were multiple packs left after doing the 'git repack -a
--d'.  Were there ever some packing bugs in older versions of git that
-would have maybe produced some packs that wouldn't get deleted or
-something?
+Yes, I've already learned earlier that this made quite a bad impression
+on many people and had the homepage revamp on top of my TODO list for
+the last few weeks.
 
-At any rate, the above command does seem to do exactly what I want. 
-Thanks for the help.
+Well, here we go, I've just uploaded a new version of the Git homepage;
+I wonder how you feel about it now.
 
-josh
+Obviously, it still feels rather empty and I'm certainly not much of
+a webmaster myself, but I take patches and pull requests; see
+http://git.or.cz/community.html for the Git homepage git repository
+information.
+
+I've borrowed Jonas Fonseca's ELinks homepage design first, but the
+contents ended up almost entirely rewritten as well (except the Related
+Tools section, which stayed mostly as it was). Git now poses as a real
+version control system and the plumbing stuff is mentioned only in the
+bottom paragraphs. ;-)
+
+
+BTW, if anyone is into CSS and stuff, after half an hour of beating it
+I couldn't manage to make the top bar look right - everything is shifted
+slightly to the top. :/
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
