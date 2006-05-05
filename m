@@ -1,81 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Fri, 5 May 2006 08:59:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
- <87mzdx7mh9.wl%cworth@cworth.org> <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605050806370.3622@g5.osdl.org> <e3fqb9$hed$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Fri, 5 May 2006 18:36:29 +0200
+Message-ID: <20060505163629.GZ27689@pasky.or.cz>
+References: <20060505005659.9092.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 05 17:59:52 2006
+X-From: git-owner@vger.kernel.org Fri May 05 18:35:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc2ic-0000ma-Bu
-	for gcvg-git@gmane.org; Fri, 05 May 2006 17:59:50 +0200
+	id 1Fc3H0-0007aq-Js
+	for gcvg-git@gmane.org; Fri, 05 May 2006 18:35:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbWEEP7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 11:59:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbWEEP7r
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 11:59:47 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:53444 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751156AbWEEP7r (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 11:59:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k45FxjtH005110
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 5 May 2006 08:59:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k45Fxi2V005773;
-	Fri, 5 May 2006 08:59:44 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e3fqb9$hed$1@sea.gmane.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750818AbWEEQfT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 12:35:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbWEEQfT
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 12:35:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50857 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750818AbWEEQfS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 12:35:18 -0400
+Received: (qmail 29864 invoked by uid 2001); 5 May 2006 18:36:29 +0200
+To: linux@horizon.com
+Content-Disposition: inline
+In-Reply-To: <20060505005659.9092.qmail@science.horizon.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19616>
 
-
-
-On Fri, 5 May 2006, Jakub Narebski wrote:
-
-> Linus Torvalds wrote:
+Dear diary, on Fri, May 05, 2006 at 02:56:59AM CEST, I got a letter
+where linux@horizon.com said that...
+> Actually, AFAICT from looking at the mailing list history, it's not dirty
+> politics: the tie-breaker was the support and enthusiasm of the mercurial
+> developers.  It passed with only minor comment on the git mailing list,
+> but it was a Big Thing to the hg folks.
 > 
-> > So what you'd get is a _really_ cut down history that doesn't contain any
-> > commit history at all (just distinct "points in commit history time"), but
-> > that _does_ contain all the objects that the commits point to.
+> There are ups and downs.  OpenSolaris is definitely the big fish in
+> the mercurial pond (that wasn't *meant* to sound like a recipe for
+> heavy metal toxicity), and will get lots of attention, but git has more
+> real-world experience.  The big fish in the git pond is Linus and Linux.
 > 
-> So we would get 'skin-deep clone' rather than 'shallow' one?
+> In any case, mercurial and git are really very similar, far closer
+> to each other than any third system, so it's not like the decision is
+> a descent into heresy.  Hopefully some useful cross-pollination
+> can occur, and converting history from one to the other would be
+> simple if anyone ever wanted to.
 
-Well, it's really shallow, but perhaps more importantly, I think it should 
-be really easy, and have totally unambiguous semantics. Never any question 
-of how far back to go, and I think we already really do have all the 
-support logic for doing it.
+It's a philosophical question here, but I'd say that Git is much closer
+to Monotone than to any other version control system - I think it can be
+described as Monotone model with more elegant implementation (for some,
+at least ;), no certificates and restriction of one head per branch.
+And another important difference is that Monotone has persistent file
+identifiers, but I think that's about the only thing that would make
+Monotone more "file orientated".
 
-Now, we don't actually expose the internal "no_walk" flag with a 
-"--no-walk" command line argument parsing, but that's a one-liner.
+I'm not much of a Mercurial pro but it appears to me that the
+architectural differences there are larger, especially wrt. the revlogs
+and wholly quite a more file-oriented model.
 
-There's another approach that might be a bit friendlier, which is again to 
-walk only the objects of the WANT/HAVE things, but then _do_ walk the 
-history for just commit objects. Something close to what I think the http 
-fetch thing does if you pass it "-c -t". That too shouldn't require too 
-much extra complexity, and it would mean that "git log" at least works.
-
-Of course, that would require another slight difference to "rev-list.c", 
-where we'd only recurse into trees of selected commit objects (ie we'd 
-have to mark the HAVE/WANT commits specially, but it's not exactly 
-complex either).
-
-Of course, the complexity of _both_ of these approaches is really in the 
-fsck stage, and all the crud you need to then do other things with these 
-pared-down repos. For example, do you allow cloning? And do you just 
-automatically notice that you're cloning a shallow repo, and only do a 
-shallow clone. Etc etc..
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
