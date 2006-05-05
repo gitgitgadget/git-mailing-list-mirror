@@ -1,80 +1,90 @@
-From: "Robin Rosenberg (list subscriber)" 
-	<robin.rosenberg.lists@dewire.com>
-Subject: Bad error message
-Date: Fri, 5 May 2006 01:57:26 +0200
-Organization: Dewire
-Message-ID: <200605041957.26194.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Teach fmt-patch to write individual files.
+Date: Thu, 04 May 2006 17:09:00 -0700
+Message-ID: <7vhd452uzn.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0605050115440.12795@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri May 05 01:58:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 05 02:09:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbniJ-00034Q-9g
-	for gcvg-git@gmane.org; Fri, 05 May 2006 01:58:31 +0200
+	id 1Fbnsf-0004JQ-21
+	for gcvg-git@gmane.org; Fri, 05 May 2006 02:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbWEDX60 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 19:58:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbWEDX60
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 19:58:26 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:31245 "EHLO
-	torino.dewire.com") by vger.kernel.org with ESMTP id S1751485AbWEDX60
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 May 2006 19:58:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id 59282802A9C
-	for <git@vger.kernel.org>; Fri,  5 May 2006 01:57:36 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 27823-02 for <git@vger.kernel.org>; Fri,  5 May 2006 01:57:36 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by torino.dewire.com (Postfix) with ESMTP id BE12680019B
-	for <git@vger.kernel.org>; Fri,  5 May 2006 01:57:33 +0200 (CEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S932398AbWEEAJE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 20:09:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932405AbWEEAJE
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 20:09:04 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:8833 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932398AbWEEAJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 May 2006 20:09:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060505000902.BDOH9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 4 May 2006 20:09:02 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605050115440.12795@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 5 May 2006 01:16:40 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19587>
 
-Hi, 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-While playing with git I got the following "impossible" error message:
+> When called with "--stdout", it still writes to standard output.
+>
+> Notable differences to git-format-patch:
+>
+> 	- since fmt-patch uses the standardized logging machinery, it is
+> 	  no longer "From nobody", but "From <commit_sha1>",
 
-$ git commit --amend
-fatal: Ref HEAD is at 3cec3036287d6b24f7ad7f724f8bb9d4032fb1a3 but expected 
-3cec3036287d6b24f7ad7f724f8bb9d4032fb1a3
+Yes, and the date on that UNIX-From line has been updated ;-).
 
-Since impossible things happen rarely, I was somewhat puzzled and it turned 
-out not to be so impossible after all, but a rather typical C bug. Since I 
-fixed my working directory using git-reset, I'm not sure how to verify the 
-code (suggestions welcome), but I'm not sure if that's important since the 
-code being replaced by  this patch probably wasn't tested either. :/
+> 	- the empty lines before and after the "---" just before the
+> 	  diffstat are no longer there,
 
-Maybe someone could explain what might have been wrong with my work space (git
-status turned up nothing wrong or missing).
+Personally, I find this the most annoying myself.  I am not
+complaining to you because as you know you inherited this
+behaviour from my code.
 
--- robin
+> 	- git-format-patch outputs the commit_sha1 just before the first
+> 	  diff, which fmt-patch does not,
 
---- git-1.3.1.orig/update-ref.c 2006-04-25 08:07:54.000000000 +0200
-+++ git-1.3.1/update-ref.c      2006-05-04 16:30:04.000000000 +0200
-@@ -43,8 +43,13 @@
-                die("No such ref: %s", refname);
+Which should be fine.
 
-        if (oldval) {
--               if (memcmp(currsha1, oldsha1, 20))
--                       die("Ref %s is at %s but expected %s", refname, sha1_to_hex(currsha1), sha1_to_hex(oldsha1));
-+               if (memcmp(currsha1, oldsha1, 20)) {
-+                       char sha1str1[41];
-+                       char sha1str2[41];
-+                       strcpy(sha1str1, sha1_to_hex(currsha1));
-+                       strcpy(sha1str2, sha1_to_hex(oldsha1));
-+                       die("Ref %s is at %s but expected %s", refname, sha1str1, sha1str2);
-+               }
-                /* Nothing to do? */
-                if (!memcmp(oldsha1, sha1, 20))
-                        exit(0);
+> 	- the file names are no longer output to stdout, but to stderr
+> 	  (since stdout is freopen()ed all the time), and
+
+Which might be a bigger deal; I suspect people capture that while
+dumping patches into individual files, and do their
+postprocessing using the list of filenames.
+
+> 	- "git fmt-patch HEAD^" does not work as expected: it outputs
+> 	  *all* commits reachable from HEAD^!
+
+If we really wanted to handle this, you could do something like
+what builtin-diff does before letting the revision machinery
+start walking the revision tree.  Look at pending objects, and
+if you find only one UNINTERESTING commit, add_object the
+current HEAD there as well.  Personally I do not think it is
+worth it; rather we would probably want to standardize on rev-list
+syntax.
+
+Two major differences you forgot to mention.
+
+One is that it does not do the "git cherry" filtering.  It is
+not a big deal for me personally, but some people may be
+depending on it.  I dunno.
+
+Another is -o outdir, which should be trivial to add once you
+have implemented output switching with freopen().
+
+Anyhow, thanks for starting this.
