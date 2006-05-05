@@ -1,84 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [ANNOUNCE] Git wiki
-Date: Fri, 05 May 2006 20:49:03 +0200
-Organization: At home
-Message-ID: <e3g6mq$uoq$1@sea.gmane.org>
-References: <20060505005659.9092.qmail@science.horizon.com> <20060505062236.GA4544@c165.ib.student.liu.se> <20060505092332.GY27689@pasky.or.cz> <7vejz8241m.fsf@assigned-by-dhcp.cox.net> <e3fvj2$779$1@sea.gmane.org>
+Date: Fri, 5 May 2006 20:54:45 +0200
+Message-ID: <20060505185445.GD27689@pasky.or.cz>
+References: <20060505005659.9092.qmail@science.horizon.com> <20060505181540.GB27689@pasky.or.cz> <Pine.LNX.4.64.0605051123420.3622@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri May 05 20:49:38 2006
+Cc: linux@horizon.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 05 20:53:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc5Mm-0006Cl-D3
-	for gcvg-git@gmane.org; Fri, 05 May 2006 20:49:28 +0200
+	id 1Fc5Qm-00075D-Oi
+	for gcvg-git@gmane.org; Fri, 05 May 2006 20:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbWEEStZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 14:49:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbWEEStZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 14:49:25 -0400
-Received: from main.gmane.org ([80.91.229.2]:4536 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751164AbWEEStY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 14:49:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fc5MQ-00069t-0v
-	for git@vger.kernel.org; Fri, 05 May 2006 20:49:06 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 May 2006 20:49:06 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 May 2006 20:49:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751214AbWEESxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 14:53:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbWEESxe
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 14:53:34 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:24005 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751214AbWEESxd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 14:53:33 -0400
+Received: (qmail 19497 invoked by uid 2001); 5 May 2006 20:54:45 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0605051123420.3622@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19627>
 
-Jakub Narebski wrote:
+Dear diary, on Fri, May 05, 2006 at 08:31:06PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> Moving data around happens with a whole lot more than "mv".
 
-> Junio C Hamano wrote:
-> 
->> Petr Baudis <pasky@suse.cz> writes:
->> 
->>> But the non-obviously important part here to note is that the branch B
->>> merely "corrects a typo on a comment somewhere" - the latest versions in
->>> branch A and branch B are always compared for renames, therefore if
->>> branch A renamed the file and branch B sums up to some larger-scale
->>> changes in the file, it still won't be merged properly.
->> 
->> I probably am guilty of starting this misinformation, but the
->> code does not compare the latest in A and B for rename
->> detection; it compares (O, A) and (O, B).
->> 
->> But the end result is the same - what you say is correct.  If a
->> path (say O to A) that renamed has too big a change, then no
->> matter how small the changes are on the other path (O to B),
->> rename detection can be fooled.  We could perhaps alleviate it
->> by following the whole commit chain.
-> 
-> Or perhaps by helper information about renames, entered either by git-mv
-> (and git-cp) or rename detection at commit, e.g. in the following form
-> 
->         note at <commit-sha1> was-in <pathname>
->         note at <commit-sha1> was-in <pathname>
-> 
-> (with the obvious limit of this "note header" solution is that it wouldn't
-> work for filenames and directory name containing "\n"). I'm not sure if
-> <pathname> should be just basename, of full pathname.
+Let's keep this on the per-file level - if you want to go below the file
+granularity, I already _DID_ say that I agree that explicit tracking is
+not a way. (If sub-file tracking would end up having any usable
+reliability in real-world cases, which is something I do not take for
+granted.)
 
-Erm, I'm sorry, forget the implementation which wouldn't work. The idea was
-to accumulate renames and contents moving information, and remember at
-which commit it occured. But it's place (as a _helper_ information) is
-perhaps in separate structure.
+Another thing is, the sub-file content tracking would end up being a lot
+more "magic" than the simple per-file content tracking, and you stated
+several times that you prefer simple merge over better but magic merge -
+so why do you prefer sub-file content tracking anyway?
+
+> It happens with patches (somebody _else_ may have done an "mv", without 
+> using git at all),
+
+_Here_ is the place for automated renames detection. Between applying
+and committing the patch, the user can verify that it got the renames
+right. That's impossible when guessing the renames later.
+
+> and it happens with editors (moving data around until 
+> most of it exists in another file).
+
+I doubt this in fact happens that often (to a degree the automatic
+rename detection would catch). And if it happens, then the user has to
+tell Git - I have never heard that _this_ would be any problem in other
+version control systems. You could make it more foolproof by running the
+automatic rename detection on the diff being committed and suggesting
+the user that other yet unrecorded renames did happen.
+
+The point is, the user stays in control and can override any stupid guess.
+
+> So doing "*mv" is just a special case.
+> 
+> And supporting special cases is _wrong_. If you start depending on data 
+> that isn't actually dependable, that's WRONG.
+
+I prefer making this data dependable to having to resort to guessing on
+dependable less amount of data.
+
+> There's another reason why encoding movement information in the commit is 
+> totally broken, namely the fact that a lot of the actions DO NOT WALK THE 
+> COMMIT CHAIN!
+> 
+> Try doing
+> 
+> 	git diff v1.3.0..
+> 
+> and think about what that actually _means_. Think about the fact that it 
+> doesn't actually walk the commit chain at all: it diffs the trees between 
+> v1.3.0 and the current one. What if the rename happened in a commit in the 
+> middle?
+
+Then the automated renames detection will miss it given that the other
+accumulated differences are large enough, and the suggested workarounds
+_are_ precisely walking the commit chain.
+
+If you use persistent file ids, you never miss it _AND_ you DO NOT WALK
+THE COMMIT CHAIN! You still just match file ids in the two trees.
+
+> The "track contents, not intentions" approach avoids both these things. 
+> The end result is _reliable_, not a "random guess".
+
+No, the end result is whichever some heuristic randomly guessed, and
+it's not reliable either since the heuristic can change.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
