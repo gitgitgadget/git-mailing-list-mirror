@@ -1,83 +1,75 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: [PATCH] Fix for config file section parsing.
-Date: Fri, 5 May 2006 09:49:15 -0400
-Message-ID: <BAYC1-PASMTP0769AAD931EFA5390875EDAEB50@CEZ.ICE>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Unresolved issues #2 (shallow clone again)
+Date: Fri, 5 May 2006 08:10:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605050806370.3622@g5.osdl.org>
+References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
+ <87mzdx7mh9.wl%cworth@cworth.org> <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri May 05 15:55:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 05 17:11:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc0l8-00069e-9g
-	for gcvg-git@gmane.org; Fri, 05 May 2006 15:54:18 +0200
+	id 1Fc1xM-0007Bd-EM
+	for gcvg-git@gmane.org; Fri, 05 May 2006 17:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbWEENyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 09:54:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWEENyM
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 09:54:12 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:43942 "EHLO
-	BAYC1-PASMTP07.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1751121AbWEENyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 May 2006 09:54:11 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP07.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 5 May 2006 06:57:13 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id A5EDE644C28
-	for <git@vger.kernel.org>; Fri,  5 May 2006 09:54:09 -0400 (EDT)
-To: git@vger.kernel.org
-Message-Id: <20060505094915.7a6eb0e2.seanlkml@sympatico.ca>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 05 May 2006 13:57:13.0562 (UTC) FILETIME=[CFAB83A0:01C6704B]
+	id S1751135AbWEEPK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 11:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbWEEPK6
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 11:10:58 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:44468 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751135AbWEEPK5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 11:10:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k45FAptH002495
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 5 May 2006 08:10:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k45FAoE4004568;
+	Fri, 5 May 2006 08:10:50 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-
-Currently, if the target key has a section that matches
-the initial substring of another section we mistakenly
-believe we've found the correct section.  To avoid this
-problem, ensure that the section lengths are identical
-before comparison.
-
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
-
----
-
-Here's an example of the problem:
-
-$ git repo-config a.b.c d
-$ cat .git/config
-[a.b]
-        c = d
-$ git repo-config a.x y
-$ cat .git/config
-[a.b]
-        c = d
-        x = y
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19611>
 
 
- config.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
 
-f956fd1a6b1d3c82d9bc735427b58ec41d9e5dd1
-diff --git a/config.c b/config.c
-index 4e1f0c2..a3e14d7 100644
---- a/config.c
-+++ b/config.c
-@@ -335,8 +335,9 @@ static int store_aux(const char* key, co
- 			store.offset[store.seen] = ftell(config_file);
- 			store.state = KEY_SEEN;
- 			store.seen++;
--		} else if(!strncmp(key, store.key, store.baselen))
--			store.state = SECTION_SEEN;
-+		} else if (strrchr(key, '.') - key == store.baselen &&
-+			      !strncmp(key, store.key, store.baselen))
-+					store.state = SECTION_SEEN;
- 	}
- 	return 0;
- }
--- 
-1.3.2.g2fb9
+On Thu, 4 May 2006, Junio C Hamano wrote:
+> 
+> Jokes aside, I think listing the updated conversation elements
+> like you did above is a good step forward.
+> 
+> The vocabulary we would want from the requestor side is probably
+> (at least):
+> 
+> 	I WANT to have these
+>         I HAVE these
+>         I'm MISSING these
+>         Don't bother with these this time around (--since, ^v2.6.16, ...)
+
+Actually, I think we can do something simpler that _most_ people might be 
+happy with.
+
+Namely just have a mode to "git-send-pack" that uses the "--no-walk" flag 
+to generate the object list to send.
+
+What that does is to never walk the object history: so it will just use 
+the "I HAVE THESE" and "I WANT THESE" commit references to directly 
+generate the list of commits, and then walks the trees to generate the 
+list of trees/blobs that differ between the particular end-points.
+
+We already have the "no_walk" flag internally, we just don't expose it.
+
+So what you'd get is a _really_ cut down history that doesn't contain any 
+commit history at all (just distinct "points in commit history time"), but 
+that _does_ contain all the objects that the commits point to.
+
+		Linus
