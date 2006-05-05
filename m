@@ -1,105 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] binary patch.
-Date: Fri, 05 May 2006 12:23:19 -0700
-Message-ID: <7vac9wxom0.fsf@assigned-by-dhcp.cox.net>
-References: <7vodyd2vqn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605042241240.28543@localhost.localdomain>
-	<7vwtd10xyd.fsf@assigned-by-dhcp.cox.net>
-	<7vy7xgzsiu.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605051128100.28543@localhost.localdomain>
-	<7vejz8z80p.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605051431390.24505@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Fri, 05 May 2006 21:39:56 +0200
+Organization: At home
+Message-ID: <e3g9m6$8i0$1@sea.gmane.org>
+References: <20060505005659.9092.qmail@science.horizon.com> <20060505181540.GB27689@pasky.or.cz> <Pine.LNX.4.64.0605051123420.3622@g5.osdl.org> <20060505185445.GD27689@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 05 21:23:33 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri May 05 21:40:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc5tg-0003jn-VJ
-	for gcvg-git@gmane.org; Fri, 05 May 2006 21:23:29 +0200
+	id 1Fc6A2-0006Xv-SE
+	for gcvg-git@gmane.org; Fri, 05 May 2006 21:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbWEETX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 15:23:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbWEETX0
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 15:23:26 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:24457 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750993AbWEETXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 May 2006 15:23:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060505192323.YKD9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 5 May 2006 15:23:23 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0605051431390.24505@localhost.localdomain>
-	(Nicolas Pitre's message of "Fri, 05 May 2006 14:33:01 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751532AbWEETkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 15:40:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbWEETkT
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 15:40:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:46515 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751532AbWEETkS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 15:40:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fc69l-0006Ue-7g
+	for git@vger.kernel.org; Fri, 05 May 2006 21:40:05 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 May 2006 21:40:05 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 May 2006 21:40:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19635>
 
-Nicolas Pitre <nico@cam.org> writes:
+Petr Baudis wrote:
 
-> On Fri, 5 May 2006, Junio C Hamano wrote:
->
->> The delta is going to be deflated and hopefully gets a bit
->> smaller, so if we really care that level of detail, it might be
->> worth to do (deflate_size*3/2) or something like that here, use
->> delta with or without deflate whichever is smaller, and mark the
->> uncompressed delta with a different tag ("uncompressed delta"?).
->> And for symmetry, to deal with uncompressible data, we may want
->> to have "uncompressed literal" as well.
->
-> Nah...  Please just forget that.  ;-)
+> Dear diary, on Fri, May 05, 2006 at 08:31:06PM CEST, I got a letter
+> where Linus Torvalds <torvalds@osdl.org> said that...
 
-I was serious about the above actually.
+> I prefer making this [rename detection] data dependable to having to
+> resort to guessing on dependable less amount of data.
+> 
+>> There's another reason why encoding movement information in the commit is
+>> totally broken, namely the fact that a lot of the actions DO NOT WALK THE
+>> COMMIT CHAIN!
+>> 
+>> Try doing
+>> 
+>> git diff v1.3.0..
+>> 
+>> and think about what that actually _means_. Think about the fact that it
+>> doesn't actually walk the commit chain at all: it diffs the trees between
+>> v1.3.0 and the current one. What if the rename happened in a commit in
+>> the middle?
+> 
+> Then the automated renames detection will miss it given that the other
+> accumulated differences are large enough, and the suggested workarounds
+> _are_ precisely walking the commit chain.
+> 
+> If you use persistent file ids, you never miss it _AND_ you DO NOT WALK
+> THE COMMIT CHAIN! You still just match file ids in the two trees.
 
-BTW, this "binary patch" opens a different can of worms.
+Let not jump to the one of the possible solution. The detecting and noting
+renames and content moving (with user interaction) at commit is nice...
+unless does something which cannot allow interactiveness (like applying
+patchbomb), but even then detecting and saving info at commit would be good
+idea.
 
-Currently, the diff uses a heuristic borrowed from GNU diff 
-(I did not look at the code when I did it, but it is described
-in its documentation) to decide if a file is binary (look at the
-first few bytes and find NUL).  I am sure people will want to
-have a way to say "that heuristic fails but this _is_ a binary
-file and please treat it as such".
+What we need is to for two given linked revisions (with a path between them)
+to easily extract information about renames (content moving). Perhaps using
+additional structure... best if we could do this without walking the chain.
+The rest is details... ;-P
 
-There are two, both valid, I think, ways to do it.
-
- - give an option to "diff" that says "treat this path as binary
-   for this invocation of the program".
-
- - give an attribute to blob object that says "this blob is
-   binary and should be treated as such".
-
-The latter is probably the right way to go in the longer term.
-
-A blob being binary or not is a property of the content and does
-not depend on where it sits in the history, so unlike "recording
-renames as a hint in commit objects", the attribute is at the
-blob level, not at the commit nor the tree that points at the
-blob.
-
-But "binaryness" affects only certain operations that extract
-the data (e.g. diff and grep) and not others (e.g. fetch).
-Also, it makes sense to being able to retroactively mark a blob,
-which was not marked as such originally, is a binary.  So I do
-not think it should be recorded in the object header.
-
-Which suggests that we may perhaps want to have notes that can
-be attached to existing objects to augment them without changing
-the contents of the data, and have tools notice these notes when
-they are available.  Another example is to associate correct
-MIME types to blobs so, gitweb _blob_ links can do sensible
-things to them.
-
-These external notes are purely for Porcelains (in the context
-of this sentence "diff" and "grep" are Porcelain), but we would
-also want a way to propagate them across repositories somehow.
-In a sense, "grafts" information is similar to the external
-notes in that it augments existing commit objects, but its
-effect is a bit more intrusive; it affects the way the core
-operates.
+-- 
+Jakub Narebski
+Warsaw, Poland
