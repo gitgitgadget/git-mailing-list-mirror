@@ -1,69 +1,84 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] binary patch.
-Date: Fri, 05 May 2006 14:33:01 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605051431390.24505@localhost.localdomain>
-References: <7vodyd2vqn.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605042241240.28543@localhost.localdomain>
- <7vwtd10xyd.fsf@assigned-by-dhcp.cox.net>
- <7vy7xgzsiu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605051128100.28543@localhost.localdomain>
- <7vejz8z80p.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Fri, 05 May 2006 20:49:03 +0200
+Organization: At home
+Message-ID: <e3g6mq$uoq$1@sea.gmane.org>
+References: <20060505005659.9092.qmail@science.horizon.com> <20060505062236.GA4544@c165.ib.student.liu.se> <20060505092332.GY27689@pasky.or.cz> <7vejz8241m.fsf@assigned-by-dhcp.cox.net> <e3fvj2$779$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 05 20:33:10 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri May 05 20:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc56y-0003Xb-Ed
-	for gcvg-git@gmane.org; Fri, 05 May 2006 20:33:09 +0200
+	id 1Fc5Mm-0006Cl-D3
+	for gcvg-git@gmane.org; Fri, 05 May 2006 20:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbWEESdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 14:33:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWEESdF
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 14:33:05 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60481 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751207AbWEESdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 May 2006 14:33:04 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IYT000AK271JT70@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 05 May 2006 14:33:01 -0400 (EDT)
-In-reply-to: <7vejz8z80p.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S1751164AbWEEStZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 14:49:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbWEEStZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 14:49:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:4536 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751164AbWEEStY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 14:49:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fc5MQ-00069t-0v
+	for git@vger.kernel.org; Fri, 05 May 2006 20:49:06 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 May 2006 20:49:06 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 May 2006 20:49:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19626>
 
-On Fri, 5 May 2006, Junio C Hamano wrote:
+Jakub Narebski wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
+> Junio C Hamano wrote:
 > 
-> >> +	delta = NULL;
-> >> +	deflated = deflate_it(two->ptr, two->size, &deflate_size);
-> >> +	if (one->size && two->size) {
-> >> +		delta = diff_delta(one->ptr, one->size,
-> >> +				   two->ptr, two->size,
-> >> +				   &delta_size, deflate_size);
-> >
-> > Here you probably want to use deflate_size-1 (deflate_size can't be 0).
+>> Petr Baudis <pasky@suse.cz> writes:
+>> 
+>>> But the non-obviously important part here to note is that the branch B
+>>> merely "corrects a typo on a comment somewhere" - the latest versions in
+>>> branch A and branch B are always compared for renames, therefore if
+>>> branch A renamed the file and branch B sums up to some larger-scale
+>>> changes in the file, it still won't be merged properly.
+>> 
+>> I probably am guilty of starting this misinformation, but the
+>> code does not compare the latest in A and B for rename
+>> detection; it compares (O, A) and (O, B).
+>> 
+>> But the end result is the same - what you say is correct.  If a
+>> path (say O to A) that renamed has too big a change, then no
+>> matter how small the changes are on the other path (O to B),
+>> rename detection can be fooled.  We could perhaps alleviate it
+>> by following the whole commit chain.
 > 
-> I am not sure if -1 is worth here.
+> Or perhaps by helper information about renames, entered either by git-mv
+> (and git-cp) or rename detection at commit, e.g. in the following form
 > 
-> The delta is going to be deflated and hopefully gets a bit
-> smaller, so if we really care that level of detail, it might be
-> worth to do (deflate_size*3/2) or something like that here, use
-> delta with or without deflate whichever is smaller, and mark the
-> uncompressed delta with a different tag ("uncompressed delta"?).
-> And for symmetry, to deal with uncompressible data, we may want
-> to have "uncompressed literal" as well.
+>         note at <commit-sha1> was-in <pathname>
+>         note at <commit-sha1> was-in <pathname>
+> 
+> (with the obvious limit of this "note header" solution is that it wouldn't
+> work for filenames and directory name containing "\n"). I'm not sure if
+> <pathname> should be just basename, of full pathname.
 
-Nah...  Please just forget that.  ;-)
+Erm, I'm sorry, forget the implementation which wouldn't work. The idea was
+to accumulate renames and contents moving information, and remember at
+which commit it occured. But it's place (as a _helper_ information) is
+perhaps in separate structure.
 
-
-Nicolas
+-- 
+Jakub Narebski
+Warsaw, Poland
