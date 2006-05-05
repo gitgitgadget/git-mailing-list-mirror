@@ -1,70 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Fri, 05 May 2006 07:48:11 +0200
-Organization: At home
-Message-ID: <e3eouo$1fm$1@sea.gmane.org>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net> <87mzdx7mh9.wl%cworth@cworth.org> <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net> <46a038f90605042217n3261b14cxd63f35a31223848e@mail.gmail.com> <87bqud6o4p.wl%cworth@cworth.org>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Fri, 5 May 2006 08:22:36 +0200
+Message-ID: <20060505062236.GA4544@c165.ib.student.liu.se>
+References: <20060505005659.9092.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri May 05 07:48:50 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 05 08:22:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FbtBB-00041p-I4
-	for gcvg-git@gmane.org; Fri, 05 May 2006 07:48:41 +0200
+	id 1FbtiI-0007p3-DC
+	for gcvg-git@gmane.org; Fri, 05 May 2006 08:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932472AbWEEFsi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 01:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932474AbWEEFsi
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 01:48:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:2247 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932472AbWEEFsi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 01:48:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FbtAz-0003zt-7W
-	for git@vger.kernel.org; Fri, 05 May 2006 07:48:30 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 May 2006 07:48:29 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 May 2006 07:48:29 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750979AbWEEGWj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 02:22:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWEEGWj
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 02:22:39 -0400
+Received: from 85.8.31.11.se.wasadata.net ([85.8.31.11]:41344 "EHLO
+	mail6.wasadata.com") by vger.kernel.org with ESMTP id S1750750AbWEEGWi
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 5 May 2006 02:22:38 -0400
+Received: from c165 (85.8.2.189.se.wasadata.net [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 6368A40FF; Fri,  5 May 2006 08:41:32 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1Fbti0-0001FX-00; Fri, 05 May 2006 08:22:36 +0200
+To: linux@horizon.com
+Content-Disposition: inline
+In-Reply-To: <20060505005659.9092.qmail@science.horizon.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19600>
 
-Carl Worth wrote:
+On Thu, May 04, 2006 at 08:56:59PM -0400, linux@horizon.com wrote:
+> What people who are asking for explicit rename tracking actually want
+> is automatic rename merging.  If branch A renames a file, and branch B
+> corrects a typo on a comment somewhere, they'd like the merge to
+> both patch and rename the file.  If you can do that, you have met the
+> need, even if your solution isn't the one the feature requester
+> imagined.
 
-> On Fri, 5 May 2006 17:17:10 +1200, "Martin Langhoff" wrote:
+I don't know if you already know this, if you do it might be valuable
+for other readers.
 
->> In that case, the server should apply the ignore rules. Except that
->> later merges in the local repo would perhaps have to deal with missing
->> part of the history. I suspect it should refuse to merge something we
->> don't have all the merging parts for.
-> 
-> Yeah, shallow clones can shake up the conventions a bit. It's
-> definitely common for a repository to only have a single parent-less
-> commit, such that there is always an identifiable merge base for any
-> pair of revisions. Shallow clones would make (effectively) parent-less
-> commits much more common.
+If the rename is detected by the current rename detection code
+(git-diff-tree -M) then the merge case described above is handled
+perfectly fine by the current git. That is, the rename is followed and
+the patch fixing the typo is applied to the renamed file. This assumes
+that the default merge strategy (recursive) is used.
 
-I wonder if it would be possible for git to:
-a) as for a fetch which would bring all the commits up to the merge base
-   (and merge base has to be calculated on the server side I think),
-   i.e. give command to use (for fetch or for force baseless merge)
-b) fetch the commits
-c) do merge
-d) optionally re-cauterize history again
 
--- 
-Jakub Narebski
-Warsaw, Poland
+- Fredrik
