@@ -1,64 +1,51 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] binary patch.
-Date: Fri, 5 May 2006 16:33:55 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605051605340.6713@iabervon.org>
-References: <7vodyd2vqn.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605042241240.28543@localhost.localdomain>
- <7vwtd10xyd.fsf@assigned-by-dhcp.cox.net> <7vy7xgzsiu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605051128100.28543@localhost.localdomain>
- <7vejz8z80p.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605051431390.24505@localhost.localdomain>
- <7vac9wxom0.fsf@assigned-by-dhcp.cox.net>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Fri, 5 May 2006 22:45:16 +0200
+Message-ID: <20060505204516.GA82888@dspnet.fr.eu.org>
+References: <20060505005659.9092.qmail@science.horizon.com> <20060505181540.GB27689@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 05 22:33:46 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 05 22:45:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc6za-0006z1-8K
-	for gcvg-git@gmane.org; Fri, 05 May 2006 22:33:38 +0200
+	id 1Fc7Aw-0000fk-SR
+	for gcvg-git@gmane.org; Fri, 05 May 2006 22:45:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751749AbWEEUdU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 16:33:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbWEEUdT
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 16:33:19 -0400
-Received: from iabervon.org ([66.92.72.58]:29966 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751715AbWEEUdM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 16:33:12 -0400
-Received: (qmail 22667 invoked by uid 1000); 5 May 2006 16:33:55 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 May 2006 16:33:55 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vac9wxom0.fsf@assigned-by-dhcp.cox.net>
+	id S1751216AbWEEUpT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 16:45:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbWEEUpT
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 16:45:19 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:41740 "EHLO dspnet.fr.eu.org")
+	by vger.kernel.org with ESMTP id S1751216AbWEEUpR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 16:45:17 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id BFB43A3556; Fri,  5 May 2006 22:45:16 +0200 (CEST)
+To: linux@horizon.com
+Mail-Followup-To: Olivier Galibert <galibert@pobox.com>, linux@horizon.com,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060505181540.GB27689@pasky.or.cz>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19640>
 
-On Fri, 5 May 2006, Junio C Hamano wrote:
+On Fri, May 05, 2006 at 08:15:41PM +0200, Petr Baudis wrote:
+> The automatic vs. explicit movement tracking is a lot more
+> controversial. Explicit movement tracking is pretty easy to provide for
+> file-level movements, it's just that the user says "I _did_ move file
+> A to file B" (I never got the Linus' argument that the user has no idea
+> - he just _performed_ the move, also explicitly, by calling *mv).
 
-> But "binaryness" affects only certain operations that extract
-> the data (e.g. diff and grep) and not others (e.g. fetch).
-> Also, it makes sense to being able to retroactively mark a blob,
-> which was not marked as such originally, is a binary.  So I do
-> not think it should be recorded in the object header.
+In one of my projects 99% or the renames are "done" when unzipping the
+source release of the next version.  Explicit tracking would be
+unbearable, frankly.
 
-Why do you think it makes sense to retroactively mark a blob with things 
-like binariness or MIME type? To the extent that the information is not 
-possible to extract from the blob contents, it seems to me to be a 
-permanent aspect of the blob. And I could see having blobs with the same 
-content but different type information (that one is a ZIP archive, while 
-this one is a OpenDocument file), and tools may care how they were 
-specified, and the user would want to be able to track how they had 
-historically been marked, if the system allows them to be marked at all.
+And once you have a good enough implicit tracking, why bother with an
+explicit one?
 
-Of course, there's still the issue of how this info is generated for a new 
-blob; I think it should live in the index for tracked files and come from 
-a .gitignore-style file for new files. (For that matter, there could be a 
-.gitmetadata file, which would handle "ignore" as well as binary and 
-whatever other info you want to produce about your not-previously-tracked 
-files.)
-
-	-Daniel
-*This .sig left intentionally blank*
+  OG.
