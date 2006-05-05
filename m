@@ -1,73 +1,150 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] binary patch.
-Date: Fri, 05 May 2006 13:50:24 -0700
-Message-ID: <7vmzdww60f.fsf@assigned-by-dhcp.cox.net>
-References: <7vodyd2vqn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605042241240.28543@localhost.localdomain>
-	<7vwtd10xyd.fsf@assigned-by-dhcp.cox.net>
-	<7vy7xgzsiu.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605051128100.28543@localhost.localdomain>
-	<7vejz8z80p.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605051431390.24505@localhost.localdomain>
-	<7vac9wxom0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605051605340.6713@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri May 05 22:50:43 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 1/2] git-svn: documentation updates
+Date: Fri, 05 May 2006 12:35:39 -0700
+Message-ID: <11468577403821-git-send-email-normalperson@yhbt.net>
+References: <11468577402388-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri May 05 22:51:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc7Fv-0001ZF-L0
-	for gcvg-git@gmane.org; Fri, 05 May 2006 22:50:32 +0200
+	id 1Fc7Gy-0001mV-Uc
+	for gcvg-git@gmane.org; Fri, 05 May 2006 22:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742AbWEEUu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 16:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751396AbWEEUu0
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 16:50:26 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37599 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751772AbWEEUu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 May 2006 16:50:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060505205025.EUQD25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 5 May 2006 16:50:25 -0400
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0605051605340.6713@iabervon.org> (Daniel
-	Barkalow's message of "Fri, 5 May 2006 16:33:55 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751773AbWEEUvc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 16:51:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbWEEUvc
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 16:51:32 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:11206 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751773AbWEEUvb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 May 2006 16:51:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 1D5412DC034;
+	Fri,  5 May 2006 13:51:31 -0700 (PDT)
+To: junkio@cox.net, git@vger.kernel.org
+X-Mailer: git-send-email 1.3.2.ge3d7
+In-Reply-To: <11468577402388-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19642>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+* Clarify that 'init' requires an argument
+* Remove instances of 'SVN_URL' in the manpage, it's not an
+  environment variable.
+* Refer to 'Additional Fetch Arguments' when documenting 'fetch'
+* document --authors-file / -A option
 
-> On Fri, 5 May 2006, Junio C Hamano wrote:
->
->> But "binaryness" affects only certain operations that extract
->> the data (e.g. diff and grep) and not others (e.g. fetch).
->> Also, it makes sense to being able to retroactively mark a blob,
->> which was not marked as such originally, is a binary.  So I do
->> not think it should be recorded in the object header.
->
-> Why do you think it makes sense to retroactively mark a blob with things 
-> like binariness or MIME type? To the extent that the information is not 
-> possible to extract from the blob contents, it seems to me to be a 
-> permanent aspect of the blob. And I could see having blobs with the same 
-> content but different type information (that one is a ZIP archive, while 
-> this one is a OpenDocument file), and tools may care how they were 
-> specified, and the user would want to be able to track how they had 
-> historically been marked, if the system allows them to be marked at all.
->
-> Of course, there's still the issue of how this info is generated for a new 
-> blob; I think it should live in the index for tracked files and come from 
-> a .gitignore-style file for new files. (For that matter, there could be a 
-> .gitmetadata file, which would handle "ignore" as well as binary and 
-> whatever other info you want to produce about your not-previously-tracked 
-> files.)
+Thanks to Pavel Roskin and Seth Falcon for bringing these issues
+to my attention.
 
-I think Nico's solution (compromise?) is the right and most
-practical one.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+
+---
+
+ contrib/git-svn/git-svn.perl |    6 ++++--
+ contrib/git-svn/git-svn.txt  |   45 ++++++++++++++++++++++++++++++++----------
+ 2 files changed, 38 insertions(+), 13 deletions(-)
+
+f16bddd18d55404fbaa4a88020f4d58ab2b1c620
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index 7c44450..e003501 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -42,7 +42,8 @@ my %fc_opts = ( 'no-ignore-externals' =>
+ my %cmd = (
+ 	fetch => [ \&fetch, "Download new revisions from SVN",
+ 			{ 'revision|r=s' => \$_revision, %fc_opts } ],
+-	init => [ \&init, "Initialize and fetch (import)", { } ],
++	init => [ \&init, "Initialize a repo for tracking" .
++			  " (requires URL argument)", { } ],
+ 	commit => [ \&commit, "Commit git revisions to SVN",
+ 			{	'stdin|' => \$_stdin,
+ 				'edit|e' => \$_edit,
+@@ -220,7 +221,8 @@ when you have upgraded your tools and ha
+ }
+ 
+ sub init {
+-	$SVN_URL = shift or croak "SVN repository location required\n";
++	$SVN_URL = shift or die "SVN repository location required " .
++				"as a command-line argument\n";
+ 	unless (-d $GIT_DIR) {
+ 		sys('git-init-db');
+ 	}
+diff --git a/contrib/git-svn/git-svn.txt b/contrib/git-svn/git-svn.txt
+index e18fcaf..f7d3de4 100644
+--- a/contrib/git-svn/git-svn.txt
++++ b/contrib/git-svn/git-svn.txt
+@@ -36,17 +36,22 @@ COMMANDS
+ --------
+ init::
+ 	Creates an empty git repository with additional metadata
+-	directories for git-svn.  The SVN_URL must be specified
+-	at this point.
++	directories for git-svn.  The Subversion URL must be specified
++	as a command-line argument.
+ 
+ fetch::
+-	Fetch unfetched revisions from the SVN_URL we are tracking.
+-	refs/heads/remotes/git-svn will be updated to the latest revision.
++	Fetch unfetched revisions from the Subversion URL we are
++	tracking.  refs/remotes/git-svn will be updated to the
++	latest revision.
+ 
+-	Note: You should never attempt to modify the remotes/git-svn branch
+-	outside of git-svn.  Instead, create a branch from remotes/git-svn
+-	and work on that branch.  Use the 'commit' command (see below)
+-	to write git commits back to remotes/git-svn.
++	Note: You should never attempt to modify the remotes/git-svn
++	branch outside of git-svn.  Instead, create a branch from
++	remotes/git-svn and work on that branch.  Use the 'commit'
++	command (see below) to write git commits back to
++	remotes/git-svn.
++
++	See 'Additional Fetch Arguments' if you are interested in
++	manually joining branches on commit.
+ 
+ commit::
+ 	Commit specified commit or tree objects to SVN.  This relies on
+@@ -62,9 +67,9 @@ rebuild::
+ 	tracked with git-svn.  Unfortunately, git-clone does not clone
+ 	git-svn metadata and the svn working tree that git-svn uses for
+ 	its operations.  This rebuilds the metadata so git-svn can
+-	resume fetch operations.  SVN_URL may be optionally specified if
+-	the directory/repository you're tracking has moved or changed
+-	protocols.
++	resume fetch operations.  A Subversion URL may be optionally
++	specified at the command-line if the directory/repository you're
++	tracking has moved or changed protocols.
+ 
+ show-ignore::
+ 	Recursively finds and lists the svn:ignore property on
+@@ -123,6 +128,24 @@ OPTIONS
+ 	repo-config key: svn.l
+ 	repo-config key: svn.findcopiesharder
+ 
++-A<filename>::
++--authors-file=<filename>::
++
++	Syntax is compatible with the files used by git-svnimport and
++	git-cvsimport:
++
++------------------------------------------------------------------------
++loginname = Joe User <user@example.com>
++------------------------------------------------------------------------
++
++	If this option is specified and git-svn encounters an SVN
++	committer name that does not exist in the authors-file, git-svn
++	will abort operation. The user will then have to add the
++	appropriate entry.  Re-running the previous git-svn command
++	after the authors-file is modified should continue operation.
++
++	repo-config key: svn.authors-file
++
+ ADVANCED OPTIONS
+ ----------------
+ -b<refname>::
+-- 
+1.3.2.ge3d7
