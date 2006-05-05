@@ -1,90 +1,62 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach fmt-patch to write individual files.
-Date: Thu, 04 May 2006 17:09:00 -0700
-Message-ID: <7vhd452uzn.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0605050115440.12795@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: Bad error message
+Date: Thu, 04 May 2006 17:20:47 -0700
+Message-ID: <7vac9x2ug0.fsf@assigned-by-dhcp.cox.net>
+References: <200605041957.26194.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 05 02:09:13 2006
+X-From: git-owner@vger.kernel.org Fri May 05 02:21:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fbnsf-0004JQ-21
-	for gcvg-git@gmane.org; Fri, 05 May 2006 02:09:13 +0200
+	id 1Fbo45-0005gY-CK
+	for gcvg-git@gmane.org; Fri, 05 May 2006 02:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398AbWEEAJE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 20:09:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932405AbWEEAJE
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 20:09:04 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:8833 "EHLO
+	id S1030289AbWEEAUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 20:20:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030290AbWEEAUw
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 20:20:52 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:49807 "EHLO
 	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932398AbWEEAJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 May 2006 20:09:03 -0400
+	id S1030289AbWEEAUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 May 2006 20:20:51 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao11.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060505000902.BDOH9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 4 May 2006 20:09:02 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0605050115440.12795@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Fri, 5 May 2006 01:16:40 +0200
-	(CEST)")
+          id <20060505002049.BOQS9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 4 May 2006 20:20:49 -0400
+To: "Robin Rosenberg (list subscriber)" 
+	<robin.rosenberg.lists@dewire.com>
+In-Reply-To: <200605041957.26194.robin.rosenberg.lists@dewire.com> (Robin
+	Rosenberg's message of "Fri, 5 May 2006 01:57:26 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19588>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Robin Rosenberg (list subscriber)"  <robin.rosenberg.lists@dewire.com> writes:
 
-> When called with "--stdout", it still writes to standard output.
+> @@ -43,8 +43,13 @@
+>                 die("No such ref: %s", refname);
 >
-> Notable differences to git-format-patch:
->
-> 	- since fmt-patch uses the standardized logging machinery, it is
-> 	  no longer "From nobody", but "From <commit_sha1>",
+>         if (oldval) {
+> -               if (memcmp(currsha1, oldsha1, 20))
+> -                       die("Ref %s is at %s but expected %s", refname, sha1_to_hex(currsha1), sha1_to_hex(oldsha1));
+> +               if (memcmp(currsha1, oldsha1, 20)) {
+> +                       char sha1str1[41];
+> +                       char sha1str2[41];
+> +                       strcpy(sha1str1, sha1_to_hex(currsha1));
+> +                       strcpy(sha1str2, sha1_to_hex(oldsha1));
+> +                       die("Ref %s is at %s but expected %s", refname, sha1str1, sha1str2);
+> +               }
 
-Yes, and the date on that UNIX-From line has been updated ;-).
+Your patch looks correct, but probably is made unnecessary with
+the "you can use up to 4 sha1_to_hex() safely" patch Linus did.
 
-> 	- the empty lines before and after the "---" just before the
-> 	  diffstat are no longer there,
-
-Personally, I find this the most annoying myself.  I am not
-complaining to you because as you know you inherited this
-behaviour from my code.
-
-> 	- git-format-patch outputs the commit_sha1 just before the first
-> 	  diff, which fmt-patch does not,
-
-Which should be fine.
-
-> 	- the file names are no longer output to stdout, but to stderr
-> 	  (since stdout is freopen()ed all the time), and
-
-Which might be a bigger deal; I suspect people capture that while
-dumping patches into individual files, and do their
-postprocessing using the list of filenames.
-
-> 	- "git fmt-patch HEAD^" does not work as expected: it outputs
-> 	  *all* commits reachable from HEAD^!
-
-If we really wanted to handle this, you could do something like
-what builtin-diff does before letting the revision machinery
-start walking the revision tree.  Look at pending objects, and
-if you find only one UNINTERESTING commit, add_object the
-current HEAD there as well.  Personally I do not think it is
-worth it; rather we would probably want to standardize on rev-list
-syntax.
-
-Two major differences you forgot to mention.
-
-One is that it does not do the "git cherry" filtering.  It is
-not a big deal for me personally, but some people may be
-depending on it.  I dunno.
-
-Another is -o outdir, which should be trivial to add once you
-have implemented output switching with freopen().
-
-Anyhow, thanks for starting this.
+We have it in "master" and my plan is to cherry-pick it to
+"maint" branch and included it in the next stale release 1.3.3,
+along with core.prefersymlinkrefs patch also only in "master",
+if we do not hear somebody scream in the next few days.
