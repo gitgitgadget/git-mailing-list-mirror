@@ -1,106 +1,81 @@
-From: linux@horizon.com
-Subject: Re: [ANNOUNCE] Git wiki
-Date: 4 May 2006 20:56:59 -0400
-Message-ID: <20060505005659.9092.qmail@science.horizon.com>
-Cc: linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri May 05 02:57:10 2006
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] fmt-patch: output file names to stdout
+Date: Fri, 5 May 2006 03:33:05 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605050332450.25591@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri May 05 03:33:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fbod1-0005s1-Jo
-	for gcvg-git@gmane.org; Fri, 05 May 2006 02:57:08 +0200
+	id 1FbpBx-0001Yk-6R
+	for gcvg-git@gmane.org; Fri, 05 May 2006 03:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbWEEA5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 May 2006 20:57:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751507AbWEEA5B
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 20:57:01 -0400
-Received: from science.horizon.com ([192.35.100.1]:22848 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1751505AbWEEA5B
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 May 2006 20:57:01 -0400
-Received: (qmail 9094 invoked by uid 1000); 4 May 2006 20:56:59 -0400
-To: git@vger.kernel.org
+	id S932276AbWEEBdI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 May 2006 21:33:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbWEEBdI
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 May 2006 21:33:08 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62093 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932276AbWEEBdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 May 2006 21:33:06 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id B912E1CC4;
+	Fri,  5 May 2006 03:33:05 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id AB59E1CBF;
+	Fri,  5 May 2006 03:33:05 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 865041CB8;
+	Fri,  5 May 2006 03:33:05 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19591>
-
-Actually, AFAICT from looking at the mailing list history, it's not dirty
-politics: the tie-breaker was the support and enthusiasm of the mercurial
-developers.  It passed with only minor comment on the git mailing list,
-but it was a Big Thing to the hg folks.
-
-There are ups and downs.  OpenSolaris is definitely the big fish in
-the mercurial pond (that wasn't *meant* to sound like a recipe for
-heavy metal toxicity), and will get lots of attention, but git has more
-real-world experience.  The big fish in the git pond is Linus and Linux.
-
-In any case, mercurial and git are really very similar, far closer
-to each other than any third system, so it's not like the decision is
-a descent into heresy.  Hopefully some useful cross-pollination
-can occur, and converting history from one to the other would be
-simple if anyone ever wanted to.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19592>
 
 
-As for explicit renames, people are confused on the subject.
-IMHO, the two most revolutionary things about git are:
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-- Finally, a complete break from file-oriented history.  History is made
-  of trees, and trees are made of files.  There is no direct connection
-  between files in different commits.
-- An explicit representation of an in-progress merge.
-  This is what makes multiple merge strategies easily implementable.
+---
 
-Third, I suppose, is the raw diff format and the diffcore pipeline.
+ builtin-log.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-But finally getting away from the SCCS & RCS idea that the file is the
-unit of history is one of git's Great Features, and it shouldn't be
-thrown away.
-
-
-What people who are asking for explicit rename tracking actually want
-is automatic rename merging.  If branch A renames a file, and branch B
-corrects a typo on a comment somewhere, they'd like the merge to
-both patch and rename the file.  If you can do that, you have met the
-need, even if your solution isn't the one the feature requester
-imagined.
-
-(This is the general consulting problem: a client calls when they've
-been trying a solution and can't get past some problem.  Usually, this
-is because they've wandered into a blind alley, and what they're asking
-for is either far more difficult than necessary, or will just lead them
-into greater problems.  The first thing you have to determine is what
-they actually want to do, as distinct from how they've decided to do it.)
-
-
-But, as Linus has pointed out, this is a very partial solution which
-introduces a lot of difficulties elsewhere.  File renaming is a subset of
-the general class of code reorganizations.  Source files will be split,
-merged, and have functions moved back and forth.  You want the patch to
-find the code it applies to even if that code was moved.
-
-And that can be done by taking a more global view of the patch.
-Identical file names is only a heuristic.  If the hunk on branch A
-can't find a place to apply on the same file in branch B, then
-you have to look a little harder, either at changes from branch B
-that introduce matching code elsewhere, or perhaps looking
-through history for a change that removed the match from the
-obvious place to see if it added a match elsewhere.
-
-The one thing that makes this difficult is git-read-tree's automatic
-collapse of "trivial" merges.  If branch B moves foo() unchanged from
-x.c to y.c, while branch A doesn't touch y.c, but edits foo() in x.c,
-git-read-tree will collapse the changes to y.c before even invoking
-the advanced resolve script.
-
-(The solution might be to keep *four* versions of the file in the index:
-the three pre-merge, *and* the post-merge.  Then git-write-tree makes
-sure everything has a stage 0 entry and strips out the stage 1, 2 and
-3 entries.  This way, one merge algorithm can use another as a
-subroutine but decide not to accept something it did.)
-
-
-But anyway, it's the merging that's the desired feature.  Explicitly
-recording renames is only the means to that end, and is superfluous
-if there's another way of getting there.  (And the place to look for
-interesting new ideas in that area Darcs.)
+diff --git a/builtin-log.c b/builtin-log.c
+index 576703c..1649f49 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -75,6 +75,8 @@ static int istitlechar(char c)
+ 		(c >= '0' && c <= '9') || c == '.' || c == '_';
+ }
+ 
++static FILE *realstdout = NULL;
++
+ static void reopen_stdout(struct commit *commit, int nr)
+ {
+ 	char filename[1024];
+@@ -117,7 +119,7 @@ static void reopen_stdout(struct commit 
+ 			len--;
+ 	}
+ 	strcpy(filename + len, ".txt");
+-	fprintf(stderr, "%s\n", filename);
++	fprintf(realstdout, "%s\n", filename);
+ 	freopen(filename, "w", stdout);
+ }
+ 
+@@ -149,6 +151,9 @@ int cmd_format_patch(int argc, const cha
+ 		argv++;
+ 	}
+ 
++	if (!use_stdout)
++		realstdout = fdopen(dup(1), "w");
++
+ 	prepare_revision_walk(&rev);
+ 	while ((commit = get_revision(&rev)) != NULL) {
+ 		/* ignore merges */
+-- 
+1.3.1.g6d0e-dirty
