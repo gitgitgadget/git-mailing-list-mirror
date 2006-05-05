@@ -1,101 +1,139 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Fri, 05 May 2006 12:49:59 -0700
-Message-ID: <7vr738w8t4.fsf@assigned-by-dhcp.cox.net>
-References: <20060505005659.9092.qmail@science.horizon.com>
-	<20060505181540.GB27689@pasky.or.cz>
-	<Pine.LNX.4.64.0605051123420.3622@g5.osdl.org>
-	<20060505185445.GD27689@pasky.or.cz>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] binary patch.
+Date: Fri, 05 May 2006 16:07:40 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605051547420.24505@localhost.localdomain>
+References: <7vodyd2vqn.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605042241240.28543@localhost.localdomain>
+ <7vwtd10xyd.fsf@assigned-by-dhcp.cox.net>
+ <7vy7xgzsiu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605051128100.28543@localhost.localdomain>
+ <7vejz8z80p.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605051431390.24505@localhost.localdomain>
+ <7vac9wxom0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 05 21:50:18 2006
+X-From: git-owner@vger.kernel.org Fri May 05 22:07:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fc6JY-0008Gg-3b
-	for gcvg-git@gmane.org; Fri, 05 May 2006 21:50:12 +0200
+	id 1Fc6aX-0002wx-0W
+	for gcvg-git@gmane.org; Fri, 05 May 2006 22:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbWEETuE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 May 2006 15:50:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751711AbWEETuE
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 15:50:04 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:24747 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750991AbWEETuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 May 2006 15:50:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060505195000.SQRM27327.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 5 May 2006 15:50:00 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060505185445.GD27689@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 5 May 2006 20:54:45 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751513AbWEEUHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 May 2006 16:07:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbWEEUHm
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 May 2006 16:07:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:15799 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751513AbWEEUHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 May 2006 16:07:41 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IYT00FAP6KSQ270@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 05 May 2006 16:07:40 -0400 (EDT)
+In-reply-to: <7vac9wxom0.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19638>
 
-Petr Baudis <pasky@suse.cz> writes:
+On Fri, 5 May 2006, Junio C Hamano wrote:
 
-> I doubt this in fact happens that often (to a degree the automatic
-> rename detection would catch). And if it happens, then the user has to
-> tell Git - I have never heard that _this_ would be any problem in other
-> version control systems.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > On Fri, 5 May 2006, Junio C Hamano wrote:
+> >
+> >> The delta is going to be deflated and hopefully gets a bit
+> >> smaller, so if we really care that level of detail, it might be
+> >> worth to do (deflate_size*3/2) or something like that here, use
+> >> delta with or without deflate whichever is smaller, and mark the
+> >> uncompressed delta with a different tag ("uncompressed delta"?).
+> >> And for symmetry, to deal with uncompressible data, we may want
+> >> to have "uncompressed literal" as well.
+> >
+> > Nah...  Please just forget that.  ;-)
+> 
+> I was serious about the above actually.
 
-It does not become an issue only because users accept it as a
-fact of life.  When Linus was moving most of the contents in
-rev-list.c to create a new revision.c, I already had some tweaks
-to rev-list.c published before he sent me a patch for the code
-movement, and I am sure he needed to re-roll the patch by
-merging the change I did to rev-list.c back into his revision.c
-file.  No SCM may handle that automatically, and no user
-accustomed to existing SCM (including git) expect that to work
-automatically.  But that does not necessarily mean a tool that
-notices it and tells user what is going on is a bad thing.
+And I think this is overkill.
 
-However it is a different story to try recording "what is going on"
-whether it comes from the tool's guess or directly from the user.
+First, if a deflated delta is to be _larger_ than its inflated version 
+this is because the delta data is really really short, most probably 
+shorter than a single base85 line.  Same for literal data.
 
-Having a way to affect the inprecise "guess" the tool makes when
-that guesswork is needed might make sense.  If you (think you)
-know arch/i386/foo.h was copied to create arch/x86-64/foo.h but
-the detector does not detect it and seeing a creation patch for
-arch/x86-64/foo.h frustrates you, you may want to have a way to
-explicitly say "compare arch/i386/foo.h with arch/x86-64/foo.h
-in that commit -- I want to examine the change needed to adjust
-foo to x86-64 architecture".
+So I truely think the pretty special and rare case where not deflating 
+might be smaller is simply not worth the added complexity.
 
-But we have "git diff v2.6.14:arch/i386/foo.h v2.6.14:arch/x86-64/foo.h"
-for that ;-).
+> BTW, this "binary patch" opens a different can of worms.
+> 
+> Currently, the diff uses a heuristic borrowed from GNU diff 
+> (I did not look at the code when I did it, but it is described
+> in its documentation) to decide if a file is binary (look at the
+> first few bytes and find NUL).  I am sure people will want to
+> have a way to say "that heuristic fails but this _is_ a binary
+> file and please treat it as such".
+> 
+> There are two, both valid, I think, ways to do it.
+> 
+>  - give an option to "diff" that says "treat this path as binary
+>    for this invocation of the program".
+> 
+>  - give an attribute to blob object that says "this blob is
+>    binary and should be treated as such".
+> 
+> The latter is probably the right way to go in the longer term.
 
-> Then the automated renames detection will miss it given that the other
-> accumulated differences are large enough, and the suggested workarounds
-> _are_ precisely walking the commit chain.
+I'm not sure I agree.
 
-The HEAD may _not_ have anything to do with v1.3.0 in which case
-you would get nothing from walking the ancestry.
+> A blob being binary or not is a property of the content and does
+> not depend on where it sits in the history, so unlike "recording
+> renames as a hint in commit objects", the attribute is at the
+> blob level, not at the commit nor the tree that points at the
+> blob.
 
-> If you use persistent file ids, you never miss it _AND_ you DO NOT WALK
-> THE COMMIT CHAIN! You still just match file ids in the two trees.
+Well, sort of.
 
-It is unworkable.
+> But "binaryness" affects only certain operations that extract
+> the data (e.g. diff and grep) and not others (e.g. fetch).
+> Also, it makes sense to being able to retroactively mark a blob,
+> which was not marked as such originally, is a binary.  So I do
+> not think it should be recorded in the object header.
 
-Which one should inherit the persistent id of the old
-rev-list.c?  New rev-list.c, or revision.c that has most of the
-old contents split out?
+Agreed.
 
-Oh, and did you know there was a different revision.h that is
-not related to the current revision.h in the history of git?
-Should its persistent id have any relation with the persistent
-id of the current revision.h?  When would you decide to make the
-id inherited and when not to?  If I remove revision.h by mistake
-in a commit and resurrect it in the next commit, should it get
-the same id back?  If I forget to tell the tool that those two
-"disappeared and then reappeared" are related and should get the
-same persistent id when I make the resurrection commit, and keep
-piling other commits on top, do I have to rewind the ancestry
-chain all the way to correct the mistake?
+> Which suggests that we may perhaps want to have notes that can
+> be attached to existing objects to augment them without changing
+> the contents of the data, and have tools notice these notes when
+> they are available.  Another example is to associate correct
+> MIME types to blobs so, gitweb _blob_ links can do sensible
+> things to them.
+
+I think blobs are the wrong level to attach such notes.  If you go that 
+path you'll have to add as many entries for the number of blobs many 
+revisions of the same file might have.
+
+Instead I think it should be attached to files.  After all being a 
+binary or not is a file attribute regardless of its revision.  And 
+implementation wise I'd do it as a .gitbin file listing all names of 
+files that should be considered as binaries, with path globing and all, 
+just like .gitignore currently lists files that should be ignored.
+
+And the advantage is that those .gitbin files can be distributed and 
+revision-controlled just like the .gitignore files.
+
+And in addition to those files you could have a section in the repo 
+config file listing default name patterns for files that are considered 
+binaries.  Or even a section, if present, that lists patterns for files 
+that are _not_ binaries since that list might certainly be shorter.  
+There could be a corresponding .gittext as well.
+
+And in the absence of any of those then the default automatic euristic 
+applies.
+
+
+Nicolas
