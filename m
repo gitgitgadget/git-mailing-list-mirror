@@ -1,49 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] Git wiki
-Date: Sat, 06 May 2006 00:41:25 -0700
-Message-ID: <7vslnntxay.fsf@assigned-by-dhcp.cox.net>
-References: <20060505005659.9092.qmail@science.horizon.com>
-	<20060505181540.GB27689@pasky.or.cz>
-	<Pine.LNX.4.64.0605051123420.3622@g5.osdl.org>
-	<20060505185445.GD27689@pasky.or.cz>
-	<7vr738w8t4.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90605052353m2d2aca11weac7efee80c6fb35@mail.gmail.com>
-	<e3hjfk$bjn$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC] Managing projects - advanced Git tutorial/walkthrough
+Date: Sat, 06 May 2006 10:43:37 +0200
+Organization: At home
+Message-ID: <e3hnjg$k9f$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 06 09:41:34 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat May 06 10:43:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcHPw-0007qi-35
-	for gcvg-git@gmane.org; Sat, 06 May 2006 09:41:32 +0200
+	id 1FcIOD-0007Re-Nw
+	for gcvg-git@gmane.org; Sat, 06 May 2006 10:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbWEFHl1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 03:41:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbWEFHl1
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 03:41:27 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:39098 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751283AbWEFHl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 May 2006 03:41:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060506074126.QHBS18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 6 May 2006 03:41:26 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e3hjfk$bjn$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	06 May 2006 09:33:15 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751297AbWEFInr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 04:43:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbWEFInr
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 04:43:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:60855 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751297AbWEFInq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 04:43:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FcIO1-0007ON-BH
+	for git@vger.kernel.org; Sat, 06 May 2006 10:43:37 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 06 May 2006 10:43:37 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 06 May 2006 10:43:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19656>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+I have browsed through Git documentation: "A tutorial introduction to
+git" (tutorial.txt), "A short git tutorial" (core-tutorial.txt) which
+contrary to the title is the tutorial in low-level git commands and is
+longer that the first one, "Everyday GIT With 20 Commands Or
+So" (everyday.txt) and "git for CVS users" (cvs-migration.txt) which does
+not mention git-blame and git-annotate.
 
-> Perhaps an option to do rename detection with walking the commit chain?
+What I miss is walkthrough type tutorial, describing typical workflow (or
+workflows), and tutorial concentrating on advanced topics which may come
+once in a while or for some topics only, but it would be nice to know how
+to resolve them.
 
-Have fun implementing that ;-).
+Perhaps some of the following problems would need Git improvement (e.g.
+better support for subprojects: "bind" idea)...
+
+
+1. Description of typical workflow, with 'stable'/'maintenance'/'fixes' and
+'development'/'master'/'main' branches, how to put bugfixes into both
+branches etc. Perhaps description of git branches and workflow, or Linux
+kernel branches and workflow.
+
+2. Contrib: how to add project which was externally managed to contrib and
+later/or to core, preserving history. Examples: gitk for git, or like
+perhaps parsecvs would be for git, or like git-svn for git.
+
+3. Subprojects: how to manage project which depends on other externally
+managed (third-party) project, and perhaps needs patches for it. Examples:
+out of tree kernel patches + userspace tools, plugin for some program which
+may need bugfixes, program which need some library, gitk before
+incorporating into git,... Perhaps description of the whole sequence of
+project development from add-on project (some new filesystem for Linux,
+gitk) to being incorporated into bigger project (filesystem included in
+Linux kernel, gitk in git repository).
+
+4. Splitting repository: splitting one big project (X.org, Linux
+distribution) into modules.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
