@@ -1,75 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Unresolved issues #2
-Date: Sat, 6 May 2006 14:51:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605061442490.16343@g5.osdl.org>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605041627310.6713@iabervon.org> <Pine.LNX.4.64.0605041715500.3611@g5.osdl.org>
- <7vhd43vgnm.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605060821430.16343@g5.osdl.org>
- <BAYC1-PASMTP10F63ADF30C26A29D070C5AEAA0@CEZ.ICE> <Pine.LNX.4.64.0605060923050.16343@g5.osdl.org>
- <BAYC1-PASMTP0824AA77198F95FE28B79DAEAA0@CEZ.ICE> <Pine.LNX.4.64.0605061008340.16343@g5.osdl.org>
- <7vvesirh0q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0605062332420.6423@wbgn013.biozentrum.uni-wuerzburg.de>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: [RFC] Managing projects - advanced Git tutorial/walkthrough
+Date: Sat, 6 May 2006 17:54:50 -0400
+Message-ID: <BAYC1-PASMTP10D8E6E33237EA0B422677AEAA0@CEZ.ICE>
+References: <e3hnjg$k9f$1@sea.gmane.org>
+	<7v64kisyow.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Sat May 06 23:51:23 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: jnareb@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 07 00:00:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcUgN-0005rt-7i
-	for gcvg-git@gmane.org; Sat, 06 May 2006 23:51:23 +0200
+	id 1FcUoi-0006s2-Fk
+	for gcvg-git@gmane.org; Sun, 07 May 2006 00:00:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081AbWEFVvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 17:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932082AbWEFVvO
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 17:51:14 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57064 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932081AbWEFVvO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 17:51:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k46Lp6tH030032
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 6 May 2006 14:51:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k46Lp5rJ007103;
-	Sat, 6 May 2006 14:51:06 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0605062332420.6423@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750857AbWEFV7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 17:59:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbWEFV7v
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 17:59:51 -0400
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:52765 "EHLO
+	BAYC1-PASMTP10.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1750857AbWEFV7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 May 2006 17:59:50 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP10.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 6 May 2006 15:01:41 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 9F3A7644C28;
+	Sat,  6 May 2006 17:59:48 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060506175450.57b70ee2.seanlkml@sympatico.ca>
+In-Reply-To: <7v64kisyow.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 06 May 2006 22:01:42.0265 (UTC) FILETIME=[A8615690:01C67158]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19673>
 
+On Sat, 06 May 2006 13:09:03 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
+[...]
+> I think tutorial.txt is the right "your first experience with
+> git with walkthru" document, and the materials it gives, and the
+> order in which it introduces them, are very well thought out;
+> kudos to JBF.  We might also want to show "git grep", but other
+> than that I do not think of anything that a new user might want
+> to use on the first day.
 
-On Sat, 6 May 2006, Johannes Schindelin wrote:
+It doesn't mention git log, show or status which are important
+for the first day.  Also an example of git commit --amend would
+be a nice touch.
+
+Part of the problem people new to git are having arise by reading
+documentation in the wrong order and coming to the conclusion that
+git is an ugly beast.   Also many people are still finding out-of-
+date information before anything else (eg. git isn't an scm only an
+object tracker).
+
+Part of this will be solved by having a useful and inviting web page
+(thanks Pasky!).  But it would also help to rename core-tutorial.txt
+to something that doesn't sound inviting to newbies.  Something
+along the line of core-internal-design.txt (or here-be-dragons.txt).
+
+Turning the main man page into more of a reference than a tutorial
+slash concepts page would be something worth doing too.  Removing
+all of the plumbing commands from that page should at least be
+considered.
+
+[...]
+
+> Then reorganize the initial part core-tutorial.txt to match the
+> examples tutorial.txt gives, and demonstrate what is happening
+> under the hood.  The tutorial says "git init-db" then "git
+> add".  The core-tutorial would match that and explain what
+> happens when "git init-db" is run (creates .git/objects etc.)
+> and "git add" is run (populates the index).
 > 
-> It was done because the very syntax of the config suggests it be a 
-> user-editable file.
 
-Yeah, I personally much prefer user-friendly config files. Any format that 
-thinks that "easy parsing" is more important than "visually obvious" is 
-bad. So I obviously think that XML is a horrid piece of cr*p (has anybody 
-ever noticed I have strong opinions?) and totally unreadable.
+There really seems to be a lot of room for another intermediate user
+level document between tutorial.txt and the current core-tutorial.txt.
+There are lots of concepts that can be explained without having to get
+into the low level design or tools of git.  For example, a user could
+have long been productive with git before ever having to learn about
+read-tree/write-tree etc.. all those commands are more for porcelain
+writers and git guru/experts now.
 
-I think "git repo-config" is doing a reasonable job of editing a file that 
-is really designed to be user-friendly. That said, the code _is_ a bit 
-scary.
-
-It might be worthwhile to re-write config.c to read the config file into 
-memory and work on it in-memory instead of doing the funky mixed usage 
-(using fgetc/ftell to read it, but then switching over to mmap when 
-rewriting it).
-
-IOW, maybe that "static FILE *config_file" should be changed to something 
-more like "static const char *config_buffer; unsigned int len;" instead, 
-and at least make both the reading and writing use the same buffer rather 
-than mixing stdio and mmap..
-
-		Linus
+Sean
