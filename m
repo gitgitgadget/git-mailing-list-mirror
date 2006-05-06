@@ -1,71 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC] get_pathspec(): free() old buffer if rewriting
-Date: Sun, 7 May 2006 00:04:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605070003430.6357@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] fmt-patch: understand old <his> notation
+Date: Sat, 6 May 2006 15:30:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605061527030.16343@g5.osdl.org>
+References: <Pine.LNX.4.63.0605062252530.4155@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7viroirfur.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun May 07 00:04:36 2006
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 07 00:30:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcUt2-0007OI-TP
-	for gcvg-git@gmane.org; Sun, 07 May 2006 00:04:29 +0200
+	id 1FcVIW-0001zQ-Mz
+	for gcvg-git@gmane.org; Sun, 07 May 2006 00:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932088AbWEFWE0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 18:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932089AbWEFWE0
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 18:04:26 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27850 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932088AbWEFWE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 May 2006 18:04:26 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 463E32270;
-	Sun,  7 May 2006 00:04:25 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 39520226F;
-	Sun,  7 May 2006 00:04:25 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 1765DB78;
-	Sun,  7 May 2006 00:04:25 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932090AbWEFWaq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 18:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932091AbWEFWaq
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 18:30:46 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:897 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932090AbWEFWap (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 18:30:45 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k46MUdtH031361
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 6 May 2006 15:30:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k46MUcNS007779;
+	Sat, 6 May 2006 15:30:39 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7viroirfur.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19678>
 
 
-This might be the wrong way to do it, but as it is without this patch,
-get_pathspec() is leaking memory.
 
-However, it is by no means guaranteed that the input is malloc()ed. The
-tests run through without problems, but you never know...
+On Sat, 6 May 2006, Junio C Hamano wrote:
+> 
+> While this would be easier on _my_ fingers as well, I have a
+> suspicion that it might make more sense to make this "single
+> ref" case to mean "HEAD~5^..HEAD~5" (if we _were_ designing a
+> new command that is called format-patch today, that would be
+> more natural).
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Careful, that "X^..X" thing does entirely the wrong thing for merges. Not 
+what you want at all, I think.
 
----
+> But probably it is too late to break it by now.
 
- setup.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+Maybe not. I've actually cursed the fact that I made "git diff X" mean 
+"diff from X to current working tree", because it almost never makes any 
+sense at all when X is anything but "HEAD".
 
-diff --git a/setup.c b/setup.c
-index fe7f884..9c39d6e 100644
---- a/setup.c
-+++ b/setup.c
-@@ -126,6 +126,11 @@ const char **get_pathspec(const char *pr
- 	prefixlen = prefix ? strlen(prefix) : 0;
- 	do {
- 		*p = prefix_path(prefix, prefixlen, entry);
-+		if (*p != entry) {
-+			if (*p > entry && *p < entry + strlen(entry))
-+				*p = strdup(*p);
-+			free((char*)entry);
-+		}
- 	} while ((entry = *++p) != NULL);
- 	return (const char **) pathspec;
- }
--- 
-1.3.2.g9ba6-dirty
+I probably _should_ have made "git diff X" mean basically "git show X", 
+and not what it means now.
+
+Oh, well.
+
+			Linus
