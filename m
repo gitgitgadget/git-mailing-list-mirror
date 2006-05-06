@@ -1,49 +1,97 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: [PATCH] fmt-patch: understand old <his> notation
-Date: Sun, 7 May 2006 01:19:01 +0200
-Message-ID: <20060506231901.GB45996@dspnet.fr.eu.org>
-References: <Pine.LNX.4.63.0605062252530.4155@wbgn013.biozentrum.uni-wuerzburg.de> <7viroirfur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605061527030.16343@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] config: if mtime (or size) of the config file changed since
+ last read, reread it
+Date: Sun, 7 May 2006 01:26:00 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605070125010.6597@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 07 01:19:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun May 07 01:26:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcW3G-0007eV-Hq
-	for gcvg-git@gmane.org; Sun, 07 May 2006 01:19:06 +0200
+	id 1FcWA2-00006i-52
+	for gcvg-git@gmane.org; Sun, 07 May 2006 01:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751138AbWEFXTD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 19:19:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbWEFXTD
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 19:19:03 -0400
-Received: from dspnet.fr.eu.org ([213.186.44.138]:27658 "EHLO dspnet.fr.eu.org")
-	by vger.kernel.org with ESMTP id S1751138AbWEFXTC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 19:19:02 -0400
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id 77EC3A3732; Sun,  7 May 2006 01:19:01 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605061527030.16343@g5.osdl.org>
-User-Agent: Mutt/1.4.2.1i
+	id S1751082AbWEFX0D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 19:26:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbWEFX0C
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 19:26:02 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:20436 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751082AbWEFX0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 May 2006 19:26:01 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 239361DC1
+	for <git@vger.kernel.org>; Sun,  7 May 2006 01:26:00 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 17CF51DA6
+	for <git@vger.kernel.org>; Sun,  7 May 2006 01:26:00 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 0480B1D46
+	for <git@vger.kernel.org>; Sun,  7 May 2006 01:26:00 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19683>
 
-On Sat, May 06, 2006 at 03:30:38PM -0700, Linus Torvalds wrote:
-> Maybe not. I've actually cursed the fact that I made "git diff X" mean 
-> "diff from X to current working tree", because it almost never makes any 
-> sense at all when X is anything but "HEAD".
-> 
-> I probably _should_ have made "git diff X" mean basically "git show X", 
-> and not what it means now.
 
-Funny, when tracking other projects I use (sometimes path-filtered)
-"git diff origin" often, but I find "git show origin" utterly
-uninteresting.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-  OG.
+---
+
+	This is extremely paranoic, I know.
+
+ config.c |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/config.c b/config.c
+index 05d4d8c..6765186 100644
+--- a/config.c
++++ b/config.c
+@@ -13,6 +13,7 @@ #define MAXNAME (256)
+ static const char *contents = NULL;
+ static int config_length = 0, config_offset = 0;
+ static const char *config_file_name;
++static time_t config_file_mtime = 0;
+ static int config_linenr;
+ static int get_next_char(void)
+ {
+@@ -255,23 +256,26 @@ int git_default_config(const char *var, 
+ int git_config_from_file(config_fn_t fn, const char *filename)
+ {
+ 	int ret, in_fd;
++	struct stat st;
+ 
+ 	config_offset = 0;
+ 
++	in_fd = open(filename, O_RDONLY);
++	fstat(in_fd, &st);
++
+ 	if (contents) {
+-		if (!strcmp(config_file_name, filename))
++		if (!strcmp(config_file_name, filename)
++				&& config_file_mtime == st.st_mtime
++				&& config_length == st.st_size) {
++			close(in_fd);
+ 			return git_parse_file(fn);
++		}
+ 		munmap((char*)contents, config_length);
+ 		free((char*)config_file_name);
+ 	}
+ 
+-	in_fd = open(filename, O_RDONLY);
+-
+ 	ret = -1;
+ 	if (in_fd > 0) {
+-		struct stat st;
+-
+-		fstat(in_fd, &st);
+ 		config_length = st.st_size;
+ 		contents = mmap(NULL, config_length, PROT_READ, MAP_PRIVATE,
+ 				in_fd, 0);
+-- 
+1.3.1.g5545a
