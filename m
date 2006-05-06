@@ -1,80 +1,107 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Sat, 6 May 2006 18:23:03 +1200
-Message-ID: <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
-	 <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
-	 <87mzdx7mh9.wl%cworth@cworth.org>
-	 <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0605050806370.3622@g5.osdl.org>
-	 <e3fqb9$hed$1@sea.gmane.org>
-	 <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Sat, 6 May 2006 18:53:36 +1200
+Message-ID: <46a038f90605052353m2d2aca11weac7efee80c6fb35@mail.gmail.com>
+References: <20060505005659.9092.qmail@science.horizon.com>
+	 <20060505181540.GB27689@pasky.or.cz>
+	 <Pine.LNX.4.64.0605051123420.3622@g5.osdl.org>
+	 <20060505185445.GD27689@pasky.or.cz>
+	 <7vr738w8t4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 06 08:23:11 2006
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 06 08:53:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcGC5-0004lQ-SF
-	for gcvg-git@gmane.org; Sat, 06 May 2006 08:23:10 +0200
+	id 1FcGfc-0000fR-RF
+	for gcvg-git@gmane.org; Sat, 06 May 2006 08:53:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806AbWEFGXG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 02:23:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbWEFGXG
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 02:23:06 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:59098 "EHLO
+	id S932398AbWEFGxi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 02:53:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932436AbWEFGxi
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 02:53:38 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:53991 "EHLO
 	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750806AbWEFGXE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 02:23:04 -0400
-Received: by wr-out-0506.google.com with SMTP id 68so676631wri
-        for <git@vger.kernel.org>; Fri, 05 May 2006 23:23:04 -0700 (PDT)
+	id S932398AbWEFGxh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 02:53:37 -0400
+Received: by wr-out-0506.google.com with SMTP id 68so677908wri
+        for <git@vger.kernel.org>; Fri, 05 May 2006 23:53:36 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CR+NhImqZqaI2LlFHOhfUcGkE2D4rOcpROaYN2eCWamfdV0Y2vOhAYdUOWu5D21hUvAqV7OpQV2QpH0Nj0Fv8WhmnihbyIOKmsR4HDeZFG/Lp27JSIGOfDrsJGCY9UAM2xcpyRjD1SyqLRJw+EI/92CbCeeuMWSK1/gXfdzzNwU=
-Received: by 10.54.82.15 with SMTP id f15mr14781wrb;
-        Fri, 05 May 2006 23:23:04 -0700 (PDT)
-Received: by 10.54.127.4 with HTTP; Fri, 5 May 2006 23:23:03 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
+        b=ARfe7FcxkUGEOS1/PTnzmjr6VBdJQIRHJLSnxC1Bk9/8B3yscdeuTaVWTbdwm6k3p05OS7qVq0hHsohdl6j0PJs5l1VgSP10zIpPwGN7kJ6sH33/LQxBlIWq+u1ap1X3TFPAuHp+jWJ8HUzQYRAaqtjsAc4oWhJN2a6BGplghIE=
+Received: by 10.54.126.20 with SMTP id y20mr17378wrc;
+        Fri, 05 May 2006 23:53:36 -0700 (PDT)
+Received: by 10.54.127.4 with HTTP; Fri, 5 May 2006 23:53:36 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vr738w8t4.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19649>
 
-On 5/6/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> Of course, that would require another slight difference to "rev-list.c",
-> where we'd only recurse into trees of selected commit objects (ie we'd
-> have to mark the HAVE/WANT commits specially, but it's not exactly
-> complex either).
+On 5/6/06, Junio C Hamano <junkio@cox.net> wrote:
+> > If you use persistent file ids, you never miss it _AND_ you DO NOT WALK
+> > THE COMMIT CHAIN! You still just match file ids in the two trees.
+>
+> It is unworkable.
 
-Would it make sense to make all the shallow clone clone machinery walk
-everything and trim only blob objects? In that case, all the machinery
-that walks commits/trees would remain intact -- we only have to deal
-with the case of not having blob objects, which affects less
-codepaths.
++1 -- explicit file ids are evil. Arch/TLA demonstrated that amply...
+they are a serious annoyance to the end user, they have a lot of
+not-elegantly solvable cases (same file created with the same contents
+in several repos -- say via an emailed patch) that git gets right
+_today_.
 
-It means that for a merge or checkout involving stuff we "don't have",
-it's trivial to know we are missing, and so we can  attempt a fetch of
-the missing objects or tell the user how to request them them before
-retrying.
+They _are_ useful in a very small set of cases -- namely in the case
+of a naive mv, which git handles correctly today. Subtler things git
+sometimes does right, sometimes fails, but it can be made to be much
+smarter by interpreting content changes better, for instance all this
+talk about getting pickaxe to guess where the patch should be applied
+for a file that got split into 3.
 
-And in any case commits and trees are lightweight and compress well...
+But those subtler cases are totally impossible with explicit id
+tracking. I used Arch for a long time with very large trees, and
+renames coming left, right and centre. Explicit ids didn't help much,
+and the number of manual fixups we had to do was awful.
 
-> Of course, the complexity of _both_ of these approaches is really in the
-> fsck stage, and all the crud you need to then do other things with these
-> pared-down repos. For example, do you allow cloning? And do you just
-> automatically notice that you're cloning a shallow repo, and only do a
-> shallow clone. Etc etc..
+I am using GIT with the very same project, and just now, typing this,
+I realised that there are still many renames happening in the project.
+I had forgotten about it -- well, not really: I do use git-merge
+instead of cg-merge when I suspect there may be interesting cases ;-)
 
-Definitely.
+Of course, YMMV, and I have to confess I was a sceptic for a while...
+but now as an end-user dealing with messy projects, I say LIRAR: Linus
+Is Right About Renames.
 
-cheers,
+OTOH,
+
+>> Try doing
+>>
+>> git diff v1.3.0..
+>>
+>> and think about what that actually _means_. Think about the fact that it
+>> doesn't actually walk the commit chain at all: it diffs the trees between
+>> v1.3.0 and the current one. What if the rename happened in a commit in
+>> the middle?
+>
+> Then the automated renames detection will miss it given that the other
+> accumulated differences are large enough, and the suggested workarounds
+> _are_ precisely walking the commit chain.
+
+I agree here with Pasky that after a while the automated
+renames/copy/splitup detection will miss the operation in cases where
+it would be interesting to note it to the user. IIRC git-rerere is the
+tool that knows about this (still voodoo to me how) and could be used
+to help here. At what (runtime) cost, I don't know, but that kind of
+walking history to tell me more interesting things about the diff is
+something that is usually worthwhile.
+
+Usual disclaimers apply.
 
 
 martin
