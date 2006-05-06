@@ -1,74 +1,63 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Sat, 06 May 2006 00:10:00 -0700
-Message-ID: <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
-	<7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
-	<87mzdx7mh9.wl%cworth@cworth.org>
-	<7v1wv92u7o.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605050806370.3622@g5.osdl.org>
-	<e3fqb9$hed$1@sea.gmane.org>
-	<Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
-	<46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git wiki
+Date: Sat, 06 May 2006 00:14:06 -0700
+Message-ID: <7v7j4zvd4x.fsf@assigned-by-dhcp.cox.net>
+References: <20060505005659.9092.qmail@science.horizon.com>
+	<20060505181540.GB27689@pasky.or.cz>
+	<Pine.LNX.4.64.0605051123420.3622@g5.osdl.org>
+	<20060505185445.GD27689@pasky.or.cz>
+	<7vr738w8t4.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90605052353m2d2aca11weac7efee80c6fb35@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 06 09:10:30 2006
+X-From: git-owner@vger.kernel.org Sat May 06 09:14:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcGvn-0003Jy-MU
-	for gcvg-git@gmane.org; Sat, 06 May 2006 09:10:24 +0200
+	id 1FcGzU-0003v0-Fz
+	for gcvg-git@gmane.org; Sat, 06 May 2006 09:14:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932436AbWEFHKE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 03:10:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932445AbWEFHKE
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 03:10:04 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:16282 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932436AbWEFHKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 May 2006 03:10:01 -0400
+	id S1751253AbWEFHOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 03:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWEFHOJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 03:14:09 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36086 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751253AbWEFHOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 May 2006 03:14:08 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060506071001.RVZF9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 6 May 2006 03:10:01 -0400
+          id <20060506071407.UXLQ25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 6 May 2006 03:14:07 -0400
 To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
-	(Martin Langhoff's message of "Sat, 6 May 2006 18:23:03 +1200")
+In-Reply-To: <46a038f90605052353m2d2aca11weac7efee80c6fb35@mail.gmail.com>
+	(Martin Langhoff's message of "Sat, 6 May 2006 18:53:36 +1200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19651>
 
 "Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> On 5/6/06, Linus Torvalds <torvalds@osdl.org> wrote:
->> Of course, that would require another slight difference to "rev-list.c",
->> where we'd only recurse into trees of selected commit objects (ie we'd
->> have to mark the HAVE/WANT commits specially, but it's not exactly
->> complex either).
->
-> Would it make sense to make all the shallow clone clone machinery walk
-> everything and trim only blob objects? In that case, all the machinery
-> that walks commits/trees would remain intact -- we only have to deal
-> with the case of not having blob objects, which affects less
-> codepaths.
->
-> It means that for a merge or checkout involving stuff we "don't have",
-> it's trivial to know we are missing, and so we can  attempt a fetch of
-> the missing objects or tell the user how to request them them before
-> retrying.
->
-> And in any case commits and trees are lightweight and compress well...
+> I agree here with Pasky that after a while the automated
+> renames/copy/splitup detection will miss the operation in cases where
+> it would be interesting to note it to the user. IIRC git-rerere is the
+> tool that knows about this (still voodoo to me how) and could be used
+> to help here. At what (runtime) cost, I don't know, but that kind of
+> walking history to tell me more interesting things about the diff is
+> something that is usually worthwhile.
 
-Commit maybe, but is this based on a hard fact?  
+FYI rerere is a totally unrelated voodoo.
 
-Earlier Linus said something about "git log" working on
-commit-only copy, but obviously you would want at least trees
-for the path limiting part to work, so having commits and trees
-would be handy, but my impression was that at least for deep
-project like the kernel trees tend to be nonnegligible (a commit
-consists of 18K paths and 1200 trees or something like that).
+It remembers the conflict marker pattern <<< === >>> immediately
+after it runs "merge" (ah, that reminds me -- I should replace
+them with diff3), and then remembers the result of the manual
+resolution just before the user makes a commit.  Then, when next
+time it runs "merge" for something and notices <<< === >>>
+pattern it has seen before, it runs a three-way merge between
+the previous resolution result and the current conflicted state,
+using the previous conflicted state as the common origin.
