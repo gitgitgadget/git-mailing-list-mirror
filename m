@@ -1,104 +1,141 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: [PATCH] t1300-repo-config: two new config parsing tests.
-Date: Sat, 6 May 2006 15:43:43 -0400
-Message-ID: <BAYC1-PASMTP090EE19E31F9EEBD579719AEAA0@CEZ.ICE>
-References: <20060506141402.3909cb37.seanlkml@sympatico.ca>
-	<BAYC1-PASMTP08FCAC8B8FB768ED1791F1AEAA0@CEZ.ICE>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Managing projects - advanced Git tutorial/walkthrough
+Date: Sat, 06 May 2006 13:09:03 -0700
+Message-ID: <7v64kisyow.fsf@assigned-by-dhcp.cox.net>
+References: <e3hnjg$k9f$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Sat May 06 21:48:57 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 06 22:09:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcSls-0006qT-2Q
-	for gcvg-git@gmane.org; Sat, 06 May 2006 21:48:56 +0200
+	id 1FcT5V-00013v-NW
+	for gcvg-git@gmane.org; Sat, 06 May 2006 22:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071AbWEFTso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 15:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932072AbWEFTso
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 15:48:44 -0400
-Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:6691 "EHLO
-	BAYC1-PASMTP09.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932071AbWEFTsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 May 2006 15:48:43 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP09.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 6 May 2006 12:50:19 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id E3BEC644C28;
-	Sat,  6 May 2006 15:48:41 -0400 (EDT)
-To: git@vger.kernel.org
-Message-Id: <20060506154343.750a806a.seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP08FCAC8B8FB768ED1791F1AEAA0@CEZ.ICE>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 06 May 2006 19:50:19.0281 (UTC) FILETIME=[4DC17010:01C67146]
+	id S1750819AbWEFUJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 16:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbWEFUJG
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 16:09:06 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:27885 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750819AbWEFUJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 May 2006 16:09:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060506200904.XCOJ19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 6 May 2006 16:09:04 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e3hnjg$k9f$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
+	06 May 2006 10:43:37 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19667>
+
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> I have browsed through Git documentation: "A tutorial introduction to
+> git" (tutorial.txt), "A short git tutorial" (core-tutorial.txt) which
+> contrary to the title is the tutorial in low-level git commands and is
+> longer that the first one, "Everyday GIT With 20 Commands Or
+> So" (everyday.txt) and "git for CVS users" (cvs-migration.txt) which does
+> not mention git-blame and git-annotate.
+
+I was initially somewhat dissapointed that a posting marked as
+RFC did not contain a draft that is commentable, but we would
+probably want to know how the updated document set will be
+organized in general first.  There was a discussion both here
+and on #irc, while Pasky and gang were working on the wiki,
+about sprucing up the introductory documentation set.
+
+The core-tutorial grow out of a short tutorial to start from
+Plumbing basics (what's in object store) to cover Porcelainish;
+when it was written there was not another user-level document,
+so it had to cover both, but it is probably a good idea to move
+the parts that talk about Porcelainish to other documents and
+make it "A short tutorial on git Plumbing" document.  Maybe we
+can have a tiered document set like this:
+
+ - Your first experience with git with walkthru.  This shows the
+   minimum basic operations to get started a stand-alone "hello
+   world" project, without talking about index nor object store.
+   The current tutorial.txt is probably good enough with
+   updates.
+
+ - Understanding git as an end user.  Currently, this is
+   included in the global map git(7) documentation.  It might
+   make sense to separate it out.  This should talk about
+   concepts like blobs/trees/commits/trust/index without going
+   into lowlevel details of the implementation.  The stress
+   should be on what they are for, not operationally but
+   philosophically.  What's currently in README would be
+   suitable for this part, with some additional topics:
+
+   - branches.  "Tying it all together" section talks about the
+     single branch and "the HEAD state"; we should talk about
+     why you would want to use multiple branches (either
+     keeping track of your own development, or keeping track of
+     somebody else's) and stress branches are to keep separate
+     things separate (explained that way it becomes clear why
+     you should not commit on a remote tracking branch).
+
+   - ancestry traversal.  what "A..B" or "^A ^B C" means and why
+     you would want to say them.
+
+ - Everyday.
+
+ - Special interests: cvs migration, howto/ documents.
+
+ - The global map git(7) with pointers to individual commands,
+   and the glossary.
+
+ - Tutorial on Plumbing.
+
+For a new end-user, the order to read would be from the top to
+bottom.  "Everyday" should cover most of what are needed for
+different classes of users, and other things can be looked up
+from the global map.
 
 
-- correctly insert a new variable into a section that only
-  contains a single (different) variable.
+I think tutorial.txt is the right "your first experience with
+git with walkthru" document, and the materials it gives, and the
+order in which it introduces them, are very well thought out;
+kudos to JBF.  We might also want to show "git grep", but other
+than that I do not think of anything that a new user might want
+to use on the first day.
 
-- correctly insert a new section that matches the initial
-  substring of an existing section.
+It is deliberately sketchy at times to keep the flow of walkthru
+clean and simple, and I'd like to keep it that way.  I would
+however like to see the examples to show the expected output
+from the commands, like the initial part of the current
+core-tutorial.txt does.  Also, I'd like to see a "see also" link
+to each step that refers the user to "what if this step does not
+work as expected for you", either separate document or a section
+in the appendix part of the same document, without cluttering
+the main text too much.
 
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+Some commands and syntax it mentions may need to be rethought in
+the light what happened recently, especially the internal
+version of diff and log/show/whatchanged unification that
+happened before the 1.3.0 came out.
 
+ * "git diff A B" should probably be spelled as "git diff A..B"
+   throughout for consistency.
 
----
+ * Today's "git log" is more powerful than the one we had when
+   the tutorial was first written, and we probably want to
+   recommend "git log [-p|--stat]" in place of whatchanged;
+   whatchanged is kept primarily for historical reasons and to
+   give a different default output format than log.  A new user
+   does not have to even know about it.
 
-Both tests fail with v1.3.2 and pass with latest patches.
-
-
- t/t1300-repo-config.sh |   31 +++++++++++++++++++++++++++++++
- 1 files changed, 31 insertions(+), 0 deletions(-)
-
-ef2178a10e27f43d4120884bc587c460e9b1bfcb
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 1bf728f..0914be2 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -278,5 +278,36 @@ git-repo-config > output 2>&1
- test_expect_success 'no arguments, but no crash' \
- 	"test $? = 129 && grep usage output"
- 
-+cat > .git/config << EOF
-+[a.b]
-+	c = d
-+EOF
-+
-+git-repo-config a.x y
-+
-+cat > expect << EOF
-+[a.b]
-+	c = d
-+[a]
-+	x = y
-+EOF
-+
-+test_expect_success 'new section is partial match of another' 'cmp .git/config expect'
-+
-+git-repo-config b.x y
-+git-repo-config a.b c
-+
-+cat > expect << EOF
-+[a.b]
-+	c = d
-+[a]
-+	x = y
-+	b = c
-+[b]
-+	x = y
-+EOF
-+
-+test_expect_success 'new variable inserts into proper section' 'cmp .git/config expect'
-+
- test_done
- 
--- 
-1.3.2.gd777c
+Then reorganize the initial part core-tutorial.txt to match the
+examples tutorial.txt gives, and demonstrate what is happening
+under the hood.  The tutorial says "git init-db" then "git
+add".  The core-tutorial would match that and explain what
+happens when "git init-db" is run (creates .git/objects etc.)
+and "git add" is run (populates the index).
