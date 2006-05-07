@@ -1,75 +1,87 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Sun, 7 May 2006 18:08:03 +1200
-Message-ID: <46a038f90605062308x53995076k7bf45f0aebcae0c6@mail.gmail.com>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
-	 <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
-	 <87mzdx7mh9.wl%cworth@cworth.org>
-	 <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0605050806370.3622@g5.osdl.org>
-	 <e3fqb9$hed$1@sea.gmane.org>
-	 <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
-	 <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
-	 <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: [PATCH] config: if mtime (or size) of the config file changed since last read, reread it
+Date: Sun, 7 May 2006 09:30:52 +0200
+Message-ID: <20060507073052.GC17031@lug-owl.de>
+References: <Pine.LNX.4.63.0605070125010.6597@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0605070144530.7578@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="c3bfwLpm8qysLVxt"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 07 08:08:19 2006
+X-From: git-owner@vger.kernel.org Sun May 07 09:30:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FccRG-0004d0-2f
-	for gcvg-git@gmane.org; Sun, 07 May 2006 08:08:18 +0200
+	id 1FcdjF-0000o7-9h
+	for gcvg-git@gmane.org; Sun, 07 May 2006 09:30:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140AbWEGGIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 02:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWEGGIF
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 02:08:05 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:45786 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751140AbWEGGIE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 02:08:04 -0400
-Received: by wr-out-0506.google.com with SMTP id 68so780959wri
-        for <git@vger.kernel.org>; Sat, 06 May 2006 23:08:03 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JmiYC1O8G7yQQi6nRDwqi81w8qWxY/9Jz7lpja3hb/hnN+Nx1YalK5BOVf2oquYLnipqnKEeE+yiRDP6nxcaHKnednwMr++e1pfonQtH96lScJwmYkJySMdI3K3qEvCgG2dP/XGCYg6/12LxOaTg8Gv5k1zI97/dgqcDMwsY4cY=
-Received: by 10.54.86.16 with SMTP id j16mr1004523wrb;
-        Sat, 06 May 2006 23:08:03 -0700 (PDT)
-Received: by 10.54.127.4 with HTTP; Sat, 6 May 2006 23:08:03 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net>
+	id S1751164AbWEGHay (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 03:30:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbWEGHay
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 03:30:54 -0400
+Received: from lug-owl.de ([195.71.106.12]:26535 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S1751164AbWEGHax (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 03:30:53 -0400
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id A902FF003F; Sun,  7 May 2006 09:30:52 +0200 (CEST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0605070144530.7578@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Operating-System: Linux mail 2.6.12.3lug-owl 
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19692>
-
-On 5/6/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
-> >
-> > It means that for a merge or checkout involving stuff we "don't have",
-> > it's trivial to know we are missing, and so we can  attempt a fetch of
-> > the missing objects or tell the user how to request them them before
-> > retrying.
-> >
-> > And in any case commits and trees are lightweight and compress well...
->
-> Commit maybe, but is this based on a hard fact?
-
-No hard facts here :( but I think it's reasonable to assume that the
-trees delta/compress reasonably well, as a given commit will change
-just a few entries in each tree.
-
-I might try and hack a shallow local clone of the kernel and pack it
-tightly to see what it yields.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19693>
 
 
+--c3bfwLpm8qysLVxt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-martin
+On Sun, 2006-05-07 01:45:22 +0200, Johannes Schindelin <Johannes.Schindelin=
+@gmx.de> wrote:
+> diff --git a/config.c b/config.c
+> index 6765186..452b587 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -261,6 +261,10 @@ int git_config_from_file(config_fn_t fn,
+>  	config_offset =3D 0;
+> =20
+>  	in_fd =3D open(filename, O_RDONLY);
+> +	if (in_fd < 0 && ENOENT !=3D errno )
+
+I admit that I don't like the (constant -operator- variable) notation,
+but mixing both in one line..?
+
+MfG, JBG
+
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
+m Irak!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--c3bfwLpm8qysLVxt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEXaIsHb1edYOZ4bsRAvB6AJ9R1C74XO9Z3RxTsF5jjYsNrZTNUwCeJQO/
+rLIrHmCRALb9gFGHfora1As=
+=EXRq
+-----END PGP SIGNATURE-----
+
+--c3bfwLpm8qysLVxt--
