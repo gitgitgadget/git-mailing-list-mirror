@@ -1,278 +1,154 @@
 From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH] Transitively read alternatives
-Date: Sun, 7 May 2006 20:19:21 +0200
-Message-ID: <20060507181920.GC23738@admingilde.org>
+Subject: [PATCH] test case for transitive info/alternates
+Date: Sun, 7 May 2006 20:19:47 +0200
+Message-ID: <20060507181947.GE23738@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 07 20:19:37 2006
+X-From: git-owner@vger.kernel.org Sun May 07 20:20:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fcnqr-00043u-Ov
-	for gcvg-git@gmane.org; Sun, 07 May 2006 20:19:30 +0200
+	id 1Fcnrh-0004Bx-KL
+	for gcvg-git@gmane.org; Sun, 07 May 2006 20:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210AbWEGSTX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 14:19:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750883AbWEGSTW
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 14:19:22 -0400
-Received: from admingilde.org ([213.95.32.146]:35279 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1750743AbWEGSTW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 14:19:22 -0400
+	id S1751216AbWEGSTt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 14:19:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbWEGSTs
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 14:19:48 -0400
+Received: from admingilde.org ([213.95.32.146]:37839 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1751216AbWEGSTr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 14:19:47 -0400
 Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Fcnqj-0000pg-2N
-	for git@vger.kernel.org; Sun, 07 May 2006 20:19:21 +0200
+	id 1Fcnr9-0000q1-6I
+	for git@vger.kernel.org; Sun, 07 May 2006 20:19:47 +0200
 To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19711>
-
-When adding an alternate object store then add entries from its
-info/alternates files, too.
-Relative entries are only allowed in the current repository.
-Loops and duplicate alternates through multiple repositories are ignored.
-Just to be sure that nothing breaks it is not allow to build deep
-nesting levels using info/alternates.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19712>
 
 Signed-off-by: Martin Waitz <tali@admingilde.org>
 
 ---
 
- sha1_file.c |  178 +++++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 106 insertions(+), 72 deletions(-)
+ t/t5710-info-alternate.sh |  105 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 105 insertions(+), 0 deletions(-)
+ create mode 100755 t/t5710-info-alternate.sh
 
-34981f5467a86bb09120cc3c9637b98048fada04
-diff --git a/sha1_file.c b/sha1_file.c
-index 5464828..b62d0e3 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -217,6 +217,8 @@ char *sha1_pack_index_name(const unsigne
- struct alternate_object_database *alt_odb_list;
- static struct alternate_object_database **alt_odb_tail;
- 
-+static void read_info_alternates(const char * alternates, int depth);
+47d59f8b0c26226a40344673ecd9e6255a576b98
+diff --git a/t/t5710-info-alternate.sh b/t/t5710-info-alternate.sh
+new file mode 100755
+index 0000000..097d037
+--- /dev/null
++++ b/t/t5710-info-alternate.sh
+@@ -0,0 +1,105 @@
++#!/bin/sh
++#
++# Copyright (C) 2006 Martin Waitz <tali@admingilde.org>
++#
 +
- /*
-  * Prepare alternate object database registry.
-  *
-@@ -232,14 +234,85 @@ static struct alternate_object_database 
-  * SHA1, an extra slash for the first level indirection, and the
-  * terminating NUL.
-  */
--static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
--				 const char *relative_base)
-+static int link_alt_odb_entry(const char * entry, int len, const char * relative_base, int depth)
- {
--	const char *cp, *last;
--	struct alternate_object_database *ent;
-+	struct stat st;
- 	const char *objdir = get_object_directory();
-+	struct alternate_object_database *ent;
-+	struct alternate_object_database *alt;
-+	/* 43 = 40-byte + 2 '/' + terminating NUL */
-+	int pfxlen = len;
-+	int entlen = pfxlen + 43;
- 	int base_len = -1;
- 
-+	if (*entry != '/' && relative_base) {
-+		/* Relative alt-odb */
-+		if (base_len < 0)
-+			base_len = strlen(relative_base) + 1;
-+		entlen += base_len;
-+		pfxlen += base_len;
-+	}
-+	ent = xmalloc(sizeof(*ent) + entlen);
++test_description='test transitive info/alternate entries'
++. ./test-lib.sh
 +
-+	if (*entry != '/' && relative_base) {
-+		memcpy(ent->base, relative_base, base_len - 1);
-+		ent->base[base_len - 1] = '/';
-+		memcpy(ent->base + base_len, entry, len);
-+	}
-+	else
-+		memcpy(ent->base, entry, pfxlen);
-+
-+	ent->name = ent->base + pfxlen + 1;
-+	ent->base[pfxlen + 3] = '/';
-+	ent->base[pfxlen] = ent->base[entlen-1] = 0;
-+
-+	/* Detect cases where alternate disappeared */
-+	if (stat(ent->base, &st) || !S_ISDIR(st.st_mode)) {
-+		error("object directory %s does not exist; "
-+		      "check .git/objects/info/alternates.",
-+		      ent->base);
-+		free(ent);
-+		return -1;
-+	}
-+
-+	/* Prevent the common mistake of listing the same
-+	 * thing twice, or object directory itself.
-+	 */
-+	for (alt = alt_odb_list; alt; alt = alt->next) {
-+		if (!memcmp(ent->base, alt->base, pfxlen)) {
-+			free(ent);
-+			return -1;
-+		}
-+	}
-+	if (!memcmp(ent->base, objdir, pfxlen)) {
-+		free(ent);
-+		return -1;
-+	}
-+
-+	/* add the alternate entry */
-+	*alt_odb_tail = ent;
-+	alt_odb_tail = &(ent->next);
-+	ent->next = NULL;
-+
-+	/* recursively add alternates */
-+	read_info_alternates(ent->base, depth + 1);
-+
-+	ent->base[pfxlen] = '/';
-+
-+	return 0;
++# test that a file is not reachable in the current repository
++# but that it is after creating a info/alternate entry
++reachable_via() {
++	alternate="$1"
++	file="$2"
++	if git cat-file -e "HEAD:$file"; then return 1; fi
++	echo "$alternate" >> .git/objects/info/alternate
++	git cat-file -e "HEAD:$file"
 +}
 +
-+static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
-+				 const char *relative_base, int depth)
-+{
-+	const char *cp, *last;
-+
-+	if (depth > 5) {
-+		error("%s: ignoring alternate object stores, nesting too deep.",
-+				relative_base);
-+		return;
-+	}
-+
- 	last = alt;
- 	while (last < ep) {
- 		cp = last;
-@@ -249,60 +322,15 @@ static void link_alt_odb_entries(const c
- 			last = cp + 1;
- 			continue;
- 		}
--		for ( ; cp < ep && *cp != sep; cp++)
--			;
-+		while (cp < ep && *cp != sep)
-+			cp++;
- 		if (last != cp) {
--			struct stat st;
--			struct alternate_object_database *alt;
--			/* 43 = 40-byte + 2 '/' + terminating NUL */
--			int pfxlen = cp - last;
--			int entlen = pfxlen + 43;
--
--			if (*last != '/' && relative_base) {
--				/* Relative alt-odb */
--				if (base_len < 0)
--					base_len = strlen(relative_base) + 1;
--				entlen += base_len;
--				pfxlen += base_len;
--			}
--			ent = xmalloc(sizeof(*ent) + entlen);
--
--			if (*last != '/' && relative_base) {
--				memcpy(ent->base, relative_base, base_len - 1);
--				ent->base[base_len - 1] = '/';
--				memcpy(ent->base + base_len,
--				       last, cp - last);
--			}
--			else
--				memcpy(ent->base, last, pfxlen);
--
--			ent->name = ent->base + pfxlen + 1;
--			ent->base[pfxlen + 3] = '/';
--			ent->base[pfxlen] = ent->base[entlen-1] = 0;
--
--			/* Detect cases where alternate disappeared */
--			if (stat(ent->base, &st) || !S_ISDIR(st.st_mode)) {
--				error("object directory %s does not exist; "
--				      "check .git/objects/info/alternates.",
--				      ent->base);
--				goto bad;
--			}
--			ent->base[pfxlen] = '/';
--
--			/* Prevent the common mistake of listing the same
--			 * thing twice, or object directory itself.
--			 */
--			for (alt = alt_odb_list; alt; alt = alt->next)
--				if (!memcmp(ent->base, alt->base, pfxlen))
--					goto bad;
--			if (!memcmp(ent->base, objdir, pfxlen)) {
--			bad:
--				free(ent);
--			}
--			else {
--				*alt_odb_tail = ent;
--				alt_odb_tail = &(ent->next);
--				ent->next = NULL;
-+			if ((*last != '/') && depth) {
-+				error("%s: ignoring relative alternate object store %s",
-+						relative_base, last);
-+			} else {
-+				link_alt_odb_entry(last, cp - last,
-+						relative_base, depth);
- 			}
- 		}
- 		while (cp < ep && *cp == sep)
-@@ -311,23 +339,14 @@ static void link_alt_odb_entries(const c
- 	}
- }
- 
--void prepare_alt_odb(void)
-+static void read_info_alternates(const char * relative_base, int depth)
- {
--	char path[PATH_MAX];
- 	char *map;
--	int fd;
- 	struct stat st;
--	char *alt;
--
--	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
--	if (!alt) alt = "";
--
--	if (alt_odb_tail)
--		return;
--	alt_odb_tail = &alt_odb_list;
--	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL);
-+	char path[PATH_MAX];
-+	int fd;
- 
--	sprintf(path, "%s/info/alternates", get_object_directory());
-+	sprintf(path, "%s/info/alternates", relative_base);
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		return;
-@@ -340,11 +359,26 @@ void prepare_alt_odb(void)
- 	if (map == MAP_FAILED)
- 		return;
- 
--	link_alt_odb_entries(map, map + st.st_size, '\n',
--			     get_object_directory());
-+	link_alt_odb_entries(map, map + st.st_size, '\n', relative_base, depth);
-+
- 	munmap(map, st.st_size);
- }
- 
-+void prepare_alt_odb(void)
-+{
-+	char *alt;
-+
-+	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-+	if (!alt) alt = "";
-+
-+	if (alt_odb_tail)
-+		return;
-+	alt_odb_tail = &alt_odb_list;
-+	link_alt_odb_entries(alt, alt + strlen(alt), ':', NULL, 0);
-+
-+	read_info_alternates(get_object_directory(), 0);
++test_valid_repo() {
++	git fsck-objects --full > fsck.log &&
++	test `wc -l < fsck.log` = 0
 +}
 +
- static char *find_sha1_file(const unsigned char *sha1, struct stat *st)
- {
- 	char *name = sha1_file_name(sha1);
++base_dir=`pwd`
++
++test_expect_success 'preparing first repository' \
++'test_create_repo A && cd A &&
++echo "Hello World" > file1 &&
++git add file1 &&
++git commit -m "Initial commit" file1 &&
++git repack -a -d &&
++git prune'
++
++cd "$base_dir"
++
++test_expect_success 'preparing second repository' \
++'git clone -l -s A B && cd B &&
++echo "foo bar" > file2 &&
++git add file2 &&
++git commit -m "next commit" file2 &&
++git repack -a -d -l &&
++git prune'
++
++cd "$base_dir"
++
++test_expect_success 'preparing third repository' \
++'git clone -l -s B C && cd C &&
++echo "Goodbye, cruel world" > file3 &&
++git add file3 &&
++git commit -m "one more" file3 &&
++git repack -a -d -l &&
++git prune'
++
++cd "$base_dir"
++
++test_expect_failure 'creating too deep nesting' \
++'git clone -l -s C D &&
++git clone -l -s D E &&
++git clone -l -s E F &&
++git clone -l -s F G &&
++test_valid_repo'
++
++cd "$base_dir"
++
++test_expect_success 'validity of third repository' \
++'cd C &&
++test_valid_repo'
++
++cd "$base_dir"
++
++test_expect_success 'validity of fourth repository' \
++'cd D &&
++test_valid_repo'
++
++cd "$base_dir"
++
++test_expect_success 'breaking of loops' \
++"echo '$base_dir/B/.git/objects' >> '$base_dir'/A/.git/objects/info/alternates&&
++cd C &&
++test_valid_repo"
++
++cd "$base_dir"
++
++test_expect_failure 'that info/alternates is neccessary' \
++'cd C &&
++rm .git/objects/info/alternates &&
++test_valid_repo'
++
++cd "$base_dir"
++
++test_expect_success 'that relative alternate is possible for current dir' \
++'cd C &&
++echo "../../../B/.git/objects" > .git/objects/info/alternates &&
++test_valid_repo'
++
++cd "$base_dir"
++
++test_expect_failure 'that relative alternate is only possible for current dir' \
++'cd D &&
++test_valid_repo'
++
++cd "$base_dir"
++
++test_done
++
 -- 
 1.3.1.g6ef7
