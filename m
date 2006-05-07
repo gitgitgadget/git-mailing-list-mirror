@@ -1,53 +1,47 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] core-tutorial.txt: escape asterisk
-Date: Sun, 7 May 2006 19:32:53 +0200
-Message-ID: <E1Fcn7l-0003ru-ER@moooo.ath.cx>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: symlinks
+Date: Sun, 7 May 2006 17:47:49 +0000
+Message-ID: <f36b08ee0605071047h32ccef4bk76ac360ada1331a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 07 19:33:13 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sun May 07 19:47:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fcn82-0006Qr-5l
-	for gcvg-git@gmane.org; Sun, 07 May 2006 19:33:10 +0200
+	id 1FcnMG-0008Lt-QB
+	for gcvg-git@gmane.org; Sun, 07 May 2006 19:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932204AbWEGRc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 13:32:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932205AbWEGRc4
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 13:32:56 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:5768 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S932204AbWEGRcz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 13:32:55 -0400
+	id S932211AbWEGRru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 13:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbWEGRru
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 13:47:50 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:38601 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932211AbWEGRrt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 13:47:49 -0400
+Received: by py-out-1112.google.com with SMTP id x31so1273543pye
+        for <git@vger.kernel.org>; Sun, 07 May 2006 10:47:49 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=TsymHhqCovAzzJUVC9oH0XQiB+DeC0hZNiFrS9pGYti0cjqgWxtsBJuuXsqbFHeR0CcLZQaFFnRn6fl2SzEl0h9Ot+KIzRBnBOjX78EOCmtlVRKG2/v91E335kpj/JJafSpSRuS43ceDZBgzigOij1FUQM9iP2Fy+XRFLs+SBIk=
+Received: by 10.35.70.17 with SMTP id x17mr1759905pyk;
+        Sun, 07 May 2006 10:47:49 -0700 (PDT)
+Received: by 10.35.96.18 with HTTP; Sun, 7 May 2006 10:47:49 -0700 (PDT)
 To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19707>
 
----
-I don't now exactly why, but this asterisk has to be escaped to show
-up correctly in the html format.
+Hello,
 
- Documentation/core-tutorial.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I have a project that makes heavy use of symlinks in the source tree.
+I added it to git, then cloned the repository, and all symlinks were
+converted to plain files. What am I missing to preserve symlinks ?
 
-7e3a9fbafb8b6aa4ce460221a982feda06549215
-diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
-index 4211c81..d1360ec 100644
---- a/Documentation/core-tutorial.txt
-+++ b/Documentation/core-tutorial.txt
-@@ -971,7 +971,7 @@ environment, is `git show-branch`.
- The first two lines indicate that it is showing the two branches
- and the first line of the commit log message from their
- top-of-the-tree commits, you are currently on `master` branch
--(notice the asterisk `*` character), and the first column for
-+(notice the asterisk `\*` character), and the first column for
- the later output lines is used to show commits contained in the
- `master` branch, and the second column for the `mybranch`
- branch. Three commits are shown along with their log messages.
--- 
-1.3.2
+Yakov
