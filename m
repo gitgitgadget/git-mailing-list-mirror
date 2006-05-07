@@ -1,62 +1,64 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH] clone: don't clone the info/alternates file
-Date: Sun, 7 May 2006 20:19:33 +0200
-Message-ID: <20060507181933.GD23738@admingilde.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Transitively read alternatives
+Date: Sun, 07 May 2006 20:28:25 +0200
+Organization: At home
+Message-ID: <e3le7q$eli$1@sea.gmane.org>
+References: <20060507181920.GC23738@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 07 20:20:33 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun May 07 20:28:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fcnri-0004Bx-90
-	for gcvg-git@gmane.org; Sun, 07 May 2006 20:20:23 +0200
+	id 1Fcnzj-000568-FG
+	for gcvg-git@gmane.org; Sun, 07 May 2006 20:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750883AbWEGSTf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 14:19:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWEGSTf
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 14:19:35 -0400
-Received: from admingilde.org ([213.95.32.146]:37583 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1750883AbWEGSTe (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 14:19:34 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Fcnqv-0000pv-Go
-	for git@vger.kernel.org; Sun, 07 May 2006 20:19:33 +0200
+	id S1751226AbWEGS2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 14:28:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWEGS2c
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 14:28:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:51174 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751226AbWEGS2c (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 14:28:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FcnzQ-000549-Qx
+	for git@vger.kernel.org; Sun, 07 May 2006 20:28:20 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 07 May 2006 20:28:20 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 07 May 2006 20:28:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19714>
 
-Now that the cloned alternates file is parsed, too we don't need to
-copy it into our new repository, we just reference it.
+Martin Waitz wrote:
 
-Signed-off-by: Martin Waitz <tali@admingilde.org>
+> When adding an alternate object store then add entries from its
+> info/alternates files, too.
+> Relative entries are only allowed in the current repository.
+> Loops and duplicate alternates through multiple repositories are ignored.
+> Just to be sure that nothing breaks it is not allow to build deep
+> nesting levels using info/alternates.
 
----
+> +     if (depth > 5) {
+> +             error("%s: ignoring alternate object stores, nesting too deep.",
+> +                             relative_base);
+> +             return;
+> +     }
 
- git-clone.sh |    6 +-----
- 1 files changed, 1 insertions(+), 5 deletions(-)
+Please, no magic numbers. Use preprocesor "constants" for that.
 
-4dc26b7a15c0778459f2ccf85aad1c03d1b3a3cc
-diff --git a/git-clone.sh b/git-clone.sh
-index b785247..227245c 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -261,11 +261,7 @@ yes,yes)
- 	    ;;
- 	yes)
- 	    mkdir -p "$GIT_DIR/objects/info"
--	    {
--		test -f "$repo/objects/info/alternates" &&
--		cat "$repo/objects/info/alternates";
--		echo "$repo/objects"
--	    } >>"$GIT_DIR/objects/info/alternates"
-+	    echo "$repo/objects" >> "$GIT_DIR/objects/info/alternates"
- 	    ;;
- 	esac
- 	git-ls-remote "$repo" >"$GIT_DIR/CLONE_HEAD"
 -- 
-1.3.1.g6ef7
+Jakub Narebski
+Warsaw, Poland
