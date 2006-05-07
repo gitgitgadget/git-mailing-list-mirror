@@ -1,71 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config: if mtime (or size) of the config file changed
- since last read, reread it
-Date: Sun, 7 May 2006 01:45:22 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605070144530.7578@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0605070125010.6597@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Unresolved issues #2
+Date: Sun, 07 May 2006 02:41:00 +0200
+Organization: At home
+Message-ID: <e3jfmh$1vc$1@sea.gmane.org>
+References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605041627310.6713@iabervon.org> <Pine.LNX.4.64.0605041715500.3611@g5.osdl.org> <7vhd43vgnm.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605060821430.16343@g5.osdl.org> <BAYC1-PASMTP10F63ADF30C26A29D070C5AEAA0@CEZ.ICE> <Pine.LNX.4.64.0605060923050.16343@g5.osdl.org> <BAYC1-PASMTP0824AA77198F95FE28B79DAEAA0@CEZ.ICE> <Pine.LNX.4.64.0605061008340.16343@g5.osdl.org> <7vvesirh0q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun May 07 01:45:34 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun May 07 02:41:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcWSm-0002g0-DE
-	for gcvg-git@gmane.org; Sun, 07 May 2006 01:45:28 +0200
+	id 1FcXKg-0003pX-V0
+	for gcvg-git@gmane.org; Sun, 07 May 2006 02:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750940AbWEFXpY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 19:45:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbWEFXpY
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 19:45:24 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:30177 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750940AbWEFXpX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 May 2006 19:45:23 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 6E5D11EB5
-	for <git@vger.kernel.org>; Sun,  7 May 2006 01:45:22 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 6330D1E3D
-	for <git@vger.kernel.org>; Sun,  7 May 2006 01:45:22 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 474781E02
-	for <git@vger.kernel.org>; Sun,  7 May 2006 01:45:22 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1751156AbWEGAlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 20:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751159AbWEGAlH
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 20:41:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:56745 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751156AbWEGAlG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 20:41:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FcXKW-0003kw-94
+	for git@vger.kernel.org; Sun, 07 May 2006 02:41:00 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 07 May 2006 02:41:00 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 07 May 2006 02:41:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.63.0605070125010.6597@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19685>
 
-Hi,
+Junio C Hamano wrote:
 
-sorry: bad patch. This is needed on top.
+> It might make sense to rewrite it to parse and read the existing
+> configuration as a whole, do necessary manupulations on the
+> parsed internal representation in-core, and write the result out
+> from scratch.
 
-diff --git a/config.c b/config.c
-index 6765186..452b587 100644
---- a/config.c
-+++ b/config.c
-@@ -261,6 +261,10 @@ int git_config_from_file(config_fn_t fn,
- 	config_offset = 0;
- 
- 	in_fd = open(filename, O_RDONLY);
-+	if (in_fd < 0 && ENOENT != errno )
-+		die("opening %s: %s", config_file_name,
-+				strerror(errno));
-+
- 	fstat(in_fd, &st);
- 
- 	if (contents) {
-@@ -288,9 +292,6 @@ int git_config_from_file(config_fn_t fn,
- 	} else {
- 		contents = NULL;
- 		config_length = 0;
--		if (in_fd < 0 && ENOENT != errno )
--			die("opening %s: %s", config_file_name,
--					strerror(errno));
- 	}
- 
- 	return ret;
+Or perhaps do git repo-config read and change config file in two passes:
+read and build some kind of index (beginning of section, end of
+section/last variable in section, number of elements in section), then in
+second pass add some information if needed.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
