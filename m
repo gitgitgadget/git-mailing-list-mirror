@@ -1,59 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Unresolved issues #2
-Date: Sun, 07 May 2006 02:41:00 +0200
-Organization: At home
-Message-ID: <e3jfmh$1vc$1@sea.gmane.org>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net> <7v4q065hq0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605041627310.6713@iabervon.org> <Pine.LNX.4.64.0605041715500.3611@g5.osdl.org> <7vhd43vgnm.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605060821430.16343@g5.osdl.org> <BAYC1-PASMTP10F63ADF30C26A29D070C5AEAA0@CEZ.ICE> <Pine.LNX.4.64.0605060923050.16343@g5.osdl.org> <BAYC1-PASMTP0824AA77198F95FE28B79DAEAA0@CEZ.ICE> <Pine.LNX.4.64.0605061008340.16343@g5.osdl.org> <7vvesirh0q.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] fmt-patch: understand old <his> notation
+Date: Sat, 06 May 2006 18:28:38 -0700
+Message-ID: <7vd5eqr5bt.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0605062252530.4155@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7viroirfur.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0605062358280.6357@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun May 07 02:41:17 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 07 03:28:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcXKg-0003pX-V0
-	for gcvg-git@gmane.org; Sun, 07 May 2006 02:41:11 +0200
+	id 1FcY4k-0004wV-Al
+	for gcvg-git@gmane.org; Sun, 07 May 2006 03:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbWEGAlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 May 2006 20:41:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751159AbWEGAlH
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 20:41:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:56745 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751156AbWEGAlG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 May 2006 20:41:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FcXKW-0003kw-94
-	for git@vger.kernel.org; Sun, 07 May 2006 02:41:00 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 07 May 2006 02:41:00 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 07 May 2006 02:41:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751159AbWEGB2k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 May 2006 21:28:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbWEGB2k
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 May 2006 21:28:40 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:64152 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751159AbWEGB2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 May 2006 21:28:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060507012839.NSMA25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 6 May 2006 21:28:39 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605062358280.6357@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 7 May 2006 00:01:16 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19686>
 
-Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> It might make sense to rewrite it to parse and read the existing
-> configuration as a whole, do necessary manupulations on the
-> parsed internal representation in-core, and write the result out
-> from scratch.
+> No, it is not too late. I did this patch only to prevent cluttering my 
+> directory with millions of patches, only because I forgot _again_ to type 
+> the two dots.
 
-Or perhaps do git repo-config read and change config file in two passes:
-read and build some kind of index (beginning of section, end of
-section/last variable in section, number of elements in section), then in
-second pass add some information if needed.
+I did that as well, and the thing is, this is _so_ fast that
+when I noticed and typed ^C, it already has done 400 or so
+commits starting from the epoch (which was empty by the way).
 
--- 
-Jakub Narebski
-Warsaw, Poland
+I am already working on adjusting in-tree format-patch users not
+to use <his> syntax but to use <his>.. syntax, so this should not
+be a problem either way.
+
+>> Also we probably would want to default the diff options to show
+>> the root commit diff (rev.show_root_diff).
+
+> I gather this is needed for git-am/git-rebase to continue working?
+
+No, but people want to export the whole history sometimes.
