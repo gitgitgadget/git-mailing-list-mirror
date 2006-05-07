@@ -1,63 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Fix crash when reading the empty tree
-Date: Sun, 7 May 2006 17:42:37 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605071742240.5906@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] core-tutorial.txt: escape asterisk
+Date: Sun, 7 May 2006 19:32:53 +0200
+Message-ID: <E1Fcn7l-0003ru-ER@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun May 07 17:42:45 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun May 07 19:33:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FclP8-000154-FK
-	for gcvg-git@gmane.org; Sun, 07 May 2006 17:42:42 +0200
+	id 1Fcn82-0006Qr-5l
+	for gcvg-git@gmane.org; Sun, 07 May 2006 19:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189AbWEGPmj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 11:42:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932190AbWEGPmj
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 11:42:39 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:50384 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932189AbWEGPmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 11:42:38 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id B18B91CAC;
-	Sun,  7 May 2006 17:42:37 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id A5D7E1C9D;
-	Sun,  7 May 2006 17:42:37 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 87DF11C94;
-	Sun,  7 May 2006 17:42:37 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932204AbWEGRc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 13:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932205AbWEGRc4
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 13:32:56 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:5768 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932204AbWEGRcz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 13:32:55 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19706>
 
-
-cvsimport needs to call git-read-tree without arguments to create an empty
-tree.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 ---
- read-tree.c |    2 +-
+I don't now exactly why, but this asterisk has to be escaped to show
+up correctly in the html format.
+
+ Documentation/core-tutorial.txt |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/read-tree.c b/read-tree.c
-index 067fb95..a060a97 100644
---- a/read-tree.c
-+++ b/read-tree.c
-@@ -881,7 +881,7 @@ int main(int argc, char **argv)
- 	 * valid cache-tree because the index must match exactly
- 	 * what came from the tree.
- 	 */
--	if (trees->item && (!merge || (stage == 2))) {
-+	if (trees && trees->item && (!merge || (stage == 2))) {
- 		cache_tree_free(&active_cache_tree);		
- 		prime_cache_tree();
- 	}
+7e3a9fbafb8b6aa4ce460221a982feda06549215
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 4211c81..d1360ec 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -971,7 +971,7 @@ environment, is `git show-branch`.
+ The first two lines indicate that it is showing the two branches
+ and the first line of the commit log message from their
+ top-of-the-tree commits, you are currently on `master` branch
+-(notice the asterisk `*` character), and the first column for
++(notice the asterisk `\*` character), and the first column for
+ the later output lines is used to show commits contained in the
+ `master` branch, and the second column for the `mybranch`
+ branch. Three commits are shown along with their log messages.
 -- 
-1.3.2.g5131-dirty
+1.3.2
