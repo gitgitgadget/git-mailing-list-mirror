@@ -1,123 +1,50 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH/RFC] Teach git-clean optional <paths>... parameters.
-Date: Mon, 08 May 2006 12:02:44 -0700
-Message-ID: <7v1wv4gx0r.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Command to list commits that point to a given tree.
+Date: Mon, 08 May 2006 13:34:24 -0700
+Message-ID: <7vvesgfe7j.fsf@assigned-by-dhcp.cox.net>
+References: <20060508163437.GA17390@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 21:02:58 2006
+X-From: git-owner@vger.kernel.org Mon May 08 22:34:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdB0L-0004zn-5q
-	for gcvg-git@gmane.org; Mon, 08 May 2006 21:02:49 +0200
+	id 1FdCR4-0005L5-Jy
+	for gcvg-git@gmane.org; Mon, 08 May 2006 22:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbWEHTCq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 15:02:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbWEHTCp
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 15:02:45 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:20200 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751278AbWEHTCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 15:02:45 -0400
+	id S1750722AbWEHUe0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 16:34:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750705AbWEHUe0
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 16:34:26 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:51853 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750722AbWEHUe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 May 2006 16:34:26 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060508190244.UZTZ17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 May 2006 15:02:44 -0400
-To: Pavel Roskin <proski@gnu.org>
+          id <20060508203425.HRQN25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 May 2006 16:34:25 -0400
+To: Carl Baldwin <cnb@fc.hp.com>
+In-Reply-To: <20060508163437.GA17390@hpsvcnb.fc.hp.com> (Carl Baldwin's
+	message of "Mon, 8 May 2006 10:34:37 -0600")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19775>
 
-When optional paths arguments are given, git-clean passes them
-to underlying git-ls-files; with this, you can say:
+Carl Baldwin <cnb@fc.hp.com> writes:
 
-	git clean 'temp-*'
+> ... In particular, I am
+> looking for a command that will return a list of commits that point to a
+> particular tree.
+>
+> Right now I plan to brute force it.
 
-to clean only the garbage files whose names begin with 'temp-'.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- * I usually do not use clean myself, so I am not sure if this
-   is the kind of thing people who do use 'clean' regularly
-   would generally want, hence this RFC.
-
- Documentation/git-clean.txt |    5 ++++-
- git-clean.sh                |   13 +++++++++----
- 2 files changed, 13 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 36890c5..b95545f 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -8,7 +8,7 @@ git-clean - Remove untracked files from 
- SYNOPSIS
- --------
- [verse]
--'git-clean' [-d] [-n] [-q] [-x | -X]
-+'git-clean' [-d] [-n] [-q] [-x | -X] <paths>...
- 
- DESCRIPTION
- -----------
-@@ -16,6 +16,9 @@ Removes files unknown to git.  This allo
- from files that are not under version control.  If the '-x' option is
- specified, ignored files are also removed, allowing to remove all
- build products.
-+When optional `<paths>...` arguments are given, the paths
-+affected are further limited to those that match them.
-+
- 
- OPTIONS
- -------
-diff --git a/git-clean.sh b/git-clean.sh
-index b200868..6c818f4 100755
---- a/git-clean.sh
-+++ b/git-clean.sh
-@@ -3,13 +3,15 @@ #
- # Copyright (c) 2005-2006 Pavel Roskin
- #
- 
--USAGE="[-d] [-n] [-q] [-x | -X]"
-+USAGE="[-d] [-n] [-q] [-x | -X] <paths>..."
- LONG_USAGE='Clean untracked files from the working directory
- 	-d	remove directories as well
- 	-n 	don'\''t remove anything, just show what would be done
- 	-q	be quiet, only report errors
- 	-x	remove ignored files as well
--	-X	remove only ignored files as well'
-+	-X	remove only ignored files as well
-+When optional <paths>... arguments are given, the paths
-+affected are further limited to those that match them.'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- 
-@@ -44,8 +46,11 @@ do
- 	-X)
- 		ignoredonly=1
- 		;;
--	*)
-+	-*)
- 		usage
-+		;;
-+	*)
-+		break
- 	esac
- 	shift
- done
-@@ -64,7 +69,7 @@ if [ -z "$ignored" ]; then
- 	fi
- fi
- 
--git-ls-files --others --directory $excl ${excl_info:+"$excl_info"} |
-+git-ls-files --others --directory $excl ${excl_info:+"$excl_info"} "$@" |
- while read -r file; do
- 	if [ -d "$file" -a ! -L "$file" ]; then
- 		if [ -z "$cleandir" ]; then
--- 
-1.3.2.gb012
+You might want to explain what problem you are trying to solve,
+by knowing which commit contains a particular tree object.
+There might be a solution to that unstated problem which does
+not require the reverse lookup.
