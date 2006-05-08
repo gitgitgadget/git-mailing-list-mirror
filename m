@@ -1,49 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [patch] munmap-before-rename, cygwin need
-Date: Mon, 08 May 2006 13:52:28 -0700
-Message-ID: <7vfyjkfddf.fsf@assigned-by-dhcp.cox.net>
-References: <f36b08ee0605071258s7a0cb085r3f08e9981234255a@mail.gmail.com>
-	<7vslnlk04v.fsf@assigned-by-dhcp.cox.net>
-	<f36b08ee0605080358y3830f1aep879331df806211e0@mail.gmail.com>
-	<81b0412b0605080635r40868f18ua88b33558368f82b@mail.gmail.com>
+Subject: Re: (patch) calloc->xcalloc in read-cache.c
+Date: Mon, 08 May 2006 13:54:50 -0700
+Message-ID: <7vzmhsdyp1.fsf@assigned-by-dhcp.cox.net>
+References: <f36b08ee0605081101w3dc3a60cof5a524e9b4a3f555@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Yakov Lerner" <iler.ml@gmail.com>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 22:52:43 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 08 22:55:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdCiX-0000XU-Ny
-	for gcvg-git@gmane.org; Mon, 08 May 2006 22:52:34 +0200
+	id 1FdCko-0000xg-Jl
+	for gcvg-git@gmane.org; Mon, 08 May 2006 22:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbWEHUwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 16:52:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWEHUwb
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 16:52:31 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:33187 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750755AbWEHUwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 16:52:30 -0400
+	id S1750797AbWEHUyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 16:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWEHUyw
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 16:54:52 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32432 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750797AbWEHUyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 May 2006 16:54:51 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060508205230.ILSN25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 May 2006 16:52:30 -0400
-To: "Alex Riesen" <raa.lkml@gmail.com>
+          id <20060508205450.YYAW25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 May 2006 16:54:50 -0400
+To: "Yakov Lerner" <iler.ml@gmail.com>
+In-Reply-To: <f36b08ee0605081101w3dc3a60cof5a524e9b4a3f555@mail.gmail.com>
+	(Yakov Lerner's message of "Mon, 8 May 2006 21:01:40 +0300")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19778>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+"Yakov Lerner" <iler.ml@gmail.com> writes:
 
-> You really want  "NO_MMAP = YesPlease" in your config.mak.
-> Take a look into compat/mmap.c. That's why Junio has never seen
-> the breakage.
+> --- read-cache.c.000    2006-05-08 15:13:57.000000000 +0000
+> +++ read-cache.c        2006-05-08 15:15:35.000000000 +0000
+> @@ -557,7 +557,7 @@
+>
+>        active_nr = ntohl(hdr->hdr_entries);
+>        active_alloc = alloc_nr(active_nr);
+> -       active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
+> +       active_cache = xcalloc(active_alloc, sizeof(struct cache_entry *));
+>
+>        offset = sizeof(*hdr);
+>        for (i = 0; i < active_nr; i++) {
+>
+> Yakov
 
-I do not have custom config.mak for my Cygwin builds and NO_MMAP
-is disabled in the default Makefile, so that does not explain
-why it does not break for me.  Very puzzled.
+While I do not mind hand generated patch, your mailer setting
+seems to be seriously broken.  
+
+Mind checking Documentation/SubmittingPatches and try again?
