@@ -1,58 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: (patch) calloc->xcalloc in read-cache.c
-Date: Mon, 08 May 2006 13:54:50 -0700
-Message-ID: <7vzmhsdyp1.fsf@assigned-by-dhcp.cox.net>
-References: <f36b08ee0605081101w3dc3a60cof5a524e9b4a3f555@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH/RFC] Teach git-clean optional <paths>... parameters.
+Date: Mon, 08 May 2006 18:42:14 -0400
+Message-ID: <1147128134.3353.13.camel@dv>
+References: <7v1wv4gx0r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 22:55:01 2006
+X-From: git-owner@vger.kernel.org Tue May 09 00:42:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdCko-0000xg-Jl
-	for gcvg-git@gmane.org; Mon, 08 May 2006 22:54:54 +0200
+	id 1FdEQt-000447-8i
+	for gcvg-git@gmane.org; Tue, 09 May 2006 00:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750797AbWEHUyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 16:54:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWEHUyw
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 16:54:52 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32432 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750797AbWEHUyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 16:54:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060508205450.YYAW25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 May 2006 16:54:50 -0400
-To: "Yakov Lerner" <iler.ml@gmail.com>
-In-Reply-To: <f36b08ee0605081101w3dc3a60cof5a524e9b4a3f555@mail.gmail.com>
-	(Yakov Lerner's message of "Mon, 8 May 2006 21:01:40 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750740AbWEHWmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 18:42:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750785AbWEHWmY
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 18:42:24 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:42725 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750740AbWEHWmY
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 8 May 2006 18:42:24 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FdEQp-0000Y5-1P
+	for git@vger.kernel.org; Mon, 08 May 2006 18:42:23 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FdEQh-0000uo-3W; Mon, 08 May 2006 18:42:15 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wv4gx0r.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.6.1 (2.6.1-3) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19779>
 
-"Yakov Lerner" <iler.ml@gmail.com> writes:
+On Mon, 2006-05-08 at 12:02 -0700, Junio C Hamano wrote:
+> When optional paths arguments are given, git-clean passes them
+> to underlying git-ls-files; with this, you can say:
+> 
+> 	git clean 'temp-*'
+> 
+> to clean only the garbage files whose names begin with 'temp-'.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-> --- read-cache.c.000    2006-05-08 15:13:57.000000000 +0000
-> +++ read-cache.c        2006-05-08 15:15:35.000000000 +0000
-> @@ -557,7 +557,7 @@
->
->        active_nr = ntohl(hdr->hdr_entries);
->        active_alloc = alloc_nr(active_nr);
-> -       active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
-> +       active_cache = xcalloc(active_alloc, sizeof(struct cache_entry *));
->
->        offset = sizeof(*hdr);
->        for (i = 0; i < active_nr; i++) {
->
-> Yakov
+>  * I usually do not use clean myself, so I am not sure if this
+>    is the kind of thing people who do use 'clean' regularly
+>    would generally want, hence this RFC.
 
-While I do not mind hand generated patch, your mailer setting
-seems to be seriously broken.  
+I'm not likely to use this feature, but I think it's OK to have it.
 
-Mind checking Documentation/SubmittingPatches and try again?
+It would be nice to have "--" support (see e.g. git-commit).
+
+> +	-X	remove only ignored files as well
+
+That's my stupid error, "as well" should be removed.
+
+-- 
+Regards,
+Pavel Roskin
