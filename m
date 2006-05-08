@@ -1,88 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Implementing branch attributes in git config
-Date: Sun, 7 May 2006 17:25:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605071718440.3718@g5.osdl.org>
-References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Release config lock if the regex is invalid
+Date: Mon, 8 May 2006 02:32:52 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605080229220.32508@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060507213612.27887.28600.stgit@dv.roinet.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 08 02:25:55 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 08 02:32:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FctZT-0000y2-36
-	for gcvg-git@gmane.org; Mon, 08 May 2006 02:25:55 +0200
+	id 1FctgG-0002Yq-V2
+	for gcvg-git@gmane.org; Mon, 08 May 2006 02:32:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbWEHAZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 20:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750721AbWEHAZp
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 20:25:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:51624 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751112AbWEHAZp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 20:25:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k480PgtH022378
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 7 May 2006 17:25:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k480Pf4Q030002;
-	Sun, 7 May 2006 17:25:41 -0700
+	id S1751245AbWEHAcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 20:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWEHAcy
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 20:32:54 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6827 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751245AbWEHAcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 May 2006 20:32:53 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id B6532D81;
+	Mon,  8 May 2006 02:32:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id AA1B8CCF;
+	Mon,  8 May 2006 02:32:52 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 89B11C9E;
+	Mon,  8 May 2006 02:32:52 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <20060507213612.27887.28600.stgit@dv.roinet.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19729>
 
+Hi,
 
+On Sun, 7 May 2006, Pavel Roskin wrote:
 
-On Sun, 7 May 2006, Linus Torvalds wrote:
->
-> The downside is that if you start using config files like this, you 
-> literally can't go back to older git versions. They'll refuse to touch 
-> such a config file (rather than just ignoring the new entries) and will 
-> exit with nasty messages. That might be unacceptable.
+> @@ -516,6 +516,8 @@ int git_config_set_multivar(const char* 
+>  				fprintf(stderr, "Invalid pattern: %s\n",
+>  					value_regex);
+>  				free(store.value_regex);
+> +				close(fd);
+> +				unlink(lock_file);
+>  				ret = 6;
+>  				goto out_free;
+>  			}
+> 
 
-Side note: with this syntax, the _users_ will all just basically do
+This is not enough. There are quite a few exit paths. Notice the "goto 
+out_free"? That is where this must go.
 
-	if (!strncmp(name, "branch.", 7)) {
-		branch = name + 7;
-		dot = strchr(branch, '.');
-		if (!dot)
-			return -1;
-		*dot++ = 0;
-		.. we now have the branchname in "branc",
-		    and the rest in "dot" ..
+This patch is totally untested but obviously correct:
 
-and if your branch names are purely alphabetical and lower-case, you can 
-now write
-
-	[branch.origin]
-		remote = true
-		url = git://git.kernel.org/...
-		fetch = master
-
-	[branch.master]
-		pull = origin
-
-and it will be parsed _exactly_ the same as
-
-	["origin"]
-		remote = true
-		url = git://git.kernel.org/...
-		fetch = master
-
-	["master"]
-		pull = origin
-
-while the [branch.origin] syntax allows old versions of git to happily 
-ignore it. So that would be a kind of cheesy work-around: the new 
-double-quoted format is only _required_ for any branch-names that have 
-special characters in it.
-
-		Linus
+diff --git a/config.c b/config.c
+index 30effe3..d8fd94d 100644
+--- a/config.c
++++ b/config.c
+@@ -445,7 +445,7 @@ int git_config_set_multivar(const char* 
+ 	const char* value_regex, int multi_replace)
+ {
+ 	int i;
+-	int fd;
++	int fd = -1;
+ 	int ret;
+ 	char* config_filename = strdup(git_path("config"));
+ 	char* lock_file = strdup(git_path("config.lock"));
+@@ -619,10 +619,14 @@ int git_config_set_multivar(const char* 
+ 	ret = 0;
+ 
+ out_free:
++	if (fd > 0)
++		close(fd);
+ 	if (config_filename)
+ 		free(config_filename);
+-	if (lock_file)
++	if (lock_file) {
++		unlink(lock_file);
+ 		free(lock_file);
++	}
+ 	return ret;
+ }
+ 
