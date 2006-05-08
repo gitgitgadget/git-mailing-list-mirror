@@ -1,67 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Sun, 7 May 2006 19:42:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605071939291.3718@g5.osdl.org>
-References: <e3fqb9$hed$1@sea.gmane.org> <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
- <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
- <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net> <46a038f90605062308x53995076k7bf45f0aebcae0c6@mail.gmail.com>
- <20060507075631.GA24423@coredump.intra.peff.net> <20060508003338.GB17138@thunk.org>
- <Pine.LNX.4.64.0605071744210.3718@g5.osdl.org> <20060508012632.GD17138@thunk.org>
- <Pine.LNX.4.64.0605071853290.3718@g5.osdl.org> <20060508022432.GA26076@thunk.org>
+From: sean <seanlkml@sympatico.ca>
+Subject: Re: Implementing branch attributes in git config
+Date: Sun, 7 May 2006 22:39:18 -0400
+Message-ID: <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
+References: <1147037659.25090.25.camel@dv>
+	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+	<1147048587.17371.13.camel@dv>
+	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
+	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
+	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 04:42:57 2006
+X-From: git-owner@vger.kernel.org Mon May 08 04:44:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fcvi1-0006os-Lq
-	for gcvg-git@gmane.org; Mon, 08 May 2006 04:42:54 +0200
+	id 1FcvjW-00074j-6k
+	for gcvg-git@gmane.org; Mon, 08 May 2006 04:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932259AbWEHCmu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 22:42:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbWEHCmu
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:42:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:36291 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932259AbWEHCmu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 22:42:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k482gjtH026541
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 7 May 2006 19:42:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k482gi4V032282;
-	Sun, 7 May 2006 19:42:44 -0700
-To: Theodore Tso <tytso@mit.edu>
-In-Reply-To: <20060508022432.GA26076@thunk.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932260AbWEHCoX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 22:44:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932262AbWEHCoX
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:44:23 -0400
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:10825 "EHLO
+	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S932260AbWEHCoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 May 2006 22:44:23 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 7 May 2006 19:48:51 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 4A958644C28;
+	Sun,  7 May 2006 22:44:21 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060507223918.6112f0c1.seanlkml@sympatico.ca>
+In-Reply-To: <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 08 May 2006 02:48:51.0593 (UTC) FILETIME=[F045E790:01C67249]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19753>
+
+On Sun, 07 May 2006 19:29:50 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
 
+> Not at all.  Whatever Porcelain that runs repo-config to record
+> the branch name needs to spell that branch name with proper
+> quoting, like:
 
-On Sun, 7 May 2006, Theodore Tso wrote:
-> 
-> That brings up an interesting question though --- why not skip
-> compressing files that are under 4k (or whatever the filesystem
-> blocksize happens to be) if they are unpacked?  It burns CPU time;
-> maybe not enough to be human-noticeable, but it's still not buying you
-> anything.
+Okay.  It just seems nuts to require quoting because you happen
+to use an uppercase character.  People are used to quoting 
+special characters like * and $, not uppercase letters.
 
-Well, other filesystems don't have 4kB issues. Reiser can do smaller 
-things iirc, and you might obviously have a ext3 filesystem with a 1kB 
-blocksize too. And with tails on FFS, you might have a filesystem with a 
-8kB blocksize, but despite that it might lay out <1kB files well.
+> I _do_ want to keep my slashes intact and also dots; mangling
+> them is not very nice to me X-<.
 
-Anyway, packing makes all this basically a non-issue. There are no block 
-boundaries in a pack-file, and you only use a single inode. And you'd 
-obviously want to pack for other reasons anyway (ie the delta compression 
-will makea huge difference over time).
+You're right.
 
-		Linus
+We should just relax the config file rules for legal characters,
+in identifiers, at least [a-zA-Z0-9_/-].
+
+Sean.
