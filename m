@@ -1,55 +1,78 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Unresolved issues #2 (shallow clone again)
-Date: Sun, 7 May 2006 22:24:32 -0400
-Message-ID: <20060508022432.GA26076@thunk.org>
-References: <e3fqb9$hed$1@sea.gmane.org> <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org> <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com> <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net> <46a038f90605062308x53995076k7bf45f0aebcae0c6@mail.gmail.com> <20060507075631.GA24423@coredump.intra.peff.net> <20060508003338.GB17138@thunk.org> <Pine.LNX.4.64.0605071744210.3718@g5.osdl.org> <20060508012632.GD17138@thunk.org> <Pine.LNX.4.64.0605071853290.3718@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Implementing branch attributes in git config
+Date: Sun, 07 May 2006 19:29:50 -0700
+Message-ID: <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
+References: <1147037659.25090.25.camel@dv>
+	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+	<1147048587.17371.13.camel@dv>
+	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
+	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 04:24:53 2006
+X-From: git-owner@vger.kernel.org Mon May 08 04:30:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcvQa-0004dW-1x
-	for gcvg-git@gmane.org; Mon, 08 May 2006 04:24:52 +0200
+	id 1FcvVp-0005DA-DJ
+	for gcvg-git@gmane.org; Mon, 08 May 2006 04:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253AbWEHCYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 22:24:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932254AbWEHCYg
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:24:36 -0400
-Received: from thunk.org ([69.25.196.29]:42462 "EHLO thunker.thunk.org")
-	by vger.kernel.org with ESMTP id S932253AbWEHCYf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 22:24:35 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1FcvQI-0007to-Ii; Sun, 07 May 2006 22:24:34 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.60)
-	(envelope-from <tytso@thunk.org>)
-	id 1FcvQG-0006oU-Hj; Sun, 07 May 2006 22:24:32 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605071853290.3718@g5.osdl.org>
-User-Agent: Mutt/1.5.11
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S932254AbWEHC3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 22:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWEHC3w
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:29:52 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:16799 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932254AbWEHC3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 May 2006 22:29:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060508022951.OGCB17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 7 May 2006 22:29:51 -0400
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Sun, 7 May 2006 21:34:45 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19751>
 
-On Sun, May 07, 2006 at 07:04:48PM -0700, Linus Torvalds wrote:
-> Is that without compression?
+sean <seanlkml@sympatico.ca> writes:
 
-Yes, without compression.  So yes, that probably explains the
-difference between your numbers and mine. 
+> On Sun, 07 May 2006 18:27:32 -0700
+> Junio C Hamano <junkio@cox.net> wrote:
+>
+>
+>> How about keeping the default syntax as it is (tokens are case
+>> insensitive and alnums only, dot separates tokens into
+>> sections), and when a token that violates that rule needs to be
+>> spelled out, require quoting, so:
+>> 
+>> 	branch.foo	BranCh.FoO	branch.FOO
+>  
+>> are the same (section "branch.foo"),
+>
+> Doesn't that mean you have to then prohibit creating mixed
+> case branches with "git branch" and "git checkout -b" ?
 
-That brings up an interesting question though --- why not skip
-compressing files that are under 4k (or whatever the filesystem
-blocksize happens to be) if they are unpacked?  It burns CPU time;
-maybe not enough to be human-noticeable, but it's still not buying you
-anything.
+Not at all.  Whatever Porcelain that runs repo-config to record
+the branch name needs to spell that branch name with proper
+quoting, like:
 
-						- Ted
+>> 	branch."js/fmt.patch"	or   "branch.js/fmt.patch"        
+>> 
+>> and the URL variable for that section is
+>> 
+>> 	$ git repo-config '"branch.js/fmt.patch".url'
+>
+> How about transforming slashes into dots?  so the above would 
+> be:
+>
+>    [branch.js.fmt.patch]
+
+I _do_ want to keep my slashes intact and also dots; mangling
+them is not very nice to me X-<.
