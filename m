@@ -1,64 +1,75 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH/RFC] Teach git-clean optional <paths>... parameters.
-Date: Mon, 08 May 2006 18:42:14 -0400
-Message-ID: <1147128134.3353.13.camel@dv>
-References: <7v1wv4gx0r.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Implementing branch attributes in git config
+Date: Mon, 8 May 2006 19:20:17 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605081905240.6713@iabervon.org>
+References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+ <1147048587.17371.13.camel@dv> <Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
+ <7vfyjli9vf.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
+ <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 00:42:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 01:19:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdEQt-000447-8i
-	for gcvg-git@gmane.org; Tue, 09 May 2006 00:42:29 +0200
+	id 1FdF12-0002fZ-9w
+	for gcvg-git@gmane.org; Tue, 09 May 2006 01:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750740AbWEHWmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 18:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750785AbWEHWmY
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 18:42:24 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:42725 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750740AbWEHWmY
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 8 May 2006 18:42:24 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FdEQp-0000Y5-1P
-	for git@vger.kernel.org; Mon, 08 May 2006 18:42:23 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FdEQh-0000uo-3W; Mon, 08 May 2006 18:42:15 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wv4gx0r.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.6.1 (2.6.1-3) 
+	id S1750846AbWEHXTj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 19:19:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbWEHXTi
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 19:19:38 -0400
+Received: from iabervon.org ([66.92.72.58]:4622 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750842AbWEHXTi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 19:19:38 -0400
+Received: (qmail 30824 invoked by uid 1000); 8 May 2006 19:20:20 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 May 2006 19:20:20 -0400
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19780>
 
-On Mon, 2006-05-08 at 12:02 -0700, Junio C Hamano wrote:
-> When optional paths arguments are given, git-clean passes them
-> to underlying git-ls-files; with this, you can say:
+On Sun, 7 May 2006, sean wrote:
+
+> On Sun, 07 May 2006 19:29:50 -0700
+> Junio C Hamano <junkio@cox.net> wrote:
 > 
-> 	git clean 'temp-*'
 > 
-> to clean only the garbage files whose names begin with 'temp-'.
+> > Not at all.  Whatever Porcelain that runs repo-config to record
+> > the branch name needs to spell that branch name with proper
+> > quoting, like:
 > 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+> Okay.  It just seems nuts to require quoting because you happen
+> to use an uppercase character.  People are used to quoting 
+> special characters like * and $, not uppercase letters.
 
->  * I usually do not use clean myself, so I am not sure if this
->    is the kind of thing people who do use 'clean' regularly
->    would generally want, hence this RFC.
+You could tell people always to use:
 
-I'm not likely to use this feature, but I think it's OK to have it.
+ [branch."name"]
 
-It would be nice to have "--" support (see e.g. git-commit).
+even if the branch name is all lowercase anyway. They could even use:
 
-> +	-X	remove only ignored files as well
+ [Branch."MyMixedCaseBranch"]
 
-That's my stupid error, "as well" should be removed.
+Then when you refer to something case-sensitive with the possibility of 
+funny characters, you put it in quotes, regardless of what it is.
 
--- 
-Regards,
-Pavel Roskin
+For that matter, we could retain the quotes when we parse the file, and 
+reject [branch.master] for lacking the quotes, so that people who are only 
+exposed to branch names all in lowercase letters don't get habits that 
+will fail when they have a v2.6.16.x branch.
+
+I don't think that people are likely to use older versions of git on the 
+same repository they've used newer versions on. (Clones of it, sure, but 
+that doesn't matter here.) But we should, in any case, make the code 
+ignore sections or lines with syntax errors, under the assumption that 
+they're a later extension and possibly legal but not anything the code 
+could be interested in getting from a parser that doesn't support them.
+
+	-Daniel
+*This .sig left intentionally blank*
