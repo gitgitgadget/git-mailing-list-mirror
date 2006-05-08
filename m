@@ -1,91 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Release config lock if the regex is invalid
-Date: Mon, 8 May 2006 02:32:52 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605080229220.32508@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060507213612.27887.28600.stgit@dv.roinet.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Unresolved issues #2 (shallow clone again)
+Date: Sun, 7 May 2006 20:33:38 -0400
+Message-ID: <20060508003338.GB17138@thunk.org>
+References: <7v4q065hq0.fsf@assigned-by-dhcp.cox.net> <87mzdx7mh9.wl%cworth@cworth.org> <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605050806370.3622@g5.osdl.org> <e3fqb9$hed$1@sea.gmane.org> <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org> <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com> <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net> <46a038f90605062308x53995076k7bf45f0aebcae0c6@mail.gmail.com> <20060507075631.GA24423@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 02:32:58 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon May 08 02:33:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FctgG-0002Yq-V2
-	for gcvg-git@gmane.org; Mon, 08 May 2006 02:32:58 +0200
+	id 1FcthC-0002vU-BX
+	for gcvg-git@gmane.org; Mon, 08 May 2006 02:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbWEHAcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 20:32:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWEHAcy
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 20:32:54 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6827 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751245AbWEHAcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 20:32:53 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id B6532D81;
-	Mon,  8 May 2006 02:32:52 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id AA1B8CCF;
-	Mon,  8 May 2006 02:32:52 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 89B11C9E;
-	Mon,  8 May 2006 02:32:52 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <20060507213612.27887.28600.stgit@dv.roinet.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751249AbWEHAdw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 20:33:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbWEHAdv
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 20:33:51 -0400
+Received: from thunk.org ([69.25.196.29]:58333 "EHLO thunker.thunk.org")
+	by vger.kernel.org with ESMTP id S1751249AbWEHAdt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 20:33:49 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1Fcth6-0007a0-SX; Sun, 07 May 2006 20:33:49 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.60)
+	(envelope-from <tytso@thunk.org>)
+	id 1Fctgw-0005Eg-Ia; Sun, 07 May 2006 20:33:38 -0400
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060507075631.GA24423@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19730>
 
-Hi,
-
-On Sun, 7 May 2006, Pavel Roskin wrote:
-
-> @@ -516,6 +516,8 @@ int git_config_set_multivar(const char* 
->  				fprintf(stderr, "Invalid pattern: %s\n",
->  					value_regex);
->  				free(store.value_regex);
-> +				close(fd);
-> +				unlink(lock_file);
->  				ret = 6;
->  				goto out_free;
->  			}
+On Sun, May 07, 2006 at 03:56:31AM -0400, Jeff King wrote:
+> On Sun, May 07, 2006 at 06:08:03PM +1200, Martin Langhoff wrote:
 > 
+> > >> And in any case commits and trees are lightweight and compress well...
+> > >Commit maybe, but is this based on a hard fact?
+> > No hard facts here :( but I think it's reasonable to assume that the
+> > trees delta/compress reasonably well, as a given commit will change
+> > just a few entries in each tree.
+> 
+> A few hard facts (using Linus' linux-2.6 tree):
+>   - original packsize: 120996 kilobytes
+>   - unpacked: 233338 objects, 1417476 kilobytes
+>     This is an 11.7:1 compression ratio (of course, much of this is
+>     wasted space from the 4k block size in the filesystem)
 
-This is not enough. There are quite a few exit paths. Notice the "goto 
-out_free"? That is where this must go.
+If there are 233338 objects, then the average wasted space due to
+internal fragmentation is 233338 * 2k, or 466676 kilobytes, or only
+36% of the wasted space.  Most of the savings is probably coming from
+the compression and delta packing.
 
-This patch is totally untested but obviously correct:
-
-diff --git a/config.c b/config.c
-index 30effe3..d8fd94d 100644
---- a/config.c
-+++ b/config.c
-@@ -445,7 +445,7 @@ int git_config_set_multivar(const char* 
- 	const char* value_regex, int multi_replace)
- {
- 	int i;
--	int fd;
-+	int fd = -1;
- 	int ret;
- 	char* config_filename = strdup(git_path("config"));
- 	char* lock_file = strdup(git_path("config.lock"));
-@@ -619,10 +619,14 @@ int git_config_set_multivar(const char* 
- 	ret = 0;
- 
- out_free:
-+	if (fd > 0)
-+		close(fd);
- 	if (config_filename)
- 		free(config_filename);
--	if (lock_file)
-+	if (lock_file) {
-+		unlink(lock_file);
- 		free(lock_file);
-+	}
- 	return ret;
- }
- 
+						- Ted
