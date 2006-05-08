@@ -1,53 +1,123 @@
-From: "Yakov Lerner" <iler.ml@gmail.com>
-Subject: (patch) calloc->xcalloc in read-cache.c
-Date: Mon, 8 May 2006 21:01:40 +0300
-Message-ID: <f36b08ee0605081101w3dc3a60cof5a524e9b4a3f555@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH/RFC] Teach git-clean optional <paths>... parameters.
+Date: Mon, 08 May 2006 12:02:44 -0700
+Message-ID: <7v1wv4gx0r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon May 08 20:02:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 08 21:02:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdA3E-0000Yv-Ez
-	for gcvg-git@gmane.org; Mon, 08 May 2006 20:01:44 +0200
+	id 1FdB0L-0004zn-5q
+	for gcvg-git@gmane.org; Mon, 08 May 2006 21:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932475AbWEHSBl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 14:01:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932484AbWEHSBl
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 14:01:41 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:36213 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932475AbWEHSBl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 14:01:41 -0400
-Received: by py-out-1112.google.com with SMTP id f28so1359333pyf
-        for <git@vger.kernel.org>; Mon, 08 May 2006 11:01:40 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=erDxap0cKifOt7s/55mWQ6I4X+2V81+M+kr+adyyfq8yjLfdFnnl2u9qmfeArjc+HZMuxzg4CnSlbu9uGMaQnIy/OKZGG0bzyIhZxOo3VVytlGTChHEZvHh9FUjiEUYM4uZhU7ouNLyVdycsBYzoxN3MJAkbTTnnajvYsJWjiLI=
-Received: by 10.35.43.10 with SMTP id v10mr134263pyj;
-        Mon, 08 May 2006 11:01:40 -0700 (PDT)
-Received: by 10.35.96.18 with HTTP; Mon, 8 May 2006 11:01:40 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751278AbWEHTCq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 15:02:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbWEHTCp
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 15:02:45 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:20200 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751278AbWEHTCp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 May 2006 15:02:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060508190244.UZTZ17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 May 2006 15:02:44 -0400
+To: Pavel Roskin <proski@gnu.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19774>
 
---- read-cache.c.000    2006-05-08 15:13:57.000000000 +0000
-+++ read-cache.c        2006-05-08 15:15:35.000000000 +0000
-@@ -557,7 +557,7 @@
+When optional paths arguments are given, git-clean passes them
+to underlying git-ls-files; with this, you can say:
 
-        active_nr = ntohl(hdr->hdr_entries);
-        active_alloc = alloc_nr(active_nr);
--       active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
-+       active_cache = xcalloc(active_alloc, sizeof(struct cache_entry *));
+	git clean 'temp-*'
 
-        offset = sizeof(*hdr);
-        for (i = 0; i < active_nr; i++) {
+to clean only the garbage files whose names begin with 'temp-'.
 
-Yakov
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+---
+
+ * I usually do not use clean myself, so I am not sure if this
+   is the kind of thing people who do use 'clean' regularly
+   would generally want, hence this RFC.
+
+ Documentation/git-clean.txt |    5 ++++-
+ git-clean.sh                |   13 +++++++++----
+ 2 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index 36890c5..b95545f 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -8,7 +8,7 @@ git-clean - Remove untracked files from 
+ SYNOPSIS
+ --------
+ [verse]
+-'git-clean' [-d] [-n] [-q] [-x | -X]
++'git-clean' [-d] [-n] [-q] [-x | -X] <paths>...
+ 
+ DESCRIPTION
+ -----------
+@@ -16,6 +16,9 @@ Removes files unknown to git.  This allo
+ from files that are not under version control.  If the '-x' option is
+ specified, ignored files are also removed, allowing to remove all
+ build products.
++When optional `<paths>...` arguments are given, the paths
++affected are further limited to those that match them.
++
+ 
+ OPTIONS
+ -------
+diff --git a/git-clean.sh b/git-clean.sh
+index b200868..6c818f4 100755
+--- a/git-clean.sh
++++ b/git-clean.sh
+@@ -3,13 +3,15 @@ #
+ # Copyright (c) 2005-2006 Pavel Roskin
+ #
+ 
+-USAGE="[-d] [-n] [-q] [-x | -X]"
++USAGE="[-d] [-n] [-q] [-x | -X] <paths>..."
+ LONG_USAGE='Clean untracked files from the working directory
+ 	-d	remove directories as well
+ 	-n 	don'\''t remove anything, just show what would be done
+ 	-q	be quiet, only report errors
+ 	-x	remove ignored files as well
+-	-X	remove only ignored files as well'
++	-X	remove only ignored files as well
++When optional <paths>... arguments are given, the paths
++affected are further limited to those that match them.'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+ 
+@@ -44,8 +46,11 @@ do
+ 	-X)
+ 		ignoredonly=1
+ 		;;
+-	*)
++	-*)
+ 		usage
++		;;
++	*)
++		break
+ 	esac
+ 	shift
+ done
+@@ -64,7 +69,7 @@ if [ -z "$ignored" ]; then
+ 	fi
+ fi
+ 
+-git-ls-files --others --directory $excl ${excl_info:+"$excl_info"} |
++git-ls-files --others --directory $excl ${excl_info:+"$excl_info"} "$@" |
+ while read -r file; do
+ 	if [ -d "$file" -a ! -L "$file" ]; then
+ 		if [ -z "$cleandir" ]; then
+-- 
+1.3.2.gb012
