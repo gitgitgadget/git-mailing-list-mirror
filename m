@@ -1,63 +1,78 @@
-From: sean <seanlkml@sympatico.ca>
+From: Pavel Roskin <proski@gnu.org>
 Subject: Re: Implementing branch attributes in git config
-Date: Sun, 7 May 2006 21:11:45 -0400
-Message-ID: <BAYC1-PASMTP087BACE5DC41C608DDC18DAEA80@CEZ.ICE>
+Date: Sun, 07 May 2006 21:21:40 -0400
+Message-ID: <1147051300.17371.32.camel@dv>
 References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<BAYC1-PASMTP08D42DA222BA9843352CC1AEA80@CEZ.ICE>
-	<Pine.LNX.4.64.0605071751050.3718@g5.osdl.org>
+	 <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+	 <Pine.LNX.4.64.0605071718440.3718@g5.osdl.org>
+	 <Pine.LNX.4.63.0605080303410.13588@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: proski@gnu.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 03:16:55 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 08 03:21:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcuMo-0003uN-BH
-	for gcvg-git@gmane.org; Mon, 08 May 2006 03:16:54 +0200
+	id 1FcuRX-0004SK-DC
+	for gcvg-git@gmane.org; Mon, 08 May 2006 03:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932238AbWEHBQt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 21:16:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932240AbWEHBQt
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 21:16:49 -0400
-Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:36618 "EHLO
-	BAYC1-PASMTP08.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932238AbWEHBQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 21:16:49 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP08.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 7 May 2006 18:21:18 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 77E1A644C28;
-	Sun,  7 May 2006 21:16:47 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060507211145.36fb1be4.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0605071751050.3718@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 08 May 2006 01:21:19.0093 (UTC) FILETIME=[B58A0250:01C6723D]
+	id S932242AbWEHBVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 21:21:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932245AbWEHBVo
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 21:21:44 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:36793 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932242AbWEHBVo
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 7 May 2006 21:21:44 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FcuRT-0000zG-KL
+	for git@vger.kernel.org; Sun, 07 May 2006 21:21:43 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FcuRQ-0007yv-Sj; Sun, 07 May 2006 21:21:40 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605080303410.13588@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Evolution 2.6.1 (2.6.1-3) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19741>
 
-On Sun, 7 May 2006 17:55:25 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
+Hello, Johannes!
 
-> On Sun, 7 May 2006, sean wrote:
-> > 
-> > Having magic sections that prepend "branch." seems a bit suspect;
-> > why not just be explicit:
-> > 
-> >   [branch.Origin]
-> >       URL = ...
-> >       fetch = master
-> 
-> Exactly because section (and key) names are normally not case sensitive.
+On Mon, 2006-05-08 at 03:05 +0200, Johannes Schindelin wrote:
+> The ["blablabla"] syntax fails the is-it-obvious-what-this-does test. What 
+> *is* wrong with the " for " syntax? IIRC it was even proposed by you, and 
+> it happens to be backward compatible.
 
-Restore case sensitivity to config file parsing and the problem largely goes
-away.  Or go the other route and remove case sensitivity from all the other 
-bits (branches names etc..).
+Not trying to answer for Linus, here's my take.
 
-Sean
+The "for" syntax is one more layer in the config hierarchy.  Adding
+another layer is a more intrusive solution than relaxing the syntax of
+the existing elements without changing their semantic.
+
+git-repo-config is "for" agnostic.  It doesn't parse "for" (as far as I
+know).
+
+"for" can be confusing in some contexts, or may force inversion of the
+hierarchy to make the config file more readable.  How would you
+implement branch descriptions?  See this:
+
+[branchdata]
+description = "netdev" for "Network device development"
+
+and this
+
+[branchdata]
+description = "Network device development" for "netdev"
+
+The later is closer to English.  Or should we use the first approach and
+"is" instead of "for"?
+
+Now, how can I get a description for the "netdev" branch by one
+git-repo-config command, without pipes?
+
+-- 
+Regards,
+Pavel Roskin
