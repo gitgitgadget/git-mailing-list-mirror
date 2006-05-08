@@ -1,66 +1,77 @@
-From: Pavel Roskin <proski@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Implementing branch attributes in git config
-Date: Sun, 07 May 2006 21:04:39 -0400
-Message-ID: <1147050279.17371.20.camel@dv>
-References: <1147037659.25090.25.camel@dv>
-	 <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	 <BAYC1-PASMTP08D42DA222BA9843352CC1AEA80@CEZ.ICE>
-	 <Pine.LNX.4.64.0605071751050.3718@g5.osdl.org>
+Date: Mon, 8 May 2006 03:05:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605080303410.13588@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+ <Pine.LNX.4.64.0605071718440.3718@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 03:04:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pavel Roskin <proski@gnu.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 08 03:06:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcuB4-0002ez-37
-	for gcvg-git@gmane.org; Mon, 08 May 2006 03:04:46 +0200
+	id 1FcuCL-0002nb-3P
+	for gcvg-git@gmane.org; Mon, 08 May 2006 03:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932233AbWEHBEn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 21:04:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932239AbWEHBEn
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 21:04:43 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:63177 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932233AbWEHBEn
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 7 May 2006 21:04:43 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FcuB0-0000eh-C0
-	for git@vger.kernel.org; Sun, 07 May 2006 21:04:42 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FcuAx-0007wk-CY; Sun, 07 May 2006 21:04:39 -0400
+	id S932239AbWEHBGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 21:06:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932240AbWEHBGB
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 21:06:01 -0400
+Received: from mail.gmx.de ([213.165.64.20]:34466 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932239AbWEHBGA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 21:06:00 -0400
+Received: (qmail invoked by alias); 08 May 2006 01:05:59 -0000
+Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
+  by mail.gmx.net (mp035) with SMTP; 08 May 2006 03:05:59 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605071751050.3718@g5.osdl.org>
-X-Mailer: Evolution 2.6.1 (2.6.1-3) 
+In-Reply-To: <Pine.LNX.4.64.0605071718440.3718@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19739>
 
-On Sun, 2006-05-07 at 17:55 -0700, Linus Torvalds wrote:
+Hi,
+
+On Sun, 7 May 2006, Linus Torvalds wrote:
+
+> [...]
 > 
-> On Sun, 7 May 2006, sean wrote:
-> > 
-> > Having magic sections that prepend "branch." seems a bit suspect;
-> > why not just be explicit:
-> > 
-> >   [branch.Origin]
-> >       URL = ...
-> >       fetch = master
+> and if your branch names are purely alphabetical and lower-case, you can 
+> now write
 > 
-> Exactly because section (and key) names are normally not case sensitive.
+> 	[branch.origin]
+> 		remote = true
+> 		url = git://git.kernel.org/...
+> 		fetch = master
 > 
-> Even the documentation actually talks about "core.fileMode" and "[imap] 
-> Folders". 
+> 	[branch.master]
+> 		pull = origin
+> 
+> and it will be parsed _exactly_ the same as
+> 
+> 	["origin"]
+> 		remote = true
+> 		url = git://git.kernel.org/...
+> 		fetch = master
+> 
+> 	["master"]
+> 		pull = origin
+> 
+> while the [branch.origin] syntax allows old versions of git to happily 
+> ignore it. So that would be a kind of cheesy work-around: the new 
+> double-quoted format is only _required_ for any branch-names that have 
+> special characters in it.
 
-Make it ["branch.Origin"]
+Eek.
 
-No hardcoded "branch" prepending needed.  The case sensitive name is
-still protected by quotes.  This extends trivially to ["user.Linus"] or
-["path./src/git.c"] or whatever.
+The ["blablabla"] syntax fails the is-it-obvious-what-this-does test. What 
+*is* wrong with the " for " syntax? IIRC it was even proposed by you, and 
+it happens to be backward compatible.
 
--- 
-Regards,
-Pavel Roskin
+Ciao,
+Dscho
