@@ -1,68 +1,64 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Implementing branch attributes in git config
-Date: Sun, 7 May 2006 22:39:18 -0400
-Message-ID: <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
-References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<1147048587.17371.13.camel@dv>
-	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
-	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
-	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Unresolved issues #2
+Date: Sun, 07 May 2006 19:51:09 -0700
+Message-ID: <7v3bfli602.fsf@assigned-by-dhcp.cox.net>
+References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
+	<7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605041627310.6713@iabervon.org>
+	<Pine.LNX.4.64.0605041715500.3611@g5.osdl.org>
+	<7vhd43vgnm.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605060821430.16343@g5.osdl.org>
+	<BAYC1-PASMTP10F63ADF30C26A29D070C5AEAA0@CEZ.ICE>
+	<Pine.LNX.4.64.0605060923050.16343@g5.osdl.org>
+	<BAYC1-PASMTP0824AA77198F95FE28B79DAEAA0@CEZ.ICE>
+	<Pine.LNX.4.64.0605061008340.16343@g5.osdl.org>
+	<7vvesirh0q.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0605062332420.6423@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vy7xekwbs.fsf@assigned-by-dhcp.cox.net> <e3km6q$f7p$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 04:44:30 2006
+X-From: git-owner@vger.kernel.org Mon May 08 04:51:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcvjW-00074j-6k
-	for gcvg-git@gmane.org; Mon, 08 May 2006 04:44:26 +0200
+	id 1FcvqE-00083f-8i
+	for gcvg-git@gmane.org; Mon, 08 May 2006 04:51:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932260AbWEHCoX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 22:44:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932262AbWEHCoX
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:44:23 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:10825 "EHLO
-	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932260AbWEHCoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 22:44:23 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 7 May 2006 19:48:51 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 4A958644C28;
-	Sun,  7 May 2006 22:44:21 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060507223918.6112f0c1.seanlkml@sympatico.ca>
-In-Reply-To: <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 08 May 2006 02:48:51.0593 (UTC) FILETIME=[F045E790:01C67249]
+	id S932261AbWEHCvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 22:51:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbWEHCvM
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:51:12 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:42155 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932261AbWEHCvL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 May 2006 22:51:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060508025111.OTLP17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 7 May 2006 22:51:11 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e3km6q$f7p$1@sea.gmane.org> (Jakub Narebski's message of "Sun,
+	07 May 2006 13:38:16 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19755>
 
-On Sun, 07 May 2006 19:29:50 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
+> Junio C Hamano wrote:
+>
+>>             char *value; /* "existence" bool may have NULL,
+>>                           * otherwise probably a string "= value"
+>>                           */
+>
+> Probably " = value" to preserve whitespace (e.g. justify on equal sign in
+> hand crafted config file).
 
-> Not at all.  Whatever Porcelain that runs repo-config to record
-> the branch name needs to spell that branch name with proper
-> quoting, like:
-
-Okay.  It just seems nuts to require quoting because you happen
-to use an uppercase character.  People are used to quoting 
-special characters like * and $, not uppercase letters.
-
-> I _do_ want to keep my slashes intact and also dots; mangling
-> them is not very nice to me X-<.
-
-You're right.
-
-We should just relax the config file rules for legal characters,
-in identifiers, at least [a-zA-Z0-9_/-].
-
-Sean.
+Probably even better is to remove the separate *value_comment,
+and make this thing point at the entire " = value ; this is the
+comment for the value\n" thing.
