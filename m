@@ -1,130 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Release config lock if the regex is invalid
-Date: Sun, 07 May 2006 19:38:11 -0700
-Message-ID: <7v7j4xi6lo.fsf@assigned-by-dhcp.cox.net>
-References: <20060507213612.27887.28600.stgit@dv.roinet.com>
-	<Pine.LNX.4.63.0605080229220.32508@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Unresolved issues #2 (shallow clone again)
+Date: Sun, 7 May 2006 19:42:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605071939291.3718@g5.osdl.org>
+References: <e3fqb9$hed$1@sea.gmane.org> <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
+ <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
+ <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net> <46a038f90605062308x53995076k7bf45f0aebcae0c6@mail.gmail.com>
+ <20060507075631.GA24423@coredump.intra.peff.net> <20060508003338.GB17138@thunk.org>
+ <Pine.LNX.4.64.0605071744210.3718@g5.osdl.org> <20060508012632.GD17138@thunk.org>
+ <Pine.LNX.4.64.0605071853290.3718@g5.osdl.org> <20060508022432.GA26076@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 04:38:24 2006
+X-From: git-owner@vger.kernel.org Mon May 08 04:42:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fcvdf-0006C9-9V
-	for gcvg-git@gmane.org; Mon, 08 May 2006 04:38:23 +0200
+	id 1Fcvi1-0006os-Lq
+	for gcvg-git@gmane.org; Mon, 08 May 2006 04:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932255AbWEHCiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 22:38:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbWEHCiN
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:38:13 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:51597 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932255AbWEHCiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 22:38:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060508023812.DEUL27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 7 May 2006 22:38:12 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0605080229220.32508@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 8 May 2006 02:32:52 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932259AbWEHCmu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 22:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbWEHCmu
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 22:42:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:36291 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932259AbWEHCmu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 22:42:50 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k482gjtH026541
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 7 May 2006 19:42:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k482gi4V032282;
+	Sun, 7 May 2006 19:42:44 -0700
+To: Theodore Tso <tytso@mit.edu>
+In-Reply-To: <20060508022432.GA26076@thunk.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19753>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This is not enough. There are quite a few exit paths. Notice the "goto 
-> out_free"? That is where this must go.
->
-> This patch is totally untested but obviously correct:
 
-except that many places you already close(fd) and
-unlink(lock_file).  
+On Sun, 7 May 2006, Theodore Tso wrote:
+> 
+> That brings up an interesting question though --- why not skip
+> compressing files that are under 4k (or whatever the filesystem
+> blocksize happens to be) if they are unpacked?  It burns CPU time;
+> maybe not enough to be human-noticeable, but it's still not buying you
+> anything.
 
-Somehow it vaguely reminds me of recent "kernel in C++" thread
-in the other mailing list, which I do not want people to start
-talking about here, but moving all the clean-up code to exit
-path indeed makes things simpler to read.
+Well, other filesystems don't have 4kB issues. Reiser can do smaller 
+things iirc, and you might obviously have a ext3 filesystem with a 1kB 
+blocksize too. And with tails on FFS, you might have a filesystem with a 
+8kB blocksize, but despite that it might lay out <1kB files well.
 
-How about doing something like this?
+Anyway, packing makes all this basically a non-issue. There are no block 
+boundaries in a pack-file, and you only use a single inode. And you'd 
+obviously want to pack for other reasons anyway (ie the delta compression 
+will makea huge difference over time).
 
--- >8 --
-diff --git a/config.c b/config.c
-index 11d65f8..adb5ce4 100644
---- a/config.c
-+++ b/config.c
-@@ -420,7 +420,7 @@ int git_config_set_multivar(const char* 
- 	const char* value_regex, int multi_replace)
- {
- 	int i;
--	int fd, in_fd;
-+	int fd = -1, in_fd;
- 	int ret;
- 	char* config_filename = strdup(git_path("config"));
- 	char* lock_file = strdup(git_path("config.lock"));
-@@ -478,15 +478,11 @@ int git_config_set_multivar(const char* 
- 		if ( ENOENT != errno ) {
- 			error("opening %s: %s", config_filename,
- 			      strerror(errno));
--			close(fd);
--			unlink(lock_file);
- 			ret = 3; /* same as "invalid config file" */
- 			goto out_free;
- 		}
- 		/* if nothing to unset, error out */
- 		if (value == NULL) {
--			close(fd);
--			unlink(lock_file);
- 			ret = 5;
- 			goto out_free;
- 		}
-@@ -514,8 +510,6 @@ int git_config_set_multivar(const char* 
- 				fprintf(stderr, "Invalid pattern: %s\n",
- 					value_regex);
- 				free(store.value_regex);
--				close(fd);
--				unlink(lock_file);
- 				ret = 6;
- 				goto out_free;
- 			}
-@@ -551,8 +545,6 @@ int git_config_set_multivar(const char* 
- 		/* if nothing to unset, or too many matches, error out */
- 		if ((store.seen == 0 && value == NULL) ||
- 				(store.seen > 1 && multi_replace == 0)) {
--			close(fd);
--			unlink(lock_file);
- 			ret = 5;
- 			goto out_free;
- 		}
-@@ -601,8 +593,6 @@ int git_config_set_multivar(const char* 
- 		unlink(config_filename);
- 	}
- 
--	close(fd);
--
- 	if (rename(lock_file, config_filename) < 0) {
- 		fprintf(stderr, "Could not rename the lock file?\n");
- 		ret = 4;
-@@ -612,10 +602,14 @@ int git_config_set_multivar(const char* 
- 	ret = 0;
- 
- out_free:
-+	if (0 <= fd)
-+		close(fd);
- 	if (config_filename)
- 		free(config_filename);
--	if (lock_file)
-+	if (lock_file) {
-+		unlink(lock_file);
- 		free(lock_file);
-+	}
- 	return ret;
- }
- 
+		Linus
