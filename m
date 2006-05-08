@@ -1,122 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Implementing branch attributes in git config
-Date: Mon, 8 May 2006 02:43:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605080236350.32508@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1147037659.25090.25.camel@dv> <7v4q01jwwg.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Unresolved issues #2 (shallow clone again)
+Date: Sun, 7 May 2006 17:50:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605071744210.3718@g5.osdl.org>
+References: <7v4q065hq0.fsf@assigned-by-dhcp.cox.net> <87mzdx7mh9.wl%cworth@cworth.org>
+ <7v1wv92u7o.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605050806370.3622@g5.osdl.org>
+ <e3fqb9$hed$1@sea.gmane.org> <Pine.LNX.4.64.0605050848230.3622@g5.osdl.org>
+ <46a038f90605052323o29f8bfadr7426f97d8dfc2319@mail.gmail.com>
+ <7vbqubvdbr.fsf@assigned-by-dhcp.cox.net> <46a038f90605062308x53995076k7bf45f0aebcae0c6@mail.gmail.com>
+ <20060507075631.GA24423@coredump.intra.peff.net> <20060508003338.GB17138@thunk.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 02:44:08 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 08 02:51:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fctqu-0006Bo-Fu
-	for gcvg-git@gmane.org; Mon, 08 May 2006 02:43:58 +0200
+	id 1Fctxk-000199-AD
+	for gcvg-git@gmane.org; Mon, 08 May 2006 02:51:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbWEHAnx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 20:43:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbWEHAnw
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 20:43:52 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:58816 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751243AbWEHAnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 20:43:52 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id E260D12E9;
-	Mon,  8 May 2006 02:43:50 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id D6A1E12D1;
-	Mon,  8 May 2006 02:43:50 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id B53A01086;
-	Mon,  8 May 2006 02:43:50 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q01jwwg.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751246AbWEHAuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 20:50:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbWEHAuv
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 20:50:51 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:39341 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751246AbWEHAuv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 May 2006 20:50:51 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k480ogtH022974
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 7 May 2006 17:50:43 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k480ogj8030426;
+	Sun, 7 May 2006 17:50:42 -0700
+To: Theodore Tso <tytso@mit.edu>
+In-Reply-To: <20060508003338.GB17138@thunk.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19735>
 
-Hi,
 
-On Sun, 7 May 2006, Junio C Hamano wrote:
 
-> Pavel Roskin <proski@gnu.org> writes:
-> 
-> > In particular, git-repo-config leaves the config file locked in the
-> > regex is wrong:
-> >
-> > $ git-repo-config branch.fetch "master:origin" +
-> > Invalid pattern: +
-> > $ git-repo-config branch.fetch "master:origin" +
-> > could not lock config file
-> >
-> > To fix it, just add "close(fd); unlink(lock_file);" after "Invalid
-> > pattern" in config.c.
-> 
-> I'd give Johannes the first refusal right to deal with this and
-> not touch repo-config.c myself for now, since I suspect I
-> tempted him enough to restructure it ;-).
+On Sun, 7 May 2006, Theodore Tso wrote:
+>> 
+> If there are 233338 objects, then the average wasted space due to
+> internal fragmentation is 233338 * 2k, or 466676 kilobytes, or only
+> 36% of the wasted space.
 
-Thanks. Yes, you tempted me real hard :-) Unfortunately, the restructuring 
-will have to wait a little, because I really should work for my day job 
-these days... :-(
+That's not necessarily true.
 
-> > I don't quite understand what pattern is needed to add an entry.  "foo"
-> > seems to work fine, I don't know why.
-> 
-> I think the value regexp is "replace the ones that match this",
-> and the convention he came up with is to use "^$" to append (see
-> some examples in t/t1300-repo-config.sh).
-> 
-> In any case, Documentation/git-repo-config.txt mentions
-> value_regex without explaining what the semantics is.  This
-> needs to be fixed, probably like the attached patch.
-> 
-> > That problem with multiple values is that they are quite fragile and
-> > require special options to access them.  Since regex is used, dots in
-> > the branch names need to be escaped.  Probably more escapes are needed.
-> 
-> I have a suspicion that using regex while is more powerful and
-> expressive might be a mistake and it would be easier for users
-> (both Porcelain and end-users) to use fnmatch() patterns.
+That assumes a randomly distributed filesize. File sizes are _not_ random, 
+and in particular if you have the distribution leaning towards <2kB being 
+common, you can actually get >50% fragmentation.
 
-I did not know about fnmatch()... It is probably better than regular 
-expressions. After all, what I use it for most often is
+Btw, I hit this when some people argued that the page size should be made 
+64kB. The above (incorrect) logic implies that you waste 32kB on average 
+per file. That's not true, if a large fraction of your files are small, in 
+which case you may actually be wastign closer to 60kB on average from 
+using a big page-size, because about half of the kernel files are actually 
+smaller than 4kB (or something. I forget the exact statistics, I did them 
+with a script at some point).
 
-	git-repo-config --get-all remote.*url
+Anyway, with inode overhead and a lot of objects being just a couple of 
+hundred bytes, I think I estimated at some point that you actually lost 
+closer to 3kB per object.
 
-which -- magically -- will continue to work with fnmatch()!
+Many of the objects actually end up being smaller than the inode they end 
+up allocating ;(
 
-> 	[branch]
-> 		defaultremote = origin for master
->                 defaultremote = private for test
-
-FWIW I like that syntax much better. But then, somebody called me weird 
-because of how I order the arguments of a comparison... tsk, tsk.
-
-> @@ -23,10 +23,11 @@ You can query/set/replace/unset options 
->  actually the section and the key separated by a dot, and the value will be
->  escaped.
->  
-> -If you want to set/unset an option which can occur on multiple lines, you
-> -should provide a POSIX regex for the value. If you want to handle the lines
-> -*not* matching the regex, just prepend a single exclamation mark in front
-> -(see EXAMPLES).
-> +If you want to set/unset an option which can occur on multiple
-> +lines, a POSIX regexp `value_regex` needs to be given.  Only the
-> +existing values that match the regexp are updated or unset.  If
-> +you want to handle the lines that do *not* match the regex, just
-> +prepend a single exclamation mark in front (see EXAMPLES).
-
-I would actually prefer to go with your suggestion of using shell patterns 
-instead of regular expressions. They are not needed, and most users tend 
-to positively hate regular expressions.
-
-Thoughts?
-
-Ciao,
-Dscho
+			Linus
