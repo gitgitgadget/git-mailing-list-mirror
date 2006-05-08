@@ -1,96 +1,56 @@
-From: sean <seanlkml@sympatico.ca>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Implementing branch attributes in git config
-Date: Sun, 7 May 2006 21:34:45 -0400
-Message-ID: <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
-References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<1147048587.17371.13.camel@dv>
-	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
-	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 8 May 2006 03:45:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605080344480.14008@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
+ <1147048587.17371.13.camel@dv> <Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
+ <7vfyjli9vf.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 08 03:40:06 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 08 03:45:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FcujF-0006lA-R2
-	for gcvg-git@gmane.org; Mon, 08 May 2006 03:40:06 +0200
+	id 1Fcuot-0007Lx-5O
+	for gcvg-git@gmane.org; Mon, 08 May 2006 03:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932248AbWEHBjv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 May 2006 21:39:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932250AbWEHBjv
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 21:39:51 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:4957 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S932248AbWEHBjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 May 2006 21:39:51 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 7 May 2006 18:39:48 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 6CA27644C28;
-	Sun,  7 May 2006 21:39:47 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060507213445.66a2a3b0.seanlkml@sympatico.ca>
-In-Reply-To: <7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 08 May 2006 01:39:48.0707 (UTC) FILETIME=[4AEBAB30:01C67240]
+	id S932250AbWEHBpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 May 2006 21:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbWEHBpu
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 May 2006 21:45:50 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:42716 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932250AbWEHBpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 May 2006 21:45:50 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 1D5B2225B;
+	Mon,  8 May 2006 03:45:49 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 11CA61244;
+	Mon,  8 May 2006 03:45:49 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id D84CCCE3;
+	Mon,  8 May 2006 03:45:48 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19746>
 
-On Sun, 07 May 2006 18:27:32 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+Hi,
 
+On Sun, 7 May 2006, sean wrote:
 
-> How about keeping the default syntax as it is (tokens are case
-> insensitive and alnums only, dot separates tokens into
-> sections), and when a token that violates that rule needs to be
-> spelled out, require quoting, so:
-> 
-> 	branch.foo	BranCh.FoO	branch.FOO
- 
-> are the same (section "branch.foo"),
+> Not worth it.  Branch names should be alnums and imho should be
+> case sensitive too.
 
-Doesn't that mean you have to then prohibit creating mixed
-case branches with "git branch" and "git checkout -b" ?
+Why should they be case sensitive? So you have a branch "origin" and 
+another named "Origin" and get totally confused?
 
-> and if I have js/fmt.patch
-> branch, I need to spell the configuration for that branch like
-> so:
-> 
-> 	branch."js/fmt.patch"	or   "branch.js/fmt.patch"        
-> 
-> and the URL variable for that section is
-> 
-> 	$ git repo-config '"branch.js/fmt.patch".url'
-
-How about transforming slashes into dots?  so the above would 
-be:
-
-   [branch.js.fmt.patch]
-
-      And could be accessed by either:
-
-    $ git repo-config branch.js.fmt.patch
-    $ git repo-config branch.js/fmt.patch
-
-> (BTW, you could even have a variable with dots in it by quoting
-> the variable name, like "branch.js/fmt.patch"."fetch.option"; I
-> do not know if it is worth it).
-
-Not worth it.  Branch names should be alnums and imho should be
-case sensitive too.
- 
-> My repository is full of topic branches that are named xx/yyyy.
-> It is very handy to be able to say "show-branch --topics master
-> 'heads/??/*' next" which would not show my other branches like
-> "test", "throwaway", "rework", "temp", etc.
-
-Very nice.
-
-Sean
+Ciao,
+Dscho
