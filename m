@@ -1,77 +1,99 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Implementing branch attributes in git config
-Date: Tue, 9 May 2006 15:44:59 -0400
-Message-ID: <BAYC1-PASMTP02C02EAC2F64AC00BB5801AEA90@CEZ.ICE>
-References: <1147037659.25090.25.camel@dv>
-	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
-	<Pine.LNX.4.64.0605081905240.6713@iabervon.org>
-	<BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
-	<Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
-	<BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
-	<Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
-	<7virogc90u.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
-	<7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
-	<BAYC1-PASMTP04C9C4BF5B89E55B9D877AAEA90@CEZ.ICE>
-	<Pine.LNX.4.64.0605082007100.3718@g5.osdl.org>
-	<BAYC1-PASMTP05953E2B948CB07A171FD8AEA90@CEZ.ICE>
-	<Pine.LNX.4.64.0605082100460.3718@g5.osdl.org>
-	<e3p5om$djs$1@sea.gmane.org>
-	<Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vzmhr3wje.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] gitopt - command-line parsing enhancements
+Date: Tue, 09 May 2006 13:28:23 -0700
+Message-ID: <7vr7332ba0.fsf@assigned-by-dhcp.cox.net>
+References: <1147151209168-git-send-email-normalperson@yhbt.net>
+	<7vzmhr7fys.fsf@assigned-by-dhcp.cox.net>
+	<20060509194825.GC3676@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, Johannes.Schindelin@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 22:13:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 22:28:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdYZB-00053E-9u
-	for gcvg-git@gmane.org; Tue, 09 May 2006 22:12:21 +0200
+	id 1FdYom-0007hJ-Nh
+	for gcvg-git@gmane.org; Tue, 09 May 2006 22:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbWEIUMT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 16:12:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbWEIUMS
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 16:12:18 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:18965 "EHLO
-	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751115AbWEIUMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 May 2006 16:12:18 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 9 May 2006 13:12:17 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 3C309644C28;
-	Tue,  9 May 2006 15:50:08 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060509154459.40cc0d13.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 09 May 2006 20:12:17.0603 (UTC) FILETIME=[DEC6A930:01C673A4]
+	id S1751129AbWEIU2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 16:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbWEIU2Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 16:28:25 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5063 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751129AbWEIU2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 May 2006 16:28:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060509202824.XIHV17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 9 May 2006 16:28:24 -0400
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20060509194825.GC3676@localdomain> (Eric Wong's message of "Tue,
+	9 May 2006 12:48:25 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19848>
 
-On Tue, 9 May 2006 12:24:02 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> NOTE! This patch could be applied right now, and to all the branches (to
-> make 1.x, 1.2.x and 1.3.x all support the _syntax_). Even if nothing 
-> actually uses it.
-> 
-> It just makes the syntax be
-> 
-> 	[section<space>+"<randomstring>"]
-> 
-> where the only rule for "randomstring" is that it can't contain a newline, 
-> and if you really want to insert a double-quote, you do it with \".
+>> And scary, especially the "eat" macros are very scary.
+>
+> They look weird at first, but I think they help readability and
+> maintainability once you get used to them.  They let you focus on the
+> important part of the function while hiding the boring parts from you.
+> Quite elegant, imho.
 
-Lightly tested here.  Looks good.
+Sorry, there is no elegance to it as far as I can see.  A macro
+invocation that creates a private function while it does not
+look like a function definition is already bad, you cannot have
+a comma in the stmt part, and the bare semicolons in the
+parenthesised text look insane.
 
-Sean
+If your patch were like this, it would have been a bit easier
+for me to understand what was going on during my first pass:
+
+    static struct exec_args *ui_optparse
+            (struct opt_spec *s, int ac, char **av, int *ac_p, int what)
+    {
+            struct exec_args *ea = one_arg(s, ac, av, ac_p);
+            if (!ea) return NULL;
+            switch (what) {
+            case IGNORE_MISSING:
+                    not_new = 1; break;
+            case VERBOSE:
+                    verbose = 1; break;
+            case HELP:
+                    usage(update_index_usage); break;
+            }
+            return nil_exec_args(ea);
+    }
+
+instead of
+
+    gitopt_eat(opt_ignore_missing, not_new = 1;)
+    gitopt_eat(opt_verbose, verbose = 1;)
+    gitopt_eat(opt_h, usage(update_index_usage);)
+
+Then, you would give an extra element in the table, and your
+argument parsing/splitting routine passes that one to the
+handler function:
+
+    static const struct opt_spec update_index_ost[] = {
+    ...
+    { "ignore-missing", 0,	0, 0, ui_optparse, IGNORE_MISSING },
+    { "verbose",	    0,	0, 0, ui_optparse, VERBOSE },
+    { "help",	   'h',	0, 0, ui_optparse, HELP },
+    { 0, 0 }
+
+Another thing is I do not think we would want to make the
+argument parsing into callback style interface like you did.  It
+actively encourages the option variables to be global (you could
+make it file scoped static but they are global nevertheless).
+If you can make it an iterator style, it would be a lot easier
+to see what is going on, I suspect.  Then you would not even
+need the callback function pointers and small functions created
+by magic eat() macros.
