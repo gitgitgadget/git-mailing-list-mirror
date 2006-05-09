@@ -1,60 +1,62 @@
-From: David Woodhouse <dwmw2@infradead.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git-feed-mail-list.sh
-Date: Tue, 09 May 2006 02:01:07 +0100
-Message-ID: <1147136467.2694.53.camel@shinybook.infradead.org>
+Date: Mon, 08 May 2006 18:03:32 -0700
+Message-ID: <7vac9sc8m3.fsf@assigned-by-dhcp.cox.net>
 References: <1146678513.20773.45.camel@pmac.infradead.org>
-	 <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
-	 <1147131877.2694.37.camel@shinybook.infradead.org>
-	 <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
-	 <1147134522.2694.45.camel@shinybook.infradead.org>
-	 <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org>
+	<7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
+	<1147131877.2694.37.camel@shinybook.infradead.org>
+	<Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+	<4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 03:01:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 03:03:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdGbQ-0007sD-3S
-	for gcvg-git@gmane.org; Tue, 09 May 2006 03:01:28 +0200
+	id 1FdGdU-0008Bs-M5
+	for gcvg-git@gmane.org; Tue, 09 May 2006 03:03:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbWEIBBZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 21:01:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbWEIBBZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:01:25 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:49601 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S1751188AbWEIBBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 21:01:25 -0400
-Received: from shinybook.infradead.org ([81.187.2.165])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1FdGbJ-0007tQ-E9; Tue, 09 May 2006 02:01:21 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org>
-X-Mailer: Evolution 2.6.1 (2.6.1-1.fc5.2.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1751192AbWEIBDe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 21:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbWEIBDe
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:03:34 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:32478 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751192AbWEIBDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 May 2006 21:03:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060509010333.LGDW21197.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 May 2006 21:03:33 -0400
+To: "Bertrand Jacquin" <beber.mailing@gmail.com>
+In-Reply-To: <4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
+	(Bertrand Jacquin's message of "Tue, 9 May 2006 02:55:48 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19799>
 
-On Mon, 2006-05-08 at 17:45 -0700, Linus Torvalds wrote:
-> As long as the "commit <sha1>" id is there (and "--pretty=fuller" does 
-> have it), I'll be happy.
+"Bertrand Jacquin" <beber.mailing@gmail.com> writes:
 
-Ah, right. Those are _commit_ IDs in that strange first line. I'll
-reformat those to 'Commit:' and 'Parent:' for the mailing list.
+> Is there a way to track merge like that?
 
-Having 'git-show --pretty=email' would be nice. I think Junio is working
-on something which will achieve that, right?
+The command line you quoted shows the relevant information for
+people who want to know what happened in that merge.
 
->  At some point, the commit mailing list didn't 
-> actually mention the commit ID itself, just the tree/parent IDs.
+Namely:
 
-Yeah, I know -- and I got complaints :)
+ * it always shows the header and the message
 
--- 
-dwmw2
+ * it shows the changes that are not trivial (i.e. merge parents
+   have overlapping different versions and manual resolution
+   resulted in something different from either parents).
+
+It is not a replacement for format-patch, but I think the commit
+mailing list is not for machines to receive and apply the
+received patches, but for humans to inspect, so it would be more
+suitable than a naive alternative of showing diff from all
+parents concatenated together.
