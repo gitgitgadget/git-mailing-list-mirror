@@ -1,62 +1,67 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC] gitopt - command-line parsing enhancements
-Date: Tue, 9 May 2006 12:48:25 -0700
-Message-ID: <20060509194825.GC3676@localdomain>
-References: <1147151209168-git-send-email-normalperson@yhbt.net> <7vzmhr7fys.fsf@assigned-by-dhcp.cox.net>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [PATCH 1/6] gitopt: a new command-line option parser for git
+Date: Tue, 9 May 2006 23:10:31 +0300
+Message-ID: <20060509231031.b62576da.tihirvon@gmail.com>
+References: <1147151209168-git-send-email-normalperson@yhbt.net>
+	<11471512103526-git-send-email-normalperson@yhbt.net>
+	<20060509120809.4d9494b9.tihirvon@gmail.com>
+	<20060509191803.GA3676@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 21:48:43 2006
+X-From: git-owner@vger.kernel.org Tue May 09 22:09:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdYCI-0000sr-DQ
-	for gcvg-git@gmane.org; Tue, 09 May 2006 21:48:42 +0200
+	id 1FdYW7-0004Va-6W
+	for gcvg-git@gmane.org; Tue, 09 May 2006 22:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbWEITs2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 15:48:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWEITs2
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 15:48:28 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:46052 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750996AbWEITs0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 May 2006 15:48:26 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 94CED2DC034;
-	Tue,  9 May 2006 12:48:25 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  9 May 2006 12:48:25 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vzmhr7fys.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060126
+	id S1751117AbWEIUJI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 16:09:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbWEIUJH
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 16:09:07 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:46905 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751117AbWEIUJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 May 2006 16:09:06 -0400
+Received: by nf-out-0910.google.com with SMTP id b2so1269758nfe
+        for <git@vger.kernel.org>; Tue, 09 May 2006 13:09:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=JOfCltvb5Pvn2eGx9DSIlwew8H1HZ3q6oW7fJDB2nMZvwAAOmPRt7xoZcGPJ5PvGoK1N9yKVUKK6VjjQGJihUiq/YjXh3c9LlrE//DiubR0J5YDdaSJJlGT+6oJrRiBH7LyG8cNGVmQnH4LboJB/EXL9PNgtw+e3sFVJEwR8FIw=
+Received: by 10.49.34.18 with SMTP id m18mr2378574nfj;
+        Tue, 09 May 2006 13:09:03 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.200.31])
+        by mx.gmail.com with ESMTP id b1sm3692039nfe.2006.05.09.13.09.02;
+        Tue, 09 May 2006 13:09:02 -0700 (PDT)
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20060509191803.GA3676@localdomain>
+X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19846>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > Here's my take at a new command-line option parser to reduce wear on my
-> > fingers.  It handles both long and short options, permuting, automatic
-> > abbreviations, required arguments, optional arguments, and bundling.
-> 
-> Taken a superficial look at it.
-> 
-> Sounds nice, might be a tad too ambitious though.  Looks
-> intrusive at places.
+Eric Wong <normalperson@yhbt.net> wrote:
 
-I wasn't overly happy with the addition of global variables to existing
-files and the way they're set (setup_revisions).  But at least they're
-static.  Of course, I'm not yet certain that I haven't introduced new
-bugs.  All the tests pass, at least...
+> I'm striving for backwards compatibility with existing usage.  That
+> means as a diff option, -C alone works, as does -C20.  I've made -C 20
+> _not_ work because it breaks existing usage (where 20 could be a
+> filename, or a tree-ish).  -C=20 would mean something
+> else,
 
-> And scary, especially the "eat" macros are very scary.
+I think optional arguments are still confusing.  We could support both
+-C (no args) and -C=20 syntax.
 
-They look weird at first, but I think they help readability and
-maintainability once you get used to them.  They let you focus on the
-important part of the function while hiding the boring parts from you.
-Quite elegant, imho.
+> since I wanted to make pickaxe work exactly as it did before:
+> -S=var would search for '=var', not 'var'.
+
+Some other options use -x=y syntax so this would be confusing. Pickaxe's
+-Stext syntax is a bit strange.  I think -S text or -S=text would be
+more logical.
 
 -- 
-Eric Wong
+http://onion.dynserv.net/~timo/
