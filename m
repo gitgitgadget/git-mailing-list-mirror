@@ -1,52 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Bertrand Jacquin" <beber.mailing@gmail.com>
 Subject: Re: git-feed-mail-list.sh
-Date: Mon, 08 May 2006 18:05:39 -0700
-Message-ID: <7v64kgc8ik.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 9 May 2006 03:09:36 +0200
+Message-ID: <4fb292fa0605081809r6aa76baai5eac9823183fc3fc@mail.gmail.com>
 References: <1146678513.20773.45.camel@pmac.infradead.org>
-	<7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
-	<1147131877.2694.37.camel@shinybook.infradead.org>
-	<Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
-	<1147134522.2694.45.camel@shinybook.infradead.org>
-	<Pine.LNX.4.64.0605081742330.3718@g5.osdl.org>
-	<1147136467.2694.53.camel@shinybook.infradead.org>
+	 <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
+	 <1147131877.2694.37.camel@shinybook.infradead.org>
+	 <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+	 <4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
+	 <7vac9sc8m3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 03:05:50 2006
+X-From: git-owner@vger.kernel.org Tue May 09 03:09:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdGfX-0000AY-EA
-	for gcvg-git@gmane.org; Tue, 09 May 2006 03:05:43 +0200
+	id 1FdGjN-0000pd-Kn
+	for gcvg-git@gmane.org; Tue, 09 May 2006 03:09:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbWEIBFl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 21:05:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWEIBFl
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:05:41 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4298 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751261AbWEIBFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 21:05:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060509010540.LZZE17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 May 2006 21:05:40 -0400
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1147136467.2694.53.camel@shinybook.infradead.org> (David
-	Woodhouse's message of "Tue, 09 May 2006 02:01:07 +0100")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751329AbWEIBJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 21:09:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbWEIBJi
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:09:38 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:36743 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751329AbWEIBJh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 21:09:37 -0400
+Received: by nf-out-0910.google.com with SMTP id b2so1089518nfe
+        for <git@vger.kernel.org>; Mon, 08 May 2006 18:09:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QT8N0wb4KgD2QRF3nhXtmEbW4Yt4Kfvg3HM0rAWXnr+bzyMF/TMeVtUaNVZ7PI401x+RUyWEjFyoRoeLYZnOv2Pb/jZetMNtBW18saMpB2qBk0gR3ZAm76EolPmkzOenDRQlH+lu/JGG10HIk/1IGsgaPJyMmvaeQ9/8c9AbBPM=
+Received: by 10.48.3.17 with SMTP id 17mr1649603nfc;
+        Mon, 08 May 2006 18:09:36 -0700 (PDT)
+Received: by 10.49.2.19 with HTTP; Mon, 8 May 2006 18:09:36 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vac9sc8m3.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19802>
 
-David Woodhouse <dwmw2@infradead.org> writes:
+On 5/9/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Bertrand Jacquin" <beber.mailing@gmail.com> writes:
+>
+> > Is there a way to track merge like that?
+>
+> The command line you quoted shows the relevant information for
+> people who want to know what happened in that merge.
+>
+> Namely:
+>
+>  * it always shows the header and the message
+>
+>  * it shows the changes that are not trivial (i.e. merge parents
+>    have overlapping different versions and manual resolution
+>    resulted in something different from either parents).
+>
+> It is not a replacement for format-patch, but I think the commit
+> mailing list is not for machines to receive and apply the
+> received patches, but for humans to inspect, so it would be more
+> suitable than a naive alternative of showing diff from all
+> parents concatenated together.
 
-> Having 'git-show --pretty=email' would be nice. I think Junio is working
-> on something which will achieve that, right?
+That's right. And don't want to do that.
 
-That's the replacement of "git format-patch".  If you have a
-chance, please try out what's in "next".  Johannes did quite a
-nice enhancements.
+But I would like to send an email after merge to inform people that:
+
+o tree ``a'' and ``b'' have been merged.
+o made by John Doe at a time
+o show a diffstat.
+o show a --short-log=oneline from merge base.
+
+--
+Beber
+#e.fr@freenode
