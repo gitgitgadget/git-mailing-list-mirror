@@ -1,72 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Implementing branch attributes in git config
-Date: Tue, 9 May 2006 02:23:22 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605090219250.6000@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
- <1147048587.17371.13.camel@dv> <Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
- <7vfyjli9vf.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
- <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
- <Pine.LNX.4.64.0605081905240.6713@iabervon.org> <BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
- <Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
- <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: git-feed-mail-list.sh
+Date: Tue, 09 May 2006 01:28:42 +0100
+Message-ID: <1147134522.2694.45.camel@shinybook.infradead.org>
+References: <1146678513.20773.45.camel@pmac.infradead.org>
+	 <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
+	 <1147131877.2694.37.camel@shinybook.infradead.org>
+	 <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 02:23:31 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 02:29:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdG0c-0005gg-WB
-	for gcvg-git@gmane.org; Tue, 09 May 2006 02:23:27 +0200
+	id 1FdG67-0006b9-7M
+	for gcvg-git@gmane.org; Tue, 09 May 2006 02:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952AbWEIAXY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 20:23:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750962AbWEIAXY
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:23:24 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3502 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750952AbWEIAXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 20:23:23 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 90E6B17E8;
-	Tue,  9 May 2006 02:23:22 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 8547413B5;
-	Tue,  9 May 2006 02:23:22 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 664131311;
-	Tue,  9 May 2006 02:23:22 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1750975AbWEIA26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 20:28:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbWEIA26
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:28:58 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:53391 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S1750962AbWEIA25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 May 2006 20:28:57 -0400
+Received: from shinybook.infradead.org ([81.187.2.165])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1FdG5u-0007UL-4f; Tue, 09 May 2006 01:28:54 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+X-Mailer: Evolution 2.6.1 (2.6.1-1.fc5.2.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19788>
 
-Hi,
+On Mon, 2006-05-08 at 17:19 -0700, Linus Torvalds wrote:
+> Well, you might choose to just not use "git-cat-file commit" but instead 
+> ask git to format the thing for you.
+> 
+> Ie you could probably more easily parse the data from something like
+> 
+> 	git show -B --patch-with-stat --pretty=fuller $commit
+> 
+> instead of using "git-cat-file commit $commit" and generating the stat and 
+> diff manually.
+> 
+> That way you get the dates etc pretty-printed for you by git.
 
-On Mon, 8 May 2006, sean wrote:
+Aha, thanks. Git has learned to do a lot more since I first started
+hacking up a copy of git-log.sh to feed the mailing lists, and it even
+had to walk the commit tree manually :)
 
-> [branch1]
->     streetname = "p4/BrAnCH"
-> [branch2]
->     streetname = "origin"
+The output of (the undocumented) '--pretty=fuller' is probably good
+enough that I can just feed the mailing list with it directly. I think I
+have to add the commit and the parent manually, but that's easy enough
+to do -- the commit is obviously known, and the parent is just
+$(git-rev-parse $commit^1).
 
-Conceptually, it feels just wrong to me that a section name should contain 
-a filename. A section is something which contains data regarding a certain 
-concept. Such as "core", which has values concerning the core of git.
+Anyone got any objections to switching the kernel git-commits-* lists to
+this format?
 
-In that sense, I stay with my preferance:
-
-[branch]
-	defaultRemote = bla for bloop
-	defaultRemote = connery for sean
-
-No need to extend the simple config file. And remember, it is so simple, 
-because it is so strict.
-
-Ciao,
-Dscho
+-- 
+dwmw2
