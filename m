@@ -1,96 +1,60 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Implementing branch attributes in git config
-Date: Mon, 8 May 2006 20:49:33 -0400
-Message-ID: <BAYC1-PASMTP02A6C811EC4FA46BBD95DDAEA90@CEZ.ICE>
-References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<1147048587.17371.13.camel@dv>
-	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
-	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
-	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
-	<Pine.LNX.4.64.0605081905240.6713@iabervon.org>
-	<BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
-	<Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
-	<BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
-	<Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
+From: "Bertrand Jacquin" <beber.mailing@gmail.com>
+Subject: Re: git-feed-mail-list.sh
+Date: Tue, 9 May 2006 02:55:48 +0200
+Message-ID: <4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
+References: <1146678513.20773.45.camel@pmac.infradead.org>
+	 <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
+	 <1147131877.2694.37.camel@shinybook.infradead.org>
+	 <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 02:54:49 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "David Woodhouse" <dwmw2@infradead.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 02:55:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdGUv-0006ls-Sv
-	for gcvg-git@gmane.org; Tue, 09 May 2006 02:54:46 +0200
+	id 1FdGW1-0006zR-Gt
+	for gcvg-git@gmane.org; Tue, 09 May 2006 02:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbWEIAyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 20:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751039AbWEIAyl
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:54:41 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:38703 "EHLO
-	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1750999AbWEIAyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 20:54:40 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 8 May 2006 17:54:40 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 486AA644C28;
-	Mon,  8 May 2006 20:54:39 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060508204933.539ddd8b.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 09 May 2006 00:54:40.0628 (UTC) FILETIME=[27315B40:01C67303]
+	id S1751058AbWEIAzv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 20:55:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbWEIAzv
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:55:51 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:54382 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751047AbWEIAzu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 20:55:50 -0400
+Received: by nf-out-0910.google.com with SMTP id b2so1088084nfe
+        for <git@vger.kernel.org>; Mon, 08 May 2006 17:55:48 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RrC+QgjGLWCmYar1jOTSTA888U/HPYIoy288uDrtNgg8ZdWYbVdPIvfKCDzJU8yFyQWxK2if7Ij9g5HoFr8UiIp32oHQhV6+bO1lZBJ8jJ/XfOGcbBcQcxw+bTiFX9ARNrxJeB4TYqMBCopO5NNr/itsk0wou2OuA4St1nAJxVM=
+Received: by 10.48.162.20 with SMTP id k20mr1632754nfe;
+        Mon, 08 May 2006 17:55:48 -0700 (PDT)
+Received: by 10.49.2.19 with HTTP; Mon, 8 May 2006 17:55:48 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19795>
 
-On Mon, 8 May 2006 17:37:29 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
+On 5/9/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> Ie you could probably more easily parse the data from something like
+>
+>         git show -B --patch-with-stat --pretty=fuller $commit
+>
 
-> We could easily do
-> 
-> 	[branch]
-> 		name = "p4/BrAnCH"
-> 		url = git://git.kernel.org/...
-> 		pull = master
-> 
-> 	;
-> 	; Repeating the "[branch]" section here isn't
-> 	;  needed, but doesn't hurt either, and is
-> 	; more readable
-> 	;
-> 	[branch]
-> 		name = "origin"
-> 		url = ...
-> 		pull = ...
-> 
-> because the config file is always parsed linearly, and just 
-> trigger on "branch.name", and keep that around when parsing 
-> anything else.
+Is there a way to track merge like that ? Documentation is not very
+clear and near from empty.
 
-That was pretty much what I was suggesting although i overlooked 
-the fact that you don't actually need to number the sections.
-
-> The problem with _that_ is that "git repo-config" can't add this kind of 
-> setup sanely: it doesn't understand that kind of statefulness.
-
-Shouldn't be too hard to deal with.  So we would allow the following
-command to make the url entry above:
-
-    $ git repo-config branch.p4/BrAnCH.url git://git.kernel.org/...
-
-> The above would work without any changes what-so-ever to the config format 
-> and readers - and old versions of git wouldn't react badly either. But the 
-> writer would need to be taught about state.
-
-Well it seems like maybe the best compromise, and it avoids having to put
-files and directories into section names which Johannes was objecting to.
-
-Sean
+--
+Beber
+#e.fr@freenode
