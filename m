@@ -1,42 +1,37 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Implementing branch attributes in git config
-Date: Mon, 8 May 2006 17:37:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
-References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
- <1147048587.17371.13.camel@dv> <Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
- <7vfyjli9vf.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
- <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
- <Pine.LNX.4.64.0605081905240.6713@iabervon.org> <BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
- <Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
- <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
+Subject: Re: git-feed-mail-list.sh
+Date: Mon, 8 May 2006 17:45:53 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org>
+References: <1146678513.20773.45.camel@pmac.infradead.org> 
+ <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>  <1147131877.2694.37.camel@shinybook.infradead.org>
+  <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org> <1147134522.2694.45.camel@shinybook.infradead.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 02:37:45 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 02:46:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdGES-0000vA-K6
-	for gcvg-git@gmane.org; Tue, 09 May 2006 02:37:45 +0200
+	id 1FdGMa-0003h2-0y
+	for gcvg-git@gmane.org; Tue, 09 May 2006 02:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990AbWEIAhm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 20:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbWEIAhl
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:37:41 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18659 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750989AbWEIAhl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 20:37:41 -0400
+	id S1750926AbWEIAqE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 20:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbWEIAqE
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:46:04 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:44260 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750926AbWEIAqD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 20:46:03 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k490bUtH008382
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k490jstH008601
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 8 May 2006 17:37:30 -0700
+	Mon, 8 May 2006 17:45:54 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k490bTeA026753;
-	Mon, 8 May 2006 17:37:29 -0700
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k490jr3T026938;
+	Mon, 8 May 2006 17:45:53 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1147134522.2694.45.camel@shinybook.infradead.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
 X-MIMEDefang-Filter: osdl$Revision: 1.134 $
@@ -44,48 +39,20 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19791>
 
 
 
-On Mon, 8 May 2006, sean wrote:
+On Tue, 9 May 2006, David Woodhouse wrote:
 > 
-> One option, which I don't really like and comes with its own set of 
-> problems, would be to do something like:
-> 
-> [branch1]
->     streetname = "p4/BrAnCH"
-> [branch2]
->     streetname = "origin"
+> Anyone got any objections to switching the kernel git-commits-* lists to
+> this format?
 
-You don't actually need that.
+As long as the "commit <sha1>" id is there (and "--pretty=fuller" does 
+have it), I'll be happy. At some point, the commit mailing list didn't 
+actually mention the commit ID itself, just the tree/parent IDs.
 
-We could easily do
-
-	[branch]
-		name = "p4/BrAnCH"
-		url = git://git.kernel.org/...
-		pull = master
-
-	;
-	; Repeating the "[branch]" section here isn't
-	;  needed, but doesn't hurt either, and is
-	; more readable
-	;
-	[branch]
-		name = "origin"
-		url = ...
-		pull = ...
-
-because the config file is always parsed linearly, and just 
-trigger on "branch.name", and keep that around when parsing 
-anything else.
-
-The problem with _that_ is that "git repo-config" can't add this kind of 
-setup sanely: it doesn't understand that kind of statefulness.
-
-The above would work without any changes what-so-ever to the config format 
-and readers - and old versions of git wouldn't react badly either. But the 
-writer would need to be taught about state.
+The "fuller" format should be fine, if you care about committer. Otherwise 
+just use the standard "--pretty", which drops committer info.
 
 		Linus
