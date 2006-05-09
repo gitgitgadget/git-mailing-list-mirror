@@ -1,118 +1,92 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Implementing branch attributes in git config
-Date: Mon, 8 May 2006 22:47:21 -0400
-Message-ID: <BAYC1-PASMTP04C9C4BF5B89E55B9D877AAEA90@CEZ.ICE>
-References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<1147048587.17371.13.camel@dv>
-	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
-	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
-	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
-	<Pine.LNX.4.64.0605081905240.6713@iabervon.org>
-	<BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
-	<Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
-	<BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
-	<Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
-	<7virogc90u.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
-	<7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-feed-mail-list.sh
+Date: Mon, 8 May 2006 20:06:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605081951390.3718@g5.osdl.org>
+References: <1146678513.20773.45.camel@pmac.infradead.org>
+ <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net> <1147131877.2694.37.camel@shinybook.infradead.org>
+ <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+ <4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
+ <7vac9sc8m3.fsf@assigned-by-dhcp.cox.net> <4fb292fa0605081809r6aa76baai5eac9823183fc3fc@mail.gmail.com>
+ <7vwtcvc42s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 04:52:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bertrand Jacquin <beber.mailing@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 05:06:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdIL2-0001qJ-Jh
-	for gcvg-git@gmane.org; Tue, 09 May 2006 04:52:40 +0200
+	id 1FdIYj-000481-4l
+	for gcvg-git@gmane.org; Tue, 09 May 2006 05:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbWEICwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 22:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWEICwa
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 22:52:30 -0400
-Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:56821 "EHLO
-	BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751348AbWEICw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 22:52:29 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 8 May 2006 19:52:28 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id D107B644C28;
-	Mon,  8 May 2006 22:52:27 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060508224721.045a48fb.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 09 May 2006 02:52:29.0274 (UTC) FILETIME=[9C6F23A0:01C67313]
+	id S1751346AbWEIDGm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 23:06:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWEIDGm
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 23:06:42 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:38048 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751346AbWEIDGl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 23:06:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4936atH013002
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 8 May 2006 20:06:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4936ZtG029569;
+	Mon, 8 May 2006 20:06:36 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtcvc42s.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19811>
 
-On Mon, 8 May 2006 18:57:08 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
 
-> Btw, I keep coming back to the same
+
+On Mon, 8 May 2006, Junio C Hamano wrote:
+
+> "Bertrand Jacquin" <beber.mailing@gmail.com> writes:
 > 
-> 	["jc/show-branch-dense"]
-> 		remote = git://...
+> > But I would like to send an email after merge to inform people that:
+> >
+> > o tree ``a'' and ``b'' have been merged.
+> > o made by John Doe at a time
+> > o show a diffstat.
+> > o show a --short-log=oneline from merge base.
 > 
-> branch specifier syntax. It just seems very intuitive and is easy to 
-> parse. 
+> Forgetting about a fast-forward merge,  (1) and (2) are
+> available in the commit header and the commit log, so is (4) if
+> you enable merge.summary configuration like Linus does in his
+> kernel repository.
 
-We already need such section headers for remotes, and for branches.. 
-both which may well need to be quoted as above.. how to distinguish
-between them?   How to handle the next case that comes along where we
-want these special header semantics?
+NOTE! Please don't enable "merge.summary" if you ever merge from the 
+upstream tree. That just looks ugly. Your merge messages will be just 
+filled with crap that has nothing to do with your tree - and everything to 
+do with all the _unrelated_ normal development that happened in the tree.
 
-We really need:
+So in general, "merge.summary" makes sense only for trees that pull from 
+downstreams, and never merge with anything upstream. My tree obviously 
+does that for the kernel. Think of it as a "top-level maintainer" flag, 
+although it works find also for sub-maintainers as long as they 
+synchronize upwards _purely_ by being pulled from, not by pulling.
 
-   [branch.Whatever]
+But if you want to get it for any random merges, you can always just do
 
-and:
+	git log -11 --pretty=oneline ^$commit^ $commit^@ |
+		sed 's/[0-9a-f]* // ; 11 s/.*/\.\.\./' 
 
-   [remote.Whatever]
+which will show up to the ten first commits that were merged (and turn the 
+eleventh one, if it exists, into "..." - that's a pretty disgusting trick 
+to make it show when you left things out).
 
-As in the case of "origin" where we have a remote and a branch
-named that.
+That "^$commit^ $commit^@" part is important. It may look like some 
+deranged git smiley, but it does exactly what you want it to do: take all 
+the parents of the commit, but ignore any commit reachable from the first 
+one (the "mainline" of the person who did the commit).
 
+The ^@ syntax is obviously pretty new, so it requires a modern git.
 
-> The only real downside ends up being the non-forwards-compatibility thing. 
-> But trying to be forwards-compatible for old git versions with this thing 
-> would seem to be a major pain for rather slim gain.
-
-What's the advantage of section quotation marks over just allowing these
-characters in regular section names?  To be specific, what is wrong with:
-
-   [jc/show-branch-dense]
-       remote = git://...
-
-If we just relax the legal characters in identifiers to include slash and dash?
-It doesn't seem to be any different in amount of code needed to achieve, and it
-is just as intuitive (perhaps more so) and no worse on the forward-compatibility
-thing.
-
-If we continue with case insensitive section names, it's quite possible for 
-the user to mess up while hand editing or forgetting proper "git" quoting
-rules on the command line and end up with silent breakage:
-
-$ git repo-config "Branch".url = git://...  
-        (updates section ["Branch"])
-
-And then the next time forget the quotes and use:
-
-$ git repo-config Branch.url = git://...    
-         (updates section [branch])
-
-And all of a sudden the user is updating _different_ sections with 
-unpredictable results.  This is just awkward; why not just admit that 
-section names should always be case sensitive if we're going to put
-filenames inside them?
-
-Sean
+		Linus
