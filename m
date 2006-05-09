@@ -1,67 +1,66 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH 1/6] gitopt: a new command-line option parser for git
-Date: Wed, 10 May 2006 00:31:41 +0300
-Message-ID: <20060510003141.0d0820ed.tihirvon@gmail.com>
-References: <1147151209168-git-send-email-normalperson@yhbt.net>
-	<11471512103526-git-send-email-normalperson@yhbt.net>
-	<20060509120809.4d9494b9.tihirvon@gmail.com>
-	<20060509191803.GA3676@localdomain>
-	<20060509231031.b62576da.tihirvon@gmail.com>
-	<7vlktb2ayy.fsf@assigned-by-dhcp.cox.net>
-	<20060510000826.1a708c03.tihirvon@gmail.com>
-	<7v7j4u3nv8.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [BUG] "cg-object-id -p" ignore grafts, breaks cg-admin-rewritehist
+Date: Wed, 10 May 2006 00:25:19 +0200
+Message-ID: <20060509222519.GF27397@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 23:31:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 10 00:14:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdZnG-0002GT-Fp
-	for gcvg-git@gmane.org; Tue, 09 May 2006 23:30:58 +0200
+	id 1FdaT5-0001RP-WE
+	for gcvg-git@gmane.org; Wed, 10 May 2006 00:14:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbWEIVaz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 17:30:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbWEIVaz
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 17:30:55 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:53000 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751103AbWEIVaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 May 2006 17:30:55 -0400
-Received: by nf-out-0910.google.com with SMTP id b2so1286473nfe
-        for <git@vger.kernel.org>; Tue, 09 May 2006 14:30:53 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=V05YNCOyQ43De5lCUFJHUlN+Fzt2vD91L9qT2LD1hXHdzejSOUDo2arNO7iz7v7BVVeYs8wtl4R6E0JwWF2LWI2FsTwrSfRzkvmb9wEUj/OeWIX+Fhb/g3ETK48GRbMBgfeTjXhuvZrEfa7nAsRQtoSLYp/qkNPdp/fj/Shvzac=
-Received: by 10.48.3.15 with SMTP id 15mr2433352nfc;
-        Tue, 09 May 2006 14:30:53 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.200.31])
-        by mx.gmail.com with ESMTP id d2sm3750899nfe.2006.05.09.14.30.52;
-        Tue, 09 May 2006 14:30:53 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j4u3nv8.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
+	id S1751205AbWEIWOG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 18:14:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbWEIWOF
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 18:14:05 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:2960 "EHLO smtp4-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751205AbWEIWOF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 May 2006 18:14:05 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 935C2547FF;
+	Wed, 10 May 2006 00:14:03 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1Fdadr-0007FS-SS; Wed, 10 May 2006 00:25:19 +0200
+To: GIT list <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19854>
 
-Junio C Hamano <junkio@cox.net> wrote:
 
-> Timo Hirvonen <tihirvon@gmail.com> writes:
-> 
-> > Better to support only -x=y or -x y, not both.
-> 
-> Didn't I just say -x=y where x is a single letter _is_ odd?
-> It is either -xy or -x y, not -x=y.
+Currently (cogito 0.17.2), using "cg-object-id -p" to lookup a
+commit's parents fetches information directly from the commit object
+through "git-cat-file commit".  This causes all its callers to ignore
+any grafts, and probably causes various problems.  The one I stumbled
+upon is an inconstency in the data seen by cg-admin-rewritehist, when
+a graft is used to replace the single parent of a commit with another
+single parent - tentative recovery of a tarball import done on a wrong
+branch, in the hope that cg-admin-rewritehist would allow to fix the
+history as defined by the graft.
 
-Oh, I thought parameters would use same syntax for short and long
-options.  For optional args -C2 would make sense but -C 2 would be
-ambiguous ("-C -- 2" or "-C2"?).  Maybe I'm just too drunk to
-understand.
+In that case, after identifying the commits to rewrite through legal
+means, rewritehist attempts to lookup the parents for each of those
+original commits and map them to already-rewritten ones, but
+cg-object-id returns the pre-graft parent, which was not to be
+rewritten, and the tool fails (miserably with an invalid rewritten
+branch, as the exception is not caught).
+
+A patch follows (depending on an updated "set -e" patch for
+rewritehist) to have rewritehist at least abort in error when it can
+identify such an inconsistency.
+
+What should cg-object-id use to lookup parent information in a sane
+way that does not ignore grafts ?
 
 -- 
-http://onion.dynserv.net/~timo/
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
