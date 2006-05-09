@@ -1,73 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: (patch) calloc->xaclloc in read-cache.c
-Date: Tue, 09 May 2006 06:26:59 -0700
-Message-ID: <7vpsin5nx8.fsf@assigned-by-dhcp.cox.net>
-References: <0IZ000KI11YCKL10@mxout4.netvision.net.il>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Implementing branch attributes in git config
+Date: Tue, 9 May 2006 08:29:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605090822150.3718@g5.osdl.org>
+References: <1147037659.25090.25.camel@dv> <7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
+ <BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE> <7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
+ <BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE> <Pine.LNX.4.64.0605081905240.6713@iabervon.org>
+ <BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
+ <Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
+ <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE> <Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
+ <7virogc90u.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
+ <7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
+ <BAYC1-PASMTP04C9C4BF5B89E55B9D877AAEA90@CEZ.ICE> <Pine.LNX.4.64.0605082007100.3718@g5.osdl.org>
+ <BAYC1-PASMTP05953E2B948CB07A171FD8AEA90@CEZ.ICE> <Pine.LNX.4.64.0605082100460.3718@g5.osdl.org>
+ <e3p5om$djs$1@sea.gmane.org> <Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 15:27:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 17:31:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdSF8-0000uv-AY
-	for gcvg-git@gmane.org; Tue, 09 May 2006 15:27:14 +0200
+	id 1FdUA7-0000TN-DI
+	for gcvg-git@gmane.org; Tue, 09 May 2006 17:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932513AbWEIN1E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 09:27:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932514AbWEIN1E
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 09:27:04 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:59549 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932513AbWEIN1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 May 2006 09:27:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060509132701.ENLU27327.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 9 May 2006 09:27:01 -0400
-To: iler.ml@gmail.com
-In-Reply-To: <0IZ000KI11YCKL10@mxout4.netvision.net.il> (iler ml's message of
-	"Tue, 09 May 2006 16:14 +0000")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751400AbWEIPaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 11:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbWEIPaF
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 11:30:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:56275 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751400AbWEIPaD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 May 2006 11:30:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k49FTptH009732
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 9 May 2006 08:29:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k49FTocg012523;
+	Tue, 9 May 2006 08:29:50 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19840>
 
-iler.ml@gmail.com writes:
 
-> How about this.
 
-Looks good, thanks.  If you needed some MUA trick that other
-people might benefit from please feel free to send a patch to
-Documentation/SubmittingPatches "MUA specific hints" section.
+On Tue, 9 May 2006, Johannes Schindelin wrote:
+> 
+> Okay, to summarize what people proposed (and that I remember):
+> 
+> 1) [branch."AnY+String"]
 
-Except "Subject: [PATCH] blah", commit log message (in this case
-what you would have on the Subject line is to the point and you
-would not need any extra log message), "Signed-off-by: whom",
-and perhaps "---\n".  Material that you do not want to have in
-the final commit message, like "How about this" and diffstat if
-you have one, would come after the "---\n" line.
+If we really change the syntax, I would oppose the ".". I realize I may 
+have used it myself, and I think it would be good _internally_, but I 
+think the syntax would be
 
-Your message formatted in the preferred way becomes like this:
+	[branch "Any+String"]
 
-	Subject: [PATCH] read-cache.c: use xcalloc() not calloc()
+which looks a lot more readable. Ie just a space (or, perhaps, "any 
+combination of spaces and tabs").
 
-	Elsewhere we use xcalloc(); we should consistently do so.
+> 4) [branch.just/allow-slashes/and-dashes]
 
-        Signed-off-by: Yakov Lerner <iler.ml@gmail.com>
-	---
+Same here. If we break old parsers anyway, the "." has no redeeming 
+value. You'd use it when _scripting_ stuff, but not anywhere else.
 
-        * How about this?
+So in both cases, the above would turn into the _variable_ called 
+"branch.Any+String/and-dashes.<key>" internally, and things that used "git 
+repo-config" would say it that way, but the config file format should be 
+human-readable.
 
-         read-cache.c |    2 +-
-         1 files changed, 1 insertions(+), 1 deletions(-)
+We already do that human-readability thing. We say
 
-        --- read-cache.c.000	2006-05-09 15:27:56.000000000 +0000
-        +++ read-cache.c	2006-05-09 15:28:10.000000000 +0000
-        @@ -552,7 +552,7 @@
+	[core]
+		name = Linus  Torvalds
+		email = random
 
-                active_nr = ntohl(hdr->hdr_entries);
-	...
+but we turn it internally into
+
+	core.name  ->	"Linus Torvalds"
+	core.email ->	"random"
+
+and that's also the format you use for "git repo-config". Similarly, 
+having
+
+	[branch "master"]
+		remote = git://....
+
+in the config file should - for exactly the same reasons - be turned 
+_internally_ into the association
+
+	branch.master.remote    ->    git://...
+
+and for exactly the same reason you'd just use
+
+	git repo-config set branch.master.remote "git://..."
+
+on the command line.
+
+IOW, we _already_ do not match the internal and command line with the 
+actal human-readable syntax.
+
+			Linus
