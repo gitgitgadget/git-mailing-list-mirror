@@ -1,185 +1,90 @@
-From: David Woodhouse <dwmw2@infradead.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git-feed-mail-list.sh
-Date: Tue, 09 May 2006 02:12:50 +0100
-Message-ID: <1147137170.2694.58.camel@shinybook.infradead.org>
-References: <1146678513.20773.45.camel@pmac.infradead.org>
-	 <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
-	 <1147131877.2694.37.camel@shinybook.infradead.org>
-	 <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
-	 <1147134522.2694.45.camel@shinybook.infradead.org>
-	 <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org>
-	 <1147136467.2694.53.camel@shinybook.infradead.org>
-	 <7v64kgc8ik.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 8 May 2006 18:18:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605081805290.3718@g5.osdl.org>
+References: <1146678513.20773.45.camel@pmac.infradead.org> 
+ <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>  <1147131877.2694.37.camel@shinybook.infradead.org>
+  <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+ <4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-eaFnnmEF3675ya6YUVp3"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 03:13:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Woodhouse <dwmw2@infradead.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 03:18:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdGmh-0001Up-R1
-	for gcvg-git@gmane.org; Tue, 09 May 2006 03:13:08 +0200
+	id 1FdGrz-0002Vf-Qj
+	for gcvg-git@gmane.org; Tue, 09 May 2006 03:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbWEIBNE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 21:13:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbWEIBNE
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:13:04 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:13535 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S1751332AbWEIBND (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 21:13:03 -0400
-Received: from shinybook.infradead.org ([81.187.2.165])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1FdGmb-00081a-V1; Tue, 09 May 2006 02:13:02 +0100
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64kgc8ik.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.6.1 (2.6.1-1.fc5.2.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1751334AbWEIBS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 21:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbWEIBS1
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:18:27 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:18670 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751334AbWEIBS1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 21:18:27 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k491IItH009628
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 8 May 2006 18:18:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k491IHhe027564;
+	Mon, 8 May 2006 18:18:17 -0700
+To: Bertrand Jacquin <beber.mailing@gmail.com>
+In-Reply-To: <4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19804>
 
 
---=-eaFnnmEF3675ya6YUVp3
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Mon, 2006-05-08 at 18:05 -0700, Junio C Hamano wrote:
-> That's the replacement of "git format-patch".  If you have a
-> chance, please try out what's in "next".  Johannes did quite a
-> nice enhancements. 
+On Tue, 9 May 2006, Bertrand Jacquin wrote:
 
-I think I'd best wait for it to turn up in the release; preferably
-already capable of MIME quoting. I don't like touching the scripts which
-feed the mailing lists :)
+> On 5/9/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> > 
+> > Ie you could probably more easily parse the data from something like
+> > 
+> >         git show -B --patch-with-stat --pretty=fuller $commit
+> > 
+> 
+> Is there a way to track merge like that ? Documentation is not very
+> clear and near from empty.
 
-This is what I currently have... since it changes the format I think
-I'll won't deploy it yet -- I'll wait until the "replacement of
-git-format-patch" is done, in case that would change the format _again_.
-I'd rather not change the format I send to the list twice within a few
-weeks.
+Sure.
 
--- 
-dwmw2
+If you want to track merges and get their patches, add the "--cc" flag, 
+which tells git to use the "conflict combination patch" that shows any 
+visible conflicts.
 
---=-eaFnnmEF3675ya6YUVp3
-Content-Disposition: inline; filename=git-feed-mail-list.sh
-Content-Type: application/x-shellscript; name=git-feed-mail-list.sh
-Content-Transfer-Encoding: 7bit
+(NOTE NOTE NOTE! This is _not_ the same as showing what conflicted: if you 
+edited the result to match one of the original branches, it will be quiet 
+in --cc, but if the result of a conflict was something that was in 
+_neither_ branch, it will be shown! So most clean merges will not show any 
+conflict diff at all, but the diffstat will be shown against the "first 
+parent").
 
-#!/usr/bin/env bash
-#
-# Generate a mail feed for a commits list.
-#
-# Author: David Woodhouse <dwmw2@infradead.org>
+And you probably don't want to abbreviate the parent commit SHA1's (which 
+are shown for merges, but not regular commits), so add "--no-abbrev".
 
-# Environment variables used by this script...
-#
-# $SENDMAIL and $MLIST must be set appropriately if you intend to
-# actually send mail to a mailing list (or other recipient). Otherwise,
-# an mbox file named 'git-commits-mail.out' will be created in the 
-# current directory.
-#
-# $FROM specifies the From: header used in the mails. It'll default
-# to GIT_COMMITTER_EMAIL if that exists, or to `whoami`@`hostname`
-#
-# $EXCLUDEHEAD is given as additional arguments to the git-rev-list
-# invocation, and is intended to allow other branches to be excluded.
-# For example, subsystem trees might avoid mailing changes which were
-# merged in from Linus' tree by setting EXCLUDEHEAD=^linus
-#
-# $GIT_DIR has the obvious effect.
-#
-# $MAILTAG specifies the file in which the 'last commit mailed' information
-# is stored. By default, this will be $GIT_DIR/refs/tags/MailDone, or
-# just the relative path '.git/refs/tags/MailDone' if $GIT_DIR is not specified
+If you want to show parents for _all_ commits, you could do something like
 
-if [ -z "SENDMAIL" -o -z "$MLIST" ]; then 
-    SENDMAIL="tee --append"
-    MLIST=git-commits-mail.out
-fi
+  git show --no-abbrev --cc -C --patch-with-stat --pretty=fuller --parents |
+	sed '1 s/commit [0-9a-f]*/\0\nParents:   / ; /^Merge: / d'
 
-if [ -z "$FROM" ]; then
-    if [ -n "$GIT_COMMITTER_EMAIL" ]; then 
-	FROM="$GIT_COMMITTER_EMAIL"
-    else
-	FROM=`whoami`@`hostname`
-    fi
-fi
+which removes a potential "Merge: " line in favour of listing the parents 
+on a "Parents:" line, and which also shows merges nicely.
 
-if [ -z "$MAILTAG" ]; then
-    if [ "$GIT_DIR" = "" ]; then
-	MAILTAG=.git/refs/tags/MailDone
-    else
-	MAILTAG=$GIT_DIR/refs/tags/MailDone
-    fi
-fi
+That said, the diffstat for merges is usually just a lot of noise. It's 
+sometimes nice (you've merged from a topic branch), but if you have merged 
+from the mainline _into_ a topic branch, it's just annoying.
 
-# Command line arguments. The first specifies the commit or branch to treat
-# as HEAD, and the second is the starting commit. Defaults to HEAD and 
-# whatever's in $MAILTAG, resp.
+So the above is just a wild suggestion. Caveat emptor.
 
-if [ -z $2 ]; then
-    lastmail=$(git-rev-parse `cat $MAILTAG`)
-    if [ -z "$lastmail" ]; then
-	echo "No last tag"
-	exit 1
-    fi
-else
-    lastmail=$(git-rev-parse $2)
-fi
-
-if [ -z $1 ]; then
-    base=$(git-rev-parse HEAD) || exit 1
-else
-    base=$(git-rev-parse $1) || exit 1
-fi
-
-
-if [ "$base" != "$lastmail" ]; then
-    git-rev-list --topo-order --no-merges $lastmail..$base $EXCLUDEHEAD | tac |
-    while read COMMIT ; do (
-	PARENT=`git-rev-parse $COMMIT^1`
-	SUBJECT="`git-show --pretty=oneline $COMMIT | head -2 | tail -1`"
-	echo Mail: $SUBJECT >&2
-
-	SUBHEX="`echo -n "$SUBJECT" | od -t x1 -A none | tr a-f A-F`"
-	if echo $SUBHEX | egrep -q ' [8-9A-F]' ; then
-	    # Subject contains non-ASCII.
-	    NEWSUB="=?UTF-8?Q?"
-	    for CHR in $SUBHEX ; do
-		case $CHR in
-		    20|3D|3F|8*|9*|A*|B*|C*|D*|E*|F*)
-			NEWSUB="$NEWSUB=$CHR"
-			;;
-		    *)
-			NEWSUB="$NEWSUB`echo -en \\\\x$CHR`"
-		esac
-	    done
-	    SUBJECT="$NEWSUB?="
-	fi
-	cat <<EOF 
-From: $FROM
-To: $MLIST
-Subject: $SUBJECT
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Git-Commit: $COMMIT
-X-Git-Parent: $PARENT
-
-Commit:     $COMMIT
-Parent:     $PARENT
-EOF
-	git-show -B --patch-with-stat --pretty=fuller $COMMIT | 
-	    egrep -v '^diff-tree [A-Fa-f0-9]{40} \(from [A-Fa-z0-9]{40}\)$' 
-	) | $SENDMAIL $MLIST
-    done
-
-    echo $base > $MAILTAG
-fi
-
---=-eaFnnmEF3675ya6YUVp3--
+		Linus
