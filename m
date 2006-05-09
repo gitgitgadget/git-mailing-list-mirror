@@ -1,96 +1,69 @@
-From: sean <seanlkml@sympatico.ca>
-Subject: Re: Implementing branch attributes in git config
-Date: Mon, 8 May 2006 20:08:26 -0400
-Message-ID: <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
-References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<1147048587.17371.13.camel@dv>
-	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
-	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
-	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
-	<Pine.LNX.4.64.0605081905240.6713@iabervon.org>
-	<BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
-	<Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-feed-mail-list.sh
+Date: Mon, 8 May 2006 17:19:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
+References: <1146678513.20773.45.camel@pmac.infradead.org> 
+ <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net> <1147131877.2694.37.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 02:13:45 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 02:19:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdFrE-0004C8-3D
-	for gcvg-git@gmane.org; Tue, 09 May 2006 02:13:44 +0200
+	id 1FdFwl-00054b-0l
+	for gcvg-git@gmane.org; Tue, 09 May 2006 02:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750932AbWEIANf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 20:13:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbWEIANf
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:13:35 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:8392 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1750926AbWEIANe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 20:13:34 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 8 May 2006 17:13:33 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 67CE7644C28;
-	Mon,  8 May 2006 20:13:32 -0400 (EDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-Id: <20060508200826.2b0f34a6.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 09 May 2006 00:13:33.0908 (UTC) FILETIME=[68E9C140:01C672FD]
+	id S1750947AbWEIATY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 20:19:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbWEIATY
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 20:19:24 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:30175 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750933AbWEIATY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 20:19:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k490JFtH007801
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 8 May 2006 17:19:16 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k490JEWf026358;
+	Mon, 8 May 2006 17:19:15 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1147131877.2694.37.camel@shinybook.infradead.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19786>
 
-On Tue, 9 May 2006 01:44:31 +0200 (CEST)
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-> Hi,
+
+On Tue, 9 May 2006, David Woodhouse wrote:
 > 
-> On Mon, 8 May 2006, sean wrote:
+> The remaining problem is that the invocation of 'date' doesn't work with
+> new versions of coreutils. This...
 > 
-> > There's no good reason for git to break with traditional and common 
-> > practice in this case.
+>    date=(${rest#*> })
+>    sec=${date[0]}; tz=${date[1]}
+>    dtz=${tz/+/+ }; dtz=${dtz/-/- }
+>    pdate="$(date -Rud "1970-01-01 UTC + $sec sec $dtz" 2>/dev/null)"
 > 
-> It is well established common practice that ini files (and everything in 
-> config resembles an ini file) have case insensitive section headers as 
-> well as keys.
+> ... doesn't work any more on FC-5, because:
 
-Not in ini files that support section headers that represent filenames
-and directories.  Exactly because those things _are_ case sensitive 
-and include more characters than just alnums.  But we're not just 
-talking about the config file syntax we're talking about how the 
-user must ultimately refer to branches with uppercase character.  
-Now everytime a person wants to add a branch attribute via repo-config
-they have to remember that git thinks uppercase characters should
-be quoted.  Doesn't that sound ridiculous to you?
+Well, you might choose to just not use "git-cat-file commit" but instead 
+ask git to format the thing for you.
 
-The point is that we should make the config file and the repo-config
-command easy for the _users_.   Instead we're going to make them use
-some crazy extra syntax because we refuse to come to terms with the
-limitations of the choices we've made so far.
+Ie you could probably more easily parse the data from something like
 
-One option, which I don't really like and comes with its own set of 
-problems, would be to do something like:
+	git show -B --patch-with-stat --pretty=fuller $commit
 
-[branch1]
-    streetname = "p4/BrAnCH"
-[branch2]
-    streetname = "origin"
+instead of using "git-cat-file commit $commit" and generating the stat and 
+diff manually.
 
-And then allow reference to it from git-repo-config by either branch#
-or the value of street name.  While it would take some extra coding
-but at least it lives within the current restrictions for key names.
+That way you get the dates etc pretty-printed for you by git.
 
-It just seems that once you have to even consider options like this,
-a big red flag should be raised about some of the assumptions we've
-built into the system.
-
-Sean
+			Linus
