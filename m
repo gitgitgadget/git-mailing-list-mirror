@@ -1,105 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Implementing branch attributes in git config
-Date: Mon, 08 May 2006 18:18:51 -0700
-Message-ID: <7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net>
-References: <1147037659.25090.25.camel@dv>
-	<Pine.LNX.4.64.0605071629080.3718@g5.osdl.org>
-	<1147048587.17371.13.camel@dv>
-	<Pine.LNX.4.64.0605071740550.3718@g5.osdl.org>
-	<7vfyjli9vf.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP0334B471C6908E4E40BFD2AEA80@CEZ.ICE>
-	<7vbqu9i6zl.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP110777A694DAF1D7623895AEA80@CEZ.ICE>
-	<Pine.LNX.4.64.0605081905240.6713@iabervon.org>
-	<BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
-	<Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
-	<BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
-	<Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
-	<7virogc90u.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-feed-mail-list.sh
+Date: Mon, 8 May 2006 18:27:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605081822140.3718@g5.osdl.org>
+References: <1146678513.20773.45.camel@pmac.infradead.org> 
+ <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>  <1147131877.2694.37.camel@shinybook.infradead.org>
+  <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>  <1147134522.2694.45.camel@shinybook.infradead.org>
+  <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org> <1147136467.2694.53.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 03:19:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 09 03:28:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdGsM-0002ai-Rd
-	for gcvg-git@gmane.org; Tue, 09 May 2006 03:19:02 +0200
+	id 1FdH1B-000496-L1
+	for gcvg-git@gmane.org; Tue, 09 May 2006 03:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbWEIBSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 May 2006 21:18:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751336AbWEIBSx
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:18:53 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:26284 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751335AbWEIBSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 May 2006 21:18:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060509011851.LLAI25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 May 2006 21:18:51 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605081801360.3718@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 8 May 2006 18:05:13 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751337AbWEIB15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 May 2006 21:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWEIB15
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 May 2006 21:27:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:9347 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751337AbWEIB15 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 May 2006 21:27:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k491RotH009979
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 8 May 2006 18:27:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k491Ro5e027727;
+	Mon, 8 May 2006 18:27:50 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1147136467.2694.53.camel@shinybook.infradead.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19805>
-
-Linus Torvalds <torvalds@osdl.org> writes:
-
-> On Mon, 8 May 2006, Junio C Hamano wrote:
->> 
->> Wait a minute...  Statefulness is not the issue, I think.
->
-> Well, it does end up being..
-
-Not really, you ended up making it so, perhaps, but I do not
-think it needs to be.
-
-You dodged my comments on the SQL-like queries ;-).  I was half
-(perhaps 3/4) joking, but some people actually might like to be
-able to say:
-
-	git repo-config --get-all branch.name where url like 'git://%'
-
-to list all the repositories reachable via git-native protocol.
-
-Oops, by the way, why does a [branch] have url as its attribute?
-I think this was a bad example -- we are talking about [remote]
-here.  But the main point is about syntax, so that is OK.
-
-> Exactly, git repo-config would have to know about this magic thing, and 
-> have a special argument like
->
-> 	--state=branch.name
->
-> that says that "state" is to be taken from the "branch.name" variable when 
-> seen.
->
-> Then, in addition to the regexp, you would have a way to trigger on the 
-> "state" variable.
-
-I am reluctant to buy that argument (I see it is an easy way
-from the implementation point of view) -- it appears to me that
-it would invite this easy user error.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19806>
 
 
-	[branch]
-        	name = linus
-        	url = git://git.kernel.org/../torvalds/linux-2.6
 
-	[branch]
-        	url = git://git.kernel.org/../jgarzik/libata-dev
-        	name = libata
+On Tue, 9 May 2006, David Woodhouse wrote:
+> 
+> Ah, right. Those are _commit_ IDs in that strange first line. I'll
+> reformat those to 'Commit:' and 'Parent:' for the mailing list.
 
-> It would be _able_ to do all the same things, but thanks to statefulness 
-> you'd be able to keep the section (and key) names the way they are.
+Right. That first line (that starts with "commit") lists the commit ID, 
+and if you say "--parents", the commit ID's of the parents will be 
+appended.
 
-Yes, but that statefulness is inviting user errors, and you need
-to update repo-config and config parser anyway, so I still do
-not see what the advantage is.
+So if you want to turn that into "Commit: <id>" and "Parent: <id>", you'll 
+want to do something like this:
+
+  git show --no-abbrev -C --patch-with-stat --pretty=fuller --parents $commit |
+	sed '1 s/commit \([0-9a-f]*\)/Commit:     \1\nParent:    /'
+
+which should look pretty (count the spaces to make sure it lines up 
+right with the other fields).
+
+(And if you ever want to report on merges, you'll want to change that a 
+bit, but it should be reasonably close to the above)
+
+		Linus
