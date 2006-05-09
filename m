@@ -1,48 +1,47 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Unresolved issues #2
-Date: Tue, 09 May 2006 09:09:13 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605090907260.24505@localhost.localdomain>
-References: <7v64lcqz9j.fsf@assigned-by-dhcp.cox.net>
- <7v4q065hq0.fsf@assigned-by-dhcp.cox.net>
- <1147174809.2794.12.camel@pmac.infradead.org>
+From: iler.ml@gmail.com
+Subject: Re: (patch) calloc->xaclloc in read-cache.c
+Date: Tue, 09 May 2006 16:14 +0000
+Message-ID: <0IZ000KI11YCKL10@mxout4.netvision.net.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 09 15:09:42 2006
+X-From: git-owner@vger.kernel.org Tue May 09 15:11:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdRxn-0005Ga-LK
-	for gcvg-git@gmane.org; Tue, 09 May 2006 15:09:20 +0200
+	id 1FdRzc-0005hM-KW
+	for gcvg-git@gmane.org; Tue, 09 May 2006 15:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932498AbWEINJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 09:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWEINJO
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 09:09:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44387 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932498AbWEINJO
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 9 May 2006 09:09:14 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IZ000E8E1VDCY50@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 09 May 2006 09:09:13 -0400 (EDT)
-In-reply-to: <1147174809.2794.12.camel@pmac.infradead.org>
-X-X-Sender: nico@localhost.localdomain
-To: David Woodhouse <dwmw2@infradead.org>
+	id S932494AbWEINLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 09:11:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWEINLJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 09:11:09 -0400
+Received: from mxout4.netvision.net.il ([194.90.9.27]:41608 "EHLO
+	mxout4.netvision.net.il") by vger.kernel.org with ESMTP
+	id S932494AbWEINLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 May 2006 09:11:08 -0400
+Received: from main ([62.90.164.62]) by mxout4.netvision.net.il
+ (Sun Java System Messaging Server 6.2-4.03 (built Sep 22 2005))
+ with ESMTPA id <0IZ000KHZ1YBKL10@mxout4.netvision.net.il> for
+ git@vger.kernel.org; Tue, 09 May 2006 16:11:04 +0300 (IDT)
+To: git@vger.kernel.org
+X-Mailer: Mail::SendEasy/1.2 Perl/5.008008-linux
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19838>
 
-On Tue, 9 May 2006, David Woodhouse wrote:
+How about this.
 
-> I'm not sure about that. The payload is patches, isn't it? That's just
-> text, too -- we aren't going to deal with diffs of binary content very
-> well _anyway_, are we?
-
-Yes we do.  GIT now has its own email friendly binary patch format.
-
-
-Nicolas
+--- read-cache.c.000	2006-05-09 15:27:56.000000000 +0000
++++ read-cache.c	2006-05-09 15:28:10.000000000 +0000
+@@ -552,7 +552,7 @@
+ 
+ 	active_nr = ntohl(hdr->hdr_entries);
+ 	active_alloc = alloc_nr(active_nr);
+-	active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
++	active_cache = xcalloc(active_alloc, sizeof(struct cache_entry *));
+ 
+ 	offset = sizeof(*hdr);
+ 	for (i = 0; i < active_nr; i++) {
