@@ -1,85 +1,108 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-feed-mail-list.sh
-Date: Tue, 09 May 2006 00:32:24 -0700
-Message-ID: <7v7j4v8xh3.fsf@assigned-by-dhcp.cox.net>
-References: <1146678513.20773.45.camel@pmac.infradead.org>
-	<7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net>
-	<1147131877.2694.37.camel@shinybook.infradead.org>
-	<Pine.LNX.4.64.0605081715270.3718@g5.osdl.org>
-	<4fb292fa0605081755m22e8239cjda0b1ac74b84c0d9@mail.gmail.com>
-	<7vac9sc8m3.fsf@assigned-by-dhcp.cox.net>
-	<4fb292fa0605081809r6aa76baai5eac9823183fc3fc@mail.gmail.com>
-	<7vwtcvc42s.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605081951390.3718@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue May 09 09:33:12 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] apply: fix infinite loop with multiple patches with --index
+Date: Tue, 09 May 2006 01:08:23 -0700
+Message-ID: <1147162103958-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 09 10:08:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdMiS-000379-2k
-	for gcvg-git@gmane.org; Tue, 09 May 2006 09:33:08 +0200
+	id 1FdNGp-0001pJ-0O
+	for gcvg-git@gmane.org; Tue, 09 May 2006 10:08:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbWEIHc1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 03:32:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbWEIHc1
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 03:32:27 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:246 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751450AbWEIHc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 May 2006 03:32:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060509073225.DJYN24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 9 May 2006 03:32:25 -0400
-To: Bertrand Jacquin <beber.mailing@gmail.com>
-In-Reply-To: <Pine.LNX.4.64.0605081951390.3718@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 8 May 2006 20:06:35 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751455AbWEIIIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 04:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbWEIIIZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 04:08:25 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:51423 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751455AbWEIIIY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 May 2006 04:08:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id E06132DC035;
+	Tue,  9 May 2006 01:08:23 -0700 (PDT)
+To: junkio@cox.net, git@vger.kernel.org
+X-Mailer: git-send-email 1.3.2.ge3d7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19828>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+When multiple patches are passed to git-apply, it will attempt
+to open multiple file descriptors to an index, which means
+multiple entries will be in the circular cache_file_list.
 
-> But if you want to get it for any random merges, you can always just do
->
-> 	git log -11 --pretty=oneline ^$commit^ $commit^@ |
-> 		sed 's/[0-9a-f]* // ; 11 s/.*/\.\.\./' 
->
-> which will show up to the ten first commits that were merged (and turn the 
-> eleventh one, if it exists, into "..." - that's a pretty disgusting trick 
-> to make it show when you left things out).
->
-> That "^$commit^ $commit^@" part is important. It may look like some 
-> deranged git smiley, but it does exactly what you want it to do: take all 
-> the parents of the commit, but ignore any commit reachable from the first 
-> one (the "mainline" of the person who did the commit).
->
-> The ^@ syntax is obviously pretty new, so it requires a modern git.
+This change makes git-apply only open the index once and
+write the index at exit.
 
-It is indeed very quite new.  Merged into "master" branch at the
-beginning of this month.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-I often wish we had a straightforward way to tell when a given
-feature went into the mainline, not just appeared on a topic
-branch.  In this case, I said:
+---
 
-	$ git whatchanged -p -S'"^@"' master -- revision.c
+ apply.c |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-to find ea4a19 commit (Apr 30 00:54:29 2006 -0700).  But that
-was when the feature was first made on one of my topic branches,
-which is not what I was looking for.
-
-By looking at gitk, I can then tell 83262e (May 1 01:54:27)
-merged it to "next", and 746437 (May 1 22:55:40) merged it to
-"master".
-
-In general this is an unsolvable question, because I can have a
-topic branch forked off of the tip of "master", cook it for a
-few days without advancing "master" at all, and merge it to
-"master" after that.  But such a merge will be a fast-forward.
+1d0b15a178abaf7ba61085f0acc70521bd71a961
+diff --git a/apply.c b/apply.c
+index 269210a..ca36391 100644
+--- a/apply.c
++++ b/apply.c
+@@ -19,6 +19,7 @@ #include "blob.h"
+ //
+ static const char *prefix;
+ static int prefix_length = -1;
++static int newfd = -1;
+ 
+ static int p_value = 1;
+ static int allow_binary_replacement = 0;
+@@ -1873,7 +1874,6 @@ static int use_patch(struct patch *p)
+ 
+ static int apply_patch(int fd, const char *filename)
+ {
+-	int newfd;
+ 	unsigned long offset, size;
+ 	char *buffer = read_patch_file(fd, &size);
+ 	struct patch *list = NULL, **listp = &list;
+@@ -1904,12 +1904,11 @@ static int apply_patch(int fd, const cha
+ 		size -= nr;
+ 	}
+ 
+-	newfd = -1;
+ 	if (whitespace_error && (new_whitespace == error_on_whitespace))
+ 		apply = 0;
+ 
+ 	write_index = check_index && apply;
+-	if (write_index)
++	if (write_index && newfd < 0)
+ 		newfd = hold_index_file_for_update(&cache_file, get_index_file());
+ 	if (check_index) {
+ 		if (read_cache() < 0)
+@@ -1922,12 +1921,6 @@ static int apply_patch(int fd, const cha
+ 	if (apply)
+ 		write_out_results(list, skipped_patch);
+ 
+-	if (write_index) {
+-		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_index_file(&cache_file))
+-			die("Unable to write new cachefile");
+-	}
+-
+ 	if (show_index_info)
+ 		show_index_list(list);
+ 
+@@ -2085,5 +2078,12 @@ int main(int argc, char **argv)
+ 				whitespace_error == 1 ? "" : "s",
+ 				whitespace_error == 1 ? "s" : "");
+ 	}
++
++	if (write_index) {
++		if (write_cache(newfd, active_cache, active_nr) ||
++		    commit_index_file(&cache_file))
++			die("Unable to write new cachefile");
++	}
++
+ 	return 0;
+ }
+-- 
+1.3.2.g45f7-dirty
