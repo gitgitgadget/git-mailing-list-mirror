@@ -1,60 +1,63 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: What's in git.git
-Date: Wed, 10 May 2006 17:34:28 +1200
-Message-ID: <46a038f90605092234u14d4cd2en73c9cbe698eea8b9@mail.gmail.com>
+Date: Wed, 10 May 2006 08:48:08 +0200
+Organization: At home
+Message-ID: <e3s2b0$i1m$1@sea.gmane.org>
 References: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 07:34:39 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed May 10 08:48:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdhLE-0007pC-Iu
-	for gcvg-git@gmane.org; Wed, 10 May 2006 07:34:32 +0200
+	id 1FdiUW-0000hG-5g
+	for gcvg-git@gmane.org; Wed, 10 May 2006 08:48:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964821AbWEJFea (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 01:34:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964822AbWEJFea
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 01:34:30 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:45879 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S964821AbWEJFe3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 May 2006 01:34:29 -0400
-Received: by wr-out-0506.google.com with SMTP id i34so1399678wra
-        for <git@vger.kernel.org>; Tue, 09 May 2006 22:34:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GJQotXruwNVFh/z1WGIjOSHihhwRibIz2HdNFLiABM6Ri834gmoTpgoaaahyxf4p/LftIQsyKwKoYwaE2lEhL/ovAa65ePNdc68Iboo0g1iVoLbsWeJKImMi4PVck0V7JUeEFN0z6GXpcFHATcTVTfQ6SiWL3ilTgbcjczVyi7U=
-Received: by 10.54.116.11 with SMTP id o11mr497270wrc;
-        Tue, 09 May 2006 22:34:28 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Tue, 9 May 2006 22:34:28 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750886AbWEJGsJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 02:48:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750915AbWEJGsI
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 02:48:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:13804 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750886AbWEJGsH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 May 2006 02:48:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FdiUO-0000fa-N6
+	for git@vger.kernel.org; Wed, 10 May 2006 08:48:04 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 May 2006 08:48:04 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 May 2006 08:48:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19879>
 
-On 5/10/06, Junio C Hamano <junkio@cox.net> wrote:
-> * The 'next' branch, in addition, has these.
->
->   - cvsserver and cvsexportcommit updates (Martin Langhoff and Martyn Smith)
->
->     This is a new merge but not very new code.  Martin may want
->     to comment on how ready they are.
+Junio C Hamano wrote:
 
-They have seen some limited use in-house -- we don't use Eclipse
-in-house that much, but that has been the test target. I am currently
-looking for a machine with good bandwidth to a backbone and cycles to
-spare where we can run anon cvs access to Linus's kernel.git repo.
+>   - built-in grep (me)
+> 
+>     I think this is also ready, even though it robs users from
+>     having funky "grep" on their $PATH and invoke it.  Compared
+>     to GNU grep, it lacks -P (pcre), -Z (NUL-terminated output),
+>     -q (totally quiet), -z (NUL-terminated input), but all the
+>     commonly used ones including -f (from file), -F (fixed), -w
+>     (word regexp), -l/-L (files with/without match) and -n (line
+>     number) are implemented.  The same "stop me or else" comment
+>     applies.
 
-cheers,
+If there would be possible to use external grep (like one can use external
+diff), then lack of some options wouldn't matter.
 
-
-martin
+-- 
+Jakub Narebski
+Warsaw, Poland
