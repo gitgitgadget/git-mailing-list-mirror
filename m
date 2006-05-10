@@ -1,83 +1,52 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Implementing branch attributes in git config
-Date: Wed, 10 May 2006 19:19:07 +1200
-Message-ID: <46a038f90605100019q3b44b87kf49e456668f2e249@mail.gmail.com>
-References: <1147037659.25090.25.camel@dv> <e3p5om$djs$1@sea.gmane.org>
-	 <Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vzmhr3wje.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
-	 <BAYC1-PASMTP02C02EAC2F64AC00BB5801AEA90@CEZ.ICE>
-	 <BAYC1-PASMTP04D623089E043F1C792A37AEA90@CEZ.ICE>
-	 <Pine.LNX.4.64.0605091543100.3718@g5.osdl.org>
-	 <BAYC1-PASMTP037EBB0237B35C5F92FB0BAEAE0@CEZ.ICE>
-	 <Pine.LNX.4.64.0605091854380.3718@g5.osdl.org>
+From: Martin Mares <mj@ucw.cz>
+Subject: Re: git-feed-mail-list.sh
+Date: Wed, 10 May 2006 10:49:07 +0200
+Message-ID: <mj+md-20060510.084721.9078.atrey@ucw.cz>
+References: <1146678513.20773.45.camel@pmac.infradead.org> <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net> <1147131877.2694.37.camel@shinybook.infradead.org> <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org> <1147134522.2694.45.camel@shinybook.infradead.org> <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org> <1147136467.2694.53.camel@shinybook.infradead.org> <7v64kgc8ik.fsf@assigned-by-dhcp.cox.net> <1147137170.2694.58.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: sean <seanlkml@sympatico.ca>, junkio@cox.net,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 09:19:12 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 10 10:49:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdiyW-0005wq-GW
-	for gcvg-git@gmane.org; Wed, 10 May 2006 09:19:12 +0200
+	id 1FdkNb-0004xe-9G
+	for gcvg-git@gmane.org; Wed, 10 May 2006 10:49:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964838AbWEJHTJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 03:19:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbWEJHTJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 03:19:09 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:136 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S964838AbWEJHTH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 May 2006 03:19:07 -0400
-Received: by wr-out-0506.google.com with SMTP id i34so1417024wra
-        for <git@vger.kernel.org>; Wed, 10 May 2006 00:19:07 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dstNN/h52ebY4RK7sGDYkaY9REzs4Bas4P7BoKiaVHnFl2zuLvgXOU7Xr+cvUPajOsXC+yvSQezJhXvXfqW5QgyStE4ClJrVIDD1WNg2FWWNLFabgPllMnuSoWdgxDYFFriaSjnlM5C3YzeBZscVqErWs/Weqgwvi6oeK813n6A=
-Received: by 10.54.98.15 with SMTP id v15mr580962wrb;
-        Wed, 10 May 2006 00:19:07 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Wed, 10 May 2006 00:19:07 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605091854380.3718@g5.osdl.org>
+	id S964860AbWEJItH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 04:49:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbWEJItH
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 04:49:07 -0400
+Received: from atrey.karlin.mff.cuni.cz ([195.113.31.123]:38285 "EHLO
+	atrey.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
+	id S964860AbWEJItG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 May 2006 04:49:06 -0400
+Received: by atrey.karlin.mff.cuni.cz (Postfix, from userid 1000)
+	id 7F0A3C7B31; Wed, 10 May 2006 10:49:07 +0200 (CEST)
+To: David Woodhouse <dwmw2@infradead.org>
 Content-Disposition: inline
+In-Reply-To: <1147137170.2694.58.camel@shinybook.infradead.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19881>
 
-On 5/10/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> You _can_ be user-friendly and machine-parseable at the same time!
+Hello!
 
-Good one. I'm following this thread with interest, but it feels we've
-been attacked by the 'bike shed bug' in the act of redesigning
-Windows.ini.
+> I think I'd best wait for it to turn up in the release; preferably
+> already capable of MIME quoting.
 
-As an end-user, I have personally stayed away from the increasingly
-complex scheme for remotes waiting for it to settle, and stuck with
-the old-styled .git/branches stuff which is slam-dunk simple and it
-just works.
+Wouldn't it be easier to feed the output to a MUA and letting it handle
+the MIME stuff for you?
 
-The normal non-branch config options don't need any of this fancy
-stuff. And I think the branches is reasonably well managed as files as
-is done in .git/remotes which is trivial to work on with standard
-shell commands. What I mean is that I can grep them trivially to ask
-"how many remotes pull from server X" or from repo Y. Or via rsync.
+I am using mutt for this purpose:
 
-Also -- repo config is tricky in the sense of scope. I want all my
-"dev" repos of different projects on my laptop to have mostly the same
-config but radically different remotes listings.
+mutt -x -e 'set charset="utf-8"; set send_charset="us-ascii:iso-8859-2:utf-8"' -s "$subj" "$recipient" <$out
 
-So... call me old-styled... but I'm happy with one-file-per-remote.
-Was it broken to start with? Should we restart the track renames
-flameway instead?
-
-cheers,
-
-
-
-martin
+				Have a nice fortnight
+-- 
+Martin `MJ' Mares   <mj@ucw.cz>   http://atrey.karlin.mff.cuni.cz/~mj/
+Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
+Next lecture on time travel will be held on previous Monday.
