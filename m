@@ -1,166 +1,93 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: sean <seanlkml@sympatico.ca>
 Subject: Re: Implementing branch attributes in git config
-Date: Tue, 9 May 2006 17:17:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605091543100.3718@g5.osdl.org>
-References: <1147037659.25090.25.camel@dv> <Pine.LNX.4.64.0605081905240.6713@iabervon.org>
- <BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
- <Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
- <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE> <Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
- <7virogc90u.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
- <7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
- <BAYC1-PASMTP04C9C4BF5B89E55B9D877AAEA90@CEZ.ICE> <Pine.LNX.4.64.0605082007100.3718@g5.osdl.org>
- <BAYC1-PASMTP05953E2B948CB07A171FD8AEA90@CEZ.ICE> <Pine.LNX.4.64.0605082100460.3718@g5.osdl.org>
- <e3p5om$djs$1@sea.gmane.org> <Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmhr3wje.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
- <BAYC1-PASMTP02C02EAC2F64AC00BB5801AEA90@CEZ.ICE>
- <BAYC1-PASMTP04D623089E043F1C792A37AEA90@CEZ.ICE>
+Date: Tue, 9 May 2006 21:38:53 -0400
+Message-ID: <BAYC1-PASMTP1056CADE82C96CB1DA9AA9AEAE0@CEZ.ICE>
+References: <1147037659.25090.25.camel@dv>
+	<BAYC1-PASMTP0453E2D70B10C6D116167EAEA80@CEZ.ICE>
+	<Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
+	<BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE>
+	<Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
+	<7virogc90u.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
+	<7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
+	<BAYC1-PASMTP04C9C4BF5B89E55B9D877AAEA90@CEZ.ICE>
+	<Pine.LNX.4.64.0605082007100.3718@g5.osdl.org>
+	<BAYC1-PASMTP05953E2B948CB07A171FD8AEA90@CEZ.ICE>
+	<Pine.LNX.4.64.0605082100460.3718@g5.osdl.org>
+	<e3p5om$djs$1@sea.gmane.org>
+	<Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vzmhr3wje.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
+	<BAYC1-PASMTP02C02EAC2F64AC00BB5801AEA90@CEZ.ICE>
+	<BAYC1-PASMTP04D623089E043F1C792A37AEA90@CEZ.ICE>
+	<Pine.LNX.4.64.0605091543100.3718@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: junkio@cox.net, Johannes.Schindelin@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 02:18:59 2006
+X-From: git-owner@vger.kernel.org Wed May 10 03:44:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdcPk-00041d-Om
-	for gcvg-git@gmane.org; Wed, 10 May 2006 02:18:53 +0200
+	id 1FddkQ-0003Hl-9R
+	for gcvg-git@gmane.org; Wed, 10 May 2006 03:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932343AbWEJASQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 20:18:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932345AbWEJASQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 20:18:16 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:5815 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932343AbWEJASP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 May 2006 20:18:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4A0HxtH001403
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 May 2006 17:17:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4A0HwEX028888;
-	Tue, 9 May 2006 17:17:58 -0700
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP04D623089E043F1C792A37AEA90@CEZ.ICE>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751021AbWEJBoH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 21:44:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbWEJBoG
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 21:44:06 -0400
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:27573 "EHLO
+	BAYC1-PASMTP10.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1751021AbWEJBoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 May 2006 21:44:04 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP10.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 9 May 2006 18:45:58 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 0BE0E644C2A;
+	Tue,  9 May 2006 21:44:03 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Message-Id: <20060509213853.0fd8af0f.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.64.0605091543100.3718@g5.osdl.org>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 10 May 2006 01:45:58.0515 (UTC) FILETIME=[7C2B6430:01C673D3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19864>
 
+On Tue, 9 May 2006 17:17:58 -0700 (PDT)
+Linus Torvalds <torvalds@osdl.org> wrote:
 
+> Here's a pretty lightly tested patch (on top of my previous one) that does 
+> exactly that.
 
-On Tue, 9 May 2006, sean wrote:
->
-> I really tried to like your patch ;o)  But it breaks the repo-config command
-> line and causes mixing of some branches using old style [branch.xyz] and new
-> style [branch "XYZ"] which just doesn't seem to be the right thing to do.
+This patch or something like it is needed for repo-config in order to query
+the new case sensitive portion of section names.   This is on top of your two
+patches:
 
-Well, obviously it's _simpler_ to have the machine-readable format as-is, 
-and say "don't try to make it human-readable". But the repo-config patch 
-to make it human-readable isn't that hard.
-
-And it's _not_ that hard to make repo-config do the right thing.
-
-Here's a pretty lightly tested patch (on top of my previous one) that does 
-exactly that.
-
-(The first part just fixes an indentation bug)
-
-		Linus
----
-diff --git a/config.c b/config.c
-index f3b74e0..12c51b1 100644
---- a/config.c
-+++ b/config.c
-@@ -372,10 +372,12 @@ static int store_aux(const char* key, co
- 			store.offset[store.seen] = ftell(config_file);
- 			store.state = KEY_SEEN;
- 			store.seen++;
--		} else if (strrchr(key, '.') - key == store.baselen &&
-+		} else {
-+			if (strrchr(key, '.') - key == store.baselen &&
- 			      !strncmp(key, store.key, store.baselen)) {
- 					store.state = SECTION_SEEN;
- 					store.offset[store.seen] = ftell(config_file);
-+			}
- 		}
- 	}
- 	return 0;
-@@ -383,8 +385,30 @@ static int store_aux(const char* key, co
- 
- static void store_write_section(int fd, const char* key)
+diff --git a/repo-config.c b/repo-config.c
+index 63eda1b..9a9194f 100644
+--- a/repo-config.c
++++ b/repo-config.c
+@@ -65,11 +65,14 @@ static int show_config(const char* key_,
+ static int get_value(const char* key_, const char* regex_)
  {
-+	const char *dot = strchr(key, '.');
-+	int len1 = store.baselen, len2 = -1;
+ 	int i;
++	char *tl;
 +
-+	dot = strchr(key, '.');
-+	if (dot) {
-+		int dotlen = dot - key;
-+		if (dotlen < len1) {
-+			len2 = len1 - dotlen - 1;
-+			len1 = dotlen;
-+		}
-+	}
-+			
- 	write(fd, "[", 1);
--	write(fd, key, store.baselen);
-+	write(fd, key, len1);
-+	if (len2 >= 0) {
-+		write(fd, " \"", 2);
-+		while (--len2 >= 0) {
-+			unsigned char c = *++dot;
-+			if (c == '"')
-+				write(fd, "\\", 1);
-+			write(fd, &c, 1);
-+		}
-+		write(fd, "\"", 1);
-+	}
- 	write(fd, "]\n", 2);
- }
++	key = strdup(key_);
++	for (tl=key+strlen(key)-1; tl >= key && *tl != '.'; --tl)
++		*tl = tolower(*tl);
++	for (tl=key; *tl && *tl != '.'; ++tl)
++		*tl = tolower(*tl);
  
-@@ -458,7 +482,7 @@ int git_config_set(const char* key, cons
- int git_config_set_multivar(const char* key, const char* value,
- 	const char* value_regex, int multi_replace)
- {
--	int i;
-+	int i, dot;
- 	int fd = -1, in_fd;
- 	int ret;
- 	char* config_filename = strdup(git_path("config"));
-@@ -483,16 +507,23 @@ int git_config_set_multivar(const char* 
- 	 * Validate the key and while at it, lower case it for matching.
- 	 */
- 	store.key = (char*)malloc(strlen(key)+1);
--	for (i = 0; key[i]; i++)
--		if (i != store.baselen &&
--				((!isalnum(key[i]) && key[i] != '.') ||
--				 (i == store.baselen+1 && !isalpha(key[i])))) {
--			fprintf(stderr, "invalid key: %s\n", key);
--			free(store.key);
--			ret = 1;
--			goto out_free;
--		} else
--			store.key[i] = tolower(key[i]);
-+	dot = 0;
-+	for (i = 0; key[i]; i++) {
-+		unsigned char c = key[i];
-+		if (c == '.')
-+			dot = 1;
-+		/* Leave the extended basename untouched.. */
-+		if (!dot || i > store.baselen) {
-+			if (!isalnum(c) || (i == store.baselen+1 && !isalpha(c))) {
-+				fprintf(stderr, "invalid key: %s\n", key);
-+				free(store.key);
-+				ret = 1;
-+				goto out_free;
-+			}
-+			c = tolower(c);
-+		}
-+		store.key[i] = c;
-+	}
- 	store.key[i] = 0;
+-	key = malloc(strlen(key_)+1);
+-	for (i = 0; key_[i]; i++)
+-		key[i] = tolower(key_[i]);
+-	key[i] = 0;
  
- 	/*
+ 	if (use_key_regexp) {
+ 		key_regexp = (regex_t*)malloc(sizeof(regex_t));
