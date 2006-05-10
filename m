@@ -1,107 +1,88 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] fix diff-delta bad memory access
-Date: Wed, 10 May 2006 15:57:39 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605101555390.24505@localhost.localdomain>
-References: <Pine.LNX.4.64.0605101216360.24505@localhost.localdomain>
- <Pine.LNX.4.64.0605100953090.3718@g5.osdl.org>
- <Pine.LNX.4.64.0605101311020.24505@localhost.localdomain>
- <Pine.LNX.4.64.0605101159160.3718@g5.osdl.org>
- <Pine.LNX.4.64.0605101515420.24505@localhost.localdomain>
+From: Martin Waitz <tali@admingilde.org>
+Subject: common URL for repository and gitweb
+Date: Thu, 11 May 2006 01:00:46 +0200
+Message-ID: <20060510230046.GC3228@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 10 21:57:47 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8NvZYKFJsRX2Djef"
+X-From: git-owner@vger.kernel.org Thu May 11 01:01:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FduoZ-0000pk-JH
-	for gcvg-git@gmane.org; Wed, 10 May 2006 21:57:44 +0200
+	id 1Fdxfo-00071I-Po
+	for gcvg-git@gmane.org; Thu, 11 May 2006 01:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbWEJT5k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 15:57:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbWEJT5k
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 15:57:40 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14436 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751323AbWEJT5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 May 2006 15:57:40 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IZ200DDVFG3QR60@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 10 May 2006 15:57:39 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0605101515420.24505@localhost.localdomain>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S965060AbWEJXAt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 19:00:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965062AbWEJXAt
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 19:00:49 -0400
+Received: from admingilde.org ([213.95.32.146]:45466 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S965060AbWEJXAs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 May 2006 19:00:48 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Fdxfi-0005gu-U3
+	for git@vger.kernel.org; Thu, 11 May 2006 01:00:46 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19896>
 
 
-And of course s/robin/rabin/ (I can't type RABIN without having my 
-fingers decide on ROBIN by themselves).
+--8NvZYKFJsRX2Djef
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 10 May 2006, Nicolas Pitre wrote:
+hoi :)
 
-> On Wed, 10 May 2006, Linus Torvalds wrote:
-> 
-> > 
-> > 
-> > Btw, Nico, that rabin hash code is _extremely_ confusing.
-> 
-> Possible.
-> 
-> > The hash entry pointers point to "data + RABIN_WINDOW", and then to make 
-> > things even _more_ confusing, the hash calculation code is actually offset 
-> > by one, so it will have computed the hash with
-> > 
-> > 	val = ((val << 8) | data[i]) ^ T[val >> RABIN_SHIFT];
-> > 
-> > where "i" goes from _1_ to RABIN_WINDOW instead of 0..WINDOW-1.
-> > 
-> > So, if I read that correctly, the "entry->ptr" actually points not to the 
-> > beginning of the data that was hashed, or even the end, but literally to 
-> > the last byte of the data that was hashed in that window.
-> > 
-> > Isn't that just _really_ confusing?
-> > 
-> > Or is there some sense to this?
-> 
-> Yes, ptr points to the last byte of the window for given hash value.
-> 
-> This is so because in the matching loop the window is scrolled byte by 
-> byte and the new hash value is always made of ROBIN_WINDOW-1 bytes which 
-> already have been processed (most probably added as literal bytes in the 
-> delta buffer) plus one new byte.  So it makes sense to start forward 
-> byte matching only from that last byte to find the longest source area 
-> to match, especially since all the other bytes in the window are likely 
-> to be identical already and comparing them repeatedly for entries with 
-> the same hash would be wasteful in most cases.
-> 
-> Further down, once the best offset with the longest match in the source 
-> buffer has been found, backward matching is performed to remove as much 
-> literal bytes that were added to the delta output as possible, which is 
-> most likely to catch the whole Robin window that hasn't been compared 
-> previously, but in that case the window content is compared only once.
-> 
-> And the reason why the reference hash is computed with an offset of 1 to 
-> RABIN_WINDOW inclusive in create_delta_index() is to allow for quick 
-> initialization of the Rabin window _outside_ of the main loop in 
-> create_delta().  There is a comment to that effect near the top of 
-> create_delta_index but probably a small reminder should be added in the 
-> index loop as well.
-> 
-> 
-> Nicolas
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+I hacked a little bit in gitweb so that it can get the project path
+form the URI without using a ?p=3D parameter.  That is, you can now
+use "http://.../cgi-bin/gitweb.cgi/path/to/project/" to show
+the summary of your project.
 
+Together with a apache configuration like below, you can give your
+gitweb pages the same URL as your repositories:
 
-Nicolas
+	<VirtualHost www:80>
+		ServerName git.hostname.org
+		DocumentRoot /pub/git
+		RewriteEngine on
+		RewriteRule ^/(.*\.git/(.*\.html)?)?$ /usr/lib/cgi-bin/gitweb.cgi%{REQUES=
+T_URI}  [L]
+	</VirtualHost>
+
+This will rewrite all URLs that go to gitweb to use the CGI, while
+leaving URLs for the repository intact.
+
+You can see an example at http://git.admingilde.org/.
+The gitweb version used for that is available here, too.
+
+As an added bonus, gitweb can now serve the "html" branch of a
+repository directly using "text/html", so you can show your
+documentation without needing to update a checked out version
+of this branch.
+For example have a look at the GIT manpages at
+http://git.admingilde.org/tali/git.git/git.html
+
+--=20
+Martin Waitz
+
+--8NvZYKFJsRX2Djef
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEYnCej/Eaxd/oD7IRAmeyAJ4/+zguP4YnvkpqCZxrvIe0hQDcbwCfcJPY
+Zr2Atd6fZfGlhv4bYZhTFuw=
+=jgDa
+-----END PGP SIGNATURE-----
+
+--8NvZYKFJsRX2Djef--
