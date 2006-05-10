@@ -1,135 +1,220 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Implementing branch attributes in git config
-Date: Tue, 9 May 2006 19:08:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605091854380.3718@g5.osdl.org>
-References: <1147037659.25090.25.camel@dv>
- <Pine.LNX.4.63.0605090142280.5778@wbgn013.biozentrum.uni-wuerzburg.de>
- <BAYC1-PASMTP03ADC2F3E75E482ADC5CD3AEA90@CEZ.ICE> <Pine.LNX.4.64.0605081731440.3718@g5.osdl.org>
- <7virogc90u.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605081801360.3718@g5.osdl.org>
- <7v1wv4c7wk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605081854190.3718@g5.osdl.org>
- <BAYC1-PASMTP04C9C4BF5B89E55B9D877AAEA90@CEZ.ICE> <Pine.LNX.4.64.0605082007100.3718@g5.osdl.org>
- <BAYC1-PASMTP05953E2B948CB07A171FD8AEA90@CEZ.ICE> <Pine.LNX.4.64.0605082100460.3718@g5.osdl.org>
- <e3p5om$djs$1@sea.gmane.org> <Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmhr3wje.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
- <BAYC1-PASMTP02C02EAC2F64AC00BB5801AEA90@CEZ.ICE>
- <BAYC1-PASMTP04D623089E043F1C792A37AEA90@CEZ.ICE> <Pine.LNX.4.64.0605091543100.3718@g5.osdl.org>
- <BAYC1-PASMTP037EBB0237B35C5F92FB0BAEAE0@CEZ.ICE>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Tue, 09 May 2006 20:11:31 -0700
+Message-ID: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net, Johannes.Schindelin@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 04:09:16 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed May 10 05:11:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fde8W-0000bj-2W
-	for gcvg-git@gmane.org; Wed, 10 May 2006 04:09:12 +0200
+	id 1Fdf6v-00029Y-Sm
+	for gcvg-git@gmane.org; Wed, 10 May 2006 05:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbWEJCJI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 May 2006 22:09:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWEJCJI
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 22:09:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:8402 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751194AbWEJCJH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 May 2006 22:09:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4A28jtH004308
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 May 2006 19:08:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4A28jkw031312;
-	Tue, 9 May 2006 19:08:45 -0700
-To: sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP037EBB0237B35C5F92FB0BAEAE0@CEZ.ICE>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964775AbWEJDLe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 May 2006 23:11:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964776AbWEJDLe
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 May 2006 23:11:34 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:50939 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S964775AbWEJDLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 May 2006 23:11:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060510031132.VJPB9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 9 May 2006 23:11:32 -0400
+To: git@vger.kernel.org
+X-maint-at: d1802851b0c112a065b43e3f83d631f867b7e1ce
+X-master-at: f7a3276bab880222e3117f8b8cbef40920dfe884
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19868>
+
+This week's "What's in" is a day early, since I do not expect to
+be able to do much gitting for the rest of the week.
+
+* The 'maint' branch has these fixes since the last announcement.
+
+Dmitry V. Levin:
+      Separate object name errors from usage errors
+
+Eric Wong:
+      apply: fix infinite loop with multiple patches with --index
+
+Johannes Schindelin:
+      repo-config: trim white-space before comment
+
+Junio C Hamano:
+      core.prefersymlinkrefs: use symlinks for .git/HEAD
+      repo-config: document what value_regexp does a bit more clearly.
+      Fix repo-config set-multivar error return path.
+      Documentation: {caret} fixes (git-rev-list.txt)
+
+Linus Torvalds:
+      Fix "git diff --stat" with long filenames
+      revert/cherry-pick: use aggressive merge.
+
+Martin Waitz:
+      clone: keep --reference even with -l -s
+      repack: honor -d even when no new pack was created
+
+Matthias Lederhofer:
+      core-tutorial.txt: escape asterisk
+
+Pavel Roskin:
+      Release config lock if the regex is invalid
+
+Sean Estabrooks:
+      Fix for config file section parsing.
+
+Yakov Lerner:
+      read-cache.c: use xcalloc() not calloc()
 
 
+* The 'master' branch has these since the last announcement, in
+  addition to the above.  I've flushed topics that have been
+  cooked in "next" long enough and hadn't given me problems.
 
-On Tue, 9 May 2006, sean wrote:
-> On Tue, 9 May 2006 17:17:58 -0700 (PDT)
-> Linus Torvalds <torvalds@osdl.org> wrote:
-> 
-> > And it's _not_ that hard to make repo-config do the right thing.
-> > 
-> > Here's a pretty lightly tested patch (on top of my previous one) that does 
-> > exactly that.
-> 
-> So every mutli-part section is going to be of the form:
-> 
->   [section "big long opaque string"]
+Eric Wong:
+      git-svn: documentation updates
+      git-svn 1.0.0
 
-That's what my stupid patch does now. It seems to work well for all cases, 
-but if we were to care, we could have some special heuristics for 
-different section names (ie "if subsection is all lower-case 
-alphanumerics, and the section name is one of the following, use the 
-old-fashioned format").
+Johannes Schindelin:
+      builtin-push: --all and --tags _are_ explicit refspecs
+      Fix users of prefix_path() to free() only when necessary
+      Fix users of prefix_path() to free() only when necessary
 
-I don't see _why_ we'd ever do that, but we certainly _could_, if it were 
-to make more sense that way for some section name.
+Junio C Hamano:
+      get_sha1(): :path and :[0-3]:path to extract from index.
+      Makefile: do not link rev-list any specially.
+      delta: stricter constness
+      pack-object: squelch eye-candy on non-tty
+      binary patch.
+      binary diff: further updates.
+      update-index --unresolve: work from a subdirectory.
+      checkout-index: plug memory leak from prefix_path()
+      update-index: plug memory leak from prefix_path()
+      update-index --again
+      update-index --again: take optional pathspecs
+      binary diff and apply: testsuite.
+      repo-config: document what value_regexp does a bit more clearly.
+      get_sha1() - fix infinite loop on nonexistent stage.
+      Teach git-clean optional <paths>... parameters.
+      checkout: use --aggressive when running a 3-way merge (-m).
 
-However, if you already use a syntax like
+Martin Waitz:
+      Transitively read alternatives
+      test case for transitive info/alternates
+      clone: don't clone the info/alternates file
 
-	[section.subsection]
-		key = 1
+Nicolas Pitre:
+      split the diff-delta interface
+      use delta index data when finding best delta matches
+      replace adler32 with Rabin's polynomial in diff-delta
+      tiny optimization to diff-delta
+      improve diff-delta with sparse and/or repetitive data
+      improve base85 generated assembly code
 
-and then do
+Peter Hagervall:
+      Sparse fix for builtin-diff
 
-	git-repo-config --replace-all section.subsection.new 2
+Sean Estabrooks:
+      Several trivial documentation touch ups.
+      Fix up docs where "--" isn't displayed correctly.
+      Update git-unpack-objects documentation.
+      Clarify git-cherry documentation.
+      Another config file parsing fix.
+      t1300-repo-config: two new config parsing tests.
 
-it will actually keep the old section header, so you'll end up with
 
-	[section.subsection]
-		key = 1
-		new = 2
+* The 'next' branch, in addition, has these.
 
-but if you create a _new_ subsection (and since subsections are now case 
-sensitive, this example is a "new" subsection):
+  - cvsserver and cvsexportcommit updates (Martin Langhoff and Martyn Smith)
 
-	git-repo-config --replace-all section.SubSection.new 3
+    This is a new merge but not very new code.  Martin may want
+    to comment on how ready they are.
 
-you will now have
+  - built-in fmt-patch (Johannes Schindelin)
 
-	[section.subsection]
-		key = 1
-		new = 2
-	[section "SubSection"]
-		new = 3
+    I think this is ready, even though it does not have some
+    things we have in format-patch (i.e. --attach, --signoff,
+    --check).  If anybody deeply cares please stop me soon or
+    better yet enhance with your patches; otherwise I would like
+    to push this out to "master" sometime next week to supersede
+    the git-format-patch script.
 
-(ie notice how it did _not_ replace the old "section.subsection.new", 
-because of how this is a _different_ subsection due to the subsectin 
-rules, and notice how it will always create the new subsection with 
-quotes).
+  - built-in grep (me)
 
-So you _can_ continue to use the old subsection format, and it will work 
-the way it always did, except for the fact that it would now be deprecated 
-(if there were any multi-level users, which I don't think there are), and 
-it is now case-sensitive (which makes sense in the new format with "" 
-around it, but is illogical in the old deprecated one).
+    I think this is also ready, even though it robs users from
+    having funky "grep" on their $PATH and invoke it.  Compared
+    to GNU grep, it lacks -P (pcre), -Z (NUL-terminated output),
+    -q (totally quiet), -z (NUL-terminated input), but all the
+    commonly used ones including -f (from file), -F (fixed), -w
+    (word regexp), -l/-L (files with/without match) and -n (line
+    number) are implemented.  The same "stop me or else" comment
+    applies.
 
-> It seems to handle everything, you have me convinced.
+  - use config "remote.$name.url" and friends for fetch/pull
+    (Johannes Schindelin)
 
-Hey, it was fun, and the only ugly part was the write-out of the quoted 
-format.
+    I think this itself is ready; the only reason I do not plan
+    to do so this week is to wait until the new config format
+    discussion settles, at which time we would need to adjust
+    this to the new format.
 
-And it should be perfectly easy to use. Modulo double-quotes in branch 
-names, you can do trivial things like
+  - cache-tree (me)
 
-	git repo-config "branch.$branchname.remote" "git://git.kernel.org/..."
+    This has been stalled; I would want to redo it without using
+    out-of-index data structure, but that would need the
+    following steps, and lately I have too many distractions to
+    concentrate on them.
 
-and it will do the obvious thing.
+    - review existing index/working-tree/tree walkers.
 
-My one complaint is that I think we should add an empty line for the case 
-where we add a new sub-section to the end of a file. That's not a new 
-problem, but that was really the only visually ugly part I noticed during 
-testing.
+    - prepare a merge-tree style path walker that walks index,
+      working tree, and zero or more trees in parallel.  This
+      would probably have an interator interface to return list
+      of either tree or blob <mode,sha1> to the caller.  Because
+      index does not currently have tree entries, a "not
+      up-to-date" tree entry would be returned from the index
+      part of the walker if I base this change on "master".  I
+      might base this on "next" and use information from
+      cache-tree. 
 
-You _can_ be user-friendly and machine-parseable at the same time!
+    - using the parallel path walker, revamp diff-cache (both
+      cached and non cached) to work out kinks to the walker API
+      and see how well it performs.  If I base the work on
+      "next", the code should be able to skip unchanged
+      subtrees.
 
-			Linus
+    - revamp diff-files (walks index and working tree), although
+      this will not get any benefit from having tree entries in
+      the index.
+
+    - revamp read-tree (all forms).
+
+    - if I based the work on "next", rip out the cache-tree
+      dependency and make the walker return "not up-to-date"
+      tree entries for index.
+
+    - revamp update-index, apply, and write-tree to have tree
+      entries in the index.  This probably involves revamping
+      read-cache interface to update the index file contents.
+
+    - review read-tree to make sure it correctly maintains the
+      tree entries in the cache.
+
+* The 'pu' branch, in addition, has the proposed configuration
+  file syntax updates from Linus with a patch from Sean.  I
+  haven't had time to really look at it, and it seems to fail a
+  test right now, but I left it as is.  This is merged from a
+  throw-away topic branch for now, but when I resume to gitting
+  sometime next week I am hoping we have something ready to be
+  tested (iow, "next" material) based on the list concensus.  At
+  that time we might probably do backport to cope with the
+  syntax updates for 1.3.X release and perhaps 1.2.X series just
+  for fun.
