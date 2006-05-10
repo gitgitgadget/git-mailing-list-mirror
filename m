@@ -1,52 +1,61 @@
-From: Martin Mares <mj@ucw.cz>
-Subject: Re: git-feed-mail-list.sh
-Date: Wed, 10 May 2006 10:49:07 +0200
-Message-ID: <mj+md-20060510.084721.9078.atrey@ucw.cz>
-References: <1146678513.20773.45.camel@pmac.infradead.org> <7vmzdy9zl2.fsf@assigned-by-dhcp.cox.net> <1147131877.2694.37.camel@shinybook.infradead.org> <Pine.LNX.4.64.0605081715270.3718@g5.osdl.org> <1147134522.2694.45.camel@shinybook.infradead.org> <Pine.LNX.4.64.0605081742330.3718@g5.osdl.org> <1147136467.2694.53.camel@shinybook.infradead.org> <7v64kgc8ik.fsf@assigned-by-dhcp.cox.net> <1147137170.2694.58.camel@shinybook.infradead.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Implementing branch attributes in git config
+Date: Wed, 10 May 2006 13:07:34 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605101305560.6240@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1147037659.25090.25.camel@dv> <e3p5om$djs$1@sea.gmane.org> 
+ <Pine.LNX.4.63.0605091321350.7652@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7vzmhr3wje.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0605091215340.3718@g5.osdl.org>
+  <BAYC1-PASMTP02C02EAC2F64AC00BB5801AEA90@CEZ.ICE> 
+ <BAYC1-PASMTP04D623089E043F1C792A37AEA90@CEZ.ICE>  <Pine.LNX.4.64.0605091543100.3718@g5.osdl.org>
+  <BAYC1-PASMTP037EBB0237B35C5F92FB0BAEAE0@CEZ.ICE> 
+ <Pine.LNX.4.64.0605091854380.3718@g5.osdl.org>
+ <46a038f90605100019q3b44b87kf49e456668f2e249@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 10:49:18 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 10 13:07:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdkNb-0004xe-9G
-	for gcvg-git@gmane.org; Wed, 10 May 2006 10:49:11 +0200
+	id 1FdmXb-00046d-Cr
+	for gcvg-git@gmane.org; Wed, 10 May 2006 13:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964860AbWEJItH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 04:49:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbWEJItH
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 04:49:07 -0400
-Received: from atrey.karlin.mff.cuni.cz ([195.113.31.123]:38285 "EHLO
-	atrey.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
-	id S964860AbWEJItG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 May 2006 04:49:06 -0400
-Received: by atrey.karlin.mff.cuni.cz (Postfix, from userid 1000)
-	id 7F0A3C7B31; Wed, 10 May 2006 10:49:07 +0200 (CEST)
-To: David Woodhouse <dwmw2@infradead.org>
-Content-Disposition: inline
-In-Reply-To: <1147137170.2694.58.camel@shinybook.infradead.org>
-User-Agent: Mutt/1.5.9i
+	id S964901AbWEJLHg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 07:07:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964921AbWEJLHg
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 07:07:36 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:37266 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964901AbWEJLHf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 May 2006 07:07:35 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 5A770CA6;
+	Wed, 10 May 2006 13:07:34 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 4DED8C66;
+	Wed, 10 May 2006 13:07:34 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 3134CA89;
+	Wed, 10 May 2006 13:07:34 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90605100019q3b44b87kf49e456668f2e249@mail.gmail.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19882>
 
-Hello!
+Hi,
 
-> I think I'd best wait for it to turn up in the release; preferably
-> already capable of MIME quoting.
+On Wed, 10 May 2006, Martin Langhoff wrote:
 
-Wouldn't it be easier to feed the output to a MUA and letting it handle
-the MIME stuff for you?
+> So... call me old-styled... but I'm happy with one-file-per-remote.
+> Was it broken to start with?
 
-I am using mutt for this purpose:
+Depends on how you look at it. A bunch of files is okay for quick-n-dirty, 
+where you do not care about locking or consistency or extensibility.
 
-mutt -x -e 'set charset="utf-8"; set send_charset="us-ascii:iso-8859-2:utf-8"' -s "$subj" "$recipient" <$out
-
-				Have a nice fortnight
--- 
-Martin `MJ' Mares   <mj@ucw.cz>   http://atrey.karlin.mff.cuni.cz/~mj/
-Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
-Next lecture on time travel will be held on previous Monday.
+Ciao,
+Dscho
