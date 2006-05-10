@@ -1,62 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: What's in git.git
-Date: Tue, 9 May 2006 21:26:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605092123520.3718@g5.osdl.org>
+Date: 09 May 2006 21:36:43 -0700
+Message-ID: <864pzyh4x0.fsf@blue.stonehenge.com>
 References: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605092117240.3718@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 06:26:42 2006
+X-From: git-owner@vger.kernel.org Wed May 10 06:38:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdgHV-00066o-Rw
-	for gcvg-git@gmane.org; Wed, 10 May 2006 06:26:38 +0200
+	id 1FdgRQ-0007fn-0r
+	for gcvg-git@gmane.org; Wed, 10 May 2006 06:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964802AbWEJE0f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 00:26:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964804AbWEJE0f
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 00:26:35 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40832 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964802AbWEJE0f (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 May 2006 00:26:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4A4QPtH008504
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 May 2006 21:26:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4A4QOhk001774;
-	Tue, 9 May 2006 21:26:24 -0700
+	id S964797AbWEJEgp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 00:36:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964804AbWEJEgp
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 00:36:45 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:60071 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964797AbWEJEgo
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 May 2006 00:36:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 03A2C8F564;
+	Tue,  9 May 2006 21:36:44 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 04535-01-26; Tue,  9 May 2006 21:36:43 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 76BA28F569; Tue,  9 May 2006 21:36:43 -0700 (PDT)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0605092117240.3718@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+x-mayan-date: Long count = 12.19.13.5.2; tzolkin = 4 Ik; haab = 15 Uo
+In-Reply-To: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19872>
 
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
+Junio> This week's "What's in" is a day early, since I do not expect to
+Junio> be able to do much gitting for the rest of the week.
 
-On Tue, 9 May 2006, Linus Torvalds wrote:
-> 
-> I think the new binary diff is non-reversible. That's ok right now, since 
-> we don't actually support patching in reverse (if you want to get the 
-> reverse patch, you need to _diff_ it in reverse and then patch it that 
-> way).
+I just got this with the latest, on the git archive, using git-repack -a:
 
-Btw, I don't actually know why we don't support "-R". The way git-apply is 
-written, it should be totally trivial (just switch old/new around for data 
-and line numbers - since it doesn't actually apply the patch directly line 
-by line or anything like that) for a normal patch.
+Generating pack...
+Done counting 19151 objects.
+Deltifying 19151 objects.
+Segmentation fault (core dumped)
 
-So if I read the binary patch right, the lack of "-R" went from "silly 
-oversight" to "uhhuh, I don't think the patch format supports it".
+This is on OpenBSD.  Is there a secret sabotage afoot?  This is repeatable.
+Is there anything I can try differently?
 
-Maybe it's not a big deal.
-
-			Linus
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
