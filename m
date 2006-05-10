@@ -1,73 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix diff-delta bad memory access
-Date: Wed, 10 May 2006 12:26:08 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605101216360.24505@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: What's in git.git
+Date: Wed, 10 May 2006 09:48:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605100919250.3718@g5.osdl.org>
+References: <7viroezi8s.fsf@assigned-by-dhcp.cox.net> <864pzyh4x0.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0605092142050.3718@g5.osdl.org>
+ <Pine.LNX.4.64.0605101012250.24505@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 10 18:26:47 2006
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 10 18:49:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdrVt-0000fT-Uc
-	for gcvg-git@gmane.org; Wed, 10 May 2006 18:26:14 +0200
+	id 1FdrsD-0004oW-F8
+	for gcvg-git@gmane.org; Wed, 10 May 2006 18:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965012AbWEJQ0K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 12:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965013AbWEJQ0K
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 12:26:10 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63418 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S965012AbWEJQ0J
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 May 2006 12:26:09 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IZ200AL45NKPOJ0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 10 May 2006 12:26:08 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S964908AbWEJQtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 12:49:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964981AbWEJQtO
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 12:49:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:64912 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964908AbWEJQtO (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 May 2006 12:49:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4AGmvtH003992
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 10 May 2006 09:48:57 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4AGmtao018274;
+	Wed, 10 May 2006 09:48:56 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0605101012250.24505@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19887>
-
-It cannot be assumed that the given buffer will never be moved when 
-shrinking the allocated memory size with realloc().  So let's ignore 
-that optimization for now.
-
-This patch makes Electric Fence happy on Linux.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
-
----
-
-I can't tell if that fixes it on BSD and Cygwin though.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19888>
 
 
-diff --git a/Makefile b/Makefile
-diff --git a/diff-delta.c b/diff-delta.c
-index c618875..25a798d 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -199,7 +199,6 @@ struct delta_index * create_delta_index(
- 			entry->next = hash[i];
- 			hash[i] = entry++;
- 			hash_count[i]++;
--			entries--;
- 		}
- 	}
- 
-@@ -230,10 +229,6 @@ struct delta_index * create_delta_index(
- 	}
- 	free(hash_count);
- 
--	/* If we didn't use all hash entries, free the unused memory. */
--	if (entries)
--		index = realloc(index, memsize - entries * sizeof(*entry));
--
- 	return index;
- }
- 
+
+On Wed, 10 May 2006, Nicolas Pitre wrote:
+> 
+> When linking with Electric Fence I can reproduce the segfault on Linux 
+> as well.
+> 
+> Looking into it now.
+
+Yeah, I get 
+
+	#0  0x1000bfe4 in create_delta (index=0xf7d758a0, trg_buf=0xf7d72eb8, trg_size=327, delta_size=0xffb422b4, 
+	    max_size=143) at diff-delta.c:308
+	#1  0x10005734 in try_delta (trg=0xf7fdbfa0, src=0xf7fdbf94, src_index=0xf7d758a0, max_depth=10)
+	    at pack-objects.c:1049
+	#2  0x10005b04 in find_deltas (list=0xf7e32f54, window=11, depth=10) at pack-objects.c:1128
+	#3  0x10005ca0 in prepare_pack (window=10, depth=10) at pack-objects.c:1161
+	#4  0x1000677c in main (argc=3, argv=0xffb436e4) at pack-objects.c:1359
+
+ie the "entry" chain seems to be corrupt in create_delta.
+
+Actually, it's not even the chain: it's the very first entry:
+
+	(gdb) p index->hash[i]
+	$2 = (struct index_entry *) 0xf7d7385c
+	(gdb) p entry
+	$3 = (struct index_entry *) 0xf7d7385c
+
+and it's not a random value - it looks perfectly valid. As do all the 
+other index hash entries. It's just that the index hash entries seem to 
+all have been freed, so accessing them causes a SIGSEV!
+
+			Linus
