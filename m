@@ -1,61 +1,75 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: What's in git.git
-Date: 09 May 2006 21:36:43 -0700
-Message-ID: <864pzyh4x0.fsf@blue.stonehenge.com>
+Date: Tue, 09 May 2006 21:41:06 -0700
+Message-ID: <7vd5emze3h.fsf@assigned-by-dhcp.cox.net>
 References: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605092117240.3718@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 10 06:38:08 2006
+X-From: git-owner@vger.kernel.org Wed May 10 06:41:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FdgRQ-0007fn-0r
-	for gcvg-git@gmane.org; Wed, 10 May 2006 06:36:52 +0200
+	id 1FdgVb-0008Tt-Ir
+	for gcvg-git@gmane.org; Wed, 10 May 2006 06:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964797AbWEJEgp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 May 2006 00:36:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964804AbWEJEgp
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 00:36:45 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:60071 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964797AbWEJEgo
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 May 2006 00:36:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 03A2C8F564;
-	Tue,  9 May 2006 21:36:44 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 04535-01-26; Tue,  9 May 2006 21:36:43 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 76BA28F569; Tue,  9 May 2006 21:36:43 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.13.5.2; tzolkin = 4 Ik; haab = 15 Uo
-In-Reply-To: <7viroezi8s.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S964806AbWEJElI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 May 2006 00:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964807AbWEJElI
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 May 2006 00:41:08 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:21144 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S964806AbWEJElH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 May 2006 00:41:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060510044106.ZAOP25692.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 10 May 2006 00:41:06 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605092117240.3718@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 9 May 2006 21:21:07 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19873>
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Junio> This week's "What's in" is a day early, since I do not expect to
-Junio> be able to do much gitting for the rest of the week.
+> On Tue, 9 May 2006, Junio C Hamano wrote:
+>> 
+>> Junio C Hamano:
+>>       binary patch.
+>>       binary diff: further updates.
+>
+> Btw, am I just smoking stuff, or is this going to be fundamentally 
+> problematic for "git-apply -R" if we ever want to support that?
 
-I just got this with the latest, on the git archive, using git-repack -a:
+It is problematic but not more than the current index + "Binary
+files differ" output.  If you have both pre and postimage then
+you do not need the binary data.
 
-Generating pack...
-Done counting 19151 objects.
-Deltifying 19151 objects.
-Segmentation fault (core dumped)
+The forward application is done assuming you have the preimage
+(but not necessarily postimage), and when you do not have
+postimage the binary data is used.  When going reverse we should
+assume you have the postimage (but not necessarily preimage),
+but the pack-object format xdelta is not reversible so if you do
+not have preimage that matches the index, with the current
+output format you lose.
 
-This is on OpenBSD.  Is there a secret sabotage afoot?  This is repeatable.
-Is there anything I can try differently?
+If we care enough, we could add a reverse delta from postimage
+to preimage to the output, but I am not sure if it is worth it.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+> But at least in theory we might well want to do "-R" eventually.
+
+Yes, but even without binary, -R has a funny implication when
+copy-edit patch is involved.  What if a patch copy-edits to
+create a new file B based on old A, and also modifies A
+in-place, and somehow the postimages of A and B you already have
+are not consistent with what that patch does?  Application with
+-R would produce two versions of A and you would get a conflict.
+I guess showing a combined diff would be a helpful way to
+resolve that ;-).
