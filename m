@@ -1,102 +1,75 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: Tracking branch history
-Date: Fri, 12 May 2006 23:40:51 -0400
-Message-ID: <20060513034051.GA21586@spearce.org>
-References: <Pine.LNX.4.64.0605121838490.6713@iabervon.org> <Pine.LNX.4.64.0605121640210.3866@g5.osdl.org>
+Date: Sat, 13 May 2006 00:27:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605122358490.6713@iabervon.org>
+References: <Pine.LNX.4.64.0605121838490.6713@iabervon.org>
+ <Pine.LNX.4.64.0605121640210.3866@g5.osdl.org> <Pine.LNX.4.64.0605121656350.3866@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 13 05:41:06 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 13 06:26:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fel03-00042P-2f
-	for gcvg-git@gmane.org; Sat, 13 May 2006 05:41:03 +0200
+	id 1Felhf-0008OG-7K
+	for gcvg-git@gmane.org; Sat, 13 May 2006 06:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751137AbWEMDk6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 May 2006 23:40:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbWEMDk6
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 May 2006 23:40:58 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39325 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751137AbWEMDk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 May 2006 23:40:58 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fekzh-000400-LH; Fri, 12 May 2006 23:40:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E196820FB12; Fri, 12 May 2006 23:40:51 -0400 (EDT)
+	id S1750824AbWEME0E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 May 2006 00:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWEME0E
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 May 2006 00:26:04 -0400
+Received: from iabervon.org ([66.92.72.58]:43793 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750824AbWEME0B (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 May 2006 00:26:01 -0400
+Received: (qmail 2127 invoked by uid 1000); 13 May 2006 00:27:00 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 13 May 2006 00:27:00 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605121640210.3866@g5.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0605121656350.3866@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19924>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
+On Fri, 12 May 2006, Linus Torvalds wrote:
+
+> Btw, the real problem with this is how to use it.
 > 
-> On Fri, 12 May 2006, Daniel Barkalow wrote:
-> >
-> > One feature that might make git more intuitive to people is if we were to 
-> > additionally track the history of what commit was the head of each branch 
-> > over time. This is only vaguely related to the history of the content, but 
-> > it's well-defined and sometimes significant.
-> > 
-> > E.g., if you know that two weeks ago, what you had worked, but it doesn't 
-> > work now, you can use git-bisect to figure out what happened, but first 
-> > you have to figure out what commit it was that you were using two weeks 
-> > ago. Two weeks ago, we had that information, but we didn't keep it.
+> The only really valid use I see is to use it for date-based things, ie if 
+> given a date, look up the most recent commit ID that is older than the 
+> date in question. No other op seems to really make sense, but that one 
+> does.
 > 
-> Note that this is possible, but it must be done literally as a separate 
-> history from the commit history. 
-> 
-> IOW, a good (?) way to do it is to literally have a commit hook that 
-> basically just does
-> 
-> 	echo $new >> .git/$branch-commit-history
-> 
-> possibly together with a datestamp thing (ie it could be something like
-> "echo $new "$USER" $(date)" rather than just the commit SHA1).
+> Now, the one other operation that is semantically sensible is to use the 
+> list of commits to figure out a "path" through the commit space. However, 
+> that path won't actually even be well-defined (a fast-forward pull/merge 
+> can and often /will/ update the history in a way where it's impossible to 
+> select one particular path to the previous commit listed in the commit 
+> log).
 
-Why not intergrate this into git-update-ref.  Almost every tool which
-deals with a GIT repository (aside from my pure-Java Eclipse plugin
-which is still a major work-in-process) performs ref changes through
-git-udpate-ref.  So just have it append the ref's history to a file:
+I think that jumping around with reset is necessary to make this actually 
+complicated; a fast-forward only happens if the new value descends from 
+the old value, and a merge obviously descends from the old value. Sure, 
+the non-linear history added by a merge will still be non-linear, but 
+from the local user's point of view, it was all added in bulk by the 
+merge.
 
-	.git/log/refs/heads/$branch
+I think the program creating the history should note the tricky cases, 
+where the new value doesn't descend from the old value, which should be 
+easy to identify. I'm not sure what should actually be done to report a 
+reset in a changelog, either. The section of the log just before the reset 
+is clearly a false start of some sort, and you probably want to do 
+something special to list the commits which don't actually lead to the 
+current state, but you probably want to report them, in case the reason 
+you'd looking through this is that there was some benefit to a version 
+that you ended up discarding, and you want to revisit that attempt.
 
-where the history records are stored as:
+I think in the always-forward case, there's a useful optimization to be 
+had by having the rev-list-equivalent actually binning commits by the 
+earliest points that descend from them, so you don't trace the local 
+branch back to where other branches forked off over and over. But it seems 
+to me otherwise pretty simple.
 
-	40 byte commit-ish SHA1
-	<SP>
-	<committer>
-	<LF>
-
-e.g.:
-
-	cbb6d91d95e523c2b6a6b52577c4be28d18ace83 Shawn O. Pearce <spearce@spearce.org> 1137039378 -0500
-	ae8c74e96a1e02bbfb7f1a9669b77d6f8ee6c3cf Shawn O. Pearce <spearce@spearce.org> 1136921470 -0500
-
-Of course a major issue here is locking the log file during the ref
-update, but it looks like it might just be safe to append the entry
-to the log file right after the re_verify and before the rename.
-
-I wouldn't have git-update-ref create the log file. I'd would only
-have it append if the log already exists.
-
-Hmm, this actually looks like it would be really easy.  Maybe I'll
-hack up an RFC patch this evening after dinner.
-
--- 
-Shawn.
+	-Daniel
+*This .sig left intentionally blank*
