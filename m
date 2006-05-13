@@ -1,84 +1,63 @@
-From: Pavel Roskin <proski@gnu.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: [RFC] qgit with tabs
-Date: Sat, 13 May 2006 07:07:26 -0400
-Message-ID: <20060513070726.qa5ssccws80go044@webmail.spamcop.net>
+Date: Sat, 13 May 2006 13:31:12 +0200
+Message-ID: <e5bfff550605130431w417b8aacl2b17cf5655b46f31@mail.gmail.com>
 References: <e5bfff550605130344n75e3e55eq533c49fc2a4f5483@mail.gmail.com>
+	 <20060513070726.qa5ssccws80go044@webmail.spamcop.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 13 13:07:47 2006
+X-From: git-owner@vger.kernel.org Sat May 13 13:31:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FeryN-0003vZ-2e
-	for gcvg-git@gmane.org; Sat, 13 May 2006 13:07:47 +0200
+	id 1FesL7-0007fd-EL
+	for gcvg-git@gmane.org; Sat, 13 May 2006 13:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932328AbWEMLHa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 May 2006 07:07:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932339AbWEMLHa
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 May 2006 07:07:30 -0400
-Received: from mailgate.cesmail.net ([216.154.195.36]:29913 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP id S932328AbWEMLH3
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 May 2006 07:07:29 -0400
-Received: (qmail 10574 invoked from network); 13 May 2006 11:07:26 -0000
-Received: from unknown (HELO gamma.cesmail.net) (192.168.1.20)
-  by mailgate.cesmail.net with SMTP; 13 May 2006 11:07:26 -0000
-Received: (qmail 25299 invoked by uid 99); 13 May 2006 11:07:26 -0000
-Received: from pool-68-163-58-250.phil.east.verizon.net
-	(pool-68-163-58-250.phil.east.verizon.net [68.163.58.250]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Sat, 13 May 2006 07:07:26 -0400
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550605130344n75e3e55eq533c49fc2a4f5483@mail.gmail.com>
+	id S932387AbWEMLbO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 May 2006 07:31:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932389AbWEMLbO
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 May 2006 07:31:14 -0400
+Received: from nz-out-0102.google.com ([64.233.162.193]:9846 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932387AbWEMLbN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 May 2006 07:31:13 -0400
+Received: by nz-out-0102.google.com with SMTP id x7so322432nzc
+        for <git@vger.kernel.org>; Sat, 13 May 2006 04:31:13 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=V5I4ItG7qcM19YfdQktqmbCreXTLOJ/UTOM0Xln93ZU+3dAsLHSCgSurdksa7vwKpdbG/q5QsL+q/Dd8T8vHDjUgsfY9ABojk4gaJ0xf7pAxmDVCcVeE6D1lONqKRwf9sBYhBQRZzDFEiBvioodFIqSTLYPhJSTLu4Dyaw+NLiw=
+Received: by 10.65.219.6 with SMTP id w6mr433477qbq;
+        Sat, 13 May 2006 04:31:12 -0700 (PDT)
+Received: by 10.64.131.11 with HTTP; Sat, 13 May 2006 04:31:12 -0700 (PDT)
+To: "Pavel Roskin" <proski@gnu.org>
+In-Reply-To: <20060513070726.qa5ssccws80go044@webmail.spamcop.net>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19932>
 
-Hello, Marco!
+Hi Pavel,
 
-Quoting Marco Costalba <mcostalba@gmail.com>:
-
->    I have pushed some patches that add tabs to qgit UI.
-
-That's _really_ appreciated.
-
-> I don't expect a new release any time soon, but I am interested to
-> hear comments, especially on the usability front, so to be able to
-> steer new development in advance.
-
-Just one thing for now.  Double click on a file on the "rev list" tab should
-show the patch (what Ctrl-P would do), not the whole file.  That would be more
-compatible with gitk, and it's what I normally need if I just browse the latest
-changes in the rev list.
-
-> With new UI I found myself more and more using keyboard bindings
-> instead of mouse:
 >
-> - r, p, f to switch to revisions list, patch and file views respectively
+> Just one thing for now.  Double click on a file on the "rev list" tab should
+> show the patch (what Ctrl-P would do), not the whole file.  That would be more
+> compatible with gitk, and it's what I normally need if I just browse the latest
+> changes in the rev list.
 >
-> - t to toggle tree view
->
-> - s to toggle split view (very useful IMHO)
 
-The later is very useful, but a bit hard to discover without checking the menu. 
-Maybe it should be a button in the toolbar.
+Well, double click activates the current top entry in context menu.
 
-> NOTE:
-> Due to some repacking on a dumb host probably you need to re-clone:
+This behaviour has not changed from past releases. To show the patch
+perhaps you may, as always, double click on the selected revision, in
+revisions list.
 
-I don't think re-clone should be needed.  I didn't re-clone, yet I could update.
+FWIK gitk does not have a file content viewer.
 
-On the other hand, that host sometimes returns something that crashes
-git-http-fetch.  Sorry, no time to debug it right now.  I guess it returns
-error messages in HTML without reporting error 404, but git-http-fetch should
-be more robust anyway.
-
---
-Regards,
-Pavel Roskin
+Thanks
+Marco
