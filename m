@@ -1,160 +1,178 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Simplify "git reset --hard"
-Date: Sun, 14 May 2006 11:20:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605141110150.3866@g5.osdl.org>
-References: <Pine.LNX.4.64.0605141040210.3866@g5.osdl.org>
+From: Tommi Virtanen <tv@inoi.fi>
+Subject: The git newbie experience
+Date: Sun, 14 May 2006 21:36:40 +0300
+Organization: Inoi Oy
+Message-ID: <446778B8.7080201@inoi.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun May 14 20:21:03 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun May 14 20:36:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfLD4-00058M-Pd
-	for gcvg-git@gmane.org; Sun, 14 May 2006 20:20:55 +0200
+	id 1FfLSV-0007Yo-3X
+	for gcvg-git@gmane.org; Sun, 14 May 2006 20:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbWENSUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 14:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbWENSUm
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 14:20:42 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:37063 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751533AbWENSUl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 14:20:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4EIKctH000720
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 14 May 2006 11:20:38 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4EIKbgp012303;
-	Sun, 14 May 2006 11:20:37 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0605141040210.3866@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751550AbWENSgr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 14:36:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbWENSgr
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 14:36:47 -0400
+Received: from i1.inoi.fi ([194.100.97.46]:15519 "EHLO mail.inoi.fi")
+	by vger.kernel.org with ESMTP id S1751194AbWENSgq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 14:36:46 -0400
+Received: from mail.inoi.fi (localhost.localdomain [127.0.0.1])
+	by mail.inoi.fi (Postfix) with ESMTP id 192B8F54AB
+	for <git@vger.kernel.org>; Sun, 14 May 2006 21:37:16 +0300 (EEST)
+Received: from [10.116.0.191] (GMMDXXVII.dsl.saunalahti.fi [85.76.242.28])
+	by mail.inoi.fi (Postfix) with ESMTP id C65D2121C77
+	for <git@vger.kernel.org>; Sun, 14 May 2006 21:37:15 +0300 (EEST)
+User-Agent: Mail/News 1.5 (X11/20060309)
+To: git@vger.kernel.org
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19978>
+
+Here's my thoughts from teaching half a dozen people git recently:
+
+Minimal newbie command set
+--------------------------
+
+The complete set of "newbie commands" for useful development work should
+be as small as possible, for fast learning.
+
+People can always look up new things when they want to, but if they
+don't get the simple things going quickly they will forever see git
+as "that overcomplex thing I tried to use once".
+
+Concretely: explain the indexless "git commit -a" case first,
+so people don't need update-index right away. Most new docs are
+pretty good at this, already.
+
+Fix the cases where "git commit -a" is not enough. Here's a case I
+ran into:
+
+- Jack is a beginning user of git and does not (want to) understand
+  the index (right now).
+- Jack works on branch X, say his HEAD points to X1. He has an edited,
+  uncommitted files with the names A, B and C.
+- Jack wants to pull new changes made by others to his branch.
+  There are merge conflicts in files D, E, ..., Z.
+- Jack resolves the merge conflicts and is ready to commit the resulting
+  merge. Note files A, B and C should not be committed.
+
+  1. if Jack says "git commit -a", then A, B and C will be committed
+     also.
+
+  2. if Jack says "git commit", then the current state of the index will
+     be committed. That is, the commit will not contain the proper
+     merged state of files D, E, ..., Z.
+
+  3. if Jack says "git commit D E ... Z", things work correctly. But
+     Jack does not want to type or copy-paste that much, and that's
+     horribly error-prone anyway. If the leaves one file out, or
+     accidentally adds B there too, the merge goes wrong.
+
+  4. if Jack says "git update-index --refresh" and then "git commit",
+     things work correctly. But Jack doesn't (want to) know about the
+     index.
+
+My best idea so far is to add a "git commit -A" option, that
+essentially does the "update-index --refresh". Whenever index
+has a file state != HEAD, update-index it. The modified unrelated
+files will have index state == HEAD. Or altering "git commit -a"
+to do that.
+
+Except, trying to solve usability problems by _adding_ options
+is just insane.
+
+I'd really like to see a way to use git without caring about the
+index, and just having things work. I can appreciate the index
+is useful, and possibly even necessary to work on projects the size
+of the Linux kernel, but I really wish it would default to being
+_only_ an optimization, not the central bit of user interface to
+prepare commits.
+
+Basic git use _should_ be as easy as basic svn/bzr/hg use. Anything
+else will just mean git is not used outside of what codebases Linus
+has dictatorship over. (At least not after bzr is more done or hg
+more well known; right now git has a very nice feature set, but the
+others are catching up fast.)
+
+This is a part that Subversion got right. Basic use needs to be simple.
+(If you catch me in agitated mood, I'd claim it's the _only_ part
+Subversion got right;-)
 
 
-Now that the one-way merge strategy does the right thing wrt files that do 
-not exist in the result, just remove all the random crud we did in "git 
-reset" to do this all by hand.
+And to reply to a comment on IRC I missed at the time:
 
-Instead, just pass in "-u" to git-read-tree when we do a hard reset, and 
-depend on git-read-tree to update the working tree appropriately.
+(21:05:35) gitster: as gittus said much earlier, refusing index is like
+refusing git.  We might be able to implement "index-less" mode in which
+things like merge and am refuse to operate when you have any change from
+HEAD in the working tree. Then new users can always do "commit -a".
+(21:06:04) gitster: "git-repo-config core.newuser yes" perhaps?
 
-This basically means that git reset turns into
+If you do it that way, you only make git unnecessarily hard to use for
+newbies. For example, we had a case where we absolutely _had_ to keep
+an ugly workaround in the tree, in a file not otherwise edited, but
+we definitely did not want to commit the kludge, at least not to the
+branch that was really being worked on. So such restricted mode would
+just have meant either people could not merge, or they had to use index
+anyway. That's a point where people who have a choice make on, and stop
+trying to use git.
 
-	# Always update the HEAD ref
-	git update-ref HEAD "$rev"
+(21:08:34) ***gitster personally considers getting more users a very
+high priority but agrees that from usability point of view, having a
+mode to expose "stripped down" set of features for simple needs would be
+beneficial.
 
-	case "--soft"
-		# do nothing to index/working tree
-	case "--hard"
-		# read index _and_ update working tree
-		git-read-tree --reset -u "$rev"
-	case "--mixed"
-		# update just index, report on working tree differences
-		git-read-tree --reset "$rev"
-		git-update-index --refresh
+That I can 100% agree with.
 
-which is what it was always semantically doing, it just did it in a
-rather strange way because it was written to not expect git-read-tree to 
-do anything to the working tree.
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+Branch management
+-----------------
 
-NOTE! The switch to use "git-read-tree -u" does actually result in a real 
-change: we will now remove files that were in the index but not in HEAD 
-before (ie files added with "git add"). I'd argue that this is a bug-fix.
+"master" and "origin" are good enough for the really simple use, but
+that starts to fail fast when you add in more branches.
 
- git-reset.sh |   50 ++++----------------------------------------------
- 1 files changed, 4 insertions(+), 46 deletions(-)
+The remotes/* branch support is really nice, but should be used better.
+Here's a bunch of wild ideas:
 
-diff --git a/git-reset.sh b/git-reset.sh
-index 6cb073c..0ee3e3e 100755
---- a/git-reset.sh
-+++ b/git-reset.sh
-@@ -6,6 +6,7 @@ USAGE='[--mixed | --soft | --hard]  [<co
- tmp=${GIT_DIR}/reset.$$
- trap 'rm -f $tmp-*' 0 1 2 3 15
- 
-+update=
- reset_type=--mixed
- case "$1" in
- --mixed | --soft | --hard)
-@@ -23,24 +24,7 @@ # We need to remember the set of paths t
- # behind before a hard reset, so that we can remove them.
- if test "$reset_type" = "--hard"
- then
--	{
--		git-ls-files --stage -z
--		git-rev-parse --verify HEAD 2>/dev/null &&
--		git-ls-tree -r -z HEAD
--	} | perl -e '
--	    use strict;
--	    my %seen;
--	    $/ = "\0";
--	    while (<>) {
--		chomp;
--		my ($info, $path) = split(/\t/, $_);
--		next if ($info =~ / tree /);
--		if (!$seen{$path}) {
--			$seen{$path} = 1;
--			print "$path\0";
--		}
--	    }
--	' >$tmp-exists
-+	update=-u
- fi
- 
- # Soft reset does not touch the index file nor the working tree
-@@ -54,7 +38,7 @@ then
- 		die "Cannot do a soft reset in the middle of a merge."
- 	fi
- else
--	git-read-tree --reset "$rev" || exit
-+	git-read-tree --reset $update "$rev" || exit
- fi
- 
- # Any resets update HEAD to the head being switched to.
-@@ -68,33 +52,7 @@ git-update-ref HEAD "$rev"
- 
- case "$reset_type" in
- --hard )
--	# Hard reset matches the working tree to that of the tree
--	# being switched to.
--	git-checkout-index -f -u -q -a
--	git-ls-files --cached -z |
--	perl -e '
--		use strict;
--		my (%keep, $fh);
--		$/ = "\0";
--		while (<STDIN>) {
--			chomp;
--			$keep{$_} = 1;
--		}
--		open $fh, "<", $ARGV[0]
--			or die "cannot open $ARGV[0]";
--		while (<$fh>) {
--			chomp;
--			if (! exists $keep{$_}) {
--				# it is ok if this fails -- it may already
--				# have been culled by checkout-index.
--				unlink $_;
--				while (s|/[^/]*$||) {
--					rmdir($_) or last;
--				}
--			}
--		}
--	' $tmp-exists
--	;;
-+	;; # Nothing else to do
- --soft )
- 	;; # Nothing else to do
- --mixed )
+- When cloning a repository, just clone all the non-remote heads to
+local remotes/* heads. See what name the remote HEAD points to, store
+that locally also as a refs/heads/master, set local HEAD to it. Note,
+origin is gone, and is now called remotes/master.
+
+- Alternatively (and I think I like this more): When cloning a
+repository, just clone all the non-remote heads to local remotes/*
+heads. See what the remote HEAD points to, store that locally
+also as a refs/heads/* head, set local HEAD to it. Note, origin and
+master are both gone, and accessible via remotes/X and refs/heads/X
+(where X is the name remote HEAD pointed to).
+
+- Currently, when people start tracking a new remote branch, they end
+up editing .git/remotes/origin and adding new Pull: lines. If they
+intend to work on the branch, they also clone the branch locally, and
+add a Push: line. Make this simpler. Here's a rough sketch:
+
+  "git track [--read-only] REMOTE [BRANCH | --all]"
+
+  Without --all, git track would:
+  - abort if refs/remotes/foo exists
+  - add "Pull: foo:remotes/foo" to .git/remotes/origin (or the
+    equivalent config file)
+  - if --read-only is not given:
+    - add "Push: foo:foo" to .git/remotes/origin
+  - fetch foo from origin to remotes/foo
+  - if --read-only is not given:
+    - run "git branch foo remotes/foo"
+
+  With --all, it would do the same, but for everything the REMOTE has
+  in refs/remotes/. Exactly when to abort is a bit harder to define,
+  but still..
+
+- Or, if that's too much, at least make peek-remote understand
+.git/remotes/* shortcuts, so finding out what branches exist is a bit
+simpler.
