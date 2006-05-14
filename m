@@ -1,90 +1,64 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Branch relationships
-Date: Mon, 15 May 2006 01:04:46 +0200
-Message-ID: <200605150104.46762.Josef.Weidendorfer@gmx.de>
-References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org> <200605150001.48548.Josef.Weidendorfer@gmx.de> <7v8xp4ntbf.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Tracking branch history
+Date: Sun, 14 May 2006 16:14:55 -0700
+Message-ID: <7vk68o19n4.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605121838490.6713@iabervon.org>
+	<Pine.LNX.4.64.0605121640210.3866@g5.osdl.org>
+	<20060513034051.GA21586@spearce.org>
+	<7vody2v7yr.fsf@assigned-by-dhcp.cox.net>
+	<20060513071753.GA21998@spearce.org>
+	<20060513074328.GB21998@spearce.org>
+	<Pine.LNX.4.64.0605130815550.3866@g5.osdl.org>
+	<7vbqu1vps3.fsf@assigned-by-dhcp.cox.net>
+	<20060513181816.GA12475@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 01:05:14 2006
+X-From: git-owner@vger.kernel.org Mon May 15 01:15:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfPeE-0003Fa-9m
-	for gcvg-git@gmane.org; Mon, 15 May 2006 01:05:14 +0200
+	id 1FfPnh-0004WV-Tn
+	for gcvg-git@gmane.org; Mon, 15 May 2006 01:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751383AbWENXFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 19:05:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWENXFH
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 19:05:07 -0400
-Received: from mail.gmx.de ([213.165.64.20]:1745 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751383AbWENXFG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 19:05:06 -0400
-Received: (qmail invoked by alias); 14 May 2006 23:05:04 -0000
-Received: from p54968B53.dip0.t-ipconnect.de (EHLO noname) [84.150.139.83]
-  by mail.gmx.net (mp027) with SMTP; 15 May 2006 01:05:04 +0200
-X-Authenticated: #352111
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-In-Reply-To: <7v8xp4ntbf.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1751373AbWENXO5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 19:14:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393AbWENXO5
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 19:14:57 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:43713 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751373AbWENXO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 May 2006 19:14:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060514231456.QWHK27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 14 May 2006 19:14:56 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060513181816.GA12475@spearce.org> (Shawn Pearce's message of
+	"Sat, 13 May 2006 14:18:16 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19989>
 
-On Monday 15 May 2006 00:19, you wrote:
-> > I suppose "branch.<branch name>.origin" is still the way to go for
-> > specifying the upstream?
-> 
-> Probably "origin" is a better name for it; I was assuming
-> "branch.<branch name>.remote = foo" refers to a [remote "foo"]
-> section and means "when on this branch, pull from foo and merge
-> from it".
+Shawn Pearce <spearce@spearce.org> writes:
 
-Maybe.
+> Log ref updates to logs/refs/<ref>
+>
+> If config parameter core.logRefUpdates is true then append a line
+> to .git/logs/refs/<ref> whenever git-update-ref <ref> is executed.
 
-But there is a misunderstanding. I wanted the branch attribute "origin"
-to specify the upstream _branch_, not a remote.
-After a "git clone", we would have
+I cannot decide if a parameter makes more sense, or just making
+the existence of such a file a cue is better.  For example, I do
+not much care about when I updated each of my topic branch head,
+while I do care about master, next, and pu branches.  A global
+parameter would make this black-or-white choice, while opening
+the log without O_CREAT and write things out only when the log
+file exists might make things as easy and controllable.
 
- [remote "origin"]
-   url = ...
-   fetch = master:origin
+I could "touch" the ones I care about to prime the process.
 
- [branch "master"]
-   origin = "origin" ; upstream of master is local branch "origin"
-
- [branch "origin"]
-   tracksremote ; bool
-
-Now adding a further development branch for remote branch "topic", we would add
-
- [remote "origin"]
-   ...
-   fetch = topic:tracking-topic
-
- [branch "local-topic"]
-   origin = "tracking-topic"
-
- [branch "tracking-topic"]
-   tracksremote
-
-Now, a "git pull" on branch "local-topic" does the right thing: it fetches
-from remote "origin", as "tracking-topic" is given in a refspec there, and merges
-"tracking-topic" to the current branch "local-topic", as given by the origin
-attribute.
-
-This also extends to local upstreams: a "git checkout -b topic2 master" would
-append
-
- [branch "topic2"]
-   origin = "master"
-
-and a "git pull" on topic2 would merge the upstream "master".
-
-Josef
+Hmm?
