@@ -1,517 +1,238 @@
-From: Al Viro <viro@ftp.linux.org.uk>
-Subject: Re: [RFC] Add "rcs format diff" support
-Date: Sun, 14 May 2006 01:12:14 +0100
-Message-ID: <20060514001214.GB27946@ftp.linux.org.uk>
-References: <Pine.LNX.4.64.0605131405590.3866@g5.osdl.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: [PATCH] Add "--branches", "--tags" and "--remotes" options to
+ git-rev-parse.
+Date: Sat, 13 May 2006 21:43:00 -0400
+Message-ID: <BAYC1-PASMTP043948149786B7EE06DED3AEA20@CEZ.ICE>
+References: <BAYC1-PASMTP0299DC98A51B55188BDF96AEAD0@CEZ.ICE>
+	<7vd5ehu8og.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Al Viro <viro@ZenIV.linux.org.uk>,
-	Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Sun May 14 02:12:41 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 14 03:48:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ff4Df-0004B0-57
-	for gcvg-git@gmane.org; Sun, 14 May 2006 02:12:23 +0200
+	id 1Ff5is-0003mt-G8
+	for gcvg-git@gmane.org; Sun, 14 May 2006 03:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbWENAMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 May 2006 20:12:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964821AbWENAMU
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 May 2006 20:12:20 -0400
-Received: from zeniv.linux.org.uk ([195.92.253.2]:15764 "EHLO
-	ZenIV.linux.org.uk") by vger.kernel.org with ESMTP id S964800AbWENAMT
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 May 2006 20:12:19 -0400
-Received: from viro by ZenIV.linux.org.uk with local (Exim 4.52 #1 (Red Hat Linux))
-	id 1Ff4DW-0002kB-Ly; Sun, 14 May 2006 01:12:14 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605131405590.3866@g5.osdl.org>
-User-Agent: Mutt/1.4.1i
+	id S932094AbWENBs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 May 2006 21:48:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbWENBs1
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 May 2006 21:48:27 -0400
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:10208 "EHLO
+	BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S932094AbWENBs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 May 2006 21:48:26 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 13 May 2006 18:48:25 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 75AAF644C17;
+	Sat, 13 May 2006 21:48:24 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060513214300.4bfb01a2.seanlkml@sympatico.ca>
+In-Reply-To: <7vd5ehu8og.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 14 May 2006 01:48:25.0939 (UTC) FILETIME=[7DB18230:01C676F8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19952>
 
-On Sat, May 13, 2006 at 02:14:15PM -0700, Linus Torvalds wrote:
+
+"git branch" uses "rev-parse --all" and becomes much too slow when
+there are many tags (it scans all refs).  Use the new "--branches"
+option of rev-parse to speed things up.
+
+Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+
+---
+
+On Sat, 13 May 2006 10:38:23 -0700
+Junio C Hamano <junkio@cox.net> wrote:
+
+> Makes sense perhaps.
 > 
-> Al was asking for the "diff -n" format, which is the old RCS format, and 
-> which is really easy to parse.
+> I understand you added --tags for completeness.  Probably it
+> would make sense to add --remotes if you are shooting for that.
+> 
 
-Heh... And I've just managed to get around that stuff on plain git.  Have fun:
+Hi Junio,
 
-Use:
-	git-remap-data [git-diff arguments] > map
-	git-remap map <old-log >remapped-old
-	git-remap /dev/null <new-log >remapped-new
-	diff -u remapped-old remapped-new
-with old-log and new-log being build/sparse/whatever logs produced on
-trees in question (for values of "whatever logs" including e.g. grep -n
-results, etc.)
+Here's an updated patch with --remotes as you asked.  I appened _ref to the
+new functions to make it clear that for_each_remote didn't have anything to
+do with remote files.  Also updated the "is_rev_argument" function which was
+missed first time around.
 
-git-remap-data builds the description of how lines of old tree are mapped
-to the new one; git-remap is a filter using that data to massage log
-from the old tree to new one; lines of form
-<file>:<line>:<text>
-are turned into
-N:<new-file>:<new-line>:<text>
-if they survive in new tree and
-O:<file>:<line>:<text>
-otherwise.
+On a related note, would it be okay to change "git tag -l" to produce a list
+of tags without the "tags/" prefix in front of every tag as it does now?
+Wanted to use the new "git rev-parse --tags" instead of "find" to produce 
+the list but am not sure how important backward compatibility is in that case.
 
-Here they are; enjoy.  BTW, that puppy can be used on unified diffs with
-zero context; won't catch renames, obviously...
+Sean
 
-git-remap-data.sh:
-#!/bin/sh
-GIT_DIFF_OPTS="-u 0" git-diff -M "$@" | git-remap
+ Documentation/git-rev-parse.txt |    9 +++++++++
+ git-branch.sh                   |    3 +--
+ refs.c                          |   23 +++++++++++++++++++----
+ refs.h                          |    3 +++
+ rev-parse.c                     |   17 ++++++++++++++++-
+ 5 files changed, 48 insertions(+), 7 deletions(-)
 
-git-remap.c:
-
-/*
- * Copyright (c) 2006, Al Viro.  All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
-
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <limits.h>
-
-char *prefix1 = "a/", *prefix2 = "b/";
-size_t len1, len2;
-
-char *line;
-size_t size;
-
-void die(char *s)
-{
-	fprintf(stderr, "remap: %s\n", s);
-	exit(1);
-}
-
-void Enomem(void)
-{
-	die("out of memory");
-}
-
-void Eio(void)
-{
-	die("IO error");
-}
-
-int getline(FILE *f)
-{
-	char *s;
-	if (!fgets(line, size, f)) {
-		if (!feof(f))
-			Eio();
-		return 0;
-	}
-	for (s = line + strlen(line); s[-1] != '\n'; s = s + strlen(s)) {
-		if (s == line + size - 1) {
-			line = realloc(line, 2 * size);
-			if (!line)
-				Enomem();
-			s = line + size - 1;
-			size *= 2;
-		}
-		if (!fgets(s, size - (s - line), f)) {
-			if (!feof(f))
-				Eio();
-			return 1;
-		}
-	}
-	s[-1] = '\0';
-	return 1;
-}
-
-/* to == 0 -> deletion */
-struct range_map {
-	int from, to;
-};
-
-struct file_map {
-	char *name;
-	struct file_map *next;
-	char *new_name;
-	int count;
-	int allocated;
-	int last;
-	struct range_map ranges[];
-};
-
-struct file_map *alloc_map(char *name)
-{
-	struct file_map *map;
-
-	map = malloc(sizeof(struct file_map) + 16 * sizeof(struct range_map));
-	if (!map)
-		Enomem();
-	map->name = map->new_name = strdup(name);
-	if (!map->name)
-		Enomem();
-	map->count = 0;
-	map->allocated = 16;
-	map->next = NULL;
-	map->last = 0;
-	return map;
-}
-
-/* this is 32bit FNV1 */
-uint32_t FNV_hash(char *name)
-{
-	uint32_t n = 0x811c9dc5;
-	while (*name) {
-		unsigned char c = *name++;
-		n *= 0x01000193;
-		n ^= c;
-	}
-	return n;
-}
-
-struct file_map *hash[1024];
-
-int hash_map(struct file_map *map)
-{
-	int n = FNV_hash(map->name) % 1024;
-	struct file_map **p = &hash[n];
-
-	while (*p) {
-		if (!strcmp((*p)->name, map->name))
-			return 0;
-		p = &(*p)->next;
-	}
-	*p = map;
-	if (map->new_name && !map->count)
-		return 0;
-	if (map->new_name && map->ranges[0].from != 1)
-		return 0;
-	return 1;
-}
-
-struct file_map *find_map(char *name)
-{
-	static struct file_map *last = NULL;
-	int n = FNV_hash(name) % 1024;
-	struct file_map *p;
-
-	if (last && !strcmp(last->name, name))
-		return last;
-
-	for (p = hash[n]; p && strcmp(p->name, name); p = p->next)
-		;
-	if (p)
-		last = p;
-	return p;
-}
-
-void parse_map(char *name)
-{
-	struct file_map *map = NULL;
-	struct range_map *range;
-	char *s;
-	FILE *f;
-
-	f = fopen(name, "r");
-	if (!f)
-		die("can't open map");
-	while (getline(f)) {
-		if (line[0] == 'D') {
-			if (map && !hash_map(map))
-				goto Ebadmap;
-			if (line[1] != ' ')
-				goto Ebadmap;
-			if (strchr(line + 2, ' '))
-				goto Ebadmap;
-			map = alloc_map(line + 2);
-			map->new_name = NULL;
-			continue;
-		}
-		if (line[0] == 'M') {
-			if (map && !hash_map(map))
-				goto Ebadmap;
-			if (line[1] != ' ')
-				goto Ebadmap;
-			s = strchr(line + 2, ' ');
-			if (!s)
-				goto Ebadmap;
-			*s++ = '\0';
-			if (strchr(s, ' '))
-				goto Ebadmap;
-			map = alloc_map(line + 2);
-			if (strcmp(line + 2, s)) {
-				map->new_name = strdup(s);
-				if (!map->new_name)
-					Enomem();
-			}
-			continue;
-		}
-		if (!map || !map->new_name)
-			goto Ebadmap;
-		if (map->count == map->allocated) {
-			int n = 2 * map->allocated;
-			map = realloc(map, sizeof(struct file_map) +
-					   n * sizeof(struct range_map));
-			if (!map)
-				Enomem();
-			map->allocated = n;
-		}
-		range = &map->ranges[map->count++];
-		if (sscanf(line, "%d %d%*c", &range->from, &range->to) != 2)
-			goto Ebadmap;
-		if (range > map->ranges && range->from <= range[-1].from)
-			goto Ebadmap;
-	}
-	if (map && !hash_map(map))
-		goto Ebadmap;
-	fclose(f);
-	return;
-Ebadmap:
-	die("bad map");
-}
-
-struct range_map *find_range(struct file_map *map, int l)
-{
-	struct range_map *range = &map->ranges[map->last];
-	struct range_map *p;
-
-	if (range->from <= l) {
-		p = &map->ranges[map->count - 1];
-		if (p->from > l) {
-			for (p = range; p->from <= l; p++)
-				;
-			p--;
-		}
-	} else {
-		for (p = map->ranges; p->from <= l; p++)
-			;
-		p--;
-	}
-	map->last = p - map->ranges;
-	return p;
-}
-
-void mapline(void)
-{
-	struct file_map *map;
-	struct range_map *range;
-	unsigned long l;
-	char *s1, *s2;
-	char *name;
-
-	s1 = strchr(line, ':');
-	if (!s1)
-		goto noise;
-	s2 = strchr(line, ' ');
-	if (s2 && s2 < s1)
-		goto noise;
-	l = strtoul(s1 + 1, &s2, 10);
-	if (s2 == s1 + 1 || *s2 != ':' || !l || l > INT_MAX)
-		goto noise;
-	*s1++ = *s2++ = '\0';
-	name = line;
-	map = find_map(line);
-	if (!map)
-		goto new;
-	if (!map->new_name)
-		goto old;
-	name = map->new_name;
-	range = find_range(map, l);
-	if (!range->to)
-		goto old;
-	l += range->to - range->from;
-new:
-	printf("N:%s:%lu:%s\n", name, l, s2);
-	return;
-old:
-	s1[-1] = s2[-1] = ':';
-	printf("O:%s\n", line);
-	return;
-noise:
-	printf("%s\n", line);
-}
-
-int parse_hunk(int *l1, int *l2, int *n1, int *n2)
-{
-	unsigned long n;
-	char *s, *p;
-	if (line[3] != '-')
-		return 0;
-	n = strtoul(line + 4, &s, 10);
-	if (s == line + 4 || n > INT_MAX)
-		return 0;
-	*l1 = n;
-	if (*s == ',') {
-		n = strtoul(s + 1, &p, 10);
-		if (p == s + 1 || n > INT_MAX)
-			return 0;
-		*n1 = n;
-		if (!n)
-			(*l1)++;
-	} else {
-		p = s;
-		*n1 = 1;
-	}
-	if (*p != ' ' || p[1] != '+')
-		return 0;
-	n = strtoul(p + 2, &s, 10);
-	if (s == p + 2 || n > INT_MAX)
-		return 0;
-	*l2 = n;
-	if (*s == ',') {
-		n = strtoul(s + 1, &p, 10);
-		if (p == s + 1 || n > INT_MAX)
-			return 0;
-		*n2 = n;
-		if (!n)
-			(*l2)++;
-	} else {
-		p = s;
-		*n2 = 1;
-	}
-	return 1;
-}
-
-void parse_diff(void)
-{
-	int skipping = -1, suppress = 1;
-	char *name1 = NULL, *name2 = NULL;
-	int from = 1, to = 1;
-	int l1, l2, n1, n2;
-	enum cmd {
-		Diff, Hunk, New, Del, Copy, Rename, Junk
-	} cmd;
-	static struct { const char *s; size_t len; } pref[] = {
-		[Hunk] = {"@@ ", 3},
-		[Diff] = {"diff ", 5},
-		[New] = {"new file ", 9},
-		[Del] = {"deleted file ", 12},
-		[Copy] = {"copy from ", 10},
-		[Rename] = {"rename from ", 11},
-		[Junk] = {"", 0},
-	};
-	size_t len1 = strlen(prefix1), len2 = strlen(prefix2);
-
-	while (getline(stdin)) {
-		if (skipping > 0) {
-			switch (line[0]) {
-			case '+':
-			case '-':
-			case '\\':
-				continue;
-			}
-		}
-		for (cmd = 0; strncmp(line, pref[cmd].s, pref[cmd].len); cmd++)
-			;
-		switch (cmd) {
-		case Hunk:
-			if (skipping < 0)
-				goto Ediff;
-			if (!suppress) {
-				if (!skipping)
-					printf("M %s %s\n", name1, name2);
-				if (!parse_hunk(&l1, &l2, &n1, &n2))
-					goto Ediff;
-				if (l1 > from)
-					printf("%d %d\n", from, to);
-				if (n1)
-					printf("%d 0\n", l1);
-				from = l1 + n1;
-				to = l2 + n2;
-			}
-			skipping = 1;
-			break;
-		case Diff:
-			if (!suppress) {
-				if (!skipping)
-					printf("M %s %s\n", name1, name2);
-				printf("%d %d\n", from, to);
-			}
-			free(name1);
-			free(name2);
-			name2 = strrchr(line, ' ');
-			if (!name2)
-				goto Ediff;
-			*name2 = '\0';
-			name1 = strrchr(line, ' ');
-			if (!name1)
-				goto Ediff;
-			if (strncmp(name1 + 1, prefix1, len1))
-				goto Ediff;
-			if (strncmp(name2 + 1, prefix2, len2))
-				goto Ediff;
-			name1 = strdup(name1 + len1 + 1);
-			name2 = strdup(name2 + len2 + 1);
-			if (!name1 || !name2)
-				goto Ediff;
-			skipping = 0;
-			suppress = 0;
-			from = to = 1;
-			break;
-		case New:
-			if (skipping)
-				goto Ediff;
-			suppress = 1;
-			break;
-		case Del:
-		case Copy:
-			if (skipping)
-				goto Ediff;
-			printf("D %s\n", name2);
-			suppress = 1;
-			break;
-		case Rename:
-			if (skipping)
-				goto Ediff;
-			printf("D %s\n", name2);
-			break;
-		default:
-			break;
-		}
-	}
-	return;
-Ediff:
-	die("odd diff");
-}
-
-int main(int argc, char **argv)
-{
-	int skipping = 0;
-	size = 256;
-	line = malloc(size);
-	if (!line)
-		Enomem();
-	if (argc < 2) {
-		parse_diff();
-	} else {
-		parse_map(argv[1]);
-		while (getline(stdin))
-			mapline();
-	}
-	return 0;
-}
+260bda5eb4effca1a1dd33beb7f7e962d3eab602
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 8b95df0..ab896fc 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -67,6 +67,15 @@ OPTIONS
+ --all::
+ 	Show all refs found in `$GIT_DIR/refs`.
+ 
++--branches::
++	Show branch refs found in `$GIT_DIR/refs/heads`.
++
++--tags::
++	Show tag refs found in `$GIT_DIR/refs/tags`.
++
++--remotes::
++	Show tag refs found in `$GIT_DIR/refs/remotes`.
++
+ --show-prefix::
+ 	When the command is invoked from a subdirectory, show the
+ 	path of the current directory relative to the top-level
+diff --git a/git-branch.sh b/git-branch.sh
+index ebcc898..134e68c 100755
+--- a/git-branch.sh
++++ b/git-branch.sh
+@@ -82,8 +82,7 @@ done
+ 
+ case "$#" in
+ 0)
+-	git-rev-parse --symbolic --all |
+-	sed -ne 's|^refs/heads/||p' |
++	git-rev-parse --symbolic --branches |
+ 	sort |
+ 	while read ref
+ 	do
+diff --git a/refs.c b/refs.c
+index 275b914..6c91ae6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -114,7 +114,7 @@ int read_ref(const char *filename, unsig
+ 	return -1;
+ }
+ 
+-static int do_for_each_ref(const char *base, int (*fn)(const char *path, const unsigned char *sha1))
++static int do_for_each_ref(const char *base, int (*fn)(const char *path, const unsigned char *sha1), int trim)
+ {
+ 	int retval = 0;
+ 	DIR *dir = opendir(git_path("%s", base));
+@@ -146,7 +146,7 @@ static int do_for_each_ref(const char *b
+ 			if (stat(git_path("%s", path), &st) < 0)
+ 				continue;
+ 			if (S_ISDIR(st.st_mode)) {
+-				retval = do_for_each_ref(path, fn);
++				retval = do_for_each_ref(path, fn, trim);
+ 				if (retval)
+ 					break;
+ 				continue;
+@@ -160,7 +160,7 @@ static int do_for_each_ref(const char *b
+ 				      "commit object!", path);
+ 				continue;
+ 			}
+-			retval = fn(path, sha1);
++			retval = fn(path + trim, sha1);
+ 			if (retval)
+ 				break;
+ 		}
+@@ -180,7 +180,22 @@ int head_ref(int (*fn)(const char *path,
+ 
+ int for_each_ref(int (*fn)(const char *path, const unsigned char *sha1))
+ {
+-	return do_for_each_ref("refs", fn);
++	return do_for_each_ref("refs", fn, 0);
++}
++
++int for_each_tag_ref(int (*fn)(const char *path, const unsigned char *sha1))
++{
++	return do_for_each_ref("refs/tags", fn, 10);
++}
++
++int for_each_branch_ref(int (*fn)(const char *path, const unsigned char *sha1))
++{
++	return do_for_each_ref("refs/heads", fn, 11);
++}
++
++int for_each_remote_ref(int (*fn)(const char *path, const unsigned char *sha1))
++{
++	return do_for_each_ref("refs/remotes", fn, 13);
+ }
+ 
+ static char *ref_file_name(const char *ref)
+diff --git a/refs.h b/refs.h
+index 2625596..fa816c1 100644
+--- a/refs.h
++++ b/refs.h
+@@ -7,6 +7,9 @@ #define REFS_H
+  */
+ extern int head_ref(int (*fn)(const char *path, const unsigned char *sha1));
+ extern int for_each_ref(int (*fn)(const char *path, const unsigned char *sha1));
++extern int for_each_tag_ref(int (*fn)(const char *path, const unsigned char *sha1));
++extern int for_each_branch_ref(int (*fn)(const char *path, const unsigned char *sha1));
++extern int for_each_remote_ref(int (*fn)(const char *path, const unsigned char *sha1));
+ 
+ /** Reads the refs file specified into sha1 **/
+ extern int get_ref_sha1(const char *ref, unsigned char *sha1);
+diff --git a/rev-parse.c b/rev-parse.c
+index 62e16af..4e2d9fb 100644
+--- a/rev-parse.c
++++ b/rev-parse.c
+@@ -36,6 +36,7 @@ static int is_rev_argument(const char *a
+ 		"--all",
+ 		"--bisect",
+ 		"--dense",
++		"--branches",
+ 		"--header",
+ 		"--max-age=",
+ 		"--max-count=",
+@@ -45,7 +46,9 @@ static int is_rev_argument(const char *a
+ 		"--objects-edge",
+ 		"--parents",
+ 		"--pretty",
++		"--remotes",
+ 		"--sparse",
++		"--tags",
+ 		"--topo-order",
+ 		"--date-order",
+ 		"--unpacked",
+@@ -165,7 +168,7 @@ int main(int argc, char **argv)
+ 	int i, as_is = 0, verify = 0;
+ 	unsigned char sha1[20];
+ 	const char *prefix = setup_git_directory();
+-	
++
+ 	git_config(git_default_config);
+ 
+ 	for (i = 1; i < argc; i++) {
+@@ -255,6 +258,18 @@ int main(int argc, char **argv)
+ 				for_each_ref(show_reference);
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--branches")) {
++				for_each_branch_ref(show_reference);
++				continue;
++			}
++			if (!strcmp(arg, "--tags")) {
++				for_each_tag_ref(show_reference);
++				continue;
++			}
++			if (!strcmp(arg, "--remotes")) {
++				for_each_remote_ref(show_reference);
++				continue;
++			}
+ 			if (!strcmp(arg, "--show-prefix")) {
+ 				if (prefix)
+ 					puts(prefix);
+-- 
+1.3.2.g575a1
