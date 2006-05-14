@@ -1,58 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: The git newbie experience
-Date: Sun, 14 May 2006 14:26:21 -0700
-Message-ID: <7vmzdk2t8i.fsf@assigned-by-dhcp.cox.net>
-References: <446778B8.7080201@inoi.fi>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Branch relationships
+Date: Mon, 15 May 2006 00:01:48 +0200
+Message-ID: <200605150001.48548.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org> <200605142249.17508.Josef.Weidendorfer@gmx.de> <7vr72w2thu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 14 23:26:41 2006
+X-From: git-owner@vger.kernel.org Mon May 15 00:02:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfO6k-0007J6-Jv
-	for gcvg-git@gmane.org; Sun, 14 May 2006 23:26:35 +0200
+	id 1FfOfN-0003R5-LP
+	for gcvg-git@gmane.org; Mon, 15 May 2006 00:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750935AbWENV0X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 17:26:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751404AbWENV0X
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 17:26:23 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:49386 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750935AbWENV0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 May 2006 17:26:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060514212622.TGMR27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 14 May 2006 17:26:22 -0400
-To: Tommi Virtanen <tv@inoi.fi>
-In-Reply-To: <446778B8.7080201@inoi.fi> (Tommi Virtanen's message of "Sun, 14
-	May 2006 21:36:40 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750760AbWENWCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 18:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbWENWCJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 18:02:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:63910 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750760AbWENWCI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 18:02:08 -0400
+Received: (qmail invoked by alias); 14 May 2006 22:02:06 -0000
+Received: from p54968B53.dip0.t-ipconnect.de (EHLO noname) [84.150.139.83]
+  by mail.gmx.net (mp039) with SMTP; 15 May 2006 00:02:06 +0200
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.1
+In-Reply-To: <7vr72w2thu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19985>
 
-Tommi Virtanen <tv@inoi.fi> writes:
+On Sunday 14 May 2006 23:20, Junio C Hamano wrote:
+> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+> >>   ; my private build areas on the kernel.org machines
+> >>    [remote "ko-private"]
+> >>         url = "x86-64-build.kernel.org:git"
+> >>         url = "i386-build.kernel.org:git"
+> >>         push = master:origin
+> >> ...
+> >
+> > specifies that "git push" should push to both URLs?
+> 
+> Exactly.  I would _want_ to push to both with single action when
+> I say "git push ko-private".  Actually I have _never_ felt need
+> to, but Linus wanted it first and I think it makes sense.
 
-> (21:08:34) ***gitster personally considers getting more users a very
-> high priority but agrees that from usability point of view, having a
-> mode to expose "stripped down" set of features for simple needs would be
-> beneficial.
->
-> That I can 100% agree with.
+Hmmm. Isn't this a solution for a very special use-case?
+You even can not specify different push lines for the 2 URLs.
+I think you want an alias name for a group of remotes here?
+Why not
 
-Sorry, I personally consider it is not a very high priority; the
-above is a typo (otherwise "but agrees" does not make _any_
-sense).
+ [remotealias "ko-private"]
+   remote = "ko-private-x86-64"
+   remote = "ko-private-i386"
 
-The rest of the message I'll find a time to comment on
-separately, but I am in the middle of migrating the development
-environment, so it might take some time.
+Neverless, this wasn't the thing I was after.
 
-Oh, and please send patches cc'ed to the list at least for a few
-days, because I am fighting with fetchmail/getmail configuration
-right now and might lose a few mails while doing so.
+> That is what "branch.foo.remote = this-remote" is about.
+
+OK. Sorry, I somehow missed this.
+
+> When 
+> working on foo branch, use what is described in
+> remote."this-remote" section for "git pull".
+> remote."this-remote" would have url and one or more fetch lines,
+> and as usual the first fetch line would say "merge this thing".
+> This gives the continuity in semantics while migrating from
+> .git/remotes/foo to [remote "foo"] section of the config file.
+
+The only thing I wanted to discuss in this thread is exactly the
+limitation of "as usual the first fetch line..." by the branch
+attribute "origin", which lead me to the alternative "tracksremote"
+attribute. Sorry about any confusion.
+
+I suppose "branch.<branch name>.origin" is still the way to go for
+specifying the upstream?
+
+Josef
