@@ -1,99 +1,126 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: git diff: support "-U" and "--unified" options properly
-Date: Sun, 14 May 2006 14:57:17 +0200
-Message-ID: <200605141457.17314.Josef.Weidendorfer@gmx.de>
-References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org> <Pine.LNX.4.64.0605131404391.3866@g5.osdl.org> <7vpsihsjq6.fsf@assigned-by-dhcp.cox.net>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: [PATCH] gitk: Display commit messages with word wrap
+Date: Sun, 14 May 2006 19:14:56 +0400
+Message-ID: <20060514151456.GA18012@procyon.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 14 14:57:48 2006
+X-From: git-owner@vger.kernel.org Sun May 14 17:15:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfGAL-00047U-JX
-	for gcvg-git@gmane.org; Sun, 14 May 2006 14:57:45 +0200
+	id 1FfIJM-0004Ic-BI
+	for gcvg-git@gmane.org; Sun, 14 May 2006 17:15:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbWENM5j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 08:57:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbWENM5j
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 08:57:39 -0400
-Received: from mail.gmx.de ([213.165.64.20]:23239 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750801AbWENM5i (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 08:57:38 -0400
-Received: (qmail invoked by alias); 14 May 2006 12:57:36 -0000
-Received: from p54968B53.dip0.t-ipconnect.de (EHLO noname) [84.150.139.83]
-  by mail.gmx.net (mp039) with SMTP; 14 May 2006 14:57:36 +0200
-X-Authenticated: #352111
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.1
-In-Reply-To: <7vpsihsjq6.fsf@assigned-by-dhcp.cox.net>
+	id S1751448AbWENPPI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 11:15:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbWENPPI
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 11:15:08 -0400
+Received: from master.altlinux.org ([62.118.250.235]:61190 "EHLO
+	master.altlinux.org") by vger.kernel.org with ESMTP
+	id S1751448AbWENPPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 May 2006 11:15:06 -0400
+Received: from procyon.home (localhost.localdomain [127.0.0.1])
+	by master.altlinux.org (Postfix) with ESMTP
+	id D13D6E32FE; Sun, 14 May 2006 19:15:03 +0400 (MSD)
+Received: by procyon.home (Postfix, from userid 500)
+	id C4282E36689; Sun, 14 May 2006 19:14:56 +0400 (MSD)
+To: Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19962>
 
-On Saturday 13 May 2006 23:22, you wrote:
->  * remotes/ information from .git/config (js/fetchconfig)
-> ...
->    [branch "master"]
-> 	remote = "ko-private"
+Some people put very long strings into commit messages, which then
+become invisible in gitk (word wrapping in the commit details window is
+turned off, and there is no horizontal scroll bar).  Enabling word wrap
+for just the commit message looks much better.
 
-Why is this line needed? In this example, what is the relationship
-of local "master" with the remote? I think it is enough to specify
-the local upstream branch:
-
- [branch "master"]
-    origin = "ko-master"
-
-For the default pull action when on "master", we would have to look
-up for remotes with a fetch line fetching into "ko-master", which
-could be cumbersome. Besides, the fetch lines specify default actions
-when fetching from a given remote, and there is no garantuee that we
-want fetching into "ko-master" as any default action.
-
-So we need
-
- [branch "ko-master"]
-    tracksremote = "master of ko-private"
-
-This also would specify that we are not allowed to commit on "ko-master".
-
-If we do not want to have a local tracking branch at all, we would have
-
- [branch "master"]
-    origin = "master of ko-private"
-
-or
-
- [branch "master"]
-    origin = "master of kernel.org:/pub/scm/git/git.git"
+Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
 
 
-For a default push action when on master, I would add
+---
 
- [branch "master"]
-    push = "master of ko-private"
+ gitk |   22 +++++++++++-----------
+ 1 files changed, 11 insertions(+), 11 deletions(-)
 
-or alternatively
-
- [branch "master"]
-    push = "master of kernel.org:/pub/scm/git/git.git"
-
-> ...
->    [remote "ko"]
->    	url = "kernel.org:/pub/scm/git/git.git"
->       push = master:master
-> ...
-> 	fetch = master:ko-master
-
-These specifications more or less are independent from the above,
-as it specifies the defaults when fetching/pushing to the specified remote.
-
-Josef
-
-PS: Patch pending...
+be428b9cd6287b214e61c614bd4c4b4fa3d20075
+diff --git a/gitk b/gitk
+index 4aa57c0..41f25df 100755
+--- a/gitk
++++ b/gitk
+@@ -527,6 +527,7 @@ proc makewindow {} {
+     pack $ctext -side left -fill both -expand 1
+     .ctop.cdet add .ctop.cdet.left
+ 
++    $ctext tag conf comment -wrap word
+     $ctext tag conf filesep -font [concat $textfont bold] -back "#aaaaaa"
+     $ctext tag conf hunksep -fore blue
+     $ctext tag conf d0 -fore red
+@@ -3222,12 +3223,12 @@ proc commit_descriptor {p} {
+ 
+ # append some text to the ctext widget, and make any SHA1 ID
+ # that we know about be a clickable link.
+-proc appendwithlinks {text} {
++proc appendwithlinks {text tags} {
+     global ctext commitrow linknum curview
+ 
+     set start [$ctext index "end - 1c"]
+-    $ctext insert end $text
+-    $ctext insert end "\n"
++    $ctext insert end $text $tags
++    $ctext insert end "\n" {}
+     set links [regexp -indices -all -inline {[0-9a-f]{40}} $text]
+     foreach l $links {
+ 	set s [lindex $l 0]
+@@ -3354,7 +3355,7 @@ proc selectline {l isnew} {
+ 	$ctext insert end "\n"
+     }
+  
+-    set comment {}
++    set headers {}
+     set olds [lindex $parentlist $l]
+     if {[llength $olds] > 1} {
+ 	set np 0
+@@ -3365,23 +3366,22 @@ proc selectline {l isnew} {
+ 		set tag m$np
+ 	    }
+ 	    $ctext insert end "Parent: " $tag
+-	    appendwithlinks [commit_descriptor $p]
++	    appendwithlinks [commit_descriptor $p] {}
+ 	    incr np
+ 	}
+     } else {
+ 	foreach p $olds {
+-	    append comment "Parent: [commit_descriptor $p]\n"
++	    append headers "Parent: [commit_descriptor $p]\n"
+ 	}
+     }
+ 
+     foreach c [lindex $childlist $l] {
+-	append comment "Child:  [commit_descriptor $c]\n"
++	append headers "Child:  [commit_descriptor $c]\n"
+     }
+-    append comment "\n"
+-    append comment [lindex $info 5]
+ 
+     # make anything that looks like a SHA1 ID be a clickable link
+-    appendwithlinks $comment
++    appendwithlinks $headers {}
++    appendwithlinks [lindex $info 5] {comment}
+ 
+     $ctext tag delete Comments
+     $ctext tag remove found 1.0 end
+@@ -4504,7 +4504,7 @@ proc showtag {tag isnew} {
+     } else {
+ 	set text "Tag: $tag\nId:  $tagids($tag)"
+     }
+-    appendwithlinks $text
++    appendwithlinks $text {}
+     $ctext conf -state disabled
+     init_flist {}
+ }
+-- 
+1.3.2.g8252
