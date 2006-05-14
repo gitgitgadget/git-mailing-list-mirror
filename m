@@ -1,86 +1,73 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Tracking branch history
-Date: Sun, 14 May 2006 16:16:54 -0700
-Message-ID: <7vfyjc19jt.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605121838490.6713@iabervon.org>
-	<loom.20060513T140528-554@post.gmane.org>
+Subject: Re: [PATCH] Add "--branches", "--tags" and "--remotes" options to git-rev-parse.
+Date: Sun, 14 May 2006 16:24:57 -0700
+Message-ID: <7v8xp4196e.fsf@assigned-by-dhcp.cox.net>
+References: <BAYC1-PASMTP0299DC98A51B55188BDF96AEAD0@CEZ.ICE>
+	<7vd5ehu8og.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP043948149786B7EE06DED3AEA20@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 15 01:17:01 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 01:25:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfPpb-0004mo-Ua
-	for gcvg-git@gmane.org; Mon, 15 May 2006 01:17:00 +0200
+	id 1FfPxP-0005ue-Ot
+	for gcvg-git@gmane.org; Mon, 15 May 2006 01:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbWENXQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 19:16:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751396AbWENXQ4
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 19:16:56 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:36264 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751393AbWENXQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 May 2006 19:16:56 -0400
+	id S1751403AbWENXY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 19:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWENXY7
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 19:24:59 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47757 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751403AbWENXY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 May 2006 19:24:58 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060514231655.UAV17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 14 May 2006 19:16:55 -0400
-To: git@vger.kernel.org
-In-Reply-To: <loom.20060513T140528-554@post.gmane.org>
-	(elrond+kernel.org@samba-tng.org's message of "Sat, 13 May 2006
-	12:53:14 +0000 (UTC)")
+          id <20060514232458.JFOS19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 14 May 2006 19:24:58 -0400
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP043948149786B7EE06DED3AEA20@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Sat, 13 May 2006 21:43:00 -0400")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19991>
 
-Elrond <elrond+kernel.org@samba-tng.org> writes:
+Sean <seanlkml@sympatico.ca> writes:
 
-> Daniel Barkalow <barkalow <at> iabervon.org> writes:
->
->> 
->> One feature that might make git more intuitive to people is if we were to 
->> additionally track the history of what commit was the head of each branch 
->> over time. This is only vaguely related to the history of the content, but 
->> it's well-defined and sometimes significant.
->> 
->> E.g., if you know that two weeks ago, what you had worked, but it doesn't 
->> work now, you can use git-bisect to figure out what happened, but first 
->> you have to figure out what commit it was that you were using two weeks 
->> ago. Two weeks ago, we had that information, but we didn't keep it.
->
-> On a related issue:
->
-> Looking at a commit:
->    commit id-commit
->    parent id-1
->    parent id-2
->    parent id-3
->
->        Merge branch 'branch-2', 'branch-3'
->
-> One can tell the name of the branches for id-2 and id-3 (branch-2, 3),
-> but one can't tell the name of id-1.
+> On a related note, would it be okay to change "git tag -l" to
+> produce a list of tags without the "tags/" prefix in front of
+> every tag as it does now?  Wanted to use the new "git
+> rev-parse --tags" instead of "find" to produce the list but am
+> not sure how important backward compatibility is in that case.
 
-That's deliberate.  If you are merging into a branch other than
-"master", the message would say:
+I do not have problem with that, but somebody else's script
+might; Cogito seems not to mind.
 
-        commit ea892b27b15fbc46a3bb3ad2ddce737dc6590ae5
-        Merge: 7278a29... 8d48ad6...
-        Author: Junio C Hamano <junkio@cox.net>
-        Date:   Sat May 13 18:49:54 2006 -0700
+Something like this perhaps?
 
-            Merge branch 'lt/config' into next
-
-            * lt/config:
-              git config syntax updates
-              Another config file parsing fix.
-              checkout: use --aggressive when running a 3-way merge (-m).
-              Fix git-pack-objects for 64-bit platforms
-              fix diff-delta bad memory access
-
-The point is to keep the punch line as short and meaningful for
-the most common case.
+-- >8 --
+diff --git a/git-tag.sh b/git-tag.sh
+index dc6aa95..2286ad5 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -28,11 +28,10 @@ do
+         cd "$GIT_DIR/refs" &&
+ 	case "$#" in
+ 	1)
+-		find tags -type f -print ;;
+-	*)
+-		shift
+-		find tags -type f -print | grep "$@" ;;
++		set x . ;;
+ 	esac
++	shift
++	find tags -type f -print | sed -e 's|^tags/||' | grep "$@"
+ 	exit $?
+ 	;;
+     -m)
