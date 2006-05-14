@@ -1,67 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Subject: Re: Branch relationships
-Date: Sun, 14 May 2006 15:19:00 -0700
-Message-ID: <7v8xp4ntbf.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org>
-	<200605142249.17508.Josef.Weidendorfer@gmx.de>
-	<7vr72w2thu.fsf@assigned-by-dhcp.cox.net>
-	<200605150001.48548.Josef.Weidendorfer@gmx.de>
+Date: Mon, 15 May 2006 01:04:46 +0200
+Message-ID: <200605150104.46762.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org> <200605150001.48548.Josef.Weidendorfer@gmx.de> <7v8xp4ntbf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 00:19:19 2006
+X-From: git-owner@vger.kernel.org Mon May 15 01:05:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfOvg-0005gw-Bt
-	for gcvg-git@gmane.org; Mon, 15 May 2006 00:19:12 +0200
+	id 1FfPeE-0003Fa-9m
+	for gcvg-git@gmane.org; Mon, 15 May 2006 01:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbWENWTD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 18:19:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbWENWTD
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 18:19:03 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:54156 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750749AbWENWTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 May 2006 18:19:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060514221901.MUSV9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 14 May 2006 18:19:01 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200605150001.48548.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Mon, 15 May 2006 00:01:48 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751383AbWENXFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 19:05:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWENXFH
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 19:05:07 -0400
+Received: from mail.gmx.de ([213.165.64.20]:1745 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751383AbWENXFG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 19:05:06 -0400
+Received: (qmail invoked by alias); 14 May 2006 23:05:04 -0000
+Received: from p54968B53.dip0.t-ipconnect.de (EHLO noname) [84.150.139.83]
+  by mail.gmx.net (mp027) with SMTP; 15 May 2006 01:05:04 +0200
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.1
+In-Reply-To: <7v8xp4ntbf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19988>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+On Monday 15 May 2006 00:19, you wrote:
+> > I suppose "branch.<branch name>.origin" is still the way to go for
+> > specifying the upstream?
+> 
+> Probably "origin" is a better name for it; I was assuming
+> "branch.<branch name>.remote = foo" refers to a [remote "foo"]
+> section and means "when on this branch, pull from foo and merge
+> from it".
 
->> Exactly.  I would _want_ to push to both with single action when
->> I say "git push ko-private".  Actually I have _never_ felt need
->> to, but Linus wanted it first and I think it makes sense.
->
-> Hmmm. Isn't this a solution for a very special use-case?
-> You even can not specify different push lines for the 2 URLs.
-> I think you want an alias name for a group of remotes here?
+Maybe.
 
-Perhaps.  
+But there is a misunderstanding. I wanted the branch attribute "origin"
+to specify the upstream _branch_, not a remote.
+After a "git clone", we would have
 
-The "push to multiple places" is mostly for Linus backing things
-up, and I tend to agree that your "alias" notation makes things
-appear to be more general.  However, I do not think you would
-want to push to two different places with different branch
-mappings, so I suspect that generality is not buying you much
-while making things more easily misconfigured.
+ [remote "origin"]
+   url = ...
+   fetch = master:origin
 
-> I suppose "branch.<branch name>.origin" is still the way to go for
-> specifying the upstream?
+ [branch "master"]
+   origin = "origin" ; upstream of master is local branch "origin"
 
-Probably "origin" is a better name for it; I was assuming
-"branch.<branch name>.remote = foo" refers to a [remote "foo"]
-section and means "when on this branch, pull from foo and merge
-from it".
+ [branch "origin"]
+   tracksremote ; bool
+
+Now adding a further development branch for remote branch "topic", we would add
+
+ [remote "origin"]
+   ...
+   fetch = topic:tracking-topic
+
+ [branch "local-topic"]
+   origin = "tracking-topic"
+
+ [branch "tracking-topic"]
+   tracksremote
+
+Now, a "git pull" on branch "local-topic" does the right thing: it fetches
+from remote "origin", as "tracking-topic" is given in a refspec there, and merges
+"tracking-topic" to the current branch "local-topic", as given by the origin
+attribute.
+
+This also extends to local upstreams: a "git checkout -b topic2 master" would
+append
+
+ [branch "topic2"]
+   origin = "master"
+
+and a "git pull" on topic2 would merge the upstream "master".
+
+Josef
