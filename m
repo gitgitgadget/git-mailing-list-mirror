@@ -1,68 +1,101 @@
-From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-Subject: align git diff a..b semantics with git log a..b
-Date: Mon, 15 May 2006 12:41:35 +0400
-Message-ID: <44683EBF.9070307@Intel.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
+Date: Mon, 15 May 2006 02:27:04 -0700
+Message-ID: <20060515092704.GB6855@localdomain>
+References: <1147660345772-git-send-email-normalperson@yhbt.net> <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon May 15 10:49:39 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>,
+	Greg KH <greg@kroah.com>, Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Mon May 15 11:27:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfYlm-0008J9-I9
-	for gcvg-git@gmane.org; Mon, 15 May 2006 10:49:39 +0200
+	id 1FfZM8-0006fH-FO
+	for gcvg-git@gmane.org; Mon, 15 May 2006 11:27:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbWEOItf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 04:49:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751030AbWEOItf
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 04:49:35 -0400
-Received: from mga03.intel.com ([143.182.124.21]:14164 "EHLO
-	azsmga101-1.ch.intel.com") by vger.kernel.org with ESMTP
-	id S1750792AbWEOIte (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 04:49:34 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101-1.ch.intel.com with ESMTP; 15 May 2006 01:49:32 -0700
-Received: from fmsmsx331.fm.intel.com (HELO fmsmsx331.amr.corp.intel.com) ([132.233.42.156])
-  by azsmga001.ch.intel.com with ESMTP; 15 May 2006 01:42:35 -0700
-X-IronPort-AV: i="4.05,128,1146466800"; 
-   d="scan'208"; a="36451641:sNHT6268843763"
-Received: from fmsmsx312.amr.corp.intel.com ([132.233.42.227]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 15 May 2006 01:42:14 -0700
-Received: from mssmsx402.ccr.corp.intel.com ([10.125.2.12]) by fmsmsx312.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 15 May 2006 01:42:13 -0700
-Received: from [10.125.151.180] ([10.125.151.180]) by mssmsx402.ccr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Mon, 15 May 2006 12:42:10 +0400
-User-Agent: Thunderbird 1.5 (Windows/20051201)
-To: git@vger.kernel.org
-X-OriginalArrivalTime: 15 May 2006 08:42:10.0325 (UTC) FILETIME=[7497F450:01C677FB]
+	id S1751442AbWEOJ1I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 05:27:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbWEOJ1I
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 05:27:08 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:3235 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751442AbWEOJ1H (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 05:27:07 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id C50D57DC005;
+	Mon, 15 May 2006 02:27:04 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 15 May 2006 02:27:04 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20036>
 
-Hi,
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > This should make local mailing possible for machines without
+> > a connection to an SMTP server.
+> 
+> Which is a good thing, but
+> 
+> > It'll default to using /usr/sbin/sendmail or /usr/lib/sendmail
+> > if no SMTP server is specified (the default).  If it can't find
+> > either of those paths, it'll fall back to connecting to an SMTP
+> > server on localhost.
+> 
+> I do not know if it is OK to change the default to first prefer
+> local MDA executable and then "localhost".  That is, ...
+> 
+> > @@ -179,8 +180,14 @@ if (!defined $initial_reply_to && $promp
+> >  	$initial_reply_to =~ s/(^\s+|\s+$)//g;
+> >  }
+> >  
+> > -if (!defined $smtp_server) {
+> > -	$smtp_server = "localhost";
+> > +if (!$smtp_server) {
+> > +	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+> > +		if (-x $_) {
+> > +			$smtp_server = $_;
+> > +			last;
+> > +		}
+> > +	}
+> > +	$smtp_server ||= 'localhost'; # could be 127.0.0.1, too... *shrug*
+> >  }
+> >  
+> >  if ($compose) {
+> 
+> Without this hunk, people who did not specify --smtp-server=host
+> could get away with having anything that listens to 25/tcp on
+> the localhost that is not either of the above two paths; now
+> they have to explicitly say --smtp-server=localhost to defeat
+> what this hunk does.  I do not know if it is a big deal, though.
 
-Currently, git-diff accepts
+I believe this is what Martin wanted.  I think it's a good idea since
+sendmail binaries tend to be more flexible, but I'm ok with it either
+way.
 
-	git-diff A..B
+Of course, Greg and Ryan were the original authors of this, so I'd
+like their take on it, too.
 
-syntax, and the output seems to be equivalent of 'git-diff A B'.
+> > +	if ($smtp_server =~ m#^/#) {
+> 
+> I like this if(){}else{} here, but have a feeling that the
+> logging part should be placed outside it to be shared.
 
-IMHO, this conflicts with A..B semantics defined for git-log family of commands.
-Consider following tree
+Cleaned that up a bit, patch coming.  Also removed the Port: printout
+completely, as it's rather redundant (see below).
 
-O--X--Y--A1--A2  (a)
-       \
-        B1--B2  (b)
+> While we are at it, we might want to enhance $smtp_server parsing
+> to take host:port notation so that people can use message
+> submission port 587/tcp (RFC 4409) instead.
 
-The command 'git log a..b' will show B1,B2, so I would find it
-intuitive (and useful) to have 'git diff a..b' show B1+B2,
-rather than -A2-A1+B1+B2.
+This already works, IO::Socket::INET (behind Net::SMTP) takes care of
+it :)
 
-So, I suggest to change semantics of 'git diff a..b'
-to 'git diff `git-merge-base a b` b'.
-
-I could contribute the documentation change if the idea is accepted and implemented.
-
-Thanks a lot!
+-- 
+Eric Wong
