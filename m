@@ -1,81 +1,137 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] Add "--branches", "--tags" and "--remotes" options to
- git-rev-parse.
-Date: Sun, 14 May 2006 20:07:39 -0400
-Message-ID: <BAYC1-PASMTP079744DE4B299C5B567F30AEA30@CEZ.ICE>
-References: <BAYC1-PASMTP0299DC98A51B55188BDF96AEAD0@CEZ.ICE>
-	<7vd5ehu8og.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP043948149786B7EE06DED3AEA20@CEZ.ICE>
-	<7v8xp4196e.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] commit: allow --pretty= args to be abbreviated
+Date: Sun, 14 May 2006 17:34:05 -0700
+Message-ID: <20060515003405.GA5533@localdomain>
+References: <11476199622462-git-send-email-normalperson@yhbt.net> <1147619963765-git-send-email-normalperson@yhbt.net> <7vwtcoyxs2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 02:13:14 2006
+X-From: git-owner@vger.kernel.org Mon May 15 02:34:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfQi0-0003TN-AF
-	for gcvg-git@gmane.org; Mon, 15 May 2006 02:13:12 +0200
+	id 1FfR2M-00078w-Os
+	for gcvg-git@gmane.org; Mon, 15 May 2006 02:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420AbWEOANI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 20:13:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbWEOANI
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 20:13:08 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:64899 "EHLO
-	BAYC1-PASMTP07.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1751420AbWEOANH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 May 2006 20:13:07 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP07.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 14 May 2006 17:16:17 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 78C40644C28;
-	Sun, 14 May 2006 20:13:05 -0400 (EDT)
+	id S1750969AbWEOAeJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 20:34:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbWEOAeJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 20:34:09 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:55199 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1750969AbWEOAeI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 20:34:08 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id E653C7DC005;
+	Sun, 14 May 2006 17:34:05 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 14 May 2006 17:34:05 -0700
 To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060514200739.11c9d3a5.seanlkml@sympatico.ca>
-In-Reply-To: <7v8xp4196e.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 15 May 2006 00:16:17.0718 (UTC) FILETIME=[C907AD60:01C677B4]
+Content-Disposition: inline
+In-Reply-To: <7vwtcoyxs2.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19999>
 
-On Sun, 14 May 2006 16:24:57 -0700
+Unlike the original one, this one only does prefix matches, so
+you can't do --pretty=er anymore :)
+
+This one really works with and without the gitopt changes.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+
+---
+
 Junio C Hamano <junkio@cox.net> wrote:
-
-> I do not have problem with that, but somebody else's script
-> might; Cogito seems not to mind.
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> Something like this perhaps?
+> >  commit.c |   42 +++++++++++++++++++++++++++++-------------
+> >  1 files changed, 29 insertions(+), 13 deletions(-)
+> 
+> This is applicable without the gitopt changes, but I have a
+> feeling that when we think about abbreviations the users would
+> expect the leading substring abbreviation, not strstr().
+> 
+> While "git log --pretty=lle" or "git log --pretty=or" might be
+> unambiguous, I think that is trying to be too cute and
+> confusing, especially if somebody picks up that habit by
+> watching others type such a cute abbreviations.
+> 
+> That comment probably incidentally applies to your bigger
+> patches.
 
-That looks good.  If you accept the rev-parse patch, then i'd suggest the
-patch below instead.
+Ok.  The current gitopt patch only uses leading substring abbreviations
+by default.  GIT_ABBREV_HARDER needs to be set if you want all the
+crazyness :)
 
-Sean
+ commit.c |   50 ++++++++++++++++++++++++++++++++++++--------------
+ 1 files changed, 36 insertions(+), 14 deletions(-)
 
-
-diff --git a/git-tag.sh b/git-tag.sh
-index dc6aa95..a0afa25 100755
---- a/git-tag.sh
-+++ b/git-tag.sh
-@@ -25,14 +25,12 @@ do
- 	force=1
- 	;;
-     -l)
--        cd "$GIT_DIR/refs" &&
- 	case "$#" in
- 	1)
--		find tags -type f -print ;;
--	*)
--		shift
--		find tags -type f -print | grep "$@" ;;
-+		set x . ;;
- 	esac
-+	shift
-+	git rev-parse --symbolic --tags | sort | grep "$@"
- 	exit $?
- 	;;
-     -m)
+d4473559924b1a5ba655cd5d5b18d39f53e25184
+diff --git a/commit.c b/commit.c
+index 2717dd8..2753677 100644
+--- a/commit.c
++++ b/commit.c
+@@ -22,23 +22,45 @@ struct sort_node
+ 
+ const char *commit_type = "commit";
+ 
++struct cmt_fmt_map {
++	const char *n;
++	enum cmit_fmt v;
++} cmt_fmts[] = {
++	{ "raw",	CMIT_FMT_RAW },
++	{ "medium",	CMIT_FMT_MEDIUM },
++	{ "short",	CMIT_FMT_SHORT },
++	{ "full",	CMIT_FMT_FULL },
++	{ "fuller",	CMIT_FMT_FULLER },
++	{ "oneline",	CMIT_FMT_ONELINE },
++};
++
+ enum cmit_fmt get_commit_format(const char *arg)
+ {
+-	if (!*arg)
++	int i, found;
++	size_t len;
++
++	if (!arg || !*arg)
+ 		return CMIT_FMT_DEFAULT;
+-	if (!strcmp(arg, "=raw"))
+-		return CMIT_FMT_RAW;
+-	if (!strcmp(arg, "=medium"))
+-		return CMIT_FMT_MEDIUM;
+-	if (!strcmp(arg, "=short"))
+-		return CMIT_FMT_SHORT;
+-	if (!strcmp(arg, "=full"))
+-		return CMIT_FMT_FULL;
+-	if (!strcmp(arg, "=fuller"))
+-		return CMIT_FMT_FULLER;
+-	if (!strcmp(arg, "=oneline"))
+-		return CMIT_FMT_ONELINE;
+-	die("invalid --pretty format");
++	if (*arg == '=')
++		arg++;
++	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
++		if (!strcmp(arg, cmt_fmts[i].n))
++			return cmt_fmts[i].v;
++	}
++
++	/* look for abbreviations */
++	len = strlen(arg);
++	found = -1;
++	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
++		if (!strncmp(cmt_fmts[i].n, arg, len)) {
++			if (found >= 0)
++				die("invalid --pretty format: %s", arg);
++			found = i;
++		}
++	}
++	if (found >= 0)
++		return cmt_fmts[found].v;
++	die("invalid --pretty format: %s", arg);
+ }
+ 
+ static struct commit *check_commit(struct object *obj,
+-- 
+1.3.2.g58c0
