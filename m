@@ -1,60 +1,86 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: 1.3.2.gde1d fails to build on OpenBSD
-Date: 15 May 2006 08:57:40 -0700
-Message-ID: <86bqtzth57.fsf@blue.stonehenge.com>
+Date: Mon, 15 May 2006 09:00:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605150854420.3866@g5.osdl.org>
 References: <86psiftlgf.fsf@blue.stonehenge.com>
-	<20060515185819.ff05f6fe.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 17:57:51 2006
+X-From: git-owner@vger.kernel.org Mon May 15 18:00:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FffS6-0003Lz-GF
-	for gcvg-git@gmane.org; Mon, 15 May 2006 17:57:46 +0200
+	id 1FffUo-0003x0-57
+	for gcvg-git@gmane.org; Mon, 15 May 2006 18:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491AbWEOP5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 11:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751588AbWEOP5n
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 11:57:43 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:56204 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751491AbWEOP5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 11:57:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id CF4B98F2CA;
-	Mon, 15 May 2006 08:57:41 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 16046-01-6; Mon, 15 May 2006 08:57:41 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 37A838F2D2; Mon, 15 May 2006 08:57:41 -0700 (PDT)
-To: Timo Hirvonen <tihirvon@gmail.com>
-x-mayan-date: Long count = 12.19.13.5.8; tzolkin = 10 Lamat; haab = 1 Zip
-In-Reply-To: <20060515185819.ff05f6fe.tihirvon@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750880AbWEOQAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 12:00:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255AbWEOQAa
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 12:00:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:23486 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750880AbWEOQAa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 12:00:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4FG0RtH011096
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 15 May 2006 09:00:28 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4FG0M1i007294;
+	Mon, 15 May 2006 09:00:25 -0700
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86psiftlgf.fsf@blue.stonehenge.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20062>
 
->>>>> "Timo" == Timo Hirvonen <tihirvon@gmail.com> writes:
 
->> I think you want
->> 
->> #include <sys/types.h>
->> 
->> on OpenBSD.
 
-Timo> I think it should be #include <inttypes.h>.  It works at least on BSD
-Timo> and Linux.
+On Mon, 15 May 2006, Randal L. Schwartz wrote:
+> 
+> GIT_VERSION = 1.3.2.gde1d
+> gcc -o sha1_file.o -c -g -O2 -Wall -I/usr/local/include -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR sha1_file.c
+> sha1_file.c:16:20: stdint.h: No such file or directory
+> gmake: *** [sha1_file.o] Error 1
+> 
+> I think you want
+> 
+>         #include <sys/types.h>
+> 
+> on OpenBSD.
 
-Yes, that's present in OpenBSD.
+Gaah. This was one reason why I absolutely _detested_ those "intXX_t" 
+types historically. I thought the world had gotten over it, and they were 
+all so common and standard that we'd never need to worry about it.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Randal: we already _do_ include <sys/types.h>, as part of the standard set 
+of headers in git-compat-util.h.
+
+So the problem is that that wasn't enough on OS X, which wanted 
+<stdint.h>.
+
+Junio: I'd suggest just using "unsigned int", or just defining your own 
+types in "cache.h". I would suggest
+
+	typedef unsigned char u8;
+	typedef unsigned short u16;
+	typedef unsigned int u32;
+
+	typedef signed char s8;
+	typedef short s16;
+	typedef int s32;
+
+which is the only sane way to avoid idiotic crap like autoconf, and which 
+avoids that whole "standard namespace" issue.
+
+Yeah, some people will complain. Ten years later, they _still_ complain 
+about me doing this right in the kernel. But you can sleep well, knowing 
+that the complainers are standards-weenies that have read books, but never 
+seen the real world.
+
+				Linus
