@@ -1,73 +1,71 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 2/3] Handle branch names with slashes
-Date: Mon, 15 May 2006 11:22:08 +0100
-Message-ID: <b0943d9e0605150322w684785d5n9b17dccda6b29ac1@mail.gmail.com>
-References: <20060510060040.GA3034@diana.vm.bytemark.co.uk>
-	 <20060515095440.GA11412@backpacker.hemma.treskal.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
+Date: Mon, 15 May 2006 22:37:18 +1200
+Message-ID: <46a038f90605150337l3357ce3by22834823eee7b87c@mail.gmail.com>
+References: <1147660345772-git-send-email-normalperson@yhbt.net>
+	 <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net>
+	 <20060515092704.GB6855@localdomain>
+	 <7vmzdjtya4.fsf@assigned-by-dhcp.cox.net>
+	 <20060515101142.GD6855@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
+Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Wartan Hachaturow" <wartan.hachaturow@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 12:22:23 2006
+Content-Transfer-Encoding: 7BIT
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 12:37:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfaDP-0007sX-2A
-	for gcvg-git@gmane.org; Mon, 15 May 2006 12:22:15 +0200
+	id 1FfaS7-00023W-3f
+	for gcvg-git@gmane.org; Mon, 15 May 2006 12:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964864AbWEOKWM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 15 May 2006 06:22:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964869AbWEOKWM
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 06:22:12 -0400
-Received: from wx-out-0102.google.com ([66.249.82.198]:116 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S964864AbWEOKWK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 06:22:10 -0400
-Received: by wx-out-0102.google.com with SMTP id i29so93037wxd
-        for <git@vger.kernel.org>; Mon, 15 May 2006 03:22:10 -0700 (PDT)
+	id S964872AbWEOKhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 06:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbWEOKhW
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 06:37:22 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:16338 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S964872AbWEOKhV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 06:37:21 -0400
+Received: by wr-out-0506.google.com with SMTP id i28so794288wra
+        for <git@vger.kernel.org>; Mon, 15 May 2006 03:37:20 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JJztKvpmRK4OKoqEv/jXyzbqMBwfoCXR/YsjsO645djbIVfhNFQLGgPxeKM9Y+muryWG1jCfbziILXf1fP+qSMmpj62HUM+hJgnHrjj/6iVZQAFXvMTx8VK+6yWfKoluo4Ac/O+Lb2iGnGWcCl7s5g70O9BXzrQ80VeIPtbWpDg=
-Received: by 10.70.74.11 with SMTP id w11mr6730350wxa;
-        Mon, 15 May 2006 03:22:08 -0700 (PDT)
-Received: by 10.70.31.2 with HTTP; Mon, 15 May 2006 03:22:08 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-In-Reply-To: <20060515095440.GA11412@backpacker.hemma.treskal.com>
+        b=PNiaiEjS6BOoplYtaAeY5TGSOpUSrehdfJqw277v2Km8iiG/FYVOyf1TOxs5/1Ce9wDIRdRfhuuNJmKBwo+ziEUAOBW4zOxY0KfbUEBDnPV3GM2powh93zIvFWWNJEknWhsbYrXQLV/pmwKyhfoAFBGyGSQOHDH/M/mCLtKad1U=
+Received: by 10.54.117.5 with SMTP id p5mr5484622wrc;
+        Mon, 15 May 2006 03:37:18 -0700 (PDT)
+Received: by 10.54.127.17 with HTTP; Mon, 15 May 2006 03:37:18 -0700 (PDT)
+To: "Eric Wong" <normalperson@yhbt.net>
+In-Reply-To: <20060515101142.GD6855@localdomain>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20046>
 
-Karl,
+On 5/15/06, Eric Wong <normalperson@yhbt.net> wrote:
+> Junio C Hamano <junkio@cox.net> wrote:
+> > I am not opposed to have an option to run a local submission
+> > agent binary (I said I like that if(){}else{} there, didn't I?).
+> > The ability to do so is a good thing.  I am not however sure
+> > about changing the default when no option is specified on the
+> > command line.
+>
+> By "I believe this is what Martin wanted", I meant changing the default to
+> sendmail: <46a038f90604271804j195d62f3x93ae816e809f4ffd@mail.gmail.com>
+>
+>         > Oh, it should just work with sendmail if it's there and we don't
 
-On 15/05/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> Teach stgit to handle branch names with slashes in them; that is,
-> branches living in a subdirectory of .git/refs/heads.
+Thanks Eric! git-send-email used to default to using local binaries.
+It was only with the switch to Net::SMTP that the default changed to
+localhost:25.
+IMHO the developer's machine is more likely to have a working
+/usr/sbin/sendmail than an SMTP server (specially looking at current
+linux desktop configurations).
 
-Thanks for the patches. I'll add them, probably tomorrow evening as
-I'm busy today.
+OTOH, as long as I can override it to use sendmail, it's all good.
 
-> I had to change the patch@branch/top command-line syntax to
-> patch@branch#top, in order to get sane parsing. The /top variant is
-> still available for repositories that have no slashy branches; it is
-> disabled as soon as there exists at least one subdirectory of
-> refs/heads. Preferably, this compatibility hack can be killed some
-> time in the future.
 
-There is one problem with killing "/" entirely (or maybe we could use
-other character than "#"). I tend to write quite often "stg diff -r
-/bottom" to see how the whole patch looks like before refreshing. With
-"#", the shell ignores "#bottom" as being a comment.
-
-Otherwise, I'm OK with changing "/" with something else or just
-keeping both (though I prefer to have a singe way of specifying it).
-It looks like ^ and ~ are already used by GIT. It leaves us with % and
-!. Do you have any preference? The exclamation mark looks OK to me.
-
---=20
-Catalin
+martin
