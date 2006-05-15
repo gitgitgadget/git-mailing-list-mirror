@@ -1,189 +1,112 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: The git newbie experience
-Date: Mon, 15 May 2006 10:46:10 -0600
-Organization: Hewlett Packard
-Message-ID: <20060515164610.GA24295@hpsvcnb.fc.hp.com>
-References: <446778B8.7080201@inoi.fi> <7vfyjcntro.fsf@assigned-by-dhcp.cox.net> <44680C54.8040206@inoi.fi> <7vy7x3x3ux.fsf@assigned-by-dhcp.cox.net> <20060515053133.GB28068@spearce.org> <7v1wuvvg0j.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: how to display file history?
+Date: Mon, 15 May 2006 19:22:01 +0200
+Message-ID: <e5bfff550605151022m7b9ddcd9y53cd745e16ff6b22@mail.gmail.com>
+References: <CFF307C98FEABE47A452B27C06B85BB670F4FD@hdsmsx411.amr.corp.intel.com>
+	 <7v64k7wzzf.fsf@assigned-by-dhcp.cox.net>
+	 <m1ejyv7077.fsf@ebiederm.dsl.xmission.com>
+	 <Pine.LNX.4.64.0605150900510.3866@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, Tommi Virtanen <tv@inoi.fi>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 18:46:19 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 19:22:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfgD1-0005BD-5V
-	for gcvg-git@gmane.org; Mon, 15 May 2006 18:46:15 +0200
+	id 1Ffglu-0004GI-M1
+	for gcvg-git@gmane.org; Mon, 15 May 2006 19:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964868AbWEOQqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 12:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964849AbWEOQqM
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 12:46:12 -0400
-Received: from atlrel7.hp.com ([156.153.255.213]:55213 "EHLO atlrel7.hp.com")
-	by vger.kernel.org with ESMTP id S964868AbWEOQqM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 12:46:12 -0400
-Received: from smtp2.fc.hp.com (smtp2.fc.hp.com [15.11.136.114])
-	by atlrel7.hp.com (Postfix) with ESMTP id 5CAF934708;
-	Mon, 15 May 2006 12:46:11 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP id 1BD4819CE5;
-	Mon, 15 May 2006 16:46:11 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id F1E604370; Mon, 15 May 2006 10:46:10 -0600 (MDT)
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	Shawn Pearce <spearce@spearce.org>, Tommi Virtanen <tv@inoi.fi>,
-	git@vger.kernel.org
+	id S965005AbWEORWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 13:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965006AbWEORWF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 13:22:05 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:31173 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S965000AbWEORWC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 13:22:02 -0400
+Received: by wr-out-0506.google.com with SMTP id i12so4235wra
+        for <git@vger.kernel.org>; Mon, 15 May 2006 10:22:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tHeqoYQ1yGIB+gBLDojy31jdo4cV2XPyA+i+5uwXT2LdtEO8Q1keoTa4p9DEdz7nXD8z3LkkuERd7hl2mfG2GfV5k+bj3bCO+wd292jc2qRRX/6T3dHybdEEFE3s/SrEFOfTtwwxguHH37aW244o+7zk+5QQwfjdUjKiZFnsob4=
+Received: by 10.65.197.9 with SMTP id z9mr4009405qbp;
+        Mon, 15 May 2006 10:22:01 -0700 (PDT)
+Received: by 10.64.131.11 with HTTP; Mon, 15 May 2006 10:22:01 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605150900510.3866@g5.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7v1wuvvg0j.fsf@assigned-by-dhcp.cox.net>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20068>
 
-Junio,
+>
+> So
+>
+>         gitk --all --since=1.month -15 -- t/
+>
+> will show at most fifteen commits from _any_ branch that changed the
+> test subdirectory in the last month.
+>
+> And yeah, maybe that isn't a very interesting query, but it's easy to
+> explain and understand, so it's worth explaining early.
+>
+> And it should be equally obvious to everybody that if it works for "gitk",
+> that means that it works for "qgit", "git log" and "git whatchanged" too,
 
-This seems a lot like what I tried to do with git-undo/git-redo quite a
-while back.
+For qgit it doesn't work :-)
 
-My implementation actually wrote the working file state into the object
-store as a tree and stored a reference to the tree under something like
-.git/refs/undo (or .git/refs/stash).  Redo was a simple merge of this
-tree back onto the current working files.
+Well, it works but the nice boundary circles are not shown, and qgit
+always adds  --boundary to command line args to feed git-rev-list, but
+in this case it seems the --boundary option didn't do his job.
 
-I think I would like something like this better than the 'generate
-binary patch and reapply the patch later.
+$git-rev-list --topo-order --boundary --parents --all --since=1.month -15 -- t/
+ea892b27b15fbc46a3bb3ad2ddce737dc6590ae5
+b0121fb3f279a9cf13aff9da060e742aef3a83fa
+8d48ad62a902556b523ee892a3fbe4206d576d3f
+8d48ad62a902556b523ee892a3fbe4206d576d3f
+2c49009dbe98a26505891d3c680da73baf0b4f81
+d14f776402d9f7040cc71ff6e3b992b2e019526a
+b0121fb3f279a9cf13aff9da060e742aef3a83fa
+7f498065e9bf85f6f3e954ec57dedf56fec29e01
+6bd20358a9b831b3b545284188871bc844245c25
+6bd20358a9b831b3b545284188871bc844245c25
+9af0b8dbe2fb252262412a11254e2bcc6ffb87bb
+7f498065e9bf85f6f3e954ec57dedf56fec29e01
+c2b9e6994d044b218e59abf6d19f7751c4aa13e3
+dd05ea1799656024a45017238bbd4857b5256370
+c2b9e6994d044b218e59abf6d19f7751c4aa13e3
+aadc81c13bbb103e7db759ba9a98a6f9509831f1
+bd886fd3ea49b726493255d4adf5d20b31681713
+aadc81c13bbb103e7db759ba9a98a6f9509831f1
+42d0ee8302c361a0e3bde7bc59858eda94bc13a4
+22293b9c41778bb60f3b07355e1b8e421a503702
+2c49009dbe98a26505891d3c680da73baf0b4f81
+143f4d94c6e2188a6bedfdfa268e66b579e3fbf9
+dd05ea1799656024a45017238bbd4857b5256370
+dd05ea1799656024a45017238bbd4857b5256370
+fd60acaced6de16ebfb66959067e2b29f99a133e
+143f4d94c6e2188a6bedfdfa268e66b579e3fbf9
+2fc240a7b21c060529c1d2e19d6b483361f81f2a
+22293b9c41778bb60f3b07355e1b8e421a503702
+22293b9c41778bb60f3b07355e1b8e421a503702
+83e77a25dc194933c0fb7908ab6d9fb84a5045e2
+83e77a25dc194933c0fb7908ab6d9fb84a5045e2
+2fa9a0fb31cbf01e8318a02c3e222d7fd3fd0a83
+2fc240a7b21c060529c1d2e19d6b483361f81f2a
+fd60acaced6de16ebfb66959067e2b29f99a133e
+42d0ee8302c361a0e3bde7bc59858eda94bc13a4
+42d0ee8302c361a0e3bde7bc59858eda94bc13a4
+2fa9a0fb31cbf01e8318a02c3e222d7fd3fd0a83
+fd60acaced6de16ebfb66959067e2b29f99a133e
+bd886fd3ea49b726493255d4adf5d20b31681713
+cf9dc65368113caa28f2829e2ada5477fbb031ec
 
-If these commands were added to git I think they would be better if the
-commands chose a temporary branch name, committed the current state to
-that branch and did everything else that someone more experienced would
-do using branches having chosen a temporary branch name.
 
-The redo or unstash operation could just pick the most recent tempory
-branch name (top of stack) and merge changes into the working copy.
-
-Carl
-
-On Mon, May 15, 2006 at 01:39:08AM -0700, Junio C Hamano wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> >> I'd rather do that with a diff file that can be used to do a
-> >> 3-way (see how rebase does it with --full-index diff with am -3).
-> >> No point creating and forgetting to remove a throw away branch
-> >> and getting more complaints.
-> >
-> > How is a quick stash different from a topic branch?
-> 
-> The original version of my message in response to TV looked like
-> this.
-> 
->  - Jack is a beginning user of git and does not (want to) understand
->    the index (right now).
-> 
->  - Jack works on branch X, say his HEAD points to X1. He has an edited,
->    uncommitted files with the names A, B and C.
-> 
->  - Jack wants to pull new changes made by others to his branch.
->    But "git merge" invoked from "git pull" says he needs to stash
->    away the local changes to do the merge.
-> 
->  - Jack stashes away what he has been working on and cleans up
->    his mess.
-> 
->    git checkout -b stash ;# risks error when "stash" exists
->    git commit -a -m 'Stashing WIP'
->    git checkout master ;# assuming that was where he was
-> 
->  - Jack then pulls.  There are merge conflicts in files D, E, ..., Z.
-> 
->  - Jack resolves the merge conflicts and is ready to commit the resulting
->    merge. Note files A, B and C do not have his unfinished work.
-> 
->    There is no "if Jack does this or that" problem; he says "git
->    commit -a" because that is the only "commit" command he knows
->    about.
-> 
->  - Jack then reapplies what he stashed away, and keeps working.
-> 
->    git pull . --no-commit stash
->    git branch -D stash
-> 
-> You have to teach the new user to (1) name something, only to
-> immediately discard it when he returns to what he was in the
-> middle of, (2) remember to clean up the temporary thing once he
-> is done lest he forgets to clean it up (and common names like
-> "stash", "tmp" will be reused by accident causing grief next
-> time he needs to do another stash), and (3) use of --no-commit
-> pull.
-> 
-> On the other hand, "git stash/unstash" workflow would be quite
-> simple:
-> 
-> 	$ git stash >my.precious.state
->         ... do whatever you want to deviate to
->         $ git unstash <my.precious.state
-> 
-> Merge resolve might be needed while unstashing, but 
-> we are talking about pulling somebody else's work in "do
-> whatever" part, so that is something the user knows how to
-> perform anyway.
-> 
-> A quick and dirty stash implementation would go like this:
-> 
-> Stash is easy.
-> 
->         #!/bin/sh
->         # git stash
->         git diff --binary HEAD
->         git reset --hard
-> 
-> Unstash is a bit involved.
-> 
->         #!/bin/sh
->         # git unstash
->         . git-sh-setup
->         O_OBJECT=`cd "$GIT_OBJECT_DIRECTORY" && pwd`
->         O_DIR=`cd "$GIT_DIR" && pwd`
->         stash="$O_DIR/.stash$$"
->         rm -fr "$stash.*"
->         trap 'rm -rf $stash.*' 0
->         cat >"$stash.patch"
->         git-apply -z --index-info <"$stash.patch" >"$stash.list"
->         GIT_INDEX_FILE="$stash.index"  \
->         GIT_OBJECT_DIRECTORY="$O_OBJECT" \
->         (
->                 mkdir -p "$stash.tmp" &&
->                 git-update-index -z --index-info <"$stash.list" &&
->                 git-write-tree >"$stash.base" &&
->                 cd "$stash.tmp" &&
->                 git-apply --binary --index <"$stash.patch" &&
->                 git-write-tree >"$stash.his"
->         )
->         his_tree=$(cat "$stash.his")
->         orig_tree=$(cat "$stash.base")
->         rm -fr "$stash.*"
->         git-merge-resolve $orig_tree -- HEAD $his_tree
-> 
-> This is essentially the core of "am -3" logic; if you are going
-> to use this for real, you would probably want to see if the
-> patch applies cleanly before falling back on the three-way
-> merge, though.
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        RADCAD (R&D CAD)
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       Marco
