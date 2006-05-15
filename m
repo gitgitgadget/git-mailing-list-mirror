@@ -1,186 +1,138 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git diff: support "-U" and "--unified" options properly
-Date: Sun, 14 May 2006 20:49:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605142044550.3866@g5.osdl.org>
-References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org>
- <7vzmhlsksm.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605131404391.3866@g5.osdl.org>
- <7vpsihsjq6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605131518390.3866@g5.osdl.org>
- <7vbqu0yvda.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605141745410.3866@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH (resend)] send-email: address expansion for common mailers
+Date: Mon, 15 May 2006 00:12:28 -0400
+Message-ID: <20060515041227.GP32076@h4x0r5.com>
+References: <20060326024416.GA14234@localdomain> <11476592243181-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 05:49:37 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Mon May 15 06:13:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfU5M-0007oW-1C
-	for gcvg-git@gmane.org; Mon, 15 May 2006 05:49:32 +0200
+	id 1FfUSs-0002rK-9V
+	for gcvg-git@gmane.org; Mon, 15 May 2006 06:13:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbWEODtW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 23:49:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbWEODtW
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 23:49:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41171 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751312AbWEODtV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 23:49:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4F3nGtH017344
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 14 May 2006 20:49:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4F3nFdd022902;
-	Sun, 14 May 2006 20:49:16 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0605141745410.3866@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751406AbWEOENq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 00:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbWEOENq
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 00:13:46 -0400
+Received: from h4x0r5.com ([70.85.31.202]:22799 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1751406AbWEOENp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 00:13:45 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1FfURY-00059F-Rh; Mon, 15 May 2006 00:12:28 -0400
+To: Eric Wong <normalperson@yhbt.net>
+Content-Disposition: inline
+In-Reply-To: <11476592243181-git-send-email-normalperson@yhbt.net>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20015>
 
-
-
-On Sun, 14 May 2006, Linus Torvalds wrote:
+On Sun, May 14, 2006 at 07:13:44PM -0700, Eric Wong wrote:
+> mutt, gnus, pine, mailrc formats should be supported.
 > 
-> So I would actually assume that the solution is to simply make 
-> grep_cache() have a simple
+> Testing and feedback for correctness and completeness of all formats
+> and support for additional formats would be good.
 > 
-> 	#ifdef __unix__
-> 		if (!cached) {
-> 			hit = external_grep(opt, paths, cached);
-> 			if (hit >= 0)
-> 				return hit;
-> 		}
-> 	#endif
+> Nested expansions are also supported.
 > 
-> at the top, so that we'd have the best of both worlds.
+> More than one alias file to be used.
+> 
+> All alias file formats must still of be the same type, though.
+> 
+> Two git repo-config keys are required for this
+> (as suggested by Ryan Anderson):
+> 
+>     sendemail.aliasesfile = <filename of aliases file>
+>     sendemail.aliasfiletype = (mutt|gnus|pine|mailrc)
+> 
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Acked-by: Ryan Anderson <ryan@michonline.com>
 
-Ok. Here's a slightly tested version, my out-lined thing from the email 
-was pretty close to working already.
-
-It's not perfect, but it gets the "git grep some-random-string" down to 
-the good old half-a-second range for the kernel.
-
-It should convert more of the argument flags for "grep", that should be 
-trivial to expand (I did a few just as an example). It should also bother 
-to try to return the right "hit" value (which it doesn't, right now - the 
-code is kind of there, but I didn't actually bother to do it _right_).
-
-Also, right now it _just_ limits by number of arguments, but it should 
-also strictly speaking limit by total argument size (ie add up the length 
-of the filenames, and do the "exec_grep()" flush call if it's bigger than 
-some random value like 32kB).
-
-But I think that it's _conceptually_ doing all the right things, and it 
-seems to work. So maybe somebody else can do some of the final polish.
-
-		Linus
-
-----
-diff --git a/builtin-grep.c b/builtin-grep.c
-index fead356..14471db 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -12,6 +12,7 @@ #include "tree-walk.h"
- #include "builtin.h"
- #include <regex.h>
- #include <fnmatch.h>
-+#include <sys/wait.h>
- 
- /*
-  * git grep pathspecs are somewhat different from diff-tree pathspecs;
-@@ -409,12 +410,90 @@ static int grep_file(struct grep_opt *op
- 	return i;
- }
- 
-+static int exec_grep(int argc, const char **argv)
-+{
-+	pid_t pid;
-+	int status;
-+
-+	argv[argc] = NULL;
-+	pid = fork();
-+	if (pid < 0)
-+		return pid;
-+	if (!pid) {
-+		execvp("grep", (char **) argv);
-+		exit(255);
-+	}
-+	while (waitpid(pid, &status, 0) < 0) {
-+		if (errno == EINTR)
-+			continue;
-+		return -1;
-+	}
-+	if (WIFEXITED(status)) {
-+		if (!WEXITSTATUS(status))
-+			return 1;
-+		return 0;
-+	}
-+	return -1;
-+}
-+
-+#define MAXARGS 1000
-+
-+static int external_grep(struct grep_opt *opt, const char **paths, int cached)
-+{
-+	int i, nr, argc, hit;
-+	const char *argv[MAXARGS+1];
-+	struct grep_pat *p;
-+
-+	nr = 0;
-+	argv[nr++] = "grep";
-+	if (opt->word_regexp)
-+		argv[nr++] = "-w";
-+	if (opt->name_only)
-+		argv[nr++] = "-l";
-+	for (p = opt->pattern_list; p; p = p->next) {
-+		argv[nr++] = "-e";
-+		argv[nr++] = p->pattern;
-+	}
-+	argv[nr++] = "--";
-+
-+	hit = 0;
-+	argc = nr;
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *ce = active_cache[i];
-+		if (ce_stage(ce) || !S_ISREG(ntohl(ce->ce_mode)))
-+			continue;
-+		if (!pathspec_matches(paths, ce->name))
-+			continue;
-+		argv[argc++] = ce->name;
-+		if (argc < MAXARGS)
-+			continue;
-+		hit += exec_grep(argc, argv);
-+		argc = nr;
-+	}
-+	if (argc > nr)
-+		hit += exec_grep(argc, argv);
-+	return 0;
-+}
-+
- static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
- {
- 	int hit = 0;
- 	int nr;
- 	read_cache();
- 
-+#ifdef __unix__
-+	/*
-+	 * Use the external "grep" command for the case where
-+	 * we grep through the checked-out files. It tends to
-+	 * be a lot more optimized
-+	 */
-+	if (!cached) {
-+		hit = external_grep(opt, paths, cached);
-+		if (hit >= 0)
-+			return hit;
-+	}
-+#endif
-+
- 	for (nr = 0; nr < active_nr; nr++) {
- 		struct cache_entry *ce = active_cache[nr];
- 		if (ce_stage(ce) || !S_ISREG(ntohl(ce->ce_mode)))
+> ---
+> 
+> Looks like this patch got forgotten a while ago, and I never noticed
+> because I forgot to set WITH_SEND_EMAIL when doing make install.
+> Of course, WITH_SEND_EMAIL should no longer be needed...
+> 
+>  git-send-email.perl |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 48 insertions(+), 0 deletions(-)
+> 
+> ff6593287dc500853c1cf05bdb0f32f970f10c9d
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 703dd1f..d8c4b1f 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -89,6 +89,41 @@ sub gitvar_ident {
+>  my ($author) = gitvar_ident('GIT_AUTHOR_IDENT');
+>  my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
+>  
+> +my %aliases;
+> +chomp(my @alias_files = `git-repo-config --get-all sendemail.aliasesfile`);
+> +chomp(my $aliasfiletype = `git-repo-config sendemail.aliasfiletype`);
+> +my %parse_alias = (
+> +	# multiline formats can be supported in the future
+> +	mutt => sub { my $fh = shift; while (<$fh>) {
+> +		if (/^alias\s+(\S+)\s+(.*)$/) {
+> +			my ($alias, $addr) = ($1, $2);
+> +			$addr =~ s/#.*$//; # mutt allows # comments
+> +			 # commas delimit multiple addresses
+> +			$aliases{$alias} = [ split(/\s*,\s*/, $addr) ];
+> +		}}},
+> +	mailrc => sub { my $fh = shift; while (<$fh>) {
+> +		if (/^alias\s+(\S+)\s+(.*)$/) {
+> +			# spaces delimit multiple addresses
+> +			$aliases{$1} = [ split(/\s+/, $2) ];
+> +		}}},
+> +	pine => sub { my $fh = shift; while (<$fh>) {
+> +		if (/^(\S+)\s+(.*)$/) {
+> +			$aliases{$1} = [ split(/\s*,\s*/, $2) ];
+> +		}}},
+> +	gnus => sub { my $fh = shift; while (<$fh>) {
+> +		if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
+> +			$aliases{$1} = [ $2 ];
+> +		}}}
+> +);
+> +
+> +if (@alias_files && defined $parse_alias{$aliasfiletype}) {
+> +	foreach my $file (@alias_files) {
+> +		open my $fh, '<', $file or die "opening $file: $!\n";
+> +		$parse_alias{$aliasfiletype}->($fh);
+> +		close $fh;
+> +	}
+> +}
+> +
+>  my $prompting = 0;
+>  if (!defined $from) {
+>  	$from = $author || $committer;
+> @@ -112,6 +147,19 @@ if (!@to) {
+>  	$prompting++;
+>  }
+>  
+> +sub expand_aliases {
+> +	my @cur = @_;
+> +	my @last;
+> +	do {
+> +		@last = @cur;
+> +		@cur = map { $aliases{$_} ? @{$aliases{$_}} : $_ } @last;
+> +	} while (join(',',@cur) ne join(',',@last));
+> +	return @cur;
+> +}
+> +
+> +@to = expand_aliases(@to);
+> +@initial_cc = expand_aliases(@initial_cc);
+> +
+>  if (!defined $initial_subject && $compose) {
+>  	do {
+>  		$_ = $term->readline("What subject should the emails start with? ",
+> -- 
+> 1.3.2.g1c9b
+> 
+> 
