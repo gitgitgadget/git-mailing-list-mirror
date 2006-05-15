@@ -1,72 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: how to display file history?
-Date: Mon, 15 May 2006 11:51:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605151149460.3866@g5.osdl.org>
-References: <CFF307C98FEABE47A452B27C06B85BB670F4FD@hdsmsx411.amr.corp.intel.com>
-  <7v64k7wzzf.fsf@assigned-by-dhcp.cox.net>  <m1ejyv7077.fsf@ebiederm.dsl.xmission.com>
-  <Pine.LNX.4.64.0605150900510.3866@g5.osdl.org> 
- <e5bfff550605151022m7b9ddcd9y53cd745e16ff6b22@mail.gmail.com> 
- <Pine.LNX.4.64.0605151055080.3866@g5.osdl.org>
- <e5bfff550605151132s4605a241sd3132aaeb2de6a39@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
+Date: Mon, 15 May 2006 12:10:36 -0700
+Message-ID: <20060515190953.GA4368@localdomain>
+References: <1147660345772-git-send-email-normalperson@yhbt.net> <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net> <20060515092704.GB6855@localdomain> <7vmzdjtya4.fsf@assigned-by-dhcp.cox.net> <20060515101142.GD6855@localdomain> <46a038f90605150337l3357ce3by22834823eee7b87c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	Junio C Hamano <junkio@cox.net>,
-	"Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 20:52:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 21:10:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfiAr-0004QZ-8o
-	for gcvg-git@gmane.org; Mon, 15 May 2006 20:52:09 +0200
+	id 1FfiSp-0007rJ-Nh
+	for gcvg-git@gmane.org; Mon, 15 May 2006 21:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932320AbWEOSwF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 14:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932175AbWEOSwF
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 14:52:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33162 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932320AbWEOSwD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 14:52:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4FIpstH020904
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 15 May 2006 11:51:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4FIprrP012999;
-	Mon, 15 May 2006 11:51:53 -0700
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550605151132s4605a241sd3132aaeb2de6a39@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965149AbWEOTKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 15:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965155AbWEOTKj
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 15:10:39 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53927 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S965149AbWEOTKi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 15:10:38 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id C60652DC01A;
+	Mon, 15 May 2006 12:10:36 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 15 May 2006 12:10:36 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90605150337l3357ce3by22834823eee7b87c@mail.gmail.com>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20078>
 
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> Thanks Eric! git-send-email used to default to using local binaries.
+> It was only with the switch to Net::SMTP that the default changed to
+> localhost:25.
 
+You're welcome.
 
-On Mon, 15 May 2006, Marco Costalba wrote:
-> 
-> $ git-rev-list --topo-order --after="Apr 10" --before="Apr 11" HEAD |wc
->     14      14     574
-> $ git-rev-list --topo-order --boundary --after="Apr 10" --before="Apr
-> 11" HEAD |wc
->     18      18     742
-> 
-> Boundary revisions in this case are _not_ passed through search
-> filtering. Using --boundary option we get revisions ouside given
-> filter range.
+That's odd, though, looking at Mail::Sendmail, I don't think it actually
+uses the sendmail binary, either.  The FAQ
+<http://alma.ch/perl/Mail-Sendmail-FAQ.html> confirms this, too.
 
-Right. And the commit counting is a special filter, and "boundary" is 
-special in that it doesn't normally honor some other filters (it _does_ 
-honor path-based ones, though, I think).
+Of course documentation may be lying and the code I'm looking at may be
+*very* well obfuscated :D
 
-So you really should see "--boundary" as a heuristic, and as a hack to 
-help you close the loop on uninteresting commits _faster_. But if 
-something else has closed it for other reasons, you shouldn't depend on 
-it.
-
-		Linus
+-- 
+Eric Wong
