@@ -1,129 +1,79 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: [PATCH 3/3] Tests for branch names with slashes
-Date: Mon, 15 May 2006 11:55:20 +0200
-Message-ID: <20060515095520.GA11419@backpacker.hemma.treskal.com>
-References: <20060510060040.GA3034@diana.vm.bytemark.co.uk>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
+Date: Mon, 15 May 2006 03:11:42 -0700
+Message-ID: <20060515101142.GD6855@localdomain>
+References: <1147660345772-git-send-email-normalperson@yhbt.net> <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net> <20060515092704.GB6855@localdomain> <7vmzdjtya4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wartan Hachaturow <wartan.hachaturow@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 11:55:28 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 15 12:12:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfZnR-0003XG-Me
-	for gcvg-git@gmane.org; Mon, 15 May 2006 11:55:26 +0200
+	id 1Ffa3I-0006Ee-3r
+	for gcvg-git@gmane.org; Mon, 15 May 2006 12:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964846AbWEOJzW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 15 May 2006 05:55:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbWEOJzW
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 05:55:22 -0400
-Received: from mxfep01.bredband.com ([195.54.107.70]:29436 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S932332AbWEOJzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 05:55:21 -0400
-Received: from backpacker.hemma.treskal.com ([83.227.180.148] [83.227.180.148])
-          by mxfep01.bredband.com with ESMTP
-          id <20060515095520.CZJU19930.mxfep01.bredband.com@backpacker.hemma.treskal.com>;
-          Mon, 15 May 2006 11:55:20 +0200
-Received: by backpacker.hemma.treskal.com (Postfix, from userid 1000)
-	id 0DF2126DE; Mon, 15 May 2006 11:55:20 +0200 (CEST)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S932332AbWEOKLp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 06:11:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbWEOKLp
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 06:11:45 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:27555 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932332AbWEOKLo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 06:11:44 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 6F1017DC005;
+	Mon, 15 May 2006 03:11:42 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 15 May 2006 03:11:42 -0700
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20060510060040.GA3034@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vmzdjtya4.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20044>
 
-Test a number of operations on a repository that has branch names
-containing slashes (that is, branches living in a subdirectory of
-=2Egit/refs/heads).
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > I believe this is what Martin wanted.  I think it's a good idea since
+> > sendmail binaries tend to be more flexible, but I'm ok with it either
+> > way.
+> 
+> I am not opposed to have an option to run a local submission
+> agent binary (I said I like that if(){}else{} there, didn't I?).
+> The ability to do so is a good thing.  I am not however sure
+> about changing the default when no option is specified on the
+> command line.
 
-Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+By "I believe this is what Martin wanted", I meant changing the default to
+sendmail: <46a038f90604271804j195d62f3x93ae816e809f4ffd@mail.gmail.com>
 
+	> Oh, it should just work with sendmail if it's there and we don't
+	> provide --smtp-server ;-)
 
----
+> >> > +	if ($smtp_server =~ m#^/#) {
+> >> 
+> >> I like this if(){}else{} here, but have a feeling that the
+> >> logging part should be placed outside it to be shared.
+> >
+> > Cleaned that up a bit, patch coming.  Also removed the Port: printout
+> > completely, as it's rather redundant (see below).
+> >
+> >> While we are at it, we might want to enhance $smtp_server parsing
+> >> to take host:port notation so that people can use message
+> >> submission port 587/tcp (RFC 4409) instead.
+> >
+> > This already works, IO::Socket::INET (behind Net::SMTP) takes care of
+> > it :)
+> 
+> Thanks.  Maybe the next option would be delivery to a file (or
+> even SMTP batch)? ;-)
 
- t/t0001-subdir-branches.sh |   59 ++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 59 insertions(+), 0 deletions(-)
- create mode 100644 t/t0001-subdir-branches.sh
+Sure :)  Authentication and SSL may be worth looking into, though.  I'm
+pretty content these days with my autossh tunnel to my mail server,
+though.
 
-58badd265645874165379bc841453a44b64e1906
-diff --git a/t/t0001-subdir-branches.sh b/t/t0001-subdir-branches.sh
-new file mode 100644
-index 0000000..e3608de
---- /dev/null
-+++ b/t/t0001-subdir-branches.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Karl Hasselstr=C3=B6m
-+#
-+
-+test_description=3D'Branch names containing slashes
-+
-+Test a number of operations on a repository that has branch names
-+containing slashes (that is, branches living in a subdirectory of
-+.git/refs/heads).'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'Create a patch' \
-+  'stg init &&
-+   echo "foo" > foo.txt &&
-+   stg add foo.txt &&
-+   stg new foo -m "Add foo.txt" &&
-+   stg refresh'
-+
-+test_expect_success 'Old and new id with non-slashy branch' \
-+  'stg id foo &&
-+   stg id foo# &&
-+   stg id foo/ &&
-+   stg id foo#top &&
-+   stg id foo/top &&
-+   stg id foo@master &&
-+   stg id foo@master#top &&
-+   stg id foo@master/top'
-+
-+test_expect_success 'Clone branch to slashier name' \
-+  'stg branch --clone x/y/z'
-+
-+test_expect_success 'Try new form of id with slashy branch' \
-+  'stg id foo &&
-+   stg id foo# &&
-+   stg id foo#top &&
-+   stg id foo@x/y/z &&
-+   stg id foo@x/y/z#top'
-+
-+test_expect_failure 'Try old id with slashy branch' \
-+  'stg id foo/ ||
-+   stg id foo/top ||
-+   stg id foo@x/y/z/top'
-+
-+test_expect_success 'Create patch in slashy branch' \
-+  'echo "bar" >> foo.txt &&
-+   stg new bar -m "Add another line" &&
-+   stg refresh'
-+
-+test_expect_success 'Rename branches' \
-+  'stg branch --rename master goo/gaa &&
-+   test ! -e .git/refs/heads/master &&
-+   stg branch --rename goo/gaa x1/x2/x3/x4 &&
-+   test ! -e .git/refs/heads/goo &&
-+   stg branch --rename x1/x2/x3/x4 servant &&
-+   test ! -e .git/refs/heads/x1'
-+
-+test_done
---=20
-1.3.2.g639c
-
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Eric Wong
