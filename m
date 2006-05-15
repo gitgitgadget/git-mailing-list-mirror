@@ -1,64 +1,121 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
-Date: Mon, 15 May 2006 09:25:38 -0700
-Message-ID: <7viro7tful.fsf@assigned-by-dhcp.cox.net>
-References: <1147660345772-git-send-email-normalperson@yhbt.net>
-	<7vpsifx2b7.fsf@assigned-by-dhcp.cox.net>
-	<20060515092704.GB6855@localdomain>
-	<7vmzdjtya4.fsf@assigned-by-dhcp.cox.net>
-	<20060515101142.GD6855@localdomain>
-	<46a038f90605150337l3357ce3by22834823eee7b87c@mail.gmail.com>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: how to display file history?
+Date: Mon, 15 May 2006 10:29:20 -0600
+Message-ID: <m164k76ylb.fsf@ebiederm.dsl.xmission.com>
+References: <CFF307C98FEABE47A452B27C06B85BB670F4FD@hdsmsx411.amr.corp.intel.com>
+	<7v64k7wzzf.fsf@assigned-by-dhcp.cox.net>
+	<m1ejyv7077.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0605150900510.3866@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Eric Wong" <normalperson@yhbt.net>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 18:26:13 2006
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 18:30:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfftB-0000r2-DG
-	for gcvg-git@gmane.org; Mon, 15 May 2006 18:25:45 +0200
+	id 1Fffxc-0001lF-Ut
+	for gcvg-git@gmane.org; Mon, 15 May 2006 18:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932332AbWEOQZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 12:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbWEOQZl
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 12:25:41 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:50672 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932332AbWEOQZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 12:25:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060515162539.RBQW19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 15 May 2006 12:25:39 -0400
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605150337l3357ce3by22834823eee7b87c@mail.gmail.com>
-	(Martin Langhoff's message of "Mon, 15 May 2006 22:37:18 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932427AbWEOQaQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 12:30:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932432AbWEOQaQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 12:30:16 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:2015 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S932427AbWEOQaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 12:30:14 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4FGTL8T009431;
+	Mon, 15 May 2006 10:29:21 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4FGTK7D009430;
+	Mon, 15 May 2006 10:29:20 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605150900510.3866@g5.osdl.org> (Linus
+ Torvalds's message of "Mon, 15 May 2006 09:15:00 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20065>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> On 5/15/06, Eric Wong <normalperson@yhbt.net> wrote:
->> Junio C Hamano <junkio@cox.net> wrote:
->> > I am not opposed to have an option to run a local submission
->> > agent binary (I said I like that if(){}else{} there, didn't I?).
->> > The ability to do so is a good thing.  I am not however sure
->> > about changing the default when no option is specified on the
->> > command line.
->>
->> By "I believe this is what Martin wanted", I meant changing the default to
->> sendmail: <46a038f90604271804j195d62f3x93ae816e809f4ffd@mail.gmail.com>
->>
->>         > Oh, it should just work with sendmail if it's there and we don't
+> On Mon, 15 May 2006, Eric W. Biederman wrote:
+>> 
+>> So that it has a chance of being remembered, and eventually fixed
+>> the man pages of git-whatchanged and git-log only sort of tell you
+>> that this is even possible.
 >
-> Thanks Eric! git-send-email used to default to using local binaries.
-> It was only with the switch to Net::SMTP that the default changed to
-> localhost:25.
+> I don't think this is a man-page issue. I think this is a very basic 
+> tutorial issue. 
+>
+> People still don't seem to realize how flexible (and powerful) the git 
+> revision specifications are. It's not just limiting by path, all of these 
+> work on _all_ of the "history tools" (whether they be gitk, qgit, "git 
+> log", "git whatchanged" or your own home-cooked stuff):
+>
+>  - "revision based limiting"
+>
+> 	"a..b", but also "a ^b ^c ^d" or "a --not b c d" for the more 
+> 	complex case where you're interested in one (or more) commit, but 
+> 	not anything that flows from any of a number of other commits.
+>
+> 	"--all".
+>
+>  - "commit date based limiting"
+>
+> 	"--since=2.weeks.ago" "--since=aug.5th"
+>
+>  - "limit by number of hits"
+>
+> 	"-15"
+>
+>  - "limit by type or state"
+>
+> 	"--no-merges" and "--unpacked"
+>
+> And finally
+>
+>  - "limit by pathname"
+>
+> and you can combine all of these.
+>
+> So
+>
+> 	gitk --all --since=1.month -15 -- t/
+>
+> will show at most fifteen commits from _any_ branch that changed the 
+> test subdirectory in the last month.
+>
+> And yeah, maybe that isn't a very interesting query, but it's easy to 
+> explain and understand, so it's worth explaining early.
+>
+> And it should be equally obvious to everybody that if it works for "gitk", 
+> that means that it works for "qgit", "git log" and "git whatchanged" too, 
+> ie this is a very core concept, and not just some tacked-on thing for one 
+> special tool.
 
-Thanks, and I think it makes sense.
+Sure.  If it gets included in a tutorial is great, but existing
+users aren't likely to read through a tutorial if they think they
+know what is going on.
+
+Having it documented in the man pages (i.e. the reference
+documentation) which is where people look to check up on the fine
+points of a command is more likely to matter.  Plus it doesn't
+take any creativity to write a man page you just need to describe
+what is, which makes man-pages easier to write than documentation
+where you aren't certain of who your audience is.
+
+Since it isn't specific to one command we probably need to document
+the query limiting in a single file like the diff options are
+and then just included it in all of the different man pages.
+
+But regardless of where we put it, it needs to be documented someplace
+besides in the email so you don't need to read the code to see that
+the option is there. 
+
+Eric
