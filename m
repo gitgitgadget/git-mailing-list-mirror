@@ -1,92 +1,139 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Install git-send-email by default
-Date: Sun, 14 May 2006 19:26:56 -0700
-Message-ID: <11476600163338-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
+Date: Sun, 14 May 2006 19:32:25 -0700
+Message-ID: <1147660345772-git-send-email-normalperson@yhbt.net>
 Reply-To: Eric Wong <normalperson@yhbt.net>
 Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon May 15 04:27:27 2006
+X-From: git-owner@vger.kernel.org Mon May 15 04:32:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfSnl-0001jI-WE
-	for gcvg-git@gmane.org; Mon, 15 May 2006 04:27:18 +0200
+	id 1FfSsx-0002Ve-1V
+	for gcvg-git@gmane.org; Mon, 15 May 2006 04:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751022AbWEOC1A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 22:27:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWEOC1A
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 22:27:00 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:39072 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750808AbWEOC1A (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 22:27:00 -0400
+	id S1750978AbWEOCc1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 22:32:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbWEOCc1
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 22:32:27 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:43168 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1750978AbWEOCc1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 22:32:27 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D84917DC005;
-	Sun, 14 May 2006 19:26:56 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 14 May 2006 19:26:56 -0700
+	by hand.yhbt.net (Postfix) with SMTP id B10F17DC005;
+	Sun, 14 May 2006 19:32:25 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 14 May 2006 19:32:25 -0700
 To: Junio C Hamano <junkio@cox.net>, <git@vger.kernel.org>
-X-Mailer: git-send-email 1.3.2.g97f7
+X-Mailer: git-send-email 1.3.2.g0e5a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20009>
 
-After 567ffeb7722eefab3991cb894c96548b92b57cc2 and
-4bc87a28be020a6bf7387161c65ea3d8e4a0228b, git-send-email no
-longer requires any non-standard Perl modules, so there's no
-reason to special-case it.
+This should make local mailing possible for machines without
+a connection to an SMTP server.
+
+It'll default to using /usr/sbin/sendmail or /usr/lib/sendmail
+if no SMTP server is specified (the default).  If it can't find
+either of those paths, it'll fall back to connecting to an SMTP
+server on localhost.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
 ---
 
- Makefile    |    7 ++-----
- git.spec.in |    4 ++--
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ git-send-email.perl |   55 +++++++++++++++++++++++++++++++++++++++------------
+ 1 files changed, 42 insertions(+), 13 deletions(-)
 
-df2d76fcee34efcf265b3a8a45940138e11a97c4
-diff --git a/Makefile b/Makefile
-index 8fd3e13..95d25f0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -131,7 +131,8 @@ SCRIPT_PERL = \
- 	git-archimport.perl git-cvsimport.perl git-relink.perl \
- 	git-shortlog.perl git-fmt-merge-msg.perl git-rerere.perl \
- 	git-annotate.perl git-cvsserver.perl \
--	git-svnimport.perl git-mv.perl git-cvsexportcommit.perl
-+	git-svnimport.perl git-mv.perl git-cvsexportcommit.perl \
-+	git-send-email.perl
+1c9bacc5a2bfe382f68046aeba62302d28e4c976
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d8c4b1f..d27a7a5 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -40,7 +40,8 @@ # Variables we fill in automatically, or
+ my (@to,@cc,@initial_cc,$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
  
- SCRIPT_PYTHON = \
- 	git-merge-recursive.py
-@@ -320,10 +321,6 @@ else
- 	endif
- endif
+ # Behavior modification variables
+-my ($chain_reply_to, $smtp_server, $quiet, $suppress_from, $no_signed_off_cc) = (1, "localhost", 0, 0, 0);
++my ($chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc) = (1, 0, 0, 0);
++my $smtp_server;
  
--ifdef WITH_SEND_EMAIL
--	SCRIPT_PERL += git-send-email.perl
--endif
--
- ifndef NO_CURL
- 	ifdef CURLDIR
- 		# This is still problematic -- gcc does not always want -R.
-diff --git a/git.spec.in b/git.spec.in
-index 96dfc1d..8ccd256 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -74,12 +74,12 @@ Git revision tree visualiser ('gitk')
- %setup -q
+ # Example reply to:
+ #$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
+@@ -179,8 +180,14 @@ if (!defined $initial_reply_to && $promp
+ 	$initial_reply_to =~ s/(^\s+|\s+$)//g;
+ }
  
- %build
--make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease WITH_SEND_EMAIL=1 \
-+make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease \
-      prefix=%{_prefix} all %{!?_without_docs: doc}
+-if (!defined $smtp_server) {
+-	$smtp_server = "localhost";
++if (!$smtp_server) {
++	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
++		if (-x $_) {
++			$smtp_server = $_;
++			last;
++		}
++	}
++	$smtp_server ||= 'localhost'; # could be 127.0.0.1, too... *shrug*
+ }
  
- %install
- rm -rf $RPM_BUILD_ROOT
--make %{_smp_mflags} DESTDIR=$RPM_BUILD_ROOT WITH_OWN_SUBPROCESS_PY=YesPlease WITH_SEND_EMAIL=1 \
-+make %{_smp_mflags} DESTDIR=$RPM_BUILD_ROOT WITH_OWN_SUBPROCESS_PY=YesPlease \
-      prefix=%{_prefix} mandir=%{_mandir} \
-      install %{!?_without_docs: install-doc}
+ if ($compose) {
+@@ -358,18 +365,39 @@ X-Mailer: git-send-email $gitversion
+ ";
+ 	$header .= "In-Reply-To: $reply_to\n" if $reply_to;
+ 
+-	$smtp ||= Net::SMTP->new( $smtp_server );
+-	$smtp->mail( $from ) or die $smtp->message;
+-	$smtp->to( @recipients ) or die $smtp->message;
+-	$smtp->data or die $smtp->message;
+-	$smtp->datasend("$header\n$message") or die $smtp->message;
+-	$smtp->dataend() or die $smtp->message;
+-	$smtp->ok or die "Failed to send $subject\n".$smtp->message;
++	if ($smtp_server =~ m#^/#) {
++		my $pid = open my $sm, '|-';
++		defined $pid or die $!;
++		if (!$pid) {
++			exec($smtp_server,'-i',@recipients) or die $!;
++		}
++		print $sm "$header\n$message";
++		close $sm or die $?;
++		if ($quiet) {
++			printf "Sent %s\n", $subject;
++		} else {
++			print "OK. Log says:
++Date: $date
++Sendmail: $smtp_server
++From: $from
++Subject: $subject
++Cc: $cc
++To: $to
+ 
+-	if ($quiet) {
+-		printf "Sent %s\n", $subject;
++Result: OK\n";
++		}
+ 	} else {
+-		print "OK. Log says:
++		$smtp ||= Net::SMTP->new( $smtp_server );
++		$smtp->mail( $from ) or die $smtp->message;
++		$smtp->to( @recipients ) or die $smtp->message;
++		$smtp->data or die $smtp->message;
++		$smtp->datasend("$header\n$message") or die $smtp->message;
++		$smtp->dataend() or die $smtp->message;
++		$smtp->ok or die "Failed to send $subject\n".$smtp->message;
++		if ($quiet) {
++			printf "Sent %s\n", $subject;
++		} else {
++			print "OK. Log says:
+ Date: $date
+ Server: $smtp_server Port: 25
+ From: $from
+@@ -378,6 +406,7 @@ Cc: $cc
+ To: $to
+ 
+ Result: ", $smtp->code, ' ', ($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
++		}
+ 	}
+ }
  
 -- 
 1.3.2.g1c9b
