@@ -1,53 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix compilation on newer NetBSD systems
-Date: Sun, 14 May 2006 22:31:10 -0700
-Message-ID: <7vu07rx3a9.fsf@assigned-by-dhcp.cox.net>
-References: <20060511173531.G18d4553c@leonov.stosberg.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: The git newbie experience
+Date: Mon, 15 May 2006 01:31:33 -0400
+Message-ID: <20060515053133.GB28068@spearce.org>
+References: <446778B8.7080201@inoi.fi> <7vfyjcntro.fsf@assigned-by-dhcp.cox.net> <44680C54.8040206@inoi.fi> <7vy7x3x3ux.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 07:31:25 2006
+Cc: Tommi Virtanen <tv@inoi.fi>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 07:31:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfVfn-00077u-CY
-	for gcvg-git@gmane.org; Mon, 15 May 2006 07:31:15 +0200
+	id 1FfVgI-0007DJ-Ux
+	for gcvg-git@gmane.org; Mon, 15 May 2006 07:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932230AbWEOFbM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 01:31:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWEOFbM
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 01:31:12 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:12538 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932230AbWEOFbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 01:31:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060515053111.PPWC17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 15 May 2006 01:31:11 -0400
-To: Dennis Stosberg <dennis@stosberg.net>
-In-Reply-To: <20060511173531.G18d4553c@leonov.stosberg.net> (Dennis Stosberg's
-	message of "Thu, 11 May 2006 19:35:31 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932235AbWEOFbo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 01:31:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932241AbWEOFbo
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 01:31:44 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:41859 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932235AbWEOFbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 01:31:43 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FfVg9-0001Qh-F4; Mon, 15 May 2006 01:31:37 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3042E212667; Mon, 15 May 2006 01:31:34 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vy7x3x3ux.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20020>
 
-Dennis Stosberg <dennis@stosberg.net> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Tommi Virtanen <tv@inoi.fi> writes:
+> 
+> > Oh, I'd love to have a quick stash, that's what we actually ended up
+> > doing a lot. Although I'd rather see a real implementation use a branch
+> > and not just a diff file, but.. yes please.
+> 
+> I'd rather do that with a diff file that can be used to do a
+> 3-way (see how rebase does it with --full-index diff with am -3).
+> No point creating and forgetting to remove a throw away branch
+> and getting more complaints.
 
-> NetBSD >=2.0 has iconv() in libc.  A libiconv is not required and
-> does not exist.
+How is a quick stash different from a topic branch?  I don't see
+any difference between the two.  Your working directory was a topic
+branch, just an unnamed topic branch.  Why don't you name it and
+deal with it once it is named?
 
-I do not doubt that, but...
+I can see new users getting confused about what changes are in
+their quick stash or accidentially losing their quick stash by
+running it twice in a row.
 
-> +	ifeq ($(shell test `uname -r | sed -e 's/^\([0-9]\).*/\1/'` -lt 2 && echo y),y)
-> +		NEEDS_LIBICONV = YesPlease
-> +	endif
+Teaching new users to always work on a topic branch and committing
+before pulling/merging should be the favored workflow.
 
-This looks rather ugly.  I do not know if NetBSD has 0.xx
-versions, but perhaps something like this?
-
-	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
+-- 
+Shawn.
