@@ -1,63 +1,103 @@
-From: "Brown, Len" <len.brown@intel.com>
-Subject: RE: how to display file history?
-Date: Mon, 15 May 2006 02:13:30 -0400
-Message-ID: <CFF307C98FEABE47A452B27C06B85BB670F4FD@hdsmsx411.amr.corp.intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Tracking branch history
+Date: Sun, 14 May 2006 23:27:53 -0700
+Message-ID: <7vac9jx0nq.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605121640210.3866@g5.osdl.org>
+	<20060513034051.GA21586@spearce.org>
+	<7vody2v7yr.fsf@assigned-by-dhcp.cox.net>
+	<20060513071753.GA21998@spearce.org>
+	<20060513074328.GB21998@spearce.org>
+	<Pine.LNX.4.64.0605130815550.3866@g5.osdl.org>
+	<7vbqu1vps3.fsf@assigned-by-dhcp.cox.net>
+	<20060513181816.GA12475@spearce.org>
+	<7vk68o19n4.fsf@assigned-by-dhcp.cox.net>
+	<20060515031511.GA27505@spearce.org>
+	<20060515055830.GC28068@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 15 08:13:59 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 08:28:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfWL8-0005it-EZ
-	for gcvg-git@gmane.org; Mon, 15 May 2006 08:13:58 +0200
+	id 1FfWYg-00080R-M5
+	for gcvg-git@gmane.org; Mon, 15 May 2006 08:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932208AbWEOGNo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 02:13:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWEOGNo
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 02:13:44 -0400
-Received: from mga03.intel.com ([143.182.124.21]:15752 "EHLO
-	azsmga101-1.ch.intel.com") by vger.kernel.org with ESMTP
-	id S932208AbWEOGNn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 02:13:43 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101-1.ch.intel.com with ESMTP; 14 May 2006 23:13:43 -0700
-Received: from fmsmsx331.fm.intel.com (HELO fmsmsx331.amr.corp.intel.com) ([132.233.42.156])
-  by azsmga001.ch.intel.com with ESMTP; 14 May 2006 23:13:38 -0700
-X-IronPort-AV: i="4.05,128,1146466800"; 
-   d="scan'208"; a="36393211:sNHT12632857664"
-Received: from fmsmsx312.amr.corp.intel.com ([132.233.42.227]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 14 May 2006 23:13:33 -0700
-Received: from hdsmsx401.amr.corp.intel.com ([10.127.2.60]) by fmsmsx312.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 14 May 2006 23:13:33 -0700
-Received: from hdsmsx411.amr.corp.intel.com ([10.127.2.70]) by hdsmsx401.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Mon, 15 May 2006 02:13:31 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: how to display file history?
-Thread-Index: AcZ35PPAJUnW9R8fTVS5gh8ati81sQAAQMhA
-To: <spearce@spearce.org>
-X-OriginalArrivalTime: 15 May 2006 06:13:32.0032 (UTC) FILETIME=[B0E07000:01C677E6]
+	id S932317AbWEOG1z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 02:27:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbWEOG1z
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 02:27:55 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:2999 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932317AbWEOG1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 02:27:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060515062754.JRGC19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 15 May 2006 02:27:54 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060515055830.GC28068@spearce.org> (Shawn Pearce's message of
+	"Mon, 15 May 2006 01:58:30 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20027>
 
- 
->	git whatchanged A
+Shawn Pearce <spearce@spearce.org> writes:
 
-thanks.  I've used this on entire repos before, but
-for some reason didn't think of this command name
-when looking for individual file history.
+> This is all well and good but its sort of useless without the diffcore
+> being able to lookup what SHA1 was valid on a given branch at a given
+> point in time.  :-)
+>
+> I'm thinking about extending the 'extended SHA1' syntax to accept
+> a date (or date expression) as a suffix:
+>
+> 	HEAD@'2 hours ago'
+> 	HEAD@'2006-04-20'
+> 	HEAD@'2006-04-20 14:12'
+>
+> etc... This would be merged into get_sha1 (sha1_name.c) so its
+> usable pretty much anywhere.  Does this seem reasonable?  If so
+> I'll work up a patch for it.
 
-Searching git(7) for "history" didn't take me here.
-Searching for "log" would have, but I must have
-terminated that search when git-log and git-shortlog
-turned out to not be what I was looking for.
+HEAD?
 
--Len
+Are you going to hook into symbolic-ref as well to track branch
+switching?
+
+Since there is no reverse pointer to tell which symbolic
+reference is pointing at branch heads,and there are symbolic
+references like refs/remotes/origin/HEAD that point at
+refs/remotes/origin/master, detecting that such and such
+symbolic refs are pointing at a branch that is advanced by a
+call to update-ref and update the log for the symbolic refs that
+point at it becomes rather expensive.
+So probably you would need a separate log format that tracks
+which concrete ref a symbolic ref was pointing at at any given
+time and use that to keep track of them.
+
+I personally doubt it is worth the trouble.  I switch branches
+between master, next and the topics all the time, and never is
+interested in which branch I happened to be on 30 minutes ago.
+
+The time-warp format would make sense for individual branches,
+like refs/heads/master, though.
+
+sha1_name.c and sha1_file.c were supposed to be real core, but
+get_sha1() is looking more and more Porcelainish these days, and
+I do not have much problem with being able to say "tip of this
+branch, two hours ago".
+
+I am not sure about the syntax though.  We would want to be able
+to say "start from the commit that was at the tip of 'master'
+branch two days ago, grab its tree and look at arch/sparc64
+directory", so things like
+
+            "master@2006-05-14 14:12"
+            "master@2006-05-14 14:12^{tree}"
+            "master@two days ago:arch/sparc64"
+
+would need to be supported.
