@@ -1,65 +1,104 @@
-From: "Brown, Len" <len.brown@intel.com>
-Subject: RE: how to display file history?
-Date: Mon, 15 May 2006 13:24:41 -0400
-Message-ID: <CFF307C98FEABE47A452B27C06B85BB670FB0A@hdsmsx411.amr.corp.intel.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] pack-object: slightly more efficient
+Date: Mon, 15 May 2006 13:47:16 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605151319580.18071@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 15 19:40:08 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 19:49:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ffh33-0007YF-QB
-	for gcvg-git@gmane.org; Mon, 15 May 2006 19:40:02 +0200
+	id 1FfhBp-0000xm-Bd
+	for gcvg-git@gmane.org; Mon, 15 May 2006 19:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614AbWEORj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 13:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbWEORj7
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 13:39:59 -0400
-Received: from mga01.intel.com ([192.55.52.88]:34982 "EHLO
-	fmsmga101-1.fm.intel.com") by vger.kernel.org with ESMTP
-	id S1751606AbWEORj6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 13:39:58 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101-1.fm.intel.com with ESMTP; 15 May 2006 10:39:57 -0700
-Received: from fmsmsx331.fm.intel.com (HELO fmsmsx331.amr.corp.intel.com) ([132.233.42.156])
-  by fmsmga001.fm.intel.com with ESMTP; 15 May 2006 10:24:53 -0700
-X-IronPort-AV: i="4.05,130,1146466800"; 
-   d="scan'208"; a="37514158:sNHT3900504300"
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 15 May 2006 10:24:46 -0700
-Received: from hdsmsx402.amr.corp.intel.com ([10.127.2.62]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 15 May 2006 10:24:45 -0700
-Received: from hdsmsx411.amr.corp.intel.com ([10.127.2.70]) by hdsmsx402.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Mon, 15 May 2006 13:24:43 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: how to display file history?
-Thread-Index: AcZ36sGeb9HWEt9sShWKCMzu7fkjlQAWJZXQ
-To: "Junio C Hamano" <junkio@cox.net>
-X-OriginalArrivalTime: 15 May 2006 17:24:44.0172 (UTC) FILETIME=[74F154C0:01C67844]
+	id S965015AbWEORrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 13:47:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965016AbWEORrU
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 13:47:20 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:58502 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S965015AbWEORrR
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 13:47:17 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IZB00JIGIQSM790@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 15 May 2006 13:47:16 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20071>
 
->	git log --stat -- A
+Avoid creating a delta index for objects with maximum depth since they 
+are not going to be used as delta base anyway.  This also reduce peak 
+memory usage slightly as the current object's delta index is not useful 
+until the next object in the loop is considered for deltification. This 
+saves a bit more than 1% on CPU usage.
 
-very handy indeed.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-I was surprised on initial use that --stat is
-limited to the file specified in "A" and doesn't
-expand to describe the entire commit that touches "A".
-(ie. the stat output is a subset of what is associated
-with the displayed commit comments).
+---
 
-This, of course, is clear now, it just isn't what
-I expected on first use.
-
-thanks,
--Len
+diff --git a/delta.h b/delta.h
+index 727ae30..7b3f86d 100644
+--- a/delta.h
++++ b/delta.h
+@@ -18,6 +18,8 @@ create_delta_index(const void *buf, unsi
+ 
+ /*
+  * free_delta_index: free the index created by create_delta_index()
++ *
++ * Given pointer must be what create_delta_index() returned, or NULL.
+  */
+ extern void free_delta_index(struct delta_index *index);
+ 
+diff --git a/pack-objects.c b/pack-objects.c
+index b0388d7..9daf1c1 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -1104,17 +1104,14 @@ static void find_deltas(struct object_en
+ 
+ 		if (entry->size < 50)
+ 			continue;
+-		if (n->index)
+-			free_delta_index(n->index);
++		free_delta_index(n->index);
++		n->index = NULL;
+ 		free(n->data);
+ 		n->entry = entry;
+ 		n->data = read_sha1_file(entry->sha1, type, &size);
+ 		if (size != entry->size)
+ 			die("object %s inconsistent object length (%lu vs %lu)",
+ 			    sha1_to_hex(entry->sha1), size, entry->size);
+-		n->index = create_delta_index(n->data, size);
+-		if (!n->index)
+-			die("out of memory");
+ 
+ 		j = window;
+ 		while (--j > 0) {
+@@ -1134,6 +1131,11 @@ static void find_deltas(struct object_en
+ 		 */
+ 		if (entry->delta && depth <= entry->depth)
+ 			continue;
++
++		n->index = create_delta_index(n->data, size);
++		if (!n->index)
++			die("out of memory");
++
+ 		idx++;
+ 		if (idx >= window)
+ 			idx = 0;
+@@ -1143,8 +1145,7 @@ static void find_deltas(struct object_en
+ 		fputc('\n', stderr);
+ 
+ 	for (i = 0; i < window; ++i) {
+-		if (array[i].index)
+-			free_delta_index(array[i].index);
++		free_delta_index(array[i].index);
+ 		free(array[i].data);
+ 	}
+ 	free(array);
