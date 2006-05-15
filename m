@@ -1,138 +1,107 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH (resend)] send-email: address expansion for common mailers
-Date: Mon, 15 May 2006 00:12:28 -0400
-Message-ID: <20060515041227.GP32076@h4x0r5.com>
-References: <20060326024416.GA14234@localdomain> <11476592243181-git-send-email-normalperson@yhbt.net>
+From: Tommi Virtanen <tv@inoi.fi>
+Subject: Re: The git newbie experience
+Date: Mon, 15 May 2006 08:06:28 +0300
+Organization: Inoi Oy
+Message-ID: <44680C54.8040206@inoi.fi>
+References: <446778B8.7080201@inoi.fi> <7vfyjcntro.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Mon May 15 06:13:55 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 07:06:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfUSs-0002rK-9V
-	for gcvg-git@gmane.org; Mon, 15 May 2006 06:13:50 +0200
+	id 1FfVIC-00030v-Q1
+	for gcvg-git@gmane.org; Mon, 15 May 2006 07:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751406AbWEOENq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 00:13:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbWEOENq
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 00:13:46 -0400
-Received: from h4x0r5.com ([70.85.31.202]:22799 "EHLO h4x0r5.com")
-	by vger.kernel.org with ESMTP id S1751406AbWEOENp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 00:13:45 -0400
-Received: from ryan by h4x0r5.com with local (Exim 4.50)
-	id 1FfURY-00059F-Rh; Mon, 15 May 2006 00:12:28 -0400
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <11476592243181-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.9i
-X-michonline.com-MailScanner: Found to be clean
-X-michonline.com-MailScanner-From: ryan@h4x0r5.com
+	id S1751312AbWEOFGd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 15 May 2006 01:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWEOFGd
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 01:06:33 -0400
+Received: from i1.inoi.fi ([194.100.97.46]:20383 "EHLO mail.inoi.fi")
+	by vger.kernel.org with ESMTP id S1751312AbWEOFGd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 01:06:33 -0400
+Received: from mail.inoi.fi (localhost.localdomain [127.0.0.1])
+	by mail.inoi.fi (Postfix) with ESMTP id 8F33810C012;
+	Mon, 15 May 2006 08:07:03 +0300 (EEST)
+Received: from [10.116.0.191] (GMMDXXVII.dsl.saunalahti.fi [85.76.242.28])
+	by mail.inoi.fi (Postfix) with ESMTP id 3639F10C00E;
+	Mon, 15 May 2006 08:07:03 +0300 (EEST)
+User-Agent: Mail/News 1.5 (X11/20060309)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyjcntro.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20016>
 
-On Sun, May 14, 2006 at 07:13:44PM -0700, Eric Wong wrote:
-> mutt, gnus, pine, mailrc formats should be supported.
-> 
-> Testing and feedback for correctness and completeness of all formats
-> and support for additional formats would be good.
-> 
-> Nested expansions are also supported.
-> 
-> More than one alias file to be used.
-> 
-> All alias file formats must still of be the same type, though.
-> 
-> Two git repo-config keys are required for this
-> (as suggested by Ryan Anderson):
-> 
->     sendemail.aliasesfile = <filename of aliases file>
->     sendemail.aliasfiletype = (mutt|gnus|pine|mailrc)
-> 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-Acked-by: Ryan Anderson <ryan@michonline.com>
+Junio C Hamano wrote:
+> Anyway, I think the time to commit is too late to save somebody
+> who does not understand the index.  How would you explain why
+> you sometimes need to use -A and sometimes -a?=20
 
-> ---
-> 
-> Looks like this patch got forgotten a while ago, and I never noticed
-> because I forgot to set WITH_SEND_EMAIL when doing make install.
-> Of course, WITH_SEND_EMAIL should no longer be needed...
-> 
->  git-send-email.perl |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 48 insertions(+), 0 deletions(-)
-> 
-> ff6593287dc500853c1cf05bdb0f32f970f10c9d
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 703dd1f..d8c4b1f 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -89,6 +89,41 @@ sub gitvar_ident {
->  my ($author) = gitvar_ident('GIT_AUTHOR_IDENT');
->  my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
->  
-> +my %aliases;
-> +chomp(my @alias_files = `git-repo-config --get-all sendemail.aliasesfile`);
-> +chomp(my $aliasfiletype = `git-repo-config sendemail.aliasfiletype`);
-> +my %parse_alias = (
-> +	# multiline formats can be supported in the future
-> +	mutt => sub { my $fh = shift; while (<$fh>) {
-> +		if (/^alias\s+(\S+)\s+(.*)$/) {
-> +			my ($alias, $addr) = ($1, $2);
-> +			$addr =~ s/#.*$//; # mutt allows # comments
-> +			 # commas delimit multiple addresses
-> +			$aliases{$alias} = [ split(/\s*,\s*/, $addr) ];
-> +		}}},
-> +	mailrc => sub { my $fh = shift; while (<$fh>) {
-> +		if (/^alias\s+(\S+)\s+(.*)$/) {
-> +			# spaces delimit multiple addresses
-> +			$aliases{$1} = [ split(/\s+/, $2) ];
-> +		}}},
-> +	pine => sub { my $fh = shift; while (<$fh>) {
-> +		if (/^(\S+)\s+(.*)$/) {
-> +			$aliases{$1} = [ split(/\s*,\s*/, $2) ];
-> +		}}},
-> +	gnus => sub { my $fh = shift; while (<$fh>) {
-> +		if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
-> +			$aliases{$1} = [ $2 ];
-> +		}}}
-> +);
-> +
-> +if (@alias_files && defined $parse_alias{$aliasfiletype}) {
-> +	foreach my $file (@alias_files) {
-> +		open my $fh, '<', $file or die "opening $file: $!\n";
-> +		$parse_alias{$aliasfiletype}->($fh);
-> +		close $fh;
-> +	}
-> +}
-> +
->  my $prompting = 0;
->  if (!defined $from) {
->  	$from = $author || $committer;
-> @@ -112,6 +147,19 @@ if (!@to) {
->  	$prompting++;
->  }
->  
-> +sub expand_aliases {
-> +	my @cur = @_;
-> +	my @last;
-> +	do {
-> +		@last = @cur;
-> +		@cur = map { $aliases{$_} ? @{$aliases{$_}} : $_ } @last;
-> +	} while (join(',',@cur) ne join(',',@last));
-> +	return @cur;
-> +}
-> +
-> +@to = expand_aliases(@to);
-> +@initial_cc = expand_aliases(@initial_cc);
-> +
->  if (!defined $initial_subject && $compose) {
->  	do {
->  		$_ = $term->readline("What subject should the emails start with? ",
-> -- 
-> 1.3.2.g1c9b
-> 
-> 
+I guess what I really want is "a smarter -a".
+
+> That is why I
+> suggested to make "git pull" and "git merge" refuse to work if
+> there are local changes for novice users, where the definition
+> of novice is "git commit -a" is the only way to make a commit.
+> We can have [core] novice =3D yes in .git/config for that.
+>=20
+> If somebody does not understand the index, if the merge is
+> prevented because the local change does conflict with it, how
+> would you explain why sometimes you can merge and sometimes you
+> cannot?
+
+By the same logic that is already implemented. "pull refuses to pull
+changes to files that are modified but not committed".
+
+>> For example, we had a case where we absolutely _had_ to keep
+>> an ugly workaround in the tree, in a file not otherwise
+>> edited, but we definitely did not want to commit the kludge,
+> Your example is a very ill-thought out one.
+>
+> If you are leaving the uncommitable kludge around, you cannot be
+> using "commit -a" with the normal non-merge workflow.  Why
+> would you worry about not being able to do "commit -a" on a
+> merge then?
+
+The indexless working mode means you know two kinds of commits.
+"git commit -a" or "git commit FILE..". The uncommitted kludge hanging
+around means people listed file names. The case where the merge differs
+is that it's not just a few files, and they didn't even really
+know what files to list. And "git status" showed them something
+they were not used to seeing.
+
+> For the beginning user without index, I would rewrite your
+> scenario like this.
+>=20
+=2E..
+> - Jack stashes away what he has been working on and cleans up
+>   his mess.
+>=20
+>   git diff >P.diff
+>   git checkout HEAD A B C
+=2E..
+> - Jack then reapplies what he stashed away with "git apply P.diff"
+>   and keeps working.
+>=20
+> Maybe "git stash" command that does "git diff --full-index" with
+> some frills, and "git unstash" command which does an equivalent
+> of "git am -3" would help this workflow (bare "git apply" does
+> not do the three-way merge like am does).
+
+Oh, I'd love to have a quick stash, that's what we actually ended up
+doing a lot. Although I'd rather see a real implementation use a branch
+and not just a diff file, but.. yes please.
+
+Although, "git stash" and "git unstash" are yet another command to add
+to the newbie set, and I just complained about the size of the set ;)
+
+--=20
+Inoi Oy, Tykist=F6katu 4 D (4. krs), FI-20520 Turku, Finland
+http://www.inoi.fi/
+Mobile +358 40 762 5656
