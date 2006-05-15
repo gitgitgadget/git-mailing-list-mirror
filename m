@@ -1,76 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: RE: how to display file history?
-Date: Mon, 15 May 2006 10:54:47 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605151049470.3866@g5.osdl.org>
-References: <CFF307C98FEABE47A452B27C06B85BB670FB0A@hdsmsx411.amr.corp.intel.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: how to display file history?
+Date: Mon, 15 May 2006 13:55:49 -0400
+Message-ID: <20060515175549.GD15165@fieldses.org>
+References: <CFF307C98FEABE47A452B27C06B85BB670F4FD@hdsmsx411.amr.corp.intel.com> <7v64k7wzzf.fsf@assigned-by-dhcp.cox.net> <m1ejyv7077.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.64.0605150900510.3866@g5.osdl.org> <m164k76ylb.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 19:55:40 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	"Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 19:56:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfhHb-0002On-FY
-	for gcvg-git@gmane.org; Mon, 15 May 2006 19:55:03 +0200
+	id 1FfhIX-0002gS-Jh
+	for gcvg-git@gmane.org; Mon, 15 May 2006 19:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965009AbWEORy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 13:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965012AbWEORy7
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 13:54:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:31719 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965009AbWEORy6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 13:54:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4FHsrtH017774
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 15 May 2006 10:54:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4FHsmU9011229;
-	Mon, 15 May 2006 10:54:51 -0700
-To: "Brown, Len" <len.brown@intel.com>
-In-Reply-To: <CFF307C98FEABE47A452B27C06B85BB670FB0A@hdsmsx411.amr.corp.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965007AbWEORz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 13:55:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965012AbWEORz7
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 13:55:59 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:58077 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S965007AbWEORz6
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 13:55:58 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1FfhIM-0006qp-1A; Mon, 15 May 2006 13:55:50 -0400
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Content-Disposition: inline
+In-Reply-To: <m164k76ylb.fsf@ebiederm.dsl.xmission.com>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20073>
 
-
-
-On Mon, 15 May 2006, Brown, Len wrote:
->
-> >	git log --stat -- A
+On Mon, May 15, 2006 at 10:29:20AM -0600, Eric W. Biederman wrote:
+> Sure.  If it gets included in a tutorial is great, but existing
+> users aren't likely to read through a tutorial if they think they
+> know what is going on.
 > 
-> very handy indeed.
-> 
-> I was surprised on initial use that --stat is
-> limited to the file specified in "A" and doesn't
-> expand to describe the entire commit that touches "A".
-> (ie. the stat output is a subset of what is associated
-> with the displayed commit comments).
-> 
-> This, of course, is clear now, it just isn't what
-> I expected on first use.
+> Having it documented in the man pages (i.e. the reference
+> documentation) which is where people look to check up on the fine
+> points of a command is more likely to matter.
 
-Well,  you can obviously have your cake and eat it too (ie "--full-diff").
+Looks like the current git-log man page refers you to the git-rev-list
+page for that, and the use of path names is documented there.
 
-I don't often end up using the "--full-diff" thing. It's almost never 
-actually worth it until I find the diff that I actually start caring 
-about, and the full diff just makes it harder to see the part I explicitly 
-told git I was interested in.
+I think that's a pretty reasonable approach for reference
+documentation, which should be concise.  Duplicating the git-rev-list
+documentation (even some of it) to every man page to which it's relevant
+would add a lot of text.
 
-So the default "show only diffs for the files asked for" behaviour is in 
-my opinion much superior (and it used to be the only one), because the 
-"show the whole thing" part ends up being something you use only once 
-you've already skimmed the default case and decide to go deeper.
+The current git-log man page is misleading, though--it suggests that
+git-log accepts (and git-rev-list documents) only options, which might
+discourage a reader from tracking down information about non-option
+arguments.
 
-Of course, "gitk" ends up using the full diff by default in its diff 
-window. I'm not convinced that's the right thing, but usually when I use 
-gitk I'm primarily looking at the history and the commit messages to 
-decide if it's a relevant one, not the diff, so I don't think it matters.
+I also agree about the tutorial--the "Keeping track of history" section
+would be a good place to introduce this and git-grep with some fun
+examples.  It's on my todo list, but may take a while, so maybe someone
+else can beat me to it....
 
-			Linus
+--b.
