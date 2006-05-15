@@ -1,50 +1,132 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Branch relationships
-Date: Sun, 14 May 2006 19:11:11 -0700
-Message-ID: <7vbqu0xcjk.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605131317200.3866@g5.osdl.org>
-	<200605150104.46762.Josef.Weidendorfer@gmx.de>
-	<7vslncyxez.fsf@assigned-by-dhcp.cox.net>
-	<200605150348.53879.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 04:11:29 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH (resend)] send-email: address expansion for common mailers
+Date: Sun, 14 May 2006 19:13:44 -0700
+Message-ID: <11476592243181-git-send-email-normalperson@yhbt.net>
+References: <20060326024416.GA14234@localdomain>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon May 15 04:13:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfSYQ-0008Pl-AX
-	for gcvg-git@gmane.org; Mon, 15 May 2006 04:11:26 +0200
+	id 1FfSam-0000Cq-U4
+	for gcvg-git@gmane.org; Mon, 15 May 2006 04:13:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbWEOCLN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 May 2006 22:11:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbWEOCLN
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 22:11:13 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:35221 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751308AbWEOCLN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 May 2006 22:11:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060515021112.PPU15069.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 14 May 2006 22:11:12 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200605150348.53879.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Mon, 15 May 2006 03:48:53 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750807AbWEOCNr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 May 2006 22:13:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbWEOCNr
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 May 2006 22:13:47 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:28576 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1750807AbWEOCNq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 May 2006 22:13:46 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id F3D7D7DC005;
+	Sun, 14 May 2006 19:13:44 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 14 May 2006 19:13:44 -0700
+To: Junio C Hamano <junkio@cox.net>, <git@vger.kernel.org>,
+	Ryan Anderson <ryan@michonline.com>
+X-Mailer: git-send-email 1.3.2.g1c9b
+In-Reply-To: <20060326024416.GA14234@localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20007>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+mutt, gnus, pine, mailrc formats should be supported.
 
-> But not supporting this in a first step should be no problem, as
-> you always can do "git pull somewhere that-head" directly.
+Testing and feedback for correctness and completeness of all formats
+and support for additional formats would be good.
 
-That defeats the point of .git/remotes/ setup, and I suspect is
-unacceptable to people who pull from a given branch of a given
-repository repeatedly without ever tracking it.  Think of the
-maintainer pulling from subsystem maintainers.
+Nested expansions are also supported.
+
+More than one alias file to be used.
+
+All alias file formats must still of be the same type, though.
+
+Two git repo-config keys are required for this
+(as suggested by Ryan Anderson):
+
+    sendemail.aliasesfile = <filename of aliases file>
+    sendemail.aliasfiletype = (mutt|gnus|pine|mailrc)
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+
+---
+
+Looks like this patch got forgotten a while ago, and I never noticed
+because I forgot to set WITH_SEND_EMAIL when doing make install.
+Of course, WITH_SEND_EMAIL should no longer be needed...
+
+ git-send-email.perl |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 48 insertions(+), 0 deletions(-)
+
+ff6593287dc500853c1cf05bdb0f32f970f10c9d
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 703dd1f..d8c4b1f 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -89,6 +89,41 @@ sub gitvar_ident {
+ my ($author) = gitvar_ident('GIT_AUTHOR_IDENT');
+ my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
+ 
++my %aliases;
++chomp(my @alias_files = `git-repo-config --get-all sendemail.aliasesfile`);
++chomp(my $aliasfiletype = `git-repo-config sendemail.aliasfiletype`);
++my %parse_alias = (
++	# multiline formats can be supported in the future
++	mutt => sub { my $fh = shift; while (<$fh>) {
++		if (/^alias\s+(\S+)\s+(.*)$/) {
++			my ($alias, $addr) = ($1, $2);
++			$addr =~ s/#.*$//; # mutt allows # comments
++			 # commas delimit multiple addresses
++			$aliases{$alias} = [ split(/\s*,\s*/, $addr) ];
++		}}},
++	mailrc => sub { my $fh = shift; while (<$fh>) {
++		if (/^alias\s+(\S+)\s+(.*)$/) {
++			# spaces delimit multiple addresses
++			$aliases{$1} = [ split(/\s+/, $2) ];
++		}}},
++	pine => sub { my $fh = shift; while (<$fh>) {
++		if (/^(\S+)\s+(.*)$/) {
++			$aliases{$1} = [ split(/\s*,\s*/, $2) ];
++		}}},
++	gnus => sub { my $fh = shift; while (<$fh>) {
++		if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
++			$aliases{$1} = [ $2 ];
++		}}}
++);
++
++if (@alias_files && defined $parse_alias{$aliasfiletype}) {
++	foreach my $file (@alias_files) {
++		open my $fh, '<', $file or die "opening $file: $!\n";
++		$parse_alias{$aliasfiletype}->($fh);
++		close $fh;
++	}
++}
++
+ my $prompting = 0;
+ if (!defined $from) {
+ 	$from = $author || $committer;
+@@ -112,6 +147,19 @@ if (!@to) {
+ 	$prompting++;
+ }
+ 
++sub expand_aliases {
++	my @cur = @_;
++	my @last;
++	do {
++		@last = @cur;
++		@cur = map { $aliases{$_} ? @{$aliases{$_}} : $_ } @last;
++	} while (join(',',@cur) ne join(',',@last));
++	return @cur;
++}
++
++@to = expand_aliases(@to);
++@initial_cc = expand_aliases(@initial_cc);
++
+ if (!defined $initial_subject && $compose) {
+ 	do {
+ 		$_ = $term->readline("What subject should the emails start with? ",
+-- 
+1.3.2.g1c9b
