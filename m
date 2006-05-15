@@ -1,71 +1,57 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
-Date: Mon, 15 May 2006 22:37:18 +1200
-Message-ID: <46a038f90605150337l3357ce3by22834823eee7b87c@mail.gmail.com>
-References: <1147660345772-git-send-email-normalperson@yhbt.net>
-	 <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net>
-	 <20060515092704.GB6855@localdomain>
-	 <7vmzdjtya4.fsf@assigned-by-dhcp.cox.net>
-	 <20060515101142.GD6855@localdomain>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 2/3] Handle branch names with slashes
+Date: Mon, 15 May 2006 12:58:10 +0200
+Message-ID: <20060515105810.GA27077@diana.vm.bytemark.co.uk>
+References: <20060510060040.GA3034@diana.vm.bytemark.co.uk> <20060515095440.GA11412@backpacker.hemma.treskal.com> <b0943d9e0605150322w684785d5n9b17dccda6b29ac1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 12:37:33 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wartan Hachaturow <wartan.hachaturow@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 12:58:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfaS7-00023W-3f
-	for gcvg-git@gmane.org; Mon, 15 May 2006 12:37:28 +0200
+	id 1FfamK-0005m1-W1
+	for gcvg-git@gmane.org; Mon, 15 May 2006 12:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964872AbWEOKhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 06:37:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbWEOKhW
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 06:37:22 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:16338 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S964872AbWEOKhV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 06:37:21 -0400
-Received: by wr-out-0506.google.com with SMTP id i28so794288wra
-        for <git@vger.kernel.org>; Mon, 15 May 2006 03:37:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PNiaiEjS6BOoplYtaAeY5TGSOpUSrehdfJqw277v2Km8iiG/FYVOyf1TOxs5/1Ce9wDIRdRfhuuNJmKBwo+ziEUAOBW4zOxY0KfbUEBDnPV3GM2powh93zIvFWWNJEknWhsbYrXQLV/pmwKyhfoAFBGyGSQOHDH/M/mCLtKad1U=
-Received: by 10.54.117.5 with SMTP id p5mr5484622wrc;
-        Mon, 15 May 2006 03:37:18 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Mon, 15 May 2006 03:37:18 -0700 (PDT)
-To: "Eric Wong" <normalperson@yhbt.net>
-In-Reply-To: <20060515101142.GD6855@localdomain>
+	id S964878AbWEOK6R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 15 May 2006 06:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964879AbWEOK6R
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 06:58:17 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:58629 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S964878AbWEOK6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 06:58:17 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FfamA-00074o-00; Mon, 15 May 2006 11:58:10 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0605150322w684785d5n9b17dccda6b29ac1@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20047>
 
-On 5/15/06, Eric Wong <normalperson@yhbt.net> wrote:
-> Junio C Hamano <junkio@cox.net> wrote:
-> > I am not opposed to have an option to run a local submission
-> > agent binary (I said I like that if(){}else{} there, didn't I?).
-> > The ability to do so is a good thing.  I am not however sure
-> > about changing the default when no option is specified on the
-> > command line.
+On 2006-05-15 11:22:08 +0100, Catalin Marinas wrote:
+
+> There is one problem with killing "/" entirely (or maybe we could
+> use other character than "#"). I tend to write quite often "stg diff
+> -r /bottom" to see how the whole patch looks like before refreshing.
+> With "#", the shell ignores "#bottom" as being a comment.
 >
-> By "I believe this is what Martin wanted", I meant changing the default to
-> sendmail: <46a038f90604271804j195d62f3x93ae816e809f4ffd@mail.gmail.com>
->
->         > Oh, it should just work with sendmail if it's there and we don't
+> Otherwise, I'm OK with changing "/" with something else or just
+> keeping both (though I prefer to have a singe way of specifying it).
+> It looks like ^ and ~ are already used by GIT. It leaves us with %
+> and !. Do you have any preference? The exclamation mark looks OK to
+> me.
 
-Thanks Eric! git-send-email used to default to using local binaries.
-It was only with the switch to Net::SMTP that the default changed to
-localhost:25.
-IMHO the developer's machine is more likely to have a working
-/usr/sbin/sendmail than an SMTP server (specially looking at current
-linux desktop configurations).
+Ah, right. Well, I would prefer %, since ! is used for some kind of
+shell history searching, but % is not touched by the shell, I think.
 
-OTOH, as long as I can override it to use sendmail, it's all good.
-
-
-martin
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
