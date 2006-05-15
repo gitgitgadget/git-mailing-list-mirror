@@ -1,57 +1,56 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 2/3] Handle branch names with slashes
-Date: Mon, 15 May 2006 12:58:10 +0200
-Message-ID: <20060515105810.GA27077@diana.vm.bytemark.co.uk>
-References: <20060510060040.GA3034@diana.vm.bytemark.co.uk> <20060515095440.GA11412@backpacker.hemma.treskal.com> <b0943d9e0605150322w684785d5n9b17dccda6b29ac1@mail.gmail.com>
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: Re: [PATCH] Fix compilation on newer NetBSD systems
+Date: Mon, 15 May 2006 14:41:16 +0200
+Message-ID: <20060515124115.G78828137@leonov.stosberg.net>
+References: <20060511173531.G18d4553c@leonov.stosberg.net> <7vu07rx3a9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wartan Hachaturow <wartan.hachaturow@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 15 12:58:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 15 14:41:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfamK-0005m1-W1
-	for gcvg-git@gmane.org; Mon, 15 May 2006 12:58:21 +0200
+	id 1FfcO8-00088V-EN
+	for gcvg-git@gmane.org; Mon, 15 May 2006 14:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964878AbWEOK6R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 15 May 2006 06:58:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964879AbWEOK6R
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 06:58:17 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:58629 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S964878AbWEOK6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 06:58:17 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1FfamA-00074o-00; Mon, 15 May 2006 11:58:10 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S1751394AbWEOMlZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 08:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWEOMlY
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 08:41:24 -0400
+Received: from v345.ncsrv.de ([89.110.145.104]:31156 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1751394AbWEOMlY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 08:41:24 -0400
+Received: from leonov.stosberg.net (p213.54.84.32.tisdip.tiscali.de [213.54.84.32])
+	by ncs.stosberg.net (Postfix) with ESMTP id 4E062590C002;
+	Mon, 15 May 2006 14:41:12 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id 43924FE76C; Mon, 15 May 2006 14:41:16 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0605150322w684785d5n9b17dccda6b29ac1@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vu07rx3a9.fsf@assigned-by-dhcp.cox.net>
+OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20048>
 
-On 2006-05-15 11:22:08 +0100, Catalin Marinas wrote:
+Junio C Hamano wrote:
 
-> There is one problem with killing "/" entirely (or maybe we could
-> use other character than "#"). I tend to write quite often "stg diff
-> -r /bottom" to see how the whole patch looks like before refreshing.
-> With "#", the shell ignores "#bottom" as being a comment.
->
-> Otherwise, I'm OK with changing "/" with something else or just
-> keeping both (though I prefer to have a singe way of specifying it).
-> It looks like ^ and ~ are already used by GIT. It leaves us with %
-> and !. Do you have any preference? The exclamation mark looks OK to
-> me.
+> Dennis Stosberg <dennis@stosberg.net> writes:
+> 
+> > +	ifeq ($(shell test `uname -r | sed -e 's/^\([0-9]\).*/\1/'` -lt 2 && echo y),y)
+> > +		NEEDS_LIBICONV = YesPlease
+> > +	endif
+> 
+> This looks rather ugly.  I do not know if NetBSD has 0.xx
+> versions, but perhaps something like this?
+> 
+> 	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
 
-Ah, right. Well, I would prefer %, since ! is used for some kind of
-shell history searching, but % is not touched by the shell, I think.
+Admittedly, that looks a lot nicer.  And it works correctly with
+NetBSD's "expr", too.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Regards,
+Dennis
