@@ -1,77 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] simple euristic for further free packing improvements
-Date: Mon, 15 May 2006 22:53:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605152237240.18071@localhost.localdomain>
-References: <Pine.LNX.4.64.0605132305580.18071@localhost.localdomain>
- <Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
- <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Fix silly typo in new builtin grep
+Date: Mon, 15 May 2006 20:18:11 -0700
+Message-ID: <7vu07qfyj0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605151743360.3866@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 04:53:13 2006
+X-From: git-owner@vger.kernel.org Tue May 16 05:19:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfpgI-0005Ts-HX
-	for gcvg-git@gmane.org; Tue, 16 May 2006 04:53:06 +0200
+	id 1Ffq5P-00086x-Gh
+	for gcvg-git@gmane.org; Tue, 16 May 2006 05:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086AbWEPCxD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 22:53:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbWEPCxD
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 22:53:03 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:1105 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751086AbWEPCxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 22:53:01 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IZC00D2B80C9SC0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 15 May 2006 22:53:01 -0400 (EDT)
-In-reply-to: <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S1751089AbWEPDSr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 23:18:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbWEPDSr
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 23:18:47 -0400
+Received: from fed1rmmtai16.cox.net ([68.230.241.43]:13296 "EHLO
+	fed1rmmtai16.cox.net") by vger.kernel.org with ESMTP
+	id S1751089AbWEPDSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 23:18:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060516031813.MNCA27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 15 May 2006 23:18:13 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605151743360.3866@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 15 May 2006 17:54:01 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20095>
 
-On Mon, 15 May 2006, Junio C Hamano wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > @@ -1038,8 +1038,8 @@ static int try_delta(struct unpacked *tr
-> >  
-> >  	/* Now some size filtering euristics. */
-> >  	size = trg_entry->size;
-> > -	max_size = size / 2 - 20;
-> > -	if (trg_entry->delta)
-> > +	max_size = (size/2 - 20) / (src_entry->depth + 1);
-> > +	if (trg_entry->delta && trg_entry->delta_size <= max_size)
-> >  		max_size = trg_entry->delta_size-1;
-> >  	src_size = src_entry->size;
-> >  	sizediff = src_size < size ? size - src_size : 0;
-> 
-> At the first glance, this seems rather too agressive.  It makes
-> me wonder if it is a good balance to penalize the second
-> generation base by requiring it to produce a small delta that is
-> at most half as we normally would (and the third generation a
-> third), or maybe the penalty should kick in more gradually, like
-> e.g. ((max_depth * 2 - src_entry->depth) / (max_depth * 2).
-> 
-> Having said that, judging from your past patches, I learned to
-> trust that you have tried tweaking this part and settled on this
-> simplicity and elegance, so I'll take the patch as is -- if
-> somebody wants to play with it that can always be done to
-> further improve things.
+> The "-F" flag apparently got mis-translated due to some over-eager 
+> copy-paste work into a duplicate "-H" when using the external grep.
 
-Actually I didn't play with that part that much.  The only thing I tried 
-besides this version was (size - 20) / (src_entry->depth + 1) but it 
-produced larger packs than the current version.
+Thanks.  I've pushed it out to "master", along with some other
+stuff.
 
-So I thought it was better to provide a simple initial rule and leave 
-possible improvements for later.
+> Me likee the new built-in grep. The ability to say
+>
+> 	git grep __make_request v2.6.13 -- '*.c'
+>
+> to grep for it in a specific version is well worth the fact that it 
+> obviously ends up being slower than grepping in the currently checked-out 
+> tree. It's doing a hell of a lot more, but despite that it's not at all 
+> that slow.
+>
+> (In fact, I would say that doing the above command in just 4 seconds is 
+> damn impressive - it's a large code-base, and v2.6.13 is several months, 
+> and over 20 _thousand_ revisions ago).
 
+That is a BS praise and you know it ;-).  You do not have delta
+chains that are 20k long, so grepping from the tree 10 revs ago
+and from the tree 20k revs ago would not make a difference.
 
-Nicolas
+It _would_ be impressive to CVS folks, but even there each path
+would not have 20k revisions.  The kernel patches tend to touch
+3 paths per patch on average, so 60k changes over 18k files
+distributed unevenly -- my guess (I could count but haven't) is
+probably 200 revisions at most for most frequently touched file.
