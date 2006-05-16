@@ -1,95 +1,57 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] improve depth heuristic for maximum delta size
-Date: Tue, 16 May 2006 16:29:14 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605161510200.18071@localhost.localdomain>
-References: <Pine.LNX.4.64.0605132305580.18071@localhost.localdomain>
- <Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
- <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: let's meet
+Date: 16 May 2006 13:34:35 -0700
+Message-ID: <86odxxn1yc.fsf@blue.stonehenge.com>
+References: <602115DC.2C05E9D@arsenal.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 22:29:20 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue May 16 22:34:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg6AR-00083V-0W
-	for gcvg-git@gmane.org; Tue, 16 May 2006 22:29:19 +0200
+	id 1Fg6Fb-0000kO-TG
+	for gcvg-git@gmane.org; Tue, 16 May 2006 22:34:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbWEPU3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 16:29:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbWEPU3P
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 16:29:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:15228 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750703AbWEPU3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 May 2006 16:29:15 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0IZD0034LKWQDO60@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 16 May 2006 16:29:14 -0400 (EDT)
-In-reply-to: <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S1750731AbWEPUeh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 16:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbWEPUeh
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 16:34:37 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:48150 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750731AbWEPUeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 May 2006 16:34:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 2E9C48F2AA
+	for <git@vger.kernel.org>; Tue, 16 May 2006 13:34:36 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 16691-01-19 for <git@vger.kernel.org>;
+ Tue, 16 May 2006 13:34:35 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id B31988F2B7; Tue, 16 May 2006 13:34:35 -0700 (PDT)
+To: <git@vger.kernel.org>
+x-mayan-date: Long count = 12.19.13.5.9; tzolkin = 11 Muluc; haab = 2 Zip
+In-Reply-To: <602115DC.2C05E9D@arsenal.co.uk>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20135>
 
-This provides a linear decrement on the penalty related to delta depth
-instead of being an 1/x function.  With this another 5% reduction is 
-observed on packs for both the GIT repo and the Linux kernel repo, as 
-well as fixing a pack size regression in another sample repo I have.
+>>>>> "Luke" == Luke  <oxwacpp@arsenal.co.uk> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Luke> Hire,
+Luke> i am here sittiang in the internet caffe. Found your email a!nd
+Luke> decided to write. I might be coming to your p!lace in 14 days, 
+Luke> so I decided to email you. May be we ca!n meet? I am 25 y.o.
+Luke> girl. I have a picture if you want. No need to reply here as 
+Luke> this is not my email. Write me at ex@datetodayy.com
 
----
+I hope she has a big table. :)
 
-On Mon, 15 May 2006, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > @@ -1038,8 +1038,8 @@ static int try_delta(struct unpacked *tr
-> >  
-> >  	/* Now some size filtering euristics. */
-> >  	size = trg_entry->size;
-> > -	max_size = size / 2 - 20;
-> > -	if (trg_entry->delta)
-> > +	max_size = (size/2 - 20) / (src_entry->depth + 1);
-> > +	if (trg_entry->delta && trg_entry->delta_size <= max_size)
-> >  		max_size = trg_entry->delta_size-1;
-> >  	src_size = src_entry->size;
-> >  	sizediff = src_size < size ? size - src_size : 0;
-> 
-> At the first glance, this seems rather too agressive.  It makes
-> me wonder if it is a good balance to penalize the second
-> generation base by requiring it to produce a small delta that is
-> at most half as we normally would (and the third generation a
-> third), or maybe the penalty should kick in more gradually, like
-> e.g. ((max_depth * 2 - src_entry->depth) / (max_depth * 2).
-
-You are right.  However your formula converge towards 0.5 which is not 
-enough to be sure the bad effect with early eviction of max depth object 
-from the object window won't come back.  I prefer this patch with a 
-formula converging toward 0.
-
-diff --git a/pack-objects.c b/pack-objects.c
-index 566a2a2..3116020 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -1036,9 +1036,12 @@ static int try_delta(struct unpacked *tr
- 	if (src_entry->depth >= max_depth)
- 		return 0;
- 
--	/* Now some size filtering euristics. */
-+	/* Now some size filtering heuristics. */
- 	size = trg_entry->size;
--	max_size = (size/2 - 20) / (src_entry->depth + 1);
-+	max_size = size/2 - 20;
-+	max_size = max_size * (max_depth - src_entry->depth) / max_depth;
-+	if (max_size == 0)
-+		return 0;
- 	if (trg_entry->delta && trg_entry->delta_size <= max_size)
- 		max_size = trg_entry->delta_size-1;
- 	src_size = src_entry->size;
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
