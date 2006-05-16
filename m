@@ -1,136 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Remove old "git-grep.sh" remnants
-Date: Tue, 16 May 2006 16:46:31 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605161644380.16475@g5.osdl.org>
+From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+Subject: Git 1.3.2 on Solaris
+Date: Wed, 17 May 2006 01:52:37 +0200
+Message-ID: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed May 17 01:46:48 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed May 17 01:52:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg9FY-0006Hc-BC
-	for gcvg-git@gmane.org; Wed, 17 May 2006 01:46:48 +0200
+	id 1Fg9LM-0007PE-36
+	for gcvg-git@gmane.org; Wed, 17 May 2006 01:52:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932293AbWEPXqp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 19:46:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932295AbWEPXqp
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 19:46:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:17894 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932293AbWEPXqo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 19:46:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4GNkatH025047
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 May 2006 16:46:37 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4GNkVNH028107;
-	Tue, 16 May 2006 16:46:31 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932087AbWEPXwj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 19:52:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbWEPXwj
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 19:52:39 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:51589 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932087AbWEPXwj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 19:52:39 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so89667wra
+        for <git@vger.kernel.org>; Tue, 16 May 2006 16:52:38 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=G/LsUnnF9SnXC8UGb8HPHfEWedm0UpJrrdhYj3GkLI2BpLQfMvAoJFxfR5vgbrFhOcBMNKMH8384gptEBVu0+MSiO87g7iOWL36sPNuh4Ix+ahkVtSVLJKeqXjlkZgNJEik1uV8ZYYTai+TyGE2jrr1G2dxmS7z0pR50vfXKivU=
+Received: by 10.64.91.7 with SMTP id o7mr520352qbb;
+        Tue, 16 May 2006 16:52:37 -0700 (PDT)
+Received: by 10.65.20.19 with HTTP; Tue, 16 May 2006 16:52:37 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20152>
 
+Hi,
 
-It's built-in now.
+I've been trying to get git to work on the latest Solaris Express
+release (with the help of NetBSD's pkgsrc).
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-----
+It mostly miserabely fails because of common "shell commands" being
+used with GNU options. (like xargs, diff, tr and prob. some more) On
+my box (and thats AFAIK the default when you install gnu coreutils on
+Solaris) the commands do have a g prefix.
 
-diff --git a/Makefile b/Makefile
-index 93779b0..9ba608c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -124,7 +124,7 @@ SCRIPT_SH = \
- 	git-tag.sh git-verify-tag.sh \
- 	git-applymbox.sh git-applypatch.sh git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
--	git-merge-resolve.sh git-merge-ours.sh git-grep.sh \
-+	git-merge-resolve.sh git-merge-ours.sh \
- 	git-lost-found.sh
- 
- SCRIPT_PERL = \
-@@ -169,7 +169,8 @@ PROGRAMS = \
- 	git-describe$X git-merge-tree$X git-blame$X git-imap-send$X
- 
- BUILT_INS = git-log$X git-whatchanged$X git-show$X \
--	git-count-objects$X git-diff$X git-push$X
-+	git-count-objects$X git-diff$X git-push$X \
-+	git-grep$X
- 
- # what 'all' will build and 'install' will install, in gitexecdir
- ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS)
-diff --git a/git-grep.sh b/git-grep.sh
-deleted file mode 100755
-index ad4f2fe..0000000
---- a/git-grep.sh
-+++ /dev/null
-@@ -1,62 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) Linus Torvalds, 2005
--#
--
--USAGE='[<option>...] [-e] <pattern> [<path>...]'
--SUBDIRECTORY_OK='Yes'
--. git-sh-setup
--
--got_pattern () {
--	if [ -z "$no_more_patterns" ]
--	then
--		pattern="$1" no_more_patterns=yes
--	else
--		die "git-grep: do not specify more than one pattern"
--	fi
--}
--
--no_more_patterns=
--pattern=
--flags=()
--git_flags=()
--while : ; do
--	case "$1" in
--	-o|--cached|--deleted|--others|--killed|\
--	--ignored|--modified|--exclude=*|\
--	--exclude-from=*|\--exclude-per-directory=*)
--		git_flags=("${git_flags[@]}" "$1")
--		;;
--	-e)
--		got_pattern "$2"
--		shift
--		;;
--	-A|-B|-C|-D|-d|-f|-m)
--		flags=("${flags[@]}" "$1" "$2")
--		shift
--		;;
--	--)
--		# The rest are git-ls-files paths
--		shift
--		break
--		;;
--	-*)
--		flags=("${flags[@]}" "$1")
--		;;
--	*)
--		if [ -z "$no_more_patterns" ]
--		then
--			got_pattern "$1"
--			shift
--		fi
--		[ "$1" = -- ] && shift
--		break
--		;;
--	esac
--	shift
--done
--[ "$pattern" ] || {
--	usage
--}
--git-ls-files -z "${git_flags[@]}" -- "$@" |
--	xargs -0 grep "${flags[@]}" -e "$pattern" --
+So there are 2 possible solutions to get git working on Solaris.
+
+1.  fix every single shellscript automatically during the build phase
+2.  setup a dir which contains symlinks to the "right" binaries and
+put that dir into PATH.
+
+No matter what solution is chosen to be the best, I'm volunteering to
+create a patch for it. :)
+
+(although I personally prefer the second, because its easier...)
+
+bye
+
+Stefan
+-- 
+        http://www.dreamind.de/
+Oroborus and Debian GNU/Linux Developer.
