@@ -1,56 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Handle branch names with slashes
-Date: Mon, 15 May 2006 23:48:04 -0700
-Message-ID: <7v64k6ea8r.fsf@assigned-by-dhcp.cox.net>
-References: <20060515105810.GA27077@diana.vm.bytemark.co.uk>
-	<20060516063541.GA11218@backpacker.hemma.treskal.com>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] Update the documentation for git-merge-base
+Date: Tue, 16 May 2006 08:54:52 +0200
+Message-ID: <20060516065452.GA5540@c165.ib.student.liu.se>
+References: <20060516055815.GA4572@c165.ib.student.liu.se> <7vhd3qebuv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 08:48:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 16 08:55:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FftLv-0000Ua-JF
-	for gcvg-git@gmane.org; Tue, 16 May 2006 08:48:19 +0200
+	id 1FftSK-0001b2-MO
+	for gcvg-git@gmane.org; Tue, 16 May 2006 08:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbWEPGsI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 May 2006 02:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbWEPGsH
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 02:48:07 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:59628 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751552AbWEPGsG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 02:48:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060516064805.IADT27327.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 May 2006 02:48:05 -0400
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-In-Reply-To: <20060516063541.GA11218@backpacker.hemma.treskal.com> (Karl
-	=?iso-8859-1?Q?Hasselstr=F6m's?= message of "Tue, 16 May 2006 08:35:41
- +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751561AbWEPGyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 02:54:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbWEPGyy
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 02:54:54 -0400
+Received: from mxfep01.bredband.com ([195.54.107.70]:30693 "EHLO
+	mxfep01.bredband.com") by vger.kernel.org with ESMTP
+	id S1751558AbWEPGyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 May 2006 02:54:53 -0400
+Received: from c165 ([213.114.27.63] [213.114.27.63])
+          by mxfep01.bredband.com with ESMTP
+          id <20060516065452.OVIF19930.mxfep01.bredband.com@c165>;
+          Tue, 16 May 2006 08:54:52 +0200
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1FftSG-0001Rd-00; Tue, 16 May 2006 08:54:52 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhd3qebuv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20107>
 
-Karl Hasselstr=F6m <kha@treskal.com> writes:
-
-> Teach stgit to handle branch names with slashes in them; that is,
-> branches living in a subdirectory of .git/refs/heads.
+On Mon, May 15, 2006 at 11:13:12PM -0700, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+> > Is the code guaranteed to return a least common ancestor? If that is
+> > the case we should probably mention it in the documentation.
+> 
+> Unfortunately, no, if you mean by "least common" closest to the
+> tips.
 >
-> I had to change the patch@branch/top command-line syntax to
-> patch@branch%top, in order to get sane parsing. The /top variant is
-> still available for repositories that have no slashy branches; it is
-> disabled as soon as there exists at least one subdirectory of
-> refs/heads. Preferably, this compatibility hack can be killed some
-> time in the future.
 
-I wonder if using double-slashes is an easier alternative to
-type than '%', like "patch@branch//top".  That way, you do not
-have to forbid per-cent sign in branch names.
+By "least" I mean the following:
+
+C is a least common ancestor of A and B if:
+
+* C is a common ancestor of A and B, and
+* for every other common ancestor D (different from C) of A and B, C
+  is not reacheable from D.
+
+> See the big illustration at the top of the source for how you
+> can construct pathological case to defeat an attempt to
+> guarantee such.  --all guarantees that the output contains all
+> interesting ones, but does not guarantee the output has no
+> suboptimal merge bases.
+
+There are two examples at the top of the source. In the first one a
+least common ancestor is returned. As I interpret the second one, it
+is an example of how the old algorithm without the postprocessing step
+produced a common ancestor which is not least.
+
+Am I wrong? Do we have any cases where the current merge-base
+algorithm gives us common ancestors which are not least?
+
+- Fredrik
