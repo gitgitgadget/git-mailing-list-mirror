@@ -1,58 +1,70 @@
-From: Santi <sbejar@gmail.com>
-Subject: Ouput of git diff with <ent>:<path>
-Date: Wed, 17 May 2006 00:24:12 +0200
-Message-ID: <8aa486160605161524j5d7e672eo@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: "git add $ignored_file" fail
+Date: Tue, 16 May 2006 15:28:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605161526210.16475@g5.osdl.org>
+References: <8aa486160605161507w3a27152dq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed May 17 00:24:21 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 17 00:28:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg7xk-0007kr-8c
-	for gcvg-git@gmane.org; Wed, 17 May 2006 00:24:20 +0200
+	id 1Fg81c-0008Qi-Bn
+	for gcvg-git@gmane.org; Wed, 17 May 2006 00:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932215AbWEPWYQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 18:24:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbWEPWYP
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:24:15 -0400
-Received: from wx-out-0102.google.com ([66.249.82.201]:34640 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932214AbWEPWYN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 18:24:13 -0400
-Received: by wx-out-0102.google.com with SMTP id s6so61734wxc
-        for <git@vger.kernel.org>; Tue, 16 May 2006 15:24:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=pJkSyA8bPTLdtMWlXinC8Fb0+EL3GD/YdjbZ0OL2d49kfUYnuG2lduriwAe0fE9Sx4unSIWbimffdQDxuPIeEGFSotWOL4WGW5SLrj0QzNFzsg8GUxKdsCx5gQCx9BZJXB2Mweq9mYF0DG7dezrfERN/3AtCHGaroiYlDO/JYqY=
-Received: by 10.70.95.16 with SMTP id s16mr287873wxb;
-        Tue, 16 May 2006 15:24:12 -0700 (PDT)
-Received: by 10.70.20.2 with HTTP; Tue, 16 May 2006 15:24:12 -0700 (PDT)
-To: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-Content-Disposition: inline
+	id S932212AbWEPW2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 18:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbWEPW2R
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:28:17 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:50126 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932212AbWEPW2Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 18:28:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4GMSAtH021786
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 16 May 2006 15:28:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4GMS9Fl025777;
+	Tue, 16 May 2006 15:28:10 -0700
+To: Santi <sbejar@gmail.com>
+In-Reply-To: <8aa486160605161507w3a27152dq@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20142>
 
-Hi *,
 
-   just curious if this is the expected output. I find this syntax
-very usefull but the "a/v1.3.3:" of even without the tree "a/:" a bit
-confusing. And I didn't expect the rename from/to neither the
-similarity index 0%.
 
-diff --git a/v1.3.3:Makefile b/Makefile
-similarity index 0%
-rename from v1.3.3:Makefile
-rename to Makefile
-index b808eca..55d1937 100644
---- a/v1.3.3:Makefile
-+++ b/Makefile
+On Wed, 17 May 2006, Santi wrote:
+> 
+>      When you try to add ignored files with the git-add command it
+> fails because the call to:
+> 
+> git-ls-files -z \
+>        --exclude-from="$GIT_DIR/info/exclude" \
+>        --others --exclude-per-directory=.gitignore
+> 
+>      does not output this file because it is ignored. I know I can do it with:
+> 
+> git-update-index --add $ignored_file
+> 
+> I understand the behaviour of git-ls-files but I think it is no the
+> expected for git-add, at least for me.
 
-Thanks.
+Well, the thing is, git-add doesn't really take a "file name", it takes a 
+filename _pattern_.
 
-Santi
+Clearly we can't add everything that matches the pattern, because one 
+common case is to add a whole subdirectory, and thus clearly the 
+.gitignore file must override the pattern.
+
+So it's consistent that it overrides it also for a single filename case, 
+no?
+
+		Linus
