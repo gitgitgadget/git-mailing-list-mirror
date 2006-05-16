@@ -1,36 +1,37 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Update the documentation for git-merge-base
-Date: Tue, 16 May 2006 08:32:42 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605160821570.3866@g5.osdl.org>
+Date: Tue, 16 May 2006 09:32:12 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605160906150.3866@g5.osdl.org>
 References: <20060516055815.GA4572@c165.ib.student.liu.se>
  <7vhd3qebuv.fsf@assigned-by-dhcp.cox.net> <20060516065452.GA5540@c165.ib.student.liu.se>
+ <Pine.LNX.4.64.0605160821570.3866@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 17:43:40 2006
+X-From: git-owner@vger.kernel.org Tue May 16 18:33:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg1Xg-0005Yo-6o
-	for gcvg-git@gmane.org; Tue, 16 May 2006 17:33:02 +0200
+	id 1Fg2U7-0003LN-Di
+	for gcvg-git@gmane.org; Tue, 16 May 2006 18:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbWEPPc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 11:32:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbWEPPc4
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 11:32:56 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:36523 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751232AbWEPPcz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 11:32:55 -0400
+	id S1751866AbWEPQcs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 12:32:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751867AbWEPQcr
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 12:32:47 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15552 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751866AbWEPQcq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 12:32:46 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4GFWhtH002426
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4GGWDtH005158
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 May 2006 08:32:44 -0700
+	Tue, 16 May 2006 09:32:14 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4GFWgTj010820;
-	Tue, 16 May 2006 08:32:43 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4GGWCEv012598;
+	Tue, 16 May 2006 09:32:13 -0700
 To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20060516065452.GA5540@c165.ib.student.liu.se>
+In-Reply-To: <Pine.LNX.4.64.0605160821570.3866@g5.osdl.org>
 X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
 X-MIMEDefang-Filter: osdl$Revision: 1.134 $
@@ -38,57 +39,72 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20125>
 
 
 
-On Tue, 16 May 2006, Fredrik Kuivinen wrote:
+On Tue, 16 May 2006, Linus Torvalds wrote:
 > 
-> By "least" I mean the following:
-> 
-> C is a least common ancestor of A and B if:
-> 
-> * C is a common ancestor of A and B, and
-> * for every other common ancestor D (different from C) of A and B, C
->   is not reacheable from D.
+> I don't think you can be more specific, or do a better job. The definition 
+> of "most recent" is arbitrary, of course - and going by commit date is 
+> just _one_ way to order them, but it happens to be an easy one, and one 
+> that is as good as any other choice.
 
-Yes, git-merge-base should always return a least common ancestor, never 
-anything less. The only question is what happens when there are multiple 
-LCA commits.
+Side note: since LCA's are (by definition) never going to have a direct 
+graph relationship, there is obviously no ordering enforced by the graph 
+itself. So they're all unordered in the graph sense, but you could use 
+other measures of "distance" in the graph.
 
-In fact, even in that case git-merge-base will have a pretty strong 
-specification:
+Example other orderings that we _could_ do, and I considered (some purely 
+graph based, others based on content):
 
-  "git-merge-base with the '--all' flag will return the complete set of
-   least common ancestors, sorted by most recent (as defined purely by
-   the commit date order, not any graph ordering) first.
+ - order by number of commits between the LCA and the two commits that we 
+   are trying to find the LCA for (the "tips").
+ - order by diff size between the LCA and the tips
+ - order by lack of conflicts between the LCA and the tips.
 
-   Without the '--all' flag, it will return just one LCA commit (the most 
-   recent one, by the same date-based definition).
+however, none of the alternate orderings really seem to make a lot of 
+sense.
 
-   In the case two or more LCA commits have exactly the same committer 
-   date, the ordering between them is arbitrary"
+The date-based one trumps them all by being straightforward and simple to 
+both implement and explain. And iirc, I actually verified that it happened 
+to pick the "better" one for at least one of my tests when using the old 
+stupid straigth three-way merge, so I think it was actually objectively a 
+good measure at least once.
 
-I don't think you can be more specific, or do a better job. The definition 
-of "most recent" is arbitrary, of course - and going by commit date is 
-just _one_ way to order them, but it happens to be an easy one, and one 
-that is as good as any other choice.
+Anybody who cares can obviously always just do "git-merge-base --all" and 
+do their own sorting for the (relatively unlikely) case that you get more 
+than one parent.
 
-Of course, the defined ordering probably really matters only for the case 
-where we return just one LCA out of many, but it's nice to be able to tell 
-what the order will be even for the multi-commit case.
+Anyway, just out of interest I just did some statistics using some shell 
+scripts:
 
-> There are two examples at the top of the source. In the first one a
-> least common ancestor is returned. As I interpret the second one, it
-> is an example of how the old algorithm without the postprocessing step
-> produced a common ancestor which is not least.
+ - For the current kernel tree, of 1857 merges, only 17 had more than one 
+   merge base (and none had more than two):
 
-Correct. We used to occasionally get it wrong, and return a common 
-ancestor that wasn't least.
+   1840 o
+     17 oo
 
-> Am I wrong? Do we have any cases where the current merge-base
-> algorithm gives us common ancestors which are not least?
+ - In contrast, for git (current master branch), the numbers are 35 out of 
+   540, and there are lots of merges with many LCA's:
 
-Modulo bugs, no. And I don't think there are any bugs in that respect.
+    505 o
+     15 oo
+     13 ooo
+      2 oooo
+      3 ooooo
+      2 ooooooo
+
+I think the difference is that Junio does a lot of these branches where he 
+keeps on pulling from them, and never syncs back (which is a great 
+workflow). In contrast, the kernel tends to try to avoid that because the 
+history gets messy enough as it is ;)
+
+Anyway, the two commits that apparently have seven (!) LCA's in the git 
+tree should probably be checked out. They are probably a good thing to see 
+if git-merge-base really _really_ does the right thing, and whether they 
+really are true LCA's.
+
+They are commits ad0b46bf.. and e6a933bd.. respectively.
 
 		Linus
