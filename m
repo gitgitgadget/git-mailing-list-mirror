@@ -1,78 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gateway status?
-Date: Tue, 16 May 2006 15:54:14 +0200
-Organization: At home
-Message-ID: <e4cli6$abe$1@sea.gmane.org>
-References: <Pine.LNX.4.62.0605151122500.29452@qynat.qvtvafvgr.pbz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Update the documentation for git-merge-base
+Date: Tue, 16 May 2006 08:32:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605160821570.3866@g5.osdl.org>
+References: <20060516055815.GA4572@c165.ib.student.liu.se>
+ <7vhd3qebuv.fsf@assigned-by-dhcp.cox.net> <20060516065452.GA5540@c165.ib.student.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue May 16 16:09:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 16 17:43:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg09W-0006Sv-GM
-	for gcvg-git@gmane.org; Tue, 16 May 2006 16:03:58 +0200
+	id 1Fg1Xg-0005Yo-6o
+	for gcvg-git@gmane.org; Tue, 16 May 2006 17:33:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751108AbWEPODc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 May 2006 10:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbWEPODc
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 10:03:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:11435 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751108AbWEPODb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 10:03:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fg03s-000502-Jw
-	for git@vger.kernel.org; Tue, 16 May 2006 15:58:08 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 16 May 2006 15:58:08 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 16 May 2006 15:58:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751232AbWEPPc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 11:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbWEPPc4
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 11:32:56 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:36523 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751232AbWEPPcz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 11:32:55 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4GFWhtH002426
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 16 May 2006 08:32:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4GFWgTj010820;
+	Tue, 16 May 2006 08:32:43 -0700
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060516065452.GA5540@c165.ib.student.liu.se>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20123>
-
-David Lang wrote:
-
-> I seem to remember seeing discussion of gateways to cvs/svn that woul=
-d let=20
-> a project use a git repository and allow clients to use cvs/svn clien=
-ts to=20
-> retreive data.
->=20
-> am I remembering correctly, and are these tools ready for production =
-use?=20
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20124>
 
 
-Eric Wong <normalperson@yhbt.net> wrote:
-in "[0/2 PATCH] git-svn 1.0.0 release" thread
-http://permalink.gmane.org/gmane.comp.version-control.git/19644
 
-> It's been very solid for a long time now.=A0=A0I=A0haven't=A0run=A0in=
-to
-> any problems with it myself in a while, and no critical bugs
-> that I know of exist.=A0=A0Labeling=A0it=A01.0.0=A0may=A0make=A0it=A0=
-look
-> less scary to new users :)
+On Tue, 16 May 2006, Fredrik Kuivinen wrote:
+> 
+> By "least" I mean the following:
+> 
+> C is a least common ancestor of A and B if:
+> 
+> * C is a common ancestor of A and B, and
+> * for every other common ancestor D (different from C) of A and B, C
+>   is not reacheable from D.
 
-So I guess yes, they are.
+Yes, git-merge-base should always return a least common ancestor, never 
+anything less. The only question is what happens when there are multiple 
+LCA commits.
 
+In fact, even in that case git-merge-base will have a pretty strong 
+specification:
 
-P.S. IIRC git-cvsserver is used as temporary "Git plugin" for Eclipse, =
-and
-there are some problems with that due to the cvs client/server
-implementation in Eclipse.
+  "git-merge-base with the '--all' flag will return the complete set of
+   least common ancestors, sorted by most recent (as defined purely by
+   the commit date order, not any graph ordering) first.
 
---=20
-Jakub Narebski
-Warsaw, Poland
+   Without the '--all' flag, it will return just one LCA commit (the most 
+   recent one, by the same date-based definition).
+
+   In the case two or more LCA commits have exactly the same committer 
+   date, the ordering between them is arbitrary"
+
+I don't think you can be more specific, or do a better job. The definition 
+of "most recent" is arbitrary, of course - and going by commit date is 
+just _one_ way to order them, but it happens to be an easy one, and one 
+that is as good as any other choice.
+
+Of course, the defined ordering probably really matters only for the case 
+where we return just one LCA out of many, but it's nice to be able to tell 
+what the order will be even for the multi-commit case.
+
+> There are two examples at the top of the source. In the first one a
+> least common ancestor is returned. As I interpret the second one, it
+> is an example of how the old algorithm without the postprocessing step
+> produced a common ancestor which is not least.
+
+Correct. We used to occasionally get it wrong, and return a common 
+ancestor that wasn't least.
+
+> Am I wrong? Do we have any cases where the current merge-base
+> algorithm gives us common ancestors which are not least?
+
+Modulo bugs, no. And I don't think there are any bugs in that respect.
+
+		Linus
