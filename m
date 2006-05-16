@@ -1,59 +1,63 @@
 From: Santi <sbejar@gmail.com>
-Subject: "git add $ignored_file" fail
-Date: Wed, 17 May 2006 00:07:08 +0200
-Message-ID: <8aa486160605161507w3a27152dq@mail.gmail.com>
+Subject: Re: Merge with local conflicts in new files
+Date: Wed, 17 May 2006 00:12:31 +0200
+Message-ID: <8aa486160605161512g4d38b7f0y@mail.gmail.com>
+References: <8aa486160605161500m1dd8428cj@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed May 17 00:07:37 2006
+X-From: git-owner@vger.kernel.org Wed May 17 00:12:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg7hL-00045i-07
-	for gcvg-git@gmane.org; Wed, 17 May 2006 00:07:23 +0200
+	id 1Fg7mN-0005Ee-FI
+	for gcvg-git@gmane.org; Wed, 17 May 2006 00:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205AbWEPWHL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 18:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932209AbWEPWHK
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:07:10 -0400
-Received: from wx-out-0102.google.com ([66.249.82.203]:42092 "EHLO
+	id S932201AbWEPWMd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 18:12:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbWEPWMc
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:12:32 -0400
+Received: from wx-out-0102.google.com ([66.249.82.201]:16718 "EHLO
 	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932205AbWEPWHJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 18:07:09 -0400
-Received: by wx-out-0102.google.com with SMTP id s6so59892wxc
-        for <git@vger.kernel.org>; Tue, 16 May 2006 15:07:08 -0700 (PDT)
+	id S932201AbWEPWMc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 18:12:32 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so60473wxc
+        for <git@vger.kernel.org>; Tue, 16 May 2006 15:12:31 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=jNE4C33xTw5VC0UISRhj7exHe/tcPBKFCiDYW8Nmn9dd6rgmyduVzoGqgdodWY89T7hPH5n7sk/s33F8XXGjYGVstNAvlCjkmkJ7gEPTYid6QI2ZySujG4M8u22efD1nOHXnM+cJUSssNiQdLw5dLVQGESm3uzX/3S4qDhmRnHc=
-Received: by 10.70.46.14 with SMTP id t14mr275963wxt;
-        Tue, 16 May 2006 15:07:08 -0700 (PDT)
-Received: by 10.70.20.2 with HTTP; Tue, 16 May 2006 15:07:08 -0700 (PDT)
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OcPMQ6XsTVyH+qKT27TcfgorKIWZQyg2Ym1sQJ7hEdSR8J/rxNpUrrOi3rxi8W7xgpP8rOtweZQWxCBjKw8Rjsi9kVebsZ+Ak8JKX+BEfnV06YqpUG8i1YoacoWO/Q59E+NzF4XzXNq9X7+6R49V7q6I1BwuxwoWCH3B7iTiPuY=
+Received: by 10.70.77.7 with SMTP id z7mr308337wxa;
+        Tue, 16 May 2006 15:12:31 -0700 (PDT)
+Received: by 10.70.20.2 with HTTP; Tue, 16 May 2006 15:12:31 -0700 (PDT)
 To: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <8aa486160605161500m1dd8428cj@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20140>
 
-Hi *,
+Sorry, the test is wrong. Use this:
 
-      When you try to add ignored files with the git-add command it
-fails because the call to:
+test_description='Test merge with local conflicts in new files'
+. ./test-lib.sh
 
-git-ls-files -z \
-        --exclude-from="$GIT_DIR/info/exclude" \
-        --others --exclude-per-directory=.gitignore
+test_expect_success 'prepare repository' \
+'echo "Hello" > init &&
+git add init &&
+git commit -m "Initial commit" &&
+git checkout -b B &&
+echo "foo" > foo &&
+git add foo &&
+git commit -m "File: foo" &&
+git checkout master &&
+echo "bar" > foo &&
+'
 
-      does not output this file because it is ignored. I know I can do it with:
+test_expect_code 1 'Merge with local conflicts in new files' 'git
+merge "merge msg" HEAD B'
 
-git-update-index --add $ignored_file
-
-I understand the behaviour of git-ls-files but I think it is no the
-expected for git-add, at least for me.
-
-    Thanks
-
-    Santi
+test_done
