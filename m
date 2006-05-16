@@ -1,72 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] simple euristic for further free packing improvements
-Date: Mon, 15 May 2006 18:51:34 -0700
-Message-ID: <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605132305580.18071@localhost.localdomain>
-	<Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: Fix silly typo in new builtin grep
+Date: Mon, 15 May 2006 22:10:38 -0400
+Message-ID: <118833cc0605151910s7619ddf0x8f014adba2a1eba5@mail.gmail.com>
+References: <Pine.LNX.4.64.0605151743360.3866@g5.osdl.org>
+	 <Pine.LNX.4.64.0605151801100.3866@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 03:51:45 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 16 04:10:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ffoio-0004yq-Nw
-	for gcvg-git@gmane.org; Tue, 16 May 2006 03:51:39 +0200
+	id 1Ffp1G-0000U2-UA
+	for gcvg-git@gmane.org; Tue, 16 May 2006 04:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024AbWEPBvg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 21:51:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbWEPBvg
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 21:51:36 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:19388 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751024AbWEPBvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 May 2006 21:51:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060516015134.HNMI15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 15 May 2006 21:51:34 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
-	(Nicolas Pitre's message of "Mon, 15 May 2006 11:40:05 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751044AbWEPCKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 22:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbWEPCKk
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 22:10:40 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:54175 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751043AbWEPCKj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 22:10:39 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so187652nfa
+        for <git@vger.kernel.org>; Mon, 15 May 2006 19:10:38 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jRDS5BUU569pcCCNjcA/Sx7cMYOrv1yBAEhQOEHGjuya351T717BOMoYqzCtJ2d7QY2BiNez7xRIz167DiEAo+7Gz+rcKA333Z/2csFUtj9cqZ1DuKpJo5r61tWBhbg3fE6IGX07+sDUVKW5UK2vrBcQeTmpmhQHVOWye4fxHM4=
+Received: by 10.48.47.7 with SMTP id u7mr4001485nfu;
+        Mon, 15 May 2006 19:10:38 -0700 (PDT)
+Received: by 10.49.12.11 with HTTP; Mon, 15 May 2006 19:10:38 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605151801100.3866@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20093>
 
-Nicolas Pitre <nico@cam.org> writes:
+If I read the code right, it calls regexec for every single character
+on every single line.  No wonder that takes a while!  Just call it
+once and it'll search for its match quite nicely.
 
-> Given that the early eviction of objects with maximum delta depth 
-> may exhibit bad packing on its own, why not considering a bias against 
-> deep base objects in try_delta() to mitigate that bad behavior.
+If that's not enough, the two obvious optimizations are...
 
-This is really a good stuff.  Thanks.  Oh, and thanks for
-noticing my puzzlement expressed with "#if 0" ;-).
+1. If the pattern contains no regexp characters  (and that is very
+    common), do a strstr.
 
-> @@ -1038,8 +1038,8 @@ static int try_delta(struct unpacked *tr
->  
->  	/* Now some size filtering euristics. */
->  	size = trg_entry->size;
-> -	max_size = size / 2 - 20;
-> -	if (trg_entry->delta)
-> +	max_size = (size/2 - 20) / (src_entry->depth + 1);
-> +	if (trg_entry->delta && trg_entry->delta_size <= max_size)
->  		max_size = trg_entry->delta_size-1;
->  	src_size = src_entry->size;
->  	sizediff = src_size < size ? size - src_size : 0;
+2. If the pattern must start with a specific character, search for that
+    by itself.
 
-At the first glance, this seems rather too agressive.  It makes
-me wonder if it is a good balance to penalize the second
-generation base by requiring it to produce a small delta that is
-at most half as we normally would (and the third generation a
-third), or maybe the penalty should kick in more gradually, like
-e.g. ((max_depth * 2 - src_entry->depth) / (max_depth * 2).
-
-Having said that, judging from your past patches, I learned to
-trust that you have tried tweaking this part and settled on this
-simplicity and elegance, so I'll take the patch as is -- if
-somebody wants to play with it that can always be done to
-further improve things.
+M.
