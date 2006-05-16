@@ -1,70 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fix silly typo in new builtin grep
-Date: Mon, 15 May 2006 18:07:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605151801100.3866@g5.osdl.org>
-References: <Pine.LNX.4.64.0605151743360.3866@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] simple euristic for further free packing improvements
+Date: Mon, 15 May 2006 18:51:34 -0700
+Message-ID: <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605132305580.18071@localhost.localdomain>
+	<Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue May 16 03:07:16 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 16 03:51:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ffo1o-0007yo-Im
-	for gcvg-git@gmane.org; Tue, 16 May 2006 03:07:12 +0200
+	id 1Ffoio-0004yq-Nw
+	for gcvg-git@gmane.org; Tue, 16 May 2006 03:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbWEPBHI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 21:07:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbWEPBHI
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 21:07:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:50583 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750928AbWEPBHH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 21:07:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4G172tH004611
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 15 May 2006 18:07:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4G172r8023672;
-	Mon, 15 May 2006 18:07:02 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0605151743360.3866@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751024AbWEPBvg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 21:51:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbWEPBvg
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 21:51:36 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:19388 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751024AbWEPBvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 21:51:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060516015134.HNMI15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 15 May 2006 21:51:34 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
+	(Nicolas Pitre's message of "Mon, 15 May 2006 11:40:05 -0400 (EDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20092>
 
+Nicolas Pitre <nico@cam.org> writes:
 
+> Given that the early eviction of objects with maximum delta depth 
+> may exhibit bad packing on its own, why not considering a bias against 
+> deep base objects in try_delta() to mitigate that bad behavior.
 
-On Mon, 15 May 2006, Linus Torvalds wrote:
-> 
-> Me likee the new built-in grep. The ability to say
-> 
-> 	git grep __make_request v2.6.13 -- '*.c'
-> 
-> to grep for it in a specific version is well worth the fact that it 
-> obviously ends up being slower than grepping in the currently checked-out 
-> tree. It's doing a hell of a lot more, but despite that it's not at all 
-> that slow.
+This is really a good stuff.  Thanks.  Oh, and thanks for
+noticing my puzzlement expressed with "#if 0" ;-).
 
-Side note: it looks like the version generation really isn't much of a 
-cost. Grepping in v2.6.13 isn't really noticeably slower than the 
-"pre-external grep" was for grepping in the checked-out file tree.
+> @@ -1038,8 +1038,8 @@ static int try_delta(struct unpacked *tr
+>  
+>  	/* Now some size filtering euristics. */
+>  	size = trg_entry->size;
+> -	max_size = size / 2 - 20;
+> -	if (trg_entry->delta)
+> +	max_size = (size/2 - 20) / (src_entry->depth + 1);
+> +	if (trg_entry->delta && trg_entry->delta_size <= max_size)
+>  		max_size = trg_entry->delta_size-1;
+>  	src_size = src_entry->size;
+>  	sizediff = src_size < size ? size - src_size : 0;
 
-So it looks like we _could_ improve the grepping of specific versions 
-noticeably if we were to have a better regex library that was as optimized 
-as what the external GNU grep seems to do. The actual revision data 
-generation doesn't seem to be the biggest cost, and at least in _theory_ 
-we could probably speed things up by a factor of two with a faster regex 
-library.
+At the first glance, this seems rather too agressive.  It makes
+me wonder if it is a good balance to penalize the second
+generation base by requiring it to produce a small delta that is
+at most half as we normally would (and the third generation a
+third), or maybe the penalty should kick in more gradually, like
+e.g. ((max_depth * 2 - src_entry->depth) / (max_depth * 2).
 
-That's good to keep in mind. It may be that the glibc regexp is just not 
-very good, but quite frankly, I would personally not be surprised if it's 
-better than most (ie windows, for example).
-
-			Linus
+Having said that, judging from your past patches, I learned to
+trust that you have tried tweaking this part and settled on this
+simplicity and elegance, so I'll take the patch as is -- if
+somebody wants to play with it that can always be done to
+further improve things.
