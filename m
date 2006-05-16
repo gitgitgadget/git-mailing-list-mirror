@@ -1,85 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Rocco Rutte <pdmef@gmx.net>
 Subject: Re: [PATCH] CMIT_FMT_EMAIL: Q-encode Subject: and display-name part of From: fields.
-Date: Tue, 16 May 2006 12:38:37 +0200
-Organization: At home
-Message-ID: <e4ca2p$ud5$1@sea.gmane.org>
+Date: Tue, 16 May 2006 10:49:50 +0000
+Organization: Berlin University of Technology
+Message-ID: <20060516104949.GA9641@klaus.daprodeges.fqdn.th-h.de>
 References: <7vmzdi9ssv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue May 16 12:38:41 2006
+Content-Type: text/plain; charset=us-ascii; format=flowed
+X-From: git-owner@vger.kernel.org Tue May 16 12:50:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ffwwk-0001cC-RD
-	for gcvg-git@gmane.org; Tue, 16 May 2006 12:38:35 +0200
+	id 1Ffx8R-0003s5-JJ
+	for gcvg-git@gmane.org; Tue, 16 May 2006 12:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbWEPKic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 06:38:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751764AbWEPKic
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 06:38:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:43923 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751761AbWEPKib (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 06:38:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ffwwf-0001aw-Lh
-	for git@vger.kernel.org; Tue, 16 May 2006 12:38:29 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 16 May 2006 12:38:29 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 16 May 2006 12:38:29 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751765AbWEPKuh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 06:50:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751769AbWEPKuh
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 06:50:37 -0400
+Received: from mail.gmx.de ([213.165.64.20]:50355 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751765AbWEPKug (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 06:50:36 -0400
+Received: (qmail invoked by alias); 16 May 2006 10:49:54 -0000
+Received: from cable-62-117-27-26.cust.blue-cable.de (EHLO peter.daprodeges.fqdn.th-h.de) [62.117.27.26]
+  by mail.gmx.net (mp042) with SMTP; 16 May 2006 12:49:54 +0200
+X-Authenticated: #1642131
+Received: from klaus.daprodeges.fqdn.th-h.de (klaus [192.168.0.4])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id 1223F21185
+	for <git@vger.kernel.org>; Tue, 16 May 2006 10:49:52 +0000 (UTC)
+Received: from klaus.daprodeges.fqdn.th-h.de (klaus [192.168.0.4])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by klaus.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id F09E7DED00
+	for <git@vger.kernel.org>; Tue, 16 May 2006 10:49:51 +0000 (UTC)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vmzdi9ssv.fsf@assigned-by-dhcp.cox.net>
+X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
+X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
+X-System: klaus.daprodeges.fqdn.th-h.de (FreeBSD 6.1-STABLE i386)
+User-Agent: Mutt/1.5.11-pdmef-20060506074251
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20115>
 
-Junio C Hamano wrote:
+Hi,
 
-> By convention, the commit message and the author/committer names
-> in the commit objects are UTF-8 encoded.  When formatting for
-> e-mails, Q-encode them according to RFC 2047.
-> 
-> While we are at it, generate the content-type and
-> content-transfer-encoding headers as well.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> 
-> ---
-> 
->  With this patch, the output formatted with
-> 
-> git show --pretty=email --patch-with-stat 9d7f73d4
-> 
->  would start like this:
-> 
->    From 9d7f73d43fa49d0d2f5a8cfcce9d659e8ad2d265  Thu Apr 7 15:13:13 2005
->    From: =?utf-8?q?Lukas_Sandstr=C3=B6m?= <lukass@etek.chalmers.se>
->    Date: Sat, 25 Feb 2006 12:20:13 +0100
->    Subject: [PATCH] git-fetch: print the new and old ref when fast-forwarding 
->    Content-Type: text/plain; charset=UTF-8 
->    Content-Transfer-Encoding: 8bit
+* Junio C Hamano [06-05-16 03:18:24 -0700] wrote:
 
-I guess that we also need
-     
-     MIME-Version: 1.0
+[...]
 
-(from what I remember of troubles with Eoutlook Express not sending all 
-the required headers, and tin not working properly).
+> Thoughts?
 
-If I remember correctly encoding headers using quoted-printable is needed
-only because headers are before charset is set. IIRC there was proposal
-to use UTF-8 for headers regardless of the charset used for body of message.
+> If we decide to do the header formatting here, there are two
+> further enhancements that need to be done:
 
-P.S. Should we set User-Agent header as well?
+> (1) The charset must be configurable for projects that use
+>     encoding different from UTF-8, perhaps with the .git/config
+>     [i18n] commitEncoding.  It is only a convention, not a hard
+>     rule, to use UTF-8 for the metainformation.
+
+To write an encoder really fully conforming to RfC2047 is a mess. Not so
+much because the algorithms are difficult but because there're many
+things to take care of if you want to do it right.
+
+For example, encoded words are required to be at most something below 80
+characters long. For names this maybe is not an issue, but for subjects.
+I didn't really check whether your patch produces only the minimum
+encoding (i.e. only those words that need it and not just all words with
+'_' or '=20' in between them) but if not, 80 isn't that much after all.
+And you may need to think about header folding (and unfolding for
+reading it back in).
+
+Also, supporting any character set (via iconv()) blows up the
+implementation. There're character sets for which other RfCs define the
+encoding method so only using quoted-printable is not fully correct in
+all possible cases.
+
+And, with the first point, several character sets really can become a
+mess as you need to produce several encoded words because the input
+would exceed RfC limits otherwise. Because for multi-byte character sets
+you musn't break within a multi-byte character sequence but only at
+their boundaries. So you need a generic way to detect the byte-size of
+such a character in any supported character set.
+
+With just the UTF-8 encoding all of this is pretty simple though.
+
+I would rather try to find a way to implement this in a scripting
+language that already has standard modules for this or makes it easy to
+write one. In C this gets quite lengthy...
+
+   bye, Rocco
 -- 
-Jakub Narebski
-Warsaw, Poland
+:wq!
