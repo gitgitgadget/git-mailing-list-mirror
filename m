@@ -1,59 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Ouput of git diff with <ent>:<path>
-Date: Tue, 16 May 2006 15:44:17 -0700
-Message-ID: <7vwtcl4mke.fsf@assigned-by-dhcp.cox.net>
-References: <8aa486160605161524j5d7e672eo@mail.gmail.com>
+From: Santi <sbejar@gmail.com>
+Subject: Re: Merge with local conflicts in new files
+Date: Wed, 17 May 2006 01:11:29 +0200
+Message-ID: <8aa486160605161611p4c9ddbc0v@mail.gmail.com>
+References: <8aa486160605161500m1dd8428cj@mail.gmail.com>
+	 <7v1wut61aj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 00:44:31 2006
+X-From: git-owner@vger.kernel.org Wed May 17 01:11:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg8HB-0003Ew-AW
-	for gcvg-git@gmane.org; Wed, 17 May 2006 00:44:25 +0200
+	id 1Fg8hU-00009f-Mb
+	for gcvg-git@gmane.org; Wed, 17 May 2006 01:11:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932247AbWEPWoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 18:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932271AbWEPWoV
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:44:21 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:16348 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932256AbWEPWoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 May 2006 18:44:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060516224418.LHTW27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 May 2006 18:44:18 -0400
-To: Santi <sbejar@gmail.com>
-In-Reply-To: <8aa486160605161524j5d7e672eo@mail.gmail.com> (sbejar@gmail.com's
-	message of "Wed, 17 May 2006 00:24:12 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932239AbWEPXLb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 19:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932269AbWEPXLb
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 19:11:31 -0400
+Received: from wx-out-0102.google.com ([66.249.82.207]:64596 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932239AbWEPXLa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 19:11:30 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so66754wxc
+        for <git@vger.kernel.org>; Tue, 16 May 2006 16:11:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nUr/ZysmKQUZt5m9lVC2F2775dPzDuHW0+Wk4dTuRH4GJzW+aUZJU2+Nr18kPlWD3hRSAkXmPIpUg8igxAAbQbiNBq+QG/YRxVbGtFkY9wMIL7CMw/mxr1fzGbgCKW9+jNi26SsOzLBihPeE3veYhWkzuaDU18LOtaC/hPg2B+Q=
+Received: by 10.70.133.4 with SMTP id g4mr335002wxd;
+        Tue, 16 May 2006 16:11:29 -0700 (PDT)
+Received: by 10.70.20.2 with HTTP; Tue, 16 May 2006 16:11:29 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7v1wut61aj.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20147>
 
-Santi <sbejar@gmail.com> writes:
-
-> ... I didn't expect the rename from/to neither the
-> similarity index 0%.
+2006/5/17, Junio C Hamano <junkio@cox.net>:
+> Santi <sbejar@gmail.com> writes:
 >
-> diff --git a/v1.3.3:Makefile b/Makefile
-> similarity index 0%
-> rename from v1.3.3:Makefile
-> rename to Makefile
-> index b808eca..55d1937 100644
-> --- a/v1.3.3:Makefile
-> +++ b/Makefile
+> >       In the case of:
+> >
+> > - You merge from a branch with new files
+> > - You have these files in the working directory
+> > - You do not have these files in the HEAD.
+>
+> and
+>
+>  - You have not told git that these files matter.
 
-Yes I am aware of this one; I just haven't bothered to deal with
-it.
+For me it is the other way, all my files matter but git can do
+whatever it wants with the ones it controls.
 
-It looks at two strings, "v1.3.3:Makefile" and "Makefile", and
-says "they have different names -- they are renamed".
+>
+> This is totally untested, but on top of "next" you could do
+> something like this, perhaps.
 
-Patches welcome as long as you do not break more usual cases
-;-).
+Thanks, it works here.
+
+Santi
