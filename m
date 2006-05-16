@@ -1,75 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Implement git-quiltimport
-Date: Tue, 16 May 2006 12:01:27 -0700
-Message-ID: <7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
-References: <m1k68l6hga.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0605161001190.3866@g5.osdl.org>
-	<m1bqtx6el6.fsf@ebiederm.dsl.xmission.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] improve depth heuristic for maximum delta size
+Date: Tue, 16 May 2006 16:29:14 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605161510200.18071@localhost.localdomain>
+References: <Pine.LNX.4.64.0605132305580.18071@localhost.localdomain>
+ <Pine.LNX.4.64.0605151129540.18071@localhost.localdomain>
+ <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 21:01:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 16 22:29:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg4na-00048r-7V
-	for gcvg-git@gmane.org; Tue, 16 May 2006 21:01:38 +0200
+	id 1Fg6AR-00083V-0W
+	for gcvg-git@gmane.org; Tue, 16 May 2006 22:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901AbWEPTBb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 15:01:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751900AbWEPTBb
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 15:01:31 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:32919 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1752002AbWEPTBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 May 2006 15:01:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060516190129.YUXY27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 May 2006 15:01:29 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1bqtx6el6.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's
-	message of "Tue, 16 May 2006 11:53:41 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750703AbWEPU3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 16:29:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbWEPU3P
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 16:29:15 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:15228 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750703AbWEPU3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 May 2006 16:29:15 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0IZD0034LKWQDO60@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 16 May 2006 16:29:14 -0400 (EDT)
+In-reply-to: <7v4pzqhh3t.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20134>
 
-ebiederm@xmission.com (Eric W. Biederman) writes:
+This provides a linear decrement on the penalty related to delta depth
+instead of being an 1/x function.  With this another 5% reduction is 
+observed on packs for both the GIT repo and the Linux kernel repo, as 
+well as fixing a pack size regression in another sample repo I have.
 
->    Given the ugliness in -mm making it an error to have an
->    non-attributed patch would result in people specifying --author
->    when they really don't know who the author is, giving us much
->    less reliable information.
->
->    Possibly what we need is an option to not make it an error so that
->    people doing this kind of thing in their own trees have useful
->    information.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-I agree it is probably a good way to error by default, optinally
-allowing to say "don't care".  I do not think Linus would pull
-from such a tree or trees branched from it into his official
-tree, so I do not think we would need to worry about commits
-with incomplete information propagating for this particular
-"gitified mm" usage.  But as a general purpose tool to produce
-"gitified quilt series" tree, we would.
+---
 
-It depends on the expected use of the resulting gitified mm
-tree.
+On Mon, 15 May 2006, Junio C Hamano wrote:
 
-If it is for an individual developer to futz with and tweak
-upon, and the end result from the work leaves such a "gitified
-quilt series" repository only as a patch form, then not having
-to figure out and specify authorship information to many patches
-is probably a plus; the information will not be part of the
-official history recorded elsewhere anyway.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > @@ -1038,8 +1038,8 @@ static int try_delta(struct unpacked *tr
+> >  
+> >  	/* Now some size filtering euristics. */
+> >  	size = trg_entry->size;
+> > -	max_size = size / 2 - 20;
+> > -	if (trg_entry->delta)
+> > +	max_size = (size/2 - 20) / (src_entry->depth + 1);
+> > +	if (trg_entry->delta && trg_entry->delta_size <= max_size)
+> >  		max_size = trg_entry->delta_size-1;
+> >  	src_size = src_entry->size;
+> >  	sizediff = src_size < size ? size - src_size : 0;
+> 
+> At the first glance, this seems rather too agressive.  It makes
+> me wonder if it is a good balance to penalize the second
+> generation base by requiring it to produce a small delta that is
+> at most half as we normally would (and the third generation a
+> third), or maybe the penalty should kick in more gradually, like
+> e.g. ((max_depth * 2 - src_entry->depth) / (max_depth * 2).
 
-However, if it is to produce a reference git tree to point
-people at, (i.e. the quiltimport script is run once per a series
-by somebody and the result is published for public use), I would
-imagine we would want to have the attribution straight, so if
-the tool has to "guess", it should either error out or go
-interactive and ask.
+You are right.  However your formula converge towards 0.5 which is not 
+enough to be sure the bad effect with early eviction of max depth object 
+from the object window won't come back.  I prefer this patch with a 
+formula converging toward 0.
+
+diff --git a/pack-objects.c b/pack-objects.c
+index 566a2a2..3116020 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -1036,9 +1036,12 @@ static int try_delta(struct unpacked *tr
+ 	if (src_entry->depth >= max_depth)
+ 		return 0;
+ 
+-	/* Now some size filtering euristics. */
++	/* Now some size filtering heuristics. */
+ 	size = trg_entry->size;
+-	max_size = (size/2 - 20) / (src_entry->depth + 1);
++	max_size = size/2 - 20;
++	max_size = max_size * (max_depth - src_entry->depth) / max_depth;
++	if (max_size == 0)
++		return 0;
+ 	if (trg_entry->delta && trg_entry->delta_size <= max_size)
+ 		max_size = trg_entry->delta_size-1;
+ 	src_size = src_entry->size;
