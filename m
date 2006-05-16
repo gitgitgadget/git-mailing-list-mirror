@@ -1,59 +1,58 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Pickaxe usage question -- only matching on added string
-Date: Tue, 16 May 2006 15:37:26 +1200
-Message-ID: <46a038f90605152037g1498bbfbm8d652ee9ff760ead@mail.gmail.com>
+From: "Horace Cole" <ajepugnpg@dk.intrum.com>
+Subject: Find cheap prescriptions on the internet pharmacy!
+Date: Tue, 16 May 2006 05:35:38 +0200
+Message-ID: <000401c6789a$42559716$ba208650@ji.qciex>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue May 16 05:37:40 2006
+Content-Type: text/plain;
+	format=flowed;
+	charset="Windows-1252";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue May 16 05:39:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfqNP-0002Y5-VJ
-	for gcvg-git@gmane.org; Tue, 16 May 2006 05:37:40 +0200
+	id 1FfqP7-0002jS-Bg
+	for gcvg-git@gmane.org; Tue, 16 May 2006 05:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbWEPDh3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 23:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbWEPDh2
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 23:37:28 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:55911 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751107AbWEPDh1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 23:37:27 -0400
-Received: by wr-out-0506.google.com with SMTP id i28so992837wra
-        for <git@vger.kernel.org>; Mon, 15 May 2006 20:37:27 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=qylWM+IXDHqQpld+o8RJaX/GbpGlYy1AxCy4ITt7Fx+1kLqJPcsG4pgDPsenuca2gcBDhBGrO2xCeu4H1miPjzzyK3tRcNXRtbrvUqLwOq/JipxsaFjd77iaESUf8o07Aa5xpWBxH2CuCR3cYguKyKtUedfH9rK4XwdPMOBfZ+Q=
-Received: by 10.54.66.8 with SMTP id o8mr6997984wra;
-        Mon, 15 May 2006 20:37:27 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Mon, 15 May 2006 20:37:26 -0700 (PDT)
-To: git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1751108AbWEPDjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 23:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbWEPDjW
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 23:39:22 -0400
+Received: from p5086B7A0.dip0.t-ipconnect.de ([80.134.183.160]:50422 "HELO
+	p5086B7A0.dip0.t-ipconnect.de") by vger.kernel.org with SMTP
+	id S1751108AbWEPDjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 May 2006 23:39:22 -0400
+Received: from ji.qciex ([80.134.32.186]) by p5086B7A0.dip0.t-ipconnect.de with Microsoft SMTPSVC(6.0.3790.1830); Tue, 16 May 2006 05:38:55 +0200
+To: <git@vger.kernel.org>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20098>
+X-Spam-Report: 17.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4992]
+ *  2.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP address
+ *      [80.134.183.160 listed in dnsbl.sorbs.net]
+ *  0.1 RCVD_IN_NJABL_DUL RBL: NJABL: dialup sender did non-local SMTP
+ *      [80.134.183.160 listed in combined.njabl.org]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: tullianhf.com]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: tullianhf.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: tullianhf.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: tullianhf.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: tullianhf.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: tullianhf.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20099>
 
-Documentation for diffcore-pickaxe (in Documentation/diffcore.txt) says:
-
-When diffcore-pickaxe is in use, it checks if there are
-filepairs whose "original" side has the specified string and
-whose "result" side does not.  Such a filepair represents "the
-string appeared in this changeset".  It also checks for the
-opposite case that loses the specified string.
-
-Now, is there a way to get diffcore to match only on 'added' (or on
-'removed', for that matter)? I am tring to identify commtis that added
-patches to a project, and I seem to be getting matches that add and
-remove when I do:
-
-   git-whatchanged -p -C -S"\t" master
-
-cheers,
-
-
-martin
+The next generation online pharmacy.
+http://rfvhrec.musurvrrajrc444x944x94mm.tullianhf.com/?zno
