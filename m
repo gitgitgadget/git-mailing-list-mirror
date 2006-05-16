@@ -1,76 +1,147 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: gateway status?
-Date: Wed, 17 May 2006 01:09:19 +1200
-Message-ID: <46a038f90605160609u19a356ccx9467c32100731b9@mail.gmail.com>
-References: <Pine.LNX.4.62.0605151122500.29452@qynat.qvtvafvgr.pbz>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] commit: allow --pretty= args to be abbreviated
+Date: Tue, 16 May 2006 06:25:41 -0700
+Message-ID: <20060516132541.GA1066@soma>
+References: <11476199622462-git-send-email-normalperson@yhbt.net> <1147619963765-git-send-email-normalperson@yhbt.net> <7vwtcoyxs2.fsf@assigned-by-dhcp.cox.net> <20060515003405.GA5533@localdomain> <7vac9jhv66.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 15:15:20 2006
+X-From: git-owner@vger.kernel.org Tue May 16 15:28:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FfzIh-0000km-SJ
-	for gcvg-git@gmane.org; Tue, 16 May 2006 15:09:24 +0200
+	id 1FfzYa-0005Do-OM
+	for gcvg-git@gmane.org; Tue, 16 May 2006 15:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815AbWEPNJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 09:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751818AbWEPNJU
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 09:09:20 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:43652 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751815AbWEPNJU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 09:09:20 -0400
-Received: by wr-out-0506.google.com with SMTP id i22so1480495wra
-        for <git@vger.kernel.org>; Tue, 16 May 2006 06:09:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EqgO6gOhbdhiuCobbjUvSisTbtVSbmCC/lMZMWzBxnZBUTJkdK7R/hmUKW/dV3ncouiTBhcOdVBSmP49vn6Jaib3leYPD8BPGxhVSTAZdXQTKuYfqpe+kJMdXnt+oNl4dMjUL9ZV2mTUAV0GlkuRwjaky9/iidBCL3aUBLdvXm0=
-Received: by 10.54.60.26 with SMTP id i26mr4935999wra;
-        Tue, 16 May 2006 06:09:19 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Tue, 16 May 2006 06:09:19 -0700 (PDT)
-To: "David Lang" <dlang@digitalinsight.com>
-In-Reply-To: <Pine.LNX.4.62.0605151122500.29452@qynat.qvtvafvgr.pbz>
+	id S1751665AbWEPNZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 09:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbWEPNZp
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 09:25:45 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:1454 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751665AbWEPNZp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 09:25:45 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id B0DCF7DC020;
+	Tue, 16 May 2006 06:25:42 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 16 May 2006 06:25:41 -0700
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vac9jhv66.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20122>
 
-On 5/16/06, David Lang <dlang@digitalinsight.com> wrote:
-> I seem to remember seeing discussion of gateways to cvs/svn that would let
-> a project use a git repository and allow clients to use cvs/svn clients to
-> retreive data.
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Unlike the original one, this one only does prefix matches, so
+> > you can't do --pretty=er anymore :)
+> 
+> Sounds good.  But then you know how long the unique prefix
+> are for each candidate, so wouldn't this rather be redundant, I
+> wonder?
 
-David,
+I just copied the idea for the 2nd for loop from gitopt, since it makes
+maintenance easier when there are lots of possibilities.  We only have 6
+(soon 7) to worry about for --pretty= here, so hard coding lengths
+probably makes more sense.
 
-I suspect you might be thinking of git-cvsserver. The code has no
-known bugs, but is has only seen limited use by in-house dev teams.
+> > +
+> > +	/* look for abbreviations */
+> > +	len = strlen(arg);
+> > +	found = -1;
+> > +	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
+> > +		if (!strncmp(cmt_fmts[i].n, arg, len)) {
+> > +			if (found >= 0)
+> > +				die("invalid --pretty format: %s", arg);
+> > +			found = i;
+> > +		}
+> > +	}
+> > +	if (found >= 0)
+> > +		return cmt_fmts[found].v;
+> > +	die("invalid --pretty format: %s", arg);
+> >  }
+> 
+> It would probably be better to say "ambiguous" not "invalid" in
+> the die() message.
 
-A good measure is to run an import of the current cvs project (I would
-try both git-cvsimport and parsecvs) and then get a checkout via
-git-cvsserver.
+Yes, but only one die() message left now :)
 
-Works great with traditional cvs cli and well behaved clients (TortoiseCVS).
+-- 
+Eric Wong
 
-> am I remembering correctly, and are these tools ready for production use?
-> the popfile project is getting ready to abandon sourceforge and move to
-> self-hosting, but before I suggest that they use git I need to know the
-> current status of these projects (I think the ability to export directly
-> into the other interfaces is a significant advantage)
+>From nobody Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Sun, 14 May 2006 17:20:46 -0700
+Subject: [PATCH] commit: allow --pretty= args to be abbreviated
 
-Moodle (a project I hack on) is in a similar situation, specially
-after the SF.net debacle with CVS. It is very likely that it will move
-to git with git-cvsserver providing "anon cvs" and cvs over ssh to a
-very limited set of people with commit rights but no development
-knowledge (translators, etc). So there is a path forward.
+Unlike the original one, this one only does prefix matches, so
+you can't do --pretty=er anymore :)
 
-cheers,
+This one really works with and without the gitopt changes.
 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
+---
 
-martin
+ commit.c |   38 ++++++++++++++++++++++++--------------
+ 1 files changed, 24 insertions(+), 14 deletions(-)
+
+044dff6523c25e173eb7fb1c5d5c8a8e6ada8fdc
+diff --git a/commit.c b/commit.c
+index 2717dd8..4a26070 100644
+--- a/commit.c
++++ b/commit.c
+@@ -22,23 +22,33 @@ struct sort_node
+ 
+ const char *commit_type = "commit";
+ 
++struct cmt_fmt_map {
++	const char *n;
++	size_t cmp_len;
++	enum cmit_fmt v;
++} cmt_fmts[] = {
++	{ "raw",	1,	CMIT_FMT_RAW },
++	{ "medium",	1,	CMIT_FMT_MEDIUM },
++	{ "short",	1,	CMIT_FMT_SHORT },
++	{ "full",	5,	CMIT_FMT_FULL },
++	{ "fuller",	5,	CMIT_FMT_FULLER },
++	{ "oneline",	1,	CMIT_FMT_ONELINE },
++};
++
+ enum cmit_fmt get_commit_format(const char *arg)
+ {
+-	if (!*arg)
++	int i;
++
++	if (!arg || !*arg)
+ 		return CMIT_FMT_DEFAULT;
+-	if (!strcmp(arg, "=raw"))
+-		return CMIT_FMT_RAW;
+-	if (!strcmp(arg, "=medium"))
+-		return CMIT_FMT_MEDIUM;
+-	if (!strcmp(arg, "=short"))
+-		return CMIT_FMT_SHORT;
+-	if (!strcmp(arg, "=full"))
+-		return CMIT_FMT_FULL;
+-	if (!strcmp(arg, "=fuller"))
+-		return CMIT_FMT_FULLER;
+-	if (!strcmp(arg, "=oneline"))
+-		return CMIT_FMT_ONELINE;
+-	die("invalid --pretty format");
++	if (*arg == '=')
++		arg++;
++	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
++		if (!strncmp(arg, cmt_fmts[i].n, cmt_fmts[i].cmp_len))
++			return cmt_fmts[i].v;
++	}
++
++	die("invalid --pretty format: %s", arg);
+ }
+ 
+ static struct commit *check_commit(struct object *obj,
+-- 
+1.3.2.g7d11
