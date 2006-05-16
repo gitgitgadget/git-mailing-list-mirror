@@ -1,78 +1,77 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] send-email: allow sendmail binary to be used instead of SMTP
-Date: Tue, 16 May 2006 10:07:16 +1200
-Message-ID: <46a038f90605151507p313386efv7998b2376cd85b2c@mail.gmail.com>
-References: <1147660345772-git-send-email-normalperson@yhbt.net>
-	 <7vpsifx2b7.fsf@assigned-by-dhcp.cox.net>
-	 <20060515092704.GB6855@localdomain>
-	 <7vmzdjtya4.fsf@assigned-by-dhcp.cox.net>
-	 <20060515210110.GR32076@h4x0r5.com>
-	 <7vhd3rgfey.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix silly typo in new builtin grep
+Date: Mon, 15 May 2006 17:54:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605151743360.3866@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Ryan Anderson" <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 00:07:35 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue May 16 02:54:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FflDs-0005LG-Jx
-	for gcvg-git@gmane.org; Tue, 16 May 2006 00:07:28 +0200
+	id 1FfnpC-0006U8-Kl
+	for gcvg-git@gmane.org; Tue, 16 May 2006 02:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653AbWEOWHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 May 2006 18:07:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965273AbWEOWHT
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 18:07:19 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:35645 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S965268AbWEOWHR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 18:07:17 -0400
-Received: by wr-out-0506.google.com with SMTP id i22so1311078wra
-        for <git@vger.kernel.org>; Mon, 15 May 2006 15:07:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CBFAZ3V1mjLOICzjNjj8TBifD7spnjClLdRwzW2U/EIhg1Jt63vpRG3D6MB1RBsKoZUeyAMQn31yFaohWGDh2wp+ye8FGQRzb1ek+oIhsVSsx8Svf8tVQ2ZhRLyYjh0IOgCmoExkMcvqYt2GB3bLFK+2lAVM3NKIXhfVA1WxlCM=
-Received: by 10.54.69.7 with SMTP id r7mr6631597wra;
-        Mon, 15 May 2006 15:07:16 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Mon, 15 May 2006 15:07:16 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vhd3rgfey.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750904AbWEPAyH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 May 2006 20:54:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbWEPAyH
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 May 2006 20:54:07 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:22676 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750904AbWEPAyG (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 May 2006 20:54:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4G0s2tH004068
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 15 May 2006 17:54:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4G0s1hH023409;
+	Mon, 15 May 2006 17:54:01 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20089>
-
-On 5/16/06, Junio C Hamano <junkio@cox.net> wrote:
-> Ryan Anderson <ryan@michonline.com> writes:
->
-> > I think, in practice, that /usr/lib/sendmail will exist anywhere you hve
-> > something running on port 25, at least on unixy machines.
-...
-> exim, postfix and friends?
-
-/usr/sbin/sendmail is there for any current MTA, so if qmail, exim,
-postfix, sendmail and all MTAs I can think of install a working
-sendmail binary.
-
-Newish desktop-targetted distros (and MacOSX) are leaning towards not
-running an MTA on port 25 any more unless you ask them for it. They'll
-do crontab-driven queue flushes, so the messages you feed to
-/usr/sbin/sendmail will be sent a few minutes later.
-
-That is why IMHO /usr/sbin/sendmail is a better default than
-localhost:25, but I can live with either ;-)
-
-> I used to know somebody who port-forwarded 25/tcp to central
-> smtp server from smaller machines in her intranet installation,
-
-I can understand that, but I think the changes in unixy distros
-mentioned above make it unnecessary today.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20090>
 
 
-martin
+The "-F" flag apparently got mis-translated due to some over-eager 
+copy-paste work into a duplicate "-H" when using the external grep.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+Me likee the new built-in grep. The ability to say
+
+	git grep __make_request v2.6.13 -- '*.c'
+
+to grep for it in a specific version is well worth the fact that it 
+obviously ends up being slower than grepping in the currently checked-out 
+tree. It's doing a hell of a lot more, but despite that it's not at all 
+that slow.
+
+(In fact, I would say that doing the above command in just 4 seconds is 
+damn impressive - it's a large code-base, and v2.6.13 is several months, 
+and over 20 _thousand_ revisions ago).
+
+And now it doesn't have any performance downsides, so it's all upside. 
+
+Good job. Pls merge into mainline, I think the "grep per revision" is a 
+killer feature.
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 3d6e515..66111de 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -455,7 +455,7 @@ static int external_grep(struct grep_opt
+ 	push_arg("grep");
+ 	push_arg("-H");
+ 	if (opt->fixed)
+-		push_arg("-H");
++		push_arg("-F");
+ 	if (opt->linenum)
+ 		push_arg("-n");
+ 	if (opt->regflags & REG_EXTENDED)
