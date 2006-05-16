@@ -1,72 +1,38 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: [PATCH] Update the documentation for git-merge-base
-Date: Tue, 16 May 2006 08:54:52 +0200
-Message-ID: <20060516065452.GA5540@c165.ib.student.liu.se>
-References: <20060516055815.GA4572@c165.ib.student.liu.se> <7vhd3qebuv.fsf@assigned-by-dhcp.cox.net>
+From: Li Yang-r58472 <LeoLi@freescale.com>
+Subject: newbie question
+Date: Tue, 16 May 2006 15:03:27 +0800
+Message-ID: <9FCDBA58F226D911B202000BDBAD467308146E@zch01exm40.ap.freescale.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 16 08:55:44 2006
+Content-Type: text/plain
+X-From: git-owner@vger.kernel.org Tue May 16 09:03:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FftSK-0001b2-MO
-	for gcvg-git@gmane.org; Tue, 16 May 2006 08:54:57 +0200
+	id 1Fftal-0003Jn-RH
+	for gcvg-git@gmane.org; Tue, 16 May 2006 09:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751561AbWEPGyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 02:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbWEPGyy
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 02:54:54 -0400
-Received: from mxfep01.bredband.com ([195.54.107.70]:30693 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S1751558AbWEPGyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 May 2006 02:54:53 -0400
-Received: from c165 ([213.114.27.63] [213.114.27.63])
-          by mxfep01.bredband.com with ESMTP
-          id <20060516065452.OVIF19930.mxfep01.bredband.com@c165>;
-          Tue, 16 May 2006 08:54:52 +0200
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1FftSG-0001Rd-00; Tue, 16 May 2006 08:54:52 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhd3qebuv.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+	id S1751611AbWEPHDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 03:03:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbWEPHDh
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 03:03:37 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:3065 "EHLO
+	de01egw01.freescale.net") by vger.kernel.org with ESMTP
+	id S1751596AbWEPHDg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 May 2006 03:03:36 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id k4G8J8IV007193
+	for <git@vger.kernel.org>; Tue, 16 May 2006 02:19:08 -0600 (MDT)
+Received: from zch01exm40.ap.freescale.net (zch01exm40.ap.freescale.net [10.192.130.11])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k4G75kPN020955
+	for <git@vger.kernel.org>; Tue, 16 May 2006 02:05:47 -0500 (CDT)
+Received: by zch01exm40.ap.freescale.net with Internet Mail Service (5.5.2657.72)
+	id <47PLX3YJ>; Tue, 16 May 2006 15:03:32 +0800
+To: git@vger.kernel.org
+X-Mailer: Internet Mail Service (5.5.2657.72)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20108>
 
-On Mon, May 15, 2006 at 11:13:12PM -0700, Junio C Hamano wrote:
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
-> 
-> > Is the code guaranteed to return a least common ancestor? If that is
-> > the case we should probably mention it in the documentation.
-> 
-> Unfortunately, no, if you mean by "least common" closest to the
-> tips.
->
-
-By "least" I mean the following:
-
-C is a least common ancestor of A and B if:
-
-* C is a common ancestor of A and B, and
-* for every other common ancestor D (different from C) of A and B, C
-  is not reacheable from D.
-
-> See the big illustration at the top of the source for how you
-> can construct pathological case to defeat an attempt to
-> guarantee such.  --all guarantees that the output contains all
-> interesting ones, but does not guarantee the output has no
-> suboptimal merge bases.
-
-There are two examples at the top of the source. In the first one a
-least common ancestor is returned. As I interpret the second one, it
-is an example of how the old algorithm without the postprocessing step
-produced a common ancestor which is not least.
-
-Am I wrong? Do we have any cases where the current merge-base
-algorithm gives us common ancestors which are not least?
-
-- Fredrik
+I just starting to use git recently.  I have setup a public repository, and pushed cloned open source repository to it.  As most documents suggested, I need to run a repack on the public repository.  Normally git-repack is run in the source directory(the parent directory of .git).  Considering the public repository, there is no source directory and the *.git is the uppest level directory.  Where am I supposed to run the git-repack command?
