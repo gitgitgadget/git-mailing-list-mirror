@@ -1,57 +1,58 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: let's meet
-Date: 16 May 2006 13:34:35 -0700
-Message-ID: <86odxxn1yc.fsf@blue.stonehenge.com>
+Date: Tue, 16 May 2006 13:40:59 -0700
+Message-ID: <7viro58zz8.fsf@assigned-by-dhcp.cox.net>
 References: <602115DC.2C05E9D@arsenal.co.uk>
+	<86odxxn1yc.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue May 16 22:34:48 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 16 22:41:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg6Fb-0000kO-TG
-	for gcvg-git@gmane.org; Tue, 16 May 2006 22:34:40 +0200
+	id 1Fg6Lq-00027A-Al
+	for gcvg-git@gmane.org; Tue, 16 May 2006 22:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750731AbWEPUeh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 16:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbWEPUeh
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 16:34:37 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:48150 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1750731AbWEPUeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 May 2006 16:34:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 2E9C48F2AA
-	for <git@vger.kernel.org>; Tue, 16 May 2006 13:34:36 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 16691-01-19 for <git@vger.kernel.org>;
- Tue, 16 May 2006 13:34:35 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id B31988F2B7; Tue, 16 May 2006 13:34:35 -0700 (PDT)
-To: <git@vger.kernel.org>
-x-mayan-date: Long count = 12.19.13.5.9; tzolkin = 11 Muluc; haab = 2 Zip
-In-Reply-To: <602115DC.2C05E9D@arsenal.co.uk>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1750768AbWEPUlD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 16:41:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbWEPUlD
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 16:41:03 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:52614 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750768AbWEPUlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 May 2006 16:41:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060516204100.UVAV25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 16 May 2006 16:41:00 -0400
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86odxxn1yc.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "16 May 2006 13:34:35 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20136>
 
->>>>> "Luke" == Luke  <oxwacpp@arsenal.co.uk> writes:
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Luke> Hire,
-Luke> i am here sittiang in the internet caffe. Found your email a!nd
-Luke> decided to write. I might be coming to your p!lace in 14 days, 
-Luke> so I decided to email you. May be we ca!n meet? I am 25 y.o.
-Luke> girl. I have a picture if you want. No need to reply here as 
-Luke> this is not my email. Write me at ex@datetodayy.com
+>>>>>> "Luke" == Luke  <oxwacpp@arsenal.co.uk> writes:
+>
+> Luke> Hire,
+> Luke> i am here sittiang in the internet caffe. Found your email a!nd
+> Luke> decided to write. I might be coming to your p!lace in 14 days, 
+> Luke> so I decided to email you. May be we ca!n meet? I am 25 y.o.
+> Luke> girl. I have a picture if you want. No need to reply here as 
+> Luke> this is not my email. Write me at ex@datetodayy.com
+>
+> I hope she has a big table. :)
 
-I hope she has a big table. :)
+Huh?
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+She's coming to *your* place, so you are the one to prepare a
+big table to cover the locations we all live---perhaps "earth"?
+
+;-)
