@@ -1,63 +1,58 @@
 From: Santi <sbejar@gmail.com>
-Subject: Re: Merge with local conflicts in new files
-Date: Wed, 17 May 2006 00:12:31 +0200
-Message-ID: <8aa486160605161512g4d38b7f0y@mail.gmail.com>
-References: <8aa486160605161500m1dd8428cj@mail.gmail.com>
+Subject: Ouput of git diff with <ent>:<path>
+Date: Wed, 17 May 2006 00:24:12 +0200
+Message-ID: <8aa486160605161524j5d7e672eo@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed May 17 00:12:43 2006
+X-From: git-owner@vger.kernel.org Wed May 17 00:24:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg7mN-0005Ee-FI
-	for gcvg-git@gmane.org; Wed, 17 May 2006 00:12:35 +0200
+	id 1Fg7xk-0007kr-8c
+	for gcvg-git@gmane.org; Wed, 17 May 2006 00:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932201AbWEPWMd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 18:12:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbWEPWMc
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:12:32 -0400
-Received: from wx-out-0102.google.com ([66.249.82.201]:16718 "EHLO
+	id S932215AbWEPWYQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 18:24:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbWEPWYP
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 18:24:15 -0400
+Received: from wx-out-0102.google.com ([66.249.82.201]:34640 "EHLO
 	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932201AbWEPWMc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 18:12:32 -0400
-Received: by wx-out-0102.google.com with SMTP id s6so60473wxc
-        for <git@vger.kernel.org>; Tue, 16 May 2006 15:12:31 -0700 (PDT)
+	id S932214AbWEPWYN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 18:24:13 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so61734wxc
+        for <git@vger.kernel.org>; Tue, 16 May 2006 15:24:12 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OcPMQ6XsTVyH+qKT27TcfgorKIWZQyg2Ym1sQJ7hEdSR8J/rxNpUrrOi3rxi8W7xgpP8rOtweZQWxCBjKw8Rjsi9kVebsZ+Ak8JKX+BEfnV06YqpUG8i1YoacoWO/Q59E+NzF4XzXNq9X7+6R49V7q6I1BwuxwoWCH3B7iTiPuY=
-Received: by 10.70.77.7 with SMTP id z7mr308337wxa;
-        Tue, 16 May 2006 15:12:31 -0700 (PDT)
-Received: by 10.70.20.2 with HTTP; Tue, 16 May 2006 15:12:31 -0700 (PDT)
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pJkSyA8bPTLdtMWlXinC8Fb0+EL3GD/YdjbZ0OL2d49kfUYnuG2lduriwAe0fE9Sx4unSIWbimffdQDxuPIeEGFSotWOL4WGW5SLrj0QzNFzsg8GUxKdsCx5gQCx9BZJXB2Mweq9mYF0DG7dezrfERN/3AtCHGaroiYlDO/JYqY=
+Received: by 10.70.95.16 with SMTP id s16mr287873wxb;
+        Tue, 16 May 2006 15:24:12 -0700 (PDT)
+Received: by 10.70.20.2 with HTTP; Tue, 16 May 2006 15:24:12 -0700 (PDT)
 To: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <8aa486160605161500m1dd8428cj@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20141>
 
-Sorry, the test is wrong. Use this:
+Hi *,
 
-test_description='Test merge with local conflicts in new files'
-. ./test-lib.sh
+   just curious if this is the expected output. I find this syntax
+very usefull but the "a/v1.3.3:" of even without the tree "a/:" a bit
+confusing. And I didn't expect the rename from/to neither the
+similarity index 0%.
 
-test_expect_success 'prepare repository' \
-'echo "Hello" > init &&
-git add init &&
-git commit -m "Initial commit" &&
-git checkout -b B &&
-echo "foo" > foo &&
-git add foo &&
-git commit -m "File: foo" &&
-git checkout master &&
-echo "bar" > foo &&
-'
+diff --git a/v1.3.3:Makefile b/Makefile
+similarity index 0%
+rename from v1.3.3:Makefile
+rename to Makefile
+index b808eca..55d1937 100644
+--- a/v1.3.3:Makefile
++++ b/Makefile
 
-test_expect_code 1 'Merge with local conflicts in new files' 'git
-merge "merge msg" HEAD B'
+Thanks.
 
-test_done
+Santi
