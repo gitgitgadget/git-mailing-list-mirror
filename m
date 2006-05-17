@@ -1,85 +1,84 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [RFC 6/5] Fix ref log parsing so it works properly.
-Date: Wed, 17 May 2006 18:34:48 -0400
-Message-ID: <20060517223448.GE30313@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: "git add $ignored_file" fail
+Date: Wed, 17 May 2006 16:07:35 -0700
+Message-ID: <7vd5ecb688.fsf@assigned-by-dhcp.cox.net>
+References: <8aa486160605161507w3a27152dq@mail.gmail.com>
+	<Pine.LNX.4.64.0605161526210.16475@g5.osdl.org>
+	<8aa486160605161542u704ccf03w@mail.gmail.com>
+	<Pine.LNX.4.63.0605171306400.19012@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0605170604i689a8f7axa5aeb7752dc72072@mail.gmail.com>
+	<8aa486160605170641p2ab8704o@mail.gmail.com>
+	<e4f9eo$b60$1@sea.gmane.org> <1147893786.16654.5.camel@dv>
+	<20060517153903.6b896fdd.seanlkml@sympatico.ca>
+	<1147895816.30618.6.camel@dv>
+	<Pine.LNX.4.64.0605171325200.10823@g5.osdl.org>
+	<e4g1f4$anv$1@sea.gmane.org>
+	<Pine.LNX.4.64.0605171342370.10823@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 18 00:35:13 2006
+X-From: git-owner@vger.kernel.org Thu May 18 01:07:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgUba-0000Ax-1G
-	for gcvg-git@gmane.org; Thu, 18 May 2006 00:34:58 +0200
+	id 1FgV7L-0006Cn-6t
+	for gcvg-git@gmane.org; Thu, 18 May 2006 01:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750796AbWEQWew (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 18:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWEQWew
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 18:34:52 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:64483 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750782AbWEQWev (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 18:34:51 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FgUbI-0007xY-9A; Wed, 17 May 2006 18:34:40 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 74B6C212667; Wed, 17 May 2006 18:34:48 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751139AbWEQXHh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 19:07:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbWEQXHh
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 19:07:37 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:65425 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751139AbWEQXHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 19:07:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060517230736.RTXV27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 May 2006 19:07:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605171342370.10823@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 17 May 2006 13:53:09 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20249>
 
-The log parser was only ever matching the last log record due to
-calling strtoul on "> 1136091609" rather than " 1136091609".  Also
-once a match for '@' has been found after the name of the ref there
-is no point in looking for another '@' within the remaining text.
+Linus Torvalds <torvalds@osdl.org> writes:
 
----
- Uh yea, I found a couple of bugs.  :-)
- This applies on top of the other 5 patches (hence the 6/5).
+> Well, with the new-and-improved builtin "git add", you could probably do 
+> something like the appended (on top of my most recent patch).
+>
+> It says
+>
+> 	No added files - did you perhaps mean to do a 'git update-index'?
+>
+> whenever it finds that "git add" has ignored a file and not actually added 
+> anything. That, btw, can happen either because it refused to see the file 
+> in the first place (ie it was ignored), or because all the files listed 
+> were already added.
+>
+> In both cases the warning may or may not be sensible.
+>
+> Anyway, I dunno. I don't have any strong opinions on this.
 
- refs.c      |    2 +-
- sha1_name.c |    1 +
- 2 files changed, 2 insertions(+), 1 deletions(-)
+If you give a pattern that would match two files but one of them
+were hidden by .gitignore, this approach would not help you
+much.
 
-fbc7bf049255370f1611a5772c39d35422a81e24
-diff --git a/refs.c b/refs.c
-index 4c99e37..ae9825d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -459,7 +459,7 @@ int read_ref_at(const char *ref, unsigne
- 			c++;
- 		if (c == logend || *c == '\n')
- 			die("Log %s is corrupt.", logfile);
--		date = strtoul(c, NULL, 10);
-+		date = strtoul(c + 1, NULL, 10);
- 		if (date <= at_time) {
- 			if (get_sha1_hex(rec + 41, sha1))
- 				die("Log %s is corrupt.", logfile);
-diff --git a/sha1_name.c b/sha1_name.c
-index 3ac3ab4..4376cb3 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -267,6 +267,7 @@ static int get_sha1_basic(const char *st
- 			at_time = approxidate(date_spec);
- 			free(date_spec);
- 			len = at_mark;
-+			break;
- 		}
- 	}
- 
--- 
-1.3.2.g7278
+Even if we wanted to say something like "if the user explicitly
+tells us to add etc/mtab~ by spelling it out, we should ignore
+*~ entry in .gitignore", the shell expansion bites us because it
+is done before we get to what the user give us.  We cannot
+distinguish that with the user typing etc/?tab* for example.
+
+If somebody (Jakub, perhaps?) cares strong enough, we could show
+by default "matched the pathspec but ignored by .gitignore"
+paths with fprintf(stderr, "ignoring '%s'\n"), and have an
+option -q to squelch it.
+
+I do not have strong feeling on this, so I'll see if somebody
+comes up with a better implementation.
