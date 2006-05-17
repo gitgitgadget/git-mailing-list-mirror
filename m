@@ -1,32 +1,32 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] libify git-ls-files directory traversal
-Date: Tue, 16 May 2006 19:36:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605161931340.10823@g5.osdl.org>
+Subject: [PATCH] Clean up git-ls-file directory walking library interface
+Date: Tue, 16 May 2006 19:46:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605161944480.10823@g5.osdl.org>
 References: <Pine.LNX.4.64.0605161859050.16475@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed May 17 04:37:05 2006
+X-From: git-owner@vger.kernel.org Wed May 17 04:46:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgBuJ-0007J5-Sf
-	for gcvg-git@gmane.org; Wed, 17 May 2006 04:37:04 +0200
+	id 1FgC3P-0000Iw-M7
+	for gcvg-git@gmane.org; Wed, 17 May 2006 04:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbWEQChA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 22:37:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWEQChA
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 22:37:00 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:23969 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751149AbWEQCg7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 22:36:59 -0400
+	id S1751168AbWEQCqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 22:46:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbWEQCqY
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 22:46:24 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:48035 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751168AbWEQCqY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 22:46:24 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4H2artH031221
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4H2kHtH031457
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 May 2006 19:36:53 -0700
+	Tue, 16 May 2006 19:46:17 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4H2aqJf032197;
-	Tue, 16 May 2006 19:36:52 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4H2kGd1032346;
+	Tue, 16 May 2006 19:46:17 -0700
 To: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
 In-Reply-To: <Pine.LNX.4.64.0605161859050.16475@g5.osdl.org>
@@ -37,33 +37,113 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20157>
 
 
+This moves the code to add the per-directory ignore files for the base
+directory into the library routine.
 
-On Tue, 16 May 2006, Linus Torvalds wrote:
-> 
-> NOTE! Not all of git-ls-files is libified by this.  The index matching
-> and pathspec prefix calculation is still in ls-files.c, but this is a
-> big part of it.
+That not only allows us to turn the function push_exclude_per_directory() 
+static again, it also simplifies the library interface a lot (the caller 
+no longer needs to worry about any of the per-directory exclude files at 
+all).
 
-Side note: the reason I held off on the index matching is that 
-git-ls-files currently uses a pretty disgusting trick to make the index 
-accesses faster for the common subdirectory case, namely it basically 
-rewrites the index so that it only contains the entries defined by a 
-common prefix.
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+ dir.c      |   28 +++++++++++++++++++++++++++-
+ dir.h      |    2 --
+ ls-files.c |   22 +---------------------
+ 3 files changed, 28 insertions(+), 24 deletions(-)
 
-Now, that's fine for git-ls-files, but it's not fine for a library 
-function where the caller may well want to actually use the index that it 
-has read in (eg "git add" and "git commit" both want to work with the 
-full index).
-
-So libification of that part will require more than splitting things into 
-a new file and passing in a structure pointer that contains the data for 
-the function.
-
-That said, a lot of the current shell scripts seem to use mainly 
-"git-ls-files" with the "--others" flag, and in that case the current 
-libification should be already sufficient.
-
-		Linus
+diff --git a/dir.c b/dir.c
+index 3f41a5d..d40b62e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -78,7 +78,7 @@ void add_excludes_from_file(struct dir_s
+ 		die("cannot use %s as an exclude file", fname);
+ }
+ 
+-int push_exclude_per_directory(struct dir_struct *dir, const char *base, int baselen)
++static int push_exclude_per_directory(struct dir_struct *dir, const char *base, int baselen)
+ {
+ 	char exclude_file[PATH_MAX];
+ 	struct exclude_list *el = &dir->exclude_list[EXC_DIRS];
+@@ -289,6 +289,32 @@ static int cmp_name(const void *p1, cons
+ 
+ int read_directory(struct dir_struct *dir, const char *path, const char *base, int baselen)
+ {
++	/*
++	 * Make sure to do the per-directory exclude for all the
++	 * directories leading up to our base.
++	 */
++	if (baselen) {
++		if (dir->exclude_per_dir) {
++			char *p, *pp = xmalloc(baselen+1);
++			memcpy(pp, base, baselen+1);
++			p = pp;
++			while (1) {
++				char save = *p;
++				*p = 0;
++				push_exclude_per_directory(dir, pp, p-pp);
++				*p++ = save;
++				if (!save)
++					break;
++				p = strchr(p, '/');
++				if (p)
++					p++;
++				else
++					p = pp + baselen;
++			}
++			free(pp);
++		}
++	}
++
+ 	read_directory_recursive(dir, path, base, baselen);
+ 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
+ 	return dir->nr;
+diff --git a/dir.h b/dir.h
+index e8fc441..4f65f57 100644
+--- a/dir.h
++++ b/dir.h
+@@ -44,7 +44,5 @@ extern int excluded(struct dir_struct *,
+ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *which);
+-extern int push_exclude_per_directory(struct dir_struct *,
+-				      const char *base, int baselen);
+ 
+ #endif
+diff --git a/ls-files.c b/ls-files.c
+index 89941a3..dfe1481 100644
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -215,28 +215,8 @@ static void show_files(struct dir_struct
+ 		const char *path = ".", *base = "";
+ 		int baselen = prefix_len;
+ 
+-		if (baselen) {
++		if (baselen)
+ 			path = base = prefix;
+-			if (dir->exclude_per_dir) {
+-				char *p, *pp = xmalloc(baselen+1);
+-				memcpy(pp, prefix, baselen+1);
+-				p = pp;
+-				while (1) {
+-					char save = *p;
+-					*p = 0;
+-					push_exclude_per_directory(dir, pp, p-pp);
+-					*p++ = save;
+-					if (!save)
+-						break;
+-					p = strchr(p, '/');
+-					if (p)
+-						p++;
+-					else
+-						p = pp + baselen;
+-				}
+-				free(pp);
+-			}
+-		}
+ 		read_directory(dir, path, base, baselen);
+ 		if (show_others)
+ 			show_other_files(dir);
