@@ -1,61 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC 5/5] Support 'master@2 hours ago' syntax
-Date: Wed, 17 May 2006 11:32:34 -0700
-Message-ID: <7v7j4kec3h.fsf@assigned-by-dhcp.cox.net>
-References: <20060517095609.GF28529@spearce.org>
-	<7vbqtwhpum.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605170745270.10823@g5.osdl.org>
+From: "Fernando J. Pereda" <ferdy@ferdyx.org>
+Subject: Re: 1.3.2 git-clone segfaults
+Date: Wed, 17 May 2006 20:41:21 +0200
+Message-ID: <20060517184121.GA17846@ferdyx.org>
+References: <879BAFDD-87DB-4041-8753-5D63630076B5@cs.utexas.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 20:33:24 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
+Cc: git@vger.kernel.org, Wolfgang Denk <wd@denx.de>
+X-From: git-owner@vger.kernel.org Wed May 17 20:41:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgQp6-0000YZ-21
-	for gcvg-git@gmane.org; Wed, 17 May 2006 20:32:41 +0200
+	id 1FgQxg-0002ab-L7
+	for gcvg-git@gmane.org; Wed, 17 May 2006 20:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750876AbWEQSch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 14:32:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750878AbWEQSch
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:32:37 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:31474 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750876AbWEQScg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 14:32:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060517183236.BQLL19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 17 May 2006 14:32:36 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750890AbWEQSla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 14:41:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750891AbWEQSl3
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:41:29 -0400
+Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:28571
+	"EHLO smtp.ferdyx.org") by vger.kernel.org with ESMTP
+	id S1750886AbWEQSl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 14:41:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ferdyx.org (Postfix) with ESMTP id 8393D8D318;
+	Wed, 17 May 2006 20:37:19 +0200 (CEST)
+Received: from smtp.ferdyx.org ([127.0.0.1])
+	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 10623-04; Wed, 17 May 2006 20:37:15 +0200 (CEST)
+Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.ferdyx.org (Postfix) with ESMTP id C884A8D305;
+	Wed, 17 May 2006 20:37:14 +0200 (CEST)
+Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	ferdy@ferdyx.org; Wed, 17 May 2006 20:41:21 +0200 (CEST)
+To: Bill Yoder <byoder@cs.utexas.edu>
+Mail-Followup-To: "Fernando J. Pereda" <ferdy@ferdyx.org>,
+	Bill Yoder <byoder@cs.utexas.edu>, git@vger.kernel.org,
+	Wolfgang Denk <wd@denx.de>
+Content-Disposition: inline
+In-Reply-To: <879BAFDD-87DB-4041-8753-5D63630076B5@cs.utexas.edu>
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20220>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Wed, 17 May 2006, Junio C Hamano wrote:
->> 
->> This does not allow '2006-05-17 00:00:00' as the timespec, and
->> the documentation carefully avoids giving that example, but I
->> think it is better to spell that limitation out.
->
-> It doesn't? The "approxidate()" function should handle any reasonable date 
-> specifier, and the above is certainly more than reasonable.
->
-> Why doesn't approxidate handle it?
+--pWyiEgJYm5f9v55/
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The way I read the code is that get_sha1() would first do its
-magic at the first colon and feeds get_sha1_1() with prefix up
-to the first colon.  This gets passed down to get_sha1_basic()
-and what approxidate() is fed is the suffix of that prefix. It
-ends up seeing stuff between '@' and ':'.  I.e.
+On Wed, May 17, 2006 at 01:32:39PM -0500, Bill Yoder wrote:
+> Please let me know if I can supply more information or if I'm
+> misusing the command.
 
-	"master@2006-05-17 00:00:00:cache.h"
+I reported this same issue to Nick Hengeveld and he said he'll take a
+look at it. this is also Gentoo Bug #133412 [1].
 
-would ask for "00:00:cache.h" file in the "master" branch as of
-timestamp "2006-05-17 00".
+- ferdy
+
+[1] https://bugs.gentoo.org/show_bug.cgi?id=3D133412
+
+--=20
+Fernando J. Pereda Garcimart=EDn
+Gentoo Developer (Alpha,net-mail,mutt,git)
+20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
+
+--pWyiEgJYm5f9v55/
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQFEa25RCkhbDGC9KNQRAgJ5AJ0b5Hl6gLt/gGsrrPpga+GfdlD+8gCfUny0
+VFD3N6YWC6O9rK5DvvI6in4=
+=ocjd
+-----END PGP SIGNATURE-----
+
+--pWyiEgJYm5f9v55/--
