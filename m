@@ -1,53 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git 1.3.2 on Solaris
-Date: Wed, 17 May 2006 01:28:26 -0700
-Message-ID: <7vpsidhx79.fsf@assigned-by-dhcp.cox.net>
-References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: Fwd: [OT] Re: Git via a proxy server?
+Date: Wed, 17 May 2006 10:38:45 +0200
+Message-ID: <20060517083845.GC23642@lug-owl.de>
+References: <4469CF92.2010002@vmware.com> <20060517035639.40450.qmail@web32004.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 10:28:33 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jcjv6D8puUawUjle"
+Cc: Petr Vandrovec <petr@vmware.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 10:38:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgHOR-0006pH-Co
-	for gcvg-git@gmane.org; Wed, 17 May 2006 10:28:31 +0200
+	id 1FgHYR-0008P8-7r
+	for gcvg-git@gmane.org; Wed, 17 May 2006 10:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932485AbWEQI22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 04:28:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932487AbWEQI22
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 04:28:28 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38373 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932485AbWEQI22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 04:28:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060517082827.WGLY15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 17 May 2006 04:28:27 -0400
-To: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932491AbWEQIir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 04:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932497AbWEQIir
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 04:38:47 -0400
+Received: from lug-owl.de ([195.71.106.12]:54186 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S932491AbWEQIir (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 04:38:47 -0400
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id C78BEF003D; Wed, 17 May 2006 10:38:45 +0200 (CEST)
+To: Sam Song <samlinuxkernel@yahoo.com>
+Mail-Followup-To: Sam Song <samlinuxkernel@yahoo.com>,
+	Petr Vandrovec <petr@vmware.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060517035639.40450.qmail@web32004.mail.mud.yahoo.com>
+X-Operating-System: Linux mail 2.6.12.3lug-owl 
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20172>
 
-"Stefan Pfetzing" <stefan.pfetzing@gmail.com> writes:
 
-> 1.  fix every single shellscript automatically during the build phase
-> 2.  setup a dir which contains symlinks to the "right" binaries and
-> put that dir into PATH.
+--jcjv6D8puUawUjle
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You forgot 3.
+On Tue, 2006-05-16 20:56:39 -0700, Sam Song <samlinuxkernel@yahoo.com> wrot=
+e:
+> Petr Vandrovec <petr@vmware.com> wrote:
+> > Best to test this is to start 'socket 192.168.40.99
+> > 80' from command line and=20
+> > then type these two lines above, plus one empty
+> > line.  You should get back '200=20
+> > OK', empty line, and then you can start
+> > communicating using git protocol - if=20
+> > you can do that...
+>=20
+> I cannot run "socket" and "CONNECT" on Fedora Core 3.
+> It simply told me that no such command. How could I=20
+> do this task in my case?
 
-  3.  rewrite scripts so that they would require only POSIX;
-      for ones that do need GNU extended coreutils to do in
-      shell, find other ways, perhaps rewriting the stuff in C.
+Well, install some package to have `socket' available? Debian calls
+the packet `socket', too, so I guess Fedora may have something
+similar.
 
-I am not looking forward to do the g- prefix in the main
-Makefile.  The approach to have symlink forest under gitexecdir
-(<Pine.LNX.4.64.0605162047380.10823@g5.osdl.org> by Linus) is
-more palatable, and I am not opposed to host a script to do so
-under contrib/notgnu perhaps.
+MfG, JBG
+
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
+m Irak!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--jcjv6D8puUawUjle
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEauEVHb1edYOZ4bsRAkHtAKCKYMDxud+dObhwFM4tQqbCQ8O+wQCgjR+l
+CZr9sNtaMROqO8BycVOi3FE=
+=FYDQ
+-----END PGP SIGNATURE-----
+
+--jcjv6D8puUawUjle--
