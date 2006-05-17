@@ -1,51 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
-Date: Wed, 17 May 2006 12:57:32 -0700
-Message-ID: <7v8xp0ctlf.fsf@assigned-by-dhcp.cox.net>
-References: <e4f1ta$e07$1@sea.gmane.org>
-	<7viro4ecao.fsf@assigned-by-dhcp.cox.net> <e4fsla$oth$1@sea.gmane.org>
+Date: Wed, 17 May 2006 22:06:28 +0200
+Organization: At home
+Message-ID: <e4fvnu$4ar$1@sea.gmane.org>
+References: <e4f1ta$e07$1@sea.gmane.org> <7viro4ecao.fsf@assigned-by-dhcp.cox.net> <e4fsla$oth$1@sea.gmane.org> <7v8xp0ctlf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 21:57:46 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed May 17 22:07:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgS9J-00027m-2Z
-	for gcvg-git@gmane.org; Wed, 17 May 2006 21:57:37 +0200
+	id 1FgSIV-0004A0-Nm
+	for gcvg-git@gmane.org; Wed, 17 May 2006 22:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047AbWEQT5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 15:57:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbWEQT5e
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 15:57:34 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:41684 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751047AbWEQT5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 15:57:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060517195733.BVEH27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 17 May 2006 15:57:33 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e4fsla$oth$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	17 May 2006 21:13:51 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751074AbWEQUHE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 16:07:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751079AbWEQUHE
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 16:07:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:18362 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751071AbWEQUHC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 16:07:02 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FgSI6-00044V-2e
+	for git@vger.kernel.org; Wed, 17 May 2006 22:06:42 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 May 2006 22:06:42 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 May 2006 22:06:42 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20237>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
 
-> [cut long description]
->
-> The description you gave is nice, but it belongs in Tutorial rather than in
-> Glossary.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> [cut long description]
+>>
+>> The description you gave is nice, but it belongs in Tutorial rather than 
+>> in the Glossary.
+> 
+> I suspect I was not clear enough for you when I said:
+> 
+>         I cannot easily do a glossary entry to describe that specific
+>         term, but maybe somebody else can split the following up and
+>         paraphrase.
 
-I suspect I was not clear enough for you when I said:
+Maybe I should say that the description you gave is a nice source for
+eventual glossary entry, but I feel that as the whole is worth preserving
+in some tutorial text.
 
-        I cannot easily do a glossary entry to describe that specific
-        term, but maybe somebody else can split the following up and
-        paraphrase.
+-- 
+Jakub Narebski
+Warsaw, Poland
