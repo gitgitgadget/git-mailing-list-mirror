@@ -1,100 +1,126 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "git add $ignored_file" fail
-Date: Wed, 17 May 2006 16:20:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605171614250.10823@g5.osdl.org>
-References: <8aa486160605161507w3a27152dq@mail.gmail.com>
- <Pine.LNX.4.64.0605161526210.16475@g5.osdl.org> <8aa486160605161542u704ccf03w@mail.gmail.com>
- <Pine.LNX.4.63.0605171306400.19012@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0605170604i689a8f7axa5aeb7752dc72072@mail.gmail.com>
- <8aa486160605170641p2ab8704o@mail.gmail.com> <e4f9eo$b60$1@sea.gmane.org>
- <1147893786.16654.5.camel@dv> <20060517153903.6b896fdd.seanlkml@sympatico.ca>
- <1147895816.30618.6.camel@dv> <Pine.LNX.4.64.0605171325200.10823@g5.osdl.org>
- <e4g1f4$anv$1@sea.gmane.org> <Pine.LNX.4.64.0605171342370.10823@g5.osdl.org>
- <7vd5ecb688.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [RFC] qgit with tabs
+Date: Wed, 17 May 2006 19:21:34 -0400
+Message-ID: <1147908094.32050.22.camel@dv>
+References: <e5bfff550605130344n75e3e55eq533c49fc2a4f5483@mail.gmail.com>
+	 <20060513070726.qa5ssccws80go044@webmail.spamcop.net>
+	 <e5bfff550605130431w417b8aacl2b17cf5655b46f31@mail.gmail.com>
+	 <20060513142840.39c0kwkw84g8g88g@webmail.spamcop.net>
+	 <e5bfff550605131538u63b87002o3e9b5542c0e15bf7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 18 01:21:01 2006
+X-From: git-owner@vger.kernel.org Thu May 18 01:21:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgVJq-0008GE-CH
-	for gcvg-git@gmane.org; Thu, 18 May 2006 01:20:42 +0200
+	id 1FgVKo-0008S6-0f
+	for gcvg-git@gmane.org; Thu, 18 May 2006 01:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbWEQXUd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 19:20:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750701AbWEQXUd
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 19:20:33 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:55511 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750700AbWEQXUc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 19:20:32 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HNKRtH015551
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 May 2006 16:20:28 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HNKR6R032417;
-	Wed, 17 May 2006 16:20:27 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5ecb688.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750701AbWEQXVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 19:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750714AbWEQXVi
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 19:21:38 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:28039 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750701AbWEQXVi
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 19:21:38 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FgVKj-0005Jk-CA
+	for git@vger.kernel.org; Wed, 17 May 2006 19:21:37 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FgVKg-0008W8-C3; Wed, 17 May 2006 19:21:34 -0400
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550605131538u63b87002o3e9b5542c0e15bf7@mail.gmail.com>
+X-Mailer: Evolution 2.6.1 (2.6.1-3) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20251>
 
+Hi, Marco!
 
-
-On Wed, 17 May 2006, Junio C Hamano wrote:
+On Sun, 2006-05-14 at 00:38 +0200, Marco Costalba wrote:
+> Hi Pavel,
 > 
-> If you give a pattern that would match two files but one of them
-> were hidden by .gitignore, this approach would not help you
-> much.
+> >
+> > Sure, but I often want to see what changed in a particular file.
+> >
+> > And of course I only mean the subwindow dislaying the files affected by the
+> > patch.  The file tree should still have file annotation bound to the double
+> > click.
+> >
+> 
+> I understand your reasons, but I have some doubts about this change:
+> 
+> 1) The context menu is currently shared between the tree and the file
+> list, splitting in two subcases adds some crap to the code (ok, this
+> is not the real doubt ;-)  )
 
-Correct. On the other hand, what could you do?
+Actually, "Get revision/patch" and "External diff" shouldn't be in the
+popup used in the tree, or at least they should only appear for the
+files affected by the currently selected patch.
 
-I think that the common case for that is literally something like
+"External diff" may be a good candidate for the toolbar if you find out
+how to feed a multi-file patch to kompare (I guess you'll need two
+temporary directories populated with differing files).
 
-	git add dirname/
+> 2) The context menu is currently shared between the file list in main
+> view and the file list in patch view. The file list in patch view, of
+> course, does not need a double click, a single click is enough to
+> select corresponding file's diff. In main view you currently need a
+> single click _plus_  a 'p' key press to change the view. So we should
+> add another subcase here.
 
-or
+Yes.  It should be perfectly OK to have different menus for different
+contexts.
 
-	git add file*
+> 3) It is true that double clicking on a revision switch to the patch
+> view at top position (if no file is selected), but it's also true that
+> you can select the file's related diff directly in patch view with a
+> single click on the right column file list.
 
-and it turns out that there are object files under the directory, or that 
-there's a file.c, file.h _and_ a already-compiled file.o file.
+That's true.  But I still find myself double clicking on the file in the
+file list and expecting to see the patch for the file.  It's very
+natural.  
 
-Under both of those circumstances (one pattern that matches multiple files 
-but ignores others - or several different patterns where _some_ of the 
-patterns are ignored), we actually do what I think is the only sane thing. 
+If I see the list of the recent patches, I see the descriptions and the
+affected files.  If I'm interested to see what changed in the file, it's
+only natural for me to double-click the corresponding entry in the list.
 
-Namely to just silently add everything that makes sense to add.
+Full history of a file is a much more advanced operation, and it's not
+something I need to do often while browsing recently merged changes.
 
-> Even if we wanted to say something like "if the user explicitly
-> tells us to add etc/mtab~ by spelling it out, we should ignore
-> *~ entry in .gitignore", the shell expansion bites us because it
-> is done before we get to what the user give us.  We cannot
-> distinguish that with the user typing etc/?tab* for example.
+> 4) Once a file is selected, as example with a single click, you can
+> browse through rev list and the selection is preserved, it means that
+> anytime you switch to patch view page the content will be _already_
+> centered on the correct diff.
 
-Right.
+That's useful, but irrelevant.
 
-The only case that we cando anything at all about is really the case where 
-we didn't add anything at all, and then we might reasonably ask "do you 
-know what the heck you're doing".
+> 5) Double clicking on a file name is currently the only way (without
+> opening the menu) to show the file content tab, with your suggested
+> change we will have two ways to switch to patch view and no one to
+> switch to file view.
 
-That's kind of what my last patch did. It's a total special case, but it's 
-the _only_ special case that I can see that is at all relevant (ie in all 
-other cases it would just be annoying as _hell_ if we started talking 
-about how we're ignoring object files. Of _course_ we're ignoring them, 
-and that's why they are listed in .gitignore).
+That's a good thing.  That's called consistency.  git is about patches,
+so showing the patches should be the default whenever practical.
 
-So I'd love to have the built-in "git add", but quite frankly, if you drop 
-that last patch as "too ugly to live", I certainly won't complain. I sent 
-it out more as a "we -could- do this" thing rather than anything more 
-serious.
+The file viewer is a great feature, and it should be discoverable, but
+it doesn't mean it should pop up when users expect something else.
 
-			Linus
+> 
+> 6) Selecting from the tree view is very slow if you have to search for
+> the correct file, it is fast only if the file is already selected, but
+> in this case is faster to press 'p' key ;-)
+
+That's true, but we are talking about double click behavior.  Every
+reasonable person can learn shortcuts, but the software should work
+predictably even if operated by the mouse.
+
+-- 
+Regards,
+Pavel Roskin
