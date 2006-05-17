@@ -1,67 +1,79 @@
-From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
-Subject: Git 1.3.2 on Solaris
-Date: Wed, 17 May 2006 01:52:37 +0200
-Message-ID: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed May 17 01:52:55 2006
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Tue, 16 May 2006 18:25:10 -0700
+Message-ID: <4648.1147829110@lotus.CS.Berkeley.EDU>
+References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 03:25:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fg9LM-0007PE-36
-	for gcvg-git@gmane.org; Wed, 17 May 2006 01:52:48 +0200
+	id 1FgAmu-0003Gn-Rv
+	for gcvg-git@gmane.org; Wed, 17 May 2006 03:25:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932087AbWEPXwj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 19:52:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbWEPXwj
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 19:52:39 -0400
-Received: from wr-out-0506.google.com ([64.233.184.224]:51589 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932087AbWEPXwj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 May 2006 19:52:39 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so89667wra
-        for <git@vger.kernel.org>; Tue, 16 May 2006 16:52:38 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=G/LsUnnF9SnXC8UGb8HPHfEWedm0UpJrrdhYj3GkLI2BpLQfMvAoJFxfR5vgbrFhOcBMNKMH8384gptEBVu0+MSiO87g7iOWL36sPNuh4Ix+ahkVtSVLJKeqXjlkZgNJEik1uV8ZYYTai+TyGE2jrr1G2dxmS7z0pR50vfXKivU=
-Received: by 10.64.91.7 with SMTP id o7mr520352qbb;
-        Tue, 16 May 2006 16:52:37 -0700 (PDT)
-Received: by 10.65.20.19 with HTTP; Tue, 16 May 2006 16:52:37 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751051AbWEQBZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 May 2006 21:25:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbWEQBZP
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 21:25:15 -0400
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:65460 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1751051AbWEQBZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 May 2006 21:25:12 -0400
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k4H1PAgH004651;
+	Tue, 16 May 2006 18:25:10 -0700 (PDT)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k4H1PAA0004650;
+	Tue, 16 May 2006 18:25:10 -0700 (PDT)
+To: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+In-reply-to: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20153>
 
-Hi,
+And "Stefan Pfetzing" writes:
+ - I've been trying to get git to work on the latest Solaris Express
+ - release (with the help of NetBSD's pkgsrc).
 
-I've been trying to get git to work on the latest Solaris Express
-release (with the help of NetBSD's pkgsrc).
+I've been using it on Solaris 8 and 9 with the GNU tools
+in pkgsrc for quite a while, as well as on AIX with the
+GNU tools available as modules (but I haven't compiled a
+new AIX version for a month or two).
 
-It mostly miserabely fails because of common "shell commands" being
-used with GNU options. (like xargs, diff, tr and prob. some more) On
-my box (and thats AFAIK the default when you install gnu coreutils on
-Solaris) the commands do have a g prefix.
+ - It mostly miserabely fails because of common "shell commands" being
+ - used with GNU options. (like xargs, diff, tr and prob. some more) On
+ - my box (and thats AFAIK the default when you install gnu coreutils on
+ - Solaris) the commands do have a g prefix.
 
-So there are 2 possible solutions to get git working on Solaris.
+In your pkgsrc mk.conf, use:
+GNU_PROGRAM_PREFIX=
+GTAR_PROGRAM_PREFIX=
 
-1.  fix every single shellscript automatically during the build phase
-2.  setup a dir which contains symlinks to the "right" binaries and
-put that dir into PATH.
+I tried your first suggestion (patch all the commands) back
+in February.  It's pretty fragile against future changes, and
+I wouldn't recommend it.
 
-No matter what solution is chosen to be the best, I'm volunteering to
-create a patch for it. :)
+ - 2.  setup a dir which contains symlinks to the "right" binaries and
+ - put that dir into PATH.
 
-(although I personally prefer the second, because its easier...)
+Setting a GIT_COMPAT_PATH in the Makefile and prepending
+it to the path in git.c and git-sh-setup.sh might be more
+sane.  A fragment like the following in git.c before adding
+GIT_EXEC_PATH:
+#ifdef GIT_COMPAT_PATH
+	/* Search for sane external utilities */
+	prepend_to_path(GIT_COMPAT_PATH, strlen(GIT_COMPAT_PATH));
+#endif
 
-bye
+And maybe in git-sh-setup.sh to help those of us who
+use git-foo rather than git foo:
+if [ ! -z "@GIT_COMPAT_PATH@" ] ; then
+	PATH="@GIT_COMPAT_PATH@:${PATH}"
+	export PATH
+fi
 
-Stefan
--- 
-        http://www.dreamind.de/
-Oroborus and Debian GNU/Linux Developer.
+Plus Makefile fun.
+
+Jason
