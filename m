@@ -1,69 +1,72 @@
-From: Petr Vandrovec <petr@vmware.com>
-Subject: Re: Fwd: [OT] Re: Git via a proxy server?
-Date: Wed, 17 May 2006 12:54:06 +0200
-Message-ID: <446B00CE.9000609@vmware.com>
-References: <4469CF92.2010002@vmware.com> <20060517035639.40450.qmail@web32004.mail.mud.yahoo.com> <20060517083845.GC23642@lug-owl.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC 5/5] Support 'master@2 hours ago' syntax
+Date: Wed, 17 May 2006 04:07:13 -0700
+Message-ID: <7vbqtwhpum.fsf@assigned-by-dhcp.cox.net>
+References: <20060517095609.GF28529@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 12:54:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 13:07:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgJfV-0005aL-MS
-	for gcvg-git@gmane.org; Wed, 17 May 2006 12:54:18 +0200
+	id 1FgJs9-0008Ca-15
+	for gcvg-git@gmane.org; Wed, 17 May 2006 13:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751142AbWEQKyL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 06:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbWEQKyL
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 06:54:11 -0400
-Received: from mailout1.vmware.com ([65.113.40.130]:31755 "EHLO
-	mailout1.vmware.com") by vger.kernel.org with ESMTP
-	id S1751142AbWEQKyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 06:54:10 -0400
-Received: from mailhost1.vmware.com (mailhost1.vmware.com [10.16.12.135])
-	by mailout1.vmware.com (Postfix) with ESMTP
-	id B5B454747; Wed, 17 May 2006 03:52:00 -0700 (PDT)
-Received: from pa-exch3.vmware.com (pa-exch3.vmware.com [10.16.15.61])
-	by mailhost1.vmware.com (Postfix) with ESMTP id 4A6AC6FC330;
-	Wed, 17 May 2006 03:54:09 -0700 (PDT)
-Received: from [127.0.0.1] ([10.17.163.5]) by pa-exch3.vmware.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 17 May 2006 03:54:08 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.7.12) Gecko/20060205 Debian/1.7.12-1.1
-X-Accept-Language: cs, en
-To: Sam Song <samlinuxkernel@yahoo.com>
-In-Reply-To: <20060517083845.GC23642@lug-owl.de>
-X-OriginalArrivalTime: 17 May 2006 10:54:09.0247 (UTC) FILETIME=[39770EF0:01C679A0]
+	id S1751157AbWEQLHQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 07:07:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbWEQLHQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 07:07:16 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:47237 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751157AbWEQLHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 07:07:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060517110714.GGUF18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 May 2006 07:07:14 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060517095609.GF28529@spearce.org> (Shawn Pearce's message of
+	"Wed, 17 May 2006 05:56:09 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20190>
 
-Jan-Benedict Glaw wrote:
-> On Tue, 2006-05-16 20:56:39 -0700, Sam Song <samlinuxkernel@yahoo.com> wrote:
-> 
->>Petr Vandrovec <petr@vmware.com> wrote:
->>
->>>Best to test this is to start 'socket 192.168.40.99
->>>80' from command line and 
->>>then type these two lines above, plus one empty
->>>line.  You should get back '200 
->>>OK', empty line, and then you can start
->>>communicating using git protocol - if 
->>>you can do that...
->>
->>I cannot run "socket" and "CONNECT" on Fedora Core 3.
->>It simply told me that no such command. How could I 
->>do this task in my case?
-> 
-> 
-> Well, install some package to have `socket' available? Debian calls
-> the packet `socket', too, so I guess Fedora may have something
-> similar.
+Shawn Pearce <spearce@spearce.org> writes:
 
-Surprisingly they do not...  You should be able to replace 'socket' with 
-'netcat' - and I believe that netcat/nc package is available for Fedora.  For 
-this purpose they have same command line & behavior.
-							Petr
+> Extended sha1 expressions may now include date specifications
+> which indicate a point in time within the local repository's
+> history.  If the ref indicated to the left of '@' has a log in
+> $GIT_DIR/logs/<ref> then the value of the ref at the time indicated
+> by the specification is obtained from the ref's log.
+
+This does not allow '2006-05-17 00:00:00' as the timespec, and
+the documentation carefully avoids giving that example, but I
+think it is better to spell that limitation out.
+
+> +* A suffix '@' followed by a date specification such as 'yesterday'
+> +  (24 hours ago) or '1 month 2 weeks 3 days 1 hour 1 second ago'
+> +  to specify the value of the ref at a prior point in time.
+> +  This suffix may only be used immediately following a ref name
+> +  and the ref must have an existing log ($GIT_DIR/logs/<ref>).
+
+
++	fprintf(stderr, "warning: Log %s only goes back to %s.\n",
++		logfile, show_rfc2822_date(date, tz));
++	return 0;
+
+I am not sure about this part.  If the oldest log entry was 3
+hours ago, the second oldest 2 hours ago, we can tell during
+that one hour period the ref was at that point.  If the user
+asked "ref as of four hours ago", and if the oldest log entry
+had old SHA1 that is not 0{40} (because the log was not enabled
+before that record), it might make more sense to give that back.
+
+Also I wonder how much complexity would we suffer and how much
+efficiency would we gain if we binary search the logdata (the
+committer info is variable length, so you would need to resync
+in each step).
