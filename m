@@ -1,31 +1,31 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: git-add + git-reset --hard = Arrrggh!
-Date: Wed, 17 May 2006 05:45:26 -0400
-Message-ID: <20060517094526.GA8563@spearce.org>
+Subject: [RFC 0/5] Log history of a ref
+Date: Wed, 17 May 2006 05:54:17 -0400
+Message-ID: <20060517095417.GA28529@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 17 11:45:44 2006
+X-From: git-owner@vger.kernel.org Wed May 17 11:54:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgIb2-0002qR-FZ
-	for gcvg-git@gmane.org; Wed, 17 May 2006 11:45:36 +0200
+	id 1FgIjY-0004H3-RY
+	for gcvg-git@gmane.org; Wed, 17 May 2006 11:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932508AbWEQJpb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 05:45:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbWEQJpb
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 05:45:31 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:48335 "EHLO
+	id S1750762AbWEQJyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 05:54:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWEQJyV
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 05:54:21 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48592 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932508AbWEQJpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 05:45:30 -0400
+	id S1750762AbWEQJyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 05:54:20 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FgIas-0000ja-8B
-	for git@vger.kernel.org; Wed, 17 May 2006 05:45:26 -0400
+	id 1FgIjQ-0000ty-E2
+	for git@vger.kernel.org; Wed, 17 May 2006 05:54:16 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D5255212667; Wed, 17 May 2006 05:45:26 -0400 (EDT)
+	id 6E4DA212667; Wed, 17 May 2006 05:54:17 -0400 (EDT)
 To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
@@ -40,32 +40,44 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20178>
 
-After spending an hour writing and testing a new test case for GIT
-I do the foolish:
+The following 5 [RFC] patches from me are all related to logging
+changes made to a ref.  These patches contain the same basic idea
+as the two patches I floated earlier this week.  Log files reside
+in .git/logs<ref> and logging is enabled either by creating the
+log file or by setting 'core.logAllRefUpdates' to true.
 
-	$ git add t/t1400-update-ref.sh
-	# Hmm, maybe I should amend this into the prior commit.
-	$ git format-patch -o .. next
-	$ git reset --hard
-	$ git update-ref HEAD~1
-	# Uhhohh...
-	$ ls t/t1400-update-ref.sh
+Summary is:
 
-All I can say is I'm very happy that update-index does a lot more
-than just update the index.  I was easily able to find the deleted
-test by finding the most recently modified object in my .git/objects
-directory and pulling it back out with git cat-file.  :-)
+ * [RFC 1/5] Remove unnecessary local in get_ref_sha1.
 
-Oh, and I totally agree with that discussion about GIT not clobbering
-files the user is working on which the user can't easily recover.
-I just wish recovery from the above stupidity didn't require going
-through .git/objects looking for the newest file.  :-)
+	A minor code cleanup.
 
-Yes, I know that git reset --hard was brutal and yes, I didn't
-really need to use git-update-ref when git-reset would have also
-done the job for me.  Arrgh.  Its early and I wasn't thinking.
+ * [RFC 2/5] Improve abstraction of ref lock/write.
+
+	A major reorg of the write_ref_sha1 APIs.  This reorg allows
+	all internal code to use the same logic for updating any ref,
+	which makes it much easier to hook logging in.
+	
+ * [RFC 3/5] Convert update-ref to use ref_lock API.
+
+ 	Modify update-ref to use the reorg'd write_ref_sha1 API.
+
+ * [RFC 4/5] Log ref updates to logs/refs/<ref>
+
+	Add logging of refs.  This is the pretty much my latest
+	logging patch but cleaned up and built on the above.
+
+ * [RFC 5/5] Support 'master@2 hours ago' syntax
+
+	Extend the SHA1 syntax to search the log for the SHA1 which
+	was valid at the given point in time.
+
+I still need to fix the receive-pack code to log ref changes prior
+to running the update hook.  I'll probably look at that later this
+week.  I also need to edit the ~20 sites which call 'git-update-ref'
+to make use of the new "-m <reason>" flag.
 
 -- 
 Shawn.
