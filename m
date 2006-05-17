@@ -1,95 +1,71 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [PATCH] Implement git-quiltimport (take 2)
-Date: Wed, 17 May 2006 13:20:09 -0600
-Message-ID: <m1zmhg31cm.fsf@ebiederm.dsl.xmission.com>
-References: <m1k68l6hga.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0605161001190.3866@g5.osdl.org>
-	<m1bqtx6el6.fsf@ebiederm.dsl.xmission.com>
-	<7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
-	<m13bf95ixo.fsf@ebiederm.dsl.xmission.com>
-	<7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
-	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
-	<7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: "git add $ignored_file" fail
+Date: Wed, 17 May 2006 15:23:06 -0400
+Message-ID: <1147893786.16654.5.camel@dv>
+References: <8aa486160605161507w3a27152dq@mail.gmail.com>
+	 <Pine.LNX.4.64.0605161526210.16475@g5.osdl.org>
+	 <8aa486160605161542u704ccf03w@mail.gmail.com>
+	 <Pine.LNX.4.63.0605171306400.19012@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <81b0412b0605170604i689a8f7axa5aeb7752dc72072@mail.gmail.com>
+	 <8aa486160605170641p2ab8704o@mail.gmail.com>   <e4f9eo$b60$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 21:21:17 2006
+X-From: git-owner@vger.kernel.org Wed May 17 21:23:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgRZm-0002xx-GV
-	for gcvg-git@gmane.org; Wed, 17 May 2006 21:20:54 +0200
+	id 1FgRc5-0003OE-2b
+	for gcvg-git@gmane.org; Wed, 17 May 2006 21:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbWEQTUr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 15:20:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbWEQTUr
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 15:20:47 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:63634 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1750983AbWEQTUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 15:20:46 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4HJKAKX026787;
-	Wed, 17 May 2006 13:20:10 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4HJK9T7026786;
-	Wed, 17 May 2006 13:20:09 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vsln8cwn6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Wed, 17 May 2006 11:51:41 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S1751016AbWEQTXO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 15:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751019AbWEQTXO
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 15:23:14 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:12743 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751016AbWEQTXN
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 15:23:13 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FgRc0-0004Vy-Gy
+	for git@vger.kernel.org; Wed, 17 May 2006 15:23:12 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FgRbu-0004LN-AY; Wed, 17 May 2006 15:23:06 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e4f9eo$b60$1@sea.gmane.org>
+X-Mailer: Evolution 2.6.1 (2.6.1-3) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20229>
 
-Junio C Hamano <junkio@cox.net> writes:
+On Wed, 2006-05-17 at 15:46 +0200, Jakub Narebski wrote:
+> Santi wrote:
+> 
+> > In the other way, now I find the value of being able to say:
+> > 
+> > $ git add t*
+> > 
+> > and be sure that it does not add an ignored file. Unfortunately
+> > git-add cannot distinguish between both.
+> 
+> Well, it could. If 'git add <filespec>' would result in NO files 
+> added, take <filespec> as literate <file> (filename), regardless
+> of ignores.
 
-> ebiederm@xmission.com (Eric W. Biederman) writes:
->
->> Importing a quilt patch series into git is not very difficult
->> but parsing the patch descriptions and all of the other
->> minutia take a bit of effort to get right, so this automates it.
->>
->> Since git and quilt complement each other it makes sense
->> to make it easy to go back and forth between the two.
->>
->> If a patch is encountered that it cannot derive the author
->> from the user is asked.
->
-> What's the expected workflow for you to work on a 1300 patch
-> series you get from Andrew in the next installment to deal with
-> 88 unattributed patches?  Answer the question 88 times and make
-> sure you get the answers right every time?  Or abort and
-> hand-edit them to help mailinfo to notice the correct
-> attribution and re-run?
+Can we apply the ignore rules to the directories but not the files?
 
-For the internal consumption case it isn't a big deal.  I
-can specify --author with something bogus and it works. 
+This way, "git-add *" would add all files (rarely a good idea), whereas 
+"git-add ." would respect the ignore rules.
 
-There are a few tweaks that can be made to git-mailinfo to
-make it better at parsing information out of patches.  I
-cut the list down to about 49 that way.  I had it all of the
-way down to 1.  But then I realized that the first Singed-off-by
-really doesn't accurately reflect the author.  I suspect a
-few of my other teaks are equally suspicious.
+Kludgy as it is, this approach would generally produce more expected
+results than others.  If you let the shell expand the pattern, expect
+all junk to be added.  If you let git expand the pattern, expect it to
+adhere to the ignore rules.
 
-> I know I am guilty of suggesting "going interactive", but I have
-> a feeling that having an optional file that maps patch-name to
-> author might be easier to work with.  If the old patches are
-> recycled in the updated -mm set, you probably can reuse the
-> mapping for them, adding entries for newly introduced "unnamed"
-> patches as needed.
-
-Short of getting the script where it has a sane restart in the
-middle mode going interactive and asking questions makes a lot
-of sense.  Especially with smaller trees.
-
-For Andrews tree before I play anymore with technical solutions I
-need to talk to Andrew and see if we can improve the situation
-upstream.  Possibly with a quilt-audit script that finds problem
-patches.
-
-Eric
+-- 
+Regards,
+Pavel Roskin
