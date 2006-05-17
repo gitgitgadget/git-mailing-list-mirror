@@ -1,67 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: "git add $ignored_file" fail
-Date: Wed, 17 May 2006 15:48:09 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605171546350.1522@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <8aa486160605161507w3a27152dq@mail.gmail.com> 
- <Pine.LNX.4.64.0605161526210.16475@g5.osdl.org>  <8aa486160605161542u704ccf03w@mail.gmail.com>
-  <Pine.LNX.4.63.0605171306400.19012@wbgn013.biozentrum.uni-wuerzburg.de> 
- <81b0412b0605170604i689a8f7axa5aeb7752dc72072@mail.gmail.com>
- <8aa486160605170641p2ab8704o@mail.gmail.com>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [ANNOUNCE] tig - text-mode interface for git
+Date: Wed, 17 May 2006 16:53:05 +0300
+Message-ID: <20060517165305.07b682b2.tihirvon@gmail.com>
+References: <20060517120733.GA14041@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 15:48:56 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 15:51:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgMNq-0006No-M9
-	for gcvg-git@gmane.org; Wed, 17 May 2006 15:48:15 +0200
+	id 1FgMQp-00073r-Hg
+	for gcvg-git@gmane.org; Wed, 17 May 2006 15:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932556AbWEQNsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 09:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932557AbWEQNsM
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 09:48:12 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:17569 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932556AbWEQNsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 09:48:11 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id D5190197F;
-	Wed, 17 May 2006 15:48:09 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id C930B18AE;
-	Wed, 17 May 2006 15:48:09 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id ADB24DCD;
-	Wed, 17 May 2006 15:48:09 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Santi <sbejar@gmail.com>
-In-Reply-To: <8aa486160605170641p2ab8704o@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932553AbWEQNvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 09:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932559AbWEQNvQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 09:51:16 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:46208 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932553AbWEQNvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 09:51:16 -0400
+Received: by nf-out-0910.google.com with SMTP id d4so168435nfe
+        for <git@vger.kernel.org>; Wed, 17 May 2006 06:51:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=VFqd8GThRHzGXg4JY0sf42R1+1Q7iEOj5yU7vt2ZCPoarEAsXsQTZT6HxnemLm+cIi0z64f9a9oQb7AY6LfYVCNWGvYiOWQ0j7QkGWAESqaGgTzHj2+OWpB/I62Om2avcUrJdmpEpbyVG+zfqFflxioRrBi9DoWGcXYNCY3dJco=
+Received: by 10.48.202.2 with SMTP id z2mr770393nff;
+        Wed, 17 May 2006 06:51:11 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.200.31])
+        by mx.gmail.com with ESMTP id r34sm2105486nfc.2006.05.17.06.51.10;
+        Wed, 17 May 2006 06:51:11 -0700 (PDT)
+To: fonseca@diku.dk
+In-Reply-To: <20060517120733.GA14041@diku.dk>
+X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20198>
 
-Hi,
+Jonas Fonseca <fonseca@diku.dk> wrote:
 
-On Wed, 17 May 2006, Santi wrote:
-
-> In the other way, now I find the value of being able to say:
+> Hello,
 > 
-> $ git add t*
+> I am pleased to announce tig, a simple git repository browser written
+> using ncurses. Basically, it just acts as a front-end for git-log and
+> git-show/git-diff. Additionally, you can also use it as a pager for git
+> commands.
 > 
-> and be sure that it does not add an ignored file. Unfortunately
-> git-add cannot distinguish between both. So what I propose is to
-> document it explicitly, something like:
-> 
-> [...]
+> Currently, it just provides a minimum support for looking through
+> changes. I hope to slowly extend it to also be usable as a front-end for
+> git-blame and for tree browsing. Also, it doesn't do any fancy revision
+> graph rendering, but I want to at least give it a shot at some point. :)
 
-How about a "--force" AKA "-f" flag that overrides the ignore file?
+Thanks.  This makes browsing repositories much easier.  It would be
+great if the colors were customizable.
 
-I would implement it if I had time, but I am gone for three days in about 
-1 minute :-(
-
-Ciao,
-Dscho
+-- 
+http://onion.dynserv.net/~timo/
