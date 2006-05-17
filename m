@@ -1,66 +1,94 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "git add $ignored_file" fail
-Date: Wed, 17 May 2006 07:49:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605170747280.10823@g5.osdl.org>
-References: <8aa486160605161507w3a27152dq@mail.gmail.com> 
- <Pine.LNX.4.64.0605161526210.16475@g5.osdl.org>  <8aa486160605161542u704ccf03w@mail.gmail.com>
-  <Pine.LNX.4.63.0605171306400.19012@wbgn013.biozentrum.uni-wuerzburg.de> 
- <81b0412b0605170604i689a8f7axa5aeb7752dc72072@mail.gmail.com>
- <8aa486160605170641p2ab8704o@mail.gmail.com>
+From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Wed, 17 May 2006 17:08:48 +0200
+Message-ID: <f3d7535d0605170808l21d9f6d0gff1afaa10db17af9@mail.gmail.com>
+References: <4973.1147836384@lotus.CS.Berkeley.EDU>
+	 <Pine.LNX.4.64.0605162047380.10823@g5.osdl.org>
+	 <f3d7535d0605170105j2a6942cfh5a5a8a0d6153046f@mail.gmail.com>
+	 <Pine.LNX.4.64.0605170728520.10823@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 16:49:48 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed May 17 17:13:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgNKw-00033P-QI
-	for gcvg-git@gmane.org; Wed, 17 May 2006 16:49:19 +0200
+	id 1FgNdv-00077j-DA
+	for gcvg-git@gmane.org; Wed, 17 May 2006 17:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbWEQOtP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 10:49:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbWEQOtP
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 10:49:15 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:53909 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750735AbWEQOtP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 10:49:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HEn4tH024826
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 May 2006 07:49:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HEn3eT015475;
-	Wed, 17 May 2006 07:49:04 -0700
-To: Santi <sbejar@gmail.com>
-In-Reply-To: <8aa486160605170641p2ab8704o@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751281AbWEQPIv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 11:08:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbWEQPIt
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 11:08:49 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:14892 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750958AbWEQPIs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 11:08:48 -0400
+Received: by wr-out-0506.google.com with SMTP id i11so237718wra
+        for <git@vger.kernel.org>; Wed, 17 May 2006 08:08:48 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cn5/3sbopBwu7PDRmWIpDxH1ha5k+L6Tpi14J4mxqZj4F+N1+Ots2kLjB+bOKvsKVJInOPNVkozNwz8PozzniRv4d7J0s+FxZSUQT5YSS8Frmp3/eFlJoj/hhjoysc5yN/arNAqTkMc+gira7Tpf1GdHcBkCz1NliDR4kGQJOfU=
+Received: by 10.65.188.2 with SMTP id q2mr1219315qbp;
+        Wed, 17 May 2006 08:08:48 -0700 (PDT)
+Received: by 10.65.20.19 with HTTP; Wed, 17 May 2006 08:08:48 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0605170728520.10823@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20206>
 
+Hi Linus,
 
+2006/5/17, Linus Torvalds <torvalds@osdl.org>:
+>
+> So let me just quote the thing you quoted but apparently didn't read:
 
-On Wed, 17 May 2006, Santi wrote:
-> 
-> In the other way, now I find the value of being able to say:
-> 
-> $ git add t*
+[snip]
 
-Exactly. The shell will expand the path, so the fact that the path exists 
-on the command line does not mean that "git add" should just trust it.
+I did read that.
 
-> and be sure that it does not add an ignored file. Unfortunately
-> git-add cannot distinguish between both. So what I propose is to
-> document it explicitly, something like:
+> There already _is_ such a directory. It's your "prefix=" directory plus
+> "bin".
+>
+> So what you can do is make sure you compile with
+>
+>         make prefix=/my/git/installation/prefix
+>
+> and then install the GNU tools in /my/git/installation/prefix/bin, and
+> you're all set.
 
-Documenting this more clearly (and the workaround of forcing it with 
-"git-update-index --add" by hand) is certainly a good idea.
+Ok, if I would do so, my prefix would be /usr/pkg, and the bindir would be
+/usr/pkg/bin. So I would need to have an xargs and so on symlink in
+/usr/pkg/bin.
+But this is simply not acceptable, because it breaks other NetBSD
+pkgsrc scripts.
 
-			Linus
+Besides that, installing git to a different location is not an option
+for me, because
+I want to have git packaged by pkgsrc.
+
+I suggest Junio's solution will work (gitexecdir) but I have to try
+that later today.
+
+> At most you might have to make some of the tests use "git xyzzy" instead
+> of "git-xyzzy", and run "make install" before "make test".
+>
+> It wouldn't be wonderful, but hey, I've given alternatives (like using the
+> GNU tools by default, or helping make git more portable in the first
+> place). So it's a hack.
+
+Yes I know, as far as I can, I'm willing to help with this.
+
+bye
+
+dreamind
+
+-- 
+       http://www.dreamind.de/
+Oroborus and Debian GNU/Linux Developer.
