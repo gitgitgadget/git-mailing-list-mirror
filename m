@@ -1,66 +1,102 @@
-From: Sam Song <samlinuxkernel@yahoo.com>
-Subject: Re: Fwd: [OT] Re: Git via a proxy server?
-Date: Tue, 16 May 2006 20:56:39 -0700 (PDT)
-Message-ID: <20060517035639.40450.qmail@web32004.mail.mud.yahoo.com>
-References: <4469CF92.2010002@vmware.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Clean up git-ls-file directory walking library interface
+Date: Tue, 16 May 2006 21:06:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605162100570.10823@g5.osdl.org>
+References: <Pine.LNX.4.64.0605161859050.16475@g5.osdl.org>
+ <Pine.LNX.4.64.0605161944480.10823@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 05:56:44 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed May 17 06:07:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgD9O-0003jE-W6
-	for gcvg-git@gmane.org; Wed, 17 May 2006 05:56:43 +0200
+	id 1FgDJN-00051B-Ky
+	for gcvg-git@gmane.org; Wed, 17 May 2006 06:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbWEQD4k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 May 2006 23:56:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbWEQD4k
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 May 2006 23:56:40 -0400
-Received: from web32004.mail.mud.yahoo.com ([68.142.207.101]:23688 "HELO
-	web32004.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751215AbWEQD4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 May 2006 23:56:39 -0400
-Received: (qmail 40452 invoked by uid 60001); 17 May 2006 03:56:39 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Z0ftBaPCgMeCNyfKqS8WqvQoQXFAqwqyT6M2kzTfF8wK4NRGL2suAeNy0Ob5SAGTgEn1Bp6Wu+bY5IP5WT8hMaWPrao6v/aQQJVbsAECFbsBgyEZL29gtGXr98L+YhzebywAh95QJ75ga3zd4KdpUfXsUCq2lRLhUw7rP3RKozk=  ;
-Received: from [61.152.162.133] by web32004.mail.mud.yahoo.com via HTTP; Tue, 16 May 2006 20:56:39 PDT
-To: Petr Vandrovec <petr@vmware.com>
-In-Reply-To: <4469CF92.2010002@vmware.com>
+	id S1751220AbWEQEG7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 00:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbWEQEG7
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 00:06:59 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51381 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751220AbWEQEG6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 00:06:58 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4H46otH001259
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 16 May 2006 21:06:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4H46njZ001318;
+	Tue, 16 May 2006 21:06:49 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0605161944480.10823@g5.osdl.org>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20160>
-
-Petr Vandrovec <petr@vmware.com> wrote:
-> Best to test this is to start 'socket 192.168.40.99
-> 80' from command line and 
-> then type these two lines above, plus one empty
-> line.  You should get back '200 
-> OK', empty line, and then you can start
-> communicating using git protocol - if 
-> you can do that...
-
-I cannot run "socket" and "CONNECT" on Fedora Core 3.
-It simply told me that no such command. How could I 
-do this task in my case?
-
-> As far as I can tell, http_proxy is ignored
-> (Debian's git 1.3.2-1/cogito 0.17.2-1).
-
-Seems you tried proxy-cmd.sh on Debian. Which 
-distribution did you use? 
-
-Thanks a lot,
-
-Sam
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20161>
 
 
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+
+On Tue, 16 May 2006, Linus Torvalds wrote:
+> 
+> That not only allows us to turn the function push_exclude_per_directory() 
+> static again, it also simplifies the library interface a lot (the caller 
+> no longer needs to worry about any of the per-directory exclude files at 
+> all).
+
+Just as an example, here's all you need to basically do
+
+	git-ls-files --others --directory
+		--exclude-from="$GIT_DIR/info/exclude"
+		--exclude-per-directory=.gitignore
+
+like "git status" does (where the "--exclude-from" is conditional on 
+whether the file exists or not).
+
+		Linus
+---
+#include "cache.h"
+#include "dir.h"
+
+int main(int argc, char **argv)
+{
+	struct dir_struct dir;
+	const char *prefix = setup_git_directory();
+	const char *base, *path;
+	int baselen, i;
+
+	/* Read the index */
+	read_cache();
+
+	/* Set up the "struct dir_struct */
+	memset(&dir, 0, sizeof(dir));
+	dir.show_other_directories = 1;
+
+	/* normal git porcelain exclude patterns */
+	dir.exclude_per_dir = ".gitignore";
+	path = git_path("info/exclude");
+	if (!access(path, R_OK))
+		add_excludes_from_file(&dir, path);
+
+	/* Set up read_directory() arguments and go go go! */
+	path = ".";
+	base = "";
+	baselen = 0;
+	if (prefix) {
+		path = base = prefix;
+		baselen = strlen(prefix);
+	}
+	read_directory(&dir, path, base, baselen);
+
+	/* And print it all out */
+	if (dir.nr)
+		printf("#\n# Untracked files:\n#\n");
+	for (i = 0; i < dir.nr; i++)
+		printf("# %s\n", dir.entries[i]->name);
+	return 0;
+}
