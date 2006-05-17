@@ -1,77 +1,53 @@
-From: "Bertrand Jacquin" <beber.mailing@gmail.com>
-Subject: Re: [PATCH] builtin-grep: workaround for non GNU grep.
-Date: Wed, 17 May 2006 17:39:26 +0200
-Message-ID: <4fb292fa0605170839r259732dcw1c1bae3f1808db32@mail.gmail.com>
-References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
-	 <Pine.LNX.4.64.0605161904260.16475@g5.osdl.org>
-	 <7vejythvkr.fsf@assigned-by-dhcp.cox.net>
-	 <7vves5geng.fsf_-_@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Git interfaces, frontends and other tools list
+Date: Wed, 17 May 2006 17:49:43 +0200
+Organization: At home
+Message-ID: <e4fgmi$9ls$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 17:40:00 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed May 17 17:51:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgO7a-0006Ol-LP
-	for gcvg-git@gmane.org; Wed, 17 May 2006 17:39:35 +0200
+	id 1FgOIs-0000X2-CR
+	for gcvg-git@gmane.org; Wed, 17 May 2006 17:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750701AbWEQPja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 11:39:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750704AbWEQPja
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 11:39:30 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:30883 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750701AbWEQPja convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 11:39:30 -0400
-Received: by nf-out-0910.google.com with SMTP id d4so187964nfe
-        for <git@vger.kernel.org>; Wed, 17 May 2006 08:39:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mtB2Tg6ZsSbEKyrQUGHzuVkzXix5EsGYSgBikqewKUhp3HCICdYqudTzAu7VLty2lpCCzQ3nXY/dfGNFDiPYrDWm67TtqUANsawvjFzArMqHvv3WnVu00/OjcoMa6xqJo6j86K/PtjzXmvqWcwFqGNuUt/c85QxBGDYRpNiSO4w=
-Received: by 10.48.48.16 with SMTP id v16mr8605nfv;
-        Wed, 17 May 2006 08:39:26 -0700 (PDT)
-Received: by 10.49.5.5 with HTTP; Wed, 17 May 2006 08:39:26 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vves5geng.fsf_-_@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750721AbWEQPu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 11:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbWEQPu4
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 11:50:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:49094 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750721AbWEQPuz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 11:50:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FgOHr-0000Kz-Vf
+	for git@vger.kernel.org; Wed, 17 May 2006 17:50:12 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 May 2006 17:50:11 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 May 2006 17:50:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20209>
 
-On 5/17/06, Junio C Hamano <junkio@cox.net> wrote:
+Authors of Git related tools are encouraged to enter the information about
+those tools on GitWiki:
 
-> +ifdef NO_H_OPTION_IN_GREP
-> +       NO_H_OPTION_IN_GREP=1
-> +else
-> +       NO_H_OPTION_IN_GREP=0
-> +endif
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
 
-> +       if (NO_H_OPTION_IN_GREP)
-> +               push_arg("/dev/null");
-> +       else {
-> +               push_arg("-H");
-> +               push_arg("--");
-> +       }
-
-Sorry, maybe a C code beginner question but while you define
-NO_H_OPTION_IN_GREP in Makefile, why don't use a build time ``if''
-instead of a runtime one ?
-
-Like :
-
-#if NO_H_OPTION_IN_GREP
-               push_arg("/dev/null");
-#else
-               push_arg("-H");
-               push_arg("--");
-#fi
+and, of course, correct and expand information there.
 
 -- 
-Beber
-#e.fr@freenode
+Jakub Narebski
+Warsaw, Poland
