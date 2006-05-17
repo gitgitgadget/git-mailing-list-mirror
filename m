@@ -1,93 +1,83 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Subject: Re: Fwd: [OT] Re: Git via a proxy server?
-Date: Wed, 17 May 2006 10:38:45 +0200
-Message-ID: <20060517083845.GC23642@lug-owl.de>
-References: <4469CF92.2010002@vmware.com> <20060517035639.40450.qmail@web32004.mail.mud.yahoo.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Merge with local conflicts in new files
+Date: Wed, 17 May 2006 20:50:41 +1200
+Message-ID: <46a038f90605170150x361892abv8df226aa899f1a95@mail.gmail.com>
+References: <8aa486160605161500m1dd8428cj@mail.gmail.com>
+	 <7v1wut61aj.fsf@assigned-by-dhcp.cox.net>
+	 <8aa486160605161611p4c9ddbc0v@mail.gmail.com>
+	 <7vu07p35xn.fsf@assigned-by-dhcp.cox.net>
+	 <1147852052.31879.50.camel@dv>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jcjv6D8puUawUjle"
-Cc: Petr Vandrovec <petr@vmware.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 10:38:52 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Junio C Hamano" <junkio@cox.net>, Santi <sbejar@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 10:50:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgHYR-0008P8-7r
-	for gcvg-git@gmane.org; Wed, 17 May 2006 10:38:51 +0200
+	id 1FgHjz-0001sK-9A
+	for gcvg-git@gmane.org; Wed, 17 May 2006 10:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932491AbWEQIir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 04:38:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932497AbWEQIir
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 04:38:47 -0400
-Received: from lug-owl.de ([195.71.106.12]:54186 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S932491AbWEQIir (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 04:38:47 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id C78BEF003D; Wed, 17 May 2006 10:38:45 +0200 (CEST)
-To: Sam Song <samlinuxkernel@yahoo.com>
-Mail-Followup-To: Sam Song <samlinuxkernel@yahoo.com>,
-	Petr Vandrovec <petr@vmware.com>, git@vger.kernel.org
+	id S1751042AbWEQIun (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 04:50:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbWEQIun
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 04:50:43 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:15476 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751017AbWEQIum convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 04:50:42 -0400
+Received: by wr-out-0506.google.com with SMTP id i4so178769wra
+        for <git@vger.kernel.org>; Wed, 17 May 2006 01:50:41 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S+dxn74lVsY8xeEmUqcrOaaufCs61FnEvvCae3jkftXWkHSK1H45hCn0llxe9iedoD3i9QwJrFF6qmhYfrAaRnCQiT3hG/J1uRrOV6dJEY0MPIhDNpHlh4QF1s1NgcN6vyBm1nSyJ3jEm3aVGr6MhCIpp1WQ67AD8bZScYXY1MI=
+Received: by 10.54.134.15 with SMTP id h15mr2203672wrd;
+        Wed, 17 May 2006 01:50:41 -0700 (PDT)
+Received: by 10.54.127.17 with HTTP; Wed, 17 May 2006 01:50:41 -0700 (PDT)
+To: "Pavel Roskin" <proski@gnu.org>
+In-Reply-To: <1147852052.31879.50.camel@dv>
 Content-Disposition: inline
-In-Reply-To: <20060517035639.40450.qmail@web32004.mail.mud.yahoo.com>
-X-Operating-System: Linux mail 2.6.12.3lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20173>
+
+On 5/17/06, Pavel Roskin <proski@gnu.org> wrote:
+> If a file doesn't "belong" to git, it belongs to its
+> "supreme commander", i.e. the user, and should be approached with utmost
+> care.
+
++1 here. Unknown files are precious (to take an Arch term) until git
+is told otherwise.
+
+> special options (e.g. --force or --hard), and for the files explicitly
+> marked as transient (e.g. in .gitignore).
+
+I think that if we turn into clobbering files listed in .gitignore
+users will probably be screaming bloody murder. No git op should
+clobber untracked files...
+
+Arch has this strange concept of allowing you to list 'junk' files. I
+could never figure out why it would want my authorization to remove
+files randomly. For all its faults, cvs does the right thing -- it
+will say 'checkout/update of foo.c blocked by foo.c in directory'. And
+if you force it with -C it will rename the local file to
+.#originalname-local or something like that.
+
+Even the files I think of as junk are actually useful and should not
+be messed up with. Editor temp files, for instance, are often listed
+in .gitignore, and if you ask me, they are junk. Except while I am
+working with my editor! ;-)
+
+Another case is .project files from IDEs like Eclipse. People list
+them in .cvsignore so that they are not committed, and yet preserved.
+The user probably has a lot of personal settings there.
+
+cheers,
 
 
---jcjv6D8puUawUjle
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, 2006-05-16 20:56:39 -0700, Sam Song <samlinuxkernel@yahoo.com> wrot=
-e:
-> Petr Vandrovec <petr@vmware.com> wrote:
-> > Best to test this is to start 'socket 192.168.40.99
-> > 80' from command line and=20
-> > then type these two lines above, plus one empty
-> > line.  You should get back '200=20
-> > OK', empty line, and then you can start
-> > communicating using git protocol - if=20
-> > you can do that...
->=20
-> I cannot run "socket" and "CONNECT" on Fedora Core 3.
-> It simply told me that no such command. How could I=20
-> do this task in my case?
-
-Well, install some package to have `socket' available? Debian calls
-the packet `socket', too, so I guess Fedora may have something
-similar.
-
-MfG, JBG
-
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
-_ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
-_ _ O
- f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
-m Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
-);
-
---jcjv6D8puUawUjle
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEauEVHb1edYOZ4bsRAkHtAKCKYMDxud+dObhwFM4tQqbCQ8O+wQCgjR+l
-CZr9sNtaMROqO8BycVOi3FE=
-=FYDQ
------END PGP SIGNATURE-----
-
---jcjv6D8puUawUjle--
+martin
