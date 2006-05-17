@@ -1,72 +1,80 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig - text-mode interface for git
-Date: Wed, 17 May 2006 17:53:10 +0200
-Message-ID: <20060517155310.GA12985@diku.dk>
-References: <20060517120733.GA14041@diku.dk> <20060517165305.07b682b2.tihirvon@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Wed, 17 May 2006 09:24:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605170919290.10823@g5.osdl.org>
+References: <4973.1147836384@lotus.CS.Berkeley.EDU> 
+ <Pine.LNX.4.64.0605162047380.10823@g5.osdl.org> 
+ <f3d7535d0605170105j2a6942cfh5a5a8a0d6153046f@mail.gmail.com> 
+ <Pine.LNX.4.64.0605170728520.10823@g5.osdl.org>
+ <f3d7535d0605170808l21d9f6d0gff1afaa10db17af9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 17:53:58 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 17 18:25:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgOL5-00012N-U2
-	for gcvg-git@gmane.org; Wed, 17 May 2006 17:53:32 +0200
+	id 1FgOol-0007Qk-D5
+	for gcvg-git@gmane.org; Wed, 17 May 2006 18:24:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750740AbWEQPxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 11:53:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbWEQPxO
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 11:53:14 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:45548 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1750734AbWEQPxN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 11:53:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 30AF477003C;
-	Wed, 17 May 2006 17:53:12 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08998-07; Wed, 17 May 2006 17:53:10 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id F1228770036;
-	Wed, 17 May 2006 17:53:10 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 0EE8A6DF89F; Wed, 17 May 2006 17:50:18 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id AF4FE6242D; Wed, 17 May 2006 17:53:10 +0200 (CEST)
-To: Timo Hirvonen <tihirvon@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20060517165305.07b682b2.tihirvon@gmail.com>
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1750726AbWEQQYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 12:24:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbWEQQYI
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 12:24:08 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57787 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750726AbWEQQYG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 12:24:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HGO2tH029784
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 17 May 2006 09:24:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HGO1sx018308;
+	Wed, 17 May 2006 09:24:02 -0700
+To: Stefan Pfetzing <stefan.pfetzing@gmail.com>
+In-Reply-To: <f3d7535d0605170808l21d9f6d0gff1afaa10db17af9@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20211>
 
-Timo Hirvonen <tihirvon@gmail.com> wrote Wed, May 17, 2006:
-> Jonas Fonseca <fonseca@diku.dk> wrote:
+
+
+On Wed, 17 May 2006, Stefan Pfetzing wrote:
 > 
-> > Hello,
-> > 
-> > I am pleased to announce tig, a simple git repository browser written
-> > using ncurses. Basically, it just acts as a front-end for git-log and
-> > git-show/git-diff. Additionally, you can also use it as a pager for git
-> > commands.
-> > 
-> > Currently, it just provides a minimum support for looking through
-> > changes. I hope to slowly extend it to also be usable as a front-end for
-> > git-blame and for tree browsing. Also, it doesn't do any fancy revision
-> > graph rendering, but I want to at least give it a shot at some point. :)
-> 
-> Thanks.  This makes browsing repositories much easier.  It would be
-> great if the colors were customizable.
+> Ok, if I would do so, my prefix would be /usr/pkg, and the bindir would be
+> /usr/pkg/bin. So I would need to have an xargs and so on symlink in
+> /usr/pkg/bin.
+> But this is simply not acceptable, because it breaks other NetBSD
+> pkgsrc scripts.
 
-I am open to providing a better default color scheme, since my fondness
-of green might be too dominating. For now you will have to edit the
-colors defined under LINE_INFO, but sure. I think supporting something
-similar to CG_COLORS will suffice.
+DON'T USE /usr/pkg then.
 
--- 
-Jonas Fonseca
+Use /usr/pkg/git-core/share/ or something that is normally not on your 
+path.
+
+And then install _just_ the "git" binary in /usr/pkg/bin.
+
+That must be allowable by whatever solaris packaging rules: it's not like 
+other projects don't have their own internal library files.
+
+Then you install the GNU symlinks under that same
+
+	/usr/pkg/git-core/share/bin
+
+and you're all set. The only binary you can _see_ is "git", and when that 
+executes any scripts or other git binaries, it will set up the path to 
+include that magic hidden directory.
+
+> Besides that, installing git to a different location is not an option
+> for me, because I want to have git packaged by pkgsrc.
+
+Now, I'm told pkgsrc is horrible, but it can't be so horrid as to not 
+allow private directories?
+
+		Linus
