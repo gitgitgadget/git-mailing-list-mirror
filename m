@@ -1,62 +1,71 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [ANNOUNCE] tig - text-mode interface for git
-Date: Wed, 17 May 2006 16:53:05 +0300
-Message-ID: <20060517165305.07b682b2.tihirvon@gmail.com>
-References: <20060517120733.GA14041@diku.dk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] builtin-grep: workaround for non GNU grep.
+Date: Wed, 17 May 2006 07:24:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605170722590.10823@g5.osdl.org>
+References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
+ <Pine.LNX.4.64.0605161904260.16475@g5.osdl.org> <7vejythvkr.fsf@assigned-by-dhcp.cox.net>
+ <7vves5geng.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 15:51:51 2006
+X-From: git-owner@vger.kernel.org Wed May 17 16:24:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgMQp-00073r-Hg
-	for gcvg-git@gmane.org; Wed, 17 May 2006 15:51:19 +0200
+	id 1FgMwi-00065f-TE
+	for gcvg-git@gmane.org; Wed, 17 May 2006 16:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932553AbWEQNvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 09:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932559AbWEQNvQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 09:51:16 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:46208 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932553AbWEQNvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 09:51:16 -0400
-Received: by nf-out-0910.google.com with SMTP id d4so168435nfe
-        for <git@vger.kernel.org>; Wed, 17 May 2006 06:51:11 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=VFqd8GThRHzGXg4JY0sf42R1+1Q7iEOj5yU7vt2ZCPoarEAsXsQTZT6HxnemLm+cIi0z64f9a9oQb7AY6LfYVCNWGvYiOWQ0j7QkGWAESqaGgTzHj2+OWpB/I62Om2avcUrJdmpEpbyVG+zfqFflxioRrBi9DoWGcXYNCY3dJco=
-Received: by 10.48.202.2 with SMTP id z2mr770393nff;
-        Wed, 17 May 2006 06:51:11 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.200.31])
-        by mx.gmail.com with ESMTP id r34sm2105486nfc.2006.05.17.06.51.10;
-        Wed, 17 May 2006 06:51:11 -0700 (PDT)
-To: fonseca@diku.dk
-In-Reply-To: <20060517120733.GA14041@diku.dk>
-X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
+	id S932573AbWEQOYN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 10:24:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932572AbWEQOYN
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 10:24:13 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:42634 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932573AbWEQOYM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 10:24:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HEO5tH023440
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 17 May 2006 07:24:05 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HEO4wY014845;
+	Wed, 17 May 2006 07:24:04 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vves5geng.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20200>
 
-Jonas Fonseca <fonseca@diku.dk> wrote:
 
-> Hello,
-> 
-> I am pleased to announce tig, a simple git repository browser written
-> using ncurses. Basically, it just acts as a front-end for git-log and
-> git-show/git-diff. Additionally, you can also use it as a pager for git
-> commands.
-> 
-> Currently, it just provides a minimum support for looking through
-> changes. I hope to slowly extend it to also be usable as a front-end for
-> git-blame and for tree browsing. Also, it doesn't do any fancy revision
-> graph rendering, but I want to at least give it a shot at some point. :)
+No, please don't do it this way.
 
-Thanks.  This makes browsing repositories much easier.  It would be
-great if the colors were customizable.
+On Wed, 17 May 2006, Junio C Hamano wrote:
+>
+> +	 * Some grep implementations do not understand -H nor --
+> +	 * but /dev/null can be used as a substitution in most
+> +	 * cases.
+> +	 *
+> +	 * However -L and -c would slightly misbehave (-L would
+> +	 * list /dev/null as a hit, and -c would report 0 hits
+> +	 * from /dev/null); so do not use the external one on
+> +	 * such platforms.
+>  	 */
+> -	if (!cached) {
+> +	if (!cached &&
+> +	    (!NO_H_OPTION_IN_GREP ||
+> +	     (!opt->count && !opt->unmatch_name_only))) {
+>  		hit = external_grep(opt, paths, cached);
+>  		if (hit >= 0)
+>  			return hit;
 
--- 
-http://onion.dynserv.net/~timo/
+That's the ugliest test ever, and at all the wrong levels.
+
+Just make "external_grep()" test for the cases that it cannot handle, and 
+return -1. That's how it's designed to work.
+
+		Linus
