@@ -1,116 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
-Date: Wed, 17 May 2006 11:28:15 -0700
-Message-ID: <7viro4ecao.fsf@assigned-by-dhcp.cox.net>
-References: <e4f1ta$e07$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 20:28:25 2006
+From: Bill Yoder <byoder@cs.utexas.edu>
+Subject: 1.3.2 git-clone segfaults
+Date: Wed, 17 May 2006 13:32:39 -0500
+Message-ID: <879BAFDD-87DB-4041-8753-5D63630076B5@cs.utexas.edu>
+Mime-Version: 1.0 (Apple Message framework v750)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Wolfgang Denk <wd@denx.de>
+X-From: git-owner@vger.kernel.org Wed May 17 20:33:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgQkt-0007xn-RM
-	for gcvg-git@gmane.org; Wed, 17 May 2006 20:28:20 +0200
+	id 1FgQpD-0000Z5-6C
+	for gcvg-git@gmane.org; Wed, 17 May 2006 20:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750863AbWEQS2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 14:28:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbWEQS2R
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:28:17 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61317 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750853AbWEQS2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 14:28:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060517182816.KBSC25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 17 May 2006 14:28:16 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e4f1ta$e07$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	17 May 2006 13:37:19 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750879AbWEQSco (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 14:32:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbWEQScn
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:32:43 -0400
+Received: from smtpauth04.mail.atl.earthlink.net ([209.86.89.64]:63212 "EHLO
+	smtpauth04.mail.atl.earthlink.net") by vger.kernel.org with ESMTP
+	id S1750878AbWEQScn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 14:32:43 -0400
+Received: from [128.83.122.182] (helo=[128.83.122.182])
+	by smtpauth04.mail.atl.earthlink.net with asmtp (Exim 4.34)
+	id 1FgQp7-0000lV-Nf; Wed, 17 May 2006 14:32:41 -0400
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.750)
+X-ELNK-Trace: 9592836211a6d0db1058e01f90253df340683398e744b8a4c379ccdaff32a659381b8bef45b073ec350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
+X-Originating-IP: 128.83.122.182
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20218>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Dear Git maintainers:
 
-> In #git channel somebody asked about 'branches' and 'heads' and was referred
-> to the glossary. I had taken then a look at appropriate glossary entries.
->
-> In 'Documentation/glossary.txt' we have:
-> ----  
-> branch::
->         A non-cyclical graph of revisions, i.e. the complete history of
->         a particular revision, which is called the branch head. The
->         branch heads are stored in `$GIT_DIR/refs/heads/`.
->
-> head::
->         The top of a branch. It contains a ref to the corresponding
->         commit object.
->
-> head ref::
->         A ref pointing to a head. Often, this is abbreviated to "head".
->         Head refs are stored in `$GIT_DIR/refs/heads/`.
->
-> revision::
->         A particular state of files and directories which was stored in
->         the object database. It is referenced by a commit object.
-> ---- 
->
-> It is just me or the glossary entry for `branch` is unnecessary 
-> complicated? 
+I have twice downloaded git-1.3.2, most recently the git-1.3.2.tar.gz  
+source package from http://www.t2-project.org/packages/git.html.   
+Both the prebuilt version and the source version, built with gcc  
+3.2.3 on x86/Linux, run into trouble when executing this command:
 
-While technically it might be correct, the above description for
-"branch" completely misses the point in the context of other
-entries.  I do not recall when this entry was first written, but
-I suspect it probably predates other entries that talk about the
-same thing.
+% git --exec-path=/usr/local/downloads/git-1.3.2 clone http:// 
+www.denx.de/git/linux-2.6-denx.git linux-2.6-denx
 
-As you point out it talks primarily about the mesh of all
-possible histories (i.e commit DAG), without talking much about
-what "branch" means and what role "branch" plays.
+Both git operations proceed with some 18,000+ lines of output,  
+culminating in this message:
 
-I cannot easily do a glossary entry to describe that specific
-term, but maybe somebody else can split the following up and
-paraphrase.
+got 243a15f54002445f5b8b4938981ec90430b73ec6
+got 03914b7e41b17871aea961f6522ec4ce26a4f8ed
+got a305ae2e44b6dde305d3afe241768e32c47d8907
+got 33a653913d942fa35c263edf1d019f36f4e0f5b1
+got f13f49afe198cc0d59e998fe3a6e721d70fca6b4
+error: The requested URL returned error: 405 (curl_result = 22,  
+http_code = 405, sha1 = b323ff5779672c77b6adfba1c1bdc87f4981f85c)
+error: Unable to find b323ff5779672c77b6adfba1c1bdc87f4981f85c under  
+http://www.denx.de/git/linux-2.6-denx.git/
+Cannot obtain needed blob b323ff5779672c77b6adfba1c1bdc87f4981f85c
+while processing commit ea989b3245993f95e58e6c0320bf6165a949b072.
+Waiting for http://www.denx.de/git/linux-2.6-denx.git/objects/ 
+31/548303ee3767095f86efb47696ce433662450e
+/usr/local/downloads/git-1.3.2/git-clone: line 323: 25972  
+Segmentation fault      git-http-fetch -v -a -w "$tname" "$name" "$1/"
 
-        A project history is born by recording a particular
-        state ("revision") as a root commit, and built up by
-        recording subsequent states ("revisions") on top of the
-        previous commits.  Thus, a group of commits connected by
-        their parent fields form a directed acyclic graph
-        ("DAG").  Often this linkage between commits by their
-        parent fields is called "ancestry chain", and a commit
-        that has another commit in its "parent" field is called
-        a "child commit" of the latter.
+I have also tested git-1.2.3 built from source, and it works dandily.
 
-        There can be multiple root commits in the history of a
-        project.  In other words, projects born independently
-        can later be glued together to become a single project.
+Please let me know if I can supply more information or if I'm  
+misusing the command.
 
-        The history is grown by building on top of previous
-        commits, and by the nature of distributed development,
-        many lineages of histories are grown simultaneously.
-        Each lineage is called a "branch".
+Thanks,
 
-        A commit that can be reached by following the ancestry
-        chain from a commit that is "on the branch" is also "on
-        the branch", and a commit that cannot be reached by
-        following the ancestry chain from any commit that is "on
-        the branch" is not "on the branch".  The commit that
-        bootstraps this recursive definition of "on the branch"
-        is called its "branch head", the "tip of the branch", or
-        the "top commit".  In other words, it is topologically
-        the latest commit on the branch.
-
-	The above does not mean the top commit of a branch does
-	not have any child commit in the global project
-	histories.  It just means that these children are not on
-	the branch; they may be on some other branches, forked
-	from it.  To create a branch whose "on the branch"
-	commits are strict superset of "on the branch" commits
-	of another branch is called "forking" the branch.
+Bill Yoder
+Git Newbie
