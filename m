@@ -1,86 +1,82 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Merge with local conflicts in new files
-Date: Wed, 17 May 2006 03:47:32 -0400
-Message-ID: <1147852052.31879.50.camel@dv>
-References: <8aa486160605161500m1dd8428cj@mail.gmail.com>
-	 <7v1wut61aj.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160605161611p4c9ddbc0v@mail.gmail.com>
-	 <7vu07p35xn.fsf@assigned-by-dhcp.cox.net>
+From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Wed, 17 May 2006 10:05:39 +0200
+Message-ID: <f3d7535d0605170105j2a6942cfh5a5a8a0d6153046f@mail.gmail.com>
+References: <4973.1147836384@lotus.CS.Berkeley.EDU>
+	 <Pine.LNX.4.64.0605162047380.10823@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Santi <sbejar@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 09:47:46 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed May 17 10:05:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgGkv-00008C-Js
-	for gcvg-git@gmane.org; Wed, 17 May 2006 09:47:41 +0200
+	id 1FgH2R-0003TJ-N7
+	for gcvg-git@gmane.org; Wed, 17 May 2006 10:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750850AbWEQHri (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 03:47:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbWEQHri
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 03:47:38 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:8601 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750764AbWEQHrh
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 03:47:37 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FgGkq-00082x-16
-	for git@vger.kernel.org; Wed, 17 May 2006 03:47:36 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FgGkm-0005jh-K6; Wed, 17 May 2006 03:47:32 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu07p35xn.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.6.1 (2.6.1-3) 
+	id S932467AbWEQIFl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 04:05:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932472AbWEQIFl
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 04:05:41 -0400
+Received: from wr-out-0506.google.com ([64.233.184.231]:37960 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932467AbWEQIFk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 04:05:40 -0400
+Received: by wr-out-0506.google.com with SMTP id i11so165950wra
+        for <git@vger.kernel.org>; Wed, 17 May 2006 01:05:40 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dq+EeY8N0LHgrQk8M/MBDNCXw7nf7lGynqfsd2Rw7yeWKQM5PxXN/hC3eS/oFTFP85dwSE3jqRWfz05m8N4+4rC7PHKYkiNiXgY9Mdp1/XsH96A+8QiruRXx8isgRI+1yl55Zw6vrevF1nB/xPS+LUOXUzsYWK7vOxAGQRodl6Q=
+Received: by 10.65.73.20 with SMTP id a20mr809063qbl;
+        Wed, 17 May 2006 01:05:39 -0700 (PDT)
+Received: by 10.65.20.19 with HTTP; Wed, 17 May 2006 01:05:39 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.64.0605162047380.10823@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20166>
 
-Hello, Junio!
+Hi Linus,
 
-On Tue, 2006-05-16 at 16:28 -0700, Junio C Hamano wrote:
-> Santi <sbejar@gmail.com> writes:
-> 
-> > 2006/5/17, Junio C Hamano <junkio@cox.net>:
-> >>  - You have not told git that these files matter.
+2006/5/17, Linus Torvalds <torvalds@osdl.org>:
+>
+> On Tue, 16 May 2006, Jason Riedy wrote:
 > >
-> > For me it is the other way, all my files matter but git can do
-> > whatever it wants with the ones it controls.
-> 
-> You really do not mean that.
-> 
-> If you told git a file matters, and have local modifications to
-> the file in the working tree that you have not run update-index
-> yet, merge and apply should be careful not to overwrite your
-> changes that is not ready while doing whatever thing they have
-> to do.  And they are careful, because you have told git that
-> they matter, and the way you tell git that they matter is to
-> have entries for them in the index.
+> > But for recommending and using git on these systems _now_...
+>
+> Yes. For that, I would literally suggest having people install the GNU
+> tools (and/or a recent enough perl) somewhere early in the path.
+>
+> If you use the git wrapper, for example, you can already depend on the
+> fact that it will prepend the git installation directory to the path, so
+> while the GNU tools might not _normally_ be on the path, if you put them
+> in the same directory as your git install, you'll automatically get them
+> as long as you use the "git cmd" format (rather than the "git-cmd"
+> format).
 
-I'm afraid this approach, while understandable from the technical
-standpoint, could prevent git from ever becoming a version control
-system that "just works" without any porcelains.
+Well I guess for my pkgsrc environment this won't work.
+I already (quite some time ago) tried to have gnu coreutils, findutils and
+diffutils installed without the g prefix.
+This broke several things on NetBSD and on Solaris.
 
-I know a person who refuses to use any version control.  If he
-encountered this situation, he would never try any version control
-again.
+So I'd prefer a solution where one could set one flag for the Makefile of git,
+and git would check for the g prefix, create somewhere a directory with
+symlinks to the "real" gnu binaries and put it into $PATH upon startup of
+every git c-program or shellscript.
 
-After all, we are talking about files in the _working_ directory.  It's
-not merely a transient appendix to the repository.  git is not the only
-player here.  If a file doesn't "belong" to git, it belongs to its
-"supreme commander", i.e. the user, and should be approached with utmost
-care.
+I suggest having these gnu "tools" dependancies removed can only be a long
+term goal.
 
-Merging a branch should not cause an irreparable loss of user data.  The
-same applies to other commands.  Exceptions can be made for commands
-that are specifically meant to clean user data, for commands with
-special options (e.g. --force or --hard), and for the files explicitly
-marked as transient (e.g. in .gitignore).
+bye
 
--- 
-Regards,
-Pavel Roskin
+dreamind
+
+P.S.: I had to re-sent this mail, somehow gmail did put html crap into it.
+--
+       http://www.dreamind.de/
+Oroborus and Debian GNU/Linux Developer.
