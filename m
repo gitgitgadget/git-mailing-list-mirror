@@ -1,102 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Clean up git-ls-file directory walking library interface
-Date: Tue, 16 May 2006 21:06:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605162100570.10823@g5.osdl.org>
-References: <Pine.LNX.4.64.0605161859050.16475@g5.osdl.org>
- <Pine.LNX.4.64.0605161944480.10823@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Tue, 16 May 2006 22:15:16 -0700
+Message-ID: <20060517051505.GD31164@h4x0r5.com>
+References: <Pine.LNX.4.64.0605161904260.16475@g5.osdl.org> <4973.1147836384@lotus.CS.Berkeley.EDU>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed May 17 06:07:09 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Stefan Pfetzing <stefan.pfetzing@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 17 07:16:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgDJN-00051B-Ky
-	for gcvg-git@gmane.org; Wed, 17 May 2006 06:07:02 +0200
+	id 1FgEOM-0004bC-E1
+	for gcvg-git@gmane.org; Wed, 17 May 2006 07:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbWEQEG7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 00:06:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbWEQEG7
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 00:06:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:51381 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751220AbWEQEG6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 00:06:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4H46otH001259
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 May 2006 21:06:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4H46njZ001318;
-	Tue, 16 May 2006 21:06:49 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0605161944480.10823@g5.osdl.org>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932124AbWEQFPz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 01:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbWEQFPz
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 01:15:55 -0400
+Received: from h4x0r5.com ([70.85.31.202]:4104 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S932124AbWEQFPz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 01:15:55 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1FgENT-0000ug-68; Tue, 16 May 2006 22:15:19 -0700
+To: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Content-Disposition: inline
+In-Reply-To: <4973.1147836384@lotus.CS.Berkeley.EDU>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20162>
 
+On Tue, May 16, 2006 at 08:26:24PM -0700, Jason Riedy wrote:
+> Plus, alas, Perl modules and Python version drift can be a bit
+> of a problem on the same semi-pristine (or unmaintained, or
+> too-stable) systems, so shell isn't the only thing that needs to
+> go.  And that'll take a good deal of effort.
 
+The Perl used in core-git is pretty forgiving of older versions of Perl,
+back to at least 5.6.  (Going back to 5.005.003 is rather painful,
+however, to be honest.)
 
-On Tue, 16 May 2006, Linus Torvalds wrote:
-> 
-> That not only allows us to turn the function push_exclude_per_directory() 
-> static again, it also simplifies the library interface a lot (the caller 
-> no longer needs to worry about any of the per-directory exclude files at 
-> all).
-
-Just as an example, here's all you need to basically do
-
-	git-ls-files --others --directory
-		--exclude-from="$GIT_DIR/info/exclude"
-		--exclude-per-directory=.gitignore
-
-like "git status" does (where the "--exclude-from" is conditional on 
-whether the file exists or not).
-
-		Linus
----
-#include "cache.h"
-#include "dir.h"
-
-int main(int argc, char **argv)
-{
-	struct dir_struct dir;
-	const char *prefix = setup_git_directory();
-	const char *base, *path;
-	int baselen, i;
-
-	/* Read the index */
-	read_cache();
-
-	/* Set up the "struct dir_struct */
-	memset(&dir, 0, sizeof(dir));
-	dir.show_other_directories = 1;
-
-	/* normal git porcelain exclude patterns */
-	dir.exclude_per_dir = ".gitignore";
-	path = git_path("info/exclude");
-	if (!access(path, R_OK))
-		add_excludes_from_file(&dir, path);
-
-	/* Set up read_directory() arguments and go go go! */
-	path = ".";
-	base = "";
-	baselen = 0;
-	if (prefix) {
-		path = base = prefix;
-		baselen = strlen(prefix);
-	}
-	read_directory(&dir, path, base, baselen);
-
-	/* And print it all out */
-	if (dir.nr)
-		printf("#\n# Untracked files:\n#\n");
-	for (i = 0; i < dir.nr; i++)
-		printf("# %s\n", dir.entries[i]->name);
-	return 0;
-}
+The only major tool I can think of that has embedded Perl in the shell
+script is format-patch.  That could probably be redone in pure Perl if
+it would help.
