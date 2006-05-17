@@ -1,83 +1,85 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Merge with local conflicts in new files
-Date: Wed, 17 May 2006 20:50:41 +1200
-Message-ID: <46a038f90605170150x361892abv8df226aa899f1a95@mail.gmail.com>
-References: <8aa486160605161500m1dd8428cj@mail.gmail.com>
-	 <7v1wut61aj.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160605161611p4c9ddbc0v@mail.gmail.com>
-	 <7vu07p35xn.fsf@assigned-by-dhcp.cox.net>
-	 <1147852052.31879.50.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Wed, 17 May 2006 02:03:32 -0700
+Message-ID: <7vejythvkr.fsf@assigned-by-dhcp.cox.net>
+References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
+	<Pine.LNX.4.64.0605161904260.16475@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <junkio@cox.net>, Santi <sbejar@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 10:50:54 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 11:03:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgHjz-0001sK-9A
-	for gcvg-git@gmane.org; Wed, 17 May 2006 10:50:47 +0200
+	id 1FgHwV-0003zz-5c
+	for gcvg-git@gmane.org; Wed, 17 May 2006 11:03:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbWEQIun (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 04:50:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbWEQIun
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 04:50:43 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:15476 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751017AbWEQIum convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 04:50:42 -0400
-Received: by wr-out-0506.google.com with SMTP id i4so178769wra
-        for <git@vger.kernel.org>; Wed, 17 May 2006 01:50:41 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=S+dxn74lVsY8xeEmUqcrOaaufCs61FnEvvCae3jkftXWkHSK1H45hCn0llxe9iedoD3i9QwJrFF6qmhYfrAaRnCQiT3hG/J1uRrOV6dJEY0MPIhDNpHlh4QF1s1NgcN6vyBm1nSyJ3jEm3aVGr6MhCIpp1WQ67AD8bZScYXY1MI=
-Received: by 10.54.134.15 with SMTP id h15mr2203672wrd;
-        Wed, 17 May 2006 01:50:41 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Wed, 17 May 2006 01:50:41 -0700 (PDT)
-To: "Pavel Roskin" <proski@gnu.org>
-In-Reply-To: <1147852052.31879.50.camel@dv>
-Content-Disposition: inline
+	id S1750910AbWEQJDe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 05:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751039AbWEQJDe
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 05:03:34 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:47332 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750910AbWEQJDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 05:03:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060517090333.ONES27327.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 May 2006 05:03:33 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605161904260.16475@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 16 May 2006 19:20:30 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20174>
 
-On 5/17/06, Pavel Roskin <proski@gnu.org> wrote:
-> If a file doesn't "belong" to git, it belongs to its
-> "supreme commander", i.e. the user, and should be approached with utmost
-> care.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-+1 here. Unknown files are precious (to take an Arch term) until git
-is told otherwise.
+> [ Junio - see the "grep" issue ]
+> ...
+> Of course, I don't think anybody tried the new "git grep" on Solaris,...
 
-> special options (e.g. --force or --hard), and for the files explicitly
-> marked as transient (e.g. in .gitignore).
+I haven't tried the new grep on Solaris myself, as the Solaris
+box I have easy access is badly maintained (unmaintained is
+probably a better wording).
 
-I think that if we turn into clobbering files listed in .gitignore
-users will probably be screaming bloody murder. No git op should
-clobber untracked files...
+> ...and 
+> I think the solaris "grep" lacks the "-H" flag, for example. But that 
+> should be easy to fix (for example, replace the use of "--" and "-H" with 
+> putting a "/dev/null" as the first filename).
 
-Arch has this strange concept of allowing you to list 'junk' files. I
-could never figure out why it would want my authorization to remove
-files randomly. For all its faults, cvs does the right thing -- it
-will say 'checkout/update of foo.c blocked by foo.c in directory'. And
-if you force it with -C it will rename the local file to
-.#originalname-local or something like that.
+You mean like this, I presume.
 
-Even the files I think of as junk are actually useful and should not
-be messed up with. Editor temp files, for instance, are often listed
-in .gitignore, and if you ask me, they are junk. Except while I am
-working with my editor! ;-)
+But I think this approach breaks -L; I do not think Solaris
+supports -L, so it does not matter there, but on platforms that
+knows how to do -L it does.
 
-Another case is .project files from IDEs like Eclipse. People list
-them in .cvsignore so that they are not committed, and yet preserved.
-The user probably has a lot of personal settings there.
+-- >8 --
+[PATCH] builtin-grep: give /dev/null at the beginning instead of -H
 
-cheers,
-
-
-martin
+---
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 66111de..ff3c1f7 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -453,7 +453,6 @@ static int external_grep(struct grep_opt
+ 
+ 	len = nr = 0;
+ 	push_arg("grep");
+-	push_arg("-H");
+ 	if (opt->fixed)
+ 		push_arg("-F");
+ 	if (opt->linenum)
+@@ -503,7 +502,7 @@ static int external_grep(struct grep_opt
+ 		push_arg("-e");
+ 		push_arg(p->pattern);
+ 	}
+-	push_arg("--");
++	push_arg("/dev/null");
+ 
+ 	hit = 0;
+ 	argc = nr;
