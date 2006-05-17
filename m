@@ -1,118 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
-Date: Wed, 17 May 2006 21:13:51 +0200
-Organization: At home
-Message-ID: <e4fsla$oth$1@sea.gmane.org>
-References: <e4f1ta$e07$1@sea.gmane.org> <7viro4ecao.fsf@assigned-by-dhcp.cox.net>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: [PATCH] Implement git-quiltimport (take 2)
+Date: Wed, 17 May 2006 13:20:09 -0600
+Message-ID: <m1zmhg31cm.fsf@ebiederm.dsl.xmission.com>
+References: <m1k68l6hga.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0605161001190.3866@g5.osdl.org>
+	<m1bqtx6el6.fsf@ebiederm.dsl.xmission.com>
+	<7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
+	<m13bf95ixo.fsf@ebiederm.dsl.xmission.com>
+	<7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
+	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
+	<7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed May 17 21:14:51 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 21:21:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgRTa-0001bL-QH
-	for gcvg-git@gmane.org; Wed, 17 May 2006 21:14:31 +0200
+	id 1FgRZm-0002xx-GV
+	for gcvg-git@gmane.org; Wed, 17 May 2006 21:20:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbWEQTO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 15:14:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbWEQTO2
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 15:14:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:60549 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750995AbWEQTO1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 15:14:27 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FgRT8-0001SU-Rd
-	for git@vger.kernel.org; Wed, 17 May 2006 21:14:02 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 May 2006 21:14:02 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 May 2006 21:14:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750985AbWEQTUr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 15:20:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbWEQTUr
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 15:20:47 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:63634 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1750983AbWEQTUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 15:20:46 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4HJKAKX026787;
+	Wed, 17 May 2006 13:20:10 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4HJK9T7026786;
+	Wed, 17 May 2006 13:20:09 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vsln8cwn6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Wed, 17 May 2006 11:51:41 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20228>
 
-Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+> ebiederm@xmission.com (Eric W. Biederman) writes:
+>
+>> Importing a quilt patch series into git is not very difficult
+>> but parsing the patch descriptions and all of the other
+>> minutia take a bit of effort to get right, so this automates it.
+>>
+>> Since git and quilt complement each other it makes sense
+>> to make it easy to go back and forth between the two.
+>>
+>> If a patch is encountered that it cannot derive the author
+>> from the user is asked.
+>
+> What's the expected workflow for you to work on a 1300 patch
+> series you get from Andrew in the next installment to deal with
+> 88 unattributed patches?  Answer the question 88 times and make
+> sure you get the answers right every time?  Or abort and
+> hand-edit them to help mailinfo to notice the correct
+> attribution and re-run?
 
->> In 'Documentation/glossary.txt' we have:
->> ----  
->> branch::
->>         A non-cyclical graph of revisions, i.e. the complete history of
->>         a particular revision, which is called the branch head. The
->>         branch heads are stored in `$GIT_DIR/refs/heads/`.
->> ---- 
-> 
-> While technically it might be correct, the above description for
-> "branch" completely misses the point in the context of other
-> entries.  I do not recall when this entry was first written, but
-> I suspect it probably predates other entries that talk about the
-> same thing.
+For the internal consumption case it isn't a big deal.  I
+can specify --author with something bogus and it works. 
 
-[cut long description]
+There are a few tweaks that can be made to git-mailinfo to
+make it better at parsing information out of patches.  I
+cut the list down to about 49 that way.  I had it all of the
+way down to 1.  But then I realized that the first Singed-off-by
+really doesn't accurately reflect the author.  I suspect a
+few of my other teaks are equally suspicious.
 
-The description you gave is nice, but it belongs in Tutorial rather than in
-Glossary. Additionally it mainly deals with branches fron the 'revision
-history' point of view, although the 'commit' point of view can also be
-seen.
+> I know I am guilty of suggesting "going interactive", but I have
+> a feeling that having an optional file that maps patch-name to
+> author might be easier to work with.  If the old patches are
+> recycled in the updated -mm set, you probably can reuse the
+> mapping for them, adding entries for newly introduced "unnamed"
+> patches as needed.
 
-Glossary entry should be short, up to the point, and encompass al three
-points of view: 
+Short of getting the script where it has a sane restart in the
+middle mode going interactive and asking questions makes a lot
+of sense.  Especially with smaller trees.
 
- a.) conceptual point of view, i.e. "branch is separate line of
-development" (be it stable or development direction, introducing new
-feature aka. 'topic', or following aka. 'tracking' changes in other
-repository),
+For Andrews tree before I play anymore with technical solutions I
+need to talk to Andrew and see if we can improve the situation
+upstream.  Possibly with a quilt-audit script that finds problem
+patches.
 
- b) revision history point of view, i.e. "on branch means, roughly,
-reachable from branch head aka. tip", or "branch is lineage of history of
-project" (somewhat mudded by merges[*1*], fork points[*2*] and multiple
-roots). This is what current glossary entry tries to present,
-
- c) commit point of view, i.e. "branch tip is where we do commit
-changes" (branch tip is [one of] parent(s) of current commit, and branch
-tip is advanced to new commit).
-
-
-[*1*] Problem with merges:
-   
-   ---.---.---A-\--.---.---.---B-- branch1
-                 \
-   ---.---.---C---*D---.---.---E-- branch2   
-   
-Does A belong to branch2? It is one of parents of commit D. We can assume
-that only first parent in merges continues branch. But what if we have the
-following history:
-
-   ---.---.---A-\  <---- there was branch1 here
-                 \
-   ---.---.---C---*D---.---.---E-- branch2 
-
-To which branch belongs A then?
-
-
-[*2*] Problem with fork point
-
-           /--1---2---3-- maintenance/stable/fixes branch  
-          /
-  ---A---B----C---D---E-- master/development branch
-
-Following the ancestry chain we get that commit A is on branch 'maint' (it
-is also on branch 'master'); git does not record fork points. Perhaps the
-branch logging and/or per branch configuration could be used to resolve
-this issue.
-
--- 
-Jakub Narebski
-Warsaw, Poland
+Eric
