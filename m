@@ -1,69 +1,65 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Implement git-quiltimport (take 2)
-Date: Wed, 17 May 2006 11:51:41 -0700
-Message-ID: <7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
-References: <m1k68l6hga.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0605161001190.3866@g5.osdl.org>
-	<m1bqtx6el6.fsf@ebiederm.dsl.xmission.com>
-	<7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
-	<m13bf95ixo.fsf@ebiederm.dsl.xmission.com>
-	<7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
-	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
+Subject: Re: [PATCH] builtin-grep: workaround for non GNU grep.
+Date: Wed, 17 May 2006 11:59:34 -0700
+Message-ID: <7vodxwcwa1.fsf@assigned-by-dhcp.cox.net>
+References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
+	<Pine.LNX.4.64.0605161904260.16475@g5.osdl.org>
+	<7vejythvkr.fsf@assigned-by-dhcp.cox.net>
+	<7vves5geng.fsf_-_@assigned-by-dhcp.cox.net>
+	<4fb292fa0605170839r259732dcw1c1bae3f1808db32@mail.gmail.com>
+	<7vhd3ofsyv.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605171109170.10823@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 20:52:59 2006
+X-From: git-owner@vger.kernel.org Wed May 17 21:00:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgR7b-0004s5-NJ
-	for gcvg-git@gmane.org; Wed, 17 May 2006 20:51:48 +0200
+	id 1FgRFC-0006cu-VR
+	for gcvg-git@gmane.org; Wed, 17 May 2006 20:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750935AbWEQSvn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 14:51:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbWEQSvn
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:51:43 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29089 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750928AbWEQSvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 14:51:43 -0400
+	id S1750969AbWEQS7g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 14:59:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750976AbWEQS7g
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:59:36 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:12228 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750968AbWEQS7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 14:59:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060517185142.FQND27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 17 May 2006 14:51:42 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com> (Eric
-	W. Biederman's message of "Wed, 17 May 2006 12:44:40 -0600")
+          id <20060517185935.HVBF17501.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 May 2006 14:59:35 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605171109170.10823@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 17 May 2006 11:12:22 -0700 (PDT)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20224>
 
-ebiederm@xmission.com (Eric W. Biederman) writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Importing a quilt patch series into git is not very difficult
-> but parsing the patch descriptions and all of the other
-> minutia take a bit of effort to get right, so this automates it.
+> I think this is portable and correct.
 >
-> Since git and quilt complement each other it makes sense
-> to make it easy to go back and forth between the two.
+> Of course, it still ignores the fact that not all grep's support some of 
+> the flags like -F/-L/-A/-C etc, but for those cases, the external grep 
+> itself will happily just say "unrecognized option -F" or similar.
 >
-> If a patch is encountered that it cannot derive the author
-> from the user is asked.
+> So with this change, "git grep" should handle all the flags the native 
+> grep handles, which is really quite fine. We don't _need_ to expose 
+> anything more, and if you do want our extensions, you can get them with 
+> "--uncached" and an up-to-date index.
+>
+> No configuration necessary, and we automatically take advantage of any 
+> native grep we have, if possible.
 
-What's the expected workflow for you to work on a 1300 patch
-series you get from Andrew in the next installment to deal with
-88 unattributed patches?  Answer the question 88 times and make
-sure you get the answers right every time?  Or abort and
-hand-edit them to help mailinfo to notice the correct
-attribution and re-run?
+This makes -c misbehave in a subtle way.
 
-I know I am guilty of suggesting "going interactive", but I have
-a feeling that having an optional file that maps patch-name to
-author might be easier to work with.  If the old patches are
-recycled in the updated -mm set, you probably can reuse the
-mapping for them, adding entries for newly introduced "unnamed"
-patches as needed.
+	git grep -c -e no-such-string-anywhere | head -n 1
+
+But I do not think we care.
