@@ -1,101 +1,90 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Make git-rev-list understand --tags/--branches/--remotes
-Date: Wed, 17 May 2006 14:44:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605171439371.10823@g5.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC 5/5] Support 'master@2 hours ago' syntax
+Date: Wed, 17 May 2006 18:06:13 -0400
+Message-ID: <20060517220613.GC30313@spearce.org>
+References: <20060517095609.GF28529@spearce.org> <7vbqtwhpum.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed May 17 23:45:41 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 18 00:06:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgTpM-0007UG-SZ
-	for gcvg-git@gmane.org; Wed, 17 May 2006 23:45:09 +0200
+	id 1FgU9v-0003FG-OE
+	for gcvg-git@gmane.org; Thu, 18 May 2006 00:06:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbWEQVo6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 17:44:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbWEQVo6
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 17:44:58 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:56249 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751161AbWEQVo5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 17:44:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HLiqtH011610
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 May 2006 14:44:53 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HLiqgm028573;
-	Wed, 17 May 2006 14:44:52 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751194AbWEQWGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 18:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWEQWGR
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 18:06:17 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55519 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751194AbWEQWGQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 18:06:16 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FgU9d-0006z9-FT; Wed, 17 May 2006 18:06:05 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 170D3212667; Wed, 17 May 2006 18:06:13 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vbqtwhpum.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20246>
 
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> +	fprintf(stderr, "warning: Log %s only goes back to %s.\n",
+> +		logfile, show_rfc2822_date(date, tz));
+> +	return 0;
+> 
+> I am not sure about this part.  If the oldest log entry was 3
+> hours ago, the second oldest 2 hours ago, we can tell during
+> that one hour period the ref was at that point.  If the user
+> asked "ref as of four hours ago", and if the oldest log entry
+> had old SHA1 that is not 0{40} (because the log was not enabled
+> before that record), it might make more sense to give that back.
 
-We shouldn't add stuff to git-rev-parse without teaching git-rev-list and 
-all the other tools to do the same.
+If I understand my own code here what I'm doing is walking back
+in the log file, realizing I fell off the first line of it, then
+loading the old ref from the first line.  This is the oldest ref
+I can find so I return it as a valid ref to the caller but I'm
+printing out this warning to tell the user that the oldest point
+in time I found in the log is effectively the update date as I have
+no idea when that old sha1 first became the value of the ref.
 
-In fact, these days there is much less reason for git-rev-parse in the 
-first place: it's usually used to verify a particular reference, or to 
-just split the different argument types up from each other. Most tools 
-don't need or use it any more (eg "gitk" will just pass its arguments 
-directly to git-rev-list).
+So I think I'm doing what you are expecting here.  The log will start
+with the value in the ref at the time the log started, not 0{40}
+and that value is what gets returned when we have this warning
+come out..  That's the best anyone can expect...
 
-With this, you can now do (for example)
+> Also I wonder how much complexity would we suffer and how much
+> efficiency would we gain if we binary search the logdata (the
+> committer info is variable length, so you would need to resync
+> in each step).
 
-	gitk HEAD --not --tags
+I thought about doing this but did not think it would be worth the
+effort (either developer to code or CPU to execute) at this point
+in time.  I don't think users will be pulling refs from the log very
+often and if they are they will probably be pulling from recent time,
+not very far back.  Thus starting at the end and walking back is
+probably "good enough".
 
-to see all the work on all the main branch that hasn't been included in a 
-tagged version (replace HEAD with "--branches" to show all branches, of 
-course).
+But if it proves to be too slow in practice I'm sure I can come up
+with a faster way to walk through the log.  :-)
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-
-diff --git a/revision.c b/revision.c
-index 2294b16..1fc6725 100644
---- a/revision.c
-+++ b/revision.c
-@@ -470,11 +470,13 @@ static int handle_one_ref(const char *pa
- 	return 0;
- }
- 
--static void handle_all(struct rev_info *revs, unsigned flags)
-+typedef int (*ref_fn_t)(int (*)(const char *, const unsigned char *));
-+
-+static void handle_ref(ref_fn_t fn, struct rev_info *revs, unsigned flags)
- {
- 	all_revs = revs;
- 	all_flags = flags;
--	for_each_ref(handle_one_ref);
-+	fn(handle_one_ref);
- }
- 
- static int add_parents_only(struct rev_info *revs, const char *arg, int flags)
-@@ -614,7 +616,19 @@ int setup_revisions(int argc, const char
- 				continue;
- 			}
- 			if (!strcmp(arg, "--all")) {
--				handle_all(revs, flags);
-+				handle_ref(for_each_ref, revs, flags);
-+				continue;
-+			}
-+			if (!strcmp(arg, "--branches")) {
-+				handle_ref(for_each_branch_ref, revs, flags);
-+				continue;
-+			}
-+			if (!strcmp(arg, "--tags")) {
-+				handle_ref(for_each_tag_ref, revs, flags);
-+				continue;
-+			}
-+			if (!strcmp(arg, "--remotes")) {
-+				handle_ref(for_each_remote_ref, revs, flags);
- 				continue;
- 			}
- 			if (!strcmp(arg, "--not")) {
+-- 
+Shawn.
