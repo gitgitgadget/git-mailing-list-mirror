@@ -1,128 +1,116 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] builtin-grep: workaround for non GNU grep.
-Date: Wed, 17 May 2006 11:12:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605171109170.10823@g5.osdl.org>
-References: <f3d7535d0605161652n3b2ec033r874336082755e728@mail.gmail.com>
- <Pine.LNX.4.64.0605161904260.16475@g5.osdl.org> <7vejythvkr.fsf@assigned-by-dhcp.cox.net>
- <7vves5geng.fsf_-_@assigned-by-dhcp.cox.net>
- <4fb292fa0605170839r259732dcw1c1bae3f1808db32@mail.gmail.com>
- <7vhd3ofsyv.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
+Date: Wed, 17 May 2006 11:28:15 -0700
+Message-ID: <7viro4ecao.fsf@assigned-by-dhcp.cox.net>
+References: <e4f1ta$e07$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bertrand Jacquin <beber.mailing@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 20:12:54 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 17 20:28:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgQVh-0004IP-O4
-	for gcvg-git@gmane.org; Wed, 17 May 2006 20:12:38 +0200
+	id 1FgQkt-0007xn-RM
+	for gcvg-git@gmane.org; Wed, 17 May 2006 20:28:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839AbWEQSMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 14:12:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbWEQSMd
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:12:33 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:25827 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750839AbWEQSMd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 14:12:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HICOtH002211
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 May 2006 11:12:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HICNR9021577;
-	Wed, 17 May 2006 11:12:23 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhd3ofsyv.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.134 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750863AbWEQS2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 14:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbWEQS2R
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 14:28:17 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61317 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750853AbWEQS2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 14:28:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060517182816.KBSC25666.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 May 2006 14:28:16 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e4f1ta$e07$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
+	17 May 2006 13:37:19 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20217>
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-
-On Wed, 17 May 2006, Junio C Hamano wrote:
+> In #git channel somebody asked about 'branches' and 'heads' and was referred
+> to the glossary. I had taken then a look at appropriate glossary entries.
 >
-> "Bertrand Jacquin" <beber.mailing@gmail.com> writes:
-> >
-> > #if NO_H_OPTION_IN_GREP
-> >               push_arg("/dev/null");
-> > #else
-> >               push_arg("-H");
-> >               push_arg("--");
-> > #fi
-> 
-> Exactly because I wanted to avoid conditional compilation using
-> C preprocessor directive (#if).
+> In 'Documentation/glossary.txt' we have:
+> ----  
+> branch::
+>         A non-cyclical graph of revisions, i.e. the complete history of
+>         a particular revision, which is called the branch head. The
+>         branch heads are stored in `$GIT_DIR/refs/heads/`.
+>
+> head::
+>         The top of a branch. It contains a ref to the corresponding
+>         commit object.
+>
+> head ref::
+>         A ref pointing to a head. Often, this is abbreviated to "head".
+>         Head refs are stored in `$GIT_DIR/refs/heads/`.
+>
+> revision::
+>         A particular state of files and directories which was stored in
+>         the object database. It is referenced by a commit object.
+> ---- 
+>
+> It is just me or the glossary entry for `branch` is unnecessary 
+> complicated? 
 
-I think this is portable and correct.
+While technically it might be correct, the above description for
+"branch" completely misses the point in the context of other
+entries.  I do not recall when this entry was first written, but
+I suspect it probably predates other entries that talk about the
+same thing.
 
-Of course, it still ignores the fact that not all grep's support some of 
-the flags like -F/-L/-A/-C etc, but for those cases, the external grep 
-itself will happily just say "unrecognized option -F" or similar.
+As you point out it talks primarily about the mesh of all
+possible histories (i.e commit DAG), without talking much about
+what "branch" means and what role "branch" plays.
 
-So with this change, "git grep" should handle all the flags the native 
-grep handles, which is really quite fine. We don't _need_ to expose 
-anything more, and if you do want our extensions, you can get them with 
-"--uncached" and an up-to-date index.
+I cannot easily do a glossary entry to describe that specific
+term, but maybe somebody else can split the following up and
+paraphrase.
 
-No configuration necessary, and we automatically take advantage of any 
-native grep we have, if possible.
+        A project history is born by recording a particular
+        state ("revision") as a root commit, and built up by
+        recording subsequent states ("revisions") on top of the
+        previous commits.  Thus, a group of commits connected by
+        their parent fields form a directed acyclic graph
+        ("DAG").  Often this linkage between commits by their
+        parent fields is called "ancestry chain", and a commit
+        that has another commit in its "parent" field is called
+        a "child commit" of the latter.
 
-		Linus
+        There can be multiple root commits in the history of a
+        project.  In other words, projects born independently
+        can later be glued together to become a single project.
 
----
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 66111de..d09ddf0 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -453,7 +453,6 @@ static int external_grep(struct grep_opt
- 
- 	len = nr = 0;
- 	push_arg("grep");
--	push_arg("-H");
- 	if (opt->fixed)
- 		push_arg("-F");
- 	if (opt->linenum)
-@@ -503,17 +502,35 @@ static int external_grep(struct grep_opt
- 		push_arg("-e");
- 		push_arg(p->pattern);
- 	}
--	push_arg("--");
-+
-+	/*
-+	 * To make sure we get the header printed out when we want it,
-+	 * add /dev/null to the paths to grep.  This is unnecessary
-+	 * (and wrong) with "-l" or "-L", which always print out the
-+	 * name anyway.
-+	 *
-+	 * GNU grep has "-H", but this is portable.
-+	 */
-+	if (!opt->name_only && !opt->unmatch_name_only)
-+		push_arg("/dev/null");
- 
- 	hit = 0;
- 	argc = nr;
- 	for (i = 0; i < active_nr; i++) {
- 		struct cache_entry *ce = active_cache[i];
-+		const char *name;
- 		if (ce_stage(ce) || !S_ISREG(ntohl(ce->ce_mode)))
- 			continue;
- 		if (!pathspec_matches(paths, ce->name))
- 			continue;
--		argv[argc++] = ce->name;
-+		name = ce->name;
-+		if (name[0] == '-') {
-+			int len = ce_namelen(ce);
-+			name = xmalloc(len + 3);
-+			memcpy(name, "./", 2);
-+			memcpy(name + 2, ce->name, len + 1);
-+		}
-+		argv[argc++] = name;
- 		if (argc < MAXARGS)
- 			continue;
- 		hit += exec_grep(argc, argv);
+        The history is grown by building on top of previous
+        commits, and by the nature of distributed development,
+        many lineages of histories are grown simultaneously.
+        Each lineage is called a "branch".
+
+        A commit that can be reached by following the ancestry
+        chain from a commit that is "on the branch" is also "on
+        the branch", and a commit that cannot be reached by
+        following the ancestry chain from any commit that is "on
+        the branch" is not "on the branch".  The commit that
+        bootstraps this recursive definition of "on the branch"
+        is called its "branch head", the "tip of the branch", or
+        the "top commit".  In other words, it is topologically
+        the latest commit on the branch.
+
+	The above does not mean the top commit of a branch does
+	not have any child commit in the global project
+	histories.  It just means that these children are not on
+	the branch; they may be on some other branches, forked
+	from it.  To create a branch whose "on the branch"
+	commits are strict superset of "on the branch" commits
+	of another branch is called "forking" the branch.
