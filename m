@@ -1,149 +1,169 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: [PATCH] Implement a --dry-run option to git-quiltimport
-Date: Wed, 17 May 2006 14:10:25 -0600
-Message-ID: <m1r72s2z0u.fsf_-_@ebiederm.dsl.xmission.com>
-References: <m1k68l6hga.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0605161001190.3866@g5.osdl.org>
-	<m1bqtx6el6.fsf@ebiederm.dsl.xmission.com>
-	<7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
-	<m13bf95ixo.fsf@ebiederm.dsl.xmission.com>
-	<7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
-	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
-	<7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Do "git add" as a builtin
+Date: Wed, 17 May 2006 13:23:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605171321020.10823@g5.osdl.org>
+References: <Pine.LNX.4.64.0605170927050.10823@g5.osdl.org>
+ <7vhd3ocvyy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 17 22:11:23 2006
+X-From: git-owner@vger.kernel.org Wed May 17 22:23:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgSMN-000526-Kg
-	for gcvg-git@gmane.org; Wed, 17 May 2006 22:11:08 +0200
+	id 1FgSYU-0007aA-12
+	for gcvg-git@gmane.org; Wed, 17 May 2006 22:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbWEQULE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 16:11:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751079AbWEQULE
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 16:11:04 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:29331 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1751071AbWEQULD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 16:11:03 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4HKAQmU020576;
-	Wed, 17 May 2006 14:10:26 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4HKAQlj020575;
-	Wed, 17 May 2006 14:10:26 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+	id S1751079AbWEQUXY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 16:23:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbWEQUXY
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 16:23:24 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:21663 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751079AbWEQUXY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 16:23:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4HKNKtH007923
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 17 May 2006 13:23:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4HKNJ4J025195;
+	Wed, 17 May 2006 13:23:19 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vsln8cwn6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Wed, 17 May 2006 11:51:41 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <7vhd3ocvyy.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20239>
 
 
-Since large quilt trees like -mm can easily have patches
-without clear authorship information, add a --dry-run
-option to make the problem patches easy to find.
 
----
+On Wed, 17 May 2006, Junio C Hamano wrote:
+> 
+> By "not seeing the point", do you mean you do not agree with
+> what bba319b5 and 45e48120 tried to do to help users?
 
-This patch should make it easy to communicate to Andrew
-and others exactly which patches there are problems
-with, and should make it possible to easily edit
-those patches before they are imported.
+Naah, I just didn't see why, and didn't bother to go exploring.
 
- Documentation/git-quiltimport.txt |    8 +++++++-
- git-quiltimport.sh                |   24 ++++++++++++++++++------
- 2 files changed, 25 insertions(+), 7 deletions(-)
+How about this patch on top of the previous one?
 
-cb0ff8090e1492f177a521b01cf987c16b125d81
-diff --git a/Documentation/git-quiltimport.txt b/Documentation/git-quiltimport.txt
-index e694537..97f4071 100644
---- a/Documentation/git-quiltimport.txt
-+++ b/Documentation/git-quiltimport.txt
-@@ -9,7 +9,7 @@ git-quiltimport - Applies a quilt patchs
- SYNOPSIS
- --------
- [verse]
--'git-quiltimport' [--author <author>] [--patches <dir>]
-+'git-quiltimport' [--dry-run] [--author <author>] [--patches <dir>]
+		Linus
+
+----
+diff --git a/builtin-add.c b/builtin-add.c
+index e815b3d..82e8f44 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -44,50 +44,89 @@ static int common_prefix(const char **pa
+ 	return prefix;
+ }
  
- 
- DESCRIPTION
-@@ -29,6 +29,12 @@ preserved as the 1 line subject in the g
- 
- OPTIONS
- -------
-+--dry-run::
-+	Walk through the patches in the series and warn
-+	if we cannot find all of the necessary information to commit
-+	a patch.  At the time of this writing only missing author
-+	information is warned about.
+-static int match(const char **pathspec, const char *name, int namelen, int prefix)
++static int match_one(const char *match, const char *name, int namelen)
+ {
++	int matchlen;
 +
- --author Author Name <Author Email>::
- 	The author name and email address to use when no author
- 	information can be found in the patch description.
-diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-index be43f9d..476e078 100644
---- a/git-quiltimport.sh
-+++ b/git-quiltimport.sh
-@@ -1,8 +1,9 @@
- #!/bin/sh
--USAGE='--author <author> --patches </path/to/quilt/patch/directory>'
-+USAGE='--dry-run --author <author> --patches </path/to/quilt/patch/directory>'
- SUBDIRECTORY_ON=Yes
- . git-sh-setup
- 
-+dry_run=""
- quilt_author=""
- while case "$#" in 0) break;; esac
- do
-@@ -19,6 +20,11 @@ do
- 		shift
- 		;;
- 
-+	--dry-run)
-+		shift
-+		dry_run=1
-+		;;
++	/* If the match was just the prefix, we matched */
++	matchlen = strlen(match);
++	if (!matchlen)
++		return 1;
 +
- 	--pa=*|--pat=*|--patc=*|--patch=*|--patche=*|--patches=*)
- 		QUILT_PATCHES=$(expr "$1" : '-[^=]*\(.*\)')
- 		shift
-@@ -75,8 +81,12 @@ for patch_name in $(cat "$QUILT_PATCHES/
- 		if [ -n "$quilt_author" ] ; then
- 			GIT_AUTHOR_NAME="$quilt_author_name";
- 			GIT_AUTHOR_EMAIL="$quilt_author_email";
-+	    	elif [ -n "$dry_run" ]; then
-+			echo "No author found in $patch_name" >&2;
-+			GIT_AUTHOR_NAME="dry-run-not-found";
-+			GIT_AUTHOR_EMAIL="dry-run-not-found";
- 		else
--			echo "No author found in $patch_name";
-+			echo "No author found in $patch_name" >&2;
- 			echo "---"
- 			cat $tmp_msg
- 			echo -n "Author: ";
-@@ -98,9 +108,11 @@ for patch_name in $(cat "$QUILT_PATCHES/
- 		SUBJECT=$(echo $patch_name | sed -e 's/.patch$//')
- 	fi
++	/*
++	 * If we don't match the matchstring exactly,
++	 * we need to match by fnmatch
++	 */
++	if (strncmp(match, name, matchlen))
++		return !fnmatch(match, name, 0);
++
++	/*
++	 * If we did match the string exactly, we still
++	 * need to make sure that it happened on a path
++	 * component boundary (ie either the last character
++	 * of the match was '/', or the next character of
++	 * the name was '/' or the terminating NUL.
++	 */
++	return	match[matchlen-1] == '/' ||
++		name[matchlen] == '/' ||
++		!name[matchlen];
++}
++
++static int match(const char **pathspec, const char *name, int namelen, int prefix, char *seen)
++{
++	int retval;
+ 	const char *match;
  
--	git-apply --index -C1 "$tmp_patch" &&
--	tree=$(git-write-tree) &&
--	commit=$((echo "$SUBJECT"; echo; cat "$tmp_msg") | git-commit-tree $tree -p $commit) &&
--	git-update-ref HEAD $commit || exit 4
-+	if [ -z "$dry_run" ] ; then
-+		git-apply --index -C1 "$tmp_patch" &&
-+		tree=$(git-write-tree) &&
-+		commit=$((echo "$SUBJECT"; echo; cat "$tmp_msg") | git-commit-tree $tree -p $commit) &&
-+		git-update-ref HEAD $commit || exit 4
-+	fi	
- done
- rm -rf $tmp_dir || exit 5
--- 
-1.3.2.g5041c-dirty
+ 	name += prefix;
+ 	namelen -= prefix;
+ 
+-	while ((match = *pathspec++) != NULL) {
+-		int matchlen;
+-
++	for (retval = 0; (match = *pathspec++) != NULL; seen++) {
++		if (retval & *seen)
++			continue;
+ 		match += prefix;
+-		matchlen = strlen(match);
+-		if (!matchlen)
+-			return 1;
+-		if (!strncmp(match, name, matchlen)) {
+-			if (match[matchlen-1] == '/')
+-				return 1;
+-			switch (name[matchlen]) {
+-			case '/': case '\0':
+-				return 1;
+-			}
++		if (match_one(match, name, namelen)) {
++			retval = 1;
++			*seen = 1;
+ 		}
+-		if (!fnmatch(match, name, 0))
+-			return 1;
+ 	}
+-	return 0;
++	return retval;
+ }
+ 
+ static void prune_directory(struct dir_struct *dir, const char **pathspec, int prefix)
+ {
+-	int i;
++	char *seen;
++	int i, specs;
+ 	struct dir_entry **src, **dst;
+ 
++	for (specs = 0; pathspec[specs];  specs++)
++		/* nothing */;
++	seen = xmalloc(specs);
++	memset(seen, 0, specs);
++
+ 	src = dst = dir->entries;
+ 	i = dir->nr;
+ 	while (--i >= 0) {
+ 		struct dir_entry *entry = *src++;
+-		if (!match(pathspec, entry->name, entry->len, prefix)) {
++		if (!match(pathspec, entry->name, entry->len, prefix, seen)) {
+ 			free(entry);
+ 			continue;
+ 		}
+ 		*dst++ = entry;
+ 	}
+ 	dir->nr = dst - dir->entries;
++
++	for (i = 0; i < specs; i++) {
++		struct stat st;
++		const char *match;
++		if (seen[i])
++			continue;
++
++		/* Existing file? We must have ignored it */
++		match = pathspec[i];
++		if (!lstat(match, &st))
++			continue;
++		die("pathspec '%s' did not match any files", match);
++	}
+ }
+ 
+ static void fill_directory(struct dir_struct *dir, const char **pathspec)
