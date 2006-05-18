@@ -1,63 +1,72 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: [PATCH] SubmittingPatches: The download location of External Editor
- has moved
-Date: Thu, 18 May 2006 14:23:59 +0200
-Organization: Chalmers
-Message-ID: <446C675F.3020600@etek.chalmers.se>
+From: Elrond <elrond+kernel.org@samba-tng.org>
+Subject: Re: [Patch] git-cvsimport: tiny fix
+Date: Thu, 18 May 2006 15:29:57 +0200
+Message-ID: <20060518132956.GA19476@memak.tu-darmstadt.de>
+References: <20060510173703.GA10335@memak.tu-darmstadt.de> <7vd5eccvns.fsf@assigned-by-dhcp.cox.net> <46a038f90605172153mac96f40id9a50d2f29c75915@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 18 14:24:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 18 15:30:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FghY2-0007ER-7t
-	for gcvg-git@gmane.org; Thu, 18 May 2006 14:24:10 +0200
+	id 1Fgia1-0003CM-Im
+	for gcvg-git@gmane.org; Thu, 18 May 2006 15:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356AbWERMYH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 18 May 2006 08:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbWERMYH
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 08:24:07 -0400
-Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:53694 "EHLO
-	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
-	id S1751356AbWERMYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 May 2006 08:24:06 -0400
-Received: from [192.168.0.82] (213.66.95.18) by pne-smtpout2-sn2.hy.skanova.net (7.2.072.1)
-        id 446C465B000134FC; Thu, 18 May 2006 14:24:02 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.0.2) Gecko/20060501 Thunderbird/1.5.0.2 Mnenhy/0.7.4.666
-To: Junio C Hamano <junkio@cox.net>
+	id S1751021AbWERNaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 May 2006 09:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbWERNaJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 09:30:09 -0400
+Received: from baerbel.mug.maschinenbau.tu-darmstadt.de ([130.83.48.97]:64987
+	"EHLO baerbel.mug.maschinenbau.tu-darmstadt.de") by vger.kernel.org
+	with ESMTP id S1751021AbWERNaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 May 2006 09:30:07 -0400
+Received: from baerbel.mug.maschinenbau.tu-darmstadt.de (localhost [127.0.0.1])
+	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4) with ESMTP id k4IDTvUA019767
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 18 May 2006 15:29:57 +0200
+Received: (from tacke@localhost)
+	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4/Submit) id k4IDTvGJ019765;
+	Thu, 18 May 2006 15:29:57 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Elrond <elrond+kernel.org@samba-tng.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <46a038f90605172153mac96f40id9a50d2f29c75915@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: ClamAV 0.88.2/1467/Tue May 16 23:21:47 2006 on baerbel.mug.maschinenbau.tu-darmstadt.de
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20286>
+
+On Thu, May 18, 2006 at 04:53:56PM +1200, Martin Langhoff wrote:
+> On 5/18/06, Junio C Hamano <junkio@cox.net> wrote:
+> >Could somebody who actually works with CVS import Ack this?
+> >Pretty please?
+> 
+> Sounds sane. It would be interesting to hear about what repo (and
+> server) this was seen against. Elrond, can you tell us more about
+> this?
+
+This is a private local repository.
+git-cvsimport starts a local "cvs server" for this.
+
+I tried to create a minimal repo, that would trigger the
+same behaviour, but didn't succeed. My current guessing is,
+that this happened in cooperation with "cvsps" caching.
+(cvsps is a tool used by git-cvsimport).
+
+I will move the cvsps cache for my problematic repo out of
+the way and try a git-cvsimport from scratch to verify that
+the above mentioned issue is related to cvsps caching.
+But I still think, that handling all cvs pserver replies
+should be done anyway in git-cvsimport (when it relies on
+this mode of operation).
 
 
-Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
-
----
-I'm using the new version right now.
-
- Documentation/SubmittingPatches |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-d95d1ac9e4cd408cca8da421a4313b149002e1f9
-diff --git a/Documentation/SubmittingPatches b/Documentation/Submitting=
-Patches
-index 318b04f..8601949 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -266,8 +266,8 @@ This recipe appears to work with the cur
- The following Thunderbird extensions are needed:
- 	AboutConfig 0.5
- 		http://aboutconfig.mozdev.org/
--	External Editor 0.5.4
--		http://extensionroom.mozdev.org/more-info/exteditor
-+	External Editor 0.7.2
-+		http://globs.org/articles.php?lng=3Den&pg=3D8
-=20
- 1) Prepare the patch as a text file using your method of choice.
-=20
---=20
-1.3.2.g3c45-dirty
+    Elrond
