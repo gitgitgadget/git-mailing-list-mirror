@@ -1,58 +1,69 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: tailor (Was: gateway status?)
-Date: Fri, 19 May 2006 10:16:14 +1200
-Message-ID: <46a038f90605181516n787fe543j50db5506058b099c@mail.gmail.com>
-References: <Pine.LNX.4.62.0605151122500.29452@qynat.qvtvafvgr.pbz>
-	 <46a038f90605160609u19a356ccx9467c32100731b9@mail.gmail.com>
-	 <20060518220759.GA6535@nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] [BUG] Add a test to check git-prune does not throw away revs hidden by a graft.
+Date: Thu, 18 May 2006 15:25:29 -0700
+Message-ID: <7v64k3nf6u.fsf@assigned-by-dhcp.cox.net>
+References: <20060518213519.14577.67309.stgit@gandelf.nowhere.earth>
+	<Pine.LNX.4.64.0605181435230.10823@g5.osdl.org>
+	<7viro3nh07.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605181500470.10823@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "David Lang" <dlang@digitalinsight.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 00:16:31 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri May 19 00:25:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fgqn8-0000zq-78
-	for gcvg-git@gmane.org; Fri, 19 May 2006 00:16:22 +0200
+	id 1Fgqw2-0002Wz-UW
+	for gcvg-git@gmane.org; Fri, 19 May 2006 00:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750804AbWERWQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 May 2006 18:16:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbWERWQT
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 18:16:19 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:6681 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750804AbWERWQT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 May 2006 18:16:19 -0400
-Received: by wr-out-0506.google.com with SMTP id 50so36606wri
-        for <git@vger.kernel.org>; Thu, 18 May 2006 15:16:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EVI0fUmrO38sUNMpRLTGQI1RTFbofY3QII6htOg+VuDLxtQ71Hz5BRzmT6WAjcbx0uUwF3x5Mgvvl8ai8JNYEhLrY2aE/21N6M7mG8QEMzo0cQzi4q5Y1d9dod46Ii0uoWXZnOFJxKb8IQhQIEkkjTRCjS9rUlta9RjXG5E1wY8=
-Received: by 10.54.111.2 with SMTP id j2mr1119903wrc;
-        Thu, 18 May 2006 15:15:54 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Thu, 18 May 2006 15:16:14 -0700 (PDT)
-To: "Yann Dirson" <ydirson@altern.org>
-In-Reply-To: <20060518220759.GA6535@nowhere.earth>
-Content-Disposition: inline
+	id S1750863AbWERWZc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 May 2006 18:25:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbWERWZb
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 18:25:31 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:40066 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750863AbWERWZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 May 2006 18:25:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060518222530.JFPG27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 18 May 2006 18:25:30 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605181500470.10823@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 18 May 2006 15:01:16 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20311>
 
-On 5/19/06, Yann Dirson <ydirson@altern.org> wrote:
-> Another tool that I don't see mentionned often here is tailor, which
-> has the ability to act as a gatway between git and a good selection of
-> other SCMs, including cvs and svn.  I have not yet tried it with git
-> though, so any comments from people having shaked it a bit would be
-> useful :)
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Last I looked, a few months ago, it didn't track branches.
+> On Thu, 18 May 2006, Junio C Hamano wrote:
+>> 
+>> I haven't looked at what the test does, but I think he is
+>> talking about the opposite.  fsck by design does not honor
+>> grafts, and if you grafted a history back to your true root
+>> commit, that "older" history will be lost.
+>
+> Ahh. Ok. Gotcha.
+>
+> 		Linus
 
-cheers,
+Is it really OK?
 
+I said "fsck by design does not honor" as a flamebait.
 
-martin
+And what I said was completely untrue.  Sorry.
+
+If you have a commit chain A->B->C and graft B away by saying
+C's parent is A, fsck does read graft and discards B.  But that
+is what the user asked to do, so I agree with your initial
+response to Yann.
+
+And the opposite case of grafting older history back to the real
+root commit was a false alarm.  You would not lose such a
+history, because the ancestry traversal will go right through
+the real root and traverses the older history.
