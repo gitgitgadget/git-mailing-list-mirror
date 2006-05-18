@@ -1,89 +1,65 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: cvsimport weird
-Date: Thu, 18 May 2006 14:54:34 +1200
-Message-ID: <46a038f90605171954n7e75ee64t412b22e8d405d909@mail.gmail.com>
-References: <4fb292fa0605171800n4f041dd2l8af06d82bdbe6bff@mail.gmail.com>
+From: Sam Song <samlinuxkernel@yahoo.com>
+Subject: Re: Fwd: [OT] Re: Git via a proxy server?
+Date: Wed, 17 May 2006 20:44:28 -0700 (PDT)
+Message-ID: <20060518034428.42456.qmail@web32002.mail.mud.yahoo.com>
+References: <446B00CE.9000609@vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 18 04:54:57 2006
+Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 18 05:44:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgYf9-0003LW-Eh
-	for gcvg-git@gmane.org; Thu, 18 May 2006 04:54:55 +0200
+	id 1FgZRK-0002sx-JC
+	for gcvg-git@gmane.org; Thu, 18 May 2006 05:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750820AbWERCyg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 22:54:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbWERCyg
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 22:54:36 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:37319 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750820AbWERCyf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 May 2006 22:54:35 -0400
-Received: by wr-out-0506.google.com with SMTP id 50so323899wri
-        for <git@vger.kernel.org>; Wed, 17 May 2006 19:54:34 -0700 (PDT)
+	id S1750791AbWERDo3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 May 2006 23:44:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWERDo3
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 23:44:29 -0400
+Received: from web32002.mail.mud.yahoo.com ([68.142.207.99]:50073 "HELO
+	web32002.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750791AbWERDo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 May 2006 23:44:29 -0400
+Received: (qmail 42458 invoked by uid 60001); 18 May 2006 03:44:28 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y8K+FsfOVj2pnvnWO1rIFqXGVEI6a7KfH6CDBKryl39o2CIMaBb9UdRzSwq2N4gRjNn2zC8WQeb3kefUgKt8HjhBad6EvtVe7cqx5pK14UXaMGcwZhZbo1ZVWauth4pIIpKeHG2uyQGOvAHGuqlt+NABER1loFkqQ/t4w6ecA5E=
-Received: by 10.54.132.6 with SMTP id f6mr30170wrd;
-        Wed, 17 May 2006 19:54:34 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Wed, 17 May 2006 19:54:34 -0700 (PDT)
-To: "Bertrand Jacquin" <beber.mailing@gmail.com>
-In-Reply-To: <4fb292fa0605171800n4f041dd2l8af06d82bdbe6bff@mail.gmail.com>
-Content-Disposition: inline
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=3m3xtG454oCnriZsQRoE90PT0Mw4GWsyo28a4KV7tTQTAN4rXovbNLKZUwgXmwxqmNzFd7zZqNUTnMJkgGtVD1OktVyKdpfGOqz3DJ1uVOW6T9fF0LSS02h28C2uQxiw3ntD4moSJwcBHWKUZ1Bv8GKdI+9S2rbdP2JzzW2qJEE=  ;
+Received: from [61.152.162.133] by web32002.mail.mud.yahoo.com via HTTP; Wed, 17 May 2006 20:44:28 PDT
+To: Petr Vandrovec <petr@vmware.com>
+In-Reply-To: <446B00CE.9000609@vmware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20257>
 
-On 5/18/06, Bertrand Jacquin <beber.mailing@gmail.com> wrote:
-> Hi,
->
-> I would like to make some git-cvsimport test on a public repo. And I
-> get some problem and don't know if it's a remote server
-> (enlightenment) problem or a git-cvsimport one.
->
-> Here is the log :
->
-> /mnt/data/src/e-tmp % git-cvsimport -v
-> -d:pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e e17
-> connect error: Network is unreachable
-> WARNING: malformed CVS version str: Server:
-> WARNING: Your CVS client version:
-> [Client: Concurrent Versions System (CVS) 1.12.12 (client)]
-> and/or server version:
-> [Server: ]
-> are too old to properly support the rlog command.
-> This command was introduced in 1.11.1.  Cvsps
-> will use log instead, but PatchSet numbering
-> may become unstable due to pruned empty
-> directories.
+Petr Vandrovec <petr@vmware.com> wrote:
+> Jan-Benedict Glaw <jbglaw@lug-owl.de> wrote:
+> > Well, install some package to have `socket'
+> > available? Debian calls
+> > the packet `socket', too, so I guess Fedora may
+> > have something similar.
+> 
+> Surprisingly they do not...  You should be able to
+> replace 'socket' with 
+> 'netcat' - and I believe that netcat/nc package is
+> available for Fedora.  For 
+> this purpose they have same command line & behavior.
 
-The cvs server is strange -- buggy probably. cvsps thinks it is old,
-but it is not even returning a version string. Is it really cvs?
+Ummm, I am trying on that. nc is avaiable for Fedora.
+But what could be the replacement for CONNECT in
+Fedora? :-)
 
-> cvs [log aborted]: end of file from server (consult above messages if any)
+Thanks for your kind support,
 
-The remote end is dying on you.
-
-> I don't why it tell me that Network is unreachable as I can do normal
-> cvs checkout.
-
-I think it is the remote end that is saying Network unreachable.
-Perhaps it is a cvs proxy that only allows some commands?
-
-> Also, I have the repo in another directory, and I don't know how to
-> use a :local: CVSROOT
-
-   git-cvsimport -d /tmp/cvsrepo/ modulename
-
-should work ok. You should also try parsecvs ;-)
+Sam
 
 
 
-m
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
