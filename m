@@ -1,58 +1,78 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: tailor (Was: gateway status?)
-Date: Fri, 19 May 2006 00:07:59 +0200
-Message-ID: <20060518220759.GA6535@nowhere.earth>
-References: <Pine.LNX.4.62.0605151122500.29452@qynat.qvtvafvgr.pbz> <46a038f90605160609u19a356ccx9467c32100731b9@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Make "git rev-list" be a builtin
+Date: Thu, 18 May 2006 15:00:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605181454540.10823@g5.osdl.org>
+References: <Pine.LNX.4.64.0605181415090.10823@g5.osdl.org>
+ <7vejyrngto.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Lang <dlang@digitalinsight.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 18 23:56:21 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 19 00:00:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgqTi-00062W-Pc
-	for gcvg-git@gmane.org; Thu, 18 May 2006 23:56:19 +0200
+	id 1FgqXg-0006hr-6p
+	for gcvg-git@gmane.org; Fri, 19 May 2006 00:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932157AbWERV4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 May 2006 17:56:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932160AbWERV4Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 17:56:16 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:15074 "EHLO smtp6-g19.free.fr")
-	by vger.kernel.org with ESMTP id S932157AbWERV4P (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 May 2006 17:56:15 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id A3EC32260D;
-	Thu, 18 May 2006 23:56:14 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1Fgqf1-0002dj-R2; Fri, 19 May 2006 00:07:59 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90605160609u19a356ccx9467c32100731b9@mail.gmail.com>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932160AbWERWAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 May 2006 18:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932161AbWERWAV
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 18:00:21 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:61858 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932160AbWERWAV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 May 2006 18:00:21 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4IM0GtH002219
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 18 May 2006 15:00:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4IM0GYx003358;
+	Thu, 18 May 2006 15:00:16 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vejyrngto.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20307>
 
-On Wed, May 17, 2006 at 01:09:19AM +1200, Martin Langhoff wrote:
-> On 5/16/06, David Lang <dlang@digitalinsight.com> wrote:
-> >I seem to remember seeing discussion of gateways to cvs/svn that would let
-> >a project use a git repository and allow clients to use cvs/svn clients to
-> >retreive data.
+
+
+On Thu, 18 May 2006, Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> >
+> > We should have done this long ago.
 > 
-> I suspect you might be thinking of git-cvsserver. The code has no
-> known bugs, but is has only seen limited use by in-house dev teams.
+> Should we have?
+> 
+> Certainly it is almost trivial, and it means we need to worry
+> about one less file, but is that the point?
 
-Another tool that I don't see mentionned often here is tailor, which
-has the ability to act as a gatway between git and a good selection of
-other SCMs, including cvs and svn.  I have not yet tried it with git
-though, so any comments from people having shaked it a bit would be
-useful :)
+Take a look at the size of the binaries before and after.
 
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+This is the _stripped_ binaries (on ppc) before:
+
+  -rwxr-xr-x 9 torvalds torvalds 213392 May 18 14:56 git
+  -rwxr-xr-x 1 torvalds torvalds 167540 May 18 14:56 git-rev-list
+
+and after:
+
+  -rwxr-xr-x 10 torvalds torvalds 216740 May 18 14:56 git
+  -rwxr-xr-x 10 torvalds torvalds 216740 May 18 14:56 git-rev-list
+
+ie the "git" binary grew by about 3kB, and the "git-rev-list" binary 
+shrank by about 164kB (because it now takes zero disk-space: it's the same 
+as the git binary).
+
+So on ppc, you win about 160kB of disk space from this (and much more if 
+you don't strip the binaries - "git-rev-list" is over half a megabyte 
+with the debugging info for me).
+
+Now, x86 probably has less of that, because it's a denser instruction set, 
+but I'd expect that to be in the 100kB range too.
+
+			Linus
