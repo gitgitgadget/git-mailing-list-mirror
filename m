@@ -1,59 +1,86 @@
-From: "Bertrand Jacquin" <beber.mailing@gmail.com>
-Subject: Re: cvsimport weird
-Date: Thu, 18 May 2006 11:33:23 +0200
-Message-ID: <4fb292fa0605180233n3d3448ddl557fa6c10a90c80e@mail.gmail.com>
-References: <4fb292fa0605171800n4f041dd2l8af06d82bdbe6bff@mail.gmail.com>
-	 <46a038f90605171954n7e75ee64t412b22e8d405d909@mail.gmail.com>
-	 <1147924771.32050.40.camel@dv> <1147931094.32050.51.camel@dv>
+From: Mark Rosenstand <mark@borkware.net>
+Subject: Re: Shipping man pages?
+Date: Thu, 18 May 2006 11:41:38 +0200
+Message-ID: <1147945298.1320.35.camel@mjollnir>
+References: <20060518074630.GA2994@code-monkey.de>
+	 <7vac9f69la.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 18 11:33:36 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu May 18 11:40:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fgesp-0001q5-H6
-	for gcvg-git@gmane.org; Thu, 18 May 2006 11:33:28 +0200
+	id 1Fgezt-0003Bi-A3
+	for gcvg-git@gmane.org; Thu, 18 May 2006 11:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750933AbWERJdZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 May 2006 05:33:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbWERJdZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 05:33:25 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:36952 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750933AbWERJdY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 May 2006 05:33:24 -0400
-Received: by nf-out-0910.google.com with SMTP id o63so84544nfa
-        for <git@vger.kernel.org>; Thu, 18 May 2006 02:33:23 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kkyq0bVeQXsvucVKyW+F9f7sI1+BYb8j8RIX4BNO+D/K3bEHcR6qOqKVwlFHGU3wvgfk6gb3UnKT9EJS3WmT++tS0el9NpjTDFWA9/E0Ava6sZHkrwpXA2kdvBNudYKYkdfulIFiCX0oLYnCgob+hdA9gbJ+2KZrjv2DpsX81ts=
-Received: by 10.48.233.19 with SMTP id f19mr363799nfh;
-        Thu, 18 May 2006 02:33:23 -0700 (PDT)
-Received: by 10.49.5.5 with HTTP; Thu, 18 May 2006 02:33:23 -0700 (PDT)
-To: "Pavel Roskin" <proski@gnu.org>
-In-Reply-To: <1147931094.32050.51.camel@dv>
-Content-Disposition: inline
+	id S1751321AbWERJkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 May 2006 05:40:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWERJkm
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 05:40:42 -0400
+Received: from 0x55511dab.adsl.cybercity.dk ([85.81.29.171]:24636 "EHLO
+	hunin.borkware.net") by vger.kernel.org with ESMTP id S1751321AbWERJkm
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 May 2006 05:40:42 -0400
+Received: from hammer (unknown [10.0.0.5])
+	by hunin.borkware.net (Postfix) with ESMTP id EBAB1146B1
+	for <git@vger.kernel.org>; Thu, 18 May 2006 11:40:40 +0200 (CEST)
+To: git@vger.kernel.org
+In-Reply-To: <7vac9f69la.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20278>
 
-On 5/18/06, Pavel Roskin <proski@gnu.org> wrote:
-> On Wed, 2006-05-17 at 23:59 -0400, Pavel Roskin wrote:
-> > I'm quite sure that it's a bug in cvsps.  It displays such things on
-> > x86_64, but works properly on 32-bit PowerPC.
->
-> Address resolution is broken in cvsps on 64-bit machines.  This patch to
-> cvsps is needed:
+On Thu, 2006-05-18 at 01:06 -0700, Junio C Hamano wrote:
+> Tilman Sauerbeck <tilman@code-monkey.de> writes:
+> 
+> > atm, the git release tarballs don't contain man pages.
+> 
+> I ship *source* tarball.
 
-Ah Thanks, I'm running it on a x86_64.
+Which is great for generating binaries and other things that are likely
+to be incompatible across systems.
 
--- 
-Beber
-#e.fr@freenode
+> I also happen to do RPM for people who do not want to build from
+> the source (btw, I do that from pure inertia). In addition,
+> preformatted manual pages and html docs are available from man
+> and html branches of the git.git repository.
+> 
+> If you are building from the source, please build from the
+> source.  Everything you need is right there.
+
+But asciidoc is a royal PITA to package or install - it doesn't even
+provide a Makefile: http://www.methods.co.nz/asciidoc/userguide.html#X38
+
+Additionally it carries the whole docbook dependency chain with it.
+
+> If you don't build from the source, please use whatever binary
+> distribution available out there.  RPM happens to be available
+> from kernel.org.  If you are on Debian/Ubuntu/Gentoo/others,
+> please ask your distribution packager to include the manpages
+> and html docs, if they don't already.
+
+Even the packagers are likely to hate the unneccessary asciidoc
+dependency. As a result some of the small distributions that don't have
+the manpower to support 1000+ packages choose to ship git without the
+man pages, which is a shame, IMO.
+
+> Why does this have to come up so often, and everybody who asks
+> for them never supplies the patch to do so?
+
+Because it seems like a political decision rather than a technical one
+(it's trivial to add the docs as a prerequisite for the dist target.)
+
+> > Or maybe offer them in a separate tarball?
+> 
+> Things that are buildable from the source do not belong in the
+> source tarball.  If somebody wants to do this as a patch, I can
+> be talked into accepting it, but the build procedure should
+> build a separate tarball (or two; one for man and another for
+> woman^Whtml).
+
+That would be great! I'd love to submit a patch, but I wouldn't be able
+to test it, because I'd need asciidoc.
