@@ -1,86 +1,59 @@
-From: Mark Rosenstand <mark@borkware.net>
-Subject: Re: Shipping man pages?
-Date: Thu, 18 May 2006 11:41:38 +0200
-Message-ID: <1147945298.1320.35.camel@mjollnir>
-References: <20060518074630.GA2994@code-monkey.de>
-	 <7vac9f69la.fsf@assigned-by-dhcp.cox.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] Provide a way to flush git-diff-tree's output
+Date: Thu, 18 May 2006 19:43:01 +1000
+Message-ID: <17516.16805.281168.662330@cargo.ozlabs.ibm.com>
+References: <17516.6955.282732.460675@cargo.ozlabs.ibm.com>
+	<7vmzdf6bj5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu May 18 11:40:58 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 18 11:44:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fgezt-0003Bi-A3
-	for gcvg-git@gmane.org; Thu, 18 May 2006 11:40:45 +0200
+	id 1Fgf2P-0003fp-JQ
+	for gcvg-git@gmane.org; Thu, 18 May 2006 11:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbWERJkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 May 2006 05:40:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWERJkm
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 05:40:42 -0400
-Received: from 0x55511dab.adsl.cybercity.dk ([85.81.29.171]:24636 "EHLO
-	hunin.borkware.net") by vger.kernel.org with ESMTP id S1751321AbWERJkm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 May 2006 05:40:42 -0400
-Received: from hammer (unknown [10.0.0.5])
-	by hunin.borkware.net (Postfix) with ESMTP id EBAB1146B1
-	for <git@vger.kernel.org>; Thu, 18 May 2006 11:40:40 +0200 (CEST)
-To: git@vger.kernel.org
-In-Reply-To: <7vac9f69la.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.6.1 
+	id S1751137AbWERJnT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 May 2006 05:43:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbWERJnT
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 05:43:19 -0400
+Received: from ozlabs.org ([203.10.76.45]:41873 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1751137AbWERJnS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 May 2006 05:43:18 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id B8D15679F5; Thu, 18 May 2006 19:43:17 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzdf6bj5.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20279>
 
-On Thu, 2006-05-18 at 01:06 -0700, Junio C Hamano wrote:
-> Tilman Sauerbeck <tilman@code-monkey.de> writes:
+Junio C Hamano writes:
+
+> Sounds low impact and sane.
 > 
-> > atm, the git release tarballs don't contain man pages.
-> 
-> I ship *source* tarball.
+> I suspect the usual caveat on bidirectional pipe deadlock
+> applies to the caller.  Does gitk do that?  The current code
 
-Which is great for generating binaries and other things that are likely
-to be incompatible across systems.
+Gitk will use non-blocking mode on the pipes to/from the git-diff-tree
+process, so there isn't a possibility of deadlock that I can see.
 
-> I also happen to do RPM for people who do not want to build from
-> the source (btw, I do that from pure inertia). In addition,
-> preformatted manual pages and html docs are available from man
-> and html branches of the git.git repository.
-> 
-> If you are building from the source, please build from the
-> source.  Everything you need is right there.
+> seems to feed a pre-generated list with "open | cmd <<"
+> construct to the command, so perhaps you are planning to change
+> that?
 
-But asciidoc is a royal PITA to package or install - it doesn't even
-provide a Makefile: http://www.methods.co.nz/asciidoc/userguide.html#X38
+That's for the "Find" function.  I'm in the process of adding the code
+to let users enter a list of paths and have gitk highlight the commits
+affecting those paths.  That will involve a separate invocation of
+git-diff-tree.  To make it responsive, I'm only going to ask
+git-diff-tree about the commits that are visible on the screen - but I
+need git-diff-tree to give me an answer quickly, i.e. in less time
+than a human can perceive.
 
-Additionally it carries the whole docbook dependency chain with it.
-
-> If you don't build from the source, please use whatever binary
-> distribution available out there.  RPM happens to be available
-> from kernel.org.  If you are on Debian/Ubuntu/Gentoo/others,
-> please ask your distribution packager to include the manpages
-> and html docs, if they don't already.
-
-Even the packagers are likely to hate the unneccessary asciidoc
-dependency. As a result some of the small distributions that don't have
-the manpower to support 1000+ packages choose to ship git without the
-man pages, which is a shame, IMO.
-
-> Why does this have to come up so often, and everybody who asks
-> for them never supplies the patch to do so?
-
-Because it seems like a political decision rather than a technical one
-(it's trivial to add the docs as a prerequisite for the dist target.)
-
-> > Or maybe offer them in a separate tarball?
-> 
-> Things that are buildable from the source do not belong in the
-> source tarball.  If somebody wants to do this as a patch, I can
-> be talked into accepting it, but the build procedure should
-> build a separate tarball (or two; one for man and another for
-> woman^Whtml).
-
-That would be great! I'd love to submit a patch, but I wouldn't be able
-to test it, because I'd need asciidoc.
+Thanks,
+Paul.
