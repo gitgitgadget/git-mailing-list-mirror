@@ -1,84 +1,129 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: cvsimport weird
-Date: Wed, 17 May 2006 23:59:31 -0400
-Message-ID: <1147924771.32050.40.camel@dv>
-References: <4fb292fa0605171800n4f041dd2l8af06d82bdbe6bff@mail.gmail.com>
-	 <46a038f90605171954n7e75ee64t412b22e8d405d909@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Remove old "git-add.sh" remnants
+Date: Wed, 17 May 2006 21:21:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605172120160.10823@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Bertrand Jacquin <beber.mailing@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 18 05:59:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu May 18 06:21:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgZfu-0004jn-BD
-	for gcvg-git@gmane.org; Thu, 18 May 2006 05:59:46 +0200
+	id 1Fga0o-0007Nc-Pc
+	for gcvg-git@gmane.org; Thu, 18 May 2006 06:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750781AbWERD7g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 May 2006 23:59:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbWERD7g
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 May 2006 23:59:36 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:24961 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750781AbWERD7f
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 May 2006 23:59:35 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FgZfi-0007a2-Oq
-	for git@vger.kernel.org; Wed, 17 May 2006 23:59:34 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FgZff-0004CA-VO; Wed, 17 May 2006 23:59:31 -0400
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605171954n7e75ee64t412b22e8d405d909@mail.gmail.com>
-X-Mailer: Evolution 2.6.1 (2.6.1-3) 
+	id S1751087AbWEREVQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 May 2006 00:21:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWEREVQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 May 2006 00:21:16 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:40125 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751087AbWEREVQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 May 2006 00:21:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4I4L6tH025661
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 17 May 2006 21:21:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4I4L4xm007033;
+	Wed, 17 May 2006 21:21:05 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=-6 required=5 tests=PATCH_UNIFIED_DIFF_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.134 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20259>
 
-On Thu, 2006-05-18 at 14:54 +1200, Martin Langhoff wrote:
-> On 5/18/06, Bertrand Jacquin <beber.mailing@gmail.com> wrote:
-> >
-> The cvs server is strange -- buggy probably. cvsps thinks it is old,
-> but it is not even returning a version string. Is it really cvs?
 
-The version reporting is working for me:
+Repeat after me: "It's now a built-in"
 
-$ cvs -d :pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e version
-Client: Concurrent Versions System (CVS) 1.11.21 (client/server)
-Server: Concurrent Versions System (CVS) 1.11.17 (client/server)
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
 
-But I can reproduce the problem with git-cvsimport.  git main branch,
-cvsps 2.1.
-
-I'm quite sure that it's a bug in cvsps.  It displays such things on
-x86_64, but works properly on 32-bit PowerPC.
-
-x86_64:
-$ cvsps --cvs-direct -A -u --root :pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e e17
-connect error: Network is unreachable
-WARNING: malformed CVS version: no data
-WARNING: malformed CVS version str: (UNKNOWN CLIENT)
-WARNING: Your CVS client version:
-[(UNKNOWN CLIENT)]
-and/or server version:
-[(UNKNOWN SERVER)]
-
-ppc:
-$ cvsps --cvs-direct -A -u --root :pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e e17
-cvs_direct initialized to CVSROOT /var/cvs/e
-cvs rlog: Logging e17
-cvs rlog: Logging e17/CVSROOT
-cvs rlog: Logging e17/apps
-cvs rlog: Logging e17/apps/e
-cvs rlog: Logging e17/apps/e/client
-...
-
-Both are cvsps 2.1 on Fedora Core 5.
-
--- 
-Regards,
-Pavel Roskin
+diff --git a/Makefile b/Makefile
+index a1d2e08..3a28580 100644
+--- a/Makefile
++++ b/Makefile
+@@ -113,7 +113,7 @@ SPARSE_FLAGS = -D__BIG_ENDIAN__ -D__powe
+ ### --- END CONFIGURATION SECTION ---
+ 
+ SCRIPT_SH = \
+-	git-add.sh git-bisect.sh git-branch.sh git-checkout.sh \
++	git-bisect.sh git-branch.sh git-checkout.sh \
+ 	git-cherry.sh git-clean.sh git-clone.sh git-commit.sh \
+ 	git-fetch.sh \
+ 	git-format-patch.sh git-ls-remote.sh \
+@@ -170,7 +170,7 @@ PROGRAMS = \
+ 
+ BUILT_INS = git-log$X git-whatchanged$X git-show$X \
+ 	git-count-objects$X git-diff$X git-push$X \
+-	git-grep$X
++	git-grep$X git-add$X
+ 
+ # what 'all' will build and 'install' will install, in gitexecdir
+ ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS)
+diff --git a/git-add.sh b/git-add.sh
+deleted file mode 100755
+index d6a4bc7..0000000
+--- a/git-add.sh
++++ /dev/null
+@@ -1,56 +0,0 @@
+-#!/bin/sh
+-
+-USAGE='[-n] [-v] <file>...'
+-SUBDIRECTORY_OK='Yes'
+-. git-sh-setup
+-
+-show_only=
+-verbose=
+-while : ; do
+-  case "$1" in
+-    -n)
+-	show_only=true
+-	;;
+-    -v)
+-	verbose=--verbose
+-	;;
+-    --)
+-	shift
+-	break
+-	;;
+-    -*)
+-	usage
+-	;;
+-    *)
+-	break
+-	;;
+-  esac
+-  shift
+-done
+-
+-# Check misspelled pathspec
+-case "$#" in
+-0)	;;
+-*)
+-	git-ls-files --error-unmatch --others --cached -- "$@" >/dev/null || {
+-		echo >&2 "Maybe you misspelled it?"
+-		exit 1
+-	}
+-	;;
+-esac
+-
+-if test -f "$GIT_DIR/info/exclude"
+-then
+-	git-ls-files -z \
+-	--exclude-from="$GIT_DIR/info/exclude" \
+-	--others --exclude-per-directory=.gitignore -- "$@"
+-else
+-	git-ls-files -z \
+-	--others --exclude-per-directory=.gitignore -- "$@"
+-fi |
+-case "$show_only" in
+-true)
+-	xargs -0 echo ;;
+-*)
+-	git-update-index --add $verbose -z --stdin ;;
+-esac
