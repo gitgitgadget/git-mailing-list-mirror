@@ -1,89 +1,101 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: [PATCH] Allow pickaxe and diff-filter options to be used by git
- log.
-Date: Fri, 19 May 2006 00:19:20 -0400
-Message-ID: <BAYC1-PASMTP096010F052E9BF78B5FD4AAEA70@CEZ.ICE>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Allow pickaxe and diff-filter options to be used by git log.
+Date: Thu, 18 May 2006 22:41:43 -0700
+Message-ID: <7vbqtuk1uw.fsf@assigned-by-dhcp.cox.net>
 References: <BAYC1-PASMTP04945C92FB14DA65AB1AC7AEA70@CEZ.ICE>
 	<7vac9elm2p.fsf@assigned-by-dhcp.cox.net>
+	<BAYC1-PASMTP096010F052E9BF78B5FD4AAEA70@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 06:25:49 2006
+X-From: git-owner@vger.kernel.org Fri May 19 07:42:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgwYe-0008P7-7B
-	for gcvg-git@gmane.org; Fri, 19 May 2006 06:25:48 +0200
+	id 1FgxkF-0003St-1c
+	for gcvg-git@gmane.org; Fri, 19 May 2006 07:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932219AbWESEZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 00:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbWESEZF
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 00:25:05 -0400
-Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:1812 "EHLO
-	BAYC1-PASMTP09.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932219AbWESEZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 May 2006 00:25:03 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP09.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 18 May 2006 21:26:44 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 2BCF3644C28;
-	Fri, 19 May 2006 00:25:02 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060519001920.42990900.seanlkml@sympatico.ca>
-In-Reply-To: <7vac9elm2p.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 19 May 2006 04:26:45.0171 (UTC) FILETIME=[6FBE0830:01C67AFC]
+	id S932230AbWESFlp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 01:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWESFlp
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 01:41:45 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:8680 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932230AbWESFlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 01:41:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060519054143.JYZW15069.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 19 May 2006 01:41:43 -0400
+To: Sean <seanlkml@sympatico.ca>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20323>
 
-Handle the -S option when passed to git log such that only the
-appropriate commits are displayed.  Also per Junio's comments, do
-the same for "--diff-filter", so that it too can be used as an option
-to git log.  By default no patch or diff information is displayed.
+Sean <seanlkml@sympatico.ca> writes:
 
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+> +	if (rev->always_show_header) {
+> +		if (rev->diffopt.pickaxe || rev->diffopt.filter) {
 
----
+I understand and agree to the change up to this part, but I do
+not necessarily agree with what follows:
 
-> If your goal is to make whatchanged less necessary, I think you
-> would need to special case --diff-filter as well for "git log",
-> although nobody on #git channel seems to have noticed.  I often
-> run --diff-filter=A when I am trying to see when I added a
-> particular file, to avoid getting distracted by other types of
-> changes; log would be still shown if do not disable --always.
+> +			rev->always_show_header = 0;
+> +			if (rev->diffopt.output_format == DIFF_FORMAT_RAW)
+> +				rev->diffopt.output_format = DIFF_FORMAT_NO_OUTPUT;
 
-Makes sense.  This patch should cover that case too.
+To me, if the user explicitly says --diff-filter or -S, it seems
+more natural to interpret that the user wanted _some_ sort of
+diff.  Now, there are people who say raw format is anti-human,
+which I consider is a valid view, but I think it is better than
+NO_OUTPUT in that case.
 
-Sean
+I wonder if doing something like this instead makes more sense
+perhaps?
 
+-- >8 --
 
-a2221c07a94bc378ef40182fa6b260ac88804073
- builtin-log.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-a2221c07a94bc378ef40182fa6b260ac88804073
 diff --git a/builtin-log.c b/builtin-log.c
-index d5bbc1c..12a6d19 100644
+index 69f2911..e68bfad 100644
 --- a/builtin-log.c
 +++ b/builtin-log.c
-@@ -23,6 +23,13 @@ static int cmd_log_wc(int argc, const ch
- 	rev->commit_format = CMIT_FMT_DEFAULT;
- 	rev->verbose_header = 1;
- 	argc = setup_revisions(argc, argv, rev, "HEAD");
-+	if (rev->always_show_header) {
-+		if (rev->diffopt.pickaxe || rev->diffopt.filter) {
-+			rev->always_show_header = 0;
-+			if (rev->diffopt.output_format == DIFF_FORMAT_RAW)
-+				rev->diffopt.output_format = DIFF_FORMAT_NO_OUTPUT;
-+		}
-+	}
- 
+@@ -23,6 +23,35 @@ static int cmd_log_wc(int argc, const ch
  	if (argc > 1)
  		die("unrecognized argument: %s", argv[1]);
--- 
-1.3.GIT
+ 
++	if (rev->always_show_header) {
++		/* Log command is primarily about the message for human
++		 * consumption, but if the user asks for any diff, it
++		 * is human unfriendly to give the raw diff.
++		 *
++		 * Show command is the same way, but there the default is
++		 * always give patch output, so this does not trigger.
++		 */
++		if (rev->diffopt.output_format == DIFF_FORMAT_RAW) {
++			if (rev->diffopt.pickaxe)
++				rev->diffopt.output_format = DIFF_FORMAT_PATCH;
++			else {
++				rev->diffopt.output_format = DIFF_FORMAT_DIFFSTAT;
++				rev->diffopt.summary = 1;
++			}
++		}
++
++		/* If the user is limiting the commits to the ones
++		 * that have particular classes of diff, we should not
++		 * show the log message for irrelevant ones.
++		 *
++		 * git show --diff-filter=R -M --all can be used to view
++		 * the branch tips that renames something.  I do not know
++		 * how useful that is, though.
++		 */
++		if (rev->diffopt.pickaxe || rev->diffopt.filter)
++			rev->always_show_header = 0;
++	}
++
+ 	prepare_revision_walk(rev);
+ 	setup_pager();
+ 	while ((commit = get_revision(rev)) != NULL) {
