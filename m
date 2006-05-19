@@ -1,31 +1,31 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH 4/5] Log ref updates made by fetch.
-Date: Fri, 19 May 2006 03:29:26 -0400
-Message-ID: <20060519072926.GE22257@spearce.org>
+Subject: [PATCH 5/5] Change 'master@noon' syntax to 'master@{noon}'.
+Date: Fri, 19 May 2006 03:29:43 -0400
+Message-ID: <20060519072943.GF22257@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 09:29:39 2006
+X-From: git-owner@vger.kernel.org Fri May 19 09:29:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgzQT-0005WR-1M
-	for gcvg-git@gmane.org; Fri, 19 May 2006 09:29:33 +0200
+	id 1FgzQk-0005Xe-Pw
+	for gcvg-git@gmane.org; Fri, 19 May 2006 09:29:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751104AbWESH3a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 03:29:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbWESH3a
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 03:29:30 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37827 "EHLO
+	id S1751111AbWESH3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 03:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWESH3s
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 03:29:48 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40643 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751104AbWESH3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 May 2006 03:29:30 -0400
+	id S1751111AbWESH3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 03:29:47 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FgzQM-0002kT-EJ; Fri, 19 May 2006 03:29:26 -0400
+	id 1FgzQd-0002l6-QA; Fri, 19 May 2006 03:29:44 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BC2F0212691; Fri, 19 May 2006 03:29:26 -0400 (EDT)
+	id 229C5212691; Fri, 19 May 2006 03:29:44 -0400 (EDT)
 To: Junio Hamano <junkio@cox.net>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
@@ -40,179 +40,204 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20333>
 
-If a ref is changed by http-fetch, local-fetch or ssh-fetch
-record the change and the remote URL/name in the log for the ref.
-This requires loading the config file to check logAllRefUpdates.
-
-Also fixed a bug in the ref lock generation; the log file name was
-not being produced right due to a bad prefix length.
+Its ambiguous to parse "master@2006-05-17 18:30:foo" when foo is
+meant as a file name and ":30" is meant as 30 minutes past 6 pm.
+Therefore all date specifications in a sha1 expression must now
+appear within brackets and the ':' splitter used for the path name
+in a sha1 expression ignores ':' appearing within brackets.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
 ---
 
- fetch.c       |   17 +++++++++++++++--
- fetch.h       |    3 +++
- http-fetch.c  |    2 ++
- local-fetch.c |    2 ++
- refs.c        |    5 +++--
- ssh-fetch.c   |    2 ++
- 6 files changed, 27 insertions(+), 4 deletions(-)
+ Documentation/git-rev-parse.txt |   11 ++++----
+ sha1_name.c                     |   27 ++++++++++++-------
+ t/t1400-update-ref.sh           |   55 ++++++++++++++++++++++++++++-----------
+ 3 files changed, 62 insertions(+), 31 deletions(-)
 
-b929e2a5a8f80c8635cf3c54a6d766902cf87434
-diff --git a/fetch.c b/fetch.c
-index 8bdaacb..fd57684 100644
---- a/fetch.c
-+++ b/fetch.c
-@@ -8,6 +8,7 @@ #include "blob.h"
- #include "refs.h"
+eea4ae092b92129ef09e9caf6f6f2b523cd193cb
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index df308c3..b894694 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -124,11 +124,12 @@ syntax.
+   happen to have both heads/master and tags/master, you can
+   explicitly say 'heads/master' to tell git which one you mean.
  
- const char *write_ref = NULL;
-+const char *write_ref_log_details = NULL;
+-* A suffix '@' followed by a date specification such as 'yesterday'
+-  (24 hours ago) or '1 month 2 weeks 3 days 1 hour 1 second ago'
+-  to specify the value of the ref at a prior point in time.
+-  This suffix may only be used immediately following a ref name
+-  and the ref must have an existing log ($GIT_DIR/logs/<ref>).
++* A suffix '@' followed by a date specification enclosed in a brace
++  pair (e.g. '\{yesterday\}', '\{1 month 2 weeks 3 days 1 hour 1
++  second ago\}' or '\{1979-02-26 18:30:00\}') to specify the value
++  of the ref at a prior point in time.  This suffix may only be
++  used immediately following a ref name and the ref must have an
++  existing log ($GIT_DIR/logs/<ref>).
  
- const unsigned char *current_ref = NULL;
+ * A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+diff --git a/sha1_name.c b/sha1_name.c
+index 4376cb3..fbbde1c 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -249,7 +249,7 @@ static int get_sha1_basic(const char *st
+ 	static const char *warning = "warning: refname '%.*s' is ambiguous.\n";
+ 	const char **p, *pathname;
+ 	char *real_path = NULL;
+-	int refs_found = 0, at_mark;
++	int refs_found = 0, am;
+ 	unsigned long at_time = (unsigned long)-1;
+ 	unsigned char *this_result;
+ 	unsigned char sha1_from_ref[20];
+@@ -257,16 +257,16 @@ static int get_sha1_basic(const char *st
+ 	if (len == 40 && !get_sha1_hex(str, sha1))
+ 		return 0;
  
-@@ -206,13 +207,17 @@ int pull(char *target)
+-	/* At a given period of time? "@2 hours ago" */
+-	for (at_mark = 1; at_mark < len; at_mark++) {
+-		if (str[at_mark] == '@') {
+-			int date_len = len - at_mark - 1;
++	/* At a given period of time? "@{2 hours ago}" */
++	for (am = 1; am < len - 1; am++) {
++		if (str[am] == '@' && str[am+1] == '{' && str[len-1] == '}') {
++			int date_len = len - am - 3;
+ 			char *date_spec = xmalloc(date_len + 1);
+-			strncpy(date_spec, str + at_mark + 1, date_len);
++			strncpy(date_spec, str + am + 2, date_len);
+ 			date_spec[date_len] = 0;
+ 			at_time = approxidate(date_spec);
+ 			free(date_spec);
+-			len = at_mark;
++			len = am;
+ 			break;
+ 		}
+ 	}
+@@ -482,7 +482,7 @@ static int get_sha1_1(const char *name, 
+  */
+ int get_sha1(const char *name, unsigned char *sha1)
  {
- 	struct ref_lock *lock;
- 	unsigned char sha1[20];
-+	char *msg;
-+	int ret;
- 
- 	save_commit_buffer = 0;
- 	track_object_refs = 0;
- 	if (write_ref) {
- 		lock = lock_ref_sha1(write_ref, current_ref, 1);
--		if (!lock)
-+		if (!lock) {
-+			error("Can't lock ref %s", write_ref);
- 			return -1;
-+		}
+-	int ret;
++	int ret, bracket_depth;
+ 	unsigned unused;
+ 	int namelen = strlen(name);
+ 	const char *cp;
+@@ -528,8 +528,15 @@ int get_sha1(const char *name, unsigned 
+ 		}
+ 		return -1;
  	}
+-	cp = strchr(name, ':');
+-	if (cp) {
++	for (cp = name, bracket_depth = 0; *cp; cp++) {
++		if (*cp == '{')
++			bracket_depth++;
++		else if (bracket_depth && *cp == '}')
++			bracket_depth--;
++		else if (!bracket_depth && *cp == ':')
++			break;
++	}
++	if (*cp == ':') {
+ 		unsigned char tree_sha1[20];
+ 		if (!get_sha1_1(name, cp-name, tree_sha1))
+ 			return get_tree_entry(tree_sha1, cp+1, sha1,
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 7858d86..f6b076b 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -125,52 +125,75 @@ ed="Thu, 26 May 2005 18:32:00 -0500"
+ gd="Thu, 26 May 2005 18:33:00 -0500"
+ ld="Thu, 26 May 2005 18:43:00 -0500"
+ test_expect_success \
+-	'Query "master@May 25 2005" (before history)' \
++	'Query "master@{May 25 2005}" (before history)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@May 25 2005" >o 2>e &&
++	 git-rev-parse --verify "master@{May 25 2005}" >o 2>e &&
+ 	 test $C = $(cat o) &&
+ 	 test "warning: Log .git/logs/$m only goes back to $ed." = "$(cat e)"'
+ test_expect_success \
+-	"Query master@2005-05-25 (before history)" \
++	"Query master@{2005-05-25} (before history)" \
+ 	'rm -f o e
+-	 git-rev-parse --verify master@2005-05-25 >o 2>e &&
++	 git-rev-parse --verify master@{2005-05-25} >o 2>e &&
+ 	 test $C = $(cat o) &&
+ 	 echo test "warning: Log .git/logs/$m only goes back to $ed." = "$(cat e)"'
+ test_expect_success \
+-	'Query "master@May 26 2005 23:31:59" (1 second before history)' \
++	'Query "master@{May 26 2005 23:31:59}" (1 second before history)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@May 26 2005 23:31:59" >o 2>e &&
++	 git-rev-parse --verify "master@{May 26 2005 23:31:59}" >o 2>e &&
+ 	 test $C = $(cat o) &&
+ 	 test "warning: Log .git/logs/$m only goes back to $ed." = "$(cat e)"'
+ test_expect_success \
+-	'Query "master@May 26 2005 23:32:00" (exactly history start)' \
++	'Query "master@{May 26 2005 23:32:00}" (exactly history start)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@May 26 2005 23:32:00" >o 2>e &&
++	 git-rev-parse --verify "master@{May 26 2005 23:32:00}" >o 2>e &&
+ 	 test $A = $(cat o) &&
+ 	 test "" = "$(cat e)"'
+ test_expect_success \
+-	'Query "master@2005-05-26 23:33:01" (middle of history with gap)' \
++	'Query "master@{2005-05-26 23:33:01}" (middle of history with gap)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@2005-05-26 23:33:01" >o 2>e &&
++	 git-rev-parse --verify "master@{2005-05-26 23:33:01}" >o 2>e &&
+ 	 test $B = $(cat o) &&
+ 	 test "warning: Log .git/logs/$m has gap after $gd." = "$(cat e)"'
+ test_expect_success \
+-	'Query "master@2005-05-26 23:33:01" (middle of history)' \
++	'Query "master@{2005-05-26 23:38:00}" (middle of history)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@2005-05-26 23:38:00" >o 2>e &&
++	 git-rev-parse --verify "master@{2005-05-26 23:38:00}" >o 2>e &&
+ 	 test $Z = $(cat o) &&
+ 	 test "" = "$(cat e)"'
+ test_expect_success \
+-	'Query "master@2005-05-26 23:43:00" (exact end of history)' \
++	'Query "master@{2005-05-26 23:43:00}" (exact end of history)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@2005-05-26 23:43:00" >o 2>e &&
++	 git-rev-parse --verify "master@{2005-05-26 23:43:00}" >o 2>e &&
+ 	 test $E = $(cat o) &&
+ 	 test "" = "$(cat e)"'
+ test_expect_success \
+-	'Query "master@2005-05-28" (past end of history)' \
++	'Query "master@{2005-05-28}" (past end of history)' \
+ 	'rm -f o e
+-	 git-rev-parse --verify "master@2005-05-28" >o 2>e &&
++	 git-rev-parse --verify "master@{2005-05-28}" >o 2>e &&
+ 	 test $D = $(cat o) &&
+ 	 test "warning: Log .git/logs/$m unexpectedly ended on $ld." = "$(cat e)"'
  
- 	if (!get_recover) {
-@@ -234,7 +239,15 @@ int pull(char *target)
- 	}
- 
- 	if (write_ref) {
--		return write_ref_sha1(lock, sha1, "git fetch");
-+		if (write_ref_log_details) {
-+			msg = xmalloc(strlen(write_ref_log_details) + 12);
-+			sprintf(msg, "fetch from %s", write_ref_log_details);
-+		} else
-+			msg = NULL;
-+		ret = write_ref_sha1(lock, sha1, msg ? msg : "fetch (unknown)");
-+		if (msg)
-+			free(msg);
-+		return ret;
- 	}
- 	return 0;
- }
-diff --git a/fetch.h b/fetch.h
-index 9837a3d..0011548 100644
---- a/fetch.h
-+++ b/fetch.h
-@@ -25,6 +25,9 @@ extern int fetch_ref(char *ref, unsigned
- /* If set, the ref filename to write the target value to. */
- extern const char *write_ref;
- 
-+/* If set additional text will appear in the ref log. */
-+extern const char *write_ref_log_details;
 +
- /* If set, the hash that the current value of write_ref must be. */
- extern const unsigned char *current_ref;
- 
-diff --git a/http-fetch.c b/http-fetch.c
-index 861644b..cc7bd1f 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1223,6 +1223,7 @@ int main(int argc, char **argv)
- 	int rc = 0;
- 
- 	setup_git_directory();
-+	git_config(git_default_config);
- 
- 	while (arg < argc && argv[arg][0] == '-') {
- 		if (argv[arg][1] == 't') {
-@@ -1249,6 +1250,7 @@ int main(int argc, char **argv)
- 	}
- 	commit_id = argv[arg];
- 	url = argv[arg + 1];
-+	write_ref_log_details = url;
- 
- 	http_init();
- 
-diff --git a/local-fetch.c b/local-fetch.c
-index fa9e697..ffa4887 100644
---- a/local-fetch.c
-+++ b/local-fetch.c
-@@ -208,6 +208,7 @@ int main(int argc, char **argv)
- 	int arg = 1;
- 
- 	setup_git_directory();
-+	git_config(git_default_config);
- 
- 	while (arg < argc && argv[arg][0] == '-') {
- 		if (argv[arg][1] == 't')
-@@ -239,6 +240,7 @@ int main(int argc, char **argv)
- 		usage(local_pull_usage);
- 	commit_id = argv[arg];
- 	path = argv[arg + 1];
-+	write_ref_log_details = path;
- 
- 	if (pull(commit_id))
- 		return 1;
-diff --git a/refs.c b/refs.c
-index 31cf276..d3ddc82 100644
---- a/refs.c
-+++ b/refs.c
-@@ -142,6 +142,8 @@ static int do_for_each_ref(const char *b
- 			namelen = strlen(de->d_name);
- 			if (namelen > 255)
- 				continue;
-+			if (namelen>5 && !strcmp(de->d_name+namelen-5,".lock"))
-+				continue;
- 			memcpy(path + baselen, de->d_name, namelen+1);
- 			if (stat(git_path("%s", path), &st) < 0)
- 				continue;
-@@ -296,7 +298,6 @@ static struct ref_lock* lock_ref_sha1_ba
- 	plen = strlen(path) - plen;
- 	path = resolve_ref(path, lock->old_sha1, mustexist);
- 	if (!path) {
--		error("Can't read ref %s", path);
- 		unlock_ref(lock);
- 		return NULL;
- 	}
-@@ -326,7 +327,7 @@ struct ref_lock* lock_ref_sha1(const cha
- 	if (check_ref_format(ref))
- 		return NULL;
- 	return lock_ref_sha1_basic(git_path("refs/%s", ref),
--		strlen(ref), old_sha1, mustexist);
-+		5 + strlen(ref), old_sha1, mustexist);
- }
- 
- struct ref_lock* lock_any_ref_for_update(const char *ref,
-diff --git a/ssh-fetch.c b/ssh-fetch.c
-index 4eb9e04..e3067b8 100644
---- a/ssh-fetch.c
-+++ b/ssh-fetch.c
-@@ -132,6 +132,7 @@ int main(int argc, char **argv)
- 	if (!prog) prog = "git-ssh-upload";
- 
- 	setup_git_directory();
-+	git_config(git_default_config);
- 
- 	while (arg < argc && argv[arg][0] == '-') {
- 		if (argv[arg][1] == 't') {
-@@ -158,6 +159,7 @@ int main(int argc, char **argv)
- 	}
- 	commit_id = argv[arg];
- 	url = argv[arg + 1];
-+	write_ref_log_details = url;
- 
- 	if (setup_connection(&fd_in, &fd_out, prog, url, arg, argv + 1))
- 		return 1;
++rm -f .git/$m .git/logs/$m expect
++
++test_expect_success \
++    'creating initial files' \
++    'cp ../../COPYING COPYING &&
++     git-add COPYING &&
++	 GIT_COMMITTER_DATE="2005-05-26 23:30" git-commit -m add -a &&
++	 cp ../../Makefile COPYING &&
++	 GIT_COMMITTER_DATE="2005-05-26 23:41" git-commit -m change -a'
++
++test_expect_success \
++	'git-cat-file blob master:COPYING (expect Makefile)' \
++	'git-cat-file blob master:COPYING | diff - ../../Makefile'
++test_expect_success \
++	'git-cat-file blob master@{2005-05-26 23:30}:COPYING (expect COPYING)' \
++	'git-cat-file blob "master@{2005-05-26 23:30}:COPYING" \
++	  | diff - ../../COPYING'
++test_expect_success \
++	'git-cat-file blob master@{2005-05-26 23:42}:COPYING (expect Makefile)' \
++	'git-cat-file blob "master@{2005-05-26 23:42}:COPYING" \
++	  | diff - ../../Makefile'
++
+ test_done
 -- 
 1.3.2.g7278
