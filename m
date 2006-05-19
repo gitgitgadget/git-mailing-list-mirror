@@ -1,87 +1,75 @@
-From: Santi <sbejar@gmail.com>
-Subject: [PATCH] Document that "git add" only adds non-ignored files.
-Date: Fri, 19 May 2006 23:02:34 +0200
-Message-ID: <8aa486160605191402k2863e5edk@mail.gmail.com>
+From: Sven Ekman <svekman@yahoo.se>
+Subject: Re: [PATCH] built-in tar-tree and remote tar-tree
+Date: Fri, 19 May 2006 23:43:18 +0200 (CEST)
+Message-ID: <20060519214318.38240.qmail@web25910.mail.ukl.yahoo.com>
+References: <7v7j4ik1fr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri May 19 23:02:46 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 19 23:43:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhC7P-0007dH-E7
-	for gcvg-git@gmane.org; Fri, 19 May 2006 23:02:43 +0200
+	id 1FhCko-0005Y3-K9
+	for gcvg-git@gmane.org; Fri, 19 May 2006 23:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964844AbWESVCf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 May 2006 17:02:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbWESVCf
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 17:02:35 -0400
-Received: from wx-out-0102.google.com ([66.249.82.203]:52883 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S964844AbWESVCe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 17:02:34 -0400
-Received: by wx-out-0102.google.com with SMTP id s6so578530wxc
-        for <git@vger.kernel.org>; Fri, 19 May 2006 14:02:34 -0700 (PDT)
+	id S964857AbWESVnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 17:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964860AbWESVnU
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 17:43:20 -0400
+Received: from web25910.mail.ukl.yahoo.com ([217.12.10.208]:51082 "HELO
+	web25910.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S964857AbWESVnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 17:43:19 -0400
+Received: (qmail 38242 invoked by uid 60001); 19 May 2006 21:43:18 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=pUrF6bYVaID1M+2s33rUI2JIQzL6kigJvM/4z2K1zG9zK9fJJow5SIWMV8X6mH+ivRn1/ViaIHGZqkHOCH8nVSXU3xe9+VyoAjwlpg0RndKmqKKcFxFUA+Mz8lgFscsiHKP0WqZ9nknxyDnWDjIJdaD906/HbsHcpKEmxrr6q2w=
-Received: by 10.70.133.7 with SMTP id g7mr2540734wxd;
-        Fri, 19 May 2006 14:02:34 -0700 (PDT)
-Received: by 10.70.20.2 with HTTP; Fri, 19 May 2006 14:02:34 -0700 (PDT)
-To: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-Content-Disposition: inline
+  s=s1024; d=yahoo.se;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=T4Scw+0J5elzjO4VRyK4bzjU4dbT2BET8H05iE6Vo2x8mrwirpOrCcQ30HU9vDFsZgih6ZvIpUJlKUVP3lGx5NRGyBr0TAMJJeAxpFDkCsqkFnhY43wGuDYeFaJDdHcNZbY2/1pvxgWN276eTmtcbS8lpmldHDI7XMcyZCzbcs0=  ;
+Received: from [140.78.95.135] by web25910.mail.ukl.yahoo.com via HTTP; Fri, 19 May 2006 23:43:18 CEST
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7j4ik1fr.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20357>
 
-Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
+Junio C Hamano <junkio@cox.net> skrev:
 
+> Sorry for sending a crapoid that does not even
+> compile.  I ran format-patch while on a wrong 
+> branch.
+> 
+> Tonight's "pu" will have a fixed up one for 
+> people who are interested to play with.
 
----
+Hi Junio,
 
- Documentation/git-add.txt |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+Thanks for your answer. I'm looking forward to try the
+remote tar-tree at the weekend.  While this will
+definitely make it much more easy to grab single
+revisions out of a git tree, it only solves a part of
+the issue I was trying to address. If one wanted a
+simple snapshot of the source, it's usually easier to
+download a tarball. 
 
-9c057bcba388450963085eb5c751b734c04ff045
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 5e31129..1b6a22a 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -7,18 +7,20 @@ git-add - Add files to the index file
+The great thing about having the kernel source in a
+git repository is that it lets me upgrade the kernel
+source tree in place with a single simple command. No
+firing up a browser, downloading and applying a patch.
+It is also braindead easy to maintain a set of local
+patches across different kernel versions. Git makes
+all this quick and easy.
 
- SYNOPSIS
- --------
--'git-add' [-n] [-v] [--] <file>...
-+'git-add' [-n] [-v] [--] <filepattern>...
+Is there a simple way to retrieve a single object or a
+list of objects _without_ any of their parents? If so
+one could retrieve the wanted commit and the
+corresponding tree and parse it on the client side to
+retrieve its descendents and commits.  If so, the
+number of roundtrips would be roughly proportional to
+the depth of the trees, which would probably still be
+acceptable.
 
- DESCRIPTION
- -----------
- A simple wrapper for git-update-index to add files to the index,
- for people used to do "cvs add".
-
-+It only adds non-ignored files, to add ignored files use
-+"git update-index --add".
-
- OPTIONS
- -------
--<file>...::
--       Files to add to the index.
-+<filepattern>...::
-+       Files to add to the index, see gitlink:git-ls-files[1].
-
- -n::
-         Don't actually add the file(s), just show if they exist.
-@@ -68,6 +70,7 @@ git-add git-*.sh::
- See Also
- --------
- gitlink:git-rm[1]
-+gitlink:git-ls-files[1]
-
- Author
- ------
---
-1.3.3.g97ee3
+Greetings, Sven
