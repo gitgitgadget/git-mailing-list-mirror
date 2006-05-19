@@ -1,62 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] [BUG] Add a test to check git-prune does not throw away
- revs hidden by a graft.
-Date: Fri, 19 May 2006 13:45:57 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605191344200.10823@g5.osdl.org>
-References: <20060518213519.14577.67309.stgit@gandelf.nowhere.earth>
- <Pine.LNX.4.64.0605181435230.10823@g5.osdl.org> <7viro3nh07.fsf@assigned-by-dhcp.cox.net>
- <20060518222045.GB6535@nowhere.earth> <20060518225216.GC6535@nowhere.earth>
- <7vsln7lzbj.fsf@assigned-by-dhcp.cox.net> <20060519185558.GE6535@nowhere.earth>
- <Pine.LNX.4.64.0605191159520.10823@g5.osdl.org> <20060519202540.GF6535@nowhere.earth>
+From: Santi <sbejar@gmail.com>
+Subject: [PATCH] Document that "git add" only adds non-ignored files.
+Date: Fri, 19 May 2006 23:02:34 +0200
+Message-ID: <8aa486160605191402k2863e5edk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 22:46:43 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri May 19 23:02:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhBrO-000537-31
-	for gcvg-git@gmane.org; Fri, 19 May 2006 22:46:10 +0200
+	id 1FhC7P-0007dH-E7
+	for gcvg-git@gmane.org; Fri, 19 May 2006 23:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964832AbWESUqE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 16:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbWESUqE
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 16:46:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:49583 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964832AbWESUqD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 16:46:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4JKjwtH019161
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 19 May 2006 13:45:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4JKjvEO004350;
-	Fri, 19 May 2006 13:45:57 -0700
-To: Yann Dirson <ydirson@altern.org>
-In-Reply-To: <20060519202540.GF6535@nowhere.earth>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964844AbWESVCf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 May 2006 17:02:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbWESVCf
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 17:02:35 -0400
+Received: from wx-out-0102.google.com ([66.249.82.203]:52883 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S964844AbWESVCe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 17:02:34 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so578530wxc
+        for <git@vger.kernel.org>; Fri, 19 May 2006 14:02:34 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pUrF6bYVaID1M+2s33rUI2JIQzL6kigJvM/4z2K1zG9zK9fJJow5SIWMV8X6mH+ivRn1/ViaIHGZqkHOCH8nVSXU3xe9+VyoAjwlpg0RndKmqKKcFxFUA+Mz8lgFscsiHKP0WqZ9nknxyDnWDjIJdaD906/HbsHcpKEmxrr6q2w=
+Received: by 10.70.133.7 with SMTP id g7mr2540734wxd;
+        Fri, 19 May 2006 14:02:34 -0700 (PDT)
+Received: by 10.70.20.2 with HTTP; Fri, 19 May 2006 14:02:34 -0700 (PDT)
+To: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20356>
+
+Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
 
 
+---
 
-On Fri, 19 May 2006, Yann Dirson wrote:
-> 
-> > We _could_ decide that fsck should just follow the "real parents" and the 
-> > grafts _both_. That's the safe thing to do by default. Possibly with a 
-> > flag to say "prefer one over the other", or even a "prefer which-ever 
-> > exists".
-> 
-> I'm not sure I see how "prefer which-ever exists" would be useful - do
-> you have anything precise in mind ?
+ Documentation/git-add.txt |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-It would be a "once you've pruned one or the other, don't complain any 
-more about the fact that it doesn't exist" flag.
+9c057bcba388450963085eb5c751b734c04ff045
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 5e31129..1b6a22a 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -7,18 +7,20 @@ git-add - Add files to the index file
 
-		Linus
+ SYNOPSIS
+ --------
+-'git-add' [-n] [-v] [--] <file>...
++'git-add' [-n] [-v] [--] <filepattern>...
+
+ DESCRIPTION
+ -----------
+ A simple wrapper for git-update-index to add files to the index,
+ for people used to do "cvs add".
+
++It only adds non-ignored files, to add ignored files use
++"git update-index --add".
+
+ OPTIONS
+ -------
+-<file>...::
+-       Files to add to the index.
++<filepattern>...::
++       Files to add to the index, see gitlink:git-ls-files[1].
+
+ -n::
+         Don't actually add the file(s), just show if they exist.
+@@ -68,6 +70,7 @@ git-add git-*.sh::
+ See Also
+ --------
+ gitlink:git-rm[1]
++gitlink:git-ls-files[1]
+
+ Author
+ ------
+--
+1.3.3.g97ee3
