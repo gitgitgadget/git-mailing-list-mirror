@@ -1,35 +1,33 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 4/5] Log ref updates made by fetch.
-Date: Fri, 19 May 2006 04:03:14 -0400
-Message-ID: <20060519080314.GG22257@spearce.org>
-References: <20060519072926.GE22257@spearce.org> <7vodxuih2d.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 0/5] More ref logging
+Date: Fri, 19 May 2006 05:14:56 -0400
+Message-ID: <20060519091456.GH22257@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 10:03:42 2006
+X-From: git-owner@vger.kernel.org Fri May 19 11:15:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgzxN-0003U5-BT
-	for gcvg-git@gmane.org; Fri, 19 May 2006 10:03:33 +0200
+	id 1Fh14e-00081H-5Y
+	for gcvg-git@gmane.org; Fri, 19 May 2006 11:15:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932125AbWESIDT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 04:03:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932130AbWESIDT
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 04:03:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:6086 "EHLO
+	id S1751226AbWESJPD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 05:15:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbWESJPD
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 05:15:03 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:13003 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932125AbWESIDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 May 2006 04:03:18 -0400
+	id S1751226AbWESJPC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 05:15:02 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fgzx4-0003kc-Lm; Fri, 19 May 2006 04:03:14 -0400
+	id 1Fh14U-0005gB-4o; Fri, 19 May 2006 05:14:58 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 04264212691; Fri, 19 May 2006 04:03:14 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id 370C5212691; Fri, 19 May 2006 05:14:56 -0400 (EDT)
+To: Junio Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vodxuih2d.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,55 +40,33 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20337>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> > diff --git a/refs.c b/refs.c
-> > index 31cf276..d3ddc82 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -142,6 +142,8 @@ static int do_for_each_ref(const char *b
-> >  			namelen = strlen(de->d_name);
-> >  			if (namelen > 255)
-> >  				continue;
-> > +			if (namelen>5 && !strcmp(de->d_name+namelen-5,".lock"))
-> > +				continue;
-> >  			memcpy(path + baselen, de->d_name, namelen+1);
-> >  			if (stat(git_path("%s", path), &st) < 0)
-> >  				continue;
-> 
-> Now this got me worried.  Until now I did not realize that we
-> are clobbering refnames that ends with ".lock" if another ref
-> with the name without ".locK" is updated.  Because we do not
-> forbid a name that ends with ".lock" to be used as a refname,
-> this is an accident waiting to happen.
-> 
-> Not your fault, though.  It was like this ever since the initial
-> version of refs.c was accepted by Linus.
-> 
-> We could do one of two things: officially forbid any refname
-> that ends with ".lock", or fix the lockfile naming convention.
-> 
-> Nobody should be relying on what the actual lockfile-to-be-
-> renamed-to-become-the-real-file is called.  I suspect we would
-> want to fix refs.c::ref_lock_file_name() to use a name that
-> would never be used as a refname.
-> 
-> We could make it begin with ".", so the lock file for the master
-> ".git/refs/heads/master" would become ".git/refs/heads/.master",
-> for example.  That way, we cannot clobber a valid unrelated ref
-> (".master" is not a valid ref name), and as an added bonus, you
-> do not even have to have the above hunk.
+These are on top of the other five I just sent:
 
-Not a bad idea.  I found this bug because fetch.c was trying to
-work on the bob.lock while it was fetching "heads/bob".  Which
-didn't make sense to me, so I put this skip thing in...
+* [PATCH 1/5] Correct force_write bug in refs.c
 
-I'd want to get all of the "lockers" move to using the common
-lock code before changing the lock name to ".master" (for example)
-but yes that's a good idea.
+	Yea there was a bug in the last bug fix.  Now we
+	really don't write the ref unless we need to.
+
+* [PATCH 2/5] Change order of -m option to update-ref.
+
+	Minor documentation nit noticed by Junio.
+
+* [PATCH 3/5] Include ref log detail in commit, reset, etc.
+
+	Enhance some core tools to use the new '-m' switch with
+	update-ref.  Trivial but requires the new update-ref.
+
+* [PATCH 4/5] Create/delete branch ref logs.
+
+	This was discussed on #git earlier this morning.
+	Automatically create the ref log if -l is given when creating
+	a branch and delete the log when deleting the branch.
+
+* [PATCH 5/5] Enable ref log creation in git checkout -b.
+
+	Fix git checkout -b to behave like git branch.
 
 -- 
 Shawn.
