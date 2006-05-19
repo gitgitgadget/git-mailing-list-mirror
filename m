@@ -1,98 +1,78 @@
-From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
-Date: Fri, 19 May 2006 08:53:37 +0200
-Message-ID: <87y7wyv72m.fsf@morpheus.hq.vtech>
-References: <e4f1ta$e07$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/5] Log ref updates made by fetch.
+Date: Fri, 19 May 2006 00:56:10 -0700
+Message-ID: <7vodxuih2d.fsf@assigned-by-dhcp.cox.net>
+References: <20060519072926.GE22257@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri May 19 09:50:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 19 09:56:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FgzkV-000105-HO
-	for gcvg-git@gmane.org; Fri, 19 May 2006 09:50:16 +0200
+	id 1FgzqN-000290-7A
+	for gcvg-git@gmane.org; Fri, 19 May 2006 09:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbWESHuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 May 2006 03:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932160AbWESHuH
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 03:50:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:46011 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932138AbWESHuF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 03:50:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FgzkF-0000w4-4A
-	for git@vger.kernel.org; Fri, 19 May 2006 09:49:59 +0200
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 19 May 2006 09:49:59 +0200
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 19 May 2006 09:49:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:YvHzW9ycOpr0t6XormUff6/XGxA=
+	id S932147AbWESH4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 03:56:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932160AbWESH4N
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 03:56:13 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:40152 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932147AbWESH4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 03:56:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060519075611.DOBW9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 19 May 2006 03:56:11 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060519072926.GE22257@spearce.org> (Shawn Pearce's message of
+	"Fri, 19 May 2006 03:29:26 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20335>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> In #git channel somebody asked about 'branches' and 'heads' and was r=
-eferred
-> to the glossary. I had taken then a look at appropriate glossary entr=
-ies.
->
-> In 'Documentation/glossary.txt' we have:
-> ---- =20
-> branch::
->         A non-cyclical graph of revisions, i.e. the complete history =
-of
->         a particular revision, which is called the branch head. The
->         branch heads are stored in `$GIT_DIR/refs/heads/`.
+> diff --git a/refs.c b/refs.c
+> index 31cf276..d3ddc82 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -142,6 +142,8 @@ static int do_for_each_ref(const char *b
+>  			namelen = strlen(de->d_name);
+>  			if (namelen > 255)
+>  				continue;
+> +			if (namelen>5 && !strcmp(de->d_name+namelen-5,".lock"))
+> +				continue;
+>  			memcpy(path + baselen, de->d_name, namelen+1);
+>  			if (stat(git_path("%s", path), &st) < 0)
+>  				continue;
 
-[...]
+Now this got me worried.  Until now I did not realize that we
+are clobbering refnames that ends with ".lock" if another ref
+with the name without ".locK" is updated.  Because we do not
+forbid a name that ends with ".lock" to be used as a refname,
+this is an accident waiting to happen.
 
-> It is just me or the glossary entry for `branch` is unnecessary=20
-> complicated?=20
->
-> Let's take a look at other definitions:
->
->   In software engineering, 'branch' is a separate line of development=
-, which=20
->   among others allows development on a project to diverge in two dire=
-ctions,=20
->   such as a stable and a development version. (WikiPedia:Branch)
->
->   In the CVS team development environment, a separate line of develop=
-ment=20
->   where changes can be isolated. When a programmer changes files on=20
->   a branch, those changes do not appear on the main trunk=20
->   or other branches. (cvs.info)
->
-> So from the user's point of view, 'branch' is simply _named line of
-> development_. Refer to topic and tracking branches.
+Not your fault, though.  It was like this ever since the initial
+version of refs.c was accepted by Linus.
 
-But the definition of 'branch' in git is quite different from the
-definition in CVS or many other systems.  It CVS, each revision
-(commit) belongs to a branch, and the branch is a linear sequence of
-revisions, not a full DAG.  In git, a commit doesn't really "belong"
-in any specific branch.
+We could do one of two things: officially forbid any refname
+that ends with ".lock", or fix the lockfile naming convention.
 
-So, while it makes sense to describe branches as "lines of
-development" in general terms, it is also important to note the
-specific meaning of 'branch' in the context of git; i.e. as the
-history of a single head commit.
+Nobody should be relying on what the actual lockfile-to-be-
+renamed-to-become-the-real-file is called.  I suspect we would
+want to fix refs.c::ref_lock_file_name() to use a name that
+would never be used as a refname.
 
-I noticed that some of this seems to be changing slightly with the
-introduction of branch logs, but I don't know how those are supposed
-to be used yet.
+We could make it begin with ".", so the lock file for the master
+".git/refs/heads/master" would become ".git/refs/heads/.master",
+for example.  That way, we cannot clobber a valid unrelated ref
+(".master" is not a valid ref name), and as an added bonus, you
+do not even have to have the above hunk.
 
---=20
-David K=E5gedal
+Hmm?
