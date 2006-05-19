@@ -1,64 +1,50 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Allow pickaxe and diff-filter options to be used by git log.
-Date: Thu, 18 May 2006 23:05:34 -0700
-Message-ID: <7v3bf6k0r5.fsf@assigned-by-dhcp.cox.net>
-References: <BAYC1-PASMTP04945C92FB14DA65AB1AC7AEA70@CEZ.ICE>
-	<7vac9elm2p.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP096010F052E9BF78B5FD4AAEA70@CEZ.ICE>
-	<7vbqtuk1uw.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP092CB0667E05EA20FBA30EAEA70@CEZ.ICE>
+Subject: FIXED: [WARNING] Please be careful when using "git add" from "next" branch
+Date: Thu, 18 May 2006 23:28:34 -0700
+Message-ID: <7vy7wyil4d.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605170927050.10823@g5.osdl.org>
+	<7vhd3ocvyy.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605171321020.10823@g5.osdl.org>
+	<7v64k3698l.fsf@assigned-by-dhcp.cox.net>
+	<7vwtcj4tp6.fsf@assigned-by-dhcp.cox.net>
+	<7vsln74sv7.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 08:05:52 2006
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 19 08:28:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fgy7M-0007Qn-Vu
-	for gcvg-git@gmane.org; Fri, 19 May 2006 08:05:45 +0200
+	id 1FgyTY-0002s9-RP
+	for gcvg-git@gmane.org; Fri, 19 May 2006 08:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932234AbWESGFg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 02:05:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932238AbWESGFg
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 02:05:36 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:15796 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932234AbWESGFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 May 2006 02:05:35 -0400
+	id S932249AbWESG2h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 02:28:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932248AbWESG2h
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 02:28:37 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:31107 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932241AbWESG2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 02:28:36 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060519060535.HEFQ24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 19 May 2006 02:05:35 -0400
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP092CB0667E05EA20FBA30EAEA70@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Fri, 19 May 2006 01:49:38 -0400")
+          id <20060519062835.KXDO15069.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 19 May 2006 02:28:35 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7vsln74sv7.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 18 May 2006 01:52:44 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20327>
 
-Sean <seanlkml@sympatico.ca> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Well, I was looking at the use of diff-filter and -S as a way
-> to prune uninteresting commits from the log rather than as an 
-> desire to see the patch information.
+> There is still a small breakage in the built-in "git add" on the
+> "next" branch that ends up creating nonsense tree objects.
 
-Fair enough.
-
-> It's pretty natural to add -p or --stat along with the above 
-> options if that is what the user wants.  If you make those implied
-> by using --diff-filter or -S is there a way for the user to say,
-> no patch and no stat?
-
-Well, I was sneaking in a hidden feature with that tweak.
-
-Regardless of the diff-filter/-S issues, with that alternative
-patch, you could do:
-
-	$ git log -r
-
-It lets you do a wonderful thing with surprisingly small number
-of keystrokes ;-).
+This was fixed this morning, in case I scared people.
+ 
