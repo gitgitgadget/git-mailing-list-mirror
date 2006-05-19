@@ -1,31 +1,31 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH 0/5] More ref logging
-Date: Fri, 19 May 2006 05:14:56 -0400
-Message-ID: <20060519091456.GH22257@spearce.org>
+Subject: [PATCH 1/5] Correct force_write bug in refs.c
+Date: Fri, 19 May 2006 05:15:28 -0400
+Message-ID: <20060519091528.GI22257@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 19 11:15:11 2006
+X-From: git-owner@vger.kernel.org Fri May 19 11:15:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fh14e-00081H-5Y
-	for gcvg-git@gmane.org; Fri, 19 May 2006 11:15:08 +0200
+	id 1Fh154-00085s-7k
+	for gcvg-git@gmane.org; Fri, 19 May 2006 11:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226AbWESJPD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 05:15:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbWESJPD
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 05:15:03 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:13003 "EHLO
+	id S1751231AbWESJPb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 05:15:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWESJPb
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 05:15:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:15819 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751226AbWESJPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 May 2006 05:15:02 -0400
+	id S1751231AbWESJPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 05:15:31 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fh14U-0005gB-4o; Fri, 19 May 2006 05:14:58 -0400
+	id 1Fh14w-0005h3-Oz; Fri, 19 May 2006 05:15:26 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 370C5212691; Fri, 19 May 2006 05:14:56 -0400 (EDT)
+	id 0CA72212691; Fri, 19 May 2006 05:15:28 -0400 (EDT)
 To: Junio Hamano <junkio@cox.net>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
@@ -40,33 +40,32 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20338>
 
-These are on top of the other five I just sent:
+My earlier attempt at forcing a write for non-existant refs worked;
+it forced a write for pretty much all refs.  This corrects the
+condition to only force a write for refs which don't exist yet.
 
-* [PATCH 1/5] Correct force_write bug in refs.c
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-	Yea there was a bug in the last bug fix.  Now we
-	really don't write the ref unless we need to.
+---
 
-* [PATCH 2/5] Change order of -m option to update-ref.
+ refs.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-	Minor documentation nit noticed by Junio.
-
-* [PATCH 3/5] Include ref log detail in commit, reset, etc.
-
-	Enhance some core tools to use the new '-m' switch with
-	update-ref.  Trivial but requires the new update-ref.
-
-* [PATCH 4/5] Create/delete branch ref logs.
-
-	This was discussed on #git earlier this morning.
-	Automatically create the ref log if -l is given when creating
-	a branch and delete the log when deleting the branch.
-
-* [PATCH 5/5] Enable ref log creation in git checkout -b.
-
-	Fix git checkout -b to behave like git branch.
-
+5ee16115982c52fa9b8fa15c14b234608a8b935d
+diff --git a/refs.c b/refs.c
+index d3ddc82..eeb1196 100644
+--- a/refs.c
++++ b/refs.c
+@@ -305,7 +305,7 @@ static struct ref_lock* lock_ref_sha1_ba
+ 	lock->ref_file = strdup(path);
+ 	lock->lock_file = strdup(mkpath("%s.lock", lock->ref_file));
+ 	lock->log_file = strdup(git_path("logs/%s", lock->ref_file + plen));
+-	lock->force_write = !lstat(lock->ref_file, &st) || errno == ENOENT;
++	lock->force_write = lstat(lock->ref_file, &st) && errno == ENOENT;
+ 
+ 	if (safe_create_leading_directories(lock->lock_file))
+ 		die("unable to create directory for %s", lock->lock_file);
 -- 
-Shawn.
+1.3.2.g7278
