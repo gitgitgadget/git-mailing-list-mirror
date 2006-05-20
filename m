@@ -1,92 +1,68 @@
-From: Donnie Berkholz <spyderous@gentoo.org>
-Subject: Re: irc usage..
-Date: Sat, 20 May 2006 16:12:34 -0700
-Message-ID: <446FA262.7080900@gentoo.org>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org> <20060520203911.GI6535@nowhere.earth> <446F95A2.6040909@gentoo.org> <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: dangling commits.
+Date: Sat, 20 May 2006 19:08:02 -0400
+Message-ID: <BAYC1-PASMTP12721518DAEC49D36EF4B8AEA40@CEZ.ICE>
+References: <20060520230531.GA27511@redhat.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig34FFDDCAB8FABA000A81E593"
-Cc: Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 21 01:12:48 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 21 01:14:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhaci-0008TF-MJ
-	for gcvg-git@gmane.org; Sun, 21 May 2006 01:12:41 +0200
+	id 1Fhadv-00009O-Fs
+	for gcvg-git@gmane.org; Sun, 21 May 2006 01:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964826AbWETXMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 19:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964827AbWETXMi
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 19:12:38 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:51679 "EHLO smtp.gentoo.org")
-	by vger.kernel.org with ESMTP id S964826AbWETXMh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 19:12:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.gentoo.org (Postfix) with ESMTP id 0539464327;
-	Sat, 20 May 2006 23:12:37 +0000 (UTC)
-Received: from smtp.gentoo.org ([127.0.0.1])
- by localhost (smtp.gentoo.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 11955-09; Sat, 20 May 2006 23:12:35 +0000 (UTC)
-Received: from [192.168.1.105] (c-67-171-150-177.hsd1.or.comcast.net [67.171.150.177])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTP id 8822B64411;
-	Sat, 20 May 2006 23:12:34 +0000 (UTC)
-User-Agent: Thunderbird 1.5.0.2 (X11/20060513)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>
-X-Enigmail-Version: 0.94.0.0
-X-Virus-Scanned: amavisd-new at gentoo.org
+	id S964841AbWETXNx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 19:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbWETXNw
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 19:13:52 -0400
+Received: from bayc1-pasmtp12.bayc1.hotmail.com ([65.54.191.172]:27827 "EHLO
+	BAYC1-PASMTP12.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S964841AbWETXNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 May 2006 19:13:52 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP12.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 20 May 2006 16:21:24 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 49BF6644C28;
+	Sat, 20 May 2006 19:13:50 -0400 (EDT)
+To: Dave Jones <davej@redhat.com>
+Message-Id: <20060520190802.0df67730.seanlkml@sympatico.ca>
+In-Reply-To: <20060520230531.GA27511@redhat.com>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 20 May 2006 23:21:25.0203 (UTC) FILETIME=[1D044230:01C67C64]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20406>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig34FFDDCAB8FABA000A81E593
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Sat, 20 May 2006 19:05:31 -0400
+Dave Jones <davej@redhat.com> wrote:
 
-Linus Torvalds wrote:
->=20
-> On Sat, 20 May 2006, Donnie Berkholz wrote:
->> Our main repo is actually a bit over 2G (2103621223) now that I check,=
+> What's wrong here?
+> 
+> (tmp)$ mkdir git
+> (tmp)$ cd git
+> (git)$ rsync -azq rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git/ .git
+> (git)$ git-fsck-objects --full
+> dangling commit fc024e5e1b92fb11d11aa3c15e9e3f92a888acb6
+> dangling commit be49def3dd524b241e3f14c657e740f2e4d73d39
+> dangling commit e659abda29b2b25db2771c3e6086f15bc74b1d06
+> dangling commit 0f5aaf12d411debc2958dfb029ffcf873d980f15
+> dangling commit 8eed8a5da8330df6901f254eab4b7056855b919c
+> 
+> The version of git on that box is 1.2.6-1 from Debian etch.
+> 
+> 		Dave
+> 
 
->> but it's not very complex. There's actually just one branch, and I don=
-'t
->> think anyone would care if we lost the history from it because it's a
->> release branch from a few years ago.
->=20
-> Can you point to it? I'm not a CVS user, but I've played with cvsps bef=
-ore=20
-> (to get it to work), and I'm a humanitarian - rescuing people from CVS =
-is=20
-> to me not just a good idea, it's a moral imperative.
+Nothing wrong.  Those commits were just dropped from the "pu" branch at
+one time or another when it was rewound.  The repository could use a
+pruning, but there's no harm done by having those objects remain in
+the object database.   If you had used any protocol other than rsync,
+they would not have appeared in your cloned copy.
 
-I don't want to post the link publicly for a few reasons, including the
-huge amount of bandwidth it would suck up for lots of people to download
-it. I've sent it to you off-list, and if anyone else would also like it,
-please drop me a note.
-
-Thanks,
-Donnie
-
-
---------------enig34FFDDCAB8FABA000A81E593
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFEb6JiXVaO67S1rtsRAuusAJ9xQ3uRZ/k3MFhQEgiHNvGA/byQ5QCfSJa7
-4QnjCxWOVKtvZuA/qruOSyc=
-=7C7V
------END PGP SIGNATURE-----
-
---------------enig34FFDDCAB8FABA000A81E593--
+Sean
