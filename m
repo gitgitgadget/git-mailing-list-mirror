@@ -1,62 +1,65 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [RFC] qgit with tabs
-Date: Sat, 20 May 2006 05:42:01 -0400
-Message-ID: <20060520054201.11po8xb4gwwowo0k@webmail.spamcop.net>
-References: <e5bfff550605130344n75e3e55eq533c49fc2a4f5483@mail.gmail.com>
-	<20060513070726.qa5ssccws80go044@webmail.spamcop.net>
-	<e5bfff550605130431w417b8aacl2b17cf5655b46f31@mail.gmail.com>
-	<20060513142840.39c0kwkw84g8g88g@webmail.spamcop.net>
-	<e5bfff550605131538u63b87002o3e9b5542c0e15bf7@mail.gmail.com>
-	<1147908094.32050.22.camel@dv>
-	<e5bfff550605190954w4baab5fcj4f48a539bd120364@mail.gmail.com>
+From: Santi <sbejar@gmail.com>
+Subject: Re: [PATCH] Document that "git add" only adds non-ignored files.
+Date: Sat, 20 May 2006 11:54:07 +0200
+Message-ID: <8aa486160605200254yef22fadj@mail.gmail.com>
+References: <8aa486160605191402k2863e5edk@mail.gmail.com>
+	 <7vfyj5ispx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 20 11:42:21 2006
+X-From: git-owner@vger.kernel.org Sat May 20 11:54:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhNyQ-0002p9-SA
-	for gcvg-git@gmane.org; Sat, 20 May 2006 11:42:15 +0200
+	id 1FhOA0-0004Vm-Ef
+	for gcvg-git@gmane.org; Sat, 20 May 2006 11:54:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932273AbWETJmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 05:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932303AbWETJmD
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 05:42:03 -0400
-Received: from mailgate.cesmail.net ([216.154.195.36]:45730 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP id S932273AbWETJmC
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 May 2006 05:42:02 -0400
-Received: (qmail 16941 invoked from network); 20 May 2006 09:42:01 -0000
-Received: from unknown (HELO epsilon.cesmail.net) (192.168.1.40)
-  by mailgate.cesmail.net with SMTP; 20 May 2006 09:42:01 -0000
-Received: (qmail 25946 invoked by uid 99); 20 May 2006 09:42:01 -0000
-Received: from pool-70-16-137-110.phil.east.verizon.net
-	(pool-70-16-137-110.phil.east.verizon.net [70.16.137.110]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Sat, 20 May 2006 05:42:01 -0400
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550605190954w4baab5fcj4f48a539bd120364@mail.gmail.com>
+	id S932305AbWETJyI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 05:54:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932306AbWETJyI
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 05:54:08 -0400
+Received: from wx-out-0102.google.com ([66.249.82.203]:13706 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932305AbWETJyH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 05:54:07 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so631764wxc
+        for <git@vger.kernel.org>; Sat, 20 May 2006 02:54:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S7BPOF3yor6PL75rzhZ8wytFiqBVTRmYmOZkKEUVZhp5EVmceXJPh8uiIV0aBb3PxBnXut2h7GM21DjQkymJu7ASvIBFUTRhmRoLh3OCMcx/NrT/vhhnxsOLOJoVkBMzBpjKekehG7dbXaqrMEI7R4o9OT+W4GauPLJtCBBb8yk=
+Received: by 10.70.17.10 with SMTP id 10mr3093840wxq;
+        Sat, 20 May 2006 02:54:07 -0700 (PDT)
+Received: by 10.70.20.2 with HTTP; Sat, 20 May 2006 02:54:07 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vfyj5ispx.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20374>
 
-Quoting Marco Costalba <mcostalba@gmail.com>:
+2006/5/19, Junio C Hamano <junkio@cox.net>:
+> Thanks for the reminder, but I wonder if it is good to update
+> the description of this command, and ls-files to use the
+> same wording for consistency.  We seem to use <pathspec> to mean
+> "this is not necessarily a filename -- we glob", so that may be
+> a good candidate (we do not have <pathspec> in glossary yet --
+> we would need to add).
 
-> > If I see the list of the recent patches, I see the descriptions and the
-> > affected files.  If I'm interested to see what changed in the file, it's
-> > only natural for me to double-click the corresponding entry in the list.
-> >
+I changed it to match with the new usage string in the buildin-add.c.
+
 >
-> Ok. patch pushed.
+> Please don't touch description for diff-* family -- right now,
+> they say <path>, because they do not glob.  If we decide that it
+> is a good idea to glob (which I suspect we don't for the
+> low-level stuff, but we probably do for the "git-diff" wrapper),
+> we would update the code and the description at the same time.
+>
 
-Working fine here.  Thank you!
+OK.
 
---
-Regards,
-Pavel Roskin
+Santi
