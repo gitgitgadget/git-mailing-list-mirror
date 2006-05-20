@@ -1,71 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: irc usage..
-Date: Sat, 20 May 2006 10:26:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] fmt-patch: Support --attach
+Date: Sat, 20 May 2006 10:43:46 -0700
+Message-ID: <7v4pzk3831.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0605201537290.17869@wbgn013.biozentrum.uni-wuerzburg.de>
+	<e4n8b3$ari$1@sea.gmane.org>
+	<Pine.LNX.4.63.0605201904320.31887@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat May 20 19:26:38 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 20 19:43:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhVDh-0006HL-0G
-	for gcvg-git@gmane.org; Sat, 20 May 2006 19:26:29 +0200
+	id 1FhVUU-0000c2-D6
+	for gcvg-git@gmane.org; Sat, 20 May 2006 19:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbWETR0Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 13:26:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbWETR0Z
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 13:26:25 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:22722 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751445AbWETR0Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 13:26:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4KHQNtH000459
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Sat, 20 May 2006 10:26:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4KHQMM3001871
-	for <git@vger.kernel.org>; Sat, 20 May 2006 10:26:23 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751451AbWETRns (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 13:43:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbWETRns
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 13:43:48 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:63465 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751451AbWETRnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 May 2006 13:43:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060520174346.HOIM27327.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 20 May 2006 13:43:46 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605201904320.31887@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 20 May 2006 19:10:02 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20387>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I hate irc.
+> I only changed the "From " line (note the missing ":") to match the output 
+> from git-format-patch.sh.
 
-I'm reading the irc logs, and seeing that people have problems, but (a) it 
-was while I was asleep and (b) irc use doesn't encourage people to 
-actually explain what the problems _are_, so I have no clue.
+Not a big deal, but I was hoping you would keep the inception
+date of git (April one) in the final version ;-).  The September
+date is totally a random date and does not have any
+significance.
 
-So now I know that "spyderous" has problems importing some 1GB gentoo CVS 
-archive, but that's pretty much it. Grr.
-
-Are people afraid to post to git@vger.kernel.org, or what?
-
-I saw that people tried to suggest posting to the git mailing list, but 
-can any of you who are active on irc be a bit more forceful? And perhaps 
-we don't make this mailing list address well enough known? 
-
-As far as I'm aware, the git mailing list isn't closed, so people should 
-be able to post here without even subscribing. I can well understand that 
-you might not want to subscribe and prefer to look ove rthe list through 
-some archive setup (the way I look at the irc logs), and maybe we should 
-just make the git mailing list address more obvious.
-
-Right now, the "community" page at http://git.or.cz/community.html doesn't 
-even mention the git mailing list address directly, it just tells you how 
-you can subscribe and read the archives.
-
-Can we perhaps fix that, and the people who are active on irc please also 
-make it clear to people that if they have some real problems that don't 
-get an immediate answer, the git mailing list ends up where a lot of 
-people can actually look more closely at it.. And tell them what the 
-address is.
-
-			Linus
+Anyway, with this change (and a lot of testing ;-) I think we
+can replace the script with built-in.  Thanks.
