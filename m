@@ -1,75 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fmt-patch: Support --attach
-Date: Sat, 20 May 2006 22:23:04 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605202214430.634@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0605201537290.17869@wbgn013.biozentrum.uni-wuerzburg.de>
- <e4n8b3$ari$1@sea.gmane.org> <Pine.LNX.4.63.0605201904320.31887@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4pzk3831.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0605201945110.32590@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vu07k1sr8.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: irc usage..
+Date: Sat, 20 May 2006 22:39:11 +0200
+Message-ID: <20060520203911.GI6535@nowhere.earth>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 20 22:23:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 20 22:27:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhXyl-0001Nq-K3
-	for gcvg-git@gmane.org; Sat, 20 May 2006 22:23:15 +0200
+	id 1FhY2k-00023X-T0
+	for gcvg-git@gmane.org; Sat, 20 May 2006 22:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbWETUXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 16:23:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbWETUXH
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 16:23:07 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:45528 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751476AbWETUXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 May 2006 16:23:06 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id EB4F81C97;
-	Sat, 20 May 2006 22:23:04 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id DF4CA1C56;
-	Sat, 20 May 2006 22:23:04 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id BDA6A1BCB;
-	Sat, 20 May 2006 22:23:04 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu07k1sr8.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751478AbWETU1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 16:27:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWETU1U
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 16:27:20 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:32682 "EHLO smtp4-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751478AbWETU1T (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 16:27:19 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id D6F6A4F1B4;
+	Sat, 20 May 2006 22:27:18 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FhYEC-0005Ix-3i; Sat, 20 May 2006 22:39:12 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20394>
 
-Hi,
-
-On Sat, 20 May 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sat, May 20, 2006 at 10:26:22AM -0700, Linus Torvalds wrote:
+> I'm reading the irc logs, and seeing that people have problems, but (a) it 
+> was while I was asleep and (b) irc use doesn't encourage people to 
+> actually explain what the problems _are_, so I have no clue.
 > 
-> > On Sat, 20 May 2006, Junio C Hamano wrote:
-> >
-> > As for --check: how about having yet another diff "format": 
-> > DIFF_FORMAT_CHECK? Instead of showing the diff, it only shows the line(s) 
-> > which are offending.
-> 
-> Never thought of that but I think it makes sense.  
-> 
-> I liked the way Sean did the --summary; I am wondering if we
-> could clean up the --with-* stuff in a similar way.  We
-> currently do "if DIFF_FORMAT_XYZ or with_xyz then do this" which
-> is quite honestly disgusting (my fault).
+> So now I know that "spyderous" has problems importing some 1GB gentoo CVS 
+> archive, but that's pretty much it. Grr.
 
-I do not think the --with-* stuff can be done in a similar way. If I do 
-"git log --summary -p", I do not get a summary. The only way to "clean it 
-up" would be to add a linked list of diff_formats (to preserve the order). 
+FWIW, I have mentionned a problem that may be the same, under
+Message-ID <20060107090148.GB32585@nowhere.earth>, that was on January
+7th.  Namely, when importing a repository with very large files over
+pserver or ssh, timeouts can occur and prevent the import from
+working.  But, as you said, it's not easy to get precise info from the
+logs :)
 
-But frankly, I think that is overkill. After all, how often have you 
-dreamt about showing first the patch, then the summary, and maybe a 
-diffstat, and after that the patch again, for each commit?
-
-Ciao,
-Dscho
+Best regards,
+-- 
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
