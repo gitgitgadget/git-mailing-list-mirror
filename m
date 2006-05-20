@@ -1,66 +1,75 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitk highlight feature
-Date: Sat, 20 May 2006 09:42:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605200934240.10823@g5.osdl.org>
-References: <17495.61142.677439.171773@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.64.0605021659430.4086@g5.osdl.org> <Pine.LNX.4.64.0605021721540.4086@g5.osdl.org>
- <17496.7073.507895.484698@cargo.ozlabs.ibm.com> <Pine.LNX.4.64.0605030946260.4086@g5.osdl.org>
- <17518.24000.952384.563448@cargo.ozlabs.ibm.com>
+Subject: Re: [PATCH] include header to define uint32_t, necessary on Mac OS
+ X
+Date: Sat, 20 May 2006 09:50:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605200943270.10823@g5.osdl.org>
+References: <20060511173632.G60c08b4@leonov.stosberg.net>
+ <Pine.LNX.4.64.0605111054290.3866@g5.osdl.org> <7v7j4swg0r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605111218380.3866@g5.osdl.org> <7viroav534.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605142056320.3038@mundungus.clifford.ac>
+ <Pine.LNX.4.64.0605142057220.10680@mundungus.clifford.ac>
+ <20060520144111.GA5798@steel.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 20 18:42:52 2006
+Cc: Ben Clifford <benc@hawaga.org.uk>, Junio C Hamano <junkio@cox.net>,
+	Dennis Stosberg <dennis@stosberg.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 20 18:50:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhUXQ-0007vQ-4l
-	for gcvg-git@gmane.org; Sat, 20 May 2006 18:42:49 +0200
+	id 1FhUfI-0000i9-Cw
+	for gcvg-git@gmane.org; Sat, 20 May 2006 18:50:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbWETQme (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 12:42:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbWETQme
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 12:42:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:19131 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751437AbWETQme (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 12:42:34 -0400
+	id S1751419AbWETQuu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 12:50:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbWETQuu
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 12:50:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41148 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751419AbWETQut (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 12:50:49 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4KGgVtH031473
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4KGoStH031727
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 20 May 2006 09:42:32 -0700
+	Sat, 20 May 2006 09:50:28 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4KGgUMi000938;
-	Sat, 20 May 2006 09:42:31 -0700
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17518.24000.952384.563448@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=0 required=5 tests=
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4KGoOlo001124;
+	Sat, 20 May 2006 09:50:24 -0700
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060520144111.GA5798@steel.home>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
 X-MIMEDefang-Filter: osdl$Revision: 1.135 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20384>
 
 
 
-On Sat, 20 May 2006, Paul Mackerras wrote:
+On Sat, 20 May 2006, Alex Riesen wrote:
+
+> Ben Clifford, Sun, May 14, 2006 22:58:33 +0200:
+> >   #include <sys/time.h>
+> >   #include <signal.h>
+> > +#include <stdint.h>
+> > 
 > 
-> I just pushed some changes to the "new" branch of the gitk.git
-> repository which change the way we do highlighting.  There is now a
-> row of controls across the middle of the window, just below the row
-> containing the sha1 ID, "Find" button, etc., which controls the
-> highlighting.
+> BTW, Ben, how did you produce this patch? It has some unusual
+> indentations...
 
-Ok, this is much nicer, I think this ends up being much closer to what I 
-really wanted, even if I didn't know quite how I wanted it.
+I don't think it's the patch producer. It's some mail-mangler. Some broken 
+mailers seem to add an extra space at the beginning of a line that already 
+begins with a space - I've seen this before.
 
-I think the "Find" field should highlight things too. Right now there's no 
-way to get highlighting for somebody having signed-off on a patch, for 
-example, even though you can _search_ for it.
+The headers would seem to say "Pine":
 
-Also, right now it says "Author/committer", but it actually only triggers 
-on author. Which may be the right thing to do (it's certainly what I'd 
-normally want to see), but it doesn't match the description. 
+	Message-ID: <Pine.LNX.4.64.0605142057220.10680@mundungus.clifford.ac>
+
+but that makes no sense, because mine certainly doesn't. But pine does 
+have a few config options to mangle whitespace, so who knows..
+
+It could also be the actual send path, of course.
 
 		Linus
