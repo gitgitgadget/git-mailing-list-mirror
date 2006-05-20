@@ -1,70 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Dave Jones <davej@redhat.com>
 Subject: Re: dangling commits.
-Date: Sat, 20 May 2006 16:19:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605201615270.3649@g5.osdl.org>
-References: <20060520230531.GA27511@redhat.com>
+Date: Sat, 20 May 2006 19:49:11 -0400
+Message-ID: <20060520234911.GA30269@redhat.com>
+References: <20060520230531.GA27511@redhat.com> <Pine.LNX.4.64.0605201615270.3649@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 01:19:26 2006
+X-From: git-owner@vger.kernel.org Sun May 21 01:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhajE-0000hU-LC
-	for gcvg-git@gmane.org; Sun, 21 May 2006 01:19:25 +0200
+	id 1FhbCS-0003nO-7N
+	for gcvg-git@gmane.org; Sun, 21 May 2006 01:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964827AbWETXTW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 19:19:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964820AbWETXTV
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 19:19:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41610 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964827AbWETXTV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 19:19:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4KNJ8tH012109
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 20 May 2006 16:19:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4KNJ6Gg010577;
-	Sat, 20 May 2006 16:19:07 -0700
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20060520230531.GA27511@redhat.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932161AbWETXtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 19:49:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932182AbWETXtX
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 19:49:23 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:47081 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S932161AbWETXtX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 19:49:23 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k4KNnI65023575;
+	Sat, 20 May 2006 19:49:18 -0400
+Received: from nwo.kernelslacker.org (vpn83-123.boston.redhat.com [172.16.83.123])
+	by int-mx1.corp.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k4KNnDvs006292;
+	Sat, 20 May 2006 19:49:13 -0400
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.6/8.13.5) with ESMTP id k4KNnCkW030607;
+	Sat, 20 May 2006 19:49:12 -0400
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.6/8.13.6/Submit) id k4KNnCCL030606;
+	Sat, 20 May 2006 19:49:12 -0400
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0605201615270.3649@g5.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20409>
 
+On Sat, May 20, 2006 at 04:19:06PM -0700, Linus Torvalds wrote:
 
+ > > What's wrong here?
+ > 
+ > Nothing, except
+ > 
+ >  - you used rsync to fetch the thing (so you get all objects, regardless 
+ >    of whether they are reachable or not)
 
-On Sat, 20 May 2006, Dave Jones wrote:
->
-> What's wrong here?
+Ah. I actually noticed this when I poked around the box that does
+the nightly snapshots, and wondered for a few minutes why I never
+switched it over to git:// last time I poked at that script.
+Then it came back to me: rsync -q worked better than redirecting
+git to /dev/null
+- git-clone's -q was still outputting some stuff, so recloning each
+  time the cronjob ran wasn't an option,
+- subsequent git pull's were noisy too
 
-Nothing, except
+When run from a cronjob, unless something fatal happens, I basically
+never want to get mail from the snapshotting script.
 
- - you used rsync to fetch the thing (so you get all objects, regardless 
-   of whether they are reachable or not)
+ >  - junio re-bases his "pu" branch, and I just end up following him (I 
+ >    should stop exporting git entirely, here's no point, really).
 
- - junio re-bases his "pu" branch, and I just end up following him (I 
-   should stop exporting git entirely, here's no point, really). Thus, 
-   whenever "pu" gets reset to something else, the old head of pu gets 
-   dropped on the floor and ends up as a "dangling" commit (no branch head 
-   points to it any more).
+I just updated the snapshot script to pull from 
+http://www.kernel.org/pub/scm/git/git.git/ instead.
 
-The moral(s) of the story being that
+thanks,
 
- (a) dangling commits are normal if you reset branch heads (which includes 
-     things like "git rebase", for example)
+		Dave
 
- (b) rsync is not a good transfer protocol, since it will just blindly 
-     transfer objects that aren't needed - or worse - successfully clone a 
-     corrupt repository.
-
-but there's nothing to _worry_ about in this particular schenario.
-
-		Linus
+-- 
+http://www.codemonkey.org.uk
