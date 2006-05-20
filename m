@@ -1,75 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
-Date: Fri, 19 May 2006 19:06:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605191853570.10823@g5.osdl.org>
-References: <e4f1ta$e07$1@sea.gmane.org> <87y7wyv72m.fsf@morpheus.hq.vtech>
- <20060519092136.GN22257@spearce.org> <Pine.LNX.4.64.0605192006400.6713@iabervon.org>
- <7vy7wxfs7v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605192116360.6713@iabervon.org>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: [PATCH] Implement git-quiltimport (take 2)
+Date: Fri, 19 May 2006 20:42:38 -0600
+Message-ID: <m1ac9dv2ld.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.64.0605161001190.3866@g5.osdl.org>
+	<m1bqtx6el6.fsf@ebiederm.dsl.xmission.com>
+	<7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
+	<m13bf95ixo.fsf@ebiederm.dsl.xmission.com>
+	<7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
+	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
+	<7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
+	<m1zmhg31cm.fsf@ebiederm.dsl.xmission.com>
+	<7vy7x09qet.fsf@assigned-by-dhcp.cox.net>
+	<m1ejyr38xx.fsf@ebiederm.dsl.xmission.com>
+	<20060519235825.GA3289@kroah.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 20 04:07:06 2006
+X-From: git-owner@vger.kernel.org Sat May 20 04:43:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhGrx-0000MR-UC
-	for gcvg-git@gmane.org; Sat, 20 May 2006 04:07:06 +0200
+	id 1FhHRD-0003rm-OZ
+	for gcvg-git@gmane.org; Sat, 20 May 2006 04:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964823AbWETCGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 22:06:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964802AbWETCGz
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 22:06:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:37768 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964823AbWETCGy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 22:06:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4K26ltH000340
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 19 May 2006 19:06:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4K26koh013627;
-	Fri, 19 May 2006 19:06:47 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0605192116360.6713@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932478AbWETCnV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 22:43:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932349AbWETCnV
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 22:43:21 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:53682 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S932478AbWETCnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 May 2006 22:43:21 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4K2gc11015186;
+	Fri, 19 May 2006 20:42:38 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4K2gcub015185;
+	Fri, 19 May 2006 20:42:38 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20060519235825.GA3289@kroah.com> (Greg KH's message of "Fri,
+ 19 May 2006 16:58:25 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20372>
 
+Greg KH <greg@kroah.com> writes:
 
+> On Thu, May 18, 2006 at 04:48:26AM -0600, Eric W. Biederman wrote:
+>> 
+>> Yes, a smaller patch series, that is what I meant.
+>> Most quilt trees that I know about are  small.
+>
+> $ quilt series | wc -l
+> 207
+>
+> And that is about "normal" for me.  Sometimes it grows to about 500+
+> patches, but that only happens when there's a longer kernel release
+> cycle.
+>
+> Another tree that I work on all the time is about 700+ patches, and yet
+> another 2000+.  So you might re-evaluate your statement about "small"
+> quilt series :)
 
-On Fri, 19 May 2006, Daniel Barkalow wrote:
-> 
-> I guess I did forget that it sticks around. So you have to be doing 
-> something somewhat more complicated, like fetching the latest versions of 
-> multiple topic branches.
+Sure.  On fixing the upstream attribution issue you and Andi Kleen 
+look like people that are worth talking to, as there were several
+patches in Andrews tree from both of you that were lacking attribution.
 
-I actually don't think it's at all unlikely that I'd start using this.
+> In looking at your script, it doesn't seem to be able to handle patches
+> in quilt that are in mbox format.  Any thoughts to allow this to handle
+> the attribution properly?
 
-I tend to work in "spurts", where I do one thing for a while, and then 
-merge several pull requests in fairly short order. So while I use 
-ORIG_HEAD a lot, I can certainly imagine myself using the "since 2 hours 
-ago" format too.
+Mbox format but one patch per file, or multiple patches in one mbox file?
 
-I'm not entirely sure about the syntax, though. It ends up being pretty 
-command-line-unfriendly. The "gitk ORIG_HEAD.." thing is fairly easy to 
-type, but typing
+If it is one patch per file but with mbox headers, it is relatively
+simple to teach git-mailinfo to parse things in a slightly more intelligent
+way.  I played with that but I didn't have any patches that helped with.
 
-	gitk 'master@{2 hours ago}'..
+> Right now my development flow has me converting my quilt tree to one big
+> mbox file and then using 'git applymbox' to import it before asking
+> Linus to pull from it.
+>
+> With your script I could skip at least one step, which would save me
+> some time...
 
-on a Finnish keyboard (yeah, that's what I still use) is "interesting", 
-since all of '@', '{' and '}' are complex characters (AltGr + '2', AltGr + 
-'7' and AltGr + '0' respectively), and you have to remember the quoting.
+Sure. That is the point of making it generic.
 
-Not that I see any obvious better syntax. Although allowing a shorthand 
-like "@2.hours.ago" for "current branch, at given date" might help a 
-bit, at least that wouldn't need quoting:
-
-	gitk @2.hours.ago..
-
-			Linus
+Eric
