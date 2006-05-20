@@ -1,63 +1,83 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk highlight feature
-Date: Sat, 20 May 2006 10:07:28 +1000
-Message-ID: <17518.24000.952384.563448@cargo.ozlabs.ibm.com>
-References: <17495.61142.677439.171773@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
-	<Pine.LNX.4.64.0605021721540.4086@g5.osdl.org>
-	<17496.7073.507895.484698@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.64.0605030946260.4086@g5.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFD] Git glossary: 'branch' and 'head' description
+Date: Fri, 19 May 2006 20:28:22 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0605192006400.6713@iabervon.org>
+References: <e4f1ta$e07$1@sea.gmane.org> <87y7wyv72m.fsf@morpheus.hq.vtech>
+ <20060519092136.GN22257@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 20 02:07:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 20 02:27:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhF0L-0006Td-OQ
-	for gcvg-git@gmane.org; Sat, 20 May 2006 02:07:38 +0200
+	id 1FhFJU-0000Gm-Kv
+	for gcvg-git@gmane.org; Sat, 20 May 2006 02:27:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbWETAHf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 May 2006 20:07:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbWETAHf
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 20:07:35 -0400
-Received: from ozlabs.org ([203.10.76.45]:35299 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1751441AbWETAHe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 20:07:34 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id DA1DB67A64; Sat, 20 May 2006 10:07:33 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605030946260.4086@g5.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1751451AbWETA1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 May 2006 20:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbWETA1L
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 May 2006 20:27:11 -0400
+Received: from iabervon.org ([66.92.72.58]:41994 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751451AbWETA1K (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 May 2006 20:27:10 -0400
+Received: (qmail 5524 invoked by uid 1000); 19 May 2006 20:28:22 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 May 2006 20:28:22 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060519092136.GN22257@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20368>
 
-Linus Torvalds writes:
+On Fri, 19 May 2006, Shawn Pearce wrote:
 
-> But the real thing I found is that when I decided I wanted to highlight, I 
-> didn't actually want to highlight by "git-rev-list" at all. At least not 
-> most of the time.
+> David K?gedal <davidk@lysator.liu.se> wrote:
+> > I noticed that some of this seems to be changing slightly with the
+> > introduction of branch logs, but I don't know how those are supposed
+> > to be used yet.
+> 
+> 	$ git commit -a
+> 	$ git pull . some/other-tag
+> 	# go to lunch
+> 	$ git pull . some/bad-stuff
+> 	$ git commit -a
+> 	# go home
+> 	$ test...
+> 	# realize this is all bad
+> 	$ git reset --hard "master@{yesterday}"
+> 
+> :-)
+> 
+> Its really only useful for recording the history of your ref's state,
+> so you can 'undo' a bad merge that you might have done a few days
+> ago but not realized was bad until now.
 
-I just pushed some changes to the "new" branch of the gitk.git
-repository which change the way we do highlighting.  There is now a
-row of controls across the middle of the window, just below the row
-containing the sha1 ID, "Find" button, etc., which controls the
-highlighting.  There are (currently) three ways to do highlighting: by
-path, by view, and by author/committer.  The author/committer matching
-is case-insensitive (since I'm clearly an insensitive sort of guy :)
-and matches any of the given strings anywhere in the author and
-committer fields.  The path and author/committer entry widgets take a
-whitespace-delimited list of paths or names of interest, using shell
-quoting rules, so you can put for example:
+I still think it's useful for presenting a local view of how things have 
+changed. I.e.:
 
-"david s. miller" benh
+$ git pull . stuff
+# Notice that the diffstat is exciting
+# What did I just get?
+$ git log master@{5 minutes ago}..master
 
-in there and you'll get commits from either davem or benh highlighted.
+This is about the only easy way to find out that the fast-forward you just 
+did included merging a line which contains a commit from several weeks 
+ago. (Because the "before" state isn't easily accessible for a 
+fast-forward, and the date of the old commit puts it way back in a 
+date-ordered log.)
 
-Do people think this is useful and on the right track interface-wise?
+I still think that a local changelog, which groups the additions due to 
+each logged value, would be a useful way of viewing the history in a way 
+that's meaningful to the particular user, and I think it would fit user 
+expectations of gitweb (i.e., when looking at Linus's tree's summary, 
+things would be ordered by when they hit Linus's tree, not when they were 
+originally committed, so between the listing of the merge at 23:48:54 
+today and the one 7 minutes before would be those things which weren't in 
+Linus's tree during those 7 minutes).
 
-Paul.
+	-Daniel
+*This .sig left intentionally blank*
