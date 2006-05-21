@@ -1,59 +1,54 @@
-From: Gang Chen <goncha.ml@gmail.com>
-Subject: [PATCH] compress output of `cd' when installing templates
-Date: Sun, 21 May 2006 23:41:02 +0800
-Message-ID: <83mzdbjshd.fsf@skypiea.yi.org>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [PATCH] compress output of `cd' when installing templates
+Date: Sun, 21 May 2006 18:54:21 +0300
+Message-ID: <20060521185421.a91bf118.tihirvon@gmail.com>
+References: <83mzdbjshd.fsf@skypiea.yi.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 21 17:41:18 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 21 17:52:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhq3Q-0006Sd-RX
-	for gcvg-git@gmane.org; Sun, 21 May 2006 17:41:17 +0200
+	id 1FhqEX-0008Fp-IY
+	for gcvg-git@gmane.org; Sun, 21 May 2006 17:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964888AbWEUPlM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 11:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964889AbWEUPlL
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 11:41:11 -0400
-Received: from [220.234.92.111] ([220.234.92.111]:64652 "EHLO skypiea.yi.org")
-	by vger.kernel.org with ESMTP id S964888AbWEUPlK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 11:41:10 -0400
-Received: from skypiea.yi.org (localhost [127.0.0.1])
-	by skypiea.yi.org (8.13.6/8.13.6) with ESMTP id k4LFf8Qn008169
-	for <git@vger.kernel.org>; Sun, 21 May 2006 23:41:08 +0800
-Received: (from gang@localhost)
-	by skypiea.yi.org (8.13.6/8.13.6/Submit) id k4LFf7so008168;
-	Sun, 21 May 2006 23:41:07 +0800
-To: GIT <git@vger.kernel.org>
-Replay-To: Gang Chen <goncha.ml@gmail.com>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+	id S964887AbWEUPwP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 11:52:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964889AbWEUPwP
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 11:52:15 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:9682 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S964887AbWEUPwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 May 2006 11:52:15 -0400
+Received: by nf-out-0910.google.com with SMTP id c31so301989nfb
+        for <git@vger.kernel.org>; Sun, 21 May 2006 08:52:13 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=qe0zTgqhUovAhpHAEVBC6SCBP7acx1PYIBUxaq4K8cSEB/xwuaxtZGqBb8UY0FElNaO/ctUHCtwxVW+uzzyaEZmqAKDDsRdA8pKq+l0zjiGJLe7BR9tparCOJUN6nvHz9DNURRIBNxLDr6W6RbGrbIFxsnyIjJW37JSBifjDrbA=
+Received: by 10.49.78.6 with SMTP id f6mr3031359nfl;
+        Sun, 21 May 2006 08:52:13 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.200.31])
+        by mx.gmail.com with ESMTP id d2sm3961869nfe.2006.05.21.08.52.12;
+        Sun, 21 May 2006 08:52:12 -0700 (PDT)
+To: Gang Chen <goncha.ml@gmail.com>
+In-Reply-To: <83mzdbjshd.fsf@skypiea.yi.org>
+X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20453>
 
-When CDPATH is set in Bash, `cd' writes new working directory to
-stdout, which corrupts output of `tar cf - .'.
+Gang Chen <goncha.ml@gmail.com> wrote:
 
-Signed-off-by: Gang Chen <goncha.ml@gmail.com>
+> When CDPATH is set in Bash, `cd' writes new working directory to
+> stdout, which corrupts output of `tar cf - .'.
 
----
-
- Makefile |    2 +-
- 1 files changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/templates/Makefile b/templates/Makefile
-index 8f7f4fe..cb67489 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -44,5 +44,5 @@ clean:
- 
- install: all
- 	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(template_dir))
--	(cd blt && $(TAR) cf - .) | \
-+	(cd blt > /dev/null && $(TAR) cf - .) | \
- 	(cd $(call shellquote,$(DESTDIR)$(template_dir)) && $(TAR) xf -)
+Fix bash instead, or just don't export CDPATH.  It is used by bash only
+so exporting it is unnecessary.
 
 -- 
-If it makes you happy, it can't be that bad.
+http://onion.dynserv.net/~timo/
