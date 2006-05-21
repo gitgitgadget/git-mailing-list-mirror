@@ -1,74 +1,46 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: don't accept bogus N in `HEAD~N'
-Date: Sun, 21 May 2006 23:42:47 +0200
-Organization: At home
-Message-ID: <e4qmsn$3mv$1@sea.gmane.org>
-References: <87mzdcjqey.fsf@rho.meyering.net> <7v3bf3jl15.fsf@assigned-by-dhcp.cox.net> <87d5e7hxhl.fsf_-_@rho.meyering.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Local clone/fetch with cogito is glacial
+Date: Sun, 21 May 2006 16:47:45 -0700
+Message-ID: <4470FC21.6010104@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun May 21 23:43:42 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon May 22 01:47:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhvi6-0006yo-8P
-	for gcvg-git@gmane.org; Sun, 21 May 2006 23:43:38 +0200
+	id 1FhxeM-0007uK-Rd
+	for gcvg-git@gmane.org; Mon, 22 May 2006 01:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964943AbWEUVnF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 17:43:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbWEUVnF
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 17:43:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:24514 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964943AbWEUVnE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 17:43:04 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FhvhS-0006rH-Li
-	for git@vger.kernel.org; Sun, 21 May 2006 23:42:58 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 May 2006 23:42:58 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 May 2006 23:42:58 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751560AbWEUXrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 19:47:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbWEUXrv
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 19:47:51 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:3259 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751558AbWEUXru
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 May 2006 19:47:50 -0400
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k4LNljEA011110
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 21 May 2006 16:47:46 -0700
+User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20465>
 
-Jim Meyering wrote:
+It appears that doing a *local* -- meaning using a file path or file URL 
+-- clone or fetch with cogito is just glacial when the repository has an 
+even moderate number of tags (and it's fetching the tags that takes all 
+the time.)  That's a really serious problem for me.
 
-> In a very shallow audit, I spotted code where overflow was not detected.
-> But it's hardly critical.
-> 
-> Currently,
-> 
->   git-diff HEAD HEAD
-> 
-> is equivalent to this
-> 
->   git-diff HEAD HEAD~18446744073709551616   # aka 2^64
-> 
-> Exercising git-rev-parse directly, currently I get this:
-> 
->   $ git-rev-parse --no-flags --sq HEAD~18446744073709551616
->   '639ca5497279607665847f2e3a11064441a8f2a6'
-> 
-> It'd be better to produce a diagnostic and fail:
-> 
->   $ ./git-rev-parse --no-flags --sq -- HEAD~18446744073709551616 /dev/null
->   fatal: ambiguous argument 'HEAD~18446744073709551616': unknown revision or filename
-
-Wouldn't it remove ability to say "to the root commit"?
-One can do it now I guess exactly by specyfying overly large N.
-Although there should probably be some limit... or not.
-
--- 
-Jakub Narebski
-Warsaw, Poland
+	-hpa
