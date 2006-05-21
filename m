@@ -1,87 +1,61 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 0/5] More ref logging
-Date: Sat, 20 May 2006 20:50:09 -0400
-Message-ID: <20060521005009.GA7179@spearce.org>
-References: <20060519091456.GH22257@spearce.org> <20060519071603.11d3be5d.seanlkml@sympatico.ca>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk highlight feature
+Date: Sun, 21 May 2006 10:40:14 +1000
+Message-ID: <17519.46830.626777.438845@cargo.ozlabs.ibm.com>
+References: <17495.61142.677439.171773@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.64.0605021659430.4086@g5.osdl.org>
+	<Pine.LNX.4.64.0605021721540.4086@g5.osdl.org>
+	<17496.7073.507895.484698@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.64.0605030946260.4086@g5.osdl.org>
+	<17518.24000.952384.563448@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.64.0605200934240.10823@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 02:50:31 2006
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 21 02:53:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhc9I-00076l-9J
-	for gcvg-git@gmane.org; Sun, 21 May 2006 02:50:24 +0200
+	id 1FhcCI-0008Lu-Kd
+	for gcvg-git@gmane.org; Sun, 21 May 2006 02:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964856AbWEUAuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 20:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932249AbWEUAuQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 20:50:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:18125 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932161AbWEUAuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 May 2006 20:50:15 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fhc8v-0003rY-OK; Sat, 20 May 2006 20:50:01 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BADB3212691; Sat, 20 May 2006 20:50:09 -0400 (EDT)
-To: Sean <seanlkml@sympatico.ca>
-Content-Disposition: inline
-In-Reply-To: <20060519071603.11d3be5d.seanlkml@sympatico.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932234AbWEUAx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 20:53:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932249AbWEUAx2
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 20:53:28 -0400
+Received: from ozlabs.org ([203.10.76.45]:1696 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932234AbWEUAx1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 20:53:27 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 87976679F8; Sun, 21 May 2006 10:53:26 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605200934240.10823@g5.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20414>
 
-Sean <seanlkml@sympatico.ca> wrote:
-> On Fri, 19 May 2006 05:14:56 -0400
-> Shawn Pearce <spearce@spearce.org> wrote:
-> 
-> > * [PATCH 5/5] Enable ref log creation in git checkout -b.
-> > 
-> > 	Fix git checkout -b to behave like git branch.
-> 
-> It seems that the ref log is a new way of tagging commits with some
-> extra meta data.  Conceptually this seems very close to what git tags 
-> already do.  So... what about using regular git tags rather than
-> creating a ref log?  All the regular git-rev-list tools could be
-> used to query the tags and prune would delete them automatically etc.
+Linus Torvalds writes:
 
-It sort of is a new way of tagging commits with extra data.  But its
-also sort of a way of versioning your ref `database'.  Using tags
-to save the points in time might be useful but it would generate
-a lot of temporary files.  A commit every 5 minutes for a typical
-working week would generate 480 tags per week.  That's just too much.
+> I think the "Find" field should highlight things too. Right now there's no 
+> way to get highlighting for somebody having signed-off on a patch, for 
+> example, even though you can _search_ for it.
 
-I was actually thinking this morning that another way to do this
-is to keep a metadata branch within the repository which records
-all of the refs in tree objects, then save the root commit under
-the special ref `LOG` in GIT_DIR.  Every update to a logged ref
-would cause the tree to be updated and a new commit to be built.
-The branch would be a relatively simple string of pearls as its
-doubtful you would branch it.
+Yes, I think the way to go is to extend the highlight feature to be
+able to do everything that the "Find" function can do, and then I
+think the "Find" function won't be needed any more.
 
-There are a number of downsides to this, not the least of which is
-I'd like to put a commit or tag SHA1 into the tree object rather than
-writing each ref as a blob (saves space).  Currently commits and tags
-aren't permitted in a tree object so that would require some effort.
-But on the other hand you could pull (and track!) someone elses
-ref log through the standard GIT protocol.
+> Also, right now it says "Author/committer", but it actually only triggers 
+> on author. Which may be the right thing to do (it's certainly what I'd 
+> normally want to see), but it doesn't match the description. 
 
-But this is starting to head down into the `bind commit` discussion;
-how do we record a number of commits as being related and tie them
-up into a single super commit?
+If the author matches, it highlights both the headline and the
+author.  If the committer matches, it highlights only the headline (as
+it does for any other highlighting).  Try it with "torvalds" in the
+author/committer field on commit a54c9d30 (compared to cb46c370,
+say).  If that's confusing I can change it of course.
 
--- 
-Shawn.
+Paul.
