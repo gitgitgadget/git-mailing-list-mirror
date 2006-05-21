@@ -1,101 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC] send-pack: allow skipping delta when sending pack
-Date: Sun, 21 May 2006 01:48:27 -0400
-Message-ID: <20060521054827.GA18530@coredump.intra.peff.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] send-pack: allow skipping delta when sending pack
+Date: Sat, 20 May 2006 23:17:42 -0700
+Message-ID: <7vy7wvx5o9.fsf@assigned-by-dhcp.cox.net>
+References: <20060521054827.GA18530@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 21 07:48:45 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 21 08:18:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhgnu-0000aZ-Pm
-	for gcvg-git@gmane.org; Sun, 21 May 2006 07:48:39 +0200
+	id 1FhhGO-0003Co-Ik
+	for gcvg-git@gmane.org; Sun, 21 May 2006 08:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbWEUFsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 01:48:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWEUFsa
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 01:48:30 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4825 "EHLO
-	peff.net") by vger.kernel.org with ESMTP id S1751483AbWEUFsa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 01:48:30 -0400
-Received: (qmail 93931 invoked from network); 21 May 2006 05:48:28 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 0 with SMTP; 21 May 2006 05:48:28 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 21 May 2006 01:48:27 -0400
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751490AbWEUGRo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 02:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWEUGRo
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 02:17:44 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:65250 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751490AbWEUGRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 May 2006 02:17:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060521061743.VJIR27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 21 May 2006 02:17:43 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060521054827.GA18530@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 21 May 2006 01:48:27 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20433>
 
-I have a git repo where I keep relatively large files (digital photos).
-I have a local repo and a "master" repo on a server which I access over
-ssh.  Deltifying a bunch of large images takes a relatively long time. I
-can live with this while packing (though it is slightly annoying to have
-to pack separately on both repos, I understand why it might be hard to
-reuse the deltification).
+Jeff King <peff@peff.net> writes:
 
-However, it is extremely annoying to add a large set of images and then
-push them to the server. The server is on a 100Mbit LAN, so the
-deltification part of the process takes up most of the time (and
-typically ends up making no deltas, since the files are unrelated
-images). The patch below causes the GIT_NODELTA environment variable to
-set the window depth to 0 when sending a pack, preventing deltification.
+> The result is much better performance in my case. However, the method
+> seems quite hack-ish, so I wanted to get comments on how this should be
+> done. Possibilities I considered:
 
-The result is much better performance in my case. However, the method
-seems quite hack-ish, so I wanted to get comments on how this should be
-done. Possibilities I considered:
-  1. A command line option to git-send-pack. The problem with this is
-     that support is required from git-push and cg-push to pass the
-     option through.
-  2. A repo config variable that says not to deltify on sending (or
-     potentially, not to deltify at all, which makes packing in general
-     much nicer -- however, I don't think this is a good idea, as I do
-     still want deltification rarely, it's just that it mostly will
-     fail). This should probably be per-remote for the obvious reason
-     that one might push to local and remote repos. One drawback is that
-     sometimes deltification may be a win; it's just that I sometimes
-     know that it won't be (because I added a bunch of unrelated large
-     files). It's nice to selectively turn this option on for a given
-     push.
-  3. Ideally, we could do some heuristic to see if deltification will
-     yield helpful results. In particular, we may already have a pack
-     with these commits in it (especially if we just repack before a
-     push). If we can re-use this information, it at least saves
-     deltifying twice (once to pack, once to push). In theory, I would
-     think the fact that we don't pass --no-reuse-delta to pack-objects
-     means that this would happen automatically, but it clearly doesn't.
+>   1. A command line option to git-send-pack. The problem with this is
+>      that support is required from git-push and cg-push to pass the
+>      option through.
 
-Comments?
+When you pull from such a repository you would also need to be
+able to control this.  The repository owner knows what's in the
+repository a lot more than the downloader, so some repository
+configuration that tells upload-pack to use such-and-such delta
+window is also needed.  But as you say below:
 
----
+>   3. Ideally, we could do some heuristic to see if deltification will
+>      yield helpful results. In particular, we may already have a pack
+>      with these commits in it (especially if we just repack before a
+>      push). If we can re-use this information, it at least saves
+>      deltifying twice (once to pack, once to push). In theory, I would
+>      think the fact that we don't pass --no-reuse-delta to pack-objects
+>      means that this would happen automatically, but it clearly doesn't.
 
-f1cf653120dd492d1c86ee2a92a9c8221023cef1
- send-pack.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-f1cf653120dd492d1c86ee2a92a9c8221023cef1
-diff --git a/send-pack.c b/send-pack.c
-index 409f188..4ad6489 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -30,8 +30,14 @@ static void exec_pack_objects(void)
- 	static const char *args[] = {
- 		"pack-objects",
- 		"--stdout",
-+		NULL,
- 		NULL
- 	};
-+	const char *nodelta;
-+
-+	nodelta = getenv("GIT_NODELTA");
-+	if(nodelta && !strcmp(nodelta, "1"))
-+		args[2] = "--depth=0";
- 	execv_git_cmd(args);
- 	die("git-pack-objects exec failed (%s)", strerror(errno));
- }
--- 
-1.3.3.g288c-dirty
+The lack of --no-reuse-delta just means "if the object we are
+going to send is a delta in the source, and its delta base is
+also something we are going to send, then pretend that it is the
+base delta for that object to skip computation".  What you want
+here is "if the object we are going to send is not a delta in
+the source, and there are sufficient number of other objects the
+object could have been deltified against, then it is very likely
+that it was not worth deltifying when it was packed; so it is
+probably not worth deltifying it now".
