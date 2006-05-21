@@ -1,68 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] send-pack: allow skipping delta when sending pack
-Date: Sun, 21 May 2006 01:31:22 -0700
-Message-ID: <7vlksvzsmd.fsf@assigned-by-dhcp.cox.net>
-References: <20060521054827.GA18530@coredump.intra.peff.net>
-	<7vy7wvx5o9.fsf@assigned-by-dhcp.cox.net>
-	<20060521081435.GA4526@coredump.intra.peff.net>
+Date: Sun, 21 May 2006 04:43:13 -0400
+Message-ID: <20060521084313.GA12825@coredump.intra.peff.net>
+References: <20060521054827.GA18530@coredump.intra.peff.net> <7vy7wvx5o9.fsf@assigned-by-dhcp.cox.net> <20060521081435.GA4526@coredump.intra.peff.net> <7vlksvzsmd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 21 10:31:29 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 21 10:43:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhjLS-0007la-JB
-	for gcvg-git@gmane.org; Sun, 21 May 2006 10:31:26 +0200
+	id 1FhjWx-0000pe-6T
+	for gcvg-git@gmane.org; Sun, 21 May 2006 10:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbWEUIbY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 04:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWEUIbY
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 04:31:24 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:29886 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751502AbWEUIbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 04:31:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060521083123.LKSF24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 21 May 2006 04:31:23 -0400
-To: git@vger.kernel.org
-In-Reply-To: <20060521081435.GA4526@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 21 May 2006 04:14:35 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751508AbWEUInQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 04:43:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbWEUInQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 04:43:16 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:65234 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1751508AbWEUInP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 04:43:15 -0400
+Received: (qmail 638 invoked from network); 21 May 2006 08:43:14 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 21 May 2006 08:43:14 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 21 May 2006 04:43:14 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vlksvzsmd.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20441>
 
-Jeff King <peff@peff.net> writes:
+On Sun, May 21, 2006 at 01:31:22AM -0700, Junio C Hamano wrote:
 
-> On Sat, May 20, 2006 at 11:17:42PM -0700, Junio C Hamano wrote:
->
->> base delta for that object to skip computation".  What you want
->> here is "if the object we are going to send is not a delta in
->> the source, and there are sufficient number of other objects the
->> object could have been deltified against, then it is very likely
->> that it was not worth deltifying when it was packed; so it is
->> probably not worth deltifying it now".
->
-> I think we can make a stronger statement in many cases: "if the object
-> we are going to send is not a delta in the source, and there are no
-> other objects it could be deltified against, then it is not worth
-> deltifying." That is, in the case that we just packed we KNOW that it's
-> not worth it, since we're not sending anything that isn't already
-> packed.
+> We do not delta an otherwise perfectly deltifiable object if its
+> delta base happens to be at the depth edge in the original pack.
+> So no, we do _NOT_ know if it is not worth it merely from the
+> fact that it is not deltified in the existing pack.  And the
 
-Careful.
+Yes, you're right. What do you suggest for this performance issue, then?
+A manual no-delta trigger, or just going to get a cup of coffee while
+pushing (my tests showed 5-6x slowdown from deltifying)?
 
-We do not delta an otherwise perfectly deltifiable object if its
-delta base happens to be at the depth edge in the original pack.
-So no, we do _NOT_ know if it is not worth it merely from the
-fact that it is not deltified in the existing pack.  And the
-latter part of your test "there are no other objects it could be
-deltified against" is either expensive (you have to try first to
-see if that is the case to really see it) or stupid (you just
-assume there is no suitable delta base without looking at other
-objects like we currently do).
+-Peff
