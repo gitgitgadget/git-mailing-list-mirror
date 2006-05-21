@@ -1,83 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Remove possible segfault in http-fetch.
-Date: Sun, 21 May 2006 00:49:19 -0700
-Message-ID: <7vverzzukg.fsf@assigned-by-dhcp.cox.net>
-References: <87fyj4y1lx.fsf@mid.deneb.enyo.de>
-	<BAYC1-PASMTP082397700A9527CC2F3786AEA40@CEZ.ICE>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [idea] Converting sha1 evaluator into parser/interpreter
+Date: Sun, 21 May 2006 10:06:45 +0200
+Organization: At home
+Message-ID: <e4p71u$t0s$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>
-X-From: git-owner@vger.kernel.org Sun May 21 09:49:38 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun May 21 10:06:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhigy-0003uZ-24
-	for gcvg-git@gmane.org; Sun, 21 May 2006 09:49:36 +0200
+	id 1Fhixa-0005TZ-EV
+	for gcvg-git@gmane.org; Sun, 21 May 2006 10:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489AbWEUHtV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 03:49:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbWEUHtV
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 03:49:21 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:23736 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751489AbWEUHtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 03:49:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060521074920.FUNR5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 21 May 2006 03:49:20 -0400
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP082397700A9527CC2F3786AEA40@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Sat, 20 May 2006 18:46:33 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964847AbWEUIGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 04:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751501AbWEUIGm
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 04:06:42 -0400
+Received: from main.gmane.org ([80.91.229.2]:50339 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751503AbWEUIGl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 04:06:41 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FhixQ-0005Sx-4u
+	for git@vger.kernel.org; Sun, 21 May 2006 10:06:36 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 May 2006 10:06:36 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 May 2006 10:06:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20435>
 
-Sean <seanlkml@sympatico.ca> writes:
+Shawn Pearce wrote:
 
-> Free the curl string lists after running http_cleanup to
-> avoid an occasional segfault in the curl library.  Seems
-> to only occur if the website returns a 405 error.
->...
-> It comes with a big disclaimer because I don't really know the
-> code in here all that well.  However gdb reports the segfault
-> happens in a strncasecmp call, and seeing as we've released a
-> bunch of strings prior to the call....
->
->  http-fetch.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/http-fetch.c b/http-fetch.c
-> index 861644b..178f1ee 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
-> @@ -1269,10 +1269,10 @@ int main(int argc, char **argv)
->  	if (pull(commit_id))
->  		rc = 1;
->  
-> -	curl_slist_free_all(no_pragma_header);
-> -
->  	http_cleanup();
->  
-> +	curl_slist_free_all(no_pragma_header);
-> +
->  	if (corrupt_object_found) {
->  		fprintf(stderr,
->  "Some loose object were found to be corrupt, but they might be just\n"
+> There was just a short conversation on #git about converting
+> the sha1 expression evaluator into a split parser/interpreter
+> model.  The idea here would be to convert an expression such as
+> 
+>   HEAD@{yesterday}~3^{tree}
+> 
+> into a an expression tree such as (in LISP style):
+> 
+>   (peel-onion (walk-back 3 (date-spec yesterday (ref HEAD))))
 
-curl_easy_cleanup() which is called from http_cleanup() says it
-is safe to remove the strings _after_ you call that function, so
-I think the change makes sense -- it was apparently unsafe to
-free them before calling cleanup.
+Rather
 
-Knowing nothing about quirks in curl libraries, one thing that
-is mystery to me is that we slist_append() to other two lists
-(pragma_header and range_header) but we do not seem to ever free
-them.  Another slist dav_headers is allocated and then freed
-inside a function, so that call-pattern seems well-formed.
+    (peel-onion 'tree (walk-back 3 (date-spec yesterday (ref HEAD))))
+ 
+> with such a tree it is relatively easy to evaluate the expression,
+> but its also easy to determine if a ref name is valid.  Just pass
+> it through the parser and see if you get back anything more complex
+> then '(ref <input>)'.
 
-Nick, care to help us out?
+Didn't you meant to see if we get correct tree (not a forest), 
+and if the root of said tree is '(ref <commit-ish>)' [1]?
+
+Interpreting said parse tree anch checking if it folds to correct object
+reference is the task of interpreter, not parser...
+
+
+[*1*] if I understand currectly that <commit-ish> mean direct sha1,
+shortened sha1, or ref (head or tag)? commit-ish is not in 
+git glossary...
+
+-- 
+Jakub Narebski
+Warsaw, Poland
