@@ -1,45 +1,83 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: irc usage..
-Date: Sun, 21 May 2006 11:46:06 +0200
-Message-ID: <20060521094606.GD5545@cip.informatik.uni-erlangen.de>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org> <20060520203911.GI6535@nowhere.earth> <446F95A2.6040909@gentoo.org> <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [idea] Converting sha1 evaluator into parser/interpreter
+Date: Sun, 21 May 2006 12:13:50 +0200
+Organization: At home
+Message-ID: <e4peg7$g3b$1@sea.gmane.org>
+References: <e4p71u$t0s$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Donnie Berkholz <spyderous@gentoo.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 21 11:46:15 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun May 21 12:13:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhkVp-0001K4-3W
-	for gcvg-git@gmane.org; Sun, 21 May 2006 11:46:14 +0200
+	id 1FhkwQ-00064H-LI
+	for gcvg-git@gmane.org; Sun, 21 May 2006 12:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932356AbWEUJqK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 05:46:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWEUJqK
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 05:46:10 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:53727 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S932356AbWEUJqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 05:46:09 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 255AE305D0; Sun, 21 May 2006 11:46:07 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>
-User-Agent: Mutt/1.5.11
+	id S932352AbWEUKNk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 06:13:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbWEUKNk
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 06:13:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:36566 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932352AbWEUKNj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 06:13:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FhkwI-00063S-MX
+	for git@vger.kernel.org; Sun, 21 May 2006 12:13:34 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 May 2006 12:13:34 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 May 2006 12:13:34 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20449>
 
-Hello Linus,
+Jakub Narebski wrote:
 
-> and I'm a humanitarian - rescuing people from CVS is 
-> to me not just a good idea, it's a moral imperative.
+> Shawn Pearce wrote:
+> 
+>> There was just a short conversation on #git about converting
+>> the sha1 expression evaluator into a split parser/interpreter
+>> model.  The idea here would be to convert an expression such as
+>> 
+>>   HEAD@{yesterday}~3^{tree}
+>> 
+>> into a an expression tree such as (in LISP style):
+>> 
+>>   (peel-onion (walk-back 3 (date-spec yesterday (ref HEAD))))
+>>
+>> with such a tree it is relatively easy to evaluate the expression,
+>> but its also easy to determine if a ref name is valid.  Just pass
+>> it through the parser and see if you get back anything more complex
+>> then '(ref <input>)'.
+> 
+> Didn't you meant to see if we get correct tree (not a forest), 
+> and if the root of said tree is '(ref <commit-ish>)' [1]?
 
-you're a very brave man.
+I'm sorry. Of course branch names (ref names) should be limited to the ones
+that doesn't make problems for the parser, i.e. they should parse to single
+element parse tree:
 
-        Thomas
+   <input> ---parses to---> (ref <input>)
+
+and doesn't give problems for other parsers (e.g.commit list parser
+including '^A B' and 'A..B'; remotes branch mapping parser 'srcref:destref'
+and '+srcref:destref') and shell (e.g. globbing).
+
+
+P.S. Hmmm... is '--' branch name (heads/--) possible?
+P.P.S. Would branch name which include '!' and/or '$' cause trouble?
+
+-- 
+Jakub Narebski
+Warsaw, Poland
