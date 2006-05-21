@@ -1,43 +1,69 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: synchronizing incremental git changes to cvs
-Date: Sun, 21 May 2006 18:37:55 +0200
-Message-ID: <87r72niba4.fsf@rho.meyering.net>
-References: <87mzdcjqey.fsf@rho.meyering.net>
-	<46a038f90605201709n3a840fd9n7e85a289f49a3c5f@mail.gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: how to display file history?
+Date: Sun, 21 May 2006 19:35:49 +0200
+Message-ID: <20060521173549.GA23347@diku.dk>
+References: <CFF307C98FEABE47A452B27C06B85BB670F4FD@hdsmsx411.amr.corp.intel.com> <7v64k7wzzf.fsf@assigned-by-dhcp.cox.net> <m1ejyv7077.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.64.0605150900510.3866@g5.osdl.org> <m164k76ylb.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 18:38:12 2006
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	"Brown, Len" <len.brown@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 21 19:36:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhqwQ-0006dn-3T
-	for gcvg-git@gmane.org; Sun, 21 May 2006 18:38:06 +0200
+	id 1FhrqQ-0007qF-FE
+	for gcvg-git@gmane.org; Sun, 21 May 2006 19:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964898AbWEUQh5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 12:37:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964902AbWEUQh5
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 12:37:57 -0400
-Received: from mx.meyering.net ([82.230.74.64]:10722 "EHLO mx.meyering.net")
-	by vger.kernel.org with ESMTP id S964898AbWEUQh5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 12:37:57 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 9E02D34A8E; Sun, 21 May 2006 18:37:55 +0200 (CEST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605201709n3a840fd9n7e85a289f49a3c5f@mail.gmail.com>
-	(Martin Langhoff's message of "Sun, 21 May 2006 12:09:19 +1200")
+	id S964905AbWEURfy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 13:35:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964906AbWEURfy
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 13:35:54 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:34946 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S964905AbWEURfy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 13:35:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 9004C770025;
+	Sun, 21 May 2006 19:35:52 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 27912-04; Sun, 21 May 2006 19:35:50 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 59CD1770027;
+	Sun, 21 May 2006 19:35:50 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 1A7C26DF893; Sun, 21 May 2006 19:32:52 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 11DC16248E; Sun, 21 May 2006 19:35:50 +0200 (CEST)
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Content-Disposition: inline
+In-Reply-To: <m164k76ylb.fsf@ebiederm.dsl.xmission.com>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20455>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> wrote:
-> git-cvsserver is the word. It currently tracks the git repo itself
-> pretty well (perfectly, AFAICS) and it also tracks a git tree that is
-> actually imported daily from CVS -- doing
->
->    CVSrepo ->cvsimport -> GIT -> cvsserver -> CVS checkout
+Eric W. Biederman <ebiederm@xmission.com> wrote Mon, May 15, 2006:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > On Mon, 15 May 2006, Eric W. Biederman wrote:
+> > People still don't seem to realize how flexible (and powerful) the git 
+> > revision specifications are. It's not just limiting by path, all of these 
+> > work on _all_ of the "history tools" (whether they be gitk, qgit, "git 
+> > log", "git whatchanged" or your own home-cooked stuff):
+> >
+> > [examples]
+> 
+> But regardless of where we put it, it needs to be documented someplace
+> besides in the email so you don't need to read the code to see that
+> the option is there. 
 
-Thanks, but I'd rather do primary development directly using git,
-rather than with CVS.
+I've put some of this on http://git.or.cz/gitwiki/RevisionSpecification
+that for now may serve as an introduction ...
+
+-- 
+Jonas Fonseca
