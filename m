@@ -1,33 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Reference git-check-ref-format in git-branch.
-Date: Sat, 20 May 2006 21:54:46 -0400
-Message-ID: <20060521015446.GA7605@spearce.org>
+Subject: Re: [PATCH] Make '@' not valid in a ref name.
+Date: Sat, 20 May 2006 21:58:49 -0400
+Message-ID: <20060521015849.GB7605@spearce.org>
+References: <20060521013751.GA7516@spearce.org> <7vodxsywzk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 03:55:16 2006
+X-From: git-owner@vger.kernel.org Sun May 21 03:58:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fhd9t-0006zs-N2
-	for gcvg-git@gmane.org; Sun, 21 May 2006 03:55:06 +0200
+	id 1FhdDe-0000fm-AK
+	for gcvg-git@gmane.org; Sun, 21 May 2006 03:58:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbWEUByy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 21:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbWEUByy
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 21:54:54 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44242 "EHLO
+	id S1751347AbWEUB6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 21:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbWEUB6x
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 21:58:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:7891 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751004AbWEUByx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 May 2006 21:54:53 -0400
+	id S1751347AbWEUB6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 May 2006 21:58:53 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fhd9U-0005iy-I1; Sat, 20 May 2006 21:54:40 -0400
+	id 1FhdDM-0005qs-9p; Sat, 20 May 2006 21:58:40 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DCA90212691; Sat, 20 May 2006 21:54:46 -0400 (EDT)
-To: Junio Hamano <junkio@cox.net>
+	id B49E2212691; Sat, 20 May 2006 21:58:49 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vodxsywzk.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,54 +42,25 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20424>
 
-Its nice to have git-check-ref-format actually get mentioned in
-git-branch's documentation as the syntax of a ref name must conform
-to what is described in git-check-ref-format.
+Junio C Hamano <junkio@cox.net> wrote:
+> I am not a fan of retroactively disallowing what we used to
+> allow.  Is this unavoidable?
+> 
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+We're talking about it on #git right now.  Someone actually uses
+refs like 'user@host/foo' and thus doesn't like this patch either.
 
----
- Sorry about this patch being built on pu.  It clearly has no
- relationship to current pu, but the new -l appears in the hunk
- below...
+We were talking about disallowing '@{' instead.  Really its just
+'@{<some run that smells like a date}' at the end of the ref which
+would want to be disallowed; similiar to how ~ and ^ really only
+need to be disallowed near the end.
 
-1e2080dcf2f8e76e0fcf48684e5c6b182f695e0a
- Documentation/git-branch.txt   |    3 +++
- Documentation/git-checkout.txt |    5 ++++-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+The date parser grabs '@{' not '@' so 'user@host/foo@{yesterday}'
+makes sense to it.  But 'user@{host}/foo@{yesterday}' is going
+to cause problems as the date parser will attempt to evaluate
+'host}/foo@{yesterday'.  :-(
 
-1e2080dcf2f8e76e0fcf48684e5c6b182f695e0a
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index a7bec3c..d43ef1d 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -49,6 +49,9 @@ OPTIONS
- 
- <branchname>::
- 	The name of the branch to create or delete.
-+	The new branch name must pass all checks defined by
-+	gitlink:git-check-ref-format[1].  Some of these checks
-+	may restrict the characters allowed in a branch name.
- 
- <start-point>::
- 	The new branch will be created with a HEAD equal to this.  It may
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 0643943..fbdbadc 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -35,7 +35,10 @@ OPTIONS
- 	Force a re-read of everything.
- 
- -b::
--	Create a new branch and start it at <branch>.
-+	Create a new branch named <new_branch> and start it at
-+	<branch>.  The new branch name must pass all checks defined
-+	by gitlink:git-check-ref-format[1].  Some of these checks
-+	may restrict the characters allowed in a branch name.
- 
- -l::
- 	Create the new branch's ref log.  This activates recording of
 -- 
-1.3.3.gfad60
+Shawn.
