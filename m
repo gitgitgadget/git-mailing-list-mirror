@@ -1,76 +1,101 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH 0/5] More ref logging
-Date: Sun, 21 May 2006 01:09:44 -0400
-Message-ID: <BAYC1-PASMTP110591AAE415FBD1523110AEA50@CEZ.ICE>
-References: <20060519091456.GH22257@spearce.org>
-	<20060519071603.11d3be5d.seanlkml@sympatico.ca>
-	<20060521005009.GA7179@spearce.org>
-	<20060520224344.7ebca48b.seanlkml@sympatico.ca>
-	<20060521045146.GA8269@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: [RFC] send-pack: allow skipping delta when sending pack
+Date: Sun, 21 May 2006 01:48:27 -0400
+Message-ID: <20060521054827.GA18530@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 07:15:40 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun May 21 07:48:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhgI0-0005dE-8N
-	for gcvg-git@gmane.org; Sun, 21 May 2006 07:15:40 +0200
+	id 1Fhgnu-0000aZ-Pm
+	for gcvg-git@gmane.org; Sun, 21 May 2006 07:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbWEUFPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 01:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbWEUFPf
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 01:15:35 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:50064 "EHLO
-	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1751451AbWEUFPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 01:15:34 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 20 May 2006 22:20:23 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 09AD2644C28;
-	Sun, 21 May 2006 01:15:33 -0400 (EDT)
-To: Shawn Pearce <spearce@spearce.org>
-Message-Id: <20060521010944.78903774.seanlkml@sympatico.ca>
-In-Reply-To: <20060521045146.GA8269@spearce.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 21 May 2006 05:20:23.0765 (UTC) FILETIME=[43000050:01C67C96]
+	id S1751483AbWEUFsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 01:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWEUFsa
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 01:48:30 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4825 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1751483AbWEUFsa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 May 2006 01:48:30 -0400
+Received: (qmail 93931 invoked from network); 21 May 2006 05:48:28 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 21 May 2006 05:48:28 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 21 May 2006 01:48:27 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20432>
 
-On Sun, 21 May 2006 00:51:46 -0400
-Shawn Pearce <spearce@spearce.org> wrote:
+I have a git repo where I keep relatively large files (digital photos).
+I have a local repo and a "master" repo on a server which I access over
+ssh.  Deltifying a bunch of large images takes a relatively long time. I
+can live with this while packing (though it is slightly annoying to have
+to pack separately on both repos, I understand why it might be hard to
+reuse the deltification).
 
-> Any chance we could get some details on why so many tags were useful?
-> You have a good argument here but I'm not sure how a better tag
-> store could be structured.  :-)
+However, it is extremely annoying to add a large set of images and then
+push them to the server. The server is on a 100Mbit LAN, so the
+deltification part of the process takes up most of the time (and
+typically ends up making no deltas, since the files are unrelated
+images). The patch below causes the GIT_NODELTA environment variable to
+set the window depth to 0 when sending a pack, preventing deltification.
 
-It is a conversion from another SCM.  So every one of the ~16K commits
-was tagged with the reference number taken from the original SCM.  This
-has some very nice benefits in that you can refer to every commit
-in git by the original changeset #.  For example, if someone reports a
-bug mentioning the original scm's reference id, you can say something
-like: "git show p4/1234" without having to go back to the old scm.
+The result is much better performance in my case. However, the method
+seems quite hack-ish, so I wanted to get comments on how this should be
+done. Possibilities I considered:
+  1. A command line option to git-send-pack. The problem with this is
+     that support is required from git-push and cg-push to pass the
+     option through.
+  2. A repo config variable that says not to deltify on sending (or
+     potentially, not to deltify at all, which makes packing in general
+     much nicer -- however, I don't think this is a good idea, as I do
+     still want deltification rarely, it's just that it mostly will
+     fail). This should probably be per-remote for the obvious reason
+     that one might push to local and remote repos. One drawback is that
+     sometimes deltification may be a win; it's just that I sometimes
+     know that it won't be (because I added a bunch of unrelated large
+     files). It's nice to selectively turn this option on for a given
+     push.
+  3. Ideally, we could do some heuristic to see if deltification will
+     yield helpful results. In particular, we may already have a pack
+     with these commits in it (especially if we just repack before a
+     push). If we can re-use this information, it at least saves
+     deltifying twice (once to pack, once to push). In theory, I would
+     think the fact that we don't pass --no-reuse-delta to pack-objects
+     means that this would happen automatically, but it clearly doesn't.
 
-Also, qgit, gitk and gitweb display them nicely which can be helpful
-during the conversion.  And if/when they're not needed any longer,
-you just delete them without having to rewrite the history etc..   
-  
-> Yea - despite being the author of ref log I'm still slightly unhappy
-> with the fact that it doesn't make reuse of existing GIT plumbing.
-> But I'm sort of OK with that right now as you can't map two indexes
-> into memory at once currently, nor is there a way to easily update
-> multiple refs at once if the ref log must serialize access to create
-> a string of trees and commits.
+Comments?
 
-Well it's not the end of the world either way, and sometimes it's just
-better to implement a workable solution rather than wait for one that's
-theoretically cleaner.  It just seemed like it was worth mentioning in
-case you saw a way to make it happen without a lot of grief.
+---
 
-Sean
+f1cf653120dd492d1c86ee2a92a9c8221023cef1
+ send-pack.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+f1cf653120dd492d1c86ee2a92a9c8221023cef1
+diff --git a/send-pack.c b/send-pack.c
+index 409f188..4ad6489 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -30,8 +30,14 @@ static void exec_pack_objects(void)
+ 	static const char *args[] = {
+ 		"pack-objects",
+ 		"--stdout",
++		NULL,
+ 		NULL
+ 	};
++	const char *nodelta;
++
++	nodelta = getenv("GIT_NODELTA");
++	if(nodelta && !strcmp(nodelta, "1"))
++		args[2] = "--depth=0";
+ 	execv_git_cmd(args);
+ 	die("git-pack-objects exec failed (%s)", strerror(errno));
+ }
+-- 
+1.3.3.g288c-dirty
