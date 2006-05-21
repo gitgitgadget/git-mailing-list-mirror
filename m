@@ -1,46 +1,102 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Local clone/fetch with cogito is glacial
-Date: Sun, 21 May 2006 16:47:45 -0700
-Message-ID: <4470FC21.6010104@zytor.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon May 22 01:47:57 2006
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: (unknown)
+Date: Sun, 21 May 2006 19:53:18 -0400
+Message-ID: <1148255528.61d5d241.0@fieldses.org>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 22 01:53:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhxeM-0007uK-Rd
-	for gcvg-git@gmane.org; Mon, 22 May 2006 01:47:55 +0200
+	id 1Fhxjo-0008W6-JZ
+	for gcvg-git@gmane.org; Mon, 22 May 2006 01:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560AbWEUXrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 19:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbWEUXrv
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 19:47:51 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:3259 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751558AbWEUXru
+	id S964950AbWEUXxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 19:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964951AbWEUXxa
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 19:53:30 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:33457 "EHLO
+	puzzle.fieldses.org") by vger.kernel.org with ESMTP id S964950AbWEUXx3
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 19:47:50 -0400
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k4LNljEA011110
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 21 May 2006 16:47:46 -0700
-User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
-To: Git Mailing List <git@vger.kernel.org>
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	Sun, 21 May 2006 19:53:29 -0400
+Received: from bfields by puzzle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Fhxja-000667-Nf; Sun, 21 May 2006 19:53:18 -0400
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20466>
 
-It appears that doing a *local* -- meaning using a file path or file URL 
--- clone or fetch with cogito is just glacial when the repository has an 
-even moderate number of tags (and it's fetching the tags that takes all 
-the time.)  That's a really serious problem for me.
+>From nobody Mon Sep 17 00:00:00 2001
+From: J. Bruce Fields <bfields@citi.umich.edu>
+Date: Sun, 21 May 2006 16:52:34 -0400
+Subject: [PATCH 1/3] tutorial: replace "whatchanged" by "log"
 
-	-hpa
+Junio suggested changing references to git-whatchanged to git-log.
+
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
+
+---
+
+d1177b299b449e9eb63d963ee118a5e0283aa611
+ Documentation/tutorial.txt |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+d1177b299b449e9eb63d963ee118a5e0283aa611
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index fa79b01..cd0f0df 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -80,13 +80,13 @@ file; just remove it, then commit.
+ At any point you can view the history of your changes using
+ 
+ ------------------------------------------------
+-$ git whatchanged
++$ git log
+ ------------------------------------------------
+ 
+ If you also want to see complete diffs at each step, use
+ 
+ ------------------------------------------------
+-$ git whatchanged -p
++$ git log -p
+ ------------------------------------------------
+ 
+ Managing branches
+@@ -216,7 +216,7 @@ This actually pulls changes from the bra
+ "master".  Alice could request a different branch by adding the name
+ of the branch to the end of the git pull command line.
+ 
+-This merges Bob's changes into her repository; "git whatchanged" will
++This merges Bob's changes into her repository; "git log" will
+ now show the new commits.  If Alice has made her own changes in the
+ meantime, then Bob's changes will be merged in, and she will need to
+ manually fix any conflicts.
+@@ -234,7 +234,7 @@ named bob-incoming.  (Unlike git pull, g
+ of Bob's line of development without doing any merging).  Then
+ 
+ -------------------------------------
+-$ git whatchanged -p master..bob-incoming
++$ git log -p master..bob-incoming
+ -------------------------------------
+ 
+ shows a list of all the changes that Bob made since he branched from
+@@ -330,13 +330,13 @@ But you may find it more useful to see t
+ the experimental branch but not in the current branch, and
+ 
+ -------------------------------------
+-git whatchanged HEAD..experimental
++git log HEAD..experimental
+ -------------------------------------
+ 
+ will do that, just as
+ 
+ -------------------------------------
+-git whatchanged experimental..HEAD
++git log experimental..HEAD
+ -------------------------------------
+ 
+ will show the list of commits made on the HEAD but not included in
+-- 
+1.3.3.gff62
