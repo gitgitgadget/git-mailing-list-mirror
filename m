@@ -1,78 +1,89 @@
-From: Dave Jones <davej@redhat.com>
-Subject: Re: dangling commits.
-Date: Sat, 20 May 2006 19:49:11 -0400
-Message-ID: <20060520234911.GA30269@redhat.com>
-References: <20060520230531.GA27511@redhat.com> <Pine.LNX.4.64.0605201615270.3649@g5.osdl.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: synchronizing incremental git changes to cvs
+Date: Sun, 21 May 2006 12:09:19 +1200
+Message-ID: <46a038f90605201709n3a840fd9n7e85a289f49a3c5f@mail.gmail.com>
+References: <87mzdcjqey.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 01:49:38 2006
+X-From: git-owner@vger.kernel.org Sun May 21 02:09:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhbCS-0003nO-7N
-	for gcvg-git@gmane.org; Sun, 21 May 2006 01:49:36 +0200
+	id 1FhbVb-0005bz-91
+	for gcvg-git@gmane.org; Sun, 21 May 2006 02:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161AbWETXtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 19:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932182AbWETXtX
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 19:49:23 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:47081 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S932161AbWETXtX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 19:49:23 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k4KNnI65023575;
-	Sat, 20 May 2006 19:49:18 -0400
-Received: from nwo.kernelslacker.org (vpn83-123.boston.redhat.com [172.16.83.123])
-	by int-mx1.corp.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k4KNnDvs006292;
-	Sat, 20 May 2006 19:49:13 -0400
-Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
-	by nwo.kernelslacker.org (8.13.6/8.13.5) with ESMTP id k4KNnCkW030607;
-	Sat, 20 May 2006 19:49:12 -0400
-Received: (from davej@localhost)
-	by nwo.kernelslacker.org (8.13.6/8.13.6/Submit) id k4KNnCCL030606;
-	Sat, 20 May 2006 19:49:12 -0400
-X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
+	id S964801AbWEUAJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 20:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932234AbWEUAJU
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 20:09:20 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:46314 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932219AbWEUAJU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 May 2006 20:09:20 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so884307wra
+        for <git@vger.kernel.org>; Sat, 20 May 2006 17:09:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SOahP2yIic+Sj1EkLI1stQm6lS9AGR5VOANLpd9KKChvyggvMynEV+++gBoMlcXBVWtvLYWMxXqdYIv30Ag+ULxAa7+lekkhBlyi83Q2SItAnliqhQOQwXAtq6NGbDBtbqTYVmvI9lVLMY7Eoi7Zun7Oy3BQziS2UBIxWFcLwsg=
+Received: by 10.54.139.3 with SMTP id m3mr2511071wrd;
+        Sat, 20 May 2006 17:09:19 -0700 (PDT)
+Received: by 10.54.127.17 with HTTP; Sat, 20 May 2006 17:09:19 -0700 (PDT)
+To: "Jim Meyering" <jim@meyering.net>
+In-Reply-To: <87mzdcjqey.fsf@rho.meyering.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605201615270.3649@g5.osdl.org>
-User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20410>
 
-On Sat, May 20, 2006 at 04:19:06PM -0700, Linus Torvalds wrote:
+On 5/21/06, Jim Meyering <jim@meyering.net> wrote:
+> Can anyone point me at code to mirror a git repository to cvs?
 
- > > What's wrong here?
- > 
- > Nothing, except
- > 
- >  - you used rsync to fetch the thing (so you get all objects, regardless 
- >    of whether they are reachable or not)
+Ive thought a couple of times about writing an exporter that would
+replay things into a true CVS repo, but it's truly not worth it. We've
+already got git-cvsserver that does all that -- better for me to focus
+on that codebase.
 
-Ah. I actually noticed this when I poked around the box that does
-the nightly snapshots, and wondered for a few minutes why I never
-switched it over to git:// last time I poked at that script.
-Then it came back to me: rsync -q worked better than redirecting
-git to /dev/null
-- git-clone's -q was still outputting some stuff, so recloning each
-  time the cronjob ran wasn't an option,
-- subsequent git pull's were noisy too
+> I've experimented with git-cvsexportcommit, and found a few bugs (it
+> couldn't handle simple things, like adding a file in a new directory --
+> fixed that, along with a few other minor problems), adding an empty file
+> in git still gets a patch application error on the cvs side, but I can
+> live with that for now.  More seriously, making a change on a git branch
+> mistakenly tries to apply the delta on the cvs trunk.
 
-When run from a cronjob, unless something fatal happens, I basically
-never want to get mail from the snapshotting script.
+cvsexportcommit is clearly for manual usage, not for automagic usage.
+It is a bit rough, (and I'd like to see your patches to it!) but it
+wants to be driven by a smarter script to, for instance, know what
+branch you want things in.
 
- >  - junio re-bases his "pu" branch, and I just end up following him (I 
- >    should stop exporting git entirely, here's no point, really).
+> Why am I interested?  I want to switch the development of GNU coreutils
+> from cvs to git.  I would also like to continue making the repository
+> available via cvs, for the sake of continuity.  At worst, I can always
+> cut the CVS cord, but that's a last resort.
 
-I just updated the snapshot script to pull from 
-http://www.kernel.org/pub/scm/git/git.git/ instead.
+git-cvsserver is the word. It currently tracks the git repo itself
+pretty well (perfectly, AFAICS) and it also tracks a git tree that is
+actually imported daily from CVS -- doing
 
-thanks,
+    CVSrepo ->cvsimport -> GIT -> cvsserver -> CVS checkout
 
-		Dave
+git-cvsserver works great for anon cvs access (does pserver) and
+TortoiseCVS and cli cvs work great with it. Eclipse works well, but it
+has been quite hard to get 'right'. Optionally, it can support users
+with commit rights via ssh. It does track git 'heads' but they don't
+show up as branches, they show up as different modules. So you to get
+a checkout of the master branch, you do:
 
--- 
-http://www.codemonkey.org.uk
+    cvs -d pserver:anonymouys@foo.com:/var/foo.git co master
+
+hope that helps!
+
+
+
+
+martin
