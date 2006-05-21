@@ -1,71 +1,83 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] send-pack: allow skipping delta when sending pack
-Date: Sat, 20 May 2006 23:17:42 -0700
-Message-ID: <7vy7wvx5o9.fsf@assigned-by-dhcp.cox.net>
-References: <20060521054827.GA18530@coredump.intra.peff.net>
+Subject: Re: [PATCH] Remove possible segfault in http-fetch.
+Date: Sun, 21 May 2006 00:49:19 -0700
+Message-ID: <7vverzzukg.fsf@assigned-by-dhcp.cox.net>
+References: <87fyj4y1lx.fsf@mid.deneb.enyo.de>
+	<BAYC1-PASMTP082397700A9527CC2F3786AEA40@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 08:18:05 2006
+Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>
+X-From: git-owner@vger.kernel.org Sun May 21 09:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhhGO-0003Co-Ik
-	for gcvg-git@gmane.org; Sun, 21 May 2006 08:18:04 +0200
+	id 1Fhigy-0003uZ-24
+	for gcvg-git@gmane.org; Sun, 21 May 2006 09:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490AbWEUGRo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 02:17:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWEUGRo
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 02:17:44 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:65250 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751490AbWEUGRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 02:17:43 -0400
+	id S1751489AbWEUHtV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 03:49:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbWEUHtV
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 03:49:21 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:23736 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751489AbWEUHtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 May 2006 03:49:20 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060521061743.VJIR27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 21 May 2006 02:17:43 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20060521054827.GA18530@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 21 May 2006 01:48:27 -0400")
+          id <20060521074920.FUNR5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 21 May 2006 03:49:20 -0400
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP082397700A9527CC2F3786AEA40@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Sat, 20 May 2006 18:46:33 -0400")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20434>
 
-Jeff King <peff@peff.net> writes:
+Sean <seanlkml@sympatico.ca> writes:
 
-> The result is much better performance in my case. However, the method
-> seems quite hack-ish, so I wanted to get comments on how this should be
-> done. Possibilities I considered:
+> Free the curl string lists after running http_cleanup to
+> avoid an occasional segfault in the curl library.  Seems
+> to only occur if the website returns a 405 error.
+>...
+> It comes with a big disclaimer because I don't really know the
+> code in here all that well.  However gdb reports the segfault
+> happens in a strncasecmp call, and seeing as we've released a
+> bunch of strings prior to the call....
+>
+>  http-fetch.c |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/http-fetch.c b/http-fetch.c
+> index 861644b..178f1ee 100644
+> --- a/http-fetch.c
+> +++ b/http-fetch.c
+> @@ -1269,10 +1269,10 @@ int main(int argc, char **argv)
+>  	if (pull(commit_id))
+>  		rc = 1;
+>  
+> -	curl_slist_free_all(no_pragma_header);
+> -
+>  	http_cleanup();
+>  
+> +	curl_slist_free_all(no_pragma_header);
+> +
+>  	if (corrupt_object_found) {
+>  		fprintf(stderr,
+>  "Some loose object were found to be corrupt, but they might be just\n"
 
->   1. A command line option to git-send-pack. The problem with this is
->      that support is required from git-push and cg-push to pass the
->      option through.
+curl_easy_cleanup() which is called from http_cleanup() says it
+is safe to remove the strings _after_ you call that function, so
+I think the change makes sense -- it was apparently unsafe to
+free them before calling cleanup.
 
-When you pull from such a repository you would also need to be
-able to control this.  The repository owner knows what's in the
-repository a lot more than the downloader, so some repository
-configuration that tells upload-pack to use such-and-such delta
-window is also needed.  But as you say below:
+Knowing nothing about quirks in curl libraries, one thing that
+is mystery to me is that we slist_append() to other two lists
+(pragma_header and range_header) but we do not seem to ever free
+them.  Another slist dav_headers is allocated and then freed
+inside a function, so that call-pattern seems well-formed.
 
->   3. Ideally, we could do some heuristic to see if deltification will
->      yield helpful results. In particular, we may already have a pack
->      with these commits in it (especially if we just repack before a
->      push). If we can re-use this information, it at least saves
->      deltifying twice (once to pack, once to push). In theory, I would
->      think the fact that we don't pass --no-reuse-delta to pack-objects
->      means that this would happen automatically, but it clearly doesn't.
-
-The lack of --no-reuse-delta just means "if the object we are
-going to send is a delta in the source, and its delta base is
-also something we are going to send, then pretend that it is the
-base delta for that object to skip computation".  What you want
-here is "if the object we are going to send is not a delta in
-the source, and there are sufficient number of other objects the
-object could have been deltified against, then it is very likely
-that it was not worth deltifying when it was packed; so it is
-probably not worth deltifying it now".
+Nick, care to help us out?
