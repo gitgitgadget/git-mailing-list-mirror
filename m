@@ -1,75 +1,80 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [PATCH] Implement git-quiltimport (take 2)
-Date: Sat, 20 May 2006 19:16:22 -0600
-Message-ID: <m1u07kp47t.fsf@ebiederm.dsl.xmission.com>
-References: <7vbqtxaj5k.fsf@assigned-by-dhcp.cox.net>
-	<m13bf95ixo.fsf@ebiederm.dsl.xmission.com>
-	<7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
-	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
-	<7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
-	<m1zmhg31cm.fsf@ebiederm.dsl.xmission.com>
-	<7vy7x09qet.fsf@assigned-by-dhcp.cox.net>
-	<m1ejyr38xx.fsf@ebiederm.dsl.xmission.com>
-	<20060519235825.GA3289@kroah.com>
-	<m1ac9dv2ld.fsf@ebiederm.dsl.xmission.com>
-	<20060520213257.GH24672@kroah.com>
-	<m1fyj4qkm2.fsf@ebiederm.dsl.xmission.com>
-	<7v8xow1a6r.fsf@assigned-by-dhcp.cox.net>
-	<m13bf4qjjv.fsf@ebiederm.dsl.xmission.com>
-	<7v4pzk196p.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Make '@' not valid in a ref name.
+Date: Sat, 20 May 2006 21:37:51 -0400
+Message-ID: <20060521013751.GA7516@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 21 03:17:14 2006
+X-From: git-owner@vger.kernel.org Sun May 21 03:38:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhcZC-0003F9-FJ
-	for gcvg-git@gmane.org; Sun, 21 May 2006 03:17:10 +0200
+	id 1FhctL-0005L9-79
+	for gcvg-git@gmane.org; Sun, 21 May 2006 03:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964847AbWEUBRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 May 2006 21:17:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbWEUBRH
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 21:17:07 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:50119 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S964847AbWEUBRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 May 2006 21:17:05 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4L1GNQl004365;
-	Sat, 20 May 2006 19:16:23 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4L1GNuR004364;
-	Sat, 20 May 2006 19:16:23 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4pzk196p.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sat, 20 May 2006 18:02:54 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S932161AbWEUBh4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 May 2006 21:37:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932249AbWEUBh4
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 May 2006 21:37:56 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:26577 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932161AbWEUBh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 May 2006 21:37:56 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1Fhct5-0005Bn-8r; Sat, 20 May 2006 21:37:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6E94F212691; Sat, 20 May 2006 21:37:52 -0400 (EDT)
+To: Junio Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20421>
 
-Junio C Hamano <junkio@cox.net> writes:
+Now that the sha1 expression syntax supports looking up a ref's
+value at a prior point in time through the '@' operator the '@'
+operator should not be permitted in a ref name.
 
-> ebiederm@xmission.com (Eric W. Biederman) writes:
->
->> Where git-mailinfo is likely to fall down is more in the quilt
->> patches from Andi Kleen. If you look at my quoted patch header below
->> you will see the subject is a plain line, followed by a space followed
->> by a from.  On this example git-mailinfo works (except for picking up
->> the subject) but it appears to be a fluke.
->>
->> From x86_64-mm-add-abilty-to-enable-disable-nmi-watchdog-from-sysfs.patch:
->>
->
-> Yeah, that's right, but in a real mailbox wouldn't that line be
-> prefixed with a '>' ;-)?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-That last from line was my attribution.  The first quoted line
-was the first line of the patch.  In this context that was probably
-a little confusing.
+---
 
-Eric
+90d3212d5351d2f6c6ad33578c9f9df2e07af12e
+ refs.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+90d3212d5351d2f6c6ad33578c9f9df2e07af12e
+diff --git a/refs.c b/refs.c
+index eeb1196..2530c99 100644
+--- a/refs.c
++++ b/refs.c
+@@ -213,14 +213,14 @@ int get_ref_sha1(const char *ref, unsign
+  *
+  * - any path component of it begins with ".", or
+  * - it has double dots "..", or
+- * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
++ * - it has ASCII control character, "@", "~", "^", ":" or SP,
+  * - it ends with a "/".
+  */
+ 
+ static inline int bad_ref_char(int ch)
+ {
+ 	return (((unsigned) ch) <= ' ' ||
+-		ch == '~' || ch == '^' || ch == ':' ||
++		ch == '@' || ch == '~' || ch == '^' || ch == ':' ||
+ 		/* 2.13 Pattern Matching Notation */
+ 		ch == '?' || ch == '*' || ch == '[');
+ }
+-- 
+1.3.3.gfad60
