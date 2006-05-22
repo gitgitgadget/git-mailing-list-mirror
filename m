@@ -1,79 +1,95 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsimport: replace anonymous sub ref with a normal sub
-Date: Tue, 23 May 2006 00:45:39 +1200
-Message-ID: <11483019392683-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Mon May 22 14:40:47 2006
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: irc usage..
+Date: Tue, 23 May 2006 00:54:15 +1200
+Message-ID: <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+	 <446F95A2.6040909@gentoo.org>
+	 <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>
+	 <446FA262.7080900@gentoo.org>
+	 <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org>
+	 <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org>
+	 <44713BE4.9040505@gentoo.org>
+	 <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>
+	 <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>
+	 <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Donnie Berkholz" <spyderous@gentoo.org>,
+	"Yann Dirson" <ydirson@altern.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Matthias Urlichs" <smurf@smurf.noris.de>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 22 14:54:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fi9hw-0003Rz-U5
-	for gcvg-git@gmane.org; Mon, 22 May 2006 14:40:25 +0200
+	id 1Fi9vT-00065b-3Q
+	for gcvg-git@gmane.org; Mon, 22 May 2006 14:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbWEVMkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 08:40:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbWEVMkW
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 08:40:22 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:39886 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1750795AbWEVMkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 May 2006 08:40:21 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1Fi9hr-0004hA-Ll; Tue, 23 May 2006 00:40:19 +1200
-Received: from mltest ([127.0.0.1] helo=localhost.localdomain)
-	by mltest with esmtp (Exim 3.36 #1 (Debian))
-	id 1Fi9n1-0001XA-00; Tue, 23 May 2006 00:45:39 +1200
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.3.0.g9927-dirty
+	id S1750807AbWEVMyR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 08:54:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWEVMyQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 08:54:16 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:5271 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750807AbWEVMyQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 08:54:16 -0400
+Received: by wr-out-0506.google.com with SMTP id 50so599716wri
+        for <git@vger.kernel.org>; Mon, 22 May 2006 05:54:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FjuQSWz3LpAX8K2ANVmF8d/FN1Un97xxbkmE/QETMWBZ3RW9ZvrHuAcQ9UwFsP8+2dLN6YozsOyRzH+hbCh1xxoEvcxBVFj4r7wdaX0TtN/XBYRIrEaluOOYHeQEHnko86aLyv1QjH+svdl5AMJ7v/Y8lpMe7wyin4i889gmcJQ=
+Received: by 10.54.101.13 with SMTP id y13mr4787424wrb;
+        Mon, 22 May 2006 05:54:15 -0700 (PDT)
+Received: by 10.54.127.17 with HTTP; Mon, 22 May 2006 05:54:15 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20502>
 
-commit() does not need to be an anonymous subreference. Keep it simple.
+On 5/22/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> On Mon, 22 May 2006, Martin Langhoff wrote:
+> >
+> > Or a slow leak in Perl? The 5.8.8 release notes do talk about some
+> > leaks being fixed, but this 5.8.8 isn't making a difference.
+> >
+> > Working on it.
+>
+> Thanks. Looking at what I did convert, that horrid gentoo CVS tree is
+> interesting. The resulting (partial) git history has 93413 commits and
+> 850,000+ objects total, all in a totally linear history.
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+Ok, so there's 3 patches posted that should help narrow down the
+problem. There's a new -L <imit> so that Donnie can get his stuff done
+by running it in a while(true) loop. Not proud of it, but hey.
+
+And there are two patches that I suspect may fix the leak. After
+applying them, the cvsimport process grows up to ~13MB and then tapers
+off, at least as far as my patience has gotten me. It's late on this
+side of the globe so I'll look at the results tomorrow morning.
+
+(BTW, I typo-ed Linus' address in the git-send-email invocation. Will
+resend to him separately)
+
+I'll also prep a patch as Linus suggests to do auto-repacking while
+the import runs so we don't eat up the harddisk.
+
+> git would basically cut down the disk usage for a live
+> repo by a factor of 7 or so.
+>
+> _And_ I can do a "git log origin > /dev/null" in about 2.4 seconds. Take
+> that, CVS.
+
+Heh. Faster Gitticat, Kill Kill Kill!
 
 
----
 
- git-cvsimport.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
 
-a0bbc1c2010ca46fc215453d5e4c4853c679f950
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index c1923d1..2ecfe14 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -563,7 +563,7 @@ my $state = 0;
- 
- my($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
- my(@old,@new,@skipped);
--my $commit = sub {
-+sub commit {
- 	my $pid;
- 	while(@old) {
- 		my @o2;
-@@ -853,7 +853,7 @@ #	VERSION:1.96->1.96.2.1
- 		if ($opt_L && $commitcount++ >= $opt_L) {
- 			last;
- 		}
--		&$commit();
-+		commit();
- 		$state = 1;
- 	} elsif($state == 11 and /^-+$/) {
- 		$state = 1;
-@@ -863,7 +863,7 @@ #	VERSION:1.96->1.96.2.1
- 		print "* UNKNOWN LINE * $_\n";
- 	}
- }
--&$commit() if $branch and $state != 11;
-+commit() if $branch and $state != 11;
- 
- unlink($git_index);
- 
--- 
-1.3.2.g82000
+martin
