@@ -1,57 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Current Issues #3
-Date: Mon, 22 May 2006 17:54:28 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0605221738090.6713@iabervon.org>
-References: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Local clone/fetch with cogito is glacial
+Date: Tue, 23 May 2006 00:02:06 +0200
+Message-ID: <20060522220206.GA10488@pasky.or.cz>
+References: <4470FC21.6010104@zytor.com> <BAYC1-PASMTP11FDE05B530CFF43C043E5AE9A0@CEZ.ICE> <44722A8F.9020609@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 22 23:53:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 23 00:02:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiIKv-0007W6-Uq
-	for gcvg-git@gmane.org; Mon, 22 May 2006 23:53:14 +0200
+	id 1FiITX-0000fe-Sp
+	for gcvg-git@gmane.org; Tue, 23 May 2006 00:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbWEVVxL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 17:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWEVVxL
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 17:53:11 -0400
-Received: from iabervon.org ([66.92.72.58]:4110 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751208AbWEVVxK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 17:53:10 -0400
-Received: (qmail 391 invoked by uid 1000); 22 May 2006 17:54:28 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 May 2006 17:54:28 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net>
+	id S1751145AbWEVWCE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 18:02:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbWEVWCD
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 18:02:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:14734 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751145AbWEVWCC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 18:02:02 -0400
+Received: (qmail 3626 invoked by uid 2001); 23 May 2006 00:02:06 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <44722A8F.9020609@zytor.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20537>
 
-On Mon, 22 May 2006, Junio C Hamano wrote:
-
-> * reflog
+Dear diary, on Mon, May 22, 2006 at 11:18:07PM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> said that...
+> Sean wrote:
+> >On Sun, 21 May 2006 16:47:45 -0700
+> >"H. Peter Anvin" <hpa@zytor.com> wrote:
+> >
+> >>It appears that doing a *local* -- meaning using a file path or file URL 
+> >>-- clone or fetch with cogito is just glacial when the repository has an 
+> >>even moderate number of tags (and it's fetching the tags that takes all 
+> >>the time.)  That's a really serious problem for me.
+> >>
+> >
+> >Peter, does git clone work acceptably for you?
+> >
 > 
->   I still haven't merged this series to "next" -- I do not have
->   much against what the code does, but I am unconvinced if it is
->   useful.  Also objections raised on the list that this can be
->   replaced by making sure that a repository that has hundreds of
->   tags usable certainly have a point.
+> Well, it does, except it doesn't set up the cogito branches (which one can 
+> of course copy manually.)
 
-I think it would make gitweb's summary view clearer, and Linus seemed 
-interested in being able to look up what happened in the fast forward 
-which was the first of several merges in a day.
+What about incremental fetches using git-fetch? From a quick scan of the
+git-fetch automagic tags following code, it seems to be even
+significantly more expensive than Cogito's (in terms of number of
+forks).
 
-It could be replaced by a repository with hundreds of machine-readable 
-tags with code to parse dates into queries for suitable tags. But I don't 
-think there's an advantage to using the tag mechanism here, because you 
-never want to look the history up by exactly which history it is (the 
-thing that a tag ref is good for); you'll be looking for whatever reflog 
-item is the newest not after a specified time, where the specified time is 
-almost never a time that a reflog item was created.
+git-clone has an advantage here since it clones _everything_ while
+Cogito fetches only stuff related to the branch you are cloning, and
+verifying if what it fetches is sensible for you unfortunately takes a
+lot of time. :/ I guess there is no way to verify presence of multiple
+objects at once and there is also no way to order local fetch of
+multiple objects at once.
 
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Right now I am having amnesia and deja-vu at the same time.  I think
+I have forgotten this before.
