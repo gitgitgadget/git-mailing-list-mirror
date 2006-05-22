@@ -1,62 +1,81 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Local clone/fetch with cogito is glacial
-Date: Mon, 22 May 2006 14:18:07 -0700
-Message-ID: <44722A8F.9020609@zytor.com>
-References: <4470FC21.6010104@zytor.com> <BAYC1-PASMTP11FDE05B530CFF43C043E5AE9A0@CEZ.ICE>
+From: Donnie Berkholz <spyderous@gentoo.org>
+Subject: Re: irc usage..
+Date: Mon, 22 May 2006 14:48:52 -0700
+Message-ID: <447231C4.2030508@gentoo.org>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>  <446F95A2.6040909@gentoo.org>  <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>  <446FA262.7080900@gentoo.org>  <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org>  <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org>  <44713BE4.9040505@gentoo.org>  <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>  <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>  <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org> <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> <44720C66.6040304@gentoo.org> <Pine.LNX.4.64.0605221234430.3697@g5.osdl.org> <447215D4.5020403@gentoo.org> <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 22 23:19:08 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig65E17BF46F4C30FF75167CB6"
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Yann Dirson <ydirson@altern.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 22 23:49:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiHnp-0001ot-C1
-	for gcvg-git@gmane.org; Mon, 22 May 2006 23:19:01 +0200
+	id 1FiIH3-0006wF-Pl
+	for gcvg-git@gmane.org; Mon, 22 May 2006 23:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbWEVVSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 17:18:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbWEVVSw
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 17:18:52 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:61576 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750852AbWEVVSv
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 May 2006 17:18:51 -0400
-Received: from [192.168.10.106] (63-207-7-10.ded.pacbell.net [63.207.7.10])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k4MLI70b003693
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 22 May 2006 14:18:44 -0700
-User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP11FDE05B530CFF43C043E5AE9A0@CEZ.ICE>
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1751216AbWEVVtK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 17:49:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWEVVtK
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 17:49:10 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:47078 "EHLO smtp.gentoo.org")
+	by vger.kernel.org with ESMTP id S1751216AbWEVVtJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 17:49:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.gentoo.org (Postfix) with ESMTP id E4DC464437;
+	Mon, 22 May 2006 21:49:08 +0000 (UTC)
+Received: from smtp.gentoo.org ([127.0.0.1])
+ by localhost (smtp.gentoo.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 13523-03-3; Mon, 22 May 2006 21:48:58 +0000 (UTC)
+Received: from [192.168.2.158] (xray.science.oregonstate.edu [128.193.220.51])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTP id 619C3643FB;
+	Mon, 22 May 2006 21:48:58 +0000 (UTC)
+User-Agent: Thunderbird 1.5.0.2 (X11/20060513)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>
+X-Enigmail-Version: 0.94.0.0
+X-Virus-Scanned: amavisd-new at gentoo.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20535>
 
-Sean wrote:
-> On Sun, 21 May 2006 16:47:45 -0700
-> "H. Peter Anvin" <hpa@zytor.com> wrote:
-> 
->> It appears that doing a *local* -- meaning using a file path or file URL 
->> -- clone or fetch with cogito is just glacial when the repository has an 
->> even moderate number of tags (and it's fetching the tags that takes all 
->> the time.)  That's a really serious problem for me.
->>
-> 
-> Peter, does git clone work acceptably for you?
-> 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig65E17BF46F4C30FF75167CB6
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Well, it does, except it doesn't set up the cogito branches (which one can of course copy 
-manually.)
+Linus Torvalds wrote:
+> The latest stable CVS release is 1.11.21, I think: you seem to be runni=
+ng=20
+> the "development" version (1.12.x).
 
-cg-clone probably should be rewritten as a thin wrapper around git-clone.
+Backed down to the 1.11 series, things seem to be going fine so far.
 
-	-hpa
+Thanks,
+Donnie
+
+
+--------------enig65E17BF46F4C30FF75167CB6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEcjHGXVaO67S1rtsRAtI5AKDGhLskW88RVbjIMlPmXd8/Leu+/wCbBxae
+J20ZxQFXnXNwuq/0taD6YPo=
+=NI3L
+-----END PGP SIGNATURE-----
+
+--------------enig65E17BF46F4C30FF75167CB6--
