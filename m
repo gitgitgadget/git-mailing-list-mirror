@@ -1,58 +1,60 @@
-From: Jim Meyering <jim@meyering.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: avoid atoi, when possible; int overflow -> heap corruption
-Date: Mon, 22 May 2006 15:31:28 +0200
-Message-ID: <878xoufaof.fsf@rho.meyering.net>
-References: <87mzdcjqey.fsf@rho.meyering.net>
-	<7v3bf3jl15.fsf@assigned-by-dhcp.cox.net>
-	<871wumim28.fsf_-_@rho.meyering.net>
-	<118833cc0605220616t75a182b1oa404d5efe8a1f5d9@mail.gmail.com>
+Date: Mon, 22 May 2006 09:37:46 -0400
+Message-ID: <20060522133746.GA12302@coredump.intra.peff.net>
+References: <87mzdcjqey.fsf@rho.meyering.net> <7v3bf3jl15.fsf@assigned-by-dhcp.cox.net> <871wumim28.fsf_-_@rho.meyering.net> <118833cc0605220616t75a182b1oa404d5efe8a1f5d9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 22 15:31:38 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 22 15:38:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiAVQ-0004gS-Tw
-	for gcvg-git@gmane.org; Mon, 22 May 2006 15:31:33 +0200
+	id 1FiAbX-00060H-K0
+	for gcvg-git@gmane.org; Mon, 22 May 2006 15:37:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750832AbWEVNba (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 09:31:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbWEVNba
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 09:31:30 -0400
-Received: from mx.meyering.net ([82.230.74.64]:60896 "EHLO mx.meyering.net")
-	by vger.kernel.org with ESMTP id S1750832AbWEVNb3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 09:31:29 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 2984134B8D; Mon, 22 May 2006 15:31:28 +0200 (CEST)
-To: "Morten Welinder" <mwelinder@gmail.com>
+	id S1750812AbWEVNht (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 09:37:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbWEVNht
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 09:37:49 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:11985 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S1750812AbWEVNhs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 09:37:48 -0400
+Received: (qmail 71973 invoked from network); 22 May 2006 13:37:46 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 0 with SMTP; 22 May 2006 13:37:46 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 22 May 2006 09:37:46 -0400
+To: Morten Welinder <mwelinder@gmail.com>
+Mail-Followup-To: Morten Welinder <mwelinder@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
 In-Reply-To: <118833cc0605220616t75a182b1oa404d5efe8a1f5d9@mail.gmail.com>
-	(Morten Welinder's message of "Mon, 22 May 2006 09:16:50 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20505>
 
-"Morten Welinder" <mwelinder@gmail.com> wrote:
->> There are about 20 uses of atoi, and most calls can return
->> a usable result in spite of an invalid input -- just because
->> atoi returns the same thing for "99" as "99-and-any-suffix".
->> It would be better not to ignore invalid inputs.
->
+On Mon, May 22, 2006 at 09:16:50AM -0400, Morten Welinder wrote:
+
 > atoi has undefined behaviour for "99-and-any-suffix".  You might
 > get lucky and get back 99, but you might also get a random value
 > or a core dump.
 
-I've never heard of that.
-POSIX says that atoi(str) is equivalent to:
+Where do you get that from? The standard claims that it converts "the
+initial portion of the string pointed to" (7.20.1.2). Furthermore, atoi
+is equivalent to strtol with a base of 10 (with the exception of range
+errors). From 7.20.1.4, paragraph 2:
+  The strtol [...] functions [...] decompose the input string into three
+  parts: an initial, possibly empty, sequence of white-space characters
+  [...], a subject sequence resembling an integer represented in some
+  radix determined by the value of base, and a final string of one or
+  more unrecognized characters...
+If no conversion can be performed (i.e., you feed it garbage with no
+number), zero is returned.
 
-    (int) strtol(str, (char **)NULL, 10)
-    except that the handling of errors may differ.
-    If the value cannot be represented, the behavior is undefined.
+atoi does NOT handle range errors, however; the behavior is undefined in
+that case. In practice, I expect most implementations do some sort of
+wrapping.
 
-Since strtol works fine with such a suffix, and since 99 can be
-represented, I don't see why there would be any undefined behavior.
-
-Do you know of an implementation for which `atoi ("99-and-any-suffix")'
-does anything other than return 99?
+-Peff
