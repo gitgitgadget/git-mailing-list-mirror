@@ -1,63 +1,97 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: [PATCH] Install git builtins into gitexecdir rather than bindir.
-Date: Mon, 22 May 2006 00:42:59 -0400
-Message-ID: <BAYC1-PASMTP07C5BAC47CC7E8CF750B26AE9A0@CEZ.ICE>
-References: <BAYC1-PASMTP09B22AA86724B4F2C01F7FAE9A0@CEZ.ICE>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: irc usage..
+Date: Sun, 21 May 2006 21:50:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+ <20060520203911.GI6535@nowhere.earth> <446F95A2.6040909@gentoo.org>
+ <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org> <446FA262.7080900@gentoo.org>
+ <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org> <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org>
+ <44713BE4.9040505@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon May 22 06:49:03 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Yann Dirson <ydirson@altern.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Martin Langhoff <martin@catalyst.net.nz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 22 06:51:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fi2Lg-0001Y4-DK
-	for gcvg-git@gmane.org; Mon, 22 May 2006 06:48:56 +0200
+	id 1Fi2Nv-0001v0-2W
+	for gcvg-git@gmane.org; Mon, 22 May 2006 06:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbWEVEsx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 00:48:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbWEVEsx
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 00:48:53 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:27062 "EHLO
-	BAYC1-PASMTP07.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S1750913AbWEVEsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 May 2006 00:48:53 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP07.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 21 May 2006 21:52:10 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 82024644C28
-	for <git@vger.kernel.org>; Mon, 22 May 2006 00:48:51 -0400 (EDT)
-To: git@vger.kernel.org
-Message-Id: <20060522004259.3e86718e.seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP09B22AA86724B4F2C01F7FAE9A0@CEZ.ICE>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 22 May 2006 04:52:10.0328 (UTC) FILETIME=[7C0BC580:01C67D5B]
+	id S965015AbWEVEvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 00:51:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbWEVEvM
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 00:51:12 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:61060 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751181AbWEVEvM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 00:51:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4M4oqtH017692
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 21 May 2006 21:50:52 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4M4oo2B016143;
+	Sun, 21 May 2006 21:50:50 -0700
+To: Donnie Berkholz <spyderous@gentoo.org>
+In-Reply-To: <44713BE4.9040505@gentoo.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20481>
 
 
-Moving "git-cmd" commands out of the path and into a special
-git exec path, should include the builtins.
----
- Makefile |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d171829..d9b9671 100644
---- a/Makefile
-+++ b/Makefile
-@@ -628,7 +628,8 @@ install: all
- 	$(MAKE) -C templates install
- 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
- 	$(INSTALL) $(PYMODULES) '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
--	$(foreach p,$(BUILT_INS), rm -f '$(DESTDIR_SQ)$(bindir_SQ)/$p' && ln '$(DESTDIR_SQ)$(bindir_SQ)/git$X' '$(DESTDIR_SQ)$(bindir_SQ)/$p' ;)
-+	ln -f '$(DESTDIR_SQ)$(bindir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' || cp '$(DESTDIR_SQ)$(bindir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X'
-+	$(foreach p,$(BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
- 
- install-doc:
- 	$(MAKE) -C Documentation install
--- 
-1.3.3.ge95c
+On Sun, 21 May 2006, Donnie Berkholz wrote:
+> 
+> Fortunately the storms haven't been that bad down in Corvallis. cvsps
+> also worked fine for me, but git-cvsimport broke in the middle.
+
+Hmm. It's actually possible that it did that for me too - I had put the 
+cvsimport in an xterm and forgotten about it, and just assumed that the 
+power failure was what broke it. But maybe it had broken down before that 
+happened - I just don't have any logs left ;)
+
+> Here's the last bits:
+> 
+> [ snip snip ]
+> Commit ID 7a36de9c4c9b93337ed789ae2341cad3d0991c6d
+> Unknown: error  Cannot allocate memory
+> Fetching profiles/package.mask   v 1.992
+> cat: write error: Broken pipe
+
+Hmm. I don't actually know perl, and my original "cvsimport" script was 
+actually this funny C program that generated a shell script to do the 
+import. That worked fine, and had no memory leaks, but it was a truly 
+hacky thing of horrible beauty. Or rather, it _would_ have been that, if 
+it had had any beauty to be horrible about. But at least I would have been 
+able to debug it.
+
+But the perl one I can't parse any more. That said, the whole "Unknown:" 
+printout seems to come from the subroutine "_line()", which just reads a 
+line from the cvs server.
+
+Did you do a "top" at any time just before this all happened? It _sounds_ 
+like it might actually be a memory leak on the CVS server side, and the 
+problem may (or may not) be due to the optimization that keeps a single 
+long-running CVS server instance for the whole process.
+
+I wouldn't be in the least surprised if that ends up triggering a slow 
+leak in CVS itself, and then CVS runs out of memory.
+
+That would likely have been obvious in any "top" output just before the 
+failure.
+
+Smurf, Martin, Dscho.. Any ideas? My old script just ran RCS directly on 
+the files, and had no issues like that. I'll happily admit that my old 
+script generator thing was horrible, but it was a lot easier to debug than 
+the smarter perl script that uses a CVS server connection..
+
+		Linus
