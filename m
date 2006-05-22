@@ -1,103 +1,62 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] git status: ignore empty directories (because they cannot be added)
-Date: Mon, 22 May 2006 23:02:06 +0200
-Message-ID: <E1FiHXS-0008MC-LB@moooo.ath.cx>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Local clone/fetch with cogito is glacial
+Date: Mon, 22 May 2006 14:18:07 -0700
+Message-ID: <44722A8F.9020609@zytor.com>
+References: <4470FC21.6010104@zytor.com> <BAYC1-PASMTP11FDE05B530CFF43C043E5AE9A0@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 22 23:02:28 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 22 23:19:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiHXZ-0006SJ-5T
-	for gcvg-git@gmane.org; Mon, 22 May 2006 23:02:13 +0200
+	id 1FiHnp-0001ot-C1
+	for gcvg-git@gmane.org; Mon, 22 May 2006 23:19:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbWEVVCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 17:02:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbWEVVCK
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 17:02:10 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:13976 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751183AbWEVVCJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 17:02:09 -0400
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: mutt-ng/devel-r790 (Linux)
+	id S1751194AbWEVVSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 17:18:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbWEVVSw
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 17:18:52 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:61576 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750852AbWEVVSv
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 May 2006 17:18:51 -0400
+Received: from [192.168.10.106] (63-207-7-10.ded.pacbell.net [63.207.7.10])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k4MLI70b003693
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 22 May 2006 14:18:44 -0700
+User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP11FDE05B530CFF43C043E5AE9A0@CEZ.ICE>
+X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20534>
 
-and a new option -u / --untracked-files to show files in untracked
-directories.
+Sean wrote:
+> On Sun, 21 May 2006 16:47:45 -0700
+> "H. Peter Anvin" <hpa@zytor.com> wrote:
+> 
+>> It appears that doing a *local* -- meaning using a file path or file URL 
+>> -- clone or fetch with cogito is just glacial when the repository has an 
+>> even moderate number of tags (and it's fetching the tags that takes all 
+>> the time.)  That's a really serious problem for me.
+>>
+> 
+> Peter, does git clone work acceptably for you?
+> 
 
----
-A few things I'm not sure about:
-- Should there be another option to disable --no-empty-directory?
-- Is the option name --untracked-files ok?
-- Should it be documented (probably yes :))? At the moment the
-  git-status man page does not tell about any command line option at
-  all but for git-commit it does not make sense.
+Well, it does, except it doesn't set up the cogito branches (which one can of course copy 
+manually.)
 
- git-commit.sh |   17 ++++++++++++++---
- 1 files changed, 14 insertions(+), 3 deletions(-)
+cg-clone probably should be rewritten as a thin wrapper around git-clone.
 
----
-
-1921592d5e7809f72a902cca1a38217b150800a9
-diff --git a/git-commit.sh b/git-commit.sh
-index 6ef1a9d..6785826 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -3,7 +3,7 @@ #
- # Copyright (c) 2005 Linus Torvalds
- # Copyright (c) 2006 Junio C Hamano
- 
--USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>) [--amend] [-e] [--author <author>] [[-i | -o] <path>...]'
-+USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>] [-u] [--amend] [-e] [--author <author>] [[-i | -o] <path>...]'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- 
-@@ -134,13 +134,17 @@ #'
- 	report "Changed but not updated" \
- 	    "use git-update-index to mark for commit"
- 
-+        option=""
-+        if test -z "$untracked_files"; then
-+            option="--directory --no-empty-directory"
-+        fi
- 	if test -f "$GIT_DIR/info/exclude"
- 	then
--	    git-ls-files -z --others --directory \
-+	    git-ls-files -z --others $option \
- 		--exclude-from="$GIT_DIR/info/exclude" \
- 		--exclude-per-directory=.gitignore
- 	else
--	    git-ls-files -z --others --directory \
-+	    git-ls-files -z --others $option \
- 		--exclude-per-directory=.gitignore
- 	fi |
- 	perl -e '$/ = "\0";
-@@ -203,6 +207,7 @@ verbose=
- signoff=
- force_author=
- only_include_assumed=
-+untracked_files=
- while case "$#" in 0) break;; esac
- do
-   case "$1" in
-@@ -340,6 +345,12 @@ do
-       verbose=t
-       shift
-       ;;
-+  -u|--u|--un|--unt|--untr|--untra|--untrac|--untrack|--untracke|--untracked|\
-+  --untracked-|--untracked-f|--untracked-fi|--untracked-fil|--untracked-file|\
-+  --untracked-files)
-+      untracked_files=t
-+      shift
-+      ;;
-   --)
-       shift
-       break
--- 
-1.3.2
+	-hpa
