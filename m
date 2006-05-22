@@ -1,219 +1,77 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: Current Issues #3
-Date: Mon, 22 May 2006 03:18:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605220216310.3697@g5.osdl.org>
+Date: Mon, 22 May 2006 12:20:29 +0200
+Message-ID: <20060522102029.GE12810@admingilde.org>
 References: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="fXStkuK2IQBfcDe+"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 22 12:18:26 2006
+X-From: git-owner@vger.kernel.org Mon May 22 12:20:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fi7UM-00060J-Ri
-	for gcvg-git@gmane.org; Mon, 22 May 2006 12:18:15 +0200
+	id 1Fi7We-0006Kp-IF
+	for gcvg-git@gmane.org; Mon, 22 May 2006 12:20:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbWEVKSL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 06:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750714AbWEVKSL
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 06:18:11 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2520 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750712AbWEVKSK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 06:18:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4MAI4tH029355
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 22 May 2006 03:18:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4MAI3WC025261;
-	Mon, 22 May 2006 03:18:03 -0700
+	id S1750716AbWEVKUe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 06:20:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750717AbWEVKUd
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 06:20:33 -0400
+Received: from admingilde.org ([213.95.32.146]:20653 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1750716AbWEVKUd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 06:20:33 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Fi7WX-0006Bm-9I; Mon, 22 May 2006 12:20:29 +0200
 To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
 In-Reply-To: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20496>
 
 
+--fXStkuK2IQBfcDe+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 22 May 2006, Junio C Hamano wrote:
-> 
-> * Per branch configuration
-> 
->   The [section "foo"] configuration syntax update by Linus, and
->   git-parse-remote update to use remote.stuff.{url,push,pull} by
->   Johannes are now both in the "master".  The stage is set to
->   discuss what to actually do with per-branch configuration.
-> 
->   We will use the [branch "foo"] section for configuration about
->   local branch named "foo".  I do not think there is any
->   disagreement about this.
-> 
->   The ideas floated so far (I am forgetting many of them
->   perhaps):
-> 
+hoi :)
+
+On Mon, May 22, 2006 at 01:44:15AM -0700, Junio C Hamano wrote:
 >     1. "upstream" refers to the remote section to use when
 >        running "git-{fetch,pull,push}" while on that branch.
-> 
+>=20
 > 	[branch "master"]
-> 		upstream = "origin"
-> 
-> 	[remote "origin"]
->         	url = "git://git.kernel.org/.../git.git"
-> 		fetch = refs/heads/master:refs/remotes/origin/master
-> 
->     2. "url/fetch/push" directly specifies what would usually be
->        taken from a remote section by "git-{fetch,pull,push}"
->        while on that branch.
-> 
-> 	[branch "foo"]
->         	url = "company.com.xz:myrepo"
-> 		fetch = refs/heads/master:refs/remotes/origin/master
-> 		push = refs/heads/master:refs/heads/origin
+> 		upstream =3D "origin"
 
-I'd _much_ prefer (1) over (2).
+what do you do for [branch "next"] here?
 
-However, I wonder if we couldn't do even better. How about forgetting 
-about the "branch" vs "remote" thing, and instead splitting it into 
-_three_: "branch", "repository" and "remote branch".
+Does it make sense to regard all refs/remotes/*/<branchname> as
+upstream and merge these into the current branch when pulling?
 
-Something like
+Perhaps a pull could even merge all newly fetched remote heads
+into the corresponding branch, but for that we'd need to be
+able to merge without using the working dir.
 
-	[repo "origin"]
-		url = "git://git.kernel.org/.../git.git"
+--=20
+Martin Waitz
 
-	[repo "gitk"]
-		url = "git://git.kernel.org/.../gitk.git"
+--fXStkuK2IQBfcDe+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-to describe two remote repositories (and NOTE! No branch descriptions 
-within those. We're just describing the actual repository, so we might 
-have things like "readonly" to indicate that we can't push to them, but if 
-we do things like that, they would be "repo-wide" things that we 
-describe for that repository),
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-Then, we can describe remote branches within those repositories:
+iD8DBQFEcZBtj/Eaxd/oD7IRArywAJwMPfPUjTqX/hQoXEiwpjw3B67AJACfbjLj
+poqfBRvjka0WP7aCKU1NqWk=
+=7qDo
+-----END PGP SIGNATURE-----
 
-	[remote "origin/master"]
-		repo = origin
-		branch = master
-
-	[remote "origin/next"]
-		repo = origin
-		branch = next
-
-	[remote "origin/pu"]
-		repo = origin
-		branch = pu
-
-	[remote "gitk/master"]
-		repo = gitk
-		branch = master
-
-now, here we're describing two things: the name of the remote is what we 
-will then use for the ".git/remotes/<name>" thing to remember the last 
-value, and we're describing where to get that data (which repo, and which 
-branch).
-
-NOTE! In the example above, I made the name of the remote always match the 
-<repo>/<branch> format, but that would be just a convention. You could do
-
-	[remote "linus"]
-		repo = kernel
-		branch = master
-
-to describe the "linus" remote as the master branch of the "kernel" 
-repository.
-
-Finally, local branches:
-
-	[branch "master"]
-		source = origin/master
-
-	[branch "origin"]
-		readonly
-		source = origin/master
-
-	[branch "next"]
-		readonly
-		source = origin/next
-
-	[branch "pu"]
-		readonly
-		rebase
-		source = origin/pu
-
-	[branch "gitk"]
-		readonly
-		source = gitk/master
-
-This marks the things that just _track_ somebody elses branch as being 
-readonly (so "master" and "origin" are really different: they're both 
-branches, but one of them just tracks remotes/origin/master, while the 
-other one can be committed to), and "pu" has been marked as not only being 
-read-only, it also re-bases to its source.
-
-I dunno. Does this sound too verbose and abstract?
-
-Normally, you'd not have a lot of these. For example, for somebody who 
-follows the kernel, you'd literally just have
-
-	[branch "master"]
-		source = linus
-
-	[remote "linus"]
-		repo = kernel
-		branch = master
-
-	[repo "kernel"]
-		url = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-
-and you'd be done. The above would describe both the local "master" branch 
-and the "remotes/linus" head, and give the relationship between them.
-
-The git repo is actually much more complex, especially if you want to 
-track all of the different branches Junio has, and if you want to also 
-track the branches Paul has to gitk.
-
-But with the above, you can fairly naturally do:
-
- - "git pull" 
-
-	No arguments. fetch the remote described by the current branch, 
-	and merge into current branch (we might decide to fetch all the 
-	remotes associated with that repo, just because once we do this, 
-	we might as well, but that's not that important to the end 
-	result).
-
- - "git pull <repo>"
-
-	fetch all remotes that use <repo>. IFF the current branch is 
-	matched to one of those remotes, merge the changes into the 
-	current branch. But if you happened to be on another unrelated 
-	branch, nothing happens aside from the fetch.
-
- - "git pull <remote>"
-
-	fetch just the named remote. IFF that remote is also the remote 
-	for the current branch, do merge it into current. Again, we 
-	_might_ decide to just do the whole repo.
-
- - "git pull <repo> <branchname>"
-
-	fetch the named branch from the named repository and merge it into 
-	current (no ifs, buts or maybes - now we've basically overridden 
-	the default relationships, so now the <repo> is just a pure 
-	shorthand for the location of the repository)
-
- - "git pull <repo> <src>:<dst>"
-
-	same as now. fetch <repo> <src> into <dst>, and merge it into the 
-	current branch (again, we've overridden any default relationships).
-
-but maybe this is overdesigned. Comments?
-
-			Linus
+--fXStkuK2IQBfcDe+--
