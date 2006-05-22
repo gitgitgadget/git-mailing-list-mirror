@@ -1,60 +1,73 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH 2/3] tutorial: expanded discussion of commit history
-Date: Mon, 22 May 2006 10:18:34 -0400
-Message-ID: <20060522141834.GA17461@fieldses.org>
-References: <1148255528.61d5d241.0@fieldses.org> <1148255528.61d5d241.1@fieldses.org> <e4rsef$v34$1@sea.gmane.org> <7vzmhacuso.fsf@assigned-by-dhcp.cox.net> <e4ruku$5uk$1@sea.gmane.org>
+From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
+Subject: [PATCH 0/2] tagsize < 8kb restriction
+Date: Mon, 22 May 2006 16:48:03 +0200
+Message-ID: <4471CF23.1070807@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 22 16:18:43 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon May 22 16:48:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiBF0-0006gY-Cp
-	for gcvg-git@gmane.org; Mon, 22 May 2006 16:18:38 +0200
+	id 1FiBhR-0005F2-5y
+	for gcvg-git@gmane.org; Mon, 22 May 2006 16:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbWEVOSf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 10:18:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbWEVOSf
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 10:18:35 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:61380 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP
-	id S1750846AbWEVOSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 May 2006 10:18:35 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
-	(envelope-from <bfields@fieldses.org>)
-	id 1FiBEw-0004uG-4L; Mon, 22 May 2006 10:18:34 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <e4ruku$5uk$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1750885AbWEVOr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 10:47:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750886AbWEVOr7
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 10:47:59 -0400
+Received: from mail.gmx.de ([213.165.64.20]:40417 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750885AbWEVOr6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 10:47:58 -0400
+Received: (qmail invoked by alias); 22 May 2006 14:47:56 -0000
+Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
+  by mail.gmx.net (mp042) with SMTP; 22 May 2006 16:47:56 +0200
+X-Authenticated: #916101
+User-Agent: Mail/News 1.5 (X11/20060228)
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.94.0.0
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20508>
 
-On Mon, May 22, 2006 at 11:01:20AM +0200, Jakub Narebski wrote:
-> Junio C Hamano wrote:
-> > I do not think being able to do diff with arbitrary stage is
-> > often used in practice.  By definition, you would want to do
-> > diff with a stage during a conflicted merge, and most of the
-> > time the default combined diff without any colon form should
-> > give you the most useful results.  Also, ":<path>" to mean the
-> > entry in the index is often equivalent to "git diff --cached".
-> > 
-> > IOW, these are obscure special purpose notation, and I do not
-> > think tutorial is a good place to cover them.
-> 
-> Hmmm... perhaps in tutorial-3.txt, covering merges and how to resolve
-> conflicted merge, cherry picking, reverting and rebasing.
+Hi,
 
-Even then I had the impression that stages were pretty much invisible to
-users.  So that should stay in core-tutorial.txt.  Which could use some
-revision (Junio had some ideas) but I'm personally more interested in
-end-user documentation than developer documentation for now.
+I am currently working on an interface for source code quality assurance
+tools to automatically scan newly commited code. Since it is the only
+way to add data (scan-results) to an already-existing commit, I decided
+to use tags for that.
 
-So I'd imagined future tutorial parts cannibalizing everyday.txt and the
-howto's.
+Since the scan-results will most definitly exeed the 8kb-limit, I would
+like to remove this artificial restriction.
 
---b.
+I know I could also
+
+    git-hash-object -t tag -w
+
+but prefer using the "official" way.
+
+
+In order not to write duplicate code I used parts of index_pipe() in
+sha1_file.c
+
+What I found odd when writing the patch was that main() in mktag.c uses
+xread() to read from stdin (which respects EAGAIN and EINTR return
+values), but index_pipe() in sha1_file.c just uses read() for doing
+merely the same thing. For unifying both routines i found that xread()
+might be the better choice.
+
+Removing the restriction was pretty straightforward but do you think
+this would break something in other places ?
+
+
+[PATCH 1/2]
+    remove the < 8kb restrinction from git-mktag
+
+[PATCH 2/2]
+    add more informative error messages to git-mktag
+
+
+Bj
