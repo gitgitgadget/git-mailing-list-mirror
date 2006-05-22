@@ -1,66 +1,86 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Donnie Berkholz <spyderous@gentoo.org>
 Subject: Re: irc usage..
-Date: Mon, 22 May 2006 17:04:34 +1200
-Message-ID: <46a038f90605212204m7735d637j50aeb9807eae336a@mail.gmail.com>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
-	 <20060520203911.GI6535@nowhere.earth> <446F95A2.6040909@gentoo.org>
-	 <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>
-	 <446FA262.7080900@gentoo.org>
-	 <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org>
-	 <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org>
-	 <44713BE4.9040505@gentoo.org>
-	 <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>
+Date: Sun, 21 May 2006 22:21:01 -0700
+Message-ID: <44714A3D.5060909@gentoo.org>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org> <20060520203911.GI6535@nowhere.earth> <446F95A2.6040909@gentoo.org> <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org> <446FA262.7080900@gentoo.org> <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org> <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org> <44713BE4.9040505@gentoo.org> <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Donnie Berkholz" <spyderous@gentoo.org>,
-	"Yann Dirson" <ydirson@altern.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Matthias Urlichs" <smurf@smurf.noris.de>,
-	"Martin Langhoff" <martin@catalyst.net.nz>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 22 07:04:43 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA9544FF4B4C3E961AF12D4FA"
+Cc: Yann Dirson <ydirson@altern.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Martin Langhoff <martin@catalyst.net.nz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 22 07:21:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fi2aw-0003O1-VQ
-	for gcvg-git@gmane.org; Mon, 22 May 2006 07:04:43 +0200
+	id 1Fi2r8-0005C9-Nk
+	for gcvg-git@gmane.org; Mon, 22 May 2006 07:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932146AbWEVFEg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 01:04:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWEVFEg
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 01:04:36 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:52242 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751181AbWEVFEf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 01:04:35 -0400
-Received: by wr-out-0506.google.com with SMTP id 68so184697wri
-        for <git@vger.kernel.org>; Sun, 21 May 2006 22:04:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OATTuSHmRQ5T7PjAK57a+JI1MklcAQaqFN7wDc1CK8OrJ5d+HA3B8qUCUJTZ0l4sZTpDgnt7ucOLYbwBOwkl3gUOI4ukn2mvix+ap4QggUQraqE0FwWs+07XYWfOr9t+sFZATu3biszveMIyR/Xr1pbXJ1V9cybXLNIuZL0LNBQ=
-Received: by 10.54.99.4 with SMTP id w4mr1545291wrb;
-        Sun, 21 May 2006 22:04:34 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Sun, 21 May 2006 22:04:34 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
+	id S1751249AbWEVFVQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 01:21:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWEVFVQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 01:21:16 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:19159 "EHLO smtp.gentoo.org")
+	by vger.kernel.org with ESMTP id S1751249AbWEVFVP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 01:21:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.gentoo.org (Postfix) with ESMTP id 0E04164452;
+	Mon, 22 May 2006 05:21:15 +0000 (UTC)
+Received: from smtp.gentoo.org ([127.0.0.1])
+ by localhost (smtp.gentoo.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 32534-13; Mon, 22 May 2006 05:21:09 +0000 (UTC)
+Received: from [192.168.1.105] (c-67-171-150-177.hsd1.or.comcast.net [67.171.150.177])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTP id C47D46444C;
+	Mon, 22 May 2006 05:21:08 +0000 (UTC)
+User-Agent: Thunderbird 1.5.0.2 (X11/20060513)
+To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>
-Content-Disposition: inline
+X-Enigmail-Version: 0.94.0.0
+X-Virus-Scanned: amavisd-new at gentoo.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20483>
 
-On 5/22/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> I wouldn't be in the least surprised if that ends up triggering a slow
-> leak in CVS itself, and then CVS runs out of memory.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA9544FF4B4C3E961AF12D4FA
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-I'm dying to try this out myself after work. I don't discard that
-cvsimport might be stuffing data in an array that grows forever. In
-any case you'll hear from me soon.
+Linus Torvalds wrote:
+> Did you do a "top" at any time just before this all happened? It _sound=
+s_=20
+> like it might actually be a memory leak on the CVS server side, and the=
+=20
+> problem may (or may not) be due to the optimization that keeps a single=
+=20
+> long-running CVS server instance for the whole process.
+
+No. =3D\ I just started the thing running in a screen session and came
+back a few hours later to find it like that.
+
+Thanks,
+Donnie
 
 
+--------------enigA9544FF4B4C3E961AF12D4FA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-martin
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEcUpBXVaO67S1rtsRArDiAJ0TNPANUVwDHrlkfieO9rENPrSFWgCfdI9p
+qudPSEsQrld3GBwHNIVqD8c=
+=xVaw
+-----END PGP SIGNATURE-----
+
+--------------enigA9544FF4B4C3E961AF12D4FA--
