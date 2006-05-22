@@ -1,68 +1,53 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: totorial-2 Re: (unknown)
-Date: Sun, 21 May 2006 21:25:19 -0400
-Message-ID: <20060522012519.GB4818@fieldses.org>
-References: <1148255528.61d5d241.1@fieldses.org> <1148255528.61d5d241.2@fieldses.org> <7vfyj2hp5p.fsf_-_@assigned-by-dhcp.cox.net>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Local clone/fetch with cogito is glacial
+Date: Sun, 21 May 2006 21:20:26 -0400
+Message-ID: <BAYC1-PASMTP11FDE05B530CFF43C043E5AE9A0@CEZ.ICE>
+References: <4470FC21.6010104@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 22 03:25:24 2006
+X-From: git-owner@vger.kernel.org Mon May 22 03:26:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FhzAh-0003tp-TR
-	for gcvg-git@gmane.org; Mon, 22 May 2006 03:25:24 +0200
+	id 1FhzBe-00040J-Vx
+	for gcvg-git@gmane.org; Mon, 22 May 2006 03:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964947AbWEVBZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 May 2006 21:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932410AbWEVBZV
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 21:25:21 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:40913 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932384AbWEVBZU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 May 2006 21:25:20 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
-	(envelope-from <bfields@fieldses.org>)
-	id 1FhzAd-0001sT-I4; Sun, 21 May 2006 21:25:19 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfyj2hp5p.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932384AbWEVB0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 May 2006 21:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932410AbWEVB0U
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 May 2006 21:26:20 -0400
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:35793 "EHLO
+	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S932384AbWEVB0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 May 2006 21:26:20 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 21 May 2006 18:31:10 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 291FF644C28;
+	Sun, 21 May 2006 21:26:18 -0400 (EDT)
+To: "H. Peter Anvin" <hpa@zytor.com>
+Message-Id: <20060521212026.22f36e03.seanlkml@sympatico.ca>
+In-Reply-To: <4470FC21.6010104@zytor.com>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 22 May 2006 01:31:10.0421 (UTC) FILETIME=[67C80050:01C67D3F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20472>
 
-On Sun, May 21, 2006 at 05:35:46PM -0700, Junio C Hamano wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> > +Besides blobs, trees, and commits, the only remaining type of object
-> > +is a "tag", which we won't discuss here; refer to gitlink:git-tag[1]
-> > +for details.
+On Sun, 21 May 2006 16:47:45 -0700
+"H. Peter Anvin" <hpa@zytor.com> wrote:
+
+> It appears that doing a *local* -- meaning using a file path or file URL 
+> -- clone or fetch with cogito is just glacial when the repository has an 
+> even moderate number of tags (and it's fetching the tags that takes all 
+> the time.)  That's a really serious problem for me.
 > 
-> We have created a tag in tutorial#1, so it _might_ make sense to
-> just tell the user to cat-file it.
 
-The example in tutorial.txt is a "lightweight" tag.
+Peter, does git clone work acceptably for you?
 
-The original tutorial.txt (unlike this sequel) doesn't actually try to
-stick to a consistent example throughout, so it's awkward to refer back.
-Probably something to fix some day....
-
-> 
-> > +------------------------------------------------
-> > +$ git diff
-> > +--- a/file.txt
-> > ++++ b/file.txt
-> > +@@ -1 +1,2 @@
-> > + hello world!
-> > + +hello world, again
-> > +$ git update-index file.txt
-> > +$ git diff
-> > +------------------------------------------------
-> 
-> Is the second line of the diff " +" intentional?  The same
-> comment to the example that immediately follows this part.
-
-Oops, no--those look like cut'n'paste errors.  Would you like a revised
-patch?--b.
+Sean
