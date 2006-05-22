@@ -1,99 +1,79 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Current Issues #3
-Date: Mon, 22 May 2006 19:12:57 -0400
-Message-ID: <20060522231257.GA21124@spearce.org>
-References: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605221738090.6713@iabervon.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: irc usage..
+Date: Tue, 23 May 2006 11:15:07 +1200
+Message-ID: <46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com>
+References: <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org>
+	 <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>
+	 <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>
+	 <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org>
+	 <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com>
+	 <44720C66.6040304@gentoo.org>
+	 <46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com>
+	 <Pine.LNX.4.64.0605221256090.3697@g5.osdl.org>
+	 <20060522214128.GE16677@kiste.smurf.noris.de>
+	 <7v8xotadm3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 01:13:16 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Matthias Urlichs" <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 23 01:15:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiJaH-0001vy-6Q
-	for gcvg-git@gmane.org; Tue, 23 May 2006 01:13:09 +0200
+	id 1FiJcI-0002CX-8S
+	for gcvg-git@gmane.org; Tue, 23 May 2006 01:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbWEVXNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 19:13:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbWEVXNF
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 19:13:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:40333 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751292AbWEVXNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 May 2006 19:13:04 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FiJZy-0002dE-SL; Mon, 22 May 2006 19:12:51 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 89A9620FB0C; Mon, 22 May 2006 19:12:58 -0400 (EDT)
-To: Daniel Barkalow <barkalow@iabervon.org>
+	id S1751294AbWEVXPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 19:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbWEVXPK
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 19:15:10 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:30022 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751294AbWEVXPI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 19:15:08 -0400
+Received: by wr-out-0506.google.com with SMTP id 50so729852wri
+        for <git@vger.kernel.org>; Mon, 22 May 2006 16:15:08 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bpzooI3CR5AfCy0hG9KuiGX7LtDjhtrtWvMpLE6ummpVUKUAKbraE/abaqTkzB57oG/2z7Bj3zmH3/q/jf+6c3BlrJvtEyLaMVrPiP03lD1gcSRg6oCMhpkltBnievQRKQGnfk1m8jzWpxQOi6MTL6U6sy1dRLUNpeCnpWWV6Yg=
+Received: by 10.54.121.3 with SMTP id t3mr5346987wrc;
+        Mon, 22 May 2006 16:15:07 -0700 (PDT)
+Received: by 10.54.127.17 with HTTP; Mon, 22 May 2006 16:15:07 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7v8xotadm3.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605221738090.6713@iabervon.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20548>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> On Mon, 22 May 2006, Junio C Hamano wrote:
-> 
-> > * reflog
-> > 
-> >   I still haven't merged this series to "next" -- I do not have
-> >   much against what the code does, but I am unconvinced if it is
-> >   useful.  Also objections raised on the list that this can be
-> >   replaced by making sure that a repository that has hundreds of
-> >   tags usable certainly have a point.
-> 
-> I think it would make gitweb's summary view clearer, and Linus seemed 
-> interested in being able to look up what happened in the fast forward 
-> which was the first of several merges in a day.
-> 
-> It could be replaced by a repository with hundreds of machine-readable 
-> tags with code to parse dates into queries for suitable tags. But I don't 
-> think there's an advantage to using the tag mechanism here, because you 
-> never want to look the history up by exactly which history it is (the 
-> thing that a tag ref is good for); you'll be looking for whatever reflog 
-> item is the newest not after a specified time, where the specified time is 
-> almost never a time that a reflog item was created.
+On 5/23/06, Junio C Hamano <junkio@cox.net> wrote:
+> > I simply was too lazy to count the actual filenames' lengths. ;-)
+>
+> I think cvsimport predates that option, but these days that loop
+> can be optimized by feeding --index-info from standard input.
 
-The thing is this might also be easily represented as a structure
-of tags; for example:
+Oh, yep, that'd be a good addition. I think we can also cut down on
+the number of fork+exec calls (as Linus points out they are killing
+us) by caching some data we should already have that we are repeatedly
+asking from git-ref-parse.
 
-	refs/logs/heads/<ref>/<year>/<month>/<day> <hour>:<min>:<sec>:<seq>
+Other TODOs from my reading of the code last night...
 
-where the tag is a tag of the commit which was valid in that ref
-at that time.  Searching for an entry "around a particular time"
-isn't that much more difficult than parsing a file, you just have
-to walk backwards through the sorted directory listings then read
-the tag object which matches; that tag object will point at the
-tree/commit/tag which is was in that ref..
+ - Switch from line-oriented reads to block reads when fetching files
+from CVS. This gentoo has repo has some large binary blobs in it and
+we end up slurping them into memory.
 
-What's ugly about this is simply the disk storage: a ref file is an
-expensive thing (relatively speaking) on most UNIX file systems due
-to the inode overhead.  If this was stored in a more compact format
-(such as a GIT tree) then this would cost very little.
+ - Stop abusing globals in commit() -- pass the commit data as parameters.
 
-So the alternative that I have been mentaly kicking around for
-the past two days is storing the GIT_DIR/refs directory within a
-standard GIT tree.  This of course would need to be an option that
-gets enabled by the user as currently most tools expect the refs
-directory to actually be a directory, not a tree.  The advantage here
-is that unlike proposed reflog it is a compact ref representation
-which could be used by other features, such as tagging a GIT
-commit with the unique name of the same change from another SCM.
-Or tagging your repository on every automated build, which runs
-once every 5 minutes.
+ - Further profiling? Whatever we are doing, we aren't doing it fast :(
 
--- 
-Shawn.
+Will be trying to do those things in the next few days, don't mind if
+someone jumps in as well.
+
+
+
+martin
