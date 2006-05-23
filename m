@@ -1,90 +1,67 @@
-From: Ben Clifford <benc@hawaga.org.uk>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: file name case-sensitivity issues
-Date: Tue, 23 May 2006 22:43:15 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0605232239070.15915@dildano.hawaga.org.uk>
+Date: Tue, 23 May 2006 15:57:04 -0700
+Message-ID: <7v7j4c4af3.fsf@assigned-by-dhcp.cox.net>
 References: <20060523210615.GB5869@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 24 00:43:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 00:57:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FifbL-0003wQ-Im
-	for gcvg-git@gmane.org; Wed, 24 May 2006 00:43:43 +0200
+	id 1FifoL-0006NH-Ui
+	for gcvg-git@gmane.org; Wed, 24 May 2006 00:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256AbWEWWnj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 18:43:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbWEWWnj
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 18:43:39 -0400
-Received: from dildano.hawaga.org.uk ([81.187.211.37]:40154 "EHLO
-	dildano.hawaga.org.uk") by vger.kernel.org with ESMTP
-	id S932256AbWEWWnj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 May 2006 18:43:39 -0400
-Received: from dildano.hawaga.org.uk (localhost.localdomain [127.0.0.1])
-	by dildano.hawaga.org.uk (8.13.6/8.13.6/Debian-1) with ESMTP id k4NMhGxS030664;
-	Tue, 23 May 2006 22:43:16 GMT
-Received: from localhost (benc@localhost)
-	by dildano.hawaga.org.uk (8.13.6/8.13.6/Submit) with ESMTP id k4NMhFdS030660;
-	Tue, 23 May 2006 22:43:15 GMT
-X-Authentication-Warning: dildano.hawaga.org.uk: benc owned process doing -bs
+	id S932275AbWEWW5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 18:57:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932461AbWEWW5G
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 18:57:06 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:33018 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932275AbWEWW5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 May 2006 18:57:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060523225704.FHRH27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 23 May 2006 18:57:04 -0400
 To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060523210615.GB5869@steel.home>
+In-Reply-To: <20060523210615.GB5869@steel.home> (Alex Riesen's message of
+	"Tue, 23 May 2006 23:06:15 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20646>
 
+fork0@t-online.de (Alex Riesen) writes:
 
-On OS X using whatever filesystem it comes with by default, I get the 
-following, which doesn't seem right (but in a different way).
+> Very simple to reproduce on FAT and NTFS, and under Windows, as usual,
+> when a problem is especially annoying. I seem to have no chance to
+> get my hands on this myself, so I at least let everyone know about the
+> problem.
 
-$ mkdir case-sensitivity-test
-$ cd case-sensitivity-test
-$ git init-db
-defaulting to local storage area
-$ echo foo > foo
-$ echo bar > bar
-$ git add foo bar
-$ git commit -m initial\ commit
-Committing initial tree 89ff1a2aefcbff0f09197f0fd8beeb19a7b6e51c
-$ git checkout -b side
-$ echo bar-side >> bar
-$ git commit -m side\ commit -o bar
-$ git checkout master
-$ rm foo
-$ git update-index --remove foo
-$ echo FOO > FOO
-$ git add FOO
-$ git commit -m case\ change
-$ ls
-FOO bar
-$ git pull . side
-Trying really trivial in-index merge...
-fatal: Merge requires file-level merging
-Nope.
-Merging HEAD with e1f1e78035b099fad2bbfb82af7ec31864d8e4c1
-Merging: 
-5d70969775bf595dd5144a2bacc25d32cc288352 case change 
-e1f1e78035b099fad2bbfb82af7ec31864d8e4c1 side commit 
-found 1 common ancestor(s): 
-e35c42fad4f08c2ccf61d93409a0208e92028a51 initial commit 
+Isn't it like complaining that the following sequence loses your
+precious file on a case-challenged filesystem?
 
-Merge 98bf1cae75776c141ad3b61dc2cb938c71c303ef, made by recursive.
- bar |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-$ 
-$ ls
-bar
-$ git ls-files -d
-FOO
-$ git ls-tree HEAD
-100644 blob b7d6715e2df11b9c32b2341423273c6b3ad9ae8a    FOO
-100644 blob 5f8b81e197a2cb27816112fb5a6b86b7031ffde8    bar
+	$ echo precious contents >foo
+        $ rm -f FOO
 
-The checkout is losing the FOO file but the merged tree object has the 
-merged FOO in it.
+Is it a problem for the user?  Certainly yes.  You lost your
+precious file.
 
--- 
+Is it a bug in the operating system and/or the filesystem?
+Probably not; it is doing what it is asked to do -- its
+definition of what string matches what file on the filesystem is
+dubious, but that is how it sees the world and you accept that
+view while you are on such a system.  Is it a bug in "rm"?
+Probably not; it is doing what it is asked to do within the
+context that you gave it.
+
+I'd call that a PEBCAK.
+
+If you _know_ you are working on a case challenged filesystem, I
+think the best thing you can do is not to work on a project that
+has files in different cases on such a filesystem.
