@@ -1,120 +1,86 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
-Date: Tue, 23 May 2006 16:15:37 -0700
-Message-ID: <7vzmh81gfa.fsf@assigned-by-dhcp.cox.net>
-References: <4471CF23.1070807@gmx.de>
-	<7vac99c1hv.fsf@assigned-by-dhcp.cox.net> <44737353.20904@gmx.de>
+Subject: Re: [PATCH 2/2] cvsimport: cleanup commit function
+Date: Tue, 23 May 2006 16:41:33 -0700
+Message-ID: <7vpsi41f82.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com>
+	<44720C66.6040304@gentoo.org>
+	<46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com>
+	<Pine.LNX.4.64.0605221256090.3697@g5.osdl.org>
+	<20060522214128.GE16677@kiste.smurf.noris.de>
+	<7v8xotadm3.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com>
+	<20060523065232.GA6180@coredump.intra.peff.net>
+	<20060523070007.GC6180@coredump.intra.peff.net>
+	<118833cc0605231047o2012deefh5e77b8496da1e673@mail.gmail.com>
+	<20060523205944.GA16164@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 01:15:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Morten Welinder <mwelinder@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 01:42:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fig6J-0001HG-OY
-	for gcvg-git@gmane.org; Wed, 24 May 2006 01:15:44 +0200
+	id 1FigVh-0005ZG-Qz
+	for gcvg-git@gmane.org; Wed, 24 May 2006 01:41:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274AbWEWXPj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 23 May 2006 19:15:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbWEWXPj
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 19:15:39 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:4231 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932274AbWEWXPi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 19:15:38 -0400
+	id S932107AbWEWXlf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 19:41:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932329AbWEWXlf
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 19:41:35 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:18906 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932107AbWEWXlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 May 2006 19:41:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060523231538.HOBR5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 23 May 2006 19:15:38 -0400
-To: =?iso-8859-1?Q?Bj=F6rn?= Engelmann <BjEngelmann@gmx.de>
-In-Reply-To: <44737353.20904@gmx.de> (=?iso-8859-1?Q?Bj=F6rn?= Engelmann's
- message of "Tue, 23
-	May 2006 22:40:51 +0200")
+          id <20060523234134.VQUP24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 23 May 2006 19:41:34 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060523205944.GA16164@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 23 May 2006 16:59:44 -0400")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20648>
 
-Bj=F6rn Engelmann <BjEngelmann@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> I am currently wondering where to store the reference to such a
-> sub-repository. It certainly is a head, but I would like to avoid any=
-one
-> commiting code into this "branch". Maybe I will create a new director=
-y
-> .git/refs/annotations.
-
-I would recommend against that.  Why shouldn't it be an ordinary
-branch that is different from the default "master"?
-
-If you are in a shared repository settings, then update hook is
-there for you to prevent people who do not have any business
-touching that branch head from mucking with it.
-
-> I am not sure how git would perform in such an environment. Do you th=
-ink
-> the "git-push"-implementation is sufficiently "thread-save" for this =
-?
-
-Yes.
-
-And I do not necessarily think your workflow would want to have
-such "an empty file works as a lock" convention.
-
-Just do things locklessly.  If two people in the group happened
-to do duplicated work, the first push would succeed and the
-second person would be prevented from pushing (and suggested to
-merge in the work first).  When the second person pulls, he
-would realize the scan result by the first person is already
-there.  If that is considered to be too much wasted work, then
-it means your distributed workflow did not have sufficient
-communication among people.  Being able to work distributed does
-not mean you need no coordination, and a distributed SCM is not
-a substitute for comminication among paticipants.
-
-> 1.) Do you intend to add some more advanced metadata-functionality to
-> git in the future or should I send a patch with my implementation onc=
-e
-> it is finished ? Will be just some scripts using similar commands to
-> what Linus sent me (thanks for that, btw)
-
-Neither, until/unless we have a clear design.
-
-I think the annotation branch (or a separate repository) is a
-very natural consequence of what the tool already give you, and
-the tools work just fine as they are.  There is nothing
-innovative in what I suggested above nor Linus outlined in the
-other message.
-
-If you are talking about an application that builds on top of
-git to do issue management (or QA or whatever), that uses
-metadata linked to the commits on the main development branch,
-that would be a wonderful system, but that does not necessarily
-have to come with git (it's just an application on top of git,
-and the workflow of your organization may or may not match other
-people's workflow).
-
-> 2.) Searching for a way to add objects to the database I spent quite =
-a
-> while to find the right command. Don't you think it would be much mor=
-e
-> intuitive having an
+> On Tue, May 23, 2006 at 01:47:01PM -0400, Morten Welinder wrote:
 >
->     git-create-object [-t <type>] [-n] [-f] [-z] [--stdin] <file> [-r
-> <ref-name>]
+>> Why run "env" and not just muck with %ENV?
+>> >+       my $pid = open2(my $commit_read, my $commit_write,
+>> >+               'env',
+>> >+               "GIT_AUTHOR_NAME=$author_name",
+>> >+               "GIT_AUTHOR_EMAIL=$author_email",
+>> >+               "GIT_AUTHOR_DATE=$commit_date",
+>> >+               "GIT_COMMITTER_NAME=$author_name",
+>> >+               "GIT_COMMITTER_EMAIL=$author_email",
+>> >+               "GIT_COMMITTER_DATE=$commit_date",
+>> >+               'git-commit-tree', $tree, @commit_args);
 >
-> command for creating any type of object (-t blob as default).
+> Oops, that's an obvious fork optimization that I should have caught.
 
-No, I do not think we would want to make it too easy and relaxed
-to create arbitrary object-looking thing.  Each type have
-defined format and semantics, and creation of an object of each
-type should be validated.  I do not want to encourage bypassing
-it by introducing such a backdoor.  The backdoor is easy to
-write, but I suspect it would actively harm us, instead of
-helping us, by encouraging "let's build a custom type of object,
-we do not care if other people would not understand it"
-mentality.
+Are you two talking about running git-commit-tree via env is two
+fork-execs instead of just one?  Does that have a measurable
+difference?
+
+Not that I have anything against the updated code, but I do not
+particularly thing it is such a big issue.
+
+> PS What is the preferred format for throwing patches into replies like
+> this? Putting the patch at the end (as here) or throwing the reply
+> comments in the ignored section near the diffstat?
+
+You could do it either way.  Although I personally find the
+former easier to read (meshes well with "do not top post"
+mantra), it appears many other people finds the cover letter
+material should come after the first '---' separator.
+
+If you append the patch to your message, btw, you would need to
+realize that the receiving end needs to edit your message to
+remove the top part before running "git am" to apply.
