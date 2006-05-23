@@ -1,84 +1,61 @@
-From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
 Subject: Re: Git 1.3.2 on Solaris
-Date: Tue, 23 May 2006 05:20:41 +0200
-Message-ID: <f3d7535d0605222020j2d581bd9j602752659a4b3ac2@mail.gmail.com>
-References: <Pine.LNX.4.64.0605170919290.10823@g5.osdl.org>
-	 <6471.1147883724@lotus.CS.Berkeley.EDU>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue May 23 05:20:50 2006
+Date: Mon, 22 May 2006 21:51:15 -0700
+Message-ID: <8157.1148359875@lotus.CS.Berkeley.EDU>
+References: <f3d7535d0605222020j2d581bd9j602752659a4b3ac2@mail.gmail.com>
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 23 06:51:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiNRw-0005Az-KH
-	for gcvg-git@gmane.org; Tue, 23 May 2006 05:20:48 +0200
+	id 1FiOrh-0003NA-Dt
+	for gcvg-git@gmane.org; Tue, 23 May 2006 06:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbWEWDUn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 23:20:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbWEWDUn
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 23:20:43 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:19191 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751211AbWEWDUn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 May 2006 23:20:43 -0400
-Received: by wr-out-0506.google.com with SMTP id 68so1973470wra
-        for <git@vger.kernel.org>; Mon, 22 May 2006 20:20:42 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ohcmXEyks1lfYMlWWqDMPVXdPlG7XQPVh0944bJ79A5COZIW/FJHhorKvA+V2tYtngOOyneyBEn1wE0DNieo9CDQpUXYWPhVx1pKwrI5jeF5iWRNpAoe7K8g6rLTXOLr+Jgz1ln7RulHWmQj1WPfgokWoyREGTXz7Ivh61+d4AQ=
-Received: by 10.65.248.12 with SMTP id a12mr1463291qbs;
-        Mon, 22 May 2006 20:20:42 -0700 (PDT)
-Received: by 10.64.253.10 with HTTP; Mon, 22 May 2006 20:20:41 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
-In-Reply-To: <6471.1147883724@lotus.CS.Berkeley.EDU>
-Content-Disposition: inline
+	id S1750902AbWEWEvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 00:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbWEWEvR
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 00:51:17 -0400
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:43958 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1750897AbWEWEvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 May 2006 00:51:17 -0400
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id k4N4pFgH008161;
+	Mon, 22 May 2006 21:51:15 -0700 (PDT)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id k4N4pFpA008160;
+	Mon, 22 May 2006 21:51:15 -0700 (PDT)
+To: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+In-reply-to: <f3d7535d0605222020j2d581bd9j602752659a4b3ac2@mail.gmail.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20564>
 
-Hi Jason,
+And "Stefan Pfetzing" writes:
+ -   printf ("access: %d\n", access("/etc/motd", X_OK));
+[...]
+ - will return 0 on solaris - when run as root, even though /etc/motd
+ - is not executeable.
 
-2006/5/17, Jason Riedy <ejr@eecs.berkeley.edu>:
-> And pkgsrc itself works just fine without the silly g prefix,
-> or at least does for me as a mere user (and as well as it does
-> work).  But if you intend on adding the package upstream, it'll
-> need something to cope with the g.  And pkgsrc handles local
-> patches...
+This is explicitly allowed by the SUS, even for non-root:
+  http://www.opengroup.org/onlinepubs/000095399/functions/access.html
+For non-root, some ACL systems could allow you to execute
+the file even if there are no execute bits.  What a joy
+ACLs are.  Or NFS uid mappings could play tricks on you,
+or...  And as you've noticed, this kills [ -x ].  (Failing
+to run the hooks in receive-pack.c is noisy but not fatal.
+It's the shell scripts that stop.)
 
-Well I had some problems on NetBSD without the g prefix for the
-gnu coreutils - since then I always used that prefix.
+I think you're stuck.  To disable the hooks for all possible
+users, OSes, file systems, etc., you need to remove them.
 
-But now I have a completely different problem with the tests on
-solaris. It seems on solaris access() always returns 0 if a file is
-existant and the effective uid is 0.
+Or just don't run as root, and hope that the OS isn't 
+completely insane.
 
-so:
---- snip ---
-#include <stdio.h>
-#include <unistd.h>
+BTW, ERR_RUN_COMMAND_EXEC is never returned.  Any failure
+to exec will produce an exit code of 128 from die.  This
+will be an issue when commit becomes a built-in, right?
 
-int
-main (int argc, char **argv)
-{
-  printf ("access: %d\n", access("/etc/motd", X_OK));
-  return 0;
-}
---- snap ---
-
-will return 0 on solaris - when run as root, even though /etc/motd
-is not executeable. This seems to break hooks on Solaris - but
-I'm not sure if this is only a Solaris Express bug. (I have no Solaris
-10 system to verify it)
-
-bye
-
-Stefan
-
--- 
-       http://www.dreamind.de/
-Oroborus and Debian GNU/Linux Developer.
+Jason
