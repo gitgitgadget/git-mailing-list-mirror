@@ -1,105 +1,74 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
-Date: Tue, 23 May 2006 05:59:00 -0400
-Message-ID: <BAYC1-PASMTP07A0CAD58FB1CE30882F19AE9B0@CEZ.ICE>
-References: <4471CF23.1070807@gmx.de>
-	<7vac99c1hv.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP1164FE2A24B4D1B4C0A607AE9A0@CEZ.ICE>
-	<Pine.LNX.4.64.0605221646540.3697@g5.osdl.org>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: Q: xasprintf
+Date: Tue, 23 May 2006 15:28:54 +0400
+Message-ID: <20060523112854.GD5582@basalt.office.altlinux.org>
+References: <e7bda7770605221609h7c18c2ccpe92db34050d46f9f@mail.gmail.com> <BAYC1-PASMTP115C9137E5BDABD705881BAE9B0@CEZ.ICE> <7vzmh98seo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, BjEngelmann@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 12:05:02 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sgneBHv3152wZ8jf"
+X-From: git-owner@vger.kernel.org Tue May 23 13:29:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiTl7-0001Z0-Fk
-	for gcvg-git@gmane.org; Tue, 23 May 2006 12:05:01 +0200
+	id 1FiV4c-0001Tg-1P
+	for gcvg-git@gmane.org; Tue, 23 May 2006 13:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932163AbWEWKE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 06:04:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932164AbWEWKE6
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 06:04:58 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:45674 "EHLO
-	BAYC1-PASMTP07.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932163AbWEWKE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 May 2006 06:04:58 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP07.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 23 May 2006 03:08:16 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 4D34D644C04;
-	Tue, 23 May 2006 06:04:56 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Message-Id: <20060523055900.0dd845fd.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0605221646540.3697@g5.osdl.org>
-X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 23 May 2006 10:08:16.0390 (UTC) FILETIME=[CF1CEA60:01C67E50]
+	id S1751071AbWEWL25 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 07:28:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932174AbWEWL25
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 07:28:57 -0400
+Received: from mh.altlinux.org ([217.16.24.5]:51859 "EHLO mh.altlinux.org")
+	by vger.kernel.org with ESMTP id S1751071AbWEWL24 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 07:28:56 -0400
+Received: from basalt.office.altlinux.org (localhost.localdomain [127.0.0.1])
+	by mh.altlinux.org (Postfix) with ESMTP id 140965F413
+	for <git@vger.kernel.org>; Tue, 23 May 2006 15:28:55 +0400 (MSD)
+Received: by basalt.office.altlinux.org (Postfix, from userid 501)
+	id BC434B0D89; Tue, 23 May 2006 15:28:54 +0400 (MSD)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vzmh98seo.fsf@assigned-by-dhcp.cox.net>
+X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20590>
 
-On Mon, 22 May 2006 17:02:41 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
 
-> That said, I think that what you actually want to do may be totally 
-> different.
-> 
-> If _each_ commit has some extra information associated with it, you don't 
-> want to create a tag that points to the commit, you more likely want to 
-> create an object that is indexed by the commit ID rather than the other 
-> way around.
-> 
-> IOW, I _think_ that what you described would be that if you have the 
-> commit ID, you want to find the data based on that ID. No?
+--sgneBHv3152wZ8jf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Correct.  But even though there isn't currently an efficient way to do
-the reverse lookup, many of the visual tools do it.  So for instance, if
-you embed some metadata in the name of a tag, it will actually be nicely
-shown to you associated with the proper commit in qgit/gitk/gitweb.  So
-you _can_ abuse tags and get modest results.  And of course the low level
-tools let you do..  git name-rev --tags to lookup the meta data as well.
-So you can do  git log | git name-rev --tags --stdin  and see which tags
-are associated with each commit.
+Hi,
 
-I'm not arguing that this makes tags well designed for the these types
-of things, just that there is no other option built in to the low level
-git that comes as close.
+On Mon, May 22, 2006 at 06:02:39PM -0700, Junio C Hamano wrote:
+> Sean <seanlkml@sympatico.ca> writes:
+[...]
+> > -		name =3D xmalloc(len_a + len_b - pfx_length - sfx_length + 7);
+> > +		name =3D xmalloc(pfx_length + a_midlen + b_midlen + sfx_length + 7);
+> >  		sprintf(name, "%.*s{%.*s =3D> %.*s}%s",
+>=20
+> Obviously correct given what the sprintf() that immediately
+> follows does.  Sheesh, what was I smoking back then.  *BLUSH*
 
-> And that you can do quite easily, while _also_ using git to distribute the 
-> extra per-commit meta-data. Just create a separate branch that has the 
-> data indexed by commit ID. That could be as simple as having one file per 
-> commit (using, perhaps, a similar directory layout as the .git/objects/ 
-> directory itself), and then you could do something like
-> 
-> 	# Get the SHA1 of the named commit
-> 	commit=$(git-rev-parse --verify "$cmitname"^0)
-> 
-> 	# turn it into a filename (slash between two first chars and the rest)
-> 	filename=$(echo $commit | sed 's:^\(..\)\(.*\):\1/\2:')
-> 
-> 	# look it up in the "annotations" branch
-> 	git cat-file blob "annotations:$filename"
-> 
-> which gets the data from the "annotations" branch, indexed by the SHA1 
-> name.
-> 
-> Now, everybody can track your "annotations" branch using git, and get your 
-> per-commit annotations for the main branch.
-> 
-> See?
+What about introducing xasprintf() to eliminate such issues?
 
-Sure, makes a lot of sense.  Although the one file per commit thing doesn't
-scale well.  It's already a problem when trying to use a lot of tags for
-instance.
 
-More than the technical details of the implementation though, i'm trying to
-make a case that git would do well to codify something like the above and
-provide a _standard_ method of associating meta data with commits.  This
-would allow all the tools to start displaying meta data etc and have a
-defined way to efficiently query and manipulate it. 
+--=20
+ldv
 
-Sean
+--sgneBHv3152wZ8jf
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQFEcvH2fKvmrJ41Nh4RAp4zAJ91mokNOG+cxlsxIF46AuBh7LJp0QCfQFPJ
+ntyH1lNVlTV2pWu8P/Xu/no=
+=9WU3
+-----END PGP SIGNATURE-----
+
+--sgneBHv3152wZ8jf--
