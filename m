@@ -1,89 +1,107 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [PATCH] Add a test-case for git-apply trying to add an ending line
-Date: Tue, 23 May 2006 22:48:36 +0100
-Message-ID: <20060523214836.22628.2179.stgit@localhost.localdomain>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue May 23 23:48:52 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Current Issues #3
+Date: Tue, 23 May 2006 23:58:15 +0200
+Organization: At home
+Message-ID: <e500hd$vpr$1@sea.gmane.org>
+References: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605220216310.3697@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue May 23 23:58:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiekD-00035a-Ge
-	for gcvg-git@gmane.org; Tue, 23 May 2006 23:48:49 +0200
+	id 1Fietb-0004yp-6s
+	for gcvg-git@gmane.org; Tue, 23 May 2006 23:58:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbWEWVsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 17:48:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbWEWVsp
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 17:48:45 -0400
-Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:44203 "EHLO
-	mtaout01-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S932258AbWEWVsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 May 2006 17:48:45 -0400
-Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com with ESMTP
-          id <20060523214843.RHPK29343.mtaout01-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
-          Tue, 23 May 2006 22:48:43 +0100
-Received: from localhost.localdomain ([81.98.248.58])
-          by aamtaout01-winn.ispmail.ntl.com with ESMTP
-          id <20060523214843.UDOW19763.aamtaout01-winn.ispmail.ntl.com@localhost.localdomain>;
-          Tue, 23 May 2006 22:48:43 +0100
+	id S932107AbWEWV62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 17:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbWEWV62
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 17:58:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:16316 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932107AbWEWV62 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 17:58:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FietL-0004vk-0L
+	for git@vger.kernel.org; Tue, 23 May 2006 23:58:16 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 May 2006 23:58:15 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 May 2006 23:58:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: StGIT/0.9
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20644>
 
-From: Catalin Marinas <catalin.marinas@gmail.com>
+Linus Torvalds wrote:
 
-git-apply adding an ending line doesn't seem to fail if the ending line is
-already present in the patched file.
+[...]
+> But with the above, you can fairly naturally do:
+> 
+>  - "git pull" 
+> 
+>       No arguments. fetch the remote described by the current branch, 
+>       and merge into current branch (we might decide to fetch all the 
+>       remotes associated with that repo, just because once we do this, 
+>       we might as well, but that's not that important to the end 
+>       result).
+> 
+>  - "git pull <repo>"
+     (i.e. re-clone)
+>       fetch all remotes that use <repo>. IFF the current branch is 
+>       matched to one of those remotes, merge the changes into the 
+>       current branch. But if you happened to be on another unrelated 
+>       branch, nothing happens aside from the fetch.
+> 
+>  - "git pull <remote>"
+> 
+>       fetch just the named remote. IFF that remote is also the remote 
+>       for the current branch, do merge it into current. Again, we 
+>       _might_ decide to just do the whole repo.
+> 
+>  - "git pull <repo> <branchname>"
+> 
+>       fetch the named branch from the named repository and merge it into 
+>       current (no ifs, buts or maybes - now we've basically overridden 
+>       the default relationships, so now the <repo> is just a pure 
+>       shorthand for the location of the repository)
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
+Fetch into curret branch, or specified by branch configuration, then current
+if unspecified?
 
- t/t4113-apply-ending.sh |   35 +++++++++++++++++++++++++++++++++++
- 1 files changed, 35 insertions(+), 0 deletions(-)
+>  - "git pull <repo> <src>:<dst>"
+> 
+>       same as now. fetch <repo> <src> into <dst>, and merge it into the 
+>       current branch (again, we've overridden any default relationships).
+> 
+> but maybe this is overdesigned. Comments?
 
-diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
-new file mode 100755
-index 0000000..d021ae8
---- /dev/null
-+++ b/t/t4113-apply-ending.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Catalin Marinas
-+#
-+
-+test_description='git-apply trying to add an ending line.
-+
-+'
-+. ./test-lib.sh
-+
-+# setup
-+
-+cat >test-patch <<\EOF
-+diff --git a/file b/file
-+--- a/file
-++++ b/file
-+@@ -1,2 +1,3 @@
-+ a
-+ b
-++c
-+EOF
-+
-+echo 'a' >file
-+echo 'b' >>file
-+echo 'c' >>file
-+
-+test_expect_success setup \
-+    'git-update-index --add file'
-+
-+# test
-+
-+test_expect_failure apply \
-+    'git-apply --index test-patch'
-+
-+test_done
+It all means that within <repo> annd <remote> names should be unique
+(to know if we use "git pull <repo>" or "git pull <remote>").
+
+Perhaps it would be nice to have
+
+ - "git pull <repo> *:<dst>"
+ - "git pull <repo> <src>:*"
+ - "git pull <repo> *:*"
+and
+ - "git pull <repo> <src>:<dst>:<to-merge>"
+
+as easier to remember options. Of course what is the remote branch related
+to <dst>, and what is local branch related to <src> would be in
+branch/remotes/repos configuration.
+
+BTW. what about --use-separate-remotes option support?
+
+-- 
+Jakub Narebski
+Warsaw, Poland
