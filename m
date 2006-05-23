@@ -1,100 +1,109 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH 2/2] cvsimport: cleanup commit function
-Date: Wed, 24 May 2006 08:32:16 +1200
-Message-ID: <46a038f90605231332l7ba7a596k2916e6e8c7456e48@mail.gmail.com>
-References: <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>
-	 <46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com>
-	 <Pine.LNX.4.64.0605221256090.3697@g5.osdl.org>
-	 <20060522214128.GE16677@kiste.smurf.noris.de>
-	 <7v8xotadm3.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com>
-	 <20060523065232.GA6180@coredump.intra.peff.net>
-	 <20060523070007.GC6180@coredump.intra.peff.net>
-	 <46a038f90605230113x2f6b0e4bq5a2ea97308b495e0@mail.gmail.com>
-	 <7vpsi55et5.fsf@assigned-by-dhcp.cox.net>
+From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
+Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
+Date: Tue, 23 May 2006 22:40:51 +0200
+Message-ID: <44737353.20904@gmx.de>
+References: <4471CF23.1070807@gmx.de> <7vac99c1hv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 22:32:32 2006
+X-From: git-owner@vger.kernel.org Tue May 23 22:40:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FidYC-00047o-Fr
-	for gcvg-git@gmane.org; Tue, 23 May 2006 22:32:20 +0200
+	id 1FidgU-0005kx-Aa
+	for gcvg-git@gmane.org; Tue, 23 May 2006 22:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932121AbWEWUcS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 16:32:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932149AbWEWUcS
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:32:18 -0400
-Received: from wr-out-0506.google.com ([64.233.184.228]:9739 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932121AbWEWUcR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:32:17 -0400
-Received: by wr-out-0506.google.com with SMTP id i3so1338981wra
-        for <git@vger.kernel.org>; Tue, 23 May 2006 13:32:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WAaIM3ep5ohZZR7aC7CWGvlr4vvOU/K+cWgsyLupduvqfT47AIygDQjm4RyEqnv1tjT9xuraTqg1Kf1weK/nc4meYWMG4oqxEVHdlIpujArWiLuU4sppIWR+RnUK0yrI81wDIOcCIpsKvd78bTZrZ3LjOFZOL4k1pROV8KMP/BE=
-Received: by 10.54.76.1 with SMTP id y1mr6305227wra;
-        Tue, 23 May 2006 13:32:15 -0700 (PDT)
-Received: by 10.54.127.17 with HTTP; Tue, 23 May 2006 13:32:16 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vpsi55et5.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932188AbWEWUkv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 16:40:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932163AbWEWUkv
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:40:51 -0400
+Received: from mail.gmx.de ([213.165.64.20]:43696 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932188AbWEWUku (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:40:50 -0400
+Received: (qmail invoked by alias); 23 May 2006 20:40:49 -0000
+Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
+  by mail.gmx.net (mp017) with SMTP; 23 May 2006 22:40:49 +0200
+X-Authenticated: #916101
+User-Agent: Mail/News 1.5 (X11/20060228)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vac99c1hv.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20634>
 
-On 5/23/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
+Hi,
+
+I hope this time I got it right. Is there some kind of style-guide I can
+refer to in future ?
+
+
+> Another question is if the QA data expected to be amended or
+> annotated later, after it is created.
 >
-> > Jeff,
-> >
-> > good stuff -- aiming at exactly the things that had been nagging me.
-> > Some minor notes on top of what junio's mentioned...
-> >
-> >> +    die "unable to open $f: $!" unless $! == POSIX::ENOENT;
-> >> +    return undef;
-> >
-> > Heh. Is that the return of the living dead?
->
-> Note the trailing "unless" there.
+> If the answer is yes, then you probably would not want tags --
+> you can create a new tag that points at the same commit to
+> update the data, but then you have no structural relationships
+> given by git between such tags that point at the same commit.
+> You could infer their order by timestamp but that is about it.
+> I think you are better off creating a separate QA project that
+> adds one new file per commit on the main project, and have the
+> file identify the commit object on the main project (either
+> start your text file format for QA data with the commit object
+> name, or name each such QA data file after the commit object
+> name).  Then your automated procedure could scan and add a new
+> file to the QA project every time a new commit is made to the
+> main project, and the data in the QA project can be amended or
+> annotated and the changes will be version controlled.
+>   
 
-Of course. I had actually missed the closing quotes, and thought the
-error msg wanted to talk about POSIX. 'twas late in the day, seems
-like most of my comments in this email were rather stoopid.
+Great idea ! Thanks a lot. Originally it was not planned to alter the
+results once committet, but this way it would even be possible to rescan
+a commit with a different tool and merge the results. Git would also be
+able to use delta-encoding when packing what can be considered extremly
+efficient since most probably most scan-results won't differ much.
 
-> >> +sub update_index (\@\@) {
-> >> +       my $old = shift;
-> >> +       my $new = shift;
-> >
-> > Would it not make more sense to just pass them as plain parameters?
->
-> Meaning...?  Perl5 can pass only one flat array, so the above is
-> a standard way to pass two arrays.
+I am currently wondering where to store the reference to such a
+sub-repository. It certainly is a head, but I would like to avoid anyone
+commiting code into this "branch". Maybe I will create a new directory
+.git/refs/annotations.
 
-Meaning I am stupid :(
+When thinking about this very elegant way to handle meta-data, I got
+another idea:
+The quality assurance system also works distributed. For scalability
+reasons there are multiple scanners, each scanning one commit at a time.
+Do you think git could also be used to handle "locking" ? The scanners
+would then push a commit with an empty result-file into the
+annotations-repository so all other scanners who are looking for
+currently unscanned commits would ignore it in future. When finished the
+result can be inserted by pushing a subsequent commit. This way one
+avoids the need for a seperate job-server / protocol.
+I am not sure how git would perform in such an environment. Do you think
+the "git-push"-implementation is sufficiently "thread-save" for this ?
+Or could simultaniously pushing into the same branch f.e. break  the
+repository ?
 
-> >> +       print "Committed patch $patchset ($branch $commit_date)\n" if
-> >
-> > Given that we have that -- should we remember it and avoid re-reading
-> > the headref from disk? A %seenheads cache would save us 99.9% of the
-> > hassle.
-> >
-> > In related news, I've dealt with file reads from the socket being
-> > memorybound. Should merge ok.
->
-> Merged OK, and I think your last suggestion makes sense.  I'll
-> go to bed after pushing out Jeff's two patches and yours.
+Hmm.. 2 more things on my mind:
+1.) Do you intend to add some more advanced metadata-functionality to
+git in the future or should I send a patch with my implementation once
+it is finished ? Will be just some scripts using similar commands to
+what Linus sent me (thanks for that, btw)
 
-I'll look into caching headrefs tonight if noone beats me to it.
+2.) Searching for a way to add objects to the database I spent quite a
+while to find the right command. Don't you think it would be much more
+intuitive having an
 
+    git-create-object [-t <type>] [-n] [-f] [-z] [--stdin] <file> [-r
+<ref-name>]
 
+command for creating any type of object (-t blob as default), optionally
+omitting writing it to the database (-n = no-write) (like
+git-hash-object), by default validating its input  (overriding with -f)
+(like git-mktag, git-mktree) and maybe even able to add a reference to
+it with -r (like git-tag).
 
-
-martin
+Bj
