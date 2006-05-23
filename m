@@ -1,96 +1,73 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: [PATCH 6/6] Allow in body headers beyond the in body header prefix.
-Date: Tue, 23 May 2006 13:58:36 -0600
-Message-ID: <m1irnwikcz.fsf_-_@ebiederm.dsl.xmission.com>
-References: <m18xosjznu.fsf@ebiederm.dsl.xmission.com>
-	<m14pzgjzlg.fsf@ebiederm.dsl.xmission.com>
-	<m1zmh8ikym.fsf_-_@ebiederm.dsl.xmission.com>
-	<m1verwikvj.fsf_-_@ebiederm.dsl.xmission.com>
-	<m1r72kiksz.fsf_-_@ebiederm.dsl.xmission.com>
-	<m1mzd8iklr.fsf_-_@ebiederm.dsl.xmission.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: irc usage..
+Date: Tue, 23 May 2006 22:19:33 +0200
+Organization: At home
+Message-ID: <e4vqob$apj$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org> <446F95A2.6040909@gentoo.org> <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org> <446FA262.7080900@gentoo.org> <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org> <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org> <44713BE4.9040505@gentoo.org> <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org> <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com> <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org> <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> <Pine.LNX.4.64.0605221013020.3697@g5.osdl.org> <e4stna$o1g$1@sea.gmane.org> <Pine.LNX.4.64.0605221055270.3697@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 23 21:59:39 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue May 23 22:20:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fid2O-0005pL-B2
-	for gcvg-git@gmane.org; Tue, 23 May 2006 21:59:28 +0200
+	id 1FidMn-0001gn-QV
+	for gcvg-git@gmane.org; Tue, 23 May 2006 22:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbWEWT7Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 15:59:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbWEWT7Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 15:59:25 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:60035 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1751208AbWEWT7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 May 2006 15:59:25 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4NJwaSe020822;
-	Tue, 23 May 2006 13:58:36 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4NJwahk020821;
-	Tue, 23 May 2006 13:58:36 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <m1mzd8iklr.fsf_-_@ebiederm.dsl.xmission.com> (Eric W.
- Biederman's message of "Tue, 23 May 2006 13:53:20 -0600")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S932107AbWEWUUb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 16:20:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbWEWUUb
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:20:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:15025 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932107AbWEWUUa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:20:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FidMS-0001bt-Px
+	for git@vger.kernel.org; Tue, 23 May 2006 22:20:12 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 May 2006 22:20:12 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 May 2006 22:20:12 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20630>
 
-
-- handle_from is fixed to not mangle it's input line.
-
-- Then handle_inbody_header is allowed to look in
-  the body of a commit message for additional headers
-  that we haven't already seen.
-
-This allows patches with all of the right information in
-unfortunate places to be imported.
-
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
-
-
----
-
- mailinfo.c |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-eca59d2fd60af47170cdbfdebf3384465f0e7635
-diff --git a/mailinfo.c b/mailinfo.c
-index c642ff4..99374b3 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -72,11 +72,14 @@ static int bogus_from(char *line)
- 	return 1;
- }
+Linus Torvalds wrote:
  
--static int handle_from(char *line)
-+static int handle_from(char *in_line)
- {
--	char *at = strchr(line, '@');
-+	char line[1000];
-+	char *at;
- 	char *dst;
- 
-+	strcpy(line, in_line);
-+	at = strchr(line, '@');
- 	if (!at)
- 		return bogus_from(line);
- 
-@@ -242,8 +245,6 @@ #define SEEN_PREFIX  0x08
- /* First lines of body can have From:, Date:, and Subject: */
- static void handle_inbody_header(int *seen, char *line)
- {
--	if (*seen & SEEN_PREFIX)
--		return;
- 	if (!memcmp("From:", line, 5) && isspace(line[5])) {
- 		if (!(*seen & SEEN_FROM) && handle_from(line+6)) {
- 			*seen |= SEEN_FROM;
+> [...] people _should_ realize that removing objects is very very special. 
+> Whether it's done by "git prune-packed" or "git prune", that's a very 
+> dangerous operations. "git prune" a lot more so than "git prune-packed", 
+> of course (in fact, you should _never_ run "git prune" on a repository 
+> that is active - you _will_ corrupt it)-
+
+Would it be possible to make 'git prune' command repository corruption safe,
+even if some information might be lost (like 'git add')? Or do _corruption_
+mean some recoverable only information is lost? Not always one can use "one
+repository per developer" workflow.
+
+
+One of the solution would be to to use reader/writer lock (filesystem
+semaphore), with each command modyfying repository performing locking, and
+git-prune waiting on lock until noone is accessing repository. Of course
+the problem is with OS and filesystems which does not support locking, and
+with stale locks...
+
+Second solution would be to [optionally] wait until no process is accessing
+repository, copy repository in some safe place, [optionally] calculate
+checksum, prune, [optionally] check if the repository was modified
+meanwhile and either abort or repeat, and finally copy pruned repository
+back.
+
 -- 
-1.3.2.g5041c-dirty
+Jakub Narebski
+Warsaw, Poland
