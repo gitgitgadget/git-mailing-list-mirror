@@ -1,70 +1,64 @@
-From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [osol-bugs] access() behaves strange when used as root
-Date: Tue, 23 May 2006 22:43:56 +0200
-Message-ID: <f3d7535d0605231343h51bfb2c9w1d15536b92874a88@mail.gmail.com>
-References: <f3d7535d0605230818l6ecb9b87gd38afc75941c5fdd@mail.gmail.com>
-	 <20060523153415.GB3638@greyarea>
-	 <20060523154213.GB21587@totally.trollied.org>
-	 <f3d7535d0605231035p6e2d8ef8qefefe43a8b11e739@mail.gmail.com>
-	 <44735D61.nail4RQ116Y06@burner>
+Date: Tue, 23 May 2006 13:54:08 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605231349180.5623@g5.osdl.org>
+References: <f3d7535d0605230818l6ecb9b87gd38afc75941c5fdd@mail.gmail.com> 
+ <20060523153415.GB3638@greyarea>  <20060523154213.GB21587@totally.trollied.org>
+  <f3d7535d0605231035p6e2d8ef8qefefe43a8b11e739@mail.gmail.com> 
+ <44735D61.nail4RQ116Y06@burner> <f3d7535d0605231343h51bfb2c9w1d15536b92874a88@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue May 23 22:44:00 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 23 22:54:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FidjU-0006JW-98
-	for gcvg-git@gmane.org; Tue, 23 May 2006 22:44:00 +0200
+	id 1FidtS-0008Qn-VY
+	for gcvg-git@gmane.org; Tue, 23 May 2006 22:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932163AbWEWUn5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 16:43:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWEWUn5
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:43:57 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:61462 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932163AbWEWUn5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:43:57 -0400
-Received: by wr-out-0506.google.com with SMTP id i34so1440380wra
-        for <git@vger.kernel.org>; Tue, 23 May 2006 13:43:56 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UFLUz9eV35OO667GsXxwBnOe46RjRLtCxDyhlAxMI9IECtLO99cf2Irxg43d1bKiXBNwzzdXLCU8gRUL54hUnlE2OUA9NC0zN8vubYje2XRtGx/oHK2uMPl50MBcUqYGZniGvPMAR6fjZ6KpmkTVFMWdOj4U/+2RaUi1HWtKS/Y=
-Received: by 10.65.205.12 with SMTP id h12mr2380983qbq;
-        Tue, 23 May 2006 13:43:56 -0700 (PDT)
-Received: by 10.64.253.10 with HTTP; Tue, 23 May 2006 13:43:56 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
-In-Reply-To: <44735D61.nail4RQ116Y06@burner>
-Content-Disposition: inline
+	id S932192AbWEWUyN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 16:54:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbWEWUyN
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:54:13 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:42171 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932192AbWEWUyM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:54:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4NKsAtH027301
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 May 2006 13:54:10 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4NKs8i1020697;
+	Tue, 23 May 2006 13:54:09 -0700
+To: Stefan Pfetzing <stefan.pfetzing@gmail.com>
+In-Reply-To: <f3d7535d0605231343h51bfb2c9w1d15536b92874a88@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20636>
 
-Hi Joerg,
 
-2006/5/23, Joerg Schilling <schilling@fokus.fraunhofer.de>:
-> Before claiming that Soplaris is not behaving correctly, you should have a look
-> into the standard.......
 
-I didn't say Solaris does not behave "correctly" - I just said it does
-not behave as every
-other POSIX/SUS Unix I know.
+On Tue, 23 May 2006, Stefan Pfetzing wrote:
+>
+> Hi Joerg,
 
-> The behavior of Solaris access() is OK.
+Don't bother talking to Joerg.
 
-I know that its completely ok with SUS - and I did say that before.
+He's a certified loon, and thinks Solaris is correct by definition. He's 
+insane. He thinks that anybody who does anything different from Solaris is 
+by definition not just wrong, but actively evil, even when the "anything 
+different" is clearly superior (ie he thinks that Solaris device naming is 
+not only sane, but claims that everybody else should do it that way).
 
-Primarily I was just wondering about this behaviour and IMHO the git
-developers were too.
+If you ever wondered why "cdrecord" takes a default device argument of the 
+forma "dev=0,1,0" or other random numbers, it's Joerg.
 
-bye
+So just ignore him. I hope the OpenSolaris lists have saner people around.
 
-Stefan
-
--- 
-       http://www.dreamind.de/
-Oroborus and Debian GNU/Linux Developer.
+		Linus
