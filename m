@@ -1,57 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Git 1.3.2 on Solaris
-Date: Tue, 23 May 2006 08:31:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605230829020.5623@g5.osdl.org>
-References: <8157.1148359875@lotus.CS.Berkeley.EDU> <Pine.LNX.4.64.0605230744350.5623@g5.osdl.org>
- <20060523172053.60ec1145.froese@gmx.de>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] cvsimport: introduce -L<imit> option to workaround memory leaks
+Date: Tue, 23 May 2006 11:36:36 -0400
+Message-ID: <20060523153636.GA21506@thunk.org>
+References: <11482978883713-git-send-email-martin@catalyst.net.nz> <Pine.LNX.4.64.0605221926270.3697@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>,
-	Stefan Pfetzing <stefan.pfetzing@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 23 17:32:31 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin@catalyst.net.nz>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, Johannes.Schindelin@gmx.de,
+	spyderous@gentoo.org, smurf@smurf.noris.de
+X-From: git-owner@vger.kernel.org Tue May 23 17:37:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiYrS-0001IE-Oj
-	for gcvg-git@gmane.org; Tue, 23 May 2006 17:31:55 +0200
+	id 1FiYwZ-0002K8-16
+	for gcvg-git@gmane.org; Tue, 23 May 2006 17:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbWEWPbv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 11:31:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbWEWPbv
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 11:31:51 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:16805 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750798AbWEWPbu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 11:31:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4NFVitH010952
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 23 May 2006 08:31:44 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4NFVhue009376;
-	Tue, 23 May 2006 08:31:43 -0700
-To: Edgar Toernig <froese@gmx.de>
-In-Reply-To: <20060523172053.60ec1145.froese@gmx.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750713AbWEWPhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 11:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750729AbWEWPhH
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 11:37:07 -0400
+Received: from thunk.org ([69.25.196.29]:38809 "EHLO thunker.thunk.org")
+	by vger.kernel.org with ESMTP id S1750713AbWEWPhF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 11:37:05 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1FiYwE-0006jb-Bq; Tue, 23 May 2006 11:36:52 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.60)
+	(envelope-from <tytso@thunk.org>)
+	id 1FiYw0-0001rX-KB; Tue, 23 May 2006 11:36:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0605221926270.3697@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20609>
 
-
-
-On Tue, 23 May 2006, Edgar Toernig wrote:
+On Mon, May 22, 2006 at 07:28:37PM -0700, Linus Torvalds wrote:
 > 
-> But I was hit by this effect on my system which is - surprise surprise - 
-> Linux :-)  Ok, it's a pretty old one with a 2.0 kernel and libc 5.
+> 
+> This stupid patch on top of yours seems to make git happier. It's 
+> disgusting, I know, but it just repacks things every kilo-commit.
+> 
+> I actually think that I found a real ext3 performance bug from trying to 
+> determine why git sometimes slows down ridiculously when the tree has been 
+> allowed to go too long without a repack.
 
-Yes, we've had that bug too, and yes, I was hit by a clue-stick, and still 
-have the bruise. That's how you teach people.
+Do you have dir_index (the hashed btree) feature enabled by any chance?
 
-[ And how the heck does anybody still run 2.0, btw? ]
-
-		Linus
+						- Ted
