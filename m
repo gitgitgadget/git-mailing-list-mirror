@@ -1,28 +1,28 @@
 From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
-Subject: [PATCH 1/2] Again: remove the artificial restriction tagsize < 8kb
-Date: Tue, 23 May 2006 20:19:04 +0200
-Message-ID: <44735218.7070801@gmx.de>
+Subject: [PATCH 2/2] Again: add more informative error messages to git-mktag
+Date: Tue, 23 May 2006 20:20:09 +0200
+Message-ID: <44735259.5040107@gmx.de>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------090807030908060409010401"
-X-From: git-owner@vger.kernel.org Tue May 23 20:19:05 2006
+ boundary="------------070305050204050509030902"
+X-From: git-owner@vger.kernel.org Tue May 23 20:20:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FibTE-0001vm-52
-	for gcvg-git@gmane.org; Tue, 23 May 2006 20:19:04 +0200
+	id 1FibUQ-0002Bt-Ix
+	for gcvg-git@gmane.org; Tue, 23 May 2006 20:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbWEWSTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 14:19:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932124AbWEWSS7
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 14:18:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:3767 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932116AbWEWSS7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 14:18:59 -0400
-Received: (qmail invoked by alias); 23 May 2006 18:18:57 -0000
+	id S1751168AbWEWSUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 14:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWEWSUG
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 14:20:06 -0400
+Received: from mail.gmx.de ([213.165.64.20]:20870 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751168AbWEWSUD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 14:20:03 -0400
+Received: (qmail invoked by alias); 23 May 2006 18:20:02 -0000
 Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
-  by mail.gmx.net (mp043) with SMTP; 23 May 2006 20:18:57 +0200
+  by mail.gmx.net (mp001) with SMTP; 23 May 2006 20:20:02 +0200
 X-Authenticated: #916101
 User-Agent: Mail/News 1.5 (X11/20060228)
 To: git@vger.kernel.org
@@ -31,21 +31,21 @@ X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20617>
 
 This is a multi-part message in MIME format.
---------------090807030908060409010401
+--------------070305050204050509030902
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 
 
 
---------------090807030908060409010401
+--------------070305050204050509030902
 Content-Type: text/plain;
- name="0001-remove-the-artificial-restriction-tagsize-8kb.txt"
+ name*0="0002-add-more-informative-error-messages-to-git-mktag.txt"
 Content-Transfer-Encoding: 8bit
 Content-Disposition: inline;
- filename*0="0001-remove-the-artificial-restriction-tagsize-8kb.txt"
+ filename*0="0002-add-more-informative-error-messages-to-git-mktag.txt"
 
 
 Signed-off-by: Björn Engelmann <BjEngelmann@gmx.de>
@@ -53,152 +53,98 @@ Signed-off-by: Björn Engelmann <BjEngelmann@gmx.de>
 
 ---
 
-430953ceafbc722226e2300b489e38938220d435
- cache.h     |    1 +
- mktag.c     |   19 +++++++++----------
- sha1_file.c |   46 ++++++++++++++++++++++++++++++++++++----------
- 3 files changed, 46 insertions(+), 20 deletions(-)
+51465a979a25c4363010cbab5798d95ac9f102e7
+ mktag.c |   28 ++++++++++++++++------------
+ 1 files changed, 16 insertions(+), 12 deletions(-)
 
-430953ceafbc722226e2300b489e38938220d435
-diff --git a/cache.h b/cache.h
-index 4b7a439..19e90eb 100644
---- a/cache.h
-+++ b/cache.h
-@@ -154,6 +154,7 @@ extern int ce_match_stat(struct cache_en
- extern int ce_modified(struct cache_entry *ce, struct stat *st, int);
- extern int ce_path_match(const struct cache_entry *ce, const char **pathspec);
- extern int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, const char *type);
-+extern int read_pipe(int fd, char** return_buf, unsigned long* return_size);
- extern int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object);
- extern int index_path(unsigned char *sha1, const char *path, struct stat *st, int write_object);
- extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
+51465a979a25c4363010cbab5798d95ac9f102e7
 diff --git a/mktag.c b/mktag.c
-index 2328878..f1598db 100644
+index f1598db..6bd45df 100644
 --- a/mktag.c
 +++ b/mktag.c
-@@ -45,7 +45,7 @@ static int verify_tag(char *buffer, unsi
- 	unsigned char sha1[20];
+@@ -46,41 +46,45 @@ static int verify_tag(char *buffer, unsi
  	const char *object, *type_line, *tag_line, *tagger_line;
  
--	if (size < 64 || size > MAXSIZE-1)
-+	if (size < 64)
- 		return -1;
+ 	if (size < 64)
+-		return -1;
++		return error("wanna fool me ? you obviously got the size wrong !\n");
++
  	buffer[size] = 0;
  
-@@ -105,8 +105,8 @@ static int verify_tag(char *buffer, unsi
+ 	/* Verify object line */
+ 	object = buffer;
+ 	if (memcmp(object, "object ", 7))
+-		return -1;
++		return error("char%d: does not start with \"object \"\n", 0);
++
+ 	if (get_sha1_hex(object + 7, sha1))
+-		return -1;
++		return error("char%d: could not get SHA1 hash\n", 7);
  
- int main(int argc, char **argv)
- {
--	unsigned long size;
--	char buffer[MAXSIZE];
-+	unsigned long size = 4096;
-+	char *buffer = malloc(size);
- 	unsigned char result_sha1[20];
+ 	/* Verify type line */
+ 	type_line = object + 48;
+ 	if (memcmp(type_line - 1, "\ntype ", 6))
+-		return -1;
++		return error("char%d: could not find \"\\ntype \"\n", 47);
  
- 	if (argc != 1)
-@@ -114,13 +114,9 @@ int main(int argc, char **argv)
+ 	/* Verify tag-line */
+ 	tag_line = strchr(type_line, '\n');
+ 	if (!tag_line)
+-		return -1;
++		return error("char%td: could not find next \"\\n\"\n", type_line - buffer);
+ 	tag_line++;
+ 	if (memcmp(tag_line, "tag ", 4) || tag_line[4] == '\n')
+-		return -1;
++		return error("char%td: no \"tag \" found\n", tag_line - buffer);
  
- 	setup_git_directory();
+ 	/* Get the actual type */
+ 	typelen = tag_line - type_line - strlen("type \n");
+ 	if (typelen >= sizeof(type))
+-		return -1;
++		return error("char%d: type too long\n", (int)(type_line - buffer) + strlen("type \n"));
++
+ 	memcpy(type, type_line+5, typelen);
+ 	type[typelen] = 0;
  
--	// Read the signature
--	size = 0;
--	for (;;) {
--		int ret = xread(0, buffer + size, MAXSIZE - size);
--		if (ret <= 0)
--			break;
--		size += ret;
-+	if (read_pipe(0, &buffer, &size)) {
-+		free(buffer);
-+		die("could not read from stdin");
+ 	/* Verify that the object matches */
+ 	if (get_sha1_hex(object + 7, sha1))
+-		return -1;
++		return error("char%d: could not get SHA1 hash but this is really odd since i got it before !\n", 7);
++	
+ 	if (verify_object(sha1, type))
+-		return -1;
++		return error("char%d: could not verify object %s\n", 7, sha1);
+ 
+ 	/* Verify the tag-name: we don't allow control characters or spaces in it */
+ 	tag_line += 4;
+@@ -90,14 +94,14 @@ static int verify_tag(char *buffer, unsi
+ 			break;
+ 		if (c > ' ')
+ 			continue;
+-		return -1;
++		return error("char%td: could not verify tag name\n", tag_line - buffer);
  	}
  
- 	// Verify it for some basic sanity: it needs to start with "object <sha1>\ntype\ntagger "
-@@ -129,6 +125,9 @@ int main(int argc, char **argv)
+ 	/* Verify the tagger line */
+ 	tagger_line = tag_line;
  
- 	if (write_sha1_file(buffer, size, tag_type, result_sha1) < 0)
- 		die("unable to write tag file");
-+
-+	free(buffer);
-+
- 	printf("%s\n", sha1_to_hex(result_sha1));
+ 	if (memcmp(tagger_line, "tagger", 6) || (tagger_line[6] == '\n'))
+-		return -1;
++		return error("char%td: could not find \"tagger\"\n", tagger_line - buffer);
+ 
+ 	/* The actual stuff afterwards we don't care about.. */
  	return 0;
- }
-diff --git a/sha1_file.c b/sha1_file.c
-index 2230010..e444d9d 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1645,16 +1645,24 @@ int has_sha1_file(const unsigned char *s
- 	return find_sha1_file(sha1, &st) ? 1 : 0;
- }
- 
--int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object)
-+/*
-+ * reads from fd as long as possible into a supplied buffer of size bytes.
-+ * If neccessary the buffer's size is increased using realloc()
-+ *
-+ * returns 0 if anything went fine and -1 otherwise
-+ *
-+ * NOTE: both buf and size may change, but even when -1 is returned
-+ * you still have to free() it yourself.
-+ */
-+int read_pipe(int fd, char** return_buf, unsigned long* return_size)
- {
--	unsigned long size = 4096;
--	char *buf = malloc(size);
--	int iret, ret;
-+	char* buf = *return_buf;
-+	unsigned long size = *return_size;
-+	int iret;
- 	unsigned long off = 0;
--	unsigned char hdr[50];
--	int hdrlen;
-+
- 	do {
--		iret = read(fd, buf + off, size - off);
-+		iret = xread(fd, buf + off, size - off);
- 		if (iret > 0) {
- 			off += iret;
- 			if (off == size) {
-@@ -1663,16 +1671,34 @@ int index_pipe(unsigned char *sha1, int 
- 			}
- 		}
- 	} while (iret > 0);
--	if (iret < 0) {
-+
-+	*return_buf = buf;
-+	*return_size = off;
-+
-+	if (iret < 0)
-+		return -1;
-+	return 0;
-+}
-+
-+int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object)
-+{
-+	unsigned long size = 4096;
-+	char *buf = malloc(size);
-+	int ret;
-+	unsigned char hdr[50];
-+	int hdrlen;
-+
-+	if (read_pipe(fd, &buf, &size)) {
- 		free(buf);
- 		return -1;
+@@ -118,7 +122,7 @@ int main(int argc, char **argv)
+ 		free(buffer);
+ 		die("could not read from stdin");
  	}
-+
- 	if (!type)
- 		type = blob_type;
- 	if (write_object)
--		ret = write_sha1_file(buf, off, type, sha1);
-+		ret = write_sha1_file(buf, size, type, sha1);
- 	else {
--		write_sha1_file_prepare(buf, off, type, sha1, hdr, &hdrlen);
-+		write_sha1_file_prepare(buf, size, type, sha1, hdr, &hdrlen);
- 		ret = 0;
- 	}
- 	free(buf);
+-
++	
+ 	// Verify it for some basic sanity: it needs to start with "object <sha1>\ntype\ntagger "
+ 	if (verify_tag(buffer, size) < 0)
+ 		die("invalid tag signature file");
 -- 
 1.3.3.g4309-dirty
 
 
---------------090807030908060409010401--
+--------------070305050204050509030902--
