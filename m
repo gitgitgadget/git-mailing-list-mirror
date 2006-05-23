@@ -1,79 +1,76 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: cogito testsuite failure - git-read-tree too careful
-Date: Mon, 22 May 2006 20:28:18 -0400
-Message-ID: <1148344098.26251.57.camel@dv>
+From: Sean <seanlkml@sympatico.ca>
+Subject: [PATCH] Avoid segfault in diff --stat rename output.
+Date: Mon, 22 May 2006 20:36:34 -0400
+Message-ID: <BAYC1-PASMTP115C9137E5BDABD705881BAE9B0@CEZ.ICE>
+References: <e7bda7770605221609h7c18c2ccpe92db34050d46f9f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue May 23 02:28:38 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 23 02:43:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiKlI-0003jp-Oe
-	for gcvg-git@gmane.org; Tue, 23 May 2006 02:28:37 +0200
+	id 1FiKz3-0007oQ-H9
+	for gcvg-git@gmane.org; Tue, 23 May 2006 02:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206AbWEWA2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 May 2006 20:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbWEWA2a
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 20:28:30 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:52134 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751206AbWEWA2a
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 May 2006 20:28:30 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FiKlA-0004EL-RO
-	for git@vger.kernel.org; Mon, 22 May 2006 20:28:28 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FiKl0-0001oQ-GD; Mon, 22 May 2006 20:28:18 -0400
-To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.6.1 (2.6.1-3) 
+	id S1751201AbWEWAmb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 May 2006 20:42:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbWEWAmb
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 May 2006 20:42:31 -0400
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:5102 "EHLO
+	BAYC1-PASMTP11.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1751201AbWEWAma (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 May 2006 20:42:30 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 22 May 2006 17:47:22 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 2A7F7644C28;
+	Mon, 22 May 2006 20:42:29 -0400 (EDT)
+To: "Torgil Svensson" <torgil.svensson@gmail.com>
+Message-Id: <20060522203634.2f7b0613.seanlkml@sympatico.ca>
+In-Reply-To: <e7bda7770605221609h7c18c2ccpe92db34050d46f9f@mail.gmail.com>
+X-Mailer: Sylpheed version 2.0.4 (GTK+ 2.8.15; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 23 May 2006 00:47:22.0468 (UTC) FILETIME=[73CFF240:01C67E02]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20556>
 
-Hello, Petr!
 
-The testsuite for cogito fails in t9300-seek.sh for up-to-date master
-branches of git and Cogito.
+Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+---
+ diff.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-$ ./t9300-seek.sh -v -i
-* expecting success: cg-seek cbd273f56aecaaf28b857ae74da77cbb11a4d659
-Warning: uncommitted local changes, trying to bring them along
-fatal: Entry 'newdir/newfile' not uptodate. Cannot merge.
-cg-seek: cbd273f56aecaaf28b857ae74da77cbb11a4d659: bad commit
-* FAIL 21: seeking to the first commit
-        cg-seek cbd273f56aecaaf28b857ae74da77cbb11a4d659
+On Tue, 23 May 2006 01:09:43 +0200
+"Torgil Svensson" <torgil.svensson@gmail.com> wrote:
 
-As I understand it, "git-read-tree -m" in cg-Xlib refuses to merge if
-there are local changes.  This was likely caused by commit
-fcc387db9bc453dc7e07a262873481af2ee9e5c8:
+> Hi
+> 
+> It seems like git-diff-tree has some problems with moved files:
+> 
+> $ git-diff-tree -p --stat --summary -M
+> 348f179e3195448cea49c98a79cce8c7f446ce26
+> 343ca16424ba031b37e4df49afddaee098a8f347 | wc -l
+> *** glibc detected *** free(): invalid pointer: 0x12ecbbf0 ***
+> 6101
 
-read-tree -m -u: do not overwrite or remove untracked working tree
-files.
-    
-I guess git-read-tree should be using "--reset" or something to restore
-the original behavior.
 
-The "tutorial" testsuite also fails:
-
-Should not be doing an Octopus.
-No merge strategy handled the merge.
-Merging 5de8995e58b4b478dff476788c3607ed5021fc24 ->
-ba8b9edd80500d60d68a6630ee415a3e710f6db2
-        to a60f36f73018dc1959d8d2cbd28271f93ee5f686 ...
-fatal: Untracked working tree file 'stack.h' would be overwritten by
-merge.
-cg-merge: git-read-tree failed (merge likely blocked by local changes)
-162
-?
-Unexpected error 4 on line 242
-
-In this case, we may want cg-merge to fail, because it's wrong to
-overwrite local files without backing them up.
-
+diff --git a/diff.c b/diff.c
+index 7f35e59..a7bb9b9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -237,7 +237,7 @@ static char *pprint_rename(const char *a
+ 		if (a_midlen < 0) a_midlen = 0;
+ 		if (b_midlen < 0) b_midlen = 0;
+ 
+-		name = xmalloc(len_a + len_b - pfx_length - sfx_length + 7);
++		name = xmalloc(pfx_length + a_midlen + b_midlen + sfx_length + 7);
+ 		sprintf(name, "%.*s{%.*s => %.*s}%s",
+ 			pfx_length, a,
+ 			a_midlen, a + pfx_length,
 -- 
-Regards,
-Pavel Roskin
+1.3.GIT
