@@ -1,74 +1,67 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: Make more commands builtin
-Date: Tue, 23 May 2006 09:32:55 -0700
-Message-ID: <20060523163253.GG31164@h4x0r5.com>
-References: <20060523122056.GA5777@bohr.gbar.dtu.dk> <e4uvku$o28$1@sea.gmane.org> <20060523125400.GA11128@bohr.gbar.dtu.dk> <e4v1a0$u6c$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/2] cvsimport: cleanup commit function
+Date: Tue, 23 May 2006 09:50:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605230948280.5623@g5.osdl.org>
+References: <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com> 
+ <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> 
+ <44720C66.6040304@gentoo.org>  <46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com>
+  <Pine.LNX.4.64.0605221256090.3697@g5.osdl.org>  <20060522214128.GE16677@kiste.smurf.noris.de>
+  <7v8xotadm3.fsf@assigned-by-dhcp.cox.net> 
+ <46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com> 
+ <20060523065232.GA6180@coredump.intra.peff.net>  <20060523070007.GC6180@coredump.intra.peff.net>
+ <46a038f90605230113x2f6b0e4bq5a2ea97308b495e0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 18:33:46 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 23 18:51:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiZoo-00067b-7z
-	for gcvg-git@gmane.org; Tue, 23 May 2006 18:33:16 +0200
+	id 1Fia6C-0001WS-38
+	for gcvg-git@gmane.org; Tue, 23 May 2006 18:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbWEWQdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 12:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbWEWQdL
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 12:33:11 -0400
-Received: from h4x0r5.com ([70.85.31.202]:25361 "EHLO h4x0r5.com")
-	by vger.kernel.org with ESMTP id S1750835AbWEWQdJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 12:33:09 -0400
-Received: from ryan by h4x0r5.com with local (Exim 4.50)
-	id 1FiZoV-000510-Fa; Tue, 23 May 2006 09:32:55 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <e4v1a0$u6c$1@sea.gmane.org>
-User-Agent: Mutt/1.5.9i
-X-michonline.com-MailScanner: Found to be clean
-X-michonline.com-MailScanner-From: ryan@h4x0r5.com
+	id S1750888AbWEWQvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 12:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbWEWQvI
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 12:51:08 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51151 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750888AbWEWQvH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 12:51:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4NGo3tH015200
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 May 2006 09:50:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4NGo1Ri012349;
+	Tue, 23 May 2006 09:50:02 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90605230113x2f6b0e4bq5a2ea97308b495e0@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20613>
 
-On Tue, May 23, 2006 at 03:05:12PM +0200, Jakub Narebski wrote:
-> Peter Eriksen wrote:
-> 
-> > On Tue, May 23, 2006 at 02:36:54PM +0200, Jakub Narebski wrote:
-> >> Peter Eriksen wrote:
-> >> 
-> >> > Btw.
-> >> > 
-> >> > I used these commands to produce the patch series:
-> >> > 
-> >> > git diff --stat -C 24b65a30015aedd..pe/builtin
-> >> > git-send-email --no-chain-reply-to --compose \
-> >> >                --from=s022018@student.dtu.dk --not-signed-off-by-cc \
-> >> >                --quiet \
-> >> >                --subject="Make more commands builtin" \
-> >> >                --to=git@vger.kernel.org Patches/*
-> >> 
-> >> I wonder why the patches themselves are not replies to the main/summary
-> >> email, i.e. "Make more commands builtin" email...
-> > 
-> > It seems thay are:
-> > 
-> > Subject: Make more commands builtin
-> > Message-Id: <11483865361243-git-send-email-1>
-> > 
-> > Subject: [PATCH 1/8] Builtin git-ls-files.
-> > Message-Id: <11483865362613-git-send-email-1>
-> > In-Reply-To: <11483865361243-git-send-email-1>
-> 
-> Ahh... I'm reading git mailing list through GMane NNTP interface.
-> It would be nice if git-send-email added 'References:' Usenet/news
-> header in addition to email one 'In-Reply-To:'.
 
-Things would have worked better if --no-chain-reply-to had *not* been
-used, at least for those of us reading via mutt.
 
-I'm still in the process of getting my machines setup after moving, when
-I get sorted out, I'll try to look into this.
+Hmm. Is it just me, or does the current "git cvsimport" have new problems:
+
+	[torvalds@merom git]$ git cvsimport -d ~/CVS gentoo-x86
+
+causes
+
+	Committing initial tree 34bd3dcd4bfd79bad35ce3fb08b2e21108195db8
+	Server has gone away while fetching BUGS-TODO 1.1, retrying...
+	Retry failed at /home/torvalds/bin/git-cvsimport line 366, <GEN2656> line 9.
+
+and that's it for the import.
+
+I don't see what would have caused it in the changes, but it definitely 
+worked earlier..
+
+		Linus
