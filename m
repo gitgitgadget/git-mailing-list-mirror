@@ -1,109 +1,70 @@
-From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
-Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
-Date: Tue, 23 May 2006 22:40:51 +0200
-Message-ID: <44737353.20904@gmx.de>
-References: <4471CF23.1070807@gmx.de> <7vac99c1hv.fsf@assigned-by-dhcp.cox.net>
+From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+Subject: Re: [osol-bugs] access() behaves strange when used as root
+Date: Tue, 23 May 2006 22:43:56 +0200
+Message-ID: <f3d7535d0605231343h51bfb2c9w1d15536b92874a88@mail.gmail.com>
+References: <f3d7535d0605230818l6ecb9b87gd38afc75941c5fdd@mail.gmail.com>
+	 <20060523153415.GB3638@greyarea>
+	 <20060523154213.GB21587@totally.trollied.org>
+	 <f3d7535d0605231035p6e2d8ef8qefefe43a8b11e739@mail.gmail.com>
+	 <44735D61.nail4RQ116Y06@burner>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 22:40:57 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue May 23 22:44:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FidgU-0005kx-Aa
-	for gcvg-git@gmane.org; Tue, 23 May 2006 22:40:54 +0200
+	id 1FidjU-0006JW-98
+	for gcvg-git@gmane.org; Tue, 23 May 2006 22:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932188AbWEWUkv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 16:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932163AbWEWUkv
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:40:51 -0400
-Received: from mail.gmx.de ([213.165.64.20]:43696 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932188AbWEWUku (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:40:50 -0400
-Received: (qmail invoked by alias); 23 May 2006 20:40:49 -0000
-Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
-  by mail.gmx.net (mp017) with SMTP; 23 May 2006 22:40:49 +0200
-X-Authenticated: #916101
-User-Agent: Mail/News 1.5 (X11/20060228)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vac99c1hv.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
-X-Y-GMX-Trusted: 0
+	id S932163AbWEWUn5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 16:43:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWEWUn5
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 16:43:57 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:61462 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932163AbWEWUn5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 16:43:57 -0400
+Received: by wr-out-0506.google.com with SMTP id i34so1440380wra
+        for <git@vger.kernel.org>; Tue, 23 May 2006 13:43:56 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UFLUz9eV35OO667GsXxwBnOe46RjRLtCxDyhlAxMI9IECtLO99cf2Irxg43d1bKiXBNwzzdXLCU8gRUL54hUnlE2OUA9NC0zN8vubYje2XRtGx/oHK2uMPl50MBcUqYGZniGvPMAR6fjZ6KpmkTVFMWdOj4U/+2RaUi1HWtKS/Y=
+Received: by 10.65.205.12 with SMTP id h12mr2380983qbq;
+        Tue, 23 May 2006 13:43:56 -0700 (PDT)
+Received: by 10.64.253.10 with HTTP; Tue, 23 May 2006 13:43:56 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+In-Reply-To: <44735D61.nail4RQ116Y06@burner>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20635>
 
-Hi,
+Hi Joerg,
 
-I hope this time I got it right. Is there some kind of style-guide I can
-refer to in future ?
+2006/5/23, Joerg Schilling <schilling@fokus.fraunhofer.de>:
+> Before claiming that Soplaris is not behaving correctly, you should have a look
+> into the standard.......
 
+I didn't say Solaris does not behave "correctly" - I just said it does
+not behave as every
+other POSIX/SUS Unix I know.
 
-> Another question is if the QA data expected to be amended or
-> annotated later, after it is created.
->
-> If the answer is yes, then you probably would not want tags --
-> you can create a new tag that points at the same commit to
-> update the data, but then you have no structural relationships
-> given by git between such tags that point at the same commit.
-> You could infer their order by timestamp but that is about it.
-> I think you are better off creating a separate QA project that
-> adds one new file per commit on the main project, and have the
-> file identify the commit object on the main project (either
-> start your text file format for QA data with the commit object
-> name, or name each such QA data file after the commit object
-> name).  Then your automated procedure could scan and add a new
-> file to the QA project every time a new commit is made to the
-> main project, and the data in the QA project can be amended or
-> annotated and the changes will be version controlled.
->   
+> The behavior of Solaris access() is OK.
 
-Great idea ! Thanks a lot. Originally it was not planned to alter the
-results once committet, but this way it would even be possible to rescan
-a commit with a different tool and merge the results. Git would also be
-able to use delta-encoding when packing what can be considered extremly
-efficient since most probably most scan-results won't differ much.
+I know that its completely ok with SUS - and I did say that before.
 
-I am currently wondering where to store the reference to such a
-sub-repository. It certainly is a head, but I would like to avoid anyone
-commiting code into this "branch". Maybe I will create a new directory
-.git/refs/annotations.
+Primarily I was just wondering about this behaviour and IMHO the git
+developers were too.
 
-When thinking about this very elegant way to handle meta-data, I got
-another idea:
-The quality assurance system also works distributed. For scalability
-reasons there are multiple scanners, each scanning one commit at a time.
-Do you think git could also be used to handle "locking" ? The scanners
-would then push a commit with an empty result-file into the
-annotations-repository so all other scanners who are looking for
-currently unscanned commits would ignore it in future. When finished the
-result can be inserted by pushing a subsequent commit. This way one
-avoids the need for a seperate job-server / protocol.
-I am not sure how git would perform in such an environment. Do you think
-the "git-push"-implementation is sufficiently "thread-save" for this ?
-Or could simultaniously pushing into the same branch f.e. break  the
-repository ?
+bye
 
-Hmm.. 2 more things on my mind:
-1.) Do you intend to add some more advanced metadata-functionality to
-git in the future or should I send a patch with my implementation once
-it is finished ? Will be just some scripts using similar commands to
-what Linus sent me (thanks for that, btw)
+Stefan
 
-2.) Searching for a way to add objects to the database I spent quite a
-while to find the right command. Don't you think it would be much more
-intuitive having an
-
-    git-create-object [-t <type>] [-n] [-f] [-z] [--stdin] <file> [-r
-<ref-name>]
-
-command for creating any type of object (-t blob as default), optionally
-omitting writing it to the database (-n = no-write) (like
-git-hash-object), by default validating its input  (overriding with -f)
-(like git-mktag, git-mktree) and maybe even able to add a reference to
-it with -r (like git-tag).
-
-Bj
+-- 
+       http://www.dreamind.de/
+Oroborus and Debian GNU/Linux Developer.
