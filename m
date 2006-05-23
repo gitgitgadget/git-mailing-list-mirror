@@ -1,52 +1,96 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] cvsimport: cleanup commit function
-Date: Tue, 23 May 2006 03:13:33 -0400
-Message-ID: <20060523071333.GA18249@coredump.intra.peff.net>
-References: <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> <44720C66.6040304@gentoo.org> <46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com> <Pine.LNX.4.64.0605221256090.3697@g5.osdl.org> <20060522214128.GE16677@kiste.smurf.noris.de> <7v8xotadm3.fsf@assigned-by-dhcp.cox.net> <46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com> <20060523065232.GA6180@coredump.intra.peff.net> <20060523070007.GC6180@coredump.intra.peff.net> <7v4pzh6wtr.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 09:14:03 2006
+Subject: [PATCH 1/2] cvsimport: use git-update-index --index-info
+Date: Tue, 23 May 2006 03:27:45 -0400
+Message-ID: <37251.1135334664$1148369282@news.gmane.org>
+References: <20060523070007.GC6180@coredump.intra.peff.net>
+Reply-To: Jeff King <peff@peff.net>
+Cc: martin@catalyst.net.nz, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue May 23 09:28:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiR5N-00020H-F9
-	for gcvg-git@gmane.org; Tue, 23 May 2006 09:13:46 +0200
+	id 1FiRJ7-0004zD-Ks
+	for gcvg-git@gmane.org; Tue, 23 May 2006 09:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089AbWEWHNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 03:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932087AbWEWHNg
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 03:13:36 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:26609 "EHLO
-	peff.net") by vger.kernel.org with ESMTP id S932089AbWEWHNf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 03:13:35 -0400
-Received: (qmail 13670 invoked from network); 23 May 2006 07:13:33 -0000
+	id S932081AbWEWH1t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 03:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932087AbWEWH1t
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 03:27:49 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:7415 "EHLO
+	peff.net") by vger.kernel.org with ESMTP id S932081AbWEWH1s (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 03:27:48 -0400
+Received: (qmail 14177 invoked from network); 23 May 2006 07:27:46 -0000
 Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 0 with SMTP; 23 May 2006 07:13:33 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2006 03:13:33 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v4pzh6wtr.fsf@assigned-by-dhcp.cox.net>
+  by 0 with SMTP; 23 May 2006 07:27:46 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2006 03:27:46 -0400
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.3.3.g3408
+In-Reply-To: <20060523070007.GC6180@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20571>
 
-[cc'd to list to get reactions on open2]
+This should reduce the number of git-update-index forks required per
+commit. We now do adds/removes in one call, and we are no longer forced to
+deal with argv limitations.
 
-On Tue, May 23, 2006 at 12:10:08AM -0700, Junio C Hamano wrote:
+---
 
-> > +	return $s =~ /^[a-zA-Z0-9]{40}$/;
-> [0-9a-f] (We always do lowercase).
+This is a repost using -z/NUL instead of line feeds.
 
-Er, yes, that was a complete think-o on my part.
+d82d215430ae5e79210f73a31f5f8a053f36c27f
+ git-cvsimport.perl |   36 +++++++++++++-----------------------
+ 1 files changed, 13 insertions(+), 23 deletions(-)
 
-> Hmm.  I personally do not have problems with open2, but folks on
-> some other platforms might.  I'll see how the list audience
-> sounds.
-
-FWIW, it was already being used in git-cvsimport.
-
--Peff
+d82d215430ae5e79210f73a31f5f8a053f36c27f
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index d257e66..a65bea6 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -565,29 +565,19 @@ my($patchset,$date,$author_name,$author_
+ my(@old,@new,@skipped);
+ sub commit {
+ 	my $pid;
+-	while(@old) {
+-		my @o2;
+-		if(@old > 55) {
+-			@o2 = splice(@old,0,50);
+-		} else {
+-			@o2 = @old;
+-			@old = ();
+-		}
+-		system("git-update-index","--force-remove","--",@o2);
+-		die "Cannot remove files: $?\n" if $?;
+-	}
+-	while(@new) {
+-		my @n2;
+-		if(@new > 12) {
+-			@n2 = splice(@new,0,10);
+-		} else {
+-			@n2 = @new;
+-			@new = ();
+-		}
+-		system("git-update-index","--add",
+-			(map { ('--cacheinfo', @$_) } @n2));
+-		die "Cannot add files: $?\n" if $?;
+-	}
++
++	open(my $fh, '|-', qw(git-update-index -z --index-info))
++		or die "unable to open git-update-index: $!";
++	print $fh 
++		(map { "0 0000000000000000000000000000000000000000\t$_\0" }
++			@old),
++		(map { '100' . sprintf('%o', $_->[0]) . " $_->[1]\t$_->[2]\0" }
++			@new)
++		or die "unable to write to git-update-index: $!";
++	close $fh
++		or die "unable to write to git-update-index: $!";
++	$? and die "git-update-index reported error: $?";
++	@old = @new = ();
+ 
+ 	$pid = open(C,"-|");
+ 	die "Cannot fork: $!" unless defined $pid;
+-- 
+1.3.3.g3408
