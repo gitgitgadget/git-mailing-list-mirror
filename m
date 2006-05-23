@@ -1,83 +1,79 @@
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: Re: [PATCH] Avoid segfault in diff --stat rename output.
-Date: Tue, 23 May 2006 21:06:44 +0200
-Message-ID: <e7bda7770605231206t651d4b22xb30c07ad95cfcb39@mail.gmail.com>
-References: <e7bda7770605221609h7c18c2ccpe92db34050d46f9f@mail.gmail.com>
-	 <BAYC1-PASMTP115C9137E5BDABD705881BAE9B0@CEZ.ICE>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/2] cvsimport: cleanup commit function
+Date: Tue, 23 May 2006 12:36:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605231232360.5623@g5.osdl.org>
+References: <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com> 
+ <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> 
+ <44720C66.6040304@gentoo.org>  <46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com>
+  <Pine.LNX.4.64.0605221256090.3697@g5.osdl.org>  <20060522214128.GE16677@kiste.smurf.noris.de>
+  <7v8xotadm3.fsf@assigned-by-dhcp.cox.net> 
+ <46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com> 
+ <20060523065232.GA6180@coredump.intra.peff.net>  <20060523070007.GC6180@coredump.intra.peff.net>
+ <46a038f90605230113x2f6b0e4bq5a2ea97308b495e0@mail.gmail.com>
+ <Pine.LNX.4.64.0605230948280.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue May 23 21:07:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 23 21:37:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FicDW-0002cK-Bu
-	for gcvg-git@gmane.org; Tue, 23 May 2006 21:06:55 +0200
+	id 1Ficgv-0000w8-Ax
+	for gcvg-git@gmane.org; Tue, 23 May 2006 21:37:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbWEWTGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 15:06:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbWEWTGq
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 15:06:46 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:63955 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750890AbWEWTGp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 15:06:45 -0400
-Received: by nf-out-0910.google.com with SMTP id y25so793354nfb
-        for <git@vger.kernel.org>; Tue, 23 May 2006 12:06:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VqvyEr/RC16avyyKPq1oOsbBYeejDEoIBKWZCW/tfZWRKv4RqJMyYiZwCqwpUagYVgA9d7V+JQKc7h4S7Wt/2SxHtVLHKWdP0qsvyGMXWPC8kOWODD4icmxsMrXd6IlHoVzUDBVANnVTk5seVwFmcDczgQHxyuLlNrJfMxSncyo=
-Received: by 10.49.12.2 with SMTP id p2mr3830040nfi;
-        Tue, 23 May 2006 12:06:44 -0700 (PDT)
-Received: by 10.48.80.6 with HTTP; Tue, 23 May 2006 12:06:44 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <BAYC1-PASMTP115C9137E5BDABD705881BAE9B0@CEZ.ICE>
-Content-Disposition: inline
+	id S1751123AbWEWThF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 15:37:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbWEWThF
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 15:37:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:16800 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751123AbWEWThE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 15:37:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4NJagtH023497
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 May 2006 12:36:43 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4NJabFu018147;
+	Tue, 23 May 2006 12:36:39 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <Pine.LNX.4.64.0605230948280.5623@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20622>
 
-This patch fixed the issue for me.
 
-On 5/23/06, Sean <seanlkml@sympatico.ca> wrote:
->
-> Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
-> ---
->  diff.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> On Tue, 23 May 2006 01:09:43 +0200
-> "Torgil Svensson" <torgil.svensson@gmail.com> wrote:
->
-> > Hi
-> >
-> > It seems like git-diff-tree has some problems with moved files:
-> >
-> > $ git-diff-tree -p --stat --summary -M
-> > 348f179e3195448cea49c98a79cce8c7f446ce26
-> > 343ca16424ba031b37e4df49afddaee098a8f347 | wc -l
-> > *** glibc detected *** free(): invalid pointer: 0x12ecbbf0 ***
-> > 6101
->
->
-> diff --git a/diff.c b/diff.c
-> index 7f35e59..a7bb9b9 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -237,7 +237,7 @@ static char *pprint_rename(const char *a
->                 if (a_midlen < 0) a_midlen = 0;
->                 if (b_midlen < 0) b_midlen = 0;
->
-> -               name = xmalloc(len_a + len_b - pfx_length - sfx_length + 7);
-> +               name = xmalloc(pfx_length + a_midlen + b_midlen + sfx_length + 7);
->                 sprintf(name, "%.*s{%.*s => %.*s}%s",
->                         pfx_length, a,
->                         a_midlen, a + pfx_length,
-> --
-> 1.3.GIT
->
->
+
+On Tue, 23 May 2006, Linus Torvalds wrote:
+> 
+> Hmm. Is it just me, or does the current "git cvsimport" have new problems:
+> 
+> 	[torvalds@merom git]$ git cvsimport -d ~/CVS gentoo-x86
+> 
+> causes
+> 
+> 	Committing initial tree 34bd3dcd4bfd79bad35ce3fb08b2e21108195db8
+> 	Server has gone away while fetching BUGS-TODO 1.1, retrying...
+> 	Retry failed at /home/torvalds/bin/git-cvsimport line 366, <GEN2656> line 9.
+> 
+> and that's it for the import.
+> 
+> I don't see what would have caused it in the changes, but it definitely 
+> worked earlier..
+
+Martin, that problem seems to go away when I initialize $res to 0 in 
+_fetchfile. 
+
+I don't know perl, and maybe local variables are pre-initialized to empty. 
+
+It's entirely possible that the fact that it now seems to work for me is 
+purely timing-related, since I also ended up using "-P cvsps-output" to 
+avoid having a huge cvsps binary in memory at the same time.
+
+		Linus "perl illiterate" Torvalds
