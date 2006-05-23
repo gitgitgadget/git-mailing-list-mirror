@@ -1,74 +1,91 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] git status: ignore empty directories (because they cannot be added)
-Date: Tue, 23 May 2006 16:00:55 +0200
-Message-ID: <E1FiXRP-0006lG-5Z@moooo.ath.cx>
-References: <E1FiHXS-0008MC-LB@moooo.ath.cx> <7vu07h8rzr.fsf@assigned-by-dhcp.cox.net> <E1FiPIu-0003cJ-03@moooo.ath.cx> <7vd5e56yi6.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Tue, 23 May 2006 07:53:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605230744350.5623@g5.osdl.org>
+References: <8157.1148359875@lotus.CS.Berkeley.EDU>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 23 16:01:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Stefan Pfetzing <stefan.pfetzing@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 23 16:54:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiXRd-00073P-A3
-	for gcvg-git@gmane.org; Tue, 23 May 2006 16:01:09 +0200
+	id 1FiYGo-0000b5-Hx
+	for gcvg-git@gmane.org; Tue, 23 May 2006 16:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750811AbWEWOA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 10:00:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWEWOA7
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 10:00:59 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:52429 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1750811AbWEWOA6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 10:00:58 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vd5e56yi6.fsf@assigned-by-dhcp.cox.net>
-User-Agent: mutt-ng/devel-r790 (Linux)
+	id S932224AbWEWOyA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 10:54:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932227AbWEWOyA
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 10:54:00 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:22680 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932224AbWEWOx7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 10:53:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4NErutH008237
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 May 2006 07:53:57 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4NErthG007984;
+	Tue, 23 May 2006 07:53:56 -0700
+To: Jason Riedy <ejr@EECS.Berkeley.EDU>
+In-Reply-To: <8157.1148359875@lotus.CS.Berkeley.EDU>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20606>
 
-> > Well, anyway, here the reasons for this patch:
-> > - Working in a git repository with a lot of empty directories is
-> >   annoying, because all of them show up in git status even though they
-> >   cannot be added. With --no-empty-directories they are hidden.
+
+
+On Mon, 22 May 2006, Jason Riedy wrote:
+
+> And "Stefan Pfetzing" writes:
+>  -   printf ("access: %d\n", access("/etc/motd", X_OK));
+> [...]
+>  - will return 0 on solaris - when run as root, even though /etc/motd
+>  - is not executeable.
 > 
-> What directories are they?  Will they some day have files that
-> you might want to keep track of?  The reason for this question
-> is, "otherwise you could .gitignore them".
+> This is explicitly allowed by the SUS, even for non-root:
 
-I have been trying ruby on rails and there are some empty directories
-which will have files later. I would even add those empty directories
-if it would be possible.
+What kind of CRAP has Solaris become?
 
-> > - If there is a directory which may be added because it is quite
-> >   useful to have the -u option to see what is in there to add (without
-> >   using ls path/to/directory).
-> 
-> It really depends on how many files there are in such a
-> "interesting" directory _and_ other "uninteresting" directories
-> full of transitory files.  The -u option that disables "skip
-> contents and show only the top directory" behaviour globally
-> might not be so useful in such a case -- you will see useful
-> contents of an otherwise "closed" directory (because it defeats
-> the --directory flag), but at the same time you would get tons
-> of uninteresting files in another directory as well in such a
-> case.  You are likely to end up doing ls path/to/dir after
-> noticing that there are non-empty foo/ and bar/ directories that
-> have no tracked files, and you know which one has files
-> interesting to you.
-> So I am OK with the change, but I am somewhat still doubtful how
-> useful the option would be.
+Yes, it's allowed. That doesn't mean that a quality implementation should 
+do it.
 
-The case I think about is that there are some directories which are
-not tracked because they contain no files yet. All other directories
-which are uninteresting are added to .gitignore. If an untracked
-directory shows up in git-status one could easily check with
-git-status -u what can be added.
+SunOS used to be the best system around - it was, compared to others, 
+_nice_ to work with. It wasn't about what was "allowed by the standards", 
+that was the HP-SUX and AIX's excuses. It was the highest-quality 
+implementation.
 
-PS: I had a typo in the git mailing list e-mail address and resent my
-last e-mail to the list. Your reply did not make it to the list,
-perhaps you can send it again.
+Now, Solaris had some serious problems early on (yes, I was there when 
+they switched, and yes, I hated it), but I thought they had fixed their 
+stuff long long ago.
+
+Have Sun people forgotten the difference between "quality" and "crap that 
+passes standards tests"? 
+
+Not doing a reasonable job on "access()" is a joke. It's like VMS being 
+"posix". Sure, it's the letter of the law, but it's still not _unix_.
+
+Btw, even SuS says:
+
+    "The sentence concerning appropriate privileges and execute permission 
+     bits reflects the two possibilities implemented by historical 
+     implementations when checking superuser access for X_OK.
+
+     New implementations are discouraged from returning X_OK unless at 
+     least one execution permission bit is set."
+
+which clearly says "Solaris is CRAP" to me.
+
+What the heck is going on? First the totally broken stdio that doesn't 
+retry on EINTR, now access(). And these people think they can compete?
+
+Somebody hit some Solaris engineers with a 2x4 clue-stick, please.
+
+		Linus
