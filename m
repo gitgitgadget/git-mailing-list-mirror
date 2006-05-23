@@ -1,107 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Current Issues #3
-Date: Tue, 23 May 2006 23:58:15 +0200
-Organization: At home
-Message-ID: <e500hd$vpr$1@sea.gmane.org>
-References: <7v8xoue9eo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605220216310.3697@g5.osdl.org>
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: file name case-sensitivity issues
+Date: Tue, 23 May 2006 22:43:15 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0605232239070.15915@dildano.hawaga.org.uk>
+References: <20060523210615.GB5869@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue May 23 23:58:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed May 24 00:43:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fietb-0004yp-6s
-	for gcvg-git@gmane.org; Tue, 23 May 2006 23:58:31 +0200
+	id 1FifbL-0003wQ-Im
+	for gcvg-git@gmane.org; Wed, 24 May 2006 00:43:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932107AbWEWV62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 17:58:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbWEWV62
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 17:58:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:16316 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932107AbWEWV62 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 17:58:28 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FietL-0004vk-0L
-	for git@vger.kernel.org; Tue, 23 May 2006 23:58:16 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 May 2006 23:58:15 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 May 2006 23:58:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S932256AbWEWWnj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 18:43:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbWEWWnj
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 18:43:39 -0400
+Received: from dildano.hawaga.org.uk ([81.187.211.37]:40154 "EHLO
+	dildano.hawaga.org.uk") by vger.kernel.org with ESMTP
+	id S932256AbWEWWnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 May 2006 18:43:39 -0400
+Received: from dildano.hawaga.org.uk (localhost.localdomain [127.0.0.1])
+	by dildano.hawaga.org.uk (8.13.6/8.13.6/Debian-1) with ESMTP id k4NMhGxS030664;
+	Tue, 23 May 2006 22:43:16 GMT
+Received: from localhost (benc@localhost)
+	by dildano.hawaga.org.uk (8.13.6/8.13.6/Submit) with ESMTP id k4NMhFdS030660;
+	Tue, 23 May 2006 22:43:15 GMT
+X-Authentication-Warning: dildano.hawaga.org.uk: benc owned process doing -bs
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060523210615.GB5869@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20645>
 
-Linus Torvalds wrote:
 
-[...]
-> But with the above, you can fairly naturally do:
-> 
->  - "git pull" 
-> 
->       No arguments. fetch the remote described by the current branch, 
->       and merge into current branch (we might decide to fetch all the 
->       remotes associated with that repo, just because once we do this, 
->       we might as well, but that's not that important to the end 
->       result).
-> 
->  - "git pull <repo>"
-     (i.e. re-clone)
->       fetch all remotes that use <repo>. IFF the current branch is 
->       matched to one of those remotes, merge the changes into the 
->       current branch. But if you happened to be on another unrelated 
->       branch, nothing happens aside from the fetch.
-> 
->  - "git pull <remote>"
-> 
->       fetch just the named remote. IFF that remote is also the remote 
->       for the current branch, do merge it into current. Again, we 
->       _might_ decide to just do the whole repo.
-> 
->  - "git pull <repo> <branchname>"
-> 
->       fetch the named branch from the named repository and merge it into 
->       current (no ifs, buts or maybes - now we've basically overridden 
->       the default relationships, so now the <repo> is just a pure 
->       shorthand for the location of the repository)
+On OS X using whatever filesystem it comes with by default, I get the 
+following, which doesn't seem right (but in a different way).
 
-Fetch into curret branch, or specified by branch configuration, then current
-if unspecified?
+$ mkdir case-sensitivity-test
+$ cd case-sensitivity-test
+$ git init-db
+defaulting to local storage area
+$ echo foo > foo
+$ echo bar > bar
+$ git add foo bar
+$ git commit -m initial\ commit
+Committing initial tree 89ff1a2aefcbff0f09197f0fd8beeb19a7b6e51c
+$ git checkout -b side
+$ echo bar-side >> bar
+$ git commit -m side\ commit -o bar
+$ git checkout master
+$ rm foo
+$ git update-index --remove foo
+$ echo FOO > FOO
+$ git add FOO
+$ git commit -m case\ change
+$ ls
+FOO bar
+$ git pull . side
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Merging HEAD with e1f1e78035b099fad2bbfb82af7ec31864d8e4c1
+Merging: 
+5d70969775bf595dd5144a2bacc25d32cc288352 case change 
+e1f1e78035b099fad2bbfb82af7ec31864d8e4c1 side commit 
+found 1 common ancestor(s): 
+e35c42fad4f08c2ccf61d93409a0208e92028a51 initial commit 
 
->  - "git pull <repo> <src>:<dst>"
-> 
->       same as now. fetch <repo> <src> into <dst>, and merge it into the 
->       current branch (again, we've overridden any default relationships).
-> 
-> but maybe this is overdesigned. Comments?
+Merge 98bf1cae75776c141ad3b61dc2cb938c71c303ef, made by recursive.
+ bar |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+$ 
+$ ls
+bar
+$ git ls-files -d
+FOO
+$ git ls-tree HEAD
+100644 blob b7d6715e2df11b9c32b2341423273c6b3ad9ae8a    FOO
+100644 blob 5f8b81e197a2cb27816112fb5a6b86b7031ffde8    bar
 
-It all means that within <repo> annd <remote> names should be unique
-(to know if we use "git pull <repo>" or "git pull <remote>").
-
-Perhaps it would be nice to have
-
- - "git pull <repo> *:<dst>"
- - "git pull <repo> <src>:*"
- - "git pull <repo> *:*"
-and
- - "git pull <repo> <src>:<dst>:<to-merge>"
-
-as easier to remember options. Of course what is the remote branch related
-to <dst>, and what is local branch related to <src> would be in
-branch/remotes/repos configuration.
-
-BTW. what about --use-separate-remotes option support?
+The checkout is losing the FOO file but the merged tree object has the 
+merged FOO in it.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
