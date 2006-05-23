@@ -1,79 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Make more commands builtin
-Date: Tue, 23 May 2006 15:05:12 +0200
-Organization: At home
-Message-ID: <e4v1a0$u6c$1@sea.gmane.org>
-References: <20060523122056.GA5777@bohr.gbar.dtu.dk> <e4uvku$o28$1@sea.gmane.org> <20060523125400.GA11128@bohr.gbar.dtu.dk>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git status: ignore empty directories (because they cannot be added)
+Date: Tue, 23 May 2006 16:00:55 +0200
+Message-ID: <E1FiXRP-0006lG-5Z@moooo.ath.cx>
+References: <E1FiHXS-0008MC-LB@moooo.ath.cx> <7vu07h8rzr.fsf@assigned-by-dhcp.cox.net> <E1FiPIu-0003cJ-03@moooo.ath.cx> <7vd5e56yi6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue May 23 15:07:41 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 23 16:01:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiWbe-0004ia-Dv
-	for gcvg-git@gmane.org; Tue, 23 May 2006 15:07:26 +0200
+	id 1FiXRd-00073P-A3
+	for gcvg-git@gmane.org; Tue, 23 May 2006 16:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbWEWNGx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 09:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbWEWNGx
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 09:06:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:45549 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932206AbWEWNGw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 09:06:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FiWaS-0004MB-6u
-	for git@vger.kernel.org; Tue, 23 May 2006 15:06:12 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 May 2006 15:06:12 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 May 2006 15:06:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750811AbWEWOA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 10:00:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWEWOA7
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 10:00:59 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:52429 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1750811AbWEWOA6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 10:00:58 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vd5e56yi6.fsf@assigned-by-dhcp.cox.net>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20605>
 
-Peter Eriksen wrote:
-
-> On Tue, May 23, 2006 at 02:36:54PM +0200, Jakub Narebski wrote:
->> Peter Eriksen wrote:
->> 
->> > Btw.
->> > 
->> > I used these commands to produce the patch series:
->> > 
->> > git diff --stat -C 24b65a30015aedd..pe/builtin
->> > git-send-email --no-chain-reply-to --compose \
->> >                --from=s022018@student.dtu.dk --not-signed-off-by-cc \
->> >                --quiet \
->> >                --subject="Make more commands builtin" \
->> >                --to=git@vger.kernel.org Patches/*
->> 
->> I wonder why the patches themselves are not replies to the main/summary
->> email, i.e. "Make more commands builtin" email...
+> > Well, anyway, here the reasons for this patch:
+> > - Working in a git repository with a lot of empty directories is
+> >   annoying, because all of them show up in git status even though they
+> >   cannot be added. With --no-empty-directories they are hidden.
 > 
-> It seems thay are:
-> 
-> Subject: Make more commands builtin
-> Message-Id: <11483865361243-git-send-email-1>
-> 
-> Subject: [PATCH 1/8] Builtin git-ls-files.
-> Message-Id: <11483865362613-git-send-email-1>
-> In-Reply-To: <11483865361243-git-send-email-1>
+> What directories are they?  Will they some day have files that
+> you might want to keep track of?  The reason for this question
+> is, "otherwise you could .gitignore them".
 
-Ahh... I'm reading git mailing list through GMane NNTP interface.
-It would be nice if git-send-email added 'References:' Usenet/news
-header in addition to email one 'In-Reply-To:'.
+I have been trying ruby on rails and there are some empty directories
+which will have files later. I would even add those empty directories
+if it would be possible.
 
--- 
-Jakub Narebski
-Warsaw, Poland
+> > - If there is a directory which may be added because it is quite
+> >   useful to have the -u option to see what is in there to add (without
+> >   using ls path/to/directory).
+> 
+> It really depends on how many files there are in such a
+> "interesting" directory _and_ other "uninteresting" directories
+> full of transitory files.  The -u option that disables "skip
+> contents and show only the top directory" behaviour globally
+> might not be so useful in such a case -- you will see useful
+> contents of an otherwise "closed" directory (because it defeats
+> the --directory flag), but at the same time you would get tons
+> of uninteresting files in another directory as well in such a
+> case.  You are likely to end up doing ls path/to/dir after
+> noticing that there are non-empty foo/ and bar/ directories that
+> have no tracked files, and you know which one has files
+> interesting to you.
+> So I am OK with the change, but I am somewhat still doubtful how
+> useful the option would be.
+
+The case I think about is that there are some directories which are
+not tracked because they contain no files yet. All other directories
+which are uninteresting are added to .gitignore. If an untracked
+directory shows up in git-status one could easily check with
+git-status -u what can be added.
+
+PS: I had a typo in the git mailing list e-mail address and resent my
+last e-mail to the list. Your reply did not make it to the list,
+perhaps you can send it again.
