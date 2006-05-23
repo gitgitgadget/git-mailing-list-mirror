@@ -1,150 +1,90 @@
-From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
-Subject: [PATCH 2/2] Again: add more informative error messages to git-mktag
-Date: Tue, 23 May 2006 20:20:09 +0200
-Message-ID: <44735259.5040107@gmx.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Tue, 23 May 2006 11:24:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605231110230.5623@g5.osdl.org>
+References: <19270.1148407414@lotus.CS.Berkeley.EDU>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070305050204050509030902"
-X-From: git-owner@vger.kernel.org Tue May 23 20:20:37 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 23 20:25:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FibUQ-0002Bt-Ix
-	for gcvg-git@gmane.org; Tue, 23 May 2006 20:20:18 +0200
+	id 1FibYn-0002vC-Q1
+	for gcvg-git@gmane.org; Tue, 23 May 2006 20:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbWEWSUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 14:20:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWEWSUG
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 14:20:06 -0400
-Received: from mail.gmx.de ([213.165.64.20]:20870 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751168AbWEWSUD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 14:20:03 -0400
-Received: (qmail invoked by alias); 23 May 2006 18:20:02 -0000
-Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
-  by mail.gmx.net (mp001) with SMTP; 23 May 2006 20:20:02 +0200
-X-Authenticated: #916101
-User-Agent: Mail/News 1.5 (X11/20060228)
-To: git@vger.kernel.org
-X-Enigmail-Version: 0.94.0.0
-X-Y-GMX-Trusted: 0
+	id S1751170AbWEWSYr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 14:24:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbWEWSYr
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 14:24:47 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:52617 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751170AbWEWSYq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 14:24:46 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4NIOitH020287
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 May 2006 11:24:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4NIOhha015886;
+	Tue, 23 May 2006 11:24:43 -0700
+To: Jason Riedy <ejr@EECS.Berkeley.EDU>
+In-Reply-To: <19270.1148407414@lotus.CS.Berkeley.EDU>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20617>
-
-This is a multi-part message in MIME format.
---------------070305050204050509030902
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20618>
 
 
 
---------------070305050204050509030902
-Content-Type: text/plain;
- name*0="0002-add-more-informative-error-messages-to-git-mktag.txt"
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline;
- filename*0="0002-add-more-informative-error-messages-to-git-mktag.txt"
+On Tue, 23 May 2006, Jason Riedy wrote:
+>
+>  - Btw, even SuS says:
+> [...]
+>  -      New implementations are discouraged from returning X_OK unless at 
+>  -      least one execution permission bit is set."
+> 
+> Now there is one possible, cross-OS problem that I
+> haven't tested.  You can chmod a-x and then use
+> setfacl to grant one person execute access.  I'm not
+> sure if access works in that case, but that might
+> possibly just say that current ACL systems are crap.
 
+I absolutely agree. That is why the OS has a "access()" system call. It's 
+there to ask the OS whether the file is executable (or readable/writable).
 
-Signed-off-by: Björn Engelmann <BjEngelmann@gmx.de>
+Otherwise, we'd just do
 
+   static inline int executable(const char *path)
+   {
+	struct stat st;
+	return  !stat(pathname, &st) &&
+		S_ISREG(st.st_mode) &&
+		(st.st_mode & 0111) != 0;
+   }
 
----
+and be done with it. But exactly because the OS knows what "executable" 
+means, we ask it. We don't know about all the ACL's etc, the OS does.
 
-51465a979a25c4363010cbab5798d95ac9f102e7
- mktag.c |   28 ++++++++++++++++------------
- 1 files changed, 16 insertions(+), 12 deletions(-)
+(Similar issues are true for writability too - the file may be "writable" 
+in the sense that the write permission bits are on, but if the filesystem 
+is mounted read-only, it sure as hell ain't W_OK _anyway_).
 
-51465a979a25c4363010cbab5798d95ac9f102e7
-diff --git a/mktag.c b/mktag.c
-index f1598db..6bd45df 100644
---- a/mktag.c
-+++ b/mktag.c
-@@ -46,41 +46,45 @@ static int verify_tag(char *buffer, unsi
- 	const char *object, *type_line, *tag_line, *tagger_line;
- 
- 	if (size < 64)
--		return -1;
-+		return error("wanna fool me ? you obviously got the size wrong !\n");
-+
- 	buffer[size] = 0;
- 
- 	/* Verify object line */
- 	object = buffer;
- 	if (memcmp(object, "object ", 7))
--		return -1;
-+		return error("char%d: does not start with \"object \"\n", 0);
-+
- 	if (get_sha1_hex(object + 7, sha1))
--		return -1;
-+		return error("char%d: could not get SHA1 hash\n", 7);
- 
- 	/* Verify type line */
- 	type_line = object + 48;
- 	if (memcmp(type_line - 1, "\ntype ", 6))
--		return -1;
-+		return error("char%d: could not find \"\\ntype \"\n", 47);
- 
- 	/* Verify tag-line */
- 	tag_line = strchr(type_line, '\n');
- 	if (!tag_line)
--		return -1;
-+		return error("char%td: could not find next \"\\n\"\n", type_line - buffer);
- 	tag_line++;
- 	if (memcmp(tag_line, "tag ", 4) || tag_line[4] == '\n')
--		return -1;
-+		return error("char%td: no \"tag \" found\n", tag_line - buffer);
- 
- 	/* Get the actual type */
- 	typelen = tag_line - type_line - strlen("type \n");
- 	if (typelen >= sizeof(type))
--		return -1;
-+		return error("char%d: type too long\n", (int)(type_line - buffer) + strlen("type \n"));
-+
- 	memcpy(type, type_line+5, typelen);
- 	type[typelen] = 0;
- 
- 	/* Verify that the object matches */
- 	if (get_sha1_hex(object + 7, sha1))
--		return -1;
-+		return error("char%d: could not get SHA1 hash but this is really odd since i got it before !\n", 7);
-+	
- 	if (verify_object(sha1, type))
--		return -1;
-+		return error("char%d: could not verify object %s\n", 7, sha1);
- 
- 	/* Verify the tag-name: we don't allow control characters or spaces in it */
- 	tag_line += 4;
-@@ -90,14 +94,14 @@ static int verify_tag(char *buffer, unsi
- 			break;
- 		if (c > ' ')
- 			continue;
--		return -1;
-+		return error("char%td: could not verify tag name\n", tag_line - buffer);
- 	}
- 
- 	/* Verify the tagger line */
- 	tagger_line = tag_line;
- 
- 	if (memcmp(tagger_line, "tagger", 6) || (tagger_line[6] == '\n'))
--		return -1;
-+		return error("char%td: could not find \"tagger\"\n", tagger_line - buffer);
- 
- 	/* The actual stuff afterwards we don't care about.. */
- 	return 0;
-@@ -118,7 +122,7 @@ int main(int argc, char **argv)
- 		free(buffer);
- 		die("could not read from stdin");
- 	}
--
-+	
- 	// Verify it for some basic sanity: it needs to start with "object <sha1>\ntype\ntagger "
- 	if (verify_tag(buffer, size) < 0)
- 		die("invalid tag signature file");
--- 
-1.3.3.g4309-dirty
+> Hmm.  Does access handle SELinux or the other systems?
 
+Yup. 
 
---------------070305050204050509030902--
+Modulo bugs, of course, but yes, access() on linux should check both 
+POSIX ACL's and SELinux security extensions. It uses exactly the same 
+code-paths that open()/execve() does: it uses the "vfs_permission()" 
+function which is also what execve() uses.
+
+Now, I think access() actually misses a no-exec mount (it doesn't seem to 
+check MNT_NOEXEC for X_OK), and that looks like it might actually be a 
+real bug.
+
+		Linus
