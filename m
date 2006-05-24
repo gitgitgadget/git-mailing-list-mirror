@@ -1,138 +1,158 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] Builtin git-cat-file
-Date: Wed, 24 May 2006 14:08:46 +0300
-Message-ID: <20060524140846.38316176.tihirvon@gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: Incremental cvsimports
+Date: Wed, 24 May 2006 20:49:03 +0930
+Message-ID: <93c3eada0605240419o48891cdle6c100fc0ac870ff@mail.gmail.com>
+References: <93c3eada0605240046t10e00119n4cfc39ec33fe1d92@mail.gmail.com>
+	 <46a038f90605240121o117fadb6vf3ce910a3ad3e90@mail.gmail.com>
+Reply-To: geoff@austrics.com.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_152298_14129277.1148469543378"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 13:07:13 2006
+X-From: git-owner@vger.kernel.org Wed May 24 13:31:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FirCg-0000Mv-A2
-	for gcvg-git@gmane.org; Wed, 24 May 2006 13:07:03 +0200
+	id 1FirZn-0004ZG-5S
+	for gcvg-git@gmane.org; Wed, 24 May 2006 13:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932677AbWEXLG5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 07:06:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932680AbWEXLG5
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 07:06:57 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:28725 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932677AbWEXLG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 May 2006 07:06:56 -0400
-Received: by nf-out-0910.google.com with SMTP id x4so68289nfb
-        for <git@vger.kernel.org>; Wed, 24 May 2006 04:06:55 -0700 (PDT)
+	id S932726AbWEXL34 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 07:29:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932695AbWEXL3n
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 07:29:43 -0400
+Received: from wx-out-0102.google.com ([66.249.82.206]:39414 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932697AbWEXLTE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 07:19:04 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so1184491wxc
+        for <git@vger.kernel.org>; Wed, 24 May 2006 04:19:03 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=mJjrSveIkNMhxRDX5ZvNbhfNRYt0SZeQ4zHh9rwW76QqB2F6vOnF56qXGR7rHCMN3qzvIaI9YzAZkjdRfA3An8TeybSZsV78P7dGB+bSGxcUNVWVEYp6ND/AoQPIqShJ8yqOSbPmKf/0gj4T91CJHpYRh/itsxJ2fjZ4XPUazMI=
-Received: by 10.49.68.20 with SMTP id v20mr5586007nfk;
-        Wed, 24 May 2006 04:06:54 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.200.31])
-        by mx.gmail.com with ESMTP id q28sm2176769nfc.2006.05.24.04.06.52;
-        Wed, 24 May 2006 04:06:52 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=T6scV3/w3+OvH5VyGBX2NDCM8XtUZS2D9hLsI29nZ6fXQyzeRrRyEoxbf/NqRvtM3Gd6NcyKZfQggfC6fY8JbCCLqTrzcdKz4bXZEL3HSZ2koK0C1HATX+o92MH9Dy/5KAHUNhc13Wa3fvWfoGjF0z7K2ubUHKz/Epq/ZIQlzA0=
+Received: by 10.70.104.15 with SMTP id b15mr7582840wxc;
+        Wed, 24 May 2006 04:19:03 -0700 (PDT)
+Received: by 10.70.32.19 with HTTP; Wed, 24 May 2006 04:19:03 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90605240121o117fadb6vf3ce910a3ad3e90@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20679>
+
+------=_Part_152298_14129277.1148469543378
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+Dear Martin,
 
 
-Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+On 5/24/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 5/24/06, Geoff Russell <geoffrey.russell@gmail.com> wrote:
+> > Dear Git,
+>
+> Dear Geoff,
+>
+> if you look at the list archive for the last couple of days, you'll
+> see there's been quite a bit of activity in tuning cvsimport so that
+> it scales better with large imports like yours. We have been playing
+> with a gentoo cvs repo with 300K commits / 1.6GB uncompressed.
+>
+> Don't split up the tree... that'll lead to something rather ackward.
+> Instead, fetch and build git from Junio's 'master' branch which seems
+> to have collected most (all?) of the patches posted, including one
+> from Linus that will repack the repo every 1K commits -- keeping the
+> import size down.
 
----
+I got the latest git and yes, the size is kept down. I've only tried with
+a smaller repository but it looks promising. When I ran git-cvsimport witho=
+ut a
+CVS-module name (wanting the entire repository), it gave me a Usage message
+indicating that the CVS-module name was optional - but it isn't :)
 
-Not huge disc space savings but avoids fork+exec.
+I did have to change
+2 lines in git-cvsimport to get it to run with my 5.8.0 perl (problems with
+POSIX errno). I've attached a patch but my work around isn't as quick as
+what it replaced.
 
-95174d93a8fb39b907f4f7359a381b9ad5757e5d
- Makefile                         |    6 +++---
- cat-file.c => builtin-cat-file.c |    3 ++-
- builtin.h                        |    1 +
- git.c                            |    1 +
- 4 files changed, 7 insertions(+), 4 deletions(-)
- rename cat-file.c => builtin-cat-file.c (98%)
+Many thanks, I'll have a go with the big repository at work tomorrow!
 
-95174d93a8fb39b907f4f7359a381b9ad5757e5d
-diff --git a/Makefile b/Makefile
-index 5423b7a..faab3f9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -149,7 +149,7 @@ SIMPLE_PROGRAMS = \
- 
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS = \
--	git-apply$X git-cat-file$X \
-+	git-apply$X \
- 	git-checkout-index$X git-clone-pack$X git-commit-tree$X \
- 	git-convert-objects$X git-diff-files$X \
- 	git-diff-index$X git-diff-stages$X \
-@@ -171,7 +171,7 @@ PROGRAMS = \
- BUILT_INS = git-log$X git-whatchanged$X git-show$X \
- 	git-count-objects$X git-diff$X git-push$X \
- 	git-grep$X git-rev-list$X git-check-ref-format$X \
--	git-init-db$X
-+	git-init-db$X git-cat-file$X
- 
- # what 'all' will build and 'install' will install, in gitexecdir
- ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS)
-@@ -220,7 +220,7 @@ LIB_OBJS = \
- BUILTIN_OBJS = \
- 	builtin-log.o builtin-help.o builtin-count.o builtin-diff.o builtin-push.o \
- 	builtin-grep.o builtin-rev-list.o builtin-check-ref-format.o \
--	builtin-init-db.o
-+	builtin-init-db.o builtin-cat-file.o
- 
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
- LIBS = $(GITLIBS) -lz
-diff --git a/cat-file.c b/builtin-cat-file.c
-similarity index 98%
-rename from cat-file.c
-rename to builtin-cat-file.c
-index 7413fee..8ab136e 100644
---- a/cat-file.c
-+++ b/builtin-cat-file.c
-@@ -7,6 +7,7 @@ #include "cache.h"
- #include "exec_cmd.h"
- #include "tag.h"
- #include "tree.h"
-+#include "builtin.h"
- 
- static void flush_buffer(const char *buf, unsigned long size)
- {
-@@ -93,7 +94,7 @@ static int pprint_tag(const unsigned cha
- 	return 0;
- }
- 
--int main(int argc, char **argv)
-+int cmd_cat_file(int argc, const char **argv, char **envp)
- {
- 	unsigned char sha1[20];
- 	char type[20];
-diff --git a/builtin.h b/builtin.h
-index 6054126..01f2eec 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -27,5 +27,6 @@ extern int cmd_grep(int argc, const char
- extern int cmd_rev_list(int argc, const char **argv, char **envp);
- extern int cmd_check_ref_format(int argc, const char **argv, char **envp);
- extern int cmd_init_db(int argc, const char **argv, char **envp);
-+extern int cmd_cat_file(int argc, const char **argv, char **envp);
- 
- #endif
-diff --git a/git.c b/git.c
-index 3216d31..6df0902 100644
---- a/git.c
-+++ b/git.c
-@@ -52,6 +52,7 @@ static void handle_internal_command(int 
- 		{ "grep", cmd_grep },
- 		{ "rev-list", cmd_rev_list },
- 		{ "init-db", cmd_init_db },
-+		{ "cat-file", cmd_cat_file },
- 		{ "check-ref-format", cmd_check_ref_format }
- 	};
- 	int i;
--- 
-1.3.3.g40505-dirty
+Cheers,
+Geoff Russell
+
+P.S. I've just started to look with git. We have wanted a cvs replacement f=
+or
+a while but have been too scared to change (until now).
+
+
+
+>
+> You _will_ need a lot of memory though, as cvsps grows large (working
+> on a workaround now) and cvsimport grows a bit over time (where is
+> that last leak?!). And a fast machine -- specially fast IO. I've just
+> switched from an old test machine to an AMD64 with fast disks, and
+> it's importing around 10K commits per hour.
+
+I
+
+>
+> You will probably want to run cvsps by hand, and later use the -P flag.
+>
+> cheers,
+>
+>
+> martin
+>
+>
+
+------=_Part_152298_14129277.1148469543378
+Content-Type: application/octet-stream; name=999
+Content-Transfer-Encoding: 7bit
+X-Attachment-Id: f_enlkwnva
+Content-Disposition: attachment; filename="999"
+
+*** git-cvsimport	2006-05-24 20:13:19.000000000 +0930
+--- /usr/local/bin/git-cvsimport	2006-05-24 20:22:27.000000000 +0930
+*************** use File::Basename qw(basename dirname);
+*** 23,29 ****
+  use Time::Local;
+  use IO::Socket;
+  use IO::Pipe;
+! use POSIX qw(strftime dup2 :errno_h);
+  use IPC::Open2;
+  
+  $SIG{'PIPE'}="IGNORE";
+--- 23,29 ----
+  use Time::Local;
+  use IO::Socket;
+  use IO::Pipe;
+! use POSIX qw(strftime dup2);
+  use IPC::Open2;
+  
+  $SIG{'PIPE'}="IGNORE";
+*************** sub get_headref ($$) {
+*** 446,452 ****
+  	    is_sha1($r) or die "Cannot get head id for $name ($r): $!";
+  	    return $r;
+      }
+!     die "unable to open $f: $!" unless $! == POSIX::ENOENT;
+      return undef;
+  }
+  
+--- 446,452 ----
+  	    is_sha1($r) or die "Cannot get head id for $name ($r): $!";
+  	    return $r;
+      }
+!     die "unable to open $f: $!" if -f $f;
+      return undef;
+  }
+  
+
+
+
+
+
+
+------=_Part_152298_14129277.1148469543378--
