@@ -1,74 +1,40 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add a test-case for git-apply trying to add an ending line
-Date: Tue, 23 May 2006 21:59:13 -0700
-Message-ID: <7v8xosqaqm.fsf@assigned-by-dhcp.cox.net>
-References: <20060523214836.22628.2179.stgit@localhost.localdomain>
-	<7vd5e4z2je.fsf@assigned-by-dhcp.cox.net>
-	<7vhd3gxm73.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605231905470.5623@g5.osdl.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: A few stgit bugfixes
+Date: Wed, 24 May 2006 08:05:37 +0200
+Message-ID: <20060524060537.GA1173@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 06:59:26 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 08:05:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FilSo-0001pr-C1
-	for gcvg-git@gmane.org; Wed, 24 May 2006 06:59:18 +0200
+	id 1FimVJ-0000JF-RN
+	for gcvg-git@gmane.org; Wed, 24 May 2006 08:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932568AbWEXE7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 00:59:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932577AbWEXE7P
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 00:59:15 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:3810 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932568AbWEXE7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 May 2006 00:59:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060524045914.NMVX24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 24 May 2006 00:59:14 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605231905470.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 23 May 2006 19:08:01 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932600AbWEXGFp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 24 May 2006 02:05:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbWEXGFp
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 02:05:45 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:11784 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S932600AbWEXGFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 02:05:45 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FimUz-0000NN-00; Wed, 24 May 2006 07:05:37 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20665>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+=46ixes for a few bugs recently introduced in stgit by yours truly.
 
-> On Tue, 23 May 2006, Junio C Hamano wrote:
->
->> The issue is if we can reliably tell if there is such an EOF
->> context by looking at the diff.  Not having the same number of
->> lines that starts with ' ' in the hunk is not really a nice way
->> of doing so (you could make a unified diff that does not have
->> trailing context at all), and I do not offhand think of a good
->> way to do so.
->
-> We can. Something like this should do it.
->
-> (The same thing could be done for "match_beginning", perhaps).
-
-But this is exactly what I said I had trouble with in the above.
-
-In the extreme case, wouldn't this make git apply to refuse to
-apply a self generated patch with 0-line context?  IOW,
-
-        $ git checkout -- foo ;# reset to indexed version
-	$ edit foo
-        $ git diff -U0 >P.diff
-        $ git checkout -- foo ;# reset to indexed version
-        $ git apply <P.diff
-
-would fail, even though it _should_ cleanly apply.
-
-I'd admit that trying to apply a patch without context like the
-above example _is_ insane, and I realize that I am making this
-problem unsolvable by refusing the heuristics to consider that
-the patch is anchored at the end when we do not see any trailing
-context.  But somehow it feels wrong...
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
