@@ -1,71 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Slow fetches of tags
-Date: Wed, 24 May 2006 12:17:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
-References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
- <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
+Date: Wed, 24 May 2006 12:39:32 -0700
+Message-ID: <7v1wuj6wln.fsf@assigned-by-dhcp.cox.net>
+References: <4471CF23.1070807@gmx.de>
+	<7vac99c1hv.fsf@assigned-by-dhcp.cox.net> <44737353.20904@gmx.de>
+	<7vzmh81gfa.fsf@assigned-by-dhcp.cox.net> <4474B10A.1020704@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ralf Baechle <ralf@linux-mips.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 24 21:18:04 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 21:39:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fiyrk-0007sq-2v
-	for gcvg-git@gmane.org; Wed, 24 May 2006 21:17:56 +0200
+	id 1FizCj-0003CT-PN
+	for gcvg-git@gmane.org; Wed, 24 May 2006 21:39:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270AbWEXTRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 15:17:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWEXTRx
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 15:17:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:65152 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751270AbWEXTRx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 15:17:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4OJHctH019440
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 May 2006 12:17:38 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4OJHaU3028093;
-	Wed, 24 May 2006 12:17:37 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751180AbWEXTje convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 24 May 2006 15:39:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbWEXTje
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 15:39:34 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:41111 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751180AbWEXTje convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 15:39:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060524193933.TBSI19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 May 2006 15:39:33 -0400
+To: =?iso-8859-1?Q?Bj=F6rn?= Engelmann <BjEngelmann@gmx.de>
+In-Reply-To: <4474B10A.1020704@gmx.de> (=?iso-8859-1?Q?Bj=F6rn?= Engelmann's
+ message of "Wed, 24
+	May 2006 21:16:26 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20703>
 
+Bj=F6rn Engelmann <BjEngelmann@gmx.de> writes:
 
+> That is why I said, all input should be validated by default. All I
+> proposed was
+> a) unify the tools in order to have less duplicate code
+> (git-mktag, git-mktree & git-hash-object do merely the same
+> except for the validating part)
+> b) remove the possibility to introduce unchecked objects of arbitrary
+> type (or only allow it with the -f =3D "force, use with caution"-opti=
+on)
+> maybe I should have written "blob, tag, tree or commit" instead of
+> "arbitrary". I did not mean really arbitrary like it is implemented
+> right now in git-hash-object.
 
-On Wed, 24 May 2006, Junio C Hamano wrote:
-> 
-> A "have" object is not just has_sha1_file(), but it needs to be
-> reachable from one of our tips we have already verified as
-> complete
+Sorry, I forgot all about hash-objects X-<.  It was a convenient
+way to try out new things such as 'gitlink'.  Thanks for the
+clarification.
 
-You're right.
+As to unification, I am not sure if there are a lot to unify.
+Everybody starts with type, length and a LF, but after that each
+type has its own format constraints.  A grand unified command
+that knows about format constraints of every type under the sun
+does not sound like a good approach.  While we have only handful
+types (and I expect things will stay that way) it is not a big
+deal either way, though.
 
-And the strange part is that the commit we should give for the tag thing 
-_should_ actually be pretty recent, and I wonder why we end up walking the 
-whole damn tree history and saying "want" to basically them all. 
-
-IOW, I think there's something more fundamentally wrong with the tag 
-following. We _should_ have figured out much more quickly that we have it 
-all.
-
-I'm starting to suspect that it's actually a tag-specific problem: we do 
-that reachability crud all by commit history, so the tags are a total 
-special case, and if we don't send the proper HAVE/WANT for those or mark 
-them properly with THEY_HAVE/COMMON etc, maybe the algorithm just gets 
-confused.
-
-I need to go pick up my youngest, so I'll be off-line on this for a while. 
-Will try to think it through.
-
-		Linus
+And the common part is already shared (write_sha1_file_prepare()
+and write_sha1_file() from sha1_file.c).
