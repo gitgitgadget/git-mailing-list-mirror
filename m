@@ -1,100 +1,60 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 5/5] Enable ref log creation in git checkout -b.
-Date: Wed, 24 May 2006 19:36:46 -0400
-Message-ID: <20060524233646.GC3554@spearce.org>
-References: <20060519091716.GM22257@spearce.org> <7vk68fyarn.fsf@assigned-by-dhcp.cox.net> <20060524035234.GA13329@spearce.org> <7vy7wr3tc3.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Slow fetches of tags
+Date: Wed, 24 May 2006 16:43:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605241641250.5623@g5.osdl.org>
+References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
+ <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 01:37:06 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ralf Baechle <ralf@linux-mips.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 25 01:44:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fj2uO-0005Qn-Qn
-	for gcvg-git@gmane.org; Thu, 25 May 2006 01:36:58 +0200
+	id 1Fj30q-0006fK-Di
+	for gcvg-git@gmane.org; Thu, 25 May 2006 01:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932337AbWEXXgy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 19:36:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932338AbWEXXgy
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 19:36:54 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:63618 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932337AbWEXXgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 May 2006 19:36:53 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fj2u9-000594-HS; Wed, 24 May 2006 19:36:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 078EA20FB0C; Wed, 24 May 2006 19:36:46 -0400 (EDT)
+	id S932080AbWEXXna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 19:43:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932336AbWEXXna
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 19:43:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12751 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932080AbWEXXn3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 19:43:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4ONh8tH014176
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 24 May 2006 16:43:09 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4ONh3jk004337;
+	Wed, 24 May 2006 16:43:05 -0700
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy7wr3tc3.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20712>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+
+
+On Wed, 24 May 2006, Linus Torvalds wrote:
 > 
-> > Junio C Hamano <junkio@cox.net> wrote:
-> >> I've swallowed all 10 and pushed them out in "pu", but could you
-> >> add tests to check the Porcelainish commands you touched with
-> >> this series to make sure they all log correctly?
-> >
-> > Sure.  I've been putting it off as I've been busy the past few days
-> > and have also been thinking about trying to rebuild reflog using a
-> > tag/annotation branch style, which might be more generally useful
-> > to others.
-> 
-> It appears that there is more serious breakage caused by the
-> lock_ref change.  http-fetch in "next" fails to clone, because
-> the call to lock-ref-sha1 in fetch.c::pull() forgets that the
-> program might be creating a new ref.
+> IOW, I think there's something more fundamentally wrong with the tag 
+> following. We _should_ have figured out much more quickly that we have it 
+> all.
 
-The breakage is because of current_ref always being null.  The old
-code would allow locking a non-existant ref in this case while the
-new code was failing.  A simple change such as the following should
-fix it:
+Actually, maybe the problem is that Ralf's tree has two roots, because of 
+the old CVS history. It might be following the other root down for the 
+"have" part, since that one doesn't exist at all in the target and the 
+other side will never acknowledge any of it. 
 
--->8--
-Fix fetch when using reflog.
+I'll play with it.
 
-Previously fetch was permitted to create refs if they did not exist;
-this only worked as current_ref was always NULL and thus never
-would get compared against the existing ref.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-
----
-
-2dad4178db978c01257fde949d808361589ee003
- fetch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-2dad4178db978c01257fde949d808361589ee003
-diff --git a/fetch.c b/fetch.c
-index fd57684..15110b8 100644
---- a/fetch.c
-+++ b/fetch.c
-@@ -213,7 +213,7 @@ int pull(char *target)
- 	save_commit_buffer = 0;
- 	track_object_refs = 0;
- 	if (write_ref) {
--		lock = lock_ref_sha1(write_ref, current_ref, 1);
-+		lock = lock_ref_sha1(write_ref, current_ref, 0);
- 		if (!lock) {
- 			error("Can't lock ref %s", write_ref);
- 			return -1;
--- 
-1.3.3.gfad60
+		Linus
