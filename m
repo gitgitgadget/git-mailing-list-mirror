@@ -1,56 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] cvsimport: cleanup commit function
-Date: Wed, 24 May 2006 05:52:12 -0400
-Message-ID: <20060524095212.GA29510@coredump.intra.peff.net>
-References: <46a038f90605221241x58ffa2a4o26159d38d86a8092@mail.gmail.com> <Pine.LNX.4.64.0605221256090.3697@g5.osdl.org> <20060522214128.GE16677@kiste.smurf.noris.de> <7v8xotadm3.fsf@assigned-by-dhcp.cox.net> <46a038f90605221615j59583bcdqf128bab31603148e@mail.gmail.com> <20060523065232.GA6180@coredump.intra.peff.net> <20060523070007.GC6180@coredump.intra.peff.net> <118833cc0605231047o2012deefh5e77b8496da1e673@mail.gmail.com> <20060523205944.GA16164@coredump.intra.peff.net> <7vpsi41f82.fsf@assigned-by-dhcp.cox.net>
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: file name case-sensitivity issues
+Date: Wed, 24 May 2006 09:55:14 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0605240949470.29399@dildano.hawaga.org.uk>
+References: <20060523210615.GB5869@steel.home>
+ <Pine.LNX.4.64.0605232239070.15915@dildano.hawaga.org.uk>
+ <7vd5e4xkrh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 11:52:18 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 11:55:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fiq2M-0005um-1V
-	for gcvg-git@gmane.org; Wed, 24 May 2006 11:52:18 +0200
+	id 1Fiq5O-0006LC-Vt
+	for gcvg-git@gmane.org; Wed, 24 May 2006 11:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbWEXJwO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 05:52:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932666AbWEXJwO
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 05:52:14 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:60375 "EHLO
-	peff.net") by vger.kernel.org with ESMTP id S932655AbWEXJwN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 05:52:13 -0400
-Received: (qmail 74530 invoked from network); 24 May 2006 09:52:12 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 0 with SMTP; 24 May 2006 09:52:12 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 24 May 2006 05:52:12 -0400
+	id S932630AbWEXJzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 05:55:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932666AbWEXJzY
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 05:55:24 -0400
+Received: from dildano.hawaga.org.uk ([81.187.211.37]:32489 "EHLO
+	dildano.hawaga.org.uk") by vger.kernel.org with ESMTP
+	id S932630AbWEXJzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 05:55:23 -0400
+Received: from dildano.hawaga.org.uk (localhost.localdomain [127.0.0.1])
+	by dildano.hawaga.org.uk (8.13.6/8.13.6/Debian-1) with ESMTP id k4O9tFm7004765;
+	Wed, 24 May 2006 09:55:15 GMT
+Received: from localhost (benc@localhost)
+	by dildano.hawaga.org.uk (8.13.6/8.13.6/Submit) with ESMTP id k4O9tEnL004761;
+	Wed, 24 May 2006 09:55:15 GMT
+X-Authentication-Warning: dildano.hawaga.org.uk: benc owned process doing -bs
 To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vpsi41f82.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vd5e4xkrh.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20676>
 
-On Tue, May 23, 2006 at 04:41:33PM -0700, Junio C Hamano wrote:
 
-> Are you two talking about running git-commit-tree via env is two
-> fork-execs instead of just one?  Does that have a measurable
-> difference?
 
-Yes, that's what I was talking about. No, probably not a huge
-difference. I did some performance measurements of all of the recent
-cvsimport changes on a small-ish personal repo (I don't have the gentoo
-repo). The results were not significant (<= 1% improvement for each
-change).  I would expect some of the changes (index-info, fetchfile) to
-have an impact on a repo with different characteristics (like the gentoo
-one).
+On Tue, 23 May 2006, Junio C Hamano wrote:
 
--Peff
+> That's interesting.  I wonder how...  Does this sequence remove FOO
+> on that filesystem?
+> 
+> 	$ date >FOO
+>         $ rm -f foo
+>         $ ls
+
+yes.
+
+$ ls
+$ date >FOO
+$ ls
+FOO
+$ rm -f foo
+$ ls
+
+
+
+> Also if you do the final "git pull" using resolve strategy, does
+> it change the result (say "git pull -s resolve . side" instead)?
+
+Different result:
+
+$ mkdir case-sensitivity-test
+$ cd case-sensitivity-test
+$ git init-db
+defaulting to local storage area
+$ echo foo > foo
+$ echo bar > bar
+$ git add foo bar
+$ git commit -m initial\ commit
+Committing initial tree 89ff1a2aefcbff0f09197f0fd8beeb19a7b6e51c
+$ git checkout -b side
+$ echo bar-side >> bar
+$ git commit -m side\ commit -o bar
+$ git checkout master
+$ rm foo
+$ git update-index --remove foo
+$ echo FOO > FOO
+$ git add FOO
+$ git commit -m case\ change
+$ ls
+FOO bar
+$ git pull -s resolve . side
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Trying simple merge.
+Merge 06c11eeb08edefba8178b091287ec6d951d1ef1d, made by resolve.
+ bar |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+$ ls
+FOO bar
+$ 
+
+
+-- 
