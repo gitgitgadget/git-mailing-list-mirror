@@ -1,115 +1,94 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Add a test-case for git-apply trying to add an ending
- line
-Date: Tue, 23 May 2006 19:08:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605231905470.5623@g5.osdl.org>
-References: <20060523214836.22628.2179.stgit@localhost.localdomain>
- <7vd5e4z2je.fsf@assigned-by-dhcp.cox.net> <7vhd3gxm73.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 04:08:23 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: t0000: add -f flag to checkout
+Date: Tue, 23 May 2006 19:13:18 -0700
+Message-ID: <11484367982046-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed May 24 04:13:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiinL-0004fm-On
-	for gcvg-git@gmane.org; Wed, 24 May 2006 04:08:20 +0200
+	id 1FiisH-0005Lj-Jn
+	for gcvg-git@gmane.org; Wed, 24 May 2006 04:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932275AbWEXCIK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 22:08:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932546AbWEXCIK
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 22:08:10 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42914 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932275AbWEXCIJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 22:08:09 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4O283tH008365
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 23 May 2006 19:08:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4O2815k029653;
-	Tue, 23 May 2006 19:08:02 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhd3gxm73.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932546AbWEXCNW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 22:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932547AbWEXCNW
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 22:13:22 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:29060 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932546AbWEXCNW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 22:13:22 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 53D0E2DC01A;
+	Tue, 23 May 2006 19:13:20 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 23 May 2006 19:13:18 -0700
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-Mailer: git-send-email 1.3.2.g7d11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20657>
 
+Some changes to the latest git.git made this test croak.  So
+we'll always just force everything when using a new branch.
 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-On Tue, 23 May 2006, Junio C Hamano wrote:
-> 
-> Come to think of it, the above argument is bogus.  We _would_
-> want to make EOF just like any other context lines.
-> 
-> The issue is if we can reliably tell if there is such an EOF
-> context by looking at the diff.  Not having the same number of
-> lines that starts with ' ' in the hunk is not really a nice way
-> of doing so (you could make a unified diff that does not have
-> trailing context at all), and I do not offhand think of a good
-> way to do so.
-
-We can. Something like this should do it.
-
-(The same thing could be done for "match_beginning", perhaps).
-
-Totally untested, of course.
-
-(It might be better to pass in "match_end" to find_offset(), so that it 
-could do the "look forwards" pass to see if it finds a better line offset 
-that is at the end - as it is, this will _fail_ the patch if it could 
-apply better at a non-end thing, even if it would _also_ have applied at 
-the end of the file).
-
-		Linus
 ---
-diff --git a/apply.c b/apply.c
-index 0ed9d13..905bf34 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1333,6 +1333,7 @@ static int apply_line(char *output, cons
+
+ contrib/git-svn/t/t0000-contrib-git-svn.sh |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+9439cefac1aa09cdc8553f452d84ddf71be2f909
+diff --git a/contrib/git-svn/t/t0000-contrib-git-svn.sh b/contrib/git-svn/t/t0000-contrib-git-svn.sh
+index 80ad357..f400202 100644
+--- a/contrib/git-svn/t/t0000-contrib-git-svn.sh
++++ b/contrib/git-svn/t/t0000-contrib-git-svn.sh
+@@ -71,7 +71,7 @@ test_expect_success \
  
- static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag)
- {
-+	int match_end;
- 	char *buf = desc->buffer;
- 	const char *patch = frag->patch;
- 	int offset, size = frag->size;
-@@ -1395,10 +1396,20 @@ #endif
- 	newlines = new;
- 	leading = frag->leading;
- 	trailing = frag->trailing;
-+
-+	/*
-+	 * If we don't have any trailing data in the patch,
-+	 * we want to match the final ending '\0' byte in
-+	 * the file too..
-+	 */
-+	match_end = !trailing;
-+
- 	lines = 0;
- 	pos = frag->newpos;
- 	for (;;) {
- 		offset = find_offset(buf, desc->size, oldlines, oldsize, pos, &lines);
-+		if (match_end && offset + oldsize != desc->size)
-+			offset = -1;
- 		if (offset >= 0) {
- 			int diff = newsize - oldsize;
- 			unsigned long size = desc->size + diff;
-@@ -1428,6 +1439,10 @@ #endif
- 		/* Am I at my context limits? */
- 		if ((leading <= p_context) && (trailing <= p_context))
- 			break;
-+		if (match_end) {
-+			match_end = 0;
-+			continue;
-+		}
- 		/* Reduce the number of context lines
- 		 * Reduce both leading and trailing if they are equal
- 		 * otherwise just reduce the larger context.
+ 
+ name='try a deep --rmdir with a commit'
+-git checkout -b mybranch remotes/git-svn
++git checkout -f -b mybranch remotes/git-svn
+ mv dir/a/b/c/d/e/file dir/file
+ cp dir/file file
+ git update-index --add --remove dir/a/b/c/d/e/file dir/file file
+@@ -97,7 +97,7 @@ test_expect_code 1 "$name" \
+ 
+ name='detect node change from directory to file #1'
+ rm -rf dir $GIT_DIR/index
+-git checkout -b mybranch2 remotes/git-svn
++git checkout -f -b mybranch2 remotes/git-svn
+ mv bar/zzz zzz
+ rm -rf bar
+ mv zzz bar
+@@ -112,7 +112,7 @@ test_expect_code 1 "$name" \
+ 
+ name='detect node change from file to directory #2'
+ rm -f $GIT_DIR/index
+-git checkout -b mybranch3 remotes/git-svn
++git checkout -f -b mybranch3 remotes/git-svn
+ rm bar/zzz
+ git-update-index --remove bar/zzz
+ mkdir bar/zzz
+@@ -127,7 +127,7 @@ test_expect_code 1 "$name" \
+ 
+ name='detect node change from directory to file #2'
+ rm -f $GIT_DIR/index
+-git checkout -b mybranch4 remotes/git-svn
++git checkout -f -b mybranch4 remotes/git-svn
+ rm -rf dir
+ git update-index --remove -- dir/file
+ touch dir
+@@ -142,7 +142,7 @@ test_expect_code 1 "$name" \
+ 
+ name='remove executable bit from a file'
+ rm -f $GIT_DIR/index
+-git checkout -b mybranch5 remotes/git-svn
++git checkout -f -b mybranch5 remotes/git-svn
+ chmod -x exec.sh
+ git update-index exec.sh
+ git commit -m "$name"
+-- 
+1.3.2.g7d11
