@@ -1,60 +1,85 @@
-From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
-Subject: Re: [osol-bugs] access() behaves strange when used as root
-Date: Wed, 24 May 2006 16:09:17 +0200
-Message-ID: <f3d7535d0605240709p19497614s30ec87492a189faf@mail.gmail.com>
-References: <f3d7535d0605230818l6ecb9b87gd38afc75941c5fdd@mail.gmail.com>
-	 <20060523153415.GB3638@greyarea>
-	 <20060523154213.GB21587@totally.trollied.org>
-	 <f3d7535d0605231035p6e2d8ef8qefefe43a8b11e739@mail.gmail.com>
-	 <44734FCC.6040709@sun.com>
-	 <f3d7535d0605232220g402f7df0xb82d6afeb6b226fd@mail.gmail.com>
-	 <447460C1.6070305@sun.com>
-	 <f3d7535d0605240708k7e55cc3fu8c2e8ad744f738c9@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Add a test-case for git-apply trying to add an ending
+ line
+Date: Wed, 24 May 2006 07:49:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605240745590.5623@g5.osdl.org>
+References: <20060523214836.22628.2179.stgit@localhost.localdomain>
+ <7vd5e4z2je.fsf@assigned-by-dhcp.cox.net> <7vhd3gxm73.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605231905470.5623@g5.osdl.org> <7v8xosqaqm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed May 24 16:09:24 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 16:50:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fiu37-0006Rq-SB
-	for gcvg-git@gmane.org; Wed, 24 May 2006 16:09:22 +0200
+	id 1FiugT-00055P-7d
+	for gcvg-git@gmane.org; Wed, 24 May 2006 16:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309AbWEXOJS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 10:09:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932312AbWEXOJS
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 10:09:18 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:61309 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932309AbWEXOJS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 10:09:18 -0400
-Received: by wr-out-0506.google.com with SMTP id i34so1592057wra
-        for <git@vger.kernel.org>; Wed, 24 May 2006 07:09:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VWlmIR1EwOvnLY4ScEexb8/6KNwhOllzo/jQrsTS6Gv9i4XY3yarhfbRy/EjdA2lYv6G8pzErnfV/jx9NE4gfT4SQBqxdLCVuLsvn5PdJgHc75CVkPk2a89vPInuR2WABo32+IPLp3OFHmJIrUJaKOVOboWcex9tNCj2CX7Q8eQ=
-Received: by 10.65.239.2 with SMTP id q2mr3014734qbr;
-        Wed, 24 May 2006 07:09:17 -0700 (PDT)
-Received: by 10.64.253.10 with HTTP; Wed, 24 May 2006 07:09:17 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
-In-Reply-To: <f3d7535d0605240708k7e55cc3fu8c2e8ad744f738c9@mail.gmail.com>
-Content-Disposition: inline
+	id S932311AbWEXOt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 10:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbWEXOt5
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 10:49:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51587 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932311AbWEXOt4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 10:49:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4OEnltH005294
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 24 May 2006 07:49:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4OEnkGo019011;
+	Wed, 24 May 2006 07:49:47 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xosqaqm.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20689>
 
-[snip]
 
-oups - sorry, wrong recepient... :( *shrug*
 
-bye
+On Tue, 23 May 2006, Junio C Hamano wrote:
 
-Stefan
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > On Tue, 23 May 2006, Junio C Hamano wrote:
+> >
+> >> The issue is if we can reliably tell if there is such an EOF
+> >> context by looking at the diff.  Not having the same number of
+> >> lines that starts with ' ' in the hunk is not really a nice way
+> >> of doing so (you could make a unified diff that does not have
+> >> trailing context at all), and I do not offhand think of a good
+> >> way to do so.
+> >
+> > We can. Something like this should do it.
+> >
+> > (The same thing could be done for "match_beginning", perhaps).
+> 
+> But this is exactly what I said I had trouble with in the above.
 
--- 
-       http://www.dreamind.de/
-Oroborus and Debian GNU/Linux Developer.
+Well, not quite. You said "not the same number of lines", and I say "no 
+ending context". Very different.
+
+My patch actually is totally self-consistent: not having any context at 
+the end of a unified diff really means that it is the end of the file (ie, 
+the "end of file" there _is_ the context). And if you want to apply files 
+without context, you should use "-Cx", and my patch does that too - if you 
+asked for "relaxed context checking", it will re-try without the "only at 
+end" check thanks to the
+
+	if (match_end) {
+		match_end = 0;
+		continue;
+	}
+
+so it all should work.
+
+Not that I _tested_ it, of course ;)
+
+		Linus
