@@ -1,94 +1,63 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: t0000: add -f flag to checkout
-Date: Tue, 23 May 2006 19:13:18 -0700
-Message-ID: <11484367982046-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed May 24 04:13:31 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Add a test-case for git-apply trying to add an ending
+ line
+Date: Tue, 23 May 2006 19:17:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605231916210.5623@g5.osdl.org>
+References: <20060523214836.22628.2179.stgit@localhost.localdomain>
+ <7vd5e4z2je.fsf@assigned-by-dhcp.cox.net> <7vhd3gxm73.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0605231905470.5623@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 04:18:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiisH-0005Lj-Jn
-	for gcvg-git@gmane.org; Wed, 24 May 2006 04:13:26 +0200
+	id 1Fiiwe-00068J-IL
+	for gcvg-git@gmane.org; Wed, 24 May 2006 04:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932546AbWEXCNW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 22:13:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932547AbWEXCNW
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 22:13:22 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:29060 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S932546AbWEXCNW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 22:13:22 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 53D0E2DC01A;
-	Tue, 23 May 2006 19:13:20 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 23 May 2006 19:13:18 -0700
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Mailer: git-send-email 1.3.2.g7d11
+	id S932550AbWEXCRy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 22:17:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932551AbWEXCRy
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 22:17:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:13477 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932550AbWEXCRx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 May 2006 22:17:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4O2HktH008666
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 May 2006 19:17:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4O2Hiuc029847;
+	Tue, 23 May 2006 19:17:45 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0605231905470.5623@g5.osdl.org>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20658>
 
-Some changes to the latest git.git made this test croak.  So
-we'll always just force everything when using a new branch.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
----
+On Tue, 23 May 2006, Linus Torvalds wrote:
+>
+> +	/*
+> +	 * If we don't have any trailing data in the patch,
+> +	 * we want to match the final ending '\0' byte in
+> +	 * the file too..
+> +	 */
 
- contrib/git-svn/t/t0000-contrib-git-svn.sh |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+Btw, ignore the comment. I was thinking of doing the matching differently 
+(just make the source buffer include a '\0' at the end, and forcing that 
+to match), but once I actually wrote it, it ended up being much easier to 
+just check the offset/size difference.
 
-9439cefac1aa09cdc8553f452d84ddf71be2f909
-diff --git a/contrib/git-svn/t/t0000-contrib-git-svn.sh b/contrib/git-svn/t/t0000-contrib-git-svn.sh
-index 80ad357..f400202 100644
---- a/contrib/git-svn/t/t0000-contrib-git-svn.sh
-+++ b/contrib/git-svn/t/t0000-contrib-git-svn.sh
-@@ -71,7 +71,7 @@ test_expect_success \
- 
- 
- name='try a deep --rmdir with a commit'
--git checkout -b mybranch remotes/git-svn
-+git checkout -f -b mybranch remotes/git-svn
- mv dir/a/b/c/d/e/file dir/file
- cp dir/file file
- git update-index --add --remove dir/a/b/c/d/e/file dir/file file
-@@ -97,7 +97,7 @@ test_expect_code 1 "$name" \
- 
- name='detect node change from directory to file #1'
- rm -rf dir $GIT_DIR/index
--git checkout -b mybranch2 remotes/git-svn
-+git checkout -f -b mybranch2 remotes/git-svn
- mv bar/zzz zzz
- rm -rf bar
- mv zzz bar
-@@ -112,7 +112,7 @@ test_expect_code 1 "$name" \
- 
- name='detect node change from file to directory #2'
- rm -f $GIT_DIR/index
--git checkout -b mybranch3 remotes/git-svn
-+git checkout -f -b mybranch3 remotes/git-svn
- rm bar/zzz
- git-update-index --remove bar/zzz
- mkdir bar/zzz
-@@ -127,7 +127,7 @@ test_expect_code 1 "$name" \
- 
- name='detect node change from directory to file #2'
- rm -f $GIT_DIR/index
--git checkout -b mybranch4 remotes/git-svn
-+git checkout -f -b mybranch4 remotes/git-svn
- rm -rf dir
- git update-index --remove -- dir/file
- touch dir
-@@ -142,7 +142,7 @@ test_expect_code 1 "$name" \
- 
- name='remove executable bit from a file'
- rm -f $GIT_DIR/index
--git checkout -b mybranch5 remotes/git-svn
-+git checkout -f -b mybranch5 remotes/git-svn
- chmod -x exec.sh
- git update-index exec.sh
- git commit -m "$name"
--- 
-1.3.2.g7d11
+So that "final ending '\0' byte in the file" part of the comment is just 
+nonsense.
+
+		Linus
