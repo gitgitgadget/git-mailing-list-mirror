@@ -1,89 +1,51 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Re: Incremental cvsimports
-Date: Wed, 24 May 2006 22:03:44 +0930
-Message-ID: <93c3eada0605240533q4d1b5b81p128dc2b905aa9976@mail.gmail.com>
-References: <93c3eada0605240046t10e00119n4cfc39ec33fe1d92@mail.gmail.com>
-	 <46a038f90605240121o117fadb6vf3ce910a3ad3e90@mail.gmail.com>
-	 <93c3eada0605240419o48891cdle6c100fc0ac870ff@mail.gmail.com>
-	 <20060524122246.GA3997@coredump.intra.peff.net>
-Reply-To: geoff@austrics.com.au
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: Slow fetches of tags
+Date: Wed, 24 May 2006 14:10:22 +0100
+Message-ID: <20060524131022.GA11449@linux-mips.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed May 24 14:34:23 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed May 24 15:11:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FisZ0-0007MK-3U
-	for gcvg-git@gmane.org; Wed, 24 May 2006 14:34:10 +0200
+	id 1Fit95-0004rn-GG
+	for gcvg-git@gmane.org; Wed, 24 May 2006 15:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932723AbWEXMdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 08:33:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932728AbWEXMdp
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 08:33:45 -0400
-Received: from wx-out-0102.google.com ([66.249.82.206]:59299 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932723AbWEXMdo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 08:33:44 -0400
-Received: by wx-out-0102.google.com with SMTP id s6so1194225wxc
-        for <git@vger.kernel.org>; Wed, 24 May 2006 05:33:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=t/IOQBcHceI0j4GnS4YOziPQCKmVRX1quDbo3SMxLz3uxdX5G2R8F6eF5DNnBkoXuirDYnNEoEGaifvjxGT5nPG/eLQtjK0T/SbABSh1kD6tVFT724Lq2HZY166xeLqm1zO3ItpH5uqvPTLzCh4a1+5DntpwfhldLCgyYeY4CWg=
-Received: by 10.70.48.18 with SMTP id v18mr7655862wxv;
-        Wed, 24 May 2006 05:33:44 -0700 (PDT)
-Received: by 10.70.32.19 with HTTP; Wed, 24 May 2006 05:33:44 -0700 (PDT)
-To: geoff@austrics.com.au,
-	"Martin Langhoff" <martin.langhoff@gmail.com>, git@vger.kernel.org
-In-Reply-To: <20060524122246.GA3997@coredump.intra.peff.net>
+	id S932736AbWEXNKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 09:10:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932737AbWEXNKp
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 09:10:45 -0400
+Received: from ftp.linux-mips.org ([194.74.144.162]:16282 "EHLO
+	ftp.linux-mips.org") by vger.kernel.org with ESMTP id S932736AbWEXNKp
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 09:10:45 -0400
+Received: from localhost.localdomain ([127.0.0.1]:2177 "EHLO bacchus.dhis.org")
+	by ftp.linux-mips.org with ESMTP id S8133534AbWEXNKm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 15:10:42 +0200
+Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
+	by bacchus.dhis.org (8.13.6/8.13.4) with ESMTP id k4ODAM33011608
+	for <git@vger.kernel.org>; Wed, 24 May 2006 14:10:22 +0100
+Received: (from ralf@localhost)
+	by denk.linux-mips.net (8.13.6/8.13.6/Submit) id k4ODAMHu011607
+	for git@vger.kernel.org; Wed, 24 May 2006 14:10:22 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20682>
 
-Dear Jeff,
+I have a fairly large git tree (with a 320MB pack file containing some
+700,000 objects).  A small fetch like
 
-See below.
+  git fetch git://www.kernel.org/pub/scm/linux/kernel/git/stable/\
+       linux-2.6.16.y.git master:v2.6.16-stable
 
-On 5/24/06, Jeff King <peff@peff.net> wrote:
-> On Wed, May 24, 2006 at 08:49:03PM +0930, Geoff Russell wrote:
->
-> > I did have to change 2 lines in git-cvsimport to get it to run with my
-> > 5.8.0 perl (problems with POSIX errno). I've attached a patch but my
-> > work around isn't as quick as what it replaced.
->
-> Can you describe your problem in more detail? The POSIX errno constants
-> have been available since long before 5.8.0, so we should be able to use
-> them.
+which only fetches a handful of objects (v2.6.16.17 -> v2.6.16.18) will
+take on the order of 4-5 minutes.  Adding the "-n" option is will bring
+the operation down to under a second, so it really is just the tags
+that are slowing things down so much..
 
-
-   $ ./git-cvsimport
-
-   ":errno_h" is not exported by the POSIX module
-   Can't continue after import errors at
-/usr/lib/perl5/5.8.0/i386-linux-thread-multi/POSIX.pm line 19
-    BEGIN failed--compilation aborted at ./git-cvsimport line 26.
-
-When I deleted ":errno_h" I needed to patch the place it was used (as per patch
-I attached in original post).
-
-Cheers,
-Geoff Russell
-
-
-
->
-> (btw, the change was introduced in my commit() cleanups:
->   e73aefe4fdba0d161d9878642c69b40d83a0204c).
->
-> -Peff
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+  Ralf
