@@ -1,76 +1,71 @@
-From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
-Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
-Date: Wed, 24 May 2006 21:16:26 +0200
-Message-ID: <4474B10A.1020704@gmx.de>
-References: <4471CF23.1070807@gmx.de>	<7vac99c1hv.fsf@assigned-by-dhcp.cox.net> <44737353.20904@gmx.de> <7vzmh81gfa.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Slow fetches of tags
+Date: Wed, 24 May 2006 12:17:36 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
+References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
+ <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 21:16:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ralf Baechle <ralf@linux-mips.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 24 21:18:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiyqK-0007d4-BL
-	for gcvg-git@gmane.org; Wed, 24 May 2006 21:16:28 +0200
+	id 1Fiyrk-0007sq-2v
+	for gcvg-git@gmane.org; Wed, 24 May 2006 21:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbWEXTQZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 15:16:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWEXTQZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 15:16:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:63417 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751268AbWEXTQY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 15:16:24 -0400
-Received: (qmail invoked by alias); 24 May 2006 19:16:23 -0000
-Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
-  by mail.gmx.net (mp012) with SMTP; 24 May 2006 21:16:23 +0200
-X-Authenticated: #916101
-User-Agent: Mail/News 1.5 (X11/20060228)
+	id S1751270AbWEXTRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 15:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWEXTRx
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 15:17:53 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:65152 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751270AbWEXTRx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 15:17:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4OJHctH019440
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 24 May 2006 12:17:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4OJHaU3028093;
+	Wed, 24 May 2006 12:17:37 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmh81gfa.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20702>
 
 
->> 2.) Searching for a way to add objects to the database I spent quite a
->> while to find the right command. Don't you think it would be much more
->> intuitive having an
->>
->>     git-create-object [-t <type>] [-n] [-f] [-z] [--stdin] <file> [-r
->> <ref-name>]
->>
->> command for creating any type of object (-t blob as default).
->>     
->
-> No, I do not think we would want to make it too easy and relaxed
-> to create arbitrary object-looking thing.  Each type have
-> defined format and semantics, and creation of an object of each
-> type should be validated.  I do not want to encourage bypassing
-> it by introducing such a backdoor.  The backdoor is easy to
-> write, but I suspect it would actively harm us, instead of
-> helping us, by encouraging "let's build a custom type of object,
-> we do not care if other people would not understand it"
-> mentality.
->   
 
-Well, this is exactly what you have now in
-    git-hash-object -w -t foo
+On Wed, 24 May 2006, Junio C Hamano wrote:
+> 
+> A "have" object is not just has_sha1_file(), but it needs to be
+> reachable from one of our tips we have already verified as
+> complete
 
-That is why I said, all input should be validated by default. All I
-proposed was
-a) unify the tools in order to have less duplicate code (git-mktag,
-git-mktree & git-hash-object do merely the same except for the
-validating part)
-b) remove the possibility to introduce unchecked objects of arbitrary
-type (or only allow it with the -f = "force, use with caution"-option)
+You're right.
 
-maybe I should have written "blob, tag, tree or commit" instead of
-"arbitrary". I did not mean really arbitrary like it is implemented
-right now in git-hash-object.
+And the strange part is that the commit we should give for the tag thing 
+_should_ actually be pretty recent, and I wonder why we end up walking the 
+whole damn tree history and saying "want" to basically them all. 
 
-Bj
+IOW, I think there's something more fundamentally wrong with the tag 
+following. We _should_ have figured out much more quickly that we have it 
+all.
+
+I'm starting to suspect that it's actually a tag-specific problem: we do 
+that reachability crud all by commit history, so the tags are a total 
+special case, and if we don't send the proper HAVE/WANT for those or mark 
+them properly with THEY_HAVE/COMMON etc, maybe the algorithm just gets 
+confused.
+
+I need to go pick up my youngest, so I'll be off-line on this for a while. 
+Will try to think it through.
+
+		Linus
