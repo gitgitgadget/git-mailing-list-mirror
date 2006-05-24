@@ -1,58 +1,86 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Incremental cvsimports
-Date: Wed, 24 May 2006 20:25:39 +1200
-Message-ID: <46a038f90605240125q3fb58466w55745348846c48fc@mail.gmail.com>
-References: <93c3eada0605240046t10e00119n4cfc39ec33fe1d92@mail.gmail.com>
-	 <46a038f90605240121o117fadb6vf3ce910a3ad3e90@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC][PATCH] Allow transfer of any valid sha1
+Date: Wed, 24 May 2006 02:07:13 -0700
+Message-ID: <7vejyjpz9a.fsf@assigned-by-dhcp.cox.net>
+References: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 10:25:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 24 11:07:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fiogf-00016l-Qv
-	for gcvg-git@gmane.org; Wed, 24 May 2006 10:25:50 +0200
+	id 1FipKs-0007RB-OV
+	for gcvg-git@gmane.org; Wed, 24 May 2006 11:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932665AbWEXIZr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 04:25:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932666AbWEXIZr
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 04:25:47 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:16433 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932665AbWEXIZq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 04:25:46 -0400
-Received: by wr-out-0506.google.com with SMTP id i3so1446820wra
-        for <git@vger.kernel.org>; Wed, 24 May 2006 01:25:46 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZlIv09BpQUY9HxQNuFikyN1cAsBqMrtt6nBYpk/BBxXkkt0CpgiDIn07hVzF+go/HjMKMs1WW5uQ//ndT04m4rmpSP1Qfvpfeqn0n1H92a3+uNB9PEXmpS+ekbNXQ2Qqu6d543W0ZgcVZfLKx+UyZzMPA9PjKXWFyLbRcJKYNPM=
-Received: by 10.54.153.18 with SMTP id a18mr6926980wre;
-        Wed, 24 May 2006 01:25:39 -0700 (PDT)
-Received: by 10.54.127.12 with HTTP; Wed, 24 May 2006 01:25:39 -0700 (PDT)
-To: geoff@austrics.com.au
-In-Reply-To: <46a038f90605240121o117fadb6vf3ce910a3ad3e90@mail.gmail.com>
-Content-Disposition: inline
+	id S932175AbWEXJHQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 05:07:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932542AbWEXJHQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 05:07:16 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:52143 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932175AbWEXJHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 05:07:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060524090714.TNJI15069.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 May 2006 05:07:14 -0400
+To: ebiederm@xmission.com (Eric W. Biederman)
+In-Reply-To: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's
+	message of "Wed, 24 May 2006 01:51:36 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20674>
 
-On 5/24/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> You _will_ need a lot of memory though, as cvsps grows large (working
-> on a workaround now)
+ebiederm@xmission.com (Eric W. Biederman) writes:
 
-While the workaround is worked around, you can create the cvsps file
-using something like
+> Can we fix the check in upload-pack.c something like my
+> patch below does?  Are there any security implications for
+> doing that?
 
-CVSROOT=~/tmp/gentoorepo/ cvsps --norc -x -u -A gentoo-x86  >
-gentoo.cvsps 2> gentoo.err
+> Could we just make the final check before dying if (!o) ?
 
-and then pass a -P gentoo.cvsps to cvsimport. s/gentoo/myproject/ ;-)
+The primary implication is about correctness, so I am reluctant
+to break it without a careful alternative check in place.
 
+The issue is that having a single object in the repository does
+not guarantee that you have everything reachable from it, and we
+need that guarantee.  Reachability from the refs is what
+guarantees that.
 
-martin
+We are careful to update the ref at the very end of the transfer
+(fetch/clone or push); so if an object is reachable from a ref,
+then all the objects reachable from that object are available in
+the repository.
+
+Imagine http commit walker started fetching tip of upstream into
+your repository and you interrupted the transfer.  Objects near
+the tip of the upstream history are available after such an
+interrupted transfer.  But a bit older history (but still later
+than what we had before we started the transfer) are not.
+
+We do not update the ref with the downloaded tip object, so that
+we would not break the guarantee.  This guarantee is needed for
+feeding clients from the repository later.  If you tell your
+clients, after such an interrupted transfer, that you are
+willing to serve the objects near the (new) tip, the clients may
+rightfully request objects that are reachable from these
+objects, some of them you do _not_ have!
+
+So this "on demand SHA1" stuff needs to be solved by checking if
+the given object is reachable from our refs in upload-pack,
+instead of the current check to see if the given object is
+pointed by our refs.  When upload-pack can prove that the object
+is reachable from one of the refs, it is OK to use it; otherwise
+you should not.
+
+Now, proving that a given SHA1 is the name of an object that
+exists in the repository is cheap (has_sha1_file()), but proving
+that the object is reachable from some of our refs can become
+quite expensive.  That gives this issue a security implication
+as well -- you can easily DoS the git-daemon that way, for
+example.
