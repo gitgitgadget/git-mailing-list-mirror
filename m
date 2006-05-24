@@ -1,74 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Clean up sha1 file writing
-Date: Wed, 24 May 2006 11:52:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605241145490.5623@g5.osdl.org>
-References: <Pine.LNX.4.64.0605240820560.5623@g5.osdl.org> <E1Fixs4-0005pD-10@moooo.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Slow fetches of tags
+Date: Wed, 24 May 2006 12:06:24 -0700
+Message-ID: <7vhd3f6y4v.fsf@assigned-by-dhcp.cox.net>
+References: <20060524131022.GA11449@linux-mips.org>
+	<Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
+	<Pine.LNX.4.64.0605240947580.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 24 20:52:39 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>
+X-From: git-owner@vger.kernel.org Wed May 24 21:06:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FiyTD-0003rl-BT
-	for gcvg-git@gmane.org; Wed, 24 May 2006 20:52:35 +0200
+	id 1Fiygf-00063a-KZ
+	for gcvg-git@gmane.org; Wed, 24 May 2006 21:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932219AbWEXSwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 14:52:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932229AbWEXSwc
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 14:52:32 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12008 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932219AbWEXSwb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 14:52:31 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4OIqOtH018134
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 May 2006 11:52:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4OIqMFX027271;
-	Wed, 24 May 2006 11:52:23 -0700
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1Fixs4-0005pD-10@moooo.ath.cx>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751011AbWEXTG0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 15:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751015AbWEXTG0
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 15:06:26 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:62628 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751008AbWEXTG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 15:06:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060524190625.XTTI5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 May 2006 15:06:25 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 24 May 2006 10:21:41 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20700>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> Junio? Any ideas? I didn't want to do that tag-auto-following, and while I 
+> admit it's damn convenient, it's really quite broken, methinks. 
 
-On Wed, 24 May 2006, Matthias Lederhofer wrote:
+I think the current setup is broken on two counts.  If you fetch
+without remote tracking branch, I suspect that we end up asking
+for the tip of the remote again -- because there is no ref that
+says "this commit is known to be complete -- we just fetched
+from them successfully".
 
-> > checking for partial writes
->
-> Just out of interest: is this to be safe on any OS or should this
-> be checked always?
+But I think what Ralf is seeing is a bit different.  The example
+given:
 
-Any POSIX-conformant OS/filesystem should always do a full write for a 
-regular file, unless a serious error happens.
+  git fetch git://git.kernel.org/pub/scm/linux/kernel/git/stable/\
+       linux-2.6.16.y.git master:v2.6.16-stable
 
-HOWEVER. 
+does use a tracking branch, and when the tag following kicks in,
+v2.6.16-stable head should have been updated.  I suspect it is
+just its head commit is older than tips of other branches, and
+purely date based sorting done by fetch-pack.c::get_rev() ends
+up walking them before it gets to the tip of the branch we just
+fetched.
 
-In practice, you can get partial writes at least over NFS (hey, it may not 
-be posix, but it's _common_) when the filesystem has been mounted soft 
-(and/or interruptible). And obviously if your file descriptor isn't a 
-regular file, you can easily get partial writes.
-
-Doing the loop is always safe, so it's worth doing it that way.
-
-> > +		size = write(fd, buf, len);
-> > +		if (!size)
-> > +			return error("file write: disk full");
->
-> Shouldn't write to a full disk return -1 with ENOSPC?
-
-In that case, the "size < 0" check will catch it. The "return zero for 
-full" case is an alternate error return (it happens for block device files 
-at the end, it could happen for other things too). So the "returns zero 
-means full" is the portable/safe thing to do.
-
-		Linus
+I wonder if we can do a dirty hack to give bias to commits
+coming from refs that are newer (on the local filesystem -- that
+is, mtime of .git/refs/heads/v2.6.16-stable must be a lot newer
+than .git/refs/heads/master in this case because we just fetched
+it)...
