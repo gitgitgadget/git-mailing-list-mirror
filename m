@@ -1,61 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: [PATCH 3/3] Explicitly specify utf-8 coding in file
-Date: Wed, 24 May 2006 08:07:21 +0200
-Message-ID: <20060524060721.GC1490@diana.vm.bytemark.co.uk>
-References: <20060524060537.GA1173@diana.vm.bytemark.co.uk>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Incremental cvsimports
+Date: Wed, 24 May 2006 17:16:57 +0930
+Message-ID: <93c3eada0605240046t10e00119n4cfc39ec33fe1d92@mail.gmail.com>
+Reply-To: geoff@austrics.com.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=fixed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 08:07:31 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed May 24 09:47:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FimWk-0000Wo-4Z
-	for gcvg-git@gmane.org; Wed, 24 May 2006 08:07:26 +0200
+	id 1Fio57-0004LA-BU
+	for gcvg-git@gmane.org; Wed, 24 May 2006 09:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932607AbWEXGHX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 24 May 2006 02:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932608AbWEXGHX
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 02:07:23 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:14856 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S932607AbWEXGHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 May 2006 02:07:23 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1FimWf-0000Ow-00; Wed, 24 May 2006 07:07:21 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S932642AbWEXHq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 03:46:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932646AbWEXHq6
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 03:46:58 -0400
+Received: from wx-out-0102.google.com ([66.249.82.205]:21548 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932642AbWEXHq6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 03:46:58 -0400
+Received: by wx-out-0102.google.com with SMTP id s6so1162117wxc
+        for <git@vger.kernel.org>; Wed, 24 May 2006 00:46:57 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=LRN4ommkoCmlXoFPglwj6rv96zKG51XtOeGjxrJSOrpJ5+RhDgbgfidchi5IbildLP/NM7/SdafFf6COwMo0z0udncCW9unsP+9C8Ajr12y7D6xpHZbPgakhfhYTbF6t+M2nsJNSDxBSZL4LjKXVLqeXF3Jc0tge6LC46lVEaUk=
+Received: by 10.70.46.9 with SMTP id t9mr4907884wxt;
+        Wed, 24 May 2006 00:46:57 -0700 (PDT)
+Received: by 10.70.32.19 with HTTP; Wed, 24 May 2006 00:46:57 -0700 (PDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060524060537.GA1173@diana.vm.bytemark.co.uk>
-User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20669>
 
-uncommit.py has a non-ascii character in it (in my name in the
-copyright line). Without this coding: comment, I get an error like the
-following when I run stgit:
+Dear Git,
 
-  /home/kha/git/stgit/stgit/main.py:61: DeprecationWarning: Non-ASCII
-  character '\xc3' in file
-  /home/kha/git/stgit/stgit/commands/uncommit.py on line 3, but no
-  encoding declared; see http://www.python.org/peps/pep-0263.html for
-  details
----
+I have a 3Gb repository (10 years of history) which I want to import into git.
 
- stgit/commands/uncommit.py |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+I have tested little pieces of that and a 23Mb directory expands to 120Mb prior
+to packing/pruning.  Therefore I don't have a big enough disk to import the
+whole repository at once. So I figure I could do it in pieces with a pack after
+each piece.
 
-diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
-index e03d207..52ce5a8 100644
---- a/stgit/commands/uncommit.py
-+++ b/stgit/commands/uncommit.py
-@@ -1,3 +1,5 @@
-+# -*- coding: utf-8 -*-
-+
- __copyright__ =3D """
- Copyright (C) 2006, Karl Hasselstr=F6m <kha@treskal.com>
-=20
+So I tried something like:
+
+ 1.      $ git cvsimport  -o austrics -v -d /cvsroot -C /GitRepo /cvsroot/A
+
+followed by
+
+ 2.     $ git cvsimport  -o austrics -v -d /cvsroot -C /GitRepo /cvsroot/B
+
+After 1, /GitRepo/.git is set up but /GitRepo has the members of A,
+not A itself.
+After 2, /GitRepo also has members of B. This isn't quite what I wanted!
+
+Is there a way to do this?
+
+Cheers,
+Geoff Russell
