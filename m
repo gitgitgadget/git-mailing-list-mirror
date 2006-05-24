@@ -1,48 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Ralf Baechle <ralf@linux-mips.org>
 Subject: Re: Slow fetches of tags
-Date: Wed, 24 May 2006 10:21:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org>
+Date: Wed, 24 May 2006 19:08:13 +0100
+Message-ID: <20060524180813.GA32519@linux-mips.org>
 References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 24 19:22:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 24 20:08:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fix3V-0006Pj-Hf
-	for gcvg-git@gmane.org; Wed, 24 May 2006 19:21:57 +0200
+	id 1FixmQ-00054d-D3
+	for gcvg-git@gmane.org; Wed, 24 May 2006 20:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428AbWEXRVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 13:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932446AbWEXRVy
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 13:21:54 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12985 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932428AbWEXRVx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 13:21:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4OHLhtH012856
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 May 2006 10:21:43 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4OHLfim023901;
-	Wed, 24 May 2006 10:21:42 -0700
-To: Ralf Baechle <ralf@linux-mips.org>, Junio C Hamano <junkio@cox.net>
+	id S932402AbWEXSIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 14:08:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932757AbWEXSIT
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 14:08:19 -0400
+Received: from ftp.linux-mips.org ([194.74.144.162]:35507 "EHLO
+	ftp.linux-mips.org") by vger.kernel.org with ESMTP id S932402AbWEXSIS
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 14:08:18 -0400
+Received: from localhost.localdomain ([127.0.0.1]:1667 "EHLO bacchus.dhis.org")
+	by ftp.linux-mips.org with ESMTP id S8133774AbWEXSIQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 20:08:16 +0200
+Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
+	by bacchus.dhis.org (8.13.6/8.13.4) with ESMTP id k4OI8E7B004119;
+	Wed, 24 May 2006 19:08:14 +0100
+Received: (from ralf@localhost)
+	by denk.linux-mips.net (8.13.6/8.13.6/Submit) id k4OI8D0P004118;
+	Wed, 24 May 2006 19:08:13 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20695>
 
+On Wed, May 24, 2006 at 09:45:29AM -0700, Linus Torvalds wrote:
 
+> So this is a tree where you already _have_ most of the tags, no?
 
-On Wed, 24 May 2006, Linus Torvalds wrote:
-> 
+Yes, git did end up only fetching v2.6.16.18 as the single tag.
+
 > Can you add a printout to show what the "taglist" is for you in 
 > git-fetch.sh (just before the thing that does that
 > 
@@ -50,57 +53,60 @@ On Wed, 24 May 2006, Linus Torvalds wrote:
 > 
 > thing?). It _should_ have pruned out all the tags you already have.
 
-Actually, looking at that tag-fetching logic, we already know that we have 
-the objects that the tags point to (because those are the only kinds that 
-we should auto-follow). I wonder if the slowness is because of all the 
-have/want commit following, which walks the whole tree to say "I have 
-this", when in this case we really should directly say "I have these" for 
-the objects that the tags point to.
+Right, it's just "refs/tags/v2.6.16.18:refs/tags/v2.6.16.18".
 
-So the problem may be that we basically send a totally unnecessary list of 
-all the objects we have, when the other end really only cares about the 
-fact that we have the objects that the tags point to. Which we know we do, 
-but we didn't say so, because "git-fetch" didn't really mark them that 
-way.
+> Or is it just the "git-ls-remote" that takes forever?
 
-And instead of sending the commits that we know we have, and that we know 
-are the interesting ones and that will cut off the tag-object-walk, we 
-start from all the local tips, and use the regular "parse commits in date 
-order" thing and send "have" lines for everything we see that isn't 
-common. Walking a lot of unnecessary crud.
+git-ls-remote git://www.kernel.org/pub/scm/linux/kernel/git/stable/\
+linux-2.6.16.y takes about 1.5s.
 
-Junio? Any ideas? I didn't want to do that tag-auto-following, and while I 
-admit it's damn convenient, it's really quite broken, methinks. 
+> (Or, if you run 
+> "top", is there something that is an obviously heavy operation on the 
+> client side?)
 
-I almost suspect that we need to have a syntax where-by the local 
-fetch-list ends up doing
+git-fetch-pack was burning some 6min CPU.  Nothing else even even shows
+up on the "top" radar.
 
-	"$tagname:$tagname:$sha1wehave"
+Another funny thing I noticed in top is that the git-fetch-pack arguments
+got overwritten:
 
-as the argument to fetch-pack, and then fetch-pack would be modified to 
-send those "$sha1wehave" objects early as "have" objects. Ie start from 
-something like
+$ cat /proc/1702/cmdline | tr '\0' ' '
+git-fetch-pack --thin git //www.kernel.org pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git  efs/heads/master  efs/tags/v2.6.16.18
 
-	diff --git a/git-fetch.sh b/git-fetch.sh
-	index 280f62e..dce3812 100755
-	--- a/git-fetch.sh
-	+++ b/git-fetch.sh
-	@@ -400,7 +400,7 @@ case "$no_tags$tags" in
-	 			}
-	 			git-cat-file -t "$sha1" >/dev/null 2>&1 || continue
-	 			echo >&2 "Auto-following $name"
-	-			echo ".${name}:${name}"
-	+			echo ".${name}:${name}:${sha1}"
-	 		done)
-	 	esac
-	 	case "$taglist" in
+Guess that doesn't matter.  Anyway, so I ran strace on this git-fetch-pack
+invocation:
 
-and then pass the info all the way up (the above patch will obviously 
-result in a totally broken script, everything downstream from that point 
-would have to be taught about the "already have this" part too).
+[...]
+munmap(0xb7fe5000, 229)                 = 0
+getdents(5, /* 0 entries */, 4096)      = 0
+close(5)                                = 0
+getdents(4, /* 0 entries */, 4096)      = 0
+close(4)                                = 0
+write(3, "0046want 9b549d8e1e2f16cffbb414a"..., 70) = 70
+write(3, "0000", 4)                     = 4
+write(3, "0032have 0bcf7932d0ea742e765a40b"..., 50) = 50
+write(3, "0032have 54e938a80873e85f9c02ab4"..., 50) = 50
+write(3, "0032have 2d0a9369c540519bab8018e"..., 50) = 50
+write(3, "0032have bf3060065ef9f0a8274fc32"..., 50) = 50
+write(3, "0032have 27602bd8de8456ac619b77c"..., 50) = 50
+[... another 42,000+ similar lines chopped off ...]
 
-Ralf, which repo is this, so that others (me, if I get the time and 
-energy, Junio or some other hapless sucker^W^Whero if I'm lucky) can try 
-things out?
+9b549d8e1e2f16cffbb414a is Chris Wright's tag for v2.6.16.18.  So far,
+as expected.
 
-		Linus
+And this is where things are getting interesting:
+
+$ git-name-rev 0bcf7932d0ea742e765a40b
+0bcf7932d0ea742e765a40b master
+$ git-name-rev 54e938a80873e85f9c02ab4
+54e938a80873e85f9c02ab4 34k-2.6.16.18
+$ git-name-rev 2d0a9369c540519bab8018e
+2d0a9369c540519bab8018e 34k-2.6.16.18~1
+$ git-name-rev bf3060065ef9f0a8274fc32
+bf3060065ef9f0a8274fc32 34k-2.6.16.18~2
+$ git-name-rev 27602bd8de8456ac619b77c
+27602bd8de8456ac619b77c 34k-2.6.16.18~3
+
+It's sending every object back to the start of history ...
+
+  Ralf
