@@ -1,39 +1,39 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Add a test-case for git-apply trying to add an ending line
-Date: Tue, 23 May 2006 18:09:29 -0700
-Message-ID: <7vpsi4xm7q.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 23 May 2006 18:09:52 -0700
+Message-ID: <7vhd3gxm73.fsf@assigned-by-dhcp.cox.net>
 References: <20060523214836.22628.2179.stgit@localhost.localdomain>
 	<7vd5e4z2je.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 03:09:41 2006
+X-From: git-owner@vger.kernel.org Wed May 24 03:10:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FihsT-00041N-NY
-	for gcvg-git@gmane.org; Wed, 24 May 2006 03:09:34 +0200
+	id 1Fihsq-00044e-GO
+	for gcvg-git@gmane.org; Wed, 24 May 2006 03:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932134AbWEXBJb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 May 2006 21:09:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932198AbWEXBJb
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 21:09:31 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:31696 "EHLO
+	id S932198AbWEXBJy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 May 2006 21:09:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932430AbWEXBJy
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 May 2006 21:09:54 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:52688 "EHLO
 	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932134AbWEXBJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 May 2006 21:09:30 -0400
+	id S932198AbWEXBJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 May 2006 21:09:53 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao12.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060524010930.WFTF27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 23 May 2006 21:09:30 -0400
+          id <20060524010953.WGGB27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 23 May 2006 21:09:53 -0400
 To: Catalin Marinas <catalin.marinas@gmail.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20654>
 
 Junio C Hamano <junkio@cox.net> writes:
 
