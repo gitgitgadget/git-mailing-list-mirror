@@ -1,112 +1,81 @@
-From: Ralf Baechle <ralf@linux-mips.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Slow fetches of tags
-Date: Wed, 24 May 2006 19:08:13 +0100
-Message-ID: <20060524180813.GA32519@linux-mips.org>
-References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
+Date: Wed, 24 May 2006 11:08:26 -0700
+Message-ID: <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
+References: <20060524131022.GA11449@linux-mips.org>
+	<Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
+	<Pine.LNX.4.64.0605240947580.5623@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 24 20:08:33 2006
+Cc: Ralf Baechle <ralf@linux-mips.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 24 20:08:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FixmQ-00054d-D3
-	for gcvg-git@gmane.org; Wed, 24 May 2006 20:08:23 +0200
+	id 1Fixma-00055r-RC
+	for gcvg-git@gmane.org; Wed, 24 May 2006 20:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402AbWEXSIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 14:08:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932757AbWEXSIT
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 14:08:19 -0400
-Received: from ftp.linux-mips.org ([194.74.144.162]:35507 "EHLO
-	ftp.linux-mips.org") by vger.kernel.org with ESMTP id S932402AbWEXSIS
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 May 2006 14:08:18 -0400
-Received: from localhost.localdomain ([127.0.0.1]:1667 "EHLO bacchus.dhis.org")
-	by ftp.linux-mips.org with ESMTP id S8133774AbWEXSIQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 20:08:16 +0200
-Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
-	by bacchus.dhis.org (8.13.6/8.13.4) with ESMTP id k4OI8E7B004119;
-	Wed, 24 May 2006 19:08:14 +0100
-Received: (from ralf@localhost)
-	by denk.linux-mips.net (8.13.6/8.13.6/Submit) id k4OI8D0P004118;
-	Wed, 24 May 2006 19:08:13 +0100
+	id S932757AbWEXSIa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 14:08:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932759AbWEXSI3
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 14:08:29 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:50877 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932757AbWEXSI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 14:08:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060524180827.SSBL27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 May 2006 14:08:27 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 24 May 2006 10:21:41 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20696>
 
-On Wed, May 24, 2006 at 09:45:29AM -0700, Linus Torvalds wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> So this is a tree where you already _have_ most of the tags, no?
+> So the problem may be that we basically send a totally unnecessary list of 
+> all the objects we have, when the other end really only cares about the 
+> fact that we have the objects that the tags point to. Which we know we do, 
+> but we didn't say so, because "git-fetch" didn't really mark them that 
+> way.
 
-Yes, git did end up only fetching v2.6.16.18 as the single tag.
+I think this speculation is correct.  We should be able to do
+better.
 
-> Can you add a printout to show what the "taglist" is for you in 
-> git-fetch.sh (just before the thing that does that
-> 
-> 	fetch_main "$taglist"
-> 
-> thing?). It _should_ have pruned out all the tags you already have.
+> I almost suspect that we need to have a syntax where-by the local 
+> fetch-list ends up doing
+>
+> 	"$tagname:$tagname:$sha1wehave"
+>
+> as the argument to fetch-pack, and then fetch-pack would be modified to 
+> send those "$sha1wehave" objects early as "have" objects.
 
-Right, it's just "refs/tags/v2.6.16.18:refs/tags/v2.6.16.18".
+But this logic has to be a bit more involved.
 
-> Or is it just the "git-ls-remote" that takes forever?
+A "have" object is not just has_sha1_file(), but it needs to be
+reachable from one of our tips we have already verified as
+complete, so either the caller of fetch-pack does the
+verification and give a verified $sha1wehave, or fetch-pack
+takes $sha1weseemtohave and does its own verification and then
+send it as one of the "have" objects (the issue is the same as
+the one in my previous message to Eric W. Biederman -- we trust
+only refs not just having a single object).
 
-git-ls-remote git://www.kernel.org/pub/scm/linux/kernel/git/stable/\
-linux-2.6.16.y takes about 1.5s.
-
-> (Or, if you run 
-> "top", is there something that is an obviously heavy operation on the 
-> client side?)
-
-git-fetch-pack was burning some 6min CPU.  Nothing else even even shows
-up on the "top" radar.
-
-Another funny thing I noticed in top is that the git-fetch-pack arguments
-got overwritten:
-
-$ cat /proc/1702/cmdline | tr '\0' ' '
-git-fetch-pack --thin git //www.kernel.org pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git  efs/heads/master  efs/tags/v2.6.16.18
-
-Guess that doesn't matter.  Anyway, so I ran strace on this git-fetch-pack
-invocation:
-
-[...]
-munmap(0xb7fe5000, 229)                 = 0
-getdents(5, /* 0 entries */, 4096)      = 0
-close(5)                                = 0
-getdents(4, /* 0 entries */, 4096)      = 0
-close(4)                                = 0
-write(3, "0046want 9b549d8e1e2f16cffbb414a"..., 70) = 70
-write(3, "0000", 4)                     = 4
-write(3, "0032have 0bcf7932d0ea742e765a40b"..., 50) = 50
-write(3, "0032have 54e938a80873e85f9c02ab4"..., 50) = 50
-write(3, "0032have 2d0a9369c540519bab8018e"..., 50) = 50
-write(3, "0032have bf3060065ef9f0a8274fc32"..., 50) = 50
-write(3, "0032have 27602bd8de8456ac619b77c"..., 50) = 50
-[... another 42,000+ similar lines chopped off ...]
-
-9b549d8e1e2f16cffbb414a is Chris Wright's tag for v2.6.16.18.  So far,
-as expected.
-
-And this is where things are getting interesting:
-
-$ git-name-rev 0bcf7932d0ea742e765a40b
-0bcf7932d0ea742e765a40b master
-$ git-name-rev 54e938a80873e85f9c02ab4
-54e938a80873e85f9c02ab4 34k-2.6.16.18
-$ git-name-rev 2d0a9369c540519bab8018e
-2d0a9369c540519bab8018e 34k-2.6.16.18~1
-$ git-name-rev bf3060065ef9f0a8274fc32
-bf3060065ef9f0a8274fc32 34k-2.6.16.18~2
-$ git-name-rev 27602bd8de8456ac619b77c
-27602bd8de8456ac619b77c 34k-2.6.16.18~3
-
-It's sending every object back to the start of history ...
-
-  Ralf
+It might be useful to have a helper script you can give N object
+names and M refs (and/or --all flag to mean "all of the refs"),
+which returns the ones that are reachable from the given refs.
+It would be even more useful if it were a helper function, but
+given that the computation would involve walking the ancestry
+chain, I suspect it would have a bad interaction with any user
+of such a helper function that wants to do its own ancestry
+walking, because many of them seem to assume an object that has
+already been parsed are the ones they parsed for their own
+purpose.
