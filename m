@@ -1,66 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC][PATCH] Allow transfer of any valid sha1
-Date: Thu, 25 May 2006 11:36:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605251134410.5623@g5.osdl.org>
-References: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com>
- <7vejyjpz9a.fsf@assigned-by-dhcp.cox.net> <m13beysnb2.fsf@ebiederm.dsl.xmission.com>
- <7vwtcay5k8.fsf@assigned-by-dhcp.cox.net> <m1lksqdook.fsf@ebiederm.dsl.xmission.com>
- <Pine.LNX.4.64.0605251024320.5623@g5.osdl.org> <7v3beyuffg.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: git-format-patch possible regressions
+Date: Thu, 25 May 2006 21:23:23 +0200
+Message-ID: <e5bfff550605251223g2cf8cfb9vfa18d016b369188d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 20:36:36 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu May 25 21:23:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjKhH-0005V5-Jz
-	for gcvg-git@gmane.org; Thu, 25 May 2006 20:36:35 +0200
+	id 1FjLQe-0004nn-Ck
+	for gcvg-git@gmane.org; Thu, 25 May 2006 21:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030288AbWEYSgZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 14:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030320AbWEYSgZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 14:36:25 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:25779 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030288AbWEYSgZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 14:36:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4PIaK2g030782
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 25 May 2006 11:36:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4PIaGf9002666;
-	Thu, 25 May 2006 11:36:18 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3beyuffg.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030362AbWEYTXZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 15:23:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030363AbWEYTXY
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 15:23:24 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:26500 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1030362AbWEYTXX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 15:23:23 -0400
+Received: by wr-out-0506.google.com with SMTP id i24so1998559wra
+        for <git@vger.kernel.org>; Thu, 25 May 2006 12:23:23 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=SPik1qLiepq6x10ybQcibXvlFLeSWXm7FMRxFMpRtGY9Mn/ovIzmtyMt4872Hol5C8SZLpDt/+STGxVtsppwvvbYWJ8vaHqsCwVZEds0PLWKoabmKB4jtclWF/h7trbqqMFWavTUMLBhFKclIR0g1HAHE41i4qTUr4gvIkescAk=
+Received: by 10.64.152.19 with SMTP id z19mr4607369qbd;
+        Thu, 25 May 2006 12:23:23 -0700 (PDT)
+Received: by 10.64.142.14 with HTTP; Thu, 25 May 2006 12:23:23 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20755>
+
+A couple of possible regressions:
+
+1) Unreconized --signoff option
+
+$ git --version
+git version 1.3.3.ged90
+$ git-format-patch -s HEAD^..HEAD
+0001-cat-file-document-p-option.txt
+$ git-format-patch --signoff HEAD^..HEAD
+fatal: unrecognized argument: --signoff
 
 
+2) Unhandled ranges list
 
-On Thu, 25 May 2006, Junio C Hamano wrote:
-> 
-> With the limitation of the current tool, we could do:
-> 
->   git-fetch master.kernel.org:/pub/scm/.../torvalds/linux-2.6.git \
-> 	refs/heads/master:refs/remotes/linus/master
->   git merge 'whatever merge message' HEAD b307e854
-> 
-> assuming that b307e854 is reachable from your tip.  So it might
-> be just a matter of giving a convenient shorthand to do the
-> above two commands, instead of mucking with upload-pack.
+$ git --version
+git version 1.3.3.ged90
+$ git-format-patch -s HEAD^..HEAD HEAD^^..HEAD^
+0001-cat-file-document-p-option.txt
 
-It's not upload-pack that needs mucking with. It's simply "fetch-pack" 
-that currently will refuse to say "want b307e854..", because the only 
-thing it can do is say "want <headref>".
+$ git --version
+git version 1.3.3.gf205
+git checkout -b test 51ce34b9923d9b119ac53414584f80e05520abea
+$ git-format-patch HEAD^..HEAD HEAD^^..HEAD^
+0001-Builtin-git-show-branch.txt
+0002-Builtin-git-apply.txt
 
-So the patch would literally be to have a way to tell fetch-pack directly 
-what you want, and not have the "only select from remote branches" logic.
+Both regressions brake qgit. The first one is easy to fix (--signoff  --> -s)
+The second one is not so easy.
+It is use to format a patch series starting from a mouse selected
+multiple revisions. Note that the revisions could be not consecutive.
+Note also that looping git-format-patch for each revision does not
+updates patch number that always stay at 0001.
 
-		Linus
+Feeding all the selected revisions in one go in the form
+git-format-patch sel1^..sel1  sel2^..sel2    ........  seln^..seln is
+the only way I have found to:
+
+1) create a patch series of (randomly) selected revisions
+
+2) increment patch numbers for each patch
+
+
+   Marco
