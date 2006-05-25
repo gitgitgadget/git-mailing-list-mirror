@@ -1,69 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-format-patch possible regressions
-Date: Fri, 26 May 2006 01:28:54 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605260125420.16816@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <e5bfff550605251223g2cf8cfb9vfa18d016b369188d@mail.gmail.com>
- <7vhd3dubd9.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0605252338530.31700@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0605260014340.13003@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7wpr97n.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] Add instructions to commit template.
+Date: Fri, 26 May 2006 01:42:18 +0200
+Message-ID: <20060525234218.GB14325@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri May 26 01:29:04 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri May 26 01:42:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjPGJ-0005ys-1Y
-	for gcvg-git@gmane.org; Fri, 26 May 2006 01:29:03 +0200
+	id 1FjPTL-0007Vo-DA
+	for gcvg-git@gmane.org; Fri, 26 May 2006 01:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965189AbWEYX3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 19:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965192AbWEYX3A
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 19:29:00 -0400
-Received: from mail.gmx.de ([213.165.64.20]:39350 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S965189AbWEYX27 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 19:28:59 -0400
-Received: (qmail invoked by alias); 25 May 2006 23:28:57 -0000
-Received: from lxweb002.wuerzburg.citynet.de (EHLO localhost) [81.209.129.202]
-  by mail.gmx.net (mp001) with SMTP; 26 May 2006 01:28:57 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7wpr97n.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965170AbWEYXmU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 19:42:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965193AbWEYXmU
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 19:42:20 -0400
+Received: from admingilde.org ([213.95.32.146]:22155 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S965170AbWEYXmT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 19:42:19 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1FjPT8-0005eo-TH
+	for git@vger.kernel.org; Fri, 26 May 2006 01:42:18 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20772>
 
-Hi,
+New users can be irritated by the git status text in their editor.
+Let's give them a short help.
 
-On Thu, 25 May 2006, Junio C Hamano wrote:
+Signed-off-by: Martin Waitz <tali@admingilde.org>
+---
+ git-commit.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Thinking about this again, it makes more sense not to imply --numbered:
-> 
-> Yes, that makes sense.  That way you can say "Please start
-> naming the output files at 0032-xxxx.txt, because you gave me 31
-> patch series last time, but I do not want [PATCH x/y] on the
-> subject line, just [PATCH]".
-> 
-> That brings up another issue.  Don't we need to have another
-> option --total-number that overrides the /y part above?
+diff --git a/git-commit.sh b/git-commit.sh
+index 6785826..1983d45 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -626,6 +626,9 @@ fi
+ if test -z "$no_edit"
+ then
+ 	{
++		echo ""
++		echo "# Please enter the commit message for your changes."
++		echo "# (Comment lines starting with '#' will not be included)"
+ 		test -z "$only_include_assumed" || echo "$only_include_assumed"
+ 		run_status
+ 	} >>"$GIT_DIR"/COMMIT_EDITMSG
+-- 
+1.3.3.gc6dc-dirty
 
-I thought about that, too. Isn't the --numbered only useful for submitting 
-a patch series via mail? And isn't it necessary to make certain that these 
-patches really apply in that order? Isn't it then sensible to force the 
-user to have a branch (at least a throw-away one) having exactly these 
-patches, just to make sure that the patches really, really apply in that 
-order?
 
-If all that is true, then --start-number && --numbered does not make sense 
-at all.
-
-Ciao,
-Dscho
+-- 
+Martin Waitz
