@@ -1,59 +1,66 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: file name case-sensitivity issues
-Date: Thu, 25 May 2006 17:47:35 +0200
-Message-ID: <20060525154735.GA6119@steel.home>
-References: <20060523210615.GB5869@steel.home> <7v7j4c4af3.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Don't write directly to a make target ($@).
+Date: Thu, 25 May 2006 09:28:11 -0700
+Message-ID: <7vejyixe5g.fsf@assigned-by-dhcp.cox.net>
+References: <87hd3e5ixw.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 17:48:01 2006
+X-From: git-owner@vger.kernel.org Thu May 25 18:28:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjI3t-0004jr-I1
-	for gcvg-git@gmane.org; Thu, 25 May 2006 17:47:46 +0200
+	id 1FjIhO-0002SJ-1h
+	for gcvg-git@gmane.org; Thu, 25 May 2006 18:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032AbWEYPrm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 11:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbWEYPrm
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 11:47:42 -0400
-Received: from mailout11.sul.t-online.com ([194.25.134.85]:57230 "EHLO
-	mailout11.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1750777AbWEYPrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 May 2006 11:47:41 -0400
-Received: from fwd30.aul.t-online.de 
-	by mailout11.sul.t-online.com with smtp 
-	id 1FjI3m-00048n-00; Thu, 25 May 2006 17:47:38 +0200
-Received: from tigra.home (EY0knvZHoe2l5yn41-GeLANTMwd3lQZvmLaejhhI0OgHBZkJljV3wJ@[84.160.104.11]) by fwd30.sul.t-online.de
-	with esmtp id 1FjI3k-1ttJ0S0; Thu, 25 May 2006 17:47:36 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id DE84C277B5;
-	Thu, 25 May 2006 17:47:35 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FjI3j-0001kG-91; Thu, 25 May 2006 17:47:35 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v7j4c4af3.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-ID: EY0knvZHoe2l5yn41-GeLANTMwd3lQZvmLaejhhI0OgHBZkJljV3wJ
-X-TOI-MSGID: 0861358a-f9f0-494d-801a-e42e847d0efb
+	id S1030250AbWEYQ2P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 12:28:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030255AbWEYQ2P
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 12:28:15 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:45509 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1030250AbWEYQ2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 May 2006 12:28:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060525162812.YIXW5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 25 May 2006 12:28:12 -0400
+To: Jim Meyering <jim@meyering.net>
+In-Reply-To: <87hd3e5ixw.fsf@rho.meyering.net> (Jim Meyering's message of
+	"Thu, 25 May 2006 15:32:11 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20743>
 
-Junio C Hamano, Wed, May 24, 2006 00:57:04 +0200:
-> I'd call that a PEBCAK.
+Jim Meyering <jim@meyering.net> writes:
 
-It is not solvable there though.
+> Otherwise, if make is suspended, or killed with prejudice, or if the
+> system crashes, you could be left with an up-to-date, yet corrupt,
+> generated file.
 
-> If you _know_ you are working on a case challenged filesystem, I
-> think the best thing you can do is not to work on a project that
-> has files in different cases on such a filesystem.
+Thanks.  Maybe you would want a "make clean" target for them too
+if you do this.  I often use $@+ instead of t$@ so that I can
+say "rm -f *+" there.
 
-That is seldom an acceptable suggestion. Besides, how about when you
-don't _know_, like when cloning onto an usb-stick mounted with
-auto-detection? Will the files with case-different names just
-overwrite each other?
+> @@ -496,37 +496,43 @@ builtin-help.o: common-cmds.h
+>  	rm -f $@ && ln git$X $@
+>  
+>  common-cmds.h: Documentation/git-*.txt
+> -	./generate-cmdlist.sh > $@
+> +	./generate-cmdlist.sh > t$@
+> +	mv t$@ $@
+>  
+
+IOW, like this:
+
+common-cmds.h: Documentation/git-*.txt
+	rm -f $@+ $@
+        ./generate-cmdlist.sh > $@+
+        mv $@+ $@
+
+clean::
+	rm -f *+
