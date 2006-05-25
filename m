@@ -1,87 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Slow fetches of tags
-Date: Wed, 24 May 2006 18:32:01 -0700
-Message-ID: <7vd5e23n5a.fsf@assigned-by-dhcp.cox.net>
-References: <20060524131022.GA11449@linux-mips.org>
-	<Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
-	<Pine.LNX.4.64.0605240947580.5623@g5.osdl.org>
-	<7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
-	<Pine.LNX.4.64.0605241641250.5623@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH 1/2] Fix cg-patch hanging on terminals with TOSTOP flag
+Date: Wed, 24 May 2006 21:40:01 -0400
+Message-ID: <20060525014001.27814.23082.stgit@dv.roinet.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 03:32:10 2006
+X-From: git-owner@vger.kernel.org Thu May 25 03:40:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fj4hs-0002ST-PY
-	for gcvg-git@gmane.org; Thu, 25 May 2006 03:32:09 +0200
+	id 1Fj4qB-0003rz-Ch
+	for gcvg-git@gmane.org; Thu, 25 May 2006 03:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964807AbWEYBcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 21:32:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964815AbWEYBcE
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 21:32:04 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58103 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964807AbWEYBcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 May 2006 21:32:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060525013202.ZPAY15069.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 24 May 2006 21:32:02 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605241641250.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 24 May 2006 16:43:02 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964843AbWEYBkj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 21:40:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964844AbWEYBkj
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 21:40:39 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:5055 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S964843AbWEYBkj
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 21:40:39 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Fj4pv-0002MS-1p
+	for git@vger.kernel.org; Wed, 24 May 2006 21:40:28 -0400
+Received: from [127.0.0.1] (helo=dv.roinet.com)
+	by dv.roinet.com with esmtp (Exim 4.62)
+	(envelope-from <proski@gnu.org>)
+	id 1Fj4pV-0007Ej-Mm; Wed, 24 May 2006 21:40:01 -0400
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20717>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+From: Pavel Roskin <proski@gnu.org>
 
-> On Wed, 24 May 2006, Linus Torvalds wrote:
->> 
->> IOW, I think there's something more fundamentally wrong with the tag 
->> following. We _should_ have figured out much more quickly that we have it 
->> all.
->
-> Actually, maybe the problem is that Ralf's tree has two roots, because of 
-> the old CVS history. It might be following the other root down for the 
-> "have" part, since that one doesn't exist at all in the target and the 
-> other side will never acknowledge any of it. 
->
-> I'll play with it.
+Terminals with TOSTOP flag don't allow background processes to write to
+the terminal.  This flag is used e.g. by the subshell in GNU Midnight
+Commander.  It can also be set by "stty tostop".
 
-I think I know what is going on.  You are exactly right -- the
-two-root ness is what is causing this.
+Redirect stdout and strerr of the "patch" command to a temporary file
+and show it once "patch" terminates.
 
-We used to stop sending "have" immediately after we get an ACK.
-This was troublesome for trees with many long branches, so we
-introduced multi_ack protocol extension to let the server side
-(upload-pack) say "Ok, enough on this branch -- I know this
-object so do not tell me any more about objects reachable from
-it, but do tell me about other development tracks if you have
-one".  If you run "fetch-pack -v" after priming a repository
-with Ralf's tree and Chris's tree, you will see many "have" with
-occasional "got ack 2 [0-9a-f]{40}".  The latter is upload-pack
-acking this way.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
-This was done to prevent already-known-to-be-common objects
-filling up the list of known common commits on the server side.
-The remaining slots can be used to discover common commits on
-other branches, so that we can minimize the transfer.  It was an
-important optimization when dealing with sets of branches that
-are long.
+ cg-patch |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-This unfortunately breaks down quite badly in this case, since
-the remaining "branch" it keeps following is the other history
-Chris's tree has never heard of down to its root in vain.
-
-It might be worth changing fetch-pack to note that it has sent
-many "have"s after it got an "continue" ACK, and give up early,
-say using a heuristic between the age of the commit that did got
-an ACK and the one we are about to send out as a "have".
+diff --git a/cg-patch b/cg-patch
+index 9ea7de4..115869e 100755
+--- a/cg-patch
++++ b/cg-patch
+@@ -337,6 +337,7 @@ # parts of the tree from inadverent poll
+ [ "$unidiff" ] && newsfile="$(mktemp -t gitapply.XXXXXX)"
+ gonefile="$(mktemp -t gitapply.XXXXXX)"
+ todo="$(mktemp -t gitapply.XXXXXX)"
++patchout="$(mktemp -t gitapply.XXXXXX)"
+ patchfifo="$(mktemp -t gitapply.XXXXXX)"
+ rm "$patchfifo" && mkfifo -m 600 "$patchfifo"
+ 
+@@ -347,7 +348,7 @@ # patch file removal behaviour cannot be
+ # just handle it all ourselves.
+ patch_args="-p$strip -N"
+ [ "$reverse" ] && patch_args="$patch_args -R"
+-patch $patch_args <"$patchfifo" &
++patch $patch_args <"$patchfifo" >"$patchout" 2>&1 &
+ 
+ tee "$patchfifo" | {
+ 	redzone_reset
+@@ -407,6 +408,7 @@ tee "$patchfifo" | {
+ } >$todo
+ 
+ wait %1; ret=$?
++cat "$patchout"
+ 
+ IFS=$'\n' emptyfiles=($(git-ls-files --deleted | join -v 2 "$gonefile" -))
+ if [ "$unidiff" ]; then
+@@ -441,7 +443,7 @@ while [ "$1" ]; do
+ done
+ ' padding
+ 
+-rm "$patchfifo" "$todo" "$gonefile"
++rm "$patchfifo" "$todo" "$gonefile" "$patchout"
+ [ "$unidiff" ] && rm "$newsfile"
+ 
+ exit $ret
