@@ -1,78 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: importing cvs logical modules
-Date: Wed, 24 May 2006 22:01:14 -0700
-Message-ID: <7vslmyzoit.fsf@assigned-by-dhcp.cox.net>
-References: <93c3eada0605242148u4656bc31p96d84a16703f0fe0@mail.gmail.com>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] ls-remote fix for rsync:// transport
+Date: Thu, 25 May 2006 01:01:25 -0400
+Message-ID: <BAYC1-PASMTP073667D87F8BC653B62894AE990@CEZ.ICE>
+References: <7v7j4a3f9i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 07:01:24 2006
+X-From: git-owner@vger.kernel.org Thu May 25 07:07:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fj7yJ-0000Uc-Rz
-	for gcvg-git@gmane.org; Thu, 25 May 2006 07:01:20 +0200
+	id 1Fj84E-0001NK-GN
+	for gcvg-git@gmane.org; Thu, 25 May 2006 07:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965037AbWEYFBQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 01:01:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965038AbWEYFBQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 01:01:16 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:17611 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S965037AbWEYFBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 May 2006 01:01:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060525050115.UXPN19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 May 2006 01:01:15 -0400
-To: geoff@austrics.com.au
-In-Reply-To: <93c3eada0605242148u4656bc31p96d84a16703f0fe0@mail.gmail.com>
-	(Geoff Russell's message of "Thu, 25 May 2006 14:18:25 +0930")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965038AbWEYFHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 01:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965040AbWEYFHX
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 01:07:23 -0400
+Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:18417 "EHLO
+	BAYC1-PASMTP07.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S965038AbWEYFHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 May 2006 01:07:23 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP07.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 24 May 2006 22:10:42 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id EE67E644C17;
+	Thu, 25 May 2006 01:07:20 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060525010125.e2d6325d.seanlkml@sympatico.ca>
+In-Reply-To: <7v7j4a3f9i.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 25 May 2006 05:10:42.0921 (UTC) FILETIME=[92713D90:01C67FB9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20726>
 
-"Geoff Russell" <geoffrey.russell@gmail.com> writes:
+On Wed, 24 May 2006 21:22:17 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
-> I'd like to make 1 git repository Progs with xxxx and yyyy as child trees.
->
->           Progs/.git
->           Progs/xxxx
->           Progs/yyyy
->
-> Does this sound useful to anyone else, or is it already possible?
+> I think this would fix the "cloning rsync:// clones repository fine but
+> does not check out the working tree" problem.
 
-I would do it like this:
+Nice find, works here.
 
-           Progs/.git
-           Progs/xxxx/.git
-           Progs/yyyy/.git
-
-I do not know what you have in Progs/ hierarchy -- if it is just
-scaffolding to house subdirectories and nothing else you may not
-even need Progs/.git repository.
-
-This is a very useful and handy structure, and you do not need
-any tool support once you have these as separate repositories.
-If you want a single distribution point, you can push from these
-separate repositories into separate branches of a single
-distribution point repository [*1*].
-
-One potential disadvantage is that you would not get revision
-linkage between these "modules", but not having tight linkage is
-the point of modular structure, so depending on your workflow it
-probably may not matter.
-
-
-[Footnote]
-
-*1* In fact, my git working area has the "master", "next" or
-"pu" branch checked out in /path/to/work/area/git (and the
-repository is in /path/to/work/area/git/.git directory), and I
-check out the "todo" branch in /path/to/work/area/git/Meta
-directory, with /path/to/work/area/git/Meta/.git directory as
-its repository.
+Sean
