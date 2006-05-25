@@ -1,96 +1,131 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [RFC][PATCH] Allow transfer of any valid sha1
-Date: Thu, 25 May 2006 11:59:58 -0600
-Message-ID: <m1bqtmdly9.fsf@ebiederm.dsl.xmission.com>
-References: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com>
-	<7vejyjpz9a.fsf@assigned-by-dhcp.cox.net>
-	<m13beysnb2.fsf@ebiederm.dsl.xmission.com>
-	<7vwtcay5k8.fsf@assigned-by-dhcp.cox.net>
-	<m1lksqdook.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0605251024320.5623@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: file name case-sensitivity issues
+Date: Thu, 25 May 2006 11:17:48 -0700
+Message-ID: <7vac96ufxv.fsf@assigned-by-dhcp.cox.net>
+References: <20060523210615.GB5869@steel.home>
+	<7v7j4c4af3.fsf@assigned-by-dhcp.cox.net>
+	<20060525154735.GA6119@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 20:01:23 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 25 20:17:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjK98-0008QT-39
-	for gcvg-git@gmane.org; Thu, 25 May 2006 20:01:18 +0200
+	id 1FjKPB-0002hq-0K
+	for gcvg-git@gmane.org; Thu, 25 May 2006 20:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030299AbWEYSBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 14:01:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030300AbWEYSBF
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 14:01:05 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:30880 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1030302AbWEYSBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 May 2006 14:01:01 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4PHxx5Y010698;
-	Thu, 25 May 2006 11:59:59 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4PHxwfT010697;
-	Thu, 25 May 2006 11:59:58 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605251024320.5623@g5.osdl.org> (Linus
- Torvalds's message of "Thu, 25 May 2006 10:28:47 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S1030318AbWEYSRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 14:17:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030320AbWEYSRu
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 14:17:50 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:12792 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1030319AbWEYSRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 May 2006 14:17:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060525181748.WJAX19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 25 May 2006 14:17:48 -0400
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060525154735.GA6119@steel.home> (Alex Riesen's message of
+	"Thu, 25 May 2006 17:47:35 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20752>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+fork0@t-online.de (Alex Riesen) writes:
 
-> On Thu, 25 May 2006, Eric W. Biederman wrote:
->> 
->> My basic argument is that starting a pull with a commit that is not a
->> reference is no worse than staring a pull from a broken repository.  The
->> same checks that protects us should work in either case.
->
-> I think Junio reacted to the subject line, which was somewhat badly 
-> phrased. You're not looking to transfer random objects, you're looking to 
-> _start_ a branch at any arbitrary known point.
+> ... Besides, how about when you
+> don't _know_, like when cloning onto an usb-stick mounted with
+> auto-detection? Will the files with case-different names just
+> overwrite each other?
 
-Probably, but if I understood enough to get the subject line right the
-first time I probably would have understood enough to just send
-a patch :)
+You _do_ realize that example is bogus, don't you?  At least I
+hope you did after you sent it.
 
-> However, Junio's point is probably that the "any valid SHA1" might 
-> actually point to a broken tree, even if it exists on the server.
->
-> Of course, in that case hopefully git-rev-list exits with an error, and 
-> the server doesn't generate any pack at all rather than generating a 
-> broken one.
->
-> However, there's a (questionable) security issue: what if the server 
-> doesn't _want_ to expose certain branches? Arguably, if you know the top 
-> SHA1, you likely know all that it contains, but it may be a valid argument 
-> to say that if the SHA1 isn't an exported branch, you shouldn't 
-> necessarily be able to follow it.
+You are cloning a project that has mixed cases (say foo and FOO)
+onto a case challenged filesystem but unfortunately you did not
+know the filesystem was case challenged in advance.  So after
+the cloning, your checkout results in only one file either foo
+or FOO but not both, because you cannot have two files whose
+names are different only in case on such a filesystem.
 
-Agreed and I mentioned this one earlier.
+Tough.
 
-However the only way the above scenario can even happen in a useful
-manner is with a shared object store for several repositories.  Otherwise
-you couldn't access the data you don't want to share.
+There are some other problems on case challenged filesystems
+that we _could_ solve but we probably don't right now.  You
+could concentrate on fixing those, instead of talking about
+unfixable.
 
-I can't think of a valid argument against not sharing an entire
-repository except David Woodhouse's bandwidth concern.
-Of course what was wanted there was a test a limit to how far
-back in the history you could look for a common commit, which
-is something different.
 
-In general it is much easier to guarantee that either a repository is
-shared or it is not.  Making a guarantee that objects that
-"git-fsck-objects --unreachable --full" identifies will never be
-downloaded is difficult, and probably not worth encouraging
-people to do.
+There are probably 2 kinds of case-challenged-ness.  On non
+case-challenged filesystems, if I say "rm -f foo Foo; echo >foo;
+echo >Foo", "ls" says "foo Foo".  On case-challenged systems,
+one of the following would happen:
 
-That said it is easy to keep the current behavior as an option,
-so the security policy issue shouldn't limit the technical discussion.
+ * "ls" says "foo".  If I swap the order of the "echo", it says
+   "Foo".  The filesystem does record the case but does not
+   allow two names with only case difference.
 
-Eric
+ * "ls" says ef oh oh in a case different from either "foo" nor
+   "Foo".  Or it says "foo" but if I swap the order of the
+   "echo", it still says "foo".  The filesystem does not record
+   the case, and does not allow two names with only case
+   difference.  readdir() may do some heuristics such as
+   lowercasing the name, but the point is the returned string is
+   unrealiable.
+
+I have git installed on a Cygwin on NTFS at work, and I think it
+is in the former category.  git seems to work as expected,
+modulo that you obviously cannot have two files "foo" and "Foo"
+in your git-managed project.  Probably a patch to delete "Foo"
+and create "foo" (to make your project friendlier to Windows)
+and a merge to do the same would work well, though I haven't
+tried.
+
+What breaks on filesystems in the latter category?  I suspect
+not many.
+
+update-index records the names given by the user (I am assuming
+that at least the shell is case sensitive), uses that name to
+stat() and open() to update and/or refresh the cache entry, so
+that codepath should be OK.  Anything that goes from index to
+find names and then goes to the filesystem with those names
+(diff family, checkout-index and read-tree -u) should be fine.
+
+ls-files -o/-i would have a hard time, since they need to work
+with strings read from readdir(), as you found out.  That means
+"git add" and "git clean" may not work.
+
+I do not think of anything else that is affected by readdir()
+breakage offhand; the core is doing pretty fine as it is (I do
+not consider ls-files -o/-i a core -- that is more Porcelainish
+part of the whole package).
+
+I honestly think that on Windows people would not even want to
+use the core Porcelainish nor even Cogito.  The would want a
+native Window-ish UI that drives the core.  I do not think such
+a program would internally call "git add" nor read from
+"ls-files -o/-i".  It would instead do its own Folder hierarchy
+traversal, and use "update-index --add --remove" to implement
+its own "git add/rm" UI, and read from "ls-files" (not -o nor
+-i) so that it can show tracked and untracked files differently
+in its Explorer view.
+
+So in that sense, I think ls-files -o/-i issue is quite low
+priority.  It does not matter on sane filesystems, and in the
+place where it matters the most, the desired solution does not
+involve ls-files -o/-i working well there.
+
+Having said that, I think you _could_ have a repository
+configuration that says "this repository sits on a case
+challenged filesystem", and update ls-files to munge what it
+gets from readdir() by comparing them against what you have in
+the index.  If your readdir() gives "foo" when you have "FOO" in
+the index on such a filesystem, you do not say that "foo" is an
+untracked file -- you just say you found "FOO" as you expected.
