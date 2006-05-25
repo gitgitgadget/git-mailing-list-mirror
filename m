@@ -1,128 +1,129 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [RFC][PATCH] Allow transfer of any valid sha1
-Date: Wed, 24 May 2006 23:09:21 -0600
-Message-ID: <m13beysnb2.fsf@ebiederm.dsl.xmission.com>
-References: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com>
-	<7vejyjpz9a.fsf@assigned-by-dhcp.cox.net>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: importing cvs logical modules
+Date: Thu, 25 May 2006 15:32:55 +0930
+Message-ID: <93c3eada0605242302x24ca1272xd7bfc3a677b32845@mail.gmail.com>
+References: <93c3eada0605242148u4656bc31p96d84a16703f0fe0@mail.gmail.com>
+	 <7vslmyzoit.fsf@assigned-by-dhcp.cox.net>
+Reply-To: geoff@austrics.com.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 25 07:10:38 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 25 08:03:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fj86z-0001rj-Mn
-	for gcvg-git@gmane.org; Thu, 25 May 2006 07:10:18 +0200
+	id 1Fj8w1-0001Nh-JH
+	for gcvg-git@gmane.org; Thu, 25 May 2006 08:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965040AbWEYFKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 01:10:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965041AbWEYFKO
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 01:10:14 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:29080 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S965040AbWEYFKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 May 2006 01:10:12 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4P59MFS004356;
-	Wed, 24 May 2006 23:09:22 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4P59LZx004355;
-	Wed, 24 May 2006 23:09:22 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejyjpz9a.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Wed, 24 May 2006 02:07:13 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S965055AbWEYGC5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 02:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965056AbWEYGC5
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 02:02:57 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:4111 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S965054AbWEYGC4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 02:02:56 -0400
+Received: by wr-out-0506.google.com with SMTP id i7so61036wra
+        for <git@vger.kernel.org>; Wed, 24 May 2006 23:02:55 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jDN9JLbkGjfgjHqP6bX6KbBICGwyJQsSB/IpPH3rHk4KCrGcPKyyyzl/kAkZ13lYXvp/8kfvh5muCia2PE72OVtNw/lB1xFpz4Q8UwvDrwOk0GWDaQTFUaXZ6kIX72ot9TH7ywBFwHfuj8wbyPRZQnl4YZqFowHglrlqkcmDZXw=
+Received: by 10.54.103.2 with SMTP id a2mr184039wrc;
+        Wed, 24 May 2006 23:02:55 -0700 (PDT)
+Received: by 10.70.32.19 with HTTP; Wed, 24 May 2006 23:02:55 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vslmyzoit.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20729>
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> ebiederm@xmission.com (Eric W. Biederman) writes:
+On 5/25/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Geoff Russell" <geoffrey.russell@gmail.com> writes:
 >
->> Can we fix the check in upload-pack.c something like my
->> patch below does?  Are there any security implications for
->> doing that?
+> > I'd like to make 1 git repository Progs with xxxx and yyyy as child trees.
+> >
+> >           Progs/.git
+> >           Progs/xxxx
+> >           Progs/yyyy
+> >
+> > Does this sound useful to anyone else, or is it already possible?
 >
->> Could we just make the final check before dying if (!o) ?
+> I would do it like this:
 >
-> The primary implication is about correctness, so I am reluctant
-> to break it without a careful alternative check in place.
+>            Progs/.git
+>            Progs/xxxx/.git
+>            Progs/yyyy/.git
 >
-> The issue is that having a single object in the repository does
-> not guarantee that you have everything reachable from it, and we
-> need that guarantee.  Reachability from the refs is what
-> guarantees that.
-
-I don't see why having something reachable from a ref guarantees
-that everything is reachable.  Given the recent patch that added
-a check to make certain a ref actually existed I believe there
-is some evidence that trees may become corrupted, and have the
-problems you describe.
-
-> We are careful to update the ref at the very end of the transfer
-> (fetch/clone or push); so if an object is reachable from a ref,
-> then all the objects reachable from that object are available in
-> the repository.
-
-In the normal case I agree.
-
-> Imagine http commit walker started fetching tip of upstream into
-> your repository and you interrupted the transfer.  Objects near
-> the tip of the upstream history are available after such an
-> interrupted transfer.  But a bit older history (but still later
-> than what we had before we started the transfer) are not.
+> I do not know what you have in Progs/ hierarchy -- if it is just
+> scaffolding to house subdirectories and nothing else you may not
+> even need Progs/.git repository.
 >
-> We do not update the ref with the downloaded tip object, so that
-> we would not break the guarantee.  This guarantee is needed for
-> feeding clients from the repository later.  If you tell your
-> clients, after such an interrupted transfer, that you are
-> willing to serve the objects near the (new) tip, the clients may
-> rightfully request objects that are reachable from these
-> objects, some of them you do _not_ have!
+> This is a very useful and handy structure, and you do not need
+> any tool support once you have these as separate repositories.
+> If you want a single distribution point, you can push from these
+> separate repositories into separate branches of a single
+> distribution point repository [*1*].
+>
+> One potential disadvantage is that you would not get revision
+> linkage between these "modules", but not having tight linkage is
+> the point of modular structure, so depending on your workflow it
+> probably may not matter.
 
-I clearly would not advertise it.  My problem is that I have
-evidence that someone pulled a given sha1 at some point from 
-some branch on a given repository.  But I don't have that branch.
+The tight linkage is absolutely essential.
 
-Actually trees mirrored with rsync have similar problems all of
-the time when the catch a tree in the middle of an update.
+When we tag the system, we
+want to tag everything (not individually tag all 300 programs)
+so that later we can to branch at that tag. Very few of our
+programs are self contained, they generally make heavy use
+of one or more libraries --- which must also be part of the
+tree. The full structure should end up looking like:
 
-> So this "on demand SHA1" stuff needs to be solved by checking if
-> the given object is reachable from our refs in upload-pack,
-> instead of the current check to see if the given object is
-> pointed by our refs.  When upload-pack can prove that the object
-> is reachable from one of the refs, it is OK to use it; otherwise
-> you should not.
+        Top/.git
+        Libraries/libx
+        Libraries/liby
+        Libraries/boost
+        Libraries/...
+        Programs/xxx
+        Programs/yyy
+        Programs/...
+        ...etc.
 
-I have a problem with that approach.  Suppose the branch I have
-evidence something came from is like your pu branch.   If I want
-a copy of your pu branch at some point in the past, but you have
-rebased it since that sha1 was published then there will clearly not
-be a path from any current head to that branch.  But if I still have a
-copy of the sha1 I should actually be able to recover the old copy of
-the pu branch from your tree.
+When we build a full system, we want to tag that point so
+we can know exactly what went into that build.
 
-> Now, proving that a given SHA1 is the name of an object that
-> exists in the repository is cheap (has_sha1_file()), but proving
-> that the object is reachable from some of our refs can become
-> quite expensive.  That gives this issue a security implication
-> as well -- you can easily DoS the git-daemon that way, for
-> example.
+We used to do it the "other" way.
 
-Exactly, which is why I aimed for the cheap test.
+         cvsroot/xxx
+         cvsroot/yyy
+         cvsroot/liby
+         cvsroot/libx
+         etc
 
-There is a reasonable argument that can be made that the branches
-represent the policy that you are willing to serve.  If you have a
-tree and share a common object store with a much lager tree, like
-David Woodhouse has set up, I can see such a policy being desirable.
+But then when we did a system build, someone always forgot
+to tag something. So we got cvs to build a build logical tree
+and then cvs was quite happy to tag the lot with one go and
+nothing got forgotten. So now we are trying to pull the
+lot into git as one big tree.
 
-That is an argument I have a much harder time shooting down.
-At the same time if it is just a policy question the policy it should
-be modifiable with an appropriate configuration directive, or
-command line option.
+Cheers,
+Geoff.
 
-Eric
+
+>
+>
+> [Footnote]
+>
+> *1* In fact, my git working area has the "master", "next" or
+> "pu" branch checked out in /path/to/work/area/git (and the
+> repository is in /path/to/work/area/git/.git directory), and I
+> check out the "todo" branch in /path/to/work/area/git/Meta
+> directory, with /path/to/work/area/git/Meta/.git directory as
+> its repository.
+>
+>
