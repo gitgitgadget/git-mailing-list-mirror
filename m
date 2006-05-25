@@ -1,73 +1,64 @@
-From: =?ISO-8859-1?Q?Bj=F6rn_Engelmann?= <BjEngelmann@gmx.de>
-Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
-Date: Thu, 25 May 2006 13:53:35 +0200
-Message-ID: <44759ABF.1010209@gmx.de>
-References: <4471CF23.1070807@gmx.de>	<7vac99c1hv.fsf@assigned-by-dhcp.cox.net> <44737353.20904@gmx.de>	<7vzmh81gfa.fsf@assigned-by-dhcp.cox.net> <4474B10A.1020704@gmx.de> <7v1wuj6wln.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] Documentation/Makefile: remove extra /
+Date: Thu, 25 May 2006 14:37:46 +0200
+Message-ID: <20060525123746.GA14325@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 13:53:36 2006
+X-From: git-owner@vger.kernel.org Thu May 25 14:38:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjEPG-0003ID-MO
-	for gcvg-git@gmane.org; Thu, 25 May 2006 13:53:35 +0200
+	id 1FjF6G-0002ce-NG
+	for gcvg-git@gmane.org; Thu, 25 May 2006 14:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965122AbWEYLx3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 07:53:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965123AbWEYLx3
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 07:53:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49579 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S965122AbWEYLx3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 07:53:29 -0400
-Received: (qmail invoked by alias); 25 May 2006 11:53:27 -0000
-Received: from unknown (EHLO [10.79.42.1]) [62.206.42.234]
-  by mail.gmx.net (mp006) with SMTP; 25 May 2006 13:53:27 +0200
-X-Authenticated: #916101
-User-Agent: Mail/News 1.5 (X11/20060228)
+	id S965128AbWEYMhs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 08:37:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965131AbWEYMhs
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 08:37:48 -0400
+Received: from admingilde.org ([213.95.32.146]:30956 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S965128AbWEYMhs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 08:37:48 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1FjF62-0006sN-C5; Thu, 25 May 2006 14:37:46 +0200
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1wuj6wln.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20736>
 
+As both DESTDIR and the prefix are supposed to be absolute pathnames
+they can simply be concatenated without an extra / (like in the main Makefile).
+The extra slash may even break installation on Windows.
 
-> Sorry, I forgot all about hash-objects X-<.  It was a convenient
-> way to try out new things such as 'gitlink'.  Thanks for the
-> clarification.
->
-> As to unification, I am not sure if there are a lot to unify.
-> Everybody starts with type, length and a LF, but after that each
-> type has its own format constraints.  A grand unified command
-> that knows about format constraints of every type under the sun
-> does not sound like a good approach.  While we have only handful
-> types (and I expect things will stay that way) it is not a big
-> deal either way, though.
->   
-Oops, sorry, I forgot that "modular" in C means something else than in
-the OO-World...
-You are right. Probably it is best to have one tool handle each type.
+Signed-off-by: Martin Waitz <tali@admingilde.org>
+---
+ Documentation/Makefile |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Actually what I am aiming for is not the internal structure. I am more
-concerned about cleaning up the user-interface. When I started learning
-git I found it very annoying and inconsistent that there are commands
-for creating a tag and a tree in a validated fashion, but the command
-for creating blobs was named "git-hash-object -w" and also could create
-all other objects without validating them at all. Also, AFAIK there is
-currently no way of creating a commit object with validating.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 2a08f59..2b0efe7 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -52,9 +52,9 @@ man1: $(DOC_MAN1)
+ man7: $(DOC_MAN7)
+ 
+ install: man
+-	$(INSTALL) -d -m755 $(DESTDIR)/$(man1) $(DESTDIR)/$(man7)
+-	$(INSTALL) $(DOC_MAN1) $(DESTDIR)/$(man1)
+-	$(INSTALL) $(DOC_MAN7) $(DESTDIR)/$(man7)
++	$(INSTALL) -d -m755 $(DESTDIR)$(man1) $(DESTDIR)$(man7)
++	$(INSTALL) $(DOC_MAN1) $(DESTDIR)$(man1)
++	$(INSTALL) $(DOC_MAN7) $(DESTDIR)$(man7)
+ 
+ 
+ #
+-- 
+1.3.3.g29c7
 
-I am well aware that all functionality neccessary already exists. I just
-want to prevent people learning git in future to have the same
-frustrating experience as I did.
-
-Obviously renaming / moving code around like that would break nearly all
-tools build ontop of git. Therefore I would prefer to use aliasing. If
-you feel like this would introduce too many unneccessary commands, I
-would instead focus on improving the documentation.
-
-Bj
+-- 
+Martin Waitz
