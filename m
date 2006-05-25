@@ -1,60 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Slow fetches of tags
-Date: Wed, 24 May 2006 16:43:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605241641250.5623@g5.osdl.org>
-References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
- <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Clean up sha1 file writing
+Date: Wed, 24 May 2006 17:19:29 -0700
+Message-ID: <7virnv3qi6.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605240820560.5623@g5.osdl.org>
+	<7vslmz5ewt.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605241631340.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ralf Baechle <ralf@linux-mips.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 25 01:44:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 25 02:19:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fj30q-0006fK-Di
-	for gcvg-git@gmane.org; Thu, 25 May 2006 01:43:36 +0200
+	id 1Fj3Zl-00030D-9E
+	for gcvg-git@gmane.org; Thu, 25 May 2006 02:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932080AbWEXXna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 May 2006 19:43:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932336AbWEXXna
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 19:43:30 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12751 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932080AbWEXXn3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 May 2006 19:43:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4ONh8tH014176
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 May 2006 16:43:09 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4ONh3jk004337;
-	Wed, 24 May 2006 16:43:05 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932336AbWEYATb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 May 2006 20:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWEYATb
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 May 2006 20:19:31 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37000 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932336AbWEYATa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 May 2006 20:19:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060525001929.IMGX19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 May 2006 20:19:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605241631340.5623@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 24 May 2006 16:35:18 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20713>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Wed, 24 May 2006, Junio C Hamano wrote:
+>>
+>> It was very pleasant to read the changes that way, especially around 
+>> write_sha1_to_fd() vs repack_object().  xxdiff is my new friend.
+>
+> I think "kompare" (the KDE diff tool) is nicer.
 
-On Wed, 24 May 2006, Linus Torvalds wrote:
-> 
-> IOW, I think there's something more fundamentally wrong with the tag 
-> following. We _should_ have figured out much more quickly that we have it 
-> all.
-
-Actually, maybe the problem is that Ralf's tree has two roots, because of 
-the old CVS history. It might be following the other root down for the 
-"have" part, since that one doesn't exist at all in the target and the 
-other side will never acknowledge any of it. 
-
-I'll play with it.
-
-		Linus
+I'd love to give it a whirl, but aptitude says it will consume
+73.5MB diskspace to install it, with download size 22.4MB, which
+makes me go ... hmmmm (my machines are currently KDE free so the
+above counts slurping in the kdelibs essentials).  
