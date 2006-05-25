@@ -1,55 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/2] tagsize < 8kb restriction
-Date: Thu, 25 May 2006 13:03:40 -0700
-Message-ID: <7v8xopub1f.fsf@assigned-by-dhcp.cox.net>
-References: <4471CF23.1070807@gmx.de>
-	<7vac99c1hv.fsf@assigned-by-dhcp.cox.net> <44737353.20904@gmx.de>
-	<7vzmh81gfa.fsf@assigned-by-dhcp.cox.net> <4474B10A.1020704@gmx.de>
-	<7v1wuj6wln.fsf@assigned-by-dhcp.cox.net> <44759ABF.1010209@gmx.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: git-format-patch possible regressions
+Date: Thu, 25 May 2006 22:10:01 +0200
+Message-ID: <e5bfff550605251310n251df046r5124ec018688d321@mail.gmail.com>
+References: <e5bfff550605251223g2cf8cfb9vfa18d016b369188d@mail.gmail.com>
+	 <Pine.LNX.4.64.0605251233300.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 22:03:53 2006
+X-From: git-owner@vger.kernel.org Thu May 25 22:10:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjM3e-0002TK-BD
-	for gcvg-git@gmane.org; Thu, 25 May 2006 22:03:46 +0200
+	id 1FjM9p-0003Wc-IP
+	for gcvg-git@gmane.org; Thu, 25 May 2006 22:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030229AbWEYUDn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 25 May 2006 16:03:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030380AbWEYUDm
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 16:03:42 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:11920 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1030229AbWEYUDm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 16:03:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060525200341.EVJB24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 May 2006 16:03:41 -0400
-To: =?iso-8859-1?Q?Bj=F6rn?= Engelmann <BjEngelmann@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751104AbWEYUKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 16:10:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbWEYUKF
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 16:10:05 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:60083 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751104AbWEYUKD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 16:10:03 -0400
+Received: by wr-out-0506.google.com with SMTP id i34so1906420wra
+        for <git@vger.kernel.org>; Thu, 25 May 2006 13:10:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ASJqxuLnltMAFcLFLZErqsirj1XHGJpOHrBMvmZN71ClA+A1YF/yO1NYbE8onXgjm5r1JFesoyNeV/q0b+MqorYb/eBtNvq208KrzjDqWNL+6uta08U38tJ9HR4maqZuaDRKb9+I+RaQUW/vwpcywXzJFQuUHcV3nMpWY8CzDU0=
+Received: by 10.65.188.10 with SMTP id q10mr8823qbp;
+        Thu, 25 May 2006 13:10:01 -0700 (PDT)
+Received: by 10.64.142.14 with HTTP; Thu, 25 May 2006 13:10:01 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605251233300.5623@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20759>
 
-Bj=F6rn Engelmann <BjEngelmann@gmx.de> writes:
+On 5/25/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+>
+> The "x..y" format is defined to mean the same thing "y ^x", and that means
+> that "HEAD^..HEAD HEAD^^..HEAD^" really does mean the same thing as
+> "^HEAD^ ^HEAD^^ HEAD HEAD^", which in turn means the same thing as "^HEAD^
+> HEAD" from a reachability standpoint (since HEAD^ is by definition
+> reachable from HEAD, adding it won't change the revision list, and the
+> same goes for ^HEAD^^ vs ^HEAD^).
+>
+> So thus "HEAD^..HEAD HEAD^^..HEAD^" really _is_ the same thing as
+> "HEAD^..HEAD", and any tool that thought otherwise was just being
+> very confused.
+>
 
-> I am well aware that all functionality neccessary already exists. I j=
-ust
-> want to prevent people learning git in future to have the same
-> frustrating experience as I did.
+Perhaps I have chose the wrong example but it was  _only_
+instrumental in better explaing the regression.
 
-I think I understood your points, but for normal "people
-learning git", hash-object, write-tree, commit-tree and mktag
-are _not_ the commands they need to know about.  These low level
-commands are for Porcelain writers.  The users do not create
-blobs or trees or commits -- they "git add", "git rm", "git
-commit", and "git pull" and as part of these actions, blobs,
-trees and commits are created.  The users do not even create
-tags with mktag -- they use "git tag" for that.
+The general problem is how to format patches files named with
+consecutive numbers starting from a set of possible unrelated
+revisions.
+
+> Now, we could choose to try to make "a..b" mean something else (ie make
+> the "^a" part only meaningful for that particular "sub-query"), and yes,
+> in many ways that would be a more intuitive thing, but it's not how git
+> revision descriptions work currently, and if we make that change we should
+> do it across the board.
+>
+> (It's not an easy change to make, but it should be possible by having
+> multiple separate NECESSARY/UNNECESSARY bits, and make the revision
+> walking logic a whole lot more complicated than it already is).
+>
+> So I'd argue that you should really do something like
+>
+>         ( git-rev-list a..b ; git-rev-list c..d ) |
+>                 git-format-patch --stdin
+>
+> in qgit if you want the ranges to be truly independent.
+>
+> (And no, I don't think git-format-patch takes a "--stdin" argument, but it
+> might not be unreasonable to add it as a generic revision walking
+> argument for scripting like this).
+>
+
+To fix qgit problem could be enough to add/modify the option -nx to
+make git-format-patch do not default with 0001 number but with x and
+then simply call git-format-patch in a loop:
+
+    for(int i = 0;  i  <selectedRevisions.count(); i++)
+         git-format patch -n<i+1> selectedRevisions[i]  ^selectedRevisions[i];
+
+
+But of course it is clear your suggestion could be a solution for
+much broader cases.
+
+    Marco
