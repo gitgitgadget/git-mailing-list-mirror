@@ -1,131 +1,79 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: file name case-sensitivity issues
-Date: Thu, 25 May 2006 11:17:48 -0700
-Message-ID: <7vac96ufxv.fsf@assigned-by-dhcp.cox.net>
-References: <20060523210615.GB5869@steel.home>
-	<7v7j4c4af3.fsf@assigned-by-dhcp.cox.net>
-	<20060525154735.GA6119@steel.home>
+Subject: Re: [RFC][PATCH] Allow transfer of any valid sha1
+Date: Thu, 25 May 2006 11:28:51 -0700
+Message-ID: <7v3beyuffg.fsf@assigned-by-dhcp.cox.net>
+References: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com>
+	<7vejyjpz9a.fsf@assigned-by-dhcp.cox.net>
+	<m13beysnb2.fsf@ebiederm.dsl.xmission.com>
+	<7vwtcay5k8.fsf@assigned-by-dhcp.cox.net>
+	<m1lksqdook.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0605251024320.5623@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 25 20:17:56 2006
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 25 20:29:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjKPB-0002hq-0K
-	for gcvg-git@gmane.org; Thu, 25 May 2006 20:17:53 +0200
+	id 1FjKZt-0004SA-7V
+	for gcvg-git@gmane.org; Thu, 25 May 2006 20:28:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030318AbWEYSRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 14:17:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030320AbWEYSRu
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 14:17:50 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:12792 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1030319AbWEYSRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 May 2006 14:17:49 -0400
+	id S1030319AbWEYS2x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 14:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030321AbWEYS2x
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 14:28:53 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:60890 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1030319AbWEYS2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 May 2006 14:28:52 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060525181748.WJAX19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 May 2006 14:17:48 -0400
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20060525154735.GA6119@steel.home> (Alex Riesen's message of
-	"Thu, 25 May 2006 17:47:35 +0200")
+          id <20060525182852.KKYI9215.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 25 May 2006 14:28:52 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605251024320.5623@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 25 May 2006 10:28:47 -0700 (PDT)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20753>
 
-fork0@t-online.de (Alex Riesen) writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> ... Besides, how about when you
-> don't _know_, like when cloning onto an usb-stick mounted with
-> auto-detection? Will the files with case-different names just
-> overwrite each other?
+> On Thu, 25 May 2006, Eric W. Biederman wrote:
+>> 
+>> My basic argument is that starting a pull with a commit that is not a
+>> reference is no worse than staring a pull from a broken repository.  The
+>> same checks that protects us should work in either case.
+>
+> I think Junio reacted to the subject line, which was somewhat badly 
+> phrased. You're not looking to transfer random objects, you're looking to 
+> _start_ a branch at any arbitrary known point.
 
-You _do_ realize that example is bogus, don't you?  At least I
-hope you did after you sent it.
+I realize that now.  From Eric's original message:
 
-You are cloning a project that has mixed cases (say foo and FOO)
-onto a case challenged filesystem but unfortunately you did not
-know the filesystem was case challenged in advance.  So after
-the cloning, your checkout results in only one file either foo
-or FOO but not both, because you cannot have two files whose
-names are different only in case on such a filesystem.
+  To be accurate of his source Andrew records the sha1 of the commit
+  and the git tree he pulled from.  Which looks like:
 
-Tough.
+  GIT b307e8548921c686d2eb948ca418ab2941876daa \
+   git+ssh://master.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-There are some other problems on case challenged filesystems
-that we _could_ solve but we probably don't right now.  You
-could concentrate on fixing those, instead of talking about
-unfixable.
+  So I figured I would transform the above line into the obvious
+  git-pull command:
 
+   git-pull \
+    git+ssh://master.kernel.org/pub/scm/.../torvalds/linux-2.6.git \
+    b307e8548921c686d2eb948ca418ab2941876daa
 
-There are probably 2 kinds of case-challenged-ness.  On non
-case-challenged filesystems, if I say "rm -f foo Foo; echo >foo;
-echo >Foo", "ls" says "foo Foo".  On case-challenged systems,
-one of the following would happen:
+With the limitation of the current tool, we could do:
 
- * "ls" says "foo".  If I swap the order of the "echo", it says
-   "Foo".  The filesystem does record the case but does not
-   allow two names with only case difference.
+  git-fetch master.kernel.org:/pub/scm/.../torvalds/linux-2.6.git \
+	refs/heads/master:refs/remotes/linus/master
+  git merge 'whatever merge message' HEAD b307e854
 
- * "ls" says ef oh oh in a case different from either "foo" nor
-   "Foo".  Or it says "foo" but if I swap the order of the
-   "echo", it still says "foo".  The filesystem does not record
-   the case, and does not allow two names with only case
-   difference.  readdir() may do some heuristics such as
-   lowercasing the name, but the point is the returned string is
-   unrealiable.
-
-I have git installed on a Cygwin on NTFS at work, and I think it
-is in the former category.  git seems to work as expected,
-modulo that you obviously cannot have two files "foo" and "Foo"
-in your git-managed project.  Probably a patch to delete "Foo"
-and create "foo" (to make your project friendlier to Windows)
-and a merge to do the same would work well, though I haven't
-tried.
-
-What breaks on filesystems in the latter category?  I suspect
-not many.
-
-update-index records the names given by the user (I am assuming
-that at least the shell is case sensitive), uses that name to
-stat() and open() to update and/or refresh the cache entry, so
-that codepath should be OK.  Anything that goes from index to
-find names and then goes to the filesystem with those names
-(diff family, checkout-index and read-tree -u) should be fine.
-
-ls-files -o/-i would have a hard time, since they need to work
-with strings read from readdir(), as you found out.  That means
-"git add" and "git clean" may not work.
-
-I do not think of anything else that is affected by readdir()
-breakage offhand; the core is doing pretty fine as it is (I do
-not consider ls-files -o/-i a core -- that is more Porcelainish
-part of the whole package).
-
-I honestly think that on Windows people would not even want to
-use the core Porcelainish nor even Cogito.  The would want a
-native Window-ish UI that drives the core.  I do not think such
-a program would internally call "git add" nor read from
-"ls-files -o/-i".  It would instead do its own Folder hierarchy
-traversal, and use "update-index --add --remove" to implement
-its own "git add/rm" UI, and read from "ls-files" (not -o nor
--i) so that it can show tracked and untracked files differently
-in its Explorer view.
-
-So in that sense, I think ls-files -o/-i issue is quite low
-priority.  It does not matter on sane filesystems, and in the
-place where it matters the most, the desired solution does not
-involve ls-files -o/-i working well there.
-
-Having said that, I think you _could_ have a repository
-configuration that says "this repository sits on a case
-challenged filesystem", and update ls-files to munge what it
-gets from readdir() by comparing them against what you have in
-the index.  If your readdir() gives "foo" when you have "FOO" in
-the index on such a filesystem, you do not say that "foo" is an
-untracked file -- you just say you found "FOO" as you expected.
+assuming that b307e854 is reachable from your tip.  So it might
+be just a matter of giving a convenient shorthand to do the
+above two commands, instead of mucking with upload-pack.
