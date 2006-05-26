@@ -1,109 +1,82 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] cvsimport: introduce -L<imit> option to workaround memory leaks
-Date: Fri, 26 May 2006 18:02:30 +1200
-Message-ID: <46a038f90605252302v5ff1a3a8vb4053b7da8eb7a68@mail.gmail.com>
-References: <11482978883713-git-send-email-martin@catalyst.net.nz>
-	 <Pine.LNX.4.64.0605221926270.3697@g5.osdl.org>
-	 <46a038f90605251742p2435ae23k8bfbb98409a30c1c@mail.gmail.com>
-	 <Pine.LNX.4.64.0605252204590.5623@g5.osdl.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: git-format-patch possible regressions
+Date: Fri, 26 May 2006 08:09:12 +0200
+Message-ID: <e5bfff550605252309h2c4b74bcp50b095e09e6c133f@mail.gmail.com>
+References: <e5bfff550605251223g2cf8cfb9vfa18d016b369188d@mail.gmail.com>
+	 <7vhd3dubd9.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0605252338530.31700@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.63.0605260014340.13003@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vy7wpr97n.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0605260125420.16816@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-Cc: "Martin Langhoff" <martin@catalyst.net.nz>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>, Johannes.Schindelin@gmx.de,
-	spyderous@gentoo.org, smurf@smurf.noris.de
-X-From: git-owner@vger.kernel.org Fri May 26 08:02:36 2006
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
+	"Linus Torvalds" <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri May 26 08:09:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjVP8-0002p2-Dj
-	for gcvg-git@gmane.org; Fri, 26 May 2006 08:02:34 +0200
+	id 1FjVVe-0003QX-6L
+	for gcvg-git@gmane.org; Fri, 26 May 2006 08:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030458AbWEZGCb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 02:02:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030485AbWEZGCb
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 02:02:31 -0400
-Received: from wr-out-0506.google.com ([64.233.184.228]:53907 "EHLO
+	id S1030506AbWEZGJO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 02:09:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030507AbWEZGJO
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 02:09:14 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:19096 "EHLO
 	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1030458AbWEZGCb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 02:02:31 -0400
-Received: by wr-out-0506.google.com with SMTP id i7so316956wra
-        for <git@vger.kernel.org>; Thu, 25 May 2006 23:02:30 -0700 (PDT)
+	id S1030506AbWEZGJO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 02:09:14 -0400
+Received: by wr-out-0506.google.com with SMTP id i34so1976373wra
+        for <git@vger.kernel.org>; Thu, 25 May 2006 23:09:13 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tkikh4mLARzAxXW6bChQq60iDT8faAVdDUDeUbxJwNjmCo9v4pP+yjnTrQGzyXupuwvc/uV1yOxpXRPI0vm9IjJ2Ocs4Veq+al/vK6ManXU2U50ptESd/NropWsxYSko+pn4BMockDKmIVx9sDGrjjMOXmIuCKNZFUPxPVtZ2zU=
-Received: by 10.54.120.6 with SMTP id s6mr164661wrc;
-        Thu, 25 May 2006 23:02:30 -0700 (PDT)
-Received: by 10.54.127.12 with HTTP; Thu, 25 May 2006 23:02:30 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605252204590.5623@g5.osdl.org>
+        b=Dn6BsJ1VpdRov55TaDvfalcwtYhwGMKS8SfYiY0f+xeBRgPMHAnJxHBh3ndkvyq0PYbXsAlLmg8kdM9jwXGJi51q6aKUIN1hkB9ceVR4kqJg/vmGL3jUxRCIVKaw9HcSsCB9QkNqdJE4f8PrV7Yod50/kGj4vO7kP3OTts10llQ=
+Received: by 10.65.254.13 with SMTP id g13mr131374qbs;
+        Thu, 25 May 2006 23:09:12 -0700 (PDT)
+Received: by 10.64.142.14 with HTTP; Thu, 25 May 2006 23:09:12 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605260125420.16816@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20797>
 
-On 5/26/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> I'm doing it too, just for fun.
+On 5/26/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 25 May 2006, Junio C Hamano wrote:
+>
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> > > Thinking about this again, it makes more sense not to imply --numbered:
+> >
+> > Yes, that makes sense.  That way you can say "Please start
+> > naming the output files at 0032-xxxx.txt, because you gave me 31
+> > patch series last time, but I do not want [PATCH x/y] on the
+> > subject line, just [PATCH]".
+> >
+> > That brings up another issue.  Don't we need to have another
+> > option --total-number that overrides the /y part above?
+>
+> I thought about that, too. Isn't the --numbered only useful for submitting
+> a patch series via mail? And isn't it necessary to make certain that these
+> patches really apply in that order? Isn't it then sensible to force the
+> user to have a branch (at least a throw-away one) having exactly these
+> patches, just to make sure that the patches really, really apply in that
+> order?
+>
+> If all that is true, then --start-number && --numbered does not make sense
+> at all.
+>
 
-Well, it's good to not be so alone in our definition of fun ;-)
-
-> Of course, since I'm doing this on a machine that basically has a laptop
-> disk, the "just for fun" part is a bit sad. It's waiting for disk about
-> 25% of the time ;/
-
-Ouch.
-
-> And it's slow as hell. I really wish we could do better on the CVS import
-> front.
-
-Me too. However, I don't think the perl part is so costly anymore.
-It's down to waiting on IO. git-write-tree is also prominently there.
-It takes a lot of memory in some writes -- I had thought it'd be
-cheaper as it takes one tree object at the time...
-
-I also have a trivial patch that I haven't posted yet, that runs cvsps
-to a tempfile, and then reads the file. Serialising the tasks means
-that we don't carry around cvsps' memory footprint during the import
-itself.
-
-...
-> It's "git-rev-list --objects" that is the memory sucker for me, the
-> packing itself doesn't seem to be too bad.
-
-
-No, you're right, it's git-rev-list that gets called during the
-repack. But it was pushing everything it could to swap. Once it didn't
-fit in memory, it hit a brick wall :(
-
-> The biggest cost seems to be git-write-tree, which is about 0.225 seconds
-> for me on that tree on that machine. Which _should_ mean that we could do
-> 4 commits a second, but that sure as hell ain't how it works out. It seems
-> to do about 1.71 commits a second for me on that tree, which is pretty
-> damn pitiful. Some cvs overhead, and probably some other git overhead too.
-
-Well, we _have_ to fetch the file. I guess you are thinking of
-extracting if frrom the RCS ,v file directly? One tihng that I found
-that seemed to speed things up a bit was to declare TMPDIR to be a
-directory in the same partition.
-
-> (That's a 2GHz Merom, so the fact that you get ~6k commits per hour on
-> your 2GHz Opteron is about the same speed - I suspect you're also at least
-> partly limited by disk, our numbers seem to match pretty well).
-
-Yup. This is _very_ diskbound.
-
-> 200k commits at 6k commits per hour is about a day and a half (plus the
-> occasional packing load). Taking that long to import a CVS archive is
-> horrible. But I guess it _is_ several years of work, and I guess you
-> really have to do it only once, but still.
-
-And it's a huge CVS archive too.
+I was thinking, probably wrong, that the number prepended in file name
+is used also to disambiguate two patches with the same subject.
 
 
-
-martin
+     Marco
