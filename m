@@ -1,70 +1,101 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: Slow fetches of tags
-Date: Fri, 26 May 2006 16:42:39 +0100
-Message-ID: <20060526154239.GA20839@linux-mips.org>
-References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org> <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org> <Pine.LNX.4.64.0605241641250.5623@g5.osdl.org> <7vd5e23n5a.fsf@assigned-by-dhcp.cox.net> <7vd5e21zh9.fsf@assigned-by-dhcp.cox.net>
+From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+Subject: git-apply can't apply patches to CRLF-files
+Date: Fri, 26 May 2006 20:00:42 +0400
+Message-ID: <4477262A.5000301@Intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 26 17:43:02 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri May 26 18:02:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjeSe-0005QF-Ox
-	for gcvg-git@gmane.org; Fri, 26 May 2006 17:42:49 +0200
+	id 1Fjekc-0000rL-5X
+	for gcvg-git@gmane.org; Fri, 26 May 2006 18:01:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbWEZPmp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 11:42:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbWEZPmp
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 11:42:45 -0400
-Received: from ftp.linux-mips.org ([194.74.144.162]:4744 "EHLO
-	ftp.linux-mips.org") by vger.kernel.org with ESMTP id S1750920AbWEZPmp
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 May 2006 11:42:45 -0400
-Received: from localhost.localdomain ([127.0.0.1]:30386 "EHLO bacchus.dhis.org")
-	by ftp.linux-mips.org with ESMTP id S8133784AbWEZPmn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 17:42:43 +0200
-Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
-	by bacchus.dhis.org (8.13.6/8.13.4) with ESMTP id k4QFge3Z020943;
-	Fri, 26 May 2006 16:42:41 +0100
-Received: (from ralf@localhost)
-	by denk.linux-mips.net (8.13.6/8.13.6/Submit) id k4QFgdcQ020942;
-	Fri, 26 May 2006 16:42:39 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5e21zh9.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
+	id S1750891AbWEZQBR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 12:01:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbWEZQBR
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 12:01:17 -0400
+Received: from mga01.intel.com ([192.55.52.88]:26523 "EHLO
+	fmsmga101-1.fm.intel.com") by vger.kernel.org with ESMTP
+	id S1750883AbWEZQBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 May 2006 12:01:16 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101-1.fm.intel.com with ESMTP; 26 May 2006 09:01:16 -0700
+Received: from fmsmsx331.fm.intel.com (HELO fmsmsx331.amr.corp.intel.com) ([132.233.42.156])
+  by fmsmga001.fm.intel.com with ESMTP; 26 May 2006 09:01:01 -0700
+X-IronPort-AV: i="4.05,177,1146466800"; 
+   d="scan'208"; a="42966902:sNHT22129401413"
+Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 26 May 2006 09:01:00 -0700
+Received: from mssmsx402.ccr.corp.intel.com ([10.125.2.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 26 May 2006 09:00:59 -0700
+Received: from [10.125.151.180] ([10.125.151.180]) by mssmsx402.ccr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 26 May 2006 20:00:56 +0400
+User-Agent: Thunderbird 1.5 (Windows/20051201)
+To: git@vger.kernel.org
+X-OriginalArrivalTime: 26 May 2006 16:00:56.0189 (UTC) FILETIME=[929342D0:01C680DD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20816>
 
-On Wed, May 24, 2006 at 09:48:34PM -0700, Junio C Hamano wrote:
+Hello, 
 
-> I think the right fix for this is to change upload-pack to
-> traverse reachability chain from the "want" heads as it gets
-> "have" from the downloader, and stop responding "continue" when
-> all "want" heads can reach some "have" commits.  This would not
-> prevent it from going down all the way to the root commit if
-> what is wanted does not have anything to do with what the other
-> end has (e.g. if you have only my main project branches, and you
-> ask for html head for the first time), but it would have
-> prevented Ralf's tree from getting "continue" after he asked
-> only for v2.6.16.18 tag and said he has 2.6.16.18 commit and its
-> ancestors.  It should not be too difficult to do this, but here
-> is an alternative, client-side workaround.
-> 
-> -- >8 --
-> [PATCH] fetch-pack: give up after getting too many "ack continue"
+git-apply can't apply the patch to file with windows-style CRLF line endings,
+even if the patch was generated by git-format-patch.
 
-So I did test your patch.  In the big, slow repository it cuts down the
-time for a
+Is this a bug or known deficiency?
 
-  git fetch git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git master:v2.6.16-stable
+The following script reproduces the problem
+---------
+#!/bin/sh
+set -e
+mkdir trash
+cd trash
+git init-db
+echo "abc" > a
+unix2dos a
+git add a
+git commit -m "a added" a
+echo "cde" >> a
+unix2dos a
+git commit -m "a modified" a
+git format-patch HEAD^
+git reset --hard HEAD^
+git am 0001*.txt
+---------
 
-from like 6min to about 7s.
+The resulting output is
+---------
+$ ./test
+defaulting to local storage area
+a: done.
+Committing initial tree 357c56061b96c1548b15168bc0d02e8d1a319e0b
+a: done.
+0001-a-modified.txt
 
-Thanks!
+Applying 'a modified'
 
-  Ralf
+error: patch failed: a:1
+error: a: patch does not apply
+Patch failed at 0001.
+When you have resolved this problem run "git-am --resolved".
+If you would prefer to skip this patch, instead run "git-am --skip".
+---------
+
+If I remove unix2dos calls and so the file has normal unix LF line endings,
+then the result is correct as expected
+
+---------
+$ ./test
+defaulting to local storage area
+Committing initial tree 6afc8719a182fed19980da0e53d13fba1f94dd3f
+0001-a-modified.txt
+
+Applying 'a modified'
+
+Wrote tree 49f5181a399bbcaac1da3bf693c466a281c4a255
+Committed: 2b0a2936d0a65b3511882b8e88586ab054dd15b2
+---------
