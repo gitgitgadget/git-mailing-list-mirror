@@ -1,66 +1,62 @@
-From: Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: [PATCH 4/4] t6000lib: workaround a possible dash bug
-Date: Fri, 26 May 2006 22:33:42 +1000
-Message-ID: <20060526123342.GD5372@gondor.apana.org.au>
-References: <11486091793385-git-send-email-normalperson@yhbt.net> <11486091792604-git-send-email-normalperson@yhbt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: t8001-annotate.sh fails on Mac OS X
+Date: Fri, 26 May 2006 15:36:14 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605261534270.27610@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <f3d7535d0605251653m15db34f3j46403f4ed0c4c69f@mail.gmail.com>
+ <20060526011153.GA27720@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 26 14:53:37 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Stefan Pfetzing <stefan.pfetzing@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 26 15:36:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fjboa-0006z9-LR
-	for gcvg-git@gmane.org; Fri, 26 May 2006 14:53:17 +0200
+	id 1FjcUF-0006Jg-4x
+	for gcvg-git@gmane.org; Fri, 26 May 2006 15:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750707AbWEZMxM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 08:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750710AbWEZMxM
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 08:53:12 -0400
-Received: from rhun.apana.org.au ([64.62.148.172]:42245 "EHLO
-	arnor.apana.org.au") by vger.kernel.org with ESMTP id S1750707AbWEZMxL
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 May 2006 08:53:11 -0400
-Received: from gondolin.me.apana.org.au ([192.168.0.6])
-	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
-	id 1FjboM-0002pD-21; Fri, 26 May 2006 22:53:02 +1000
-Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
-	id 1FjbVe-000192-00; Fri, 26 May 2006 22:33:42 +1000
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <11486091792604-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.9i
+	id S1750737AbWEZNgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 09:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750738AbWEZNgQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 09:36:16 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:47594 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750737AbWEZNgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 May 2006 09:36:15 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 700151FBE;
+	Fri, 26 May 2006 15:36:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 640AF12DA;
+	Fri, 26 May 2006 15:36:14 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 466B2135E;
+	Fri, 26 May 2006 15:36:14 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060526011153.GA27720@spearce.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20811>
 
-On Thu, May 25, 2006 at 07:06:18PM -0700, Eric Wong wrote:
->
->  t/t6000lib.sh |    4 +++-
->  1 files changed, 3 insertions(+), 1 deletions(-)
+Hi,
+
+On Thu, 25 May 2006, Shawn Pearce wrote:
+
+> Stefan Pfetzing <stefan.pfetzing@gmail.com> wrote:
+> > 
+> > for some reason I could not yet figure out, t8001-annotate.sh fails at test 
+> > 18.
 > 
-> cba907ce0b1c0927fb15cbb5dd91a4129ff9a950
-> diff --git a/t/t6000lib.sh b/t/t6000lib.sh
-> index c6752af..d402621 100755
-> --- a/t/t6000lib.sh
-> +++ b/t/t6000lib.sh
-> @@ -69,7 +69,9 @@ on_committer_date()
->  {
->      _date=$1
->      shift 1
-> -    GIT_COMMITTER_DATE=$_date "$@"
-> +    export GIT_COMMITTER_DATE="$_date"
-> +    "$@"
-> +    unset GIT_COMMITTER_DATE
+> I've been seeing the same failed test case for a long time now on
+> my own Mac OS X system.
 
-The original code looks correct to me.  So I think this too should
-be fixed in dash instead.
+... which is sort of funny, because I don't see it on my system. Running 
+an iBook G3 with Mac OS X 10.2.8. "make test" runs through, and no, AFAICT 
+I do not have any local modifications which could be responsible for that.
 
-Thanks,
--- 
-Visit Openswan at http://www.openswan.org/
-Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Ciao,
+Dscho
