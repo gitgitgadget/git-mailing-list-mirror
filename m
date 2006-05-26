@@ -1,67 +1,56 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: ~/.git/config ?
-Date: Fri, 26 May 2006 20:05:26 +0300
-Message-ID: <20060526200526.d8a2f776.tihirvon@gmail.com>
-References: <20060526152837.GQ23852@progsoc.uts.edu.au>
-	<20060526193325.d2a530a4.tihirvon@gmail.com>
-	<20060526163829.GB10488@pasky.or.cz>
+Date: Fri, 26 May 2006 19:11:02 +0200
+Message-ID: <20060526171102.GH11941@pasky.or.cz>
+References: <20060526152837.GQ23852@progsoc.uts.edu.au> <20060526193325.d2a530a4.tihirvon@gmail.com> <20060526163829.GB10488@pasky.or.cz> <20060526200526.d8a2f776.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: wildfire@progsoc.uts.edu.au, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 26 19:07:34 2006
+X-From: git-owner@vger.kernel.org Fri May 26 19:10:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjfmV-00045J-Fi
-	for gcvg-git@gmane.org; Fri, 26 May 2006 19:07:24 +0200
+	id 1Fjfpk-0004bd-OX
+	for gcvg-git@gmane.org; Fri, 26 May 2006 19:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163AbWEZRHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 13:07:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbWEZRHS
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 13:07:18 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:44670 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751163AbWEZRHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 May 2006 13:07:16 -0400
-Received: by nf-out-0910.google.com with SMTP id n29so96381nfc
-        for <git@vger.kernel.org>; Fri, 26 May 2006 10:07:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=AxEO/gzXNSrPCwBU3zPCw1gufcYtjUbKrSajFySIWTDXx7Z0TQB06ECE1V5VC/uLNOSjydj9OyXmhwcNhtBwSsRi8kOh+np312zAgaWG/IG/O+NwwcRLHfOm/UyTRhlz9FnXlt3t6mMmoqR4S44hQS5lsp9aNe4QQ/iysEuqq8A=
-Received: by 10.49.6.9 with SMTP id j9mr2651nfi;
-        Fri, 26 May 2006 10:03:30 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.200.31])
-        by mx.gmail.com with ESMTP id d2sm690128nfe.2006.05.26.10.03.27;
-        Fri, 26 May 2006 10:03:28 -0700 (PDT)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060526163829.GB10488@pasky.or.cz>
-X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
+	id S1751159AbWEZRKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 13:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbWEZRKm
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 13:10:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:14258 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751159AbWEZRKl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 13:10:41 -0400
+Received: (qmail 7950 invoked by uid 2001); 26 May 2006 19:11:02 +0200
+To: Timo Hirvonen <tihirvon@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <20060526200526.d8a2f776.tihirvon@gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20822>
 
-Petr Baudis <pasky@suse.cz> wrote:
-
-> Dear diary, on Fri, May 26, 2006 at 06:33:25PM CEST, I got a letter
-> where Timo Hirvonen <tihirvon@gmail.com> said that...
-> > I backup my $HOME using git, so there's a .git directory in ~.
+Dear diary, on Fri, May 26, 2006 at 07:05:26PM CEST, I got a letter
+where Timo Hirvonen <tihirvon@gmail.com> said that...
+> > > I don't think a global config file is really needed but it would be
+> > > nice if .git/config would override the environment variables, not the
+> > > other way around.
+> > 
+> > Then you have no other way to override .git/config e.g. when committing
+> > patches submitted by other people.
 > 
-> Then it should be called ~/.gitconfig. :-)
+> git commit --author "name <email>"
 
-I just wanted to point the fact that ~/.git/ could not be used :)
+Except that this just sets the environment variables for you. :-)
 
-> > I don't think a global config file is really needed but it would be
-> > nice if .git/config would override the environment variables, not the
-> > other way around.
-> 
-> Then you have no other way to override .git/config e.g. when committing
-> patches submitted by other people.
-
-git commit --author "name <email>"
+Now, you could do some really funny stuff with overriding the
+environment variables at git commit's entry point with .git/config
+stuff, then possibly setting them again in case --author was passed, but
+I seriously think such a confusion is not worth it.
 
 -- 
-http://onion.dynserv.net/~timo/
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
