@@ -1,48 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Call builtin ls-tree in git-cat-file -p
-Date: Fri, 26 May 2006 18:59:17 +0200
-Message-ID: <20060526165917.5215.39602.stgit@machine.or.cz>
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 26 18:59:05 2006
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: ~/.git/config ?
+Date: Fri, 26 May 2006 20:05:26 +0300
+Message-ID: <20060526200526.d8a2f776.tihirvon@gmail.com>
+References: <20060526152837.GQ23852@progsoc.uts.edu.au>
+	<20060526193325.d2a530a4.tihirvon@gmail.com>
+	<20060526163829.GB10488@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: wildfire@progsoc.uts.edu.au, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 26 19:07:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjfeM-0002c6-OY
-	for gcvg-git@gmane.org; Fri, 26 May 2006 18:58:59 +0200
+	id 1FjfmV-00045J-Fi
+	for gcvg-git@gmane.org; Fri, 26 May 2006 19:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbWEZQ64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 12:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751157AbWEZQ64
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 12:58:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:11199 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751156AbWEZQ6z (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 12:58:55 -0400
-Received: (qmail 5231 invoked from network); 26 May 2006 18:59:17 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 26 May 2006 18:59:17 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1751163AbWEZRHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 13:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbWEZRHS
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 13:07:18 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:44670 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751163AbWEZRHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 May 2006 13:07:16 -0400
+Received: by nf-out-0910.google.com with SMTP id n29so96381nfc
+        for <git@vger.kernel.org>; Fri, 26 May 2006 10:07:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=AxEO/gzXNSrPCwBU3zPCw1gufcYtjUbKrSajFySIWTDXx7Z0TQB06ECE1V5VC/uLNOSjydj9OyXmhwcNhtBwSsRi8kOh+np312zAgaWG/IG/O+NwwcRLHfOm/UyTRhlz9FnXlt3t6mMmoqR4S44hQS5lsp9aNe4QQ/iysEuqq8A=
+Received: by 10.49.6.9 with SMTP id j9mr2651nfi;
+        Fri, 26 May 2006 10:03:30 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.200.31])
+        by mx.gmail.com with ESMTP id d2sm690128nfe.2006.05.26.10.03.27;
+        Fri, 26 May 2006 10:03:28 -0700 (PDT)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060526163829.GB10488@pasky.or.cz>
+X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20821>
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+Petr Baudis <pasky@suse.cz> wrote:
 
- builtin-cat-file.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Dear diary, on Fri, May 26, 2006 at 06:33:25PM CEST, I got a letter
+> where Timo Hirvonen <tihirvon@gmail.com> said that...
+> > I backup my $HOME using git, so there's a .git directory in ~.
+> 
+> Then it should be called ~/.gitconfig. :-)
 
-diff --git a/builtin-cat-file.c b/builtin-cat-file.c
-index 8ab136e..4d36817 100644
---- a/builtin-cat-file.c
-+++ b/builtin-cat-file.c
-@@ -141,7 +141,7 @@ int cmd_cat_file(int argc, const char **
- 
- 		/* custom pretty-print here */
- 		if (!strcmp(type, tree_type))
--			return execl_git_cmd("ls-tree", argv[2], NULL);
-+			return cmd_ls_tree(2, argv + 1, NULL);
- 
- 		buf = read_sha1_file(sha1, type, &size);
- 		if (!buf)
+I just wanted to point the fact that ~/.git/ could not be used :)
+
+> > I don't think a global config file is really needed but it would be
+> > nice if .git/config would override the environment variables, not the
+> > other way around.
+> 
+> Then you have no other way to override .git/config e.g. when committing
+> patches submitted by other people.
+
+git commit --author "name <email>"
+
+-- 
+http://onion.dynserv.net/~timo/
