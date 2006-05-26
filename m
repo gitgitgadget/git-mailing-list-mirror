@@ -1,58 +1,73 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-cvsserver wart?
-Date: Fri, 26 May 2006 15:28:11 +1200
-Message-ID: <46a038f90605252028h556d0b2aob43f5c3dca8a5392@mail.gmail.com>
-References: <dcedf5e20605250942g6a7417dfh5f2f26df29842def@mail.gmail.com>
-	 <46a038f90605251419kd45fbj419565eabdd63182@mail.gmail.com>
-	 <dcedf5e20605252011v6738dc9dg3d4801144d3e9898@mail.gmail.com>
-	 <dcedf5e20605252024q5bf51486o7cbf6cc396b18b5d@mail.gmail.com>
+From: "Stefan Pfetzing" <stefan.pfetzing@gmail.com>
+Subject: Re: Git 1.3.2 on Solaris
+Date: Fri, 26 May 2006 05:30:49 +0200
+Message-ID: <f3d7535d0605252030p55f83db9w4bdf436934badb19@mail.gmail.com>
+References: <Pine.LNX.4.64.0605170919290.10823@g5.osdl.org>
+	 <6471.1147883724@lotus.CS.Berkeley.EDU>
+	 <f3d7535d0605222020j2d581bd9j602752659a4b3ac2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 26 05:28:17 2006
+X-From: git-owner@vger.kernel.org Fri May 26 05:30:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjSzn-0008G9-8p
-	for gcvg-git@gmane.org; Fri, 26 May 2006 05:28:15 +0200
+	id 1FjT2L-0000MS-7P
+	for gcvg-git@gmane.org; Fri, 26 May 2006 05:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030229AbWEZD2M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 May 2006 23:28:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030265AbWEZD2M
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 23:28:12 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:45613 "EHLO
+	id S1030221AbWEZDau (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 May 2006 23:30:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030265AbWEZDau
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 May 2006 23:30:50 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:38191 "EHLO
 	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1030229AbWEZD2L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 23:28:11 -0400
-Received: by wr-out-0506.google.com with SMTP id i7so297767wra
-        for <git@vger.kernel.org>; Thu, 25 May 2006 20:28:11 -0700 (PDT)
+	id S1030221AbWEZDau convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 May 2006 23:30:50 -0400
+Received: by wr-out-0506.google.com with SMTP id i34so1959194wra
+        for <git@vger.kernel.org>; Thu, 25 May 2006 20:30:49 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=egUGdgnz8NihQ2x3H2MLjao/v574LT8Iw6zIvn+0WK6eeuKZw0lfvtJjAtR40PlauPhyJb/hSqbAD1vBQPSCQRESpO6sPkxr5pcEwKqLfRYP8kHVP3h3gYGw2e6X18nLMn5XxOXBpS7kOUB8Fcx0oIfQ9KzhwS2L2GOPJ8une8M=
-Received: by 10.54.78.9 with SMTP id a9mr1181244wrb;
-        Thu, 25 May 2006 20:28:11 -0700 (PDT)
-Received: by 10.54.127.12 with HTTP; Thu, 25 May 2006 20:28:11 -0700 (PDT)
-To: "Cameron McBride" <cameron.mcbride@gmail.com>
-In-Reply-To: <dcedf5e20605252024q5bf51486o7cbf6cc396b18b5d@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=R+b3Yln/LglL7dAwNXPdrUZSPOoJzzF8meunTQxJh0bSdHoWJK0bbhdx0XxUwDJDXHP/qkFiMiF2Bj6xosoUyTMOkzWiQ32I2F61wGFgJ1d/lKi4fm3OSlKjPOgVOapx7TqYOMa3zwHgZ7zdQ8a/cAzq/ynHtXhsbY9EOLIjiY8=
+Received: by 10.65.61.20 with SMTP id o20mr56572qbk;
+        Thu, 25 May 2006 20:30:49 -0700 (PDT)
+Received: by 10.64.253.10 with HTTP; Thu, 25 May 2006 20:30:49 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+In-Reply-To: <f3d7535d0605222020j2d581bd9j602752659a4b3ac2@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20788>
 
-On 5/26/06, Cameron McBride <cameron.mcbride@gmail.com> wrote:
-> WARN  - file 'index' already exists in the git repository
+Hi list,
 
-This warning means that you are running git-cvsserver off a repo where
-you also have a checkout. git-cvsserver really expects to be running
-off a 'naked' or 'bare' repo. For read only ops I think it kind-of
-works in a 'checkout' repo, but commits are a different story.
+2006/5/23, Stefan Pfetzing <stefan.pfetzing@gmail.com>:
 
-cheers,
+> 2006/5/17, Jason Riedy <ejr@eecs.berkeley.edu>:
+> > And pkgsrc itself works just fine without the silly g prefix,
+> > or at least does for me as a mere user (and as well as it does
+> > work).  But if you intend on adding the package upstream, it'll
+> > need something to cope with the g.  And pkgsrc handles local
+> > patches...
+>
+> Well I had some problems on NetBSD without the g prefix for the
+> gnu coreutils - since then I always used that prefix.
 
+...
 
-m
+Well finally - after some patching around access() and after figuring
+out "merge" was broken in pkgsrc (and still is - I had to open a
+problem report) - I got all tests to complete successfully.
+
+bye
+
+Stefan
+
+P.S.: merge from devel/rcs uses /bin/diff3 on solaris which somehow
+breaks merge.
+-- 
+       http://www.dreamind.de/
+Oroborus and Debian GNU/Linux Developer.
