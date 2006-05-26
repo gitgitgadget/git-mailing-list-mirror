@@ -1,56 +1,232 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: ~/.git/config ?
-Date: Fri, 26 May 2006 19:11:02 +0200
-Message-ID: <20060526171102.GH11941@pasky.or.cz>
-References: <20060526152837.GQ23852@progsoc.uts.edu.au> <20060526193325.d2a530a4.tihirvon@gmail.com> <20060526163829.GB10488@pasky.or.cz> <20060526200526.d8a2f776.tihirvon@gmail.com>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: [RFC][PATCH] Allow transfer of any valid sha1
+Date: Fri, 26 May 2006 11:32:40 -0600
+Message-ID: <m1ac94bsjr.fsf@ebiederm.dsl.xmission.com>
+References: <m164jvj1x3.fsf@ebiederm.dsl.xmission.com>
+	<7vejyjpz9a.fsf@assigned-by-dhcp.cox.net>
+	<m13beysnb2.fsf@ebiederm.dsl.xmission.com>
+	<7vwtcay5k8.fsf@assigned-by-dhcp.cox.net>
+	<m1lksqdook.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0605251024320.5623@g5.osdl.org>
+	<7v3beyuffg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605251134410.5623@g5.osdl.org>
+	<m13bexetj1.fsf@ebiederm.dsl.xmission.com>
+	<7vac95m799.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: wildfire@progsoc.uts.edu.au, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 26 19:10:53 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 26 19:33:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fjfpk-0004bd-OX
-	for gcvg-git@gmane.org; Fri, 26 May 2006 19:10:45 +0200
+	id 1FjgC2-0008DD-Py
+	for gcvg-git@gmane.org; Fri, 26 May 2006 19:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751159AbWEZRKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 13:10:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbWEZRKm
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 13:10:42 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14258 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751159AbWEZRKl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 13:10:41 -0400
-Received: (qmail 7950 invoked by uid 2001); 26 May 2006 19:11:02 +0200
-To: Timo Hirvonen <tihirvon@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20060526200526.d8a2f776.tihirvon@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751192AbWEZRdo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 13:33:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbWEZRdn
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 13:33:43 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:9390 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1751192AbWEZRdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 May 2006 13:33:43 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k4QHWfPo022530;
+	Fri, 26 May 2006 11:32:41 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k4QHWeUk022529;
+	Fri, 26 May 2006 11:32:40 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vac95m799.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Fri, 26 May 2006 03:04:50 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20823>
 
-Dear diary, on Fri, May 26, 2006 at 07:05:26PM CEST, I got a letter
-where Timo Hirvonen <tihirvon@gmail.com> said that...
-> > > I don't think a global config file is really needed but it would be
-> > > nice if .git/config would override the environment variables, not the
-> > > other way around.
-> > 
-> > Then you have no other way to override .git/config e.g. when committing
-> > patches submitted by other people.
-> 
-> git commit --author "name <email>"
+Junio C Hamano <junkio@cox.net> writes:
 
-Except that this just sets the environment variables for you. :-)
+> ebiederm@xmission.com (Eric W. Biederman) writes:
+>
+>> diff --git a/fetch-pack.c b/fetch-pack.c
+>> index a3bcad0..c767d84 100644
+>> --- a/fetch-pack.c
+>> +++ b/fetch-pack.c
+>> @@ -260,6 +260,27 @@ static void mark_recent_complete_commits
+>>  	}
+>>  }
+>>  
+>> +static struct ref **get_sha1_heads(struct ref **refs, int nr_heads, char
+> **head)
+>> +{
+>> +	int i;
+>> +	for (i  = 0; i < nr_heads; i++) {
+>> +		struct ref *ref;
+>> +		unsigned char sha1[20];
+>> +		char *s = head[i];
+>> +		int len = strlen(s);
+>> +
+>> +		if (len != 40 || get_sha1_hex(s, sha1))
+>> +			continue;
+>
+> So the new convention is fetch-pack can take ref name (as
+> before), or a bare 40-byte hexadecimal.  I think sane people
+> would not use ambiguous refname that says "deadbeef" five times,
+> and even if the do so they could disambiguate by explicitly
+> saying "refs/heads/" followed by "deadbeef" five times, so it
+> should be OK.
 
-Now, you could do some really funny stuff with overriding the
-environment variables at git commit's entry point with .git/config
-stuff, then possibly setting them again in case --author was passed, but
-I seriously think such a confusion is not worth it.
+Yes.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+>> +
+>> +		ref = xcalloc(1, sizeof(*ref) + len + 1);
+>> +		memcpy(ref->old_sha1, sha1, 20);
+>> +		memcpy(ref->name, s, len + 1);
+>> +		*refs = ref;
+>> +		refs = &ref->next;
+>> +	}
+>> +	return refs;
+>> +}
+>> +
+>
+> This function takes the pointer to a location that holds a
+> pointer to a "struct ref" -- it is the location to store the
+> newly allocated ref structure, i.e. the next pointer of the last
+> element in the list.  When it returns, the location pointed at
+> by the pointer given to you points at the first element you
+> allocated, and it returns the next pointer of the last element
+> allocated by it.  That is the same calling convention as
+> connect.c::get_remote_heads().  So when calling this function to
+> append to a list you already have, you would give the next
+> pointer to the last element of the existing list.  But you do
+> not seem to do that.
+
+Ack. That does look like a bug.  I knew there as something
+fishy about that code.  But it worked for my basic testing so I didn't
+worry about it.
+
+> I think the body of fetch_pack() should become something like:
+>
+> 	struct ref *ref, **tail;
+>
+>         tail = get_remote_heads(fd[0], &ref, 0, NULL, 0);
+> 	if (server_supports("multi_ack")) {
+> 		...
+> 	}
+> 	tail = get_sha1_heads(tail, nr_match, match);
+> 	if (everything_local(&ref, nr_match, match)) {
+> 		...
+
+Actually because we want the filter to resolve sha1s by
+default in terms of what was passed on the command line.  I'm pretty
+certain that should be:
+
+	tail = get_sha1_heads(&ref, nr_match, match);
+	tail = get_remote_heads(fd[0], tail, 0, NULL, 0);
+        ...
+
+
+>> @@ -311,6 +332,8 @@ static int everything_local(struct ref *
+>>  	if (cutoff)
+>>  		mark_recent_complete_commits(cutoff);
+>>  
+>> +	filter_refs(refs, nr_match, match);
+>> +
+>
+> I am not sure about this change.
+
+Agreed.  It was a hold over from an earlier way of injecting
+the sha1 into the logic.  
+
+As for what happens I think I need to audit everything that
+takes a ref from fetch_pack.  To make certain I have not
+messed up the logic.
+
+> In the original code we do not let get_remote_heads() to filter
+> the refs but call filter_refs() after the "mark all complete
+> remote refs as common" step for a reason.  Even though we may
+> not be fetching from some remote refs, we would want to take
+> advantage of the knowledge of what objects they have so that we
+> can mark as many objects as common as possible in the early
+> stage.  I suspect this change defeats that optimization.
+
+It feels like it.
+
+> So instead I would teach "mark all complete remote refs" loop
+> that not everything in refs list is a valid remote ref, and skip
+> what get_sha1_heads() injected, because these arbitrary ones we
+> got from the command line are not something we know exist on the
+> remote side.  Maybe something like this.
+
+Sounds sane.  We also introduce a new possibility of having a
+ref that is complete but not remote.
+
+> 	/*
+> 	 * Mark all complete remote refs as common refs.
+> 	 * Don't mark them common yet; the server has to be told so first.
+> 	 */
+> 	for (ref = *refs; ref; ref = ref->next) {
+> 		struct object *o;
+>                 if (ref is SHA1 from the command line)
+>                 	continue;
+> 		o = deref_tag(lookup_object(ref->old_sha1), NULL, 0);
+> 		if (!o || o->type != commit_type || !(o->flags & COMPLETE))
+> 			continue;
+> 		...
+>
+> To implement "ref is SHA1 from the command line", I would add
+> another 1-bit field to "struct ref" and mark the new ones you
+> create in get_sha1_heads() as such (existing "force" field
+> could also become an 1-bit field -- we do not neeed a char).
+
+Sounds sane.
+So that gives me:
+	unsigned int force : 1;
+	unsigned int injected : 1;
+
+Which aligns them to an int boundary but since we are followed
+immediately by a pointer should result in no additional storage being
+consumed.
+
+>> @@ -373,6 +394,7 @@ static int fetch_pack(int fd[2], int nr_
+>>  		packet_flush(fd[1]);
+>>  		die("no matching remote head");
+>>  	}
+>> +	get_sha1_heads(&ref, nr_match, match);
+>
+> I talked about this one already...
+>
+>> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+>> index 187f088..2372df8 100755
+>> --- a/git-parse-remote.sh
+>> +++ b/git-parse-remote.sh
+>> @@ -105,6 +105,7 @@ canon_refs_list_for_fetch () {
+>>  		'') remote=HEAD ;;
+>>  		refs/heads/* | refs/tags/* | refs/remotes/*) ;;
+>>  		heads/* | tags/* | remotes/* ) remote="refs/$remote" ;;
+>> +
+> [0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F])
+> ;;
+>
+> Yuck.  Don't we have $_x40 somewhere?
+
+I couldn't find one in shell.  
+
+> We never use uppercase so at least we could save 24 columns from
+> here ;-).
+
+I'm not certain why we always add make $remote="refs/heads/$remote" by
+default in that switch statement. git-fetch-pack at least doesn't need
+it.
+
+If that is true of the other consumers we could easily make the test:
+[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]*) ;;
+Or even simply make the default case *) ;;
+
+But for the moment I will stick to the long form because it is
+obviously correct.
+
+Eric
