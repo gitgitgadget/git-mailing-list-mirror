@@ -1,93 +1,53 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: gitview: Move the console error messages to message dialog
-Date: Sat, 27 May 2006 15:55:32 +0530
-Message-ID: <4478291C.7000507@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050100000307080304020607"
-X-From: git-owner@vger.kernel.org Sat May 27 12:25:42 2006
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH 2/2] make init-db use GIT_TEMPLATE_DIR if --template option is not specified
+Date: Sat, 27 May 2006 12:25:39 +0200
+Message-ID: <46880.7145757184$1148725551@news.gmane.org>
+References: <11487255393905-git-send-email-1>
+Reply-To: Matthias Lederhofer <matled@gmx.net>
+Cc: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Sat May 27 12:25:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjvzI-0006W5-R5
-	for gcvg-git@gmane.org; Sat, 27 May 2006 12:25:41 +0200
+	id 1FjvzQ-0006XK-GG
+	for gcvg-git@gmane.org; Sat, 27 May 2006 12:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbWE0KZi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 06:25:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbWE0KZi
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 06:25:38 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:5381 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751454AbWE0KZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 May 2006 06:25:37 -0400
-Received: by wr-out-0506.google.com with SMTP id i21so213340wra
-        for <git@vger.kernel.org>; Sat, 27 May 2006 03:25:36 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=MmM24waM7bX3XN2PNv53aLd49NmJrfIVQ2nJcj9Znsk5XIiTYcNllVPwj4CyeauiuEqd1zd9zR7ckOZ1Sv/qrQfoDpOtSg/Yt4eO+wijdkEQDvIYF5No9fEHYTdIu4nkArczLPZFQosq63Qum8HCGEMSefzvIMZbmzt+MrTrhSo=
-Received: by 10.65.188.10 with SMTP id q10mr117315qbp;
-        Sat, 27 May 2006 03:25:36 -0700 (PDT)
-Received: from ?192.168.2.39? ( [59.92.132.221])
-        by mx.gmail.com with ESMTP id e13sm376877qbe.2006.05.27.03.25.35;
-        Sat, 27 May 2006 03:25:36 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.2 (X11/20060522)
+	id S1751458AbWE0KZm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 06:25:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbWE0KZm
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 06:25:42 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:20164 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751458AbWE0KZl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 06:25:41 -0400
 To: git@vger.kernel.org
+X-Mailer: git-send-email 1.3.3.g40505
+In-Reply-To: <11487255393905-git-send-email-1>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20845>
 
-This is a multi-part message in MIME format.
---------------050100000307080304020607
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-
-
---------------050100000307080304020607
-Content-Type: text/plain;
- name*0="0002-gitview-Move-the-console-error-messages-to-message-dialog.t";
- name*1="xt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0002-gitview-Move-the-console-error-messages-to-message-dial";
- filename*1="og.txt"
-
-gitview: Move the console error messages to message dialog
-
-This changes display the error/warning info using message dialog
-rather than printing them using print
-
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
 ---
- contrib/gitview/gitview |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index c708534..b836047 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -983,10 +983,15 @@ class GitView:
- 		try:
- 			self.treeview.set_cursor(self.index[revid])
- 		except KeyError:
--			print "Revision %s not present in the list" % revid
-+			dialog = gtk.MessageDialog(parent=None, flags=0,
-+					type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_CLOSE,
-+					message_format=None)
-+			dialog.set_markup("Revision <b>%s</b> not present in the list" % revid)
- 			# revid == 0 is the parent of the first commit
- 			if (revid != 0 ):
--				print "Try running gitview without any options"
-+				dialog.format_secondary_text("Try running gitview without any options")
-+			dialog.run()
-+			dialog.destroy()
+f61e19360f9b5965dda1ae762ffdab8ede860430
+ builtin-init-db.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+f61e19360f9b5965dda1ae762ffdab8ede860430
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 2a1384c..cf5bd39 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -253,6 +253,9 @@ int cmd_init_db(int argc, const char **a
+ 			die(init_db_usage);
+ 	}
  
- 		self.treeview.grab_focus()
- 
++	if (!template_dir)
++		template_dir = getenv("GIT_TEMPLATE_DIR");
++
+ 	/*
+ 	 * Set up the default .git directory contents
+ 	 */
 -- 
-1.3.3.g4d548-dirty
-
-
---------------050100000307080304020607--
+1.3.3.g40505
