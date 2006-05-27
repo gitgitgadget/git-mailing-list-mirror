@@ -1,124 +1,134 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: [SCRIPT] chomp: trim trailing whitespace
-Date: Fri, 26 May 2006 22:27:17 -0400
-Message-ID: <4477B905.9090806@garzik.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030305020406070900020809"
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 27 04:27:33 2006
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Actually support embedded Qt, make configuration code more robust
+Date: Fri, 26 May 2006 22:27:35 -0400
+Message-ID: <20060527022735.5879.58043.stgit@dv.roinet.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 27 04:27:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjoWR-0003id-FS
-	for gcvg-git@gmane.org; Sat, 27 May 2006 04:27:23 +0200
+	id 1FjoWn-0003lh-7a
+	for gcvg-git@gmane.org; Sat, 27 May 2006 04:27:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964898AbWE0C1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 22:27:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751769AbWE0C1U
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 22:27:20 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:48100 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1751767AbWE0C1T (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 22:27:19 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.60 #1 (Red Hat Linux))
-	id 1FjoWL-0008R0-Vv; Sat, 27 May 2006 02:27:18 +0000
-User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: -4.2 (----)
-X-Spam-Report: SpamAssassin version 3.1.1 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.2 points, 5.0 required)
+	id S1751768AbWE0C1j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 May 2006 22:27:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbWE0C1j
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 22:27:39 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:48312 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751768AbWE0C1i
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 May 2006 22:27:38 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FjoWf-00066T-RC
+	for git@vger.kernel.org; Fri, 26 May 2006 22:27:37 -0400
+Received: from [127.0.0.1] (helo=dv.roinet.com)
+	by dv.roinet.com with esmtp (Exim 4.62)
+	(envelope-from <proski@gnu.org>)
+	id 1FjoWd-0001Ww-GY; Fri, 26 May 2006 22:27:35 -0400
+To: Marco Costalba <mcostalba@gmail.com>
+User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20829>
 
-This is a multi-part message in MIME format.
---------------030305020406070900020809
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Add -DQWS and -fno-rtti flags for embedded Qt.
 
+Don't add X11 flags for embedded Qt and threading specific flags for
+non-multithreaded Qt.
 
-Attached to this email is chomp.pl, a Perl script which removes trailing 
-whitespace from several files.  I've had this for years, as trailing 
-whitespace is one of my pet peeves.
+Before checking for the Qt library, make sure it actually exists in the
+Qt library path and not elsewhere.
 
-Now that git-applymbox complains loudly whenever a patch adds trailing 
-whitespace, I figured this script may be useful to others.
+Fix missing ";;" before "esac" (potentially non-portable).
 
-	Jeff
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
+ config/gwqt.m4 |   40 ++++++++++++++++++++++++++--------------
+ 1 files changed, 26 insertions(+), 14 deletions(-)
 
-
---------------030305020406070900020809
-Content-Type: application/x-perl;
- name="chomp.pl"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="chomp.pl"
-
-#!/usr/bin/perl -w
-#
-# chomp: Trim trailing whitespace from a list of files.
-#
-# Usage: chomp file1 file2 file3...
-#
-# NOTE:  Files are modified in-place.  No backups are created.
-#
-# Files are, of course, not updated if they lack trailing whitespace.
-#
-#
-
-use strict;
-
-my ($argv_fn);
-my $bytes_saved = 0;
-
-while ($argv_fn = shift @ARGV) {
-	&chomp_file($argv_fn);
-}
-printf "%u bytes chomped.\n", $bytes_saved;
-exit(0);
-
-
-sub chomp_file {
-	my ($fn) = @_;
-	my ($s, $i);
-	my $chomped = 0;
-
-	# read entire data file into memory
-	open (F, $fn) or die "cannot open $fn: $!\n";
-	my @data = <F>;
-	close (F);
-
-	# trim trailing whitespace
-	foreach $i (0 .. $#data) {
-		$s = $data[$i];
-		if ($s =~ /\s$/) {
-			while (($s) && ($s =~ /\s$/)) {
-				chop $s;
-				$bytes_saved++;
-			}
-			$s .= "\n";
-			$bytes_saved--;
-			if ($s ne $data[$i]) {
-				$chomped = 1;
-				$data[$i] = $s;
-			}
-		}
-	}
-
-	# dump data back to disk
-	if ($chomped) {
-		open (F, ">$fn") or die "cannot overwrite $fn: $!\n";
-		print F @data;
-		close (F);
-
-		print "$fn modified.\n";
-	}
-}
-
-
---------------030305020406070900020809--
+diff --git a/config/gwqt.m4 b/config/gwqt.m4
+index 78bed1d..cccccfe 100644
+--- a/config/gwqt.m4
++++ b/config/gwqt.m4
+@@ -91,17 +91,19 @@ fi
+ 
+ # Checking for possible dependencies of the Qt library
+ gwqt_save_LDFLAGS="$LDFLAGS"
+-QT_LIBS="$X_PRE_LIBS -lX11 $X_EXTRA_LIBS"
+-AC_CHECK_LIB(pthread, pthread_exit, [QT_LIBS="-lpthread $QT_LIBS"])
++QT_LIBS_X="$X_PRE_LIBS -lX11 $X_EXTRA_LIBS"
++AC_CHECK_LIB(pthread, pthread_exit, [QT_LIBS_MT="-lpthread $QT_LIBS"])
+ 
+ LDFLAGS="$LDFLAGS $X_LIBS"
+-AC_CHECK_LIB(Xft, XftFontOpen, [QT_LIBS="-lXft $QT_LIBS"], , [$QT_LIBS])
++AC_CHECK_LIB(Xft, XftFontOpen, [QT_LIBS_X="-lXft $QT_LIBS_X"], , [$QT_LIBS_X])
+ 
+ 
+ # Checking for the Qt library
+ LDFLAGS="$LDFLAGS -L$QTLIBDIR"
+ for i in qt-mt qt qte-mt qte qt-gl; do
+-    AC_CHECK_LIB([$i], Get_Class, [qtlib="$i"; break], , [$QT_LIBS])
++    set X "$QTLIBDIR/lib$i."*
++    test "$[2]" = "$QTLIBDIR/lib$i.*" && continue
++    AC_CHECK_LIB([$i], main, [qtlib="$i"; break], , [$QT_LIBS_X $QT_LIBS_MT])
+ done
+ 
+ if test -z "$qtlib"; then
+@@ -110,30 +112,40 @@ fi
+ 
+ LDFLAGS="$gwqt_save_LDFLAGS"
+ 
+-# Calculate QT_CPPFLAGS
++# Calculate QT_CPPFLAGS, QT_LDFLAGS and QT_LIBS
++QT_LIBS="-l$qtlib"
+ case "$qtlib" in
+-    *-mt) QT_CPPFLAGS="-D_REENTRANT -DQT_THREAD_SUPPORT";;
++    *-mt)
++	QT_CPPFLAGS="-D_REENTRANT -DQT_THREAD_SUPPORT"
++	QT_LIBS="$QT_LIBS $QT_LIBS_MT";;
+ esac
+ 
++case "$qtlib" in
++    qte*)
++	QT_CPPFLAGS="-DQWS -fno-rtti";;
++    *)
++	QT_LIBS="$QT_LIBS $QT_LIBS_X"
++	QT_LDFLAGS="$X_LIBS";;
++esac
++
++# Add Qt include path
+ if test "$QTINCDIR" != "/usr/include"; then
+     QT_CPPFLAGS="-I$QTINCDIR $QT_CPPFLAGS"
+ fi
+-AC_MSG_NOTICE([QT_CPPFLAGS = $QT_CPPFLAGS])
+-AC_SUBST(QT_CPPFLAGS)
+ 
+-# Calculate QT_LDFLAGS
+-QT_LDFLAGS="$X_LIBS"
++# Add Qt library path
+ case "$QTLIBDIR" in
+     /usr/lib) ;;
+     /usr/lib64) ;;
+     /usr/X11R6/lib) ;;
+-    *) QT_LDFLAGS="$QT_LDFLAGS -L$QTLIBDIR";
++    *) QT_LDFLAGS="$QT_LDFLAGS -L$QTLIBDIR";;
+ esac
++
++# Report the results
++AC_MSG_NOTICE([QT_CPPFLAGS = $QT_CPPFLAGS])
++AC_SUBST(QT_CPPFLAGS)
+ AC_MSG_NOTICE([QT_LDFLAGS = $QT_LDFLAGS])
+ AC_SUBST(QT_LDFLAGS)
+-
+-# Calculate QT_LIBS
+-QT_LIBS="-l$qtlib $QT_LIBS"
+ AC_MSG_NOTICE([QT_LIBS = $QT_LIBS])
+ AC_SUBST(QT_LIBS)
+ ])
