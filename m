@@ -1,64 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: ~/.git/config ?
-Date: Fri, 26 May 2006 20:36:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605262033560.5623@g5.osdl.org>
-References: <20060526152837.GQ23852@progsoc.uts.edu.au>
- <20060526193325.d2a530a4.tihirvon@gmail.com> <20060526163829.GB10488@pasky.or.cz>
- <1148697382.5599.1.camel@dv> <20060527025750.GM11941@pasky.or.cz>
- <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org>
+Date: Sat, 27 May 2006 05:40:48 +0200
+Organization: At home
+Message-ID: <e58hnm$fss$1@sea.gmane.org>
+References: <20060526152837.GQ23852@progsoc.uts.edu.au> <20060526193325.d2a530a4.tihirvon@gmail.com> <20060526163829.GB10488@pasky.or.cz> <1148697382.5599.1.camel@dv> <20060527025750.GM11941@pasky.or.cz> <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pavel Roskin <proski@gnu.org>, Timo Hirvonen <tihirvon@gmail.com>,
-	Anand Kumria <wildfire@progsoc.uts.edu.au>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 27 05:36:40 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat May 27 05:40:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjpbT-0003R1-Pn
-	for gcvg-git@gmane.org; Sat, 27 May 2006 05:36:40 +0200
+	id 1Fjpfa-0003lP-8y
+	for gcvg-git@gmane.org; Sat, 27 May 2006 05:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751782AbWE0Dgg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 May 2006 23:36:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbWE0Dgg
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 23:36:36 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43974 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751782AbWE0Dgg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 23:36:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4R3aA2g019930
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 26 May 2006 20:36:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4R3a8vm028864;
-	Fri, 26 May 2006 20:36:09 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751771AbWE0Dkw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 26 May 2006 23:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbWE0Dkv
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 May 2006 23:40:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:65160 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751771AbWE0Dkv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 May 2006 23:40:51 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FjpfV-0003kl-EC
+	for git@vger.kernel.org; Sat, 27 May 2006 05:40:49 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 27 May 2006 05:40:49 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 27 May 2006 05:40:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20834>
 
+Linus Torvalds wrote:
 
+> PS. I really like my [alias "cmd"] idea. _All_ my ideas are great, of=
+=20
+> course, but this one seems even better than some others. No?
 
-On Fri, 26 May 2006, Linus Torvalds wrote:
-> 
-> So they would do "alias cvs git" in a desperate attempt to save themselves 
-> from CVS, and then add
-> 
-> 	[alias "co"]
-> 		cmd = commit -a
+So, would we use it also for default options of commands, like
 
-That, of course, would be confusing.
+=A0=A0=A0=A0=A0=A0=A0=A0[alias "log"]
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0cmd =3D log -p -M -C
 
-It should be "ci" for commit, and "co" for "checkout".
+(we could implement "git whatchanges" as an alias, keeping it's man pag=
+e, or
+sharing it with "git log").
 
-Duh. Chalk it up to me not having used cvs in the last three or four years 
-or so (we used it at transmeta, although I can hope that they've since 
-seen the light ;).
-
-			Linus
+--=20
+Jakub Narebski
+Warsaw, Poland
