@@ -1,71 +1,52 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: remaining git-cvsimport problems: robustness when cvsps feeds strange history
-Date: Sun, 28 May 2006 03:23:01 +1200
-Message-ID: <46a038f90605270823qdea766fxcf2327ae0bf7373a@mail.gmail.com>
-References: <20060527120105.GL6535@nowhere.earth>
+Subject: Re: [SCRIPT] chomp: trim trailing whitespace
+Date: Sun, 28 May 2006 03:28:57 +1200
+Message-ID: <46a038f90605270828u7842ea48hda07331388694db2@mail.gmail.com>
+References: <4477B905.9090806@garzik.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
 	format=flowed
 Content-Transfer-Encoding: 7BIT
-Cc: "GIT list" <git@vger.kernel.org>, cvsps@dm.cobite.com
-X-From: git-owner@vger.kernel.org Sat May 27 17:23:24 2006
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Linux Kernel" <linux-kernel@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 27 17:29:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fk0dF-0007mx-H8
-	for gcvg-git@gmane.org; Sat, 27 May 2006 17:23:13 +0200
+	id 1Fk0ix-0000C3-Ja
+	for gcvg-git@gmane.org; Sat, 27 May 2006 17:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbWE0PXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 11:23:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751556AbWE0PXH
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 11:23:07 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:27824 "EHLO
+	id S1751558AbWE0P3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 11:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbWE0P3A
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 11:29:00 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:58035 "EHLO
 	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751550AbWE0PXF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 11:23:05 -0400
-Received: by wr-out-0506.google.com with SMTP id i7so598338wra
-        for <git@vger.kernel.org>; Sat, 27 May 2006 08:23:05 -0700 (PDT)
+	id S1750900AbWE0P26 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 11:28:58 -0400
+Received: by wr-out-0506.google.com with SMTP id i7so598964wra
+        for <git@vger.kernel.org>; Sat, 27 May 2006 08:28:57 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=E+ojs2shv+x13MgQ1Cd4Laig/qdA1qhD1PbwzpapJY0JdbLs0vl1qtMmynUKadjj9cwtOEDdDxMLai/TJzld71BLZecHh6Oiohh4JHThXluS0CBf548B8neteMqA11uCxW22kJboMJ5+PYqv7kSS1La6ihVmigLNVvpN2gjaJrU=
-Received: by 10.54.103.1 with SMTP id a1mr102524wrc;
-        Sat, 27 May 2006 08:22:18 -0700 (PDT)
-Received: by 10.54.127.12 with HTTP; Sat, 27 May 2006 08:23:01 -0700 (PDT)
-To: "Yann Dirson" <ydirson@altern.org>
-In-Reply-To: <20060527120105.GL6535@nowhere.earth>
+        b=ELGgKwqKC+wzlI2dydpY8j7mF+D3pKjRslWkNHVWRoJ5nSfhhmwvKuXFMZixXxGo+BAFzJ+/XoNK6mhg4tSkx6Ziix7lexp+SVtfi3WzvajZx8h8KElYENQDKiwx0p38WsqGUj4LGrTAxKd1u0RLNnuCjrMXogGiavFm0GdhXpo=
+Received: by 10.54.121.18 with SMTP id t18mr414432wrc;
+        Sat, 27 May 2006 08:28:57 -0700 (PDT)
+Received: by 10.54.127.12 with HTTP; Sat, 27 May 2006 08:28:57 -0700 (PDT)
+To: "Jeff Garzik" <jeff@garzik.org>
+In-Reply-To: <4477B905.9090806@garzik.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20856>
 
-Yann,
+I love perl golf for this kind of stuff... but git-stripspace is part
+of git already. Even then, I tend to do it with perl -pi -e ''
+constructs ;-)
 
-I want to see if we can close these gaps. Have you got a public repo
-that shows this problem so can look more into it?
-
-On 5/28/06, Yann Dirson <ydirson@altern.org> wrote:
-> As a sidenote, I'm wondering why there is no precise information on
-> the branchpoint in "cvsps -A".  I guess the semantics are "fork a new
-> branch from the ancestor one" at whatever point it currently is - that
-> would look quite risky to me, and could be part of the reason why
-> cvsps did not notice the inconsistency: it just did not try to find
-> out where the new branch was to be grafted exactly.
-
-It is perfectly possible for cvs to branch at a "point" that is not
-really a patchset/patchlevel. Just like it is to tag something that
-has never been a patchset.
-
-It is something we currently fudge a bit (or a lot, depending on your
-point of view). If the branch was made on a checkout with an
-inconsistent tree, we cannot really represent that in git matching
-what happened in CVS.
-
-OTOH, the cvsps output you are showing us seems to be in the right
-order...  patchset 20 should go on top of patchset 3... is cvsimport
-truly mishandling this?
+cheers,
 
 
-
-martin
+m
