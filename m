@@ -1,294 +1,161 @@
-From: "Dmitry Fedorov" <dm.fedorov@gmail.com>
-Subject: Re: [SCRIPT] chomp: trim trailing whitespace
-Date: Sat, 27 May 2006 18:48:29 +0700
-Message-ID: <7115951b0605270448ge8c45e8ha01c35e6d415e419@mail.gmail.com>
-References: <4477B905.9090806@garzik.org>
-	 <Pine.LNX.4.61.0605271212210.6670@yvahk01.tjqt.qr>
-	 <447838EB.9060900@garzik.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: remaining git-cvsimport problems: robustness when cvsps feeds strange history
+Date: Sat, 27 May 2006 14:01:05 +0200
+Message-ID: <20060527120105.GL6535@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_9308_7967851.1148730509885"
-X-From: git-owner@vger.kernel.org Sat May 27 13:48:44 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: cvsps@dm.cobite.com
+X-From: git-owner@vger.kernel.org Sat May 27 13:49:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FjxHd-0007Jz-3f
-	for gcvg-git@gmane.org; Sat, 27 May 2006 13:48:41 +0200
+	id 1FjxI6-0007TA-2b
+	for gcvg-git@gmane.org; Sat, 27 May 2006 13:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751465AbWE0Lsd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 07:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWE0Lsd
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 07:48:33 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:23229 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751465AbWE0Lsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 May 2006 07:48:31 -0400
-Received: by nf-out-0910.google.com with SMTP id l36so24539nfa
-        for <git@vger.kernel.org>; Sat, 27 May 2006 04:48:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:references;
-        b=Gj21YpxptznIWIbaNFc0pGdfRIIVVvVUczs4AyoQyWMkBcDrF5UUwImL3JDbuTfuOz6HoINM/N9f4Gx7Sosmoje5vegsWx13af9aiFmkrdj7Q/LOMu8IV8MmsmcN1FecpdcOOOLPQl0Hc2k3GQ1zEoD8XogyxvwF1X00U+zzfgQ=
-Received: by 10.49.64.14 with SMTP id r14mr265340nfk;
-        Sat, 27 May 2006 04:48:30 -0700 (PDT)
-Received: by 10.49.21.5 with HTTP; Sat, 27 May 2006 04:48:29 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Linux Kernel" <linux-kernel@vger.kernel.org>
-In-Reply-To: <447838EB.9060900@garzik.org>
+	id S1751479AbWE0Lsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 07:48:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWE0Lsq
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 07:48:46 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:50145 "EHLO smtp6-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751479AbWE0Lsp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 07:48:45 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 097052252D;
+	Sat, 27 May 2006 13:48:44 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FjxTd-0006ko-RC; Sat, 27 May 2006 14:01:05 +0200
+To: GIT list <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20850>
 
-------=_Part_9308_7967851.1148730509885
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Since there is quite some activity around git-cvsimport these days, I
+think I'd raise a couple of issues which are still problematic.
 
-Jan Engelhardt wrote:
->> Attached to this email is chomp.pl, a Perl script which removes trailing
->> whitespace from several files.  I've had this for years, as
-trailing whitespace
->> is one of my pet peeves.
+It should at least issue a warning when cvsps feeds it with a
+branchpoint that it cannot create because the base branch has not yet
+been seen.  I am still investigating why cvsps outputs such a buggy
+patchset - it may be a cvs bug at the root, and cvsps probably did not
+detect an consistency of the cvs data.  While there is probably a real
+bug to fix somewhere, git-cvsimport should not silently skip the
+faulty patchset, especially as it will then miserably fail to import
+any subsequent patch on that branch it ignored this way.
 
-And my scripts.
+However, rerunning the script (after creating a master head by copying
+heads/origin) manages to complete the import: the forgotten branch now
+gets created, and all subsequent patchsets can now be imported.
 
-------=_Part_9308_7967851.1148730509885
-Content-Type: application/octet-stream; name=find-text-files
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_enpwdioa
-Content-Disposition: attachment; filename="find-text-files"
 
-IyEvdXNyL2Jpbi9wZXJsIC13Cgo9aGVhZDEgTkFNRQoKZmluZC10ZXh0LWZpbGVzIC0gdHJhdmVy
-c2UgYSBmaWxlIHRyZWUgYW5kIGd1ZXNzIHBsYWluIHRleHQgZmlsZXMKCj1oZWFkMSBTWU5PUFNJ
-UwoKZmluZC10ZXh0LWZpbGVzIFtvcHRpb25zXSBkaXIgLi4uCgo9aGVhZDEgREVTQ1JJUFRJT04K
-ClRoaXMgcHJvZ3JhbSB0cmF2ZXJzZSBhIGZpbGUgdHJlZSwgZ3Vlc3MgcGxhaW4gdGV4dCBmaWxl
-cwphbmQgb3V0cHV0cyB0aGVpciBuYW1lcyB0byBTVERPVVQuCgo9Y3V0CgpyZXF1aXJlIDUuMDA0
-Owp1c2Ugc3RyaWN0Owp1c2UgaW50ZWdlcjsKdXNlIEZpbGU6OkZpbmQ7CnVzZSBHZXRvcHQ6Okxv
-bmc7CnVzZSBJUEM6Ok9wZW4yOwoKCnN1YiB1c2FnZSB7Cgl3YXJuICJcbiIuam9pbigiICIsIEBf
-KS4iXG4iIGlmIEBfOwoJd2FybiA8PEVPRjsKClVzYWdlOgogZmluZC10ZXh0LWZpbGVzIFstZXhj
-bHVkZT0ncGVybHJlJyAuLi5dIFstaW5jbHVkZT0ncGVybHJlJyAuLi5dIFwKICAgICAgICAgICAg
-ICAgICBbLXRvdGFsXSBbLWV4Y2x1ZGVkXSBbLWluY2x1ZGVkXSBbLXNlbGVjdG9yc10gICBcCiAg
-ICAgICAgICAgICAgICAgICAgICBkaXIgLi4uCgpFT0YKCWV4aXQoMSk7Cn0KCgo9aGVhZDEgUEFS
-QU1FVEVSUwoKPW92ZXIgNAoKPWl0ZW0gZGlyIC4uLgoKRGlyZWN0b3JpZXMgbGlzdC4KCj1iYWNr
-Cgo9Y3V0Cgo9aGVhZDEgT1BUSU9OUwoKPW92ZXIgNAoKPWl0ZW0gLWV4Y2x1ZGU9J3BlcmxyZScg
-Li4uCgpQZXJsIHJlZ3VsYXIgZXhwcmVzc2lvbiwgY2FzZSBpbnNlbnNpdGl2ZS4KTWF0Y2hlZCBm
-aWxlIG5hbWVzIGV4Y2x1ZGVkIGZyb20gb3V0cHV0IGxpc3QuCgo9aXRlbSAtaW5jbHVkZT0ncGVy
-bHJlJyAuLi4KClBlcmwgcmVndWxhciBleHByZXNzaW9uLCBjYXNlIGluc2Vuc2l0aXZlLgpNYXRj
-aGVkIGZpbGUgbmFtZXMgaW5jbHVkZWQgdG8gb3V0cHV0IGxpc3QuCgo9aGVhZDIgTm90ZQoKRGly
-ZWN0b3J5IHBhcnQgb2YgdGhlIGZpbGUgbmFtZSBzdHJpcHBlZCBiZWZvcmUgbWF0Y2gsCideZmls
-ZW5hbWVcLmV4dCQnIHdpbGwgYmUgbWF0Y2hlZCBleGFjdGx5IHRvIGZpbGVuYW1lLmV4dAp3aXRo
-IGFueSBkaXJlY3RvcnkgcHJlcGVuZGVkLgoKPWl0ZW0gLXRvdGFsCgpwcmludCBzdGF0aXN0aWMg
-Y291bnRlcnMgdG8gU1RERVJSLgoKPWl0ZW0gLWV4Y2x1ZGVkCgpwcmludCB0byBTVERFUlIgd2hh
-dCBmaWxlcyBhcmUgZXhjbHVkZWQgYW5kIHdoeS4KCj1pdGVtIC1pbmNsdWRlZAoKcHJpbnQgdG8g
-U1RERVJSIHdoYXQgZmlsZXMgYXJlIGluY2x1ZGVkIGFuZCB3aHkuCgo9aXRlbSAtc2VsZWN0b3Jz
-CgpQcmludHMgZXhjbHVkZS9pbmNsdWRlIHJlZ3VsYXIgZXhwcmVzc2lvbnMgYW5kIGZpbGUgc3Vm
-ZmljZXMgYW5kIGV4aXRzLgoKPWJhY2sKCgo9aGVhZDEgSE9XIElUIFdPUktTCgpFYWNoIG9mIGZp
-bGUgbmFtZXMgY2hlY2tlZCBpbiB0aGF0IG9yZGVyOgoKKiBjaGVjayBhZ2FpbnN0IGV4Y2x1ZGUg
-UkU7IG1hdGNoZWQgZmlsZSBleGNsdWRlZCAoc2VlIC1leGNsdWRlIG9wdGlvbik7CgogIGlmIG5v
-dCBtYXRjaGVkLCB0aGVuOgoKKiBjaGVjayBhZ2FpbnN0IGluY2x1ZGUgUkU7IG1hdGNoZWQgZmls
-ZSBpbmNsdWRlZCAoc2VlIC1pbmNsdWRlIG9wdGlvbik7CgogIGlmIG5vdCBtYXRjaGVkLCB0aGVu
-OgoKKiBjaGVjayBhZ2FpbnN0IGJpbmFyeSBzdWZmaWNlcyB0YWJsZTsgbWF0Y2hlZCBmaWxlIGV4
-Y2x1ZGVkOwoKICBpZiBub3QgbWF0Y2hlZCwgdGhlbjoKCiogY2hlY2sgYWdhaW5zdCB0ZXh0IHN1
-ZmZpY2VzIHRhYmxlOyBtYXRjaGVkIGZpbGUgaW5jbHVkZWQ7CgogIGlmIG5vdCBtYXRjaGVkLCB0
-aGVuOgoKKiBjaGVja2VkIGJ5IGZpbGUoMSkKCgpBbGwgb2YgdGhpcyBhbGxvd3MgdG8gYXZvaWQg
-ZmlsZSgxKSdzIG1pc2RldGVjdGlvbiBvbiBzb21lIHRleHRzCmFuZCByZWR1Y2UgdGltZSBzcGVu
-dCBmb3IgZmlsZSgxKSBjYWxscy4KCgo9aGVhZDEgTk9URVMKCkRvZXMgbm90IGZvbGxvd3Mgc3lt
-bGlua3MuCgpaZXJvIHNpemUgZmlsZXMgYXJlIHNraXBwZWQuCgo9Y3V0CgoKbXkgJCAgICAgaGVs
-cF9vcHRpb24gPSAwOwpteSBAICBpbmNsdWRlX29wdGlvbnM7Cm15IEAgIGV4Y2x1ZGVfb3B0aW9u
-czsKbXkgJCAgICB0b3RhbF9vcHRpb24gPSAwOwpteSAkIGV4Y2x1ZGVkX29wdGlvbiA9IDA7Cm15
-ICQgaW5jbHVkZWRfb3B0aW9uID0gMDsKbXkgJHNlbGVjdG9yc19vcHRpb24gPSAwOwoKR2V0T3B0
-aW9ucygKCSdoZWxwJwkJPT4gXCQgICAgIGhlbHBfb3B0aW9uLAoJJ2V4Y2x1ZGU9cycJPT4gXEAg
-IGV4Y2x1ZGVfb3B0aW9ucywKCSdpbmNsdWRlPXMnCT0+IFxAICBpbmNsdWRlX29wdGlvbnMsCgkn
-dG90YWwnCQk9PiBcJCAgICB0b3RhbF9vcHRpb24sCgknZXhjbHVkZWQnCT0+IFwkIGV4Y2x1ZGVk
-X29wdGlvbiwKCSdpbmNsdWRlZCcJPT4gXCQgaW5jbHVkZWRfb3B0aW9uLAoJJ3NlbGVjdG9ycycJ
-PT4gXCRzZWxlY3RvcnNfb3B0aW9uLAopIG9yIHVzYWdlOwoKdXNhZ2UgaWYgJGhlbHBfb3B0aW9u
-OwoKCm15ICViaW5fc3VmZmljZXM7Cm15ICV0eHRfc3VmZmljZXM7CgpCRUdJTgp7CiAgICBtYXAg
-eyAkYmluX3N1ZmZpY2VzeyRffSA9IHVuZGVmIH0KICAgICgKICAgICAnZ2lmJywgJ3RpZicsICd0
-aWZmJywgJ3BuZycsICdqcGcnLCAnanBlZycsCiAgICAgJ2F2aScsICdtcGcnLCAnbXBlZycsCiAg
-ICAgJ28nLCAnb2JqJywgJ2V4ZScsCiAgICAgJ2NhYicsICdhJywgJ3JhcicsICdhcmonLCAnemlw
-JywgJ3RhcicsICdjcGlvJywKICAgICAneicsICdneicsICdieicsICdiejInLCAndGd6JywgJ3Ri
-eicsICd0YnoyJywKICAgICAnaXNvJywgJ2JpbicsICdpbWcnLCAnaW1hZycsICdpbWFnZScsCiAg
-ICAgJ2RpZmYnLCAncGF0Y2gnICMgZGlmZi9wYXRjaCBmaWxlcyBjb3VsZCBoYXZlIEVPTCBzcGFj
-ZXMhCiAgICApOwoKICAgIG1hcCB7ICR0eHRfc3VmZmljZXN7JF99ID0gdW5kZWYgfQogICAgKAog
-ICAgICd0eHQnLCAndGV4dCcsICdodG1sJywgJ2h0bScsICd4bWwnLCAncGhwJywKICAgICAnYycs
-ICdjcHAnLCAnYysrJywgJ2NjJywgJ2N4eCcsCiAgICAgJ2gnLCAnaHBwJywgJ2grKycsICdoaCcs
-ICdoeHgnLAogICAgICdhc20nLCAnaW5jJywgJ21vZCcsCiAgICAgJ2ZvcicsICdmNzcnLCAnZzc3
-JywKICAgICAnamF2YScsICdqYXYnLAogICAgICdiYXMnLCAndmInLAogICAgICdwbCcsICdwbScs
-ICdwb2QnLAogICAgICdtYWtlJywgJ21haycsICdtaycsCiAgICAgJ2F3aycsICdzaCcsICdiYXQn
-LCAnY21kJywgJ3JleHgnLCAncmV4JywKICAgICAnc3FsJywgJ2RlZicsICdtYW4nLAogICAgICdj
-dnNpZ25vcmUnCiAgICApOwp9CgoKbXkgJGV4Y2x1ZGVfcmUgPSAnKCx2JCknOwptYXAgeyAkZXhj
-bHVkZV9yZSAuPSAnfCgnLmxjICRfLicpJzsgfSBAZXhjbHVkZV9vcHRpb25zOwoKbXkgJGluY2x1
-ZGVfcmUgPSAnKF5tYWtlZmlsZSQpJzsKbWFwIHsgJGluY2x1ZGVfcmUgLj0gJ3woJy5sYyAkXy4n
-KSc7IH0gQGluY2x1ZGVfb3B0aW9uczsKCgppZiAoJHNlbGVjdG9yc19vcHRpb24pCnsKICAgIG15
-ICRiaW5fc3VmZmljZXMgPSBqb2luKCIgIiwgc29ydCBrZXlzICViaW5fc3VmZmljZXMpOwogICAg
-bXkgJHR4dF9zdWZmaWNlcyA9IGpvaW4oIiAiLCBzb3J0IGtleXMgJXR4dF9zdWZmaWNlcyk7CiAg
-ICBwcmludCBTVERFUlIgIlxuIjsKICAgIHByaW50IFNUREVSUiAiRXhjbHVkZSBSRTogIi4kZXhj
-bHVkZV9yZS4iXG4iOwogICAgcHJpbnQgU1RERVJSICJcbiI7CiAgICBwcmludCBTVERFUlIgIklu
-Y2x1ZGUgUkU6ICIuJGluY2x1ZGVfcmUuIlxuIjsKICAgIHByaW50IFNUREVSUiAiXG4iOwogICAg
-cHJpbnQgU1RERVJSICJFeGNsdWRlIHN1ZmZpY2VzOiAiLiRiaW5fc3VmZmljZXMuIlxuIjsKICAg
-IHByaW50IFNUREVSUiAiXG4iOwogICAgcHJpbnQgU1RERVJSICJJbmNsdWRlIHN1ZmZpY2VzOiAi
-LiR0eHRfc3VmZmljZXMuIlxuIjsKICAgIHByaW50IFNUREVSUiAiXG4iOwogICAgZXhpdCAwOwp9
-CgoKc2NhbGFyKEBBUkdWKSA+PSAxIG9yIHVzYWdlKCJubyBkaXJlY3Rvcnkgc3BlY2lmaWVkIik7
-CgoKbXkgKAogICAgJHRvdGFsX2ZpbGVzX2NoZWNrZWQsCiAgICAkdG90YWxfZmlsZXNfZW1wdHks
-CiAgICAkdG90YWxfZmlsZXNfZXhjbHVkZWRfYnlfcmUsCiAgICAkdG90YWxfZmlsZXNfaW5jbHVk
-ZWRfYnlfcmUsCiAgICAkdG90YWxfZmlsZXNfZXhjbHVkZWRfYnlfc3VmZml4LAogICAgJHRvdGFs
-X2ZpbGVzX2luY2x1ZGVkX2J5X3N1ZmZpeCwKICAgICR0b3RhbF9maWxlc19leGNsdWRlZF9ieV9m
-aWxlLAogICAgJHRvdGFsX2ZpbGVzX2luY2x1ZGVkX2J5X2ZpbGUKICAgKSA9ICgwLDAsMCwwLDAs
-MCwwLDApOwoKCnN1YiBfYnkoJCQkJCkKewogICAgbXkgKCRpbmV4X29wdGlvbiwgJGluZXhfc3Ry
-LCAkYnksICRuYW1lKSA9IEBfOwogICAgcHJpbnRmKFNUREVSUiAiJXNjbHVkZWQgYnkgJTEzczog
-JXNcbiIsICRpbmV4X3N0ciwgJGJ5LCAkbmFtZSkKCWlmICRpbmV4X29wdGlvbjsKfQoKc3ViIGlu
-YnkoJCQpIHsgX2J5KCRpbmNsdWRlZF9vcHRpb24sICdpbicsICRfWzBdLCAkX1sxXSk7IH0Kc3Vi
-IGV4YnkoJCQpIHsgX2J5KCRleGNsdWRlZF9vcHRpb24sICdleCcsICRfWzBdLCAkX1sxXSk7IH0K
-Cgpsb2NhbCAqRklMRV9SSDsKbG9jYWwgKkZJTEVfV0g7Cm15ICRmaWxlX3BpZDsKCiRTSUd7UElQ
-RX0gPSBzdWIKewogICAgY2xvc2UgICAgRklMRV9XSDsKICAgIHdhaXRwaWQgJGZpbGVfcGlkLCAw
-OwogICAgZGllICJmaWxlKDEpIHBpcGUgYnJva2VuIgp9OwoKJGZpbGVfcGlkID0gb3BlbjIoXCpG
-SUxFX1JILCBcKkZJTEVfV0gsICJmaWxlIC1uIC1mIC0iICkKICAgIG9yIGRpZSAiY2FuJ3QgZm9y
-azogJCEiOwoKCiMrIG1haW4gd29yawokfCA9IDE7ICMgU1RET1VUIGF1dG9mbHVzaApmaW5kKFwm
-b25maWxlLCBAQVJHVik7CiMtIG1haW4gd29yawoKCmNsb3NlICAgIEZJTEVfV0g7CndhaXRwaWQg
-JGZpbGVfcGlkLCAwOwoKCmZvcm1hdCBTVERFUlIgPQoKVG90YWwgZmlsZXM6IGNoZWNrZWQgICBl
-bXB0eQogICAgICAgICAgICAgLS0tLS0tLSAgLS0tLS0tLQogICAgICAgICAgICAgQD4+Pj4+PiAg
-QD4+Pj4+PgokdG90YWxfZmlsZXNfY2hlY2tlZCwgJHRvdGFsX2ZpbGVzX2VtcHR5CgogICAgICAg
-ICAgICAgIHN1ZmZpeCAgICAgcmUgICAgZmlsZSgxKQogICAgICAgICAgICAgLS0tLS0tLSAgLS0t
-LS0tLSAgLS0tLS0tLQpleGNsdWRlZCBieTogQD4+Pj4+PiAgQD4+Pj4+PiAgQD4+Pj4+PgokdG90
-YWxfZmlsZXNfZXhjbHVkZWRfYnlfc3VmZml4LCAkdG90YWxfZmlsZXNfZXhjbHVkZWRfYnlfcmUs
-ICR0b3RhbF9maWxlc19leGNsdWRlZF9ieV9maWxlCmluY2x1ZGVkIGJ5OiBAPj4+Pj4+ICBAPj4+
-Pj4+ICBAPj4+Pj4+CiR0b3RhbF9maWxlc19pbmNsdWRlZF9ieV9zdWZmaXgsICR0b3RhbF9maWxl
-c19pbmNsdWRlZF9ieV9yZSwgJHRvdGFsX2ZpbGVzX2luY2x1ZGVkX2J5X2ZpbGUKCi4KCndyaXRl
-IFNUREVSUiBpZiAkdG90YWxfb3B0aW9uOwoKZXhpdCAwOwoKCnN1YiBvbmZpbGUoKQp7CiAgICBt
-eSAkc2hvcnRuYW1lID0gJF87CiAgICBteSAkIGZ1bGxuYW1lID0gIiRGaWxlOjpGaW5kOjpuYW1l
-IjsKCiAgICByZXR1cm4gdW5sZXNzIC1mICRzaG9ydG5hbWU7CiAgICAkdG90YWxfZmlsZXNfY2hl
-Y2tlZCsrOwoKICAgIGlmICggISAtcyAkc2hvcnRuYW1lICkKICAgIHsKCSR0b3RhbF9maWxlc19l
-bXB0eSsrOwoJcmV0dXJuOwogICAgfQoKICAgIG15ICRsY3Nob3J0bmFtZSA9IGxjICRzaG9ydG5h
-bWU7CgoKICAgIGlmICggJGxjc2hvcnRuYW1lID1+IG0vJGV4Y2x1ZGVfcmUvbyApCiAgICB7Cgll
-eGJ5KCdSRScsICRmdWxsbmFtZSk7CgkkdG90YWxfZmlsZXNfZXhjbHVkZWRfYnlfcmUrKzsKCXJl
-dHVybjsKICAgIH0KCiAgICBpZiAoICRsY3Nob3J0bmFtZSA9fiBtLyRpbmNsdWRlX3JlL28gKQog
-ICAgewoJaW5ieSgnUkUnLCAkZnVsbG5hbWUpOwoJJHRvdGFsX2ZpbGVzX2luY2x1ZGVkX2J5X3Jl
-Kys7CiAgICB9CiAgICBlbHNlICMgY2hlY2sgYnkgc3VmZml4CiAgICB7CglteSAkc3VmZml4ID0g
-JDEgaWYgJGxjc2hvcnRuYW1lID1+IG0vXC4oW15cLl0rKSQvOwoKCWlmICggZGVmaW5lZCAkc3Vm
-Zml4IGFuZCBsZW5ndGggJHN1ZmZpeCBhbmQKCSAgICAgZXhpc3RzICRiaW5fc3VmZmljZXN7JHN1
-ZmZpeH0gKQoJewoJICAgIGV4YnkoJ2JpbmFyeSBzdWZmaXgnLCAkZnVsbG5hbWUpOwoJICAgICR0
-b3RhbF9maWxlc19leGNsdWRlZF9ieV9zdWZmaXgrKzsKCSAgICByZXR1cm47Cgl9CgoJaWYgKCBk
-ZWZpbmVkICRzdWZmaXggYW5kIGxlbmd0aCAkc3VmZml4IGFuZAoJICAgICBleGlzdHMgJHR4dF9z
-dWZmaWNlc3skc3VmZml4fSApCgl7CgkgICAgaW5ieSgndGV4dCBzdWZmaXgnLCAkZnVsbG5hbWUp
-OwoJICAgICR0b3RhbF9maWxlc19pbmNsdWRlZF9ieV9zdWZmaXgrKzsKCX0KCWVsc2UJIyBjaGVj
-ayBieSBmaWxlKDEpCgl7CgkgICAgcHJpbnQgRklMRV9XSCAkZnVsbG5hbWUuIlxuIgoJCW9yIGRp
-ZSAiYmFkIHdyaXRlIHRvIGZpbGUoMSkgcGlwZTogJCEgJD8iOwoKCSAgICBteSAkZnJlYWQgPSA8
-RklMRV9SSD47CgkgICAgZGVmaW5lZCAkZnJlYWQgb3IgZGllICJiYWQgcmVhZCBmcm9tIGZpbGUo
-MSkgcGlwZTogJCEgJD8iOwoKCSAgICBjaG9tcCAkZnJlYWQ7CgoJICAgIHVubGVzcyAoICRmcmVh
-ZCA9fiBtfF4oLispOlxzKyguKykkfCApCgkgICAgewoJCWRpZSAiZmlsZSgxKSBvdXRwdXQgZG9l
-cyBub3QgbWF0Y2ggcGF0dGVybjpcbiRmcmVhZFxuIjsKCSAgICB9CgoJICAgIG15ICgkZm5hbWUs
-JGZkZXNjKSA9ICgkMSwkMik7CgkgICAgZGllICJjYW4ndCBwYXJzZSBmaWxlKDEpIG91dHB1dDpc
-biRmcmVhZFxuIgoJCWlmICghIGRlZmluZWQgJGZuYW1lKSBvciAoISBkZWZpbmVkICRmZGVzYyk7
-CgoJICAgIGRpZSAiZmlsZSBuYW1lIGFmdGVyIGZpbGUoMSkgZG9lcyBub3QgbWF0Y2ggdGhlIG9y
-aWdpbmFsIG9uZTpcbiIuCgkJIlx0YmVmb3JlOiAkZnVsbG5hbWVcbiIuCgkJIlx0YWZ0ZXIgOiAk
-Zm5hbWVcbiIKCQlpZiAkZm5hbWUgbmUgJGZ1bGxuYW1lOwoKCSAgICBpZiAoICRmZGVzYyA9fiBt
-L14uKiAodGV4dCl8KHNvdXJjZSkuKiQvICkKCSAgICB7CgkJaW5ieSgnZmlsZSgxKScsICRmdWxs
-bmFtZSk7CgkJJHRvdGFsX2ZpbGVzX2luY2x1ZGVkX2J5X2ZpbGUrKzsKCSAgICB9CgkgICAgZWxz
-ZQoJICAgIHsKCQlleGJ5KCdmaWxlKDEpJywgJGZ1bGxuYW1lKTsKCQkkdG90YWxfZmlsZXNfZXhj
-bHVkZWRfYnlfZmlsZSsrOwoJCXJldHVybjsKCSAgICB9Cgl9CiAgICB9CgogICAgcHJpbnQgJGZ1
-bGxuYW1lIC4gIlxuIjsKfQoKCj1oZWFkMSBBVVRIT1IKCkRtaXRyeSBGZWRvcm92IDxkbS5mZWRv
-cm92QGdtYWlsLmNvbT4KCj1oZWFkMSBDT1BZUklHSFQKCkNvcHlyaWdodCAoQykgMjAwMyBEbWl0
-cnkgRmVkb3JvdiA8ZG0uZmVkb3JvdkBnbWFpbC5jb20+Cgo9aGVhZDEgTElDRU5TRQoKVGhpcyBw
-cm9ncmFtIGlzIGZyZWUgc29mdHdhcmU7IHlvdSBjYW4gcmVkaXN0cmlidXRlIGl0IGFuZC9vciBt
-b2RpZnkKaXQgdW5kZXIgdGhlIHRlcm1zIG9mIHRoZSBHTlUgR2VuZXJhbCBQdWJsaWMgTGljZW5z
-ZSBhcyBwdWJsaXNoZWQgYnkKdGhlIEZyZWUgU29mdHdhcmUgRm91bmRhdGlvbjsgZWl0aGVyIHZl
-cnNpb24gMiBvZiB0aGUgTGljZW5zZSwKb3IgKGF0IHlvdXIgb3B0aW9uKSBhbnkgbGF0ZXIgdmVy
-c2lvbi4KCj1oZWFkMSBESVNDTEFJTUVSCgpUaGUgYXV0aG9yIGRpc2NsYWltcyBhbnkgcmVzcG9u
-c2liaWxpdHkgZm9yIGFueSBtYW5nbGluZyBvZiB5b3VyIHN5c3RlbQpldGMsIHRoYXQgdGhpcyBz
-Y3JpcHQgbWF5IGNhdXNlLgoKPWN1dAoK
-------=_Part_9308_7967851.1148730509885
-Content-Type: application/octet-stream; name=truncate-eol-whitespace
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_enpwe600
-Content-Disposition: attachment; filename="truncate-eol-whitespace"
+I'm not sure what would be the best way to handle the issue.  Maybe it
+would sufficient to output a bold warning and let the user take the
+necessary steps to finish the import (since this is after all a bug in
+other tools, which will hopefully be fixed at some point).  It could
+also be useful to raise a flag when detecting that condition, and
+automatically restart the import process on the first error due to
+that branch not being available - otoh, that may be overkill, and
+could possibly miss some other obscure cases.
 
-IyEvdXNyL2Jpbi9wZXJsIC13Cgo9aGVhZDEgTkFNRQoKdHJ1bmNhdGUtZW9sLXdoaXRlc3BhY2Ug
-LSB0cnVuY2F0ZSB3aGl0ZSBzcGFjZXMgYXQgZW5kIG9mIGxpbmUuCgo9aGVhZDEgU1lOT1BTSVMK
-CiAgdHJ1bmNhdGUtZW9sLXdoaXRlc3BhY2UgWy10b3RhbF0gWy10cnVuY2F0ZWRdIFstbm9udHJ1
-bmNhdGVkXSBbLWRyeS1ydW5dIFwKCVtmaWxlIC4uLl0gWy1mIGZpbGVzLWZyb21dCgo9aGVhZDEg
-REVTQ1JJUFRJT04KClRoaXMgcHJvZ3JhbSB0cnVuY2F0ZXMgZXh0cmEgd2hpdGUgc3BhY2VzIGp1
-c3QgYmVmb3JlIGVuZCBvZiBsaW5lCmluIHNwZWNpZmllZCBmaWxlcy4gRmlsZSBuYW1lcyBjYW4g
-YmUgc3BlY2lmaWVkIGFzIHBhcmFtZXRlcnMKYW5kL29yIHJlYWRlZCBmcm9tIHNwZWNpZmllZCBm
-aWxlLCAnLScgZm9yIFNURElOLgoKPWhlYWQxIEVYQU1QTEUKClRydW5jYXRlIGFsbCB0ZXh0IGZp
-bGVzIHVuZGVyIERJUjoKCiBmaW5kLXRleHQtZmlsZXMgRElSIC10b3RhbCB8IHRydW5jYXRlLWVv
-bC13aGl0ZXNwYWNlIC10b3RhbCAtZiAtCgo9Y3V0CgpyZXF1aXJlIDUuMDA0Owp1c2Ugc3RyaWN0
-Owp1c2UgaW50ZWdlcjsKdXNlIEdldG9wdDo6TG9uZzsKCgpzdWIgdXNhZ2UgewoJd2FybiAiXG4i
-LmpvaW4oIiAiLCBAXykuIlxuIiBpZiBAXzsKCXdhcm4gPDxFT0Y7CgpVc2FnZToKICB0cnVuY2F0
-ZS1lb2wtd2hpdGVzcGFjZSBbLXRvdGFsXSBbLXRydW5jYXRlZF0gWy1ub250cnVuY2F0ZWRdIFst
-ZHJ5LXJ1bl0gXAoJW2ZpbGUgLi4uXSBbLWYgZmlsZXMtZnJvbV0KCldhcm5pbmc6IHRoaXMgc2Ny
-aXB0IHRydW5jYXRlcyBmaWxlcyEgVXNlIC1kcnktcnVuIGZvciB0ZXN0IGZpcnN0LgoKRU9GCgll
-eGl0KDEpOwp9CgoKPWhlYWQxIE9QVElPTlMKCj1vdmVyIDQKCj1pdGVtIC10b3RhbAoKcHJpbnQg
-c3RhdGlzdGljIGNvdW50ZXJzIHRvIFNUREVSUi4KCj1pdGVtIC10cnVuY2F0ZWQKCnByaW50IHRv
-IFNUREVSUiB3aGF0IGZpbGVzIHdhcyB0cnVuY2F0ZWQ7Cgo9aXRlbSAtbm9udHJ1bmNhdGVkCgpw
-cmludCB0byBTVERFUlIgd2hhdCBmaWxlcyB3YXMgbm90IHRydW5jYXRlZDsKCj1pdGVtIC1kcnkt
-cnVuCgpEbyBub3Qgd3JpdGUgZmlsZXMsIHJlcG9ydCBvbmx5Cgo9aXRlbSBmaWxlIC4uLgoKRmls
-ZXMgdG8gdHJ1bmNhdGUgKG9wdGlvbmFsKQoKPWl0ZW0gLWYgZmlsZXMtZnJvbQoKRmlsZSBuYW1l
-IHdpdGggZmlsZSBuYW1lcyB0byB0cnVuY2F0ZSwgb25lIG5hbWUgcGVyIGxpbmUuClVzZSAnLScg
-Zm9yIFNURElOLgoKPWJhY2sKCj1jdXQKCgpteSAkICAgICAgICBoZWxwX29wdGlvbiA9IDA7Cm15
-ICQgICAgIGRyeV9ydW5fb3B0aW9uID0gMDsKbXkgJCAgZmlsZXNfZnJvbV9vcHRpb247Cm15ICQg
-ICAgICAgdG90YWxfb3B0aW9uID0gMDsKbXkgJCAgIHRydW5jYXRlZF9vcHRpb24gPSAwOwpteSAk
-bm9udHJ1bmNhdGVkX29wdGlvbiA9IDA7CgpHZXRPcHRpb25zKAoJJ2hlbHAnCQk9PiBcJCAgICAg
-ICAgaGVscF9vcHRpb24sCgkndG90YWwnCQk9PiBcJCAgICAgICB0b3RhbF9vcHRpb24sCgkndHJ1
-bmNhdGVkJwk9PiBcJCAgIHRydW5jYXRlZF9vcHRpb24sCgknbm9udHJ1bmNhdGVkJwk9PiBcJG5v
-bnRydW5jYXRlZF9vcHRpb24sCgknZHJ5LXJ1bicJPT4gXCQgICAgIGRyeV9ydW5fb3B0aW9uLAoJ
-J2Y9cycJCT0+IFwkICBmaWxlc19mcm9tX29wdGlvbiwKKSBvciB1c2FnZTsKCnVzYWdlIGlmICRo
-ZWxwX29wdGlvbjsKCgp1c2FnZSgibm8gZmlsZXMgc3BlY2lmaWVkIikKCWlmICghIGRlZmluZWQg
-JGZpbGVzX2Zyb21fb3B0aW9uKSBhbmQgc2NhbGFyKEBBUkdWKSA8IDE7CgoKbXkgKAogICAgJHRv
-dGFsX2ZpbGVzX2NoZWNrZWQsCiAgICAkdG90YWxfZmlsZXNfZW1wdHksCiAgICAkdG90YWxfZmls
-ZXNfdHJ1bmNhdGVkLAogICAgJHRvdGFsX2ZpbGVzX25vX2NoYXJzX3RydW5jYXRlZAogICApID0g
-KDAsMCwwLDAsMCwwLDAsMCwwLDApOwoKbXkgKCAkdG90YWxfY2hhcnNfcmVhZGVkLCAkdG90YWxf
-Y2hhcnNfdHJ1bmNhdGVkICkgPSAoMCwwKTsKCgpzdWIgdHJ1bmNhdGVfZmlsZSgkKQp7CiAgICBt
-eSAkZm5hbWUgPSBzaGlmdDsKCiAgICAkdG90YWxfZmlsZXNfY2hlY2tlZCsrOwoKICAgIGlmICgg
-ISAtZiAkZm5hbWUgKQogICAgewoJcHJpbnQgU1RERVJSICJpcyBub3QgYSBwbGFpbiBmaWxlOiAi
-LiRmbmFtZS4iXG4iOwoJcmV0dXJuOwogICAgfQoKICAgIGlmICggISAtcyAkZm5hbWUgKQogICAg
-ewoJcHJpbnQgU1RERVJSICJ6ZXJvIHNpemUgZmlsZTogIi4kZm5hbWUuIlxuIjsKCSR0b3RhbF9m
-aWxlc19lbXB0eSsrOwoJcmV0dXJuOwogICAgfQoKCiAgICBsb2NhbCAkLyA9IHVuZGVmOwkjIG5v
-IHJlY29yZHMsIHNsdXJwIG1vZGUKCiAgICBsb2NhbCAqSU47CiAgICBvcGVuICAgSU4sICI8ICRm
-bmFtZSIKCW9yIGRpZSAiQ2FuJ3Qgb3BlbiAkZm5hbWU6ICQhIjsKCiAgICBteSAkZmlsZSA9IDxJ
-Tj47CiAgICBkZWZpbmVkICRmaWxlIG9yIGRpZSAiQ2FuJ3QgcmVhZCAkZm5hbWU6ICQhIjsKCiAg
-ICBjbG9zZSBJTjsKCgogICAgbXkgJGxlbmd0aF9iZWZvcmUgPSBsZW5ndGggJGZpbGU7CiAgICAk
-dG90YWxfY2hhcnNfcmVhZGVkICs9ICRsZW5ndGhfYmVmb3JlOwoKICAgICRmaWxlID1+IHMvW1ww
-MDAtXDAxMVwwMTMtXDA0MF0rXG4vXG4vbWc7CgogICAgbXkgJGxlbmd0aF9hZnRlciAgPSBsZW5n
-dGggJGZpbGU7CgoKICAgIG15ICRjaGFyc190cnVuY2F0ZWQgPSAkbGVuZ3RoX2JlZm9yZSAtICRs
-ZW5ndGhfYWZ0ZXI7CgogICAgZGllICJzaXplIGJlY29tZSBncmVhdGVyIGFmdGVyIHRydW5jYXRp
-bmc6ICIuJGZuYW1lCglpZiAkY2hhcnNfdHJ1bmNhdGVkIDwgMDsKCgogICAgaWYgKCAkY2hhcnNf
-dHJ1bmNhdGVkID4gMCApCiAgICB7CgkkdG90YWxfZmlsZXNfdHJ1bmNhdGVkKys7CgkkdG90YWxf
-Y2hhcnNfdHJ1bmNhdGVkICs9ICRjaGFyc190cnVuY2F0ZWQ7CiAgICB9CiAgICBlbHNlCiAgICB7
-CgkkdG90YWxfZmlsZXNfbm9fY2hhcnNfdHJ1bmNhdGVkKys7CiAgICB9CgogICAgaWYgICAgKCAk
-Y2hhcnNfdHJ1bmNhdGVkID4wIGFuZCAkdHJ1bmNhdGVkX29wdGlvbiApCiAgICB7CglwcmludGYo
-U1RET1VUICAiJTZ1IG9mICU2dSBjaGFycyB0cnVuY2F0ZWQgZnJvbSAkZm5hbWVcbiIsCgkJICAg
-ICAgICRjaGFyc190cnVuY2F0ZWQsICRsZW5ndGhfYmVmb3JlKTsKICAgIH0KICAgIGVsc2lmICgg
-JGNoYXJzX3RydW5jYXRlZD09MCBhbmQgJG5vbnRydW5jYXRlZF9vcHRpb24gKQogICAgewoJcHJp
-bnRmKFNURE9VVCAgICAgICAiJS0xNnMgY2hhcnMgdHJ1bmNhdGVkIGZyb20gJGZuYW1lXG4iLCAn
-bm8nKTsKICAgIH0KCiAgICBpZiAoICEgJGRyeV9ydW5fb3B0aW9uIGFuZCAkY2hhcnNfdHJ1bmNh
-dGVkID4gMCApCiAgICB7Cglsb2NhbCAqT1VUOwoJb3BlbiAgIE9VVCwgIj4gJGZuYW1lIiBvciBk
-aWUgIkNhbid0IG9wZW4gJGZuYW1lOiAkISI7CglwcmludCAgT1VUICRmaWxlIG9yIGRpZSAiQ2Fu
-J3Qgd3JpdGUgJGZuYW1lOiAkISI7CgljbG9zZSAgT1VUICBvciBkaWUgIkVycm9yIG9uIGNsb3Np
-bmcgJGZuYW1lOiAkISI7CiAgICB9Cn0KCgoKIysgbWFpbiB3b3JrCgojIGRvIHByb2Nlc3MgZmls
-ZSBuYW1lcyBmcm9tIHRoZSBAQVJHViBmaXJzdAp0cnVuY2F0ZV9maWxlKCRfKSB3aGlsZSBkZWZp
-bmVkICgkXyA9IHNoaWZ0KTsKCmlmIChkZWZpbmVkICRmaWxlc19mcm9tX29wdGlvbikgIyBkbyBw
-cm9jZXNzIGZpbGUgbmFtZXMgZnJvbSBmaWxlfFNURElOCnsKICAgIGxvY2FsICpJTjsKICAgIG9w
-ZW4gIChJTiwgJGZpbGVzX2Zyb21fb3B0aW9uKSBvciBkaWUgIkNhbid0IG9wZW4gJGZpbGVzX2Zy
-b21fb3B0aW9uOiAkISI7CgogICAgd2hpbGUgKCBteSAkZm5hbWUgPSA8SU4+ICkKICAgIHsKCWNo
-b21wICRmbmFtZTsKCW5leHQgaWYgbGVuZ3RoKCRmbmFtZSkgPCAxOyAjIHNraXAgZW1wdHkgbGlu
-ZXMKCgl0cnVuY2F0ZV9maWxlKCRmbmFtZSk7CiAgICB9Cn0KCiMtIG1haW4gd29yawoKCmZvcm1h
-dCBTVERFUlIgPQoKVG90YWwgZmlsZXM6IGNoZWNrZWQgICBlbXB0eSAgIHRydW5jYXRlZCAgbm9u
-LXRydW5jYXRlZAogICAgICAgICAgICAgLS0tLS0tLSAgLS0tLS0tLSAgLS0tLS0tLSAgIC0tLS0t
-LS0KICAgICAgICAgICAgIEA+Pj4+Pj4gIEA+Pj4+Pj4gIEA+Pj4+Pj4gICBAPj4+Pj4+CiR0b3Rh
-bF9maWxlc19jaGVja2VkLCAkdG90YWxfZmlsZXNfZW1wdHksICR0b3RhbF9maWxlc190cnVuY2F0
-ZWQsICR0b3RhbF9maWxlc19ub19jaGFyc190cnVuY2F0ZWQKClRvdGFsIGNoYXJzIHRydW5jYXRl
-ZDogQD4+Pj4+PiBvZiBAPDw8PDw8PDw8PDw8PDw8PDwKJHRvdGFsX2NoYXJzX3RydW5jYXRlZCwg
-JHRvdGFsX2NoYXJzX3JlYWRlZAoKLgoKd3JpdGUgU1RERVJSIGlmICR0b3RhbF9vcHRpb247Cgpl
-eGl0IDA7CgoKPWhlYWQxIEFVVEhPUgoKRG1pdHJ5IEZlZG9yb3YgPGRtLmZlZG9yb3ZAZ21haWwu
-Y29tPgoKPWhlYWQxIENPUFlSSUdIVAoKQ29weXJpZ2h0IChDKSAyMDAzIERtaXRyeSBGZWRvcm92
-IDxkbS5mZWRvcm92QGdtYWlsLmNvbT4KCj1oZWFkMSBMSUNFTlNFCgpUaGlzIHByb2dyYW0gaXMg
-ZnJlZSBzb2Z0d2FyZTsgeW91IGNhbiByZWRpc3RyaWJ1dGUgaXQgYW5kL29yIG1vZGlmeQppdCB1
-bmRlciB0aGUgdGVybXMgb2YgdGhlIEdOVSBHZW5lcmFsIFB1YmxpYyBMaWNlbnNlIGFzIHB1Ymxp
-c2hlZCBieQp0aGUgRnJlZSBTb2Z0d2FyZSBGb3VuZGF0aW9uOyBlaXRoZXIgdmVyc2lvbiAyIG9m
-IHRoZSBMaWNlbnNlLApvciAoYXQgeW91ciBvcHRpb24pIGFueSBsYXRlciB2ZXJzaW9uLgoKPWhl
-YWQxIERJU0NMQUlNRVIKClRoZSBhdXRob3IgZGlzY2xhaW1zIGFueSByZXNwb25zaWJpbGl0eSBm
-b3IgYW55IG1hbmdsaW5nIG9mIHlvdXIgc3lzdGVtCmV0YywgdGhhdCB0aGlzIHNjcmlwdCBtYXkg
-Y2F1c2UuCgo9Y3V0Cgo=
-------=_Part_9308_7967851.1148730509885--
+As a sidenote, I'm wondering why there is no precise information on
+the branchpoint in "cvsps -A".  I guess the semantics are "fork a new
+branch from the ancestor one" at whatever point it currently is - that
+would look quite risky to me, and could be part of the reason why
+cvsps did not notice the inconsistency: it just did not try to find
+out where the new branch was to be grafted exactly.
+
+======
+PatchSet 1
+Date: 2006/01/03 18:23:53
+Author: ydirson
+Branch: HEAD
+Tag: (none)
+Log:
+Empty .cvsignore to be used as a branching base
+
+Members:
+        .cvsignore:INITIAL->1.1
+
+---------------------
+PatchSet 2
+Date: 2006/01/03 18:23:53
+Author: ydirson
+Branch: FOO_V3_0_0_HEAD
+Ancestor branch: FOO_VENDOR_HEAD
+Tag: (none)
+Log:
+file .cvsignore was added on branch FOO_V3_0_0_HEAD on 2006-05-24 07:51:07
++0000
+
+Members:
+        .cvsignore:1.1->1.1.4.1(DEAD)
+
+---------------------
+PatchSet 3
+Date: 2006/01/03 18:24:39
+Author: ydirson
+Branch: FOO_VENDOR_HEAD
+Ancestor branch: HEAD
+Tag: FOO_V1_1
+Log:
+Import de FOO 1.1
+---------------------
+PatchSet 20
+Date: 2006/01/10 11:47:54
+Author: ydirson
+Branch: FOO_V3_0_0_HEAD
+Tag: (none)
+Log:
+file script.sh was added on branch FOO_V3_0_0_HEAD on 2006-05-24 07:51:08
++0000
+
+Members:
+        some/script.sh:1.1->1.1.4.1(DEAD)
+===== first import
+Fetching .cvsignore   v 1.1
+New .cvsignore: 0 bytes
+Tree ID 87556a35bc2c438ede9eb2120c2cdb04baed33ae
+Committing initial tree 87556a35bc2c438ede9eb2120c2cdb04baed33ae
+Committed patch 1 (origin 2006-01-03 17:23:53)
+Commit ID 2ddb63602915316e60b26d95414100fd80e602ef
+Branch FOO_VENDOR_HEAD does not exist!
+Delete .cvsignore
+[...]
+Tree ID ca6e986b5199b01604dfa459b6e3a2841024f11a
+Parent ID 2ddb63602915316e60b26d95414100fd80e602ef
+Committed patch 3 (FOO_VENDOR_HEAD 2006-01-03 17:24:39)
+Commit ID 9e19f11520c89897704fff252901ff4dc5ae88ad
+[...]
+Committed patch 19 (origin 2006-01-10 10:47:54)
+Commit ID 0c5063420b769f8db7c009843b3947350bf78eae
+Switching from origin to FOO_V3_0_0_HEAD
+fatal: Not a valid object name FOO_V3_0_0_HEAD
+read-tree failed: 32768
+===== second run
+skip patchset 1: 1136309033 before 1136890074
+Switching from master to FOO_V3_0_0_HEAD
+Delete .cvsignore
+Tree ID 38b8067e1d36ce7f45bb1121a22628927bfd2ac2
+Parent ID b9cf667acd27ba7fd76a405166b355ec51261b17
+Committed patch 2 (FOO_V3_0_0_HEAD 2006-01-03 17:23:53)
+Commit ID 528efdac6113af50d4c14c3ccabde9661cb19359
+skip patchset 3: 1136309079 before 1136312985
+[...]
+skip patchset 19: 1136890074 before 1136890074
+Delete some/script.sh
+Tree ID 38b8067e1d36ce7f45bb1121a22628927bfd2ac2
+Parent ID 528efdac6113af50d4c14c3ccabde9661cb19359
+Committed patch 20 (FOO_V3_0_0_HEAD 2006-01-10 10:47:54)
+[...]
+Committed patch 409 (origin 2006-05-24 18:59:44)
+Commit ID 74a5c3b1f265f096177120166ae7da1a2cf3f64e
+DONE.
+=====
+--
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
