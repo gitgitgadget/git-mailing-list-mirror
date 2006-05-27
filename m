@@ -1,79 +1,88 @@
-From: Nicolas Vilz 'niv' <niv@iaglans.de>
-Subject: Re: t8001-annotate.sh fails on Mac OS X
-Date: Sat, 27 May 2006 20:13:47 +0200
-Message-ID: <447896DB.4040001@iaglans.de>
-References: <f3d7535d0605251653m15db34f3j46403f4ed0c4c69f@mail.gmail.com> <20060526011153.GA27720@spearce.org> <Pine.LNX.4.63.0605261534270.27610@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fixed Cygwin CR-munging problem in mailsplit
+Date: Sat, 27 May 2006 11:21:31 -0700
+Message-ID: <7vfyivfhw4.fsf@assigned-by-dhcp.cox.net>
+References: <4477262A.5000301@Intel.com>
+	<7virnsk6fe.fsf@assigned-by-dhcp.cox.net> <44789309.1030002@Intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Stefan Pfetzing <stefan.pfetzing@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 27 20:14:39 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat May 27 20:21:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fk3J7-0006gv-4S
-	for gcvg-git@gmane.org; Sat, 27 May 2006 20:14:37 +0200
+	id 1Fk3Pt-0007v3-Hn
+	for gcvg-git@gmane.org; Sat, 27 May 2006 20:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbWE0SOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 14:14:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbWE0SOd
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 14:14:33 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:55058 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
-	id S1751060AbWE0SOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 May 2006 14:14:33 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 112103FEC;
-	Sat, 27 May 2006 20:14:25 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ci4GZ83Kqj5I; Sat, 27 May 2006 20:14:03 +0200 (CEST)
-Received: from [192.168.100.27] (fry.lan.home.vilz.de [192.168.100.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 8CD163FEB;
-	Sat, 27 May 2006 20:13:57 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.2 (Macintosh/20060308)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0605261534270.27610@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S964916AbWE0SVe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 14:21:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964924AbWE0SVe
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 14:21:34 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:25016 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S964916AbWE0SVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 May 2006 14:21:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060527182132.FUDZ24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 27 May 2006 14:21:32 -0400
+To: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+In-Reply-To: <44789309.1030002@Intel.com> (Salikh Zakirov's message of "Sat,
+	27 May 2006 21:57:29 +0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20866>
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Thu, 25 May 2006, Shawn Pearce wrote:
-> 
->> Stefan Pfetzing <stefan.pfetzing@gmail.com> wrote:
->>> for some reason I could not yet figure out, t8001-annotate.sh fails at test 
->>> 18.
->> I've been seeing the same failed test case for a long time now on
->> my own Mac OS X system.
-> 
-> ... which is sort of funny, because I don't see it on my system. Running 
-> an iBook G3 with Mac OS X 10.2.8. "make test" runs through, and no, AFAICT 
-> I do not have any local modifications which could be responsible for that.
+Salikh Zakirov <Salikh.Zakirov@Intel.com> writes:
 
-I just tried it on my Powerbook G4 running MacOSX 10.4.6 and failed on 
-test 18, too.
+> Do not open mailbox file as fopen(..., "rt")
+> as this strips CR characters from the diff,
+> thus breaking the patch context for changes 
+> in CRLF files.
+>
+> Signed-off-by: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+>
+> ---
+> fd405a0843f3efd474bc7897b06d813d6498fbf4
+> diff --git mailsplit.c mailsplit.c
+> index c529e2d..70a569c 100644
+> --- mailsplit.c
+> +++ mailsplit.c
+> @@ -162,7 +162,7 @@ int main(int argc, const char **argv)
+>  
+>  	while (*argp) {
+>  		const char *file = *argp++;
+> -		FILE *f = !strcmp(file, "-") ? stdin : fopen(file, "rt");
+> +		FILE *f = !strcmp(file, "-") ? stdin : fopen(file, "r");
+>  		int file_done = 0;
+>  
+>  		if ( !f )
 
-I am just doing a complete test with make test...
+I personally think this is a right change.  Provided if MTAs on
+the path between patch originator and you are not broken and
+your MUA saved the message with CR/LF distinction in the
+contents intact, this should do more right thing.
 
-same situation:
+I see broken patches every once in a while, but when they are
+mangled by the mailpath, CRLF is the least of the problem; they
+have other whitespace breakage that makes them unapplicable
+anyway.
 
-* FAIL 18: some edit
-         check_count A 1 B 1 B1 1 B2 1 "A U Thor" 1 C 1 D 1
-* failed 1 among 18 test(s)
-make[1]: *** [t8001-annotate.sh] Error 1
-make: *** [test] Error 2
+Having said that, however, that historically used to be a big IF
+with capital letters.
 
 
-I am using the master tree for this test.
+I have a feeling that Linus did this on purpose.  For the
+projects we originally cared about, a patch to introduce CRLF
+in the tracked content was a broken patch 100% of the time (not
+99%), and most likely caused by a breakage somewhere on the
+mailpath.  At least in the original git context, protecting
+UNIX/POSIX people from broken MTA/MUA counted far more than
+catering to people who deals with DOSsy contents.
 
-Any suggestions?
+So I am slightly in favor of the change, but just barely.
