@@ -1,69 +1,78 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: ~/.git/config ?
-Date: Sat, 27 May 2006 12:09:34 +0300
-Message-ID: <20060527120934.e6306067.tihirvon@gmail.com>
+Date: Sat, 27 May 2006 02:11:23 -0700
+Message-ID: <7vejyfhlxg.fsf@assigned-by-dhcp.cox.net>
 References: <20060526152837.GQ23852@progsoc.uts.edu.au>
 	<20060526193325.d2a530a4.tihirvon@gmail.com>
-	<20060526163829.GB10488@pasky.or.cz>
-	<1148697382.5599.1.camel@dv>
-	<dbfc82860605270150s5c43e32fja2e7ef934bc1ef0@mail.gmail.com>
+	<20060526163829.GB10488@pasky.or.cz> <1148697382.5599.1.camel@dv>
+	<20060527025750.GM11941@pasky.or.cz>
+	<Pine.LNX.4.64.0605262007230.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: proski@gnu.org, pasky@suse.cz, wildfire@progsoc.uts.edu.au,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 27 11:07:45 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 27 11:11:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fjulr-0006jf-Ki
-	for gcvg-git@gmane.org; Sat, 27 May 2006 11:07:43 +0200
+	id 1Fjupj-0007Bm-Tn
+	for gcvg-git@gmane.org; Sat, 27 May 2006 11:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448AbWE0JHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 05:07:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbWE0JHi
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 05:07:38 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:31407 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751448AbWE0JHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 May 2006 05:07:38 -0400
-Received: by nf-out-0910.google.com with SMTP id l36so10730nfa
-        for <git@vger.kernel.org>; Sat, 27 May 2006 02:07:36 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=OOOl00V+CK8XPzA1IEu00hX5E7b8XHzz/fz3KXVe3RB3/w80wzEH65oM5iImmWaIytfg9HAllNKKO2nqQIt8Zr0/aAYE/8maWOntbFbKlX9xzonrjYEpQAnaIeEhZ2LZUx+hmiX0OvQ8EL/VTL+TSXynThCRkPuJhdJNXI9DF74=
-Received: by 10.49.66.12 with SMTP id t12mr178554nfk;
-        Sat, 27 May 2006 02:07:36 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.200.31])
-        by mx.gmail.com with ESMTP id y24sm1371636nfb.2006.05.27.02.07.34;
-        Sat, 27 May 2006 02:07:35 -0700 (PDT)
-To: "Nikolai Weibull" <now@bitwi.se>
-In-Reply-To: <dbfc82860605270150s5c43e32fja2e7ef934bc1ef0@mail.gmail.com>
-X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.17; i686-pc-linux-gnu)
+	id S1751449AbWE0JLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 05:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbWE0JLk
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 05:11:40 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:39398 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751449AbWE0JLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 May 2006 05:11:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060527091139.RXJI11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 27 May 2006 05:11:39 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 26 May 2006 20:20:14 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20839>
 
-"Nikolai Weibull" <now@bitwi.se> wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> On 5/27/06, Pavel Roskin <proski@gnu.org> wrote:
-> > On Fri, 2006-05-26 at 18:38 +0200, Petr Baudis wrote:
-> > >
-> > > Then it should be called ~/.gitconfig. :-)
-> >
-> > No, make it .gitrc for compatibility with .cvsrc, .lynxrc and others.
-> >
-> > I know, it's becoming a bikeshed issue :-)
-> 
-> I want to paint part of it as well!
-> 
-> Wouldn't we be futureproofing ourselves by stuffing it in a
-> subdirectory instead?  What if we want to add more files later?
+> On Sat, 27 May 2006, Petr Baudis wrote:
+>> 
+>> ~/.gitrc might get useful for actually doing what ~/.cvsrc or ~/.cgrc
+>> does, that is providing default options for git commands. ~/.gitconfig
+>> would just give you per-user defaults for the repository config file.
+>
+> I don't think the two are necessarily any different.
 
-Makes sense, we may want to put templates to ~/.gitsomething/templates/.
+Me neither.  Default options to fall back on if repository
+configuration does not specify them and when environments do not
+override them -- that's exactly "per-user defaults", nothing else.
 
--- 
-http://onion.dynserv.net/~timo/
+Earlier I suggested ~/.git-config, but anything other than
+~/.git/config is OK.  ~/.gitrc is fine.  And the order suggested
+by Anand sounded fine.
+
+ - use environment (if the value is obtained, stop here)
+ - use .git/config (if the value is obtained, stop here)
+ - use ~/.git-config (if the value is obtained, stop here)
+ - do whatever the program does by default.
+
+>  (a) we might as well use the same syntax. There's no point in having 
+>      different syntax for the files, even if they end up having slightly 
+>      different usage.
+
+Absolutely.
+
+>  (b) a "user-wide" config file would tend to have different things in it 
+>      than a per-repository one, but some of the things it would have in it 
+>      are the things that we currently put in the per-repository one. 
+>      Notably exactly the "user.name" and "user.email" values.
+
+Yes.  Also "preference" kind of things as opposed to "per
+project policy" such as apply.whitespace.
