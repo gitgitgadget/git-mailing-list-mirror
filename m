@@ -1,72 +1,53 @@
-From: "Zakirov, Salikh" <salikh.zakirov@intel.com>
-Subject: RE: [PATCH] Fixed Cygwin CR-munging problem in mailsplit
-Date: Sun, 28 May 2006 00:57:35 +0400
-Message-ID: <E124AAE027DA384D8B919F93E4D8C70801EFFB52@mssmsx402nb>
+From: Elrond <elrond+kernel.org@samba-tng.org>
+Subject: Remote git-cat-file?
+Date: Sat, 27 May 2006 22:26:15 +0000 (UTC)
+Message-ID: <loom.20060528T002420-957@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-X-From: git-owner@vger.kernel.org Sat May 27 22:57:59 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun May 28 00:26:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fk5r3-0006OY-18
-	for gcvg-git@gmane.org; Sat, 27 May 2006 22:57:49 +0200
+	id 1Fk7Ew-0003IL-Td
+	for gcvg-git@gmane.org; Sun, 28 May 2006 00:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964948AbWE0U5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 16:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964966AbWE0U5q
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 16:57:46 -0400
-Received: from mga01.intel.com ([192.55.52.88]:33934 "EHLO
-	fmsmga101-1.fm.intel.com") by vger.kernel.org with ESMTP
-	id S964948AbWE0U5p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 16:57:45 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101-1.fm.intel.com with ESMTP; 27 May 2006 13:57:45 -0700
-Received: from fmsmsx331.fm.intel.com (HELO fmsmsx331.amr.corp.intel.com) ([132.233.42.156])
-  by fmsmga001.fm.intel.com with ESMTP; 27 May 2006 13:57:44 -0700
-X-IronPort-AV: i="4.05,180,1146466800"; 
-   d="scan'208"; a="43409284:sNHT2480010435"
-Received: from fmsmsx312.amr.corp.intel.com ([132.233.42.227]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 27 May 2006 13:57:44 -0700
-Received: from mssmsx402.ccr.corp.intel.com ([10.125.2.12]) by fmsmsx312.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 27 May 2006 13:57:44 -0700
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH] Fixed Cygwin CR-munging problem in mailsplit
-Thread-Index: AcaBuv72VO07IZhmRWmLw8EVWE5pqgAE6trw
-To: <git@vger.kernel.org>
-X-OriginalArrivalTime: 27 May 2006 20:57:44.0321 (UTC) FILETIME=[33764F10:01C681D0]
+	id S964942AbWE0W0c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 18:26:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964964AbWE0W0c
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 18:26:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:53919 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964942AbWE0W0b (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 18:26:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fk7Es-0003Hb-H5
+	for git@vger.kernel.org; Sun, 28 May 2006 00:26:30 +0200
+Received: from p54A72F24.dip0.t-ipconnect.de ([84.167.47.36])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 28 May 2006 00:26:30 +0200
+Received: from elrond+kernel.org by p54A72F24.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 28 May 2006 00:26:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 84.167.47.36 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.3) Gecko/20060326 Firefox/1.5.0.3 (Debian-1.5.dfsg+1.5.0.3-2))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20872>
+
+Hi,
+
+Is it possible via the git: protocol to do a git-cat-file?
+
+To download just one object by its ID?
+
+Thanks for your help.
 
 
-Junio C Hamano <junkio@cox.net> writes:
-> So even in this modern day, preserving CRLF is not
-> something that happens by default -- you would need to make sure
-> that everybody on your mailpath to the recipient is set up the
-> right way.
-
-> So now I am less in favor of the change than when I wrote that
-> response.
-
-I understand this reasoning, and I am not sure if the fix is correct
-from the "GIT world" point of view.
-
-However, I believe that the command sequence git-format-patch, git-am
-without any e-mail transfer in between and in the same repository
-should work perfectly regardless of the contents of the files, 
-no matter if they are binary, text, or "CRLF text" or even 
-"broken LF and CRLF text". This is a requirement from a nasty "real
-world".
-
-Junio, could you point at a right place to fix to get git-format-patch, 
-git-am sequence work flawlessly on Cygwin?
-
-By the way, the change affects only non-Unix users, as fopen(..., "rt")
-is equivalent to fopen(..., "rb") on all Unixes anyway.
+    Elrond
