@@ -1,46 +1,75 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH 2/3] Document current cvsps limitations.
-Date: Sat, 27 May 2006 21:13:58 +0200
-Message-ID: <20060527191358.GN6535@nowhere.earth>
-References: <20060527163641.474.93575.stgit@gandelf.nowhere.earth> <20060527163933.474.4059.stgit@gandelf.nowhere.earth>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix "--abbrev=xyz" for revision listing
+Date: Sat, 27 May 2006 12:24:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605271218310.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 27 21:01:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat May 27 21:24:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fk42d-0006Nf-CJ
-	for gcvg-git@gmane.org; Sat, 27 May 2006 21:01:39 +0200
+	id 1Fk4Ot-0001ek-8T
+	for gcvg-git@gmane.org; Sat, 27 May 2006 21:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbWE0TBh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 15:01:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964936AbWE0TBg
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 15:01:36 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:13186 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S964934AbWE0TBg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 15:01:36 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 8C3EB7203B;
-	Sat, 27 May 2006 21:01:35 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1Fk4EY-0006zs-Ey; Sat, 27 May 2006 21:13:58 +0200
-To: junkio@cox.net
-Content-Disposition: inline
-In-Reply-To: <20060527163933.474.4059.stgit@gandelf.nowhere.earth>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S964946AbWE0TYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 15:24:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964948AbWE0TYg
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 15:24:36 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41188 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964946AbWE0TYg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 15:24:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4RJOV2g022247
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 27 May 2006 12:24:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4RJOVTE015402;
+	Sat, 27 May 2006 12:24:31 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20870>
 
-Well, you will have corrected by yourself, but I did mean
-"cvsexportcommit limitations" :)
 
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+The revision argument parsing was happily parsing "--abbrev", but it 
+didn't parse "--abbrev=<n>".
+
+Which was hidden by the fact that the diff options _would_ parse 
+--abbrev=<n>, so it would actually silently parse it, it just 
+wouldn't use it for the same things that a plain "--abbrev" was 
+used for.
+
+Which seems a bit insane.
+
+With this patch, if you do "git log --abbrev=10" it will abbreviate the 
+merge parent commit ID's to ten hex characters, which was probably what 
+you expected.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/revision.c b/revision.c
+index 2294b16..42c077a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -733,6 +733,14 @@ int setup_revisions(int argc, const char
+ 				revs->abbrev = DEFAULT_ABBREV;
+ 				continue;
+ 			}
++			if (!strncmp(arg, "--abbrev=", 9)) {
++				revs->abbrev = strtoul(arg + 9, NULL, 10);
++				if (revs->abbrev < MINIMUM_ABBREV)
++					revs->abbrev = MINIMUM_ABBREV;
++				else if (revs->abbrev > 40)
++					revs->abbrev = 40;
++				continue;
++			}
+ 			if (!strcmp(arg, "--abbrev-commit")) {
+ 				revs->abbrev_commit = 1;
+ 				continue;
