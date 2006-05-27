@@ -1,112 +1,79 @@
-From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-Subject: [PATCH] Fixed Cygwin CR-munging problem in mailsplit
-Date: Sat, 27 May 2006 21:57:29 +0400
-Message-ID: <44789309.1030002@Intel.com>
-References: <4477262A.5000301@Intel.com> <7virnsk6fe.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Vilz 'niv' <niv@iaglans.de>
+Subject: Re: t8001-annotate.sh fails on Mac OS X
+Date: Sat, 27 May 2006 20:13:47 +0200
+Message-ID: <447896DB.4040001@iaglans.de>
+References: <f3d7535d0605251653m15db34f3j46403f4ed0c4c69f@mail.gmail.com> <20060526011153.GA27720@spearce.org> <Pine.LNX.4.63.0605261534270.27610@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 27 19:58:19 2006
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Stefan Pfetzing <stefan.pfetzing@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 27 20:14:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fk33F-00040R-6a
-	for gcvg-git@gmane.org; Sat, 27 May 2006 19:58:13 +0200
+	id 1Fk3J7-0006gv-4S
+	for gcvg-git@gmane.org; Sat, 27 May 2006 20:14:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbWE0R6F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 13:58:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbWE0R6F
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 13:58:05 -0400
-Received: from mga02.intel.com ([134.134.136.20]:30897 "EHLO
-	orsmga101-1.jf.intel.com") by vger.kernel.org with ESMTP
-	id S1750999AbWE0R6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 May 2006 13:58:04 -0400
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101-1.jf.intel.com with ESMTP; 27 May 2006 10:58:03 -0700
-Received: from fmsmsx331.fm.intel.com (HELO fmsmsx331.amr.corp.intel.com) ([132.233.42.156])
-  by orsmga001.jf.intel.com with ESMTP; 27 May 2006 10:58:04 -0700
-X-IronPort-AV: i="4.05,180,1146466800"; 
-   d="scan'208"; a="42328822:sNHT15851164"
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 27 May 2006 10:58:03 -0700
-Received: from mssmsx402.ccr.corp.intel.com ([10.125.2.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 27 May 2006 10:58:03 -0700
-Received: from [10.125.11.160] ([10.125.11.160]) by mssmsx402.ccr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Sat, 27 May 2006 21:57:58 +0400
-User-Agent: Thunderbird 1.5 (Windows/20051201)
-In-Reply-To: <7virnsk6fe.fsf@assigned-by-dhcp.cox.net>
-X-OriginalArrivalTime: 27 May 2006 17:57:59.0229 (UTC) FILETIME=[170BDED0:01C681B7]
-To: unlisted-recipients:; (no To-header on input)
+	id S1751060AbWE0SOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 14:14:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbWE0SOd
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 14:14:33 -0400
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:55058 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de") by vger.kernel.org with ESMTP
+	id S1751060AbWE0SOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 May 2006 14:14:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 112103FEC;
+	Sat, 27 May 2006 20:14:25 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ci4GZ83Kqj5I; Sat, 27 May 2006 20:14:03 +0200 (CEST)
+Received: from [192.168.100.27] (fry.lan.home.vilz.de [192.168.100.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 8CD163FEB;
+	Sat, 27 May 2006 20:13:57 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.2 (Macintosh/20060308)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605261534270.27610@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20865>
 
-
-Do not open mailbox file as fopen(..., "rt")
-as this strips CR characters from the diff,
-thus breaking the patch context for changes 
-in CRLF files.
-
-Signed-off-by: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-
----
-
-Junio C Hamano wrote:
+Johannes Schindelin schrieb:
+> Hi,
 > 
-> 	git init-db
-> 	echo 'abc@' | tr '[@]' '[\015]' >a
->         git add a
->         git commit -m initial
-> 	echo 'def@' | tr '[@]' '[\015]' >>a
->         git commit -a -m second
->         git format-patch HEAD^
-> 	git reset --hard HEAD^
->         git am 0*.txt
+> On Thu, 25 May 2006, Shawn Pearce wrote:
 > 
+>> Stefan Pfetzing <stefan.pfetzing@gmail.com> wrote:
+>>> for some reason I could not yet figure out, t8001-annotate.sh fails at test 
+>>> 18.
+>> I've been seeing the same failed test case for a long time now on
+>> my own Mac OS X system.
+> 
+> ... which is sort of funny, because I don't see it on my system. Running 
+> an iBook G3 with Mac OS X 10.2.8. "make test" runs through, and no, AFAICT 
+> I do not have any local modifications which could be responsible for that.
 
-This reproduction scenario results in exactly the same problem.
-The problem is observed on Cygwin.
-My initial evaluation of the problem turned out to be completely bogus.
+I just tried it on my Powerbook G4 running MacOSX 10.4.6 and failed on 
+test 18, too.
 
-I've tracked the problem down to the fopen(file, "rt") in mailsplit.c,
-which then truncates the CR character from the patch file.
-This changes the patch context lines and it no longer applies.
-Changing it to fopen(file, "r") fixes the problem.
+I am just doing a complete test with make test...
 
-> Having said that, CRLF is unsafe for E-mail transfers anyway, so
-> I think we would need a special option to tell git-apply that it
-> should match '\n' that appears in the patch with '\r\n' in the
-> file being patched.  But I do not think that has anything to do
-> with the breakage you saw in your reproduction recipe.
+same situation:
 
-My use case does not involve e-mail transfers at all.
-I'm using git-format-patch and git-am to rewrite the
-patch sequence with different commit messages. 
+* FAIL 18: some edit
+         check_count A 1 B 1 B1 1 B2 1 "A U Thor" 1 C 1 D 1
+* failed 1 among 18 test(s)
+make[1]: *** [t8001-annotate.sh] Error 1
+make: *** [test] Error 2
 
-Unfortunately, some of my fellow developers are not quite
-careful, and occasionally some of the source files acquire
-CR characters, sometimes in several lines only.
 
-fd405a0843f3efd474bc7897b06d813d6498fbf4
- mailsplit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I am using the master tree for this test.
 
-fd405a0843f3efd474bc7897b06d813d6498fbf4
-diff --git mailsplit.c mailsplit.c
-index c529e2d..70a569c 100644
---- mailsplit.c
-+++ mailsplit.c
-@@ -162,7 +162,7 @@ int main(int argc, const char **argv)
- 
- 	while (*argp) {
- 		const char *file = *argp++;
--		FILE *f = !strcmp(file, "-") ? stdin : fopen(file, "rt");
-+		FILE *f = !strcmp(file, "-") ? stdin : fopen(file, "r");
- 		int file_done = 0;
- 
- 		if ( !f )
--- 
-1.3.3.gfd40
+Any suggestions?
