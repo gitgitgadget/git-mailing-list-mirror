@@ -1,55 +1,70 @@
-From: Jan Engelhardt <jengelh@linux01.gwdg.de>
-Subject: Re: [SCRIPT] chomp: trim trailing whitespace
-Date: Sat, 27 May 2006 14:42:02 +0200 (MEST)
-Message-ID: <Pine.LNX.4.61.0605271441080.4857@yvahk01.tjqt.qr>
-References: <4477B905.9090806@garzik.org> <Pine.LNX.4.61.0605271212210.6670@yvahk01.tjqt.qr>
- <447838EB.9060900@garzik.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 27 14:42:30 2006
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: ~/.git/config ?
+Date: Sat, 27 May 2006 08:52:35 -0400
+Message-ID: <200605271252.k4RCqZhR003192@laptop11.inf.utfsm.cl>
+References: <torvalds@osdl.org>
+Cc: Petr Baudis <pasky@ucw.cz>, Pavel Roskin <proski@gnu.org>,
+	Timo Hirvonen <tihirvon@gmail.com>,
+	Anand Kumria <wildfire@progsoc.uts.edu.au>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 27 14:56:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fjy7b-00058Z-KO
-	for gcvg-git@gmane.org; Sat, 27 May 2006 14:42:24 +0200
+	id 1FjyLO-0006le-4M
+	for gcvg-git@gmane.org; Sat, 27 May 2006 14:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751026AbWE0MmN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 May 2006 08:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751501AbWE0MmN
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 08:42:13 -0400
-Received: from linux01.gwdg.de ([134.76.13.21]:29839 "EHLO linux01.gwdg.de")
-	by vger.kernel.org with ESMTP id S1751026AbWE0MmM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 08:42:12 -0400
-Received: from linux01.gwdg.de (localhost [127.0.0.1])
-	by linux01.gwdg.de (8.13.3/8.13.3/SuSE Linux 0.7) with ESMTP id k4RCg5f7004928;
-	Sat, 27 May 2006 14:42:08 +0200
-Received: from localhost (jengelh@localhost)
-	by linux01.gwdg.de (8.13.3/8.13.3/Submit) with ESMTP id k4RCg4jW004904;
-	Sat, 27 May 2006 14:42:04 +0200
-To: Jeff Garzik <jeff@garzik.org>
-In-Reply-To: <447838EB.9060900@garzik.org>
+	id S1750796AbWE0M4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 May 2006 08:56:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbWE0M4Y
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 May 2006 08:56:24 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:43950 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1750796AbWE0M4X (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 May 2006 08:56:23 -0400
+Received: from laptop11.inf.utfsm.cl (laptop11.inf.utfsm.cl [200.1.19.198])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k4RCqaNO004727
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 27 May 2006 08:52:36 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k4RCqZhR003192;
+	Sat, 27 May 2006 08:52:35 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: Message from Linus Torvalds <torvalds@osdl.org> 
+   of "Fri, 26 May 2006 20:20:14 MST." <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 19)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Sat, 27 May 2006 08:52:36 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20853>
 
->> Pretty long script. How about this two-liner? It does not show 'bytes
->> chomped' but it also trims trailing whitespace.
->> 
->> #!/usr/bin/perl -i -p
->> s/[ \t\r\n]+$//
->
-> Yes, it does, but a bit too aggressive for what we need :)
->
-Whoops, should have been s/[ \t\r]+$//
-And the CL form is
-  perl -i -pe '...'
+Linus Torvalds <torvalds@osdl.org> wrote:
+> On Sat, 27 May 2006, Petr Baudis wrote:
+> > 
+> > ~/.gitrc might get useful for actually doing what ~/.cvsrc or ~/.cgrc
+> > does, that is providing default options for git commands. ~/.gitconfig
+> > would just give you per-user defaults for the repository config file.
 
-Somehow, you can't group it to -ipe, but who cares.
+Yep.
 
+[...]
 
-Jan Engelhardt
+> So they would do "alias cvs git" in a desperate attempt to save themselves 
+> from CVS, and then add
+> 
+> 	[alias "co"]
+> 		cmd = commit -a
+
+I don't like this syntax. What other stuff (beside "cmd") would be under
+"[alias "co"]? Why not simply:
+
+        [alias]
+		co = commit -a
+		publish = push public.site.com:/pub/scm/my-public-repo
 -- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
