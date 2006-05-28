@@ -1,68 +1,64 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH] git-write-tree writes garbage on sparc64
-Date: Sun, 28 May 2006 21:08:08 +0200
-Message-ID: <20060528190808.G7cae5a8a@leonov.stosberg.net>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: git-format-patch question
+Date: Sun, 28 May 2006 12:31:33 -0700
+Message-ID: <m2odxikktm.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 28 21:08:26 2006
+X-From: git-owner@vger.kernel.org Sun May 28 21:31:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkQcf-0000C9-9F
-	for gcvg-git@gmane.org; Sun, 28 May 2006 21:08:21 +0200
+	id 1FkQzG-0002k5-IF
+	for gcvg-git@gmane.org; Sun, 28 May 2006 21:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbWE1TIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 15:08:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750871AbWE1TIP
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 15:08:15 -0400
-Received: from v345.ncsrv.de ([89.110.145.104]:43393 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1750869AbWE1TIP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 15:08:15 -0400
-Received: from leonov.stosberg.net (p213.54.89.85.tisdip.tiscali.de [213.54.89.85])
-	by ncs.stosberg.net (Postfix) with ESMTP id D57B2589000C
-	for <git@vger.kernel.org>; Sun, 28 May 2006 21:08:00 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id A523B104434; Sun, 28 May 2006 21:08:08 +0200 (CEST)
+	id S1750879AbWE1Tbg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 15:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbWE1Tbg
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 15:31:36 -0400
+Received: from nz-out-0102.google.com ([64.233.162.206]:5066 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750874AbWE1Tbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 May 2006 15:31:35 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so405084nze
+        for <git@vger.kernel.org>; Sun, 28 May 2006 12:31:35 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:from:date:message-id:user-agent:mime-version:content-type;
+        b=MghTV/JLwtfyHtPr9eVwcsmiRmMJSzfFExk7VgIBq2UHlH1Y3nTfObvmo6h5AYyaA6ickii2o/harFgEw9XXzu7WLoQlFzb8kT95tqr2d5pZdEywePfppYpgZirGhQdHCRF0GdrqsToT4pGx0jWAUty3dnKMMDV/SeQfKt19bd4=
+Received: by 10.37.12.56 with SMTP id p56mr2095279nzi;
+        Sun, 28 May 2006 12:31:35 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [67.171.24.140])
+        by mx.gmail.com with ESMTP id m1sm1953067nzf.2006.05.28.12.31.34;
+        Sun, 28 May 2006 12:31:34 -0700 (PDT)
 To: git@vger.kernel.org
-Content-Disposition: inline
-Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Sun, 28 May 2006 20:38:41 +0200
-X-Sieve: CMU Sieve 2.2
-User-Agent: mutt-ng/devel-r802 (Debian)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20890>
 
-In the "next" branch, write_index_ext_header() writes garbage on a
-64-bit big-endian machine; the written index file will be unreadable.
-I noticed this on NetBSD/sparc64. Reproducible with:
+Hi,
 
-$ git init-db
-$ :>file
-$ git-update-index --add file
-$ git-write-tree
-$ git-update-index
-error: index uses  extension, which we do not understand
-fatal: index file corrupt
+A few questions about git-format-patch:
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
----
- read-cache.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+1. When is one supposed to use --signoff?  I gather the answer is
+   project specific, but a statement of what's expected for git
+   itself would probably help clarify things for me.
 
-diff --git a/read-cache.c b/read-cache.c
-index 36bd4ea..c499c51 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -826,7 +826,7 @@ static int ce_write(SHA_CTX *context, in
- }
- 
- static int write_index_ext_header(SHA_CTX *context, int fd,
--				  unsigned long ext, unsigned long sz)
-+				  unsigned int ext, unsigned int sz)
- {
- 	ext = htonl(ext);
- 	sz = htonl(sz);
--- 
-1.3.3.g3c38f
+2. How should I add extra notes to an email generated using
+   git-format-patch?  Is this in the docs somewhere that I missed?  Is
+   there a recommended way to do this?
+
+3. Is signoff broken? I get:
+
+    $ git-format-patch --stdout --signoff master
+    fatal: unrecognized argument: --signoff  
+
+   When I pass -s instead of --signoff, I get output, but no patch and
+   no signoff looking thing.  Without --signoff and without -s, I get
+   reasonable looking output.
+
+Thanks,
+
++ seth
