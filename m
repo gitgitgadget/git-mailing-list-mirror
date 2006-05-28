@@ -1,63 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Remote git-cat-file?
-Date: Sun, 28 May 2006 14:00:21 +0200
-Organization: At home
-Message-ID: <e5c3c5$i47$1@sea.gmane.org>
-References: <loom.20060528T002420-957@post.gmane.org> <Pine.LNX.4.64.0605271727110.5623@g5.osdl.org> <loom.20060528T124835-757@post.gmane.org>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: [PATCH] Fixed Cygwin CR-munging problem in mailsplit
+Date: Sun, 28 May 2006 12:39:49 -0400
+Message-ID: <20060528163949.GB400@trixie.casa.cgf.cx>
+References: <E124AAE027DA384D8B919F93E4D8C70801EFFB52@mssmsx402nb>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun May 28 14:00:36 2006
+X-From: git-owner@vger.kernel.org Sun May 28 18:39:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkJwb-0005S9-7L
-	for gcvg-git@gmane.org; Sun, 28 May 2006 14:00:29 +0200
+	id 1FkOIy-0008JH-Ua
+	for gcvg-git@gmane.org; Sun, 28 May 2006 18:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750741AbWE1MAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 08:00:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWE1MAY
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 08:00:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:25292 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750741AbWE1MAY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 08:00:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FkJwK-0005PN-Vv
-	for git@vger.kernel.org; Sun, 28 May 2006 14:00:13 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 May 2006 14:00:12 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 May 2006 14:00:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750795AbWE1Qju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 12:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbWE1Qju
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 12:39:50 -0400
+Received: from pool-71-248-179-19.bstnma.fios.verizon.net ([71.248.179.19]:49565
+	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1750795AbWE1Qju
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 May 2006 12:39:50 -0400
+Received: by cgf.cx (Postfix, from userid 201)
+	id 8964113C020; Sun, 28 May 2006 12:39:49 -0400 (EDT)
+To: "Zakirov, Salikh" <salikh.zakirov@intel.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <E124AAE027DA384D8B919F93E4D8C70801EFFB52@mssmsx402nb>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20881>
 
-Elrond wrote:
-
-> Linus Torvalds <torvalds <at> osdl.org> writes:
->> 
->> Just out of interest, why would you ever want to just look at a single 
->> object?
-[...]
+On Sun, May 28, 2006 at 12:57:35AM +0400, Zakirov, Salikh wrote:
+>Junio C Hamano <junkio@cox.net> writes:
+>> So even in this modern day, preserving CRLF is not
+>> something that happens by default -- you would need to make sure
+>> that everybody on your mailpath to the recipient is set up the
+>> right way.
 >
-> The other possible use for remote git-cat-file:
-> It might be useful in shallow repos to selectively load objects "on demand".
-> (In fact, I screwed my repo by trying to make it shallow.)
+>> So now I am less in favor of the change than when I wrote that
+>> response.
+>
+>I understand this reasoning, and I am not sure if the fix is correct
+>from the "GIT world" point of view.
+>
+>However, I believe that the command sequence git-format-patch, git-am
+>without any e-mail transfer in between and in the same repository
+>should work perfectly regardless of the contents of the files, 
+>no matter if they are binary, text, or "CRLF text" or even 
+>"broken LF and CRLF text". This is a requirement from a nasty "real
+>world".
+>
+>Junio, could you point at a right place to fix to get git-format-patch, 
+>git-am sequence work flawlessly on Cygwin?
+>
+>By the way, the change affects only non-Unix users, as fopen(..., "rt")
+>is equivalent to fopen(..., "rb") on all Unixes anyway.
 
-It would be nice I think to be able to have remote alternatives, loading
-(downloading and saving) objects "on demand" ("lazy alternatives"). Not necessary
-only with "shallow repo"/"shallow clone".
+But fopen(..., "r") is not equivalent to fopen(..., "rb") on Cygwin.
 
--- 
-Jakub Narebski
-Warsaw, Poland
+Wouldn't you want to add the "b" there to be assured of a binary open?
+
+cgf
