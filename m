@@ -1,65 +1,184 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: [PATCH] Fixed Cygwin CR-munging problem in mailsplit
-Date: Sun, 28 May 2006 12:39:49 -0400
-Message-ID: <20060528163949.GB400@trixie.casa.cgf.cx>
-References: <E124AAE027DA384D8B919F93E4D8C70801EFFB52@mssmsx402nb>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] new environment variable GIT_TEMPLATE_DIR to override default template
+Date: Sun, 28 May 2006 10:33:44 -0700
+Message-ID: <7v4pzadpfr.fsf@assigned-by-dhcp.cox.net>
+References: <20060527132554.GC10488@pasky.or.cz>
+	<E1Fk3yR-0006Gd-36@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 28 18:39:53 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 28 19:33:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkOIy-0008JH-Ua
-	for gcvg-git@gmane.org; Sun, 28 May 2006 18:39:53 +0200
+	id 1FkP9B-0006KJ-8K
+	for gcvg-git@gmane.org; Sun, 28 May 2006 19:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbWE1Qju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 12:39:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbWE1Qju
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 12:39:50 -0400
-Received: from pool-71-248-179-19.bstnma.fios.verizon.net ([71.248.179.19]:49565
-	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1750795AbWE1Qju
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 May 2006 12:39:50 -0400
-Received: by cgf.cx (Postfix, from userid 201)
-	id 8964113C020; Sun, 28 May 2006 12:39:49 -0400 (EDT)
-To: "Zakirov, Salikh" <salikh.zakirov@intel.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <E124AAE027DA384D8B919F93E4D8C70801EFFB52@mssmsx402nb>
-User-Agent: Mutt/1.5.11
+	id S1750817AbWE1Rdq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 13:33:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750821AbWE1Rdq
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 13:33:46 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:52874 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750817AbWE1Rdp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 May 2006 13:33:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060528173345.MTLP27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 28 May 2006 13:33:45 -0400
+To: Matthias Lederhofer <matled@gmx.net>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20882>
 
-On Sun, May 28, 2006 at 12:57:35AM +0400, Zakirov, Salikh wrote:
->Junio C Hamano <junkio@cox.net> writes:
->> So even in this modern day, preserving CRLF is not
->> something that happens by default -- you would need to make sure
->> that everybody on your mailpath to the recipient is set up the
->> right way.
->
->> So now I am less in favor of the change than when I wrote that
->> response.
->
->I understand this reasoning, and I am not sure if the fix is correct
->from the "GIT world" point of view.
->
->However, I believe that the command sequence git-format-patch, git-am
->without any e-mail transfer in between and in the same repository
->should work perfectly regardless of the contents of the files, 
->no matter if they are binary, text, or "CRLF text" or even 
->"broken LF and CRLF text". This is a requirement from a nasty "real
->world".
->
->Junio, could you point at a right place to fix to get git-format-patch, 
->git-am sequence work flawlessly on Cygwin?
->
->By the way, the change affects only non-Unix users, as fopen(..., "rt")
->is equivalent to fopen(..., "rb") on all Unixes anyway.
+Matthias Lederhofer <matled@gmx.net> writes:
 
-But fopen(..., "r") is not equivalent to fopen(..., "rb") on Cygwin.
+> directory and --template=<template_directory> option for to git-clone
+>
+> ---
+>> Please document such changes, in the spirit of
+>
+> That's right, here are both patches in one because the second patch
+> would also change the documentation of the first one.
 
-Wouldn't you want to add the "b" there to be assured of a binary open?
+Thanks.
 
-cgf
+ * Please don't put the beginning of one sentence on Subject
+   line and start the body of the message with the rest of that
+   sentence.  Instead, come up with a short (meaning "fits on
+   the Subject line without wrapping with 80-column terminal")
+   title that describes what the patch does -- it is a good
+   sanity check to make sure your patch is doing one thing and
+   one thing only, instead of mixing unrelated mess together.
+
+ * Please sign-off your patch.
+
+ * Please test your patch for existing usage, not just for the
+   new usage you added, to avoid regressions.
+
+I like the part to let git-clone pass --template down to git-init-db,
+but once it is in place I doubt you would still need GIT_TEMPLATE_DIR.
+I'd rather not to introduce new environment variables if we can
+avoid them.
+
+> diff --git a/git-clone.sh b/git-clone.sh
+> index d96894d..1c7ae12 100755
+> --- a/git-clone.sh
+> +++ b/git-clone.sh
+> @@ -102,6 +102,7 @@ quiet=
+>  local=no
+>  use_local=no
+>  local_shared=no
+> +template=
+>  no_checkout=
+>  upload_pack=
+>  bare=
+> @@ -120,6 +121,8 @@ while
+>  	*,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local) use_local=yes ;;
+>          *,-s|*,--s|*,--sh|*,--sha|*,--shar|*,--share|*,--shared) 
+>            local_shared=yes; use_local=yes ;;
+> +	*,--template=*)
+> +	  template="$1" ;;
+>  	*,-q|*,--quiet) quiet=-q ;;
+>  	*,--use-separate-remote)
+>  		use_separate_remote=t ;;
+
+Here, $template is either empty string "", or "--template=dir"
+after argument parsing.  But then it does this:
+
+> @@ -203,7 +206,7 @@ trap 'err=$?; cd ..; rm -r "$D"; exit $e
+>  case "$bare" in
+>  yes) GIT_DIR="$D" ;;
+>  *) GIT_DIR="$D/.git" ;;
+> -esac && export GIT_DIR && git-init-db || usage
+> +esac && export GIT_DIR && git-init-db "$template" || usage
+
+which I suspect would make git-init-db barf if you did not pass
+any --template=foo option to git-clone.  Did you test your patch?
+
+So I'd do it like this instead.
+
+-- >8 --
+[PATCH] Let git-clone to pass --template=dir option to git-init-db.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ Documentation/git-clone.txt |    9 +++++++--
+ git-clone.sh                |   10 ++++++++--
+ 2 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index b333f51..94d9393 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -9,8 +9,8 @@ git-clone - Clones a repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git-clone' [-l [-s]] [-q] [-n] [--bare] [-o <name>] [-u <upload-pack>]
+-	  [--reference <repository>]
++'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
++	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
+ 	  <repository> [<directory>]
+ 
+ DESCRIPTION
+@@ -89,6 +89,11 @@ OPTIONS
+ 	the command to specify non-default path for the command
+ 	run on the other end.
+ 
++--template=<template_directory>::
++	Specify the directory from which templates will be used;
++	if unset the templates are taken from the installation
++	defined default, typically `/usr/share/git-core/templates`.
++
+ <repository>::
+ 	The (possibly remote) repository to clone from.  It can
+ 	be any URL git-fetch supports.
+diff --git a/git-clone.sh b/git-clone.sh
+index d96894d..de59904 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -9,7 +9,7 @@ # See git-sh-setup why.
+ unset CDPATH
+ 
+ usage() {
+-	echo >&2 "Usage: $0 [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
++	echo >&2 "Usage: $0 [--template=<template_directory>] [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
+ 	exit 1
+ }
+ 
+@@ -102,6 +102,7 @@ quiet=
+ local=no
+ use_local=no
+ local_shared=no
++unset template
+ no_checkout=
+ upload_pack=
+ bare=
+@@ -120,6 +121,11 @@ while
+ 	*,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local) use_local=yes ;;
+         *,-s|*,--s|*,--sh|*,--sha|*,--shar|*,--share|*,--shared) 
+           local_shared=yes; use_local=yes ;;
++	1,--template) usage ;;
++	*,--template)
++		shift; template="--template=$1" ;;
++	*,--template=*)
++	  template="$1" ;;
+ 	*,-q|*,--quiet) quiet=-q ;;
+ 	*,--use-separate-remote)
+ 		use_separate_remote=t ;;
+@@ -203,7 +209,7 @@ trap 'err=$?; cd ..; rm -r "$D"; exit $e
+ case "$bare" in
+ yes) GIT_DIR="$D" ;;
+ *) GIT_DIR="$D/.git" ;;
+-esac && export GIT_DIR && git-init-db || usage
++esac && export GIT_DIR && git-init-db ${template+"$template"} || usage
+ case "$bare" in
+ yes)
+ 	GIT_DIR="$D" ;;
+-- 
+1.3.3.g2a0a
