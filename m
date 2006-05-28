@@ -1,140 +1,55 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Classify commands in stg --help output.
-Date: Sun, 28 May 2006 23:25:19 +0200
-Message-ID: <20060528212519.3207.76228.stgit@gandelf.nowhere.earth>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: Re: [PATCH] git-fetch: Shell syntax fix for NetBSD
+Date: Sun, 28 May 2006 23:28:03 +0200
+Message-ID: <20060528212803.G53d5b45d@leonov.stosberg.net>
+References: <20060528204510.G51ab1cf8@leonov.stosberg.net> <7vbqthdfpa.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 28 23:21:09 2006
+X-From: git-owner@vger.kernel.org Sun May 28 23:28:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkSh9-0007rY-57
-	for gcvg-git@gmane.org; Sun, 28 May 2006 23:21:07 +0200
+	id 1FkSo3-0000Ll-OS
+	for gcvg-git@gmane.org; Sun, 28 May 2006 23:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbWE1VU6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 17:20:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbWE1VU6
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 17:20:58 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:11441 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750951AbWE1VU5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 17:20:57 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 78AA9275A4;
-	Sun, 28 May 2006 23:20:56 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by bylbo.nowhere.earth with esmtp (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FkSt2-0007Fj-8v; Sun, 28 May 2006 23:33:24 +0200
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: StGIT/0.9
+	id S1750897AbWE1V2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 17:28:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbWE1V2K
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 17:28:10 -0400
+Received: from v345.ncsrv.de ([89.110.145.104]:28626 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1750897AbWE1V2I (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 17:28:08 -0400
+Received: from leonov.stosberg.net (p213.54.89.85.tisdip.tiscali.de [213.54.89.85])
+	by ncs.stosberg.net (Postfix) with ESMTP id F3C25589000C;
+	Sun, 28 May 2006 23:27:54 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id ED0921044F0; Sun, 28 May 2006 23:28:03 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vbqthdfpa.fsf@assigned-by-dhcp.cox.net>
+OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20896>
 
+Junio C Hamano wrote:
 
-Commands will be much easier to find out that way.
-Inspiration mostly comes from pg-help.
+> Funny.  Without the posixy open parenthesis, bash barfs ;-).
+> 
+>         git-fetch: line 219: syntax error near unexpected token `;;'
+>         git-fetch: line 219: `                 *^*) continue ;;'
+> 
+> So how about doing this instead?  Does NetBSD default shell
+> still work with it?
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+This looked so simple that I didn't notice the command
+substitution...
 
- stgit/main.py |   74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 70 insertions(+), 4 deletions(-)
+Yes, your version works correctly here.
 
-diff --git a/stgit/main.py b/stgit/main.py
-index df4e1f5..83bffb4 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -100,19 +100,85 @@ commands = {
-     'uncommit': stgit.commands.uncommit,
-     }
- 
-+# classification: repository, stack, patch, working copy
-+repocommands = (
-+    'branch',
-+    'clone',
-+    'id'
-+    )
-+stackcommands = (
-+    'applied',
-+    'clean',
-+    'commit',
-+    'goto',
-+    'init',
-+    'pop',
-+    'pull',
-+    'push',
-+    'series',
-+    'top',
-+    'unapplied',
-+    'uncommit'
-+    )
-+patchcommands = (
-+    'delete',
-+    'export',
-+    'files',
-+    'fold',
-+    'import',
-+    'mail',
-+    'new',
-+    'pick',
-+    'refresh',
-+    'rename',
-+    'show'
-+    )
-+wccommands = (
-+    'add',
-+    'diff',
-+    'patches',
-+    'resolved',
-+    'rm',
-+    'status'
-+    )
-+
-+def _print_helpstring(cmd):
-+    print '  ' + cmd + ' ' * (12 - len(cmd)) + commands[cmd].help
-+    
- def print_help():
-     print 'usage: %s <command> [options]' % os.path.basename(sys.argv[0])
-     print
--    print 'commands:'
-+    print 'Generic commands:'
-     print '  help        print the detailed command usage'
-     print '  version     display version information'
-     print '  copyright   display copyright information'
--    print
--
-+    # unclassified commands if any
-     cmds = commands.keys()
-     cmds.sort()
-     for cmd in cmds:
--        print '  ' + cmd + ' ' * (12 - len(cmd)) + commands[cmd].help
-+        if not cmd in repocommands and not cmd in stackcommands \
-+               and not cmd in patchcommands and not cmd in wccommands:
-+            _print_helpstring(cmd)
-+    print
-+
-+    print 'Repository commands:'
-+    for cmd in repocommands:
-+        _print_helpstring(cmd)
-+    print
-+    
-+    print 'Stack commands:'
-+    for cmd in stackcommands:
-+        _print_helpstring(cmd)
-+    print
-+
-+    print 'Patch commands:'
-+    for cmd in patchcommands:
-+        _print_helpstring(cmd)
-+    print
-+
-+    print 'Working-copy commands:'
-+    for cmd in wccommands:
-+        _print_helpstring(cmd)
- 
- #
- # The main function (command dispatcher)
+Regards,
+Dennis
