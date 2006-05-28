@@ -1,171 +1,189 @@
-From: Michael Richardson <mcr@sandelman.ottawa.on.ca>
-Subject: [PATCH] git-receive-pack needs to set umask(2)
-Date: Sun, 28 May 2006 17:31:41 -0400
-Message-ID: <v0irnpn8ea.fsf@marajade.sandelman.ca>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: [PATCH] Support for configurable git command aliases
+Date: Sun, 28 May 2006 23:59:45 +0200
+Message-ID: <20060528215945.GD10488@pasky.or.cz>
+References: <torvalds@osdl.org> <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org> <200605271252.k4RCqZhR003192@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-X-From: git-owner@vger.kernel.org Sun May 28 23:40:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Pavel Roskin <proski@gnu.org>,
+	Timo Hirvonen <tihirvon@gmail.com>,
+	Anand Kumria <wildfire@progsoc.uts.edu.au>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 28 23:59:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkSzf-0001gW-4M
-	for gcvg-git@gmane.org; Sun, 28 May 2006 23:40:15 +0200
+	id 1FkTIY-0003zV-NP
+	for gcvg-git@gmane.org; Sun, 28 May 2006 23:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750960AbWE1VkL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 17:40:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbWE1VkL
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 17:40:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:12773 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750960AbWE1VkJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 17:40:09 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1FkSzS-0001dQ-2o
-	for git@vger.kernel.org; Sun, 28 May 2006 23:40:02 +0200
-Received: from desk.marajade.sandelman.ca ([205.150.200.247])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 May 2006 23:40:02 +0200
-Received: from mcr by desk.marajade.sandelman.ca with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 May 2006 23:40:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: desk.marajade.sandelman.ca
-User-Agent: Gnus/5.1006 (Gnus v5.10.6) XEmacs/21.4 (Jumbo Shrimp, linux)
-Cancel-Lock: sha1:2Z5cqTmDRMT5oin+E0vUBee9hFM=
+	id S1750971AbWE1V7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 17:59:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750973AbWE1V7n
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 17:59:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:1427 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750969AbWE1V7n (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 17:59:43 -0400
+Received: (qmail 23026 invoked by uid 2001); 28 May 2006 23:59:45 +0200
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
+Content-Disposition: inline
+In-Reply-To: <200605271252.k4RCqZhR003192@laptop11.inf.utfsm.cl>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20898>
 
---=-=-=
+Dear diary, on Sat, May 27, 2006 at 02:52:35PM CEST, I got a letter
+where Horst von Brand <vonbrand@inf.utfsm.cl> said that...
+> > So they would do "alias cvs git" in a desperate attempt to save themselves 
+> > from CVS, and then add
+> > 
+> > 	[alias "co"]
+> > 		cmd = commit -a
+> 
+> I don't like this syntax. What other stuff (beside "cmd") would be under
+> "[alias "co"]? Why not simply:
+> 
+>         [alias]
+> 		co = commit -a
+> 		publish = push public.site.com:/pub/scm/my-public-repo
 
+Nice, I like this.
 
-If there is another way to solve this, please let me know.
-Wrapping git-receive-pack with a shell script to call umask seemed like too
-global a change.
-(also http://git.openswan.org/git#umask_hack)
-
-When working with a common git repository, not all users are always clueful
-enough to set their umask properly --- nor should the default for the user
-always be so permissive.
-
-This change adds $GIT_DIR/umask to contain a single line, an integer
-which will be fed to umask(). This should also work for the git daemon,
-which I personally do not use, so this may be inappropriate.
-
-Signed-off-by: Michael Richardson <mcr@xelerance.com>
+Well, the following isn't exactly the nicest code I have ever written...
+But it seems to work. ;-)
 
 ---
 
-8698daf8fedc8618593ec44574df1efb9f31db84
- Documentation/git-receive-pack.txt |    3 +++
- cache.h                            |    1 +
- path.c                             |    2 ++
- setup.c                            |   19 +++++++++++++++++++
- 4 files changed, 25 insertions(+), 0 deletions(-)
+This patch adds support for configurable aliases for git commands -
+"alias.WHATEVER = which ever" will kick in when you do "git WHATEVER"
+and substitute WHATEVER with "which ever" (splitted to arguments at
+whitespaces).
 
-8698daf8fedc8618593ec44574df1efb9f31db84
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-index 60debca..d3a8c11 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -74,6 +74,9 @@ packed and is served via a dumb transpor
- There are other real-world examples of using update and
- post-update hooks found in the Documentation/howto directory.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
+
+ Documentation/config.txt |    5 ++++
+ Documentation/git.txt    |    3 +++
+ git.c                    |   52 ++++++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 58 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d1a4bec..ce616e3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -83,6 +83,11 @@ core.warnAmbiguousRefs::
+ 	If true, git will warn you if the ref name you passed it is ambiguous
+ 	and might match multiple refs in the .git/refs/ tree. True by default.
  
-+The file $GIT_DIR/umask, if it exists will be opened, and the integer found
-+in it will be used to initialize the umask(2) for subsequent file creation
-+operations. 
++alias.*::
++	Command aliases for the gitlink:git[1] command wrapper - e.g.
++	after defining "alias.last = cat-file commit HEAD", the invocation
++	"git last" is equivalent to "git cat-file commit HEAD".
++
+ apply.whitespace::
+ 	Tells `git-apply` how to handle whitespaces, in the same way
+ 	as the '--whitespace' option. See gitlink:git-apply[1].
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 24ca55d..e474bdf 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -21,6 +21,9 @@ link:everyday.html[Everyday Git] for a u
+ "man git-commandname" for documentation of each command.  CVS users may
+ also want to read link:cvs-migration.html[CVS migration].
  
++The COMMAND is either a name of a Git command (see below) or an alias
++as defined in the configuration file (see gitlink:git-repo-config[1]).
++
  OPTIONS
  -------
-diff --git a/cache.h b/cache.h
-index 3a46fb9..65d5124 100644
---- a/cache.h
-+++ b/cache.h
-@@ -355,6 +355,7 @@ extern int git_config_bool(const char *,
- extern int git_config_set(const char *, const char *);
- extern int git_config_set_multivar(const char *, const char *, const char *, int);
- extern int check_repository_format_version(const char *var, const char *value);
-+extern void setup_umask();
+ --version::
+diff --git a/git.c b/git.c
+index 10ea934..0d9cd0e 100644
+--- a/git.c
++++ b/git.c
+@@ -10,6 +10,7 @@ #include <limits.h>
+ #include <stdarg.h>
+ #include "git-compat-util.h"
+ #include "exec_cmd.h"
++#include "cache.h" /* setup_git_directory_gently() */
  
- #define MAX_GITNAME (1000)
- extern char git_default_email[MAX_GITNAME];
-diff --git a/path.c b/path.c
-index 334b2bd..571ff01 100644
---- a/path.c
-+++ b/path.c
-@@ -244,6 +244,8 @@ char *enter_repo(char *path, int strict)
- 	if (access("objects", X_OK) == 0 && access("refs", X_OK) == 0 &&
- 	    validate_symref("HEAD") == 0) {
- 		putenv("GIT_DIR=.");
-+
-+		setup_umask();
- 		check_repository_format();
- 		return path;
+ #include "builtin.h"
+ 
+@@ -87,13 +88,27 @@ static void handle_internal_command(int 
  	}
-diff --git a/setup.c b/setup.c
-index fe7f884..2129125 100644
---- a/setup.c
-+++ b/setup.c
-@@ -228,6 +228,25 @@ int check_repository_format_version(cons
-        return 0;
  }
  
-+void setup_umask(void)
-+{
-+	FILE *f;
++static const char *cmd;
++static char *cmdalias;
 +
-+	f = fopen(git_path("umask"), "r");
-+	if(f != NULL) {
-+		char maskstr[32];
-+		if(fgets(maskstr, sizeof(maskstr), f) != NULL) {
-+			char *foo;
-+			unsigned int mask = strtoul(maskstr, &foo, 0);
-+			
-+			if(foo != maskstr) {
-+				umask(mask);
-+			}
-+		}
-+		fclose(f);
-+	}
++int git_alias_config(const char *var, const char *value)
++{
++	if (strncmp(var, "alias.", 6))
++		return 0;
++	var += /* strlen("alias.") */ 6;
++	if (!strcmp(var, cmd))
++		cmdalias = strdup(value);
++	return 0;
 +}
 +
- int check_repository_format(void)
+ int main(int argc, const char **argv, char **envp)
  {
- 	git_config(check_repository_format_version);
+-	const char *cmd = argv[0];
+-	char *slash = strrchr(cmd, '/');
++	char *slash = strrchr(argv[0], '/');
+ 	char git_command[PATH_MAX + 1];
+ 	const char *exec_path = NULL;
+ 
++	cmd = argv[0];
++
+ 	/*
+ 	 * Take the basename of argv[0] as the command
+ 	 * name, and the dirname as the default exec_path
+@@ -165,6 +180,39 @@ int main(int argc, const char **argv, ch
+ 	}
+ 	argv[0] = cmd;
+ 
++	/* Is this an alias? */
++	{
++		/* XXX: We do a redundant git directory detection. */
++		int nongit = 0;
++		const char *subdir = setup_git_directory_gently(&nongit);
++
++		if (!nongit) {
++			git_config(git_alias_config);
++			if (cmdalias) {
++				/* More than the worst case: */
++				const char **argv2 = malloc((strlen(cmdalias) + argc) * sizeof(char*));
++				int argc2 = 0, i = 1;
++
++				while (cmdalias && *cmdalias) {
++					argv2[argc2++] = strsep(&cmdalias, " \t");
++					if (cmdalias)
++						while (*cmdalias == ' ' || *cmdalias == '\t')
++							cmdalias++;
++				}
++				while (i < argc) {
++					argv2[argc2++] = argv[i++];
++				}
++				argv2[argc2] = NULL;
++				argv = argv2;
++				argc = argc2;
++			}
++		}
++
++		/* Go back so that the commands start with clean table */
++		if (subdir)
++			chdir(subdir);
++	}
++
+ 	/*
+ 	 * We search for git commands in the following order:
+ 	 *  - git_exec_path()
+
+
 -- 
-1.3.GIT
-
-
-
-
-
--- 
-]       ON HUMILITY: to err is human. To moo, bovine.           |  firewalls  [
-]   Michael Richardson,    Xelerance Corporation, Ottawa, ON    |net architect[
-] mcr@xelerance.com      http://www.sandelman.ottawa.on.ca/mcr/ |device driver[
-] panic("Just another Debian GNU/Linux using, kernel hacking, security guy"); [
-
-    "The Microsoft _Get the Facts CD_ does not work on Linux." - orospakr
-
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iQEVAwUARHoWwICLcPvd0N1lAQI4KQgApYdMDi/eq5AszIMg1ZEMzPJgcOH/ZlzU
-3tr/KZX9IQ3J8/crOvj2qQoqjvEmtWdnz2wAfJPp6UaLiAWyOQ5Ln3yIg9c1PQ+G
-f+B81S68OElEtSagC460vOKJzJVobWJyJyMXDxNRPWFPWc/M8+SsJl8F4wWlUQuk
-21yK2p/SXPAiO1wwynVodgX0Jq0xSqn8G1AxglwRO4W8vbfHWGjV841CCRMjicH7
-cVSSPoi5nzR69ah1b3BHvZN7rKtYtG/wzi9b/vyj/7+S+YeRb42oPtjNz5OnVVHv
-FU5dtu80xvWcJ5O4VyQrB6EIM61OAAZs5wBUH6w2GOehL/SBKacVtw==
-=DFp7
------END PGP SIGNATURE-----
---=-=-=--
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
