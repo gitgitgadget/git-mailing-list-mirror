@@ -1,427 +1,212 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 4/4] Remove "tree->entries" tree-entry list from tree parser
-Date: Sun, 28 May 2006 15:13:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605281511350.5623@g5.osdl.org>
-References: <Pine.LNX.4.64.0605281453460.5623@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Read configuration also from ~/.gitrc
+Date: Mon, 29 May 2006 00:26:42 +0200
+Message-ID: <20060528222641.GF10488@pasky.or.cz>
+References: <20060526152837.GQ23852@progsoc.uts.edu.au>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon May 29 00:14:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 29 00:26:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkTWO-0005Zs-0F
-	for gcvg-git@gmane.org; Mon, 29 May 2006 00:14:04 +0200
+	id 1FkTib-0006sZ-TZ
+	for gcvg-git@gmane.org; Mon, 29 May 2006 00:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751005AbWE1WN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 18:13:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751010AbWE1WN7
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 18:13:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42114 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751005AbWE1WN6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 18:13:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4SMDs2g030680
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 28 May 2006 15:13:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4SMDrw2015895;
-	Sun, 28 May 2006 15:13:53 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0605281453460.5623@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751017AbWE1W0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 18:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751019AbWE1W0j
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 18:26:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:22207 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750888AbWE1W0j (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 18:26:39 -0400
+Received: (qmail 2794 invoked by uid 2001); 29 May 2006 00:26:42 +0200
+To: Anand Kumria <wildfire@progsoc.uts.edu.au>
+Content-Disposition: inline
+In-Reply-To: <20060526152837.GQ23852@progsoc.uts.edu.au>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20906>
 
+  Hi,
 
-This finally removes the tree-entry list from "struct tree", since most of 
-the users can just use the tree-walk infrastructure to walk the raw tree 
-buffers instead of the tree-entry list.
+Dear diary, on Fri, May 26, 2006 at 05:28:37PM CEST, I got a letter
+where Anand Kumria <wildfire@progsoc.uts.edu.au> said that...
+> git is unable to construct a reasonable default email address in my
+> current environment.  So, I use GIT_AUTHOR_EMAIL and GIT_COMMITTER_EMAIL
+> to override things.
+> 
+> This has worked well but, now, I need to vary the email address for some
+> repositories.  Unfortunately the environment variables override
+> .git/config.
+> 
+> It would be good if things were like:
+> 	- try to construct one automagically
+> 	- use ~/.git/config (if available)
+> 	- use .git/config
+> 	- use environment variables
+> 
+> That way I could set my default email address in ~/.git/config and
+> override it as required for those repositories that need it.
 
-The tree-entry list is inefficient, and generates tons of small 
-allocations for no good reason. The tree-walk infrastructure is generally 
-no harder to use than following a linked list, and allows us to do most 
-tree parsing in-place.
+  hmm, might it be as simple as this?
 
-Some programs still use the old tree-entry lists, and are a bit painful to 
-convert without major surgery. For them we have a helper function that 
-creates a temporary tree-entry list on demand. We can convert those too 
-eventually, but with this they no longer affect any users who don't need 
-the explicit lists.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 ---
- builtin-ls-tree.c   |    2 +
- builtin-read-tree.c |    4 +--
- builtin-rev-list.c  |   26 ++++++++++------
- fetch.c             |   16 +++++++---
- fsck-objects.c      |    7 +++-
- http-push.c         |   30 +++++++++++++------
- revision.c          |    3 +-
- tree.c              |   81 ++++++++++++++++++++++++++++++++++++---------------
- tree.h              |    4 ++-
- 9 files changed, 116 insertions(+), 57 deletions(-)
 
-diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
-index 48385d5..b8d0d88 100644
---- a/builtin-ls-tree.c
-+++ b/builtin-ls-tree.c
-@@ -53,7 +53,7 @@ static int show_recursive(const char *ba
- 	}
- }
+This command makes Git read configuration from ~/.gitrc in addition
+to the per-repository .git/config configuration file, and updates
+the documentation accordingly (and also expands it a little).
+
+Idea by Anand Kumria.
+
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
+
+ Documentation/git-commit-tree.txt |    9 +++++----
+ Documentation/git-repo-config.txt |    6 +++---
+ Documentation/git-var.txt         |    5 +++--
+ Documentation/git.txt             |   15 +++++++++++----
+ config.c                          |    6 +++++-
+ 5 files changed, 27 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
+index 41d1a1c..1b0d102 100644
+--- a/Documentation/git-commit-tree.txt
++++ b/Documentation/git-commit-tree.txt
+@@ -49,8 +49,9 @@ A commit encapsulates:
+ - committer name and email and the commit time.
  
--static int show_tree(unsigned char *sha1, const char *base, int baselen,
-+static int show_tree(const unsigned char *sha1, const char *base, int baselen,
- 		     const char *pathname, unsigned mode, int stage)
+ If not provided, "git-commit-tree" uses your name, hostname and domain to
+-provide author and committer info. This can be overridden by
+-either `.git/config` file, or using the following environment variables.
++provide author and committer info. This can be overridden by either the
++`~/.gitrc` file, the `.git/config` file, or using the following
++environment variables.
+ 
+ 	GIT_AUTHOR_NAME
+ 	GIT_AUTHOR_EMAIL
+@@ -60,8 +61,8 @@ either `.git/config` file, or using the 
+ 
+ (nb "<", ">" and "\n"s are stripped)
+ 
+-In `.git/config` file, the following items are used for GIT_AUTHOR_NAME and
+-GIT_AUTHOR_EMAIL:
++In the configuration file, the following items are used for GIT_AUTHOR_NAME
++and GIT_AUTHOR_EMAIL:
+ 
+ 	[user]
+ 		name = "Your Name"
+diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
+index 660c18f..bb7f81f 100644
+--- a/Documentation/git-repo-config.txt
++++ b/Documentation/git-repo-config.txt
+@@ -3,7 +3,7 @@ git-repo-config(1)
+ 
+ NAME
+ ----
+-git-repo-config - Get and set options in .git/config
++git-repo-config - Get and set git runtime configuration options
+ 
+ 
+ SYNOPSIS
+@@ -37,7 +37,7 @@ no checks or transformations are perform
+ 
+ This command will fail if:
+ 
+-. The .git/config file is invalid,
++. The configuration file is invalid,
+ . Can not write to .git/config,
+ . no section was provided,
+ . the section or key is invalid,
+@@ -70,7 +70,7 @@ OPTIONS
+ 	Remove all matching lines from .git/config.
+ 
+ -l, --list::
+-	List all variables set in .git/config.
++	List all variables set in ~/.gitrc or .git/config.
+ 
+ 
+ EXAMPLE
+diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
+index a5b1a0d..4679aef 100644
+--- a/Documentation/git-var.txt
++++ b/Documentation/git-var.txt
+@@ -18,8 +18,9 @@ OPTIONS
+ -------
+ -l::
+ 	Cause the logical variables to be listed. In addition, all the
+-	variables of the git configuration file .git/config are listed
+-	as well. (However, the configuration variables listing functionality
++	variables of the git configuration files `~/.gitrc` and `.git/config`
++	are listed as well.
++	(However, the configuration variables listing functionality
+ 	is deprecated in favor of `git-repo-config -l`.)
+ 
+ EXAMPLE
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index e474bdf..f4e5df5 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -116,7 +116,7 @@ gitlink:git-read-tree[1]::
+ 	Reads tree information into the index.
+ 
+ gitlink:git-repo-config[1]::
+-	Get and set options in .git/config.
++	Get and set git runtime configuration options.
+ 
+ gitlink:git-unpack-objects[1]::
+ 	Unpacks objects out of a packed archive.
+@@ -473,8 +473,7 @@ gitlink:gitk[1]::
+ Configuration Mechanism
+ -----------------------
+ 
+-Starting from 0.99.9 (actually mid 0.99.8.GIT), `.git/config` file
+-is used to hold per-repository configuration options.  It is a
++You can adjust the Git behaviour by a configuration file.  It is a
+ simple text file modelled after `.ini` format familiar to some
+ people.  Here is an example:
+ 
+@@ -496,7 +495,15 @@ #
+ ------------
+ 
+ Various commands read from the configuration file and adjust
+-their operation accordingly.
++their operation accordingly. See gitlink:git-repo-config[1]
++for details and list of options.
++
++Git first reads the per-user global configuration from `~/.gitrc`
++and then per-repository configuration from the `.git/config` file.
++Either of these files may be missing; the per-repository configuration
++wins in case of a conflict. Some behaviour can be also tweaked using
++environment variables; in general, they take precedence over configuration
++options.
+ 
+ 
+ Identifier Terminology
+diff --git a/config.c b/config.c
+index 0248c6d..8a98865 100644
+--- a/config.c
++++ b/config.c
+@@ -312,7 +312,11 @@ int git_config_from_file(config_fn_t fn,
+ 
+ int git_config(config_fn_t fn)
  {
- 	int retval = 0;
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index f0b8dad..da0731c 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -163,7 +163,7 @@ #endif
- 				struct tree *tree = lookup_tree(posns[i]->sha1);
- 				any_dirs = 1;
- 				parse_tree(tree);
--				subposns[i] = tree->entries;
-+				subposns[i] = create_tree_entry_list(tree);
- 				posns[i] = posns[i]->next;
- 				src[i + merge] = &df_conflict_entry;
- 				continue;
-@@ -368,7 +368,7 @@ static int unpack_trees(merge_fn_t fn)
- 	if (len) {
- 		posns = xmalloc(len * sizeof(struct tree_entry_list *));
- 		for (i = 0; i < len; i++) {
--			posns[i] = ((struct tree *) posn->item)->entries;
-+			posns[i] = create_tree_entry_list((struct tree *) posn->item);
- 			posn = posn->next;
- 		}
- 		if (unpack_trees_rec(posns, len, "", fn, &indpos))
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 94f520b..6e2b898 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -113,7 +113,7 @@ static struct object_list **process_tree
- 					 const char *name)
- {
- 	struct object *obj = &tree->object;
--	struct tree_entry_list *entry;
-+	struct tree_desc desc;
- 	struct name_path me;
- 
- 	if (!revs.tree_objects)
-@@ -128,16 +128,22 @@ static struct object_list **process_tree
- 	me.up = path;
- 	me.elem = name;
- 	me.elem_len = strlen(name);
--	entry = tree->entries;
--	tree->entries = NULL;
--	while (entry) {
--		struct tree_entry_list *next = entry->next;
--		if (entry->directory)
--			p = process_tree(lookup_tree(entry->sha1), p, &me, entry->name);
-+
-+	desc.buf = tree->buffer;
-+	desc.size = tree->size;
-+
-+	while (desc.size) {
-+		unsigned mode;
-+		const char *name;
-+		const unsigned char *sha1;
-+
-+		sha1 = tree_entry_extract(&desc, &name, &mode);
-+		update_tree_entry(&desc);
-+
-+		if (S_ISDIR(mode))
-+			p = process_tree(lookup_tree(sha1), p, &me, name);
- 		else
--			p = process_blob(lookup_blob(entry->sha1), p, &me, entry->name);
--		free(entry);
--		entry = next;
-+			p = process_blob(lookup_blob(sha1), p, &me, name);
- 	}
- 	free(tree->buffer);
- 	tree->buffer = NULL;
-diff --git a/fetch.c b/fetch.c
-index f7f8902..d9fe41f 100644
---- a/fetch.c
-+++ b/fetch.c
-@@ -41,16 +41,22 @@ static int process_tree(struct tree *tre
- 	if (parse_tree(tree))
- 		return -1;
- 
--	entry = tree->entries;
--	tree->entries = NULL;
-+	entry = create_tree_entry_list(tree);
- 	while (entry) {
- 		struct tree_entry_list *next = entry->next;
--		if (process(entry->item.any))
--			return -1;
--		free(entry->name);
-+
-+		if (entry->directory) {
-+			struct tree *tree = lookup_tree(entry->sha1);
-+			process_tree(tree);
-+		} else {
-+			struct blob *blob = lookup_blob(entry->sha1);
-+			process(&blob->object);
-+		}
- 		free(entry);
- 		entry = next;
- 	}
-+	free(tree->buffer);
-+	tree->buffer = NULL;
- 	return 0;
- }
- 
-diff --git a/fsck-objects.c b/fsck-objects.c
-index 44b6465..ec99a7a 100644
---- a/fsck-objects.c
-+++ b/fsck-objects.c
-@@ -10,6 +10,7 @@ #include "refs.h"
- #include "pack.h"
- 
- #define REACHABLE 0x0001
-+#define SEEN      0x0002
- 
- static int show_root = 0;
- static int show_tags = 0;
-@@ -160,7 +161,7 @@ static int fsck_tree(struct tree *item)
- 	struct tree_entry_list *entry, *last;
- 
- 	last = NULL;
--	for (entry = item->entries; entry; entry = entry->next) {
-+	for (entry = create_tree_entry_list(item); entry; entry = entry->next) {
- 		if (strchr(entry->name, '/'))
- 			has_full_path = 1;
- 		has_zero_pad |= entry->zeropad;
-@@ -204,7 +205,6 @@ static int fsck_tree(struct tree *item)
- 	}
- 	if (last)
- 		free(last);
--	item->entries = NULL;
- 	free(item->buffer);
- 	item->buffer = NULL;
- 
-@@ -276,6 +276,9 @@ static int fsck_sha1(unsigned char *sha1
- 	struct object *obj = parse_object(sha1);
- 	if (!obj)
- 		return error("%s: object not found", sha1_to_hex(sha1));
-+	if (obj->flags & SEEN)
-+		return 0;
-+	obj->flags |= SEEN;
- 	if (obj->type == blob_type)
- 		return 0;
- 	if (obj->type == tree_type)
-diff --git a/http-push.c b/http-push.c
-index f492a5d..72ad89c 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1704,6 +1704,7 @@ static struct object_list **process_blob
- 		return p;
- 
- 	obj->flags |= SEEN;
-+	name = strdup(name);
- 	return add_object(obj, p, path, name);
- }
- 
-@@ -1713,7 +1714,7 @@ static struct object_list **process_tree
- 					 const char *name)
- {
- 	struct object *obj = &tree->object;
--	struct tree_entry_list *entry;
-+	struct tree_desc desc;
- 	struct name_path me;
- 
- 	obj->flags |= LOCAL;
-@@ -1724,21 +1725,30 @@ static struct object_list **process_tree
- 		die("bad tree object %s", sha1_to_hex(obj->sha1));
- 
- 	obj->flags |= SEEN;
-+	name = strdup(name);
- 	p = add_object(obj, p, NULL, name);
- 	me.up = path;
- 	me.elem = name;
- 	me.elem_len = strlen(name);
--	entry = tree->entries;
--	tree->entries = NULL;
--	while (entry) {
--		struct tree_entry_list *next = entry->next;
--		if (entry->directory)
--			p = process_tree(lookup_tree(entry->sha1), p, &me, entry->name);
-+
-+	desc.buf = tree->buffer;
-+	desc.size = tree->size;
-+
-+	while (desc.size) {
-+		unsigned mode;
-+		const char *name;
-+		const unsigned char *sha1;
-+
-+		sha1 = tree_entry_extract(&desc, &name, &mode);
-+		update_tree_entry(&desc);
-+
-+		if (S_ISDIR(mode))
-+			p = process_tree(lookup_tree(sha1), p, &me, name);
- 		else
--			p = process_blob(lookup_blob(entry->sha1), p, &me, entry->name);
--		free(entry);
--		entry = next;
-+			p = process_blob(lookup_blob(sha1), p, &me, name);
- 	}
-+	free(tree->buffer);
-+	tree->buffer = NULL;
- 	return p;
- }
- 
-diff --git a/revision.c b/revision.c
-index 35f8e3b..c366178 100644
---- a/revision.c
-+++ b/revision.c
-@@ -63,8 +63,7 @@ void mark_tree_uninteresting(struct tree
- 		return;
- 	if (parse_tree(tree) < 0)
- 		die("bad tree %s", sha1_to_hex(obj->sha1));
--	entry = tree->entries;
--	tree->entries = NULL;
-+	entry = create_tree_entry_list(tree);
- 	while (entry) {
- 		struct tree_entry_list *next = entry->next;
- 		if (entry->directory)
-diff --git a/tree.c b/tree.c
-index 8a7fdd4..db6e59f 100644
---- a/tree.c
-+++ b/tree.c
-@@ -151,22 +151,65 @@ struct tree *lookup_tree(const unsigned 
- 	return (struct tree *) obj;
- }
- 
--int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
-+static int track_tree_refs(struct tree *item)
- {
-+	int n_refs = 0, i;
-+	struct object_refs *refs;
- 	struct tree_desc desc;
--	struct tree_entry_list **list_p;
--	int n_refs = 0;
- 
-+	/* Count how many entries there are.. */
-+	desc.buf = item->buffer;
-+	desc.size = item->size;
-+	while (desc.size) {
-+		n_refs++;
-+		update_tree_entry(&desc);
-+	}
-+
-+	/* Allocate object refs and walk it again.. */
-+	i = 0;
-+	refs = alloc_object_refs(n_refs);
-+	desc.buf = item->buffer;
-+	desc.size = item->size;
-+	while (desc.size) {
-+		unsigned mode;
-+		const char *name;
-+		const unsigned char *sha1;
-+		struct object *obj;
-+
-+		sha1 = tree_entry_extract(&desc, &name, &mode);
-+		update_tree_entry(&desc);
-+		if (S_ISDIR(mode))
-+			obj = &lookup_tree(sha1)->object;
-+		else
-+			obj = &lookup_blob(sha1)->object;
-+		refs->ref[i++] = obj;
-+	}
-+	set_object_refs(&item->object, refs);
-+	return 0;
-+}
-+
-+int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
-+{
- 	if (item->object.parsed)
- 		return 0;
- 	item->object.parsed = 1;
- 	item->buffer = buffer;
- 	item->size = size;
- 
--	desc.buf = buffer;
--	desc.size = size;
-+	if (track_object_refs)
-+		track_tree_refs(item);
-+	return 0;
-+}
-+
-+struct tree_entry_list *create_tree_entry_list(struct tree *tree)
-+{
-+	struct tree_desc desc;
-+	struct tree_entry_list *ret = NULL;
-+	struct tree_entry_list **list_p = &ret;
-+
-+	desc.buf = tree->buffer;
-+	desc.size = tree->size;
- 
--	list_p = &item->entries;
- 	while (desc.size) {
- 		unsigned mode;
- 		const char *path;
-@@ -186,29 +229,19 @@ int parse_tree_buffer(struct tree *item,
- 		entry->next = NULL;
- 
- 		update_tree_entry(&desc);
--		n_refs++;
- 		*list_p = entry;
- 		list_p = &entry->next;
- 	}
+-	return git_config_from_file(fn, git_path("config"));
++	int ret = 0;
++	if (getenv("HOME"))
++		ret += git_config_from_file(fn, mkpath("%s/.gitrc", getenv("HOME")));
++	ret += git_config_from_file(fn, git_path("config"));
 +	return ret;
-+}
- 
--	if (track_object_refs) {
--		struct tree_entry_list *entry;
--		unsigned i = 0;
--		struct object_refs *refs = alloc_object_refs(n_refs);
--		for (entry = item->entries; entry; entry = entry->next) {
--			struct object *obj;
--
--			if (entry->directory)
--				obj = &lookup_tree(entry->sha1)->object;
--			else
--				obj = &lookup_blob(entry->sha1)->object;
--			refs->ref[i++] = obj;
--		}
--				
--		set_object_refs(&item->object, refs);
-+void free_tree_entry_list(struct tree_entry_list *list)
-+{
-+	while (list) {
-+		struct tree_entry_list *next = list->next;
-+		free(list);
-+		list = next;
- 	}
--
--	return 0;
  }
  
- int parse_tree(struct tree *item)
-diff --git a/tree.h b/tree.h
-index a27bae4..c7b5248 100644
---- a/tree.h
-+++ b/tree.h
-@@ -20,9 +20,11 @@ struct tree {
- 	struct object object;
- 	void *buffer;
- 	unsigned long size;
--	struct tree_entry_list *entries;
- };
- 
-+struct tree_entry_list *create_tree_entry_list(struct tree *);
-+void free_tree_entry_list(struct tree_entry_list *);
-+
- struct tree *lookup_tree(const unsigned char *sha1);
- 
- int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
+ /*
+
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
