@@ -1,50 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-diff-tree indicate when it flushes
-Date: Mon, 29 May 2006 11:38:31 -0700
-Message-ID: <7vejyc8ymw.fsf@assigned-by-dhcp.cox.net>
-References: <17530.59395.5611.931858@cargo.ozlabs.ibm.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: [PATCH 0/10] re-based and expanded tree-walker cleanup patches
+Date: Mon, 29 May 2006 12:15:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 20:38:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon May 29 21:15:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkmdX-0001NQ-GY
-	for gcvg-git@gmane.org; Mon, 29 May 2006 20:38:44 +0200
+	id 1FknD3-0008EA-Ew
+	for gcvg-git@gmane.org; Mon, 29 May 2006 21:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbWE2Sid (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 14:38:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbWE2Sid
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 14:38:33 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:38652 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751144AbWE2Sid (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 14:38:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060529183832.ZKSG554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 29 May 2006 14:38:32 -0400
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17530.59395.5611.931858@cargo.ozlabs.ibm.com> (Paul Mackerras's
-	message of "Mon, 29 May 2006 22:24:35 +1000")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751165AbWE2TPR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 15:15:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbWE2TPQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 15:15:16 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:62680 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751165AbWE2TPP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 15:15:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4TJF42g014933
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 29 May 2006 12:15:05 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4TJF2dZ015380;
+	Mon, 29 May 2006 12:15:03 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20955>
 
-Paul Mackerras <paulus@samba.org> writes:
 
-> There are times when gitk needs to know that the commits it has sent
-> to git-diff-tree --stdin did not match, and it needs to know in a
-> timely fashion even if none of them match.  At the moment,
-> git-diff-tree outputs nothing for non-matching commits, so it is
-> impossible for gitk to distinguish between git-diff-tree being slow
-> and git-diff-tree saying no.
+Ok, this is largely the same series as the previous 1..4 patches, but 
+rebased on top of the current master tree because the cache-tree patches 
+added some tree_entry_list walkers (which accounts for one extra patch in 
+the series, and some trivial merge fixups).
 
-Wouldn't this help?
+Two new patches then clean up fsck-objects, which really didn't want the 
+old tree_entry_list at all (and had added some hacks to the list entry 
+just because fsck actually needed to check the raw data).
 
-	$ git-diff-tree --stdin --always
+Another two new patches convert the last remnant of tree_entry_list in 
+revision.c and fetch.c respectively to the new world order.
+
+And the final patch then moves the "tree_entry_list" crud into the only 
+remaining user, namely builtin-read-tree.c. That file is pretty messy and 
+hard to convert, and I don't want to touch it right now, so I left it with 
+the nasty compatibility functions. But now that's at least well-contained.
+
+I think the series is all good, and should replace the old one in "next" 
+(and cook there for a while just to make sure it's ok).
+
+		Linus
