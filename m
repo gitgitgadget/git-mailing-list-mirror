@@ -1,97 +1,82 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Automatically line wrap long commit messages.
-Date: Mon, 29 May 2006 05:46:05 -0400
-Message-ID: <20060529094605.GB27194@spearce.org>
-References: <20060529085738.GB29500@spearce.org> <7virnp8a30.fsf@assigned-by-dhcp.cox.net>
+From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+Subject: Re: [PATCH] git-receive-pack needs to set umask(2)
+Date: Mon, 29 May 2006 15:28:47 +0400
+Message-ID: <447ADAEF.3030806@Intel.com>
+References: <v0irnpn8ea.fsf@marajade.sandelman.ca> <e5d6i0$rnf$1@sea.gmane.org> <Pine.LNX.4.63.0605290910210.8863@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 11:46:20 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon May 29 13:29:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkeKD-0001UF-FD
-	for gcvg-git@gmane.org; Mon, 29 May 2006 11:46:13 +0200
+	id 1Fkfvi-0001kb-Ry
+	for gcvg-git@gmane.org; Mon, 29 May 2006 13:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbWE2JqK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 05:46:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbWE2JqK
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 05:46:10 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:8862 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750778AbWE2JqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 05:46:09 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FkeK4-0001NL-Pb; Mon, 29 May 2006 05:46:04 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 66C1E20E445; Mon, 29 May 2006 05:46:05 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7virnp8a30.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750851AbWE2L2y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 07:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbWE2L2x
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 07:28:53 -0400
+Received: from mga01.intel.com ([192.55.52.88]:31100 "EHLO
+	fmsmga101-1.fm.intel.com") by vger.kernel.org with ESMTP
+	id S1750836AbWE2L2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 07:28:53 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101-1.fm.intel.com with ESMTP; 29 May 2006 04:28:52 -0700
+Received: from fmsmsx332.fm.intel.com (HELO fmsmsx332.amr.corp.intel.com) ([132.233.42.148])
+  by fmsmga001.fm.intel.com with ESMTP; 29 May 2006 04:28:52 -0700
+X-IronPort-AV: i="4.05,183,1146466800"; 
+   d="scan'208"; a="43862305:sNHT22116178"
+Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 29 May 2006 04:28:52 -0700
+Received: from mssmsx402.ccr.corp.intel.com ([10.125.2.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 29 May 2006 04:28:52 -0700
+Received: from [10.125.151.180] ([10.125.151.180]) by mssmsx402.ccr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 29 May 2006 15:28:48 +0400
+User-Agent: Thunderbird 1.5 (Windows/20051201)
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.63.0605290910210.8863@wbgn013.biozentrum.uni-wuerzburg.de>
+X-OriginalArrivalTime: 29 May 2006 11:28:48.0871 (UTC) FILETIME=[0DF97F70:01C68313]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20942>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+Johannes Schindelin wrote:
+> See also
 > 
-> > When using -m on the command line with git-commit it is not uncommon
-> > for a long commit message to be entered without line terminators.
-> > This creates commit objects whose messages are not readable in
-> > 'git log' as the line runs off the screen.
-> >
-> > So instead reformat log messages if they are supplied on the
-> > command line.
-> >
-> > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> > ---
-> >  This one might cause some problems for people.
+> http://thread.gmane.org/gmane.comp.version-control.git/13856/focus=13876
+
+I've read the thread, but couldn't find a practical solution there.
+ 
+> The essence of the thread: If you want to do anything useful in a non-bare 
+> repository, you are likely using other tools than git, which do not 
+> interpret core.umask or $GIT_DIR/umask.
 > 
-> I am already moderately negative on multiple -m so in the light
-> of it this one looks totally unneeded.  You could do a number of
-> things:
-[snip]
+> If you use a bare repository, just make it shared. No need for an umask.
 
-OK.  Ignore both patches then.  Two negative votes in such a short
-time suggests they are probably not generally accepted.  ;-)
+Could you please elaborate on what does it mean "make it shared"?
 
-> We probably should allow "commit -F -" to read from the standard
-> input if we already don't, but that is about as far as I am
-> willing to go at this moment.
+My setup: I have a bare GIT repository on a machine, where everybody can
+SSH into (with full shell access). I've assigned the repo to a special group
+where everybody belongs, and done a 'find repo.git -type d | xargs chmod 2775'
 
-We do.  So apparently the solution to my usage issue is:
+The problem: After someone pushed to the repository, the object directories 
+(i.e repo.git/objects/??)
+get created with 755 access rights, and effectively prevent everyone else from pushing
+objects starting with the same prefix.
 
-	$ fmt -w 60 | git commit -F-
-	This is my message.
+The obvious solution to use umask 002 is not applicable, because
+1) It does not seem practical to enforce umask 002 in everyone's rc files, 
+because just one forgetful or careless person can break access for all others
+2) I have 'umask 002' in my ~/.profile. Somehow, it does not help,
+because ~/.profile is not read on non-interactive SSH sessions
+(to verify that, just try to do 'ssh somehost umask')
 
-	This is the body.  Etc....
-	EOF
+The current workaround for the problem is a cron script, which
+makes 'find | xargs chmod 2775' every 5 minutes. It works, but is ugly.
 
-I'm thinking that's too much work for me.  Which means either I
-learn to format my messages better in a single -m switch (as was
-already suggested) or I just deal with git-commit popping open
-$EDITOR anytime I want to commit something.  In which case then I
-might as well also get a diff of what I am about to commit as part
-of the temp file buffer.
+Is there any better way to keep correct access rights in a shared repository?
 
-Or I create my own little wrapper shell script which calls fmt.
-Hmm, maybe that would be useful with alias and a promise to not
-use ci as a core GIT command name:
-
-	[alias "ci"]
-		command=shawns-commit-wrapper
-
--- 
-Shawn.
+Thanks a lot!
