@@ -1,65 +1,76 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] Make git-diff-tree indicate when it flushes
-Date: Tue, 30 May 2006 08:31:10 +1000
-Message-ID: <17531.30254.890940.553395@cargo.ozlabs.ibm.com>
-References: <17530.59395.5611.931858@cargo.ozlabs.ibm.com>
-	<7vejyc8ymw.fsf@assigned-by-dhcp.cox.net>
-	<17531.28529.215905.856397@cargo.ozlabs.ibm.com>
-	<7vzmh07a9k.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/10] re-based and expanded tree-walker cleanup patches
+Date: Mon, 29 May 2006 15:31:28 -0700
+Message-ID: <7virno79a7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 00:31:30 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 30 00:31:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkqGg-0000kt-ST
-	for gcvg-git@gmane.org; Tue, 30 May 2006 00:31:24 +0200
+	id 1FkqGs-0000nD-L4
+	for gcvg-git@gmane.org; Tue, 30 May 2006 00:31:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440AbWE2WbT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 18:31:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbWE2WbT
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 18:31:19 -0400
-Received: from ozlabs.org ([203.10.76.45]:31645 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1751440AbWE2WbS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 18:31:18 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 2D3BE67A63; Tue, 30 May 2006 08:31:17 +1000 (EST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmh07a9k.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1751441AbWE2Wbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 18:31:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbWE2Wbb
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 18:31:31 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:16303 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751441AbWE2Wba (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 18:31:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060529223129.LIRW18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 29 May 2006 18:31:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 29 May 2006 12:15:01 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20990>
 
-Junio C Hamano writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> I am not quite sure exactly what you are trying to achieve, but
-> one trivial way is not giving -s perhaps?
+> Ok, this is largely the same series as the previous 1..4 patches, but 
+> rebased on top of the current master tree because the cache-tree patches 
+> added some tree_entry_list walkers (which accounts for one extra patch in 
+> the series, and some trivial merge fixups).
+>
+> Two new patches then clean up fsck-objects, which really didn't want the 
+> old tree_entry_list at all (and had added some hacks to the list entry 
+> just because fsck actually needed to check the raw data).
+>
+> Another two new patches convert the last remnant of tree_entry_list in 
+> revision.c and fetch.c respectively to the new world order.
+>
+> And the final patch then moves the "tree_entry_list" crud into the only 
+> remaining user, namely builtin-read-tree.c. That file is pretty messy and 
+> hard to convert, and I don't want to touch it right now, so I left it with 
+> the nasty compatibility functions. But now that's at least well-contained.
+>
+> I think the series is all good, and should replace the old one in "next" 
+> (and cook there for a while just to make sure it's ok).
 
-I'm asking git-diff-tree which of a given set of commits affect any of
-a set of paths, so that gitk can highlight the ones that do.
-Furthermore I want to be able to use the git-diff-tree process for
-multiple sets of commit IDs.
+Sorry for having you have done this -- last night I've merged
+the series without rebasing and have the result in "next".  I'll
+compare to see if you have spotted my mismerges there tonight.
 
-If I don't use -s, then I will get lines starting with a ":" after the
-commit IDs of the commits that do affect the set of paths I specified.
-That means I get a definite indication for all except the last commit
-I send.  For the last commit I still don't know whether the absence of
-any ":" lines means that the commit doesn't affect the set of paths,
-or that git-diff-tree is being slow.  So I still need something like
-the patch I sent.
+This reminds me of one issue.
 
-I could get the indication I want (with or without -s) if I close the
-pipe going to the git-diff-tree process.  But then the process will
-exit, and I want it to stay around so that I don't have to pay the
-fork/exec and startup time of git-diff-tree next time (which will be
-when the user scrolls the commit list window or asks to move to the
-next highlighted commit).
+        From: Junio C Hamano <junkio@cox.net>
+        Subject: Necessity of "evil" merge and topic branches
+        Cc: git@vger.kernel.org
+        Date: Wed, 17 May 2006 23:25:55 -0700
+        Message-ID: <7vy7wz6e8c.fsf@assigned-by-dhcp.cox.net>
 
-Thus, --always (with or without -s) doesn't quite do what I need.
-
-Paul.
+I have such an evil-merge branch merged in "next" to deal with
+necessarily adjustments; it is 0a2586c, which is the tip of its
+own branch.  I was hoping this way I can merge it in to "master"
+when I want to pull your yesterday's series.
