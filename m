@@ -1,84 +1,81 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Improved pack format documentation.
-Date: Mon, 29 May 2006 03:17:18 -0400
-Message-ID: <20060529071718.GD6061@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Read configuration also from ~/.gitrc
+Date: Mon, 29 May 2006 09:20:07 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605290913330.8863@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060526152837.GQ23852@progsoc.uts.edu.au> <20060528222641.GF10488@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 09:17:31 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Anand Kumria <wildfire@progsoc.uts.edu.au>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 29 09:20:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkc0C-000357-Mb
-	for gcvg-git@gmane.org; Mon, 29 May 2006 09:17:25 +0200
+	id 1Fkc32-0003e2-OX
+	for gcvg-git@gmane.org; Mon, 29 May 2006 09:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750720AbWE2HRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 03:17:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWE2HRW
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 03:17:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47762 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750720AbWE2HRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 03:17:21 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fkc07-0005Xv-0n; Mon, 29 May 2006 03:17:19 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6FAF120E445; Mon, 29 May 2006 03:17:18 -0400 (EDT)
-To: Junio Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750729AbWE2HUK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 03:20:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbWE2HUK
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 03:20:10 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:43496 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750729AbWE2HUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 03:20:08 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id A73A813FA;
+	Mon, 29 May 2006 09:20:07 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 9B16113E5;
+	Mon, 29 May 2006 09:20:07 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 57329B79;
+	Mon, 29 May 2006 09:20:07 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060528222641.GF10488@pasky.or.cz>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20930>
 
-While trying to implement a pack reader in Java I was mislead by
-some facts listed in this documentation as well as found a few
-details to be missing about the pack header.
+Hi,
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/technical/pack-format.txt |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+On Mon, 29 May 2006, Petr Baudis wrote:
 
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index ed2decc..0e1ffb2 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -5,8 +5,13 @@ GIT pack format
- 
-    - The header appears at the beginning and consists of the following:
- 
--     4-byte signature
--     4-byte version number (network byte order)
-+     4-byte signature:
-+         The signature is: {'P', 'A', 'C', 'K'}
-+
-+     4-byte version number (network byte order):
-+         GIT currently accepts version number 2 or 3 but
-+         generates version 2 only.
-+
-      4-byte number of objects contained in the pack (network byte order)
- 
-      Observation: we cannot have more than 4G versions ;-) and
-@@ -41,7 +46,7 @@ GIT pack format
-     8-byte integers to go beyond 4G objects per pack, but it is
-     not strictly necessary.
- 
--  - The header is followed by sorted 28-byte entries, one entry
-+  - The header is followed by sorted 24-byte entries, one entry
-     per object in the pack.  Each entry is:
- 
-     4-byte network byte order integer, recording where the
--- 
-1.3.3.g45d8
+> diff --git a/config.c b/config.c
+> index 0248c6d..8a98865 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -312,7 +312,11 @@ int git_config_from_file(config_fn_t fn,
+>  
+>  int git_config(config_fn_t fn)
+>  {
+> -	return git_config_from_file(fn, git_path("config"));
+> +	int ret = 0;
+> +	if (getenv("HOME"))
+> +		ret += git_config_from_file(fn, mkpath("%s/.gitrc", getenv("HOME")));
+> +	ret += git_config_from_file(fn, git_path("config"));
+> +	return ret;
+>  }
+>  
+>  /*
+
+
+But would this not break for the normal case? If you override one key in 
+the repository's config, with this patch, repo-config will barf. The 
+normal case is that you do not expect multiple values for the same key. 
+Your patch reads both ~/.gitrc and $GIT_DIR/config, and if a key has a 
+value in both (even if they are identical), repo-config will error out.
+
+Further, storing a key will no longer work. This is an obscure side 
+effect of this patch not caring about storing anything in ~/.gitrc: If you 
+find the key section (or the key) in ~/.gitrc, the offset will be stored, 
+_and used on $GIT_DIR/config_!
+
+I agree it is nice to have a global git configuration, but I have it: I 
+use templates.
+
+Ciao,
+Dscho
