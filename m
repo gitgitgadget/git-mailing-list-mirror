@@ -1,79 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-diff-tree indicate when it flushes
-Date: Mon, 29 May 2006 15:18:01 -0700
-Message-ID: <7vr72c79wm.fsf@assigned-by-dhcp.cox.net>
-References: <17530.59395.5611.931858@cargo.ozlabs.ibm.com>
-	<7vejyc8ymw.fsf@assigned-by-dhcp.cox.net>
-	<17531.28529.215905.856397@cargo.ozlabs.ibm.com>
-	<7vzmh07a9k.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: irc usage..
+Date: Tue, 30 May 2006 10:21:14 +1200
+Message-ID: <46a038f90605291521q37f34209wd923608bdebb9084@mail.gmail.com>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+	 <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>
+	 <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org>
+	 <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com>
+	 <44720C66.6040304@gentoo.org>
+	 <Pine.LNX.4.64.0605221234430.3697@g5.osdl.org>
+	 <447215D4.5020403@gentoo.org>
+	 <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>
+	 <447231C4.2030508@gentoo.org> <447B6D85.4050601@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 00:18:30 2006
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Yann Dirson" <ydirson@altern.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Matthias Urlichs" <smurf@smurf.noris.de>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 30 00:21:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkq43-0007FV-Uh
-	for gcvg-git@gmane.org; Tue, 30 May 2006 00:18:20 +0200
+	id 1Fkq71-0007es-Ig
+	for gcvg-git@gmane.org; Tue, 30 May 2006 00:21:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbWE2WSF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 18:18:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbWE2WSF
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 18:18:05 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:36572 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751436AbWE2WSC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 18:18:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060529221802.TKJM27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 29 May 2006 18:18:02 -0400
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <7vzmh07a9k.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 29 May 2006 15:10:15 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751430AbWE2WVS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 18:21:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbWE2WVS
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 18:21:18 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:9960 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751430AbWE2WVR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 18:21:17 -0400
+Received: by wr-out-0506.google.com with SMTP id i7so971987wra
+        for <git@vger.kernel.org>; Mon, 29 May 2006 15:21:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ryv/vMDvg1fZtEIXXiIuklwhzupNtkyJ6IgB6MiRJQSDZxljP+jVWdJEK2afjGueQ5fGwoVIgrsxzoFDxNNgY1XnQHVG6VnICsP+sAFWboRn3Qpbtal//VSKuAEVlT83k0ppRRE/Qe6d6775OxvKomENiC72AxjLWU7JvTd7P2A=
+Received: by 10.54.108.19 with SMTP id g19mr2392834wrc;
+        Mon, 29 May 2006 15:21:14 -0700 (PDT)
+Received: by 10.54.127.12 with HTTP; Mon, 29 May 2006 15:21:14 -0700 (PDT)
+To: "Donnie Berkholz" <spyderous@gentoo.org>
+In-Reply-To: <447B6D85.4050601@gentoo.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20988>
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> Paul Mackerras <paulus@samba.org> writes:
+On 5/30/06, Donnie Berkholz <spyderous@gentoo.org> wrote:
+> Donnie Berkholz wrote:
+> > Linus Torvalds wrote:
+> >> The latest stable CVS release is 1.11.21, I think: you seem to be running
+> >> the "development" version (1.12.x).
+> >
+> > Backed down to the 1.11 series, things seem to be going fine so far.
 >
->> With --always, how do I tell that 65aadb affects apply.c and cc189c
->> doesn't?
->
-> I am not quite sure exactly what you are trying to achieve, but
-> one trivial way is not giving -s perhaps?
+> Finally hit an OOM sometime in the past day (yep, a week later) =\. Not
+> sure whether it was cvsimport or cvs. Anyone else had more luck?
 
-Having said that, I suspect this might be a better way.
-Whatever you throw at it from stdin that are not a validly
-looking object name, you will get them back, so you can use your
-favorite markers.
+It seemed like it had finished on the machine I was running it, and I
+assumed it was alright in yours too. Looking closer it only made it
+till April 2004 -- but it may have been killed by a sysadmin, the
+captured log talks about 'signal 9', I have no idea what the OOM
+sends.
 
-diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-index cc53b81..7208c48 100644
---- a/builtin-diff-tree.c
-+++ b/builtin-diff-tree.c
-@@ -138,11 +138,15 @@ int cmd_diff_tree(int argc, const char *
- 	if (opt->diffopt.detect_rename)
- 		opt->diffopt.setup |= (DIFF_SETUP_USE_SIZE_CACHE |
- 				       DIFF_SETUP_USE_CACHE);
--	while (fgets(line, sizeof(line), stdin))
--		if (line[0] == '\n')
-+	while (fgets(line, sizeof(line), stdin)) {
-+		unsigned char sha1[20];
-+
-+		if (get_sha1_hex(line, sha1)) {
-+			fputs(line);
- 			fflush(stdout);
-+		}
- 		else
- 			diff_tree_stdin(line);
--
-+	}
- 	return 0;
- }
+It had done 285070 of 343822 patchsets.
+
+Have you dropped the -a from the git-repack invocation? That should
+help. Try also Linus' patch for git-rev-list. The other thing hurting
+us is that the commits are _huge_. I wonder how you guys were managing
+this with CVS. Now _this_ explains why cvsimport grows humongous.
+
+I'll try to rework the commit loop so that we don't need to hold all
+the filenames in memory. It seems to be choking with the commits after
+April 2004. But that will have to wait till tonight.
+
+cheers,
+
+
+
+martin
