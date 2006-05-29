@@ -1,62 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] git commit --branch
-Date: Mon, 29 May 2006 23:58:10 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605292357260.18328@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060529202851.GE14325@admingilde.org>
- <Pine.LNX.4.63.0605292310280.17412@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060529213704.GG14325@admingilde.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] Make git-diff-tree indicate when it flushes
+Date: Tue, 30 May 2006 08:02:25 +1000
+Message-ID: <17531.28529.215905.856397@cargo.ozlabs.ibm.com>
+References: <17530.59395.5611.931858@cargo.ozlabs.ibm.com>
+	<7vejyc8ymw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 23:58:16 2006
+X-From: git-owner@vger.kernel.org Tue May 30 00:02:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkpkc-0003jf-Jz
-	for gcvg-git@gmane.org; Mon, 29 May 2006 23:58:15 +0200
+	id 1Fkpov-0004Tc-TU
+	for gcvg-git@gmane.org; Tue, 30 May 2006 00:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbWE2V6M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 17:58:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbWE2V6L
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:58:11 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:19857 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751403AbWE2V6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 17:58:10 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 217AC23F9;
-	Mon, 29 May 2006 23:58:10 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 158D223F7;
-	Mon, 29 May 2006 23:58:10 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id EDA931CA7;
-	Mon, 29 May 2006 23:58:09 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20060529213704.GG14325@admingilde.org>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751417AbWE2WCj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 18:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWE2WCj
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 18:02:39 -0400
+Received: from ozlabs.org ([203.10.76.45]:50328 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1751418AbWE2WCi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 18:02:38 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 7915567A62; Tue, 30 May 2006 08:02:37 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vejyc8ymw.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20983>
 
-Hi,
+Junio C Hamano writes:
 
-On Mon, 29 May 2006, Martin Waitz wrote:
-
-> I'm doing two commits, one to HEAD and one to the other branch.
-> It is more like:
+> Paul Mackerras <paulus@samba.org> writes:
 > 
-> 	git commit
-> 	git checkout otherbranch
-> 	git rebase --onto otherbranch master^ master   <-- first
-> 	git checkout master
-> 	git merge msg master otherbranch               <-- second
+> > There are times when gitk needs to know that the commits it has sent
+> > to git-diff-tree --stdin did not match, and it needs to know in a
+> > timely fashion even if none of them match.  At the moment,
+> > git-diff-tree outputs nothing for non-matching commits, so it is
+> > impossible for gitk to distinguish between git-diff-tree being slow
+> > and git-diff-tree saying no.
+> 
+> Wouldn't this help?
+> 
+> 	$ git-diff-tree --stdin --always
 
-Wouldn't this merit a different option name, such as "--also-onto" instead 
-of "--branch"?
+On the git.git tree:
 
-Ciao,
-Dscho
+$ cat revs
+65aadb92a1ce9605fa2f412b51de91781a3ef3d6
+cc189c2ca2c725c430f100f61e7c4a6849f93163
+$ git diff-tree -r -s --stdin -- apply.c <revs
+65aadb92a1ce9605fa2f412b51de91781a3ef3d6
+$ git diff-tree -r -s --stdin --always -- apply.c <revs
+65aadb92a1ce9605fa2f412b51de91781a3ef3d6
+cc189c2ca2c725c430f100f61e7c4a6849f93163
+$
+
+With --always, how do I tell that 65aadb affects apply.c and cc189c
+doesn't?
+
+Paul.
