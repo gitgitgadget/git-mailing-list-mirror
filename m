@@ -1,80 +1,90 @@
-From: Donnie Berkholz <spyderous@gentoo.org>
-Subject: Re: irc usage..
-Date: Mon, 29 May 2006 14:54:13 -0700
-Message-ID: <447B6D85.4050601@gentoo.org>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>  <446F95A2.6040909@gentoo.org>  <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>  <446FA262.7080900@gentoo.org>  <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org>  <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org>  <44713BE4.9040505@gentoo.org>  <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>  <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>  <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org> <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> <44720C66.6040304@gentoo.org> <Pine.LNX.4.64.0605221234430.3697@g5.osdl.org> <447215D4.5020403@gentoo.org> <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org> <447231C4.2030508@gentoo.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] git commit --branch
+Date: Mon, 29 May 2006 23:55:37 +0200
+Message-ID: <20060529215537.GH14325@admingilde.org>
+References: <20060529202851.GE14325@admingilde.org> <20060529204158.GC28538@spearce.org> <20060529212249.GF14325@admingilde.org> <20060529213543.GA29054@spearce.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA941EC73EF408A78B9E09F77"
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 29 23:54:33 2006
+	protocol="application/pgp-signature"; boundary="8vCeF2GUdMpe9ZbK"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 29 23:56:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkpgw-00032A-K4
-	for gcvg-git@gmane.org; Mon, 29 May 2006 23:54:27 +0200
+	id 1Fkpi9-0003DE-Ba
+	for gcvg-git@gmane.org; Mon, 29 May 2006 23:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751325AbWE2VyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 17:54:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbWE2VyX
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:54:23 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:64217 "EHLO smtp.gentoo.org")
-	by vger.kernel.org with ESMTP id S1751325AbWE2VyW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 17:54:22 -0400
-Received: from [192.168.1.105] (c-67-171-150-177.hsd1.or.comcast.net [67.171.150.177])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTP id 239F0644A4;
-	Mon, 29 May 2006 21:54:21 +0000 (UTC)
-User-Agent: Thunderbird 1.5.0.2 (X11/20060513)
-To: Donnie Berkholz <spyderous@gentoo.org>
-In-Reply-To: <447231C4.2030508@gentoo.org>
-X-Enigmail-Version: 0.94.0.0
+	id S1751346AbWE2Vzj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 17:55:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbWE2Vzj
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:55:39 -0400
+Received: from admingilde.org ([213.95.32.146]:57295 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1751346AbWE2Vzi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 17:55:38 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Fkpi5-0000XA-68; Mon, 29 May 2006 23:55:37 +0200
+To: Shawn Pearce <spearce@spearce.org>
+Content-Disposition: inline
+In-Reply-To: <20060529213543.GA29054@spearce.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20981>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA941EC73EF408A78B9E09F77
-Content-Type: text/plain; charset=ISO-8859-1
+
+--8vCeF2GUdMpe9ZbK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Donnie Berkholz wrote:
-> Linus Torvalds wrote:
->> The latest stable CVS release is 1.11.21, I think: you seem to be runn=
-ing=20
->> the "development" version (1.12.x).
+hoi :)
+
+On Mon, May 29, 2006 at 05:35:43PM -0400, Shawn Pearce wrote:
+> Now that diff+apply is probably faster than a 3 way merge in
+> read-tree precisely because it doesn't need to run merge-recursive
+> I'm starting to look at how we can use apply to do partial
+> application of a patch and use RCS' diff3 or just drop a reject
+> file out when a hunk doesn't apply cleanly.
+
+but when applying patches, we have to be careful not to overwrite
+any changes in the working tree which have not yet been committed.
+With read-tree it should operate entirely in its temporary index without
+touching the working tree.
+
+> > But then an operation as important as commit has to be bullet-proof
+> > and I don't like to do anything complex in there.
 >=20
-> Backed down to the 1.11 series, things seem to be going fine so far.
+> I agree.  But I'd like to see some sort of functionality to
+> automatically handle some common topic branche cases in commit.
+> Of course I consider the current commit tool to already be too
+> complex (like being able to pull the commit message from any
+> random commit).
 
-Finally hit an OOM sometime in the past day (yep, a week later) =3D\. Not=
+And I really feel guilt for trying to add even more.
+Is there some other way to add such a feature?
 
-sure whether it was cvsimport or cvs. Anyone else had more luck?
+I have been dreaming of such a system for years now, and with GIT
+it really feels feasible at last.
+Graphics programs could compose an image out of different layers for
+ages, now it is time for version control software to do the same :-)
 
-Thanks,
-Donnie
+--=20
+Martin Waitz
 
-
---------------enigA941EC73EF408A78B9E09F77
+--8vCeF2GUdMpe9ZbK
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-iD8DBQFEe22HXVaO67S1rtsRAngfAKCnpZmQENVR3EaYHxHCTSaLljFdRgCgpyq5
-Gkfw5w0AYqw/aapMA44LeDY=
-=VSZA
+iD8DBQFEe23Zj/Eaxd/oD7IRAp0ZAJ9WR0hZEB9aY0K6VFxluLvqptf/XgCeLVHK
+JjdyTRAsh0pACN9xprDx8TQ=
+=WQ+y
 -----END PGP SIGNATURE-----
 
---------------enigA941EC73EF408A78B9E09F77--
+--8vCeF2GUdMpe9ZbK--
