@@ -1,58 +1,85 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 6/10] fsck-objects: avoid unnecessary tree_entry_list
- usage
-Date: Mon, 29 May 2006 12:29:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605291226250.5623@g5.osdl.org>
-References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
- <Pine.LNX.4.64.0605291218390.5623@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] git-send-email.perl extract_valid_address issue
+Date: Mon, 29 May 2006 13:00:27 -0700
+Message-ID: <20060529200026.GA32457@h4x0r5.com>
+References: <200605290000.44463.ntroncos@alumnos.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon May 29 21:30:11 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 29 22:01:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FknRI-0002Ya-Pl
-	for gcvg-git@gmane.org; Mon, 29 May 2006 21:30:09 +0200
+	id 1FknvZ-0007gx-DB
+	for gcvg-git@gmane.org; Mon, 29 May 2006 22:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbWE2T3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 15:29:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbWE2T3w
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 15:29:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4572 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751246AbWE2T3w (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 15:29:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4TJTl2g015581
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 29 May 2006 12:29:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4TJTjAo015840;
-	Mon, 29 May 2006 12:29:46 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0605291218390.5623@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751249AbWE2UBU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 16:01:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbWE2UBU
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 16:01:20 -0400
+Received: from h4x0r5.com ([70.85.31.202]:28939 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1751249AbWE2UBU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 16:01:20 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1Fknue-0008Ul-67; Mon, 29 May 2006 13:00:28 -0700
+To: Nicolas Troncoso Carrere <ntroncos@alumnos.inf.utfsm.cl>
+Content-Disposition: inline
+In-Reply-To: <200605290000.44463.ntroncos@alumnos.inf.utfsm.cl>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20967>
 
+On Mon, May 29, 2006 at 12:00:44AM -0400, Nicolas Troncoso Carrere wrote:
+> 
+> The third fallback was returning if the match was done or not instead of
+> returning the actual email address that was matched. This prevented sending
+> the mail to the people included in the CC. This bug only affect those that
+> dont have Email::Valid.
+> 
+> I initialized $valid_email as undef so it would mimic the behavior of 
+> Email::Verify->address(), which returns undef if no valid address was found.
 
+Odd, I noticed the same thing this weekend.
 
-On Mon, 29 May 2006, Linus Torvalds wrote:
-> -		has_zero_pad |= entry->zeropad;
-> +		has_zero_pad |= *(char *)desc.buf = '0';
+> Signed-off-by: Nicolas <ntroncos@inf.utfsm.cl>
+Acked-by: Ryan Anderson <ryan@michonline.com>
 
-Aieee.
+(Or pick up my patch that fixes this in a slightly different way)
 
-I fixed that once in my tree already, and then broke it again when 
-re-doing the series with cherry-picking but didn't notice, because the 
-tests don't pick up the totally bogus warnings that it causes.
-
-That "= '0'" should obviously be "== '0'"
-
-		Linus
+> 
+> 
+> ---
+> 
+>  git-send-email.perl |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
+> 
+> 84853ca89c15de7a24e9eb9fd422654b86c63be9
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 312a4ea..dfff3e6 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -316,7 +316,9 @@ sub extract_valid_address {
+>  	} else {
+>  		# less robust/correct than the monster regexp in Email::Valid,
+>  		# but still does a 99% job, and one less dependency
+> -		return ($address =~ /([^\"<>\s]+@[^<>\s]+)/);
+> +                my $valid_email=undef;
+> +                ($valid_email ) = ($address =~ /([^\"<>\s]+@[^<>\s]+)/);
+> +                return ($valid_email);
+>  	}
+>  }
+> -- 
+> Nicol?s Troncoso Carr?re                        User #272312 counter.li.org
+> Estudiante Mag?ster en Ciencias de la Inform?tica
+> Universidad T?cnica Federico Santa Mar?a
+> http://www.alumnos.inf.utfsm.cl/~ntroncos
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
