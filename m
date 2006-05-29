@@ -1,56 +1,62 @@
-From: linux@horizon.com
-Subject: Re: Bisects that are neither good nor bad
-Date: 29 May 2006 18:56:32 -0400
-Message-ID: <20060529225632.7073.qmail@science.horizon.com>
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 00:56:39 2006
+From: bfields@fieldses.org
+Subject: [PATCH 5/5] Documentation: fix a tutorial-2 typo
+Date: Mon, 29 May 2006 19:31:36 -0400
+Message-ID: <11489454963791-git-send-email-bfields@fieldses.org>
+References: <11489454963586-git-send-email-bfields@fieldses.org>
+Reply-To: bfields@fieldses.org
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 30 01:32:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkqf8-0004i0-02
-	for gcvg-git@gmane.org; Tue, 30 May 2006 00:56:38 +0200
+	id 1FkrDe-0001en-N8
+	for gcvg-git@gmane.org; Tue, 30 May 2006 01:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932076AbWE2W4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 18:56:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbWE2W4e
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 18:56:34 -0400
-Received: from science.horizon.com ([192.35.100.1]:33334 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S932077AbWE2W4e
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 18:56:34 -0400
-Received: (qmail 7074 invoked by uid 1000); 29 May 2006 18:56:32 -0400
-To: paul@permanentmail.com
+	id S1751456AbWE2XcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 19:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbWE2XcP
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 19:32:15 -0400
+Received: from c-68-40-201-198.hsd1.mi.comcast.net ([68.40.201.198]:19882 "EHLO
+	puzzle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1751456AbWE2XcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 19:32:14 -0400
+Received: from bfields by puzzle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1FkrD3-0005L2-Uq; Mon, 29 May 2006 19:31:41 -0400
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.3.3.g2506
+In-Reply-To: <11489454963586-git-send-email-bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20994>
 
-(Cc: to the git list, since the people there undoubtedly know much better.)
+From: J. Bruce Fields <bfields@citi.umich.edu>
 
-> Is there a method of bisecting that means neither "good" nor "bad"?  I
-> have run into kernel problems that are not related to the problem I'm
-> attempting to track.  Some are not avoidable by changing the .config (see
-> the third bisect in comments 10 and 11 in the bugzilla report).
+Fix a typo.
 
-Yes.  While you're bisecting, HEAD is a special "bisect" head used just
-for that purpose.  If you encounter a compile error or are otherwise
-unable to test a version, you can "git reset --hard <commit>" to jump
-to some other commit and test that instead.  Because that command
-unconditionally changes both the current head and the checked-out code,
-it's normally somewhat dangerous, but while bisecting, there's no problem.
-You can choose anything you like to test instead of git-bisect's suggested
-version, but staying near the middle of the uncertain range is usually
-a good idea.  "HEAD^" (the parent of the current commit) is often a
-simple choice.  "git bisect visualize" might give you some ideas.
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
 
-Note that if the problem actually is in the area of the untestable commit,
-git bisect might drag you back there, but this lets you try to avoid it.
+---
 
-It's also worth repeating some advice from the manual:
+2506b48d2aee595a5023d31166a64d4d28bf8789
+ Documentation/tutorial-2.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
->> You can further cut down the number of trials if you know what part of
->> the tree is involved in the problem you are tracking down, by giving
->> paths parameters when you say bisect start, like this:
->>
->> $ git bisect start arch/i386 include/asm-i386
+2506b48d2aee595a5023d31166a64d4d28bf8789
+diff --git a/Documentation/tutorial-2.txt b/Documentation/tutorial-2.txt
+index 08d3453..9c9500c 100644
+--- a/Documentation/tutorial-2.txt
++++ b/Documentation/tutorial-2.txt
+@@ -377,7 +377,7 @@ At this point you should know everything
+ pages for any of the git commands; one good place to start would be
+ with the commands mentioned in link:everyday.html[Everyday git].  You
+ should be able to find any unknown jargon in the
+-link:glossary.html[Glosssay].
++link:glossary.html[Glossary].
+ 
+ The link:cvs-migration.html[CVS migration] document explains how to
+ import a CVS repository into git, and shows how to use git in a
+-- 
+1.3.3.gff62
