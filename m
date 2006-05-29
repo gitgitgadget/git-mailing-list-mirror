@@ -1,85 +1,83 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] git commit --branch
-Date: Mon, 29 May 2006 23:37:04 +0200
-Message-ID: <20060529213704.GG14325@admingilde.org>
-References: <20060529202851.GE14325@admingilde.org> <Pine.LNX.4.63.0605292310280.17412@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-receive-pack needs to set umask(2)
+Date: Mon, 29 May 2006 23:50:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0605292349510.18299@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <v0irnpn8ea.fsf@marajade.sandelman.ca> <e5d6i0$rnf$1@sea.gmane.org>
+ <Pine.LNX.4.63.0605290910210.8863@wbgn013.biozentrum.uni-wuerzburg.de>
+ <447ADAEF.3030806@Intel.com> <Pine.LNX.4.64.0605290956190.5623@g5.osdl.org>
+ <20060529212830.GA4074@limbo.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tEFtbjk+mNEviIIX"
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-820428490-1148939435=:18299"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 23:38:31 2006
+X-From: git-owner@vger.kernel.org Mon May 29 23:50:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkpRU-0008NL-4R
-	for gcvg-git@gmane.org; Mon, 29 May 2006 23:38:30 +0200
+	id 1FkpdJ-0002Hw-1D
+	for gcvg-git@gmane.org; Mon, 29 May 2006 23:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358AbWE2Vh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 17:37:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbWE2VhK
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:37:10 -0400
-Received: from admingilde.org ([213.95.32.146]:13519 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1751365AbWE2VhF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 17:37:05 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1FkpQ8-0000LL-Hz; Mon, 29 May 2006 23:37:04 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0605292310280.17412@wbgn013.biozentrum.uni-wuerzburg.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1751316AbWE2Vui (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 17:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbWE2Vuh
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:50:37 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:2510 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751316AbWE2Vug (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 17:50:36 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id BF69E14F2;
+	Mon, 29 May 2006 23:50:35 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id B35A914DF;
+	Mon, 29 May 2006 23:50:35 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 94E3214DB;
+	Mon, 29 May 2006 23:50:35 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <fork0@users.sourceforge.net>
+In-Reply-To: <20060529212830.GA4074@limbo.home>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20979>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---tEFtbjk+mNEviIIX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---1148973799-820428490-1148939435=:18299
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-hoi :)
+Hi,
 
-On Mon, May 29, 2006 at 11:14:32PM +0200, Johannes Schindelin wrote:
-> Doesn't
->=20
-> $ git-update-index $(git-ls-files --modified)
-> $ git-checkout -b tempBranch
-> $ git-commit -m "to test"
->=20
-> work? It also avoids totally bogus parents (if I read your patch=20
-> correctly, you take the current HEAD as the true parent, but record the=
-=20
-> current HEAD of the other branch as parent nevertheless).
+On Mon, 29 May 2006, Alex Riesen wrote:
 
-I'm doing two commits, one to HEAD and one to the other branch.
-It is more like:
+> [...]
+> Reading man sshd:
+> 
+>      $HOME/.ssh/rc
+>              If this file exists, it is run with /bin/sh after reading the
+>              environment files but before starting the user's shell or com­
+>              mand.  It must not produce any output on stdout; stderr must be
+>              used instead.  If X11 forwarding is in use, it will receive the
+>              "proto cookie" pair in its standard input (and DISPLAY in its
+>              environment).  The script must call xauth(1) because sshd will
+>              not run xauth automatically to add X11 cookies.
+> and
+> 
+>      /etc/ssh/sshrc
+>              Like $HOME/.ssh/rc.  This can be used to specify machine-specific
+>              login-time initializations globally.  This file should be
+>              writable only by root, and should be world-readable.
+> 
+> 
+> This guaranteed to work (at least for ssh).
 
-	git commit
-	git checkout otherbranch
-	git rebase --onto otherbranch master^ master   <-- first
-	git checkout master
-	git merge msg master otherbranch               <-- second
+But not for bash. Back to square 1.
 
-Now your current HEAD is still a merge of your topic branches,
-and you commited your changes to one clean topic branch.
+Ciao,
+Dscho
 
---=20
-Martin Waitz
-
---tEFtbjk+mNEviIIX
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEe2mAj/Eaxd/oD7IRAuvFAJ0b5BzXZuq27vhKNxc5iDrRmuVFGgCdFh08
-VhkqGrfkeEniE/1+Tf4ko7g=
-=BaLm
------END PGP SIGNATURE-----
-
---tEFtbjk+mNEviIIX--
+---1148973799-820428490-1148939435=:18299--
