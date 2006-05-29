@@ -1,31 +1,31 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Allow multiple -m options to git-commit.
-Date: Mon, 29 May 2006 04:45:49 -0400
-Message-ID: <20060529084549.GA29500@spearce.org>
+Subject: [PATCH] Automatically line wrap long commit messages.
+Date: Mon, 29 May 2006 04:57:39 -0400
+Message-ID: <20060529085738.GB29500@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 10:45:59 2006
+X-From: git-owner@vger.kernel.org Mon May 29 10:57:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkdNu-0000Uu-IM
-	for gcvg-git@gmane.org; Mon, 29 May 2006 10:45:58 +0200
+	id 1FkdZM-0003Eu-T1
+	for gcvg-git@gmane.org; Mon, 29 May 2006 10:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750769AbWE2Ipy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 04:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750775AbWE2Ipy
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 04:45:54 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44953 "EHLO
+	id S1750780AbWE2I5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 04:57:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbWE2I5q
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 04:57:46 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38042 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750769AbWE2Ipy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 04:45:54 -0400
+	id S1750780AbWE2I5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 04:57:45 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FkdNm-00083o-C5; Mon, 29 May 2006 04:45:50 -0400
+	id 1FkdZF-0008R0-Tm; Mon, 29 May 2006 04:57:42 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4F48020E445; Mon, 29 May 2006 04:45:50 -0400 (EDT)
+	id 5557E20E445; Mon, 29 May 2006 04:57:40 -0400 (EDT)
 To: Junio Hamano <junkio@cox.net>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
@@ -40,84 +40,45 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20936>
 
-I find it very convenient to be able to supply multiple paragraphs
-of text on the command line with a single git-commit call.  This
-change permits multiple -m/--message type options to be supplied
-to git-commit with each message being added as its own paragraph
-of text in the commit message.
+When using -m on the command line with git-commit it is not uncommon
+for a long commit message to be entered without line terminators.
+This creates commit objects whose messages are not readable in
+'git log' as the line runs off the screen.
 
-The -m option is still not permitted with -c/-C/-F nor are multiple
-occurrences of these options permitted.
+So instead reformat log messages if they are supplied on the
+command line.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- git-commit.sh |   37 ++++++++++++++++++++++++++++++-------
- 1 files changed, 30 insertions(+), 7 deletions(-)
+ This one might cause some problems for people.  It requires
+ 'fmt' in order to use log messages on the command line as well as
+ some users may not like having their log messages line wrapped.
+ I'm open to suggestions for how to deal with this but personally
+ this is one feature which I put into pg's commit tool that I miss
+ dearly when working with core GIT.
+
+ git-commit.sh |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
 diff --git a/git-commit.sh b/git-commit.sh
-index 0a01a0b..a092b72 100755
+index a092b72..e7aa4b1 100755
 --- a/git-commit.sh
 +++ b/git-commit.sh
-@@ -260,20 +260,41 @@ do
-   -m|--m|--me|--mes|--mess|--messa|--messag|--message)
-       case "$#" in 1) usage ;; esac
-       shift
--      log_given=t$log_given
--      log_message="$1"
-+      log_given=m$log_given
-+      if test "$log_message" = ''
-+      then
-+          log_message="$1"
-+      else
-+          log_message="$log_message
-+
-+$1"
-+      fi
-       no_edit=t
-       shift
-       ;;
-   -m*)
--      log_given=t$log_given
--      log_message=`expr "$1" : '-m\(.*\)'`
-+      log_given=m$log_given
-+      if test "$log_message" = ''
-+      then
-+          log_message=`expr "$1" : '-m\(.*\)'`
-+      else
-+          log_message="$log_message
-+
-+`expr "$1" : '-m\(.*\)'`"
-+      fi
-       no_edit=t
-       shift
-       ;;
-   --m=*|--me=*|--mes=*|--mess=*|--messa=*|--messag=*|--message=*)
--      log_given=t$log_given
--      log_message=`expr "$1" : '-[^=]*=\(.*\)'`
-+      log_given=m$log_given
-+      if test "$log_message" = ''
-+      then
-+          log_message=`expr "$1" : '-[^=]*=\(.*\)'`
-+      else
-+          log_message="$log_message
-+
-+`expr "$1" : '-[^=]*=\(.*\)'`"
-+      fi
-       no_edit=t
-       shift
-       ;;
-@@ -378,7 +399,9 @@ esac
+@@ -547,7 +547,12 @@ fi
  
- case "$log_given" in
- tt*)
--  die "Only one of -c/-C/-F/-m can be used." ;;
-+  die "Only one of -c/-C/-F can be used." ;;
-+*tm*|*mt*)
-+  die "Option -m cannot be combined with -c/-C/-F." ;;
- esac
- 
- case "$#,$also,$only,$amend" in
+ if test "$log_message" != ''
+ then
+-	echo "$log_message"
++	# The message came from the command line.  It might contain very
++	# long lines so reformat it with a target of 60. Note that we
++	# don't reformat messages created in an editor by the user as
++	# we should assume they carefully formatted it in some way.
++	#
++	echo "$log_message" | fmt -w 60
+ elif test "$logfile" != ""
+ then
+ 	if test "$logfile" = -
 -- 
 1.3.3.g45d8
