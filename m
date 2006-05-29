@@ -1,69 +1,135 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Support for configurable git command aliases
-Date: Mon, 29 May 2006 10:02:46 +0200
-Message-ID: <20060529080246.GT11941@pasky.or.cz>
-References: <torvalds@osdl.org> <Pine.LNX.4.64.0605262007230.5623@g5.osdl.org> <200605271252.k4RCqZhR003192@laptop11.inf.utfsm.cl> <20060528215945.GD10488@pasky.or.cz> <7v7j45d1wz.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Remove unnecessary ouput from t3600-rm.
+Date: Mon, 29 May 2006 04:06:48 -0400
+Message-ID: <20060529080648.GA6420@spearce.org>
+References: <20060529071646.GC6061@spearce.org> <7v1wud9tq0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 10:03:09 2006
+X-From: git-owner@vger.kernel.org Mon May 29 10:07:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkciM-00029e-Hd
-	for gcvg-git@gmane.org; Mon, 29 May 2006 10:03:02 +0200
+	id 1FkcmG-0002md-7H
+	for gcvg-git@gmane.org; Mon, 29 May 2006 10:07:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750757AbWE2ICs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 04:02:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbWE2ICs
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 04:02:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64446 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750757AbWE2ICr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 04:02:47 -0400
-Received: (qmail 20308 invoked by uid 2001); 29 May 2006 10:02:46 +0200
+	id S1750761AbWE2IGx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 04:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbWE2IGx
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 04:06:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:6039 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750761AbWE2IGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 04:06:52 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1Fkcm1-00072n-Ai; Mon, 29 May 2006 04:06:49 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F2A8420E445; Mon, 29 May 2006 04:06:48 -0400 (EDT)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7v7j45d1wz.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <7v1wud9tq0.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20934>
 
-Dear diary, on Mon, May 29, 2006 at 04:01:48AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@ucw.cz> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> >> I don't like this syntax. What other stuff (beside "cmd") would be under
-> >> "[alias "co"]? Why not simply:
-> >> 
-> >>         [alias]
-> >> 		co = commit -a
-> >> 		publish = push public.site.com:/pub/scm/my-public-repo
-> >
-> > Nice, I like this.
+> > Moved the output of the setup commits and the test-file rm check to
+> > file descriptors 3 and 4 hiding their messages unless -v is given.
+> > This makes the test suite look a little cleaner when the rm test-file
+> > setup step fails (and was probably expected to fail).
 > 
-> Sorry, I don't.  The left hand side of '=' does not allow
-> anything but alnum and squashes the case.
+> I suspect those bare commands _should_ succeed so make them a
+> separate test step and verify their success return while you are
+> at it, and their output would not be shown normally, without
+> your futzing with file descriptors.  Wouldn't that be a lot
+> cleaner approach?
 
-Does that really matter that much? Perhaps we might support something
-like
+Yes.  :-)
 
-	"!ooOk" = commit -a
+--> -
+Remove unnecessary output from t3600-rm.
 
-(and it will probably not do what the user expects if he sticks
-whitespaces in).
+Moved the setup commands into test_expect_success blocks so their
+output is hidden unless -v is used.  This makes the test suite look
+a little cleaner when the rm test-file setup step fails (and was
+expected to fail for most cases).
 
-> Please stick to [alias "co"] syntax.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ t/t3600-rm.sh |   42 +++++++++++++++++++++++-------------------
+ 1 files changed, 23 insertions(+), 19 deletions(-)
 
-That sucks, e.g. because it's alias-specific, and it's inconsistent.
-I can't have anything like "cgalias" then.
-
-Let's make some effort to keep the syntax clean...
-
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index acaa4d6..201d164 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -8,30 +8,34 @@ test_description='Test of the various op
+ . ./test-lib.sh
+ 
+ # Setup some files to be removed, some with funny characters
+-touch -- foo bar baz 'space embedded' -q
+-git-add -- foo bar baz 'space embedded' -q
+-git-commit -m "add normal files"
+-test_tabs=y
+-if touch -- 'tab	embedded' 'newline
+-embedded'
+-then
+-git-add -- 'tab	embedded' 'newline
++test_expect_success \
++    'Initialize test directory' \
++    "touch -- foo bar baz 'space embedded' -q &&
++     git-add -- foo bar baz 'space embedded' -q &&
++     git-commit -m 'add normal files' &&
++     test_tabs=y &&
++     if touch -- 'tab	embedded' 'newline
+ embedded'
+-git-commit -m "add files with tabs and newlines"
+-else
+-    say 'Your filesystem does not allow tabs in filenames.'
+-    test_tabs=n
+-fi
++     then
++     git-add -- 'tab	embedded' 'newline
++embedded' &&
++     git-commit -m 'add files with tabs and newlines'
++     else
++         say 'Your filesystem does not allow tabs in filenames.'
++         test_tabs=n
++     fi"
+ 
+ # Later we will try removing an unremovable path to make sure
+ # git-rm barfs, but if the test is run as root that cannot be
+ # arranged.
+-: >test-file
+-chmod a-w .
+-rm -f test-file
+-test -f test-file && test_failed_remove=y
+-chmod 775 .
+-rm -f test-file
++test_expect_success \
++    'Determine rm behavior' \
++    ': >test-file
++     chmod a-w .
++     rm -f test-file
++     test -f test-file && test_failed_remove=y
++     chmod 775 .
++     rm -f test-file'
+ 
+ test_expect_success \
+     'Pre-check that foo exists and is in index before git-rm foo' \
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+1.3.3.g45d8
