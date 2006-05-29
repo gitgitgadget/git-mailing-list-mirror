@@ -1,50 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Remove unnecessary ouput from t3600-rm.
-Date: Mon, 29 May 2006 00:27:03 -0700
-Message-ID: <7v1wud9tq0.fsf@assigned-by-dhcp.cox.net>
-References: <20060529071646.GC6061@spearce.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH 3/4] t5500-fetch-pack: remove local (bashism) usage.
+Date: Mon, 29 May 2006 17:31:37 +1000
+Message-ID: <20060529073137.GB22452@gondor.apana.org.au>
+References: <11486091783808-git-send-email-normalperson@yhbt.net> <11486091793385-git-send-email-normalperson@yhbt.net> <20060526122317.GC5372@gondor.apana.org.au> <20060529052828.GB24077@localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 09:27:22 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 29 09:31:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkc9c-0004vw-KK
-	for gcvg-git@gmane.org; Mon, 29 May 2006 09:27:11 +0200
+	id 1FkcEA-0005dq-L2
+	for gcvg-git@gmane.org; Mon, 29 May 2006 09:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750738AbWE2H1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 03:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbWE2H1F
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 03:27:05 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:44685 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750738AbWE2H1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 03:27:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060529072704.VWUK15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 29 May 2006 03:27:04 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060529071646.GC6061@spearce.org> (Shawn Pearce's message of
-	"Mon, 29 May 2006 03:16:46 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750737AbWE2Hbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 03:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbWE2Hbs
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 03:31:48 -0400
+Received: from rhun.apana.org.au ([64.62.148.172]:23560 "EHLO
+	arnor.apana.org.au") by vger.kernel.org with ESMTP id S1750746AbWE2Hbr
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 May 2006 03:31:47 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6])
+	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
+	id 1FkcE2-0006lS-Hh; Mon, 29 May 2006 17:31:42 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1FkcDx-0005s0-00; Mon, 29 May 2006 17:31:37 +1000
+To: Eric Wong <normalperson@yhbt.net>
+Content-Disposition: inline
+In-Reply-To: <20060529052828.GB24077@localdomain>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20932>
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Sun, May 28, 2006 at 10:28:28PM -0700, Eric Wong wrote:
+>
+> Cool.  Hmm... pdksh seems to support it here (Debian sid).  I'm pretty
+> sure local is not part of the POSIX spec, though; and I have seen
+> /bin/sh that don't support it.
 
-> Moved the output of the setup commits and the test-file rm check to
-> file descriptors 3 and 4 hiding their messages unless -v is given.
-> This makes the test suite look a little cleaner when the rm test-file
-> setup step fails (and was probably expected to fail).
+It is true that the current POSIX spec does not specify it.  However,
+all useful POSIX-compliant shells on Linux (i.e., excluding those
+shells that exist only to test POSIX compliance) support it and it
+is used by a large corpus of existing Linux scripts.
 
-I suspect those bare commands _should_ succeed so make them a
-separate test step and verify their success return while you are
-at it, and their output would not be shown normally, without
-your futzing with file descriptors.  Wouldn't that be a lot
-cleaner approach?
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
