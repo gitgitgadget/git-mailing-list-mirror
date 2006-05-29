@@ -1,81 +1,85 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: [RFC] git commit --branch
-Date: Mon, 29 May 2006 17:35:43 -0400
-Message-ID: <20060529213543.GA29054@spearce.org>
-References: <20060529202851.GE14325@admingilde.org> <20060529204158.GC28538@spearce.org> <20060529212249.GF14325@admingilde.org>
+Date: Mon, 29 May 2006 23:37:04 +0200
+Message-ID: <20060529213704.GG14325@admingilde.org>
+References: <20060529202851.GE14325@admingilde.org> <Pine.LNX.4.63.0605292310280.17412@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tEFtbjk+mNEviIIX"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 23:36:37 2006
+X-From: git-owner@vger.kernel.org Mon May 29 23:38:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkpPX-00080w-SG
-	for gcvg-git@gmane.org; Mon, 29 May 2006 23:36:28 +0200
+	id 1FkpRU-0008NL-4R
+	for gcvg-git@gmane.org; Mon, 29 May 2006 23:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbWE2VgF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 17:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbWE2VgB
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:36:01 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:62180 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751352AbWE2Vfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 17:35:47 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FkpOj-0007Va-2F; Mon, 29 May 2006 17:35:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C7C4120E445; Mon, 29 May 2006 17:35:43 -0400 (EDT)
-To: Martin Waitz <tali@admingilde.org>
+	id S1751358AbWE2Vh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 17:37:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbWE2VhK
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:37:10 -0400
+Received: from admingilde.org ([213.95.32.146]:13519 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1751365AbWE2VhF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 17:37:05 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1FkpQ8-0000LL-Hz; Mon, 29 May 2006 23:37:04 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <20060529212249.GF14325@admingilde.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.63.0605292310280.17412@wbgn013.biozentrum.uni-wuerzburg.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20978>
 
-Martin Waitz <tali@admingilde.org> wrote:
-> On Mon, May 29, 2006 at 04:41:58PM -0400, Shawn Pearce wrote:
-> > Interesting.  I have been kicking around doing the very same
-> > thing myself but just have not gotten around to it.  Its complex,
-> > especially if the current HEAD isn't strictly the merge commit
-> > between the topic branch and the previous value of HEAD; in that
-> > case you may want to replay the commits which are on HEAD but are
-> > post the merge commit using a form of git-rebase.  Except you would
-> > want to preserve any merges which happened by remerging them rather
-> > than simply exporting a massive patch and reapplying it.
-> 
-> Perhaps something like merge-recursive makes sense, except that
-> I have no clue how it works ;-)
 
-merge-recursive isn't the right tool here. Its job is to perform a
-3 way merge "quickly" by dealing with file adds, deletes, renames
-and patch application when a file was modified by both parents.
+--tEFtbjk+mNEviIIX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now that diff+apply is probably faster than a 3 way merge in
-read-tree precisely because it doesn't need to run merge-recursive
-I'm starting to look at how we can use apply to do partial
-application of a patch and use RCS' diff3 or just drop a reject
-file out when a hunk doesn't apply cleanly.
- 
-> But then an operation as important as commit has to be bullet-proof
-> and I don't like to do anything complex in there.
+hoi :)
 
-I agree.  But I'd like to see some sort of functionality to
-automatically handle some common topic branche cases in commit.
-Of course I consider the current commit tool to already be too
-complex (like being able to pull the commit message from any
-random commit).
+On Mon, May 29, 2006 at 11:14:32PM +0200, Johannes Schindelin wrote:
+> Doesn't
+>=20
+> $ git-update-index $(git-ls-files --modified)
+> $ git-checkout -b tempBranch
+> $ git-commit -m "to test"
+>=20
+> work? It also avoids totally bogus parents (if I read your patch=20
+> correctly, you take the current HEAD as the true parent, but record the=
+=20
+> current HEAD of the other branch as parent nevertheless).
 
--- 
-Shawn.
+I'm doing two commits, one to HEAD and one to the other branch.
+It is more like:
+
+	git commit
+	git checkout otherbranch
+	git rebase --onto otherbranch master^ master   <-- first
+	git checkout master
+	git merge msg master otherbranch               <-- second
+
+Now your current HEAD is still a merge of your topic branches,
+and you commited your changes to one clean topic branch.
+
+--=20
+Martin Waitz
+
+--tEFtbjk+mNEviIIX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEe2mAj/Eaxd/oD7IRAuvFAJ0b5BzXZuq27vhKNxc5iDrRmuVFGgCdFh08
+VhkqGrfkeEniE/1+Tf4ko7g=
+=BaLm
+-----END PGP SIGNATURE-----
+
+--tEFtbjk+mNEviIIX--
