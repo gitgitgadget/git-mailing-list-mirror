@@ -1,113 +1,124 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Don't use "sscanf()" for tree mode scanning
-Date: Sun, 28 May 2006 16:16:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605281559100.5623@g5.osdl.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] ciabot: fix post-update hook description
+Date: Mon, 29 May 2006 02:09:59 +0200
+Message-ID: <20060529000959.GA2061@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon May 29 01:16:24 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon May 29 02:10:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkUUh-0003K1-7o
-	for gcvg-git@gmane.org; Mon, 29 May 2006 01:16:23 +0200
+	id 1FkVKm-0007uT-VH
+	for gcvg-git@gmane.org; Mon, 29 May 2006 02:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbWE1XQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 May 2006 19:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbWE1XQU
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 19:16:20 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60814 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751042AbWE1XQU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 19:16:20 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4SNGG2g000625
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 28 May 2006 16:16:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4SNGFqu018423;
-	Sun, 28 May 2006 16:16:15 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751054AbWE2AKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 May 2006 20:10:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbWE2AKF
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 May 2006 20:10:05 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:34471 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1751054AbWE2AKD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 May 2006 20:10:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 78FE177002D;
+	Mon, 29 May 2006 02:10:02 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 08388-20; Mon, 29 May 2006 02:09:59 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id A653677002B;
+	Mon, 29 May 2006 02:09:59 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id D81CF6DF88D; Mon, 29 May 2006 02:06:51 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 8BC616253D; Mon, 29 May 2006 02:09:59 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20909>
 
+Also, improve on a few lost sentences
 
-Doing an oprofile run on the result of my git rev-list memory leak fixes 
-and tree parsing cleanups, I was surprised by the third-highest entry 
-being
-
-	samples  %        image name               app name                 symbol name
-	179751    2.7163  libc-2.4.so              libc-2.4.so              _IO_vfscanf@@GLIBC_2.4
-
-where that 2.7% is actually more than 5% of one CPU, because this was run 
-on a dual CPU setup with the other CPU just being idle.
-
-That seems to all be from the use of 'sscanf(tree, "%o", &mode)' for the 
-tree buffer parsing.
-
-So do the trivial octal parsing by hand, which also gives us where the 
-first space in the string is (and thus where the pathname starts) so we 
-can get rid of the "strchr(tree, ' ')" call too.
-
-This brings the "git rev-list --all --objects" time down from 63 seconds 
-to 55 seconds on the historical kernel archive for me, so it's quite 
-noticeable - tree parsing is a lot of what we end up doing when following 
-all the objects.
-
-[ I also see a 5% speedup on a full "git fsck-objects" on the current 
-  kernel archive, so that sscanf() really does seem to have hurt our
-  performance by a surprising amount ]
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
- tree-walk.c |   21 ++++++++++++++++++---
- 1 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 9f7abb7..3922058 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -47,18 +47,33 @@ void update_tree_entry(struct tree_desc 
- 	desc->size = size - len;
- }
+b2d8b2c5258b6585102c94f37c63dc2360092d87
+ contrib/ciabot.pl |   30 +++++++++++++++---------------
+ 1 files changed, 15 insertions(+), 15 deletions(-)
+
+b2d8b2c5258b6585102c94f37c63dc2360092d87
+diff --git a/contrib/ciabot.pl b/contrib/ciabot.pl
+index 83a0d80..e23f5f1 100755
+--- a/contrib/ciabot.pl
++++ b/contrib/ciabot.pl
+@@ -14,15 +14,15 @@ #
+ # The master location of this file is in the Cogito repository
+ # (see http://www.kernel.org/git/).
+ #
+-# This program is designed to run as the .git/commit-post-hook script. It takes
+-# the commit information, massaging it and mailing it to the address given below.
++# This program is designed to run as the .git/hooks/post-commit hook. It takes
++# the commit information, massages it and mails it to the address given below.
+ #
+-# The calling convention of the commit-post-hook script is:
++# The calling convention of the post-commit hook is:
+ #
+-#	commit-post-hook $commit_sha1 $branch_name
++#	.git/hooks/post-commit $commit_sha1 $branch_name
+ #
+ # If it does not work, try to disable $xml_rpc in the configuration section
+-# below.
++# below. Also, remember to make the hook file executable.
+ #
+ #
+ # Note that you can (and it might be actually more desirable) also use this
+@@ -36,9 +36,9 @@ #	for merged in $(git-rev-list $newhead 
+ #		/path/to/ciabot.pl $merged $refname
+ #	done
+ #
+-# This is useful when you use a remote repository without working copy, where
+-# you only push to - the update hook will be trigerred each time you push into
+-# that repository, and the pushed commits will be reported through CIA.
++# This is useful when you use a remote repository that you only push to. The
++# update hook will be triggered each time you push into that repository, and
++# the pushed commits will be reported through CIA.
  
-+static const char *get_mode(const char *str, unsigned int *modep)
-+{
-+	unsigned char c;
-+	unsigned int mode = 0;
-+
-+	while ((c = *str++) != ' ') {
-+		if (c < '0' || c > '7')
-+			return NULL;
-+		mode = (mode << 3) + (c - '0');
-+	}
-+	*modep = mode;
-+	return str;
-+}
-+
- const unsigned char *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned int *modep)
- {
- 	void *tree = desc->buf;
- 	unsigned long size = desc->size;
- 	int len = strlen(tree)+1;
- 	const unsigned char *sha1 = tree + len;
--	const char *path = strchr(tree, ' ');
-+	const char *path;
- 	unsigned int mode;
+ use strict;
+ use vars qw ($project $from_email $dest_email $noisy $rpc_uri $sendmail
+@@ -78,19 +78,19 @@ # not deliver the event at all if CIA se
+ # unfortunately not an uncommon condition.
+ $xml_rpc = 0;
  
--	if (!path || size < len + 20 || sscanf(tree, "%o", &mode) != 1)
-+	path = get_mode(tree, &mode);
-+	if (!path || size < len + 20)
- 		die("corrupt tree file");
--	*pathp = path+1;
-+	*pathp = path;
- 	*modep = canon_mode(mode);
- 	return sha1;
- }
+-# You can make this bot to totally ignore events concerning the objects
+-# specified below. Each object is composed of <path>/<filename>,
++# This variable should contain a regexp, against which each file will be
++# checked, and if the regexp is matched, the file is ignored. This can be
++# useful if you do not want auto-updated files, such as e.g. ChangeLog, to
++# appear via CIA.
+ #
+-# This variable should contain regexp, against which will each object be
+-# checked, and if the regexp is matched, the file is ignored. Therefore ie.  to
+-# ignore all changes in the two files above and everything concerning module
+-# 'admin', use:
++# The following example will make the script ignore all changes in two specific
++# files in two different modules, and everything concerning module 'admin':
+ #
+ # $ignore_regexp = "^(gentoo/Manifest|elinks/src/bfu/inphist.c|admin/)";
+ $ignore_regexp = "";
+ 
+ # It can be useful to also grab the generated XML message by some other
+-# programs and ie. autogenerate some content based on it. Here you can specify
++# programs and e.g. autogenerate some content based on it. Here you can specify
+ # a file to which it will be appended.
+ $alt_local_message_target = "";
+ 
+-- 
+1.3.3.gd882-dirty
+
+-- 
+Jonas Fonseca
