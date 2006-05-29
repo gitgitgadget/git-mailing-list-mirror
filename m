@@ -1,83 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-receive-pack needs to set umask(2)
-Date: Mon, 29 May 2006 23:50:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605292349510.18299@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <v0irnpn8ea.fsf@marajade.sandelman.ca> <e5d6i0$rnf$1@sea.gmane.org>
- <Pine.LNX.4.63.0605290910210.8863@wbgn013.biozentrum.uni-wuerzburg.de>
- <447ADAEF.3030806@Intel.com> <Pine.LNX.4.64.0605290956190.5623@g5.osdl.org>
- <20060529212830.GA4074@limbo.home>
+From: Donnie Berkholz <spyderous@gentoo.org>
+Subject: Re: irc usage..
+Date: Mon, 29 May 2006 14:54:13 -0700
+Message-ID: <447B6D85.4050601@gentoo.org>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>  <446F95A2.6040909@gentoo.org>  <Pine.LNX.4.64.0605201543260.3649@g5.osdl.org>  <446FA262.7080900@gentoo.org>  <Pine.LNX.4.64.0605211209080.3649@g5.osdl.org>  <Pine.LNX.4.64.0605212053590.3697@g5.osdl.org>  <44713BE4.9040505@gentoo.org>  <Pine.LNX.4.64.0605212132570.3697@g5.osdl.org>  <46a038f90605220042v369e9ff5o3dc7841472171d02@mail.gmail.com>  <Pine.LNX.4.64.0605220203200.3697@g5.osdl.org> <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> <44720C66.6040304@gentoo.org> <Pine.LNX.4.64.0605221234430.3697@g5.osdl.org> <447215D4.5020403@gentoo.org> <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org> <447231C4.2030508@gentoo.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-820428490-1148939435=:18299"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 29 23:50:46 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA941EC73EF408A78B9E09F77"
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Yann Dirson <ydirson@altern.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 29 23:54:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkpdJ-0002Hw-1D
-	for gcvg-git@gmane.org; Mon, 29 May 2006 23:50:42 +0200
+	id 1Fkpgw-00032A-K4
+	for gcvg-git@gmane.org; Mon, 29 May 2006 23:54:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbWE2Vui (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 May 2006 17:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbWE2Vuh
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:50:37 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:2510 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751316AbWE2Vug (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 May 2006 17:50:36 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id BF69E14F2;
-	Mon, 29 May 2006 23:50:35 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id B35A914DF;
-	Mon, 29 May 2006 23:50:35 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 94E3214DB;
-	Mon, 29 May 2006 23:50:35 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <fork0@users.sourceforge.net>
-In-Reply-To: <20060529212830.GA4074@limbo.home>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S1751325AbWE2VyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 May 2006 17:54:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbWE2VyX
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 17:54:23 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:64217 "EHLO smtp.gentoo.org")
+	by vger.kernel.org with ESMTP id S1751325AbWE2VyW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 May 2006 17:54:22 -0400
+Received: from [192.168.1.105] (c-67-171-150-177.hsd1.or.comcast.net [67.171.150.177])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTP id 239F0644A4;
+	Mon, 29 May 2006 21:54:21 +0000 (UTC)
+User-Agent: Thunderbird 1.5.0.2 (X11/20060513)
+To: Donnie Berkholz <spyderous@gentoo.org>
+In-Reply-To: <447231C4.2030508@gentoo.org>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/20980>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA941EC73EF408A78B9E09F77
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
----1148973799-820428490-1148939435=:18299
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Donnie Berkholz wrote:
+> Linus Torvalds wrote:
+>> The latest stable CVS release is 1.11.21, I think: you seem to be runn=
+ing=20
+>> the "development" version (1.12.x).
+>=20
+> Backed down to the 1.11 series, things seem to be going fine so far.
 
-Hi,
+Finally hit an OOM sometime in the past day (yep, a week later) =3D\. Not=
 
-On Mon, 29 May 2006, Alex Riesen wrote:
+sure whether it was cvsimport or cvs. Anyone else had more luck?
 
-> [...]
-> Reading man sshd:
-> 
->      $HOME/.ssh/rc
->              If this file exists, it is run with /bin/sh after reading the
->              environment files but before starting the user's shell or com­
->              mand.  It must not produce any output on stdout; stderr must be
->              used instead.  If X11 forwarding is in use, it will receive the
->              "proto cookie" pair in its standard input (and DISPLAY in its
->              environment).  The script must call xauth(1) because sshd will
->              not run xauth automatically to add X11 cookies.
-> and
-> 
->      /etc/ssh/sshrc
->              Like $HOME/.ssh/rc.  This can be used to specify machine-specific
->              login-time initializations globally.  This file should be
->              writable only by root, and should be world-readable.
-> 
-> 
-> This guaranteed to work (at least for ssh).
+Thanks,
+Donnie
 
-But not for bash. Back to square 1.
 
-Ciao,
-Dscho
+--------------enigA941EC73EF408A78B9E09F77
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
----1148973799-820428490-1148939435=:18299--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEe22HXVaO67S1rtsRAngfAKCnpZmQENVR3EaYHxHCTSaLljFdRgCgpyq5
+Gkfw5w0AYqw/aapMA44LeDY=
+=VSZA
+-----END PGP SIGNATURE-----
+
+--------------enigA941EC73EF408A78B9E09F77--
