@@ -1,50 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-clean fails on files beginning with a dash
-Date: Tue, 30 May 2006 01:49:41 -0700
-Message-ID: <7vd5dv3niy.fsf@assigned-by-dhcp.cox.net>
-References: <20060529150632.G6794bab6@leonov.stosberg.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH 4/4] Add a basic test case for git send-email, and fix some real bugs discovered.
+Date: Tue, 30 May 2006 01:51:26 -0700
+Message-ID: <20060530085125.GB32457@h4x0r5.com>
+References: <7v8xok3vhj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 10:49:47 2006
+Cc: Ryan Anderson <rda@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 30 10:51:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkzv8-0004f5-UK
-	for gcvg-git@gmane.org; Tue, 30 May 2006 10:49:47 +0200
+	id 1Fkzwt-0004w5-JK
+	for gcvg-git@gmane.org; Tue, 30 May 2006 10:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184AbWE3Itn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 04:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932186AbWE3Itn
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 04:49:43 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:18414 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932184AbWE3Itm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 May 2006 04:49:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060530084942.PYKF5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 30 May 2006 04:49:42 -0400
-To: Dennis Stosberg <dennis@stosberg.net>
-In-Reply-To: <20060529150632.G6794bab6@leonov.stosberg.net> (Dennis Stosberg's
-	message of "Mon, 29 May 2006 17:06:32 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932186AbWE3Ivd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 04:51:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbWE3Ivc
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 04:51:32 -0400
+Received: from h4x0r5.com ([70.85.31.202]:56848 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S932186AbWE3Ivc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 May 2006 04:51:32 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1Fkzwk-0008U5-Il; Tue, 30 May 2006 01:51:26 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v8xok3vhj.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21024>
 
-Dennis Stosberg <dennis@stosberg.net> writes:
+On Mon, May 29, 2006 at 10:57:44PM -0700, Junio C Hamano wrote:
+> Ryan Anderson <rda@google.com> writes:
+> 
+> > Signed-off-by: Ryan Anderson <rda@google.com>
+> >
+> > ---
+> >
+> > 64ea8c0210c2e9d1711a870460eca326778a4ffc
+> >  t/t9001-send-email.sh |   34 ++++++++++++++++++++++++++++++++++
+> >  1 files changed, 34 insertions(+), 0 deletions(-)
+> >  create mode 100755 t/t9001-send-email.sh
+> 
+> Adds test, alright, but I do not see the fix.  Is this a thinko?
 
-> Reproducible with:
->
-> $ git init-db
-> $ echo "some text" >-file
-> $ git clean
-> Removing -file
-> rm: invalid option -- l
-> Try `rm --help' for more information.
+I apparently screwed this patch up (and I think I lost it, in the
+process.)
 
-Thanks.
+Let me reconstruct, I fixed the problems in a different way (I reworked
+unique_email_address(@) into  unique_email_address($@), to pass a flag
+stating whether to returned the cleaned email address or not, that
+should come in a few minutes.)
