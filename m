@@ -1,74 +1,71 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [RFC] git-fetch - repack in the background after fetching
-Date: Tue, 30 May 2006 16:42:43 +1200
-Message-ID: <11489641631558-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Tue May 30 06:36:44 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-cvsimport problem
+Date: Mon, 29 May 2006 21:37:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605292122580.5623@g5.osdl.org>
+References: <Pine.LNX.4.63.0605300236270.25988@alpha.polcom.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 30 06:37:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkvyE-0006wd-7h
-	for gcvg-git@gmane.org; Tue, 30 May 2006 06:36:42 +0200
+	id 1Fkvz0-00070E-8j
+	for gcvg-git@gmane.org; Tue, 30 May 2006 06:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbWE3Egj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 00:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbWE3Egj
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 00:36:39 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:42381 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S932078AbWE3Egi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 May 2006 00:36:38 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1Fkvy8-0006B9-O2; Tue, 30 May 2006 16:36:36 +1200
-Received: from mltest ([127.0.0.1] helo=localhost.localdomain)
-	by mltest with esmtp (Exim 3.36 #1 (Debian))
-	id 1Fkw43-0007FM-00; Tue, 30 May 2006 16:42:43 +1200
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.3.0.g9927-dirty
+	id S932109AbWE3Eh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 00:37:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932115AbWE3Eh0
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 00:37:26 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:19432 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932109AbWE3Eh0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 May 2006 00:37:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4U4bI2g006138
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 29 May 2006 21:37:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4U4bHAV028584;
+	Mon, 29 May 2006 21:37:18 -0700
+To: Grzegorz Kulewski <kangur@polcom.net>
+In-Reply-To: <Pine.LNX.4.63.0605300236270.25988@alpha.polcom.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21012>
 
-Check whether we have a large set of unpacked objects and repack
-after the fetch, but don't for the user to wait for us.
 
----
 
-There's been some discussion about repacking proactively without
-preventing further work. But as Linus said, repacking on an active
-repo is _safe_, so repack in the background. 
+On Tue, 30 May 2006, Grzegorz Kulewski wrote:
+> 
+> and it looks like it hangs in the middle with message:
+> 
+> cvs [rlog aborted]: unexpected '\x0' reading revision number in RCS file
+> /home/cvsroot/lms/templates/noaccess.html,v
 
-If we like this approach, we should at least respect a git-repo-config
-entry saying core.noautorepack for users who don't want it. I don't
-really know if there is any convention for us to check if we are in
-a resource-constrained situation (aka laptops on battery). If there
-is, we should respect that as well. I suspect anacron and others 
-do this already but I can't find any references.
+Are you sure that CVS archive isn't corrupted? That sounds like an 
+internal CVS error to me. Doing a "git cvsimport" will obviously get every 
+single version of every single file, so it will inevitably also hit errors 
+that you migt not hit with a regular "cvs co" (which will only get the 
+current version).
 
-We can potentially do it on commit, merge and push as well. 
----
+There's bound to be some "fsck for CVS" (since people edit files by hand, 
+and mistakes must happen), but I have no idea.
 
- git-fetch.sh |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+That said, it's not like we haven't had our share of cvsps issues and 
+other things, so who knows..
 
-5498d015eb1062928a504af3c6b3cb9b776088e8
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 69bd810..4d64cdb 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -424,3 +424,9 @@ case ",$update_head_ok,$orig_head," in
- 	fi
- 	;;
- esac
-+
-+if test $(git rev-list --unpacked --all | wc -l) -gt 1000
-+then
-+	echo "Repacking in the background"
-+	nice git repack -a -d -q &
-+fi
--- 
-1.3.2.g82000
+> and to my understanding does not do anything usefull next. Nothing is imported
+> (there is only nearly empty .git tree).
+
+Do "git log origin" to see what has been imported. If a cvsimport is 
+broken in the middle, you'll not get any checked-out state, and your HEAD 
+won't point to anything, but the "origin" branch has been created and 
+contains whatever has been imported so far.
+
+			Linus
