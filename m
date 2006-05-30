@@ -1,69 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/10] re-based and expanded tree-walker cleanup patches
-Date: Mon, 29 May 2006 21:26:59 -0700
-Message-ID: <7vslms3zos.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
-	<7virno79a7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605291739430.5623@g5.osdl.org>
-	<7vmzd05i25.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605292112530.5623@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 06:27:16 2006
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [RFC] git-fetch - repack in the background after fetching
+Date: Tue, 30 May 2006 16:42:43 +1200
+Message-ID: <11489641631558-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Tue May 30 06:36:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fkvov-0005tL-K6
-	for gcvg-git@gmane.org; Tue, 30 May 2006 06:27:07 +0200
+	id 1FkvyE-0006wd-7h
+	for gcvg-git@gmane.org; Tue, 30 May 2006 06:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487AbWE3E1B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 00:27:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbWE3E1B
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 00:27:01 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:20192 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751487AbWE3E1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 May 2006 00:27:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060530042659.BSLL24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 30 May 2006 00:26:59 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605292112530.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 29 May 2006 21:17:06 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932078AbWE3Egj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 00:36:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbWE3Egj
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 00:36:39 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:42381 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S932078AbWE3Egi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 May 2006 00:36:38 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1Fkvy8-0006B9-O2; Tue, 30 May 2006 16:36:36 +1200
+Received: from mltest ([127.0.0.1] helo=localhost.localdomain)
+	by mltest with esmtp (Exim 3.36 #1 (Debian))
+	id 1Fkw43-0007FM-00; Tue, 30 May 2006 16:42:43 +1200
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.3.0.g9927-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21011>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Check whether we have a large set of unpacked objects and repack
+after the fetch, but don't for the user to wait for us.
 
-> Having to move around whole patches in the editor is not what you want to 
-> do.
+---
 
-I know.  What I meant was:
+There's been some discussion about repacking proactively without
+preventing further work. But as Linus said, repacking on an active
+repo is _safe_, so repack in the background. 
 
-	$ format-patch >those-patches
-        $ am -i those-patches
-	.. say no to the first two and yes to the third one
-        $ am -i those-patches ;# again!!
-        .. say yes to the first two
+If we like this approach, we should at least respect a git-repo-config
+entry saying core.noautorepack for users who don't want it. I don't
+really know if there is any convention for us to check if we are in
+a resource-constrained situation (aka laptops on battery). If there
+is, we should respect that as well. I suspect anacron and others 
+do this already but I can't find any references.
 
-> I was thinking more along the lines of
->
->  (a) git-rev-list --pretty=oneline "$upstream"..ORIG_HEAD > rev-list
->
->  (b) edit the rev-list, moving the single lines around, deleting them, etc
->
->  (c) cat rev-list |
->      git-format-patch -k --stdout --stdin --full_index |
->      git-am
->
-> because the "--pretty=oneline" format is actually very nice as a way to 
-> re-order things and select single commits to be deleted or whatever..
+We can potentially do it on commit, merge and push as well. 
+---
 
-I like this approach as well.
+ git-fetch.sh |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+5498d015eb1062928a504af3c6b3cb9b776088e8
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 69bd810..4d64cdb 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -424,3 +424,9 @@ case ",$update_head_ok,$orig_head," in
+ 	fi
+ 	;;
+ esac
++
++if test $(git rev-list --unpacked --all | wc -l) -gt 1000
++then
++	echo "Repacking in the background"
++	nice git repack -a -d -q &
++fi
+-- 
+1.3.2.g82000
