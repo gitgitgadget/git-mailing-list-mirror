@@ -1,130 +1,114 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/4] Add a basic test case for git send-email, and fix some real bugs discovered.
-Date: Mon, 29 May 2006 23:58:56 -0700
-Message-ID: <7vu0782e33.fsf@assigned-by-dhcp.cox.net>
-References: <11489310153730-git-send-email-1>
-	<11489310153598-git-send-email-1> <11489310151293-git-send-email-1>
-	<11489310153617-git-send-email-1>
-	<7v8xok3vhj.fsf@assigned-by-dhcp.cox.net>
-	<7v1wuc3t9y.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 08:59:02 2006
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsimport: complete the cvsps run before starting the import
+Date: Tue, 30 May 2006 20:08:50 +1200
+Message-ID: <11489765301990-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Tue May 30 10:03:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FkyBx-0004w5-Kp
-	for gcvg-git@gmane.org; Tue, 30 May 2006 08:59:01 +0200
+	id 1FkzBt-0006Jc-G5
+	for gcvg-git@gmane.org; Tue, 30 May 2006 10:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932146AbWE3G67 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 02:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWE3G67
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 02:58:59 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:37827 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932146AbWE3G66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 May 2006 02:58:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060530065857.INXO15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 30 May 2006 02:58:57 -0400
-To: Ryan Anderson <rda@google.com>
-In-Reply-To: <7v1wuc3t9y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 29 May 2006 23:45:29 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932183AbWE3ICr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 04:02:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932184AbWE3ICr
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 04:02:47 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:13775 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S932183AbWE3ICq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 May 2006 04:02:46 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1FkzBb-000691-DN; Tue, 30 May 2006 20:02:43 +1200
+Received: from martin by mltest with local (Exim 3.36 #1 (Debian))
+	id 1FkzHW-0000i7-00; Tue, 30 May 2006 20:08:50 +1200
+To: junio@cox.net, git@vger.kernel.org
+X-Mailer: git-send-email 1.3.3.g5498
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21021>
 
-Junio C Hamano <junkio@cox.net> writes:
+On 5/24/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> It's entirely possible that the fact that it now seems to work for me is
+> purely timing-related, since I also ended up using "-P cvsps-output" to
+> avoid having a huge cvsps binary in memory at the same time.
 
-> On top of yours, I think this covers the CC: trouble your test
-> triggers.
+We now capture the output of cvsps to a tempfile, and then read it in.
+cvsps 2.1 works quite a bit "in memory", and only prints its patchset info
+once it has finished talking with cvs, but apparently retaining all that
+memory allocation. With this patch, cvsps is finished and reaped before
+cvsimport start working (and growing). So the footprint of the whole
+process is much lower.
 
-Sorry, I did not look closely enough.  You are trying to keep
-the address human friendly as long as possible so that you can
-place them on the headers, so the previous one was bogus.
-
-*BLUSH*
-
-I think this is lower impact.  On the other hand, it appears
-that at least whatever pretends to be /usr/lib/sendmail on my
-box seems to grok 'A <author@example.com>' just fine, so maybe
-the test was bogus (in which case you should just change the
-expected command line parameters to include the human name).
-
-I dunno.
-
--- >8 --
-From c95682409346f7acc220ac64f453933d5a59ec3f Mon Sep 17 00:00:00 2001
-From: Junio C Hamano <junkio@cox.net>
-Date: Mon, 29 May 2006 23:53:13 -0700
-Subject: [PATCH] send-email: do not pass bogus address to local sendmail binary
-
-This makes t9001 test happy.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 ---
- git-send-email.perl   |    4 +++-
- t/t9001-send-email.sh |   19 +++++++++++++------
- 2 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d418d6c..ac84553 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -387,7 +387,9 @@ X-Mailer: git-send-email $gitversion
- 		my $pid = open my $sm, '|-';
- 		defined $pid or die $!;
- 		if (!$pid) {
--			exec($smtp_server,'-i',@recipients) or die $!;
-+			exec($smtp_server,'-i',
-+			     map { extract_valid_address($_) }
-+			     @recipients) or die $!;
- 		}
- 		print $sm "$header\n$message";
- 		close $sm or die $?;
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 276cbac..a61da1e 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -13,10 +13,14 @@ test_expect_success \
+I don't particularly like the idea of switching from a safe system() call
+to this ugly one. But this patch makes a huge difference importing gentoo's
+repo, and I could not find a way to get system() to do redirection.
+
+Of course, we could do the redirection in Perl. Ugly vs uglier?
+
+---
+
+ git-cvsimport.perl |   32 ++++++++++++++++++++++----------
+ 1 files changed, 22 insertions(+), 10 deletions(-)
+
+5ce458e0883f39ae774ec67211e6565b65139b7f
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 60fc86a..2239c67 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -529,24 +529,36 @@ if ($opt_A) {
+ 	write_author_info("$git_dir/cvs-authors");
+ }
  
- test_expect_success \
-     'Setup helper tool' \
--    'echo "#!/bin/sh" > fake.sendmail
--     echo "shift" >> fake.sendmail
--     echo "echo \"\$*\" > commandline" >> fake.sendmail
--     echo "cat > msgtxt" >> fake.sendmail
-+    '(echo "#!/bin/sh"
-+      echo shift
-+      echo for a
-+      echo do
-+      echo "  echo \"!\$a!\""
-+      echo "done >commandline"
-+      echo "cat > msgtxt"
-+      ) >fake.sendmail
-      chmod +x ./fake.sendmail
-      git add fake.sendmail
-      GIT_AUTHOR_NAME="A" git commit -a -m "Second."'
-@@ -26,9 +30,12 @@ test_expect_success \
-     'git format-patch -n HEAD^1
-      git send-email -from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" ./0001*txt'
+-my $pid = open(CVS,"-|");
+-die "Cannot fork: $!\n" unless defined $pid;
+-unless($pid) {
++#
++# run cvsps into a file unless it's provided already
++#
++my $cvspsfile;
++if ($opt_P) {
++       $cvspsfile = $opt_P;
++} else {
++	my $cvspsfh;
++	($cvspsfh, $cvspsfile) = tempfile('gitXXXXXX', SUFFIX => '.cvsps',
++					  DIR => File::Spec->tmpdir());
++	close ($cvspsfh);
++	my ($cvspserrfh, $cvspserr)  = tempfile('gitXXXXXX', SUFFIX => '.err',
++						DIR => File::Spec->tmpdir());
++	close ($cvspserrfh);
++
+ 	my @opt;
+ 	@opt = split(/,/,$opt_p) if defined $opt_p;
+ 	unshift @opt, '-z', $opt_z if defined $opt_z;
+-	unshift @opt, '-q'         unless defined $opt_v;
++	unshift @opt, '-q'	   unless defined $opt_v;
+ 	unless (defined($opt_p) && $opt_p =~ m/--no-cvs-direct/) {
+ 		push @opt, '--cvs-direct';
+ 	}
+-	if ($opt_P) {
+-	    exec("cat", $opt_P);
+-	} else {
+-	    exec("cvsps","--norc",@opt,"-u","-A",'--root',$opt_d,$cvs_tree);
+-	    die "Could not start cvsps: $!\n";
+-	}
++
++	print "Running cvsps\n"		  if $opt_v;
++	system(join(' ', "cvsps","--norc",@opt,"-u","-A",'--root',$opt_d,$cvs_tree, "1>$cvspsfile" ))
++		or die "Error in cvsps: $!\n";
+ }
  
-+cat >expected <<\EOF
-+!nobody@example.com!
-+!author@example.com!
-+EOF
- test_expect_success \
-     'Verify commandline' \
--    'cline=$(cat commandline)
--     [ "$cline" == "nobody@example.com author@example.com" ]'
-+    'diff commandline expected'
++open (CVS, "<$cvspsfile") 
++        or die "Cannot open cvsps output file $cvspsfile: $!\n";
  
- test_done
+ ## cvsps output:
+ #---------------------
 -- 
-1.3.3.g5029f
+1.3.2.g82000
