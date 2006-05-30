@@ -1,119 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] handle concurrent pruning of packed objects
-Date: Tue, 30 May 2006 11:56:11 -0400
-Message-ID: <20060530155611.GA16006@coredump.intra.peff.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 4/4] Add a basic test case for git send-email, and fix some real bugs discovered.
+Date: Tue, 30 May 2006 18:00:20 +0200
+Message-ID: <81b0412b0605300900l7530792dqcea6d812602b9176@mail.gmail.com>
+References: <7v8xok3vhj.fsf@assigned-by-dhcp.cox.net>
+	 <7v1wuc3t9y.fsf@assigned-by-dhcp.cox.net>
+	 <7vu0782e33.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0605300623h4f915829yb388c8fdc062c009@mail.gmail.com>
+	 <20060530152103.GB8931@trixie.casa.cgf.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 30 17:56:31 2006
+X-From: git-owner@vger.kernel.org Tue May 30 18:00:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fl6Zw-0006G5-G4
-	for gcvg-git@gmane.org; Tue, 30 May 2006 17:56:21 +0200
+	id 1Fl6dt-0006z2-98
+	for gcvg-git@gmane.org; Tue, 30 May 2006 18:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbWE3P4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 11:56:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbWE3P4Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 11:56:16 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:14789 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1751513AbWE3P4P (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 May 2006 11:56:15 -0400
-Received: (qmail 11779 invoked from network); 30 May 2006 11:56:00 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 30 May 2006 11:56:00 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 May 2006 11:56:11 -0400
-To: junkio@cox.net
-Mail-Followup-To: junkio@cox.net, git@vger.kernel.org
+	id S1751526AbWE3QAW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 12:00:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbWE3QAW
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 12:00:22 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:43061 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751524AbWE3QAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 May 2006 12:00:21 -0400
+Received: by wr-out-0506.google.com with SMTP id i5so13884wra
+        for <git@vger.kernel.org>; Tue, 30 May 2006 09:00:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cNbIPTo9kFSiwTL/XDqCJJl0vjucdyZvr+XMscyF69P8x5F1+PlRCbkXcWKueuCj2g+mzvp6tNxkMSD9W4cY9/MICcYBHoNIR346lWbtYnk9HW+m5lEAndJFUMMHRU92Sse2Q9eGMsxMW92JeTw8MdG/8tt/4G5wU0J4MAozGzc=
+Received: by 10.54.151.7 with SMTP id y7mr396051wrd;
+        Tue, 30 May 2006 09:00:20 -0700 (PDT)
+Received: by 10.54.67.11 with HTTP; Tue, 30 May 2006 09:00:20 -0700 (PDT)
+To: "Christopher Faylor" <me@cgf.cx>
+In-Reply-To: <20060530152103.GB8931@trixie.casa.cgf.cx>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21035>
 
-This patch causes read_sha1_file and sha1_object_info to re-examine the
-list of packs if an object cannot be found. It works by re-running
-prepare_packed_git() after an object fails to be found.
+On 5/30/06, Christopher Faylor <me@cgf.cx> wrote:
+> >froze afterwards anyway, as "wc" or "perl" did. Besides, it the
+> >command often freezes that poor imitation of xterm windows has.
+>
+> I assume that "the poor imitation of xterm" is referring to cygwin's
+> xterm here.  It's really too bad that you can't get into the mindset of
+> reporting problems to the cygwin mailing list when you notice them.
 
-It does not attempt to clean up the old pack list. Old packs which are in
-use can continue to be used (until unused by lru selection).  New packs
-are placed at the front of the list and will thus be examined before old
-packs.
+Actually, I was referring to windows console. And no, I don't think you
+could do something about it.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
+But honestly, I don't think it's worth supporting windows in general
+and cygwin in particular. And before anyone (again) asks why am
+_I_ doing it: I'd have to do my job with Perforce otherwise (as if
+windows wasn't bad enough...)
 
-I tested this by making a simple repo with three commits: a, b, and c.
-I ran git diff-tree --stdin, and then did the following:
-  1. fed 'a b' to diff-tree
-  2. ran git repack -a -d
-  3. fed 'b c' to diff-tree
-Vanilla git complains about the lack of object, whereas this version
-provides the correct diff-tree output.
+> I can't comment on the proposed patch since, AFAIK, using cat, wc, and
+> (cygwin's) perl should all work just fine but I don't think it is ever
+> correct to complain about a platform in released software.
 
- sha1_file.c |   24 ++++++++++++++++++------
- 1 files changed, 18 insertions(+), 6 deletions(-)
+If you actually read the message, you'd probably notice ActiveState Perl.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index f77c189..696e53f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -626,12 +626,12 @@ static void prepare_packed_git_one(char 
- 	closedir(dir);
- }
- 
-+static int prepare_packed_git_run_once = 0;
- void prepare_packed_git(void)
- {
--	static int run_once = 0;
- 	struct alternate_object_database *alt;
- 
--	if (run_once)
-+	if (prepare_packed_git_run_once)
- 		return;
- 	prepare_packed_git_one(get_object_directory(), 1);
- 	prepare_alt_odb();
-@@ -640,7 +640,13 @@ void prepare_packed_git(void)
- 		prepare_packed_git_one(alt->base, 0);
- 		alt->name[-1] = '/';
- 	}
--	run_once = 1;
-+	prepare_packed_git_run_once = 1;
-+}
-+
-+static void reprepare_packed_git(void)
-+{
-+	prepare_packed_git_run_once = 0;
-+	prepare_packed_git();
- }
- 
- int check_sha1_signature(const unsigned char *sha1, void *map, unsigned long size, const char *type)
-@@ -1212,9 +1218,12 @@ int sha1_object_info(const unsigned char
- 	if (!map) {
- 		struct pack_entry e;
- 
--		if (!find_pack_entry(sha1, &e))
--			return error("unable to find %s", sha1_to_hex(sha1));
--		return packed_object_info(&e, type, sizep);
-+		if (find_pack_entry(sha1, &e))
-+			return packed_object_info(&e, type, sizep);
-+		reprepare_packed_git();
-+		if (find_pack_entry(sha1, &e))
-+			return packed_object_info(&e, type, sizep);
-+		return error("unable to find %s", sha1_to_hex(sha1));
- 	}
- 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
- 		status = error("unable to unpack %s header",
-@@ -1256,6 +1265,9 @@ void * read_sha1_file(const unsigned cha
- 		munmap(map, mapsize);
- 		return buf;
- 	}
-+	reprepare_packed_git();
-+	if (find_pack_entry(sha1, &e))
-+		return read_packed_sha1(sha1, type, size);
- 	return NULL;
- }
- 
--- 
-1.3.3.g331f
+I have no idea why have you taken my post as an attempt to insult cygwin;
+IF I had that in mind I'd dedicate a whole long post just to that.
