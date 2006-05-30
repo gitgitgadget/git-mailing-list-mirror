@@ -1,60 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git bug? + question
-Date: Fri, 3 Nov 2006 10:51:06 +0100
-Message-ID: <20061103095106.GB16721@diana.vm.bytemark.co.uk>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca> <20061103081232.GB15972@diana.vm.bytemark.co.uk> <20061103042540.192bbd18.seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 0/10] re-based and expanded tree-walker cleanup patches
+Date: Mon, 29 May 2006 17:42:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0605291739430.5623@g5.osdl.org>
+References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
+ <7virno79a7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 09:51:46 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 30 May 2006 00:43:09 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061103042540.192bbd18.seanlkml@sympatico.ca>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7virno79a7.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21000>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfvhv-0001MX-4z for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 10:51:27 +0100
+ esmtp (Exim 4.43) id 1FksJx-00057a-Q9 for gcvg-git@gmane.org; Tue, 30 May
+ 2006 02:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752784AbWKCJvW convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 04:51:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbWKCJvW
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 04:51:22 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:18957 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1752784AbWKCJvW
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 04:51:22 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gfvha-0004et-00; Fri, 03 Nov 2006 09:51:06 +0000
-To: Sean <seanlkml@sympatico.ca>
+ S1751141AbWE3Amr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 29 May 2006
+ 20:42:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbWE3Amr
+ (ORCPT <rfc822;git-outgoing>); Mon, 29 May 2006 20:42:47 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:29877 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1751141AbWE3Amr (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 29 May 2006 20:42:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4U0gh2g029140
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 29
+ May 2006 17:42:43 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4U0ggbs022775; Mon, 29 May
+ 2006 17:42:42 -0700
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-03 04:25:40 -0500, Sean wrote:
 
-> Yeah.. Although fetching multiple remotes makes more sense as an
-> optimization, especially when using a separate remotes namespace.
 
-That's what "git fetch" is for. :-)
+On Mon, 29 May 2006, Junio C Hamano wrote:
+> 
+> Sorry for having you have done this -- last night I've merged
+> the series without rebasing and have the result in "next".  I'll
+> compare to see if you have spotted my mismerges there tonight.
 
-> Perhaps the real confusion is created because the only porcelain
-> level merge command current in Git is "git pull .". A separate name
-> might make things easier to grasp.
+It was interesting. I cleaned up the series and switched the order of some 
+commits in my tree by doing first a "git rebase" and then cherry-picking 
+them into another branch, and using "git commit --amend" to fix up some of 
+the things I had missed.
 
-Indeed. Having pull =3D fetch + merge and not having a porcelain merge
-command is not good, usability-wise. As is, one _has_ to learn the
-weird ways of pull even if one is only interested in using separate
-commands to fetch and merge.
+Pretty powerful, although at one point I was wondering about having a "git 
+rebase" that could switch commits around or drop unwanted ones (ie let the 
+user edit the cherry-picking list before the actual rebase).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
