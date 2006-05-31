@@ -1,66 +1,49 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: Re: [PATCH] Remove possible segfault in http-fetch.
-Date: Wed, 31 May 2006 09:07:31 -0700
-Message-ID: <20060531160731.GA12261@reactrix.com>
-References: <87fyj4y1lx.fsf@mid.deneb.enyo.de> <BAYC1-PASMTP082397700A9527CC2F3786AEA40@CEZ.ICE> <7vverzzukg.fsf@assigned-by-dhcp.cox.net>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: No tags when cloing the Linux history tree
+Date: Wed, 31 May 2006 19:23:12 +0200
+Message-ID: <1149096192.2152.37.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 31 18:08:52 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Gleixner <tglx@linutronix.de>
+X-From: git-owner@vger.kernel.org Wed May 31 19:23:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlTF8-0006GN-PW
-	for gcvg-git@gmane.org; Wed, 31 May 2006 18:08:23 +0200
+	id 1FlUPM-0004YX-T9
+	for gcvg-git@gmane.org; Wed, 31 May 2006 19:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633AbWEaQIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 12:08:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbWEaQIT
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 12:08:19 -0400
-Received: from 241.37.26.69.virtela.net ([69.26.37.241]:46173 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S1751631AbWEaQIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 May 2006 12:08:18 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k4VG7WiH010624;
-	Wed, 31 May 2006 09:07:32 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k4VG7VeO010622;
-	Wed, 31 May 2006 09:07:31 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vverzzukg.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S1751745AbWEaRW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 13:22:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbWEaRW5
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 13:22:57 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:21893 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S1751744AbWEaRW5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 13:22:57 -0400
+Received: from blade (p5487DBD8.dip.t-dialin.net [84.135.219.216])
+	by mail.holtmann.net (8.13.4/8.13.4/Debian-3sarge1) with ESMTP id k4VHOQHZ019782
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Wed, 31 May 2006 19:24:26 +0200
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.6.1 
+X-Spam-Status: No, score=0.3 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_96_XX 
+	autolearn=no version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on coyote.holtmann.net
+X-Virus-Scanned: ClamAV 0.84/1501/Wed May 31 12:23:26 2006 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21071>
 
-On Sun, May 21, 2006 at 12:49:19AM -0700, Junio C Hamano wrote:
+Hi guys,
 
-> curl_easy_cleanup() which is called from http_cleanup() says it
-> is safe to remove the strings _after_ you call that function, so
-> I think the change makes sense -- it was apparently unsafe to
-> free them before calling cleanup.
-> 
-> Knowing nothing about quirks in curl libraries, one thing that
-> is mystery to me is that we slist_append() to other two lists
-> (pragma_header and range_header) but we do not seem to ever free
-> them.  Another slist dav_headers is allocated and then freed
-> inside a function, so that call-pattern seems well-formed.
-> 
-> Nick, care to help us out?
+when cloning the Linux history tree from Thomas Gleixner over HTTP or
+GIT transports using cg-clone (instead of git-clone), I don't get the
+tags. I checked on master.kernel.org and all tags are present there.
 
-I just got back from a trip to the midwest and am still getting caught
-up.  I was only gone for 10 days, you've all been quite busy...
+Regards
 
-You're correct wrt the other slists, I'll get to work on a patch for
-that after I've caught up.
-
-I'm also doing additional testing to see whether this fixes the DAV/405
-segfault as I think there may be something else going on there.
-
--- 
-For a successful technology, reality must take precedence over public
-relations, for nature cannot be fooled.
+Marcel
