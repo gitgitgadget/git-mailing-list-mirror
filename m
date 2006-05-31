@@ -1,47 +1,66 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: format-patch signoff argument no longer works
-Date: Wed, 31 May 2006 15:19:55 -0400
-Message-ID: <20060531191955.GH13682@fieldses.org>
-References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com> <93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com> <20060531112803.GB3877@spinlock.ch> <m2mzcycn4f.fsf@ziti.fhcrc.org> <7vejyayq46.fsf@assigned-by-dhcp.cox.net>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: git --version
+Date: Wed, 31 May 2006 21:20:14 +0200
+Message-ID: <4d8e3fd30605311220t17d319efyd5234dd4eb74fc96@mail.gmail.com>
+References: <4d8e3fd30605301516l782ad81dk5b11074e88db90a4@mail.gmail.com>
+	 <7vu077ywmw.fsf@assigned-by-dhcp.cox.net>
+	 <4d8e3fd30605311158n9d669dgd6c392ee8d194b78@mail.gmail.com>
+	 <7vac8yypxc.fsf@assigned-by-dhcp.cox.net>
+	 <4d8e3fd30605311213m6f2f2660u90701ad6bd5daabc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Seth Falcon <sethfalcon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 31 21:20:13 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 31 21:20:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlWEa-0000Ca-Vq
-	for gcvg-git@gmane.org; Wed, 31 May 2006 21:20:01 +0200
+	id 1FlWEy-0000H8-DK
+	for gcvg-git@gmane.org; Wed, 31 May 2006 21:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965110AbWEaTT5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 15:19:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965112AbWEaTT5
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 15:19:57 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:14516 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S965110AbWEaTT4
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 May 2006 15:19:56 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
-	(envelope-from <bfields@fieldses.org>)
-	id 1FlWEV-0006Xt-7a; Wed, 31 May 2006 15:19:55 -0400
-To: Junio C Hamano <junkio@cox.net>
+	id S965112AbWEaTUT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 15:20:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965113AbWEaTUT
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 15:20:19 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:10023 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S965112AbWEaTUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 15:20:17 -0400
+Received: by wr-out-0506.google.com with SMTP id 50so99093wri
+        for <git@vger.kernel.org>; Wed, 31 May 2006 12:20:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rD6eUhDqnv8k0UfQNzpxysKaKmp1aeOKmCXcTAzVmtR7YlKVYHhfbEWt/loJbGm8k4D/fY2cOiqlsUCca8tvJ1x6WJi87SV2PMQz+5DCjK6UsrZOVNmToCBdUIWXA3KwW2fCXuGZzK/F/x7CL3yrl61yt9yOUL+e20yKEIOXWjE=
+Received: by 10.64.112.8 with SMTP id k8mr165997qbc;
+        Wed, 31 May 2006 12:20:14 -0700 (PDT)
+Received: by 10.64.250.4 with HTTP; Wed, 31 May 2006 12:20:14 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <4d8e3fd30605311213m6f2f2660u90701ad6bd5daabc@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vejyayq46.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21078>
 
-On Wed, May 31, 2006 at 12:02:33PM -0700, Junio C Hamano wrote:
-> Now, we could do that by re-adding "format-patch -s" option, or
-> alternatively we could add that to "send-email".  We might want
-> to do both ;-)
+On 5/31/06, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+ > So yes, it's correctly installed (I pull, compile and install almost
+> daily always without any problem).
+>
 
-Personally, just to give myself the best change of catching problems
-with the outgoing email, I'd prefer to have as much as possible be done
-*before* send-email, so whatever I review is as close to what's sent out
-as possible.
+Tried with:
+ make clean
+ make && sudo make install
+ [...]
+ paolo@Italia:~/git$ git --version
+ git version 1.3.GIT
+ paolo@Italia:~/git$ ./GIT-VERSION-GEN
+ GIT_VERSION = 1.3.3.g2186
 
---b.
+Puzzled.
+
+
+-- 
+Paolo
+http://paolociarrocchi.googlepages.com
