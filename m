@@ -1,73 +1,74 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: irc usage..
-Date: Tue, 30 May 2006 16:07:47 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org> 
- <46a038f90605220554y569c11b9p24027772bd2ee79a@mail.gmail.com> 
- <44720C66.6040304@gentoo.org>  <Pine.LNX.4.64.0605221234430.3697@g5.osdl.org>
-  <447215D4.5020403@gentoo.org>  <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>
-  <447231C4.2030508@gentoo.org> <447B6D85.4050601@gentoo.org> 
- <46a038f90605291521q37f34209wd923608bdebb9084@mail.gmail.com> 
- <447B7669.8050805@gentoo.org> <46a038f90605301531g4f8b37c7qab9a717833c64ebc@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: t9001 fails because Net::SMTP is missing
+Date: Tue, 30 May 2006 17:34:44 -0700
+Message-ID: <7v8xojyqu3.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0605302125310.11586@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Donnie Berkholz <spyderous@gentoo.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 31 01:09:37 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 31 02:34:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlDL8-0004Mx-3P
-	for gcvg-git@gmane.org; Wed, 31 May 2006 01:09:30 +0200
+	id 1FlEfh-0000NA-Rl
+	for gcvg-git@gmane.org; Wed, 31 May 2006 02:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964810AbWE3XJ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 19:09:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964811AbWE3XJ1
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 19:09:27 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:47042 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964810AbWE3XJ0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 May 2006 19:09:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k4UN7p2g029379
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 30 May 2006 16:07:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k4UN7ljh001656;
-	Tue, 30 May 2006 16:07:47 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605301531g4f8b37c7qab9a717833c64ebc@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.74__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964834AbWEaAer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 20:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964835AbWEaAer
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 20:34:47 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:59821 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S964834AbWEaAeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 May 2006 20:34:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060531003445.SBYP15767.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 30 May 2006 20:34:45 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0605302125310.11586@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 30 May 2006 21:26:55 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21050>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> is it unexpected that there are setups which come without Net::SMTP?
+>
+> -- snip --
+> * expecting success: git format-patch -n HEAD^1
+>      git send-email -from="Example <nobody@example.com>" 
+> --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" ./0001*txt
+> 0001-Second.txt
+> Can't locate Net/SMTP.pm in @INC (@INC contains: 
 
-On Wed, 31 May 2006, Martin Langhoff wrote:
-> 
->  gitview
->  http://git.catalyst.net.nz/gitweb?p=gentoo.git;a=summary
+Hmm.  Something like this?
 
-Heh. I think you should enable caching in your apache config. 
+-- >8 --
 
-And maybe we should make that part of the gitweb docs. Without a caching 
-web-server, gitweb is pretty slow, but it caches _beautifully_.
-
-That gentoo repo has a lot of "duplicate" commits that cvsps will mark as 
-two separate commits because there's one commit for the files, and one 
-commit for whatever the "Manifest" file is. I wonder if those commits 
-should generally be merged or something. 
-
-That said, things like that are most easily fixed as a git->git update 
-(along with adding name translation), which can avoid re-writing the 
-trees.
-
-			Linus
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 0e368ff..f7af8eb 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -21,7 +21,6 @@ use warnings;
+ use Term::ReadLine;
+ use Getopt::Long;
+ use Data::Dumper;
+-use Net::SMTP;
+ 
+ # most mail servers generate the Date: header, but not all...
+ $ENV{LC_ALL} = 'C';
+@@ -394,6 +393,7 @@ X-Mailer: git-send-email $gitversion
+ 		print $sm "$header\n$message";
+ 		close $sm or die $?;
+ 	} else {
++		use Net::SMTP;
+ 		$smtp ||= Net::SMTP->new( $smtp_server );
+ 		$smtp->mail( $from ) or die $smtp->message;
+ 		$smtp->to( @recipients ) or die $smtp->message;
