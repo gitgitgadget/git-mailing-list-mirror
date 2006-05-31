@@ -1,90 +1,54 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: irc usage..
-Date: Wed, 31 May 2006 13:04:46 +1200
-Message-ID: <46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
-	 <Pine.LNX.4.64.0605221234430.3697@g5.osdl.org>
-	 <447215D4.5020403@gentoo.org>
-	 <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>
-	 <447231C4.2030508@gentoo.org> <447B6D85.4050601@gentoo.org>
-	 <46a038f90605291521q37f34209wd923608bdebb9084@mail.gmail.com>
-	 <447B7669.8050805@gentoo.org>
-	 <46a038f90605301531g4f8b37c7qab9a717833c64ebc@mail.gmail.com>
-	 <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: t9001 fails because Net::SMTP is missing
+Date: Tue, 30 May 2006 22:07:29 -0400
+Message-ID: <118833cc0605301907i152fc0b0s6788a11ad05e7f10@mail.gmail.com>
+References: <Pine.LNX.4.63.0605302125310.11586@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7v8xojyqu3.fsf@assigned-by-dhcp.cox.net>
+	 <7v4pz7yqpd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Donnie Berkholz" <spyderous@gentoo.org>,
-	"Yann Dirson" <ydirson@altern.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Matthias Urlichs" <smurf@smurf.noris.de>,
+Cc: git@vger.kernel.org,
 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 31 03:04:52 2006
+X-From: git-owner@vger.kernel.org Wed May 31 04:07:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlF8l-0006aw-1Y
-	for gcvg-git@gmane.org; Wed, 31 May 2006 03:04:51 +0200
+	id 1FlG7a-0007A1-2P
+	for gcvg-git@gmane.org; Wed, 31 May 2006 04:07:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932551AbWEaBEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 21:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932552AbWEaBEr
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 21:04:47 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:58674 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932551AbWEaBEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 May 2006 21:04:46 -0400
-Received: by wr-out-0506.google.com with SMTP id 37so122448wra
-        for <git@vger.kernel.org>; Tue, 30 May 2006 18:04:46 -0700 (PDT)
+	id S1751139AbWEaCHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 22:07:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWEaCHc
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 22:07:32 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:43558 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751139AbWEaCHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 May 2006 22:07:31 -0400
+Received: by nf-out-0910.google.com with SMTP id p46so75860nfa
+        for <git@vger.kernel.org>; Tue, 30 May 2006 19:07:30 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OzPE4EWjgKgHvvOQSwNucgX/Mi2mjHGeO6q+KJSP4mIqJObb3ARR6ut7Mom54zGPbNzPKdoOhxy+qePyXl7t9i0p7jg35PeWw8/4SfCkhjmZEIJr0IvBL8v9iECzS9niyp5G6OAipdDLFDBMeC34gU2AiZB7UCw2uwTC9MJNRaY=
-Received: by 10.54.135.7 with SMTP id i7mr957632wrd;
-        Tue, 30 May 2006 18:04:46 -0700 (PDT)
-Received: by 10.54.127.12 with HTTP; Tue, 30 May 2006 18:04:46 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
+        b=iDmZCp0YIfSsGxDb5+3y+0SFh/3BKZ35MLXUew4C2D3t0IMhuYD4GmSknZSI6ktFZQk0HarkbchARYBcbdQCIg7ZP+kdw4vfSd44rLp6ZwLkjeRgXmej//BAoF22h7sBMEPixAooaoJ6a/B1fpmZwoj/PQ9olnoYHWZDxQOzrzE=
+Received: by 10.48.235.15 with SMTP id i15mr282290nfh;
+        Tue, 30 May 2006 19:07:29 -0700 (PDT)
+Received: by 10.67.15.12 with HTTP; Tue, 30 May 2006 19:07:29 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7v4pz7yqpd.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21053>
 
-On 5/31/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 31 May 2006, Martin Langhoff wrote:
-> >
-> >  gitview
-> >  http://git.catalyst.net.nz/gitweb?p=gentoo.git;a=summary
->
-> Heh. I think you should enable caching in your apache config.
+You just need more perl magic...  Try this.
 
-I know I should -- but I'm hoping to find the time to rework gitweb a
-bit to actually work fast instead. It bothers me that it is so slow on
-a basically idle machine, and where I can perform the corresponding
-git operations in the commandline in a blink.
+#!/usr/local/perl -w
 
-And caching is great for really busy sites (aka kernel.org) but
-git.catalyst.net.nz only serves a handful of small repos for a small
-group of people, and is 99% idle. Should blaze through this stuff.
+eval 'use strict';
+print "Hmm [$@]\n";
 
-> That gentoo repo has a lot of "duplicate" commits that cvsps will mark as
-> two separate commits because there's one commit for the files, and one
-> commit for whatever the "Manifest" file is. I wonder if those commits
-> should generally be merged or something.
->
-> That said, things like that are most easily fixed as a git->git update
-> (along with adding name translation), which can avoid re-writing the
-> trees.
-
-Yep, large projects often have good reasons to run custom imports,
-merging certain commits, rewriting log messages (like the X.org guys
-were doing). It can be done at the cvsimport stage or later -- I think
-Pasky has a rewritehistory tool hidden somewhere in Cogito, but I
-haven't used it.
-
-cheers,
-
-
-martin
+eval 'use Oink';
+print "Hmm [$@]\n";
