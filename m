@@ -1,57 +1,63 @@
-From: Matthias Kestenholz <lists@spinlock.ch>
-Subject: Re: format-patch signoff argument no longer works
-Date: Wed, 31 May 2006 13:28:03 +0200
-Message-ID: <20060531112803.GB3877@spinlock.ch>
-References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com> <93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com>
+From: Alec Warner <antarus@gentoo.org>
+Subject: Re: irc usage..
+Date: Wed, 31 May 2006 09:54:48 -0400
+Message-ID: <447DA028.3040606@gentoo.org>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>	 <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>	 <447231C4.2030508@gentoo.org> <447B6D85.4050601@gentoo.org>	 <46a038f90605291521q37f34209wd923608bdebb9084@mail.gmail.com>	 <447B7669.8050805@gentoo.org>	 <46a038f90605301531g4f8b37c7qab9a717833c64ebc@mail.gmail.com>	 <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>	 <46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>	 <447D043D.1020609@gentoo.org> <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
+Reply-To: antarus@gentoo.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 31 13:55:00 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Donnie Berkholz <spyderous@gentoo.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Yann Dirson <ydirson@altern.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 31 15:55:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlPHo-0002dk-DT
-	for gcvg-git@gmane.org; Wed, 31 May 2006 13:54:52 +0200
+	id 1FlRAT-0006hS-6O
+	for gcvg-git@gmane.org; Wed, 31 May 2006 15:55:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932478AbWEaLyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 07:54:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932479AbWEaLyV
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 07:54:21 -0400
-Received: from mxout.hispeed.ch ([62.2.95.247]:62443 "EHLO smtp.hispeed.ch")
-	by vger.kernel.org with ESMTP id S932478AbWEaLyU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 May 2006 07:54:20 -0400
-Received: from spinlock.ch (80-218-7-29.dclient.hispeed.ch [80.218.7.29])
-	by smtp.hispeed.ch (8.12.11.20060308/8.12.6/taifun-1.0) with SMTP id k4VBsDBt016463;
-	Wed, 31 May 2006 13:54:14 +0200
-Received: (nullmailer pid 6059 invoked by uid 1000);
-	Wed, 31 May 2006 11:28:03 -0000
-To: geoff@austrics.com.au
-Content-Disposition: inline
-In-Reply-To: <93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com>
-X-Editor: Vim http://www.vim.org/
-X-Operating-System: GNU/Linux 2.6.17-rc4-g2f880b65 (i686)
-X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
-User-Agent: Mutt/1.5.11+cvs20060403
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on smtp-07.tornado.cablecom.ch
-X-Virus-Status: Clean
-X-DCC-spamcheck-02.tornado.cablecom.ch-Metrics: smtp-07.tornado.cablecom.ch 1378;
-	Body=2 Fuz1=2 Fuz2=2
+	id S965022AbWEaNzN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 09:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965023AbWEaNzN
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 09:55:13 -0400
+Received: from jeeves.egr.msu.edu ([35.9.37.127]:15254 "EHLO egr.msu.edu")
+	by vger.kernel.org with ESMTP id S965022AbWEaNzM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 May 2006 09:55:12 -0400
+Received: from [35.9.140.215] (tokyo.dhcp.egr.msu.edu [35.9.140.215])
+	(authenticated bits=0)
+	by egr.msu.edu (8.13.6/8.13.4) with ESMTP id k4VDskIe012819
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 31 May 2006 09:54:51 -0400 (EDT)
+User-Agent: Thunderbird 1.5.0.2 (X11/20060514)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21063>
 
-* Geoff Russell (geoffrey.russell@gmail.com) wrote:
-> The --signoff argument no longer works in git-format-patch.  Was this
-> intentional?
-> It still appears in the documentation for the command.
+Martin Langhoff wrote:
+> On 5/31/06, Donnie Berkholz <spyderous@gentoo.org> wrote:
+>> We've got a guy who got a Summer of Code project to work on CVS
+>> migration, so this could be something along his lines.
 > 
-> It appears to have got lost when the shell script got converted to C.
+> He'll want a fast box to wrangle with this repo ;-)
 > 
+> 
+> martin
 
-Yes, this was intentional. You should sign off your changes while
-committing (git commit -s|--signoff)
+I have a dual opteron with 4gb of ram "on loan" from work :)
 
-Thanks,
-Matthias
+It still dies though, using git cvsimport or parsecvs.
+
+I talked to Keith Packard about adding support to parsecvs for recording 
+the actual changed changesets, but I haven't yet started on implementing 
+that since he isn't using cvsps in parsecvs.
+
+I also haven't had a chance to look at the git-cvsimport sources yet, 
+was hoping to get to that later this week.
