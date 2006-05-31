@@ -1,94 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/10] re-based and expanded tree-walker cleanup patches
-Date: Wed, 31 May 2006 15:53:19 -0700
-Message-ID: <7vpshtyffk.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
-	<7virno79a7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605291739430.5623@g5.osdl.org>
-	<7vmzd05i25.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605292112530.5623@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] send-email: only 'require' instead of 'use' Net::SMTP
+Date: Thu, 1 Jun 2006 00:55:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606010054420.3617@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 01 00:53:27 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Jun 01 00:56:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlZZ8-0004js-N5
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 00:53:27 +0200
+	id 1FlZbT-00055v-H8
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 00:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965223AbWEaWxV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 18:53:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965212AbWEaWxV
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 18:53:21 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:44220 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S965223AbWEaWxV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 May 2006 18:53:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060531225320.VEXN15447.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 31 May 2006 18:53:20 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605292112530.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 29 May 2006 21:17:06 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965226AbWEaWzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 18:55:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965212AbWEaWzt
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 18:55:49 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11983 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S965226AbWEaWzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 18:55:48 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 374E9E61;
+	Thu,  1 Jun 2006 00:55:47 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 29737E48;
+	Thu,  1 Jun 2006 00:55:47 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 00DA9E3D;
+	Thu,  1 Jun 2006 00:55:46 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net,
+	Eric Wong <normalperson@yhbt.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21096>
-
-Linus Torvalds <torvalds@osdl.org> writes:
-
->  (a) git-rev-list --pretty=oneline "$upstream"..ORIG_HEAD > rev-list
->
->  (b) edit the rev-list, moving the single lines around, deleting them, etc
->
->  (c) cat rev-list |
->      git-format-patch -k --stdout --stdin --full_index |
->      git-am
->
-> because the "--pretty=oneline" format is actually very nice as a way to 
-> re-order things and select single commits to be deleted or whatever..
-
-I am thinking about doing "format-patch --stdin" while I am
-futzing with it for other reasons, and one issue is where to
-"tac" the revision list.
-
-We could internally reverse topo-sort what we read from --stdin
-inside format-patch, but that would defeat the reordering that
-is done in the step (b) above, so that is not a useful thing to
-do.
-
-If we wanted to make rev-list piped straight to format-patch
-equilvalent to giving the arguments you would have given rev-list
-directly to format-patch, then format-patch should read --stdin
-and reverse the list before emitting them out.
-
-However, that would mean in the step (b) above the user needs to
-be conscious that the list being edited is in the reverse order,
-so if the list of commits needs to be reordered (and that is one
-of the reasons the user is doing this step) what comes earlier
-in the edited list will be output later in the result.
-
-Tentatively my feeling is that we should make it known that the
-list format-patch takes from --stdin is supposed to be _not_
-reversed, and do nothing in format-patch.  In other words, the
-list fed is a moral equivalent to quilt "series" file.
-
-What this means is:
-
-	git-format-patch $revargs
-
-is not equivalent to
-
-	git-rev-list $revargs | git-format-patch --stdin
-
-but is equivalent to
-
-	git-rev-list $revargs | tac | git-format-patch --stdin
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21097>
 
 
-Thoughts from the list?
+This was proposed by Eric Wong and fixes the test. (Of course, git-send-email
+does not work, if there is no Net::SMTP here, but it will say what is wrong
+when you actually try to use send-email.)
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ git-send-email.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 0e368ff..ed1d89b 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -21,7 +21,6 @@ use warnings;
+ use Term::ReadLine;
+ use Getopt::Long;
+ use Data::Dumper;
+-use Net::SMTP;
+ 
+ # most mail servers generate the Date: header, but not all...
+ $ENV{LC_ALL} = 'C';
+@@ -394,6 +393,7 @@ X-Mailer: git-send-email $gitversion
+ 		print $sm "$header\n$message";
+ 		close $sm or die $?;
+ 	} else {
++		require Net::SMTP;
+ 		$smtp ||= Net::SMTP->new( $smtp_server );
+ 		$smtp->mail( $from ) or die $smtp->message;
+ 		$smtp->to( @recipients ) or die $smtp->message;
+-- 
+1.3.3.gc46d3-dirty
