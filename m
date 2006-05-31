@@ -1,56 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Update documentation for git-format-patch
-Date: Wed, 31 May 2006 17:00:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0605311700240.20016@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com>
- <93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com>
- <20060531112803.GB3877@spinlock.ch> <20060531141408.G366d89c7@leonov.stosberg.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] git commit --branch
+Date: Wed, 31 May 2006 17:21:29 +0200
+Message-ID: <20060531152129.GJ14325@admingilde.org>
+References: <20060529202851.GE14325@admingilde.org> <7vr72b27x9.fsf@assigned-by-dhcp.cox.net> <20060530210551.GI14325@admingilde.org> <7vd5dvyvkq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthias Kestenholz <lists@spinlock.ch>, geoff@austrics.com.au,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 31 17:01:15 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="APlYHCtpeOhspHkB"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 31 17:22:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlSBu-0002Sz-CQ
-	for gcvg-git@gmane.org; Wed, 31 May 2006 17:00:58 +0200
+	id 1FlSVq-0006a0-DC
+	for gcvg-git@gmane.org; Wed, 31 May 2006 17:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965050AbWEaPAz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 11:00:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965053AbWEaPAz
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 11:00:55 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:29126 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965050AbWEaPAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 May 2006 11:00:54 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 88493E9C;
-	Wed, 31 May 2006 17:00:53 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 7A75DE9B;
-	Wed, 31 May 2006 17:00:53 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 97B91E96;
-	Wed, 31 May 2006 17:00:50 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Dennis Stosberg <dennis@stosberg.net>
-In-Reply-To: <20060531141408.G366d89c7@leonov.stosberg.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S965061AbWEaPVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 11:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965065AbWEaPVb
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 11:21:31 -0400
+Received: from admingilde.org ([213.95.32.146]:52098 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S965061AbWEaPVa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 May 2006 11:21:30 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1FlSVl-00082o-66; Wed, 31 May 2006 17:21:29 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vd5dvyvkq.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21068>
 
-Hi,
 
-On Wed, 31 May 2006, Dennis Stosberg wrote:
+--APlYHCtpeOhspHkB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Is there any "patch" program at all that understands git's rename
-> patches?
+hoi :)
 
-Why, yes: git-apply!
+On Tue, May 30, 2006 at 03:52:21PM -0700, Junio C Hamano wrote:
+> you can switch to another existing topic branch do with "git
+> checkout", perhaps with the -m flag.  While I was on the "master" to
+> figure out why gitweb was not behaving for me, and figured out a mis-
+> configuration that should be fixed in "newconf" topic, I switched to
+> that topic and committed the fix there, after testing the change
+> there.  Then either merging it back to "master" or rebuilding "master"
+> from scratch based on "origin" and merging my topics got me a working
+> gitweb back.
 
-Ciao,
-Dscho
+So perhaps my real problem was that I did not know about checkout -m.
+Your description of the workflow is of course much saver then
+automatically committing to an other branch.
+
+--=20
+Martin Waitz
+
+--APlYHCtpeOhspHkB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEfbR4j/Eaxd/oD7IRAuPzAJ4jISmtjO2Xxw9Y3xL4Yvs6EJfvTwCfbdua
+g70IrHADoixsi9iGt0F6Pwk=
+=/y5e
+-----END PGP SIGNATURE-----
+
+--APlYHCtpeOhspHkB--
