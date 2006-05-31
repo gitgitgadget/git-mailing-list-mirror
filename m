@@ -1,54 +1,99 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
-Subject: Re: t9001 fails because Net::SMTP is missing
-Date: Tue, 30 May 2006 22:07:29 -0400
-Message-ID: <118833cc0605301907i152fc0b0s6788a11ad05e7f10@mail.gmail.com>
-References: <Pine.LNX.4.63.0605302125310.11586@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v8xojyqu3.fsf@assigned-by-dhcp.cox.net>
-	 <7v4pz7yqpd.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Automatically line wrap long commit messages.
+Date: Tue, 30 May 2006 22:18:08 -0400
+Message-ID: <20060531021808.GC21222@spearce.org>
+References: <20060529085738.GB29500@spearce.org> <7virnp8a30.fsf@assigned-by-dhcp.cox.net> <20060529094605.GB27194@spearce.org> <7vhd373o15.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 31 04:07:44 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 31 04:18:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlG7a-0007A1-2P
-	for gcvg-git@gmane.org; Wed, 31 May 2006 04:07:42 +0200
+	id 1FlGHv-0008UA-2X
+	for gcvg-git@gmane.org; Wed, 31 May 2006 04:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751139AbWEaCHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 May 2006 22:07:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWEaCHc
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 22:07:32 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:43558 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751139AbWEaCHb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 May 2006 22:07:31 -0400
-Received: by nf-out-0910.google.com with SMTP id p46so75860nfa
-        for <git@vger.kernel.org>; Tue, 30 May 2006 19:07:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iDmZCp0YIfSsGxDb5+3y+0SFh/3BKZ35MLXUew4C2D3t0IMhuYD4GmSknZSI6ktFZQk0HarkbchARYBcbdQCIg7ZP+kdw4vfSd44rLp6ZwLkjeRgXmej//BAoF22h7sBMEPixAooaoJ6a/B1fpmZwoj/PQ9olnoYHWZDxQOzrzE=
-Received: by 10.48.235.15 with SMTP id i15mr282290nfh;
-        Tue, 30 May 2006 19:07:29 -0700 (PDT)
-Received: by 10.67.15.12 with HTTP; Tue, 30 May 2006 19:07:29 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v4pz7yqpd.fsf@assigned-by-dhcp.cox.net>
+	id S1751172AbWEaCSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 May 2006 22:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbWEaCSN
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 May 2006 22:18:13 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52929 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751534AbWEaCSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 May 2006 22:18:12 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FlGHX-0007zj-Bw; Tue, 30 May 2006 22:17:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 217B420E445; Tue, 30 May 2006 22:18:08 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vhd373o15.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21054>
 
-You just need more perl magic...  Try this.
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > OK.  Ignore both patches then.  Two negative votes in such a short
+> > time suggests they are probably not generally accepted.  ;-)
+> >
+> >> We probably should allow "commit -F -" to read from the standard
+> >> input if we already don't, but that is about as far as I am
+> >> willing to go at this moment.
+> >
+> > We do.  So apparently the solution to my usage issue is:
+> >
+> > 	$ fmt -w 60 | git commit -F-
+> > 	This is my message.
+> >
+> > 	This is the body.  Etc....
+> > 	EOF
+> >
+> > I'm thinking that's too much work for me.
+> 
+> If we supported multiple -m (presumably each becomes a single line?)
+> with internal fmt, I do not see how it would become less work.
+> 
+> 	$ git commit -w60 -m "This is my message." \
+>         	-m '' \
+>         	-m 'This is the body.  Etc....'
+> 
+> looks more typing to me, even without the second line to force
+> the empty line between the summary and the body.
 
-#!/usr/local/perl -w
+Actually I was thinking each -m would be its own paragraph so blank
+lines would split each -m and maybe the -w60 should be a config
+option in .git/config or .gitrc so it doesn't always need to be
+supplied on the command line.
 
-eval 'use strict';
-print "Hmm [$@]\n";
+Personally I want blank lines between each -m and to always run
+the message through fmt.  Others may want to run their commit
+messages through other filters so maybe the filter itself is just
+a config value which gets executed:
 
-eval 'use Oink';
-print "Hmm [$@]\n";
+	[user]
+		commitMessageFilter = fmt -w 60
+
+or someone else might set:
+
+	[user]
+		commitMessageFilter = /home/user/bin/my-filter
+
+where the filter accepts the message on STDIN and writes (the maybe
+changed) message on STDOUT.
+
+-- 
+Shawn.
