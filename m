@@ -1,91 +1,69 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: git --version
-Date: Wed, 31 May 2006 21:43:03 +0200
-Message-ID: <4d8e3fd30605311243q5a93a7a9l827c55827817602f@mail.gmail.com>
-References: <4d8e3fd30605301516l782ad81dk5b11074e88db90a4@mail.gmail.com>
-	 <7vu077ywmw.fsf@assigned-by-dhcp.cox.net>
-	 <4d8e3fd30605311158n9d669dgd6c392ee8d194b78@mail.gmail.com>
-	 <7vac8yypxc.fsf@assigned-by-dhcp.cox.net>
-	 <4d8e3fd30605311213m6f2f2660u90701ad6bd5daabc@mail.gmail.com>
-	 <4d8e3fd30605311220t17d319efyd5234dd4eb74fc96@mail.gmail.com>
-	 <Pine.LNX.4.64.0605311224360.24646@g5.osdl.org>
-	 <4d8e3fd30605311230h53981e57x8a417b176bedba86@mail.gmail.com>
-	 <Pine.LNX.4.64.0605311233030.24646@g5.osdl.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: format-patch signoff argument no longer works
+Date: Wed, 31 May 2006 12:43:09 -0700
+Message-ID: <m2k6829e0i.fsf@ziti.fhcrc.org>
+References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com>
+	<93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com>
+	<20060531112803.GB3877@spinlock.ch> <m2mzcycn4f.fsf@ziti.fhcrc.org>
+	<7vejyayq46.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 31 21:43:21 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed May 31 21:43:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlWb3-0003zK-VO
-	for gcvg-git@gmane.org; Wed, 31 May 2006 21:43:14 +0200
+	id 1FlWb4-0003zK-SY
+	for gcvg-git@gmane.org; Wed, 31 May 2006 21:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965115AbWEaTnI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 15:43:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965127AbWEaTnH
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 15:43:07 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:21567 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S965115AbWEaTnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 May 2006 15:43:05 -0400
-Received: by wr-out-0506.google.com with SMTP id i12so96030wra
-        for <git@vger.kernel.org>; Wed, 31 May 2006 12:43:04 -0700 (PDT)
+	id S965127AbWEaTnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 15:43:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965128AbWEaTnL
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 15:43:11 -0400
+Received: from wx-out-0102.google.com ([66.249.82.206]:10933 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S965127AbWEaTnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 15:43:10 -0400
+Received: by wx-out-0102.google.com with SMTP id i29so74659wxd
+        for <git@vger.kernel.org>; Wed, 31 May 2006 12:43:10 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BX3++WAJLSSTJuljrM/xaw9khd7vPdsoIjEI74HAYJmvOyuJ6GOtcE++A8scpiNacW16VUnLHuiN9kpZet6j1IgqlcWwc4Vpl81s3ZqvjS4Vrwm69cNIDambqwx69cexRhKsXjt102wqx7D35U8rf6X25YYHPnhQSN+GoFyycAo=
-Received: by 10.64.53.7 with SMTP id b7mr703272qba;
-        Wed, 31 May 2006 12:43:03 -0700 (PDT)
-Received: by 10.64.250.4 with HTTP; Wed, 31 May 2006 12:43:03 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0605311233030.24646@g5.osdl.org>
-Content-Disposition: inline
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=gr57kr7yNfIjRBu03N0yKizjdijLisqKGBMSixp5j/iziJDU2Sxl2BvltZgZHXA6fZnVDhWl2ltAevnE2gbilDKptEaCacjg8P5XjRcvSwrs2lXMo8auzi5KMnzYx6F6jxPzJLmiglvHHjvXYonIkuoeYKPEM1TUCR7KzuKxRnU=
+Received: by 10.70.6.19 with SMTP id 19mr631508wxf;
+        Wed, 31 May 2006 12:43:10 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [140.107.156.111])
+        by mx.gmail.com with ESMTP id h9sm424028wxd.2006.05.31.12.43.09;
+        Wed, 31 May 2006 12:43:10 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <7vejyayq46.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed, 31 May 2006 12:02:33 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21086>
 
-On 5/31/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 31 May 2006, Paolo Ciarrocchi wrote:
-> > >
-> > >         git describe
-> >
-> > paolo@Italia:~/git$ git describe
-> > v1.3.3-g2186d56
->
-> Ok.
->
-> > >         ./git --version
-> >
-> > paolo@Italia:~/git$ ./git --version
-> > git version 1.3.3.g2186
-> >
-> > Doh..
->
-> Ok, that's also good.
->
-> > >         which git
-> >
-> > paolo@Italia:~/git$ which git
-> > /home/paolo/bin/git
->
-> I think I know what's up.
->
-> Your "sudo" made "$HOME" be /root. So by doing "sudo make install", you
-> installed the git in _roots_ ~/bin, ie /root/bin/.
->
+Junio C Hamano <junkio@cox.net> writes:
 
-Doh... not sure to follow you, just did:
-sudo make install
-paolo@Italia:~/git$ ls /root/
-paolo@Italia:~/git$ git --version
-git version 1.3.GIT
+> Seth Falcon <sethfalcon@gmail.com> writes:
+>> When should one commit _without_ signoff?  
+>
+> Please, calm down and read Documentation/SubmittingPatches,
+> item (6), to understand what sign-off means.  It does not have
+> anything to do with the result of the commit "working".  I do
+> not use -s when making commits during my day-job, for example.
+
+Doh!  In glancing through the Documentation dir I missed the
+SubmittingPatches file. [weak excuse: there are many doc files in that
+dir and most are for the commands themselves.  I expected this to be
+in howto/.]
+
+Anyhow, much calmer now (apologies if I sounded un-calm, that wasn't
+my intention).  The SubmittingPatches doc was _exactly_ what I was
+looking for when I posted my original question [*].  My bad for not
+finding it when it was staring me in the face.  Thanks for bearing
+with me and pointing me to the fine manual :-)
 
 
 
--- 
-Paolo
-http://paolociarrocchi.googlepages.com
+[*] http://marc.theaimsgroup.com/?l=git&m=114884854119660&w=2
