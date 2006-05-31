@@ -1,65 +1,79 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: Re: [PATCH] Update documentation for git-format-patch
-Date: Wed, 31 May 2006 19:24:41 +0200
-Message-ID: <20060531172441.G2b322ff2@leonov.stosberg.net>
-References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com> <93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com> <20060531112803.GB3877@spinlock.ch> <20060531141408.G366d89c7@leonov.stosberg.net> <e5kcfi$124$1@sea.gmane.org>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: git --version
+Date: Wed, 31 May 2006 20:58:52 +0200
+Message-ID: <4d8e3fd30605311158n9d669dgd6c392ee8d194b78@mail.gmail.com>
+References: <4d8e3fd30605301516l782ad81dk5b11074e88db90a4@mail.gmail.com>
+	 <7vu077ywmw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 31 19:25:34 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 31 20:59:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlURe-00050A-BO
-	for gcvg-git@gmane.org; Wed, 31 May 2006 19:25:22 +0200
+	id 1FlVuU-0005Nf-Dz
+	for gcvg-git@gmane.org; Wed, 31 May 2006 20:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbWEaRZS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 13:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbWEaRZS
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 13:25:18 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:34751 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1751748AbWEaRZQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 May 2006 13:25:16 -0400
-Received: from leonov.stosberg.net (p213.54.78.240.tisdip.tiscali.de [213.54.78.240])
-	by ncs.stosberg.net (Postfix) with ESMTP id 6DD1EAEBA00A
-	for <git@vger.kernel.org>; Wed, 31 May 2006 19:24:41 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id D4333105CC3; Wed, 31 May 2006 19:24:41 +0200 (CEST)
-To: git@vger.kernel.org
+	id S1751785AbWEaS6y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 14:58:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbWEaS6y
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 14:58:54 -0400
+Received: from wr-out-0506.google.com ([64.233.184.225]:43279 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751785AbWEaS6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 14:58:54 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so94673wra
+        for <git@vger.kernel.org>; Wed, 31 May 2006 11:58:53 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UB9RvgerVC9RYO1mfMA0oWmUT2YfeKSH5U8iPg1vYnxkBMKf0sQrCgq/xpTNtw87ZYJKIC8w5rsFqPYOEsSNBfshI8YcpeyyKZksP/ODc1wUlf/XM3YrzTDsF03JUXi/v+QwHmAcLsZNqlyOOOCgw34qNXbe8nBUb70zVgzeG54=
+Received: by 10.65.95.12 with SMTP id x12mr630906qbl;
+        Wed, 31 May 2006 11:58:52 -0700 (PDT)
+Received: by 10.64.250.4 with HTTP; Wed, 31 May 2006 11:58:52 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vu077ywmw.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <e5kcfi$124$1@sea.gmane.org>
-OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
-User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21073>
 
-Jakub Narebski wrote:
+On 5/31/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
+>
+> > I'm confused by the following:
+> > paolo@Italia:~/git$ ./GIT-VERSION-GEN
+> > GIT_VERSION = 1.3.3.g2186
+> >
+> > paolo@Italia:~/git$ git --version
+> > git version 1.3.GIT
+> >
+> > Why git --version is not reporting the "full" version number?
+>
+> There is a bit of chicken and egg problem involved.  The build
+> procedure wants to have an already installed git to figure out
+> the "full" version number.  If you are bootstrapping, make clean
+> and rebuild after you install git once would give you a git
+> binary that knows what version it is.
 
-> Dennis Stosberg wrote:
-> 
-> > -        Display suspicious lines in the patch.  The definition
-> > -        of 'suspicious lines' is currently the lines that has
-> > -        trailing whitespaces, and the lines whose indentation
-> > -        has a SP character immediately followed by a TAB
-> > -        character.
-> 
-> So is this option also lost in built-in git-format-patch?
+Either I didn't understand your answer or something is wrong with my
+git installation:
 
-Johannes Schindelin made that one a diff option, so it can be used in
-other ways, too.  I think it should be documented in diff-options.txt.
+paolo@Italia:~$ cd git/
+paolo@Italia:~/git$ git --version
+git version 1.3.GIT
+paolo@Italia:~/git$ make >/dev/null
+paolo@Italia:~/git$ sudo make install >/dev/null
+Password:
+GIT_VERSION = 1.3.GIT
+paolo@Italia:~/git$ git --version
+git version 1.3.GIT
+paolo@Italia:~/git$
 
-> > -CONFIGURATION
-> > -You can specify extra mail header lines to be added to each
-> > -message in the repository configuration as follows:
-> > -
-> > -[format]
-> > -        headers = "Organization: git-foo\n"
-> 
-> So is this configuration option also lost in built-in git-format-patch?
 
-Grep'ing the sources, I couldn't find any trace of it.
-
-Regards,
-Dennis
+-- 
+Paolo
+http://paolociarrocchi.googlepages.com
