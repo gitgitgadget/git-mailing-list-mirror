@@ -1,63 +1,96 @@
-From: Alec Warner <antarus@gentoo.org>
-Subject: Re: irc usage..
-Date: Wed, 31 May 2006 09:54:48 -0400
-Message-ID: <447DA028.3040606@gentoo.org>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>	 <Pine.LNX.4.64.0605221312380.3697@g5.osdl.org>	 <447231C4.2030508@gentoo.org> <447B6D85.4050601@gentoo.org>	 <46a038f90605291521q37f34209wd923608bdebb9084@mail.gmail.com>	 <447B7669.8050805@gentoo.org>	 <46a038f90605301531g4f8b37c7qab9a717833c64ebc@mail.gmail.com>	 <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>	 <46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>	 <447D043D.1020609@gentoo.org> <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
-Reply-To: antarus@gentoo.org
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: format-patch signoff argument no longer works
+Date: Wed, 31 May 2006 06:58:08 -0700
+Message-ID: <m2mzcycn4f.fsf@ziti.fhcrc.org>
+References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com>
+	<93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com>
+	<20060531112803.GB3877@spinlock.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Donnie Berkholz <spyderous@gentoo.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 31 15:55:30 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed May 31 15:58:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlRAT-0006hS-6O
-	for gcvg-git@gmane.org; Wed, 31 May 2006 15:55:26 +0200
+	id 1FlRDA-0007DV-93
+	for gcvg-git@gmane.org; Wed, 31 May 2006 15:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965022AbWEaNzN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 09:55:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965023AbWEaNzN
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 09:55:13 -0400
-Received: from jeeves.egr.msu.edu ([35.9.37.127]:15254 "EHLO egr.msu.edu")
-	by vger.kernel.org with ESMTP id S965022AbWEaNzM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 May 2006 09:55:12 -0400
-Received: from [35.9.140.215] (tokyo.dhcp.egr.msu.edu [35.9.140.215])
-	(authenticated bits=0)
-	by egr.msu.edu (8.13.6/8.13.4) with ESMTP id k4VDskIe012819
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 31 May 2006 09:54:51 -0400 (EDT)
-User-Agent: Thunderbird 1.5.0.2 (X11/20060514)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
+	id S965024AbWEaN6I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 09:58:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965025AbWEaN6I
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 09:58:08 -0400
+Received: from nz-out-0102.google.com ([64.233.162.201]:53240 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S965024AbWEaN6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 09:58:07 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so37097nze
+        for <git@vger.kernel.org>; Wed, 31 May 2006 06:58:06 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=nuRuRsMaEppNwAVsMc6WUlZUwcC2AinA23L/gEx6B9WJAjhMkss/8+HNb4NkU4nHxxG5lonq7TBMweZD6sxR9rYKWndxmCVsaqs3ICSm5VCKjg+6jcG9Qun+N1sak2/3lX6pzCPnuGe6xu/0rwdqECugIUTodkgTsb6JwJf4RBM=
+Received: by 10.36.121.6 with SMTP id t6mr116082nzc;
+        Wed, 31 May 2006 06:58:06 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [67.171.24.140])
+        by mx.gmail.com with ESMTP id e1sm114042nzd.2006.05.31.06.58.06;
+        Wed, 31 May 2006 06:58:06 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20060531112803.GB3877@spinlock.ch> (Matthias Kestenholz's message of "Wed, 31 May 2006 13:28:03 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21064>
 
-Martin Langhoff wrote:
-> On 5/31/06, Donnie Berkholz <spyderous@gentoo.org> wrote:
->> We've got a guy who got a Summer of Code project to work on CVS
->> migration, so this could be something along his lines.
-> 
-> He'll want a fast box to wrangle with this repo ;-)
-> 
-> 
-> martin
+Matthias Kestenholz <lists@spinlock.ch> writes:
 
-I have a dual opteron with 4gb of ram "on loan" from work :)
+> * Geoff Russell (geoffrey.russell@gmail.com) wrote:
+>> It appears to have got lost when the shell script got converted to C.
+>> 
+> Yes, this was intentional. You should sign off your changes while
+> committing (git commit -s|--signoff)
 
-It still dies though, using git cvsimport or parsecvs.
+When should one commit _without_ signoff?  
 
-I talked to Keith Packard about adding support to parsecvs for recording 
-the actual changed changesets, but I haven't yet started on implementing 
-that since he isn't using cvsps in parsecvs.
+The obvious answer is: when one doesn't approve of the changes in the
+commit... But in my usual workflow, commit means
+works-for-me-I-think-it-is-good. :-)
 
-I also haven't had a chance to look at the git-cvsimport sources yet, 
-was hoping to get to that later this week.
+
+Also, here's a trivial patch to the git-format-patch doc.  I recently
+had the same confusion trying to get git-format-patch to add signoff
+for me...
+
+Remove reference to signoff option (-s) in git-format-patch
+
+Signed-off-by: Seth Falcon <sethfalcon@gmail.com>
+---
+ Documentation/git-format-patch.txt |    6 +-----
+ 1 files changed, 1 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 7cc7faf..d13f463 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -9,7 +9,7 @@ git-format-patch - Prepare patches for e
+ SYNOPSIS
+ --------
+ [verse]
+-'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--attach] [-s] [-c]
++'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--attach] [-c]
+                 [--diff-options] <his> [<mine>]
+ 
+ DESCRIPTION
+@@ -44,10 +44,6 @@ OPTIONS
+        Do not strip/add '[PATCH]' from the first line of the
+        commit log message.
+ 
+--s|--signoff::
+-       Add `Signed-off-by:` line to the commit message, using
+-       the committer identity of yourself.
+-
+ -c|--check::
+         Display suspicious lines in the patch.  The definition
+         of 'suspicious lines' is currently the lines that has
+-- 
+1.3.3.gb931
