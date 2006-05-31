@@ -1,86 +1,99 @@
-From: Nick Hengeveld <nickh@reactrix.com>
-Subject: [PATCH] http: prevent segfault during curl handle reuse
-Date: Wed, 31 May 2006 16:25:03 -0700
-Message-ID: <20060531232503.GC12261@reactrix.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] format-patch --signoff
+Date: Thu, 1 Jun 2006 01:31:56 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606010131010.4002@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <93c3eada0605310332p19241861g466e1516a2aaf0df@mail.gmail.com>
+ <93c3eada0605310411r712dab8au9b1c7d8ecb595a66@mail.gmail.com>
+ <20060531112803.GB3877@spinlock.ch> <m2mzcycn4f.fsf@ziti.fhcrc.org>
+ <7vejyayq46.fsf@assigned-by-dhcp.cox.net> <7v4pz5zvtc.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0606010032410.21774@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vlkshyedf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 01 01:25:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Geoff Russell <geoffrey.russell@gmail.com>,
+	Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org,
+	Seth Falcon <sethfalcon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 01 01:32:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fla3r-0008VH-AS
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 01:25:11 +0200
+	id 1FlaAe-0000uD-W0
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 01:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965255AbWEaXZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 May 2006 19:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965257AbWEaXZE
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 19:25:04 -0400
-Received: from 241.37.26.69.virtela.net ([69.26.37.241]:45109 "EHLO
-	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
-	id S965255AbWEaXZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 May 2006 19:25:03 -0400
-Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
-	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k4VNP30t008369
-	for <git@vger.kernel.org>; Wed, 31 May 2006 16:25:03 -0700
-Received: (from nickh@localhost)
-	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k4VNP3Rc008367
-	for git@vger.kernel.org; Wed, 31 May 2006 16:25:03 -0700
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S965263AbWEaXb7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 May 2006 19:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965262AbWEaXb7
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 May 2006 19:31:59 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:8120 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S965263AbWEaXb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 May 2006 19:31:58 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id B67502100;
+	Thu,  1 Jun 2006 01:31:56 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id AA74A20E6;
+	Thu,  1 Jun 2006 01:31:56 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 86ED620A1;
+	Thu,  1 Jun 2006 01:31:56 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vlkshyedf.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21100>
 
-If a curl handle is configured with special options, they may reference
-information that is freed after the request is complete which can cause
-a segfault if the curl handle is reused for a different type of request.
+Hi,
 
-This patch resets these options to a safe state when a transfer slot is
-assigned to a new request.
+On Wed, 31 May 2006, Junio C Hamano wrote:
 
-Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
----
- http.c |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > I don't know, but it may be a good idea to make this more general: Why not 
+> > build the sign-off line here, so that you could also add more than one 
+> > sign-off lines ('--signoff="The great committer <ter@mit.com>"'), and 
+> > maybe even Acked-by's?
+> 
+> Perhaps.
+> 
+> > Okay, this would be a little harder with multiple sign-offs. But the check 
+> > could be easier, i.e. if we say
+> >
+> > 	rev.add_signoff = xmalloc(enough_room);
+> > 	strcpy(rev.add_signoff, "\nSigned-off-by: ");
+> > 	strcat(rev.add_signoff, committer_ident);
+> > 	strcat(rev.add_signoff, "\n");
+> >
+> > then a simple
+> >
+> > 	p = strstr(commit_buffer, rev.add_signoff);
+> > 	if (p)
+> > 		return (int)(p - commit_buffer);
+> >
+> > would do the trick.
+> 
+> Do you mean, by "multiple sign-offs", something like this?
+> 
+> 	for (so_list = rev.add_signoff; so_list; so_list = so_list->next) {
+> 		if (strstr(commit_buffer, so_list->item))
+>                 	continue;
+>                 append_to_commit_buffer(so_list->item);
+> 	}
+> 	return tail - commit_buffer;
 
-diff --git a/http.c b/http.c
-index 0cb42a8..146cf7b 100644
---- a/http.c
-+++ b/http.c
-@@ -25,7 +25,6 @@ long curl_low_speed_limit = -1;
- long curl_low_speed_time = -1;
- 
- struct curl_slist *pragma_header;
--struct curl_slist *no_range_header;
- 
- struct active_request_slot *active_queue_head = NULL;
- 
-@@ -208,7 +207,6 @@ void http_init(void)
- 	curl_global_init(CURL_GLOBAL_ALL);
- 
- 	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
--	no_range_header = curl_slist_append(no_range_header, "Range:");
- 
- #ifdef USE_CURL_MULTI
- 	{
-@@ -344,9 +342,14 @@ #endif
- 	slot->finished = NULL;
- 	slot->callback_data = NULL;
- 	slot->callback_func = NULL;
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_range_header);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, curl_errorstr);
-+	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, NULL);
-+	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, NULL);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, NULL);
-+	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
- 
- 	return slot;
- }
--- 
-1.3.3.g2186-dirty
+Actually, I did not think of a linked list, but one buffer, but I like 
+your solution better.
+
+> > And shouldn't we error out if there is not enough room for a sign-off?
+> 
+> I do not think we error out if the commit message is too long
+> either, so...
+
+... so you could say that should be an error, too.
+
+Ciao,
+Dscho
