@@ -1,72 +1,134 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: [PATCH] Implement git-quiltimport (take 2)
-Date: Thu, 1 Jun 2006 12:23:18 -0700
-Message-ID: <20060601192318.GC3329@kroah.com>
-References: <7v1wut2p5z.fsf@assigned-by-dhcp.cox.net> <m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com> <7vsln8cwn6.fsf@assigned-by-dhcp.cox.net> <m1zmhg31cm.fsf@ebiederm.dsl.xmission.com> <7vy7x09qet.fsf@assigned-by-dhcp.cox.net> <m1ejyr38xx.fsf@ebiederm.dsl.xmission.com> <20060519235825.GA3289@kroah.com> <m1ac9dv2ld.fsf@ebiederm.dsl.xmission.com> <20060520213257.GH24672@kroah.com> <m1fyj4qkm2.fsf@ebiederm.dsl.xmission.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: remaining git-cvsimport problems: robustness when cvsps feeds strange history
+Date: Thu, 1 Jun 2006 23:28:25 +0200
+Message-ID: <20060601212825.GO6535@nowhere.earth>
+References: <20060527120105.GL6535@nowhere.earth> <46a038f90605270823qdea766fxcf2327ae0bf7373a@mail.gmail.com> <20060527163555.GM1164@nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 01 21:38:11 2006
+Cc: GIT list <git@vger.kernel.org>, cvsps@dm.cobite.com
+X-From: git-owner@vger.kernel.org Thu Jun 01 23:15:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Flszg-0005dS-MZ
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 21:38:09 +0200
+	id 1FluWD-0002rY-7u
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 23:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965280AbWFATiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 15:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965290AbWFATiE
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 15:38:04 -0400
-Received: from mail.kroah.org ([69.55.234.183]:27063 "EHLO perch.kroah.org")
-	by vger.kernel.org with ESMTP id S965280AbWFATiB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 15:38:01 -0400
-Received: from [192.168.0.11] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
-	(authenticated)
-	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k51JaGd14780;
-	Thu, 1 Jun 2006 12:36:16 -0700
-Received: from greg by press.kroah.org with local (masqmail 0.2.19) id
- 1FlslK-0sQ-00; Thu, 01 Jun 2006 12:23:18 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
+	id S965296AbWFAVPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 17:15:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965313AbWFAVPo
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 17:15:44 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:18327 "EHLO smtp5-g19.free.fr")
+	by vger.kernel.org with ESMTP id S965298AbWFAVPo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 17:15:44 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 8F8A9270B8;
+	Thu,  1 Jun 2006 23:15:42 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FluiQ-0004y7-9s; Thu, 01 Jun 2006 23:28:26 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <m1fyj4qkm2.fsf@ebiederm.dsl.xmission.com>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <20060527163555.GM1164@nowhere.earth>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21123>
 
-On Sat, May 20, 2006 at 06:36:53PM -0600, Eric W. Biederman wrote:
-> Greg KH <greg@kroah.com> writes:
+On Sat, May 27, 2006 at 06:35:55PM +0200, Yann Dirson wrote:
+> > OTOH, the cvsps output you are showing us seems to be in the right
+> > order...  patchset 20 should go on top of patchset 3... is cvsimport
+> > truly mishandling this?
 > 
-> > On Fri, May 19, 2006 at 08:42:38PM -0600, Eric W. Biederman wrote:
-> >
-> >> If it is one patch per file but with mbox headers, it is relatively
-> >> simple to teach git-mailinfo to parse things in a slightly more intelligent
-> >> way.  I played with that but I didn't have any patches that helped with.
-> >
-> > Hm, I'll try playing with that.
-> >
-> > If you want, just grab my quilt trees from kernel.org and play with
-> > them, they should all be in mbox format for the individual patches (with
-> > some exceptions as noted above, just kick me about them to get me to fix
-> > them...)
-> 
-> So I just grabbed the gregkh-2.6 set of patches and with an unmodified
-> git-mailinfo I only have problems with the following patches:
-> 	gregkh/gkh-version.patch
-> 	gregkh/sysfs-test.patch
-> 	gregkh/gregkh-usb-minors.patch
-> 	gregkh/gregkh-debugfs_example.patch
-> 	gregkh/gpl_future-test.patch
-> 	usb/usb-gotemp.patch
-> 
-> None of which actually have from headers.
+> That's the problem.  I had just copypasted the logs for handling at
+> home, and then I discovered in the cvsps log that the timestamp for
+> patchset 2 is the same as the one for patchset 1, which is obviously
+> wrong.  I'll look at the cvs repo next week to understand whether that
+> comes from the RCS file, or whether it is cvsps misunderstanding
+> something.
 
-Oops, sorry for the delay.  I've now fixed up these patches (the ones in
-the gregkh/ directory are not ever going to be sent upstream, that's
-why they were missing headers, same for the gotemp driver.)
+The problem indeed stems from the RCS files themselves.  It thus comes
+from a bug-or-feature of cvs 1.12.12.  This week I have found a number
+of files with such an history in various repos in use at work.
 
-thanks,
+I finally realize I was trying to reproduce the problem at home using
+1.12.9, where the issue does not appear to exist.  The following
+script does show the problem with 1.12.13.
 
-greg k-h
+As you see, a phantom commit is added prior to the resurecting commit
+on the branch, and it has the same timestamp as the its dead base
+revision on the trunk.
+
+In the logs I had from real repositories with 1.12.12, the "lines"
+attribute for the phantom revision was a mirror of the revision
+following it, reflecting no reality at all (would have been "+0 -1"
+here).  There is no mention of such a bugfix in the cvs NEWS file, but
+who knows.
+
+I found no mention of such a feature in the 1.12.9-13 entries in the
+CVS NEWS file, so I doubt that is an intended behaviour - I'll report
+a bug on cvs.
+
+However, cvsps should surely be made aware of this behaviour, even if
+it is a bug, since being there for at least 2 cvs releases is enough
+to have infected many repositories...
+
+
+==== script
+#!/bin/sh
+set -e
+
+# setup repo and working area
+cvs -d $PWD/root init
+mkdir root/test
+cvs -d $PWD/root co test
+cd test
+
+# trunk
+touch file1 file2
+cvs add file1 file2
+cvs ci -m "add files"
+sleep 2
+
+rm file1 
+cvs rm file1 
+cvs ci -m "rm file1"
+sleep 2
+
+cvs tag A
+
+# branch based on trunk
+cvs tag -b A_HEAD
+cvs up -r A_HEAD -P
+echo "stuff and more stuff" >file1
+cvs add file1
+cvs ci -m "work"
+sleep 2
+
+cvsps --norc -x -A
+==== cvs log file1
+----------------------------
+revision 1.2
+date: 2006-06-01 23:12:21 +0200;  author: dwitch;  state: dead;  lines: +0 -0;  commitid: GyCIctKzKqKVwlzr;
+branches:  1.2.2;
+rm file1
+----------------------------
+revision 1.1
+date: 2006-06-01 23:12:17 +0200;  author: dwitch;  state: Exp;  commitid: j1zLyPu2Bw6Uwlzr;
+add files
+----------------------------
+revision 1.2.2.2
+date: 2006-06-01 23:12:23 +0200;  author: dwitch;  state: Exp;  lines: +1 -0;  commitid: D3Fd6f9Wz8cWwlzr;
+work
+----------------------------
+revision 1.2.2.1
+date: 2006-06-01 23:12:21 +0200;  author: dwitch;  state: dead;  lines: +0 -0;  commitid: D3Fd6f9Wz8cWwlzr;
+file file1 was added on branch A_HEAD on 2006-06-01 21:12:23 +0000
+====
+
+-- 
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
