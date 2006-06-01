@@ -1,74 +1,50 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: Importing Mozilla CVS into git
-Date: Thu, 01 Jun 2006 16:20:44 -0700
-Message-ID: <1149204044.27695.38.camel@neko.keithp.com>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: HTTP questions
+Date: Thu, 1 Jun 2006 16:24:37 -0700
+Message-ID: <20060601232437.GD12261@reactrix.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-vqZnlDzBMw8wwhBEvVsx"
-Cc: keithp@keithp.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 01:21:08 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jun 02 01:24:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlwTP-0002ZW-EM
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 01:21:03 +0200
+	id 1FlwWw-00030J-62
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 01:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750891AbWFAXU7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 19:20:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWFAXU7
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 19:20:59 -0400
-Received: from home.keithp.com ([63.227.221.253]:24587 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1750891AbWFAXU6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 19:20:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id B50B9130023;
-	Thu,  1 Jun 2006 16:20:57 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 20827-03-6; Thu, 1 Jun 2006 16:20:57 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 6C5B3130020; Thu,  1 Jun 2006 16:20:57 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 6713514001;
-	Thu,  1 Jun 2006 16:20:57 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 183606AC1B1; Thu,  1 Jun 2006 16:20:47 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
-X-Mailer: Evolution 2.6.1 
+	id S1750920AbWFAXYi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 19:24:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbWFAXYi
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 19:24:38 -0400
+Received: from 241.37.26.69.virtela.net ([69.26.37.241]:16222 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1750917AbWFAXYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jun 2006 19:24:38 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k51NObJD012077
+	for <git@vger.kernel.org>; Thu, 1 Jun 2006 16:24:37 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k51NObWr012075
+	for git@vger.kernel.org; Thu, 1 Jun 2006 16:24:37 -0700
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21127>
 
+While testing recent http-fetch changes with a current checkout of next,
+I noticed a couple of things:
 
---=-vqZnlDzBMw8wwhBEvVsx
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+- "git push" seems to pass --thin by default to http-push, which
+  subsequently barfs because that's not a valid http-push option.
+  Should it be?  Should it be silently ignored?  Should git-push not
+  default to --thin when pushing with HTTP transport?
 
-On Thu, 2006-06-01 at 18:21 -0400, Jon Smirl wrote:
+- when I clone, http-fetch outputs a whole bunch of 
+  "error: Could not read ..." messages - is that expected?
 
-> Is anyone interested in helping out with this? My knowledge of git and
-> CVS is limited. Mozilla CVS is about 3GB and it is available via
-> rsync. I can post the parsecvs changes if wanted.
-
-Yes, please post parsecvs changes; I've been able to import several
-repositories of this size without problems (given sufficient memory).
-
---=20
-keith.packard@intel.com
-
---=-vqZnlDzBMw8wwhBEvVsx
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBEf3ZMQp8BWwlsTdMRAiqFAKDgUCEYV9mna1ODHI/rX1yqODMw7gCfSe8Z
-c2Vw/shoj14GDOALojUHO/Q=
-=4ipS
------END PGP SIGNATURE-----
-
---=-vqZnlDzBMw8wwhBEvVsx--
+-- 
+For a successful technology, reality must take precedence over public
+relations, for nature cannot be fooled.
