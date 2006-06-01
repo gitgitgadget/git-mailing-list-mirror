@@ -1,55 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-svnimport: Improved detection of merges.
-Date: Thu, 01 Jun 2006 02:58:41 -0700
-Message-ID: <7v64jlgpta.fsf@assigned-by-dhcp.cox.net>
-References: <11490715283626-git-send-email-octo@verplant.org>
-	<7vlkshs618.fsf@assigned-by-dhcp.cox.net>
-	<20060601092238.GB9333@hand.yhbt.net>
-	<20060601093603.GY2315@verplant.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: What's in git.git (part #2)
+Date: Thu, 1 Jun 2006 07:26:37 -0400
+Message-ID: <BAYC1-PASMTP03700A0D31613228040FADAE900@CEZ.ICE>
+References: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 01 11:58:54 2006
+X-From: git-owner@vger.kernel.org Thu Jun 01 13:33:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fljx1-000163-EM
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 11:58:49 +0200
+	id 1FllQK-00077e-PS
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 13:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964896AbWFAJ6n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 05:58:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964900AbWFAJ6n
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 05:58:43 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:18098 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S964896AbWFAJ6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jun 2006 05:58:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060601095842.XEBS27919.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 1 Jun 2006 05:58:42 -0400
-To: Florian Forster <octo@verplant.org>
-In-Reply-To: <20060601093603.GY2315@verplant.org> (Florian Forster's message
-	of "Thu, 1 Jun 2006 11:36:03 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965199AbWFALdE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 07:33:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965212AbWFALdE
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 07:33:04 -0400
+Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:31648 "EHLO
+	BAYC1-PASMTP03.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S965199AbWFALdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jun 2006 07:33:03 -0400
+X-Originating-IP: [69.156.138.66]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP03.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 1 Jun 2006 04:33:02 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 4E531644C28;
+	Thu,  1 Jun 2006 07:33:01 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060601072637.9920c8c5.seanlkml@sympatico.ca>
+In-Reply-To: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 01 Jun 2006 11:33:03.0060 (UTC) FILETIME=[24B8E940:01C6856F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21114>
 
-Florian Forster <octo@verplant.org> writes:
+On Thu, 01 Jun 2006 02:19:45 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
-> On Thu, Jun 01, 2006 at 02:22:39AM -0700, Eric Wong wrote:
->> Nope, I haven't seen that nor Florian's patch (assuming it was sent to
->> the ml).  Ah, I just saw (part #2) pop up.
->
-> sorry, I'm new to the git development and didn't know that patches
-> should be sent to the ML. I've attached that patch I sent to Junio to
-> this mail.
+>  - p4 importer (Sean Estabrooks) -- are people interested?
 
-Thanks for a resend.
+Junio,
 
-The patch is already queued in "next", so svn people might want
-to take a peek there.
+There just won't be anywhere near the call for this as there is
+for the cvs and svn importers.  Even so, a few people have expressed
+interest and it has been used by the Sourcemage folks with some success.
+Would you consider carrying this in contrib just so it has a home?
+
+Sean
