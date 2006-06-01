@@ -1,54 +1,67 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: What's in git.git (part #2)
-Date: Thu, 1 Jun 2006 07:26:37 -0400
-Message-ID: <BAYC1-PASMTP03700A0D31613228040FADAE900@CEZ.ICE>
-References: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: [PATCH] cg-commit -p tries to remove a non-existent file
+Date: Thu, 1 Jun 2006 17:14:27 +0200
+Message-ID: <20060601151427.G51985817@leonov.stosberg.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 01 13:33:13 2006
+X-From: git-owner@vger.kernel.org Thu Jun 01 17:14:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FllQK-00077e-PS
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 13:33:09 +0200
+	id 1Flosl-0004iZ-Hn
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 17:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965199AbWFALdE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 07:33:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965212AbWFALdE
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 07:33:04 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:31648 "EHLO
-	BAYC1-PASMTP03.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S965199AbWFALdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jun 2006 07:33:03 -0400
-X-Originating-IP: [69.156.138.66]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.138.66]) by BAYC1-PASMTP03.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 1 Jun 2006 04:33:02 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 4E531644C28;
-	Thu,  1 Jun 2006 07:33:01 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060601072637.9920c8c5.seanlkml@sympatico.ca>
-In-Reply-To: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 01 Jun 2006 11:33:03.0060 (UTC) FILETIME=[24B8E940:01C6856F]
+	id S1030197AbWFAPOh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 11:14:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030196AbWFAPOg
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 11:14:36 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:45185 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1030194AbWFAPOg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 11:14:36 -0400
+Received: from leonov.stosberg.net (p213.54.79.85.tisdip.tiscali.de [213.54.79.85])
+	by ncs.stosberg.net (Postfix) with ESMTP id C7D22AEBA005;
+	Thu,  1 Jun 2006 17:14:26 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id 2CFDD10637B; Thu,  1 Jun 2006 17:14:28 +0200 (CEST)
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Thu, 01 Jun 2006 16:57:06 +0200
+X-Sieve: CMU Sieve 2.2
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21116>
 
-On Thu, 01 Jun 2006 02:19:45 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+This produces an error message when the user aborts the commit:
 
->  - p4 importer (Sean Estabrooks) -- are people interested?
+$ cg init -m "Initial commit"
+$ echo "some text" >file
+$ cg add file
+$ EDITOR=/bin/false cg commit -p
+Log message unchanged or not specified
+Abort or commit? [ac] a
+rm: cannot remove `/tmp/gitci.zdAHil/patch2.diff': No such file or \
+directory
+Commit message not modified, commit aborted
+---
+ cg-commit |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Junio,
-
-There just won't be anywhere near the call for this as there is
-for the cvs and svn importers.  Even so, a few people have expressed
-interest and it has been used by the Sourcemage folks with some success.
-Would you consider carrying this in contrib just so it has a home?
-
-Sean
+diff --git a/cg-commit b/cg-commit
+index 4ec2b33..c636b1a 100755
+--- a/cg-commit
++++ b/cg-commit
+@@ -442,7 +442,7 @@ cp "$LOGMSG" "$LOGMSG2"
+ if tty -s; then
+ 	if [ "$editor" ] && ! editor $commitalways commit c; then
+ 		rm "$LOGMSG" "$LOGMSG2"
+-		[ "$review" ] && rm "$PATCH" "$PATCH2"
++		[ "$review" ] && rm "$PATCH"
+ 		echo "Commit message not modified, commit aborted" >&2
+ 		if [ "$merging" ]; then
+ 			cat >&2 <<__END__
+-- 
+1.3.3+git20060531-dest1
