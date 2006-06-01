@@ -1,80 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: git reset --hard not removing some files
-Date: Thu, 1 Jun 2006 09:21:38 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
-References: <20060601160052.GK14325@admingilde.org>
+Date: Thu, 01 Jun 2006 19:21:19 +0200
+Organization: At home
+Message-ID: <e5n7lv$3tl$1@sea.gmane.org>
+References: <20060601160052.GK14325@admingilde.org> <BAYC1-PASMTP04B113F61282BAE465D7F0AE900@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 01 18:22:20 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 01 19:22:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Flpvp-0007wo-23
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 18:21:58 +0200
+	id 1FlqsG-0001Nk-SI
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 19:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030220AbWFAQVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 12:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030224AbWFAQVy
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 12:21:54 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4578 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030220AbWFAQVx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 12:21:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k51GLd2g020967
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 1 Jun 2006 09:21:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k51GLcnX006984;
-	Thu, 1 Jun 2006 09:21:38 -0700
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20060601160052.GK14325@admingilde.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030244AbWFARWR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 13:22:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030252AbWFARWR
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 13:22:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:65497 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030244AbWFARWQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 13:22:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Flqrp-0001H4-2Y
+	for git@vger.kernel.org; Thu, 01 Jun 2006 19:21:53 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Jun 2006 19:21:53 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Jun 2006 19:21:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21120>
 
+Sean wrote:
 
-
-On Thu, 1 Jun 2006, Martin Waitz wrote:
+> On Thu, 1 Jun 2006 18:00:52 +0200
+> Martin Waitz <tali@admingilde.org> wrote:
 > 
-> I have the following problem:
+>> $ git reset --hard v1.3.3
+>>
+>> $ git status
+>> # On branch refs/heads/test
+>> #
+>> # Untracked files:
+>> #   (use "git add" to add to commit)
+>> #
+>> #       git-quiltimport
+>> #       git-upload-tar
+>> nothing to commit
+> 
+> Resetting to version 1.3.3 gets you an old version of the .gitignore
+> file which doesn't ignore these two untracked files.  Reset --hard
+> doesn't remove them because it only deals with tracked files.  Thus,
+> they show up in your status report.
 
-It's not a problem, it's a feature.
+Do you think it is _frequently_ asked question, worth adding
+to http://git.or.cz/gitwiki/GitFaq ?
 
-> nbg1l001:~/src/git > git branch
-> * master
->   next
->   origin
-> nbg1l001:~/src/git > git checkout -b test
-> nbg1l001:~/src/git > git status
-> # On branch refs/heads/test
-> nothing to commit
-> zsh: exit 1     git status
-> nbg1l001:~/src/git > git reset --hard v1.3.3
-> nbg1l001:~/src/git > git status
-> # On branch refs/heads/test
-> #
-> # Untracked files:
-> #   (use "git add" to add to commit)
-> #
-> #       git-quiltimport
-> #       git-upload-tar
-
-Those files were _never_ tracked.
-
-What happened is that when you switched to an earlier version, you _also_ 
-switched the ".gitignore" file to the earlier version, and that older 
-.gitignore file doesn't have those two (newer) binaries listed as being 
-ignored.
-
-And "git reset" won't be deleting files it doesn't track (it had _better_ 
-not touch them), even more so when it has been told to ignore them, so it 
-makes total sense to _not_ delete them when doing that reset.
-
-			Linus
+-- 
+Jakub Narebski
+Warsaw, Poland
