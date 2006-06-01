@@ -1,69 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's on git.git "master" (1/2)
-Date: Thu, 01 Jun 2006 02:29:24 -0700
-Message-ID: <7vk681gr63.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's in git.git (part #2)
+Date: Thu, 01 Jun 2006 11:31:49 +0200
+Organization: At home
+Message-ID: <e5mc5n$m33$1@sea.gmane.org>
+References: <7v64jli66m.fsf@assigned-by-dhcp.cox.net> <7v1wu9i608.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 01 11:29:40 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 01 11:32:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FljUn-0005Rn-IL
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 11:29:39 +0200
+	id 1FljXD-0005nY-BI
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 11:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbWFAJ31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 05:29:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbWFAJ31
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 05:29:27 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:24562 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750823AbWFAJ30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jun 2006 05:29:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060601092925.UXND6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 1 Jun 2006 05:29:25 -0400
+	id S932199AbWFAJcD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 05:32:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932184AbWFAJcD
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 05:32:03 -0400
+Received: from main.gmane.org ([80.91.229.2]:43450 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932183AbWFAJcC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 05:32:02 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FljWx-0005lY-0p
+	for git@vger.kernel.org; Thu, 01 Jun 2006 11:31:51 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Jun 2006 11:31:51 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Jun 2006 11:31:51 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21112>
 
-* The 'master' branch has these since the last announcement.
+Junio C Hamano wrote:
 
-(this is only the first half of "master" -- I am bisecting)
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+>> It's been a while since the last feature release,...
+> 
+> So apparently somehow part #1 (the regular "master has these",
+> "next in addition has these" message I occasionally do) is not
+> liked by the mailing list.  I wonder what's in it that makes it
+> dropped on the floor...
 
- - Misc Fixes and Enhancements
+I had same problem (message not appearing on list), and as far as 
+I was able to analyse it was because message accidentally (via unclean
+copy'n'paste) had some unusual characters.
 
-   Dennis Stosberg:
-      git-clean fails on files beginning with a dash
-   Dmitry V. Levin:
-      execv_git_cmd: Fix stack buffer overflow.
-      git_exec_path, execv_git_cmd: ignore empty environment variables
-   Paul Mackerras:
-      Make git-diff-tree indicate when it flushes
-   Salikh Zakirov:
-      Fixed Cygwin CR-munging problem in mailsplit
-   Shawn Pearce:
-      Allow multiple -m options to git-commit.
-
- - Tests and Documentation
-
-   Eric Wong:
-      t3300-funny-names: shell portability fixes
-      tests: Remove heredoc usage inside quotes
-      t5500-fetch-pack: remove local (bashism) usage.
-      t6000lib: workaround a possible dash bug
-   Horst von Brand:
-      Fix some documentation typoes
-   J. Bruce Fields:
-      documentation: mention gitk font adjustment in tutorial
-      documentation: add brief mention of cat-file to tutorial part I
-      Documentation: retitle the git-core tutorial
-      Documentation: fix a tutorial-2 typo
-   Shawn Pearce:
-      Remove unnecessary output from t3600-rm.
-      Improved pack format documentation.
+-- 
+Jakub Narebski
+Warsaw, Poland
