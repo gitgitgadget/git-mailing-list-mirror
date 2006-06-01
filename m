@@ -1,95 +1,92 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: git reset --hard not removing some files
-Date: Thu, 1 Jun 2006 18:00:52 +0200
-Message-ID: <20060601160052.GK14325@admingilde.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: git reset --hard not removing some files
+Date: Thu, 1 Jun 2006 12:13:04 -0400
+Message-ID: <BAYC1-PASMTP04B113F61282BAE465D7F0AE900@CEZ.ICE>
+References: <20060601160052.GK14325@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="it/zdz3K1bH9Y8/E"
-X-From: git-owner@vger.kernel.org Thu Jun 01 18:00:58 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 01 18:19:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlpbV-00049P-MF
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 18:00:58 +0200
+	id 1FlptW-0007Y4-H5
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 18:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030213AbWFAQAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 12:00:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030216AbWFAQAy
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 12:00:54 -0400
-Received: from admingilde.org ([213.95.32.146]:14486 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1030213AbWFAQAx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 12:00:53 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1FlpbQ-0005O5-DJ
-	for git@vger.kernel.org; Thu, 01 Jun 2006 18:00:52 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1030222AbWFAQTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 12:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030217AbWFAQTb
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 12:19:31 -0400
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:36784 "EHLO
+	BAYC1-PASMTP04.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S1030222AbWFAQTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jun 2006 12:19:31 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP04.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 1 Jun 2006 09:19:30 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 46CF4644C28;
+	Thu,  1 Jun 2006 12:19:29 -0400 (EDT)
+To: Martin Waitz <tali@admingilde.org>
+Message-Id: <20060601121304.9bae1806.seanlkml@sympatico.ca>
+In-Reply-To: <20060601160052.GK14325@admingilde.org>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 01 Jun 2006 16:19:30.0636 (UTC) FILETIME=[2950E0C0:01C68597]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21117>
 
+On Thu, 1 Jun 2006 18:00:52 +0200
+Martin Waitz <tali@admingilde.org> wrote:
 
---it/zdz3K1bH9Y8/E
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Removed your prompt just to make it a bit more readable:
 
-hoi :)
+> $ git branch
+> * master
+>   next
+>   origin
+>
+> $ git checkout -b test
+>
+> $ git status
+> # On branch refs/heads/test
+> nothing to commit
 
-I have the following problem:
+The generated files "git-quiltimport" and "git-upload-tar" exist at
+this point.  They are both untracked files and aren't listed because
+they have entries in the .gitignore file.
 
+> $ git reset --hard v1.3.3
+>
+> $ git status
+> # On branch refs/heads/test
+> #
+> # Untracked files:
+> #   (use "git add" to add to commit)
+> #
+> #       git-quiltimport
+> #       git-upload-tar
+> nothing to commit
 
-nbg1l001:~/src/git > git branch
-* master
-  next
-  origin
-nbg1l001:~/src/git > git checkout -b test
-nbg1l001:~/src/git > git status
-# On branch refs/heads/test
-nothing to commit
-zsh: exit 1     git status
-nbg1l001:~/src/git > git reset --hard v1.3.3
-nbg1l001:~/src/git > git status
-# On branch refs/heads/test
-#
-# Untracked files:
-#   (use "git add" to add to commit)
-#
-#       git-quiltimport
-#       git-upload-tar
-nothing to commit
-zsh: exit 1     git status
-nbg1l001:~/src/git > git reset --hard master
-nbg1l001:~/src/git > git status
-# On branch refs/heads/test
-nothing to commit
-zsh: exit 1     git status
+Resetting to version 1.3.3 gets you an old version of the .gitignore
+file which doesn't ignore these two untracked files.  Reset --hard
+doesn't remove them because it only deals with tracked files.  Thus,
+they show up in your status report.
 
-nbg1l001:~/src/git > git --version
-git version 1.3.3.g0825d
+> $ git reset --hard master
+> $ git status
+> # On branch refs/heads/test
+> nothing to commit
 
+Returning to the current version gets you an updated .gitignore and the
+two files are no longer listed even though they still exist.
 
-However, the complete test suite and especially t7101-reset.sh succeed.
-Any ideas?
+> $ git --version
+> git version 1.3.3.g0825d
 
---=20
-Martin Waitz
+This is the expected behavior regardless of version.
 
---it/zdz3K1bH9Y8/E
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEfw80j/Eaxd/oD7IRAq5SAJ984LMj60uvzxYIJuceUbpR7/YMSwCfZmxh
-xuAe4hrWhuUbVrYBK3gbd+0=
-=K63u
------END PGP SIGNATURE-----
-
---it/zdz3K1bH9Y8/E--
+Sean
