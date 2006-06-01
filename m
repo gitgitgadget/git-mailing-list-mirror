@@ -1,67 +1,63 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git reset --hard not removing some files
-Date: Thu, 1 Jun 2006 12:13:04 -0400
-Message-ID: <BAYC1-PASMTP04B113F61282BAE465D7F0AE900@CEZ.ICE>
+Date: Thu, 1 Jun 2006 09:21:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
 References: <20060601160052.GK14325@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 01 18:19:37 2006
+X-From: git-owner@vger.kernel.org Thu Jun 01 18:22:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlptW-0007Y4-H5
-	for gcvg-git@gmane.org; Thu, 01 Jun 2006 18:19:34 +0200
+	id 1Flpvp-0007wo-23
+	for gcvg-git@gmane.org; Thu, 01 Jun 2006 18:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030222AbWFAQTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 12:19:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030217AbWFAQTb
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 12:19:31 -0400
-Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:36784 "EHLO
-	BAYC1-PASMTP04.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1030222AbWFAQTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jun 2006 12:19:31 -0400
-X-Originating-IP: [65.93.43.191]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP04.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 1 Jun 2006 09:19:30 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 46CF4644C28;
-	Thu,  1 Jun 2006 12:19:29 -0400 (EDT)
+	id S1030220AbWFAQVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 12:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030224AbWFAQVy
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 12:21:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:4578 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030220AbWFAQVx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 12:21:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k51GLd2g020967
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 1 Jun 2006 09:21:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k51GLcnX006984;
+	Thu, 1 Jun 2006 09:21:38 -0700
 To: Martin Waitz <tali@admingilde.org>
-Message-Id: <20060601121304.9bae1806.seanlkml@sympatico.ca>
 In-Reply-To: <20060601160052.GK14325@admingilde.org>
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 01 Jun 2006 16:19:30.0636 (UTC) FILETIME=[2950E0C0:01C68597]
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21119>
 
-On Thu, 1 Jun 2006 18:00:52 +0200
-Martin Waitz <tali@admingilde.org> wrote:
 
-Removed your prompt just to make it a bit more readable:
 
-> $ git branch
+On Thu, 1 Jun 2006, Martin Waitz wrote:
+> 
+> I have the following problem:
+
+It's not a problem, it's a feature.
+
+> nbg1l001:~/src/git > git branch
 > * master
 >   next
 >   origin
->
-> $ git checkout -b test
->
-> $ git status
+> nbg1l001:~/src/git > git checkout -b test
+> nbg1l001:~/src/git > git status
 > # On branch refs/heads/test
 > nothing to commit
-
-The generated files "git-quiltimport" and "git-upload-tar" exist at
-this point.  They are both untracked files and aren't listed because
-they have entries in the .gitignore file.
-
-> $ git reset --hard v1.3.3
->
-> $ git status
+> zsh: exit 1     git status
+> nbg1l001:~/src/git > git reset --hard v1.3.3
+> nbg1l001:~/src/git > git status
 > # On branch refs/heads/test
 > #
 > # Untracked files:
@@ -69,24 +65,16 @@ they have entries in the .gitignore file.
 > #
 > #       git-quiltimport
 > #       git-upload-tar
-> nothing to commit
 
-Resetting to version 1.3.3 gets you an old version of the .gitignore
-file which doesn't ignore these two untracked files.  Reset --hard
-doesn't remove them because it only deals with tracked files.  Thus,
-they show up in your status report.
+Those files were _never_ tracked.
 
-> $ git reset --hard master
-> $ git status
-> # On branch refs/heads/test
-> nothing to commit
+What happened is that when you switched to an earlier version, you _also_ 
+switched the ".gitignore" file to the earlier version, and that older 
+.gitignore file doesn't have those two (newer) binaries listed as being 
+ignored.
 
-Returning to the current version gets you an updated .gitignore and the
-two files are no longer listed even though they still exist.
+And "git reset" won't be deleting files it doesn't track (it had _better_ 
+not touch them), even more so when it has been told to ignore them, so it 
+makes total sense to _not_ delete them when doing that reset.
 
-> $ git --version
-> git version 1.3.3.g0825d
-
-This is the expected behavior regardless of version.
-
-Sean
+			Linus
