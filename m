@@ -1,52 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Importing Mozilla CVS into git
-Date: Thu, 01 Jun 2006 23:40:30 -0700
-Message-ID: <7vac8wdpr5.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
-	<Pine.LNX.4.64.0606011643290.5498@g5.osdl.org>
-	<9e4733910606011759t7c828a50gc4a6b45d92d2b344@mail.gmail.com>
-	<Pine.LNX.4.64.0606011809401.5498@g5.osdl.org>
+Date: Fri, 2 Jun 2006 09:46:29 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606020941210.2482@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1149204044.27695.38.camel@neko.keithp.com>
+ <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
+ <1149214075.5521.31.camel@neko.keithp.com> <9e4733910606011936i725e8eb2h8c2357f3688da43e@mail.gmail.com>
+ <1149219593.5521.34.camel@neko.keithp.com> <9e4733910606012047h727a25f1vb367c880f8933c4e@mail.gmail.com>
+ <1149220518.5521.43.camel@neko.keithp.com> <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com>
+ <20060602041107.GA5429@spearce.org> <1149223164.2443.33.camel@dv>
+ <20060602044404.GB5429@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 08:41:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pavel Roskin <proski@gnu.org>, Jon Smirl <jonsmirl@gmail.com>,
+	Keith Packard <keithp@keithp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 02 09:46:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fm3L4-0004UA-MG
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 08:40:55 +0200
+	id 1Fm4Me-0005Si-T2
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 09:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbWFBGkc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 02:40:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbWFBGkc
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 02:40:32 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:51697 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751211AbWFBGkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jun 2006 02:40:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060602064031.HAXB6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 2 Jun 2006 02:40:31 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751194AbWFBHqe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Jun 2006 03:46:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbWFBHqe
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 03:46:34 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:38798 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751194AbWFBHqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jun 2006 03:46:33 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id E946E2CEB;
+	Fri,  2 Jun 2006 09:46:31 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id DB7BF2A94;
+	Fri,  2 Jun 2006 09:46:31 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 839A51D0E;
+	Fri,  2 Jun 2006 09:46:29 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060602044404.GB5429@spearce.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21152>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi,
 
-> You're much better off using "gitk --all" if you want to see the result, 
-> the "show-branch" this is really broken. It is using the old algorithm 
-> that we used to use for "git-rev-tree", and got rid of about a year ago 
-> there in favour of git-rev-list ;)
+On Fri, 2 Jun 2006, Shawn Pearce wrote:
 
-Are you sure about it?  My recollection is it uses the
-merge-base logic, naturally enhanced for multiple heads.
+> Pavel Roskin <proski@gnu.org> wrote:
+> > On Fri, 2006-06-02 at 00:11 -0400, Shawn Pearce wrote:
+> > 
+> > > GIT today requires not only a decent UNIX shell but also, GNU tools,
+> > > Perl and Python.  Porting to Solaris has recently had some more
+> > > effort put into it to remove some of the GNU tool dependencies but
+> > > perhaps one of the most important features (git-merge-recursive)
+> > > is a Python script.
+> > 
+> > The great thing about git is that it's modular.  A single utility can be
+> > replaced and retested in the same environment, without having to rewrite
+> > the rest of the scripts.  A dedicated programmer with good C and Python
+> > skills could rewrite git-merge-recursive.py in C in 2 days, I believe.
+> > Add a few days of bug fixing, of course.
+> 
+> Heh.  Funny you should mention that.  I was just thinking a few
+> minutes ago about working on that exact change...
 
-And enhancing it to support more than one int wide bitmap should
-not be too difficult, although looking at the output would be
-very taxing for human eye, so I do not know if it is worth it.
+I thought about this a couple of weeks ago. I recalled to have read 
+something about the principle: if there is more than one merge-base 
+candidate, it starts by merging the merge-base candidates until there is 
+only one 'virtual' merge-base candidate.
+
+However, looking at the code I fainted. Sure, a lot should be way easier 
+in C, because the functions are already there, _but_ it seemed too much 
+work for one afternoon nevertheless (and I did not have more time to 
+spare).
+
+Ciao,
+Dscho
