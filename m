@@ -1,60 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Importing Mozilla CVS into git
-Date: Thu, 1 Jun 2006 16:48:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606011643290.5498@g5.osdl.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: [PATCH] Implement git-quiltimport (take 2)
+Date: Thu, 01 Jun 2006 18:24:04 -0600
+Message-ID: <m1y7wg5rrv.fsf@ebiederm.dsl.xmission.com>
+References: <7v1wut2p5z.fsf@assigned-by-dhcp.cox.net>
+	<m1bqtw4hk7.fsf_-_@ebiederm.dsl.xmission.com>
+	<7vsln8cwn6.fsf@assigned-by-dhcp.cox.net>
+	<m1zmhg31cm.fsf@ebiederm.dsl.xmission.com>
+	<7vy7x09qet.fsf@assigned-by-dhcp.cox.net>
+	<m1ejyr38xx.fsf@ebiederm.dsl.xmission.com>
+	<20060519235825.GA3289@kroah.com>
+	<m1ac9dv2ld.fsf@ebiederm.dsl.xmission.com>
+	<20060520213257.GH24672@kroah.com>
+	<m1fyj4qkm2.fsf@ebiederm.dsl.xmission.com>
+	<20060601192318.GC3329@kroah.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 01:49:42 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 02 02:25:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Flwv7-0005ot-Iu
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 01:49:42 +0200
+	id 1FlxTa-0001oq-GR
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 02:25:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023AbWFAXss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 19:48:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbWFAXss
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 19:48:48 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57222 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751021AbWFAXsl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 19:48:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k51NmY2g015443
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 1 Jun 2006 16:48:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k51NmT2G021982;
-	Thu, 1 Jun 2006 16:48:32 -0700
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750735AbWFBAZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 20:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750752AbWFBAZL
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 20:25:11 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:49816 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1750732AbWFBAZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jun 2006 20:25:09 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id k520O5MJ001848;
+	Thu, 1 Jun 2006 18:24:05 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id k520O4e8001847;
+	Thu, 1 Jun 2006 18:24:04 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20060601192318.GC3329@kroah.com> (Greg KH's message of "Thu, 1
+ Jun 2006 12:23:18 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21130>
 
+Greg KH <greg@kroah.com> writes:
 
-
-On Thu, 1 Jun 2006, Jon Smirl wrote:
+>> 
+>> So I just grabbed the gregkh-2.6 set of patches and with an unmodified
+>> git-mailinfo I only have problems with the following patches:
+>> 	gregkh/gkh-version.patch
+>> 	gregkh/sysfs-test.patch
+>> 	gregkh/gregkh-usb-minors.patch
+>> 	gregkh/gregkh-debugfs_example.patch
+>> 	gregkh/gpl_future-test.patch
+>> 	usb/usb-gotemp.patch
+>> 
+>> None of which actually have from headers.
 >
-> I've been working on importing the Mozilla CVS into git for the last
-> few days. I've fixed up parsecvs so that it can parse the entire
-> repository without errors. Now I'm running into problems because there
-> are over 300 branches.
-> 
-> I just run into a problem with git show-branch. Mozilla CVS has a lot
-> more than 29 refs, is this something that can be expanded?
+> Oops, sorry for the delay.  I've now fixed up these patches (the ones in
+> the gregkh/ directory are not ever going to be sent upstream, that's
+> why they were missing headers, same for the gotemp driver.)
 
-Hmm.. Any reason you care about "show-branch --all" in particular?
+No problem. I'm mostly on vacation at the moment.
 
-The algorithm used for show-branch really doesn't scale well, it needs one 
-bit per commit per branch, and I didn't realize anybody could ever really 
-care.
+Things like usb/usb-gotemp.path have been sucked into the -mm
+tree.  So sometimes these things after being published do wind up down stream...
 
-		Linus
+
+Eric
