@@ -1,75 +1,63 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: What's in git.git (part #2)
-Date: Thu, 1 Jun 2006 22:35:45 -0400
-Message-ID: <20060602023545.GA5039@spearce.org>
-References: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Importing Mozilla CVS into git
+Date: Thu, 1 Jun 2006 22:36:25 -0400
+Message-ID: <9e4733910606011936i725e8eb2h8c2357f3688da43e@mail.gmail.com>
+References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
+	 <1149204044.27695.38.camel@neko.keithp.com>
+	 <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
+	 <1149214075.5521.31.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 04:36:06 2006
+X-From: git-owner@vger.kernel.org Fri Jun 02 04:36:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FlzW9-0006d1-An
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 04:36:05 +0200
+	id 1FlzWa-0006gX-2w
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 04:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751148AbWFBCfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 22:35:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbWFBCfv
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 22:35:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:22731 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751148AbWFBCft (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jun 2006 22:35:49 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FlzVg-00019s-Co; Thu, 01 Jun 2006 22:35:36 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EC2F020E445; Thu,  1 Jun 2006 22:35:45 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id S1751151AbWFBCg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 22:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbWFBCg1
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 22:36:27 -0400
+Received: from nz-out-0102.google.com ([64.233.162.196]:15676 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751151AbWFBCg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jun 2006 22:36:26 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so429996nze
+        for <git@vger.kernel.org>; Thu, 01 Jun 2006 19:36:25 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lUEK31PyB2EGhJp6J4Q60zGRbR/Uhyf590j4rSwFr2dCNwHaxvdD9jfJbDX47eO8NZzDPgXf318KZdWsOrKzqjmmJHy83oOtXPIgudjoEGl8YDLmKPWnvyj3SS2ciSJ/4f5+rITNOstcAhSil7wufXciWWc/tu15/M8NblBHyFQ=
+Received: by 10.37.20.12 with SMTP id x12mr1782198nzi;
+        Thu, 01 Jun 2006 19:36:25 -0700 (PDT)
+Received: by 10.36.39.3 with HTTP; Thu, 1 Jun 2006 19:36:25 -0700 (PDT)
+To: "Keith Packard" <keithp@keithp.com>
+In-Reply-To: <1149214075.5521.31.camel@neko.keithp.com>
 Content-Disposition: inline
-In-Reply-To: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21136>
 
-Junio C Hamano <junkio@cox.net> wrote:
->  - reflog from Shawn.  Do people find this useful?  I've enabled
->    reflog on "next" branch in my development repository to see
->    how useful it would be for myself a few days ago, and also in
->    a linux-2.6 repository I use for testing (I do not hack on
->    kernel myself).  
+On 6/1/06, Keith Packard <keithp@keithp.com> wrote:
+> yeah, these happen when vendor branches go awry. I'll pull the
+> repository and take a look. X.org had similar 'issues' as the current
+> CVS repo was built by merging mesa, XFree86 and X.org together in a
+> rather haphazard fashion.
 
-I find it useful to track what I've sent to you just in case I
-screw up some ref somewhere.  I like knowing that if I perform a
-bad update-ref call (which I'm prone to do sometimes) that I can
-recover quickly as the log exists.
+Let me know what you find. Converting this without rewriting parsecvs
+looks to be beyond the capacity of my home machine. I'm sure you have
+access to giant machines at Intel.
 
-Not having that prior ref value was about the only area of `possible
-data loss' that I've every really noticed with GIT.  Well, that and
-only having one repository holding all of your important files and
-you rm -rf the dang directory by accident one day...  but that's
-just foolishness on the user's part.  :-)
-
->  - using ~/.gitrc to give a fall-back default when
->    $GIT_DIR/config does not have values.
-> 
->  - command aliases and possibly default arguments via the
->    configuration file.
-
-I'm certainly interested in these two - and I don't think I'm alone
-when I say that.  :-)
+Did I see that you can use CVS client tools to manipulate a git
+repository? Mozilla has a lot of users on other OSes besides Linux. It
+would be nice to change the core server over to git and leave these
+other users running their existing tools.
 
 -- 
-Shawn.
+Jon Smirl
+jonsmirl@gmail.com
