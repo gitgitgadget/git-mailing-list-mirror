@@ -1,62 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: git reset --hard not removing some files
-Date: Fri, 02 Jun 2006 10:16:04 +0200
-Organization: At home
-Message-ID: <e5os3i$ei1$1@sea.gmane.org>
-References: <20060601160052.GK14325@admingilde.org> <BAYC1-PASMTP04B113F61282BAE465D7F0AE900@CEZ.ICE> <e5n7lv$3tl$1@sea.gmane.org> <BAYC1-PASMTP02F2FF1D978A880AFDDA1DAE900@CEZ.ICE>
+Date: Fri, 2 Jun 2006 11:37:36 +0200
+Message-ID: <20060602093736.GL14325@admingilde.org>
+References: <20060601160052.GK14325@admingilde.org> <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jun 02 10:16:21 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sl5MdczEF/OU2Miu"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 02 11:37:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fm4pM-0000l4-SF
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 10:16:17 +0200
+	id 1Fm66C-0004FR-IL
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 11:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbWFBIQM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 04:16:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbWFBIQM
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 04:16:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:52200 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751314AbWFBIQL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jun 2006 04:16:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fm4p6-0000iP-7C
-	for git@vger.kernel.org; Fri, 02 Jun 2006 10:16:00 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Jun 2006 10:16:00 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Jun 2006 10:16:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751365AbWFBJhi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Jun 2006 05:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbWFBJhi
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 05:37:38 -0400
+Received: from admingilde.org ([213.95.32.146]:15011 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1751365AbWFBJhh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Jun 2006 05:37:37 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Fm664-0006uZ-6M; Fri, 02 Jun 2006 11:37:36 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21154>
 
-Sean wrote:
 
-> On Thu, 01 Jun 2006 19:21:19 +0200
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> 
->> Do you think it is _frequently_ asked question, worth adding
->> to http://git.or.cz/gitwiki/GitFaq ?
-> 
-> Not sure if it needs to be in the FAQ at this point, but i guess it couldn't
-> hurt either.  
+--sl5MdczEF/OU2Miu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Added. See: http://git.or.cz/gitwiki/GitFaq#reset-hard-leaving-files
-Feel free to add examples, correct information, rework it etc.
+hoi :)
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+On Thu, Jun 01, 2006 at 09:21:38AM -0700, Linus Torvalds wrote:
+> Those files were _never_ tracked.
+
+You are right, I used the wrong demonstration to show my problem.
+I had one problem like this in the linux-kernel and tried to
+reproduce them in the git repository but did it wrong...
+
+GIT reset seems to have a problem when a file is tracked and ignored
+at the same time.
+
+This fails:
+
+diff --git a/t/t7101-reset.sh b/t/t7101-reset.sh
+index a919140..865e0f6 100755
+--- a/t/t7101-reset.sh
++++ b/t/t7101-reset.sh
+@@ -21,10 +21,12 @@ test_expect_success \
+      cp ../../COPYING path1/COPYING &&
+      cp ../../COPYING COPYING &&
+      cp ../../COPYING path0/COPYING-TOO &&
++     echo COPYING > .gitignore &&
+      git-add path1/path2/COPYING &&
+      git-add path1/COPYING &&
+      git-add COPYING &&
+      git-add path0/COPYING-TOO &&
++     git-add .gitignore &&
+      git-commit -m change -a'
+
+ test_expect_success \
+
+
+This hit me as the Linux kernel .gitignore includes ".*" which matches
+all the .gitignore files and so they are not removed when you go
+back to 2.6.13.  But with the new git checks regarding files in
+the working dir, git then refuses to pull in newer Linux versions
+because it would overwrite ".gitignore".
+
+--=20
+Martin Waitz
+
+--sl5MdczEF/OU2Miu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEgAbfj/Eaxd/oD7IRAmPTAJkBo1AIB0K8AWMwU1Lfp43sy5DUiACfbHZm
+H8ZSgbMij7F3DFhb8jwBROU=
+=aekz
+-----END PGP SIGNATURE-----
+
+--sl5MdczEF/OU2Miu--
