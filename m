@@ -1,119 +1,75 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: Importing Mozilla CVS into git
-Date: Thu, 01 Jun 2006 19:07:55 -0700
-Message-ID: <1149214075.5521.31.camel@neko.keithp.com>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
-	 <1149204044.27695.38.camel@neko.keithp.com>
-	 <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: What's in git.git (part #2)
+Date: Thu, 1 Jun 2006 22:35:45 -0400
+Message-ID: <20060602023545.GA5039@spearce.org>
+References: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-SQ2P4ccl99vCOcocrTOM"
-Cc: keithp@keithp.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 04:08:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 02 04:36:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Flz5F-0003TY-EZ
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 04:08:17 +0200
+	id 1FlzW9-0006d1-An
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 04:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751116AbWFBCIK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Jun 2006 22:08:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbWFBCIK
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 22:08:10 -0400
-Received: from home.keithp.com ([63.227.221.253]:30220 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1751117AbWFBCIJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jun 2006 22:08:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id DF9C5130023;
-	Thu,  1 Jun 2006 19:08:05 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 23176-03; Thu, 1 Jun 2006 19:08:05 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 8326D130020; Thu,  1 Jun 2006 19:08:05 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 79AB514001;
-	Thu,  1 Jun 2006 19:08:05 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id A5E696AC1B1; Thu,  1 Jun 2006 19:07:55 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
-X-Mailer: Evolution 2.6.1 
+	id S1751148AbWFBCfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Jun 2006 22:35:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbWFBCfv
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jun 2006 22:35:51 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:22731 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751148AbWFBCft (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jun 2006 22:35:49 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FlzVg-00019s-Co; Thu, 01 Jun 2006 22:35:36 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EC2F020E445; Thu,  1 Jun 2006 22:35:45 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64jli66m.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21135>
 
+Junio C Hamano <junkio@cox.net> wrote:
+>  - reflog from Shawn.  Do people find this useful?  I've enabled
+>    reflog on "next" branch in my development repository to see
+>    how useful it would be for myself a few days ago, and also in
+>    a linux-2.6 repository I use for testing (I do not hack on
+>    kernel myself).  
 
---=-SQ2P4ccl99vCOcocrTOM
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+I find it useful to track what I've sent to you just in case I
+screw up some ref somewhere.  I like knowing that if I perform a
+bad update-ref call (which I'm prone to do sometimes) that I can
+recover quickly as the log exists.
 
-On Thu, 2006-06-01 at 20:55 -0400, Jon Smirl wrote:
-> With the attached patch you can parse the entire Mozilla tree. The
-> tree has over 100,000 files in it and about 300 branches.
+Not having that prior ref value was about the only area of `possible
+data loss' that I've every really noticed with GIT.  Well, that and
+only having one repository holding all of your important files and
+you rm -rf the dang directory by accident one day...  but that's
+just foolishness on the user's part.  :-)
 
-that's good news.
+>  - using ~/.gitrc to give a fall-back default when
+>    $GIT_DIR/config does not have values.
+> 
+>  - command aliases and possibly default arguments via the
+>    configuration file.
 
-> I ran this overnight and it failed with out of memory on a 1GB machine
-> with 1GB swap. If failed in the branch processing, the parse phase
-> succeeded.
+I'm certainly interested in these two - and I don't think I'm alone
+when I say that.  :-)
 
-yeah, parsecvs has some internal storage inefficiencies which need to be
-addressed. In particular, every commit has a pointer to the related
-revision of every file in the commit. Much like git used to store every
-filename in the commit object and was changed to share common directory
-contents, parsecvs should be fixed to do the same.
-
-> How much memory does something like this need?
-
-It's basically 4 * nrev * nfile bytes on a 32-bit machine, multiply by 2
-for a 64-bit machine.
-
-> If you want to quickly check out the branch processing problems use
-> rsync to pull down just a copy of repository files.
->=20
-> I am getting 1000s of warnings like these and I haven't figured out why y=
-et.
->=20
-> Warning: ../mozilla/mozilla/build/mac/build_scripts/Attic/MozillaCheckout=
-List.txt,v:
-> unnamed branch from master
-> Warning: ../mozilla/mozilla/build/unix/run-mozilla.sh,v: unnamed
-> branch from master
-> Warning: ../mozilla/mozilla/Makefile.in,v: unnamed branch from master of =
-99855
-> Warning: ../mozilla/mozilla/Makefile.in,v: unnamed branch from master
-> Warning: ../mozilla/mozilla/allmakefiles.sh,v: unnamed branch from master=
-99855
-> Warning: ../mozilla/mozilla/allmakefiles.sh,v: unnamed branch from master
-> Warning: ../mozilla/mozilla/cmd/macfe/MailNews/AddressBook/Attic/UAddress=
-BookUtilities.cp,v:
-> unnamed branch from master
-> Warning: ../mozilla/mozilla/cmd/macfe/MailNews/AddressBook/Attic/UAddress=
-BookUtilities.h,v:
-> unnamed branch from master
-> Warning: ../mozilla/mozilla/cmd/macfe/central/Attic/msv2dsk.cp,v:
-> unnamed branch from master
-
-yeah, these happen when vendor branches go awry. I'll pull the
-repository and take a look. X.org had similar 'issues' as the current
-CVS repo was built by merging mesa, XFree86 and X.org together in a
-rather haphazard fashion.
-
---=20
-keith.packard@intel.com
-
---=-SQ2P4ccl99vCOcocrTOM
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBEf517Qp8BWwlsTdMRAk4/AJ0cF7OpEdz1zEFs0fFeYX8At7aHwACg5tZO
-2AMeRJ6KMAG39xFDJmkUgv4=
-=vbUZ
------END PGP SIGNATURE-----
-
---=-SQ2P4ccl99vCOcocrTOM--
+-- 
+Shawn.
