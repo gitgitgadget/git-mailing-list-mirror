@@ -1,70 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Importing Mozilla CVS into git
-Date: Fri, 2 Jun 2006 08:53:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606020849390.5498@g5.osdl.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
- <Pine.LNX.4.64.0606011643290.5498@g5.osdl.org>
- <9e4733910606011759t7c828a50gc4a6b45d92d2b344@mail.gmail.com>
- <Pine.LNX.4.64.0606011809401.5498@g5.osdl.org> <7vac8wdpr5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] handle concurrent pruning of packed objects
+Date: Fri, 02 Jun 2006 08:53:52 -0700
+Message-ID: <7vwtbzblkf.fsf@assigned-by-dhcp.cox.net>
+References: <20060602153223.GA4223@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 17:54:06 2006
+X-From: git-owner@vger.kernel.org Fri Jun 02 17:54:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmByH-0006Kd-Hy
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 17:53:57 +0200
+	id 1FmByI-0006Kd-2p
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 17:53:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932479AbWFBPxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 11:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932495AbWFBPxs
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 11:53:48 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:20908 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932479AbWFBPxs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jun 2006 11:53:48 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k52Frf2g028121
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 2 Jun 2006 08:53:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k52FreKK012563;
-	Fri, 2 Jun 2006 08:53:40 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vac8wdpr5.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932496AbWFBPxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Jun 2006 11:53:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932495AbWFBPxy
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 11:53:54 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:41091 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932496AbWFBPxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jun 2006 11:53:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060602155353.JHWI15767.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 2 Jun 2006 11:53:53 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060602153223.GA4223@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 2 Jun 2006 11:32:23 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21165>
 
+Jeff King <peff@peff.net> writes:
 
+> This is a repost, since there was no response last time. Linus
+> indicated this approach was reasonable; see:
+>   <Pine.LNX.4.64.0605300752430.5623@g5.osdl.org>
 
-On Thu, 1 Jun 2006, Junio C Hamano wrote:
-> > You're much better off using "gitk --all" if you want to see the result, 
-> > the "show-branch" this is really broken. It is using the old algorithm 
-> > that we used to use for "git-rev-tree", and got rid of about a year ago 
-> > there in favour of git-rev-list ;)
-> 
-> Are you sure about it?  My recollection is it uses the
-> merge-base logic, naturally enhanced for multiple heads.
+I haven't forgotten about it, but I have been sick.
 
-Well, it's all the same algorithm, where just the bit usage differs. 
-git-rev-tree is slightly closer, if only because the original 
-git-merge-base only did two heads, if I recall correctly (while 
-git-rev-tree did 16 - the ability of git-show-branch to do 29 came from 
-just using all the free bits rather than the high bits like rev-tree did)
+I am uncertain about not re-examining the packs it originally
+thought it had.  By prepending the new ones (and the same old
+surviving ones) at the beginning you are effectively hiding the
+old packs, which sounds reasonable in the usual case.
 
-> And enhancing it to support more than one int wide bitmap should
-> not be too difficult, although looking at the output would be
-> very taxing for human eye, so I do not know if it is worth it.
-
-Yeah, I don't think there is any reason to really support it. If you have 
-more than a few heads, you really do need the graphical version to see 
-what is going on, and git-show-branch doesn't buy you anything.
-
-		Linus
+Also I suspect this might have funny interaction with the case
+where there are hand-added packs (see how verify-pack does it).
+We do not silently "fix" missing object problems we discover
+there.
