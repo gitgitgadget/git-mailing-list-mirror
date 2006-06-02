@@ -1,60 +1,76 @@
-From: "Bi" <delmir@aaanet.ru>
-Subject: Hello my Dear Stranger!
-Date: Fri, 02 Jun 2006 16:43:45 +0300
-Message-ID: <005801c6864a$79743a80$0100a8c0__39328.5806211226$1149255854$gmane$org@222.70.114.216>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] A Perforce importer for git.
+Date: Fri, 2 Jun 2006 09:43:57 -0400
+Message-ID: <BAYC1-PASMTP04855AA99A546A74A7F07BAE910@CEZ.ICE>
+References: <BAYC1-PASMTP117796558F3B42B2C18DBCAE980@CEZ.ICE>
+	<81b0412b0606020609o24ee34b4p7b1bcd013136d49a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="windows-1251"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Fri Jun 02 15:44:13 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 02 15:44:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fm9wH-0005GX-Mi
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 15:43:46 +0200
+	id 1Fm9xD-0005Ud-NQ
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 15:44:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932134AbWFBNnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 09:43:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932130AbWFBNnW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 09:43:22 -0400
-Received: from [222.70.114.216] ([222.70.114.216]:16134 "EHLO 222.70.114.216")
-	by vger.kernel.org with ESMTP id S932111AbWFBNnP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jun 2006 09:43:15 -0400
-Received: from [192.168.0.1] by 222.70.114.216
-	id d484lqMZezSF; Fri, 02 Jun 2006 16:43:45 +0300
-Received: from 192.168.35.73 ([192.168.35.73]) 
-	by 192.168.0.1 (WinRoute Pro 4.2.8) with SMTP;
-	Fri, 02 Jun 2006 16:43:45 +0300
-To: "Richard" <bk-commits-head-owner@vger.kernel.org>
+	id S932097AbWFBNoe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Jun 2006 09:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWFBNoe
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 09:44:34 -0400
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:63774 "EHLO
+	BAYC1-PASMTP04.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S932097AbWFBNod (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jun 2006 09:44:33 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP04.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 2 Jun 2006 06:44:32 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id C803A644C28;
+	Fri,  2 Jun 2006 09:44:31 -0400 (EDT)
+To: "Alex Riesen" <raa.lkml@gmail.com>
+Message-Id: <20060602094357.ee3d8407.seanlkml@sympatico.ca>
+In-Reply-To: <81b0412b0606020609o24ee34b4p7b1bcd013136d49a@mail.gmail.com>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 02 Jun 2006 13:44:33.0065 (UTC) FILETIME=[ADF1E190:01C6864A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.5 points;
- *  0.0 SUB_HELLO Subject starts with "Hello"
- *  0.1 RCVD_BY_IP Received by mail server with no name
- * -1.1 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
- *      [score: 0.2259]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: i-am-waiting4love.net]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: i-am-waiting4love.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: i-am-waiting4love.net]
- *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
- *  0.0 RCVD_DOUBLE_IP_LOOSE Received: by and from look like IP addresses
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21158>
 
-Greeting .	
+On Fri, 2 Jun 2006 15:09:45 +0200
+"Alex Riesen" <raa.lkml@gmail.com> wrote:
 
-I'm a very young and energetic lady! I have very positive attitude to life and people. I do enjoy new experience life can offer me: to see new interesting places, to meet new people.
-I do try to enjoy every moment of life and accept everything the way it comes without complaining.
-Though my life seems to be quite enjoyable there's one important thing missing. It's LOVE!
-Without my beloved one, my soul mate, my King my life is not completed.
-I wish i coud find him very soon so that we could share together every momement of the life-time romance! 
-What about you? Could you be my King? If answer is "yes" - you can find more about me 
-http://XWWiQw3CwL.i-am-waiting4love.net/
+> BTW, can I suggest to import the _currently_ synced state?
+> 
+> The reason is that because of the way how Perforce is done
+> its working directories (views, aka clients) are often a
+> horrible mix of occasionally synced files to some random
+> versions. No one actually uses "p4 sync" for whole project here
+> where I work, because it is absolutely useless at this level
+> (updated files have abolutely no relevance at head revision,
+> which is what you get by syncing without strictly specifying
+> a revision). So a working state is stitched together from
+> a lot of "mappings": perforce path to local path -> revision.
+> That state can be actually worked on (up until you have
+> to commit something, that is not possible except on head). 
 
-Good-bye
+Hey Alex,
 
-Bi M.
+I'd happily change the script to accommodate your needs if it's at all
+reasonable.  As you've no doubt gathered, the script is currently very
+branch centric.  It needs a mapping view from each p4 branch into the
+local git directory.  Then it does a sync //p4/mapping@{revision} for
+each revision along each mapped branch and commits it into git.
+
+Note that it never syncs specifically to head, it explicitly asks for
+each revision along the branch and tt doesn't know anything about your
+working state, it can only import commits.
+
+Are you looking for the ability to create a single git branch which has
+the history of the combined view of your stitched together client mappings
+rather than the independent branches held by the server?
+
+Sean
