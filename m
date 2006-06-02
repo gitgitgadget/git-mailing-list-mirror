@@ -1,82 +1,60 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: Importing Mozilla CVS into git
-Date: Fri, 2 Jun 2006 00:11:07 -0400
-Message-ID: <20060602041107.GA5429@spearce.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com> <1149204044.27695.38.camel@neko.keithp.com> <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com> <1149214075.5521.31.camel@neko.keithp.com> <9e4733910606011936i725e8eb2h8c2357f3688da43e@mail.gmail.com> <1149219593.5521.34.camel@neko.keithp.com> <9e4733910606012047h727a25f1vb367c880f8933c4e@mail.gmail.com> <1149220518.5521.43.camel@neko.keithp.com> <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com>
+Date: Fri, 2 Jun 2006 16:14:28 +1200
+Message-ID: <46a038f90606012114m5d6d0d66r9ecd3dea0581d7a4@mail.gmail.com>
+References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Keith Packard <keithp@keithp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 02 06:11:21 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 02 06:14:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fm10J-0002UT-19
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 06:11:19 +0200
+	id 1Fm13Q-0002qx-Ag
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 06:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbWFBELQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 00:11:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbWFBELQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 00:11:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:9174 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751306AbWFBELP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jun 2006 00:11:15 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Fm0zw-0006nn-ML; Fri, 02 Jun 2006 00:10:56 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7967620E445; Fri,  2 Jun 2006 00:11:07 -0400 (EDT)
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S1751307AbWFBEO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Jun 2006 00:14:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbWFBEO3
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 00:14:29 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:31927 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751307AbWFBEO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jun 2006 00:14:29 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so503509wra
+        for <git@vger.kernel.org>; Thu, 01 Jun 2006 21:14:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jzVC2aNIPf9sO49sfg7GHbtt4CjEhaADCxgwGyIAW8pCntcq2lewTH/HcbygTZr4vw+J6xUMERLlNvtJnQoqP7EoE511jZu8ra8TpzzFRcHqR3CdJ2d4WRVOyAu6X+uJIIHMnHKwQELcLuzO+9HxqpSvnSk1CQuJ1CJmfXTXrf8=
+Received: by 10.54.76.12 with SMTP id y12mr1387653wra;
+        Thu, 01 Jun 2006 21:14:28 -0700 (PDT)
+Received: by 10.54.127.12 with HTTP; Thu, 1 Jun 2006 21:14:28 -0700 (PDT)
+To: "Jon Smirl" <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21143>
 
-Jon Smirl <jonsmirl@gmail.com> wrote:
-> On 6/1/06, Keith Packard <keithp@keithp.com> wrote:
-> >On Thu, 2006-06-01 at 23:47 -0400, Jon Smirl wrote:
-> >> On 6/1/06, Keith Packard <keithp@keithp.com> wrote:
-> >> > Git runs fine on Windows these days; asking people to use reasonable
-> >> > tools to contribute to the project doesn't seem crazy to me.
-> >>
-> >> WIndows, Mac, Solaris and Linux will cover most Firefox developers.
-> >> Is git to go on those platforms? Is WIndows native or cygwin?
-> >
-> >I think the windows stuff may still be cygwin, but Mac and Solaris work
-> >fine with the git, of course. It's just simple posix code, after all
-> 
-> It is going to have to be native Windows to move some of the
-> developers over. They are true blue MS types that won't touch anything
-> close to Unix so cygwin is out.
+Jon,
 
-Then GIT on Windows might be out.
+> Is anyone interested in helping out with this? My knowledge of git and
+> CVS is limited. Mozilla CVS is about 3GB and it is available via
+> rsync. I can post the parsecvs changes if wanted.
 
-GIT today requires not only a decent UNIX shell but also, GNU tools,
-Perl and Python.  Porting to Solaris has recently had some more
-effort put into it to remove some of the GNU tool dependencies but
-perhaps one of the most important features (git-merge-recursive)
-is a Python script.
+Fetchin it now, I'll definitely have a play. Have you tried with a
+recent git-cvsimport? In the last 2 weeks it's seen a lot of
+performance & scalability improvements as we were importing the
+gentoo-x86 tree.
 
-I'm running GIT at work on a Windows/Cygwin installation which is
-really quite bare bones.  I think I have about 15 Cygwin packages
-installed total and GIT is running fine in that environment.
-It can't send patches by email but the corporate firewalls wouldn't
-permit that anyway...
+Grab the latest 'master' branch from Junio and give the import a go.
 
-Perhaps you can tell the true blue MS types that Cygwin is a native
-Windows application.  After all it uses the Win32 API.  :-)
+cheers,
 
--- 
-Shawn.
+
+
+martin
