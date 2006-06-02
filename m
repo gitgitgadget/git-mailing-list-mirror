@@ -1,104 +1,129 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git reset --hard not removing some files
-Date: Fri, 02 Jun 2006 07:57:57 -0700
-Message-ID: <7vhd33d2q2.fsf@assigned-by-dhcp.cox.net>
-References: <20060601160052.GK14325@admingilde.org>
-	<Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] handle concurrent pruning of packed objects
+Date: Fri, 2 Jun 2006 11:32:23 -0400
+Message-ID: <20060602153223.GA4223@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Fri Jun 02 16:58:11 2006
+X-From: git-owner@vger.kernel.org Fri Jun 02 17:32:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmB6C-0003Hx-EF
-	for gcvg-git@gmane.org; Fri, 02 Jun 2006 16:58:04 +0200
+	id 1FmBdV-0001m3-4n
+	for gcvg-git@gmane.org; Fri, 02 Jun 2006 17:32:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbWFBO57 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 10:57:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbWFBO57
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 10:57:59 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:5375 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751320AbWFBO56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jun 2006 10:57:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060602145758.XSQA554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 2 Jun 2006 10:57:58 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 1 Jun 2006 09:21:38 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932177AbWFBPc0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Jun 2006 11:32:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932373AbWFBPcZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 11:32:25 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:42938 "HELO
+	peff.net") by vger.kernel.org with SMTP id S932177AbWFBPcZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Jun 2006 11:32:25 -0400
+Received: (qmail 29858 invoked from network); 2 Jun 2006 11:32:23 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 2 Jun 2006 11:32:23 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri,  2 Jun 2006 11:32:23 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21162>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+This patch causes read_sha1_file and sha1_object_info to re-examine the
+list of packs if an object cannot be found. It works by re-running
+prepare_packed_git() after an object fails to be found.
 
-> On Thu, 1 Jun 2006, Martin Waitz wrote:
->> 
->> I have the following problem:
->
-> It's not a problem, it's a feature.
->...
-> Those files were _never_ tracked.
+It does not attempt to clean up the old pack list. Old packs which are in
+use can continue to be used (until unused by lru selection).  New packs
+are placed at the front of the list and will thus be examined before old
+packs.
 
-I would agree in the reproduction recipe Martin gave there is no
-problem but feature, but at the same time I suspect the recent
-"reset --hard simplification" has introduced a true regression.
+Signed-off-by: Jeff King <peff@peff.net>
+---
 
-        $ mkdir test || exit
-        $ cd test || exit
-        $ git init-db
-        defaulting to local storage area
-        $ echo init >file0
-        $ echo init >file1
-        $ git add file0 file1
-        $ git commit -m initial
-        Committing initial tree de84dc367842fdbbb3acad3b3ed252f8c984296f
-        $ git branch side
-        $ rm -f file1
-        $ echo second >file2
-        $ git add file2
-        $ git commit -a -m 'master adds file2 and deletes file1'
-        $ git checkout side
-        $ echo modified >file1
-        $ git commit -a -m 'side edits file1'
-        $ git checkout master
-        $ ls
-        file0  file2
-        $ git pull . side
-        Trying really trivial in-index merge...
-        fatal: Merge requires file-level merging
-        Nope.
-        Merging HEAD with 7934c9c383f611cf2b9895a46cf95b815569beef
-        Merging: 
-        b684570dc1141552d0da950a18f2d84a3ffadbc1 master adds file2 and deletes file1 
-        7934c9c383f611cf2b9895a46cf95b815569beef side edits file1 
-        found 1 common ancestor(s): 
-        598d6491f72b6057ca87683d43cf64b08d90ddaf initial 
-        CONFLICT (delete/modify): file1 deleted in HEAD and modified in 7934c9c383f611cf2b9895a46cf95b815569beef. Version 7934c9c383f611cf2b9895a46cf95b815569beef of file1 left in tree. 
+This is a repost, since there was no response last time. Linus
+indicated this approach was reasonable; see:
+  <Pine.LNX.4.64.0605300752430.5623@g5.osdl.org>
 
-        Automatic merge failed; fix conflicts and then commit the result.
-        $ git ls-files -u
-        100644 b1b716105590454bfc4c0247f193a04088f39c7f 1	file1
-        100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 3	file1
-        $ ls
-        file0  file1  file2
-        $ git reset --hard
-        $ ls
-        file0  file1  file2
+I tested this by making a simple repo with three commits: a, b, and c.
+I ran git diff-tree --stdin, and then did the following:
+  1. fed 'a b' to diff-tree
+  2. ran git repack -a -d
+  3. fed 'b c' to diff-tree
+Vanilla git complains about the lack of object, whereas this version
+provides the correct diff-tree output.
 
-We used to remove file1 from the working tree in this case.  One
-of the most important reason to use "git reset --hard" is to
-recover from a conflicted, failed merge.  
+ sha1_file.c |   24 ++++++++++++++++++------
+ 1 files changed, 18 insertions(+), 6 deletions(-)
 
-Leaving file1 in the working tree around in this case has
-unpleasant consequences.  After the above:
+diff --git a/sha1_file.c b/sha1_file.c
+index f77c189..696e53f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -626,12 +626,12 @@ static void prepare_packed_git_one(char 
+ 	closedir(dir);
+ }
+ 
++static int prepare_packed_git_run_once = 0;
+ void prepare_packed_git(void)
+ {
+-	static int run_once = 0;
+ 	struct alternate_object_database *alt;
+ 
+-	if (run_once)
++	if (prepare_packed_git_run_once)
+ 		return;
+ 	prepare_packed_git_one(get_object_directory(), 1);
+ 	prepare_alt_odb();
+@@ -640,7 +640,13 @@ void prepare_packed_git(void)
+ 		prepare_packed_git_one(alt->base, 0);
+ 		alt->name[-1] = '/';
+ 	}
+-	run_once = 1;
++	prepare_packed_git_run_once = 1;
++}
++
++static void reprepare_packed_git(void)
++{
++	prepare_packed_git_run_once = 0;
++	prepare_packed_git();
+ }
+ 
+ int check_sha1_signature(const unsigned char *sha1, void *map, unsigned long size, const char *type)
+@@ -1212,9 +1218,12 @@ int sha1_object_info(const unsigned char
+ 	if (!map) {
+ 		struct pack_entry e;
+ 
+-		if (!find_pack_entry(sha1, &e))
+-			return error("unable to find %s", sha1_to_hex(sha1));
+-		return packed_object_info(&e, type, sizep);
++		if (find_pack_entry(sha1, &e))
++			return packed_object_info(&e, type, sizep);
++		reprepare_packed_git();
++		if (find_pack_entry(sha1, &e))
++			return packed_object_info(&e, type, sizep);
++		return error("unable to find %s", sha1_to_hex(sha1));
+ 	}
+ 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+ 		status = error("unable to unpack %s header",
+@@ -1256,6 +1265,9 @@ void * read_sha1_file(const unsigned cha
+ 		munmap(map, mapsize);
+ 		return buf;
+ 	}
++	reprepare_packed_git();
++	if (find_pack_entry(sha1, &e))
++		return read_packed_sha1(sha1, type, size);
+ 	return NULL;
+ }
+ 
+-- 
+1.3.3.g331f
 
-	$ git checkout side
-	fatal: Untracked working tree file 'file1' would be overwritten by merge.
+-
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+----- End forwarded message -----
