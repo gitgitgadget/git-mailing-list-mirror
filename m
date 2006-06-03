@@ -1,64 +1,66 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Gitk feature - show nearby tags
-Date: Sat, 3 Jun 2006 22:23:37 +1000
-Message-ID: <17537.32585.260926.48759@cargo.ozlabs.ibm.com>
-References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
-	<7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git reset --hard not removing some files
+Date: Sat, 3 Jun 2006 08:11:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606030802560.5498@g5.osdl.org>
+References: <20060601160052.GK14325@admingilde.org> <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
+ <7vhd33d2q2.fsf@assigned-by-dhcp.cox.net> <7vy7we8w1h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Sat Jun 03 14:24:08 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Sat Jun 03 17:12:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmVAh-00037r-Vy
-	for gcvg-git@gmane.org; Sat, 03 Jun 2006 14:24:04 +0200
+	id 1FmXnU-0005sM-Ts
+	for gcvg-git@gmane.org; Sat, 03 Jun 2006 17:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbWFCMXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 08:23:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932624AbWFCMXt
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 08:23:49 -0400
-Received: from ozlabs.org ([203.10.76.45]:39858 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932622AbWFCMXt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 08:23:49 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 5FB0267A60; Sat,  3 Jun 2006 22:23:48 +1000 (EST)
+	id S1750766AbWFCPMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 11:12:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbWFCPMJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 11:12:09 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41697 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750766AbWFCPMI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 11:12:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k53FBr2g024875
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 3 Jun 2006 08:11:53 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k53FBq23015581;
+	Sat, 3 Jun 2006 08:11:52 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+In-Reply-To: <7vy7we8w1h.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21195>
 
-Junio C Hamano writes:
 
-> Another thing that would equally be useful is to show which
-> branch a particular commit is on, so for example I can pick one
-> commit while doing "gitk next" to view the next branch and see
-> which topic it belongs to, and "gitk this-topic" to see which
-> commits on that topic, if any, are not yet in the "next" branch.
 
-That wouldn't be hard to do, it's just a matter of finding which heads
-are descendents of the selected commit.  I think that with heads, you
-would want to see all the descendent heads, rather than just the
-nearest ones (those that aren't descendents of another descendent
-head) as I do with tags.  What do you think?  If one head is a
-descendent of another, and both are descendents of the selected
-commit, should I show both?
+On Sat, 3 Jun 2006, Junio C Hamano wrote:
+> 
+> I think this patch fixes the regression.  Comments?
 
-> BTW, what's the maintenance/rewind policy on the "new" branch of
-> gitk.git?  If you are never going to rewind it, I could pull it
-> in "next" (and keep pulling your "master" in my "master") for
-> wider exposure if you like.
+The approach looks fine, but with your changes, the "deleted" flag makes 
+no sense any more and looks redundant. It's not actually used for anything 
+except deciding if we need to re-write the active_cache[] thing, and you 
+migth as well use either "last" or "unmerged" for that.
 
-I intend to pull "new" into "master" shortly, assuming I don't get any
-bug reports for the "new" branch. :)
+(yeah, "last" and "unmerged" becomes non-null one entry earlier than 
+"deleted", but that's actually just confusing, I think, and now depends on 
+the fact that we don't have to re-write the first entry).
 
-If you pull my "new" into your "next", and you then pull your "next"
-into your "master", and I pull my "new" into my "master", and you pull
-my "master" into your "master", won't we end up with duplicate merges?
+The whole "*dst++ = ce" _could_ be unconditional, the only reason I made 
+it conditional at all is to avoid dirtying the mmap when not necessary (ie 
+it's a performance optimization, and it's not one where that off-by-one 
+matters).
 
-Paul.
+So I think you could make it clearer by dropping "deleted" entirely, and 
+just making the store be conditional on "last".
+
+			Linus
