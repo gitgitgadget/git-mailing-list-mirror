@@ -1,53 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: http-fetch troubles
-Date: Fri, 2 Jun 2006 19:26:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606021925350.5498@g5.osdl.org>
-References: <20060601232437.GD12261@reactrix.com> <7vhd34dptq.fsf@assigned-by-dhcp.cox.net>
- <7vac8vbgqg.fsf_-_@assigned-by-dhcp.cox.net> <1C422237-D48C-4A30-9BDD-5C165222873D@freescale.com>
- <7virnj9gkf.fsf@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Importing Mozilla CVS into git
+Date: Sat, 3 Jun 2006 00:28:20 -0400
+Message-ID: <9e4733910606022128h23ff94fbg3fcb4fa191254b5a@mail.gmail.com>
+References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
+	 <1149204044.27695.38.camel@neko.keithp.com>
+	 <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Becky Bruce <Becky.Bruce@freescale.com>, git@vger.kernel.org,
-	Nick Hengeveld <nickh@reactrix.com>
-X-From: git-owner@vger.kernel.org Sat Jun 03 04:26:48 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 03 06:28:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmLqg-0001hq-Pv
-	for gcvg-git@gmane.org; Sat, 03 Jun 2006 04:26:47 +0200
+	id 1FmNkg-0004Iv-09
+	for gcvg-git@gmane.org; Sat, 03 Jun 2006 06:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750855AbWFCC0P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Jun 2006 22:26:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932601AbWFCC0P
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jun 2006 22:26:15 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:21213 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750855AbWFCC0P (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jun 2006 22:26:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k532Q52g027222
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 2 Jun 2006 19:26:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k532Q4if031456;
-	Fri, 2 Jun 2006 19:26:04 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virnj9gkf.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751147AbWFCE2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 00:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751153AbWFCE2W
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 00:28:22 -0400
+Received: from nz-out-0102.google.com ([64.233.162.207]:55464 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751147AbWFCE2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jun 2006 00:28:21 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so771060nze
+        for <git@vger.kernel.org>; Fri, 02 Jun 2006 21:28:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f5TdDFtqt+pnWAzWumKRda2eO4xXEMzPjila14L3q2I4mNEoK4QFpeUwo03KbZ02XxvKpxj3Pbv/WVPtDIKhwxaRm3H+XbcpqA/8Ea2Rywfp6yxJirXrHyEn1PR3Ps3BCEmiGi5XyDLwgVp2aUAkejKn0djsnxEr7bFl12sePkk=
+Received: by 10.36.68.4 with SMTP id q4mr2466919nza;
+        Fri, 02 Jun 2006 21:28:20 -0700 (PDT)
+Received: by 10.36.39.3 with HTTP; Fri, 2 Jun 2006 21:28:20 -0700 (PDT)
+In-Reply-To: <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
+Content-Disposition: inline
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21184>
 
+On 6/1/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> With the attached patch you can parse the entire Mozilla tree. The
+> tree has over 100,000 files in it and about 300 branches.
 
+I was a little low with these counts, more like 110,000 files and some
+parts of the tree have 1,000 branches. Total tree size is 3GB.
 
-On Fri, 2 Jun 2006, Junio C Hamano wrote:
-> 
-> ... and I take all the credit ;-).
-
-I always knew you'd work out as a maintainer.
-
-		Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
