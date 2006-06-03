@@ -1,56 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: A test failing with python 2.2 -- ok?
-Date: Sat, 3 Jun 2006 11:13:57 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606031113060.31512@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <93c3eada0606022348l3c39f966u781327b14b0bc3d5@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Gitk feature - show nearby tags
+Date: Sat, 3 Jun 2006 19:38:27 +1000
+Message-ID: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 03 11:14:27 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jun 03 11:38:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmSCy-0001EM-5Z
-	for gcvg-git@gmane.org; Sat, 03 Jun 2006 11:14:13 +0200
+	id 1FmSad-0005sn-EN
+	for gcvg-git@gmane.org; Sat, 03 Jun 2006 11:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932597AbWFCJOA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 05:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbWFCJOA
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 05:14:00 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:56008 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932598AbWFCJN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jun 2006 05:13:59 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id ADDE5E0D;
-	Sat,  3 Jun 2006 11:13:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id A1ED0DE8;
-	Sat,  3 Jun 2006 11:13:58 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 83FC2D32;
-	Sat,  3 Jun 2006 11:13:57 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: geoff@austrics.com.au
-In-Reply-To: <93c3eada0606022348l3c39f966u781327b14b0bc3d5@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932587AbWFCJie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 05:38:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932598AbWFCJie
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 05:38:34 -0400
+Received: from ozlabs.org ([203.10.76.45]:10411 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932587AbWFCJie (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 05:38:34 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id E395E67A6D; Sat,  3 Jun 2006 19:38:32 +1000 (EST)
+To: git@vger.kernel.org
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21190>
 
-Hi,
+I just pushed out an update to the "new" branch of the gitk.git
+repository, which adds a feature that I have often wished for: it will
+now show the nearest preceding and following tags when you select a
+commit.  This is very useful if you need to identify which release was
+the first to incorporate a particular patch, or if you need to know
+which release a patch might have been based on.
 
-On Sat, 3 Jun 2006, Geoff Russell wrote:
+(Specifically, it shows the tags for all tagged descendents that are
+not descendents of another tagged descendent of the selected commit,
+and the tags for all tagged ancestors that are not ancestors of
+another tagged ancestor of the selected commit.)
 
-> I'm not sure how far back you are supporting, but I'm running a python 
-> 2.2 machine and make test fails with a missing python module. Whatever 
-> criss-cross merges are, I don't need them, but figured if you were 
-> intending to support older environments, then you may be interested.
+Since there is a one-off computation that gitk does to work this out,
+which takes an appreciable time (about 1.5 seconds on my G5 on the
+kernel repository), I have made gitk do the computation in the
+background, and update the diff/file display window when it's done.
+There is also a checkbox in the preferences window where you can turn
+it off if you don't want gitk to do this computation.
 
-Python 2.2 is too old, even if you import some missing modules. But you 
-can always set "NO_PYTHON=YesPlease" in config.mak.
+Comments/suggestions welcome.
 
-Hth,
-Dscho
+Paul.
