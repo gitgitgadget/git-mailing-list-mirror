@@ -1,67 +1,67 @@
 From: Horst.H.von.Brand@inf.utfsm.cl
-Subject: [PATCH 5/27] Documentation: Spelling fixes
-Date: Sat, 03 Jun 2006 16:27:04 -0400
-Message-ID: <21045.1760715388$1149366490@news.gmane.org>
-References: <11493664464167-git-send-email-> <11493664482083-git-send-email-> <1149366450549-git-send-email-> <11493664521468-git-send-email-> <114936645851-git-send-email->
+Subject: [PATCH 4/27] Documentation: Spelling fixes
+Date: Sat, 03 Jun 2006 16:27:03 -0400
+Message-ID: <29030.0971166745$1149366493@news.gmane.org>
+References: <11493664464167-git-send-email-> <11493664482083-git-send-email-> <1149366450549-git-send-email-> <11493664521468-git-send-email->
 Reply-To: Horst.H.von.Brand@inf.utfsm.cl
 Cc: Junio C Hamano <junkio@cox.net>,
 	"Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Sat Jun 03 22:28:07 2006
+X-From: git-owner@vger.kernel.org Sat Jun 03 22:28:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmcj5-00064K-Qo
+	id 1Fmcj6-00064K-Cn
 	for gcvg-git@gmane.org; Sat, 03 Jun 2006 22:28:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbWFCU14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 16:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbWFCU14
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 16:27:56 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:50053 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1751802AbWFCU1z (ORCPT
+	id S1751805AbWFCU15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 16:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbWFCU15
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 16:27:57 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:50309 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1751805AbWFCU1z (ORCPT
 	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 16:27:55 -0400
 Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k53KRnXR027436
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k53KRmHh027432
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
 	Sat, 3 Jun 2006 16:27:50 -0400
 Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k53KRj2M014070
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k53KRcqH014066
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 3 Jun 2006 16:27:45 -0400
+	Sat, 3 Jun 2006 16:27:43 -0400
 Received: (from vonbrand@localhost)
-	by laptop11.inf.utfsm.cl (8.13.6/8.13.6/Submit) id k53KRifa014069;
-	Sat, 3 Jun 2006 16:27:44 -0400
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6/Submit) id k53KRcuA014065;
+	Sat, 3 Jun 2006 16:27:38 -0400
 To: git@vger.kernel.org
 X-Mailer: git-send-email 1.3.3.g86f7
-In-Reply-To: <114936645851-git-send-email->
+In-Reply-To: <11493664521468-git-send-email->
 X-Greylist: IP, sender and recipient auto-whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Sat, 03 Jun 2006 16:27:50 -0400 (CLT)
 X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21206>
 
 From: Horst H. von Brand <vonbrand@inf.utfsm.cl>
 
 Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
 ---
- Documentation/git-blame.txt |    2 +-
+ Documentation/git-apply.txt |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index 5189878..0a1fa00 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -16,7 +16,7 @@ which introduced the line. Start annotat
- 
- OPTIONS
- -------
---c, --compability::
-+-c, --compatibility::
- 	Use the same output mode as git-annotate (Default: off).
- 
- -l, --long::
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index e93ea1f..9cc7c74 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -113,7 +113,7 @@ OPTIONS
+ 	When `git-apply` is used for statistics and not applying a
+ 	patch, it defaults to `nowarn`.
+ 	You can use different `<option>` to control this
+-	behaviour:
++	behavior:
+ +
+ * `nowarn` turns off the trailing whitespace warning.
+ * `warn` outputs warnings for a few such errors, but applies the
 -- 
 1.3.3.g86f7
