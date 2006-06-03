@@ -1,89 +1,66 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Cleanup git-send-email.perl:extract_valid_email
-Date: Sat, 3 Jun 2006 15:49:36 -0700
-Message-ID: <20060603224935.GA10324@hand.yhbt.net>
-References: <11493547080-git-send-email-vonbrand@inf.utfsm.cl>
+From: "Robin Rosenberg (list subscriber)" 
+	<robin.rosenberg.lists@dewire.com>
+Subject: Re: Importing Mozilla CVS into git
+Date: Sun, 4 Jun 2006 01:16:37 +0200
+Organization: Dewire
+Message-ID: <200606040116.38036.robin.rosenberg.lists@dewire.com>
+References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com> <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com> <46a038f90606012116t478edacex72a441544f395af4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Sun Jun 04 00:49:47 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Jon Smirl" <jonsmirl@gmail.com>,
+	"Keith Packard" <keithp@keithp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 04 01:16:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmew8-0004Lv-IN
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 00:49:41 +0200
+	id 1FmfMN-0007Gh-B9
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 01:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbWFCWth (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 18:49:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbWFCWth
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 18:49:37 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:11488 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751823AbWFCWtg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 18:49:36 -0400
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id 3EFCC7DC005; Sat,  3 Jun 2006 15:49:36 -0700 (PDT)
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+	id S1751825AbWFCXQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 19:16:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbWFCXQm
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 19:16:42 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:25152 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1751825AbWFCXQl
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 19:16:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 71E5A80264B;
+	Sun,  4 Jun 2006 01:15:27 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 31138-07; Sun,  4 Jun 2006 01:15:27 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by torino.dewire.com (Postfix) with ESMTP id 1CA60802640;
+	Sun,  4 Jun 2006 01:15:25 +0200 (CEST)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <46a038f90606012116t478edacex72a441544f395af4@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <11493547080-git-send-email-vonbrand@inf.utfsm.cl>
-User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21231>
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
-> - Fix the regular expressions for local addresses
-> - Fix the fallback regexp for non-local addresses, simplify the logic
-> 
-> Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
-> ---
->  git-send-email.perl |    9 +++------
->  1 files changed, 3 insertions(+), 6 deletions(-)
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index ed1d89b..a7a7797 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -314,18 +314,15 @@ sub extract_valid_address {
->  	my $address = shift;
->  
->  	# check for a local address:
-> -	return $address if ($address =~ /^([\w\-]+)$/);
-> +	return $address if ($address =~ /^([\w\-.]+)$/);
+fredag 02 juni 2006 06:16 skrev Martin Langhoff:
+> On 6/2/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > It is going to have to be native Windows to move some of the
+> > developers over. They are true blue MS types that won't touch anything
+> > close to Unix so cygwin is out.
+That could be fixed with nice packaging since many CVS users in Windows
+never use a command line anyway since TortoiseCVS is so nice. 
 
-I keep forgetting this, '+' is a valid (and useful) setup, too.
+> As others have pointed out, you have git-cvsserver which emulates a
+> CVS server on top of GIT, so it can be used with (almost any) CVS
+> client. They will be 2nd class citizens however...
 
->  
->  	if ($have_email_valid) {
->  		return Email::Valid->address($address);
->  	} else {
->  		# less robust/correct than the monster regexp in Email::Valid,
->  		# but still does a 99% job, and one less dependency
-> -		my $cleaned_address;
-> -		if ($address =~ /([^\"<>\s]+@[^<>\s]+)/) {
-> -			$cleaned_address = $1;
-> -		}
-> -		return $cleaned_address;
-> +		$address =~ /([\w\-.]+@[\w\-.]+)/;
-> +		return $1;
+(Yet) Another problem is that many windows tools use CR LF as the line ending.
+Almost all windows editors default to CRLF and some detect existing line 
+endings. No editing with notepad anymore. Of course that is a problem 
+regardless of whether a git or cvs client is used. You'll get these big 
+everything-changed commits that alter between CRLF and LF.
 
-Actually, I'm retracting my earlier ack on this.  This is way too
-restrictive.  I'd rather allow an occasional invalid email address than
-to reject valid ones.  I generally trust git users to know what they're
-doing when entering email addresses[1].
-
-*, $, ^, +, = are all valid characters in the username portion (not sure
-about local accounts, though), and I'm sure there are more that I don't
-know about.
-
-[1] - of course, without address book support in git-send-email, I think
-I would've left the 'k' out of Junio's email address by now.  Of course
-there's also the issue of where I work and having several people using
-variations of rob/robert in their email address.  I'm likely to make
-errors like these far more than entering addresses that email systems
-consider invalid, and I suspect I'm not the only one.
-
--- 
-Eric Wong
+-- robin
