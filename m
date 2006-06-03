@@ -1,65 +1,58 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: A test failing with python 2.2 -- ok?
-Date: Sat, 3 Jun 2006 16:18:32 +0930
-Message-ID: <93c3eada0606022348l3c39f966u781327b14b0bc3d5@mail.gmail.com>
-Reply-To: geoff@austrics.com.au
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: A test failing with python 2.2 -- ok?
+Date: Sat, 3 Jun 2006 03:12:14 -0400
+Message-ID: <BAYC1-PASMTP090E371090E5CDBA2C56B9AE960@CEZ.ICE>
+References: <93c3eada0606022348l3c39f966u781327b14b0bc3d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jun 03 08:48:52 2006
+Cc: geoffrey.russell@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 03 09:42:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmPwH-0006W1-NU
-	for gcvg-git@gmane.org; Sat, 03 Jun 2006 08:48:50 +0200
+	id 1FmQmI-0004Wk-TV
+	for gcvg-git@gmane.org; Sat, 03 Jun 2006 09:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932573AbWFCGsd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 02:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932584AbWFCGsd
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 02:48:33 -0400
-Received: from wx-out-0102.google.com ([66.249.82.193]:48575 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932573AbWFCGsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jun 2006 02:48:33 -0400
-Received: by wx-out-0102.google.com with SMTP id h28so469187wxd
-        for <git@vger.kernel.org>; Fri, 02 Jun 2006 23:48:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=mVv71KkX+hPpCPJ828IrXw0rRkdD42+BUxQXxV+bMyuPel2vVv/8H0A9vZQVzO0iXuIMtWNkKjt0h86z+ZXm9XNgdfXHEen7JTdJ9KLSeKnDGkRIfFi1HLeogfaBYx8qSw5ENc3CkYfbHnxT+MiS7Xq85JXK39mvSceoxLnJJd8=
-Received: by 10.70.62.1 with SMTP id k1mr3460494wxa;
-        Fri, 02 Jun 2006 23:48:32 -0700 (PDT)
-Received: by 10.70.32.19 with HTTP; Fri, 2 Jun 2006 23:48:32 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1750750AbWFCHmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 03:42:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbWFCHmT
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 03:42:19 -0400
+Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:40813 "EHLO
+	BAYC1-PASMTP09.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S1750750AbWFCHmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jun 2006 03:42:18 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP09.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 3 Jun 2006 00:44:06 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id CE757644C28;
+	Sat,  3 Jun 2006 03:12:52 -0400 (EDT)
+To: geoff@austrics.com.au
+Message-Id: <20060603031214.e65c1744.seanlkml@sympatico.ca>
+In-Reply-To: <93c3eada0606022348l3c39f966u781327b14b0bc3d5@mail.gmail.com>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.9.1; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 03 Jun 2006 07:44:06.0984 (UTC) FILETIME=[7E358C80:01C686E1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21185>
 
-Hi,
+On Sat, 3 Jun 2006 16:18:32 +0930
+"Geoff Russell" <geoffrey.russell@gmail.com> wrote:
 
-I'm not sure how far back you are supporting, but I'm running a python
-2.2 machine
-and make test fails with a missing python module. Whatever criss-cross merges
-are, I don't need them, but figured if you were intending to support older
-environments, then you may be interested.
+> I'm not sure how far back you are supporting, but I'm running a python
+> 2.2 machine
+> and make test fails with a missing python module. Whatever criss-cross merges
+> are, I don't need them, but figured if you were intending to support older
+> environments, then you may be interested.
 
-Cheers,
-Geoff Russell
+Hi Geoff,
 
-$ git --version
+You need Python version 2.3 or newer; from the INSTALL file:
 
-    git version 1.3.3.g61ef-dirty
+       - "python" 2.3 or more recent; if you have 2.3, you may need
+          to build with "make WITH_OWN_SUBPROCESS_PY=YesPlease".
 
-$ make test
-
-*** t6021-merge-criss-cross.sh ***
-....
-
-Traceback (most recent call last):
-  File "/usr/local/LINUX/GIT/git/t/../git-merge-recursive", line 10, in ?
-    from heapq import heappush, heappop
-ImportError: No module named heapq
--------------------------------------------------------
+Sean
