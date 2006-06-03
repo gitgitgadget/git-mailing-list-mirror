@@ -1,82 +1,127 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: Gitk feature - show nearby tags
-Date: Sat, 3 Jun 2006 18:19:01 +0200
-Message-ID: <20060603161900.GA4882@diku.dk>
-References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com> <7vslmm8rcd.fsf@assigned-by-dhcp.cox.net> <20060603151240.GA4024@diku.dk> <e5sa47$qv8$1@sea.gmane.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Builtin git-rev-parse.
+Date: Sat, 3 Jun 2006 18:45:43 +0200
+Message-ID: <20060603184543.be4455c8.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 03 18:19:21 2006
+X-From: git-owner@vger.kernel.org Sat Jun 03 18:41:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmYqJ-0004QV-Jq
-	for gcvg-git@gmane.org; Sat, 03 Jun 2006 18:19:15 +0200
+	id 1FmZC8-0006dP-Se
+	for gcvg-git@gmane.org; Sat, 03 Jun 2006 18:41:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751750AbWFCQTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 12:19:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbWFCQTG
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 12:19:06 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:23276 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1751542AbWFCQTE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 12:19:04 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id E24B9770056;
-	Sat,  3 Jun 2006 18:19:03 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 14479-13; Sat,  3 Jun 2006 18:19:01 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 48904770026;
-	Sat,  3 Jun 2006 18:19:01 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id F33806DF88D; Sat,  3 Jun 2006 18:15:45 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 33C28625C6; Sat,  3 Jun 2006 18:19:01 +0200 (CEST)
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <e5sa47$qv8$1@sea.gmane.org>
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1751129AbWFCQlq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 12:41:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbWFCQlq
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 12:41:46 -0400
+Received: from mailfe04.tele2.fr ([212.247.154.108]:13241 "EHLO swip.net")
+	by vger.kernel.org with ESMTP id S1751129AbWFCQlp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 12:41:45 -0400
+X-T2-Posting-ID: TxtQRJW1bkfL6FK+j2Eryxlc4dIjlPc+B/S5UvRXFrs=
+X-Cloudmark-Score: 0.000000 []
+Received: from [83.177.220.103] (HELO localhost.boubyland)
+  by mailfe04.swip.net (CommuniGate Pro SMTP 5.0.8)
+  with SMTP id 206728667; Sat, 03 Jun 2006 18:41:43 +0200
+To: Junio Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.17; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21199>
 
-Jakub Narebski <jnareb@gmail.com> wrote Sat, Jun 03, 2006:
-> Jonas Fonseca wrote:
-> 
-> > I already took your hint from the other day on irc and have begun on
-> > implementing this revision graph visualization for tig. :)
-> > 
-> > The problem is of course to come up with some ascii-art which is both
-> > readable and dense. Below is my mockup of something not using line
-> > graphics,[...]
-> 
-> As I can see you use 'vertical' layout. Do I understand correctly that '*'
-> refers to commit on marked (by column) branch, and '|' means pass-thru?
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 
-Yes, and 'M' marks merges. Putting information in the "commit node"
-should make certain things more obvious. You could encode information
-such as whether a commit is a "unique head" (nothing other revisions
-references this commit). For example the first commit will always be
-unique, but when using --all other heads might show up "unique".
+---
+ Makefile                           |    7 +++----
+ rev-parse.c => builtin-rev-parse.c |    3 ++-
+ builtin.h                          |    1 +
+ git.c                              |    3 ++-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-	+ [master] ...
-	* ...
-	| + [unmerged/topic] ...
-	| * ...
-	*' ...
-
-> BTW. you might want to take a look at http://revctrl.org/ diagrams;
-> AFAICT all the git documentation uses 'horizontal' layout, which is good
-> for example but perhaps not for long-lived development...
-
-Looking at the examples on http://revctrl.org/StaircaseMerge: it might
-be more readable but not as dense as I would like, namely one commit pr
-line.
-
+diff --git a/Makefile b/Makefile
+index b6fce39..004c216 100644
+--- a/Makefile
++++ b/Makefile
+@@ -154,8 +154,7 @@ PROGRAMS = \
+ 	git-hash-object$X git-index-pack$X git-local-fetch$X \
+ 	git-mailinfo$X git-merge-base$X \
+ 	git-merge-index$X git-mktag$X git-mktree$X git-pack-objects$X git-patch-id$X \
+-	git-peek-remote$X git-prune-packed$X \
+-	git-receive-pack$X git-rev-parse$X \
++	git-peek-remote$X git-prune-packed$X git-receive-pack$X \
+ 	git-send-pack$X git-shell$X \
+ 	git-show-index$X git-ssh-fetch$X \
+ 	git-ssh-upload$X git-unpack-file$X \
+@@ -168,7 +167,7 @@ PROGRAMS = \
+ BUILT_INS = git-log$X git-whatchanged$X git-show$X \
+ 	git-count-objects$X git-diff$X git-push$X \
+ 	git-grep$X git-add$X git-rm$X git-rev-list$X \
+-	git-check-ref-format$X \
++	git-check-ref-format$X git-rev-parse$X \
+ 	git-init-db$X git-tar-tree$X git-upload-tar$X git-format-patch$X \
+ 	git-ls-files$X git-ls-tree$X \
+ 	git-read-tree$X git-commit-tree$X \
+@@ -222,7 +221,7 @@ LIB_OBJS = \
+ BUILTIN_OBJS = \
+ 	builtin-log.o builtin-help.o builtin-count.o builtin-diff.o builtin-push.o \
+ 	builtin-grep.o builtin-add.o builtin-rev-list.o builtin-check-ref-format.o \
+-	builtin-rm.o builtin-init-db.o \
++	builtin-rm.o builtin-init-db.o builtin-rev-parse.o \
+ 	builtin-tar-tree.o builtin-upload-tar.o \
+ 	builtin-ls-files.o builtin-ls-tree.o \
+ 	builtin-read-tree.o builtin-commit-tree.o \
+diff --git a/rev-parse.c b/builtin-rev-parse.c
+similarity index 99%
+rename from rev-parse.c
+rename to builtin-rev-parse.c
+index 4e2d9fb..c353a48 100644
+--- a/rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -7,6 +7,7 @@ #include "cache.h"
+ #include "commit.h"
+ #include "refs.h"
+ #include "quote.h"
++#include "builtin.h"
+ 
+ #define DO_REVS		1
+ #define DO_NOREV	2
+@@ -163,7 +164,7 @@ static int show_file(const char *arg)
+ 	return 0;
+ }
+ 
+-int main(int argc, char **argv)
++int cmd_rev_parse(int argc, const char **argv, char **envp)
+ {
+ 	int i, as_is = 0, verify = 0;
+ 	unsigned char sha1[20];
+diff --git a/builtin.h b/builtin.h
+index 738ec3d..ffa9340 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -43,5 +43,6 @@ extern int cmd_diff_index(int argc, cons
+ extern int cmd_diff_stages(int argc, const char **argv, char **envp);
+ extern int cmd_diff_tree(int argc, const char **argv, char **envp);
+ extern int cmd_cat_file(int argc, const char **argv, char **envp);
++extern int cmd_rev_parse(int argc, const char **argv, char **envp);
+ 
+ #endif
+diff --git a/git.c b/git.c
+index 10ea934..bc463c9 100644
+--- a/git.c
++++ b/git.c
+@@ -69,7 +69,8 @@ static void handle_internal_command(int 
+ 		{ "diff-index", cmd_diff_index },
+ 		{ "diff-stages", cmd_diff_stages },
+ 		{ "diff-tree", cmd_diff_tree },
+-		{ "cat-file", cmd_cat_file }
++		{ "cat-file", cmd_cat_file },
++		{ "rev-parse", cmd_rev_parse }
+ 	};
+ 	int i;
+ 
 -- 
-Jonas Fonseca
+1.3.3.ge13b
