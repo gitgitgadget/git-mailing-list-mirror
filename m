@@ -1,68 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git reset --hard not removing some files
-Date: Sun, 04 Jun 2006 02:31:21 -0700
-Message-ID: <7vfyilclna.fsf@assigned-by-dhcp.cox.net>
-References: <20060601160052.GK14325@admingilde.org>
-	<Pine.LNX.4.64.0606010918060.5498@g5.osdl.org>
-	<7vhd33d2q2.fsf@assigned-by-dhcp.cox.net>
-	<20060604091601.GN14325@admingilde.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [ANNOUNCE qgit-1.3]
+Date: Sun, 4 Jun 2006 11:32:15 +0200
+Message-ID: <e5bfff550606040232yffdba0ax43b1b891dfdc5b5e@mail.gmail.com>
+References: <e5bfff550606040155v14565312na26f8c866f0fc32d@mail.gmail.com>
+	 <e5u8fk$ju6$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 11:31:29 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 04 11:32:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmoxC-0001OL-BL
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 11:31:26 +0200
+	id 1Fmoy4-0001VZ-9P
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 11:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbWFDJbX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 05:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbWFDJbX
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 05:31:23 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:58832 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751153AbWFDJbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jun 2006 05:31:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060604093122.OLEN19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 4 Jun 2006 05:31:22 -0400
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20060604091601.GN14325@admingilde.org> (Martin Waitz's message
-	of "Sun, 4 Jun 2006 11:16:02 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751197AbWFDJcR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 05:32:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbWFDJcR
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 05:32:17 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:19583 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751152AbWFDJcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 05:32:16 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1141222wri
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 02:32:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=J31FZYjVxt8kEk2sy7/KzuuW64ivYxyxZvEo7bSaKfS9WnySFDNln+5BvRs3evuvFXOIg5hjBfIqhu6PONTC/Jl68dK9XQ7UwDGOU/pdFHY1wbosnihHQqTWItc44r7Lr2qMzO4AEdjiOqVK5pfo7YB6Aty4AvAD3ozGkvNuo+o=
+Received: by 10.65.236.9 with SMTP id n9mr2798054qbr;
+        Sun, 04 Jun 2006 02:32:15 -0700 (PDT)
+Received: by 10.65.210.17 with HTTP; Sun, 4 Jun 2006 02:32:15 -0700 (PDT)
+To: "Jakub Narebski" <jnareb@gmail.com>
+In-Reply-To: <e5u8fk$ju6$1@sea.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21256>
 
-Martin Waitz <tali@admingilde.org> writes:
-
-> hoi :)
+On 6/4/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> Marco Costalba wrote:
 >
-> On Fri, Jun 02, 2006 at 07:57:57AM -0700, Junio C Hamano wrote:
->> I would agree in the reproduction recipe Martin gave there is no
->> problem but feature, but at the same time I suspect the recent
->> "reset --hard simplification" has introduced a true regression.
+> > This is qgit-1.3
+> [...]
+> > NEW IN THIS RELEASE
+> >
+> > Main focus of this release is usability.
+> >
+> > The big feature is the use of tabs instead of independent windows.
+> >
+> > This change alone could be enough for a release. It's a big rewrite of UI
+> > code to let browsing revisions and patches quicker and easier.
 >
-> This may have been the bug that bit me.
-> Thanks for finding it although I was not able to reproduce it myself!
+> Of course that is advantage _only_ if the tabs are independend, and one
+> (usually) doesn't need to view them simultaneously, e.g. side by side.
+>
 
-I found this somewhat the hard way myself.  I have:
+Actually they are.
+One for revisions list, one for patches and one for file content.
+File content tab is indipendent from previous two (of course it can be
+synced on request).
 
-        [pull]
-                twohead = resolve
+> Just my 3 eurocents ;-)
 
-in my .git/config -- IOW, I usually do not use recursive
-strategy myself.  When a merge with resolve strategy fails (and
-with recent trend to busyboxify git commands, many merges
-between my topics and "next" and/or "master" do), I relied on
-"reset --hard" followed by the same merge of the topic using
-"pull -s recursive" to recover things, but it didn't.  When
-pulling a branch with builtin-*.c names into another branch with
-older names, regressed "reset --hard" left builtin-*.c files
-behind, and then the next merge attempt complained by saying my
-untracked working tree files would be overwritten X-<.
+Well, at today exchange rate should be 'my 2.3 eurocents'  :-)
+
+
+      Marco
