@@ -1,66 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Support for configurable git command aliases (v2)
-Date: Sun, 04 Jun 2006 15:38:54 -0700
-Message-ID: <7v8xoc8s1t.fsf@assigned-by-dhcp.cox.net>
-References: <20060604211931.10117.82695.stgit@machine.or.cz>
-	<20060604212050.GV10488@pasky.or.cz>
-	<mj+md-20060604.221036.15619.albireo@ucw.cz>
-	<20060604221930.GW10488@pasky.or.cz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git daemon directory munging?
+Date: Sun, 04 Jun 2006 16:08:51 -0700
+Message-ID: <44836803.5070405@zytor.com>
+References: <E1FmgFV-0001i6-Kc@jdl.com> <Pine.LNX.4.64.0606031722340.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 00:39:01 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jon Loeliger <jdl@jdl.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 01:09:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn1FM-0002dT-UL
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 00:39:01 +0200
+	id 1Fn1ia-0007Gl-GI
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 01:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932298AbWFDWi4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 18:38:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932299AbWFDWi4
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 18:38:56 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:12778 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932298AbWFDWi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jun 2006 18:38:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060604223855.ITTV27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 4 Jun 2006 18:38:55 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20060604221930.GW10488@pasky.or.cz> (Petr Baudis's message of
-	"Mon, 5 Jun 2006 00:19:30 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932305AbWFDXJJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 19:09:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932299AbWFDXJJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 19:09:09 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:63429 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S932305AbWFDXJI
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 19:09:08 -0400
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k54N8p2x016113
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 4 Jun 2006 16:08:52 -0700
+User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606031722340.5498@g5.osdl.org>
+X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21292>
 
-Petr Baudis <pasky@ucw.cz> writes:
+Linus Torvalds wrote:
+> 
+> On Sat, 3 Jun 2006, Jon Loeliger wrote:
+>> <jdl> Thus, I'd use something like:
+>>       --map-base=www.foo.com/pub/scm:/pub/foo/scm
+>>       --map-base=www.bar.com/pub/scm=/pub/bar/scm
+> 
+> The bigger problem is that nothing actually passes in the hostname to 
+> git-daemon in the first place. By the time the git-daemon is contacted, 
+> the hostname is long gone ;(
 
->
->   Then again, as pointed out on IRC you might get very confused as well
-> if you do git log | less. Besides, this is not going to help you with
-> aliases like commit = commit -a.
->
->   So, some other possibilities are to:
->
->   (i) Test stdin. Even in scripts, stdin is frequently terminal, but you
-> might add </dev/null after each git invocation and get a serious case of
-> RSI.
->
->   (ii) Add a --no-alias git argument. This way lies madness, too.
->
->   (iii) Check a $GIT_NO_ALIAS environment variable. This might work
-> best, after all. Opinions? Or some other clever idea?
+Well, you can bind different git daemons to different IP addresses 
+(IP-based vhosting) or different ports (with SRV records in DNS.)
 
-Perhaps the simplest:
+> Now, you can just extend the git protocol to just pass in the host too. 
+> 
+> You can in fact do this in a backwards-compatible manner (old git-daemons 
+> will just ignore it, and new git daemons will automatically notice new 
+> clients) with something evil like the appended.
+> 
 
-    (iv) Refuse/ignore an alias that hides existing command, and
-         train users to write portable scripts by not using
-         aliases.  E.g. "alias.log = log --pretty=raw" is
-         ignored, and you would do "alias.l = log --pretty=raw"
-         instead.
+That's actually what was done to HTTP.
+
+> Not tested (and this actualyl doesn't make the daemon _use_ the data, it 
+> just adds a comment - the rest "is left as an exercise for the reader")
+
+
+	-hpa
