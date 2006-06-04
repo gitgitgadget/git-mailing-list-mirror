@@ -1,84 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Importing Mozilla CVS into git
-Date: Sun, 4 Jun 2006 10:55:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606041050010.5498@g5.osdl.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
- <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com>
- <46a038f90606012116t478edacex72a441544f395af4@mail.gmail.com>
- <200606040116.38036.robin.rosenberg.lists@dewire.com>
- <Pine.LNX.4.64.0606031631480.5498@g5.osdl.org> <e5u0o0$3rm$1@sea.gmane.org>
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: [PATCH 0/27] Documentation: Spelling fixes
+Date: Sun, 4 Jun 2006 19:59:04 +0200
+Message-ID: <dbfc82860606041059l31605bc5j18ad2b35ea6f6dc0@mail.gmail.com>
+References: <33723.2579863214$1149366476@news.gmane.org>
+	 <7vk67xenfe.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 19:56:33 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Horst.H.von.Brand@inf.utfsm.cl, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 04 19:59:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmwpT-00062t-5k
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 19:56:00 +0200
+	id 1FmwsZ-0006sr-0q
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 19:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750819AbWFDRzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 13:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbWFDRzu
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 13:55:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43955 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750819AbWFDRzt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 13:55:49 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k54Htk2g002043
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 4 Jun 2006 10:55:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k54Htkdt020730;
-	Sun, 4 Jun 2006 10:55:46 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e5u0o0$3rm$1@sea.gmane.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750834AbWFDR7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 13:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbWFDR7F
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 13:59:05 -0400
+Received: from wx-out-0102.google.com ([66.249.82.202]:10508 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750834AbWFDR7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 13:59:04 -0400
+Received: by wx-out-0102.google.com with SMTP id h28so613276wxd
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 10:59:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=eAluZtnlFZkbFmfeO14ynWQ2X5+FSN8sJh01sFSouOzrNWpuRBBALeVxc9NWvx9puIFisLCJgAyr/nBsTYLceSA74XZziBVbp2SdsS1GmN7PZObqI6VcNHWVj4zlTCJAjGh1YKF5bseYscwyQeY5N+RFQDGb9xHNASRz8VYRc/M=
+Received: by 10.70.23.6 with SMTP id 6mr1663820wxw;
+        Sun, 04 Jun 2006 10:59:04 -0700 (PDT)
+Received: by 10.70.66.6 with HTTP; Sun, 4 Jun 2006 10:59:03 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vk67xenfe.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: 81ee5b553bc20ae6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21272>
 
+On 6/4/06, Junio C Hamano <junkio@cox.net> wrote:
+> Most do not seem to be typoes, depending on where you learned
+> the language (XYZour vs XYZor; ok, Ok, and OK; ie vs i.e.).
 
+Where do you write "ie" instead of "i.e."?
 
-On Sun, 4 Jun 2006, Jakub Narebski wrote:
-> > 
-> > And that shouldn't actually be that hard to do. The most trivial approach 
-> > is to have just a pre-trigger on commits, but let's face it, that would 
-> > not be a good "full" solution. A better one is to just make the whole
-> > "git update-index" thing just have a "automatically ignore CR/LF" mode.
-> 
-> Why wouldn't it be good solution?
+In Swedish, there has been a trend to remove dots from abbreviated
+expressions, but it seems people are returning to use dots.
+Personally, I find that dots make things a lot clearer.
 
-The pre-commit filter thing should work fine, and hey, maybe it's worth 
-doing that way. I just worry/think that it will result in tons of noise 
-when you do a "git diff" and "git update-index --refresh" on a file that 
-has been changed, but then the change reverted.
-
-But I didn't really think it through very deeply, it was just an idle "I 
-think the pre-commit hook will fall down when X happens that is a 
-non-commit event" thought. I suspect this is one of those things where 
-somebody actually working in that kind of environment will figure out what 
-the problems are, and what the righ solution is.
-
-> BTW. wouldn't Mercurial encode/decode filters
-> 
->   http://www.selenic.com/mercurial/wiki/index.cgi/EncodeDecodeFilter
-> 
-> be a better solution than modifying files by "git update-index", 
-> with all problems it can cause (not detected binary files, text files
-> which have to be in CR/LF line ending,...).
-
-Please do realize that the patch I sent out was absolutely _not_ meant to 
-be taken seriously. It was more a "somebody could try this in a windows 
-environment, and if it works as an approach, we can try to do it right".
-
-I'm absolutely _not_ suggesting merging that patch as-is or even in any 
-form very close to it. It clearly needs a config file entry with filename 
-patterns etc at a minimum.
-
-		Linus
+  nikolai
