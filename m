@@ -1,47 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/27] Documentation: Spelling fixes
-Date: Sat, 03 Jun 2006 18:09:57 -0700
-Message-ID: <7vk67xenfe.fsf@assigned-by-dhcp.cox.net>
-References: <33723.2579863214$1149366476@news.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: More verbose "git fetch"?
+Date: Sat, 3 Jun 2006 18:11:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606031809550.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 03:10:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Jun 04 03:12:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmh84-0006mZ-8R
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 03:10:08 +0200
+	id 1FmhA1-0006wk-Gu
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 03:12:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750898AbWFDBJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 21:09:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbWFDBJ7
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 21:09:59 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:50574 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750898AbWFDBJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jun 2006 21:09:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060604010958.ROJC19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 3 Jun 2006 21:09:58 -0400
-To: Horst.H.von.Brand@inf.utfsm.cl
-In-Reply-To: <33723.2579863214$1149366476@news.gmane.org> (Horst H. von
-	Brand's message of "Sat, 03 Jun 2006 16:26:59 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751082AbWFDBMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 21:12:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbWFDBMF
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 21:12:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:1249 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751082AbWFDBMC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 21:12:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k541Bw2g014442
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 3 Jun 2006 18:11:59 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k541Bw6l028652;
+	Sat, 3 Jun 2006 18:11:58 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21238>
 
-Thanks.
 
-Most do not seem to be typoes, depending on where you learned
-the language (XYZour vs XYZor; ok, Ok, and OK; ie vs i.e.).  I
-favour the latter two changes myself, but honestly, I do not
-deeply care that much.  The rest are real typos.
+Is it just me who has been getting less accepting, or has "git fetch" 
+gotten more verbose?
 
-It seems that 1/27 did not make here, nor either of the two big
-mailing list archives (gmane and marc).
+Has it always spit out those annoying
+
+	xyz: same as branch 'xyz' of so-and-so-repo
+
+even without "-v"? I thought I killed them at some point, but 
+either they're back, or I'm just confused.
+
+		Linus
