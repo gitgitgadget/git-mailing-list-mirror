@@ -1,158 +1,69 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Using subversion tools on Mozilla CVS
-Date: Sun, 4 Jun 2006 11:48:27 -0400
-Message-ID: <9e4733910606040848t5ce63f2dv84fc8bad3e33f867@mail.gmail.com>
-References: <9e4733910606032009p252ff5fai7401401427ae3ec3@mail.gmail.com>
-	 <BAYC1-PASMTP08068F9BD23CF4FA8A1BDBAE970@CEZ.ICE>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git clone takes ages on a slow link
+Date: Sun, 4 Jun 2006 10:48:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606041046340.5498@g5.osdl.org>
+References: <20060604010145.GC986@krispykreme>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 17:49:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Jun 04 19:48:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmuq8-0001cn-Cn
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 17:48:33 +0200
+	id 1FmwiQ-0004Jp-2M
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 19:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbWFDPs3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 11:48:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbWFDPs3
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 11:48:29 -0400
-Received: from nz-out-0102.google.com ([64.233.162.194]:55562 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751511AbWFDPs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jun 2006 11:48:28 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so996457nze
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 08:48:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sdWOdflO383wn4E3+BDlVywklbu1eTNOkIqnkyuk9eX35tq6au7hy4jaZvIBQDdefv1fVLLxwmmF0t7ae2rUmKm5j3Sh5YMKH8+3wTIaLo9yjtMKK40t6HMt1LfollCCK3Eg5uvx/wnBkxpLNT+Clg5h71DojdVFPhP8LBV7sd8=
-Received: by 10.36.250.34 with SMTP id x34mr4925916nzh;
-        Sun, 04 Jun 2006 08:48:28 -0700 (PDT)
-Received: by 10.36.39.3 with HTTP; Sun, 4 Jun 2006 08:48:27 -0700 (PDT)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP08068F9BD23CF4FA8A1BDBAE970@CEZ.ICE>
-Content-Disposition: inline
+	id S1750823AbWFDRsi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 13:48:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbWFDRsi
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 13:48:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47538 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750823AbWFDRsh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 13:48:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k54HmW2g001793
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 4 Jun 2006 10:48:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k54HmV5s020605;
+	Sun, 4 Jun 2006 10:48:31 -0700
+To: Anton Blanchard <anton@samba.org>
+In-Reply-To: <20060604010145.GC986@krispykreme>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21269>
-
-On 6/4/06, Sean <seanlkml@sympatico.ca> wrote:
-> On Sat, 3 Jun 2006 23:09:00 -0400
-> "Jon Smirl" <jonsmirl@gmail.com> wrote:
->
-> > I found this tool written in Python for importing CVS into Subversion.
-> > It seems to be handling the Mozilla CVS repository with fewer problems
-> > than parsecvs.
-> >
-> > http://cvs2svn.tigris.org/cvs2svn.html
-> >
-> > Since I'm not a native Python speaker, anyone else want to give a try
-> > at changing it to support git?
->
-> Hi Jon,
->
-> If you haven't tried to import into git with a recent version of
-> git-cvsimport, it would be worth a shot.
-
-I tried it a couple of weeks ago and it barely made it into the
-conversion. This repository is massive so if the tool doesn't scale
-extremely well it quickly collapses.
-
-I can't get it to run all the way, but I estimate that the git
-parsecvs tool will need 11GB of RAM to import Mozilla CVS. Each time I
-try to import the repository it runs 8-10 hours before failing. 11GB
-process means you need a 64b machine.
-
-> As for the tool you've referenced above, it does look pretty good.
-> It makes multiple passes and saves to a temp file after each, letting
-> you resume from that point and means it can use less memory overall.
-
-This tool imported the Mozilla repository to SVN on the first try. It
-needs about 10GB of temp disk space but it never took over 100MB of
-RAM while running. It is much more advanced than anything git has. I'd
-recommend reworking it to become git's main CVS import tool.
-
-> It can produce a pretty straight forward looking dump file if you
-> pass it the "--dump-only" option, rather than it pushing the results
-> into svn; for instance:
->
->  $ cvs2svn --dump-only --dumpfile DUMPFILE <cvs directory>
->
-> It shouldn't be too hard to write a script that imports the revisions
-> found in the resulting DUMPFILE into git.
-
-I haven't learned enough about GIT yet to figure out how to import the
-change sets.
-The cvs2svn tool uses eight passes to convert CVS into something SVN can use.
-In the last pass it has turned everything into change sets and it
-pipes them to a SVN process that commits them. Mozilla has 205,787
-change sets. It would be best if there was some way to pipe things
-into git, I suspect the dumpfile for Mozilla would be huge.
-
-This command imports Mozilla CVS, I had to add --use-cvs since the RCS
-tools can't handle all the strange options used in Mozilla CVS files.
-
-cvs2svn --use-cvs -s svntest \
-  --force-tag=THUNDERBIRD_0_7_RELEASE --force-tag=CVS \
- --force-branch=JAVADEV_RTM_20001102 \
- --force-branch=XPCOM_BRANCH_LANDING_981104 \
- --force-branch=MOZILLA_1_3_BRANCH \
- --force-branch=N3 \
- --force-branch=SeaMonkey_M4_BRANCH \
- --force-branch=NORMANDY_BRANCH \
- --force-branch=FASTLOAD_20010529_BRANCH \
- --force-branch=MozillaSourceClassic_19981026_BRANCH \
- --force-branch=RDF_19981124_BRANCH \
- --force-branch=OTIS_TEST_BRANCH \
- --force-branch=Netscape61_PR1_Mini_BRANCH \
- --force-branch=XPCOM20_BRANCH \
- --force-branch=XPC_IDISP_20020417_BRANCH \
- --force-branch=RDF_122898_BRANCH \
- --force-branch=MOZILLA_1_4_BRANCH \
- --force-branch=Netscape_20000922_BRANCH \
- --force-branch=NETSCAPE_7_0_OEM_BRANCH \
- --force-branch=RDF_19990407_BRANCH \
- --force-branch=ALERT_SERVICE_BRANCH \
- --force-branch=SeaMonkey_M12_BRANCH \
- --force-branch=SpiderMonkey140_NES40Rtm_Branch \
-mozilla/mozilla
-
-It takes about 16 hours to convert MozCVS with this command on my
-machine. Once you have done the full conversion you can rerun the last
-pass without rerunning the others. That makes it easier to develop GIT
-support since you don't have to do the entire conversion each time.
-
-cvs2svn -p 8 --use-cvs -s svntest \
-  --force-tag=THUNDERBIRD_0_7_RELEASE --force-tag=CVS \
- --force-branch=JAVADEV_RTM_20001102 \
- --force-branch=XPCOM_BRANCH_LANDING_981104 \
- --force-branch=MOZILLA_1_3_BRANCH \
- --force-branch=N3 \
- --force-branch=SeaMonkey_M4_BRANCH \
- --force-branch=NORMANDY_BRANCH \
- --force-branch=FASTLOAD_20010529_BRANCH \
- --force-branch=MozillaSourceClassic_19981026_BRANCH \
- --force-branch=RDF_19981124_BRANCH \
- --force-branch=OTIS_TEST_BRANCH \
- --force-branch=Netscape61_PR1_Mini_BRANCH \
- --force-branch=XPCOM20_BRANCH \
- --force-branch=XPC_IDISP_20020417_BRANCH \
- --force-branch=RDF_122898_BRANCH \
- --force-branch=MOZILLA_1_4_BRANCH \
- --force-branch=Netscape_20000922_BRANCH \
- --force-branch=NETSCAPE_7_0_OEM_BRANCH \
- --force-branch=RDF_19990407_BRANCH \
- --force-branch=ALERT_SERVICE_BRANCH \
- --force-branch=SeaMonkey_M12_BRANCH \
- --force-branch=SpiderMonkey140_NES40Rtm_Branch \
-mozilla/mozilla
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21270>
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+
+On Sun, 4 Jun 2006, Anton Blanchard wrote:
+> 
+> I think the ticker is over anxious.
+
+It is indeed. It's _meant_ to only tick once a second or when the 
+percentage changes, but I think it forgot to clear the "once a second 
+happened" flag, so instead of updates the percentage output for every 
+file it checks out after the first second has passed.
+
+So something like this should help... Can you verify?
+
+		Linus
+---
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 716f792..80c9320 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -336,6 +336,7 @@ static void check_updates(struct cache_e
+ 					fprintf(stderr, "%4u%% (%u/%u) done\r",
+ 						percent, cnt, total);
+ 					last_percent = percent;
++					progress_update = 0;
+ 				}
+ 			}
+ 		}
