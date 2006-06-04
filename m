@@ -1,61 +1,66 @@
-From: Anton Blanchard <anton@samba.org>
-Subject: Re: git clone takes ages on a slow link
-Date: Mon, 5 Jun 2006 08:29:02 +1000
-Message-ID: <20060604222901.GD986@krispykreme>
-References: <20060604010145.GC986@krispykreme> <Pine.LNX.4.64.0606041046340.5498@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Support for configurable git command aliases (v2)
+Date: Sun, 04 Jun 2006 15:38:54 -0700
+Message-ID: <7v8xoc8s1t.fsf@assigned-by-dhcp.cox.net>
+References: <20060604211931.10117.82695.stgit@machine.or.cz>
+	<20060604212050.GV10488@pasky.or.cz>
+	<mj+md-20060604.221036.15619.albireo@ucw.cz>
+	<20060604221930.GW10488@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jun 05 00:30:48 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 00:39:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn17I-0001Ag-Cw
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 00:30:40 +0200
+	id 1Fn1FM-0002dT-UL
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 00:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288AbWFDWah (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 18:30:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWFDWah
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 18:30:37 -0400
-Received: from ozlabs.org ([203.10.76.45]:9684 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932288AbWFDWah (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 18:30:37 -0400
-Received: by ozlabs.org (Postfix, from userid 1010)
-	id 616BA67A3A; Mon,  5 Jun 2006 08:30:36 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606041046340.5498@g5.osdl.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932298AbWFDWi4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 18:38:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932299AbWFDWi4
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 18:38:56 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:12778 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932298AbWFDWi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 18:38:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060604223855.ITTV27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 4 Jun 2006 18:38:55 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20060604221930.GW10488@pasky.or.cz> (Petr Baudis's message of
+	"Mon, 5 Jun 2006 00:19:30 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21291>
 
+Petr Baudis <pasky@ucw.cz> writes:
 
-Hi Linus,
+>
+>   Then again, as pointed out on IRC you might get very confused as well
+> if you do git log | less. Besides, this is not going to help you with
+> aliases like commit = commit -a.
+>
+>   So, some other possibilities are to:
+>
+>   (i) Test stdin. Even in scripts, stdin is frequently terminal, but you
+> might add </dev/null after each git invocation and get a serious case of
+> RSI.
+>
+>   (ii) Add a --no-alias git argument. This way lies madness, too.
+>
+>   (iii) Check a $GIT_NO_ALIAS environment variable. This might work
+> best, after all. Opinions? Or some other clever idea?
 
-> It is indeed. It's _meant_ to only tick once a second or when the 
-> percentage changes, but I think it forgot to clear the "once a second 
-> happened" flag, so instead of updates the percentage output for every 
-> file it checks out after the first second has passed.
-> 
-> So something like this should help... Can you verify?
+Perhaps the simplest:
 
-Thanks, it fixes it.
-
-Anton
-
-> diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-> index 716f792..80c9320 100644
-> --- a/builtin-read-tree.c
-> +++ b/builtin-read-tree.c
-> @@ -336,6 +336,7 @@ static void check_updates(struct cache_e
->  					fprintf(stderr, "%4u%% (%u/%u) done\r",
->  						percent, cnt, total);
->  					last_percent = percent;
-> +					progress_update = 0;
->  				}
->  			}
->  		}
+    (iv) Refuse/ignore an alias that hides existing command, and
+         train users to write portable scripts by not using
+         aliases.  E.g. "alias.log = log --pretty=raw" is
+         ignored, and you would do "alias.l = log --pretty=raw"
+         instead.
