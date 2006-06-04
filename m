@@ -1,69 +1,67 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: git reset --hard not removing some files
-Date: Sun, 4 Jun 2006 11:16:02 +0200
-Message-ID: <20060604091601.GN14325@admingilde.org>
-References: <20060601160052.GK14325@admingilde.org> <Pine.LNX.4.64.0606010918060.5498@g5.osdl.org> <7vhd33d2q2.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE qgit-1.3]
+Date: Sun, 04 Jun 2006 11:17:46 +0200
+Organization: At home
+Message-ID: <e5u8fk$ju6$1@sea.gmane.org>
+References: <e5bfff550606040155v14565312na26f8c866f0fc32d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2WS97oupGEGbYNpW"
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 11:16:21 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 04 11:18:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmoiW-0007gi-AA
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 11:16:16 +0200
+	id 1FmokC-0007wV-Ih
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 11:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210AbWFDJQF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 05:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932211AbWFDJQF
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 05:16:05 -0400
-Received: from admingilde.org ([213.95.32.146]:27841 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S932210AbWFDJQE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 05:16:04 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1FmoiI-0002BI-3t; Sun, 04 Jun 2006 11:16:02 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhd33d2q2.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S932144AbWFDJR5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 05:17:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWFDJR5
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 05:17:57 -0400
+Received: from main.gmane.org ([80.91.229.2]:34967 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932144AbWFDJR4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 05:17:56 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fmok6-0007w0-2s
+	for git@vger.kernel.org; Sun, 04 Jun 2006 11:17:54 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 11:17:54 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 11:17:54 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21252>
 
+Marco Costalba wrote:
 
---2WS97oupGEGbYNpW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This is qgit-1.3
+[...]
+> NEW IN THIS RELEASE
+> 
+> Main focus of this release is usability.
+> 
+> The big feature is the use of tabs instead of independent windows.
+> 
+> This change alone could be enough for a release. It's a big rewrite of UI
+> code to let browsing revisions and patches quicker and easier.
 
-hoi :)
+Of course that is advantage _only_ if the tabs are independend, and one 
+(usually) doesn't need to view them simultaneously, e.g. side by side.
 
-On Fri, Jun 02, 2006 at 07:57:57AM -0700, Junio C Hamano wrote:
-> I would agree in the reproduction recipe Martin gave there is no
-> problem but feature, but at the same time I suspect the recent
-> "reset --hard simplification" has introduced a true regression.
+Just my 3 eurocents ;-)
 
-This may have been the bug that bit me.
-Thanks for finding it although I was not able to reproduce it myself!
-
---=20
-Martin Waitz
-
---2WS97oupGEGbYNpW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEgqTRj/Eaxd/oD7IRArtfAJ9IJu6tTYTsop5h9hR02wlbjxn+fQCfcFsx
-gQ+hbxB+72bH2AT1WpmizEA=
-=djC3
------END PGP SIGNATURE-----
-
---2WS97oupGEGbYNpW--
+-- 
+Jakub Narebski
+Warsaw, Poland
