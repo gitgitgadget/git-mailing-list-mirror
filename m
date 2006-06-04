@@ -1,79 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Support for configurable git command aliases (v2)
-Date: Sun, 4 Jun 2006 16:31:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606041621010.5498@g5.osdl.org>
-References: <20060604211931.10117.82695.stgit@machine.or.cz>
- <20060604212050.GV10488@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 01:32:17 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: [PATCH] Add example xinetd(8) configuration to Documentation/everyday.txt
+Date: Sun, 04 Jun 2006 19:53:45 -0400
+Message-ID: <11494652252294-git-send-email-vonbrand@inf.utfsm.cl>
+Reply-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 01:54:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn24p-0002SW-VS
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 01:32:12 +0200
+	id 1Fn2Pw-0005fo-Mv
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 01:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932303AbWFDXcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 19:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbWFDXcI
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 19:32:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:44007 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932303AbWFDXcH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 19:32:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k54NVt2g014550
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 4 Jun 2006 16:31:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k54NVsia027448;
-	Sun, 4 Jun 2006 16:31:55 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20060604212050.GV10488@pasky.or.cz>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932331AbWFDXx6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 19:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWFDXx6
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 19:53:58 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:32729 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932331AbWFDXx5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 19:53:57 -0400
+Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k54Nrpgu014858
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 4 Jun 2006 19:53:52 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k54Nrlfh017992
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 4 Jun 2006 19:53:47 -0400
+Received: (from vonbrand@localhost)
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6/Submit) id k54NrjrN017991;
+	Sun, 4 Jun 2006 19:53:45 -0400
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.3.3.g16a4
+X-Greylist: IP, sender and recipient auto-whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Sun, 04 Jun 2006 19:53:52 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21296>
 
+Many Linux distributions use xinetd(8), not inetd(8).
+Give a sample configuration file.
 
+Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+---
+ Documentation/everyday.txt |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
-On Sun, 4 Jun 2006, Petr Baudis wrote:
-> 
-> And I forgot to mention that it also adds the interactivity test
-> requested by Janek - aliases are now interpreted only when stdout is a
-> tty.
-
-I don't think that's a good test.
-
-The fact is, I do
-
-	git diff | less -S
-
-all the time, and if I start doing aliases, I'd expect them to work the 
-same regardless of whether I piped the output to "less" or not.
-
-Also, a lot of scripts have stdout going to the regular stdout, so I don't 
-think it's even a sufficient test for scripting anyway.
-
-So I would suggest some other way to suppress aliases if we need it, not 
-based on "isatty()" and frields.
-
-But I suspect that the easiest solution is to just disallow aliases of 
-real built-ins. I realize it could be cool, but the fact is, it's also 
-extremely confusing if "git diff" does something else than what it's 
-supposed to do, and it _will_ break scripts.
-
-The alternatives is to
- - not do aliases for the "git-xyzzy" format
- - and add a special environment flag ("GIT_NO_ALIASES") to allow scripts 
-   to easily disable aliases (and add a "export GIT_NO_ALIASES" line to 
-   the git-sh-setup.sh script)
-
-Hmm?
-
-		Linus
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index 2ad2d61..ffba543 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -377,6 +377,29 @@ git	stream	tcp	nowait	nobody \
+ +
+ The actual configuration line should be on one line.
+ 
++Run git-daemon to serve /pub/scm from xinetd.::
+++
++------------
++$ cat /etc/xinetd.d/git-daemon
++# default: off
++# description: The git server offers access to git repositories
++service git
++{
++        disable = no
++        type            = UNLISTED
++        port            = 9418
++        socket_type     = stream
++        wait            = no
++        user            = root
++        server          = /usr/bin/git-daemon
++        server_args     = --inetd --syslog --export-all --base-path=/pub/scm
++        log_on_failure  += USERID
++}
++------------
+++
++Check your xinetd(8) documentation and setup, this is from a Fedora system.
++Others might be different.
++
+ Give push/pull only access to developers.::
+ +
+ ------------
+-- 
+1.3.3.g16a4
