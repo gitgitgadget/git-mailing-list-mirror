@@ -1,136 +1,96 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Importing Mozilla CVS into git
-Date: Sat, 3 Jun 2006 16:47:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606031631480.5498@g5.osdl.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
- <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com>
- <46a038f90606012116t478edacex72a441544f395af4@mail.gmail.com>
- <200606040116.38036.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Keith Packard <keithp@keithp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 01:48:02 2006
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] Cleanup git-send-email.perl:extract_valid_email
+Date: Sat, 03 Jun 2006 20:10:23 -0400
+Message-ID: <200606040010.k540ANa4015204@laptop11.inf.utfsm.cl>
+References: <normalperson@yhbt.net>
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
+	Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Sun Jun 04 02:10:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmfqb-0001s9-6q
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 01:48:01 +0200
+	id 1FmgCd-0003se-2T
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 02:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750730AbWFCXr6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Jun 2006 19:47:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbWFCXr6
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 19:47:58 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33233 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750730AbWFCXr5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 19:47:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k53Nlc2g011108
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 3 Jun 2006 16:47:38 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k53NlaR3027093;
-	Sat, 3 Jun 2006 16:47:37 -0700
-To: "Robin Rosenberg (list subscriber)" 
-	<robin.rosenberg.lists@dewire.com>
-In-Reply-To: <200606040116.38036.robin.rosenberg.lists@dewire.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750924AbWFDAKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Jun 2006 20:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750925AbWFDAKk
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jun 2006 20:10:40 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:58005 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1750913AbWFDAKk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jun 2006 20:10:40 -0400
+Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k540AYPH007792
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 3 Jun 2006 20:10:34 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k540ANa4015204;
+	Sat, 3 Jun 2006 20:10:28 -0400
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: Message from Eric Wong <normalperson@yhbt.net> 
+   of "Sat, 03 Jun 2006 15:49:36 MST." <20060603224935.GA10324@hand.yhbt.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 19)
+X-Greylist: Recipient e-mail whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Sat, 03 Jun 2006 20:10:34 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21233>
 
-
-
-On Sun, 4 Jun 2006, Robin Rosenberg (list subscriber) wrote:
+Eric Wong <normalperson@yhbt.net> wrote:
+> "Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
+> > - Fix the regular expressions for local addresses
+> > - Fix the fallback regexp for non-local addresses, simplify the logic
+> > 
+> > Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+> > ---
+> >  git-send-email.perl |    9 +++------
+> >  1 files changed, 3 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index ed1d89b..a7a7797 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -314,18 +314,15 @@ sub extract_valid_address {
+> >  	my $address = shift;
+> >  
+> >  	# check for a local address:
+> > -	return $address if ($address =~ /^([\w\-]+)$/);
+> > +	return $address if ($address =~ /^([\w\-.]+)$/);
 > 
-> (Yet) Another problem is that many windows tools use CR LF as the line ending.
-> Almost all windows editors default to CRLF and some detect existing line 
-> endings. No editing with notepad anymore. Of course that is a problem 
-> regardless of whether a git or cvs client is used. You'll get these big 
-> everything-changed commits that alter between CRLF and LF.
+> I keep forgetting this, '+' is a valid (and useful) setup, too.
 
-The only sane approach there (if you want to be at all cross-platform) is 
-to just force everybody to _commit_ in UNIX '\n'-only format. Especially 
-as most Windows tools probably handle that fine on reading (just have 
-trouble writing them).
+Oops...
 
-And that shouldn't actually be that hard to do. The most trivial approach 
-is to have just a pre-trigger on commits, but let's face it, that would 
-not be a good "full" solution. A better one is to just make the whole
-"git update-index" thing just have a "automatically ignore CR/LF" mode.
+> >  	if ($have_email_valid) {
+> >  		return Email::Valid->address($address);
+> >  	} else {
+> >  		# less robust/correct than the monster regexp in Email::Valid,
+> >  		# but still does a 99% job, and one less dependency
+> > -		my $cleaned_address;
+> > -		if ($address =~ /([^\"<>\s]+@[^<>\s]+)/) {
+> > -			$cleaned_address = $1;
+> > -		}
+> > -		return $cleaned_address;
+> > +		$address =~ /([\w\-.]+@[\w\-.]+)/;
+> > +		return $1;
+> 
+> Actually, I'm retracting my earlier ack on this.  This is way too
+> restrictive.  I'd rather allow an occasional invalid email address than
+> to reject valid ones.  I generally trust git users to know what they're
+> doing when entering email addresses[1].
+> 
+> *, $, ^, +, = are all valid characters in the username portion (not sure
+> about local accounts, though), and I'm sure there are more that I don't
+> know about.
 
-Which really shouldn't be that hard. I think it's literally a matter of 
-teaching "index_fd()" in sha1_file.c to recognize text-files, and remove 
-CR/LF from them. All done (except to add the flag that enables the 
-detection, of course - just so that sane systems won't have the overhead 
-or the "corrupt binary files" issue).
-
-Something like this is TOTALLY UNTESTED!
-
-(You also need to teach "diff" to ignore differences in cr/lf, and this 
-patch is bad because it's unconditional, and probably doesn't work 
-anyway, but hey, the idea is possibly sound. Maybe)
-
-		Linus
----
-diff --git a/sha1_file.c b/sha1_file.c
-index aea0f40..6dc6a3f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1740,9 +1740,30 @@ int index_pipe(unsigned char *sha1, int 
- 	return ret;
- }
- 
-+static unsigned long autodetect_crlf(unsigned char *src, unsigned long size)
-+{
-+	unsigned long newsize = 0;
-+	unsigned char *dst = src;
-+	unsigned char last = 0;
-+
-+	while (size) {
-+		unsigned char c = *src++;
-+		if (last == '\r' && c == '\n') {
-+			dst[-1] = '\n';
-+		} else {
-+			newsize++;
-+			dst++;
-+			if (dst != src)
-+				dst[-1] = c;
-+		}
-+		last = c;
-+	}
-+	return newsize;
-+}
-+
- int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, const char *type)
- {
--	unsigned long size = st->st_size;
-+	unsigned long size = st->st_size, use_size;
- 	void *buf;
- 	int ret;
- 	unsigned char hdr[50];
-@@ -1755,12 +1776,15 @@ int index_fd(unsigned char *sha1, int fd
- 	if (buf == MAP_FAILED)
- 		return -1;
- 
--	if (!type)
-+	use_size = size;
-+	if (!type) {
- 		type = blob_type;
-+		use_size = autodetect_crlf(buf, size);
-+	}
- 	if (write_object)
--		ret = write_sha1_file(buf, size, type, sha1);
-+		ret = write_sha1_file(buf, use_size, type, sha1);
- 	else {
--		write_sha1_file_prepare(buf, size, type, sha1, hdr, &hdrlen);
-+		write_sha1_file_prepare(buf, use_size, type, sha1, hdr, &hdrlen);
- 		ret = 0;
- 	}
- 	if (size)
+As a general principle, I prefer to check what is legal instead of trying
+to filter out what isn't.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
