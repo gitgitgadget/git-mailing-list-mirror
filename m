@@ -1,72 +1,145 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Importing Mozilla CVS into git
-Date: Sun, 4 Jun 2006 13:00:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606041256480.5498@g5.osdl.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
- <e5u0o0$3rm$1@sea.gmane.org> <Pine.LNX.4.64.0606041050010.5498@g5.osdl.org>
- <200606042144.45385.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git: handle aliases defined in $GIT_DIR/config
+Date: Sun, 04 Jun 2006 13:24:47 -0700
+Message-ID: <7v3bekacts.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0606042047160.1598@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 22:01:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 04 22:24:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmymJ-0000Ot-Bu
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 22:00:51 +0200
+	id 1Fmz9Z-0004Yy-4Y
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 22:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbWFDUAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 16:00:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWFDUAl
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 16:00:41 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60104 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750749AbWFDUAk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 16:00:40 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k54K0P2g007048
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 4 Jun 2006 13:00:28 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k54K0G9G023075;
-	Sun, 4 Jun 2006 13:00:20 -0700
-To: "Robin Rosenberg (list subscriber)" 
-	<robin.rosenberg.lists@dewire.com>
-In-Reply-To: <200606042144.45385.robin.rosenberg.lists@dewire.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932112AbWFDUYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 16:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932121AbWFDUYt
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 16:24:49 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:5057 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932112AbWFDUYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 16:24:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060604202448.ZRIY11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 4 Jun 2006 16:24:48 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606042047160.1598@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 4 Jun 2006 20:47:48 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21281>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> 	For me, short cuts have to be easy to type, so they never
+> 	include digits, and they are never case sensitive, so I do not
+> 	need any fancy config stuff...
 
-On Sun, 4 Jun 2006, Robin Rosenberg (list subscriber) wrote:
-> 
-> Other version control systems simply treat text and binary files differently. 
-> No smart(ass) logic doing the wrong thing.
+Fair enough, and the spirit is the same as what Pasky suggested
+earlier, I think.
 
-Treating text and binary file differently _is_ the "smart(ass) logic doing 
-the wrong thing".
+However, I am not sure about some parts of the code.  I started
+mucking with it myself, but realized it is far easier for me to
+just let the original submitter, especially the capable one like
+you, do a bit more work ;-).
 
-Git really shouldn't do that. The patch was meant to show how you really 
-don't need to - the internal objects would never be "binary vs text", 
-there would be a way to just basically map one onto another.
+> +#define MAX_ALIAS_ARGS 32
+> +
+> +static int handle_alias(int *argcp, const char **argv, char **envp)
+> +{
+> +	int i, i2, j = 0;
 
-> > I'm absolutely _not_ suggesting merging that patch as-is or even in any
-> > form very close to it. It clearly needs a config file entry with filename
-> > patterns etc at a minimum.
-> 
-> Do people apply your patches right away, like it's some god-like commandments?
+Please name them src, dst and cnt.
 
-What's your problem here, exactly? 
+> +	char *new_argv[MAX_ALIAS_ARGS];
+> +
+> +	alias_command = argv[0];
+> +	git_config(git_alias_config);
+> +	if (!alias_string)
+> +		return 0;
+> +
+> +	/* split alias_string */
+> +	new_argv[j++] = alias_string;
+> +	for (i = i2 = 0; alias_string[i]; i++, i2++) {
+> +		if (isspace(alias_string[i])) {
+> +			alias_string[i2] = 0;
+> +			while (alias_string[++i] && isspace(alias_string[i]));
 
-I was just trying to point out that my patch was an example, where 
-somebody who cares (not me) can use it as a starting point.
+Please make empty loops easier to read by saying:
 
-If you can't be civil, at least be quiet, ok?
+	while (alias_string[++src] && isspace(alias_string[src]))
+		; /* skip */
 
-		Linus
+> +			new_argv[j++] = alias_string + i;
+> +			i2 = i;
+
+Do we need to reset dst here?  I suspect starting the next
+parsed string immediately after the terminating NUL might be
+cleaner.
+
+> +			if (j >= MAX_ALIAS_ARGS)
+> +				die("too many args in alias %s",
+> +						alias_command);
+> +		} else {
+> +			if (alias_string[i] == '\\')
+> +				i++;
+
+Barf when the config line ends with a lone backslash, perhaps?
+Since the configuration file parser uses backslash for quoting
+itself, the user would need to have double backslashes, I
+suspect.  We might want to support single/double quote pairs in
+this parser as well.  I would further suggest separating this
+"split single string into a pair of (argc, argv)" into a helper
+function, so we can reuse it in other parts of the system later.
+
+> +			if (i != i2)
+> +				alias_string[i2] = alias_string[i];
+
+Doing this unconditionally is probably more readable (i.e. lose
+the if condition) -- this is not performance critical part of
+the system.
+
+> +		}
+> +	}
+> +
+> +	if (j < 1)
+> +		die("empty alias: %s", alias_command);
+> +
+> +	/* insert after command name */
+> +	if (j > 1)
+> +		memmove(argv + j, argv + 1, (*argcp - 1) * sizeof(char*));
+> +	memcpy(argv, new_argv, j * sizeof(char*));
+
+Who guarantees the original argv array main() received is big
+enough to hold (j-1) additional pointers, I wonder?  I think you
+would need to allocate a new array, and muck with both argc and
+argv of the caller by passing the pointers to them, not just
+argc.
+
+> @@ -121,6 +176,7 @@ int main(int argc, const char **argv, ch
+>  	if (!strncmp(cmd, "git-", 4)) {
+>  		cmd += 4;
+>  		argv[0] = cmd;
+> +		handle_alias(&argc, argv, envp);
+
+Hence probably "handle_alias(&argc, &argv, envp)" is needed here.
+
+>  		handle_internal_command(argc, argv, envp);
+>  		die("cannot handle %s internally", cmd);
+>  	}
+> @@ -178,6 +234,8 @@ int main(int argc, const char **argv, ch
+>  	exec_path = git_exec_path();
+>  	prepend_to_path(exec_path, strlen(exec_path));
+>  
+> +	handle_alias(&argc, argv, envp);
+> +
+
+... and here.
