@@ -1,72 +1,61 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Support for configurable git command aliases (v2)
-Date: Mon, 5 Jun 2006 00:19:30 +0200
-Message-ID: <20060604221930.GW10488@pasky.or.cz>
-References: <20060604211931.10117.82695.stgit@machine.or.cz> <20060604212050.GV10488@pasky.or.cz> <mj+md-20060604.221036.15619.albireo@ucw.cz>
+From: Anton Blanchard <anton@samba.org>
+Subject: Re: git clone takes ages on a slow link
+Date: Mon, 5 Jun 2006 08:29:02 +1000
+Message-ID: <20060604222901.GD986@krispykreme>
+References: <20060604010145.GC986@krispykreme> <Pine.LNX.4.64.0606041046340.5498@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 00:19:38 2006
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jun 05 00:30:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn0wb-0007ga-76
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 00:19:37 +0200
+	id 1Fn17I-0001Ag-Cw
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 00:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932290AbWFDWTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 18:19:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbWFDWTd
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 18:19:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:23511 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932286AbWFDWTc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 18:19:32 -0400
-Received: (qmail 19622 invoked by uid 2001); 5 Jun 2006 00:19:30 +0200
-To: Martin Mares <mj@ucw.cz>
+	id S932288AbWFDWah (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 18:30:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWFDWah
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 18:30:37 -0400
+Received: from ozlabs.org ([203.10.76.45]:9684 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932288AbWFDWah (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 18:30:37 -0400
+Received: by ozlabs.org (Postfix, from userid 1010)
+	id 616BA67A3A; Mon,  5 Jun 2006 08:30:36 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <mj+md-20060604.221036.15619.albireo@ucw.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <Pine.LNX.4.64.0606041046340.5498@g5.osdl.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21290>
 
-  Hi,
 
-Dear diary, on Mon, Jun 05, 2006 at 12:11:14AM CEST, I got a letter
-where Martin Mares <mj@ucw.cz> said that...
-> > And I forgot to mention that it also adds the interactivity test
-> > requested by Janek - aliases are now interpreted only when stdout is a
-> > tty.
+Hi Linus,
+
+> It is indeed. It's _meant_ to only tick once a second or when the 
+> percentage changes, but I think it forgot to clear the "once a second 
+> happened" flag, so instead of updates the percentage output for every 
+> file it checks out after the first second has passed.
 > 
-> Does this really make sense? Why should an alias stop working
-> if I happen to redirect its output? Or am I missing something?
+> So something like this should help... Can you verify?
 
-  make
+Thanks, it fixes it.
 
-	[alias]
-	log = log --pretty=raw
+Anton
 
-and then any script that works on git log output might get very
-confused.
-
-  Then again, as pointed out on IRC you might get very confused as well
-if you do git log | less. Besides, this is not going to help you with
-aliases like commit = commit -a.
-
-  So, some other possibilities are to:
-
-  (i) Test stdin. Even in scripts, stdin is frequently terminal, but you
-might add </dev/null after each git invocation and get a serious case of
-RSI.
-
-  (ii) Add a --no-alias git argument. This way lies madness, too.
-
-  (iii) Check a $GIT_NO_ALIAS environment variable. This might work
-best, after all. Opinions? Or some other clever idea?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+> diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+> index 716f792..80c9320 100644
+> --- a/builtin-read-tree.c
+> +++ b/builtin-read-tree.c
+> @@ -336,6 +336,7 @@ static void check_updates(struct cache_e
+>  					fprintf(stderr, "%4u%% (%u/%u) done\r",
+>  						percent, cnt, total);
+>  					last_percent = percent;
+> +					progress_update = 0;
+>  				}
+>  			}
+>  		}
