@@ -1,68 +1,158 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Clean up sha1 file writing
-Date: Sun, 4 Jun 2006 11:40:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606041139310.5498@g5.osdl.org>
-References: <Pine.LNX.4.64.0605240820560.5623@g5.osdl.org> <E1Fixs4-0005pD-10@moooo.ath.cx>
- <Pine.LNX.4.64.0605241145490.5623@g5.osdl.org> <44808710.1080000@zytor.com>
- <Pine.LNX.4.64.0606021416040.5498@g5.osdl.org> <4483259A.7090806@zytor.com>
- <Pine.LNX.4.64.0606041136180.5498@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git: handle aliases defined in $GIT_DIR/config
+Date: Sun, 4 Jun 2006 20:47:48 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606042047160.1598@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthias Lederhofer <matled@gmx.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 04 20:41:36 2006
+X-From: git-owner@vger.kernel.org Sun Jun 04 20:48:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmxX7-0000lo-3L
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 20:41:07 +0200
+	id 1Fmxdl-0002dB-Dd
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 20:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750935AbWFDSk6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 14:40:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbWFDSk6
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 14:40:58 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:699 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750902AbWFDSk6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 14:40:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k54Iet2g004070
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 4 Jun 2006 11:40:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k54IesOt021547;
-	Sun, 4 Jun 2006 11:40:54 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <Pine.LNX.4.64.0606041136180.5498@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750961AbWFDSru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 14:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750969AbWFDSru
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 14:47:50 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:15566 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750961AbWFDSrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 14:47:49 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 77156D04;
+	Sun,  4 Jun 2006 20:47:48 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 6B072CF4;
+	Sun,  4 Jun 2006 20:47:48 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 4E361BC7;
+	Sun,  4 Jun 2006 20:47:48 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21277>
 
 
+If you have a config containing something like this:
 
-On Sun, 4 Jun 2006, Linus Torvalds wrote:
-> 
-> On Sun, 4 Jun 2006, H. Peter Anvin wrote:
-> > 
-> > Or if you're getting a SIGWINCH in the middle of it.
-> > 
-> > Any POSIX system will interrupt the transfer and return a short read on
-> > receiving a signal.
-> 
-> Only for interruptible fd's, though, which normally a real "file" won't 
-> be.
+	[alias]
+		l = "log --stat -M ORIG_HEAD.."
 
-And _usually_ only if you actually have a SIGWINCH handler.
+you can call
 
-Although older Linux kernels were broken in this regard. They'd interrupt 
-a socket/pipe read or write even for a signal that ended up being ignored.
+	git l
 
-So it's absolutely the case that having the loop is always the safer thing 
-to do, and it's never the _wrong_ thing to do.
+and it will do the same as
 
-		Linus
+	git log --stat -M ORIG_HEAD..
+
+This also works with hard links.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+	For me, short cuts have to be easy to type, so they never
+	include digits, and they are never case sensitive, so I do not
+	need any fancy config stuff...
+
+ git.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 58 insertions(+), 0 deletions(-)
+
+diff --git a/git.c b/git.c
+index bc463c9..846062f 100644
+--- a/git.c
++++ b/git.c
+@@ -10,6 +10,7 @@ #include <limits.h>
+ #include <stdarg.h>
+ #include "git-compat-util.h"
+ #include "exec_cmd.h"
++#include "cache.h"
+ 
+ #include "builtin.h"
+ 
+@@ -32,6 +33,60 @@ static void prepend_to_path(const char *
+ 	setenv("PATH", path, 1);
+ }
+ 
++static const char *alias_command;
++static char *alias_string = NULL;
++
++static int git_alias_config(const char *var, const char *value)
++{
++	if (!strncmp(var, "alias.", 6) && !strcmp(var + 6, alias_command)) {
++		alias_string = strdup(value);
++	}
++	return 0;
++}
++
++#define MAX_ALIAS_ARGS 32
++
++static int handle_alias(int *argcp, const char **argv, char **envp)
++{
++	int i, i2, j = 0;
++	char *new_argv[MAX_ALIAS_ARGS];
++
++	alias_command = argv[0];
++	git_config(git_alias_config);
++	if (!alias_string)
++		return 0;
++
++	/* split alias_string */
++	new_argv[j++] = alias_string;
++	for (i = i2 = 0; alias_string[i]; i++, i2++) {
++		if (isspace(alias_string[i])) {
++			alias_string[i2] = 0;
++			while (alias_string[++i] && isspace(alias_string[i]));
++			new_argv[j++] = alias_string + i;
++			i2 = i;
++			if (j >= MAX_ALIAS_ARGS)
++				die("too many args in alias %s",
++						alias_command);
++		} else {
++			if (alias_string[i] == '\\')
++				i++;
++			if (i != i2)
++				alias_string[i2] = alias_string[i];
++		}
++	}
++
++	if (j < 1)
++		die("empty alias: %s", alias_command);
++
++	/* insert after command name */
++	if (j > 1)
++		memmove(argv + j, argv + 1, (*argcp - 1) * sizeof(char*));
++	memcpy(argv, new_argv, j * sizeof(char*));
++	*argcp += j - 1;
++
++	return 1;
++}
++
+ const char git_version_string[] = GIT_VERSION;
+ 
+ static void handle_internal_command(int argc, const char **argv, char **envp)
+@@ -121,6 +176,7 @@ int main(int argc, const char **argv, ch
+ 	if (!strncmp(cmd, "git-", 4)) {
+ 		cmd += 4;
+ 		argv[0] = cmd;
++		handle_alias(&argc, argv, envp);
+ 		handle_internal_command(argc, argv, envp);
+ 		die("cannot handle %s internally", cmd);
+ 	}
+@@ -178,6 +234,8 @@ int main(int argc, const char **argv, ch
+ 	exec_path = git_exec_path();
+ 	prepend_to_path(exec_path, strlen(exec_path));
+ 
++	handle_alias(&argc, argv, envp);
++
+ 	/* See if it's an internal command */
+ 	handle_internal_command(argc, argv, envp);
+ 
+-- 
+1.3.3.ga182-dirty
