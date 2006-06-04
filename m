@@ -1,77 +1,140 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Importing Mozilla CVS into git
-Date: Sun, 04 Jun 2006 09:05:36 +0200
-Organization: At home
-Message-ID: <e5u0o0$3rm$1@sea.gmane.org>
-References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com> <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com> <46a038f90606012116t478edacex72a441544f395af4@mail.gmail.com> <200606040116.38036.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0606031631480.5498@g5.osdl.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Gitk feature - show nearby tags
+Date: Sun, 4 Jun 2006 09:08:24 +0200
+Message-ID: <e5bfff550606040008m4dbf02bdga4f4e6bc2d2fe9d@mail.gmail.com>
+References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
+	 <7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550606030416s2ef6182crbde1395dd29e5b94@mail.gmail.com>
+	 <17538.16015.53244.876090@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jun 04 09:06:30 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
+	"Jonas Fonseca" <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sun Jun 04 09:08:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmmgt-0006rw-CV
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 09:06:27 +0200
+	id 1Fmmiq-000765-SB
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 09:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932176AbWFDHGF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 03:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932140AbWFDHGF
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 03:06:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:29074 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932176AbWFDHGE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 03:06:04 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FmmgS-0006or-L2
-	for git@vger.kernel.org; Sun, 04 Jun 2006 09:06:00 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 09:06:00 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 09:06:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S932140AbWFDHI0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 03:08:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932142AbWFDHI0
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 03:08:26 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:65078 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932140AbWFDHIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 03:08:25 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1134473wri
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 00:08:25 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=skfHYO8jMQLyf+4se+UpEfneqP5nCw1Q0D9A3rV+4anpwCZqqqByYt+/e0vTwjDoK+gQOBC3JYeKCiyehBiv10WGuYTHCn/rk0Lta3Us/GXTW9HKzEGgG5QuG4edlcbXIAhQLksLIO1LVMRHi7ikHlVEMDf8cdnMAVF9B1R8X4I=
+Received: by 10.65.215.12 with SMTP id s12mr2764816qbq;
+        Sun, 04 Jun 2006 00:08:24 -0700 (PDT)
+Received: by 10.65.210.17 with HTTP; Sun, 4 Jun 2006 00:08:24 -0700 (PDT)
+To: "Paul Mackerras" <paulus@samba.org>
+In-Reply-To: <17538.16015.53244.876090@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21249>
 
-On Sun, 4 Jun 2006, Linus Torvalds wrote:
+On 6/4/06, Paul Mackerras <paulus@samba.org> wrote:
+> Marco Costalba writes:
+>
+> > If I have understood correctly the patch runs a 'git rev-list --all
+> > --topo-order --parents'
+> > and then does a tree walking.
+>
+> Yes, that's right.  It means that gitk can show the nearest tags even
+> if they aren't included in the current view.
+>
+> > I am wandering if there exist any native git way to found the previous tag.
+>
+> I don't know of any.  Doing the tree walking in Tcl turned out to be
+> not too much of an overhead, though; it does the whole kernel
+> repository in 1.5 seconds on my G5.
+>
+> > As example given a selected revision with id <sha> is it possible to
+> > do something like this to fond the ancestor?
+> >
+> > 1) get the tag list with git-peek-remote or something similar if tags
+> > are not already loaded
+> >
+> > 2) given the tagList vector with n elements run
+> >
+> >     git-rev-list  --topo-order <sha> ^tagList[0]  ^tagList[1]   ....
+> >   ^tagList[n-1]
+> >
+> > 3) take the last sha spit out by git-rev-list, be it <lastSha>.
+> >
+> > 4) Previous nearest tag is the parent of lastSha
+> >
+> > I've missed something?
+>
+> I'm not sure exactly what that would do, but gitk can show more than
+> one tag (the term "nearest tag" is only a shorthand approximation for
+> what it does).  For example, if you have two tagged commits where
+> neither is an ancestor of the other, and do a merge of the two, gitk
+> will show both tags when you select the merge.
 
-> On Sun, 4 Jun 2006, Robin Rosenberg (list subscriber) wrote:
->> 
->> (Yet) Another problem is that many windows tools use CR LF as the line ending.
->> Almost all windows editors default to CRLF and some detect existing line 
->> endings. No editing with notepad anymore. Of course that is a problem 
->> regardless of whether a git or cvs client is used. You'll get these big 
->> everything-changed commits that alter between CRLF and LF.
-> 
-> The only sane approach there (if you want to be at all cross-platform) is 
-> to just force everybody to _commit_ in UNIX '\n'-only format. Especially 
-> as most Windows tools probably handle that fine on reading (just have 
-> trouble writing them).
-> 
-> And that shouldn't actually be that hard to do. The most trivial approach 
-> is to have just a pre-trigger on commits, but let's face it, that would 
-> not be a good "full" solution. A better one is to just make the whole
-> "git update-index" thing just have a "automatically ignore CR/LF" mode.
+What you suggest we need it's a kind of history of tags.
 
-Why wouldn't it be good solution?
+Currently we can run
 
-BTW. wouldn't Mercurial encode/decode filters
+git-rev-list --top-order --parents HEAD -- foo.c
 
-  http://www.selenic.com/mercurial/wiki/index.cgi/EncodeDecodeFilter
+and we get an history of file foo.c *with modified parents*
 
-be a better solution than modifying files by "git update-index", 
-with all problems it can cause (not detected binary files, text files
-which have to be in CR/LF line ending,...).
+Junio, could be possible have something like
 
--- 
-Jakub Narebski
-Warsaw, Poland
+git-rev-list --top-order --parents --tags
+
+with the history of tags ?
+
+And, according to Paul suggestions, not only tags, but merge revisions
+between tags.
+
+A more general and IMHO very powerful tool could be something like
+
+git-rev-list --top-order --parents --selected-only HEAD -- <sha 1>
+<sha 2> .....  <sha n>
+
+Where git rev list gives the history, with modified parents, of the
+given revisions _only_ plus the merging revisions among them.
+
+This could be used for tags (got from git-peek-remote), for branches
+and in general for a given set of interesting revisions.
+
+Once we have the history of tags, perhaps requested once at startup,
+we can get the previous tags of a given revision, our original
+problem, with
+
+git-rev-list  --topo-order <sha> ^tagList[0]  ^tagList[1]   ....
+^tagList[n-1] ^merge[0] ... ^merge[k]
+
+And have one or more tags according if results is a rev in tagList or
+mergeList. Having the tag history it's easy to look up _all_ the tag
+ancestors.
+
+       Marco
+
+P.S: another use of
+
+git-rev-list --top-order --parents --selected-only HEAD -- <sha 1>
+<sha 2> .....  <sha n>
+
+could be this:
+
+Currently both qgit and gitk can filter revisions with a given set of
+filter rules, but the results are shown together with the other
+revisions or as a list of matching revisions with no useful graph
+information.
+We could feed git-rev-list --top-order --parents --selected-only with
+the list of matching revisions and have a pretty and sensible graph
+too.
