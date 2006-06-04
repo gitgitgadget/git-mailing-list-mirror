@@ -1,67 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE qgit-1.3]
-Date: Sun, 04 Jun 2006 11:17:46 +0200
-Organization: At home
-Message-ID: <e5u8fk$ju6$1@sea.gmane.org>
-References: <e5bfff550606040155v14565312na26f8c866f0fc32d@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Gitk feature - show nearby tags
+Date: Sun, 04 Jun 2006 02:21:39 -0700
+Message-ID: <7vodx9cm3g.fsf@assigned-by-dhcp.cox.net>
+References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
+	<7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550606030416s2ef6182crbde1395dd29e5b94@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 11:18:05 2006
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Paul Mackerras" <paulus@samba.org>, git@vger.kernel.org,
+	"Jonas Fonseca" <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sun Jun 04 11:21:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FmokC-0007wV-Ih
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 11:18:00 +0200
+	id 1Fmonp-0008Uc-5V
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 11:21:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932144AbWFDJR5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 05:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWFDJR5
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 05:17:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:34967 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932144AbWFDJR4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 05:17:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fmok6-0007w0-2s
-	for git@vger.kernel.org; Sun, 04 Jun 2006 11:17:54 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 11:17:54 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 11:17:54 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750856AbWFDJVm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 05:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbWFDJVm
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 05:21:42 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60811 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750856AbWFDJVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 05:21:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060604092140.CHGR18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 4 Jun 2006 05:21:40 -0400
+To: "Marco Costalba" <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550606030416s2ef6182crbde1395dd29e5b94@mail.gmail.com>
+	(Marco Costalba's message of "Sat, 3 Jun 2006 13:16:45 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21253>
 
-Marco Costalba wrote:
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-> This is qgit-1.3
-[...]
-> NEW IN THIS RELEASE
-> 
-> Main focus of this release is usability.
-> 
-> The big feature is the use of tabs instead of independent windows.
-> 
-> This change alone could be enough for a release. It's a big rewrite of UI
-> code to let browsing revisions and patches quicker and easier.
+> As example given a selected revision with id <sha> is it possible to
+> do something like this to fond the ancestor?
+>
+> 1) get the tag list with git-peek-remote or something similar if tags
+> are not already loaded
+>
+> 2) given the tagList vector with n elements run
+>
+>    git-rev-list  --topo-order <sha> ^tagList[0]  ^tagList[1]   ....
+>  ^tagList[n-1]
+>
+> 3) take the last sha spit out by git-rev-list, be it <lastSha>.
+>
+> 4) Previous nearest tag is the parent of lastSha
 
-Of course that is advantage _only_ if the tabs are independend, and one 
-(usually) doesn't need to view them simultaneously, e.g. side by side.
+Sorry, I do not understand what you are doing here at all.
+Suppose you have this simple history.
 
-Just my 3 eurocents ;-)
+  (root)
 
--- 
-Jakub Narebski
-Warsaw, Poland
+         a---b---d---e---f---g
+         t1   \ /        t3        
+            ---c
+               t2
+
+and <sha1> in (2) is "e".  When tagList = (t1, t2, t3), the
+above rev-list would return empty.  For tagList = (t1, t2), the
+rev-list would return "e", and then "d".  Parent of "d" are "b"
+and "c", and c is tagged but b is not.  So if you are willing to
+try 2^N permutations of what tagList to use, then the above
+sequence, with a bit of tweak to step (4) to see which parents
+are tagged, would yield the closest tag in the past of "e", but
+is that what you are suggesting?
