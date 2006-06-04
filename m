@@ -1,86 +1,67 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Gitk feature - show nearby tags
-Date: Sun, 4 Jun 2006 12:42:16 +0200
-Message-ID: <e5bfff550606040342q5e485ae2lcc00e36ed405be8c@mail.gmail.com>
-References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
-	 <7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606030416s2ef6182crbde1395dd29e5b94@mail.gmail.com>
-	 <7vodx9cm3g.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606040254n1449b62ta70c209ad8e1a0c@mail.gmail.com>
-	 <7vbqt9ck05.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606040333h1180bbep88fa90ea9928d062@mail.gmail.com>
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: [PATCH 25/27] Documentation: Spelling fixes
+Date: Sun, 4 Jun 2006 10:42:25 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0606041041110.1864@dildano.hawaga.org.uk>
+References: <11493664464167-git-send-email-> <11493664482083-git-send-email->
+ <1149366450549-git-send-email-> <11493664521468-git-send-email->
+ <114936645851-git-send-email-> <11493664643454-git-send-email->
+ <11493664652868-git-send-email-> <1149366466232-git-send-email->
+ <11493664673957-git-send-email-> <11493664672829-git-send-email->
+ <1149366468410-git-send-email-> <11493664701494-git-send-email->
+ <11493664763628-git-send-email-> <11493664773328-git-send-email->
+ <11493664781775-git-send-email-> <1149366483572-git-send-email->
+ <11493664892352-git-send-email-> <11493664902219-git-send-email->
+ <11493664912139-git-send-email-> <1149366497156-git-send-email->
+ <11493664980-git-send-email-> <11493665032900-git-send-email->
+ <11493665092334-git-send-email-> <11493665101874-git-send-email->
+ <11493665112903-git-send-email-> <1149366517875-git-send-email->
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 04 12:42:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	"Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+X-From: git-owner@vger.kernel.org Sun Jun 04 12:43:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fmq46-0004Tz-9N
-	for gcvg-git@gmane.org; Sun, 04 Jun 2006 12:42:38 +0200
+	id 1Fmq4Z-0004bD-Ft
+	for gcvg-git@gmane.org; Sun, 04 Jun 2006 12:43:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932217AbWFDKmU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 06:42:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932220AbWFDKmT
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 06:42:19 -0400
-Received: from wr-out-0506.google.com ([64.233.184.235]:57766 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932217AbWFDKmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jun 2006 06:42:17 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1144809wri
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 03:42:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Fq9Lz02/Id2I6srCA1NYhFvE7CPgv+qPbnRZkIvjaXBchFDCOkgOx3+CnAxjTVkq+mZJpKIABKNYo8VvnUw6rabWAyaE1wQf/AOj7rD23cGAHuup9q5xJm0YmROK1FMmGiCeKic3y6/mbhvf2qmQzz8JJnIVTNTC+x0SzLK5CZE=
-Received: by 10.65.197.12 with SMTP id z12mr2798071qbp;
-        Sun, 04 Jun 2006 03:42:16 -0700 (PDT)
-Received: by 10.65.210.17 with HTTP; Sun, 4 Jun 2006 03:42:16 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <e5bfff550606040333h1180bbep88fa90ea9928d062@mail.gmail.com>
-Content-Disposition: inline
+	id S932223AbWFDKmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 06:42:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932220AbWFDKmn
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 06:42:43 -0400
+Received: from dildano.hawaga.org.uk ([81.187.211.37]:49570 "EHLO
+	dildano.hawaga.org.uk") by vger.kernel.org with ESMTP
+	id S932223AbWFDKmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 06:42:42 -0400
+Received: from dildano.hawaga.org.uk (localhost.localdomain [127.0.0.1])
+	by dildano.hawaga.org.uk (8.13.6/8.13.6/Debian-1) with ESMTP id k54AgP98009883;
+	Sun, 4 Jun 2006 10:42:25 GMT
+Received: from localhost (benc@localhost)
+	by dildano.hawaga.org.uk (8.13.6/8.13.6/Submit) with ESMTP id k54AgPPv009879;
+	Sun, 4 Jun 2006 10:42:25 GMT
+X-Authentication-Warning: dildano.hawaga.org.uk: benc owned process doing -bs
+To: Horst.H.von.Brand@inf.utfsm.cl
+In-Reply-To: <1149366517875-git-send-email->
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21264>
 
-On 6/4/06, Marco Costalba <mcostalba@gmail.com> wrote:
-> On 6/4/06, Junio C Hamano <junkio@cox.net> wrote:
-> > "Marco Costalba" <mcostalba@gmail.com> writes:
-> >
-> > > In a less corner case, just to better explaing my idea, consider this:
-> > >
-> > >          a---b---d---e---f---g---h
-> > >          t1   \ /              t3
-> > >             ---c
-> > >                t2
-> > >
-> > > Where our sha1 is still "e", in this case
-> > >
-> > > git-rev-list  --topo-order <e>  ^a  ^c   ^g
-> > >
-> > > gives, as last revision in output list, "f"
-> > > Then parentOf(<f>) is <g> and our looked for tag is t3
-> >
-> > Sorry, in the example time flows from left to right.  If you
-> > exclude g then you are excluding everything that is reachable
-> > from g so you would not see "f".
 
-To better explain what I mean, that's the algorithm :
+Horst,
 
-cmd = "git-rev-list --topo-order --parents " + sha;
-for (uint i = 0; i < tagList.count(); i++)
-	cmd.append(" ^" + tagList[i]);
+>  The default post-update hook, when enabled, runs
+>  `git-update-server-info` to keep the information used by dumb
+> -transports (eg, http) up-to-date.  If you are publishing
+> +transports (e.g.,, http) up-to-date.  If you are publishing
+>  a git repository that is accessible via http, you should
+>  probably enable this hook.
 
-output = run(cmd);
+just one extra , there
 
-if (output.isEmpty()) {
-	parent = parentOf(sha);
-	return (parent && parent->isTag()) ? parent->tag() : NO_TAG;
-}
+(btw private mail to you keeps bouncing here with various declarations 
+that you do not exist)
 
-lastSha = getLastLine(output);
-parent = parentOf(lastSha);
-return (parent && parent->isTag()) ? parent->tag() : NO_TAG;
+-- 
