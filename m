@@ -1,78 +1,93 @@
-From: Alec Warner <antarus@gentoo.org>
-Subject: Re: irc usage..
-Date: Sun, 04 Jun 2006 20:33:31 -0400
-Organization: Gentoo
-Message-ID: <44837BDB.2090601@gentoo.org>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>	 <447B7669.8050805@gentoo.org>	 <46a038f90605301531g4f8b37c7qab9a717833c64ebc@mail.gmail.com>	 <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>	 <46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>	 <447D043D.1020609@gentoo.org>	 <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>	 <447DA028.3040606@gentoo.org>	 <46a038f90605311503o1526c664qe61b0f3f40929b92@mail.gmail.com>	 <447E4611.7000309@gentoo.org> <46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
-Reply-To: antarus@gentoo.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Donnie Berkholz <spyderous@gentoo.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 05 02:33:49 2006
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH, take 2] Add example xinetd(8) configuration to Documentation/everyday.txt
+Date: Sun, 04 Jun 2006 20:54:15 -0400
+Message-ID: <200606050054.k550sFCC018490@laptop11.inf.utfsm.cl>
+References: <ldv@altlinux.org>
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 02:54:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn32R-0003xR-Qp
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 02:33:48 +0200
+	id 1Fn3Ma-0004cX-Hv
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 02:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932350AbWFEAdo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 20:33:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWFEAdo
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 20:33:44 -0400
-Received: from jeeves.egr.msu.edu ([35.9.37.127]:54929 "EHLO egr.msu.edu")
-	by vger.kernel.org with ESMTP id S932350AbWFEAdn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 20:33:43 -0400
-Received: from [69.176.143.70] (69-176-143-70.dov.spartan-net.net [69.176.143.70])
-	(authenticated bits=0)
-	by egr.msu.edu (8.13.6/8.13.4) with ESMTP id k550XDTP005748
+	id S932287AbWFEAy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 20:54:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWFEAy2
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 20:54:28 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:1759 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932287AbWFEAy2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 20:54:28 -0400
+Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k550sMsQ020128
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 4 Jun 2006 20:33:13 -0400 (EDT)
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060528)
-X-Accept-Language: en-us, en
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
+	Sun, 4 Jun 2006 20:54:23 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k550sFCC018490;
+	Sun, 4 Jun 2006 20:54:18 -0400
+To: "Dmitry V. Levin" <ldv@altlinux.org>
+In-Reply-To: Message from "Dmitry V. Levin" <ldv@altlinux.org> 
+   of "Mon, 05 Jun 2006 04:01:44 +0400." <20060605000144.GA12641@basalt.office.altlinux.org> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 19)
+X-Greylist: Delayed for 00:00:02 by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Sun, 04 Jun 2006 20:54:23 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21301>
 
-Martin Langhoff wrote:
-> On 6/1/06, Alec Warner <antarus@gentoo.org> wrote:
-> 
->> After reading the whole thread on this, I've using a git checkout of
->> git, cvsps-2.1 and cvs-1.11.12, running overnight in verbose mode with
->> screen.  Hopefully will have a repo in the morning ;)
-> 
-> 
-> Good stuff. I am rerunning it to prove (and bench) a complete an
-> uninterrupted import. So far it's done 4hs 30m, footprint grown to
-> 207MB, 49750 commits. So I think it will be done in approx 30hs on
-> this single-cpu opteron.
-> 
-> Most commits are small, but there is a handful that are downright
-> massive -- and we hold all the file list in memory, which I think
-> explains (most of) the memory growth. I've looked into avoiding
-> holding the whole filelist in memory, but it involves rewriting the
-> cvsps output parsing loop, which is better left for a rainy day, with
-> a test case that doesn't take 30hs to resolve.
+Dmitry V. Levin <ldv@altlinux.org> wrote:
+> It is a bad advice to run git-daemon as root.
 
-Ok the box this was running on had issues, so I switched to using 
-pearl.amd64.dev.gentoo.org, a dual core amd64 X2 4600+ with 4 gigs of 
-ram and plenty of disk.  The "problem" now is just converstion time...30 
-hours and I'm into 2004-09-17...but it's been in 2004 all day, seems 
-like most of the commits are in the last three years.  Are there 
-architectural issues with doing this in parallel?
+Right, my bad. Fixed patch below.
+[Really dumb question: How do you separate comments, like this, from the
+ commit itself? Here done with dashes.]
+--------
+Add example xinetd(8) configuration to Documentation/everyday.txt
 
-Since the repository commits are all in cvs, it should be possible to do 
-the work in parallel, since you know what all the commits touch.  The 
-concern would be ordering of nodes in the tree; you'd end up building a 
-bunch of subtrees and patching them together?
+Many Linux distributions use xinetd(8), not inetd(8).
+Give a sample configuration file.
 
--Alec Warner
+Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+---
+ Documentation/everyday.txt |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index 2ad2d61..ffba543 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -377,6 +377,29 @@ git	stream	tcp	nowait	nobody \
+ +
+ The actual configuration line should be on one line.
+ 
++Run git-daemon to serve /pub/scm from xinetd.::
+++
++------------
++$ cat /etc/xinetd.d/git-daemon
++# default: off
++# description: The git server offers access to git repositories
++service git
++{
++        disable = no
++        type            = UNLISTED
++        port            = 9418
++        socket_type     = stream
++        wait            = no
++        user            = root
++        server          = /usr/bin/git-daemon
++        server_args     = --inetd --syslog --export-all --base-path=/pub/scm
++        log_on_failure  += USERID
++}
++------------
+++
++Check your xinetd(8) documentation and setup, this is from a Fedora system.
++Others might be different.
++
+ Give push/pull only access to developers.::
+ +
+ ------------
+-- 
+1.3.3.g16a4
