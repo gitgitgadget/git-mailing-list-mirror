@@ -1,95 +1,92 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: irc usage..
-Date: Mon, 5 Jun 2006 14:06:59 +1200
-Message-ID: <46a038f90606041906k66d85152v6e402c65151d7ab8@mail.gmail.com>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
-	 <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
-	 <46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>
-	 <447D043D.1020609@gentoo.org>
-	 <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
-	 <447DA028.3040606@gentoo.org>
-	 <46a038f90605311503o1526c664qe61b0f3f40929b92@mail.gmail.com>
-	 <447E4611.7000309@gentoo.org>
-	 <46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
-	 <44837BDB.2090601@gentoo.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Donnie Berkholz" <spyderous@gentoo.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"Yann Dirson" <ydirson@altern.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Matthias Urlichs" <smurf@smurf.noris.de>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 05 04:07:19 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: [PATCH] Fix Documentation/everyday.txt: Junio's workflow
+Date: Sun, 04 Jun 2006 22:08:21 -0400
+Message-ID: <1149473301698-git-send-email-vonbrand@inf.utfsm.cl>
+Reply-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Cc: git@vger.kernel.org, "Dmitry V. Levin" <ldv@altlinux.org>
+X-From: git-owner@vger.kernel.org Mon Jun 05 04:09:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn4Uq-0000Zt-GJ
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 04:07:12 +0200
+	id 1Fn4WX-0000ka-Sg
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 04:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbWFECHB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 22:07:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbWFECHB
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 22:07:01 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:48144 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932379AbWFECHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jun 2006 22:07:00 -0400
-Received: by wr-out-0506.google.com with SMTP id i22so877894wra
-        for <git@vger.kernel.org>; Sun, 04 Jun 2006 19:06:59 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YZgyZgRC47oF76go9Kcczn76xFwrd1agQNCb1L3aolkv3hn28l7y4P2BIIxGDH2Xz4VX9LeuNuBzxrerkFjP9J8oN8KHuyxVLVp/zOZeX7cD7DO8cJ2DbscFc1U3Ur2f6IGUZq17D1Y9ylDCAT2nFR1wkFMDwcIgzhzK9fldK08=
-Received: by 10.54.94.10 with SMTP id r10mr4457783wrb;
-        Sun, 04 Jun 2006 19:06:59 -0700 (PDT)
-Received: by 10.54.127.12 with HTTP; Sun, 4 Jun 2006 19:06:59 -0700 (PDT)
-To: antarus@gentoo.org
-In-Reply-To: <44837BDB.2090601@gentoo.org>
-Content-Disposition: inline
+	id S932381AbWFECIz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 22:08:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932382AbWFECIz
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 22:08:55 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:59112 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932381AbWFECIy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 22:08:54 -0400
+Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k5528a8l024731
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 4 Jun 2006 22:08:42 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k5528N5n019036
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 4 Jun 2006 22:08:25 -0400
+Received: (from vonbrand@localhost)
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6/Submit) id k5528MiB019035;
+	Sun, 4 Jun 2006 22:08:22 -0400
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.3.3.g16a4
+X-Greylist: IP, sender and recipient auto-whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Sun, 04 Jun 2006 22:08:49 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21305>
 
-On 6/5/06, Alec Warner <antarus@gentoo.org> wrote:
-> Ok the box this was running on had issues, so I switched to using
-> pearl.amd64.dev.gentoo.org, a dual core amd64 X2 4600+ with 4 gigs of
-> ram and plenty of disk.  The "problem" now is just converstion time...30
-> hours and I'm into 2004-09-17...but it's been in 2004 all day, seems
-> like most of the commits are in the last three years.  Are there
-> architectural issues with doing this in parallel?
+The workflow for Junio was badly formatted.
 
-I don't think you can do this in parallel. What I would do is remove
-the -a from the git-repack invocation. It does hurt import times quite
-a bit -- just do a git-repack -a -d when it's done.
+Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+---
+ Documentation/everyday.txt |   21 +++++++++++++--------
+ 1 files changed, 13 insertions(+), 8 deletions(-)
 
-And... having said that, there is still a memory leak somehow,
-somewhere. It's been evading me for 2 weeks now, so I feel an idiot
-now. Not too bad in general, but it shows clearly in the gentoo and
-mozilla imports.
-
-> Since the repository commits are all in cvs, it should be possible to do
-> the work in parallel, since you know what all the commits touch.  The
-> concern would be ordering of nodes in the tree; you'd end up building a
-> bunch of subtrees and patching them together?
-
-Well... parsecvs does a bit of this but in sequential fashion... it
-imports all the files first, and then runs through the history
-building the tree+commits in order, committing them. It saves a lot of
-time in the file imports by parsing the RCS file directly. The
-downside is that it must keep a filename+version=>sha1 mapping --
-which I think is why parsecvs won't fit in memory until it's changed
-to store it on disk somehow ;-)
-
-You are forced to do it in a sequence because cvsps only tells you
-about the files added/removed/changed in a commit -- you need the
-ancestor to have a view of what the whole tree looked like. The only
-room for parallelism I see is to fork off new processes to work on
-branches in parallel.
-
-
-
-martin
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index ffba543..6745ab5 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -336,15 +336,20 @@ master, nor exposed as a part of a stabl
+ <11> make sure I did not accidentally rewind master beyond what I
+ already pushed out.  "ko" shorthand points at the repository I have
+ at kernel.org, and looks like this:
+-    $ cat .git/remotes/ko
+-    URL: kernel.org:/pub/scm/git/git.git
+-    Pull: master:refs/tags/ko-master
+-    Pull: maint:refs/tags/ko-maint
+-    Push: master
+-    Push: +pu
+-    Push: maint
+++
++------------
++$ cat .git/remotes/ko
++URL: kernel.org:/pub/scm/git/git.git
++Pull: master:refs/tags/ko-master
++Pull: maint:refs/tags/ko-maint
++Push: master
++Push: +pu
++Push: maint
++------------
+++
+ In the output from "git show-branch", "master" should have
+ everything "ko-master" has.
++
+ <12> push out the bleeding edge.
+ <13> push the tag out, too.
+ 
+@@ -390,7 +395,7 @@ service git
+         port            = 9418
+         socket_type     = stream
+         wait            = no
+-        user            = root
++        user            = nobody
+         server          = /usr/bin/git-daemon
+         server_args     = --inetd --syslog --export-all --base-path=/pub/scm
+         log_on_failure  += USERID
+-- 
+1.3.3.g16a4
