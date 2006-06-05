@@ -1,72 +1,99 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: irc usage..
-Date: Mon, 5 Jun 2006 12:07:43 -0400
-Message-ID: <BAYC1-PASMTP029677186C792C538C1921AE940@CEZ.ICE>
-References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
-	<Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
-	<46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>
-	<447D043D.1020609@gentoo.org>
-	<46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
-	<447DA028.3040606@gentoo.org>
-	<46a038f90605311503o1526c664qe61b0f3f40929b92@mail.gmail.com>
-	<447E4611.7000309@gentoo.org>
-	<46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
-	<44837BDB.2090601@gentoo.org>
-	<46a038f90606041906k66d85152v6e402c65151d7ab8@mail.gmail.com>
-	<448398BC.5090402@gentoo.org>
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: [PATCH 0/27] Documentation: Spelling fixes
+Date: Mon, 5 Jun 2006 18:48:11 +0200
+Message-ID: <dbfc82860606050948t5c952f65m364a455e0e83ec8@mail.gmail.com>
+References: <33723.2579863214$1149366476@news.gmane.org>
+	 <7vk67xenfe.fsf@assigned-by-dhcp.cox.net>
+	 <dbfc82860606041059l31605bc5j18ad2b35ea6f6dc0@mail.gmail.com>
+	 <4484239C.7020608@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: martin.langhoff@gmail.com, spyderous@gentoo.org, torvalds@osdl.org,
-	ydirson@altern.org, git@vger.kernel.org, smurf@smurf.noris.de,
-	Johannes.Schindelin@gmx.de
-X-From: git-owner@vger.kernel.org Mon Jun 05 18:08:50 2006
+Cc: "Junio C Hamano" <junkio@cox.net>, Horst.H.von.Brand@inf.utfsm.cl,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 18:48:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnHd5-0000He-97
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 18:08:35 +0200
+	id 1FnIFT-0007Ne-9E
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 18:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbWFEQIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 12:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbWFEQIc
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 12:08:32 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:15318 "EHLO
-	BAYC1-PASMTP02.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1750929AbWFEQIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jun 2006 12:08:31 -0400
-X-Originating-IP: [65.93.43.191]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP02.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 5 Jun 2006 09:08:30 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 0582C644C28;
-	Mon,  5 Jun 2006 12:08:29 -0400 (EDT)
-To: antarus@gentoo.org
-Message-Id: <20060605120743.566fb85f.seanlkml@sympatico.ca>
-In-Reply-To: <448398BC.5090402@gentoo.org>
-X-Mailer: Sylpheed version 2.2.5 (GTK+ 2.9.1; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 05 Jun 2006 16:08:30.0655 (UTC) FILETIME=[4996C4F0:01C688BA]
+	id S1750880AbWFEQsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 12:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbWFEQsM
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 12:48:12 -0400
+Received: from wx-out-0102.google.com ([66.249.82.197]:2092 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750741AbWFEQsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jun 2006 12:48:11 -0400
+Received: by wx-out-0102.google.com with SMTP id h28so746177wxd
+        for <git@vger.kernel.org>; Mon, 05 Jun 2006 09:48:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=iFhRaH5KKal0JHGySE8QVtHhMu+GNlf4vYjWdte9XakCb4JMBE4HDGxuHCRM0eDR30WOLbRbwDRVf6T9fBn+bbdnTfvsWbd/TcNy18d4UXKVuVHYuLReKV1m+WyRTIotJwxcvFn8Hvftc2iv5f29NtODWa187f+MRC+Jz+rEevw=
+Received: by 10.70.47.1 with SMTP id u1mr6268897wxu;
+        Mon, 05 Jun 2006 09:48:11 -0700 (PDT)
+Received: by 10.70.66.6 with HTTP; Mon, 5 Jun 2006 09:48:11 -0700 (PDT)
+To: "Andreas Ericsson" <ae@op5.se>
+In-Reply-To: <4484239C.7020608@op5.se>
+Content-Disposition: inline
+X-Google-Sender-Auth: 488f10de1dc9ebf1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21320>
 
-On Sun, 04 Jun 2006 22:36:44 -0400
-Alec Warner <antarus@gentoo.org> wrote:
+On 6/5/06, Andreas Ericsson <ae@op5.se> wrote:
+> Nikolai Weibull wrote:
+> > On 6/4/06, Junio C Hamano <junkio@cox.net> wrote:
+> >
+> >> Most do not seem to be typoes, depending on where you learned
+> >> the language (XYZour vs XYZor; ok, Ok, and OK; ie vs i.e.).
+> >
+> > Where do you write "ie" instead of "i.e."?
+> >
+>
+> Mailing lists, online conversations, tech docs written in code
+> editors...
 
-> I'll keep chugging on this one; it won't be the final import as I 
-> haven't used the complete Authors file, so I will try the repacking 
-> optimization next time I do an import.
+Do you mean that code editors usually don't let you enter a dot into
+the buffer, or what?
 
-Hi Alec,
+> Compare with online'ish abbrevs (afaict, iirc, imo, fyi).
 
-You may want to go back and do another import for other reasons, but if
-the only reason is to fix up the author information it would be _much_
-faster to simply rewrite the git commit history.  Cogito has something
-called "cg-admin-rewritehist" which should do what you need and there
-are other scripts floating around specificially for rewriting just the
-author information.
+That's hardly the same thing.  Most people would upcase AFAICT, IIRC,
+IMO, and FYI.
 
-HTH,
-Sean
+I wouldn't group "i.e." with such abbreviations in any case.  (Hehe.)
+
+> > In Swedish, there has been a trend to remove dots from abbreviated
+> > expressions, but it seems people are returning to use dots.
+> > Personally, I find that dots make things a lot clearer.
+>
+> Swedish has lots of abbreviations where one "part" of the abbreviation
+> consists of multiple characters, like t.ex.
+
+And "bl.a.".
+
+> When each character of the abbrev defines one complete word dots are
+> just prettiness-noise, their presence or absence decided by the gravity
+> of the meaning ("R.I.P." vs "ie"). Obviously, correctness never hurts
+> but this is, on two accounts, punktknulleri.
+
+Considering that people don't want to get stuck on trying to
+understand what the word "ie" is supposed to mean in a manual page
+they're trying to understand what some command does (this happened to
+me), I really think that fucking with the dots is called for.
+
+Anyway, the general guidelines recommended by "The Chicago Manual of Style" are:
+
+Use periods with abbreviations that appear in lowercase letters; use
+no periods with abbreviations that appear in full capitals or small
+capitals, whether two letters or more.
+
+One possible solution is to expand "i.e." to "that is" (or something
+equally befitting) and "e.g." to "for example", "such as", or similar.
+
+  nikolai
