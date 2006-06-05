@@ -1,83 +1,64 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Horrible re-packing?
-Date: Mon, 5 Jun 2006 14:40:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606051432270.5498@g5.osdl.org>
-References: <Pine.LNX.4.64.0606050951120.5498@g5.osdl.org>
- <Pine.LNX.4.64.0606051140530.5498@g5.osdl.org> <Pine.LNX.4.64.0606051155000.5498@g5.osdl.org>
- <Pine.LNX.4.64.0606051637490.24152@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix git_setup_directory_gently when GIT_DIR is set
+Date: Tue, 6 Jun 2006 00:57:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606060053440.25344@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606051943540.29608@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vodx74ca9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 05 23:41:03 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 06 00:57:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnMom-0003IM-3Q
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 23:41:00 +0200
+	id 1FnO0s-0007yi-V4
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 00:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751030AbWFEVk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 17:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751032AbWFEVk5
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 17:40:57 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43407 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751021AbWFEVk5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jun 2006 17:40:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k55Le32g012502
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 5 Jun 2006 14:40:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k55Le2vB025732;
-	Mon, 5 Jun 2006 14:40:02 -0700
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0606051637490.24152@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750725AbWFEW5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 18:57:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbWFEW5V
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 18:57:21 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:19433 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750725AbWFEW5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jun 2006 18:57:20 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 1D380237A;
+	Tue,  6 Jun 2006 00:57:19 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 11CE0236E;
+	Tue,  6 Jun 2006 00:57:19 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E70C81C9C;
+	Tue,  6 Jun 2006 00:57:18 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodx74ca9.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21347>
 
+Hi,
 
+On Mon, 5 Jun 2006, Junio C Hamano wrote:
 
-On Mon, 5 Jun 2006, Nicolas Pitre wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> In other words, the pack shrunk to less than half the size of the 
-> previous one !
+> > When calling git_setup_directory_gently, and GIT_DIR was set, it just
+> > ignored the variable nongit_ok.
+> 
+> Hmph.  Is this really a breakage?  That is, gently() is meant
+> for a case where you do not know if you even find a git
+> repository and tell it not to complain because you are prepared
+> for the case where you are not in a git repository.
 
-Ok, that's a bit more extreme than expected.
+Yes, it is a breakage: in git-clone, line 212, we explicitely set GIT_DIR 
+(to the not-yet-existing repository path), and call git-init-db. Now, with 
+the alias thing we need to get the config if it exists, so we _got_ to 
+call gently(). Boom.
 
-It's obviously great news, and says that the approach of sorting by 
-"reversed name" is a great heuristic, but at the same time it makes me 
-worry a bit that this thing that is supposed to be a heuristic ends up 
-being _so_ important from a pack size standpoint. I was happier when it 
-was more about saving a couple of percent.
-
-Now, your repo may be a strange case, and it just happens to fit the 
-suggested hash, but on the other hand it's nice to see three totally 
-different repositories that all improve, albeit with wildly different 
-numbers.
-
-I'm wondering if we could have some "incremental optimizer" thing that 
-would take a potentially badly packed archive, and just start looking for 
-better delta chain possibilities? That way we would still try to get a 
-good initial pack with some heuristic, but we could have people run the 
-incremental improver every once in a while looking for good deltas that it 
-missed due to the project not fitting the heuristics..
-
-The fact that we normally do incremental repacking (and "-f" is unusual) 
-is obviously one thing that makes us less susceptible to bad patterns (and 
-is also what allows us to run the incremental optimizer - any good delta 
-choice will automatically percolate into subsequent versions, including 
-packs that have been cloned).
-
-So the packing strategy itself seems to be very stable (and partly _due_ 
-to the "optimization" to re-use earlier pack choices), but we currently 
-lack the thing that fixes up any initial bad assumptions in case they 
-happen.
-
-			Linus
+Ciao,
+Dscho
