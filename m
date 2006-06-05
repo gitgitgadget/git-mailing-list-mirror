@@ -1,99 +1,217 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: [PATCH 0/27] Documentation: Spelling fixes
-Date: Mon, 5 Jun 2006 18:48:11 +0200
-Message-ID: <dbfc82860606050948t5c952f65m364a455e0e83ec8@mail.gmail.com>
-References: <33723.2579863214$1149366476@news.gmane.org>
-	 <7vk67xenfe.fsf@assigned-by-dhcp.cox.net>
-	 <dbfc82860606041059l31605bc5j18ad2b35ea6f6dc0@mail.gmail.com>
-	 <4484239C.7020608@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git: handle aliases defined in $GIT_DIR/config
+Date: Mon, 5 Jun 2006 18:51:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606051847480.18604@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606042047160.1598@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3bekacts.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, Horst.H.von.Brand@inf.utfsm.cl,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 18:48:26 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 18:51:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnIFT-0007Ne-9E
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 18:48:15 +0200
+	id 1FnIIm-0007sy-MH
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 18:51:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750880AbWFEQsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 12:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbWFEQsM
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 12:48:12 -0400
-Received: from wx-out-0102.google.com ([66.249.82.197]:2092 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1750741AbWFEQsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jun 2006 12:48:11 -0400
-Received: by wx-out-0102.google.com with SMTP id h28so746177wxd
-        for <git@vger.kernel.org>; Mon, 05 Jun 2006 09:48:11 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=iFhRaH5KKal0JHGySE8QVtHhMu+GNlf4vYjWdte9XakCb4JMBE4HDGxuHCRM0eDR30WOLbRbwDRVf6T9fBn+bbdnTfvsWbd/TcNy18d4UXKVuVHYuLReKV1m+WyRTIotJwxcvFn8Hvftc2iv5f29NtODWa187f+MRC+Jz+rEevw=
-Received: by 10.70.47.1 with SMTP id u1mr6268897wxu;
-        Mon, 05 Jun 2006 09:48:11 -0700 (PDT)
-Received: by 10.70.66.6 with HTTP; Mon, 5 Jun 2006 09:48:11 -0700 (PDT)
-To: "Andreas Ericsson" <ae@op5.se>
-In-Reply-To: <4484239C.7020608@op5.se>
-Content-Disposition: inline
-X-Google-Sender-Auth: 488f10de1dc9ebf1
+	id S1751003AbWFEQvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 12:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWFEQvi
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 12:51:38 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11964 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751003AbWFEQvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jun 2006 12:51:37 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 2E51D2C92;
+	Mon,  5 Jun 2006 18:51:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 2259D2C90;
+	Mon,  5 Jun 2006 18:51:36 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id F200AC4E;
+	Mon,  5 Jun 2006 18:51:35 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bekacts.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21321>
 
-On 6/5/06, Andreas Ericsson <ae@op5.se> wrote:
-> Nikolai Weibull wrote:
-> > On 6/4/06, Junio C Hamano <junkio@cox.net> wrote:
-> >
-> >> Most do not seem to be typoes, depending on where you learned
-> >> the language (XYZour vs XYZor; ok, Ok, and OK; ie vs i.e.).
-> >
-> > Where do you write "ie" instead of "i.e."?
-> >
->
-> Mailing lists, online conversations, tech docs written in code
-> editors...
+Hi,
 
-Do you mean that code editors usually don't let you enter a dot into
-the buffer, or what?
+On Sun, 4 Jun 2006, Junio C Hamano wrote:
 
-> Compare with online'ish abbrevs (afaict, iirc, imo, fyi).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > 	For me, short cuts have to be easy to type, so they never
+> > 	include digits, and they are never case sensitive, so I do not
+> > 	need any fancy config stuff...
+> 
+> Fair enough, and the spirit is the same as what Pasky suggested
+> earlier, I think.
+> 
+> However, I am not sure about some parts of the code.  I started
+> mucking with it myself, but realized it is far easier for me to
+> just let the original submitter, especially the capable one like
+> you, do a bit more work ;-).
 
-That's hardly the same thing.  Most people would upcase AFAICT, IIRC,
-IMO, and FYI.
+Are you trying to butter me up? If so, it's working ;-)
 
-I wouldn't group "i.e." with such abbreviations in any case.  (Hehe.)
+Here is a revised patch which addresses all of your comments (and Pasky's 
+implicit ones) except the move of split_cmdline to somewhere central (I 
+am not sure if that function is really needed elsewhere...):
 
-> > In Swedish, there has been a trend to remove dots from abbreviated
-> > expressions, but it seems people are returning to use dots.
-> > Personally, I find that dots make things a lot clearer.
->
-> Swedish has lots of abbreviations where one "part" of the abbreviation
-> consists of multiple characters, like t.ex.
+---
 
-And "bl.a.".
+ git.c |  113 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 113 insertions(+), 0 deletions(-)
 
-> When each character of the abbrev defines one complete word dots are
-> just prettiness-noise, their presence or absence decided by the gravity
-> of the meaning ("R.I.P." vs "ie"). Obviously, correctness never hurts
-> but this is, on two accounts, punktknulleri.
-
-Considering that people don't want to get stuck on trying to
-understand what the word "ie" is supposed to mean in a manual page
-they're trying to understand what some command does (this happened to
-me), I really think that fucking with the dots is called for.
-
-Anyway, the general guidelines recommended by "The Chicago Manual of Style" are:
-
-Use periods with abbreviations that appear in lowercase letters; use
-no periods with abbreviations that appear in full capitals or small
-capitals, whether two letters or more.
-
-One possible solution is to expand "i.e." to "that is" (or something
-equally befitting) and "e.g." to "for example", "such as", or similar.
-
-  nikolai
+diff --git a/git.c b/git.c
+index bc463c9..db6ac61 100644
+--- a/git.c
++++ b/git.c
+@@ -10,6 +10,7 @@ #include <limits.h>
+ #include <stdarg.h>
+ #include "git-compat-util.h"
+ #include "exec_cmd.h"
++#include "cache.h"
+ 
+ #include "builtin.h"
+ 
+@@ -32,6 +33,115 @@ static void prepend_to_path(const char *
+ 	setenv("PATH", path, 1);
+ }
+ 
++static const char *alias_command;
++static char *alias_string = NULL;
++
++static int git_alias_config(const char *var, const char *value)
++{
++	if (!strncmp(var, "alias.", 6) && !strcmp(var + 6, alias_command)) {
++		alias_string = strdup(value);
++	}
++	return 0;
++}
++
++static int split_cmdline(char *cmdline, const char ***argv)
++{
++	int src, dst, count = 0, size = 16;
++	char quoted = 0;
++
++	*argv = malloc(sizeof(char*) * size);
++
++	/* split alias_string */
++	(*argv)[count++] = cmdline;
++	for (src = dst = 0; cmdline[src];) {
++		char c = cmdline[src];
++		if (!quoted && isspace(c)) {
++			cmdline[dst++] = 0;
++			while (cmdline[++src]
++					&& isspace(cmdline[src]))
++				; /* skip */
++			if (count >= size) {
++				size += 16;
++				*argv = realloc(*argv, sizeof(char*) * size);
++			}
++			(*argv)[count++] = cmdline + dst;
++		} else if(!quoted && (c == '\'' || c == '"')) {
++			quoted = c;
++			src++;
++		} else if (c == quoted) {
++			quoted = 0;
++			src++;
++		} else {
++			if (c == '\\' && quoted != '\'') {
++				src++;
++				c = cmdline[src];
++				if (!c) {
++					free(*argv);
++					*argv = NULL;
++					return error("cmdline ends with \\");
++				}
++			}
++			cmdline[dst++] = c;
++			src++;
++		}
++	}
++
++	cmdline[dst] = 0;
++
++	if (quoted) {
++		free(*argv);
++		*argv = NULL;
++		return error("unclosed quote");
++	}
++
++	return count;
++}
++
++static int handle_alias(int *argcp, const char ***argv)
++{
++	int nongit = 0;
++	const char *subdir;
++
++	subdir = setup_git_directory_gently(&nongit);
++	if (!nongit) {
++		int count;
++		const char** new_argv;
++
++		alias_command = (*argv)[0];
++		git_config(git_alias_config);
++		if (!alias_string)
++			return 0;
++
++		count = split_cmdline(alias_string, &new_argv);
++
++		if (count < 1)
++			die("empty alias for %s", alias_command);
++
++		if (!strcmp(alias_command, new_argv[0]))
++			die("recursive alias: %s", alias_command);
++
++		/* insert after command name */
++		if (*argcp > 1) {
++			new_argv = realloc(new_argv,
++					sizeof(char*) * (count + *argcp - 1));
++			memcpy(new_argv + count, *argv, sizeof(char*) * (*argcp - 1));
++		}
++
++		*argv = new_argv;
++		*argcp += count - 1;
++
++		if (subdir)
++			chdir(subdir);
++
++		return 1;
++	}
++
++	if (subdir)
++		chdir(subdir);
++
++	return 0;
++}
++
+ const char git_version_string[] = GIT_VERSION;
+ 
+ static void handle_internal_command(int argc, const char **argv, char **envp)
+@@ -121,6 +231,7 @@ int main(int argc, const char **argv, ch
+ 	if (!strncmp(cmd, "git-", 4)) {
+ 		cmd += 4;
+ 		argv[0] = cmd;
++		handle_alias(&argc, &argv);
+ 		handle_internal_command(argc, argv, envp);
+ 		die("cannot handle %s internally", cmd);
+ 	}
+@@ -178,6 +289,8 @@ int main(int argc, const char **argv, ch
+ 	exec_path = git_exec_path();
+ 	prepend_to_path(exec_path, strlen(exec_path));
+ 
++	handle_alias(&argc, &argv);
++
+ 	/* See if it's an internal command */
+ 	handle_internal_command(argc, argv, envp);
+ 
