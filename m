@@ -1,71 +1,72 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: Re: [PATCH, take 2] Add example xinetd(8) configuration to Documentation/everyday.txt
-Date: Mon, 5 Jun 2006 17:12:37 +0400
-Message-ID: <20060605131237.GA31565@basalt.office.altlinux.org>
-References: <20060605000144.GA12641@basalt.office.altlinux.org> <200606050054.k550sFCC018490@laptop11.inf.utfsm.cl>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: irc usage..
+Date: Mon, 5 Jun 2006 12:07:43 -0400
+Message-ID: <BAYC1-PASMTP029677186C792C538C1921AE940@CEZ.ICE>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+	<Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
+	<46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>
+	<447D043D.1020609@gentoo.org>
+	<46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
+	<447DA028.3040606@gentoo.org>
+	<46a038f90605311503o1526c664qe61b0f3f40929b92@mail.gmail.com>
+	<447E4611.7000309@gentoo.org>
+	<46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
+	<44837BDB.2090601@gentoo.org>
+	<46a038f90606041906k66d85152v6e402c65151d7ab8@mail.gmail.com>
+	<448398BC.5090402@gentoo.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 15:12:49 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: martin.langhoff@gmail.com, spyderous@gentoo.org, torvalds@osdl.org,
+	ydirson@altern.org, git@vger.kernel.org, smurf@smurf.noris.de,
+	Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Mon Jun 05 18:08:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnEss-00024O-9q
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 15:12:42 +0200
+	id 1FnHd5-0000He-97
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 18:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750713AbWFENMj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 09:12:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750788AbWFENMj
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 09:12:39 -0400
-Received: from mh.altlinux.org ([217.16.24.5]:27329 "EHLO mh.altlinux.org")
-	by vger.kernel.org with ESMTP id S1750713AbWFENMi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jun 2006 09:12:38 -0400
-Received: from basalt.office.altlinux.org (localhost.localdomain [127.0.0.1])
-	by mh.altlinux.org (Postfix) with ESMTP
-	id 9CD2E5F406; Mon,  5 Jun 2006 17:12:37 +0400 (MSD)
-Received: by basalt.office.altlinux.org (Postfix, from userid 501)
-	id 72EA0B0D92; Mon,  5 Jun 2006 17:12:37 +0400 (MSD)
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-Content-Disposition: inline
-In-Reply-To: <200606050054.k550sFCC018490@laptop11.inf.utfsm.cl>
-X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
+	id S1750929AbWFEQIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 12:08:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbWFEQIc
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 12:08:32 -0400
+Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:15318 "EHLO
+	BAYC1-PASMTP02.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S1750929AbWFEQIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jun 2006 12:08:31 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP02.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 5 Jun 2006 09:08:30 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 0582C644C28;
+	Mon,  5 Jun 2006 12:08:29 -0400 (EDT)
+To: antarus@gentoo.org
+Message-Id: <20060605120743.566fb85f.seanlkml@sympatico.ca>
+In-Reply-To: <448398BC.5090402@gentoo.org>
+X-Mailer: Sylpheed version 2.2.5 (GTK+ 2.9.1; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 05 Jun 2006 16:08:30.0655 (UTC) FILETIME=[4996C4F0:01C688BA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21318>
 
+On Sun, 04 Jun 2006 22:36:44 -0400
+Alec Warner <antarus@gentoo.org> wrote:
 
---ZPt4rx8FFjLCG7dd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'll keep chugging on this one; it won't be the final import as I 
+> haven't used the complete Authors file, so I will try the repacking 
+> optimization next time I do an import.
 
-On Sun, Jun 04, 2006 at 08:54:15PM -0400, Horst von Brand wrote:
-> Dmitry V. Levin <ldv@altlinux.org> wrote:
-> > It is a bad advice to run git-daemon as root.
->=20
-> Right, my bad. Fixed patch below.
-[...]
-> +        user            =3D root
+Hi Alec,
 
-Really?
+You may want to go back and do another import for other reasons, but if
+the only reason is to fix up the author information it would be _much_
+faster to simply rewrite the git commit history.  Cogito has something
+called "cg-admin-rewritehist" which should do what you need and there
+are other scripts floating around specificially for rewriting just the
+author information.
 
-
---=20
-ldv
-
---ZPt4rx8FFjLCG7dd
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQFEhC3FfKvmrJ41Nh4RAjR4AJwOB05c7ORdsvWNjyQq4Z/X8/LEEwCgmU6t
-BSNWc+yR/zXnFOqyJIjbBkc=
-=zYhi
------END PGP SIGNATURE-----
-
---ZPt4rx8FFjLCG7dd--
+HTH,
+Sean
