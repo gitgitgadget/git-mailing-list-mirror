@@ -1,105 +1,206 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Horrible re-packing?
-Date: Mon, 5 Jun 2006 10:08:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606050951120.5498@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git: handle aliases defined in $GIT_DIR/config
+Date: Mon, 5 Jun 2006 19:43:52 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606051941450.29608@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606042047160.1598@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3bekacts.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0606051847480.18604@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0606051902210.20820@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 05 19:09:09 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 19:44:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnIZZ-0002dh-HM
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 19:09:05 +0200
+	id 1FnJ7M-0000qw-Tk
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 19:43:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228AbWFERI7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 13:08:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbWFERI7
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 13:08:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42435 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751228AbWFERI6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jun 2006 13:08:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k55H8g2g029042
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 5 Jun 2006 10:08:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k55H8eOC017835;
-	Mon, 5 Jun 2006 10:08:41 -0700
-To: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751241AbWFERny (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 13:43:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbWFERny
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 13:43:54 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:41611 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751241AbWFERnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jun 2006 13:43:53 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 76E90E13;
+	Mon,  5 Jun 2006 19:43:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 6B5C6D7A;
+	Mon,  5 Jun 2006 19:43:52 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 421AABBC;
+	Mon,  5 Jun 2006 19:43:52 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0606051902210.20820@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21324>
 
+Hi,
 
-Junio, Nico,
- I just tried doing a "git repack -a -d -f" to because I expected a full 
-re-pack to do _better_ than doing occasional incrementals, and verify the 
-pack generation, but imagine my shock when IT SUCKS.
+On Mon, 5 Jun 2006, Johannes Schindelin wrote:
 
-I didn't look at where the suckage started, but look at this:
+> Hi,
+> 
+> sorry, I did not test with the subdir=... stuff I copied from Pasky's 
+> patch. It breaks things for me. Looking into it...
 
-	[torvalds@g5 git]$ git repack -a -d
-	Generating pack...
-	Done counting 21322 objects.
-	Deltifying 21322 objects.
-	 100% (21322/21322) done
-	Writing 21322 objects.
-	 100% (21322/21322) done
-	Total 21322, written 21322 (delta 14489), reused 21319 (delta 14486)
-	Pack pack-fe4ff117c9959ead3443b826a777423b3062b666 created.
+There were actually two bugs: I did not change the subdir back in all 
+cases, and git_setup_directory_gently had a bug (will send patch 
+separately). The updated patch:
 
-	[torvalds@g5 git]$ ll .git/objects/pack/
-	total 7008
-	-rw-r--r-- 1 torvalds torvalds  512792 Jun  5 09:41 pack-fe4ff117c9959ead3443b826a777423b3062b666.idx
-	-rw-r--r-- 1 torvalds torvalds 6643695 Jun  5 09:41 pack-fe4ff117c9959ead3443b826a777423b3062b666.pack
+---
 
-Ie, we have  anice 6.33MB pack-file.
+ git.c |  111 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 111 insertions(+), 0 deletions(-)
 
-Now:
-
-	[torvalds@g5 git]$ git repack -a -d -f
-	Generating pack...
-	Done counting 21322 objects.
-	Deltifying 21322 objects.
-	 100% (21322/21322) done
-	Writing 21322 objects.
-	 100% (21322/21322) done
-	Total 21322, written 21322 (delta 10187), reused 6777 (delta 0)
-	Pack pack-fe4ff117c9959ead3443b826a777423b3062b666 created.
-
-	[torvalds@g5 git]$ ll .git/objects/pack/
-	total 15352
-	-rw-r--r-- 1 torvalds torvalds   512792 Jun  5 09:41 pack-fe4ff117c9959ead3443b826a777423b3062b666.idx
-	-rw-r--r-- 1 torvalds torvalds 15176139 Jun  5 09:41 pack-fe4ff117c9959ead3443b826a777423b3062b666.pack
-
-Whaah! That nice 6.33MB pack-file exploded to 14.5MB!
-
-Doing repeated "git repack -a -d" to try to do incrementals, it stopped 
-improving after the sixth one, at which point it was down to 11.7MB, still 
-almost twice as big as before.
-
-Re-doing it with 
-
-	git repack -a -d -f --depth=100 --window=100
-
-got me back to 6.94MB, but that's still 10% larger than the pack-file I 
-had before.
-
-Interestingly, it's the "window" that matters more. The depth part didn't 
-make that huge of a difference, so it looks like it's the sorting 
-heuristic that may be broken again.
-
-And it's possibly broken by the fact that we've been renaming things 
-lately (ie the "rev-list.c" -> "builtin-rev-list.c" thing ends up not 
-finding things)
-
-Nico? Any ideas?
-
-			Linus
+diff --git a/git.c b/git.c
+index bc463c9..8854472 100644
+--- a/git.c
++++ b/git.c
+@@ -10,6 +10,7 @@ #include <limits.h>
+ #include <stdarg.h>
+ #include "git-compat-util.h"
+ #include "exec_cmd.h"
++#include "cache.h"
+ 
+ #include "builtin.h"
+ 
+@@ -32,6 +33,113 @@ static void prepend_to_path(const char *
+ 	setenv("PATH", path, 1);
+ }
+ 
++static const char *alias_command;
++static char *alias_string = NULL;
++
++static int git_alias_config(const char *var, const char *value)
++{
++	if (!strncmp(var, "alias.", 6) && !strcmp(var + 6, alias_command)) {
++		alias_string = strdup(value);
++	}
++	return 0;
++}
++
++static int split_cmdline(char *cmdline, const char ***argv)
++{
++	int src, dst, count = 0, size = 16;
++	char quoted = 0;
++
++	*argv = malloc(sizeof(char*) * size);
++
++	/* split alias_string */
++	(*argv)[count++] = cmdline;
++	for (src = dst = 0; cmdline[src];) {
++		char c = cmdline[src];
++		if (!quoted && isspace(c)) {
++			cmdline[dst++] = 0;
++			while (cmdline[++src]
++					&& isspace(cmdline[src]))
++				; /* skip */
++			if (count >= size) {
++				size += 16;
++				*argv = realloc(*argv, sizeof(char*) * size);
++			}
++			(*argv)[count++] = cmdline + dst;
++		} else if(!quoted && (c == '\'' || c == '"')) {
++			quoted = c;
++			src++;
++		} else if (c == quoted) {
++			quoted = 0;
++			src++;
++		} else {
++			if (c == '\\' && quoted != '\'') {
++				src++;
++				c = cmdline[src];
++				if (!c) {
++					free(*argv);
++					*argv = NULL;
++					return error("cmdline ends with \\");
++				}
++			}
++			cmdline[dst++] = c;
++			src++;
++		}
++	}
++
++	cmdline[dst] = 0;
++
++	if (quoted) {
++		free(*argv);
++		*argv = NULL;
++		return error("unclosed quote");
++	}
++
++	return count;
++}
++
++static int handle_alias(int *argcp, const char ***argv)
++{
++	int nongit = 0, ret = 0;
++	const char *subdir;
++
++	subdir = setup_git_directory_gently(&nongit);
++	if (!nongit) {
++		int count;
++		const char** new_argv;
++
++		alias_command = (*argv)[0];
++		git_config(git_alias_config);
++		if (alias_string) {
++
++			count = split_cmdline(alias_string, &new_argv);
++
++			if (count < 1)
++				die("empty alias for %s", alias_command);
++
++			if (!strcmp(alias_command, new_argv[0]))
++				die("recursive alias: %s", alias_command);
++
++			/* insert after command name */
++			if (*argcp > 1) {
++				new_argv = realloc(new_argv, sizeof(char*) *
++						(count + *argcp - 1));
++				memcpy(new_argv + count, *argv, sizeof(char*) *
++						(*argcp - 1));
++			}
++
++			*argv = new_argv;
++			*argcp += count - 1;
++
++			ret = 1;
++		}
++	}
++
++	if (subdir)
++		chdir(subdir);
++
++	return ret;
++}
++
+ const char git_version_string[] = GIT_VERSION;
+ 
+ static void handle_internal_command(int argc, const char **argv, char **envp)
+@@ -121,6 +229,7 @@ int main(int argc, const char **argv, ch
+ 	if (!strncmp(cmd, "git-", 4)) {
+ 		cmd += 4;
+ 		argv[0] = cmd;
++		handle_alias(&argc, &argv);
+ 		handle_internal_command(argc, argv, envp);
+ 		die("cannot handle %s internally", cmd);
+ 	}
+@@ -178,6 +287,8 @@ int main(int argc, const char **argv, ch
+ 	exec_path = git_exec_path();
+ 	prepend_to_path(exec_path, strlen(exec_path));
+ 
++	handle_alias(&argc, &argv);
++
+ 	/* See if it's an internal command */
+ 	handle_internal_command(argc, argv, envp);
+ 
