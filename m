@@ -1,68 +1,105 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git daemon directory munging?
-Date: Sun, 04 Jun 2006 19:59:37 -0700
-Message-ID: <44839E19.8070007@zytor.com>
-References: <E1Fn4Xf-0000bL-82@jdl.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: irc usage..
+Date: Mon, 5 Jun 2006 15:49:38 +1200
+Message-ID: <46a038f90606042049y3dfb1bbdwc91132ddd9eeaa39@mail.gmail.com>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+	 <447D043D.1020609@gentoo.org>
+	 <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
+	 <447DA028.3040606@gentoo.org>
+	 <46a038f90605311503o1526c664qe61b0f3f40929b92@mail.gmail.com>
+	 <447E4611.7000309@gentoo.org>
+	 <46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
+	 <44837BDB.2090601@gentoo.org>
+	 <46a038f90606041906k66d85152v6e402c65151d7ab8@mail.gmail.com>
+	 <448398BC.5090402@gentoo.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 04:59:58 2006
+Cc: "Donnie Berkholz" <spyderous@gentoo.org>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Yann Dirson" <ydirson@altern.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Matthias Urlichs" <smurf@smurf.noris.de>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 05 05:49:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn5Jo-0007ru-Nx
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 04:59:53 +0200
+	id 1Fn664-0006p7-Qc
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 05:49:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393AbWFEC7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Jun 2006 22:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932399AbWFEC7t
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 22:59:49 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:31925 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S932393AbWFEC7t
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 22:59:49 -0400
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k552xbel021148
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 4 Jun 2006 19:59:38 -0700
-User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
-To: Jon Loeliger <jdl@jdl.com>
-In-Reply-To: <E1Fn4Xf-0000bL-82@jdl.com>
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S932329AbWFEDtl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 23:49:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932386AbWFEDtl
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 23:49:41 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:10842 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932329AbWFEDtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 23:49:40 -0400
+Received: by wr-out-0506.google.com with SMTP id i22so890383wra
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 20:49:39 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=E03qHrpqXbCnoc81qN/6G9wCLQwCIyf/Bze1GhAUBW6vrEFK/H2mn8p8KQEfKDTvDjTLn0wXBV3eEny/yu2fe5gH5tJHOCJW/Agu6IO4Bn8FM+Hs2b5eQDwP3qchYI97MFapo/Esent/+gCeP8rnRuNfnvO2p0r18AJucxmZgY8=
+Received: by 10.54.117.14 with SMTP id p14mr4436465wrc;
+        Sun, 04 Jun 2006 20:49:39 -0700 (PDT)
+Received: by 10.54.127.12 with HTTP; Sun, 4 Jun 2006 20:49:38 -0700 (PDT)
+To: antarus@gentoo.org
+In-Reply-To: <448398BC.5090402@gentoo.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21310>
 
-Jon Loeliger wrote:
->> Well, you can bind different git daemons to different IP addresses 
->> (IP-based vhosting) or different ports (with SRV records in DNS.)
-> 
-> Is there existing support for telling the git-daemon what
-> specific IP to bind to out of an inetd setup and I just
-> missed it?
-> 
+On 6/5/06, Alec Warner <antarus@gentoo.org> wrote:
+> > I don't think you can do this in parallel. What I would do is remove
+> > the -a from the git-repack invocation. It does hurt import times quite
+> > a bit -- just do a git-repack -a -d when it's done.
+>
+> Only repack at the end then? disk space isn't an issue here so I'll give
+> that a shot.
 
-No, but that really should be added.  It's a pretty trivial hack.
+Not exactly -- by removing the -a from the git-repack invocation what
+you get is cheap "partial" packing rather than a full repack. This is
+somewhat inefficient disk-wise, perhaps by 10% or so. But full repacks
+get more and more expensive as the repo grows.
 
-> I could set that up realatively easily and gain the 
-> functionality I wanted that way too.
-> 
-> I've also hacked in a host interpolation too.
-> 
-> But like you said, canonicalizing it and checking it is likely
-> a bit of a pain.  I've side-stepped one angle of that by
-> symlinking in my /pub directory for multiple different
-> hostnames too.  :-)
-> 
+So you don't need to run git-repack -a -d at the end, but it will be a
+good measure to see how compact the packing gets.
 
-Doesn't work very well.  DNS is case-insensitive, and worse, there are 
-the PunyCode aliases or whatever they're called.
+> > And... having said that, there is still a memory leak somehow,
+> > somewhere. It's been evading me for 2 weeks now, so I feel an idiot
+> > now. Not too bad in general, but it shows clearly in the gentoo and
+> > mozilla imports.
+>
+> 30565 antarus   17   0  470m 456m 1640 S   14 11.6 234:23.38
+> git-cvsimport
+> 30566 antarus   16   0 6753m 147m  752 S    7  3.7 120:27.06 cvs
+>
+> I'm on cvs-1.11.12 and the git version of git
 
-	-hpa
+Yep, I see roughly the same. It grows slowly and I don't know why :(
+
+> I'll keep chugging on this one; it won't be the final import as I
+> haven't used the complete Authors file, so I will try the repacking
+> optimization next time I do an import.
+
+Cool. If it dies for any reason, just do
+
+  git-update-ref refs/heads/master refs/heads/origin
+  git-update-ref HEAD origin
+  git-checkout
+
+You only need to do this the first time -- after that, the core heads
+are set. Rerun the script and it will pick up where it left. If it
+dies again, just do git-checkout to see the latest files.
+
+(Above, replace origin with your -o option if you are using it. I
+normally use -o cvshead.)
+
+
+
+martin
