@@ -1,95 +1,67 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Gitk feature - show nearby tags
-Date: Mon, 5 Jun 2006 13:54:35 +0200
-Message-ID: <e5bfff550606050454l32a8a3b1kffa40fcc4d018778@mail.gmail.com>
-References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
-	 <7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606030416s2ef6182crbde1395dd29e5b94@mail.gmail.com>
-	 <7vodx9cm3g.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606040254n1449b62ta70c209ad8e1a0c@mail.gmail.com>
-	 <7vbqt9ck05.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606040333h1180bbep88fa90ea9928d062@mail.gmail.com>
-	 <7v3belcicq.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550606040657p5c1a3dceq3eef254ab64f0e3a@mail.gmail.com>
-	 <7vhd305dk9.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 0/27] Documentation: Spelling fixes
+Date: Mon, 05 Jun 2006 14:29:16 +0200
+Message-ID: <4484239C.7020608@op5.se>
+References: <33723.2579863214$1149366476@news.gmane.org>	 <7vk67xenfe.fsf@assigned-by-dhcp.cox.net> <dbfc82860606041059l31605bc5j18ad2b35ea6f6dc0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 13:54:44 2006
+Cc: Junio C Hamano <junkio@cox.net>, Horst.H.von.Brand@inf.utfsm.cl,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 05 14:29:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnDfL-0006nq-Hm
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 13:54:39 +0200
+	id 1FnECv-0003nG-Nw
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 14:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbWFELyg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 07:54:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbWFELyg
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 07:54:36 -0400
-Received: from wr-out-0506.google.com ([64.233.184.235]:19654 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751015AbWFELyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jun 2006 07:54:36 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1428814wri
-        for <git@vger.kernel.org>; Mon, 05 Jun 2006 04:54:35 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EQeRtFyIK+WbE8qDeTn8RW9LCZ0YoMLnVDdrBwz7yy4tIR4Si6H1NSB6bky8/8hQNZtNB9DWH8nL1E+2LHwojUcD0MTyGvFyCLkOAAHbEIcx9zEX3ZEtrx7EGwUvflud+MadbLC9zGXVWw+WyEYEhTfTa859h2dsROofXqzY3QI=
-Received: by 10.64.76.8 with SMTP id y8mr3319763qba;
-        Mon, 05 Jun 2006 04:54:35 -0700 (PDT)
-Received: by 10.65.210.17 with HTTP; Mon, 5 Jun 2006 04:54:35 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vhd305dk9.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751043AbWFEM3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 08:29:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbWFEM3T
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 08:29:19 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:23233 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751042AbWFEM3S
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Jun 2006 08:29:18 -0400
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 1FBA36BD38; Mon,  5 Jun 2006 14:29:17 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Nikolai Weibull <now@bitwi.se>
+In-Reply-To: <dbfc82860606041059l31605bc5j18ad2b35ea6f6dc0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21316>
 
-On 6/5/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Marco Costalba" <mcostalba@gmail.com> writes:
->
-> I think your "start from positive ones, traverse one by one and
-> stop traversal that hits the negative one" logic requires the
-> negative one to be directly on the traversal paths starting from
-> positive ones to have _any_ effect.  We often ask "what's the
-> ones that are still not merged to the master from the side
-> branch" while dealing with topic branches:
->
->          c-------d---e master         time flows from
->         /       /                     left to right
->  --a---b---x---y---z side
->
-> and the way to ask that question is "rev-list master..side"
-> (which is "rev-list side ^master").  It should list z and not
-> show y nor x nor b nor a.
->
-> In order for it to be able to notice that y should not be
-> listed, it needs to perform traversals from negative ones as
-> well in order to learn that y is reachable from master.
->
+Nikolai Weibull wrote:
+> On 6/4/06, Junio C Hamano <junkio@cox.net> wrote:
+> 
+>> Most do not seem to be typoes, depending on where you learned
+>> the language (XYZour vs XYZor; ok, Ok, and OK; ie vs i.e.).
+> 
+> 
+> Where do you write "ie" instead of "i.e."?
+> 
 
-Thanks for your clear explanation. Now I see much better what's the deal.
+Mailing lists, online conversations, tech docs written in code 
+editors... Compare with online'ish abbrevs (afaict, iirc, imo, fyi).
 
->
-> I think one useful thing we can do is to generalize what
-> "describe", "nave-rev", and "merge-base" do to have a command
-> that takes a committish X and a set of other committish T1..Tn,
-> and examines if Ti (1<=i<=n) is reachable from X and if X is
-> reachable from Ti (1<=i<=n), and give a short-hand to specify
-> the set of T for common patterns like --heads --tags and --all.
->
+> In Swedish, there has been a trend to remove dots from abbreviated
+> expressions, but it seems people are returning to use dots.
+> Personally, I find that dots make things a lot clearer.
+> 
 
-I don't know if this is enough for our original problem to find previous tag.
+Swedish has lots of abbreviations where one "part" of the abbreviation 
+consists of multiple characters, like t.ex.
 
-Our problem is indeed not only to find previous tags, but _nearest_
-previous, so I think we have to think to a generalization that takes
-in account also a kind of 'metric' among tags because the only
-reachability seems to fall short in finding the nearset one.
+When each character of the abbrev defines one complete word dots are 
+just prettiness-noise, their presence or absence decided by the gravity 
+of the meaning ("R.I.P." vs "ie"). Obviously, correctness never hurts 
+but this is, on two accounts, punktknulleri.
 
-But definitely I need to think more about this ;-)
-
-   Marco
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
