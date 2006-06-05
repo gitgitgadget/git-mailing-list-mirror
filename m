@@ -1,55 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Horrible re-packing?
-Date: Mon, 5 Jun 2006 12:57:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606051256280.5498@g5.osdl.org>
-References: <Pine.LNX.4.64.0606050951120.5498@g5.osdl.org>
- <Pine.LNX.4.64.0606051140530.5498@g5.osdl.org> <Pine.LNX.4.64.0606051155000.5498@g5.osdl.org>
- <7vy7wb4cmy.fsf@assigned-by-dhcp.cox.net>
+From: Nick Hengeveld <nickh@reactrix.com>
+Subject: [PATCH] builtin-push: don't pass --thin to HTTP transport
+Date: Mon, 5 Jun 2006 13:02:29 -0700
+Message-ID: <20060605200229.GA3938@reactrix.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 05 21:57:39 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jun 05 22:02:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnLCb-0001Fh-2Y
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 21:57:29 +0200
+	id 1FnLHV-0002Ct-Jq
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 22:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbWFET50 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Jun 2006 15:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbWFET50
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 15:57:26 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43969 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751345AbWFET50 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jun 2006 15:57:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k55JvB2g006733
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 5 Jun 2006 12:57:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k55JvAof022597;
-	Mon, 5 Jun 2006 12:57:10 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7wb4cmy.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751382AbWFEUCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Jun 2006 16:02:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWFEUCa
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jun 2006 16:02:30 -0400
+Received: from 241.37.26.69.virtela.net ([69.26.37.241]:27409 "EHLO
+	teapot.corp.reactrix.com") by vger.kernel.org with ESMTP
+	id S1751382AbWFEUCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jun 2006 16:02:30 -0400
+Received: from teapot.corp.reactrix.com (localhost.localdomain [127.0.0.1])
+	by teapot.corp.reactrix.com (8.12.11/8.12.11) with ESMTP id k55K2TmZ009367
+	for <git@vger.kernel.org>; Mon, 5 Jun 2006 13:02:29 -0700
+Received: (from nickh@localhost)
+	by teapot.corp.reactrix.com (8.12.11/8.12.11/Submit) id k55K2TcF009365
+	for git@vger.kernel.org; Mon, 5 Jun 2006 13:02:29 -0700
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21334>
 
+git-http-push does not currently use packs to transfer objects.
 
+Signed-off-by: Nick Hengeveld <nickh@reactrix.com>
+---
+ builtin-push.c |   20 +++++++++++---------
+ 1 files changed, 11 insertions(+), 9 deletions(-)
 
-On Mon, 5 Jun 2006, Junio C Hamano wrote:
-> 
-> IIRC, sometimes this function is called with path and name split
-> and sometimes with full path in name
-
-Yeah, I was pretty confused by the whole hashing thing. Are you sure that 
-complexity is needed, it seems a bit overkill.
-
-		Linus
+diff --git a/builtin-push.c b/builtin-push.c
+index e530022..66b9407 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -214,7 +214,7 @@ static int do_push(const char *repo)
+ {
+ 	const char *uri[MAX_URI];
+ 	int i, n;
+-	int remote;
++	int common_argc;
+ 	const char **argv;
+ 	int argc;
+ 
+@@ -231,23 +231,25 @@ static int do_push(const char *repo)
+ 		argv[argc++] = "--force";
+ 	if (execute)
+ 		argv[argc++] = execute;
+-	if (thin)
+-		argv[argc++] = "--thin";
+-	remote = argc;
+-	argv[argc++] = "dummy-remote";
+-	while (refspec_nr--)
+-		argv[argc++] = *refspec++;
+-	argv[argc] = NULL;
++	common_argc = argc;
+ 
+ 	for (i = 0; i < n; i++) {
+ 		int error;
++		int dest_argc = common_argc;
++		int dest_refspec_nr = refspec_nr;
++		const char **dest_refspec = refspec;
+ 		const char *dest = uri[i];
+ 		const char *sender = "git-send-pack";
+ 		if (!strncmp(dest, "http://", 7) ||
+ 		    !strncmp(dest, "https://", 8))
+ 			sender = "git-http-push";
++		else if (thin)
++			argv[dest_argc++] = "--thin";
+ 		argv[0] = sender;
+-		argv[remote] = dest;
++		argv[dest_argc++] = dest;
++		while (dest_refspec_nr--)
++			argv[dest_argc++] = *dest_refspec++;
++		argv[dest_argc] = NULL;
+ 		error = run_command_v(argc, argv);
+ 		if (!error)
+ 			continue;
+-- 
+1.3.3.g423a-dirty
