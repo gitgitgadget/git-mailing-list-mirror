@@ -1,75 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Gitk feature - show nearby tags
-Date: Sun, 04 Jun 2006 18:37:10 -0700
-Message-ID: <7v3bek7589.fsf@assigned-by-dhcp.cox.net>
-References: <17537.22675.678700.118093@cargo.ozlabs.ibm.com>
-	<7vslmm8rcd.fsf@assigned-by-dhcp.cox.net>
-	<20060603151240.GA4024@diku.dk>
-	<7vejy48wp5.fsf@assigned-by-dhcp.cox.net>
-	<20060605000423.GA29521@diku.dk>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: irc usage..
+Date: Mon, 5 Jun 2006 14:06:59 +1200
+Message-ID: <46a038f90606041906k66d85152v6e402c65151d7ab8@mail.gmail.com>
+References: <Pine.LNX.4.64.0605201016090.10823@g5.osdl.org>
+	 <Pine.LNX.4.64.0605301604130.24646@g5.osdl.org>
+	 <46a038f90605301804u3beabf4ct97c8a0ea6ef7b995@mail.gmail.com>
+	 <447D043D.1020609@gentoo.org>
+	 <46a038f90605302305g7a969a62r277af1724b912069@mail.gmail.com>
+	 <447DA028.3040606@gentoo.org>
+	 <46a038f90605311503o1526c664qe61b0f3f40929b92@mail.gmail.com>
+	 <447E4611.7000309@gentoo.org>
+	 <46a038f90606010047r676840d2nd91ad2361abbe1c8@mail.gmail.com>
+	 <44837BDB.2090601@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 05 03:37:21 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Donnie Berkholz" <spyderous@gentoo.org>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Yann Dirson" <ydirson@altern.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Matthias Urlichs" <smurf@smurf.noris.de>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 05 04:07:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fn41t-00030F-HL
-	for gcvg-git@gmane.org; Mon, 05 Jun 2006 03:37:17 +0200
+	id 1Fn4Uq-0000Zt-GJ
+	for gcvg-git@gmane.org; Mon, 05 Jun 2006 04:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932375AbWFEBhO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 4 Jun 2006 21:37:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932377AbWFEBhN
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 21:37:13 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:15592 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932375AbWFEBhM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jun 2006 21:37:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060605013711.PVSD5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 4 Jun 2006 21:37:11 -0400
-To: Jonas Fonseca <fonseca@diku.dk>
-In-Reply-To: <20060605000423.GA29521@diku.dk> (Jonas Fonseca's message of
-	"Mon, 5 Jun 2006 02:04:23 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932379AbWFECHB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Jun 2006 22:07:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbWFECHB
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jun 2006 22:07:01 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:48144 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932379AbWFECHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jun 2006 22:07:00 -0400
+Received: by wr-out-0506.google.com with SMTP id i22so877894wra
+        for <git@vger.kernel.org>; Sun, 04 Jun 2006 19:06:59 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YZgyZgRC47oF76go9Kcczn76xFwrd1agQNCb1L3aolkv3hn28l7y4P2BIIxGDH2Xz4VX9LeuNuBzxrerkFjP9J8oN8KHuyxVLVp/zOZeX7cD7DO8cJ2DbscFc1U3Ur2f6IGUZq17D1Y9ylDCAT2nFR1wkFMDwcIgzhzK9fldK08=
+Received: by 10.54.94.10 with SMTP id r10mr4457783wrb;
+        Sun, 04 Jun 2006 19:06:59 -0700 (PDT)
+Received: by 10.54.127.12 with HTTP; Sun, 4 Jun 2006 19:06:59 -0700 (PDT)
+To: antarus@gentoo.org
+In-Reply-To: <44837BDB.2090601@gentoo.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21304>
 
-Jonas Fonseca <fonseca@diku.dk> writes:
+On 6/5/06, Alec Warner <antarus@gentoo.org> wrote:
+> Ok the box this was running on had issues, so I switched to using
+> pearl.amd64.dev.gentoo.org, a dual core amd64 X2 4600+ with 4 gigs of
+> ram and plenty of disk.  The "problem" now is just converstion time...30
+> hours and I'm into 2004-09-17...but it's been in 2004 all day, seems
+> like most of the commits are in the last three years.  Are there
+> architectural issues with doing this in parallel?
 
->>     - I want to see the neighbouring commits, but UP or DOWN
->>       does not do what I na=EFvely expect.  It scrolls the lower
->>       pane.  I say TAB to go up.
->
-> I wonder what tig version you are using. If you are using the tig
-> version from my git repo this should also be working to your
-> expectation, making ...
+I don't think you can do this in parallel. What I would do is remove
+the -a from the git-repack invocation. It does hurt import times quite
+a bit -- just do a git-repack -a -d when it's done.
 
-Whichever was the latest when I wrote the message.  I see you
-have added a handful commits on it since then.
+And... having said that, there is still a memory leak somehow,
+somewhere. It's been evading me for 2 weeks now, so I feel an idiot
+now. Not too bad in general, but it shows clearly in the gentoo and
+mozilla imports.
 
->>     - Press UP or DOWN and I can move the highlight to
->>       neighbouring commits.  This is wonderful, but the lower
->>       pane does not follow this -- it keeps showing the original
->>       commit, and I have to say ENTER again.
->
-> .. this unnecessary.
+> Since the repository commits are all in cvs, it should be possible to do
+> the work in parallel, since you know what all the commits touch.  The
+> concern would be ordering of nodes in the tree; you'd end up building a
+> bunch of subtrees and patching them together?
 
-Maybe I am misusing it then.
+Well... parsecvs does a bit of this but in sequential fashion... it
+imports all the files first, and then runs through the history
+building the tree+commits in order, committing them. It saves a lot of
+time in the file imports by parsing the RCS file directly. The
+downside is that it must keep a filename+version=>sha1 mapping --
+which I think is why parsecvs won't fit in memory until it's changed
+to store it on disk somehow ;-)
 
-"full-screen" diff view and being able to do [UP] and [DOWN] to
-move around there do not feel useful to me that much.  It is
-something "git log -p" does already, thanks to its output paged
-via "less" by default.
+You are forced to do it in a sequence because cvsps only tells you
+about the files added/removed/changed in a commit -- you need the
+ancestor to have a view of what the whole tree looked like. The only
+room for parallelism I see is to fork off new processes to work on
+branches in parallel.
 
-I like viewing the list in the upper and diff/log in the lower
-at the same time, and that is the primary reason I liked tig, so
-moving around in the commit list view and not seeing the
-diff/log updated in sync was major dissapointment at least for
-me.
+
+
+martin
