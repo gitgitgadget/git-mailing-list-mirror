@@ -1,62 +1,66 @@
-From: Kenneth Johansson <ken@canit.se>
-Subject: Integrity check
-Date: Wed, 07 Jun 2006 00:46:27 +0200
-Message-ID: <pan.2006.06.06.22.46.26.518589@canit.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Jun 07 00:46:51 2006
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] Cleanup git-send-email.perl:extract_valid_email
+Date: Tue, 06 Jun 2006 18:48:16 -0400
+Message-ID: <200606062248.k56MmGr6008515@laptop11.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: Horst von Brand <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 07 00:48:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnkJx-0007Ah-5Y
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 00:46:45 +0200
+	id 1FnkLa-0007TV-S8
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 00:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751136AbWFFWql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 18:46:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWFFWql
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 18:46:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:20404 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751136AbWFFWqk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 18:46:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FnkJj-00077d-Ev
-	for git@vger.kernel.org; Wed, 07 Jun 2006 00:46:31 +0200
-Received: from 1-1-4-20a.ras.sth.bostream.se ([82.182.72.90])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Jun 2006 00:46:31 +0200
-Received: from ken by 1-1-4-20a.ras.sth.bostream.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Jun 2006 00:46:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 1-1-4-20a.ras.sth.bostream.se
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table (Debian GNU/Linux))
+	id S1751269AbWFFWsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 18:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbWFFWsY
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 18:48:24 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:49101 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1751269AbWFFWsX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 18:48:23 -0400
+Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k56MmH6L032297
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Jun 2006 18:48:18 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k56MmGr6008515;
+	Tue, 6 Jun 2006 18:48:17 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Tue, 06 Jun 2006 14:39:06 MST." <7vlksanev9.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 19)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 06 Jun 2006 18:48:18 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21410>
 
-Iwas doing a git pull that ended badly and I thought that just redoing the
-command may help but then git thinks everything is just fine.
+Junio C Hamano <junkio@cox.net> wrote:
+> Horst von Brand <vonbrand@inf.utfsm.cl> writes:
+> >> > OK, but be careful as this (?:...) is an extended regexp (needs /x on
+> >> > match).
+> >
+> >> Are you sure about /x?
+> >
+> > The manual (perlop(1)) says you need /x to match extended regexps, and
+> > (?...) is the marker for such (perlre(1)).
 
-After a few failed attempts I still have not find a good way to make sure
-that everything is indeed correct. What is the suggested commands to do
-that ?
+> I always had the impression that eXtended in the context to talk
+> about /x was about ignoring whitespaces and forcing people to
+> write \s (or perhaps \040) when they mean a whitespace and had
+> nothing to do with (?...) stuff.  Let me look up the fine
+> manual.
 
---------
-Updating from 7705a8792b0fc82fd7d4dd923724606bbfd9fb20 to
-1def630a6a49dda5bc89dfbd86656293640456f0 Checking files out...
- 100% (6311/6311) done
-Fast forward
-*** glibc detected *** malloc(): memory corruption: 0x0a703e80 ***
-/home/ken/bin/git-merge: line 56: 14121 Aborted                
-git-diff-tree -p --stat --summary -M "$head" "$1" 
+You might be right... and it even sounds sensible; but both (?...) stuff
+and the ignoring of space is described as extended here.
 
->git pull
-* refs/heads/origin: same as branch 'master' of
-/delta/kernel/git/linux-2.6/ Already up-to-date.
-[
+Note that \s is a space character (' ', '\t', ...), which is not the same
+as \040 (and that one assumes ASCII...).
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
