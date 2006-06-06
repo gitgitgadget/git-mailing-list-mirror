@@ -1,59 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Integrity check
-Date: Tue, 6 Jun 2006 15:56:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606061553420.5498@g5.osdl.org>
-References: <pan.2006.06.06.22.46.26.518589@canit.se>
- <Pine.LNX.4.64.0606061550100.5498@g5.osdl.org>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: [PATCH] builtin-grep: pass ignore case option to external grep
+Date: Tue, 6 Jun 2006 23:15:16 +0000
+Message-ID: <20060606231516.GA18405@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 07 00:57:12 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jun 07 01:12:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnkU1-0000RK-0l
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 00:57:09 +0200
+	id 1FnkjB-0002kc-Tc
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 01:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296AbWFFW5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 18:57:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbWFFW5E
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 18:57:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33956 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751296AbWFFW5D (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 18:57:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k56Muw2g022881
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 6 Jun 2006 15:56:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k56MuwVx005033;
-	Tue, 6 Jun 2006 15:56:58 -0700
-To: Kenneth Johansson <ken@canit.se>
-In-Reply-To: <Pine.LNX.4.64.0606061550100.5498@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751334AbWFFXMr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 19:12:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbWFFXMr
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 19:12:47 -0400
+Received: from igraine.blacknight.ie ([217.114.173.147]:51623 "EHLO
+	igraine.blacknight.ie") by vger.kernel.org with ESMTP
+	id S1751334AbWFFXMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 19:12:46 -0400
+Received: from [193.203.134.52] (helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.42)
+	id 1Fnkir-0007VP-HI
+	for git@vger.kernel.org; Wed, 07 Jun 2006 00:12:29 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam, SpamAssassin (score=0,
+	required 7.5)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21413>
 
+Don't just read the --ignore-case/-i option, pass the flag on to the
+external grep program.
 
+Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
+---
+ builtin-grep.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-On Tue, 6 Jun 2006, Linus Torvalds wrote:
-> 
-> In the future, just do "git fsck-objects --full" if you're nervous. That 
-> will do a full integrity check.
-
-Btw, this can output some scary-sounding "unreachable commit xxxxxx" 
-messages or similar, without that actually necessarily being a problem at 
-all. Unreachable objects are normal if you've deleted branches, for 
-example, or if you rebase (or your upstream rebases, like the "pu" branch 
-in the git archive). 
-
-So if you just see a few unreachable objects, doing a "git prune" will get 
-rid of them, and they aren't normally any sign of actual trouble.
-
-		Linus
+diff --git a/builtin-grep.c b/builtin-grep.c
+index acc4eea..5fac570 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -459,6 +459,8 @@ static int external_grep(struct grep_opt
+ 		push_arg("-n");
+ 	if (opt->regflags & REG_EXTENDED)
+ 		push_arg("-E");
++	if (opt->regflags & REG_ICASE)
++		push_arg("-i");
+ 	if (opt->word_regexp)
+ 		push_arg("-w");
+ 	if (opt->name_only)
+-- 
+1.3.3.g16a4-dirty
