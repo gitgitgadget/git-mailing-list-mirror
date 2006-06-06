@@ -1,67 +1,56 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH][gitweb] Make it possible to retrieve HEAD plain blob
-Date: Tue, 6 Jun 2006 22:57:37 +0200
-Message-ID: <20060606205737.GX10488@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH][gitweb] Make it possible to retrieve HEAD plain blob
+Date: Tue, 06 Jun 2006 23:20:05 +0200
+Organization: At home
+Message-ID: <e64rhu$i7n$1@sea.gmane.org>
+References: <20060606205737.GX10488@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 06 22:58:45 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jun 06 23:20:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fnicf-00049m-LO
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 22:57:58 +0200
+	id 1FniyO-00007s-It
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 23:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751083AbWFFU5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 16:57:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbWFFU5b
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 16:57:31 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10123 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751083AbWFFU5a (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 16:57:30 -0400
-Received: (qmail 5205 invoked by uid 2001); 6 Jun 2006 22:57:37 +0200
-To: kay.sievers@vrfy.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751096AbWFFVUU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 17:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbWFFVUU
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 17:20:20 -0400
+Received: from main.gmane.org ([80.91.229.2]:16291 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751096AbWFFVUT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 17:20:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FniyB-00005T-7M
+	for git@vger.kernel.org; Tue, 06 Jun 2006 23:20:11 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Jun 2006 23:20:11 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Jun 2006 23:20:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21401>
 
-Sometimes, it is useful to be able to link directly to the blob plain
-version in the latest tree. This patch implements that.
+Petr Baudis wrote:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+> Sometimes, it is useful to be able to link directly to the blob plain
+> version in the latest tree. This patch implements that.
 
-diff --git a/gitweb.cgi b/gitweb.cgi
-index ea21fbe..abaf6ce 100755
---- a/gitweb.cgi
-+++ b/gitweb.cgi
-@@ -1376,7 +1376,8 @@ sub git_blob {
- 		      " | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$co{'tree'};hb=$hash_base")}, "tree") . "<br/>\n";
- 		if (defined $file_name) {
- 			print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob_plain;h=$hash;f=$file_name")}, "plain") .
--			" | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob;hb=HEAD;f=$file_name")}, "head") . "<br/>\n";
-+			" | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob;hb=HEAD;f=$file_name")}, "head") .
-+			" (" . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob_plain;hb=HEAD;f=$file_name")}, "plain") . ")<br/>\n";
- 		} else {
- 			print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob_plain;h=$hash")}, "plain") . "<br/>\n";
- 		}
-@@ -1414,6 +1415,10 @@ sub git_blob_plain {
- 	my $save_as = "$hash.txt";
- 	if (defined $file_name) {
- 		$save_as = $file_name;
-+		if (!defined $hash) {
-+			my $base = $hash_base || git_read_head($project);
-+			$hash = git_get_hash_by_path($base, $file_name, "blob") || die_error(undef, "Error lookup file.");
-+		}
- 	}
- 	print $cgi->header(-type => "text/plain", -charset => 'utf-8', '-content-disposition' => "inline; filename=\"$save_as\"");
- 	open my $fd, "-|", "$gitbin/git-cat-file blob $hash" or return;
+By the way, how to download binary file, like for example image, via gitweb?
+blob_plain doesn't give correct file after Save As (in the case of image,
+it is not recognized as such)...
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+Jakub Narebski
+Warsaw, Poland
