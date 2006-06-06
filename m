@@ -1,92 +1,68 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: What's in git.git (part #2)
-Date: Tue, 6 Jun 2006 01:39:05 -0400
-Message-ID: <20060606053905.GA9797@spearce.org>
-References: <7v64jli66m.fsf@assigned-by-dhcp.cox.net> <20060602023545.GA5039@spearce.org> <7v3beodpqs.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Importing Mozilla CVS into git
+Date: Tue, 6 Jun 2006 17:55:08 +1200
+Message-ID: <46a038f90606052255s62cda81bt62d7442beb26658a@mail.gmail.com>
+References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
+	 <1149204044.27695.38.camel@neko.keithp.com>
+	 <9e4733910606011755n29a149f2m1409c5a23888f1c5@mail.gmail.com>
+	 <9e4733910606022128h23ff94fbg3fcb4fa191254b5a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 06 07:39:28 2006
+X-From: git-owner@vger.kernel.org Tue Jun 06 07:55:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnUHc-0001vq-6c
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 07:39:17 +0200
+	id 1FnUX6-0004bh-Vq
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 07:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932110AbWFFFjL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 01:39:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932116AbWFFFjL
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 01:39:11 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:27591 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932110AbWFFFjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jun 2006 01:39:10 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FnUHU-0006qK-0E; Tue, 06 Jun 2006 01:39:08 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2D88420FB21; Tue,  6 Jun 2006 01:39:05 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id S932087AbWFFFzL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 01:55:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932117AbWFFFzK
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 01:55:10 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:63277 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932087AbWFFFzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 01:55:09 -0400
+Received: by wr-out-0506.google.com with SMTP id i22so1146442wra
+        for <git@vger.kernel.org>; Mon, 05 Jun 2006 22:55:08 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FNolLt3OrUzNvmkpwqJwlQ/d3o4n2KunXwWPHVXoreFhW25pUVfZT1ir3wJb0VU+H7UPFVFjNPjEdW7lKSi3OlX7ZmkZDba3SNIE9YDQypUHQ6+tfvARw6zuSZ4vdb9UGg9tfvR2ZtTsPoe1twHhavD/XW7y7E5U2jFvM8EQTo4=
+Received: by 10.54.148.6 with SMTP id v6mr401884wrd;
+        Mon, 05 Jun 2006 22:55:08 -0700 (PDT)
+Received: by 10.54.127.12 with HTTP; Mon, 5 Jun 2006 22:55:08 -0700 (PDT)
+To: "Jon Smirl" <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910606022128h23ff94fbg3fcb4fa191254b5a@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v3beodpqs.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21363>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> > I find it useful to track what I've sent to you just in case I
-> > screw up some ref somewhere.  I like knowing that if I perform a
-> > bad update-ref call (which I'm prone to do sometimes) that I can
-> > recover quickly as the log exists.
-> 
-> I find it interesting to be able to say:
-> 
-> 	$ git log next@{yesterday}..next
-> 
-> I often find myself getting curious to see:
-> 
-> 	$ git reflog next
->         Wed May 31 14:23:58 2006 -0700
->                 62b693a... Merge branch 'master' into next
->         ...
+On 6/3/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 6/1/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > With the attached patch you can parse the entire Mozilla tree. The
+> > tree has over 100,000 files in it and about 300 branches.
+>
+> I was a little low with these counts, more like 110,000 files and some
+> parts of the tree have 1,000 branches. Total tree size is 3GB.
 
-Hmm, looks like nobody has actually implemented that - at least not
-in 'next'.  :-)
+I don't think it really has that many branches. If I am to believe
+cvsps (which took 3GB to walk the history), it has some branches with
+recursive loops in their ancestry (MANG_MATH_BRANCH and
+SpiderMonkey140_BRANCH have eachother as ancestors!?), 197969 commits
+and 796 branches.
 
-Is that a serious feature request?  If so I'll do it.  BTW: we're
-also still lacking reflog during receive-pack.  Much of the update()
-function in receive-pack.c can be replaced with the new locking
-functions, except that if reflog is enabled on the target ref then
-GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL need to be set for the
-update to succeed.
+This repository has been mangled quite badly. Don't know what you guys
+did with it, but it sure isn't pretty. I'm working on getting
+git-cvsimport to get through a complete import.
 
-I've been busy at work but I really have been wanting to put
-some time into this GIT Eclipse plugin that I've been neglecting.
-Some folks at work are starting to become more interested in it.
-I have gotten the really core functionality done; all that is
-left is the hard stuff (directory synchronization, push, fetch,
-non-delta pack generation for push[1], tree diff).
+cheers,
 
 
-*1* Generating a simple pack with only deflate compression on the
-objects should be trivial.  Since this is 100% pure Java code nobody
-should be expecting great performance out of it from day 1 anyway.
-Sure its not an optimal transport but if you were that worried about
-the transfer byte costs to push then you probably would just prefer
-to use the native tools code tools anyway.
 
--- 
-Shawn.
+martin
