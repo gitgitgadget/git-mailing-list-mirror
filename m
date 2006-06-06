@@ -1,171 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] HTTP cleanup
-Date: Tue, 06 Jun 2006 14:27:36 -0700
-Message-ID: <7v4pyyotyv.fsf@assigned-by-dhcp.cox.net>
-References: <20060606164131.GB3938@reactrix.com>
+From: "Bertrand Jacquin" <beber.mailing@gmail.com>
+Subject: Re: [PATCH][gitweb] Make it possible to retrieve HEAD plain blob
+Date: Tue, 6 Jun 2006 23:31:09 +0200
+Message-ID: <4fb292fa0606061431g2fcc8cdet93685b5a4977c29f@mail.gmail.com>
+References: <20060606205737.GX10488@pasky.or.cz> <e64rhu$i7n$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 06 23:27:44 2006
+X-From: git-owner@vger.kernel.org Tue Jun 06 23:31:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fnj5S-0001Pv-S3
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 23:27:43 +0200
+	id 1Fnj8u-0002BO-Eh
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 23:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbWFFV1k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 17:27:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbWFFV1k
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 17:27:40 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:8838 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751126AbWFFV1j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jun 2006 17:27:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060606212738.JMCP19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Jun 2006 17:27:38 -0400
-To: Nick Hengeveld <nickh@reactrix.com>
-In-Reply-To: <20060606164131.GB3938@reactrix.com> (Nick Hengeveld's message of
-	"Tue, 6 Jun 2006 09:41:32 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751136AbWFFVbL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 17:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbWFFVbL
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 17:31:11 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:35946 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751136AbWFFVbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 17:31:10 -0400
+Received: by nf-out-0910.google.com with SMTP id k27so8235nfc
+        for <git@vger.kernel.org>; Tue, 06 Jun 2006 14:31:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y7LlxHwiQt8wufRcSJ2r2h+WpxktNki06/860gqgFWHKsmODBltfjjzZJx6N1IfUnE7iqksgtbGWtE/o//HMNgMGb7t0t95PlwEnG9GeB9G30ByWxk2M66rsJoWbFmeVXIGrDKwfvwIoGluSjOUPTYUJr9KCc8ZaXThrrSHfnss=
+Received: by 10.48.206.19 with SMTP id d19mr2159nfg;
+        Tue, 06 Jun 2006 14:31:09 -0700 (PDT)
+Received: by 10.49.5.13 with HTTP; Tue, 6 Jun 2006 14:31:09 -0700 (PDT)
+To: "Jakub Narebski" <jnareb@gmail.com>
+In-Reply-To: <e64rhu$i7n$1@sea.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21404>
 
-Thanks.  I think this is needed on top of it.
+On 6/6/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> Petr Baudis wrote:
+>
+> > Sometimes, it is useful to be able to link directly to the blob plain
+> > version in the latest tree. This patch implements that.
+>
+> By the way, how to download binary file, like for example image, via gitweb?
+> blob_plain doesn't give correct file after Save As (in the case of image,
+> it is not recognized as such)...
 
--- >8 --
-[PATCH] HTTP cleanup
+This is also a gitweb fault which always define document as plain-text
+instead of correct MIME.
 
-This ifdef's out more functions that are not used while !USE_MULTI
-in http code.  Also the dependency of http related objects on http.h
-header file was missing in the Makefile.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- Makefile    |    3 ++-
- http-push.c |   70 ++++++++++++++++++++++++++++++-----------------------------
- 2 files changed, 38 insertions(+), 35 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 004c216..f802043 100644
---- a/Makefile
-+++ b/Makefile
-@@ -552,7 +552,7 @@ http.o: http.c
- 	$(CC) -o $*.o -c $(ALL_CFLAGS) -DGIT_USER_AGENT='"git/$(GIT_VERSION)"' $<
- 
- ifdef NO_EXPAT
--http-fetch.o: http-fetch.c
-+http-fetch.o: http-fetch.c http.h
- 	$(CC) -o $*.o -c $(ALL_CFLAGS) -DNO_EXPAT $<
- endif
- 
-@@ -576,6 +576,7 @@ git-ssh-push$X: rsh.o
- 
- git-imap-send$X: imap-send.o $(LIB_FILE)
- 
-+http.o http-fetch.o http-push.o: http.h
- git-http-fetch$X: fetch.o http.o http-fetch.o $(LIB_FILE)
- 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-diff --git a/http-push.c b/http-push.c
-index 40524a8..b39b36b 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -186,6 +186,7 @@ static void process_response(void *callb
- 	finish_request(request);
- }
- 
-+#ifdef USE_CURL_MULTI
- static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
- 			       void *data)
- {
-@@ -349,6 +350,41 @@ static void start_fetch_loose(struct tra
- 	}
- }
- 
-+static void start_mkcol(struct transfer_request *request)
-+{
-+	char *hex = sha1_to_hex(request->obj->sha1);
-+	struct active_request_slot *slot;
-+	char *posn;
-+
-+	request->url = xmalloc(strlen(remote->url) + 13);
-+	strcpy(request->url, remote->url);
-+	posn = request->url + strlen(remote->url);
-+	strcpy(posn, "objects/");
-+	posn += 8;
-+	memcpy(posn, hex, 2);
-+	posn += 2;
-+	strcpy(posn, "/");
-+
-+	slot = get_active_slot();
-+	slot->callback_func = process_response;
-+	slot->callback_data = request;
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1); /* undo PUT setup */
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
-+	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, request->errorstr);
-+	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_MKCOL);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
-+
-+	if (start_active_slot(slot)) {
-+		request->slot = slot;
-+		request->state = RUN_MKCOL;
-+	} else {
-+		request->state = ABORTED;
-+		free(request->url);
-+		request->url = NULL;
-+	}
-+}
-+#endif
-+
- static void start_fetch_packed(struct transfer_request *request)
- {
- 	char *url;
-@@ -438,40 +474,6 @@ static void start_fetch_packed(struct tr
- 	}
- }
- 
--static void start_mkcol(struct transfer_request *request)
--{
--	char *hex = sha1_to_hex(request->obj->sha1);
--	struct active_request_slot *slot;
--	char *posn;
--
--	request->url = xmalloc(strlen(remote->url) + 13);
--	strcpy(request->url, remote->url);
--	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	strcpy(posn, "/");
--
--	slot = get_active_slot();
--	slot->callback_func = process_response;
--	slot->callback_data = request;
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1); /* undo PUT setup */
--	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
--	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, request->errorstr);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_MKCOL);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
--
--	if (start_active_slot(slot)) {
--		request->slot = slot;
--		request->state = RUN_MKCOL;
--	} else {
--		request->state = ABORTED;
--		free(request->url);
--		request->url = NULL;
--	}
--}
--
- static void start_put(struct transfer_request *request)
- {
- 	char *hex = sha1_to_hex(request->obj->sha1);
 -- 
-1.4.0.rc1.g9c41
+# Beber : beber@gna.org
+# IM : beber@jabber.fr
+# http://guybrush.ath.cx, irc://irc.freenode.net/#{e.fr,gentoofr}
