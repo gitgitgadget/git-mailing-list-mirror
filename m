@@ -1,81 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: New release?
-Date: Tue, 6 Jun 2006 10:30:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606061019440.11478@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0606052002530.5498@g5.osdl.org>
- <7vodx6zus2.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [RFC] revision limiter in git-rev-list
+Date: Tue, 6 Jun 2006 10:36:31 +0200
+Message-ID: <e5bfff550606060136l59143ef2mdb9dc68ab78e9ff1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue Jun 06 10:30:36 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Jun 06 10:36:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnWxM-0006Wr-Uz
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 10:30:33 +0200
+	id 1FnX3E-0007SA-Ie
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 10:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148AbWFFIaa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 04:30:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932149AbWFFIa3
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 04:30:29 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:4274 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932148AbWFFIa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jun 2006 04:30:29 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 40554C20;
-	Tue,  6 Jun 2006 10:30:28 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 3327FBF3;
-	Tue,  6 Jun 2006 10:30:28 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 19C13B96;
-	Tue,  6 Jun 2006 10:30:28 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vodx6zus2.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932122AbWFFIgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 04:36:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbWFFIgd
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 04:36:33 -0400
+Received: from qb-out-0506.google.com ([72.14.204.231]:32933 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932122AbWFFIgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 04:36:33 -0400
+Received: by qb-out-0506.google.com with SMTP id e12so106956qba
+        for <git@vger.kernel.org>; Tue, 06 Jun 2006 01:36:32 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=TF88l9Y2TpYOILvk4qgBD5fxRjhE8vPXCgIDulyAL8ZUtbWGIKGKidgZh9R4QXQB7EkKubtd7M4i2zWOc6Ghkgu5VpvnXtTjoQG8aQVIGzIiVColtyT8xdfpDKgEoYm5wnz/R4IEFecIfdjZ20XdjNBgxAIohNZhhSQmTeeAa+M=
+Received: by 10.64.195.9 with SMTP id s9mr4286707qbf;
+        Tue, 06 Jun 2006 01:36:32 -0700 (PDT)
+Received: by 10.65.210.20 with HTTP; Tue, 6 Jun 2006 01:36:31 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21370>
 
-Hi,
+We currently can run something like
 
-On Mon, 5 Jun 2006, Junio C Hamano wrote:
+git-rev-list --topo-order --parents HEAD -- foo1.c  foo2.c foo3.c
 
->          - letting fetch-pack ask for an arbitrary commit object the
->            user obtained out of band (Eric W Biederman) -- waiting for
->            updated patch.  We would need a corresponding one-liner patch
->            to upload-pack when we do this.
-> 
-> This can wait.
+And have in output a list of revisions that modify paths foo1.c,
+foo2.c and foo.3
 
-I think that this could be an important step towards a sensible "shallow 
-clone": we could introduce "remote alternates", where sha1_file 
-transparently loads (and stores) single commit objects and tree objects 
-together with their subtrees and blobs from a remote, if they are not 
-present in the shallow repo yet.
+For each revision we have also the corresponding pseudo-parents,
+i.e. the proper parents chosen among the revisions in output list.
 
-This will be blazingly _slow_, I guess, if one does any such stupid thing 
-as git-fsck-objects... However, it should be fixable (expensive commands, 
-i.e. commands traversing extensive history/object lists, could just barf 
-if the repo is shallow).
+The idea is to extend this behaviour to also commit objects sha.
 
->          - using ~/.gitrc to give a fall-back default when
->            $GIT_DIR/config does not have values.
-> 
-> I suspect this would be more involved than Pasky's initial
-> patch; but it can wait.
+As example, given the following revisions history:
 
-I think that this is quite important for the aliases to be useful. 
-However, it does not blend well with the mmap()ifying of the config 
-reading.
+a
+b-
+| c
+| d
+e
+f
 
-Also, there is the problem of unique keys. You want unique keys to be only 
-unique _per config file_, i.e. the local config can override the user's 
-config. This is probably only relevant for git-repo-config, though.
+We could add a new option --filtered so that
 
-Ciao,
-Dscho
+git-rev-list --topo-order --filtered HEAD -- a d e
+
+Gives the following
+
+a
+b-
+| d
+e
+
+Note that the merge point b has been added implicitly as in path limiter case.
+
+
+This is a powerful and quite general option that can be use for a large
+and interesting number of cases.
+
+1) Get the branch a given <sha> belongs
+
+git-rev-list --topo-order --parents --filtered
+    HEAD -- <sha> branchList[0] branchList[1]... branchList[k-1]
+
+
+where branchList[] is the vector of branches of lenght k
+
+Searched branch is the one where sha appears as one of his parents.
+
+
+
+2) Get nearest previous tag of a given <sha>
+
+
+git-rev-list --topo-order --parents -n1 --filtered
+    <sha> -- <sha> tagList[0] tagList[1]... tagList[n-1]
+
+
+where tagList[] is the vector of tags of lenght n
+
+In output we have only one revision (see option -n1) that is <sha>,
+his parent(s) are the nearest tag(s).
+
+
+3) Get tag/branch history with a sensible graph (using a GUI frontend)
+
+git-rev-list --topo-order --parents --filtered HEAD -- tagList[0] ...
+branchList[n-1]
+
+git-rev-list --topo-order --parents --filtered HEAD -- branchList[0]
+... branchList[n-1]
+
+
+4) Filter/find revisions according to a given search criteria (using a
+GUI frontend)
+
+git-rev-list --topo-order --parents --filtered HEAD -- matchList[0]
+... matchList[n-1]
+
+where matchList[] is the vector of sha's matching a filter criteria and could
+be provided by a GUI frontend that already normally have filter capabilities.
+
+The plus here is to let frontend to draw a sensible graph of the
+resulting revisions.
+
+Probably there are other uses of this option that is very powerful
+because essentially
+it adds topological information to a given set of revisions.
+
+Of course I really ignore any implementation difficult/feasibility issues ;-)
+
+
+Marco
