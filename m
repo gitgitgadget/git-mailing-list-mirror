@@ -1,58 +1,52 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [REGRESSION] Interrupted clone/fetch leaves .lock files around
-Date: Tue, 06 Jun 2006 14:58:46 -0700
-Message-ID: <7v1wu2ndyh.fsf@assigned-by-dhcp.cox.net>
-References: <20060606185148.GA15521@diku.dk>
-	<7vmzcqp0cn.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH][gitweb] Make it possible to retrieve HEAD plain blob
+Date: Tue, 06 Jun 2006 15:05:21 -0700
+Message-ID: <7vwtbulz32.fsf@assigned-by-dhcp.cox.net>
+References: <20060606205737.GX10488@pasky.or.cz> <e64rhu$i7n$1@sea.gmane.org>
+	<4fb292fa0606061431g2fcc8cdet93685b5a4977c29f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 06 23:59:54 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 07 00:05:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnjZl-0007NM-AE
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 23:59:01 +0200
+	id 1Fnjfy-00007P-Cd
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 00:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbWFFV6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 17:58:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbWFFV6s
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 17:58:48 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:32972 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751084AbWFFV6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jun 2006 17:58:47 -0400
+	id S1751189AbWFFWFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 18:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbWFFWFX
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 18:05:23 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:28350 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751189AbWFFWFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 18:05:22 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060606215847.RPPX19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Jun 2006 17:58:47 -0400
-To: Jonas Fonseca <fonseca@diku.dk>
+          id <20060606220522.JNVB27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 6 Jun 2006 18:05:22 -0400
+To: "Bertrand Jacquin" <beber.mailing@gmail.com>
+In-Reply-To: <4fb292fa0606061431g2fcc8cdet93685b5a4977c29f@mail.gmail.com>
+	(Bertrand Jacquin's message of "Tue, 6 Jun 2006 23:31:09 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21407>
 
-Junio C Hamano <junkio@cox.net> writes:
+"Bertrand Jacquin" <beber.mailing@gmail.com> writes:
 
-> Jonas Fonseca <fonseca@diku.dk> writes:
->
->> Below is my feeble attempt at a (tested) fix.
->>
->> diff --git a/fetch.c b/fetch.c
->> index e040ef9..861dc60 100644
->> --- a/fetch.c
->> +++ b/fetch.c
->> @@ -1,3 +1,5 @@
->> +#include <signal.h>
->> +
->>  #include "fetch.h"
->
-> I suspect you could do something similar to what we already do
-> for index updates using atexit().  Let me take a look.
+> This is also a gitweb fault which always define document as plain-text
+> instead of correct MIME.
 
-Indeed it turns out that the signal work Pasky did in index.c is
-exactly suitable for this.  I've pushed out three patches in
-"next" -- a few more eyeballs are appreciated on this one.
+But that is somewhat unfair to blame it for -- we do not store
+what the correct mime-type is for each blob, so gitweb has to
+choose between guessing and getting it wrong, or not guessing
+and havign the browser deal with it.  It chose the latter, which
+is understandably sensible.
+
+Having said that, I would agree it would be very nice if I can
+see t/test4012.png blob in gitweb automagically ;-).
