@@ -1,54 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Cleanup git-send-email.perl:extract_valid_email
-Date: Tue, 06 Jun 2006 14:39:06 -0700
-Message-ID: <7vlksanev9.fsf@assigned-by-dhcp.cox.net>
-References: <junkio@cox.net>
-	<200606062124.k56LOroI007738@laptop11.inf.utfsm.cl>
+Subject: Re: [REGRESSION] Interrupted clone/fetch leaves .lock files around
+Date: Tue, 06 Jun 2006 14:58:46 -0700
+Message-ID: <7v1wu2ndyh.fsf@assigned-by-dhcp.cox.net>
+References: <20060606185148.GA15521@diku.dk>
+	<7vmzcqp0cn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 06 23:39:24 2006
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 06 23:59:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnjGc-0003fX-N3
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 23:39:15 +0200
+	id 1FnjZl-0007NM-AE
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 23:59:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140AbWFFVjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 17:39:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWFFVjL
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 17:39:11 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:49544 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750956AbWFFVjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jun 2006 17:39:10 -0400
+	id S1751084AbWFFV6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 17:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbWFFV6s
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 17:58:48 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:32972 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751084AbWFFV6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 17:58:47 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060606213908.IBRC27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Jun 2006 17:39:08 -0400
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-In-Reply-To: <200606062124.k56LOroI007738@laptop11.inf.utfsm.cl> (Horst von
-	Brand's message of "Tue, 06 Jun 2006 17:24:53 -0400")
+          id <20060606215847.RPPX19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 6 Jun 2006 17:58:47 -0400
+To: Jonas Fonseca <fonseca@diku.dk>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21406>
 
-Horst von Brand <vonbrand@inf.utfsm.cl> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
->> > OK, but be careful as this (?:...) is an extended regexp (needs /x on
->> > match).
+> Jonas Fonseca <fonseca@diku.dk> writes:
 >
->> Are you sure about /x?
+>> Below is my feeble attempt at a (tested) fix.
+>>
+>> diff --git a/fetch.c b/fetch.c
+>> index e040ef9..861dc60 100644
+>> --- a/fetch.c
+>> +++ b/fetch.c
+>> @@ -1,3 +1,5 @@
+>> +#include <signal.h>
+>> +
+>>  #include "fetch.h"
 >
-> The manual (perlop(1)) says you need /x to match extended regexps, and
-> (?...) is the marker for such (perlre(1)).
+> I suspect you could do something similar to what we already do
+> for index updates using atexit().  Let me take a look.
 
-I always had the impression that eXtended in the context to talk
-about /x was about ignoring whitespaces and forcing people to
-write \s (or perhaps \040) when they mean a whitespace and had
-nothing to do with (?...) stuff.  Let me look up the fine
-manual.
+Indeed it turns out that the signal work Pasky did in index.c is
+exactly suitable for this.  I've pushed out three patches in
+"next" -- a few more eyeballs are appreciated on this one.
