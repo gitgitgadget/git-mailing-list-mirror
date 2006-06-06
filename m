@@ -1,75 +1,67 @@
-From: "Stella David" <meredithhrgxfkw@elsevierhealth.com>
-Subject: Want a way to lower your payments?
-Date: Tue, 6 Jun 2006 20:30:23 +0000
-Message-ID: <16b601c689a8$0972fe40$6901a8c0@lucile>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH][gitweb] Make it possible to retrieve HEAD plain blob
+Date: Tue, 6 Jun 2006 22:57:37 +0200
+Message-ID: <20060606205737.GX10488@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-     format=flowed;
-     charset="iso-8859-1";
-     reply-type=original
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 06 22:30:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 06 22:58:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FniC5-0007RQ-5z
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 22:30:29 +0200
+	id 1Fnicf-00049m-LO
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 22:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952AbWFFUa0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 16:30:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbWFFUa0
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 16:30:26 -0400
-Received: from mol67-1-82-227-58-94.fbx.proxad.net ([82.227.58.94]:5646 "EHLO
-	lucile.elsevierhealth.com") by vger.kernel.org with ESMTP
-	id S1750952AbWFFUaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jun 2006 16:30:25 -0400
-Received: from backpack ( [172.16.132.113)
-     by 10.131.111.144 with ESMTP id PGscyiM.2006.05.97.JN;
-     Tue, 6 Jun 2006 21:30:23 +0000
-To: <git@vger.kernel.org>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.2869
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2869
+	id S1751083AbWFFU5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 16:57:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbWFFU5b
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 16:57:31 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:10123 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751083AbWFFU5a (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 16:57:30 -0400
+Received: (qmail 5205 invoked by uid 2001); 6 Jun 2006 22:57:37 +0200
+To: kay.sievers@vrfy.org
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.4 points;
- *  0.1 RCVD_BY_IP Received by mail server with no name
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  0.3 RCVD_IN_SORBS_SOCKS RBL: SORBS: sender is open SOCKS proxy server
- *      [82.227.58.94 listed in dnsbl.sorbs.net]
- *  0.4 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
- *      [82.227.58.94 listed in combined.njabl.org]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: newgunforsalejoke.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: newgunforsalejoke.com blessthathomepleasee.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: newgunforsalejoke.com blessthathomepleasee.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: newgunforsalejoke.com blessthathomepleasee.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: newgunforsalejoke.com blessthathomepleasee.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: newgunforsalejoke.com blessthathomepleasee.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21400>
 
-Life Should be Full of Luxuries....
+Sometimes, it is useful to be able to link directly to the blob plain
+version in the latest tree. This patch implements that.
 
-http://newgunforsalejoke.com/
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 
-Yet, only a handful of people can afford the finest products, the luxuries of the elite.
-But, here at "Luxury Replica" we are committed to bringing you the finest products, at prices incomparably lower.
-All of the top designer brands for Watches, Ties, Handbags and even Mont Blanc.
+diff --git a/gitweb.cgi b/gitweb.cgi
+index ea21fbe..abaf6ce 100755
+--- a/gitweb.cgi
++++ b/gitweb.cgi
+@@ -1376,7 +1376,8 @@ sub git_blob {
+ 		      " | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$co{'tree'};hb=$hash_base")}, "tree") . "<br/>\n";
+ 		if (defined $file_name) {
+ 			print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob_plain;h=$hash;f=$file_name")}, "plain") .
+-			" | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob;hb=HEAD;f=$file_name")}, "head") . "<br/>\n";
++			" | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob;hb=HEAD;f=$file_name")}, "head") .
++			" (" . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob_plain;hb=HEAD;f=$file_name")}, "plain") . ")<br/>\n";
+ 		} else {
+ 			print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob_plain;h=$hash")}, "plain") . "<br/>\n";
+ 		}
+@@ -1414,6 +1415,10 @@ sub git_blob_plain {
+ 	my $save_as = "$hash.txt";
+ 	if (defined $file_name) {
+ 		$save_as = $file_name;
++		if (!defined $hash) {
++			my $base = $hash_base || git_read_head($project);
++			$hash = git_get_hash_by_path($base, $file_name, "blob") || die_error(undef, "Error lookup file.");
++		}
+ 	}
+ 	print $cgi->header(-type => "text/plain", -charset => 'utf-8', '-content-disposition' => "inline; filename=\"$save_as\"");
+ 	open my $fd, "-|", "$gitbin/git-cat-file blob $hash" or return;
 
-http://blessthathomepleasee.com/
-
-The finest of products, at the lowest of prices, only a click away:
-
-http://blessthathomepleasee.com/
-
-Regards,
-Stella David
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
