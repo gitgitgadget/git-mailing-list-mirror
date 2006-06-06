@@ -1,92 +1,65 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: [PATCH] Cleanup git-send-email.perl:extract_valid_email
-Date: Tue, 06 Jun 2006 12:05:42 -0400
-Message-ID: <200606061605.k56G5gHo006581@laptop11.inf.utfsm.cl>
-References: <junkio@cox.net>
-Cc: Horst von Brand <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 06 18:06:30 2006
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: New release?
+Date: Tue, 06 Jun 2006 11:08:20 -0500
+Message-ID: <1149610100.23938.75.camel@cashmere.sps.mot.com>
+References: <Pine.LNX.4.64.0606052002530.5498@g5.osdl.org>
+	 <7vodx6zus2.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Jun 06 18:12:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fne4M-0003Cy-52
-	for gcvg-git@gmane.org; Tue, 06 Jun 2006 18:06:15 +0200
+	id 1FneAf-0004aZ-HJ
+	for gcvg-git@gmane.org; Tue, 06 Jun 2006 18:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750939AbWFFQGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 12:06:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbWFFQGK
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 12:06:10 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:34200 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1750939AbWFFQGJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 12:06:09 -0400
-Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192] (may be forged))
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k56G5hsN023119
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 Jun 2006 12:05:46 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k56G5gHo006581;
-	Tue, 6 Jun 2006 12:05:42 -0400
+	id S1751142AbWFFQMm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 12:12:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbWFFQMm
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 12:12:42 -0400
+Received: from az33egw02.freescale.net ([192.88.158.103]:33929 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1751142AbWFFQMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jun 2006 12:12:42 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k56GSqc9004550;
+	Tue, 6 Jun 2006 09:28:52 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k56GC8p0012653;
+	Tue, 6 Jun 2006 11:12:09 -0500 (CDT)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Tue, 06 Jun 2006 08:54:17 MST." <7vpshmth3q.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 19)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 06 Jun 2006 12:05:46 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+In-Reply-To: <7vodx6zus2.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21385>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Horst von Brand <vonbrand@inf.utfsm.cl> writes:
-> 
-> >> diff --git a/git-send-email.perl b/git-send-email.perl
-> >> index a7a7797..700d0c3 100755
-> >> --- a/git-send-email.perl
-> >> +++ b/git-send-email.perl
-> >> @@ -312,16 +312,18 @@ our ($message_id, $cc, %mail, $subject, 
-> >>  
-> >>  sub extract_valid_address {
-> >>  	my $address = shift;
-> >> +	my $local_part_regexp = '[^<>"\s@]+';
-> >> +	my $domain_regexp = '[^.<>"\s@]+\.[^<>"\s@]+';
-> >
-> > This forces a '.' in the domain, while vonbrand@localhost is perfectly
-> > reasonable. Plus it doesn't disallow adyacent '.'s. What about:
-> >
-> >         my $domain_regexp = '[^.<>"\s@]+(\.[^<>"\s@]+)*';
-> >
-> > (but this is probably nitpicking...)
-> 
-> I do not have preference either way about allowing an address
-> like tld-administrator@net myself, but Email::Valid->address
-> does not seem to allow it, and I just copied that behaviour for
-> consistency between two alternative implementations.
+On Tue, 2006-06-06 at 01:02, Junio C Hamano wrote:
+> The "next" queue has been shrinking, and nothing is going to
+> "maint" branch, which can mean only one thing ;-).
 
-Reasonable.
+Junio,
 
-> I think you meant to say:
-> 
-> >         my $domain_regexp = '[^.<>"\s@]+(\.[^.<>"\s@]+)*';
-> 
-> (i.e. exclude dot from the latter character class),
+If possible, I'd like to consider my (Linus') notion
+of the extension to the git protocol supplying the client
+hostname as part of a "standard" release like 1.4.0.
 
-Right, my bad.
+We don't necessarily have to agree on how it is used yet,
+but if we can get the protocol enhancement into this
+release, I think it would make for a good "flag day"
+sort of change.
 
->                                                     but I am
-> inclined to do this instead:
-> 
-> 	my $domain_regexp = '[^.<>"\s@]+(?:\.[^.<>"\s@]+)+';
-> 
-> (i.e. still require at least two levels).
+Specifically, I'd like to consider the portion my patch
+that passes "\0HOST=%s\0" along with the git: protocol
+connection.
 
-OK, but be careful as this (?:...) is an extended regexp (needs /x on
-match). I'd just leave it plain (the performance impact shouldn't be
-noticeable). I don't see any use except for $1, so the extra parenthesis
-should be safe.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+Any chance for that?  If you'd like, I work on resubmitting
+just those bits with the connect function refactoring
+that you outlined.
+
+Thanks,
+jdl
