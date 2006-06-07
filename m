@@ -1,55 +1,74 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Off-by-one error in get_path_prefix(), found by
-	Valgrind
-Date: Wed, 07 Jun 2006 14:33:24 -0400
-Message-ID: <1149705204.11931.3.camel@dv>
-References: <20060607170140.13372.64613.stgit@dv.roinet.com>
-	 <20060607180543.GA26638@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 07 20:33:42 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Document git aliases support
+Date: Wed, 07 Jun 2006 20:43:54 +0200
+Message-ID: <20060607184354.31372.41170.stgit@machine.or.cz>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 07 20:44:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fo2qR-0004QR-3j
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 20:33:32 +0200
+	id 1Fo30Q-0006II-28
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 20:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbWFGSd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 14:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbWFGSd2
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 14:33:28 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:56456 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751183AbWFGSd1
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 14:33:27 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Fo2qN-0008UL-1M
-	for git@vger.kernel.org; Wed, 07 Jun 2006 14:33:27 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1Fo2qK-00071r-Mo; Wed, 07 Jun 2006 14:33:24 -0400
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <20060607180543.GA26638@lsrfire.ath.cx>
-X-Mailer: Evolution 2.7.2.1 (2.7.2.1-4) 
+	id S1751218AbWFGSno (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 14:43:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbWFGSno
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 14:43:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48007 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751218AbWFGSnn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 14:43:43 -0400
+Received: (qmail 31389 invoked from network); 7 Jun 2006 20:43:54 +0200
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
+  by localhost with SMTP; 7 Jun 2006 20:43:54 +0200
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21450>
 
-On Wed, 2006-06-07 at 20:05 +0200, Rene Scharfe wrote:
-> Argh, yes.  Thanks, Pavel!
+This patch ports and modifies appropriately the git aliases documentation
+from my patch, shall it rest in peace.
 
-Actually, thanks to Julian Seward for Valgrind.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
->   However, the other branch is incorrect, too:
-> accessing path->buf[path->len] is wrong, even if it's within the buffer.
-> In order to use a length variable to point to the end of some string we
-> need to subtract 1. *sigh*  So, how about this one instead?
+ Documentation/config.txt |    7 +++++++
+ Documentation/git.txt    |    3 +++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
 
-Fine with me.  Thank you for noticing!
-
--- 
-Regards,
-Pavel Roskin
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c861c6c..ad9ec3e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -91,6 +91,13 @@ core.warnAmbiguousRefs::
+ 	If true, git will warn you if the ref name you passed it is ambiguous
+ 	and might match multiple refs in the .git/refs/ tree. True by default.
+ 
++alias.*::
++	Command aliases for the gitlink:git[1] command wrapper - e.g.
++	after defining "alias.last = cat-file commit HEAD", the invocation
++	"git last" is equivalent to "git cat-file commit HEAD". You cannot
++	override even existing command names with aliases. Arguments are
++	split by spaces, the usual shell quoting and escaping is supported.
++
+ apply.whitespace::
+ 	Tells `git-apply` how to handle whitespaces, in the same way
+ 	as the '--whitespace' option. See gitlink:git-apply[1].
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 24ca55d..e474bdf 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -21,6 +21,9 @@ link:everyday.html[Everyday Git] for a u
+ "man git-commandname" for documentation of each command.  CVS users may
+ also want to read link:cvs-migration.html[CVS migration].
+ 
++The COMMAND is either a name of a Git command (see below) or an alias
++as defined in the configuration file (see gitlink:git-repo-config[1]).
++
+ OPTIONS
+ -------
+ --version::
