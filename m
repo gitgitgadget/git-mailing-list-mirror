@@ -1,67 +1,140 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH] Document git-ls-tree --fullname
-Date: Wed, 07 Jun 2006 16:00:58 -0500
-Message-ID: <1149714056.23938.168.camel@cashmere.sps.mot.com>
-References: <20060607194654.GB21448@diku.dk>
-	 <1149710874.23938.162.camel@cashmere.sps.mot.com>
-	 <20060607203434.GA30402@diku.dk>
+From: Francis Daly <francis@daoine.org>
+Subject: [PATCH] git-cvsserver asciidoc formatting tweaks
+Date: Wed, 7 Jun 2006 23:28:34 +0100
+Message-ID: <20060607222834.GW29682@craic.sysops.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 07 23:05:02 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jun 08 00:28:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fo5D4-0008KQ-HM
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 23:05:02 +0200
+	id 1Fo6W1-0006H5-5W
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 00:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932416AbWFGVE7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 17:04:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932420AbWFGVE7
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 17:04:59 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:8610 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S932416AbWFGVE7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jun 2006 17:04:59 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k57LPboZ000675;
-	Wed, 7 Jun 2006 14:25:37 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k57L4rim006744;
-	Wed, 7 Jun 2006 16:04:54 -0500 (CDT)
-To: Jonas Fonseca <fonseca@diku.dk>
-In-Reply-To: <20060607203434.GA30402@diku.dk>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S932441AbWFGW2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 18:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbWFGW2g
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 18:28:36 -0400
+Received: from craic.sysops.org ([217.75.2.2]:31977 "EHLO craic.sysops.org")
+	by vger.kernel.org with ESMTP id S932441AbWFGW2g (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 18:28:36 -0400
+Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
+	by craic.sysops.org (8.13.1/8.12.11) with SMTP id k57MSYKa031856
+	for <git@vger.kernel.org>; Wed, 7 Jun 2006 23:28:34 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Virus-Scanned: ClamAV 0.88/1517/Wed Jun  7 01:05:07 2006 on craic.sysops.org
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.8 required=2.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.5
+X-Spam-Checker-Version: SpamAssassin 3.0.5 (2005-11-28) on craic.sysops.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21462>
 
-On Wed, 2006-06-07 at 15:34, Jonas Fonseca wrote:
-> Jon Loeliger <jdl@freescale.com> wrote Wed, Jun 07, 2006:
-> > On Wed, 2006-06-07 at 14:46, Jonas Fonseca wrote:
-> > 
-> > > +--full-name::
-> > > +	Instead of showing the path names relative the current working
-> >                                                     ^to
-> > > +	directory, show the full path names.
-> > > +
-> > 
-> > *sigh*
-> 
-> I'm deeply sorry. I can't seem to get anything right ...
+No content change here.
 
-Listen.  It's not that bad.  Really.  Put the knife down.
+html output improved. man output changed.
 
-I grew up in a country where I was not a native speaker
-of the local language.  I feel your pain, and I feel Junio's
-pain of not having a language hard wired into your brain.
-And I know typos and lack of sleep and drinking happen... :-)
+Signed-off-by: Francis Daly <francis@daoine.org>
 
-Junio nailed me for bad code just a day or two ago.
+---
 
-It's a collective effort...
+08a466185e9d4ca5eb9914addc17297435d204a0
+ Documentation/git-cvsserver.txt |   49 +++++++++++++++++++++++++--------------
+ 1 files changed, 31 insertions(+), 18 deletions(-)
 
-jdl
+08a466185e9d4ca5eb9914addc17297435d204a0
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 952635d..e328db3 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -36,49 +36,62 @@ INSTALLATION
+ 
+ 1. If you are going to offer anonymous CVS access via pserver, add a line in
+    /etc/inetd.conf like
+-
+++
++--
++------
+    cvspserver stream tcp nowait nobody git-cvsserver pserver
+ 
+-   Note: In some cases, you need to pass the 'pserver' argument twice for
+-   git-cvsserver to see it. So the line would look like
++------
++Note: In some cases, you need to pass the 'pserver' argument twice for
++git-cvsserver to see it. So the line would look like
+ 
++------
+    cvspserver stream tcp nowait nobody git-cvsserver pserver pserver
+ 
+-   No special setup is needed for SSH access, other than having GIT tools
+-   in the PATH. If you have clients that do not accept the CVS_SERVER
+-   env variable, you can rename git-cvsserver to cvs.
+-
++------
++No special setup is needed for SSH access, other than having GIT tools
++in the PATH. If you have clients that do not accept the CVS_SERVER
++env variable, you can rename git-cvsserver to cvs.
++--
+ 2. For each repo that you want accessible from CVS you need to edit config in
+    the repo and add the following section.
+-
+++
++--
++------
+    [gitcvs]
+         enabled=1
+         # optional for debugging
+         logfile=/path/to/logfile
+ 
+-   Note: you need to ensure each user that is going to invoke git-cvsserver has
+-   write access to the log file and to the git repository. When offering anon
+-   access via pserver, this means that the nobody user should have write access
+-   to at least the sqlite database at the root of the repository.
+-
++------
++Note: you need to ensure each user that is going to invoke git-cvsserver has
++write access to the log file and to the git repository. When offering anon
++access via pserver, this means that the nobody user should have write access
++to at least the sqlite database at the root of the repository.
++--
+ 3. On the client machine you need to set the following variables.
+    CVSROOT should be set as per normal, but the directory should point at the
+    appropriate git repo. For example:
+++
++--
++For SSH access, CVS_SERVER should be set to git-cvsserver
+ 
+-   For SSH access, CVS_SERVER should be set to git-cvsserver
+-
+-   Example:
++Example:
+ 
++------
+      export CVSROOT=:ext:user@server:/var/git/project.git
+      export CVS_SERVER=git-cvsserver
+-
++------
++--
+ 4. For SSH clients that will make commits, make sure their .bashrc file
+    sets the GIT_AUTHOR and GIT_COMMITTER variables.
+ 
+ 5. Clients should now be able to check out the project. Use the CVS 'module'
+    name to indicate what GIT 'head' you want to check out. Example:
+-
+++
++------
+      cvs co -d project-master master
++------
+ 
+ Eclipse CVS Client Notes
+ ------------------------
+-- 
+1.3.3.g63df-dirty
+
+-- 
+Francis Daly        francis@daoine.org
