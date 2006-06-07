@@ -1,68 +1,152 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH/RFC] "git --less cmd" to page anywhere
-Date: Tue, 6 Jun 2006 20:21:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606062011030.5498@g5.osdl.org>
-References: <20060604211931.10117.82695.stgit@machine.or.cz> 
- <20060604212050.GV10488@pasky.or.cz>  <Pine.LNX.4.64.0606041621010.5498@g5.osdl.org>
-  <7vodx5n8en.fsf_-_@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0606061703380.5498@g5.osdl.org>
-  <20060607000816.GY10488@pasky.or.cz>  <Pine.LNX.4.64.0606061711000.5498@g5.osdl.org>
- <46a038f90606061929i68073677i686a3c1934ed64b1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 07 05:22:05 2006
+From: Jon Loeliger <jdl@jdl.com>
+Subject: [PATCH] Refactor git_tcp_connect() functions a little.
+Date: Tue, 06 Jun 2006 22:58:41 -0500
+Message-ID: <E1FnpBp-00043u-Uc@jdl.com>
+X-From: git-owner@vger.kernel.org Wed Jun 07 05:58:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FnocG-0005q7-0j
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 05:21:56 +0200
+	id 1FnpBv-0004fW-MV
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 05:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbWFGDVn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Jun 2006 23:21:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbWFGDVm
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 23:21:42 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:13976 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750783AbWFGDVl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 23:21:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k573LV2g002354
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 6 Jun 2006 20:21:32 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k573LUO7013158;
-	Tue, 6 Jun 2006 20:21:31 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90606061929i68073677i686a3c1934ed64b1@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750808AbWFGD6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Jun 2006 23:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbWFGD6o
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jun 2006 23:58:44 -0400
+Received: from colo.jdl.com ([66.118.10.122]:43659 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S1750808AbWFGD6o (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jun 2006 23:58:44 -0400
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1FnpBp-00043u-Uc
+	for git@vger.kernel.org; Tue, 06 Jun 2006 22:58:43 -0500
+To: git@vger.kernel.org
+X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21427>
+
+Add client side sending of "\0host=%s\0" extended
+arg for git native protocol, backwards compatibly.
+
+Signed-off-by: Jon Loeliger <jdl@jdl.com>
+---
+ connect.c |   42 ++++++++++++++++++++++++++++++++----------
+ 1 files changed, 32 insertions(+), 10 deletions(-)
+
+I've tested this against an "old" daemon, and my new daemon
+running on jdl.com that understands the new host=%s parameter.
+Both appear to work still.
+
+However, I don't have a setup to test a proxy connection,
+and I left FIXME: down there asking the question if it is
+even needed in this case as well.  I _think_ so, but I am
+just not sure.  (It should be a straight pass-through to
+another git: native protocol, right?)
+
+And if it is needed there too, do you want to refactor
+these two packet_writes() for commonality again?
 
 
-
-On Wed, 7 Jun 2006, Martin Langhoff wrote:
-> 
-> Why is it not a good default? Unless I expect it to be shorter than
-> the terminal, I always tack "| less" after it. Except when I tack ">
-> foo.patch" and then the auto-pager knows what to do anyway.
-
-I often tack "| less" after it in some situations, but in other situations 
-I _never_ do.
-
-I often use "git diff" as a way to see that my tree is clean. Sure, I 
-could do "git status", but if it's not clean, it's usually something 
-small, so I want to know what I changed last. At that point, a default 
-pager would be very annoying.
-
-The "more" behaviour (which only paginates unto the end) might work for 
-me (ie the "git diff" auto-pager would act like "more" or "less -EX")
-
-I dunno.
-
-		Linus
+diff --git a/connect.c b/connect.c
+index 54f7bf7..3fa890d 100644
+--- a/connect.c
++++ b/connect.c
+@@ -322,7 +322,10 @@ #define STR(s)	STR_(s)
+ 
+ #ifndef NO_IPV6
+ 
+-static int git_tcp_connect(int fd[2], const char *prog, char *host, char *path)
++/*
++ * Returns a connected socket() fd, or else die()s.
++ */
++static int git_tcp_connect_sock(char *host)
+ {
+ 	int sockfd = -1;
+ 	char *colon, *end;
+@@ -356,7 +359,8 @@ static int git_tcp_connect(int fd[2], co
+ 		die("Unable to look up %s (%s)", host, gai_strerror(gai));
+ 
+ 	for (ai0 = ai; ai; ai = ai->ai_next) {
+-		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
++		sockfd = socket(ai->ai_family,
++				ai->ai_socktype, ai->ai_protocol);
+ 		if (sockfd < 0)
+ 			continue;
+ 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+@@ -372,15 +376,15 @@ static int git_tcp_connect(int fd[2], co
+ 	if (sockfd < 0)
+ 		die("unable to connect a socket (%s)", strerror(errno));
+ 
+-	fd[0] = sockfd;
+-	fd[1] = sockfd;
+-	packet_write(sockfd, "%s %s\n", prog, path);
+-	return 0;
++	return sockfd;
+ }
+ 
+ #else /* NO_IPV6 */
+ 
+-static int git_tcp_connect(int fd[2], const char *prog, char *host, char *path)
++/*
++ * Returns a connected socket() fd, or else die()s.
++ */
++static int git_tcp_connect_sock(char *host)
+ {
+ 	int sockfd = -1;
+ 	char *colon, *end;
+@@ -407,7 +411,6 @@ static int git_tcp_connect(int fd[2], co
+ 		port = colon + 1;
+ 	}
+ 
+-
+ 	he = gethostbyname(host);
+ 	if (!he)
+ 		die("Unable to look up %s (%s)", host, hstrerror(h_errno));
+@@ -441,13 +444,29 @@ static int git_tcp_connect(int fd[2], co
+ 	if (sockfd < 0)
+ 		die("unable to connect a socket (%s)", strerror(errno));
+ 
++	return sockfd;
++}
++
++#endif /* NO_IPV6 */
++
++
++static int git_tcp_connect(int fd[2],
++			   const char *prog, char *host, char *path)
++{
++	int sockfd = git_tcp_connect_sock(host);
++
+ 	fd[0] = sockfd;
+ 	fd[1] = sockfd;
+-	packet_write(sockfd, "%s %s\n", prog, path);
++
++	/*
++	 * Separate original protocol components prog and path
++	 * from extended components with a NUL byte.
++	 */
++	packet_write(sockfd, "%s %s%chost=%s%c", prog, path, 0, host, 0);
++
+ 	return 0;
+ }
+ 
+-#endif /* NO_IPV6 */
+ 
+ static char *git_proxy_command = NULL;
+ static const char *rhost_name = NULL;
+@@ -551,7 +570,10 @@ static int git_proxy_connect(int fd[2], 
+ 	fd[1] = pipefd[1][1];
+ 	close(pipefd[0][1]);
+ 	close(pipefd[1][0]);
++
++	/* FIXME: Does this need %chost=%s%c tacked on here too? */
+ 	packet_write(fd[1], "%s %s\n", prog, path);
++
+ 	return pid;
+ }
+ 
+-- 
+1.4.0.rc1.ga6a5-dirty
