@@ -1,34 +1,34 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: [PATCH] Document git aliases support
-Date: Wed, 07 Jun 2006 20:43:54 +0200
-Message-ID: <20060607184354.31372.41170.stgit@machine.or.cz>
+Date: Wed, 07 Jun 2006 20:43:50 +0200
+Message-ID: <20060607184350.31338.46653.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 07 20:44:08 2006
+X-From: git-owner@vger.kernel.org Wed Jun 07 20:44:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fo30Q-0006II-28
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 20:43:50 +0200
+	id 1Fo30J-0006I0-2P
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 20:43:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbWFGSno (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 14:43:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbWFGSno
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 14:43:44 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48007 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751218AbWFGSnn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 14:43:43 -0400
-Received: (qmail 31389 invoked from network); 7 Jun 2006 20:43:54 +0200
+	id S1750708AbWFGSnj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 14:43:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751072AbWFGSnj
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 14:43:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:47239 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750708AbWFGSnj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 14:43:39 -0400
+Received: (qmail 31356 invoked from network); 7 Jun 2006 20:43:50 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 7 Jun 2006 20:43:54 +0200
+  by localhost with SMTP; 7 Jun 2006 20:43:50 +0200
 To: Junio C Hamano <junkio@cox.net>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21451>
 
 This patch ports and modifies appropriately the git aliases documentation
 from my patch, shall it rest in peace.
