@@ -1,68 +1,77 @@
 From: Pavel Roskin <proski@gnu.org>
-Subject: Re: http-fetch segfault fix?
-Date: Wed, 07 Jun 2006 10:29:44 -0400
-Message-ID: <1149690584.19551.2.camel@dv>
-References: <Pine.LNX.4.64.0606052002530.5498@g5.osdl.org>
-	 <7vodx6zus2.fsf@assigned-by-dhcp.cox.net> <1149610759.27253.9.camel@dv>
-	 <20060606164618.GC3938@reactrix.com> <1149619097.25298.6.camel@dv>
-	 <7vlks9le8b.fsf_-_@assigned-by-dhcp.cox.net> <1149658914.5648.5.camel@dv>
-	 <7vhd2xld77.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Importing Mozilla CVS into git
+Date: Wed, 07 Jun 2006 11:21:28 -0400
+Message-ID: <1149693688.3415.6.camel@dv>
+References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
+	 <1149214075.5521.31.camel@neko.keithp.com>
+	 <9e4733910606011936i725e8eb2h8c2357f3688da43e@mail.gmail.com>
+	 <1149219593.5521.34.camel@neko.keithp.com>
+	 <9e4733910606012047h727a25f1vb367c880f8933c4e@mail.gmail.com>
+	 <1149220518.5521.43.camel@neko.keithp.com>
+	 <9e4733910606012100s7ace4721le6fbfbcaadfb6c43@mail.gmail.com>
+	 <20060602041107.GA5429@spearce.org> <1149223164.2443.33.camel@dv>
+	 <9e4733910606012144p5f4fda26sdc2de2cc77b71fe7@mail.gmail.com>
+	 <df0b33100606070202w581ff581i435056f0fbc197f8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Nick Hengeveld <nickh@reactrix.com>
-X-From: git-owner@vger.kernel.org Wed Jun 07 16:30:11 2006
+Cc: Jon Smirl <jonsmirl@gmail.com>, Shawn Pearce <spearce@spearce.org>,
+	Keith Packard <keithp@keithp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 07 17:22:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fnz2k-0006Qn-7u
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 16:29:58 +0200
+	id 1Fnzqq-0000og-8d
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 17:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932230AbWFGO3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 10:29:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWFGO3z
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 10:29:55 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:25511 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932230AbWFGO3y
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 10:29:54 -0400
+	id S932257AbWFGPVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 11:21:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbWFGPVl
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 11:21:41 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:48607 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932257AbWFGPVk
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 11:21:40 -0400
 Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Fnz2d-0007oB-86
-	for git@vger.kernel.org; Wed, 07 Jun 2006 10:29:51 -0400
+	id 1Fnzql-00019s-68
+	for git@vger.kernel.org; Wed, 07 Jun 2006 11:21:39 -0400
 Received: from proski by dv.roinet.com with local (Exim 4.62)
 	(envelope-from <proski@dv.roinet.com>)
-	id 1Fnz2X-00056h-87; Wed, 07 Jun 2006 10:29:45 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vhd2xld77.fsf@assigned-by-dhcp.cox.net>
+	id 1Fnzqa-0002Bg-LE; Wed, 07 Jun 2006 11:21:28 -0400
+To: Igor Bukanov <igor.bukanov@gmail.com>
+In-Reply-To: <df0b33100606070202w581ff581i435056f0fbc197f8@mail.gmail.com>
 X-Mailer: Evolution 2.7.2.1 (2.7.2.1-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21437>
 
-On Tue, 2006-06-06 at 22:58 -0700, Junio C Hamano wrote:
-> Pavel Roskin <proski@gnu.org> writes:
-> 
-> > The Valgrind diagnostics confirms that obj_req->slot is not initialized
-> > (as opposed to being a pointer to a freed area or something else):
+On Wed, 2006-06-07 at 11:02 +0200, Igor Bukanov wrote:
+> On 6/2/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > On 6/2/06, Pavel Roskin <proski@gnu.org> wrote:
+> > > Dependency on Cygwin, Perl and Python is too much.  Windows is becoming
+> > > a legacy system in some circles, and it may run on legacy hardware.  Yet
+> > > it's irreplaceable as a testing platform for many projects.
 > >
-> > ==27182== Conditional jump or move depends on uninitialised value(s)
-> > ==27182==    at 0x4070EA: abort_object_request (http-fetch.c:1059)
-> > ==27182==    by 0x4071CE: fetch_object (http-fetch.c:1078)
-> > ==27182==    by 0x4073EC: fetch (http-fetch.c:1126)
-> > ==27182==    by 0x403125: loop (fetch.c:180)
-> > ==27182==    by 0x403369: pull (fetch.c:248)
-> > ==27182==    by 0x407A13: main (http-fetch.c:1271)
-> >
-> > Line 1059 is:
-> > if (obj_req->slot) {
+> > 80% of Mozilla commiters are running Windows. Some are OS bilingual
+> > but many are not.
 > 
-> Thanks.  That is indeed a very good sign.
+> Mozilla build system on Windows requires Cygwin and there are 198 Perl
+> files in Firefox tree. So it is only Python that can be problematic.
 
-Both git-clone instances (with and without USE_CURL_MULTI) have
-completed successfully on http://www.denx.de/git/linux-2.6-denx.git
+Then maybe the existing 3 python files in git (I'm not counting
+compat/subprocess.py) could be converted to Perl?  Perl would be great
+as the "common denominator" for interpreted languages.
 
-Nick, thank you for fixing this bug!
+Search for "python to perl" translator lead me to Perthon:
+http://perthon.sourceforge.net/
+
+But Perthon needs work.  My attempt to run it on git-p4import.py failed:
+
+$ perl -I `pwd`/lib perthon.pl git-p4import.py 
+Can't coerce array into hash at lib/Perthon/PerthonImpl.pm line 15420.
+
+It may be a fun project for somebody who wants to learn Perl and Python.
 
 -- 
 Regards,
