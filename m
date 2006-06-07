@@ -1,210 +1,69 @@
-From: Francis Daly <francis@daoine.org>
-Subject: [PATCH] Some doc typo fixes
-Date: Wed, 7 Jun 2006 13:56:45 +0100
-Message-ID: <20060607125644.GT29682@craic.sysops.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: http-fetch segfault fix?
+Date: Wed, 07 Jun 2006 10:29:44 -0400
+Message-ID: <1149690584.19551.2.camel@dv>
+References: <Pine.LNX.4.64.0606052002530.5498@g5.osdl.org>
+	 <7vodx6zus2.fsf@assigned-by-dhcp.cox.net> <1149610759.27253.9.camel@dv>
+	 <20060606164618.GC3938@reactrix.com> <1149619097.25298.6.camel@dv>
+	 <7vlks9le8b.fsf_-_@assigned-by-dhcp.cox.net> <1149658914.5648.5.camel@dv>
+	 <7vhd2xld77.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jun 07 14:57:06 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Nick Hengeveld <nickh@reactrix.com>
+X-From: git-owner@vger.kernel.org Wed Jun 07 16:30:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fnxai-0004ba-O5
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 14:56:58 +0200
+	id 1Fnz2k-0006Qn-7u
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 16:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbWFGM4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 08:56:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbWFGM4s
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 08:56:48 -0400
-Received: from craic.sysops.org ([217.75.2.2]:31975 "EHLO craic.sysops.org")
-	by vger.kernel.org with ESMTP id S1750761AbWFGM4s (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 08:56:48 -0400
-Received: from craic.sysops.org (craic.sysops.org [127.0.0.1])
-	by craic.sysops.org (8.13.1/8.12.11) with SMTP id k57Cuj7C030148
-	for <git@vger.kernel.org>; Wed, 7 Jun 2006 13:56:45 +0100
+	id S932230AbWFGO3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 10:29:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWFGO3z
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 10:29:55 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:25511 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932230AbWFGO3y
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 10:29:54 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Fnz2d-0007oB-86
+	for git@vger.kernel.org; Wed, 07 Jun 2006 10:29:51 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Fnz2X-00056h-87; Wed, 07 Jun 2006 10:29:45 -0400
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: ClamAV 0.88/1517/Wed Jun  7 01:05:07 2006 on craic.sysops.org
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.8 required=2.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.5
-X-Spam-Checker-Version: SpamAssassin 3.0.5 (2005-11-28) on craic.sysops.org
+In-Reply-To: <7vhd2xld77.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.7.2.1 (2.7.2.1-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21436>
 
+On Tue, 2006-06-06 at 22:58 -0700, Junio C Hamano wrote:
+> Pavel Roskin <proski@gnu.org> writes:
+> 
+> > The Valgrind diagnostics confirms that obj_req->slot is not initialized
+> > (as opposed to being a pointer to a freed area or something else):
+> >
+> > ==27182== Conditional jump or move depends on uninitialised value(s)
+> > ==27182==    at 0x4070EA: abort_object_request (http-fetch.c:1059)
+> > ==27182==    by 0x4071CE: fetch_object (http-fetch.c:1078)
+> > ==27182==    by 0x4073EC: fetch (http-fetch.c:1126)
+> > ==27182==    by 0x403125: loop (fetch.c:180)
+> > ==27182==    by 0x403369: pull (fetch.c:248)
+> > ==27182==    by 0x407A13: main (http-fetch.c:1271)
+> >
+> > Line 1059 is:
+> > if (obj_req->slot) {
+> 
+> Thanks.  That is indeed a very good sign.
 
-All should be clear enough, except perhaps committish / commitish.
-I just kept the more-used one within the current docs.
+Both git-clone instances (with and without USE_CURL_MULTI) have
+completed successfully on http://www.denx.de/git/linux-2.6-denx.git
 
-Signed-off-by: Francis Daly <francis@daoine.org>
-
-
----
-
-271f459c2fec6898d913bbc040a71be067e0d009
- Documentation/config.txt               |    6 +++---
- Documentation/cvs-migration.txt        |    2 +-
- Documentation/everyday.txt             |    2 +-
- Documentation/git-check-ref-format.txt |    2 +-
- Documentation/git-describe.txt         |    2 +-
- Documentation/git-name-rev.txt         |    2 +-
- Documentation/git-p4import.txt         |    2 +-
- Documentation/git-read-tree.txt        |    2 +-
- Documentation/hooks.txt                |    2 +-
- Documentation/tutorial.txt             |    2 +-
- 10 files changed, 12 insertions(+), 12 deletions(-)
-
-271f459c2fec6898d913bbc040a71be067e0d009
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c861c6c..4ce7867 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -113,12 +113,12 @@ gitcvs.logfile::
- 
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
--	over HTTPS. Can be overriden by the 'GIT_SSL_NO_VERIFY' environment
-+	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
- 	variable.
- 
- http.sslCert::
- 	File containing the SSL certificate when fetching or pushing
--	over HTTPS. Can be overriden by the 'GIT_SSL_CERT' environment
-+	over HTTPS. Can be overridden by the 'GIT_SSL_CERT' environment
- 	variable.
- 
- http.sslKey::
-@@ -133,7 +133,7 @@ http.sslCAInfo::
- 
- http.sslCAPath::
- 	Path containing files with the CA certificates to verify the peer
--	with when fetching or pushing over HTTPS. Can be overriden
-+	with when fetching or pushing over HTTPS. Can be overridden
- 	by the 'GIT_SSL_CAPATH' environment variable.
- 
- http.maxRequests::
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-index 826d089..1fbca83 100644
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -106,7 +106,7 @@ Make sure committers have a umask of at 
- they create are writable and searchable by other group members.
- 
- Suppose this repository is now set up in /pub/repo.git on the host
--foo.com.  Then as an individual commiter you can clone the shared
-+foo.com.  Then as an individual committer you can clone the shared
- repository:
- 
- ------------------------------------------------
-diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
-index 6745ab5..b935c18 100644
---- a/Documentation/everyday.txt
-+++ b/Documentation/everyday.txt
-@@ -45,7 +45,7 @@ Everybody uses these commands to feed an
- 
-   * gitlink:git-fsck-objects[1] to validate the repository.
- 
--  * gitlink:git-prune[1] to garbage collect crufts in the
-+  * gitlink:git-prune[1] to garbage collect cruft in the
-     repository.
- 
-   * gitlink:git-repack[1] to pack loose objects for efficiency.
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index 3ea720d..cb9c162 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -20,7 +20,7 @@ a tag is stored under `$GIT_DIR/refs/tag
- imposes the following rules on how refs are named:
- 
- . It could be named hierarchically (i.e. separated with slash
--  `/`), but each of its component cannot begin with a dot `.`;
-+  `/`), but each of its components cannot begin with a dot `.`;
- 
- . It cannot have two consecutive dots `..` anywhere;
- 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index 7a253ea..7cc14b7 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -21,7 +21,7 @@ object name of the commit.
- OPTIONS
- -------
- <committish>::
--	The object name of the comittish. 
-+	The object name of the committish. 
- 
- --all::
- 	Instead of using only the annotated tags, use any ref
-diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-index ffaa004..39a1434 100644
---- a/Documentation/git-name-rev.txt
-+++ b/Documentation/git-name-rev.txt
-@@ -8,7 +8,7 @@ git-name-rev - Find symbolic names for g
- 
- SYNOPSIS
- --------
--'git-name-rev' [--tags] ( --all | --stdin | <commitish>... )
-+'git-name-rev' [--tags] ( --all | --stdin | <committish>... )
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-p4import.txt b/Documentation/git-p4import.txt
-index b8ff1e9..c198ff2 100644
---- a/Documentation/git-p4import.txt
-+++ b/Documentation/git-p4import.txt
-@@ -128,7 +128,7 @@ Therefore after the import you can use g
- Perforce number, eg. git show p4/327.
- 
- The tag associated with the HEAD commit is also how `git-p4import`
--determines if their are new changes to incrementally import from the
-+determines if there are new changes to incrementally import from the
- Perforce repository.
- 
- If you import from a repository with many thousands of changes
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index 02c7e99..d894f53 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -257,7 +257,7 @@ file that does not match stage 2.
- This is done to prevent you from losing your work-in-progress
- changes, and mixing your random changes in an unrelated merge
- commit.  To illustrate, suppose you start from what has been
--commited last to your repository:
-+committed last to your repository:
- 
- ----------------
- $ JC=`git-rev-parse --verify "HEAD^0"`
-diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
-index e3dde39..898b4aa 100644
---- a/Documentation/hooks.txt
-+++ b/Documentation/hooks.txt
-@@ -100,7 +100,7 @@ update
- This hook is invoked by `git-receive-pack` on the remote repository,
- which is happens when a `git push` is done on a local repository.
- Just before updating the ref on the remote repository, the update hook
--is invoked.  It's exit status determines the success or failure of
-+is invoked.  Its exit status determines the success or failure of
- the ref update.
- 
- The hook executes once for each ref to be updated, and takes
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index db56312..554ee0a 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -357,7 +357,7 @@ names.  For example:
- $ git branch stable v2.5 # start a new branch named "stable" based
- 			 # at v2.5
- $ git reset --hard HEAD^ # reset your current branch and working
--			 # directory its state at HEAD^
-+			 # directory to its state at HEAD^
- -------------------------------------
- 
- Be careful with that last command: in addition to losing any changes
--- 
-1.3.3.g63df-dirty
+Nick, thank you for fixing this bug!
 
 -- 
-Francis Daly        francis@daoine.org
+Regards,
+Pavel Roskin
