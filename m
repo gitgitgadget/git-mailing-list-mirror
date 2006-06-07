@@ -1,9 +1,8 @@
-From: Pavel Roskin <proski@gnu.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Importing Mozilla CVS into git
-Date: Wed, 07 Jun 2006 11:21:28 -0400
-Message-ID: <1149693688.3415.6.camel@dv>
+Date: Wed, 7 Jun 2006 11:30:40 -0400
+Message-ID: <9e4733910606070830g24a08771i1a332552a95283d1@mail.gmail.com>
 References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
-	 <1149214075.5521.31.camel@neko.keithp.com>
 	 <9e4733910606011936i725e8eb2h8c2357f3688da43e@mail.gmail.com>
 	 <1149219593.5521.34.camel@neko.keithp.com>
 	 <9e4733910606012047h727a25f1vb367c880f8933c4e@mail.gmail.com>
@@ -13,40 +12,45 @@ References: <9e4733910606011521n106f8f24s6c7053ce51e3791e@mail.gmail.com>
 	 <9e4733910606012144p5f4fda26sdc2de2cc77b71fe7@mail.gmail.com>
 	 <df0b33100606070202w581ff581i435056f0fbc197f8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jon Smirl <jonsmirl@gmail.com>, Shawn Pearce <spearce@spearce.org>,
-	Keith Packard <keithp@keithp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 07 17:22:00 2006
+Cc: "Pavel Roskin" <proski@gnu.org>,
+	"Shawn Pearce" <spearce@spearce.org>,
+	"Keith Packard" <keithp@keithp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 07 17:31:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fnzqq-0000og-8d
-	for gcvg-git@gmane.org; Wed, 07 Jun 2006 17:21:44 +0200
+	id 1FnzzY-0002V8-Tc
+	for gcvg-git@gmane.org; Wed, 07 Jun 2006 17:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932257AbWFGPVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 11:21:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbWFGPVl
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 11:21:41 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:48607 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932257AbWFGPVk
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Jun 2006 11:21:40 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Fnzql-00019s-68
-	for git@vger.kernel.org; Wed, 07 Jun 2006 11:21:39 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1Fnzqa-0002Bg-LE; Wed, 07 Jun 2006 11:21:28 -0400
-To: Igor Bukanov <igor.bukanov@gmail.com>
+	id S932264AbWFGPam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 11:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932265AbWFGPam
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 11:30:42 -0400
+Received: from nz-out-0102.google.com ([64.233.162.194]:33563 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932264AbWFGPal (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jun 2006 11:30:41 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so231432nze
+        for <git@vger.kernel.org>; Wed, 07 Jun 2006 08:30:40 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h+VOSTcZmEZ9W2fxQCHQTRYdwFtsGHe1g6KmDUCNXzZrY8aWfGG3c0ztp9q0Kv6G1vbO4pcBOJ67Chu0eQ0yMw/djPGQt74t9dbWfVvomvH3TkRrKQ8qZ9NE6Jbe5HphutTrtf2IVgWbxK5DNr3w5umuOD2lqGSwnio8MZQt2mo=
+Received: by 10.37.12.54 with SMTP id p54mr861418nzi;
+        Wed, 07 Jun 2006 08:30:40 -0700 (PDT)
+Received: by 10.36.37.15 with HTTP; Wed, 7 Jun 2006 08:30:40 -0700 (PDT)
+To: "Igor Bukanov" <igor.bukanov@gmail.com>
 In-Reply-To: <df0b33100606070202w581ff581i435056f0fbc197f8@mail.gmail.com>
-X-Mailer: Evolution 2.7.2.1 (2.7.2.1-4) 
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21438>
 
-On Wed, 2006-06-07 at 11:02 +0200, Igor Bukanov wrote:
+On 6/7/06, Igor Bukanov <igor.bukanov@gmail.com> wrote:
 > On 6/2/06, Jon Smirl <jonsmirl@gmail.com> wrote:
 > > On 6/2/06, Pavel Roskin <proski@gnu.org> wrote:
 > > > Dependency on Cygwin, Perl and Python is too much.  Windows is becoming
@@ -55,24 +59,20 @@ On Wed, 2006-06-07 at 11:02 +0200, Igor Bukanov wrote:
 > >
 > > 80% of Mozilla commiters are running Windows. Some are OS bilingual
 > > but many are not.
-> 
+>
 > Mozilla build system on Windows requires Cygwin and there are 198 Perl
 > files in Firefox tree. So it is only Python that can be problematic.
 
-Then maybe the existing 3 python files in git (I'm not counting
-compat/subprocess.py) could be converted to Perl?  Perl would be great
-as the "common denominator" for interpreted languages.
+Other people have sent me mail saying this may not be as big  as
+problem as was thought, only documentation people on WIndows may be an
+issues.
 
-Search for "python to perl" translator lead me to Perthon:
-http://perthon.sourceforge.net/
 
-But Perthon needs work.  My attempt to run it on git-p4import.py failed:
+>
+> Regards, Igor
+>
 
-$ perl -I `pwd`/lib perthon.pl git-p4import.py 
-Can't coerce array into hash at lib/Perthon/PerthonImpl.pm line 15420.
-
-It may be a fun project for somebody who wants to learn Perl and Python.
 
 -- 
-Regards,
-Pavel Roskin
+Jon Smirl
+jonsmirl@gmail.com
