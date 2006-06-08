@@ -1,95 +1,78 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: [PATCH] Document git-clone --use-separate-remote
-Date: Thu, 8 Jun 2006 08:50:09 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060608065009.GA4173@informatik.uni-freiburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Some doc typo fixes
+Date: Thu, 08 Jun 2006 09:22:57 +0200
+Message-ID: <4487D051.6020802@op5.se>
+References: <20060607125644.GT29682@craic.sysops.org> <7v1wu0lxnd.fsf@assigned-by-dhcp.cox.net> <7vwtbshp3d.fsf@assigned-by-dhcp.cox.net> <20060607174614.GU29682@craic.sysops.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 08 08:50:19 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 08 09:23:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoELR-0001gG-AF
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 08:50:17 +0200
+	id 1FoEr8-00079X-G1
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 09:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932538AbWFHGuN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 02:50:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932535AbWFHGuN
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 02:50:13 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:20408 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S932538AbWFHGuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 02:50:11 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1FoELK-00015Z-9C
-	for git@vger.kernel.org; Thu, 08 Jun 2006 08:50:10 +0200
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k586oAr04292
-	for git@vger.kernel.org; Thu, 8 Jun 2006 08:50:10 +0200 (MEST)
-To: git@vger.kernel.org
-Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040523i
+	id S932493AbWFHHW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 03:22:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932525AbWFHHW7
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 03:22:59 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:30340 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932493AbWFHHW6
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 03:22:58 -0400
+Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 720C16BCC0; Thu,  8 Jun 2006 09:22:57 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Francis Daly <francis@daoine.org>
+In-Reply-To: <20060607174614.GU29682@craic.sysops.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21473>
 
-Signed-off-by: Uwe Zeisberger <uzeisberger@io.fsforth.de>
----
- Documentation/git-clone.txt |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+Francis Daly wrote:
+> On Wed, Jun 07, 2006 at 10:07:02AM -0700, Junio C Hamano wrote:
+> 
+>>Junio C Hamano <junkio@cox.net> writes:
+>>
+>>>Francis Daly <francis@daoine.org> writes:
+> 
+> 
+>>>Thanks.  I am not a native, and this is very much appreciated.
+> 
+> 
+> You're welcome.
+> 
+> 
+>>>> . It could be named hierarchically (i.e. separated with slash
+>>>>-  `/`), but each of its component cannot begin with a dot `.`;
+>>>>+  `/`), but each of its components cannot begin with a dot `.`;
+>>>
+>>>I am not sure; ...
+>>
+>>Sheesh, I was reading the diff backwards.  Sorry.
+> 
+> 
+> No worries.  I had a head-scratching moment, and suspect that the whole
+> stanza could be better phrased.  If only there was someone who didn't
+> already know what it means, they could suggest which phrasing makes
+> it clear...
+> 
+> How about rewriting it as
+> 
+> It can include slash `/` for hierarchical (directory) grouping, but no
+> slash-separated component can begin with a dot `.`;
+> 
+> ?
+> 
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 94d9393..7572e4b 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
- 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
--	  <repository> [<directory>]
-+	  [--use-separate-remote] <repository> [<directory>]
- 
- DESCRIPTION
- -----------
-@@ -73,7 +73,7 @@ OPTIONS
- 	files in `<directory>/.git`, make the `<directory>`
- 	itself the `$GIT_DIR`. This implies `-n` option.  When
- 	this option is used, neither the `origin` branch nor the
--	default	`remotes/origin` file is created.
-+	default `remotes/origin` file is created.
- 
- -o <name>::
- 	Instead of using the branch name 'origin' to keep track
-@@ -94,12 +94,17 @@ OPTIONS
- 	if unset the templates are taken from the installation
- 	defined default, typically `/usr/share/git-core/templates`.
- 
-+--use-separate-remote::
-+	Save remotes heads under `$GIT_DIR/remotes/origin/' instead
-+	of `$GIT_DIR/refs/heads/'.  Only the master branch is saved
-+	in the latter.
-+
- <repository>::
- 	The (possibly remote) repository to clone from.  It can
- 	be any URL git-fetch supports.
- 
- <directory>::
--	The name of a new directory to clone into.  The	"humanish"
-+	The name of a new directory to clone into.  The "humanish"
- 	part of the source repository is used if no directory is
- 	explicitly given ("repo" for "/path/to/repo.git" and "foo"
- 	for "host.xz:foo/.git").  Cloning into an existing directory
--- 
-1.3.3.g423a
-
+I like it.
 
 -- 
-Uwe Zeisberger
-
-http://www.google.com/search?q=square+root+of+2
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
