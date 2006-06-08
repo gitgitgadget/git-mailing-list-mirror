@@ -1,79 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] Introduce ~/.gitconfig
-Date: Thu, 8 Jun 2006 14:21:55 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606081415380.26091@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de>
-  <20060608120216.46722.qmail@web25908.mail.ukl.yahoo.com>
- <dbfc82860606080506y52dc2771sbf6c90e7246ca4c9@mail.gmail.com>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: HEAD branch duplicated in remotes/origin
+Date: Thu, 8 Jun 2006 14:33:38 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060608123337.GA12456@informatik.uni-freiburg.de>
+References: <20060608073857.GA5072@informatik.uni-freiburg.de> <7vverc9i4i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sven Ekman <svekman@yahoo.se>, git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jun 08 14:22:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 08 14:33:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoJWY-0000BI-Q7
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 14:22:07 +0200
+	id 1FoJhn-00025P-I3
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 14:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285AbWFHMV6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 08:21:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbWFHMV6
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 08:21:58 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:9127 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751285AbWFHMV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 08:21:57 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 8E03B1426;
-	Thu,  8 Jun 2006 14:21:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 7F0F820BC;
-	Thu,  8 Jun 2006 14:21:56 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 4F5381D4A;
-	Thu,  8 Jun 2006 14:21:56 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Nikolai Weibull <now@bitwi.se>
-In-Reply-To: <dbfc82860606080506y52dc2771sbf6c90e7246ca4c9@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S964778AbWFHMdk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 08:33:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbWFHMdk
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 08:33:40 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:40899 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S1751327AbWFHMdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 08:33:39 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1FoJhi-0006f4-Ey; Thu, 08 Jun 2006 14:33:38 +0200
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k58CXcA13078;
+	Thu, 8 Jun 2006 14:33:38 +0200 (MEST)
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vverc9i4i.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21485>
 
-Hi,
+Hello Junio,
 
-On Thu, 8 Jun 2006, Nikolai Weibull wrote:
-
-> On 6/8/06, Sven Ekman <svekman@yahoo.se> wrote:
-> > <Johannes.Schindelin@gmx.de> skrev:
-> > 
-> > > There are three subjects for discussion:
-> > 
-> > Have you considered making ~/.gitconfig a directory?
-> > Maybe Git wants to store more data later.
+Junio C Hamano wrote:
+> Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
 > 
-> I second that.
+> > when cloning with --use-separate-remote, $GITDIR/remotes/origin contains
+> > two references to refs/heads/master.
+> 
+> Thanks for noticing.
+> 
+> Very lightly tested but I think this should fix it.
+> -- >8 --
+> git-clone: fix duplicated "master" in $GIT_DIR/remotes/origin
+> 
+> Under --use-separate-remote we ended up duplicating the branch
+> remote HEAD pointed at in $GIT_DIR/remotes/origin file.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> diff --git a/git-clone.sh b/git-clone.sh
+> index de59904..64318b4 100755
+> --- a/git-clone.sh
+> +++ b/git-clone.sh
+> @@ -391,11 +391,16 @@ Pull: refs/heads/$head_points_at:$origin
+>  		(cd "$GIT_DIR/$remote_top" && find . -type f -print) |
+>  		while read dotslref
+>  		do
+> -			name=`expr "$dotslref" : './\(.*\)'` &&
+> -			test "$use_separate_remote" = '' && {
+> -				test "$head_points_at" = "$name" ||
+> -				test "$origin" = "$name"
+> -			} ||
+> +			name=`expr "$dotslref" : './\(.*\)'`
+> +			if test "z$head_points_at" = "z$name"
+> +			then
+> +				continue
+> +			fi
+> +			if test "$use_separate_remote" = '' &&
+> +			   test "z$origin" = "z$name"
+> +			then
+> +				continue
+> +			fi
+>  			echo "Pull: refs/heads/${name}:$remote_top/${name}"
+>  		done >>"$GIT_DIR/remotes/$origin" &&
+>  		case "$use_separate_remote" in
+> 
+I wonder if this is easier not to add the other duplicate.  That is let
+this as it is and don't add the head HEAD points at.  Don't know, didn't
+look into it.
 
-I don't. What's wrong with the simple approach of a single config file? 
-You can use a single tool for all the configuration, and do not need to 
-care about anything.
+Moreover, is it sound to error if a Pull: line is duplicated?  In my
+eyes at least the error message is wrong/missleading.  Otherwise the
+patch works for me, but probably I only did the same testing as you.
 
-After all, it is about _configuration_, not data storing. That is what 
-$GIT_DIR/objects is for.
+Best regards
+Uwe
 
-> And it'd be nice if it was configurable through an environment variable, 
-> e.g., GIT_USER_CONFIG_HOME.
+-- 
+Uwe Zeisberger
 
-<sarcasm ignore=if-possible>
-Let's see. AFAIK all programs I know (including cvs and vim, for 
-one) have a fixed name. Hmm. Perhaps this is for a reason? Like, to reduce 
-confusion?
-
-Alternatively, we could introduce a config variable "core.globalConfig" to 
-see where the global config is.
-</sarcasm>
-
-Ciao,
-Dscho
+cal 9 1752 | grep 10
