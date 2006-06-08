@@ -1,72 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Sean <seanlkml@sympatico.ca>
 Subject: Re: [PATCH 2/2] repo-config: learn the flag "--no-local"
-Date: Thu, 08 Jun 2006 09:25:53 -0700
-Message-ID: <7v1wtzaa26.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 8 Jun 2006 12:36:52 -0400
+Message-ID: <BAYC1-PASMTP04DDBAA584B31A4B0F31DCAE8B0@CEZ.ICE>
 References: <Pine.LNX.4.63.0606081331140.11910@wbgn013.biozentrum.uni-wuerzburg.de>
 	<44880BE8.40804@etek.chalmers.se>
 	<Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v1wtzaa26.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>,
-	Git Mailing List <git@vger.kernel.org>, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jun 08 18:26:37 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Johannes.Schindelin@gmx.de, lukass@etek.chalmers.se,
+	git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Jun 08 18:38:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoNKc-0002fQ-2f
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 18:26:02 +0200
+	id 1FoNW7-0004q5-SG
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 18:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964879AbWFHQZ4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Jun 2006 12:25:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964899AbWFHQZ4
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 12:25:56 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:55691 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S964879AbWFHQZz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 12:25:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060608162554.EOKE12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 8 Jun 2006 12:25:54 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 8 Jun 2006 13:41:04 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964778AbWFHQhv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 12:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964826AbWFHQhv
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 12:37:51 -0400
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:25720 "EHLO
+	BAYC1-PASMTP04.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S964778AbWFHQhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 12:37:50 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP04.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 8 Jun 2006 09:37:49 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id AB7B1644C28;
+	Thu,  8 Jun 2006 12:37:48 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Message-Id: <20060608123652.6c3acf76.seanlkml@sympatico.ca>
+In-Reply-To: <7v1wtzaa26.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.2.5 (GTK+ 2.9.2; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 08 Jun 2006 16:37:49.0705 (UTC) FILETIME=[E14DBF90:01C68B19]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21497>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, 08 Jun 2006 09:25:53 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
->> Johannes Schindelin wrote:
-> On Thu, 8 Jun 2006, Lukas Sandstr=F6m wrote:
->> > Since there is a global config now, we need a way to access it
->> > conveniently. Now you can say
->> >=20
->> > 	git repo-config --no-local alias.l "log --stat -M ORIG_HEAD.."
->> >=20
->> > to set the alias globally (it will be stored in ~/.gitconfig).
->>=20
->> Wouldn't it make more sense to call the flag --global ?
->
-> Sure, why not? Other opinions? (I will not add a test case until this=
- is=20
-> resolved! ;-)
 
-The wording "--no-local" means you are looking at things
-relative to a particular repository.  I.e. some configuration
-variables come from repository-local file, and others from
-somewhere else.  But I do not think that somewhere else is
-"global".  We are reading from $HOME, which is different
-depending on who is interacting with that same repository.  So I
-would probably call the other one "--user" or something if I
-were force to pick name.
+> The wording "--no-local" means you are looking at things
+> relative to a particular repository.  I.e. some configuration
+> variables come from repository-local file, and others from
+> somewhere else.  But I do not think that somewhere else is
+> "global".  We are reading from $HOME, which is different
+> depending on who is interacting with that same repository.  So I
+> would probably call the other one "--user" or something if I
+> were force to pick name.
 
-But as you know, I am horrible at picking names, so please don't
-stop this from coming up with a good name the list can agree
-upon.
+--user or --home makes a lot of sense.  Alternatively you could
+just be explicit: --config=~ or --config=/etc/gitconfig where
+/.gitconfig is automatically appended to the path if it ends in
+a directory name.
+
+Sean
