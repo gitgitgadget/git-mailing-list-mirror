@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/2] Introduce ~/.gitconfig
-Date: Thu, 08 Jun 2006 20:32:03 +0200
+Subject: Re: [PATCH 2/2] repo-config: learn the flag "--no-local"
+Date: Thu, 08 Jun 2006 20:36:34 +0200
 Organization: At home
-Message-ID: <e69qev$nnl$1@sea.gmane.org>
-References: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de> <1149775348.23938.236.camel@cashmere.sps.mot.com>
+Message-ID: <e69qne$nnl$2@sea.gmane.org>
+References: <Pine.LNX.4.63.0606081331140.11910@wbgn013.biozentrum.uni-wuerzburg.de> <44880BE8.40804@etek.chalmers.se> <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de> <20060608133747.GA15374@diana.vm.bytemark.co.uk> <20060608153508.GB8047@satan.machinehead.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 08 20:32:54 2006
+X-From: git-owner@vger.kernel.org Thu Jun 08 20:40:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoPIv-0002H4-Um
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 20:32:28 +0200
+	id 1FoPQe-0003wW-Kp
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 20:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964927AbWFHScX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 14:32:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964929AbWFHScX
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 14:32:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:42660 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964927AbWFHScW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 14:32:22 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FoPIc-0002Cm-L2
-	for git@vger.kernel.org; Thu, 08 Jun 2006 20:32:07 +0200
+	id S964933AbWFHSkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 14:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964934AbWFHSkV
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 14:40:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:25567 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964933AbWFHSkV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 14:40:21 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1FoPQJ-0003rd-Po
+	for git@vger.kernel.org; Thu, 08 Jun 2006 20:40:05 +0200
 Received: from 193.0.122.19 ([193.0.122.19])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:32:06 +0200
+        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:40:03 +0200
 Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:32:06 +0200
+        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:40:03 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -40,24 +40,26 @@ User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21505>
 
-Jon Loeliger wrote:
+Aneesh Kumar K.V wrote:
 
-> On Thu, 2006-06-08 at 06:30, Johannes Schindelin wrote:
-
->> - The --no-local flag [...]
+> On Thu, Jun 08, 2006 at 03:37:47PM +0200, Karl Hasselstr?m wrote:
+>> On 2006-06-08 13:41:04 +0200, Johannes Schindelin wrote:
+>> 
+>> My vote goes to --no-local, but only if we also get a --no-no-local
+>> flag with the opposite meaning. Otherwise, I'd prefer --global. :-)
+>> 
 > 
-> Could we have multiple levels, and have names that call out
-> where it applies?  Perhaps something like:
 > 
-> --repo   into $GIT_DIR/.gitconfig  <- current default, right?
-> --home   into ~/.gitconfig
-> --site   into /etc/gitconfig
-> --share  into /usr/share/git/config
+> I guess it makes much sense to rename the command to git-config and say 
+> 
+> git config  alias.l  -> for golbal config 
+> git config --repo alias.l -> for repo specific config 
 
-I like that too, wlthough --home might be named --user, and --share be named
---predefined or --library.
+And legacy "git repo-config" as equivalent of "git config --repo", perhaps
+implemented via alias mechanism (if there woul be system-wide coniguration
+file, otherwise in skeleton/template).
 
 -- 
 Jakub Narebski
