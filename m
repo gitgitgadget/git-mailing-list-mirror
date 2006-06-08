@@ -1,49 +1,45 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] cvsimport: complete the cvsps run before starting the import - BAD
-Date: Thu, 8 Jun 2006 12:06:23 +1200
-Message-ID: <46a038f90606071706w46567f6j4f4addae5c877537@mail.gmail.com>
+Date: Wed, 07 Jun 2006 18:16:28 -0700
+Message-ID: <7vk67se9ar.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90606071706w46567f6j4f4addae5c877537@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 08 02:06:39 2006
+X-From: git-owner@vger.kernel.org Thu Jun 08 03:16:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fo82d-0005p7-UY
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 02:06:28 +0200
+	id 1Fo98V-0001e5-4W
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 03:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932476AbWFHAGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Jun 2006 20:06:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbWFHAGZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 20:06:25 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:6462 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932476AbWFHAGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jun 2006 20:06:24 -0400
-Received: by wr-out-0506.google.com with SMTP id i20so295990wra
-        for <git@vger.kernel.org>; Wed, 07 Jun 2006 17:06:24 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=d2CZzwvpMmTog8SFvpykCeBRSuyev1z1QXAy3aoH7nvTWJdCBwvlRduPmQuR9U7cYLCAhsR2kdtMJSxmOV8EhykyWZFAM2UPQWGfXa17cCf53P7ezOwvyyIeYLHrc5xjUY3lQSPOzzuS7T5HwPwjAkMj7FA0gQ5ECE8Vqg1s0eI=
-Received: by 10.54.89.9 with SMTP id m9mr1378028wrb;
-        Wed, 07 Jun 2006 17:06:24 -0700 (PDT)
-Received: by 10.54.71.4 with HTTP; Wed, 7 Jun 2006 17:06:23 -0700 (PDT)
-To: junio@cox.net
-Content-Disposition: inline
+	id S932474AbWFHBQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Jun 2006 21:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbWFHBQ3
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jun 2006 21:16:29 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:7661 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932474AbWFHBQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jun 2006 21:16:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060608011629.RPW12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 7 Jun 2006 21:16:29 -0400
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606071706w46567f6j4f4addae5c877537@mail.gmail.com>
+	(Martin Langhoff's message of "Thu, 8 Jun 2006 12:06:23 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21465>
 
-Junio,
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-As far as I can see, you had the good sense of not applying this one.
-It is bad, and should be dropped.
+> As far as I can see, you had the good sense of not applying this one.
+> It is bad, and should be dropped.
 
-cheers,
-
-
-martin
+Actually it wasn't sense but distraction.  I got sidetracked
+while looking at the patch.
