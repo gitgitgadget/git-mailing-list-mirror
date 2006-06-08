@@ -1,115 +1,64 @@
-From: Paul T Darga <pdarga@umich.edu>
-Subject: [PATCH] check for error return from fork()
-Date: Thu, 8 Jun 2006 14:14:47 -0400
-Message-ID: <20060608181446.GA32089@umich.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] Introduce ~/.gitconfig
+Date: Thu, 08 Jun 2006 20:32:03 +0200
+Organization: At home
+Message-ID: <e69qev$nnl$1@sea.gmane.org>
+References: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de> <1149775348.23938.236.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 08 20:15:06 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 08 20:32:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoP29-0006fj-1L
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 20:15:05 +0200
+	id 1FoPIv-0002H4-Um
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 20:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964862AbWFHSOt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 14:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964926AbWFHSOt
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 14:14:49 -0400
-Received: from piano.eecs.umich.edu ([141.212.110.95]:28133 "EHLO
-	piano.eecs.umich.edu") by vger.kernel.org with ESMTP
-	id S964862AbWFHSOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 14:14:48 -0400
-Received: from piano.eecs.umich.edu (localhost.localdomain [127.0.0.1])
-	by piano.eecs.umich.edu (8.13.6/8.13.6) with ESMTP id k58IElNq032099
-	for <git@vger.kernel.org>; Thu, 8 Jun 2006 14:14:47 -0400
-Received: (from pdarga@localhost)
-	by piano.eecs.umich.edu (8.13.6/8.13.6/Submit) id k58IElIv032098
-	for git@vger.kernel.org; Thu, 8 Jun 2006 14:14:47 -0400
+	id S964927AbWFHScX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 14:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964929AbWFHScX
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 14:32:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:42660 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964927AbWFHScW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 14:32:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FoPIc-0002Cm-L2
+	for git@vger.kernel.org; Thu, 08 Jun 2006 20:32:07 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:32:06 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:32:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21504>
 
-Trivial fixup for fork() callsites which do not check for errors.
+Jon Loeliger wrote:
 
-Signed-off-by: Paul T Darga <pdarga@umich.edu>
----
- connect.c   |    2 ++
- imap-send.c |    6 +++++-
- rsh.c       |    6 +++++-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+> On Thu, 2006-06-08 at 06:30, Johannes Schindelin wrote:
 
-diff --git a/connect.c b/connect.c
-index eca94f7..52d709e 100644
---- a/connect.c
-+++ b/connect.c
-@@ -657,6 +657,8 @@ int git_connect(int fd[2], char *url, co
- 	if (pipe(pipefd[0]) < 0 || pipe(pipefd[1]) < 0)
- 		die("unable to create pipe pair for communication");
- 	pid = fork();
-+	if (pid < 0)
-+		die("unable to fork");
- 	if (!pid) {
- 		snprintf(command, sizeof(command), "%s %s", prog,
- 			 sq_quote(path));
-diff --git a/imap-send.c b/imap-send.c
-index 52e2400..285ad29 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -924,6 +924,7 @@ imap_open_store( imap_server_conf_t *srv
- 	struct hostent *he;
- 	struct sockaddr_in addr;
- 	int s, a[2], preauth;
-+	pid_t pid;
- 
- 	ctx = xcalloc( sizeof(*ctx), 1 );
- 
-@@ -941,7 +942,10 @@ imap_open_store( imap_server_conf_t *srv
- 			exit( 1 );
- 		}
- 
--		if (fork() == 0) {
-+		pid = fork();
-+		if (pid < 0)
-+			_exit( 127 );
-+		if (!pid) {
- 			if (dup2( a[0], 0 ) == -1 || dup2( a[0], 1 ) == -1)
- 				_exit( 127 );
- 			close( a[0] );
-diff --git a/rsh.c b/rsh.c
-index d665269..07166ad 100644
---- a/rsh.c
-+++ b/rsh.c
-@@ -48,6 +48,7 @@ int setup_connection(int *fd_in, int *fd
- 	int sizen;
- 	int of;
- 	int i;
-+	pid_t pid;
- 
- 	if (!strcmp(url, "-")) {
- 		*fd_in = 0;
-@@ -91,7 +92,10 @@ int setup_connection(int *fd_in, int *fd
- 	if (socketpair(AF_UNIX, SOCK_STREAM, 0, sv))
- 		return error("Couldn't create socket");
- 
--	if (!fork()) {
-+	pid = fork();
-+	if (pid < 0)
-+		return error("Couldn't fork");
-+	if (!pid) {
- 		const char *ssh, *ssh_basename;
- 		ssh = getenv("GIT_SSH");
- 		if (!ssh) ssh = "ssh";
--- 
-1.4.0.rc2
+>> - The --no-local flag [...]
+> 
+> Could we have multiple levels, and have names that call out
+> where it applies?  Perhaps something like:
+> 
+> --repo   into $GIT_DIR/.gitconfig  <- current default, right?
+> --home   into ~/.gitconfig
+> --site   into /etc/gitconfig
+> --share  into /usr/share/git/config
 
+I like that too, wlthough --home might be named --user, and --share be named
+--predefined or --library.
 
 -- 
-Paul T. Darga - pdarga@umich.edu - http://www.eecs.umich.edu/~pdarga/
-"When I gave food to the poor, they called me a saint. When I asked
-why the poor were hungry, they called me a communist."
-    -- Dom Helder Camara, Brazilian Bishop, Nobel Peace Prize nominee
+Jakub Narebski
+Warsaw, Poland
