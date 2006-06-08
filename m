@@ -1,38 +1,38 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 1/2]: amendment
-Date: Thu, 08 Jun 2006 09:51:56 -0700
-Message-ID: <7v7j3r8uab.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 08 Jun 2006 09:52:57 -0700
+Message-ID: <7vzmgntwra.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0606081719400.27335@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 08 18:52:49 2006
+X-From: git-owner@vger.kernel.org Thu Jun 08 18:53:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoNjl-0007AN-PX
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 18:52:02 +0200
+	id 1FoNkm-0007LZ-3l
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 18:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964902AbWFHQv6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 12:51:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964905AbWFHQv6
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 12:51:58 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:22411 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S964902AbWFHQv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 12:51:58 -0400
+	id S964907AbWFHQw7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 12:52:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964908AbWFHQw7
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 12:52:59 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:12960 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S964907AbWFHQw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 12:52:59 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060608165157.QRZC11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 8 Jun 2006 12:51:57 -0400
+          id <20060608165258.BDNC19284.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 8 Jun 2006 12:52:58 -0400
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21501>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
