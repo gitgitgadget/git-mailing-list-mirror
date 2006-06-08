@@ -1,64 +1,48 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH 2/2] repo-config: learn the flag "--no-local"
-Date: Thu, 8 Jun 2006 12:36:52 -0400
-Message-ID: <BAYC1-PASMTP04DDBAA584B31A4B0F31DCAE8B0@CEZ.ICE>
-References: <Pine.LNX.4.63.0606081331140.11910@wbgn013.biozentrum.uni-wuerzburg.de>
-	<44880BE8.40804@etek.chalmers.se>
-	<Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v1wtzaa26.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: HEAD branch duplicated in remotes/origin
+Date: Thu, 08 Jun 2006 09:39:48 -0700
+Message-ID: <7vpshj8uuj.fsf@assigned-by-dhcp.cox.net>
+References: <20060608073857.GA5072@informatik.uni-freiburg.de>
+	<7vverc9i4i.fsf@assigned-by-dhcp.cox.net>
+	<20060608123337.GA12456@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, lukass@etek.chalmers.se,
-	git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jun 08 18:38:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 08 18:40:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoNW7-0004q5-SG
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 18:37:56 +0200
+	id 1FoNY1-0005BE-BS
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 18:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964778AbWFHQhv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 12:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964826AbWFHQhv
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 12:37:51 -0400
-Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:25720 "EHLO
-	BAYC1-PASMTP04.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S964778AbWFHQhu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 12:37:50 -0400
-X-Originating-IP: [65.93.43.191]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP04.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 8 Jun 2006 09:37:49 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id AB7B1644C28;
-	Thu,  8 Jun 2006 12:37:48 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060608123652.6c3acf76.seanlkml@sympatico.ca>
-In-Reply-To: <7v1wtzaa26.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.5 (GTK+ 2.9.2; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 08 Jun 2006 16:37:49.0705 (UTC) FILETIME=[E14DBF90:01C68B19]
+	id S964826AbWFHQju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 12:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964899AbWFHQju
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 12:39:50 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:65534 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S964826AbWFHQju (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 12:39:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060608163949.DLPF19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 8 Jun 2006 12:39:49 -0400
+To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20060608123337.GA12456@informatik.uni-freiburg.de> (Uwe
+	Zeisberger's message of "Thu, 8 Jun 2006 14:33:38 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21499>
 
-On Thu, 08 Jun 2006 09:25:53 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
 
+> I wonder if this is easier not to add the other duplicate.
 
-> The wording "--no-local" means you are looking at things
-> relative to a particular repository.  I.e. some configuration
-> variables come from repository-local file, and others from
-> somewhere else.  But I do not think that somewhere else is
-> "global".  We are reading from $HOME, which is different
-> depending on who is interacting with that same repository.  So I
-> would probably call the other one "--user" or something if I
-> were force to pick name.
-
---user or --home makes a lot of sense.  Alternatively you could
-just be explicit: --config=~ or --config=/etc/gitconfig where
-/.gitconfig is automatically appended to the path if it ends in
-a directory name.
-
-Sean
+Unfortunately the above is probably easier.  The other duplicate
+is coming from the lowlevel code that makes sure each of the
+fetch-pack parameters is not used to match more than once.  We
+should fix it eventually, though.
