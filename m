@@ -1,61 +1,86 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 0/2] Introduce ~/.gitconfig
-Date: Thu, 8 Jun 2006 16:49:43 +0200
-Message-ID: <81b0412b0606080749k25a306cetf44a50836998ae09@mail.gmail.com>
+Date: Thu, 8 Jun 2006 17:19:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606081711520.27335@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <1149775348.23938.236.camel@cashmere.sps.mot.com>
+ <1149775348.23938.236.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git List" <git@vger.kernel.org>, "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jun 08 16:50:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jun 08 17:20:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoLpU-0006jZ-A4
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 16:49:48 +0200
+	id 1FoMIL-0005I0-W8
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 17:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964842AbWFHOtp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 10:49:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964851AbWFHOtp
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 10:49:45 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:8223 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S964842AbWFHOto (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 10:49:44 -0400
-Received: by py-out-1112.google.com with SMTP id x31so666082pye
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 07:49:43 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eDvK/osbZecF07d1aBKfXMG9US0efvwIUcmgkk1ULPsDu8IO8/LBb7FqheRQarOWjCjtv+zlWpk4tdLgw7nrV3IMnOGaPXs1mCt7HyxPsl3dLLNYDVLMcFlFRb9wB//MaeXdTWGfeeIRIMURcnzlDg7ksOEweD5x2F86TlLFSNA=
-Received: by 10.35.50.9 with SMTP id c9mr1069353pyk;
-        Thu, 08 Jun 2006 07:49:43 -0700 (PDT)
-Received: by 10.35.74.15 with HTTP; Thu, 8 Jun 2006 07:49:43 -0700 (PDT)
-To: "Jon Loeliger" <jdl@freescale.com>
+	id S964861AbWFHPTf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 11:19:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964869AbWFHPTf
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 11:19:35 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:49112 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964861AbWFHPTe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 11:19:34 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 5EFCB1DC9;
+	Thu,  8 Jun 2006 17:19:33 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 537741DB7;
+	Thu,  8 Jun 2006 17:19:33 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 412DA1DAC;
+	Thu,  8 Jun 2006 17:19:33 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jon Loeliger <jdl@freescale.com>
 In-Reply-To: <1149775348.23938.236.camel@cashmere.sps.mot.com>
-Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21493>
 
-On 6/8/06, Jon Loeliger <jdl@freescale.com> wrote:
+Hi,
+
+On Thu, 8 Jun 2006, Jon Loeliger wrote:
+
+> On Thu, 2006-06-08 at 06:30, Johannes Schindelin wrote:
+> 
+> > - The --no-local flag could be implemented more cleanly, but also less
+> 
+> Could we have multiple levels, and have names that call out
+> where it applies?  Perhaps something like:
+> 
 > --repo   into $GIT_DIR/.gitconfig  <- current default, right?
 > --home   into ~/.gitconfig
 > --site   into /etc/gitconfig
 > --share  into /usr/share/git/config
+> 
+> My issue is that --no-local is vague and doesn't call out
+> where it actually does go.  There could be more than one
+> different non-local place.
 
-BTW, if we go that far, maybe it makes more sense to
-implement a way to include files other config files?
-So repo-level config can (maybe implicitely) have an
-"include ~/.gitconfig" which in turn can "include /etc/gitconfig".
+The whole idea is that there are only two levels of configuration. Global 
+(applies to all calls to git) and local (applies only to the repository).
 
-We could even do like C-preprocessor does: relative
-pathnames can be searched in a defined set of directores.
+Now, it makes sense to make settings overrideable in a certain order: If 
+the global default does not match your needs in a particular case, 
+override it. With "git-repo-config <key> <value>".
 
-That's all overengineered, probably. I never needed .git/config,
-except for switching exec-bit (which I'd like to have on per-site
-basis, to be fair).
+*However*, if you want to change the default, it makes sense to say 
+"--no-local" or "--global", but I doubt that it makes any sense at all to 
+access a certain finer level. For example, when would you possibly need to 
+wrap in porcelain a method to query exactly which aliases are defined in 
+/usr/local/share/git/config?
+
+IOW if you want to edit /etc/gitconfig or something else you need admin 
+permissions for with git-repo-config, you should look for another 
+profession. Quickly.
+
+> But, hey, that's all pre-coffee.
+
+post-coffee is pre-coffee.
+
+Ciao,
+Dscho
