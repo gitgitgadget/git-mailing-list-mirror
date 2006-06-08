@@ -1,66 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 2/2] repo-config: learn the flag "--no-local"
-Date: Thu, 8 Jun 2006 22:18:54 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606082217580.28323@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Thu, 8 Jun 2006 22:24:31 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606082222470.28323@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0606081331140.11910@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060608153236.GA8047@satan.machinehead.org>
+ <44880BE8.40804@etek.chalmers.se> <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v1wtzaa26.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP04DDBAA584B31A4B0F31DCAE8B0@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 08 22:19:11 2006
+Cc: Junio C Hamano <junkio@cox.net>, lukass@etek.chalmers.se,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 08 22:25:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoQy2-0007Gy-Oo
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 22:18:59 +0200
+	id 1FoR3W-00086z-Ad
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 22:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964980AbWFHUS4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 16:18:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964981AbWFHUS4
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 16:18:56 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24043 "EHLO
+	id S964964AbWFHUYf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 16:24:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964977AbWFHUYf
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 16:24:35 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:34185 "EHLO
 	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964980AbWFHUSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 16:18:55 -0400
+	id S964964AbWFHUYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 16:24:34 -0400
 Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 6BAACD1C;
-	Thu,  8 Jun 2006 22:18:54 +0200 (CEST)
+	by mailrelay.mail (Postfix) with ESMTP id 73FA11D64;
+	Thu,  8 Jun 2006 22:24:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 60085BA1;
-	Thu,  8 Jun 2006 22:18:54 +0200 (CEST)
+	by virusscan.mail (Postfix) with ESMTP id 685E41D63;
+	Thu,  8 Jun 2006 22:24:33 +0200 (CEST)
 Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 43AD3B7C;
-	Thu,  8 Jun 2006 22:18:54 +0200 (CEST)
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 30CD71D1C;
+	Thu,  8 Jun 2006 22:24:31 +0200 (CEST)
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-In-Reply-To: <20060608153236.GA8047@satan.machinehead.org>
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP04DDBAA584B31A4B0F31DCAE8B0@CEZ.ICE>
 X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21511>
 
 Hi,
 
-On Thu, 8 Jun 2006, Aneesh Kumar K.V wrote:
+On Thu, 8 Jun 2006, Sean wrote:
 
-> On Thu, Jun 08, 2006 at 01:31:46PM +0200, Johannes Schindelin wrote:
-> > 
-> > Since there is a global config now, we need a way to access it
-> > conveniently. Now you can say
-> > 
-> > 	git repo-config --no-local alias.l "log --stat -M ORIG_HEAD.."
-> > 
-> > to set the alias globally (it will be stored in ~/.gitconfig).
-> > 
+> On Thu, 08 Jun 2006 09:25:53 -0700
+> Junio C Hamano <junkio@cox.net> wrote:
 > 
-> how about  making the above 
 > 
->    git config --repo alias.l "log --stat -M ORIG_HEAD.."
+> > The wording "--no-local" means you are looking at things
+> > relative to a particular repository.  I.e. some configuration
+> > variables come from repository-local file, and others from
+> > somewhere else.  But I do not think that somewhere else is
+> > "global".  We are reading from $HOME, which is different
+> > depending on who is interacting with that same repository.  So I
+> > would probably call the other one "--user" or something if I
+> > were force to pick name.
+> 
+> --user or --home makes a lot of sense.  Alternatively you could
+> just be explicit: --config=~ or --config=/etc/gitconfig where
+> /.gitconfig is automatically appended to the path if it ends in
+> a directory name.
 
-IMHO it would be a sane thing to make this default. Most config variables 
-are repository dependent.
+I think --user makes more sense than --home, since it does not matter 
+_where_ it is stored, but _when_ it is retreived.
+
+In the same vein, I do not think it is user friendly to expect the user to 
+remember if it was .gitconfig, .git or .gitrc.
 
 Ciao,
 Dscho
