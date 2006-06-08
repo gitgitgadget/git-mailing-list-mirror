@@ -1,53 +1,78 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 2/2] repo-config: learn the flag "--no-local"
-Date: Thu, 8 Jun 2006 16:06:17 +0200
-Message-ID: <81b0412b0606080706r3d475daeoa82b9f882b53b647@mail.gmail.com>
-References: <Pine.LNX.4.63.0606081331140.11910@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <44880BE8.40804@etek.chalmers.se>
-	 <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH 0/2] Introduce ~/.gitconfig
+Date: Thu, 08 Jun 2006 09:02:29 -0500
+Message-ID: <1149775348.23938.236.camel@cashmere.sps.mot.com>
+References: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "=?UTF-8?Q?Lukas_Sandstr=C3=B6m?=" <lukass@etek.chalmers.se>,
-	"Git Mailing List" <git@vger.kernel.org>, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jun 08 16:06:55 2006
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jun 08 16:07:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoL9S-0004gH-Ga
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 16:06:24 +0200
+	id 1FoL9h-0004kq-5y
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 16:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964837AbWFHOGT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 10:06:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964839AbWFHOGT
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 10:06:19 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:39809 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S964837AbWFHOGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 10:06:18 -0400
-Received: by py-out-1112.google.com with SMTP id x31so651407pye
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 07:06:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=c3YLS8xmu3TCdiMvrWg+lp7Vq7+0XLUqRwYThso9fpSIoc8A3x6NxCIZ+x1yi+74qRDaiQ0uHWpnWOrjqbQmhHubwnFy5a0sQJhseY3MQDI+FKV8oXncINlUdQGPjx3WTIyHzjNsMjYcSBI1OhzPKNNiPXI/NWUJULzds+Hv0u4=
-Received: by 10.35.48.15 with SMTP id a15mr1073251pyk;
-        Thu, 08 Jun 2006 07:06:18 -0700 (PDT)
-Received: by 10.35.74.15 with HTTP; Thu, 8 Jun 2006 07:06:17 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S964846AbWFHOGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 10:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbWFHOGe
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 10:06:34 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:55291 "EHLO
+	az33egw01.freescale.net") by vger.kernel.org with ESMTP
+	id S964846AbWFHOGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 10:06:33 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k58ERDKc024083;
+	Thu, 8 Jun 2006 07:27:13 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k58E6R1e021315;
+	Thu, 8 Jun 2006 09:06:28 -0500 (CDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21491>
 
-> >
-> > Wouldn't it make more sense to call the flag --global ?
->
-> Sure, why not? Other opinions? (I will not add a test case until this is
-> resolved! ;-)
->
+On Thu, 2006-06-08 at 06:30, Johannes Schindelin wrote:
 
-"--no-gitconfig" (as "--norc" in bash).
+> 
+> - The name. I personally prefer .gitconfig, since we talk about the repo
+>   config all the time. But I have no strong feelings there.
+
+I like .gitconfig over .gitrc.
+
+> - The --no-local flag could be implemented more cleanly, but also less
+
+Could we have multiple levels, and have names that call out
+where it applies?  Perhaps something like:
+
+--repo   into $GIT_DIR/.gitconfig  <- current default, right?
+--home   into ~/.gitconfig
+--site   into /etc/gitconfig
+--share  into /usr/share/git/config
+
+My issue is that --no-local is vague and doesn't call out
+where it actually does go.  There could be more than one
+different non-local place.
+
+
+> - With this, repo-config does no longer merit its name. What do people think
+>   about making it a builtin named "git config"? (Of course, nothing hinders
+>   us to keep the synonymous "repo-config" indefinitely...)
+
+I have often forgotten the "repo-" part, and go looking
+for the "git config ..." man page and command.  I think
+it should be "git config".
+
+Perhaps, "git repo-config"  would be "git config --repo ...."
+And "git config ..." would need an explict --home, --repo,
+--site type location flag from above?
+
+
+But, hey, that's all pre-coffee.
+
+jdl
