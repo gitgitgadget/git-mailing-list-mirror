@@ -1,74 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] Introduce ~/.gitconfig
-Date: Thu, 8 Jun 2006 15:35:36 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606081532370.26823@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0606081329200.11910@wbgn013.biozentrum.uni-wuerzburg.de>
-  <20060608120216.46722.qmail@web25908.mail.ukl.yahoo.com> 
- <dbfc82860606080506y52dc2771sbf6c90e7246ca4c9@mail.gmail.com> 
- <Pine.LNX.4.63.0606081415380.26091@wbgn013.biozentrum.uni-wuerzburg.de>
- <dbfc82860606080613n5b5f6a5bs7a8f461a4188228c@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 2/2] repo-config: learn the flag "--no-local"
+Date: Thu, 8 Jun 2006 15:37:47 +0200
+Message-ID: <20060608133747.GA15374@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.63.0606081331140.11910@wbgn013.biozentrum.uni-wuerzburg.de> <44880BE8.40804@etek.chalmers.se> <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sven Ekman <svekman@yahoo.se>, git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jun 08 15:37:20 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>,
+	Git Mailing List <git@vger.kernel.org>, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Jun 08 15:38:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoKfp-0005UE-Cw
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 15:35:46 +0200
+	id 1FoKi7-00069Z-8R
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 15:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964837AbWFHNfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 09:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964835AbWFHNfi
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 09:35:38 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:33452 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S964830AbWFHNfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 09:35:37 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id CB364B2B;
-	Thu,  8 Jun 2006 15:35:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id BEED6B3C;
-	Thu,  8 Jun 2006 15:35:36 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id AB14FA9B;
-	Thu,  8 Jun 2006 15:35:36 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Nikolai Weibull <now@bitwi.se>
-In-Reply-To: <dbfc82860606080613n5b5f6a5bs7a8f461a4188228c@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S964830AbWFHNiE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Jun 2006 09:38:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbWFHNiE
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 09:38:04 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:33031 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S964830AbWFHNiC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 09:38:02 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FoKhn-00041G-00; Thu, 08 Jun 2006 14:37:47 +0100
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0606081340230.25911@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21489>
 
-Hi,
+On 2006-06-08 13:41:04 +0200, Johannes Schindelin wrote:
 
-On Thu, 8 Jun 2006, Nikolai Weibull wrote:
+> On Thu, 8 Jun 2006, Lukas Sandstr=F6m wrote:
+>
+> > Johannes Schindelin wrote:
+> > > Since there is a global config now, we need a way to access it
+> > > conveniently. Now you can say
+> > >
+> > >   git repo-config --no-local alias.l "log --stat -M ORIG_HEAD.."
+> > >
+> > > to set the alias globally (it will be stored in ~/.gitconfig).
+> > >
+> >
+> > Wouldn't it make more sense to call the flag --global ?
+>
+> Sure, why not? Other opinions? (I will not add a test case until
+> this is resolved! ;-)
 
-> Who said anything about something more than one configuration file? It's 
-> nice to have a directory if we later decide to store other kinds of 
-> files there as well, e.g., templates or some keyring information or 
-> something else, perhaps not well-suited for storing in an ini-like file.
+My vote goes to --no-local, but only if we also get a --no-no-local
+flag with the opposite meaning. Otherwise, I'd prefer --global. :-)
 
-My point was: this has nothing to do with the "git config". Gitk, for 
-example, has its own file there, ~/.gitk.
-
-> > Alternatively, we could introduce a config variable "core.globalConfig" to
-> > see where the global config is.
-> 
-> That is a very good idea.  We wouldn't need an environment variable in
-> that case.
-> 
->  nikolai (who wonders if people can spot irony and sarcasm without extra 
-> help)
-
-No they can't. You almost had me falling for it...
-
-Ciao,
-Dscho
-
-P.S.: I also wanted to mention that we could migrate all the config into 
-an XML format. And maybe have an SQL backend instead of an object store.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
