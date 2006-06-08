@@ -1,58 +1,66 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: git-cvsservr questions
-Date: Wed, 07 Jun 2006 23:33:06 -0500
-Message-ID: <E1FoCCg-0002vH-FX@jdl.com>
-X-From: git-owner@vger.kernel.org Thu Jun 08 06:33:24 2006
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-cvsservr questions
+Date: Thu, 8 Jun 2006 17:23:25 +1200
+Message-ID: <46a038f90606072223v450a3c57m16482b20f5088462@mail.gmail.com>
+References: <E1FoCCg-0002vH-FX@jdl.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 08 07:23:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoCCm-0007bn-T9
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 06:33:13 +0200
+	id 1FoCzb-0005uN-Bo
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 07:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932502AbWFHEdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 00:33:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbWFHEdJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 00:33:09 -0400
-Received: from colo.jdl.com ([66.118.10.122]:61332 "EHLO jdl.com")
-	by vger.kernel.org with ESMTP id S932502AbWFHEdI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 00:33:08 -0400
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.44)
-	id 1FoCCg-0002vH-FX
-	for git@vger.kernel.org; Wed, 07 Jun 2006 23:33:07 -0500
-To: git@vger.kernel.org
-X-Spam-Score: -5.9 (-----)
+	id S1750847AbWFHFX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 01:23:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbWFHFX0
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 01:23:26 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:51517 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750847AbWFHFX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 01:23:26 -0400
+Received: by wr-out-0506.google.com with SMTP id i20so341118wra
+        for <git@vger.kernel.org>; Wed, 07 Jun 2006 22:23:25 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OosLoVOFBnptXxidNBZVfKskJ+KQ1aYlLnGit01V1Z8bfQWnrJJ54PZz5JoaeJAmBN+AxPD7nYVQeiVgl8DfHBmu7UolmpDM+Xs+lDCw/lDjWrED8Ab66jW1Fpq6hwmyLjZ0NrURWg/ZkhUOFwMjmkhRLCIWBZlczLKmiKS1eYs=
+Received: by 10.54.86.13 with SMTP id j13mr47877wrb;
+        Wed, 07 Jun 2006 22:22:57 -0700 (PDT)
+Received: by 10.54.71.4 with HTTP; Wed, 7 Jun 2006 22:23:25 -0700 (PDT)
+To: "Jon Loeliger" <jdl@jdl.com>
+In-Reply-To: <E1FoCCg-0002vH-FX@jdl.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21471>
 
-Mart{i,y}n et al,
+On 6/8/06, Jon Loeliger <jdl@jdl.com> wrote:
+> Mart{i,y}n et al,
+>
+> I'm having a bit of a problem setting up my git-cvsserver.
+> I think I have followed the man page, but this is the
+> only real response I get:
+>
+>     $ setenv CVSROOT :pserver:anonymous@jdl.com:/pub/..../foo.git
+>     $ cvs co master cvs [checkout aborted]: unrecognized auth response
+>       from jdl.com: Unknown command BEGIN AUTH REQUEST at
+>       /usr/bin/git-cvsserver line 132, <STDIN> line 1.
+...
 
-I'm having a bit of a problem setting up my git-cvsserver.
-I think I have followed the man page, but this is the
-only real response I get:
+> I have enabled it the config file, and set a log file
 
-    $ setenv CVSROOT :pserver:anonymous@jdl.com:/pub/..../foo.git
-    $ cvs co master cvs [checkout aborted]: unrecognized auth response
-      from jdl.com: Unknown command BEGIN AUTH REQUEST at
-      /usr/bin/git-cvsserver line 132, <STDIN> line 1.
+Very strange. The calling line to git-cvsserver should have the
+'pserver' option. Perhaps the inetd configuration is missing the
+doubled-up pserver?
 
-I've installed DBD:SQLite, but I don't know if it is working
-or not.  Not sure what file it would create in my repo if it
-was working properly.  I've made the bare repo directory be
-mode 777 just to be sure it is writable by "nobody."
+cheers,
 
-My client is 1.12.9.
 
-I have enabled it the config file, and set a log file, but
-I get no output.  Do I need to enable the output somehow?
-Other debug enabling bits to turn on for more help here?
 
-Have I missed some obvious step?  You know, intuit my problem
-from my sparse description! :-)  Well, or tell me what else
-you need to know...
-
-Thanks,
-jdl
+martin
