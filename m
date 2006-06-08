@@ -1,78 +1,80 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Some doc typo fixes
-Date: Thu, 08 Jun 2006 09:22:57 +0200
-Message-ID: <4487D051.6020802@op5.se>
-References: <20060607125644.GT29682@craic.sysops.org> <7v1wu0lxnd.fsf@assigned-by-dhcp.cox.net> <7vwtbshp3d.fsf@assigned-by-dhcp.cox.net> <20060607174614.GU29682@craic.sysops.org>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: HEAD branch duplicated in remotes/origin
+Date: Thu, 8 Jun 2006 09:38:57 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060608073857.GA5072@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 08 09:23:03 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jun 08 09:39:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoEr8-00079X-G1
-	for gcvg-git@gmane.org; Thu, 08 Jun 2006 09:23:02 +0200
+	id 1FoF6g-0001J6-G8
+	for gcvg-git@gmane.org; Thu, 08 Jun 2006 09:39:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbWFHHW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 03:22:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932525AbWFHHW7
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 03:22:59 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:30340 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932493AbWFHHW6
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 03:22:58 -0400
-Received: from [192.168.1.20] (host-213.88.215.14.addr.se.sn.net [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 720C16BCC0; Thu,  8 Jun 2006 09:22:57 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
-X-Accept-Language: en-us, en
-To: Francis Daly <francis@daoine.org>
-In-Reply-To: <20060607174614.GU29682@craic.sysops.org>
+	id S932556AbWFHHi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 03:38:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932557AbWFHHi7
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 03:38:59 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:3257 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S932556AbWFHHi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 03:38:58 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1FoF6X-0001UL-Cg
+	for git@vger.kernel.org; Thu, 08 Jun 2006 09:38:57 +0200
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k587cvu05530
+	for git@vger.kernel.org; Thu, 8 Jun 2006 09:38:57 +0200 (MEST)
+To: git@vger.kernel.org
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21474>
 
-Francis Daly wrote:
-> On Wed, Jun 07, 2006 at 10:07:02AM -0700, Junio C Hamano wrote:
-> 
->>Junio C Hamano <junkio@cox.net> writes:
->>
->>>Francis Daly <francis@daoine.org> writes:
-> 
-> 
->>>Thanks.  I am not a native, and this is very much appreciated.
-> 
-> 
-> You're welcome.
-> 
-> 
->>>> . It could be named hierarchically (i.e. separated with slash
->>>>-  `/`), but each of its component cannot begin with a dot `.`;
->>>>+  `/`), but each of its components cannot begin with a dot `.`;
->>>
->>>I am not sure; ...
->>
->>Sheesh, I was reading the diff backwards.  Sorry.
-> 
-> 
-> No worries.  I had a head-scratching moment, and suspect that the whole
-> stanza could be better phrased.  If only there was someone who didn't
-> already know what it means, they could suggest which phrasing makes
-> it clear...
-> 
-> How about rewriting it as
-> 
-> It can include slash `/` for hierarchical (directory) grouping, but no
-> slash-separated component can begin with a dot `.`;
-> 
-> ?
-> 
+Hello,
 
-I like it.
+when cloning with --use-separate-remote, $GITDIR/remotes/origin contains
+two references to refs/heads/master.  This breaks `git fetch origin'.
+
+uzeisberger@io:~/gsrc$ git --version
+git version 1.4.0.rc2.ga95e
+
+uzeisberger@io:~/gsrc$ git clone --use-separate-remote git://git.kernel.org/pub/scm/git/git.git git-copy
+Checking files out...)
+ 100% (523/523) done
+
+uzeisberger@io:~/gsrc$ cd git-copy
+
+uzeisberger@io:~/gsrc/git-copy$ git fetch origin
+error: no such remote ref refs/heads/master
+Fetch failure: git://git.kernel.org/pub/scm/git/git.git
+
+uzeisberger@io:~/gsrc/git-copy$ grep -n master .git/remotes/origin
+2:Pull: refs/heads/master:refs/remotes/origin/master
+12:Pull: refs/heads/master:refs/remotes/origin/master
+
+uzeisberger@io:~/gsrc/git-copy$ sed -i 2d .git/remotes/origin
+
+uzeisberger@io:~/gsrc/git-copy$ git fetch origin
+
+uzeisberger@io:~/gsrc/git-copy$ 
+
+I didn't look into it deeply, but I think this happens because the
+remote HEAD is translated to refs/heads/master and added while master is
+added once more while processing refs/heads/master explicitly.
+
+Best regards
+Uwe
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Uwe Zeisberger
+
+http://www.google.com/search?q=12+divided+by+3
