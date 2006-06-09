@@ -1,85 +1,80 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Pavel Roskin <proski@gnu.org>
 Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 9 Jun 2006 15:06:11 +1200
-Message-ID: <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+Date: Thu,  8 Jun 2006 23:12:00 -0400
+Message-ID: <20060608231200.4bkoc8sggk88k0ow@webmail.spamcop.net>
 References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 09 05:06:29 2006
+X-From: git-owner@vger.kernel.org Fri Jun 09 05:12:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoXKK-0005Fk-KL
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 05:06:24 +0200
+	id 1FoXPt-00066j-Vw
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 05:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965110AbWFIDGN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 23:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965115AbWFIDGN
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 23:06:13 -0400
-Received: from wr-out-0506.google.com ([64.233.184.231]:43620 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S965110AbWFIDGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 23:06:12 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so742395wri
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:06:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g6LN8sDgmKjlThxkVKPSa5XvV1SOt/zR/UCSj+XPkqIpM9y2OWG6b7wJ9iJx6lbllG3CtstRxhJI+ojhTpdlzf6qCnNQFQmgSPjUgnOcuK0DMWE8L3TLunHCwlQikIUgksW4feFOm/m2VO1BhwLAKdZNsqzfKuy3iL69vn4IqPk=
-Received: by 10.54.128.19 with SMTP id a19mr1439891wrd;
-        Thu, 08 Jun 2006 20:06:12 -0700 (PDT)
-Received: by 10.54.71.4 with HTTP; Thu, 8 Jun 2006 20:06:11 -0700 (PDT)
-To: "Jon Smirl" <jonsmirl@gmail.com>
+	id S965118AbWFIDME (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 23:12:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965119AbWFIDME
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 23:12:04 -0400
+Received: from mailgate.cesmail.net ([216.154.195.36]:53908 "HELO
+	mailgate.cesmail.net") by vger.kernel.org with SMTP id S965118AbWFIDMD
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 23:12:03 -0400
+Received: (qmail 20419 invoked from network); 9 Jun 2006 03:12:00 -0000
+Received: from unknown (HELO delta.cesmail.net) (192.168.1.30)
+  by mailgate.cesmail.net with SMTP; 9 Jun 2006 03:12:00 -0000
+Received: (qmail 13709 invoked by uid 99); 9 Jun 2006 03:12:00 -0000
+Received: from 68.236.0.220 ([68.236.0.220]) by webmail.spamcop.net (Horde)
+	with HTTP for <proski@spamcop.net@cesmail.net>; Thu,  8 Jun 2006 23:12:00
+	-0400
+To: Jon Smirl <jonsmirl@gmail.com>
 In-Reply-To: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
 Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21524>
 
-Jon,
+Hi Jon,
 
-oh, I went back to a cvsimport that I started a couple days ago.
-Completed with no problems...
+Quoting Jon Smirl <jonsmirl@gmail.com>:
 
-Last commit:
-commit 5ecb56b9c4566618fad602a8da656477e4c6447a
-Author: wtchang%redhat.com <wtchang%redhat.com>
-Date:   Fri Jun 2 17:20:37 2006 +0000
+> I was able to import Mozilla into SVN without problem, it just occured
+> to me to then import the SVN repository in git.
 
-    Import NSPR 4.6.2 and NSS 3.11.1
+I feel bad that I didn't suggest it before.  That's quite expected.  Subversion
+was created by  CVS developers with the intention of replacing CVS.  cvs2svn
+was written by the same CVS developers, who paid attention to all CVS quirks. 
+cvs2svn is quite mature and it has a testsuite, if I remember correctly.
 
-mozilla.git$ du -sh .git/
-2.0G    .git/
+My concern is how well a Subversion repository can be mapped to git considering
+that Subversion is branch agnostic.  But if it works for Mozilla, this approach
+could be recommended for anything big and serious.
 
-It took
-43492.19user 53504.77system 40:23:49elapsed 66%CPU (0avgtext+0avgdata
-0maxresident)k
-0inputs+0outputs (77334major+3122469478minor)pagefaults 0swaps
-
+> The import has been
+> running a few hours now and it is up to the year 2000 (starts in
+> 1998). Since I haven't hit any errors yet it will probably finish ok.
 > I should have the results in the morning. I wonder how long it will
 > take to start gitk on a 10GB repository.
 
-Hopefully not that big :) -- anyway, just do gitk --max-count=1000
+That's the "raison d'etre" of qgit.  I don't know if gitk has anything that qgit
+doesn't, except bisecting.
 
 > Once I get this monster into git, are there tools that will let me
 > keep it in sync with Mozilla CVS?
 
-If you use git-cvsimport, you can safely re-run it on a cronjob to
-keep it in sync. Not too sure about the cvs2svn => git-svnimport,
-though git-svnimport does support incremental imports.
+Ideally, make Mozilla developers use git :-)
 
 > SVN renamed numeric branches to this form, unlabeled-3.7.24, so that
 > may be a problem.
 
-Ouch,
+I think git-svn is supposed to do the svn->git part, but I'm afraid it will need
+some work to do it effectively.  Google search for "cvs2svn incremental" brings
+some patches.  cvsup can be used to synchronize the CVS repository.
 
-> Any advice on how to pack this to make it run faster?
-
-git-repack -a -d but it OOMs on my 2GB+2GBswap machine :(
-
-
-martin
+--
+Regards,
+Pavel Roskin
