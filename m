@@ -1,45 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git-daemon messing up permissions for gitweb
-Date: Fri, 09 Jun 2006 13:18:34 -0700
-Message-ID: <7vslmem6at.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: RE: Git-daemon messing up permissions for gitweb
+Date: Fri, 9 Jun 2006 13:22:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606091321100.5498@g5.osdl.org>
 References: <5A14AF34CFF8AD44A44891F7C9FF41050795787F@usahm236.amer.corp.eds.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 09 22:18:56 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 09 22:22:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FonRI-0000xP-1v
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 22:18:41 +0200
+	id 1FonV6-0001hS-53
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 22:22:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030490AbWFIUSg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 16:18:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030488AbWFIUSg
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 16:18:36 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:53488 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030490AbWFIUSg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jun 2006 16:18:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060609201835.QTIP5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 9 Jun 2006 16:18:35 -0400
+	id S932295AbWFIUWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 16:22:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932287AbWFIUWd
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 16:22:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:685 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932257AbWFIUWc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 16:22:32 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k59KMLgt028922
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Jun 2006 13:22:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k59KMI9c028440;
+	Fri, 9 Jun 2006 13:22:20 -0700
 To: "Post, Mark K" <mark.post@eds.com>
 In-Reply-To: <5A14AF34CFF8AD44A44891F7C9FF41050795787F@usahm236.amer.corp.eds.com>
-	(Mark K. Post's message of "Fri, 9 Jun 2006 16:08:15 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21549>
 
-"Post, Mark K" <mark.post@eds.com> writes:
 
+
+On Fri, 9 Jun 2006, Post, Mark K wrote:
+>
 > Martin is using git over SSH.  I have git-shell in /etc/passwd for his
 > account.
 
-Ah, then umask git-shell gets from sshd is too restrictive.
-Loosen it and you will be fine.
+Ahh. git-shell doesn't read .bashrc or anything like that.
+
+Does adding a "umask(0022)" to the beginning of main() in shell.c fix it 
+for you?
+
+		Linus
