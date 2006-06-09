@@ -1,100 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 09 Jun 2006 12:11:42 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606091127540.19403@localhost.localdomain>
+Date: Fri, 9 Jun 2006 09:30:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606090926550.5498@g5.osdl.org>
 References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
  <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
  <9e4733910606082028k37f6d915m26009e0d5011808b@mail.gmail.com>
  <e6b798$td3$1@sea.gmane.org> <Pine.LNX.4.64.0606090745390.5498@g5.osdl.org>
+ <Pine.LNX.4.64.0606091127540.19403@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 09 18:12:26 2006
+X-From: git-owner@vger.kernel.org Fri Jun 09 18:31:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FojaT-0001fX-0K
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 18:11:54 +0200
+	id 1Fojsr-0005k2-Pw
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 18:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030272AbWFIQLo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 12:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030273AbWFIQLo
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 12:11:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:10156 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1030272AbWFIQLn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jun 2006 12:11:43 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J0L00CP4OZI4HI0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 09 Jun 2006 12:11:42 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0606090745390.5498@g5.osdl.org>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751443AbWFIQau (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 12:30:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbWFIQau
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 12:30:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:6360 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751453AbWFIQat (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 12:30:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k59GUagt016580
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Jun 2006 09:30:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k59GUZd8020369;
+	Fri, 9 Jun 2006 09:30:36 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0606091127540.19403@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21532>
 
-On Fri, 9 Jun 2006, Linus Torvalds wrote:
 
+
+On Fri, 9 Jun 2006, Nicolas Pitre wrote:
 > 
+> > So a single 2GB pack is already very much pushing it. It's really really 
+> > hard to map in a 2GB file on a 32-bit platform: your VM is usually 
+> > fragmented enough that it simply isn't practical. In fact, I think the 
+> > limit for _practical_ usage of single packs is probably somewhere in the 
+> > half-gig region, unless you just have 64-bit machines.
 > 
-> On Fri, 9 Jun 2006, Jakub Narebski wrote:
-> > Jon Smirl wrote:
-> > 
-> > >> git-repack -a -d but it OOMs on my 2GB+2GBswap machine :(
-> > > 
-> > > We are all having problems getting this to run on 32 bit machines with
-> > > the 3-4GB process size limitations.
-> > 
-> > Is that expected (for 10GB repository if I remember correctly), or is there
-> > some way to avoid this OOM?
+> Sure, but have we already reached that size?
 
-What was that 10GB related to, exactly?  The original CVS repo, or the 
-unpacked GIT repo?
+Not for the Linux repos.
 
-> So a single 2GB pack is already very much pushing it. It's really really 
-> hard to map in a 2GB file on a 32-bit platform: your VM is usually 
-> fragmented enough that it simply isn't practical. In fact, I think the 
-> limit for _practical_ usage of single packs is probably somewhere in the 
-> half-gig region, unless you just have 64-bit machines.
+But apparently the mozilla repo ends up being 2GB in git. From Martin:
 
-Sure, but have we already reached that size?
+  >> oh, I went back to a cvsimport that I started a couple days ago.
+  >> Completed with no problems...
+  >> 
+  >> Last commit:
+  >> commit 5ecb56b9c4566618fad602a8da656477e4c6447a
+  >> Author: wtchang%redhat.com <wtchang%redhat.com>
+  >> Date:   Fri Jun 2 17:20:37 2006 +0000
+  >> 
+  >>    Import NSPR 4.6.2 and NSS 3.11.1
+  >> 
+  >> mozilla.git$ du -sh .git/
+  >> 2.0G    .git/
 
-The historic Linux repo currently repacks itself into a ~175MB pack for 
-63428 commits.
+now that was done with _incremental_ repacking (ie his .git directory
+won't be just one large pack), but I bet that if you were to clone it
+(without using the "-l" flag or rsync/http), you'd end up with serious
+trouble because of the single-pack limit.
 
-The current Linux repo is ~103MB with a much shorter history (27153 
-commits).
+So we're starting to see archives where single packs are problematic for
+a 32-bit architecture. 
 
-Given the above we can estimate the size of the kernel repository after 
-x commits as follows:
-
-	slope = (175 - 103) / (63428 - 27153) = approx 2KB per commit
-
-	initial size = 175 - .001985 * 63428 = 49MB
-
-So the initial kernel commit is about 49MB in size which is coherent 
-with the corresponding compressed tarball.  Subsequent commits are 2KB 
-in size on average.  Given that it will take about 233250 commits before 
-the kernel reaches the half gigabyte pack file, and given the current 
-commit rate (approx 23700 commits per year), that means we still have 
-nearly 9 years to go.  And at that point 64-bit machines are likely to 
-be the norm.
-
-So given those numbers I don't think this is really an issue.  The Linux 
-kernel is a rather huge and pretty active project to base comparisons 
-against.  The Mozilla repository might be difficult to import and 
-repack, but once repacked it should still be pretty usable now even on a 
-32-bit machine even with a single pack.
-
-Otherwise that should be quite easy to add a batch size argument to 
-git-repack so git-rev-list and git-pack-objects are called multiple 
-times with sequential commit 
-ranges to create a repo with multiple packs.
-
-
-Nicolas
+			Linus
