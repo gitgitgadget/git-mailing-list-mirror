@@ -1,66 +1,55 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 09 Jun 2006 17:05:56 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606091655420.2703@localhost.localdomain>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
- <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
- <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com>
- <Pine.LNX.4.64.0606091158460.5498@g5.osdl.org>
- <9e4733910606091317p26d66579mdf93db293f93fb50@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Git-daemon messing up permissions for gitweb
+Date: Fri, 09 Jun 2006 14:06:22 -0700
+Message-ID: <7virnam435.fsf@assigned-by-dhcp.cox.net>
+References: <5A14AF34CFF8AD44A44891F7C9FF410507957896@usahm236.amer.corp.eds.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 09 23:06:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 09 23:06:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FooB7-0001Uh-MW
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 23:06:02 +0200
+	id 1FooBX-0001YH-Fg
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 23:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965208AbWFIVF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 17:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965296AbWFIVF6
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 17:05:58 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:47786 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S965208AbWFIVF5
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 17:05:57 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J0M000ME2LWXAC0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 09 Jun 2006 17:05:56 -0400 (EDT)
-In-reply-to: <9e4733910606091317p26d66579mdf93db293f93fb50@mail.gmail.com>
-X-X-Sender: nico@localhost.localdomain
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S1030328AbWFIVGY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 17:06:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965300AbWFIVGY
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 17:06:24 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:30178 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S965296AbWFIVGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jun 2006 17:06:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060609210623.OEXG554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 9 Jun 2006 17:06:23 -0400
+To: "Post, Mark K" <mark.post@eds.com>
+In-Reply-To: <5A14AF34CFF8AD44A44891F7C9FF410507957896@usahm236.amer.corp.eds.com>
+	(Mark K. Post's message of "Fri, 9 Jun 2006 16:52:22 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21561>
 
-On Fri, 9 Jun 2006, Jon Smirl wrote:
+"Post, Mark K" <mark.post@eds.com> writes:
 
-> I haven't come up with anything that is likely to result in Mozilla
-> switching over to git. Right now it takes three days to convert the
-> tree. The tree will have to be run in parallel for a while to convince
-> everyone to switch. I don't have a solution to keeping it in sync in
-> near real time (commits would still go to CVS). Most Mozilla
-> developers are interested but the infrastructure needs some help.
+> Since umask isn't an environment variable, per se, I'm not sure how this
+> will change anything.
 
-This is true.  GIT is still evolving and certainly needs work to cope 
-with environments and datasets that were never tested before.  The 
-Mozilla repo is one of those and we're certainly interested into making 
-it work well.  GIT might not be right for it just yet, but if you could 
-let us rsync your converted repo to play with that might help us work on 
-proper fixes for that kind of repo.
+I do not configure my sshd, so you may need a bit more reading
+on it yourself; $HOME/.ssh/environment does not seem to be it,
+as you said.
 
-> Martin has also brought up the problem with needing a partial clone so
-> that everyone doesn't have to bring down the entire repository.
+> One other thing I noticed is that init-db.c spells core.sharedRepository
+> with a capital R, but setup.c spells it "core.sharedrepository" with no
+> upper case letters.  Would this make any difference to anything I'm
+> seeing? 
 
-If it can be repacked into a single pack that size might get much 
-smaller too.
-
-
-Nicolas
+The distinction should not matter since the code downcases
+(git_config_set_multivar() in config.c) it, but to avoid future
+confusion we might want to downcase the one in init-db.c
