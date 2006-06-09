@@ -1,48 +1,50 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Redhat stateless Linux and git
-Date: Fri, 9 Jun 2006 18:59:44 -0400
-Message-ID: <9e4733910606091559m6a88e864m16f9d75a507ee684@mail.gmail.com>
+From: Greg KH <greg@kroah.com>
+Subject: Re: Figured out how to get Mozilla into git
+Date: Fri, 9 Jun 2006 16:16:14 -0700
+Message-ID: <20060609231614.GN17807@kroah.com>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com> <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com> <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com> <Pine.LNX.4.64.0606091158460.5498@g5.osdl.org> <9e4733910606091317p26d66579mdf93db293f93fb50@mail.gmail.com> <Pine.LNX.4.64.0606091331170.5498@g5.osdl.org> <9e4733910606091356w391b4fdao23db5b2ce3c3e282@mail.gmail.com> <Pine.LNX.4.64.0606091450180.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jun 10 00:59:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 10 01:17:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FopxE-0003PJ-B5
-	for gcvg-git@gmane.org; Sat, 10 Jun 2006 00:59:49 +0200
+	id 1FoqDo-0006Bp-8Y
+	for gcvg-git@gmane.org; Sat, 10 Jun 2006 01:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030237AbWFIW7p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 18:59:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030276AbWFIW7p
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 18:59:45 -0400
-Received: from nz-out-0102.google.com ([64.233.162.194]:38150 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1030274AbWFIW7o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jun 2006 18:59:44 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so1207168nze
-        for <git@vger.kernel.org>; Fri, 09 Jun 2006 15:59:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=fr8zSEXISPyzpUrH2lF8IIFxgQ0kKeUhWOtjsVQyro7nrzpepZPz7IbOyrK1thcsuHEcZeC2OniSRpEFAs75Gqhiaa9KoLD8R5a4AaufYuxQk1MSJkEt75aVUj5LktJ6jNBMRcohjAe3zrQ5IrQCnBR/rB0Y8hEg04nTGIRkTFU=
-Received: by 10.36.56.4 with SMTP id e4mr623771nza;
-        Fri, 09 Jun 2006 15:59:44 -0700 (PDT)
-Received: by 10.36.36.7 with HTTP; Fri, 9 Jun 2006 15:59:44 -0700 (PDT)
-To: git <git@vger.kernel.org>
+	id S932586AbWFIXQx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 19:16:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932588AbWFIXQx
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 19:16:53 -0400
+Received: from mail.kroah.org ([69.55.234.183]:2753 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S932586AbWFIXQw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 19:16:52 -0400
+Received: from [192.168.0.11] (dsl093-040-174.pdx1.dsl.speakeasy.net [66.93.40.174])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id k59NGnY12644;
+	Fri, 9 Jun 2006 16:16:49 -0700
+Received: from greg by press.kroah.org with local (masqmail 0.2.19) id
+ 1FoqD8-4fM-00; Fri, 09 Jun 2006 16:16:14 -0700
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606091450180.5498@g5.osdl.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21567>
 
-Redhat is looking for a scheme to sync the disk system of their
-stateless Linux client. They were using rsync and now they are looking
-at doing it with LVM.
+On Fri, Jun 09, 2006 at 02:57:58PM -0700, Linus Torvalds wrote:
+> > It would be better to rsync Martins copy, he has a lot more bandwidth.
+> > It will take over a day to copy it off my cable modem. I'm signed up
+> > to get FIOS as soon as they turn it on in my neighborhood, it's
+> > already wired on the poles.
+> 
+> So it will take me quite some time to download 2GB+, regardless of how fat 
+> a pipe the other end has ;)
 
-What about using git?
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Fed-Ex a DVD or two would probably be fastest :)
