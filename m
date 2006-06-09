@@ -1,64 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git-daemon messing up permissions for gitweb
-Date: Fri, 09 Jun 2006 20:58:09 +0200
-Organization: At home
-Message-ID: <e6cgbo$2rm$1@sea.gmane.org>
-References: <5A14AF34CFF8AD44A44891F7C9FF41050795782F@usahm236.amer.corp.eds.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Figured out how to get Mozilla into git
+Date: Fri, 9 Jun 2006 12:00:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606091158460.5498@g5.osdl.org>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com> 
+ <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+ <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jun 09 20:58:39 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 09 21:01:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FomBe-00032e-Jl
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 20:58:27 +0200
+	id 1FomEN-0003Uq-Dy
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 21:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030393AbWFIS6X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 14:58:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030396AbWFIS6X
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 14:58:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:55716 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030393AbWFIS6X (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 14:58:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FomBN-0002zR-TC
-	for git@vger.kernel.org; Fri, 09 Jun 2006 20:58:10 +0200
-Received: from 212-87-13-71.sds.uw.edu.pl ([212.87.13.71])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Jun 2006 20:58:09 +0200
-Received: from jnareb by 212-87-13-71.sds.uw.edu.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Jun 2006 20:58:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212-87-13-71.sds.uw.edu.pl
-User-Agent: KNode/0.7.7
+	id S1030398AbWFITAt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 15:00:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030400AbWFITAt
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 15:00:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:18839 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030398AbWFITAs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 15:00:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k59J0igt024898
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Jun 2006 12:00:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k59J0gxI025652;
+	Fri, 9 Jun 2006 12:00:43 -0700
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21540>
 
-Post, Mark K wrote:
 
-> I'm trying to set up a git repository for mainframe Linux developers to
-> use at git390.osdl.marist.edu.  Everything _seemed_ to go well, until
-> Martin Schwidefsky started actually pushing changes back to the
-> repository.  When he does that, the projects disappear from the web page
-> that gitweb.cgi is generating.
+
+On Fri, 9 Jun 2006, Jon Smirl wrote:
 > 
-> As far as I can tell, the problem is happening because these files are
-> being written out with file permissions of 640, and since Apache is
-> running as user wwwrun, it can't read them:
-> -rw-r-----  1 sky git  5490 Jun  9 03:35 ./linux-2.6.git/info/refs
+> That looks too small. My svn git import is 2.7GB and the source CVS is
+> 3.0GB. The svn import wasn't finished when I stopped it.
 
-One of the possible soultion would be to add sky to Apache group,
-make directory sticky-group, and make files readable by group (perhaps by
-marking repository as shared, or something).
+Git is much better at packing than either CVS or SVN. Get used to it ;)
 
--- 
-Jakub Narebski
-Warsaw, Poland
+> My cvsps process is still running from last night. The error file is
+> 341MB. How big is it when the conversion is finished? My machine is
+> swapping to death.
+
+Do you have all the cvsps patches? There's a few important ones floating 
+around, and David Mansfield never did a 2.2 release..
+
+I'm pretty sure Martin doesn't run plain 2.1.
+
+		Linus
