@@ -1,63 +1,49 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 9 Jun 2006 14:13:36 -0400
-Message-ID: <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
-	 <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Failed git commands and StGIT
+Date: Fri, 9 Jun 2006 20:36:23 +0200
+Message-ID: <20060609183623.GJ11941@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 09 20:13:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 09 20:36:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FolUL-000174-4J
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 20:13:41 +0200
+	id 1Folq6-0005wY-U2
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 20:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467AbWFISNi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 14:13:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbWFISNi
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 14:13:38 -0400
-Received: from nz-out-0102.google.com ([64.233.162.207]:55323 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751467AbWFISNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jun 2006 14:13:37 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so1131837nze
-        for <git@vger.kernel.org>; Fri, 09 Jun 2006 11:13:36 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hxgCsvi206JhMzWX249eGhyrrM8BvTqwEBkBgie7t64cNz602yVZxqzn81K1AWub/LE7/jOG/8HXl+rcsz+pp9ZLWokZYX/PsrWvfvprKlKLPRHhFcU/USmQVTXGbAIErYFuJ1rtxs2sx37cvBjlme23JoFwzQNr4bthJpgLpgk=
-Received: by 10.37.12.10 with SMTP id p10mr4511547nzi;
-        Fri, 09 Jun 2006 11:13:36 -0700 (PDT)
-Received: by 10.36.37.15 with HTTP; Fri, 9 Jun 2006 11:13:36 -0700 (PDT)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+	id S1030351AbWFISgG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 14:36:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030359AbWFISgG
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 14:36:06 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:5524 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030351AbWFISgE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 14:36:04 -0400
+Received: (qmail 3010 invoked by uid 2001); 9 Jun 2006 20:36:23 +0200
+To: catalin.marinas@gmail.com
 Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21537>
 
-On 6/8/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> mozilla.git$ du -sh .git/
-> 2.0G    .git/
+  Hi,
 
-That looks too small. My svn git import is 2.7GB and the source CVS is
-3.0GB. The svn import wasn't finished when I stopped it.
+  a user at #git just came with a problem with stg refresh - it turned
+out that he did not have his environment set up properly, but what is
+troublesome that stg refresh just said that "git-commit-tree failed" and
+did not show the actual error message - looking at the code, you
+probably want to keep fd 3 on the parent process' stderr, that is use
+open2, not open3.
 
-My cvsps process is still running from last night. The error file is
-341MB. How big is it when the conversion is finished? My machine is
-swapping to death.
+  The user has used StGIT 0.9.
 
-I'm still attracted to the cvs2svn tool. It handled everything right
-the first time and it only needs 100MB to run. It is also a lot
-faster. cvsps and parsecvs both need gigabytes of RAM to run. I'll
-look at cvs2svn some more but I still need to figure out more about
-low level git and learn Python.
+  Thanks,
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
