@@ -1,70 +1,63 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 9 Jun 2006 10:49:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606091047080.5498@g5.osdl.org>
+Date: Fri, 9 Jun 2006 14:13:36 -0400
+Message-ID: <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com>
 References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
- <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
- <9e4733910606082028k37f6d915m26009e0d5011808b@mail.gmail.com>
- <e6b798$td3$1@sea.gmane.org> <Pine.LNX.4.64.0606090745390.5498@g5.osdl.org>
- <Pine.LNX.4.64.0606091127540.19403@localhost.localdomain>
- <Pine.LNX.4.64.0606090926550.5498@g5.osdl.org>
- <Pine.LNX.4.64.0606091326550.2703@localhost.localdomain>
+	 <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 09 19:49:49 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 09 20:13:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fol7B-0004AS-LO
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 19:49:46 +0200
+	id 1FolUL-000174-4J
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 20:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030276AbWFIRtm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 13:49:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030289AbWFIRtm
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 13:49:42 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:34179 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030276AbWFIRtm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 13:49:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k59HnTgt021203
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 9 Jun 2006 10:49:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k59HnStD023169;
-	Fri, 9 Jun 2006 10:49:28 -0700
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0606091326550.2703@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751467AbWFISNi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 14:13:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446AbWFISNi
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 14:13:38 -0400
+Received: from nz-out-0102.google.com ([64.233.162.207]:55323 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751467AbWFISNh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jun 2006 14:13:37 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so1131837nze
+        for <git@vger.kernel.org>; Fri, 09 Jun 2006 11:13:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hxgCsvi206JhMzWX249eGhyrrM8BvTqwEBkBgie7t64cNz602yVZxqzn81K1AWub/LE7/jOG/8HXl+rcsz+pp9ZLWokZYX/PsrWvfvprKlKLPRHhFcU/USmQVTXGbAIErYFuJ1rtxs2sx37cvBjlme23JoFwzQNr4bthJpgLpgk=
+Received: by 10.37.12.10 with SMTP id p10mr4511547nzi;
+        Fri, 09 Jun 2006 11:13:36 -0700 (PDT)
+Received: by 10.36.37.15 with HTTP; Fri, 9 Jun 2006 11:13:36 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21536>
 
+On 6/8/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> mozilla.git$ du -sh .git/
+> 2.0G    .git/
 
+That looks too small. My svn git import is 2.7GB and the source CVS is
+3.0GB. The svn import wasn't finished when I stopped it.
 
-On Fri, 9 Jun 2006, Nicolas Pitre wrote:
->
-> Maybe that single pack would instead be under the 512MB limit?  I'd be 
-> curious to know.
+My cvsps process is still running from last night. The error file is
+341MB. How big is it when the conversion is finished? My machine is
+swapping to death.
 
-Possible, but not likely, and with "git repack -a -d" running out of 
-memory, we clearly already have a problem in checking that.
+I'm still attracted to the cvs2svn tool. It handled everything right
+the first time and it only needs 100MB to run. It is also a lot
+faster. cvsps and parsecvs both need gigabytes of RAM to run. I'll
+look at cvs2svn some more but I still need to figure out more about
+low level git and learn Python.
 
-That is most likely git-rev-list, though. Which is why I'd like to just 
-rsync the repo, and run git-rev-list on it, and see what else I can shave 
-off ;)
-
-> > So we're starting to see archives where single packs are problematic for
-> > a 32-bit architecture. 
-> 
-> Depending on the operation, the single pack might actually be better, 
-
-Absolutely. Which is why I said we probably need to do a LRU on pack 
-fragments rather than full packs when we do the pack memory mapping.
-
-		Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
