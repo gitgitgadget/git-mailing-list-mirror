@@ -1,80 +1,72 @@
-From: Pavel Roskin <proski@gnu.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Figured out how to get Mozilla into git
-Date: Thu,  8 Jun 2006 23:12:00 -0400
-Message-ID: <20060608231200.4bkoc8sggk88k0ow@webmail.spamcop.net>
+Date: Thu, 8 Jun 2006 23:28:30 -0400
+Message-ID: <9e4733910606082028k37f6d915m26009e0d5011808b@mail.gmail.com>
 References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+	 <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 09 05:12:10 2006
+X-From: git-owner@vger.kernel.org Fri Jun 09 05:28:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoXPt-00066j-Vw
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 05:12:10 +0200
+	id 1FoXfx-0000QD-RH
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 05:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965118AbWFIDME (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 23:12:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965119AbWFIDME
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 23:12:04 -0400
-Received: from mailgate.cesmail.net ([216.154.195.36]:53908 "HELO
-	mailgate.cesmail.net") by vger.kernel.org with SMTP id S965118AbWFIDMD
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Jun 2006 23:12:03 -0400
-Received: (qmail 20419 invoked from network); 9 Jun 2006 03:12:00 -0000
-Received: from unknown (HELO delta.cesmail.net) (192.168.1.30)
-  by mailgate.cesmail.net with SMTP; 9 Jun 2006 03:12:00 -0000
-Received: (qmail 13709 invoked by uid 99); 9 Jun 2006 03:12:00 -0000
-Received: from 68.236.0.220 ([68.236.0.220]) by webmail.spamcop.net (Horde)
-	with HTTP for <proski@spamcop.net@cesmail.net>; Thu,  8 Jun 2006 23:12:00
-	-0400
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+	id S965116AbWFID2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 23:28:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965117AbWFID2c
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 23:28:32 -0400
+Received: from nz-out-0102.google.com ([64.233.162.203]:48742 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S965116AbWFID2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 23:28:31 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so961179nze
+        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:28:30 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nXJJUzYShempc5jLUW23c9NPtvRO6A5p2G7usAEqefCR4hmVW4A7N+Cj4fZ6C/WiloA1ZTGCEw8GCCuK78WGHZ1iMRa6FujLiefvZUqUdHCGfSzzXljH+j+SBIlV9G9UTsYEEG3slq5Zvm7pDovYtQigcKBjHG3hnz7DhmQXpJE=
+Received: by 10.36.148.16 with SMTP id v16mr625020nzd;
+        Thu, 08 Jun 2006 20:28:30 -0700 (PDT)
+Received: by 10.36.37.15 with HTTP; Thu, 8 Jun 2006 20:28:30 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21525>
 
-Hi Jon,
+On 6/8/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> Jon,
+>
+> oh, I went back to a cvsimport that I started a couple days ago.
+> Completed with no problems...
 
-Quoting Jon Smirl <jonsmirl@gmail.com>:
+I am using cvsps-2.1-3.fc5, the last time I tried it died in the
+middle of the import. I don't remember why it died. Which cvsps are
+you using? You're saying that it can handle the whole Mozilla CVS now,
+right? I will build a new cvsps from CVS and start it running tonight.
 
-> I was able to import Mozilla into SVN without problem, it just occured
-> to me to then import the SVN repository in git.
+> If you use git-cvsimport, you can safely re-run it on a cronjob to
+> keep it in sync. Not too sure about the cvs2svn => git-svnimport,
+> though git-svnimport does support incremental imports.
 
-I feel bad that I didn't suggest it before.  That's quite expected.  Subversion
-was created by  CVS developers with the intention of replacing CVS.  cvs2svn
-was written by the same CVS developers, who paid attention to all CVS quirks. 
-cvs2svn is quite mature and it has a testsuite, if I remember correctly.
+I would much rather get a direct CVS import working so that I can do
+incremental updates. I went the SVN route because it was the only
+thing I could get working.
 
-My concern is how well a Subversion repository can be mapped to git considering
-that Subversion is branch agnostic.  But if it works for Mozilla, this approach
-could be recommended for anything big and serious.
+> > Any advice on how to pack this to make it run faster?
+>
+> git-repack -a -d but it OOMs on my 2GB+2GBswap machine :(
 
-> The import has been
-> running a few hours now and it is up to the year 2000 (starts in
-> 1998). Since I haven't hit any errors yet it will probably finish ok.
-> I should have the results in the morning. I wonder how long it will
-> take to start gitk on a 10GB repository.
+We are all having problems getting this to run on 32 bit machines with
+the 3-4GB process size limitations.
 
-That's the "raison d'etre" of qgit.  I don't know if gitk has anything that qgit
-doesn't, except bisecting.
-
-> Once I get this monster into git, are there tools that will let me
-> keep it in sync with Mozilla CVS?
-
-Ideally, make Mozilla developers use git :-)
-
-> SVN renamed numeric branches to this form, unlabeled-3.7.24, so that
-> may be a problem.
-
-I think git-svn is supposed to do the svn->git part, but I'm afraid it will need
-some work to do it effectively.  Google search for "cvs2svn incremental" brings
-some patches.  cvsup can be used to synchronize the CVS repository.
-
---
-Regards,
-Pavel Roskin
+-- 
+Jon Smirl
+jonsmirl@gmail.com
