@@ -1,66 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 09 Jun 2006 22:44:48 +0200
-Organization: At home
-Message-ID: <e6cmjn$no5$1@sea.gmane.org>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com> <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com> <9e4733910606091113vdc6ab06l2d3582cb82b8fd09@mail.gmail.com> <Pine.LNX.4.64.0606091158460.5498@g5.osdl.org> <9e4733910606091317p26d66579mdf93db293f93fb50@mail.gmail.com>
+From: "Post, Mark K" <mark.post@eds.com>
+Subject: RE: Git-daemon messing up permissions for gitweb
+Date: Fri, 9 Jun 2006 16:45:17 -0400
+Message-ID: <5A14AF34CFF8AD44A44891F7C9FF410507957893@usahm236.amer.corp.eds.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jun 09 22:45:19 2006
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 09 22:45:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fonqu-00064l-7K
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 22:45:08 +0200
+	id 1FonrH-0006AL-MN
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 22:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965168AbWFIUpD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 16:45:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965200AbWFIUpB
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 16:45:01 -0400
-Received: from main.gmane.org ([80.91.229.2]:56510 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965171AbWFIUpA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 16:45:00 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fonqd-00060u-Uy
-	for git@vger.kernel.org; Fri, 09 Jun 2006 22:44:51 +0200
-Received: from 212-87-13-71.sds.uw.edu.pl ([212.87.13.71])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Jun 2006 22:44:51 +0200
-Received: from jnareb by 212-87-13-71.sds.uw.edu.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Jun 2006 22:44:51 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212-87-13-71.sds.uw.edu.pl
-User-Agent: KNode/0.7.7
+	id S965171AbWFIUpS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 16:45:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965200AbWFIUpS
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 16:45:18 -0400
+Received: from ahmler1.mail.eds.com ([192.85.154.71]:18377 "EHLO
+	ahmler1.mail.eds.com") by vger.kernel.org with ESMTP
+	id S965171AbWFIUpQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 16:45:16 -0400
+Received: from ahmlir3.mail.eds.com (ahmlir3-2.mail.eds.com [192.85.154.133])
+	by ahmler1.mail.eds.com (8.13.6/8.12.10) with ESMTP id k59Kj6oY023998;
+	Fri, 9 Jun 2006 16:45:08 -0400
+Received: from ahmlir3.mail.eds.com (localhost [127.0.0.1])
+	by ahmlir3.mail.eds.com (8.13.6/8.12.10) with ESMTP id k59Kil29011432;
+	Fri, 9 Jun 2006 16:44:47 -0400
+Received: from usahm011.amer.corp.eds.com ([130.175.214.152])
+	by ahmlir3.mail.eds.com (8.13.6/8.12.10) with ESMTP id k59KilHf011427;
+	Fri, 9 Jun 2006 16:44:47 -0400
+Received: from usahm236.amer.corp.eds.com ([130.175.214.169]) by usahm011.amer.corp.eds.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 9 Jun 2006 16:45:18 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Git-daemon messing up permissions for gitweb
+Thread-Index: AcaMAnHvyauXV3EFS2uNP2aJhPW0IwAAxZaQ
+To: "Junio C Hamano" <junkio@cox.net>
+X-OriginalArrivalTime: 09 Jun 2006 20:45:18.0647 (UTC) FILETIME=[9E603C70:01C68C05]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21555>
 
-Jon Smirl wrote:
+I'm fairly familiar with SSH, but I don't know how to do this.  I just
+did some man commands, didn't see anything there.  Can you give me a
+pointer?
 
-> Martin has also brought up the problem with needing a partial clone so
-> that everyone doesn't have to bring down the entire repository. A
-> trunk checkout is 340MB and Martin's git tree is 2GB (mine 2.7GB).  A
-> kernel tree is only 680M.
 
-Partial/shallow nor lazy clone we don't have (although there might be some
-shallow clone partial solutions in topic branches and/or patches flying
-around in git mailing list). Yet.
+Mark Post 
 
-But you can do what was done for Linux kernel: split repository into current
-and historical, and you can join them (join the history) if needed using
-grafts. And even if one need historical repository, it is neede to
-clone/copy only _once_. With alternatives (using historical repository as
-one of alternatives for current repository) someone who has both
-repositories does need only a little more space, I think, than if one used
-single repository.
+-----Original Message-----
+From: Junio C Hamano [mailto:junkio@cox.net] 
+Sent: Friday, June 09, 2006 4:19 PM
+To: Post, Mark K
+Cc: git@vger.kernel.org
+Subject: Re: Git-daemon messing up permissions for gitweb
 
--- 
-Jakub Narebski
-Warsaw, Poland
+"Post, Mark K" <mark.post@eds.com> writes:
+
+> Martin is using git over SSH.  I have git-shell in /etc/passwd for his
+> account.
+
+Ah, then umask git-shell gets from sshd is too restrictive.
+Loosen it and you will be fine.
