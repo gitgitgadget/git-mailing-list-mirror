@@ -1,72 +1,70 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Figured out how to get Mozilla into git
-Date: Thu, 8 Jun 2006 23:28:30 -0400
-Message-ID: <9e4733910606082028k37f6d915m26009e0d5011808b@mail.gmail.com>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
-	 <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-rm: fix possible segfault
+Date: Thu, 08 Jun 2006 21:15:39 -0700
+Message-ID: <7vverbnevo.fsf@assigned-by-dhcp.cox.net>
+References: <20060609111044.451c94b1@namsh.wimo.co.kr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 09 05:28:49 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 09 06:15:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoXfx-0000QD-RH
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 05:28:46 +0200
+	id 1FoYPQ-00007V-P6
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 06:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965116AbWFID2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 23:28:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965117AbWFID2c
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 23:28:32 -0400
-Received: from nz-out-0102.google.com ([64.233.162.203]:48742 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S965116AbWFID2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 23:28:31 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so961179nze
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 20:28:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nXJJUzYShempc5jLUW23c9NPtvRO6A5p2G7usAEqefCR4hmVW4A7N+Cj4fZ6C/WiloA1ZTGCEw8GCCuK78WGHZ1iMRa6FujLiefvZUqUdHCGfSzzXljH+j+SBIlV9G9UTsYEEG3slq5Zvm7pDovYtQigcKBjHG3hnz7DhmQXpJE=
-Received: by 10.36.148.16 with SMTP id v16mr625020nzd;
-        Thu, 08 Jun 2006 20:28:30 -0700 (PDT)
-Received: by 10.36.37.15 with HTTP; Thu, 8 Jun 2006 20:28:30 -0700 (PDT)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
-Content-Disposition: inline
+	id S965116AbWFIEPm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 00:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965151AbWFIEPm
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 00:15:42 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:13191 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965116AbWFIEPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jun 2006 00:15:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060609041540.FNCG19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 9 Jun 2006 00:15:40 -0400
+To: SungHyun Nam <goweol@gmail.com>
+In-Reply-To: <20060609111044.451c94b1@namsh.wimo.co.kr> (SungHyun Nam's
+	message of "Fri, 9 Jun 2006 11:10:44 +0900")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21526>
 
-On 6/8/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> Jon,
+SungHyun Nam <goweol@gmail.com> writes:
+
+> Signed-off-by: SungHyun Nam <goweol@gmail.com>
 >
-> oh, I went back to a cvsimport that I started a couple days ago.
-> Completed with no problems...
-
-I am using cvsps-2.1-3.fc5, the last time I tried it died in the
-middle of the import. I don't remember why it died. Which cvsps are
-you using? You're saying that it can handle the whole Mozilla CVS now,
-right? I will build a new cvsps from CVS and start it running tonight.
-
-> If you use git-cvsimport, you can safely re-run it on a cronjob to
-> keep it in sync. Not too sure about the cvs2svn => git-svnimport,
-> though git-svnimport does support incremental imports.
-
-I would much rather get a direct CVS import working so that I can do
-incremental updates. I went the SVN route because it was the only
-thing I could get working.
-
-> > Any advice on how to pack this to make it run faster?
+> ---
+>  builtin-rm.c |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
 >
-> git-repack -a -d but it OOMs on my 2GB+2GBswap machine :(
+> diff --git a/builtin-rm.c b/builtin-rm.c
+> index ef2f8b5..aeda415 100644
+> --- a/builtin-rm.c
+> +++ b/builtin-rm.c
+> @@ -83,6 +83,9 @@ int cmd_rm(int argc, const char **argv, 
+>  		}
+>  		die(builtin_rm_usage);
+>  	}
+> +	if (i >= argc)
+> +		usage(builtin_rm_usage);
+> +
+>  	pathspec = get_pathspec(prefix, argv + i);
+>  
+>  	seen = NULL;
 
-We are all having problems getting this to run on 32 bit machines with
-the 3-4GB process size limitations.
+Thanks.  The real problem is it uses pathspec even when no paths
+is specified, but "git rm" without any arguments would remove
+everything under the sun with the normal pathspec semantics, so
+refusing to run when no paths are specified like you did makes
+sense.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+There is a more grave bug in git-rm (I do not use this command
+myself at all, so I did not spot it earlier).  I'll push out a
+fix soonish.
