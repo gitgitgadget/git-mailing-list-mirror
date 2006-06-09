@@ -1,65 +1,56 @@
-From: SungHyun Nam <goweol@gmail.com>
-Subject: [PATCH] git-rm: fix possible segfault
-Date: Fri, 9 Jun 2006 11:10:44 +0900
-Message-ID: <20060609111044.451c94b1@namsh.wimo.co.kr>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Figured out how to get Mozilla into git
+Date: Thu, 8 Jun 2006 22:17:00 -0400
+Message-ID: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 09 04:11:05 2006
+X-From: git-owner@vger.kernel.org Fri Jun 09 04:17:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FoWSc-00068W-Pw
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 04:10:55 +0200
+	id 1FoWYd-000709-Ri
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 04:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbWFICKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Jun 2006 22:10:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbWFICKv
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 22:10:51 -0400
-Received: from nz-out-0102.google.com ([64.233.162.196]:15726 "EHLO
+	id S1751327AbWFICRB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Jun 2006 22:17:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbWFICRB
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jun 2006 22:17:01 -0400
+Received: from nz-out-0102.google.com ([64.233.162.207]:40107 "EHLO
 	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751335AbWFICKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jun 2006 22:10:50 -0400
-Received: by nz-out-0102.google.com with SMTP id 16so479234nzp
-        for <git@vger.kernel.org>; Thu, 08 Jun 2006 19:10:50 -0700 (PDT)
+	id S1751327AbWFICRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jun 2006 22:17:00 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so950274nze
+        for <git@vger.kernel.org>; Thu, 08 Jun 2006 19:17:00 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=Y8RCz/jSMmSvQVEs9vEGb+P38A63AW3cc/kuD5aO0Bdr/WETKoLcc88gezCfbIKB2s8SP+Zpo+dUuEClY9ZOudyOUP3ArFxWNo9OGJwEA7iBeYa96KEGuFnWwh3Praitczt2uMq3E0Y6TNROXTvEmJF9EgiUXOjtFQ8lemt/YmY=
-Received: by 10.37.2.14 with SMTP id e14mr3233112nzi;
-        Thu, 08 Jun 2006 19:10:50 -0700 (PDT)
-Received: from namsh.wimo.co.kr ( [218.147.190.238])
-        by mx.gmail.com with ESMTP id j7sm1591469nzd.2006.06.08.19.10.48;
-        Thu, 08 Jun 2006 19:10:50 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: sylpheed-claws
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=F+XTojvmEloWAUq0TFZ7/A4Mcpf5wG3dSi4I/wstcRxUztDCB5o2rwNK/Fw3xRembBn1tnk42w2zaOjtZM/nrKmE+xZbmAfh6uDxwB4fPC/d8mtYIj1A91DoNFUl0LenLhY3rcu+Yt+d8deTEmBL60IfCHsFdHf8tW52gEp48cs=
+Received: by 10.36.119.8 with SMTP id r8mr3242909nzc;
+        Thu, 08 Jun 2006 19:17:00 -0700 (PDT)
+Received: by 10.36.37.15 with HTTP; Thu, 8 Jun 2006 19:17:00 -0700 (PDT)
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21521>
 
+I was able to import Mozilla into SVN without problem, it just occured
+to me to then import the SVN repository in git. The import has been
+running a few hours now and it is up to the year 2000 (starts in
+1998). Since I haven't hit any errors yet it will probably finish ok.
+I should have the results in the morning. I wonder how long it will
+take to start gitk on a 10GB repository.
 
-Signed-off-by: SungHyun Nam <goweol@gmail.com>
+Once I get this monster into git, are there tools that will let me
+keep it in sync with Mozilla CVS?
+SVN renamed numeric branches to this form, unlabeled-3.7.24, so that
+may be a problem.
 
----
- builtin-rm.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Any advice on how to pack this to make it run faster?
 
-diff --git a/builtin-rm.c b/builtin-rm.c
-index ef2f8b5..aeda415 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
-@@ -83,6 +83,9 @@ int cmd_rm(int argc, const char **argv, 
- 		}
- 		die(builtin_rm_usage);
- 	}
-+	if (i >= argc)
-+		usage(builtin_rm_usage);
-+
- 	pathspec = get_pathspec(prefix, argv + i);
- 
- 	seen = NULL;
 -- 
-1.4.0.rc1.gfd7e
+Jon Smirl
+jonsmirl@gmail.com
