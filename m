@@ -1,43 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "Post, Mark K" <mark.post@eds.com>
 Subject: RE: Git-daemon messing up permissions for gitweb
-Date: Fri, 9 Jun 2006 13:22:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606091321100.5498@g5.osdl.org>
-References: <5A14AF34CFF8AD44A44891F7C9FF41050795787F@usahm236.amer.corp.eds.com>
+Date: Fri, 9 Jun 2006 16:29:17 -0400
+Message-ID: <5A14AF34CFF8AD44A44891F7C9FF410507957889@usahm236.amer.corp.eds.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 09 22:22:49 2006
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Junio C Hamano" <junkio@cox.net>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 09 22:29:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FonV6-0001hS-53
-	for gcvg-git@gmane.org; Fri, 09 Jun 2006 22:22:36 +0200
+	id 1FonbZ-0002vI-7e
+	for gcvg-git@gmane.org; Fri, 09 Jun 2006 22:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932295AbWFIUWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 16:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932287AbWFIUWd
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 16:22:33 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:685 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932257AbWFIUWc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 16:22:32 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k59KMLgt028922
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 9 Jun 2006 13:22:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k59KMI9c028440;
-	Fri, 9 Jun 2006 13:22:20 -0700
-To: "Post, Mark K" <mark.post@eds.com>
-In-Reply-To: <5A14AF34CFF8AD44A44891F7C9FF41050795787F@usahm236.amer.corp.eds.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932257AbWFIU3N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Jun 2006 16:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932173AbWFIU3M
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 16:29:12 -0400
+Received: from ahmler2.mail.eds.com ([192.85.154.72]:38791 "EHLO
+	ahmler2.mail.eds.com") by vger.kernel.org with ESMTP
+	id S932257AbWFIU3K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jun 2006 16:29:10 -0400
+Received: from ahmlir1.mail.eds.com (ahmlir1-2.mail.eds.com [192.85.154.131])
+	by ahmler2.mail.eds.com (8.13.6/8.12.10) with ESMTP id k59KT243022397;
+	Fri, 9 Jun 2006 16:29:04 -0400
+Received: from ahmlir1.mail.eds.com (localhost [127.0.0.1])
+	by ahmlir1.mail.eds.com (8.13.6/8.12.10) with ESMTP id k59KSkgo006226;
+	Fri, 9 Jun 2006 16:28:46 -0400
+Received: from USAHM013.amer.corp.eds.com ([130.175.214.154])
+	by ahmlir1.mail.eds.com (8.13.6/8.12.10) with ESMTP id k59KSkZR006216;
+	Fri, 9 Jun 2006 16:28:46 -0400
+Received: from usahm236.amer.corp.eds.com ([130.175.214.169]) by USAHM013.amer.corp.eds.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 9 Jun 2006 16:29:17 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Git-daemon messing up permissions for gitweb
+Thread-Index: AcaMArf6G3bvNHBeSZaHyvTv9gm7kQAAGCAQ
+To: "Linus Torvalds" <torvalds@osdl.org>
+X-OriginalArrivalTime: 09 Jun 2006 20:29:17.0903 (UTC) FILETIME=[61BA55F0:01C68C03]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21550>
+
+I'm not a C programmer, so I'm not sure exactly how to do what you want.
+Is this right (it compiles)?
+--- shell.c.orig        2006-05-15 16:01:37.000000000 -0400
++++ shell.c     2006-06-09 16:26:24.619808905 -0400
+@@ -31,7 +31,7 @@
+ {
+        char *prog;
+        struct commands *cmd;
+-
++       umask(0022);
+        /* We want to see "-c cmd args", and nothing else */
+        if (argc != 3 || strcmp(argv[1], "-c"))
+                die("What do you think I am? A shell?"); 
+
+I won't be able to report success or failure today.  Martin's in Germany
+and I think he has a life.
+
+
+Mark Post
+
+-----Original Message-----
+From: Linus Torvalds [mailto:torvalds@osdl.org] 
+Sent: Friday, June 09, 2006 4:22 PM
+To: Post, Mark K
+Cc: Junio C Hamano; git@vger.kernel.org
+Subject: RE: Git-daemon messing up permissions for gitweb
 
 
 
@@ -48,7 +83,8 @@ On Fri, 9 Jun 2006, Post, Mark K wrote:
 
 Ahh. git-shell doesn't read .bashrc or anything like that.
 
-Does adding a "umask(0022)" to the beginning of main() in shell.c fix it 
+Does adding a "umask(0022)" to the beginning of main() in shell.c fix it
+
 for you?
 
 		Linus
