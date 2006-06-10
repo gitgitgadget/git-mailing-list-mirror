@@ -1,70 +1,64 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.4.0
-Date: Sun, 11 Jun 2006 00:47:30 +0200
-Message-ID: <4d8e3fd30606101547x46b94058u3bb48ba8d25dc48d@mail.gmail.com>
-References: <7vmzckhfsx.fsf@assigned-by-dhcp.cox.net>
-	 <4d8e3fd30606101537n2d099ee4g5e86956bdfc5cb5@mail.gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [BUG?] git-clone fails on .git/refs/foo
+Date: Sun, 11 Jun 2006 00:50:40 +0200
+Message-ID: <20060610225040.GA7766@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 11 00:47:36 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jun 11 00:50:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpCEx-0004SB-P5
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 00:47:36 +0200
+	id 1FpCI4-0004sb-VJ
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 00:50:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161043AbWFJWrc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 18:47:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161045AbWFJWrc
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 18:47:32 -0400
-Received: from wr-out-0506.google.com ([64.233.184.224]:53312 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1161044AbWFJWrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jun 2006 18:47:31 -0400
-Received: by wr-out-0506.google.com with SMTP id i11so1205618wra
-        for <git@vger.kernel.org>; Sat, 10 Jun 2006 15:47:31 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n4pDFR6UB290Ene2UwV68qhyI5r0teXSDUE39Lkop3Fmv4rEDY0n2SyfouZuc+UnC62ccoxuQnYWEFDjsy4EG5BgKz/azvvrkdDeoFCYr+ylRK4U6pRMvzxt2L/iFhwk7l8JSmnGVnRoXSq9OH1rNNRsr4Ek4RnJQcdD4yTN+og=
-Received: by 10.65.155.18 with SMTP id h18mr3847478qbo;
-        Sat, 10 Jun 2006 15:47:31 -0700 (PDT)
-Received: by 10.64.250.4 with HTTP; Sat, 10 Jun 2006 15:47:30 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <4d8e3fd30606101537n2d099ee4g5e86956bdfc5cb5@mail.gmail.com>
+	id S1751006AbWFJWuq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 18:50:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161047AbWFJWuq
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 18:50:46 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:23490 "EHLO smtp6-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751006AbWFJWuq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Jun 2006 18:50:46 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 24229224F3
+	for <git@vger.kernel.org>; Sun, 11 Jun 2006 00:50:45 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FpCHw-0002Gq-Sf
+	for git@vger.kernel.org; Sun, 11 Jun 2006 00:50:40 +0200
+To: GIT list <git@vger.kernel.org>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21627>
 
-On 6/11/06, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
-> On 6/10/06, Junio C Hamano <junkio@cox.net> wrote:
-> > The latest feature release GIT 1.4.0 is available at the
-> > usual places:
-> >
-> >         http://www.kernel.org/pub/software/scm/git/
->
-> Cannot pull:
->
-> paolo@Italia:~/git$ git pull
-> error: no such remote ref refs/heads/jc/bind
-> Fetch failure: git://www.kernel.org/pub/scm/git/git.git
+Could it be that git-clone has a problem when a ref is not inside a
+subdir of .git/refs ?
 
-Ok, solved doing (as suggested on #git)
-/.git/remotes$ vi origin
-and removed:
-Pull: jc/bind:jc/bind
+Both 1.3.3 and 1.4.0 show the following problem, which prevents
+cloning from this repo:
 
-What happened to that branch?
-
-Thanks.
-
-Ciao,
+$ git-clone http://ydirson.free.fr/soft/git/cvsps.git test
+Getting alternates list for http://ydirson.free.fr/soft/git/cvsps.git/
+Getting pack list for http://ydirson.free.fr/soft/git/cvsps.git/
+Getting index for pack 5d9ec186a71fb6a464878518335275fe7d061a1f
+Getting pack 5d9ec186a71fb6a464878518335275fe7d061a1f
+ which contains de4e8c0aa352effae581924d07d2613799c2a5de
+walk de4e8c0aa352effae581924d07d2613799c2a5de
+walk 3e2d77cddea626fd4513087e0352ff9116f6d93b
+walk a21e7d37b22621c626faf25b32006bb1e6f7055b
+walk 1affe7d46c773d7a2136e66e927b09fa3c6a61d7
+walk fdf44680988ce53173262c8f6cb6b478a6ab04a9
+walk 4e3aa38681c849d6931dd56d958fff6abf3ea38e
+walk bb6b1ea1a785e10bee7bfba294012a821ddc3bd1
+walk ab0095940796152f171d2de4fbd60ecc6ed433c3
+walk cb7644a9650ef8521d5befb5ee43b7525445dc97
+error: Can't lock ref posted0
 
 -- 
-Paolo
-http://paolociarrocchi.googlepages.com
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
