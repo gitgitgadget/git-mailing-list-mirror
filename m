@@ -1,66 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Figured out how to get Mozilla into git
-Date: Fri, 09 Jun 2006 20:55:01 -0700
-Message-ID: <7v3bedll62.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
-	<46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
-	<46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
-	<Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
-	<Pine.LNX.4.64.0606091837040.5498@g5.osdl.org>
-	<9e4733910606091848r5fb4d565taabfc5198140daf2@mail.gmail.com>
-	<Pine.LNX.4.64.0606091853180.5498@g5.osdl.org>
-	<46a038f90606092041neadcc54n2acb6272d1f71de7@mail.gmail.com>
+Date: Fri, 9 Jun 2006 21:02:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606092043460.5498@g5.osdl.org>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com> 
+ <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com> 
+ <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com> 
+ <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>  <Pine.LNX.4.64.0606091837040.5498@g5.osdl.org>
+  <9e4733910606091848r5fb4d565taabfc5198140daf2@mail.gmail.com> 
+ <Pine.LNX.4.64.0606091853180.5498@g5.osdl.org>
+ <46a038f90606092041neadcc54n2acb6272d1f71de7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 10 05:55:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 10 06:02:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FouZ2-0000hF-36
-	for gcvg-git@gmane.org; Sat, 10 Jun 2006 05:55:09 +0200
+	id 1FougU-0001TR-CA
+	for gcvg-git@gmane.org; Sat, 10 Jun 2006 06:02:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030237AbWFJDzE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Jun 2006 23:55:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030256AbWFJDzE
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jun 2006 23:55:04 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:36534 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1030237AbWFJDzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jun 2006 23:55:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060610035502.NSZN6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 9 Jun 2006 23:55:02 -0400
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+	id S932357AbWFJECj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 00:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbWFJECj
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 00:02:39 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:20894 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932357AbWFJECi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Jun 2006 00:02:38 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5A42Zgt018033
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Jun 2006 21:02:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5A42YcD008972;
+	Fri, 9 Jun 2006 21:02:35 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
 In-Reply-To: <46a038f90606092041neadcc54n2acb6272d1f71de7@mail.gmail.com>
-	(Martin Langhoff's message of "Sat, 10 Jun 2006 15:41:39 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+X-Spam-Status: No, hits=0.16 required=5 tests=HTML_MESSAGE
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21593>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> Yes, most people have -z3, and I agree with you, on paper it sounds
-> like the cost is 1/4 of a git clone.
->
-> However.
->
-> The CVS protocol is very chatty because the client _acts_ extremely
-> stupid. It says, ok, I got here an empty directory, and the server
-> walks the client through every little step. And all that chatter is
-> uncompressed cleartext under pserver.
->
+
+On Sat, 10 Jun 2006, Martin Langhoff wrote:
+> 
 > So the per-file and per-directory overhead are significant. I can do a
 > cvs checkout via pserver:localhost but I don't know off-the-cuff how
 > to measure the traffic. Hints?
 
-If you have an otherwise unused interface, you can look at
-ifconfig output and see RX/TX bytes?  But that sounds very
-crude.
+Over localhost, you won't see the biggest issue, which is just latency.
 
-Running it through a proxy perhaps?
+The git protocol should be absolutely <i>wonderful</i> with bad latency, 
+because once the early bakc-and-forth on what each side has is done, 
+there's no synchronization any more - it's all just streaming, with 
+full-frame TCP.
+
+If :pserver: does per-file "hey, what are you up to" kind of 
+syncronization, the big killer would be the latency from one end to the 
+other, regardless of any throughput.
+
+You can try to approximate the latency by just looking at the number of 
+packets, and using a large MTU (and on localhost, the MTU will be pretty 
+large - roughly 16kB. Don't count packet size at all, just count how many 
+packets each protocol sends (both ways), ignoring packets that are just 
+empty ACK's.
+
+I don't know how to build a tcpdump expression for "TCP packet with an 
+empty payload", but I bet it's possible.
+
+[ And I won't guarantee that it's a wonderful approximation for "network 
+  cost", but I think it's potentially a reasonably good one. It's totally 
+  realistic to equate 32kB of _streaming_ data (two packets flowing in 
+  one direction with no synchronization) with just a single byte of data 
+  going back-and-forth synchronously ]
+
+		Linus
