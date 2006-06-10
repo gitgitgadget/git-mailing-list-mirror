@@ -1,80 +1,103 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Figured out how to get Mozilla into git
-Date: Sat, 10 Jun 2006 19:15:52 +0300
-Message-ID: <20060610191552.7d5a44d9.tihirvon@gmail.com>
+Date: Sat, 10 Jun 2006 10:53:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606101041490.5498@g5.osdl.org>
 References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
-	<Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
-	<Pine.LNX.4.64.0606091837040.5498@g5.osdl.org>
-	<9e4733910606091848r5fb4d565taabfc5198140daf2@mail.gmail.com>
-	<Pine.LNX.4.64.0606091853180.5498@g5.osdl.org>
-	<46a038f90606092041neadcc54n2acb6272d1f71de7@mail.gmail.com>
-	<Pine.LNX.4.64.0606092043460.5498@g5.osdl.org>
-	<Pine.LNX.4.64.0606092109380.5498@g5.osdl.org>
-	<9e4733910606092302h646ff554p107564417183e350@mail.gmail.com>
-	<7vr71xk047.fsf@assigned-by-dhcp.cox.net>
-	<9e4733910606100844v5f4765d8o85c9a6f239faed43@mail.gmail.com>
+ <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+ <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
+ <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org> <Pine.LNX.4.64.0606091837040.5498@g5.osdl.org>
+ <9e4733910606091848r5fb4d565taabfc5198140daf2@mail.gmail.com>
+ <Pine.LNX.4.64.0606091853180.5498@g5.osdl.org>
+ <9e4733910606091921o1d07826w8292dc22b1872345@mail.gmail.com>
+ <87y7w5lowc.wl%cworth@cworth.org> <Pine.LNX.4.64.0606092001590.5498@g5.osdl.org>
+ <448A847C.20105@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 10 18:15:56 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 10 19:53:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fp67o-000621-5i
-	for gcvg-git@gmane.org; Sat, 10 Jun 2006 18:15:48 +0200
+	id 1Fp7e9-0001I7-I2
+	for gcvg-git@gmane.org; Sat, 10 Jun 2006 19:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545AbWFJQPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 12:15:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbWFJQPp
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 12:15:45 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:16114 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751543AbWFJQPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jun 2006 12:15:44 -0400
-Received: by nf-out-0910.google.com with SMTP id y38so656204nfb
-        for <git@vger.kernel.org>; Sat, 10 Jun 2006 09:15:43 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=SqEO+pUQV9yGA2IpYYz5gto7A2PY9pnRHC4NNPxk2VcS8uFS8/xt19KmGAdeBPIIaBW/aQFyvSXGXHSeAuxuj2ped0++FWlOZ5sZUIAfMzK0lCO4y7d0TlvsNi1Yz/MXq/k3dD6RBEOfzSfKNwtPdFy6Q6hIaglV9jT88WS7v7U=
-Received: by 10.49.65.12 with SMTP id s12mr3353723nfk;
-        Sat, 10 Jun 2006 09:15:43 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.201.71])
-        by mx.gmail.com with ESMTP id o9sm4524283nfa.2006.06.10.09.15.42;
-        Sat, 10 Jun 2006 09:15:42 -0700 (PDT)
-To: "Jon Smirl" <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606100844v5f4765d8o85c9a6f239faed43@mail.gmail.com>
-X-Mailer: Sylpheed version 2.2.3 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S1030474AbWFJRxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 13:53:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030475AbWFJRxP
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 13:53:15 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57264 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030474AbWFJRxO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Jun 2006 13:53:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5AHrAgt018157
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 10 Jun 2006 10:53:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5AHr9lV028038;
+	Sat, 10 Jun 2006 10:53:10 -0700
+To: Rogan Dawes <lists@dawes.za.net>
+In-Reply-To: <448A847C.20105@dawes.za.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21612>
 
-"Jon Smirl" <jonsmirl@gmail.com> wrote:
 
-> On 6/10/06, Junio C Hamano <junkio@cox.net> wrote:
-> > "Jon Smirl" <jonsmirl@gmail.com> writes:
-> >
-> > > Here's a new transport problem. When using git-clone to fetch Martin's
-> > > tree it kept failing for me at dreamhost. I had a parallel fetch
-> > > running on my local machine which has a much slower net connection. It
-> > > finally finished and I am watching the end phase where it prints all
-> > > of the 'walk' messages. The git-http-fetch process has jumped up to
-> > > 800MB in size after being 2MB during the download. dreamhost has a
-> > > 500MB process size limit so that is why my fetches kept failing there.
-> >
-> > The http-fetch process uses by mmaping the downloaded pack, and
-> > if I recall correctly we are talking about 600MB pack, so 500MB
-> > limit sounds impossible, perhaps?
-> 
-> The fetch on my local machine failed too. It left nothing behind, now
-> I have to download the 680MB again.
 
-That's sad.  Could git-clone be changed to not remove .git directory if
-fetching objects fails (after other files in the .git directory have
-been fetched)?  You could then hopefully continue with git-pull.
+On Sat, 10 Jun 2006, Rogan Dawes wrote:
+>
+> Here's an idea. How about separating trees and commits from the actual blobs
+> (e.g. in separate packs)? My reasoning is that the commits and trees should
+> only be a small portion of the overall repository size, and should not be that
+> expensive to transfer. (Of course, this is only a guess, and needs some
+> numbers to back it up.)
 
--- 
-http://onion.dynserv.net/~timo/
+The trees in particular are actually a pretty big part of the history. 
+
+More importantly, the blobs compress horribly badly in the absense of 
+history - a _lot_ of the compression in git packing comes very much from 
+the fact that we do a good job at delta-compression.
+
+So if you get all of the commit/tree history, but none of the blob 
+history, you're actually not going to win that much space. As already 
+discussed, the _whole_ history packed with git is usually not insanely 
+bigger than just the whole unpacked tree (with no history at all).
+
+So you'd think that getting just the top version of the tree would be a 
+much bigger space-saving that it actually is. If you _also_ get all the 
+tree and commit objects, the space saving is even less.
+
+I actually suspect that the most realistic way to handle this is to use 
+the "fetch.c" logic (ie the incremental fetcher used by http), and add 
+some mode to the git daemon where you fetch literally one object at a time 
+(ie this would be totally _separate_ from the pack-file thing: you'd not 
+ask for "git-upload-pack", you'd ask for something like 
+"git-serve-objects" instead).
+
+The fetch.c logic really does allow for on-demand object fetching, and is 
+thus much more suitable for incomplete repositories.
+
+HOWEVER. The fetch.c logic - by necessity - works on a object-by-object 
+level. That means that you'd get no delta compression AT ALL, and I 
+suspect that the downside of that would be a factor of ten expansion or 
+more, which means that it would really not work that well in practice.
+
+It might be worth testing, though. It would work fine for the "after I 
+have the initial cauterized tree, fetch small incremental updates" case. 
+The operative word here being "small" and "incremental", because I'm 
+pretty sure it really would suck for the case of a big fetch.
+
+But it would be _simple_, which is why it's worth trying out. It also has 
+the advantage that it would solve the "I had data corruption on my disk, 
+and lost 100 objects, but all the the rest is fine" issue. Again, that's 
+not something that the efficient packing protocol handles, exactly because 
+it assumes full history, and uses that to do all its optimizations.
+
+		Linus
