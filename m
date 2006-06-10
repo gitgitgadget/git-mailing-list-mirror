@@ -1,92 +1,63 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] shared repository settings enhancement.
-Date: Fri, 9 Jun 2006 21:39:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606092131150.5498@g5.osdl.org>
-References: <5A14AF34CFF8AD44A44891F7C9FF410507957896@usahm236.amer.corp.eds.com>
- <7virnam435.fsf@assigned-by-dhcp.cox.net> <7vver9lu8g.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606091743410.5498@g5.osdl.org> <7v8xo5lleo.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606092103170.5498@g5.osdl.org> <7vver9k5gg.fsf@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Figured out how to get Mozilla into git
+Date: Sat, 10 Jun 2006 02:02:58 -0400
+Message-ID: <9e4733910606092302h646ff554p107564417183e350@mail.gmail.com>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+	 <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+	 <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
+	 <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
+	 <Pine.LNX.4.64.0606091837040.5498@g5.osdl.org>
+	 <9e4733910606091848r5fb4d565taabfc5198140daf2@mail.gmail.com>
+	 <Pine.LNX.4.64.0606091853180.5498@g5.osdl.org>
+	 <46a038f90606092041neadcc54n2acb6272d1f71de7@mail.gmail.com>
+	 <Pine.LNX.4.64.0606092043460.5498@g5.osdl.org>
+	 <Pine.LNX.4.64.0606092109380.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 10 06:40:06 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 10 08:03:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FovGW-0005WS-9Z
-	for gcvg-git@gmane.org; Sat, 10 Jun 2006 06:40:04 +0200
+	id 1FowYq-0005ne-Bv
+	for gcvg-git@gmane.org; Sat, 10 Jun 2006 08:03:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932283AbWFJEju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 00:39:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbWFJEju
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 00:39:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:61091 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932283AbWFJEju (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jun 2006 00:39:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5A4dkgt019507
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 9 Jun 2006 21:39:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5A4dj7q009804;
-	Fri, 9 Jun 2006 21:39:45 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vver9k5gg.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030290AbWFJGDA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 02:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030303AbWFJGDA
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 02:03:00 -0400
+Received: from nz-out-0102.google.com ([64.233.162.196]:43745 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1030290AbWFJGC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jun 2006 02:02:59 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so1255404nze
+        for <git@vger.kernel.org>; Fri, 09 Jun 2006 23:02:59 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DKmMGRWwLN8d3BrC20EZIfFXWwWNAukIA5xx6+iYkJEKBWwwrfzzb2MnfnVydC4MLZnRrt34icMI7MkBPlxjmfpKezneTTxEmzvD5T+OjybxE/2dnSr7xOcCyCSVk2No73iHprG5oC8g7XEhRpWw3qEE3MTilhqSF3rk2HUgdJw=
+Received: by 10.37.15.20 with SMTP id s20mr3777732nzi;
+        Fri, 09 Jun 2006 23:02:58 -0700 (PDT)
+Received: by 10.36.36.7 with HTTP; Fri, 9 Jun 2006 23:02:58 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606092109380.5498@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21598>
 
+Here's a new transport problem. When using git-clone to fetch Martin's
+tree it kept failing for me at dreamhost. I had a parallel fetch
+running on my local machine which has a much slower net connection. It
+finally finished and I am watching the end phase where it prints all
+of the 'walk' messages. The git-http-fetch process has jumped up to
+800MB in size after being 2MB during the download. dreamhost has a
+500MB process size limit so that is why my fetches kept failing there.
 
-
-On Fri, 9 Jun 2006, Junio C Hamano wrote:
-> 
-> Yes, the user can mistype "gruop", people would start making
-> noises about having "world" as a synonym for "everybody", and
-> the parsing becomes somewhat cumbersome, and all that trouble,
-> but on the other hand that is probably the easiest to explain.
-
-Actually, it's quite easy to parse using the git config file parsers.
-
-Let's say that 0 means umask, 1 means group, 2 means user and 3 means 
-everybody. That leaves "0/1" with the old false/true behaviour, and leaves 
-umask as the default.
-
-So we'd have
-
-	enum sharedrepo {
-		PERM_UMASK = 0,
-		PERM_GROUP,
-		PERM_USER,
-		PERM_EVERYBODY
-	};
-
-	int git_config_perm(const char *var, const char *value)
-	{
-		if (!strncmp(value, "umask"))
-			return PERM_UMASK;
-		if (!strncmp(value, "group"))
-			return PERM_GROUP;
-		if (!strncmp(value, "user"))
-			return PERM_USER;
-		if (!strncmp(value, "world") || !strncmp(value, "everybody"))
-			return PERM_EVERYBODY;
-		return git_config_bool(var, value);
-	}
-
-and then in check_repository_format_version() you just have
-
-	..
-	else if (strcmp(var, "core.sharedrepository") == 0)
-		shared_repository = git_config_perm(var, value);
-	..
-
-instead of git_config_bool() there, and you're done. That's not so bad, is 
-it?
-
-		Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
