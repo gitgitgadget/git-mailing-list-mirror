@@ -1,58 +1,50 @@
-From: Yann Dirson <ydirson@altern.org>
+From: Christian Biesinger <cbiesinger@web.de>
 Subject: Re: [PATCH] Ignore commits for which cvsps can't identify a branch
-Date: Sat, 10 Jun 2006 21:24:57 +0200
-Message-ID: <20060610192457.GA6620@nowhere.earth>
-References: <200602102102.k1AL2Xkd010415@biesi.no-ip.org>
+Date: Sat, 10 Jun 2006 21:45:46 +0200
+Message-ID: <448B216A.6010801@web.de>
+References: <200602102102.k1AL2Xkd010415@biesi.no-ip.org> <20060610192457.GA6620@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 10 21:25:15 2006
+X-From: git-owner@vger.kernel.org Sat Jun 10 21:46:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fp952-0005Dz-PF
-	for gcvg-git@gmane.org; Sat, 10 Jun 2006 21:25:09 +0200
+	id 1Fp9PI-0007tt-5H
+	for gcvg-git@gmane.org; Sat, 10 Jun 2006 21:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbWFJTY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 15:24:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbWFJTY5
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 15:24:57 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:34022 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1751266AbWFJTY4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jun 2006 15:24:56 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 84C7F2488C;
-	Sat, 10 Jun 2006 21:24:55 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1Fp94r-000214-SB; Sat, 10 Jun 2006 21:24:57 +0200
-To: Christian Biesinger <cbiesinger@web.de>
-Content-Disposition: inline
-In-Reply-To: <200602102102.k1AL2Xkd010415@biesi.no-ip.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1161005AbWFJTpv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 15:45:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161003AbWFJTpv
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 15:45:51 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:56811 "EHLO
+	fmmailgate03.web.de") by vger.kernel.org with ESMTP
+	id S1161007AbWFJTpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jun 2006 15:45:51 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id D9E171E033F;
+	Sat, 10 Jun 2006 21:45:49 +0200 (CEST)
+Received: from [85.124.19.211] (helo=[192.168.1.4])
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.107 #114)
+	id 1Fp9P3-0003tn-00; Sat, 10 Jun 2006 21:45:49 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060610 SeaMonkey/1.5a
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060610192457.GA6620@nowhere.earth>
+X-Sender: cbiesinger@web.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21618>
 
-On Fri, Feb 10, 2006 at 10:02:33PM +0100, Christian Biesinger wrote:
-> cvps sometimes can't identify a branch for a specific revision, it shows
-> messages like:
->   WARNING: revision 1.36.2.2 of file Makefile.in on unnamed branch
-> and uses #CVSPS_NO_BRANCH as branch name in its output.
+Yann Dirson wrote:
+> I have seen such CVSPS_NO_BRANCH things with "cvsps -u", and could
+> always get rid of it using "cvspx -x".  Christian, did you try to run
+> "cvsps -x" to be sure the cache is valid, and did it get rid of the
+> CVSPS_NO_BRANCH ?  It could help if you could make a cvsps cache
+> available, which exhibits the problem.
 
-This issue is a bit old, but still...
-
-I have seen such CVSPS_NO_BRANCH things with "cvsps -u", and could
-always get rid of it using "cvspx -x".  Christian, did you try to run
-"cvsps -x" to be sure the cache is valid, and did it get rid of the
-CVSPS_NO_BRANCH ?  It could help if you could make a cvsps cache
-available, which exhibits the problem.
-
-Best regards,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+I'm pretty sure that I did use -x and didn't have a cache. Unfortunately 
+I don't have anything about that cvsps setup available anymore.
