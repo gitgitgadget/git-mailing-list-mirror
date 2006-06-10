@@ -1,178 +1,112 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] Built-in git-get-tar-commit-id (was: [PATCH/RFC] Retire SIMPLE_*** stuff.)
-Date: Sat, 10 Jun 2006 16:13:41 +0200
-Message-ID: <20060610141341.GA5787@lsrfire.ath.cx>
-References: <5A14AF34CFF8AD44A44891F7C9FF410507957896@usahm236.amer.corp.eds.com> <7virnam435.fsf@assigned-by-dhcp.cox.net> <7v3bedn8ym.fsf_-_@assigned-by-dhcp.cox.net>
+From: Rogan Dawes <discard@dawes.za.net>
+Subject: Re: Figured out how to get Mozilla into git
+Date: Sat, 10 Jun 2006 16:47:38 +0200
+Message-ID: <448ADB8A.3070506@dawes.za.net>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>	<46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>	<46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>	<Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>	<Pine.LNX.4.64.0606091837040.5498@g5.osdl.org>	<9e4733910606091848r5fb4d565taabfc5198140daf2@mail.gmail.com>	<Pine.LNX.4.64.0606091853180.5498@g5.osdl.org>	<9e4733910606091921o1d07826w8292dc22b1872345@mail.gmail.com>	<87y7w5lowc.wl%cworth@cworth.org>	<Pine.LNX.4.64.0606092001590.5498@g5.osdl.org>	<448A847C.20105@dawes.za.net> <7vzmglgyz0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 10 16:13:48 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 10 16:47:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fp4Dh-000803-CS
-	for gcvg-git@gmane.org; Sat, 10 Jun 2006 16:13:45 +0200
+	id 1Fp4kj-0003Y5-48
+	for gcvg-git@gmane.org; Sat, 10 Jun 2006 16:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030365AbWFJONn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 10:13:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030385AbWFJONm
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 10:13:42 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:50896
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1030365AbWFJONm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jun 2006 10:13:42 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id 7EFBA12296; Sat, 10 Jun 2006 16:13:41 +0200 (CEST)
+	id S1030422AbWFJOru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 10:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030434AbWFJOru
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 10:47:50 -0400
+Received: from mailbigip2.dreamhost.com ([208.97.132.53]:2204 "EHLO
+	spunkymail-a3.dreamhost.com") by vger.kernel.org with ESMTP
+	id S1030422AbWFJOrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jun 2006 10:47:49 -0400
+Received: from [192.168.201.67] (dsl-165-2-55.telkomadsl.co.za [165.165.2.55])
+	by spunkymail-a3.dreamhost.com (Postfix) with ESMTP id DEA34111E2D;
+	Sat, 10 Jun 2006 07:47:46 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
+Newsgroups: gmane.comp.version-control.git
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v3bedn8ym.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <7vzmglgyz0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21607>
 
-By being an internal command git-get-commit-id can make use of
-struct ustar_header and other stuff and stops wasting precious
-disk space.
+Junio C Hamano wrote:
+> Rogan Dawes <lists@dawes.za.net> writes:
+> 
+>> Here's an idea. How about separating trees and commits from the actual
+>> blobs (e.g. in separate packs)?
+> 
+> If I remember my numbers correctly, trees for any project with a
+> size that matters contribute nonnegligible amount of the total
+> pack weight.  Perhaps 10-25%.
 
-Note: I recycled one of the two "tar-tree" entries instead of
-splitting that cleanup into a separate patch.
+Out of curiosity, do you think that it may be possible for tree objects 
+to compress more/better if they are packed together? Or does the 
+existing pack compression logic already do the diff against similar tree 
+objects?
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+>> In this way, the user has a history that will show all of the commit
+>> messages, and would be able to see _which_ files have changed over
+>> time e.g. gitk would still work - except for the actual file level
+>> diff, "git log" should also still work, etc
+> 
+> I suspect it would make a very unpleasant system to use.
+> Sometimes "git diff -p" would show diffs, and other times it
+> mysteriously complain saying that it lacks necessary blobs to do
+> its job.  You cannot even run fsck and tell from its output
+> which missing objects are OK (because you chose to create such a
+> sparse repository) and which are real corruption.
 
-diff --git a/Makefile b/Makefile
-index 5226fa1..2a1e639 100644
---- a/Makefile
-+++ b/Makefile
-@@ -142,11 +142,11 @@ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)
- 	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
- 	  git-cherry-pick git-status
- 
- # The ones that do not have to link with lcrypto, lz nor xdiff.
- SIMPLE_PROGRAMS = \
--	git-get-tar-commit-id$X git-mailsplit$X \
-+	git-mailsplit$X \
- 	git-stripspace$X git-daemon$X
- 
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS = \
- 	git-checkout-index$X git-clone-pack$X \
-@@ -167,11 +167,11 @@ PROGRAMS = \
- BUILT_INS = git-log$X git-whatchanged$X git-show$X \
- 	git-count-objects$X git-diff$X git-push$X \
- 	git-grep$X git-add$X git-rm$X git-rev-list$X \
- 	git-check-ref-format$X git-rev-parse$X \
- 	git-init-db$X git-tar-tree$X git-upload-tar$X git-format-patch$X \
--	git-ls-files$X git-ls-tree$X \
-+	git-ls-files$X git-ls-tree$X git-get-tar-commit-id$X \
- 	git-read-tree$X git-commit-tree$X \
- 	git-apply$X git-show-branch$X git-diff-files$X \
- 	git-diff-index$X git-diff-stages$X git-diff-tree$X git-cat-file$X
- 
- # what 'all' will build and 'install' will install, in gitexecdir
-diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
-index 7663b9b..58a8ccd 100644
---- a/builtin-tar-tree.c
-+++ b/builtin-tar-tree.c
-@@ -400,5 +400,30 @@ int cmd_tar_tree(int argc, const char **
- 		usage(tar_tree_usage);
- 	if (!strncmp("--remote=", argv[1], 9))
- 		return remote_tar(argc, argv);
- 	return generate_tar(argc, argv, envp);
- }
-+
-+/* ustar header + extended global header content */
-+#define HEADERSIZE (2 * RECORDSIZE)
-+
-+int cmd_get_tar_commit_id(int argc, const char **argv, char **envp)
-+{
-+	char buffer[HEADERSIZE];
-+	struct ustar_header *header = (struct ustar_header *)buffer;
-+	char *content = buffer + RECORDSIZE;
-+	ssize_t n;
-+
-+	n = xread(0, buffer, HEADERSIZE);
-+	if (n < HEADERSIZE)
-+		die("git-get-tar-commit-id: read error");
-+	if (header->typeflag[0] != 'g')
-+		return 1;
-+	if (memcmp(content, "52 comment=", 11))
-+		return 1;
-+
-+	n = xwrite(1, content + 11, 41);
-+	if (n < 41)
-+		die("git-get-tar-commit-id: write error");
-+
-+	return 0;
-+}
-diff --git a/builtin.h b/builtin.h
-index ffa9340..b9f36be 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -30,10 +30,11 @@ extern int cmd_add(int argc, const char 
- extern int cmd_rev_list(int argc, const char **argv, char **envp);
- extern int cmd_check_ref_format(int argc, const char **argv, char **envp);
- extern int cmd_init_db(int argc, const char **argv, char **envp);
- extern int cmd_tar_tree(int argc, const char **argv, char **envp);
- extern int cmd_upload_tar(int argc, const char **argv, char **envp);
-+extern int cmd_get_tar_commit_id(int argc, const char **argv, char **envp);
- extern int cmd_ls_files(int argc, const char **argv, char **envp);
- extern int cmd_ls_tree(int argc, const char **argv, char **envp);
- extern int cmd_read_tree(int argc, const char **argv, char **envp);
- extern int cmd_commit_tree(int argc, const char **argv, char **envp);
- extern int cmd_apply(int argc, const char **argv, char **envp);
-diff --git a/get-tar-commit-id.c b/get-tar-commit-id.c
-deleted file mode 100644
-index 4166290..0000000
---- a/get-tar-commit-id.c
-+++ /dev/null
-@@ -1,30 +0,0 @@
--/*
-- * Copyright (C) 2005 Rene Scharfe
-- */
--#include <stdio.h>
--#include <string.h>
--#include <unistd.h>
--
--#define HEADERSIZE	1024
--
--int main(int argc, char **argv)
--{
--	char buffer[HEADERSIZE];
--	ssize_t n;
--
--	n = read(0, buffer, HEADERSIZE);
--	if (n < HEADERSIZE) {
--		fprintf(stderr, "read error\n");
--		return 3;
--	}
--	if (buffer[156] != 'g')
--		return 1;
--	if (memcmp(&buffer[512], "52 comment=", 11))
--		return 1;
--	n = write(1, &buffer[523], 41);
--	if (n < 41) {
--		fprintf(stderr, "write error\n");
--		return 2;
--	}
--	return 0;
--}
-diff --git a/git.c b/git.c
-index 6db8f2b..9469d44 100644
---- a/git.c
-+++ b/git.c
-@@ -161,11 +161,11 @@ static void handle_internal_command(int 
- 		{ "grep", cmd_grep },
- 		{ "rm", cmd_rm },
- 		{ "add", cmd_add },
- 		{ "rev-list", cmd_rev_list },
- 		{ "init-db", cmd_init_db },
--		{ "tar-tree", cmd_tar_tree },
-+		{ "get-tar-commit-id", cmd_get_tar_commit_id },
- 		{ "upload-tar", cmd_upload_tar },
- 		{ "check-ref-format", cmd_check_ref_format },
- 		{ "ls-files", cmd_ls_files },
- 		{ "ls-tree", cmd_ls_tree },
- 		{ "tar-tree", cmd_tar_tree },
+The fsck problem could be worked around by maintaining a list of objects 
+that are explicitly not expected to be present. As the list gets shorter 
+(perhaps as diffs are performed, other parts of the blob history are 
+retrieved, etc), the list will get shorter until we have a complete 
+clone of the original tree.
+
+Of course diffs against a version further back in the history would 
+fail. But if you start with a checkout of a complete tree, any changes 
+made since that point would at least have one version to compare against.
+
+In effect, what we would have is a caching repository (or as Jakub said, 
+a lazy clone). An initial checkout would effectively be pre-seeding the 
+cache. One does not necessarily even need to get the complete set of 
+commit and tree objects, either. The bare minimum would probably be to 
+get the HEAD commit, and the tree objects that correspond to that commit.
+
+At that point, one could populate the "uncached objects" list with the 
+parent commits. One would not be in a position to get any history at 
+all, of course.
+
+As the user performs various operations, e.g. git log, git could either 
+go and fetch the necessary objects (updating the uncached list as it 
+goes), or fail with a message such as "Cannot perform the requested 
+operation - required objects are not available". (We may require another 
+utility that would list the objects required for an operation, and 
+compare it against the list of "uncached objects", printing out a list 
+of which are not yet available locally. I realise that this may be 
+expensive. Maybe a repo configuration option "cached" to enable or 
+disable this.)
+
+As Jakub suggested, it would be necessary to configure the location of 
+the source for any missing objects, but that is probably in the repo 
+config anyway.
+
+> A shallow clone with explicit cauterization in grafts file at
+> least would not have that problem. Although the user will still
+> not see the exact same result as what would happen in a full
+> repository, at least we can say "your git log ends at that
+> commit because your copy of the history does not go back beyond
+> that" and the user would understand.
+
+Or, we could say, perform the operation while you are online, and can 
+access the necessary objects. If the user has explicitly chosen to make 
+a lazy clone, then they should expect that at some point, whatever they 
+do may require them to be online to access items that they have not yet 
+cloned.
+
+Rogan
