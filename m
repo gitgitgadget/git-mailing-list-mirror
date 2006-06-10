@@ -1,69 +1,62 @@
-From: Tilman Sauerbeck <tilman@code-monkey.de>
-Subject: Re: [ANNOUNCE] GIT 1.4.0
-Date: Sun, 11 Jun 2006 00:05:22 +0200
-Message-ID: <20060610220519.GA6354@code-monkey.de>
-References: <7vmzckhfsx.fsf@assigned-by-dhcp.cox.net>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: Git-daemon messing up permissions for gitweb
+Date: Sun, 11 Jun 2006 00:30:53 +0200
+Message-ID: <20060610223053.GC5825@steel.home>
+References: <5A14AF34CFF8AD44A44891F7C9FF410507957896@usahm236.amer.corp.eds.com> <20060610213051.GB5825@steel.home> <Pine.LNX.4.64.0606101439530.5498@g5.osdl.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="M9NhX3UHpAaciwkO"
-X-From: git-owner@vger.kernel.org Sun Jun 11 00:05:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "Post, Mark K" <mark.post@eds.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 11 00:31:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpBaI-0006xC-HJ
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 00:05:34 +0200
+	id 1FpBz5-00026c-Ce
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 00:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161031AbWFJWF2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 18:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161032AbWFJWF2
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 18:05:28 -0400
-Received: from code-monkey.de ([81.169.170.126]:42211 "EHLO code-monkey.de")
-	by vger.kernel.org with ESMTP id S1161031AbWFJWF2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jun 2006 18:05:28 -0400
-Received: from hammerfest (N12e1.n.pppool.de [89.50.18.225])
-	by code-monkey.de (Postfix) with ESMTP id F3D6678A7
-	for <git@vger.kernel.org>; Sun, 11 Jun 2006 00:05:25 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S1161042AbWFJWbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 18:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161043AbWFJWbI
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 18:31:08 -0400
+Received: from mailout01.sul.t-online.com ([194.25.134.80]:58278 "EHLO
+	mailout01.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1161042AbWFJWbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jun 2006 18:31:06 -0400
+Received: from fwd31.aul.t-online.de 
+	by mailout01.sul.t-online.com with smtp 
+	id 1FpByt-0000FN-00; Sun, 11 Jun 2006 00:30:59 +0200
+Received: from tigra.home (Zqcc0ZZO8elCTKdabA6Z-Q6oiCKpE7wAW86JSIJlmnILQs0ZYsOaop@[84.160.94.32]) by fwd31.sul.t-online.de
+	with esmtp id 1FpByo-1RGqPI0; Sun, 11 Jun 2006 00:30:54 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C9939277B5;
+	Sun, 11 Jun 2006 00:30:53 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FpByn-0003kp-8g; Sun, 11 Jun 2006 00:30:53 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7vmzckhfsx.fsf@assigned-by-dhcp.cox.net>
-User-Agent: mutt-ng/devel-r796 (Linux)
+In-Reply-To: <Pine.LNX.4.64.0606101439530.5498@g5.osdl.org>
+User-Agent: Mutt/1.5.6i
+X-ID: Zqcc0ZZO8elCTKdabA6Z-Q6oiCKpE7wAW86JSIJlmnILQs0ZYsOaop
+X-TOI-MSGID: 98dd553d-2675-4d89-942a-f5eea03693f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21624>
 
+Linus Torvalds, Sat, Jun 10, 2006 23:41:52 +0200:
+> >
+> >      ~/.ssh/rc
+> > 
+> > AFAIK, it was always there.
+> 
+> Note that since umask is a per-process flag, and only inherited from 
+> parents to children, not the other way around, if the rc file is run as a 
+> separate shell script (and I assume it is) instead of "sourced" from the 
+> the shell that actually executes the programs you run, then this won't 
+> help at all.
 
---M9NhX3UHpAaciwkO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Junio C Hamano [2006-06-10 14:16]:
-> 	git-htmldocs-1.4.0.tar.{gz,bz2}		(preformatted documentation)
-> 	git-manpages-1.4.0.tar.{gz,bz2}		(preformatted documentation)
-
-Thanks! :)
-
-Regards,
-Tilman
-
---=20
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-A: Top-posting.
-Q: What is the most annoying thing on usenet and in e-mail?
-
---M9NhX3UHpAaciwkO
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQFEi0If27uLisrW2w8RAnM2AJ4gG2bX8skERqfvSpQ7m8lRE57BVQCcCnuy
-KOg6SfH8LZm5uc4Y62wM/8I=
-=41RD
------END PGP SIGNATURE-----
-
---M9NhX3UHpAaciwkO--
+Right, it doesn't. I should have tried ~/.ssh/rc with umask, really.
+Because of this it can't be used for environment too (that's why they
+have ~/.ssh/environment).
