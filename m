@@ -1,62 +1,60 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: Git-daemon messing up permissions for gitweb
-Date: Sun, 11 Jun 2006 00:30:53 +0200
-Message-ID: <20060610223053.GC5825@steel.home>
-References: <5A14AF34CFF8AD44A44891F7C9FF410507957896@usahm236.amer.corp.eds.com> <20060610213051.GB5825@steel.home> <Pine.LNX.4.64.0606101439530.5498@g5.osdl.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.4.0
+Date: Sun, 11 Jun 2006 00:37:04 +0200
+Message-ID: <4d8e3fd30606101537n2d099ee4g5e86956bdfc5cb5@mail.gmail.com>
+References: <7vmzckhfsx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Post, Mark K" <mark.post@eds.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 11 00:31:14 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 11 00:37:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpBz5-00026c-Ce
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 00:31:12 +0200
+	id 1FpC4y-0002zO-6u
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 00:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161042AbWFJWbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 18:31:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161043AbWFJWbI
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 18:31:08 -0400
-Received: from mailout01.sul.t-online.com ([194.25.134.80]:58278 "EHLO
-	mailout01.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1161042AbWFJWbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jun 2006 18:31:06 -0400
-Received: from fwd31.aul.t-online.de 
-	by mailout01.sul.t-online.com with smtp 
-	id 1FpByt-0000FN-00; Sun, 11 Jun 2006 00:30:59 +0200
-Received: from tigra.home (Zqcc0ZZO8elCTKdabA6Z-Q6oiCKpE7wAW86JSIJlmnILQs0ZYsOaop@[84.160.94.32]) by fwd31.sul.t-online.de
-	with esmtp id 1FpByo-1RGqPI0; Sun, 11 Jun 2006 00:30:54 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C9939277B5;
-	Sun, 11 Jun 2006 00:30:53 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FpByn-0003kp-8g; Sun, 11 Jun 2006 00:30:53 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1750989AbWFJWhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 18:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750727AbWFJWhH
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 18:37:07 -0400
+Received: from wr-out-0506.google.com ([64.233.184.225]:4667 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750989AbWFJWhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jun 2006 18:37:05 -0400
+Received: by wr-out-0506.google.com with SMTP id i11so1204657wra
+        for <git@vger.kernel.org>; Sat, 10 Jun 2006 15:37:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pFXjq/YuvjgSA0tvoHQkzZGNi+YXt3sNZtare3pqX7Cpy8pW4dOE46jreF+htLgQkT2LW0d/zG/Mw8q+zFVCZlklAfacelSNJQtRT6NL1xZe4ZHOJOJgSoktsaSZE5eX2Qe4fU8K0IhlAsHnBuj6RovkNiYVHC98fgwnaDjTLcg=
+Received: by 10.65.204.8 with SMTP id g8mr3821645qbq;
+        Sat, 10 Jun 2006 15:37:04 -0700 (PDT)
+Received: by 10.64.250.4 with HTTP; Sat, 10 Jun 2006 15:37:04 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vmzckhfsx.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606101439530.5498@g5.osdl.org>
-User-Agent: Mutt/1.5.6i
-X-ID: Zqcc0ZZO8elCTKdabA6Z-Q6oiCKpE7wAW86JSIJlmnILQs0ZYsOaop
-X-TOI-MSGID: 98dd553d-2675-4d89-942a-f5eea03693f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21625>
 
-Linus Torvalds, Sat, Jun 10, 2006 23:41:52 +0200:
-> >
-> >      ~/.ssh/rc
-> > 
-> > AFAIK, it was always there.
-> 
-> Note that since umask is a per-process flag, and only inherited from 
-> parents to children, not the other way around, if the rc file is run as a 
-> separate shell script (and I assume it is) instead of "sourced" from the 
-> the shell that actually executes the programs you run, then this won't 
-> help at all.
+On 6/10/06, Junio C Hamano <junkio@cox.net> wrote:
+> The latest feature release GIT 1.4.0 is available at the
+> usual places:
+>
+>         http://www.kernel.org/pub/software/scm/git/
 
-Right, it doesn't. I should have tried ~/.ssh/rc with umask, really.
-Because of this it can't be used for environment too (that's why they
-have ~/.ssh/environment).
+Cannot pull:
+
+paolo@Italia:~/git$ git pull
+error: no such remote ref refs/heads/jc/bind
+Fetch failure: git://www.kernel.org/pub/scm/git/git.git
+
+Am I alone?
+
+Ciao,
+-- 
+Paolo
+http://paolociarrocchi.googlepages.com
