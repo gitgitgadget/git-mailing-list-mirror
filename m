@@ -1,59 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem upgrading to 1.4.0
-Date: Sat, 10 Jun 2006 19:12:25 -0700
-Message-ID: <7v1wtwh246.fsf@assigned-by-dhcp.cox.net>
-References: <93c3eada0606101707t5eb35a4du3ebd0fd17737943f@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: gitweb.cgi history not shown
+Date: Sun, 11 Jun 2006 07:31:17 +0200
+Message-ID: <e5bfff550606102231o756f6d11lc46fecdad29568c0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Geoff Russell <geoffrey.russell@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 11 04:12:37 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 11 07:31:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpFRF-00037J-V3
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 04:12:32 +0200
+	id 1FpIXg-0002Ni-Rr
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 07:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbWFKCM1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 22:12:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbWFKCM1
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 22:12:27 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:46027 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751555AbWFKCM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jun 2006 22:12:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060611021226.VNYZ11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 10 Jun 2006 22:12:26 -0400
-To: git@vger.kernel.org
-In-Reply-To: <93c3eada0606101707t5eb35a4du3ebd0fd17737943f@mail.gmail.com>
-	(Geoff Russell's message of "Sun, 11 Jun 2006 09:37:16 +0930")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932098AbWFKFbS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 01:31:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbWFKFbS
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 01:31:18 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:12940 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932098AbWFKFbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jun 2006 01:31:17 -0400
+Received: by py-out-1112.google.com with SMTP id x31so1361774pye
+        for <git@vger.kernel.org>; Sat, 10 Jun 2006 22:31:17 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=lQwPleigkcr6FgaNWZgdqCPGDIIug4p2CSq5NTN0NpOgbBMaZGazxrmYTJR0jXUphpWrwOm1qIoNc6Sy0R6Mxw0iEz2pbEbBgpF5Ggmd+Ome1cBy5LU6pk1Zm11dfrkIG4PKREyKWFSqEIV6CT0TZ/njR+m6H/RQ1sXNLTkPCPU=
+Received: by 10.35.106.15 with SMTP id i15mr5320206pym;
+        Sat, 10 Jun 2006 22:31:17 -0700 (PDT)
+Received: by 10.35.95.9 with HTTP; Sat, 10 Jun 2006 22:31:17 -0700 (PDT)
+To: junkio@cox.net
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21632>
 
-"Geoff Russell" <geoffrey.russell@gmail.com> writes:
+What I do wrong?
 
-> Hi,
->
-> When I do a "git pull origin" I get messages:
->
->             error: no such remote ref refs/heads/gb/diffdelta
->             error: no such remote ref refs/heads/jc/bind
->             error: no such remote ref refs/heads/jc/bind-2
->             ...
->             Fetch failure: git://git.kernel.org/pub/scm/git/git.git
->...
-> So I went into .git/remotes/origin and
-> removed the lines pointing at these branches and removed the gb and jc
-> directories
-> and did another git pull and it seems to have worked.
+$ git-rev-list --all -- gitweb/gitweb.cgi
+0a8f4f0020cb35095005852c0797f0b90e9ebb74
+$ git-rev-list --all -- gitweb.cgi
+$
 
-This is the second time this same gotcha caused trouble here.  I
-agree it would be sensible to make git-fetch (which is called by
-git-pull) to detect stale entries in the remotes/origin file and
-remote.origin.fetch configuration items.
+Also the installed gitweb at kernel.org gives an empty history for
+file gitweb.cgi under git repository, while the history is correctly
+shown for the same file under the gitweb project.
+
+    Marco
