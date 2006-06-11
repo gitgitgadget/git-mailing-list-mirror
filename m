@@ -1,51 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 1.4.0
-Date: Sat, 10 Jun 2006 16:42:57 -0700
-Message-ID: <7virn8h91a.fsf@assigned-by-dhcp.cox.net>
-References: <7vmzckhfsx.fsf@assigned-by-dhcp.cox.net>
-	<4d8e3fd30606101537n2d099ee4g5e86956bdfc5cb5@mail.gmail.com>
-	<4d8e3fd30606101547x46b94058u3bb48ba8d25dc48d@mail.gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Problem upgrading to 1.4.0
+Date: Sun, 11 Jun 2006 09:37:16 +0930
+Message-ID: <93c3eada0606101707t5eb35a4du3ebd0fd17737943f@mail.gmail.com>
+Reply-To: geoff@austrics.com.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 11 01:43:17 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jun 11 02:07:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpD6d-00034e-LR
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 01:43:04 +0200
+	id 1FpDUG-0005Gg-Mz
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 02:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161054AbWFJXm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Jun 2006 19:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161055AbWFJXm7
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 19:42:59 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:7875 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1161054AbWFJXm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jun 2006 19:42:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060610234258.YZDV24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 10 Jun 2006 19:42:58 -0400
-To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-In-Reply-To: <4d8e3fd30606101547x46b94058u3bb48ba8d25dc48d@mail.gmail.com>
-	(Paolo Ciarrocchi's message of "Sun, 11 Jun 2006 00:47:30 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750769AbWFKAHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Jun 2006 20:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbWFKAHS
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jun 2006 20:07:18 -0400
+Received: from wx-out-0102.google.com ([66.249.82.196]:16441 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750769AbWFKAHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jun 2006 20:07:17 -0400
+Received: by wx-out-0102.google.com with SMTP id h28so670288wxd
+        for <git@vger.kernel.org>; Sat, 10 Jun 2006 17:07:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=gPrPFKvEZkXMBp15BXXtFbAWeAaM7q4FxjB21WCdjcleq8Os2LlDE/MAsvGakm7BhsRraYjJpIk+ualezjNjG+YT7/WZ0oYeNSGJYnq0O7q11xynBUCsTagsaXfxi1KUdury75O/laxY9gWPkzLR5GEj7thMkTrcqyj6hSqGyKM=
+Received: by 10.70.25.1 with SMTP id 1mr2603278wxy;
+        Sat, 10 Jun 2006 17:07:16 -0700 (PDT)
+Received: by 10.70.133.1 with HTTP; Sat, 10 Jun 2006 17:07:16 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21629>
 
-"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
+Hi,
 
-> Ok, solved doing (as suggested on #git)
-> /.git/remotes$ vi origin
-> and removed:
-> Pull: jc/bind:jc/bind
->
-> What happened to that branch?
+When I do a "git pull origin" I get messages:
 
-It was an experiment for "bind commit" which has been vetoed and
-discarded now.  Sorry about the confusion.
+             error: no such remote ref refs/heads/gb/diffdelta
+             error: no such remote ref refs/heads/jc/bind
+             error: no such remote ref refs/heads/jc/bind-2
+             ...
+             Fetch failure: git://git.kernel.org/pub/scm/git/git.git
+
+So I figured these branches were "in the way" so I deleted them:
+
+                git branch -D gb/diffdelta
+                etc.
+
+Again "git pull origin" gives the same errors.
+
+So I went into .git/remotes/origin and
+removed the lines pointing at these branches and removed the gb and jc
+directories
+and did another git pull and it seems to have worked.
+
+I would suggest that when the pull detects the missing remote ref, it
+should clean
+up the remotes/origin file. Or have I done entirely the wrong thing?
+
+Cheers,
+Geoff Russell.
