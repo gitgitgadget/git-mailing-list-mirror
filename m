@@ -1,61 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Implement safe_strncpy() as strlcpy() and use it more.
-Date: Sun, 11 Jun 2006 09:45:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606110942560.5498@g5.osdl.org>
-References: <20060611100628.GA10430@bohr.gbar.dtu.dk>
- <20060611.191540.68073375.yoshfuji@linux-ipv6.org> <20060611103358.GB10430@bohr.gbar.dtu.dk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: invalid command name "listrefs"
+Date: Sun, 11 Jun 2006 09:50:47 -0700
+Message-ID: <7vu06rfxg8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 11 18:45:14 2006
+X-From: git-owner@vger.kernel.org Sun Jun 11 18:50:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpT3o-0001Fn-Go
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 18:45:13 +0200
+	id 1FpT9I-0001yH-9s
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 18:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbWFKQpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 12:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbWFKQpH
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 12:45:07 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:63968 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750793AbWFKQpF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 12:45:05 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5BGj2gt022530
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 11 Jun 2006 09:45:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5BGj1Iq026193;
-	Sun, 11 Jun 2006 09:45:02 -0700
-To: Peter Eriksen <s022018@student.dtu.dk>
-In-Reply-To: <20060611103358.GB10430@bohr.gbar.dtu.dk>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751038AbWFKQut (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 12:50:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbWFKQut
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 12:50:49 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:25033 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751037AbWFKQut (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jun 2006 12:50:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060611165048.VSEY11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 11 Jun 2006 12:50:48 -0400
+To: Paul Mackerras <paulus@samba.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21662>
 
+Starting gitk, "File->Reread references" results in an error
+dialog.
 
+This patch resurrects the procedure from an older version, and it
+seems to work for me, but with the updated code it might be that
+you wanted to use a different mechanism to implement rereadrefs
+procedure -- I dunno.
 
-On Sun, 11 Jun 2006, Peter Eriksen wrote:
-> > 
-> > Please include full copyright information.
-> 
-> Where should this information go?
+-- >8 --
+gitk: rereadrefs wants listrefs 
 
-Gaah, for soemthing as trivial as strlcpy(), please either just rewrite 
-the function (you can only do it in so many ways), since the copyright 
-message is _bigger_ and more annoying than the code itself.
+The listrefs procedure was removed during the course of
+development, but there is still a user of it, so resurrect it.
 
-Or, just attribute it. Say "this is a trivial implementation 'strlcpy()' 
-shamelessly stolen from OpenBSD, originally under a BSD license, converted 
-to GPLv2"
-
-That whole "big copyright messages" thign is a _disease_. 
-
-		Linus
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/gitk b/gitk
+index 9be10a4..ba4644f 100755
+--- a/gitk
++++ b/gitk
+@@ -5196,6 +5196,24 @@ proc rereadrefs {} {
+     }
+ }
+ 
++proc listrefs {id} {
++    global idtags idheads idotherrefs
++
++    set x {}
++    if {[info exists idtags($id)]} {
++	set x $idtags($id)
++    }
++    set y {}
++    if {[info exists idheads($id)]} {
++	set y $idheads($id)
++    }
++    set z {}
++    if {[info exists idotherrefs($id)]} {
++	set z $idotherrefs($id)
++    }
++    return [list $x $y $z]
++}
++
+ proc showtag {tag isnew} {
+     global ctext tagcontents tagids linknum
+ 
