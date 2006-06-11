@@ -1,74 +1,71 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Collecting cvsps patches
-Date: Sun, 11 Jun 2006 14:27:46 +0200
-Message-ID: <20060611122746.GB7766@nowhere.earth>
+From: Rocco Rutte <pdmef@gmx.net>
+Subject: Re: [PATCH] Implement safe_strncpy() as strlcpy() and use it more. [Take 2]
+Date: Sun, 11 Jun 2006 12:33:32 +0000
+Organization: Berlin University of Technology
+Message-ID: <20060611123332.GA3832@robert.daprodeges.fqdn.th-h.de>
+References: <20060611120328.GC10430@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: cvsps@dm.cobite.com
-X-From: git-owner@vger.kernel.org Sun Jun 11 14:27:57 2006
+Content-Type: text/plain; charset=us-ascii; format=flowed
+X-From: git-owner@vger.kernel.org Sun Jun 11 14:33:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpP2m-0005vq-6g
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 14:27:52 +0200
+	id 1FpP8Y-00075P-Bg
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 14:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751235AbWFKM1o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 08:27:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbWFKM1o
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 08:27:44 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:17059 "EHLO smtp3-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1751235AbWFKM1n (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 08:27:43 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 923E448944;
-	Sun, 11 Jun 2006 14:27:42 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FpP2h-0002wD-1O; Sun, 11 Jun 2006 14:27:47 +0200
-To: GIT list <git@vger.kernel.org>
+	id S1751261AbWFKMdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 08:33:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbWFKMdo
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 08:33:44 -0400
+Received: from mail.gmx.de ([213.165.64.21]:49584 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751261AbWFKMdo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 08:33:44 -0400
+Received: (qmail invoked by alias); 11 Jun 2006 12:33:42 -0000
+Received: from cable-62-117-25-83.cust.blue-cable.de (EHLO peter.daprodeges.fqdn.th-h.de) [62.117.25.83]
+  by mail.gmx.net (mp022) with SMTP; 11 Jun 2006 14:33:42 +0200
+X-Authenticated: #1642131
+Received: from robert.daprodeges.fqdn.th-h.de (robert.daprodeges.fqdn.th-h.de [192.168.0.113])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id 97F9E21184
+	for <git@vger.kernel.org>; Sun, 11 Jun 2006 12:33:41 +0000 (UTC)
+Received: from robert.daprodeges.fqdn.th-h.de (robert.daprodeges.fqdn.th-h.de [192.168.0.113])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by robert.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id 23EAE3405F
+	for <git@vger.kernel.org>; Sun, 11 Jun 2006 12:33:34 +0000 (UTC)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <20060611120328.GC10430@bohr.gbar.dtu.dk>
+X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
+X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
+X-System: robert (FreeBSD 6.1-STABLE i386)
+User-Agent: Mutt/1.5.11-pdmef-2006-06-08
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21654>
 
-Since there are has been some work done here and there on cvsps, but
-upstream does not seem to have time to issue a new release, I have
-started to collect the patches I found.
+Hi,
 
-I guess this is a good place for a heads-up: if you know of any other
-bugfixes or feature patches to cvsps, I'd like to hear about it, so I
-can add it to my repo.
+* Peter Eriksen [06-06-11 14:03:28 +0200] wrote:
 
-Not that the master branch is an octopus merge of all works in there,
-including my preliminary work on multiple-tag support, so for now you
-may want to do your own mix.
+>-char *safe_strncpy(char *dest, const char *src, size_t n)
+>+size_t safe_strncpy(char *dest, const char *src, size_t size)
+> {
+>-	strncpy(dest, src, n);
+>-	dest[n - 1] = '\0';
+>+	size_t ret = strlen(src);
 
-For now it has:
+At least FreeBSD's strlen() requires a non-NULL argument, i.e. with 
+src==NULL, this will segfault.
 
-* bugfixes and such:
+If you can ensure that src!=NULL, then it's okay, but the safe_ prefix 
+implies something different.
 
-Anand Kumria:
-      FreeBSD isn't evil - just misguided
-
-Linus Torvalds:
-      Increase log-length limit to 64kB
-      Improve handling of file collisions in the same patchset
-      Fix branch ancestor calculation
-
-Yann Dirson:
-      Cleanup the tag handling to simplify multi-tag handling
-      Dependency handling
-
-* features
-
-Yann Dirson:
-      Allow to have multiple tags on a single patchset.
-
+   bye, Rocco
 -- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+:wq!
