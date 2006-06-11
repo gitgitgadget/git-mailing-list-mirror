@@ -1,56 +1,74 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] gitweb: Adding a `blame' interface.
-Date: Mon, 12 Jun 2006 10:02:05 +1200
-Message-ID: <46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com>
-References: <11500407193506-git-send-email-octo@verplant.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: git-applymbox broken?
+Date: Sun, 11 Jun 2006 15:40:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 00:02:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Jun 12 00:40:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpY0c-0004Zu-9N
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 00:02:14 +0200
+	id 1FpYbq-0000SI-8K
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 00:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864AbWFKWCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 18:02:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbWFKWCL
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 18:02:11 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:4974 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750864AbWFKWCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jun 2006 18:02:10 -0400
-Received: by wr-out-0506.google.com with SMTP id i20so1029294wra
-        for <git@vger.kernel.org>; Sun, 11 Jun 2006 15:02:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TOBcl1XuHH98dNeslEdQ+mil4vQNOD5gdoQJH+FAblemJj6l/QVVkgRTttdXZsUMPSKt+Dl5ZCfChT7ii7ygEpNvj1cSIudxYf4Fe02Ly10OncuqcMRAOWQf3K0x/esCUGHFBv4lKqVMRc4tdqC+AE972R/tcCviTQfmzNbwJrU=
-Received: by 10.54.93.15 with SMTP id q15mr3192237wrb;
-        Sun, 11 Jun 2006 15:02:05 -0700 (PDT)
-Received: by 10.54.71.9 with HTTP; Sun, 11 Jun 2006 15:02:05 -0700 (PDT)
-To: "Florian Forster" <octo@verplant.org>
-In-Reply-To: <11500407193506-git-send-email-octo@verplant.org>
-Content-Disposition: inline
+	id S1751090AbWFKWkb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 18:40:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbWFKWkb
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 18:40:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:7855 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751090AbWFKWka (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 18:40:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5BMePgt004025
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 11 Jun 2006 15:40:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5BMeOEL001069;
+	Sun, 11 Jun 2006 15:40:25 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21671>
-
-Florian,
-
-Looks good! git-blame/git-annotate are quite expensive to run. Do you
-think it would make sense making it conditional on a git-repo-config
-option (gitweb.blame=1)?
-
-kernel.org is the flagship user for gitweb, so expensive options
-should default to off :-/
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21672>
 
 
+It looks like something has broken git-applymbox lately.
 
-martin
+The "From: authorname" lines are no longer removed from the message, and 
+are duplicated in the commit log. This has resulted in several recent 
+kernel commits looking like this:
+
+	commit c0bbbc73d58f1b774cd987b5687a478a027f137c
+	Author: Christoph Lameter <clameter@sgi.com>
+	Date:   Sun Jun 11 15:22:26 2006 -0700
+	
+	    [PATCH] typo in vmscan.c
+	    
+	    From: Christoph Lameter <clameter@sgi.com>
+	    
+	    Looks like a comma was left from the conversion from a struct to an
+	    assignment.
+	    
+	    Signed-off-by: Christoph Lameter <clameter@sgi.com>
+	    Signed-off-by: Andrew Morton <akpm@osdl.org>
+	    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+
+where that "From:" in the body is totally wrong. I just didn't notice, 
+until now. Arrr!
+
+I _suspect_ that this is the work by Eric Biederman, ie part of the 
+patches that do "Allow in body headers beyond the in body header 
+prefix." and "Refactor commit messge handling."
+
+Eric? Can you please fix this up? Lines from the body of the email that 
+have been used to set authorship should _not_ also show up in the commit 
+message.
+
+		Linus
