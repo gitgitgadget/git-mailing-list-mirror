@@ -1,74 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Figured out how to get Mozilla into git
-Date: Sun, 11 Jun 2006 18:00:13 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606111747110.2703@localhost.localdomain>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
- <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
- <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
- <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] gitweb: Adding a `blame' interface.
+Date: Mon, 12 Jun 2006 10:02:05 +1200
+Message-ID: <46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com>
+References: <11500407193506-git-send-email-octo@verplant.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 12 00:00:31 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 12 00:02:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpXym-0004M8-EW
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 00:00:20 +0200
+	id 1FpY0c-0004Zu-9N
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 00:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbWFKWAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 18:00:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbWFKWAP
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 18:00:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:2291 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750748AbWFKWAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jun 2006 18:00:14 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J0P00EQHUGDF9C0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 11 Jun 2006 18:00:13 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1750864AbWFKWCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 18:02:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbWFKWCL
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 18:02:11 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:4974 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750864AbWFKWCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jun 2006 18:02:10 -0400
+Received: by wr-out-0506.google.com with SMTP id i20so1029294wra
+        for <git@vger.kernel.org>; Sun, 11 Jun 2006 15:02:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TOBcl1XuHH98dNeslEdQ+mil4vQNOD5gdoQJH+FAblemJj6l/QVVkgRTttdXZsUMPSKt+Dl5ZCfChT7ii7ygEpNvj1cSIudxYf4Fe02Ly10OncuqcMRAOWQf3K0x/esCUGHFBv4lKqVMRc4tdqC+AE972R/tcCviTQfmzNbwJrU=
+Received: by 10.54.93.15 with SMTP id q15mr3192237wrb;
+        Sun, 11 Jun 2006 15:02:05 -0700 (PDT)
+Received: by 10.54.71.9 with HTTP; Sun, 11 Jun 2006 15:02:05 -0700 (PDT)
+To: "Florian Forster" <octo@verplant.org>
+In-Reply-To: <11500407193506-git-send-email-octo@verplant.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21671>
 
-On Fri, 9 Jun 2006, Linus Torvalds wrote:
+Florian,
 
-> 
-> 
-> On Sat, 10 Jun 2006, Martin Langhoff wrote:
-> > 
-> > Now I don't know how much memory or time this took, but it clearly
-> > completed ok. And, it's now a single pack, weighting a grand total of
-> > 617MB
-> 
-> Ok, that's more than reasonable. That should be fairly easily mapped on a 
-> 32-bit architecture without any huge problems, even with some VM 
-> fragmentation going on. It might be borderline (and you definitely want a 
-> 3:1 VM user:kernel split), but considering that the original CVS archive 
-> was apparently 3GB, having a single 617M pack-file is still pretty damn 
-> good.  That's like 20% of the original, with all the obvious distribution 
-> advantages.
+Looks good! git-blame/git-annotate are quite expensive to run. Do you
+think it would make sense making it conditional on a git-repo-config
+option (gitweb.blame=1)?
 
-I played a bit with git-repack on that repo.  the git-pack-objects 
-memory usage grew to around 760MB (git-rev-list was less than that).  So 
-LRU of partial pack mappings might bring that down significantly.
+kernel.org is the flagship user for gitweb, so expensive options
+should default to off :-/
 
-Then I used git-repack -a -f --window=20 --depth=20 which produced a 
-nice 468MB pack file along with the invariant 45MB index file for a 
-grand total of 535MB for the whole repo (the .git/refs/ directory alone 
-still occupies 17MB on disk).
-
-So it is probably worth having deeper delta chains for large historic 
-repositories as the deep revisions are unlikely to be referenced that 
-often while the saving is quite significant.
+cheers,
 
 
-Nicolas
+
+martin
