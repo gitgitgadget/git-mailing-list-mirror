@@ -1,74 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: gitweb.cgi history not shown
-Date: Sun, 11 Jun 2006 09:54:19 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606110948090.5498@g5.osdl.org>
-References: <e5bfff550606102231o756f6d11lc46fecdad29568c0@mail.gmail.com> 
- <Pine.LNX.4.64.0606102248360.5498@g5.osdl.org>
- <e5bfff550606102332v6afb7d51m43ad5d74ba226cf0@mail.gmail.com>
- <Pine.LNX.4.64.0606110902090.5498@g5.osdl.org> <Pine.LNX.4.64.0606110933040.5498@g5.osdl.org>
+Date: Sun, 11 Jun 2006 18:59:15 +0200
+Organization: At home
+Message-ID: <e6hi4g$k4a$1@sea.gmane.org>
+References: <e5bfff550606102231o756f6d11lc46fecdad29568c0@mail.gmail.com> <Pine.LNX.4.64.0606102248360.5498@g5.osdl.org> <e5bfff550606102332v6afb7d51m43ad5d74ba226cf0@mail.gmail.com> <Pine.LNX.4.64.0606110902090.5498@g5.osdl.org> <Pine.LNX.4.64.0606110933040.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 11 18:54:33 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Jun 11 18:59:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpTCm-0002QF-DZ
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 18:54:28 +0200
+	id 1FpTHO-0002up-V2
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 18:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbWFKQy0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 12:54:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbWFKQy0
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 12:54:26 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:64482 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751044AbWFKQyZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 12:54:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5BGsKgt022982
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 11 Jun 2006 09:54:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5BGsJJN026399;
-	Sun, 11 Jun 2006 09:54:19 -0700
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <Pine.LNX.4.64.0606110933040.5498@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750773AbWFKQ7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 12:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWFKQ7M
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 12:59:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:50925 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750773AbWFKQ7L (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 12:59:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FpTHD-0002tT-TH
+	for git@vger.kernel.org; Sun, 11 Jun 2006 18:59:03 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Jun 2006 18:59:03 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 11 Jun 2006 18:59:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21664>
+
+Linus Torvalds wrote:
 
 
-I just like talking to myself.
+> Btw, this is also why I suggested adding a "--no-simplify-history" flag, 
+> because in this case, that's exactly what _you_ want. The reason git is 
+> doing something unexpected - and in your case inferior - is exactly that 
+> what you want in this case is really not "explain the STATE of this file", 
+> but you want "give me ALL THE HISTORY concerning this filename".
+[...]
+> Btw, the original "git whatchanged -p" answered exactly the question you 
+> had, and the semantics changed when we rewrite "git whatchanged" to act 
+> like "git log -p". 
+[...]
+> And I do agree that we should teach "git log" and friends to be able to 
+> answer both questions, and that's what my suggested patch (fleshed out 
+> properly, of course) should do.
 
-On Sun, 11 Jun 2006, Linus Torvalds wrote:
-> 
-> 	git-rev-list --all | git-diff-tree -p -- <filename>
+Could we please 'git whatchanged -p' default to the original (before
+rewrite) behavior, i.e. ALL THE HISTORY?
 
-That obviously wants a "--stdin" argument to git-diff-tree, and I might as 
-well point out that it has a few other differences to doing this with the 
-"--no-simplify-history" flag:
-
- - git-diff-tree obviously doesn't show merges normally, and when it does, 
-   it would show only merges that change the file. In contrast, the "git 
-   log" approach would show all merges that are part of the resulting 
-   history (which, since you don't simplify merges, is _all_ of them).
-
- - the extra flag to "git log" approach allows "--parents" to work, ie the 
-   stretches of commits in between merges would have their parents 
-   rewritten, so that the history would be a unified whole, and you can 
-   use qgit/gitk to show the result. The above pipeline obviously cannot 
-   do that, since doing the filename limiter in git-diff-tree means that 
-   it doesn't ever even _see_ the "history" part, it's just doing it one 
-   commit at a time.
-
-That concludes my monologue on the matter, I hope. If somebody wants to 
-condense the issue of "show all history" vs "show how we got to this 
-state" and add it to the Wiki FAQ thing, that would probably be good.
-
-		Linus
+-- 
+Jakub Narebski
+Warsaw, Poland
