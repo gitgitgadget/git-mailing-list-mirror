@@ -1,7 +1,7 @@
 From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsimport: ignore CVSPS_NO_BRANCH and impossible branches
-Date: Sun, 11 Jun 2006 20:12:09 +1200
-Message-ID: <11500135293734-git-send-email-martin@catalyst.net.nz>
+Subject: [PATCH] cvsimport: complete the cvsps run before starting the import - take 2
+Date: Sun, 11 Jun 2006 20:12:20 +1200
+Message-ID: <11500135403166-git-send-email-martin@catalyst.net.nz>
 Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Cc: Martin Langhoff <martin@catalyst.net.nz>
 X-From: git-owner@vger.kernel.org Sun Jun 11 10:12:26 2006
@@ -9,87 +9,104 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpL3Z-00008V-6u
-	for gcvg-git@gmane.org; Sun, 11 Jun 2006 10:12:25 +0200
+	id 1FpL3Z-00008V-OU
+	for gcvg-git@gmane.org; Sun, 11 Jun 2006 10:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbWFKIMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 04:12:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWFKIMN
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 04:12:13 -0400
-Received: from 203-79-116-174.cable.paradise.net.nz ([203.79.116.174]:17113
+	id S1750794AbWFKIMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 04:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750820AbWFKIMU
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 04:12:20 -0400
+Received: from 203-79-116-174.cable.paradise.net.nz ([203.79.116.174]:17625
 	"EHLO 203-79-116-174.cable.paradise.net.nz") by vger.kernel.org
-	with ESMTP id S1750778AbWFKIMN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jun 2006 04:12:13 -0400
+	with ESMTP id S1750794AbWFKIMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jun 2006 04:12:20 -0400
 Received: by 203-79-116-174.cable.paradise.net.nz (Postfix, from userid 501)
-	id B64E4466FE5; Sun, 11 Jun 2006 20:12:10 +1200 (NZST)
+	id 624A1466FE7; Sun, 11 Jun 2006 20:12:20 +1200 (NZST)
 To: junkio@cox.net, git@vger.kernel.org
 X-Mailer: git-send-email 1.4.0.gcda2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21642>
 
-cvsps output often contains references to CVSPS_NO_BRANCH, commits that it
-could not trace to a branch. Ignore that branch.
+On 5/24/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> It's entirely possible that the fact that it now seems to work for me is
+> purely timing-related, since I also ended up using "-P cvsps-output" to
+> avoid having a huge cvsps binary in memory at the same time.
 
-Additionally, cvsps will sometimes draw circular relationships between
-branches -- where two branches are recorded as opening from the other.
-In those cases, and where the ancestor branch hasn't been seen, ignore
-it.
+We now capture the output of cvsps to a tempfile, and then read it in.
+cvsps 2.1 works quite a bit "in memory", and only prints its patchset info
+once it has finished talking with cvs, but apparently retaining all that
+memory allocation. With this patch, cvsps is finished and reaped before
+cvsimport start working (and growing). So the footprint of the whole
+process is much lower.
+
 Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 ---
- git-cvsimport.perl |   17 ++++++++++++++++-
- 1 files changed, 16 insertions(+), 1 deletions(-)
+
+This is a more reliable implementation, which fork/execs and passes the cvsps
+output into the tempfile.
+---
+ git-cvsimport.perl |   42 ++++++++++++++++++++++++++++--------------
+ 1 files changed, 28 insertions(+), 14 deletions(-)
 
 diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 76f6246..07b3203 100755
+index 07b3203..9a7408b 100755
 --- a/git-cvsimport.perl
 +++ b/git-cvsimport.perl
-@@ -595,7 +595,11 @@ sub write_tree () {
+@@ -529,25 +529,39 @@ if ($opt_A) {
+ 	write_author_info("$git_dir/cvs-authors");
  }
  
- my($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
--my(@old,@new,@skipped);
-+my(@old,@new,@skipped,%ignorebranch);
+-my $pid = open(CVS,"-|");
+-die "Cannot fork: $!\n" unless defined $pid;
+-unless($pid) {
+-	my @opt;
+-	@opt = split(/,/,$opt_p) if defined $opt_p;
+-	unshift @opt, '-z', $opt_z if defined $opt_z;
+-	unshift @opt, '-q'         unless defined $opt_v;
+-	unless (defined($opt_p) && $opt_p =~ m/--no-cvs-direct/) {
+-		push @opt, '--cvs-direct';
 +
-+# commits that cvsps cannot place anywhere...
-+$ignorebranch{'#CVSPS_NO_BRANCH'} = 1; 
-+
- sub commit {
- 	update_index(@old, @new);
- 	@old = @new = ();
-@@ -751,7 +755,16 @@ while(<CVS>) {
- 			$state = 11;
- 			next;
- 		}
-+		if (exists $ignorebranch{$branch}) {
-+			print STDERR "Skipping $branch\n";
-+			$state = 11;
-+			next;
++#
++# run cvsps into a file unless we are getting
++# it passed as a file via $opt_P
++#
++unless ($opt_P) {
++	print "Running cvsps...\n" if $opt_v;
++	my $pid = open(CVSPS,"-|");
++	die "Cannot fork: $!\n" unless defined $pid;
++	unless($pid) {
++		my @opt;
++		@opt = split(/,/,$opt_p) if defined $opt_p;
++		unshift @opt, '-z', $opt_z if defined $opt_z;
++		unshift @opt, '-q'         unless defined $opt_v;
++		unless (defined($opt_p) && $opt_p =~ m/--no-cvs-direct/) {
++			push @opt, '--cvs-direct';
 +		}
- 		if($ancestor) {
-+			if($ancestor eq $branch) {
-+				print STDERR "Branch $branch erroneously stems from itself -- changed ancestor to $opt_o\n";
-+				$ancestor = $opt_o;
-+			}
- 			if(-f "$git_dir/refs/heads/$branch") {
- 				print STDERR "Branch $branch already exists!\n";
- 				$state=11;
-@@ -759,6 +772,7 @@ while(<CVS>) {
- 			}
- 			unless(open(H,"$git_dir/refs/heads/$ancestor")) {
- 				print STDERR "Branch $ancestor does not exist!\n";
-+				$ignorebranch{$branch} = 1;
- 				$state=11;
- 				next;
- 			}
-@@ -766,6 +780,7 @@ while(<CVS>) {
- 			close(H);
- 			unless(open(H,"> $git_dir/refs/heads/$branch")) {
- 				print STDERR "Could not create branch $branch: $!\n";
-+				$ignorebranch{$branch} = 1;
- 				$state=11;
- 				next;
- 			}
++		exec("cvsps","--norc",@opt,"-u","-A",'--root',$opt_d,$cvs_tree);
++		die "Could not start cvsps: $!\n";
+ 	}
+-	if ($opt_P) {
+-	    exec("cat", $opt_P);
+-	} else {
+-	    exec("cvsps","--norc",@opt,"-u","-A",'--root',$opt_d,$cvs_tree);
+-	    die "Could not start cvsps: $!\n";
++	my ($cvspsfh, $cvspsfile) = tempfile('gitXXXXXX', SUFFIX => '.cvsps',
++					     DIR => File::Spec->tmpdir());
++	while (<CVSPS>) {
++	    print $cvspsfh $_;
+ 	}
++	close CVSPS;
++	close $cvspsfh;
++	$opt_P = $cvspsfile;
+ }
+ 
+ 
++open(CVS, "<$opt_P") or die $!;
++
+ ## cvsps output:
+ #---------------------
+ #PatchSet 314
 -- 
 1.4.0.gcda2
