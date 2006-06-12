@@ -1,64 +1,59 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: [PATCH] Fix formatting of Documentation/git-clone.txt
-Date: Sun, 11 Jun 2006 21:37:50 -0400
-Message-ID: <115007627180-git-send-email-vonbrand@inf.utfsm.cl>
-Reply-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 03:38:04 2006
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: svn to git, N-squared?
+Date: Sun, 11 Jun 2006 22:02:18 -0400
+Message-ID: <9e4733910606111902l709c71ccyf45070d55112739e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jun 12 04:03:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpbNT-0004s3-Rj
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 03:38:04 +0200
+	id 1Fpblf-0000wM-Bm
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 04:03:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750917AbWFLBh4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 21:37:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751084AbWFLBh4
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 21:37:56 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:61859 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1750917AbWFLBh4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Jun 2006 21:37:56 -0400
-Received: from laptop11.inf.utfsm.cl (pc-192-170-104-200.cm.vtr.net [200.104.170.192])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k5C1boOl002809
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 11 Jun 2006 21:37:50 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.6/8.13.6) with ESMTP id k5C1bpF0012645
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 11 Jun 2006 21:37:51 -0400
-Received: (from vonbrand@localhost)
-	by laptop11.inf.utfsm.cl (8.13.6/8.13.6/Submit) id k5C1bpOq012644;
-	Sun, 11 Jun 2006 21:37:51 -0400
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.0.g1b2d
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Sun, 11 Jun 2006 21:37:51 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S1750765AbWFLCCU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 22:02:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbWFLCCU
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 22:02:20 -0400
+Received: from nz-out-0102.google.com ([64.233.162.201]:55476 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750765AbWFLCCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jun 2006 22:02:19 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so1526485nze
+        for <git@vger.kernel.org>; Sun, 11 Jun 2006 19:02:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hVG0oyPe4rWNSGHCEW4RmKa3tku4TDPFe6Ff9nxQzLX38kj72rEtPT66MegHjaYiS3C8leeb76LNmqN1ay4C1RE25UMc3FVYMvdtEYNZFznyrixbIiohc/GsLEWMNKLDUhSBHh6NqxxiC5aR4UwOtYCOyghQjExaN3rReUYOP9Y=
+Received: by 10.36.141.7 with SMTP id o7mr3460389nzd;
+        Sun, 11 Jun 2006 19:02:18 -0700 (PDT)
+Received: by 10.36.36.7 with HTTP; Sun, 11 Jun 2006 19:02:18 -0700 (PDT)
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21680>
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
----
- Documentation/git-clone.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+I have Mozilla CVS in a SVN repository. I've been using git-svnimport
+to import it. This time I am letting it run to completion; but the
+import has been running for four days now and it is only up to 2004.
+The import task is stable at 570MB and it is using about 50% of my
+CPU. It is constantly spawning off git write-tree, read-tree,
+hash-object, update-index. It is not doing excessive disk activity.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 7572e4b..a90521e 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -95,8 +95,8 @@ OPTIONS
- 	defined default, typically `/usr/share/git-core/templates`.
- 
- --use-separate-remote::
--	Save remotes heads under `$GIT_DIR/remotes/origin/' instead
--	of `$GIT_DIR/refs/heads/'.  Only the master branch is saved
-+	Save remotes heads under `$GIT_DIR/remotes/origin/` instead
-+	of `$GIT_DIR/refs/heads/`.  Only the master branch is saved
- 	in the latter.
- 
- <repository>::
+The import seems to be getting n-squared slower. It is still making
+forward progress but the progress seems to be getting slower and
+slower.
+
+It looks like it is doing write-tree, read-tree, hash-object,
+update-index once or more per change set. If these commands are
+n-proportional and they are getting run n times, then this is a
+n-squared process. Projecting this out, the import may take 10 days or
+more to completely finish.
+
 -- 
-1.4.0.g1b2d
+Jon Smirl
+jonsmirl@gmail.com
