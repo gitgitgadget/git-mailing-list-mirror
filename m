@@ -1,69 +1,56 @@
-From: carbonated beverage <ramune@net-ronin.org>
-Subject: cvs import error
-Date: Sun, 11 Jun 2006 16:48:42 -0700
-Message-ID: <20060611234842.GA12713@prophet.net-ronin.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: cvs import error
+Date: Mon, 12 Jun 2006 12:31:35 +1200
+Message-ID: <46a038f90606111731q34fe431fn36d751b387ab69a9@mail.gmail.com>
+References: <20060611234842.GA12713@prophet.net-ronin.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jun 12 01:48:51 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 12 02:31:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpZfl-00006z-Nq
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 01:48:50 +0200
+	id 1FpaLE-00052h-Ke
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 02:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbWFKXso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Jun 2006 19:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbWFKXso
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 19:48:44 -0400
-Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:65499 "EHLO
-	prophet.net-ronin.org") by vger.kernel.org with ESMTP
-	id S1751176AbWFKXsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jun 2006 19:48:43 -0400
-Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
-	id 1FpZfe-0003KE-00
-	for <git@vger.kernel.org>; Sun, 11 Jun 2006 16:48:42 -0700
-To: git@vger.kernel.org
+	id S1751075AbWFLAbg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Jun 2006 20:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbWFLAbg
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jun 2006 20:31:36 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:14280 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751075AbWFLAbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jun 2006 20:31:36 -0400
+Received: by wr-out-0506.google.com with SMTP id i20so1044685wra
+        for <git@vger.kernel.org>; Sun, 11 Jun 2006 17:31:35 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FeYOMLEy2YHhApH0Iu2oOReRnM0tbiJCx4b9tHRtf2qIIFpTnhRJaLWXejCAt5cxDrxhpy21bb0eGqx0NSqJftQqLZl51ButRc8mwBfa6kF17eXGyqB+Tq/Mrn67ubaq5DssZJ9MS+Qc0jpHRQIZLEtBaYe+Qcw28YJ9GGSzBcg=
+Received: by 10.54.91.8 with SMTP id o8mr5065756wrb;
+        Sun, 11 Jun 2006 17:31:35 -0700 (PDT)
+Received: by 10.54.71.9 with HTTP; Sun, 11 Jun 2006 17:31:35 -0700 (PDT)
+To: "carbonated beverage" <ramune@net-ronin.org>
+In-Reply-To: <20060611234842.GA12713@prophet.net-ronin.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21677>
 
-Hi all,
+On 6/12/06, carbonated beverage <ramune@net-ronin.org> wrote:
+> fatal: Not a valid object name HEAD
+> checkout failed: 256
+> $ exit
 
-I'm currently trying to import a CVS archive into git and hitting
-problems.  The repo was cloned with cvssuck, and the import was run
-with cvsps 2.1 and git-1.4.0, getting this (abbreviated, slightly
-sanitized) output:
+After each attempt, the import leaves a .git file around. rm -fr .git
+before retrying... or just retry in a new directory every time ;-)
 
-$ git cvsimport  -v -d ':local:/home/ramune/git-import'  -C .  FOO
-WARNING: revision 1.21.2.3 of file BAR/BAZ/QUX on unnamed branch
-<<snip lots of the same types of warnings for different files, multiple
-<<times for quite a few of them>>
-WARNING: revision 1.6.2.2 of file BAR/BAZ/FROBOZ on unnamed branch
-invalid cache revision line 'file:X/Y/Z/A/B/C D E.F; D G.F; pre_rev:INITIAL; pos
-t_rev:1.1; dead:0; branch_point:0
-'|' D G.F'
-DONE; creating master branch
-fatal: refs/heads/origin: not a valid SHA1
-fatal: master: not a valid SHA1
-fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tr
-ee.
-Use '--' to separate paths from revisions
-fatal: Not a valid object name HEAD
-checkout failed: 256
-$ exit
+(... we should die with a more helpful message here...)
 
-The import bombs out on the same place every time, with or without cvsps
-being passed -x and/or --no-cvs-direct.
+cheers,
 
-The source tree's proprietary, so I can't give snippets or examples,
-unforutnately.  Has anyone come across this issue before and resovled it?
 
-If so, how?
-
-Thanks,
-
--- DN
-Daniel
+martin
