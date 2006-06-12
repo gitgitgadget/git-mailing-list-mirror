@@ -1,78 +1,81 @@
-From: Florian Forster <octo@verplant.org>
-Subject: Re: gitweb: Config file support (was: Adding a `blame' interface.)
-Date: Mon, 12 Jun 2006 20:11:11 +0200
-Message-ID: <20060612181110.GB13432@verplant.org>
-References: <11500407193506-git-send-email-octo@verplant.org> <46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com> <20060612082448.GA11857@verplant.org> <46a038f90606120134n21c269bbj3e8c7e31d4d93a23@mail.gmail.com>
+From: David Kowis <dkowis@shlrm.org>
+Subject: Thoughts on adding another hook to git
+Date: Mon, 12 Jun 2006 13:27:13 -0500
+Message-ID: <448DB201.5090208@shlrm.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nVMJ2NtxeReIH9PS"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 20:11:22 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jun 12 20:27:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fpqse-00048L-3w
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 20:11:16 +0200
+	id 1Fpr8E-0007ZW-FX
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 20:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751598AbWFLSLN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 14:11:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbWFLSLN
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 14:11:13 -0400
-Received: from verplant.org ([213.95.21.52]:30427 "EHLO huhu.verplant.org")
-	by vger.kernel.org with ESMTP id S1751584AbWFLSLM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 14:11:12 -0400
-Received: from octo by huhu.verplant.org with local (Exim 4.50)
-	id 1FpqsZ-00042y-3g; Mon, 12 Jun 2006 20:11:11 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90606120134n21c269bbj3e8c7e31d4d93a23@mail.gmail.com>
-X-Pgp-Fingerprint: E7F2 3FEC B693 9F6F 9B77  ACF6 8EF9 1EF5 9152 3C3D
-X-Pgp-Public-Key: http://verplant.org/pubkey.txt
-User-Agent: Mutt/1.5.9i
+	id S1751215AbWFLS1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 14:27:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbWFLS1T
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 14:27:19 -0400
+Received: from ylpvm01-ext.prodigy.net ([207.115.57.32]:34280 "EHLO
+	ylpvm01.prodigy.net") by vger.kernel.org with ESMTP
+	id S1751215AbWFLS1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 14:27:18 -0400
+Received: from pimout5-ext.prodigy.net (pimout5-int.prodigy.net [207.115.4.21])
+	by ylpvm01.prodigy.net (8.13.6 out spool5000 dk/8.12.10) with ESMTP id k5CIRBaa016562
+	for <git@vger.kernel.org>; Mon, 12 Jun 2006 14:27:11 -0400
+X-ORBL: [66.143.247.87]
+Received: from mail.shlrm.org (adsl-66-143-247-87.dsl.snantx.swbell.net [66.143.247.87])
+	by pimout5-ext.prodigy.net (8.13.6 out.dk/8.13.6) with ESMTP id k5CIRD4T172960
+	for <git@vger.kernel.org>; Mon, 12 Jun 2006 14:27:14 -0400
+Received: from [192.168.2.111] (rrcs-24-173-63-133.sw.biz.rr.com [24.173.63.133])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.shlrm.org (Postfix) with ESMTP id 9142028034B0
+	for <git@vger.kernel.org>; Mon, 12 Jun 2006 13:27:13 -0500 (CDT)
+User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21722>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
---nVMJ2NtxeReIH9PS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'd like to be able to modify the commit message before it ends up in
+the $EDITOR. This is a fairly trivial thing to implement:
+Call ${GIT_DIR}/hooks/pre-editor on COMMIT_MESSAGE before opening it in
+$EDITOR.
 
-Hi Martin,
+My question to you all is should I set it up so that the hook only opens
+when the $EDITOR is actually being called? (really easy)
+Or, do I set it up so that the hook always happens. In which case it's
+similar to the commit-msg hook already, just happens before the message
+instead of after.
 
-On Mon, Jun 12, 2006 at 08:34:43PM +1200, Martin Langhoff wrote:
-> > As far as I know the Debian maintainer of the `gitweb' package has
-> > asked for this before but was refused for some reason..
-> BTW, I haven't seen the debian maintainer's request, was that on the list?
+Thanks,
+- --
+David Kowis
 
-Yes, it was a mail by Andres Salomon on May 20th, 2005 with the subject
-`add conf file support to gitweb'. A friend of mine asked him if he had
-sent the patch upstream and he pointed to this message and explained he
-had gotten a private reply saying that gitweb `only covers the special
-needs on kernel.org'.
+ISO Team Lead - www.sourcemage.org
+Source Mage GNU/Linux
 
-Regards,
--octo
---=20
-Florian octo Forster
-Hacker in training
-GnuPG: 0x91523C3D
-http://verplant.org/
-
---nVMJ2NtxeReIH9PS
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
+Progress isn't made by early risers. It's made by lazy men trying to
+find easier ways to do something.
+  - Robert Heinlein
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Version: GnuPG v1.4.2 (MingW32)
 
-iD8DBQFEja4+jvke9ZFSPD0RAo8JAJ9nN0BXW+DLKX8vB7PewAFIJ9+kpgCfeejQ
-dFFspat9ndNMa32OM5eqFWc=
-=TWcB
+iQGVAwUBRI2yAMnf+vRw63ObAQpNSgv+OCXYSDlW96K9M5QZvSaEbdZOGorYZg5Y
+RSh9WUXS2ribYRr1TbplD0Fp4vGnG8CB6qvr2QF8vP3tbEMjnwk4LobeWaUtK2Kn
+Hja3TgIUPWkzHMLleToe5o99r8v/6LFf9rkBxvFw3TMkuxsFS/lFlxy1eRa43rvd
+Skod2cA7RWus1IFJcbDKNonjhJkVkHylSMjT8iVQDbgY0hg7PEy2ZW3XB0MJJRZC
+lLsDDIJ4msPCXSx/lDRGaJj+m7IrvUgnEDzkX0jTT8DeZqnlC8nRM/2dOS72b/5w
+gIBYu49DvTL8ynod2mmYTyBynfRpVxPjxnXbubn/M+N+0WCTXIUTPCbyW2MOscjA
+pFe6/S1qKaTqc06VBDabYxdvGrHG6v+KkaJhu2XoLOHWVoBblobBBNrpIkA6GNqz
+H7JHNJDF+JbshlW2aU2HazDINRfD/AfrJmDx4Xn91qAKiegyO3wRA1rM6a0LEpun
+zg3haF3l0rfBEdFpz21gNQbYxNHaRkwg
+=Rxm/
 -----END PGP SIGNATURE-----
-
---nVMJ2NtxeReIH9PS--
