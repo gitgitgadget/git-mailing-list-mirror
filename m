@@ -1,81 +1,124 @@
-From: David Kowis <dkowis@shlrm.org>
-Subject: Thoughts on adding another hook to git
-Date: Mon, 12 Jun 2006 13:27:13 -0500
-Message-ID: <448DB201.5090208@shlrm.org>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: [PATCH] Ignore blank lines among this inbody headers.
+Date: Mon, 12 Jun 2006 12:45:27 -0600
+Message-ID: <m17j3m6wmw.fsf_-_@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
+	<m1wtbn468o.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0606111735440.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jun 12 20:27:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 12 20:45:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fpr8E-0007ZW-FX
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 20:27:22 +0200
+	id 1FprQ0-0001uQ-Iq
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 20:45:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbWFLS1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 14:27:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbWFLS1T
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 14:27:19 -0400
-Received: from ylpvm01-ext.prodigy.net ([207.115.57.32]:34280 "EHLO
-	ylpvm01.prodigy.net") by vger.kernel.org with ESMTP
-	id S1751215AbWFLS1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 14:27:18 -0400
-Received: from pimout5-ext.prodigy.net (pimout5-int.prodigy.net [207.115.4.21])
-	by ylpvm01.prodigy.net (8.13.6 out spool5000 dk/8.12.10) with ESMTP id k5CIRBaa016562
-	for <git@vger.kernel.org>; Mon, 12 Jun 2006 14:27:11 -0400
-X-ORBL: [66.143.247.87]
-Received: from mail.shlrm.org (adsl-66-143-247-87.dsl.snantx.swbell.net [66.143.247.87])
-	by pimout5-ext.prodigy.net (8.13.6 out.dk/8.13.6) with ESMTP id k5CIRD4T172960
-	for <git@vger.kernel.org>; Mon, 12 Jun 2006 14:27:14 -0400
-Received: from [192.168.2.111] (rrcs-24-173-63-133.sw.biz.rr.com [24.173.63.133])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.shlrm.org (Postfix) with ESMTP id 9142028034B0
-	for <git@vger.kernel.org>; Mon, 12 Jun 2006 13:27:13 -0500 (CDT)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: git@vger.kernel.org
-X-Enigmail-Version: 0.94.0.0
+	id S1752154AbWFLSpl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 14:45:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbWFLSpl
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 14:45:41 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:32914 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1752154AbWFLSpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 14:45:41 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5CIjSsN005755;
+	Mon, 12 Jun 2006 12:45:28 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5CIjRsd005754;
+	Mon, 12 Jun 2006 12:45:27 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0606111735440.5498@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 11 Jun 2006 17:37:47 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21723>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
 
-I'd like to be able to modify the commit message before it ends up in
-the $EDITOR. This is a fairly trivial thing to implement:
-Call ${GIT_DIR}/hooks/pre-editor on COMMIT_MESSAGE before opening it in
-$EDITOR.
+This is a fix for a regression introduced in:
+8b4525fb3c6d79bd3a64b8f441237a4095db4e22.
 
-My question to you all is should I set it up so that the hook only opens
-when the $EDITOR is actually being called? (really easy)
-Or, do I set it up so that the hook always happens. In which case it's
-similar to the commit-msg hook already, just happens before the message
-instead of after.
+When I refactored the inbody header parsing into a state machine I failed
+to see the logic that skipped multiple leading spaces if they are present.
+I think I assumed that logic was just there to skip the initial blank
+line between the mail headers and the body.
 
-Thanks,
-- --
-David Kowis
+This restores that behaviour and since we ignore all leading blank lines
+in commit messages now this code removes the special case for the blank
+line between the mail headers and the body.
+---
+ mailinfo.c |   24 ++++++++++++++++--------
+ 1 files changed, 16 insertions(+), 8 deletions(-)
 
-ISO Team Lead - www.sourcemage.org
-Source Mage GNU/Linux
-
-Progress isn't made by early risers. It's made by lazy men trying to
-find easier ways to do something.
-  - Robert Heinlein
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (MingW32)
-
-iQGVAwUBRI2yAMnf+vRw63ObAQpNSgv+OCXYSDlW96K9M5QZvSaEbdZOGorYZg5Y
-RSh9WUXS2ribYRr1TbplD0Fp4vGnG8CB6qvr2QF8vP3tbEMjnwk4LobeWaUtK2Kn
-Hja3TgIUPWkzHMLleToe5o99r8v/6LFf9rkBxvFw3TMkuxsFS/lFlxy1eRa43rvd
-Skod2cA7RWus1IFJcbDKNonjhJkVkHylSMjT8iVQDbgY0hg7PEy2ZW3XB0MJJRZC
-lLsDDIJ4msPCXSx/lDRGaJj+m7IrvUgnEDzkX0jTT8DeZqnlC8nRM/2dOS72b/5w
-gIBYu49DvTL8ynod2mmYTyBynfRpVxPjxnXbubn/M+N+0WCTXIUTPCbyW2MOscjA
-pFe6/S1qKaTqc06VBDabYxdvGrHG6v+KkaJhu2XoLOHWVoBblobBBNrpIkA6GNqz
-H7JHNJDF+JbshlW2aU2HazDINRfD/AfrJmDx4Xn91qAKiegyO3wRA1rM6a0LEpun
-zg3haF3l0rfBEdFpz21gNQbYxNHaRkwg
-=Rxm/
------END PGP SIGNATURE-----
+diff --git a/mailinfo.c b/mailinfo.c
+index 5b6c215..3696d61 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -229,6 +229,14 @@ static int is_multipart_boundary(const c
+ 	return (!memcmp(line, multipart_boundary, multipart_boundary_len));
+ }
+ 
++static int is_blank(char *line)
++{
++	char *ch;
++	for (ch = line; isspace(*ch); ch++)
++		;
++	return *ch == '\0';
++}
++
+ static int eatspace(char *line)
+ {
+ 	int len = strlen(line);
+@@ -243,7 +251,7 @@ #define SEEN_SUBJECT 04
+ #define SEEN_BOGUS_UNIX_FROM 010
+ #define SEEN_PREFIX  020
+ 
+-/* First lines of body can have From:, Date:, and Subject: */
++/* First lines of body can have From:, Date:, and Subject: or be blank */
+ static void handle_inbody_header(int *seen, char *line)
+ {
+ 	if (!memcmp(">From", line, 5) && isspace(line[5])) {
+@@ -279,6 +287,10 @@ static void handle_inbody_header(int *se
+ 			return;
+ 		}
+ 	}
++	if (isspace(line[0])) {
++		if (!(*seen & SEEN_PREFIX) && is_blank(line))
++			return;
++	}
+ 	*seen |= SEEN_PREFIX;
+ }
+ 
+@@ -420,9 +432,7 @@ static int read_one_header_line(char *li
+ 		if (fgets(line + ofs, sz - ofs, in) == NULL)
+ 			break;
+ 		len = eatspace(line + ofs);
+-		if (len == 0)
+-			break;
+-		if (!is_rfc2822_header(line)) {
++		if ((len == 0) || !is_rfc2822_header(line)) {
+ 			/* Re-add the newline */
+ 			line[ofs + len] = '\n';
+ 			line[ofs + len + 1] = '\0';
+@@ -762,10 +772,8 @@ static void handle_body(void)
+ {
+ 	int seen = 0;
+ 
+-	if (line[0] || fgets(line, sizeof(line), stdin) != NULL) {
+-		handle_commit_msg(&seen);
+-		handle_patch();
+-	}
++	handle_commit_msg(&seen);
++	handle_patch();
+ 	fclose(patchfile);
+ 	if (!patch_lines) {
+ 		fprintf(stderr, "No patch found\n");
+-- 
+1.4.0.rc2.g5e3a6
