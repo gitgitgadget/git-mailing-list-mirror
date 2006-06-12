@@ -1,104 +1,106 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: git-applymbox broken?
-Date: Mon, 12 Jun 2006 14:10:01 -0600
-Message-ID: <m17j3m5e5i.fsf@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
-	<m1wtbn468o.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0606111735440.5498@g5.osdl.org>
-	<m13bea6w13.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0606121204220.5498@g5.osdl.org>
+From: "Robin Rosenberg (list subscriber)" 
+	<robin.rosenberg.lists@dewire.com>
+Subject: cvsps wierdness
+Date: Mon, 12 Jun 2006 22:47:01 +0200
+Organization: Dewire
+Message-ID: <200606122247.02727.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 12 22:10:33 2006
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jun 12 22:47:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fpsjz-000273-NM
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 22:10:28 +0200
+	id 1FptJb-0000uH-2C
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 22:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932223AbWFLUKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 16:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbWFLUKS
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 16:10:18 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:19430 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S932223AbWFLUKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 16:10:14 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5CKA1Wr007220;
-	Mon, 12 Jun 2006 14:10:01 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5CKA19v007217;
-	Mon, 12 Jun 2006 14:10:01 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606121204220.5498@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 12 Jun 2006 12:10:27 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751059AbWFLUrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 16:47:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbWFLUrL
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 16:47:11 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:31025 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1751059AbWFLUrK
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 16:47:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 48D91802669
+	for <git@vger.kernel.org>; Mon, 12 Jun 2006 22:45:49 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 04197-02 for <git@vger.kernel.org>; Mon, 12 Jun 2006 22:45:49 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by torino.dewire.com (Postfix) with ESMTP id EC649802654
+	for <git@vger.kernel.org>; Mon, 12 Jun 2006 22:45:46 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21739>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Mon, 12 Jun 2006, Eric W. Biederman wrote:
->> 
->> Below is an example of the kind of patch that inspired me to relax the
->> rules on parsing in body headers (this comes from Andi Kleen quilt tree).
->
-> And this is wrong.
->
-> We should _not_ accept crappy patches, and then start guessing at what the 
-> person meant.
->
->>From the very beginning of git, I tried to make it extremely clear that 
-> there is never any guessing going on. We don't use "heuristics" except as 
-> a pure optimization: ie a heuristic can have a _performance_ impact, but 
-> it must never EVER have semantic impact.
->
-> SCM's are not about guessing. They are about saving the _exact_ state that 
-> the user asked for. No "let's try to be nice", no gray areas.
->
-> If the new git-applymbox just takes random lines from the body of the 
-> email, and decides that they may be authorship information, then that is a 
-> BUG. The "From: " line in the middle of an email may well be about 
-> somebody having _discovered_ the bug, and we're quoting him as part of the 
-> explanation. It does NOT mean that it's about authorship.
->
-> So we should ONLY check for "From:" (and perhaps "Subject:" and "Date:") 
-> at the very top of the email body. NOWHERE ELSE.
->
-> The fact that somebody has a crappy quilt tree, and the fact that quilt is 
-> very much a "anything goes" kind of laissez faire system does not mean, 
-> and should NEVER mean that git becomes the same kind of mess of "let's do 
-> a best effort and try to guess what somebody means" kind of thing.
+I sometimes get out-of-order imports with git-cvsimport when consecutive 
+commits have the same message. I narrowed it down to a small demo:
 
-Ok. A reasonable position.  It would have been nice if you had squawked 
-when I made that change: 2dec02b1ecafc47d4031d0a68a94c775a6a9ff9e
+#!/bin/bash -x
+mkdir demo
+cd demo
+export CVSROOT=$(pwd)/cvsrepo
+mkdir $CVSROOT
+cvs init
+mkdir $CVSROOT/x
+cvs co -d sandbox x
+cd sandbox
+echo X >k.txt
+cvs add k.txtsometimes 
+cvs commit -m "A commit"
+sleep 1
+echo a >v.txt
+cvs add v.txt
+cvs commit -m "A commit"
+sleep 1
+echo b >v.txt
+cvs commit -m "A commit"
+cvsps -x --norc
 
-I thought I was explicit when I did it, oh well.
+-- end --
 
-As for quilt being imperfect that among other things is why I
-am slowly trying to make the tools play together better.  So people
-can use the best tool for the job, which if the integration is tight
-enough becomes a single tool.
+The script creates a small CVS repo with three commits on two files. What's 
+odd is that cvsps lists revision 1.2 of the file v.txt *before* version 1.1, 
+like this:
 
-> I check and edit my emails before I apply them, and I try to teach the 
-> people who send them manners and what the rules are. THAT is the way to 
-> handle this, not by having the tool itself become unreliable and random
+---------------------
+PatchSet 1
+Date: 2006/06/13 00:34:15
+Author: roro
+Branch: HEAD
+Tag: (none)
+Log:
+A commit
 
-What are the rules?
+Members:
+        k.txt:INITIAL->1.1
+        v.txt:1.1->1.2
 
-This looks like something that needs to be Documented by
-more than just the source of git-mailinfo.
+---------------------
+PatchSet 2
+Date: 2006/06/13 00:34:17
+Author: roro
+Branch: HEAD
+Tag: (none)
+Log:
+A commit
 
-The need to skip extra blank lines was a surprise to me.
-In looking for documentation the best I could quickly
-find was SubmittingPatches and it only Documents the From: and ---
-lines.
+Members:
+        v.txt:INITIAL->1.1
 
-Eric
+Maybe someone with cvsps insight can spot the error? If you don't get the
+same error I wouldn't be surprised because I had a similar example that would
+not repeat itself on both of the machines I tried it. This one however "works" 
+every time (on my machines).
+
+-- robin
