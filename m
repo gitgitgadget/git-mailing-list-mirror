@@ -1,54 +1,55 @@
-From: "Galusya B." <12@32.ru>
-Subject: Re[1]: hi from Galusya B.
-Date: Mon, 12 Jun 2006 13:06:03 +0300
-Message-ID: <007c01c68e07$c2c14880$1a04000a@218.80.103.90>
+From: "Anand Kumria" <wildfire@progsoc.org>
+Subject: Re: Collecting cvsps patches
+Date: Mon, 12 Jun 2006 11:27:37 +0000 (UTC)
+Message-ID: <e6jj39$6ua$1@sea.gmane.org>
+References: <20060611122746.GB7766@nowhere.earth>
+	<46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com>
+	<20060611224205.GF1297@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="windows-1251"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Jun 12 12:05:57 2006
+X-From: git-owner@vger.kernel.org Mon Jun 12 13:28:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpjIm-0000q9-C4
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 12:05:44 +0200
+	id 1Fpkaw-0006mw-9N
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 13:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbWFLKFb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 06:05:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbWFLKF3
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 06:05:29 -0400
-Received: from [218.80.103.90] ([218.80.103.90]:33031 "EHLO 218.80.103.90")
-	by vger.kernel.org with ESMTP id S1751735AbWFLKF1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 06:05:27 -0400
-Received: from [10.0.4.26] by 218.80.103.90
-	id NZpOExRhO1W2; Mon, 12 Jun 2006 13:06:03 +0300
-To: "Otto" <bk-commits-head-owner@vger.kernel.org>
+	id S1751882AbWFLL2b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 07:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbWFLL2b
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 07:28:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:24003 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751882AbWFLL2b (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 07:28:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fpkao-0006lE-IZ
+	for git@vger.kernel.org; Mon, 12 Jun 2006 13:28:26 +0200
+Received: from mail.globalcapital.cc ([80.85.66.210])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Jun 2006 13:28:26 +0200
+Received: from wildfire by mail.globalcapital.cc with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Jun 2006 13:28:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: mail.globalcapital.cc
+User-Agent: pan 0.98 ("The plain old chaos of undifferentiated weirdness.")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.5 points;
- *  0.1 RCVD_BY_IP Received by mail server with no name
- *  1.6 DOMAIN_4U2 BODY: Domain name containing a "4u" variant
- *  2.0 URI_4YOU URI: Message has URI 4you
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4721]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: im-waiting-4you.net]
- *  3.0 FROM_ALL_NUMS From an address that is all numbers (non-phone)
- *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
- *  0.0 RCVD_DOUBLE_IP_LOOSE Received: by and from look like IP addresses
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21701>
 
-Hi, Otto
+On Mon, 12 Jun 2006 00:42:05 +0200, Yann Dirson wrote:
 
-I'm a very young and energetic lady! I have very positive attitude to life and people. I do enjoy new experience life can offer me: to see new interesting places, to meet new people.
-I do try to enjoy every moment of life and accept everything the way it comes without complaining.
-Though my life seems to be quite enjoyable there's one important thing missing. It's LOVE!
-Without my beloved one, my soul mate, my King my life is not completed.
-I wish i coud find him very soon so that we could share together every momement of the life-time romance! 
-What about you? Could you be my King? If answer is "yes" - you can find more about me 
-http://Aqgvj.im-waiting-4you.net/
+> http://ydirson.free.fr/soft/git/cvsps.git
 
-Yourth faithfully
-Galusya B.
+I think you need to chmod +x hooks/post-update
+
+and then run 'git-update-server-info'.
+
+Cheers,
+Anand
