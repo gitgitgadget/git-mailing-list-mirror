@@ -1,69 +1,71 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: [PATCH] Don't parse any headers in the real body of an email message.
-Date: Mon, 12 Jun 2006 13:48:35 -0600
-Message-ID: <m18xo25f58.fsf_-_@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
-	<m1wtbn468o.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0606111735440.5498@g5.osdl.org>
-	<m13bea6w13.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0606121204220.5498@g5.osdl.org>
+From: "Joanne Garcia" <JoanneGarcia@mail.ru>
+Subject: Your money, open-spaced
+Date: Mon, 12 Jun 2006 20:10:26 +0000 (UTC)
+Message-ID: <662161c80604nc5xojfelnh2c1wqz4nelnel67bu2bmz5q3@mxs.mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 12 21:49:21 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Jun 12 22:10:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpsP6-0005oj-30
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 21:48:52 +0200
+	id 1Fpsjs-000254-Dk
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 22:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbWFLTst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 15:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932142AbWFLTst
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 15:48:49 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:40103 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S932140AbWFLTss (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 15:48:48 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5CJmZXw007126;
-	Mon, 12 Jun 2006 13:48:35 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5CJmZHi007125;
-	Mon, 12 Jun 2006 13:48:35 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0606121204220.5498@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 12 Jun 2006 12:10:27 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932229AbWFLUKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 16:10:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbWFLUKP
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 16:10:15 -0400
+Received: from n20z146l253.broadband.ctm.net ([202.86.146.253]:48888 "EHLO
+	FREDO") by vger.kernel.org with ESMTP id S932222AbWFLUKN convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 16:10:13 -0400
+Date: Mon, 12 Jun 2006 20:10:10 -0480
+To: postmaster@vger.kernel.org
+Content-Disposition: inline
+X-Spam: Not detected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21736>
+X-Spam-Report: 16.0 points;
+ *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: mistnear.net]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: mistnear.net]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: mistnear.net]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: mistnear.net]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: mistnear.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21737>
 
+Even if you have no erectin problems SOFT CIAzLIS 
+would help you to make BETTER SE  X MORE OFTEN!
+and to bring  unimagnable plesure to her.
 
-It was pointed out that the current behaviour might mispart a patch comment
-so remove this behaviour for now.
+Just disolve half a pil under your tongue 
+and get ready for action in 15 minutes. 
 
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
----
- mailinfo.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+The tests showed that the majority of men 
+after taking this medic ation were able to have 
+PERFECT ER ECTI ON during 36 hours!
 
-diff --git a/mailinfo.c b/mailinfo.c
-index 3696d61..325c3b2 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -254,6 +254,8 @@ #define SEEN_PREFIX  020
- /* First lines of body can have From:, Date:, and Subject: or be blank */
- static void handle_inbody_header(int *seen, char *line)
- {
-+	if (*seen & SEEN_PREFIX)
-+		return;
- 	if (!memcmp(">From", line, 5) && isspace(line[5])) {
- 		if (!(*seen & SEEN_BOGUS_UNIX_FROM)) {
- 			*seen |= SEEN_BOGUS_UNIX_FROM;
--- 
-1.4.0.g25f48-dirty
+VISIT US, AND GET OUR SPECIAL 70% DISC OUNT OFER!
+
+http://ejlgkg.mistnear.net/?23869344
+
+=====
+over the Council Beach and for the first time began pressing his  students
+wanted to sec Guta right then and there. just like that. To look  at her and
+     Fletcher still blinked from the change of scene. "What did  you  just
+scattered, and I thought I heard something.
+learn about flight in this place as there had been in the life behind him.
+if you're dead or alive. And then you finish up  the second night and get to
+
+sounded in a voice of highest ceremony. Stand to Center meant  only  great
+didn't shine  in any special way, just a  little bit  and in a  calm, even a
