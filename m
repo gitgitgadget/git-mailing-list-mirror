@@ -1,71 +1,104 @@
-From: "Joanne Garcia" <JoanneGarcia@mail.ru>
-Subject: Your money, open-spaced
-Date: Mon, 12 Jun 2006 20:10:26 +0000 (UTC)
-Message-ID: <662161c80604nc5xojfelnh2c1wqz4nelnel67bu2bmz5q3@mxs.mail.ru>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: git-applymbox broken?
+Date: Mon, 12 Jun 2006 14:10:01 -0600
+Message-ID: <m17j3m5e5i.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
+	<m1wtbn468o.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0606111735440.5498@g5.osdl.org>
+	<m13bea6w13.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0606121204220.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Jun 12 22:10:25 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 12 22:10:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fpsjs-000254-Dk
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 22:10:20 +0200
+	id 1Fpsjz-000273-NM
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 22:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932229AbWFLUKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 16:10:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbWFLUKP
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 16:10:15 -0400
-Received: from n20z146l253.broadband.ctm.net ([202.86.146.253]:48888 "EHLO
-	FREDO") by vger.kernel.org with ESMTP id S932222AbWFLUKN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 16:10:13 -0400
-Date: Mon, 12 Jun 2006 20:10:10 -0480
-To: postmaster@vger.kernel.org
-Content-Disposition: inline
-X-Spam: Not detected
+	id S932223AbWFLUKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 16:10:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbWFLUKS
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 16:10:18 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:19430 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S932223AbWFLUKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 16:10:14 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5CKA1Wr007220;
+	Mon, 12 Jun 2006 14:10:01 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5CKA19v007217;
+	Mon, 12 Jun 2006 14:10:01 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606121204220.5498@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 12 Jun 2006 12:10:27 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.0 points;
- *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: mistnear.net]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: mistnear.net]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: mistnear.net]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: mistnear.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: mistnear.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21738>
 
-Even if you have no erectin problems SOFT CIAzLIS 
-would help you to make BETTER SE  X MORE OFTEN!
-and to bring  unimagnable plesure to her.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Just disolve half a pil under your tongue 
-and get ready for action in 15 minutes. 
+> On Mon, 12 Jun 2006, Eric W. Biederman wrote:
+>> 
+>> Below is an example of the kind of patch that inspired me to relax the
+>> rules on parsing in body headers (this comes from Andi Kleen quilt tree).
+>
+> And this is wrong.
+>
+> We should _not_ accept crappy patches, and then start guessing at what the 
+> person meant.
+>
+>>From the very beginning of git, I tried to make it extremely clear that 
+> there is never any guessing going on. We don't use "heuristics" except as 
+> a pure optimization: ie a heuristic can have a _performance_ impact, but 
+> it must never EVER have semantic impact.
+>
+> SCM's are not about guessing. They are about saving the _exact_ state that 
+> the user asked for. No "let's try to be nice", no gray areas.
+>
+> If the new git-applymbox just takes random lines from the body of the 
+> email, and decides that they may be authorship information, then that is a 
+> BUG. The "From: " line in the middle of an email may well be about 
+> somebody having _discovered_ the bug, and we're quoting him as part of the 
+> explanation. It does NOT mean that it's about authorship.
+>
+> So we should ONLY check for "From:" (and perhaps "Subject:" and "Date:") 
+> at the very top of the email body. NOWHERE ELSE.
+>
+> The fact that somebody has a crappy quilt tree, and the fact that quilt is 
+> very much a "anything goes" kind of laissez faire system does not mean, 
+> and should NEVER mean that git becomes the same kind of mess of "let's do 
+> a best effort and try to guess what somebody means" kind of thing.
 
-The tests showed that the majority of men 
-after taking this medic ation were able to have 
-PERFECT ER ECTI ON during 36 hours!
+Ok. A reasonable position.  It would have been nice if you had squawked 
+when I made that change: 2dec02b1ecafc47d4031d0a68a94c775a6a9ff9e
 
-VISIT US, AND GET OUR SPECIAL 70% DISC OUNT OFER!
+I thought I was explicit when I did it, oh well.
 
-http://ejlgkg.mistnear.net/?23869344
+As for quilt being imperfect that among other things is why I
+am slowly trying to make the tools play together better.  So people
+can use the best tool for the job, which if the integration is tight
+enough becomes a single tool.
 
-=====
-over the Council Beach and for the first time began pressing his  students
-wanted to sec Guta right then and there. just like that. To look  at her and
-     Fletcher still blinked from the change of scene. "What did  you  just
-scattered, and I thought I heard something.
-learn about flight in this place as there had been in the life behind him.
-if you're dead or alive. And then you finish up  the second night and get to
+> I check and edit my emails before I apply them, and I try to teach the 
+> people who send them manners and what the rules are. THAT is the way to 
+> handle this, not by having the tool itself become unreliable and random
 
-sounded in a voice of highest ceremony. Stand to Center meant  only  great
-didn't shine  in any special way, just a  little bit  and in a  calm, even a
+What are the rules?
+
+This looks like something that needs to be Documented by
+more than just the source of git-mailinfo.
+
+The need to skip extra blank lines was a surprise to me.
+In looking for documentation the best I could quickly
+find was SubmittingPatches and it only Documents the From: and ---
+lines.
+
+Eric
