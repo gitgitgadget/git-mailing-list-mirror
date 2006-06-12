@@ -1,56 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: cvsps wierdness
-Date: Mon, 12 Jun 2006 14:30:47 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606121429510.5498@g5.osdl.org>
-References: <200606122247.02727.robin.rosenberg.lists@dewire.com>
- <Pine.LNX.4.64.0606121406200.5498@g5.osdl.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH] gitweb: Adding a `blame' interface.
+Date: Mon, 12 Jun 2006 16:29:30 -0500
+Message-ID: <1150147770.23938.373.camel@cashmere.sps.mot.com>
+References: <11500407193506-git-send-email-octo@verplant.org>
+	 <46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com>
+	 <20060612082448.GA11857@verplant.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 23:31:01 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 12 23:34:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fptzr-0001xF-IP
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 23:30:56 +0200
+	id 1Fpu2v-0002eR-6F
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 23:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932350AbWFLVaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 17:30:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbWFLVaw
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 17:30:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60330 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932350AbWFLVav (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 17:30:51 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5CLUlgt002912
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Jun 2006 14:30:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5CLUlUh004296;
-	Mon, 12 Jun 2006 14:30:47 -0700
-To: "Robin Rosenberg (list subscriber)" 
-	<robin.rosenberg.lists@dewire.com>
-In-Reply-To: <Pine.LNX.4.64.0606121406200.5498@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932375AbWFLVeB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 17:34:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932376AbWFLVeB
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 17:34:01 -0400
+Received: from az33egw02.freescale.net ([192.88.158.103]:39835 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S932375AbWFLVeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 17:34:00 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k5CLoog3013391;
+	Mon, 12 Jun 2006 14:50:50 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k5CLXrZL000949;
+	Mon, 12 Jun 2006 16:33:54 -0500 (CDT)
+To: Florian Forster <octo@verplant.org>
+In-Reply-To: <20060612082448.GA11857@verplant.org>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21742>
 
+On Mon, 2006-06-12 at 03:24, Florian Forster wrote:
 
+> I have two more points regarding gitweb's configuration:
+> - IMHO it would make sense to move the general gitweb-configuration
+>   (where are the repositories, where are the binaries, etc) out of the
+>   script.  As far as I know the Debian maintainer of the `gitweb'
+>   package has asked for this before but was refused for some reason..
+>   Possibly a file `gitweb.conf' in the same directory as the script
+>   could be read and overwrite the builtin defaults..?
 
-On Mon, 12 Jun 2006, Linus Torvalds wrote:
-> 
-> I don't think this is strictly correct, btw. I suspect you can still get 
-> into strange situations where the changeset merging has resulted in one 
-> file ordering one way, and another file ordering the other way. 
+I already submitted a patch down this line on 22-Mar-2006:
 
-Btw, I also fear that this could make cvsps noticeably slower, since the 
-patchset comparison code is pretty expensive (O(n*m) in files in each 
-patch-set).
+    http://marc.theaimsgroup.com/?l=git&m=114308224922372&w=2
 
-		Linus
+Thanks,
+jdl
