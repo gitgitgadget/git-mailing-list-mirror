@@ -1,91 +1,54 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] gitweb: Adding a `blame' interface.
-Date: Mon, 12 Jun 2006 05:19:49 -0400
-Message-ID: <20060612091949.GB29220@spearce.org>
-References: <11500407193506-git-send-email-octo@verplant.org> <46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com> <20060612082448.GA11857@verplant.org> <46a038f90606120134n21c269bbj3e8c7e31d4d93a23@mail.gmail.com> <20060612084056.GA29220@spearce.org> <Pine.LNX.4.63.0606121107520.21813@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Galusya B." <12@32.ru>
+Subject: Re[1]: hi from Galusya B.
+Date: Mon, 12 Jun 2006 13:06:03 +0300
+Message-ID: <007c01c68e07$c2c14880$1a04000a@218.80.103.90>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Florian Forster <octo@verplant.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 11:20:06 2006
+Content-Type: text/plain;
+	charset="windows-1251"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Jun 12 12:05:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpiaT-0002AA-Tf
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 11:19:58 +0200
+	id 1FpjIm-0000q9-C4
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 12:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbWFLJTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 05:19:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbWFLJTz
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 05:19:55 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:52137 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751243AbWFLJTy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 05:19:54 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FpiaK-0005I6-TT; Mon, 12 Jun 2006 05:19:49 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4E67620FB20; Mon, 12 Jun 2006 05:19:49 -0400 (EDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0606121107520.21813@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751761AbWFLKFb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 06:05:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbWFLKF3
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 06:05:29 -0400
+Received: from [218.80.103.90] ([218.80.103.90]:33031 "EHLO 218.80.103.90")
+	by vger.kernel.org with ESMTP id S1751735AbWFLKF1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 06:05:27 -0400
+Received: from [10.0.4.26] by 218.80.103.90
+	id NZpOExRhO1W2; Mon, 12 Jun 2006 13:06:03 +0300
+To: "Otto" <bk-commits-head-owner@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21699>
+X-Spam-Report: 12.5 points;
+ *  0.1 RCVD_BY_IP Received by mail server with no name
+ *  1.6 DOMAIN_4U2 BODY: Domain name containing a "4u" variant
+ *  2.0 URI_4YOU URI: Message has URI 4you
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4721]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: im-waiting-4you.net]
+ *  3.0 FROM_ALL_NUMS From an address that is all numbers (non-phone)
+ *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
+ *  0.0 RCVD_DOUBLE_IP_LOOSE Received: by and from look like IP addresses
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21700>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Mon, 12 Jun 2006, Shawn Pearce wrote:
-> 
-> >   [gitweb]
-> >     description=<div class=\"description\">\n\
-> > This is a chunk of text which describes this repository.  Some\n\
-> > of this text might be rather long, and might need many lines to\n\
-> > really be able to describe the repository in a nice editor such as\n\
-> > vi running in an 80 character wide xterm.\n\
-> > </div>
-> 
-> AFAIK the trailing "\" will not work.
+Hi, Otto
 
-Actually it does.  I figured out that it works (and why it works)
-when I implemented the GIT repository parser in Java for my pure
-Java version of GIT...
+I'm a very young and energetic lady! I have very positive attitude to life and people. I do enjoy new experience life can offer me: to see new interesting places, to meet new people.
+I do try to enjoy every moment of life and accept everything the way it comes without complaining.
+Though my life seems to be quite enjoyable there's one important thing missing. It's LOVE!
+Without my beloved one, my soul mate, my King my life is not completed.
+I wish i coud find him very soon so that we could share together every momement of the life-time romance! 
+What about you? Could you be my King? If answer is "yes" - you can find more about me 
+http://Aqgvj.im-waiting-4you.net/
 
-For example:
-
-  [spearce@spearce-pb15 bob]$ cat .git/config 
-  [core]
-          repositoryformatversion = 0
-          filemode = true
-  [gitweb]
-          description = This is a very\nlong line to put into GIT\n\
-  repo config.\n\
-  I hope it works.
-          on = true
-  [spearce@spearce-pb15 bob]$ git repo-config gitweb.description
-  This is a very
-  long line to put into GIT
-  repo config.
-  I hope it works.
-  [spearce@spearce-pb15 bob]$ git repo-config gitweb.on
-  true
-
-The use of a trailing \ makes sense; the collapsing of multiple
-spaces into one space unless quoted inside of "" doesn't.
-But whatever...
-
--- 
-Shawn.
+Yourth faithfully
+Galusya B.
