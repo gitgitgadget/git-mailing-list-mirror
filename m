@@ -1,106 +1,95 @@
-From: "Robin Rosenberg (list subscriber)" 
-	<robin.rosenberg.lists@dewire.com>
-Subject: cvsps wierdness
-Date: Mon, 12 Jun 2006 22:47:01 +0200
-Organization: Dewire
-Message-ID: <200606122247.02727.robin.rosenberg.lists@dewire.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: cvsps wierdness
+Date: Mon, 12 Jun 2006 14:27:15 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606121406200.5498@g5.osdl.org>
+References: <200606122247.02727.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jun 12 22:47:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 12 23:27:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FptJb-0000uH-2C
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 22:47:15 +0200
+	id 1Fptwc-00019a-Gk
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 23:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbWFLUrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 16:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbWFLUrL
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 16:47:11 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:31025 "EHLO
-	torino.dewire.com") by vger.kernel.org with ESMTP id S1751059AbWFLUrK
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 16:47:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id 48D91802669
-	for <git@vger.kernel.org>; Mon, 12 Jun 2006 22:45:49 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 04197-02 for <git@vger.kernel.org>; Mon, 12 Jun 2006 22:45:49 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by torino.dewire.com (Postfix) with ESMTP id EC649802654
-	for <git@vger.kernel.org>; Mon, 12 Jun 2006 22:45:46 +0200 (CEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S932348AbWFLV1b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 17:27:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932349AbWFLV1b
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 17:27:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47785 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932348AbWFLV1a (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 17:27:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5CLRGgt002664
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Jun 2006 14:27:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5CLRFNe004133;
+	Mon, 12 Jun 2006 14:27:16 -0700
+To: "Robin Rosenberg (list subscriber)" 
+	<robin.rosenberg.lists@dewire.com>
+In-Reply-To: <200606122247.02727.robin.rosenberg.lists@dewire.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.75__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21740>
 
 
-I sometimes get out-of-order imports with git-cvsimport when consecutive 
-commits have the same message. I narrowed it down to a small demo:
 
-#!/bin/bash -x
-mkdir demo
-cd demo
-export CVSROOT=$(pwd)/cvsrepo
-mkdir $CVSROOT
-cvs init
-mkdir $CVSROOT/x
-cvs co -d sandbox x
-cd sandbox
-echo X >k.txt
-cvs add k.txtsometimes 
-cvs commit -m "A commit"
-sleep 1
-echo a >v.txt
-cvs add v.txt
-cvs commit -m "A commit"
-sleep 1
-echo b >v.txt
-cvs commit -m "A commit"
-cvsps -x --norc
+On Mon, 12 Jun 2006, Robin Rosenberg (list subscriber) wrote:
+> 
+> The script creates a small CVS repo with three commits on two files. What's 
+> odd is that cvsps lists revision 1.2 of the file v.txt *before* version 1.1, 
+> like this:
 
--- end --
+What seems to happen is that the two changes to v.txt are broken up into 
+separate changesets (because they touch the same file), but then the 
+_first_ one is merged with the changeset that contains the k.txt change 
+(because they have the same log message, and roughly the same date).
 
-The script creates a small CVS repo with three commits on two files. What's 
-odd is that cvsps lists revision 1.2 of the file v.txt *before* version 1.1, 
-like this:
+Then, because it has the earlier date, that combined changeset ends up 
+being considered to be "before" the later one, even though it contains a 
+version of v.txt that is newer.
 
----------------------
-PatchSet 1
-Date: 2006/06/13 00:34:15
-Author: roro
-Branch: HEAD
-Tag: (none)
-Log:
-A commit
+Does this patch fix it for you (untested - it could result in tons of 
+other trouble, but it basically just says that time ordering is less 
+important than member revision ordering).
 
-Members:
-        k.txt:INITIAL->1.1
-        v.txt:1.1->1.2
+I don't think this is strictly correct, btw. I suspect you can still get 
+into strange situations where the changeset merging has resulted in one 
+file ordering one way, and another file ordering the other way. 
 
----------------------
-PatchSet 2
-Date: 2006/06/13 00:34:17
-Author: roro
-Branch: HEAD
-Tag: (none)
-Log:
-A commit
+I really don't think cvsps is really very good about this.
 
-Members:
-        v.txt:INITIAL->1.1
+		Linus
 
-Maybe someone with cvsps insight can spot the error? If you don't get the
-same error I wouldn't be surprised because I had a similar example that would
-not repeat itself on both of the machines I tried it. This one however "works" 
-every time (on my machines).
-
--- robin
+---
+diff --git a/cvsps.c b/cvsps.c
+index 2695a0f..daa93a3 100644
+--- a/cvsps.c
++++ b/cvsps.c
+@@ -1662,14 +1662,14 @@ static int compare_patch_sets_bytime(con
+      * know that insertions are unique at this point.
+      */
+ 
+-    diff = ps1->date - ps2->date;
+-    if (diff)
+-	return (diff < 0) ? -1 : 1;
+-
+     ret = compare_patch_sets_by_members(ps1, ps2);
+     if (ret)
+ 	return ret;
+ 
++    diff = ps1->date - ps2->date;
++    if (diff)
++	return (diff < 0) ? -1 : 1;
++
+     ret = strcmp(ps1->author, ps2->author);
+     if (ret)
+ 	return ret;
