@@ -1,68 +1,58 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: svn to git, N-squared?
-Date: Sun, 11 Jun 2006 21:29:34 -0700
-Message-ID: <20060612042934.GA12083@hand.yhbt.net>
-References: <9e4733910606111902l709c71ccyf45070d55112739e@mail.gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: git-diff --cc broken in 1.4.0?
+Date: Mon, 12 Jun 2006 16:32:45 +1200
+Message-ID: <46a038f90606112132jaf33a25x5794a19db2a06d8d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 12 06:29:47 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jun 12 06:32:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fpe3W-0003C5-Pm
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 06:29:39 +0200
+	id 1Fpe6b-0003go-F4
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 06:32:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbWFLE3g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 00:29:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbWFLE3g
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 00:29:36 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:19383 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751272AbWFLE3f (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 00:29:35 -0400
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id E20C77DC005; Sun, 11 Jun 2006 21:29:34 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S1750720AbWFLEcr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 00:32:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbWFLEcr
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 00:32:47 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:53877 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750720AbWFLEcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 00:32:46 -0400
+Received: by wr-out-0506.google.com with SMTP id i20so1072084wra
+        for <git@vger.kernel.org>; Sun, 11 Jun 2006 21:32:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cwcJJ9aPM5TRkKzjcv9uiDTHL+uc6HUtbroZWE9mXcNUggJadguTstiv2o8Aln7iJoEHhHma86VG7XfywG7tyA45C9aRxlz0XY59fU+Ku9GFEDRbJ2mO5EhXOFGIyNyzxBxf5a9LLwUnG6+ONtjDOahOEc8T1kJlPiMvb7A++LE=
+Received: by 10.54.146.5 with SMTP id t5mr5176578wrd;
+        Sun, 11 Jun 2006 21:32:45 -0700 (PDT)
+Received: by 10.54.71.9 with HTTP; Sun, 11 Jun 2006 21:32:45 -0700 (PDT)
+To: git <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <9e4733910606111902l709c71ccyf45070d55112739e@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21689>
 
-Jon Smirl <jonsmirl@gmail.com> wrote:
-> I have Mozilla CVS in a SVN repository. I've been using git-svnimport
-> to import it. This time I am letting it run to completion; but the
-> import has been running for four days now and it is only up to 2004.
-> The import task is stable at 570MB and it is using about 50% of my
-> CPU. It is constantly spawning off git write-tree, read-tree,
-> hash-object, update-index. It is not doing excessive disk activity.
+I was looking at some merges in gitk and lamenting the apparent loss
+of the nice two-sided diff we get with -cc, and now duting a slightly
+messy merge I did git-diff -cc only to get...
 
-SVN itself seems to get much slower as you get towards newer revisions
-in a repository (FSFS) with lots of history.  I've been experimenting a
-bit with a local copy of the gcc repo from November and git-svn SUCKED
-at importing it (it took over a week and I cancelled it out of
-frustration).   I started repacking too, but, and it didn't help,  Much
-of the performance defieciency was the svn sub process. being extremely
-slow at updating.
+$ git-ls-files --unmerged
+100644 f1d3843b2b2e42ba78adcf37da6440f0d321852e 1       local/version.php
+100644 9352efa45cd25d9ad58df12b4ac241ac226a8ad4 2       local/version.php
+100644 50da9b47903f6179f55a3f44290e7feaa08342f4 3       local/version.php
 
-I also tried git-svnimport, of course, but I only had 512M on that
-machine and the machine became unusable due to heavy swapping.
+$ git-diff --cc
+diff --cc local/version.php
+index 9352efa,50da9b4..0000000
+--- a/local/version.php
++++ b/local/version.php
 
-> The import seems to be getting n-squared slower. It is still making
-> forward progress but the progress seems to be getting slower and
-> slower.
-> 
-> It looks like it is doing write-tree, read-tree, hash-object,
-> update-index once or more per change set. If these commands are
-> n-proportional and they are getting run n times, then this is a
-> n-squared process. Projecting this out, the import may take 10 days or
-> more to completely finish.
+cheers,
 
-I'm working on some improvements to git-svn to make it a bit more
-spiffy.
 
--- 
-Eric Wong
+martin
