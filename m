@@ -1,102 +1,129 @@
-From: David Kowis <dkowis@shlrm.org>
-Subject: Re: Thoughts on adding another hook to git
-Date: Mon, 12 Jun 2006 14:22:19 -0500
-Message-ID: <448DBEEB.3000308@shlrm.org>
-References: <448DB201.5090208@shlrm.org>	 <f36b08ee0606121206k62242354k13671f95da6b1418@mail.gmail.com>	 <448DBC2B.1070807@shlrm.org> <f36b08ee0606121218s6cdcfec2i42482ed5284a45e3@mail.gmail.com>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: [PATCH] Ignore blank lines among this inbody headers
+Date: Mon, 12 Jun 2006 13:29:56 -0600
+Message-ID: <m1odwy5g0b.fsf_-_@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
+	<m1wtbn468o.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.64.0606111735440.5498@g5.osdl.org>
+	<m17j3m6wmw.fsf_-_@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 21:22:40 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 12 21:30:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fprzd-0000dQ-8Y
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 21:22:33 +0200
+	id 1Fps6z-0002Ay-JJ
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 21:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207AbWFLTWa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 15:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbWFLTWa
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 15:22:30 -0400
-Received: from ylpvm01-ext.prodigy.net ([207.115.57.32]:43165 "EHLO
-	ylpvm01.prodigy.net") by vger.kernel.org with ESMTP
-	id S1752206AbWFLTW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 15:22:29 -0400
-Received: from pimout5-ext.prodigy.net (pimout5-int.prodigy.net [207.115.4.21])
-	by ylpvm01.prodigy.net (8.13.6 out spool5000 dk/8.12.10) with ESMTP id k5CJMHKl006965
-	for <git@vger.kernel.org>; Mon, 12 Jun 2006 15:22:21 -0400
-X-ORBL: [66.143.247.87]
-Received: from mail.shlrm.org (adsl-66-143-247-87.dsl.snantx.swbell.net [66.143.247.87])
-	by pimout5-ext.prodigy.net (8.13.6 out.dk/8.13.6) with ESMTP id k5CJMKaZ135756;
-	Mon, 12 Jun 2006 15:22:20 -0400
-Received: from [192.168.2.111] (rrcs-24-173-63-133.sw.biz.rr.com [24.173.63.133])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.shlrm.org (Postfix) with ESMTP id 2BD9F28034B3;
-	Mon, 12 Jun 2006 14:22:20 -0500 (CDT)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: Yakov Lerner <iler.ml@gmail.com>
-In-Reply-To: <f36b08ee0606121218s6cdcfec2i42482ed5284a45e3@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+	id S932122AbWFLTaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 15:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752247AbWFLTaF
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 15:30:05 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:14749 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1752245AbWFLTaC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 15:30:02 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5CJTuR2006855;
+	Mon, 12 Jun 2006 13:29:56 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5CJTusf006854;
+	Mon, 12 Jun 2006 13:29:56 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <m17j3m6wmw.fsf_-_@ebiederm.dsl.xmission.com> (Eric
+	W. Biederman's message of "Mon, 12 Jun 2006 12:45:27 -0600")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21733>
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-Yakov Lerner wrote:
-> On 6/12/06, David Kowis <dkowis@shlrm.org> wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA512
->>
->> Yakov Lerner wrote:
->> > On 6/12/06, David Kowis <dkowis@shlrm.org> wrote:
->> >> I'd like to be able to modify the commit message before it ends up in
->> >> the $EDITOR.
->> >
->> > Can't you define $EDITOR to point to some script
->> > which modifies the file as you wish then calls the
->> > real editor on it ?
->> >
->>
->> I could, but then anything else that uses $EDITOR would also be affected
->> in the same way... Which would produce interesting results.
-> 
-> git-commit sure creates those temp files with
-> specific naming in specific dir. You could check for
-> that in EDITOR script. In the script, you could even check
-> the name of the parent process.
-> 
-
-This is true. However, I'd be running that script every time something
-invoked $EDITOR. And some people may not like that solution. I'm
-thinking that more than just I will like to use this pre-edit hook.
-Especially in the distro I'm helping develop.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21734>
 
 
-- --
-David Kowis
+This is a fix for a regression introduced in:
+8b4525fb3c6d79bd3a64b8f441237a4095db4e22.
 
-ISO Team Lead - www.sourcemage.org
-Source Mage GNU/Linux
+When I refactored the inbody header parsing into a state machine I failed
+to see the logic that skipped multiple leading spaces if they are present.
+I think I assumed that logic was just there to skip the initial blank
+line between the mail headers and the body.
 
-Progress isn't made by early risers. It's made by lazy men trying to
-find easier ways to do something.
-  - Robert Heinlein
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (MingW32)
+This restores that behaviour and since we ignore all leading blank lines
+in commit messages now this code removes the special case for the blank
+line between the mail headers and the body.
 
-iQGVAwUBRI2+68nf+vRw63ObAQo6Kwv/bmLf8f54lm7sXekww8olFwT3SkE8orHk
-BozzIyW8foz+FLtVbjQQbbGw1RgLrL5zPn+De+BM3LwXabhqnsVca2KpQVMkLaqx
-aJwjn2JvL6ujG3ponuCCPTk5VhzU0C/Su15eIMa86O2EFu6Y0HBhw/hOnyEWJiYa
-tOxPETizJHD1YbneoTJmu+tQFaKbjAD/3tUMDkQBp9h1QkbZHD5LQUjozepLZplY
-PfOvZIP9fT6GDsK5SuweGrYZHjzuV0RlrwN191No3FsJMMX7+PQ85MBvj1p/xJG7
-VO+z33+IYPascpm/3NdpjdtKAh72+rfW5OUd8FN1ISwPtY9dJeh5zaaCTB+oEqL4
-56pchLL33SFphOO5//YwHcwgX61tPK0stsVpjfdQHEjz8BHNSoBhZw3lw/AvO+63
-UhiA3rjiIFrYe9piJHlX+IxoNo5OaLJNO2KjV9k15+0FxSzbKPn3Pt2Ee90ootEn
-8NzHFVoyOWnt5mPM+jQr4DsPgrikeUaO
-=3hwD
------END PGP SIGNATURE-----
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+---
+
+This is a resend to add my missing Signed-off-by line.
+---
+ mailinfo.c |   24 ++++++++++++++++--------
+ 1 files changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index 5b6c215..3696d61 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -229,6 +229,14 @@ static int is_multipart_boundary(const c
+ 	return (!memcmp(line, multipart_boundary, multipart_boundary_len));
+ }
+ 
++static int is_blank(char *line)
++{
++	char *ch;
++	for (ch = line; isspace(*ch); ch++)
++		;
++	return *ch == '\0';
++}
++
+ static int eatspace(char *line)
+ {
+ 	int len = strlen(line);
+@@ -243,7 +251,7 @@ #define SEEN_SUBJECT 04
+ #define SEEN_BOGUS_UNIX_FROM 010
+ #define SEEN_PREFIX  020
+ 
+-/* First lines of body can have From:, Date:, and Subject: */
++/* First lines of body can have From:, Date:, and Subject: or be blank */
+ static void handle_inbody_header(int *seen, char *line)
+ {
+ 	if (!memcmp(">From", line, 5) && isspace(line[5])) {
+@@ -279,6 +287,10 @@ static void handle_inbody_header(int *se
+ 			return;
+ 		}
+ 	}
++	if (isspace(line[0])) {
++		if (!(*seen & SEEN_PREFIX) && is_blank(line))
++			return;
++	}
+ 	*seen |= SEEN_PREFIX;
+ }
+ 
+@@ -420,9 +432,7 @@ static int read_one_header_line(char *li
+ 		if (fgets(line + ofs, sz - ofs, in) == NULL)
+ 			break;
+ 		len = eatspace(line + ofs);
+-		if (len == 0)
+-			break;
+-		if (!is_rfc2822_header(line)) {
++		if ((len == 0) || !is_rfc2822_header(line)) {
+ 			/* Re-add the newline */
+ 			line[ofs + len] = '\n';
+ 			line[ofs + len + 1] = '\0';
+@@ -762,10 +772,8 @@ static void handle_body(void)
+ {
+ 	int seen = 0;
+ 
+-	if (line[0] || fgets(line, sizeof(line), stdin) != NULL) {
+-		handle_commit_msg(&seen);
+-		handle_patch();
+-	}
++	handle_commit_msg(&seen);
++	handle_patch();
+ 	fclose(patchfile);
+ 	if (!patch_lines) {
+ 		fprintf(stderr, "No patch found\n");
+-- 
+1.4.0.g25f48-dirty
