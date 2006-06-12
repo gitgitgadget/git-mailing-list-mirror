@@ -1,72 +1,72 @@
-From: "Myrna Pereira" <MyrnaPereira@0451.com>
-Subject: Hi, milo maize
-Date: Mon, 12 Jun 2006 22:11:55 +0000 (UTC)
-Message-ID: <220619228.20060612221120__14721.8672828332$1150150315$gmane$org@0451.com>
-Reply-To: "Myrna Pereira" <MyrnaPereira@0451.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] blame: Add --time to produce raw timestamps
+Date: Tue, 13 Jun 2006 00:41:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606130038370.25422@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060612214210.22342.46844.stgit@c165>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 13 00:11:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Jun 13 00:41:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpudA-0000s9-DE
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 00:11:32 +0200
+	id 1Fpv64-0005pW-H9
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 00:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932589AbWFLWL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 18:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbWFLWL2
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 18:11:28 -0400
-Received: from [212.62.108.56] ([212.62.108.56]:15102 "EHLO [212.62.108.56]")
-	by vger.kernel.org with ESMTP id S932586AbWFLWL1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 18:11:27 -0400
-Date: Mon, 12 Jun 2006 22:11:20 +0480
-X-Mailer: The Bat! (v3.0.1.33) Educational
-X-Priority: 3 (Normal)
-To: netdev@vger.kernel.org
+	id S932636AbWFLWlV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 18:41:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932637AbWFLWlV
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 18:41:21 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16848 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932636AbWFLWlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 18:41:21 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 047262A9F;
+	Tue, 13 Jun 2006 00:41:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id ECD272A5E;
+	Tue, 13 Jun 2006 00:41:19 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id CF0691C5A;
+	Tue, 13 Jun 2006 00:41:19 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20060612214210.22342.46844.stgit@c165>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.4 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: erprost.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: erprost.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: erprost.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: erprost.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: erprost.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21746>
 
-Join and Play at the best Emperial zCASINOz!
-As a Special Welcome TODAY, we will DOUBL your 1 Deposit up to 200 bucks!
+Hi,
 
-For example:
-Deposit 50 play with 100!
-Deposit 100 play with 200!
-And your FREE Bonuses will be INSTANTLY added to your acount!
+On Mon, 12 Jun 2006, Fredrik Kuivinen wrote:
 
-Try us, inhere: 
+> diff --git a/blame.c b/blame.c
+> index 88bfec2..afa22b5 100644
+> --- a/blame.c
+> +++ b/blame.c
+> @@ -20,9 +20,11 @@ #include "xdiff-interface.h"
+>  
+>  #define DEBUG 0
+>  
+> -static const char blame_usage[] = "[-c] [-l] [--] file [commit]\n"
+> +static const char blame_usage[] = "[-c] [-l] [-t] [-S <revs-file>] [--] file [commit]\n"
 
-http://EBR7I3.erprost.com/d1/today
+That is a bit more than the commit message says.
 
-==========
-inverted spin, the gull bunt, the pinwheel.
-unscrewed the  cap, and attached myself to it  like  a lamprey. I sat on the
-     Then one day Jonathan, standing  on  the  shore,  closing  his  eyes,
-hours unless he  can answer this question: 'How do you know you're sane?' ";
-Tender.
-==
-     Still, it was easier for them to practice high  performance  than  it
-     He spread out the  map on the windowsill, leaned on his hands, and bent
-     "Why is it," Jonathan puzzled, "that the hardest thing in  the  world
-==
-     "Not bad. And  you?" He didn't answer. He hugged my neck, pressed me to
-     The squawks and grockles of everyday life in the Flock were  cut  off
-     I kicked him in  his bare  can and dove  into my  stall and locked  the
+> +        "  -t, --time        Show raw timestamp (Default: off)\n"
+> +	"  -S, --revs-file   Use revisions from revs-file instead of calling git-rev-list\n"
+
+I smell white space corruption here.
+
+> +			       int raw_time)
+
+Just a tiny nit: could you name it "show_raw_time" instead of "raw_time"? 
+I got confused by that naming into believeing raw_time was actually a 
+timestamp, not a boolean...
+
+Ciao,
+Dscho
