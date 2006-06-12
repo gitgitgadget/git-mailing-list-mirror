@@ -1,106 +1,102 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: git-applymbox broken?
-Date: Mon, 12 Jun 2006 12:58:32 -0600
-Message-ID: <m13bea6w13.fsf@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.64.0606111535310.5498@g5.osdl.org>
-	<m1wtbn468o.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.64.0606111735440.5498@g5.osdl.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: svn to git, N-squared?
+Date: Mon, 12 Jun 2006 15:00:19 -0400
+Message-ID: <9e4733910606121200m402af4a4qa162c6f79cbf7100@mail.gmail.com>
+References: <20060612043949.20992.qmail@science.horizon.com>
+	 <9e4733910606120832xaf74e77pad7f70df864541fc@mail.gmail.com>
+	 <Pine.LNX.4.64.0606120843340.5498@g5.osdl.org>
+	 <9e4733910606120855p1cec9acfy62dadb89c11756b4@mail.gmail.com>
+	 <Pine.LNX.4.64.0606120906210.5498@g5.osdl.org>
+	 <9e4733910606120922g181a5aaal623fd3f29b839f4c@mail.gmail.com>
+	 <Pine.LNX.4.64.0606120938490.5498@g5.osdl.org>
+	 <9e4733910606120944p4deb170ejc2863846685917f6@mail.gmail.com>
+	 <Pine.LNX.4.64.0606120958230.5498@g5.osdl.org>
+	 <9e4733910606121106ta925b6er49fe68bf3c1031f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 12 20:58:54 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "linux@horizon.com" <linux@horizon.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 12 21:00:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fprcd-0004PY-AB
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 20:58:47 +0200
+	id 1FpreE-0004mL-Mm
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 21:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155AbWFLS6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 14:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752167AbWFLS6o
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 14:58:44 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:23180 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S1752155AbWFLS6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 14:58:44 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5CIwWWF005793;
-	Mon, 12 Jun 2006 12:58:32 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5CIwWJr005792;
-	Mon, 12 Jun 2006 12:58:32 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606111735440.5498@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 11 Jun 2006 17:37:47 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932072AbWFLTAX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 15:00:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWFLTAX
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 15:00:23 -0400
+Received: from nz-out-0102.google.com ([64.233.162.207]:7483 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932072AbWFLTAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jun 2006 15:00:21 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so1702767nze
+        for <git@vger.kernel.org>; Mon, 12 Jun 2006 12:00:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VSE16UvCp+qOJnxROI9NqArA2yD95dKTfRbCBCzuoIPjMjh2nupDnE+gUgB5b3rzrr1dFx50fG6YTDrIP539ZisYA1MFgV9L0cMGo8wPLNKzJXzM9WrxxbnbOjMQ2EQ/Y90GUzEvZ1JVFHefbpkaSPpiSA67c7WvZyrkXccDIqA=
+Received: by 10.36.118.11 with SMTP id q11mr9232360nzc;
+        Mon, 12 Jun 2006 12:00:20 -0700 (PDT)
+Received: by 10.36.36.7 with HTTP; Mon, 12 Jun 2006 12:00:19 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <9e4733910606121106ta925b6er49fe68bf3c1031f5@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21725>
 
-Linus Torvalds <torvalds@osdl.org> writes:
-
-> What do you mean by "middle"?
+On 6/12/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 6/12/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> > Having that many files in a single directory (or two) is a total disaster.
+> > That said, it works well enough if you don't create new files very often
+> > (and _preferably_ don't look them up either, although that is effectively
+> > helped by indexing). I _suspect_ that
 >
-> No, it should only look at From: and Subject: lines if they are at the 
-> very top, with no other non-whitespace lines above them. But when it looks 
-> at them and uses the data from them, it should then remove them from the 
-> body - they are "conceptually" just extended header lines that just 
-> happened to technically (from an rfc822 standpoint) be in the body of the 
-> email.
+> Posted to the svn list, they said that 220K files is normal. They told
+> me to turn on the ext2 dir_index option. Cheking my system I see that
+> none of partitions have it turned on so it must not be the default for
+> FC5.
+>
+> I have to unmount the drive to convert existing directories. I can
+> trying doing the file move trick while the process is running since
+> new directories will use it.
 
-Below is an example of the kind of patch that inspired me to relax the
-rules on parsing in body headers (this comes from Andi Kleen quilt tree).
+I converted the ext3 directories to dir_index on the fly using the
+move trick. Switching the directory index makes it look like it is
+spending even more time in the kernel.
 
-The first line in this instance is obviously a subject line but there
-is not really good way to detect that.  Then we get a From: line.
+procs -----------memory---------- ---swap-- -----io---- --system--
+-----cpu------
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in    cs us
+sy id wa st
+ 1  0 636188  22380  19176 157200    0    0     0    52  436   415 13
+40 48  0  0
+ 1  0 636188  22504  19176 157200    0    0     0     0  430   373 13
+38 49  0  0
+ 1  0 636188  22628  19176 157064    0    0     0     0  433   380 12
+39 49  0  0
+ 1  0 636188  22628  19184 157056    0    0     0    20  434   390 12
+38 49  0  0
+ 1  0 636188  22628  19184 156920    0    0     0     0  431   376 11
+40 49  0  0
+ 1  0 636188  22752  19192 156912    0    0     0    48  437   376 12
+40 49  0  0
+ 1  0 636188  22876  19192 156912    0    0     0     0  430   386 11
+40 49  0  0
+ 1  0 636188  22752  19192 156776    0    0     0     0  431   370 10
+41 49  0  0
+ 1  0 636188  23016  19192 156776    0    0     8     0  422   500 22
+40 37  2  0
 
-Now I doubt any patches ever hit the mail in this format and it probably
-isn't worth it to track down every variation of patch headers in existence.
-But if we don't find a From: header in the body prefix it seems to make
-sense to keep looking for headers in the body, and to use the information
-if we find it.
+The size of the svn directories went from 3.2MB to 4.4MB after they
+were converted to ext3 indexed mode.
 
----
-Kdump i386 nmi event notification fix
+I'll get oprofile running when I do a reboot.
 
-From: Vivek Goyal <vgoyal@in.ibm.com>
-
-After a crash we should wait for NMI IPI event and not for external NMI or
-NMI watchdog tick.
-
-Signed-off-by: Vivek Goyal <vgoyal@in.ibm.com>
-Signed-off-by: Andi Kleen <ak@suse.de>
-Cc: Don Zickus <dzickus@redhat.com>
-Cc: Andi Kleen <ak@suse.de>
-Signed-off-by: Andrew Morton <akpm@osdl.org>
----
-
- arch/i386/kernel/crash.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-Index: linux/arch/i386/kernel/crash.c
-===================================================================
---- linux.orig/arch/i386/kernel/crash.c
-+++ linux/arch/i386/kernel/crash.c
-@@ -102,7 +102,7 @@ static int crash_nmi_callback(struct not
- 	struct pt_regs fixed_regs;
- 	int cpu;
- 
--	if (val != DIE_NMI)
-+	if (val != DIE_NMI_IPI)
- 		return NOTIFY_OK;
- 
- 	regs = ((struct die_args *)data)->regs;
-@@ -113,7 +113,7 @@ static int crash_nmi_callback(struct not
- 	 * an NMI if system was initially booted with nmi_watchdog parameter.
- 	 */
- 	if (cpu == crashing_cpu)
--		return 1;
-+		return NOTIFY_STOP;
- 	local_irq_disable();
- 
- 	if (!user_mode_vm(regs)) {
+-- 
+Jon Smirl
+jonsmirl@gmail.com
