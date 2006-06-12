@@ -1,51 +1,70 @@
-From: "Yakov Lerner" <iler.ml@gmail.com>
-Subject: Re: Thoughts on adding another hook to git
-Date: Mon, 12 Jun 2006 21:06:11 +0200
-Message-ID: <f36b08ee0606121206k62242354k13671f95da6b1418@mail.gmail.com>
-References: <448DB201.5090208@shlrm.org>
+From: "Lara Obrien" <LaraObrien@mail.ru>
+Subject: :), neon tube
+Date: Mon, 12 Jun 2006 19:10:24 +0000 (UTC)
+Message-ID: <67678882.20060612191216@mail.ru>
+Reply-To: "Lara Obrien" <LaraObrien@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 12 21:06:25 2006
+X-From: git-owner@vger.kernel.org Mon Jun 12 21:10:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fprjr-0005xN-M3
-	for gcvg-git@gmane.org; Mon, 12 Jun 2006 21:06:16 +0200
+	id 1Fprnb-0006WD-8a
+	for gcvg-git@gmane.org; Mon, 12 Jun 2006 21:10:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbWFLTGN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 15:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbWFLTGN
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 15:06:13 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:21067 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1752178AbWFLTGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jun 2006 15:06:12 -0400
-Received: by py-out-1112.google.com with SMTP id x31so1780383pye
-        for <git@vger.kernel.org>; Mon, 12 Jun 2006 12:06:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ozENE4WVVxeRR6Ssb7qptK7+HOSQsTbjqweZ/rCn+6/TRXbYJ/jYtBOK+9Jviy5LQfjHo2VHzrGCJpMVSCgGCgUCrf2Qh1cBCPmrzUcex+wRErMLrfGyUSqYVaTcC5EDXrTDPlmXHg1GMfr94l1egetN0w+KYq5Gw4p9h6pSBTQ=
-Received: by 10.35.69.11 with SMTP id w11mr4638015pyk;
-        Mon, 12 Jun 2006 12:06:11 -0700 (PDT)
-Received: by 10.35.14.20 with HTTP; Mon, 12 Jun 2006 12:06:11 -0700 (PDT)
-To: "David Kowis" <dkowis@shlrm.org>
-In-Reply-To: <448DB201.5090208@shlrm.org>
-Content-Disposition: inline
+	id S1752185AbWFLTKD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 15:10:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752187AbWFLTKD
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 15:10:03 -0400
+Received: from [85.183.213.117] ([85.183.213.117]:49928 "EHLO [85.183.213.117]")
+	by vger.kernel.org with ESMTP id S1752185AbWFLTKA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 15:10:00 -0400
+Date: Mon, 12 Jun 2006 19:12:16 -0060
+X-Mailer: The Bat! (v2.11.03) Personal
+X-Priority: 3 (Normal)
+To: linux-newbie@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21727>
+X-Spam-Report: 11.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: framefro.net]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: framefro.net]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: framefro.net]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: framefro.net]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: framefro.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21728>
 
-On 6/12/06, David Kowis <dkowis@shlrm.org> wrote:
-> I'd like to be able to modify the commit message before it ends up in
-> the $EDITOR.
+Even if you have no erectin problems SOFT CIAzLIS 
+would help you to make BETTER SE  X MORE OFTEN!
+and to bring  unimagnable plesure to her.
 
-Can't you define $EDITOR to point to some script
-which modifies the file as you wish then calls the
-real editor on it ?
+Just disolve half a pil under your tongue 
+and get ready for action in 15 minutes. 
 
-Yakov
+The tests showed that the majority of men 
+after taking this medic ation were able to have 
+PERFECT ER ECTI ON during 36 hours!
+
+VISIT US, AND GET OUR SPECIAL 70% DISC OUNT OFER!
+
+http://vvvflg.framefro.net/?83415033
+
+==========
+tired, or to sleep.
+crossed over the hillock  and moved  on and on toward us, right next  to the
+or fighting, or power in the Flock? A thousand lives, Jon,  ten  thousand!
+After all, what  can those  toads do to me? He  really  didn't  have to  say
+are special and gifted and divine, above other birds."
+and asked gloomily:
+
+Strugatsky fury--and it is fury:  disgust  with hypocrisy, with bureaucratic
+You'll be saying good-bye yet!  We  were off. The institute was on our right
