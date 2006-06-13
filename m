@@ -1,62 +1,53 @@
 From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH 4/4] Use INADDR_NONE instead of -1 to check inet_addr() result
-Date: Tue, 13 Jun 2006 00:32:33 -0400
-Message-ID: <20060613043233.16681.68343.stgit@dv.roinet.com>
-References: <20060613043224.16681.98358.stgit@dv.roinet.com>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Jun 13 06:32:50 2006
+Subject: Re: Collecting cvsps patches
+Date: Tue, 13 Jun 2006 00:35:10 -0400
+Message-ID: <1150173310.15831.6.camel@dv>
+References: <20060611122746.GB7766@nowhere.earth>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: GIT list <git@vger.kernel.org>, cvsps@dm.cobite.com
+X-From: git-owner@vger.kernel.org Tue Jun 13 06:35:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fq0a2-0005Mg-BK
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 06:32:43 +0200
+	id 1Fq0cY-0005iu-3I
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 06:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932870AbWFMEci (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 00:32:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932871AbWFMEci
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 00:32:38 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:47246 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932870AbWFMEcf
+	id S932864AbWFMEfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Jun 2006 00:35:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932874AbWFMEfN
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 00:35:13 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:32995 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932864AbWFMEfM
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jun 2006 00:32:35 -0400
+	Tue, 13 Jun 2006 00:35:12 -0400
 Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Fq0Zv-0003Sb-11
-	for git@vger.kernel.org; Tue, 13 Jun 2006 00:32:35 -0400
-Received: from [127.0.0.1] (helo=dv.roinet.com)
-	by dv.roinet.com with esmtp (Exim 4.62)
-	(envelope-from <proski@gnu.org>)
-	id 1Fq0Zt-0004MH-Ee; Tue, 13 Jun 2006 00:32:33 -0400
-To: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org,
-	cvsps@dm.cobite.com
-In-Reply-To: <20060613043224.16681.98358.stgit@dv.roinet.com>
-User-Agent: StGIT/0.10
+	id 1Fq0cR-0003Ws-OZ
+	for git@vger.kernel.org; Tue, 13 Jun 2006 00:35:11 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Fq0cQ-0004N4-Bx; Tue, 13 Jun 2006 00:35:10 -0400
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060611122746.GB7766@nowhere.earth>
+X-Mailer: Evolution 2.7.2.1 (2.7.2.1-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21767>
 
-From: Pavel Roskin <proski@gnu.org>
+Hi, Yann!
 
-INADDR_NONE is not equal to -1 on 64-bit systems.
+On Sun, 2006-06-11 at 14:27 +0200, Yann Dirson wrote: 
+> Since there are has been some work done here and there on cvsps, but
+> upstream does not seem to have time to issue a new release, I have
+> started to collect the patches I found.
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
----
+That's great news.  Thank you!  I'm sending four patches - two compile
+fixes for recent regressions and two patches fixing DNS resolution on
+64-bit systems - one on Linux and the other on other OSes.
 
- cbtcommon/tcpsocket.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/cbtcommon/tcpsocket.c b/cbtcommon/tcpsocket.c
-index a174007..f31060e 100644
---- a/cbtcommon/tcpsocket.c
-+++ b/cbtcommon/tcpsocket.c
-@@ -198,7 +198,7 @@ #ifdef __linux__
-     memcpy(dest, &ip.s_addr, sizeof(ip.s_addr));
-   }
- #else
--  if ( (*dest = inet_addr(addr_str)) != -1)
-+  if ( (*dest = inet_addr(addr_str)) != INADDR_NONE)
-   {
-     /* nothing */
-   }
+-- 
+Regards,
+Pavel Roskin
