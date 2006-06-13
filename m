@@ -1,65 +1,63 @@
-From: "Hiram Guidry" <Tashaigtp@yahoo.com>
-Subject: Get Laid !
-Date: Tue, 13 Jun 2006 04:32:48 -0500
-Message-ID: <3503D112.965431.20408@MHSG>
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 13 10:33:00 2006
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Collecting cvsps patches
+Date: Tue, 13 Jun 2006 11:54:45 +0200
+Message-ID: <20060613095445.GM1297@nowhere.earth>
+References: <20060611122746.GB7766@nowhere.earth> <1150173310.15831.6.camel@dv>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT list <git@vger.kernel.org>, cvsps@dm.cobite.com
+X-From: git-owner@vger.kernel.org Tue Jun 13 11:54:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fq4KX-00078H-W4
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 10:32:58 +0200
+	id 1Fq5bb-0004jA-3o
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 11:54:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbWFMIcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 04:32:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbWFMIcu
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 04:32:50 -0400
-Received: from [219.241.35.242] ([219.241.35.242]:33548 "HELO 44A9B368")
-	by vger.kernel.org with SMTP id S1750761AbWFMIct (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jun 2006 04:32:49 -0400
-Received: from local (unknown [10.66.1.6])
-	by competitive.yahoo.com (Postfix) with ESMTP id B153162D72
-	for <git@vger.kernel.org>; Tue, 13 Jun 2006 04:32:48 -0500
-X-Provags-ID: yahoo.com abuse@yahoo.com login:LO7VwsetzsJ4S3Edl2l4GLKrSyrnxMxH
-X-FID: 05E59DBC-9852-73AF-B4E9-96CDEA14DCB7
-To: git@vger.kernel.org
+	id S1750857AbWFMJyf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Jun 2006 05:54:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750864AbWFMJyf
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 05:54:35 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:46486 "EHLO smtp5-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750847AbWFMJye (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jun 2006 05:54:34 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id DD36027533;
+	Tue, 13 Jun 2006 11:54:33 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1Fq5bh-0004ri-VA; Tue, 13 Jun 2006 11:54:46 +0200
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <1150173310.15831.6.camel@dv>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.2 points;
- *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
- *  0.0 COMPLETELY_FREE BODY: No such thing as a free lunch (2)
- * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0115]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?219.241.35.242>]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: realgreatdates.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: realgreatdates.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: realgreatdates.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21775>
 
-100% FREE Adult Personals
+Hi Pavel,
 
-YOU NEED TO GET LAID!!!!!!!!!!!
+On Tue, Jun 13, 2006 at 12:35:10AM -0400, Pavel Roskin wrote:
+> I'm sending four patches - two compile
+> fixes for recent regressions and two patches fixing DNS resolution on
+> 64-bit systems - one on Linux and the other on other OSes.
 
-We can help.
-http://realgreatdates.com/cutiepie/dating/
+Thanks, applied the two latter fixes, and folded the compile fix into
+the patch it should have been part of :)
 
-Real profiles of people in your area that 
-just want sex!  
+For the dependency stuff, I added the -Y flag to hte makedepend
+invocation.  This produces many warnings, but at least does the job
+right.
 
-100% FREE!!!!!
+I'll push the whole once I have finished a little work on another
+branch.
 
-http://realgreatdates.com/cutiepie/dating/
+Please excuse any delays due to the recent birth of our 3rd son ;)
 
---------------------------------------------
-
-
-no plz
-http://realgreatdates.com/rr2.html
+Best regards,
+-- 
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
