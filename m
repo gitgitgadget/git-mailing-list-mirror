@@ -1,136 +1,76 @@
-From: David Kowis <dkowis@shlrm.org>
-Subject: Re: Thoughts on adding another hook to git
-Date: Tue, 13 Jun 2006 08:03:50 -0500
-Message-ID: <448EB7B6.4020708@shlrm.org>
-References: <448DB201.5090208@shlrm.org>	 <f36b08ee0606121206k62242354k13671f95da6b1418@mail.gmail.com>	 <448DBC2B.1070807@shlrm.org>	 <f36b08ee0606121218s6cdcfec2i42482ed5284a45e3@mail.gmail.com>	 <448DBEEB.3000308@shlrm.org> <dbfc82860606122329w77c566evb94ca79081a0a057@mail.gmail.com>
+From: David Mansfield <centos@dm.cobite.com>
+Subject: Re: Collecting cvsps patches
+Date: Tue, 13 Jun 2006 09:46:46 -0400
+Message-ID: <448EC1C6.5060902@dm.cobite.com>
+References: <20060611122746.GB7766@nowhere.earth> <1150173310.15831.6.camel@dv> <20060613095445.GM1297@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Yakov Lerner <iler.ml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 13 15:04:40 2006
+Cc: Pavel Roskin <proski@gnu.org>, GIT list <git@vger.kernel.org>,
+	cvsps@dm.cobite.com
+X-From: git-owner@vger.kernel.org Tue Jun 13 15:47:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fq8Yv-0007Ke-Fb
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 15:04:06 +0200
+	id 1Fq9EK-0000g1-OD
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 15:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932085AbWFMND7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 09:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbWFMND7
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 09:03:59 -0400
-Received: from ylpvm29-ext.prodigy.net ([207.115.57.60]:49559 "EHLO
-	ylpvm29.prodigy.net") by vger.kernel.org with ESMTP
-	id S1750728AbWFMND6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jun 2006 09:03:58 -0400
-Received: from pimout5-ext.prodigy.net (pimout5-int.prodigy.net [207.115.4.21])
-	by ylpvm29.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id k5DD2sW0003567
-	for <git@vger.kernel.org>; Tue, 13 Jun 2006 09:02:55 -0400
-X-ORBL: [66.143.247.87]
-Received: from mail.shlrm.org (adsl-66-143-247-87.dsl.snantx.swbell.net [66.143.247.87])
-	by pimout5-ext.prodigy.net (8.13.6 out.dk/8.13.6) with ESMTP id k5DD3poq225918;
-	Tue, 13 Jun 2006 09:03:52 -0400
-Received: from [192.168.2.111] (rrcs-24-173-63-133.sw.biz.rr.com [24.173.63.133])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.shlrm.org (Postfix) with ESMTP id 61878280342D;
-	Tue, 13 Jun 2006 08:03:51 -0500 (CDT)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: Nikolai Weibull <now@bitwi.se>
-In-Reply-To: <dbfc82860606122329w77c566evb94ca79081a0a057@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+	id S1751102AbWFMNqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Jun 2006 09:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWFMNqt
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 09:46:49 -0400
+Received: from iris.cobite.com ([208.222.83.2]:39108 "EHLO
+	email-pri.cobite.com") by vger.kernel.org with ESMTP
+	id S1751102AbWFMNqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jun 2006 09:46:48 -0400
+Received: from localhost (iris.cobite.com [127.0.0.1])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 2AE15982D1; Tue, 13 Jun 2006 09:46:13 -0400 (EDT)
+Received: from email-pri.cobite.com ([127.0.0.1])
+ by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 24484-05; Tue, 13 Jun 2006 09:46:13 -0400 (EDT)
+Received: by email-pri.cobite.com (Postfix, from userid 45000)
+	id E5A1E984F6; Tue, 13 Jun 2006 09:46:12 -0400 (EDT)
+Received: from [208.222.80.105] (gandalf.cobite.com [208.222.80.105])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 5138C982D1; Tue, 13 Jun 2006 09:46:12 -0400 (EDT)
+User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060613095445.GM1297@nowhere.earth>
+X-Virus-Scanned: by amavisd-new at cobite.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21778>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
 
-Nikolai Weibull wrote:
-> On 6/12/06, David Kowis <dkowis@shlrm.org> wrote:
->> Yakov Lerner wrote:
+
+Yann Dirson wrote:
+> Hi Pavel,
 > 
->> > git-commit sure creates those temp files with
->> > specific naming in specific dir. You could check for
->> > that in EDITOR script. In the script, you could even check
->> > the name of the parent process.
+> On Tue, Jun 13, 2006 at 12:35:10AM -0400, Pavel Roskin wrote:
+>> I'm sending four patches - two compile
+>> fixes for recent regressions and two patches fixing DNS resolution on
+>> 64-bit systems - one on Linux and the other on other OSes.
 > 
->> This is true. However, I'd be running that script every time something
->> invoked $EDITOR. And some people may not like that solution. I'm
->> thinking that more than just I will like to use this pre-edit hook.
->> Especially in the distro I'm helping develop.
+> Thanks, applied the two latter fixes, and folded the compile fix into
+> the patch it should have been part of :)
 > 
-> Perhaps you could tell us what editor you are using.  That way we may
-> provide additional solutions.
+> For the dependency stuff, I added the -Y flag to hte makedepend
+> invocation.  This produces many warnings, but at least does the job
+> right.
 > 
+> I'll push the whole once I have finished a little work on another
+> branch.
+> 
+> Please excuse any delays due to the recent birth of our 3rd son ;)
 
-I'm using vim. But that's irrelevant with what I'm trying to do.
+Congratulations.  I'm really glad someone has taken some time to collect 
+these patches.  I feel really bad about 'abandoning' (for now only, I 
+hope) the project.
 
-Perhaps I need to explain more:
+At the very least, I should put some mention in the web page, is there 
+some text you want me to put up there, and/or a like?
 
-In SourceMage, we have a collection of scripts, the grimoire, that
-contain the little bits of instructions on how to build and install all
-the software. 99% of the time most commits are based in one directory.
-For example:
-I just updated the abook spell (A spell is that collection of
-instructions I mentioned earlier.)
-
-I modified two files. DETAILS and HISTORY.
-DETAILS contains the version information, and a source hash to verify
-downloads (and a bit of other stuff, but it's not important). HISTORY is
-just a changelog. Now I do `git commit .`
-I get:
-
-  1 # Explicit paths specified without -i nor -o; assuming --only paths...
-  2 #
-  3 # Updated but not checked in:
-  4 #   (will commit)
-  5 #
-  6 #   modified: mail/abook/DETAILS
-  7 #   modified: mail/abook/HISTORY
-
-What I'd like to be able to do is have that "abook" directory name
-automatically added to the top of my commit message before it gets into
-the editor. I can do this with a script (echo ${PWD##*/}) but it'd need
-to be a hook before the editor shows up.
-
-  1 abook:
-  2 # Explicit paths specified without -i nor -o; assuming --only paths...
-  3 #
-  4 # Updated but not checked in:
-  5 #   (will commit)
-  6 #
-  7 #   modified: mail/abook/DETAILS
-  8 #   modified: mail/abook/HISTORY
-
-It helps in the short log (git log) for describing for which spell the
-log refers. Although it could be done with an EDITOR script I don't
-think that's the best solution. It's certainly not a good solution to
-give out to a lot of people. Most of the changes to our grimoire are
-like this one, so this would be extremely useful to us.
-
-Hope that clears things up a bit,
-- --
-David Kowis
-
-ISO Team Lead - www.sourcemage.org
-Source Mage GNU/Linux
-
-Progress isn't made by early risers. It's made by lazy men trying to
-find easier ways to do something.
-  - Robert Heinlein
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (MingW32)
-
-iQGVAwUBRI63tsnf+vRw63ObAQqvqAv/QkyEi4/wIDo+sQGMPkXhj/e7yMDXbVLm
-XYaVhlxOG3rXfaEu6ecdjm8b6h4UYCMFnhYKUiDqD42LlEdofCIOecGULyP5Nx9q
-JAL8BaZpq4MwRQt4HiX9oLQBTIW2ZcD9Fg5ZqFUL3QWFbjednbEl+M8/41JGFL4s
-XpvIcKHfAy90qdG5QrgsHdQTAS6JG+9mFmyi4d0wlDWBh4WoutfEfL/nwbH79d2B
-Udq6j/SIy0dmsbjNmzJnPYn5IVrFYGez4y5bW7LDpO5ddf4027iz9mNb8hd0wCzL
-akh1f4xQQ178iaFz4y60TTmNavxswRmdoKTghRKet0MXTtBTUXe0TUJ5vNOtKODz
-5MWu9M5/olCcLqlb7L6wnvqJ9HnJTvAEAUQpvKztQcC2Uy2XkpznW3XmeEK50CLU
-VQjxSzubUfXDxkf/hS1nY3WKL3UuQoGWVDmL2Maxno+Kwb3YoyW5+etvYvfoqNT7
-Vi7bpiX6fPVF/r6ogATzqla2EFLsta1f
-=m3vG
------END PGP SIGNATURE-----
+David
