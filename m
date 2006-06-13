@@ -1,57 +1,60 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [BUG] stgit branch renaming into new dir crashes
-Date: Tue, 13 Jun 2006 23:40:53 +0200
-Message-ID: <20060613214053.GD7766@nowhere.earth>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [PATCH 0/8] Make a couple of commands builtin
+Date: Wed, 14 Jun 2006 00:54:37 +0300
+Message-ID: <20060614005437.69ff6a62.tihirvon@gmail.com>
+References: <448F1E41.1040607@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 13 23:40:59 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 13 23:54:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqGcw-00051X-Ld
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 23:40:47 +0200
+	id 1FqGqH-0007Zb-8f
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 23:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932335AbWFMVkn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 17:40:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932336AbWFMVkn
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 17:40:43 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:38116 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S932335AbWFMVkm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jun 2006 17:40:42 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id F3FA0263D0;
-	Tue, 13 Jun 2006 23:40:39 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FqGd4-0005ma-2i; Tue, 13 Jun 2006 23:40:54 +0200
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932350AbWFMVya convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Jun 2006 17:54:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932355AbWFMVya
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 17:54:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:129 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932350AbWFMVy3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jun 2006 17:54:29 -0400
+Received: by nf-out-0910.google.com with SMTP id x37so1109707nfc
+        for <git@vger.kernel.org>; Tue, 13 Jun 2006 14:54:25 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=IfHexSHJvCT0FcsQv/jEm/HqYku+d2ad7LfoD0fmy8LwALcX3fJfPComwtkpO+c4aB7iZzNdaO71U9d7RBV1BoCNYN/pGzQCOqnqRAf4/SzzJ9JBAjrqdK08l2bj5L3GnYHG9hUj2kxZXVadhyZ/diXLMXXeAAsDTUTPpoi9/hE=
+Received: by 10.48.238.3 with SMTP id l3mr6189160nfh;
+        Tue, 13 Jun 2006 14:54:23 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.201.71])
+        by mx.gmail.com with ESMTP id z73sm7780753nfb.2006.06.13.14.54.22;
+        Tue, 13 Jun 2006 14:54:23 -0700 (PDT)
+To: lukass@etek.chalmers.se
+In-Reply-To: <448F1E41.1040607@etek.chalmers.se>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21815>
 
-When trying to rename a branch to a name including a slash, there is
-no explicit creation of leading dirs, and stgit crashes:
+Lukas Sandstr=F6m <lukass@etek.chalmers.se> wrote:
 
-$ stg branch -r multitag dev/multitag
-Traceback (most recent call last):
-  File "/usr/bin/stg", line 43, in ?
-    main()
-  File "/usr/lib/python2.3/site-packages/stgit/main.py", line 187, in main
-    command.func(parser, options, args)
-  File "/usr/lib/python2.3/site-packages/stgit/commands/branch.py", line 214, in func
-    stack.Series(args[0]).rename(args[1])
-  File "/usr/lib/python2.3/site-packages/stgit/stack.py", line 497, in rename
-    os.rename(self.__series_dir, to_stack.__series_dir)
-OSError: [Errno 2] No such file or directory
+> This patchseries has the ultimate goal of making
+> git-am a builtin.
+>=20
+> The version of git-am I'm sending out makes quite heavy
+> use of system(), but I think that can be worked around.
+> I just haven't figured out how, yet.
 
+I don't think git-stripspace needs to be a built-in.  It doesn't even
+depend on git.  It is just a tiny helper program used by git-am,
+git-applymbox, git-commit and git-tag.  If all these commands are made
+built-in then git-stripspace becomes useless.
 
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+--=20
+http://onion.dynserv.net/~timo/
