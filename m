@@ -1,87 +1,61 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 3/13] git-svn: optimize --branch and --branch-all-ref
-Date: Tue, 13 Jun 2006 11:02:05 -0700
-Message-ID: <11502217393714-git-send-email-normalperson@yhbt.net>
-References: <11502217352245-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jun 13 20:03:46 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Thoughts on adding another hook to git
+Date: Tue, 13 Jun 2006 11:41:06 -0700
+Message-ID: <7virn4gapp.fsf@assigned-by-dhcp.cox.net>
+References: <448DB201.5090208@shlrm.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 13 20:41:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqDE5-0004t6-F6
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 20:02:54 +0200
+	id 1FqDpA-0004ZL-6S
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 20:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbWFMSCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 14:02:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbWFMSCW
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 14:02:22 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:45253 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751130AbWFMSCV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jun 2006 14:02:21 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id DC02A7DC022;
-	Tue, 13 Jun 2006 11:02:19 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 13 Jun 2006 11:02:19 -0700
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.0
-In-Reply-To: <11502217352245-git-send-email-normalperson@yhbt.net>
+	id S932105AbWFMSlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Jun 2006 14:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbWFMSlI
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 14:41:08 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:8632 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932105AbWFMSlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jun 2006 14:41:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060613184107.WTMC18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 13 Jun 2006 14:41:07 -0400
+To: David Kowis <dkowis@shlrm.org>
+In-Reply-To: <448DB201.5090208@shlrm.org> (David Kowis's message of "Mon, 12
+	Jun 2006 13:27:13 -0500")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21802>
 
-By breaking the pipe read once we've seen a commit twice.
+David Kowis <dkowis@shlrm.org> writes:
 
-This should make -B/--branch-all-ref faster and usable on a
-frequent basis.
+> I'd like to be able to modify the commit message before it ends up in
+> the $EDITOR. This is a fairly trivial thing to implement:
+> Call ${GIT_DIR}/hooks/pre-editor on COMMIT_MESSAGE before opening it in
+> $EDITOR.
 
-We use topological order now for calling git-rev-list, and any
-commit we've seen before should imply that all parents have been
-seen (at least I hope that's the case for --topo-order).
+Three random thoughts.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- contrib/git-svn/git-svn.perl |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+ - pre-editor is too generic a name because before making a
+   commit is not the only place we give you $EDITOR (both am and
+   tag do EDITOR thing IIRC).  So the hook name must be more
+   specific to the commit codepath (otherwise your pre-editor
+   hook needs to be able to tell which codepath called it).
 
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index c91160d..d4b9323 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -1220,23 +1220,30 @@ sub check_upgrade_needed {
- # fills %tree_map with a reverse mapping of trees to commits.  Useful
- # for finding parents to commit on.
- sub map_tree_joins {
-+	my %seen;
- 	foreach my $br (@_branch_from) {
- 		my $pid = open my $pipe, '-|';
- 		defined $pid or croak $!;
- 		if ($pid == 0) {
--			exec(qw(git-rev-list --pretty=raw), $br) or croak $?;
-+			exec(qw(git-rev-list --topo-order --pretty=raw), $br)
-+								or croak $?;
- 		}
- 		while (<$pipe>) {
- 			if (/^commit ($sha1)$/o) {
- 				my $commit = $1;
-+
-+				# if we've seen a commit,
-+				# we've seen its parents
-+				last if $seen{$commit};
- 				my ($tree) = (<$pipe> =~ /^tree ($sha1)$/o);
- 				unless (defined $tree) {
- 					die "Failed to parse commit $commit\n";
- 				}
- 				push @{$tree_map{$tree}}, $commit;
-+				$seen{$commit} = 1;
- 			}
- 		}
--		close $pipe or croak $?;
-+		close $pipe; # we could be breaking the pipe early
- 	}
- }
- 
--- 
-1.4.0
+ - git-commit gives you EDITOR when you are making a merge, and
+   you would probably want to keep the default merge commit
+   message without the prefixed directory thing.  You probably
+   do not want to do this while doing --amend either.
+
+ - it might make sense to have a "commit template" that is used
+   when making a non-merge commit afresh (i.e. without -F, -m,
+   -c or -C to specify messages), instead of a hook script.
