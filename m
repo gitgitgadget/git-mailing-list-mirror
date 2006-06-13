@@ -1,28 +1,28 @@
-From: "Camille Gipson" <CamilleGipson@mail.ru>
-Subject: Your cash, mineral blue
-Date: Tue, 13 Jun 2006 00:04:42 +0000 (UTC)
-Message-ID: <9478859682.20060613000221@mail.ru>
-Reply-To: "Camille Gipson" <CamilleGipson@mail.ru>
+From: "Maritza Bruno" <MaritzaBruno@0108.com>
+Subject: Hi, Neo-christianity
+Date: Tue, 13 Jun 2006 01:51:37 +0000 (UTC)
+Message-ID: <17947527.20060613015125@0108.com>
+Reply-To: "Maritza Bruno" <MaritzaBruno@0108.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 13 02:04:41 2006
+X-From: git-owner@vger.kernel.org Tue Jun 13 03:51:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FpwOb-0002DG-L3
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 02:04:38 +0200
+	id 1Fpy44-00015J-3I
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 03:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932664AbWFMAEf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Jun 2006 20:04:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932665AbWFMAEf
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 20:04:35 -0400
-Received: from 20151103009.user.veloxzone.com.br ([201.51.103.9]:10511 "EHLO
-	rodrigo") by vger.kernel.org with ESMTP id S932661AbWFMAEe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 20:04:34 -0400
-Date: Tue, 13 Jun 2006 00:02:21 +0180
-X-Mailer: The Bat! (v3.01 RC8) Educational
+	id S932758AbWFMBv3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Jun 2006 21:51:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932759AbWFMBv3
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jun 2006 21:51:29 -0400
+Received: from 201008021003.user.veloxzone.com.br ([201.8.21.3]:41740 "EHLO
+	andrea") by vger.kernel.org with ESMTP id S932757AbWFMBv2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jun 2006 21:51:28 -0400
+Date: Tue, 13 Jun 2006 01:51:25 +0180
+X-Mailer: The Bat! (v2.00.6) UNREG / CD5BF9353B3B7091
 X-Priority: 3 (Normal)
 To: postmaster@vger.kernel.org
 Sender: git-owner@vger.kernel.org
@@ -41,7 +41,7 @@ X-Spam-Report: 14.1 points;
  *      [URIs: erprost.com]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
  *      [URIs: erprost.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21754>
 
 Join and Play at the best Emperial zCASINOz!
 As a Special Welcome TODAY, we will DOUBL your 1 Deposit up to 200 bucks!
@@ -53,19 +53,19 @@ And your FREE Bonuses will be INSTANTLY added to your acount!
 
 Try us, inhere: 
 
-http://5HIC53.erprost.com/d1/today
+http://LHDERY.erprost.com/d1/today
 
 ==========
-     He folded his wings, rolled and dropped in a dive to a hundred ninety
-could be  of  great scientific value. I am  suggesting  that we  inspect the
-joy of flight, using its wings as means to the end of finding and fighting
-whipping over them all.
-looked  into the open doors. At first I couldn't see anything because of the
+     "Well sure, O.K. they're Outcast," said some of  the  younger  gulls,
+     "He knows," Kirill said. "He's a good driver.
+do? How did we get here?"
+Shame in the sight of your fellow gulls!"
+Commission on Problems of the Visitation."
 ==
-And then another hundred lives until we began to learn that there is  such
-     He looked at me pitifully, flopped his lips, and went on: how much silk
-predictions of battle melted in the Flock's confusion.
+     "At last you've got the idea," Chiang said, "but your control needs a
+anyway, to tell the truth, people drop like flies  in the special suits too.
+     The next night from the Flock came Kirk Maynard Gull, wobbling across
 ==
-     He didn't answer. The water was making a lot of noise.
-proud or how hurt a bird was Fletcher Seagull.
-I was too slippery for them to catch me now.
+and your Tender brags to  everybody how  we  headed straight for the garage,
+     He climbed two thousand feet above  the  black  sea,  and  without  a
+because you can't press them together,  and no one's been able to pull  them
