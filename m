@@ -1,31 +1,31 @@
 From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: [PATCH 4/8] Make git-stripspace a builtin
-Date: Tue, 13 Jun 2006 22:21:53 +0200
+Subject: [PATCH 7/8] Make it possible to call cmd_apply multiple times
+Date: Tue, 13 Jun 2006 22:22:03 +0200
 Organization: Chalmers
-Message-ID: <448F1E61.9080509@etek.chalmers.se>
+Message-ID: <448F1E6B.6050507@etek.chalmers.se>
 References: <448EF791.7070504@etek.chalmers.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Tue Jun 13 22:22:20 2006
+X-From: git-owner@vger.kernel.org Tue Jun 13 22:22:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqFOo-0006XX-5e
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 22:22:06 +0200
+	id 1FqFOu-0006Y1-Bi
+	for gcvg-git@gmane.org; Tue, 13 Jun 2006 22:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbWFMUV7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Jun 2006 16:21:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932212AbWFMUV6
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 16:21:58 -0400
-Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:28558 "EHLO
-	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
-	id S932206AbWFMUV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jun 2006 16:21:57 -0400
-Received: from [192.168.0.82] (213.66.93.165) by pne-smtpout2-sn2.hy.skanova.net (7.2.072.1)
-        id 44897AB8000E7252; Tue, 13 Jun 2006 22:21:54 +0200
+	id S932220AbWFMUWI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Jun 2006 16:22:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbWFMUWH
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 16:22:07 -0400
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:17342 "EHLO
+	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S932220AbWFMUWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jun 2006 16:22:06 -0400
+Received: from [192.168.0.82] (213.66.93.165) by pne-smtpout1-sn2.hy.skanova.net (7.2.072.1)
+        id 448977B3000E7424; Tue, 13 Jun 2006 22:22:03 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.0.4) Gecko/20060603 Thunderbird/1.5.0.4 Mnenhy/0.7.4.666
 To: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
@@ -33,131 +33,201 @@ In-Reply-To: <448EF791.7070504@etek.chalmers.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21809>
+
+* xmalloc a new struct lock_file each invocation.
+* Don't die() if the patch doesn't apply.
+* Initialize the global variables each invocation.
+* Roll back the lock_file.
 
 Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
 ---
- Makefile                             |    6 +++---
- stripspace.c =3D> builtin-stripspace.c |   16 +++++++++++-----
- builtin.h                            |    6 ++++--
- git.c                                |    3 ++-
- 4 files changed, 20 insertions(+), 11 deletions(-)
+ builtin-apply.c |   94 +++++++++++++++++++++++++++++++++++------------=
+--------
+ 1 files changed, 60 insertions(+), 34 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e64d943..181255f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -144,7 +144,7 @@ SCRIPTS =3D $(patsubst %.sh,%,$(SCRIPT_SH)
+diff --git a/builtin-apply.c b/builtin-apply.c
+index e113c74..a76c553 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -22,24 +22,13 @@ #include "builtin.h"
+ //  --index updates the cache as well.
+ //  --cached updates only the cache without ever touching the working =
+tree.
+ //
+-static const char *prefix;
+-static int prefix_length =3D -1;
+-static int newfd =3D -1;
+-
+-static int p_value =3D 1;
+-static int allow_binary_replacement =3D 0;
+-static int check_index =3D 0;
+-static int write_index =3D 0;
+-static int cached =3D 0;
+-static int diffstat =3D 0;
+-static int numstat =3D 0;
+-static int summary =3D 0;
+-static int check =3D 0;
+-static int apply =3D 1;
+-static int no_add =3D 0;
+-static int show_index_info =3D 0;
+-static int line_termination =3D '\n';
++static const char *prefix, *patch_input_file;
++static int prefix_length, newfd, p_value, allow_binary_replacement, ch=
+eck_index,
++	write_index, cached, diffstat, numstat, summary, check, apply, no_add=
+,
++	show_index_info, line_termination, whitespace_error, squelch_whitespa=
+ce_errors,
++	applied_after_stripping;
+ static unsigned long p_context =3D -1;
++
+ static const char apply_usage[] =3D
+ "git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--cac=
+hed] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [=
+-z] [-pNUM] [-CNUM] [--whitespace=3D<nowarn|warn|error|error-all|strip>=
+] <patch>...";
 =20
- # The ones that do not have to link with lcrypto, lz nor xdiff.
- SIMPLE_PROGRAMS =3D \
--	git-stripspace$X git-daemon$X
-+	git-daemon$X
+@@ -49,10 +38,31 @@ static enum whitespace_eol {
+ 	error_on_whitespace,
+ 	strip_whitespace,
+ } new_whitespace =3D warn_on_whitespace;
+-static int whitespace_error =3D 0;
+-static int squelch_whitespace_errors =3D 5;
+-static int applied_after_stripping =3D 0;
+-static const char *patch_input_file =3D NULL;
++
++static void setup_state()
++{
++	prefix =3D NULL;
++	prefix_length =3D -1;
++	newfd =3D -1;
++	p_value =3D 1;
++	allow_binary_replacement =3D 0;
++	check_index =3D 0;
++	write_index =3D 0;
++	cached =3D 0;
++	diffstat =3D 0;
++	numstat =3D 0;
++	summary =3D 0;
++	check =3D 0;
++	apply =3D 1;
++	no_add =3D 0;
++	show_index_info =3D 0;
++	line_termination =3D '\n';
++	p_context =3D -1;
++	whitespace_error =3D 0;
++	squelch_whitespace_errors =3D 5;
++	applied_after_stripping =3D 0;
++	patch_input_file =3D NULL;
++}
 =20
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS =3D \
-@@ -165,7 +165,7 @@ PROGRAMS =3D \
-=20
- BUILT_INS =3D git-log$X git-whatchanged$X git-show$X \
- 	git-count-objects$X git-diff$X git-push$X git-mailsplit$X \
--	git-grep$X git-add$X git-rm$X git-rev-list$X \
-+	git-grep$X git-add$X git-rm$X git-rev-list$X git-stripspace$X \
- 	git-check-ref-format$X git-rev-parse$X git-mailinfo$X \
- 	git-init-db$X git-tar-tree$X git-upload-tar$X git-format-patch$X \
- 	git-ls-files$X git-ls-tree$X git-get-tar-commit-id$X \
-@@ -226,7 +226,7 @@ BUILTIN_OBJS =3D \
- 	builtin-read-tree.o builtin-commit-tree.o builtin-mailinfo.o \
- 	builtin-apply.o builtin-show-branch.o builtin-diff-files.o \
- 	builtin-diff-index.o builtin-diff-stages.o builtin-diff-tree.o \
--	builtin-cat-file.o builtin-mailsplit.o
-+	builtin-cat-file.o builtin-mailsplit.o builtin-stripspace.o
-=20
- GITLIBS =3D $(LIB_FILE) $(XDIFF_LIB)
- LIBS =3D $(GITLIBS) -lz
-diff --git a/stripspace.c b/builtin-stripspace.c
-similarity index 76%
-rename from stripspace.c
-rename to builtin-stripspace.c
-index 65a6346..2ce1264 100644
---- a/stripspace.c
-+++ b/builtin-stripspace.c
-@@ -1,6 +1,7 @@
- #include <stdio.h>
- #include <string.h>
- #include <ctype.h>
-+#include "builtin.h"
-=20
- /*
-  * Remove empty lines from the beginning and end.
-@@ -28,21 +29,21 @@ static int cleanup(char *line)
- 	return 1;
+ static void parse_whitespace_option(const char *option)
+ {
+@@ -2072,7 +2082,7 @@ static void write_out_results(struct pat
+ 	}
  }
 =20
--int main(int argc, char **argv)
-+void stripspace(FILE *in, FILE *out)
+-static struct lock_file lock_file;
++static struct lock_file *lock_file;
+=20
+ static struct excludes {
+ 	struct excludes *next;
+@@ -2106,7 +2116,7 @@ static int apply_patch(int fd, const cha
+=20
+ 	patch_input_file =3D filename;
+ 	if (!buffer)
+-		return -1;
++		return -2;
+ 	offset =3D 0;
+ 	while (size > 0) {
+ 		struct patch *patch;
+@@ -2134,7 +2144,7 @@ static int apply_patch(int fd, const cha
+=20
+ 	write_index =3D check_index && apply;
+ 	if (write_index && newfd < 0) {
+-		newfd =3D hold_lock_file_for_update(&lock_file,
++		newfd =3D hold_lock_file_for_update(lock_file,
+ 						  get_index_file());
+ 		if (newfd < 0)
+ 			die("unable to create new index file");
+@@ -2145,7 +2155,7 @@ static int apply_patch(int fd, const cha
+ 	}
+=20
+ 	if ((check || apply) && check_patch_list(list) < 0)
+-		exit(1);
++		return -1;
+=20
+ 	if (apply)
+ 		write_out_results(list, skipped_patch);
+@@ -2175,20 +2185,27 @@ static int git_apply_config(const char *
+ 	return git_default_config(var, value);
+ }
+=20
+-
+ int cmd_apply(int argc, const char **argv, char **envp)
  {
- 	int empties =3D -1;
- 	int incomplete =3D 0;
- 	char line[1024];
+-	int i;
++	int i, ret =3D 0;
+ 	int read_stdin =3D 1;
+ 	const char *whitespace_option =3D NULL;
 =20
--	while (fgets(line, sizeof(line), stdin)) {
-+	while (fgets(line, sizeof(line), in)) {
- 		incomplete =3D cleanup(line);
++	setup_state();
++
++	/* This memory can't be free()'d since it's needed atexit() */
++	lock_file =3D xmalloc(sizeof(struct lock_file));
++
+ 	for (i =3D 1; i < argc; i++) {
+ 		const char *arg =3D argv[i];
+ 		char *end;
+-		int fd;
++		int fd, apply_status;
 =20
- 		/* Not just an empty line? */
- 		if (line[0] !=3D '\n') {
- 			if (empties > 0)
--				putchar('\n');
-+				fputc('\n', out);
- 			empties =3D 0;
--			fputs(line, stdout);
-+			fputs(line, out);
+ 		if (!strcmp(arg, "-")) {
+-			apply_patch(0, "<stdin>");
++			if (apply_patch(0, "<stdin>")) {
++				ret =3D 1;
++				goto err;
++			}
+ 			read_stdin =3D 0;
  			continue;
  		}
- 		if (empties < 0)
-@@ -50,6 +51,11 @@ int main(int argc, char **argv)
- 		empties++;
+@@ -2281,12 +2298,18 @@ int cmd_apply(int argc, const char **arg
+ 			usage(apply_usage);
+ 		read_stdin =3D 0;
+ 		set_default_whitespace_mode(whitespace_option);
+-		apply_patch(fd, arg);
++		apply_status =3D apply_patch(fd, arg);
+ 		close(fd);
++		if (apply_status) {
++			ret =3D 1;
++			goto err;
++		}
  	}
- 	if (incomplete)
--		putchar('\n');
-+		fputc('\n', out);
-+}
+ 	set_default_whitespace_mode(whitespace_option);
+-	if (read_stdin)
+-		apply_patch(0, "<stdin>");
++	if (read_stdin && apply_patch(0, "<stdin>")) {
++		ret =3D 1;
++		goto err;
++	}
+ 	if (whitespace_error) {
+ 		if (squelch_whitespace_errors &&
+ 		    squelch_whitespace_errors < whitespace_error) {
+@@ -2316,9 +2339,12 @@ int cmd_apply(int argc, const char **arg
+=20
+ 	if (write_index) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_lock_file(&lock_file))
++		    commit_lock_file(lock_file))
+ 			die("Unable to write new index file");
+ 	}
+=20
+-	return 0;
++err:
++	rollback_lock_file(lock_file);
 +
-+int cmd_stripspace(int argc, const char **argv, char **envp)
-+{
-+	stripspace(stdin, stdout);
- 	return 0;
++	return ret;
  }
-diff --git a/builtin.h b/builtin.h
-index 979e0cd..c934d7a 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -55,6 +55,8 @@ extern int cmd_mailsplit(int argc, const
- extern int split_mbox(const char **mbox, const char *dir, int allow_ba=
-re, int nr_prec, int skip);
-=20
- extern int cmd_mailinfo(int argc, const char **argv, char **envp);
--extern int mailinfo(FILE *in, FILE *out, int ks, char *encoding,
--		    const char *msg, const char *patch);
-+extern int mailinfo(FILE *in, FILE *out, int ks, char *encoding, const=
- char *msg, const char *patch);
-+
-+extern int cmd_stripspace(int argc, const char **argv, char **envp);
-+extern void stripspace(FILE *in, FILE *out);
- #endif
-diff --git a/git.c b/git.c
-index 1e216de..31196f5 100644
---- a/git.c
-+++ b/git.c
-@@ -181,7 +181,8 @@ static void handle_internal_command(int=20
- 		{ "rev-parse", cmd_rev_parse },
- 		{ "write-tree", cmd_write_tree },
- 		{ "mailsplit", cmd_mailsplit },
--		{ "mailinfo", cmd_mailinfo }
-+		{ "mailinfo", cmd_mailinfo },
-+		{ "stripspace", cmd_stripspace }
- 	};
- 	int i;
-=20
 --=20
 1.4.0
