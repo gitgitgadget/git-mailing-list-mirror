@@ -1,61 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "Bertrand Jacquin" <beber.mailing@gmail.com>
 Subject: Re: Autoconf/Automake
-Date: Wed, 14 Jun 2006 15:45:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606141538500.5498@g5.osdl.org>
+Date: Thu, 15 Jun 2006 00:54:30 +0200
+Message-ID: <4fb292fa0606141554p2562cbear8fff960d052e825c@mail.gmail.com>
 References: <1150324030.23268.12.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 15 00:45:53 2006
+X-From: git-owner@vger.kernel.org Thu Jun 15 00:54:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqe7P-0006Ji-9I
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 00:45:48 +0200
+	id 1FqeFv-0007od-E5
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 00:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964882AbWFNWph (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 18:45:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWFNWph
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 18:45:37 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38835 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964882AbWFNWpg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 18:45:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5EMjTgt017581
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Jun 2006 15:45:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5EMjTgW023632;
-	Wed, 14 Jun 2006 15:45:29 -0700
-To: Pavel Roskin <proski@gnu.org>
+	id S964978AbWFNWyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 18:54:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964981AbWFNWyc
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 18:54:32 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:52138 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S964978AbWFNWyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jun 2006 18:54:32 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so156939nfa
+        for <git@vger.kernel.org>; Wed, 14 Jun 2006 15:54:31 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Za9r30XQ5uv+rzoYAXgWlc3/InpAJBAF0mki7/oGvdFGfbW/SmY9ynUlgwtV/ZNkeVD6Ka2TUmlYsCnnZChWLv8IEznajg7CAs2K0ePLgRIv9f3ChQtIhpYmWnic3qJT5CXDG1WrUmK2/J/uMun/ALXuOdHqOEPP8IWi677muew=
+Received: by 10.48.255.8 with SMTP id c8mr933590nfi;
+        Wed, 14 Jun 2006 15:54:30 -0700 (PDT)
+Received: by 10.49.34.12 with HTTP; Wed, 14 Jun 2006 15:54:30 -0700 (PDT)
+To: "Pavel Roskin" <proski@gnu.org>
 In-Reply-To: <1150324030.23268.12.camel@dv>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21871>
 
-
-
-On Wed, 14 Jun 2006, Pavel Roskin wrote:
-> 
+On 6/15/06, Pavel Roskin <proski@gnu.org> wrote:
+> Hello!
+>
 > Is there any interest in converting the build system used by git to
 > Autoconf and Automake?  The ad-hoc configuration in Makefile is getting
-> too big.
+> too big.  As for nice features like remembering $prefix, wouldn't it be
+> better to add them to Automake instead of limiting them to just one
+> project?
 
-NO! At least the Makefile is debuggable and understandable.
+Autofoo are pretty good but it's unix make dependant, can't create
+build files for other build system as Visual, or so on. How don't lost
+his hairs trying to do autofood his project ?
+CMake seems to be as good for git. And is also expansible.
+Git Makefile is quiet big but not complex, autofood imho will make it
+less stable and usable.
 
-If we need a better build system, I'd much rather use something 
-higher-level that can generate VC++ project files etc. 
-
-In other words, I'd much rather see us using CMake or something like that, 
-which actually adds real value-add.
-
-(And no, I've never used cmake, so maybe it has horrors waiting for us 
-too, but autoconf is just worthless).
-
-			Linus
+-- 
+# Beber : beber@gna.org
+# IM : beber@jabber.fr
+# http://guybrush.ath.cx, irc://irc.freenode.net/#{e.fr,gentoofr}
