@@ -1,73 +1,109 @@
-From: sf <sf@b-i-t.de>
-Subject: Re: git-cvsimport doesn't quite work, wrt branches
-Date: Wed, 14 Jun 2006 11:37:40 +0200
-Message-ID: <448FD8E4.9040208@b-i-t.de>
-References: <87irn5ovn6.fsf@rho.meyering.net>	 <Pine.LNX.4.64.0606131008470.5498@g5.osdl.org>	 <1150224411.20536.79.camel@neko.keithp.com> <46a038f90606131555m7b1fa744g9770140c87598b7b@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: 'sparse' clone idea
+Date: Wed, 14 Jun 2006 11:44:41 +0200
+Organization: At home
+Message-ID: <e6olpv$77s$1@sea.gmane.org>
+References: <e6oh2g$ngh$1@sea.gmane.org> <Pine.LNX.4.63.0606141110001.15673@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 14 11:38:21 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Jun 14 11:45:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqRpC-0004TE-I1
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 11:38:10 +0200
+	id 1FqRvl-0005ek-Ki
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 11:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932212AbWFNJiH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 05:38:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWFNJiH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 05:38:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:50598 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932212AbWFNJiF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 05:38:05 -0400
+	id S964796AbWFNJoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 05:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964801AbWFNJoy
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 05:44:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:22466 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964796AbWFNJox (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 05:44:53 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FqRoz-0004QB-Kc
-	for git@vger.kernel.org; Wed, 14 Jun 2006 11:37:57 +0200
-Received: from ip-213157015184.dialin.heagmedianet.de ([213.157.15.184])
+	id 1FqRvY-0005e1-Hz
+	for git@vger.kernel.org; Wed, 14 Jun 2006 11:44:44 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jun 2006 11:37:57 +0200
-Received: from sf by ip-213157015184.dialin.heagmedianet.de with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Wed, 14 Jun 2006 11:44:44 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jun 2006 11:37:57 +0200
+        for <git@vger.kernel.org>; Wed, 14 Jun 2006 11:44:44 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ip-213157015184.dialin.heagmedianet.de
-User-Agent: Thunderbird 1.5.0.4 (X11/20060606)
-In-Reply-To: <46a038f90606131555m7b1fa744g9770140c87598b7b@mail.gmail.com>
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21838>
 
-Martin Langhoff wrote:
-...
-> Yes, cvsps is relying on the wrong things. I am looking at parsecvs
-> and the cvs2svn tool and wondering where to from here.
-...
-> I am starting to look at what I can do with cvs2svn to get the import
-> into git. It seems to get very good patchsets, and it yields an easily
-> readable DB. I'll either learn Python, or read the DB from Perl
-> (probably from git-cvsimport).
+Johannes Schindelin wrote:
 
-SVN has a portable format called "dumpfile" (see
-http://svn.collab.net/repos/svn/trunk/notes/fs_dumprestore.txt) which is
-produced by "svnadmin dump ..." and "cvs2svn --dump-only ...".
+> On Wed, 14 Jun 2006, Jakub Narebski wrote:
+> 
+>> I wonder if 'sparse clone' idea described below would avoid the most
+>> difficult part of 'shallow clone' idea, namely the [sometimes] need to
+>> un-cauterize history. See: (<7vac8lidwi.fsf@assigned-by-dhcp.cox.net>).
+> 
+> I do not think that is the hardest problem. The hardest thing is to tell 
+> the server in an efficient manner which objects we have.
+> 
+> Example:
+> 
+> A - B - C - D
+>     ^ cutoff
+>         ^ current HEAD
+> 
+> Suppose B is your fake root, C is your HEAD, you want to fetch D. Now, 
+> make it a difficult example: both A and D contain a certain blob Z, but 
+> neither B nor C do. You have to tell the server _in an efficient manner_ 
+> to send Z also.
+> 
+> And by efficient manner I mean: you may not bring the server down just 
+> because 5 people with shallow clones decide to fetch from it.
 
-Why not use it as input for importing into git?
+Nah, that I think is solved. Check the mentioned post by Junio C Hamano
+in the "Re: Figured out how to get Mozilla into git" post:
 
-Pros:
-- "svnadmin dump" should be fast
-- svn repositories can be tracked with "svnadmin dump" (just remember
-the last imported revision and restart from there)
-- cvs2svn seems to be very good at its job
-- only one tool needed
+ http://permalink.gmane.org/gmane.comp.version-control.git/21603
 
-Cons:
-- Both svnadmin and cvs2svn only work on local repositories
-- cvs2svn cannot be used for tracking
+(although it would need extension to the git protocol). Client and server 
+do graft exchange both ways, limiting the commit ancestry graph the both
+ends walk to the intersection of the fake view of the ancestry graph both
+ends have. Then server uses those virtual grafts to calculate which objects
+to send.
 
-Regards
-	Stephan
+The rest is done (or should be done) by history grafting code.
+
+>>  * merge bases for all commits in full, and in the sparse part,
+>>    _including_ merge bases themselves
+> 
+> Hmmm. You cannot know _all_ merge bases beforehand, because you do not 
+> decide where other people fork off.
+
+By all merge bases I mean merge bases for all commits in full part, merge
+bases for all commits in full part and commits pointed by tags in sparse
+part, merge bases for all commits in full part and tagged in sparse part
+and merge bases in sparse part etc. recursively.
+ 
+>>  * all roots
+> 
+> Why?
+
+Just in case, as an ultimate merge bases.
+ 
+> P.S.: I think the problems of a lazy clone are much easier to solve...
+
+I still think that the correct idea for the lazy clone is to have soft
+grafts, so you have to solve at least part of shallo clone/sparse clone
+problems first.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
