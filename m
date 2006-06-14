@@ -1,74 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Porcelain specific metadata under .git?
-Date: Wed, 14 Jun 2006 13:32:25 +0200
-Organization: At home
-Message-ID: <e6os3v$r5g$1@sea.gmane.org>
-References: <20060614062240.GA13886@spearce.org> <448FEED7.30701@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Repacking many disconnected blobs
+Date: Wed, 14 Jun 2006 05:33:22 -0700
+Message-ID: <7vejxrgbn1.fsf@assigned-by-dhcp.cox.net>
+References: <1150269478.20536.150.camel@neko.keithp.com>
+	<20060614072923.GB13886@spearce.org>
+	<Pine.LNX.4.63.0606141104050.15578@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Jun 14 13:32:40 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 14 14:34:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqTbv-0005GM-Rj
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 13:32:36 +0200
+	id 1FqUYr-0005jB-OE
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 14:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812AbWFNLc1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 07:32:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932363AbWFNLc1
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 07:32:27 -0400
-Received: from main.gmane.org ([80.91.229.2]:29578 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932350AbWFNLc0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 07:32:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FqTbk-0005EE-I4
-	for git@vger.kernel.org; Wed, 14 Jun 2006 13:32:24 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jun 2006 13:32:24 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jun 2006 13:32:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S932330AbWFNMdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 08:33:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932350AbWFNMdY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 08:33:24 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:9139 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932330AbWFNMdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jun 2006 08:33:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060614123323.GVQL15767.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Jun 2006 08:33:23 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606141104050.15578@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 14 Jun 2006 11:07:52 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21841>
 
-Andreas Ericsson wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Shawn Pearce wrote:
->> 
->> I already assume/know that refs/heads and refs/tags are completely
->> off-limits as they are for user refs only.
->> 
->> I also think the core GIT tools already assume that anything
->> directly under .git which is strictly a file and which is named
->> entirely with uppercase letters (aside from "HEAD") is strictly a
->> temporary/short-lived state type item (e.g. COMMIT_MSG) used by a
->> Porcelain.
->> 
->> But is saying ".git/refs/eclipse-workspaces" is probably able to
->> be used for this purpose safe?  :-)
->> 
-> 
-> .git/eclipse/whatever-you-like
-> 
-> would probably be better. Heads can be stored directly under .git/refs 
-> too. Most likely, nothing will ever be stored under ./git/eclipse by 
-> either core git or the current (other) porcelains though.
+> Alternatively, you could construct fake trees like this:
+>
+> README/1.1.1.1
+> README/1.2
+> README/1.3
+> ...
+>
+> i.e. every file becomes a directory -- containing all the versions of that 
+> file -- in the (virtual) tree, which you can point to by a temporary ref.
 
-I think if it is a ref, which one wants to be visible to git-fsck (and
-git-prune), it should be under .git/refs.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+That would not play well with the packing heuristics, I suspect.
+If you reverse it to use rev/file-id, then the same files from
+different revs would sort closer, though.
