@@ -1,75 +1,85 @@
-From: "Buford Greer" <BufordGreer@mail.ru>
-Subject: Your future, N electron
-Date: Wed, 14 Jun 2006 09:01:26 -0330
-Message-ID: <8488315442.20060614090126__43151.6274497428$1150275702$gmane$org@mail.ru>
-Reply-To: "Buford Greer" <BufordGreer@mail.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Repacking many disconnected blobs
+Date: Wed, 14 Jun 2006 11:07:52 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606141104050.15578@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1150269478.20536.150.camel@neko.keithp.com> <20060614072923.GB13886@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 14 11:01:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Keith Packard <keithp@keithp.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 14 11:08:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqRFi-0005nu-1L
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 11:01:30 +0200
+	id 1FqRM0-0007AF-3I
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 11:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270AbWFNJB1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 05:01:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWFNJB1
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 05:01:27 -0400
-Received: from zeus2.kernel.org ([204.152.191.36]:44738 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1751270AbWFNJB0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 05:01:26 -0400
-Received: from triband-mum-59.183.165.28.mtnl.net.in (triband-mum-59.183.165.28.mtnl.net.in [59.183.165.28] (may be forged))
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k5E91CgZ010717;
-	Wed, 14 Jun 2006 09:01:25 GMT
-X-Mailer: The Bat! (v2.0 Beta/1) Business
-X-Priority: 3 (Normal)
-To: linux-newbie@vger.kernel.org
-X-Virus-Scanned: ClamAV 0.88.2/1538/Tue Jun 13 20:17:56 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+	id S1751278AbWFNJH5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 05:07:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751284AbWFNJH5
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 05:07:57 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:63403 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751278AbWFNJH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jun 2006 05:07:56 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 5D9CF141E;
+	Wed, 14 Jun 2006 11:07:55 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 51667DE2;
+	Wed, 14 Jun 2006 11:07:55 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id CCD8CE48;
+	Wed, 14 Jun 2006 11:07:52 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060614072923.GB13886@spearce.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.0 points;
- *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
- * -2.0 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1061]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: jugjest.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: jugjest.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: jugjest.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: jugjest.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: jugjest.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21834>
 
-Even if you have no erectin problems SOFT CIAzLIS 
-would help you to make BETTER SE  X MORE OFTEN!
-and to bring  unimagnable plesure to her.
+Hi,
 
-Just disolve half a pil under your tongue 
-and get ready for action in 15 minutes. 
+On Wed, 14 Jun 2006, Shawn Pearce wrote:
 
-The tests showed that the majority of men 
-after taking this medic ation were able to have 
-PERFECT ER ECTI ON during 36 hours!
+> Keith Packard <keithp@keithp.com> wrote:
+> > parsecvs scans every ,v file and creates a blob for every revision of
+> > every file right up front. Once these are created, it discards the
+> > actual file contents and deals solely with the hash values.
+> > 
+> > The problem is that while this is going on, the repository consists
+> > solely of disconnected objects, and I can't make git-repack put those
+> > into pack objects. This leaves the directories bloated, and operations
+> > within the tree quite sluggish. I'm importing a project with 30000 files
+> > and 30000 revisions (the CVS repository is about 700MB), and after
+> > scanning the files, and constructing (in memory) a complete revision
+> > history, the actual construction of the commits is happening at about 2
+> > per second, and about 70% of that time is in the kernel, presumably
+> > playing around in the repository.
+> > 
+> > I'm assuming that if I could get these disconnected blobs all neatly
+> > tucked into a pack object, things might go a bit faster.
+> 
+> What about running git-update-index using .git/objects as the
+> current working directory and adding all files in ??/* into the
+> index, then git-write-tree that index and git-commit-tree the tree.
+> 
+> When you are done you have a bunch of orphan trees and a commit
+> but these shouldn't be very big and I'd guess would prune out with
+> a repack if you don't hold a ref to the orphan commit.
 
-VISIT US, AND GET OUR SPECIAL 70% DISC OUNT OFER!
+Alternatively, you could construct fake trees like this:
 
-http://tvewuu.jugjest.com/?62746363
+README/1.1.1.1
+README/1.2
+README/1.3
+...
 
-==========
-weapons--and you  have the framework of  this amazing  short novel.  Add the
-their  teeth  on this cotton problem  for some  time.  You  see,  they  were
-own sake, the search for new devices, new techniques, to achieve new heights
-"It's just a garage."
-     "I don't mind being bone and feathers mom. I just want to know what I
-and against the spitting devil's cabbage.... All right.
+i.e. every file becomes a directory -- containing all the versions of that 
+file -- in the (virtual) tree, which you can point to by a temporary ref.
 
-fourteen miles per hour! It was a breakthrough, the greatest single moment
-     "Of  course!  But I would  like  to  Finish with  science  first. As  a
+Ciao,
+Dscho
