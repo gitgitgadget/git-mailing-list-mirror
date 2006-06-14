@@ -1,103 +1,105 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: oprofile on svn import
-Date: Tue, 13 Jun 2006 21:10:19 -0400
-Message-ID: <9e4733910606131810ya6aa585m5d2349f651b01492@mail.gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-cvsimport doesn't quite work, wrt branches
+Date: Wed, 14 Jun 2006 13:56:13 +1200
+Message-ID: <46a038f90606131856o77d58467le4d3dab8021b32@mail.gmail.com>
+References: <87irn5ovn6.fsf@rho.meyering.net>
+	 <Pine.LNX.4.64.0606131008470.5498@g5.osdl.org>
+	 <1150224411.20536.79.camel@neko.keithp.com>
+	 <46a038f90606131555m7b1fa744g9770140c87598b7b@mail.gmail.com>
+	 <1150241459.20536.98.camel@neko.keithp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 14 03:11:56 2006
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Jim Meyering" <jim@meyering.net>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Matthias Urlichs" <smurf@smurf.noris.de>,
+	"Yann Dirson" <ydirson@altern.org>, "Pavel Roskin" <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jun 14 03:56:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqJvB-00032w-Gl
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 03:11:49 +0200
+	id 1FqKcK-0003ie-Q8
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 03:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964843AbWFNBK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 21:10:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbWFNBKi
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 21:10:38 -0400
-Received: from nz-out-0102.google.com ([64.233.162.196]:13134 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S964854AbWFNBKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jun 2006 21:10:21 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so15455nze
-        for <git@vger.kernel.org>; Tue, 13 Jun 2006 18:10:20 -0700 (PDT)
+	id S964784AbWFNB4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Jun 2006 21:56:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964876AbWFNB4P
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 21:56:15 -0400
+Received: from wr-out-0506.google.com ([64.233.184.231]:37028 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S964784AbWFNB4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jun 2006 21:56:14 -0400
+Received: by wr-out-0506.google.com with SMTP id 50so15965wri
+        for <git@vger.kernel.org>; Tue, 13 Jun 2006 18:56:14 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=PvY4NgTJd2HFsLAWvSQMSHfxdVgu2kDeCQ5i8OaycHw717TmlpFieY+aDtdbmsXqO6wcAk6WiFhfDHZwY3PaYpO95BsUCsqTaveTNfRtN4Uy6EcXpF/yl1eBqmMRRXFPgWh4DcZ9dkgX08aT0Ub0GFiTwnLYBz4peffGtXTXjkw=
-Received: by 10.36.36.19 with SMTP id j19mr156079nzj;
-        Tue, 13 Jun 2006 18:10:20 -0700 (PDT)
-Received: by 10.36.36.7 with HTTP; Tue, 13 Jun 2006 18:10:19 -0700 (PDT)
-To: git <git@vger.kernel.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Jm+61jEwzppKwHpByEp8vuA2C8hFUo5BkAr86otXgTWNsTqbNwV94BII81/hmYBYqeqyX1h1x/K0Y+isnwr3hBpp5Cae0i5pZoNT5v+juLElThwsJSgngJ5c+kLtL7uBk/jA/uXvoTe5ub5w5vJghZGFNXbYEVensMYoK+JFVfo=
+Received: by 10.54.89.9 with SMTP id m9mr158969wrb;
+        Tue, 13 Jun 2006 18:56:13 -0700 (PDT)
+Received: by 10.54.71.9 with HTTP; Tue, 13 Jun 2006 18:56:13 -0700 (PDT)
+To: "Keith Packard" <keithp@keithp.com>
+In-Reply-To: <1150241459.20536.98.camel@neko.keithp.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21820>
 
-I'm going back to cvsimport tomorrow. My svn import that had been
-running for five days got killed this morning when the city decided to
-move the telephone pole that provides my electricty.
+On 6/14/06, Keith Packard <keithp@keithp.com> wrote:
+> On Wed, 2006-06-14 at 10:55 +1200, Martin Langhoff wrote:
+>
+> > In terms of history parsing, parsecvs and cvs2svn are similar. I like
+> > cvs2svn "many passes" approach better, though the Python source is
+> > really messy. A good thing about cvs2svn is that it is a lot more
+> > conservative WRT memory use.
+>
+> I will try to fix parsecvs so it doesn't take so much memory. Of course,
+> my goal was to import various X.org repositories which have horrible
+> issues, but aren't all that huge. And, for them, it works just fine.
 
-Some oprofile data, this doesn't make a lot of sense to me. Why is it
-in libcypto so much?
+Would it be possible to have it parse the RCS histories from a remote repo?
 
- 12632739 30.6077 /lib/libcrypto.so.0.9.8a
- 11762639 28.4995 /home/good/vmlinux
-  6310191 15.2889 /lib/libc-2.4.so
-  2498812  6.0543 /usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE/libperl.so
-  2079975  5.0395 /usr/local/bin/git-update-index
-  1103116  2.6727 /usr/lib/libz.so.1.2.3
-   617395  1.4959 /usr/lib/libapr-1.so.0.2.2
-   484625  1.1742 /usr/local/bin/git-read-tree
+I had forgotten, but that's something else that the cvsps +
+git-cvsimport combo can do. In short, to replace cvsps+git-cvsimport
+...
 
-kernel breakdown
+ + not memory bound -- or at least must be able to import large
+(mozilla, gentoo) with a decent amount of memory
 
-2035561  16.4450  copy_page_range
-1110813   8.9741  get_page_from_freelist
-851064    6.8756  check_poison_obj
-759296    6.1342  unmap_vmas
-670659    5.4181  release_pages
-667657    5.3939  page_remove_rmap
-595826    4.8136  page_fault
-241962    1.9548  __copy_from_user_ll
-185876    1.5017  do_wp_page
-176506    1.4260  do_page_fault
+ + must work local and remote (of course local can be faster)
 
+ + must do incrementals reasonably well
 
-I reset the statistics and took another snapshot half an hour later.
+> I'd like some help figuring out how to do incremental imports with
+> parsecvs. As parsecvs already constructs the project history from the
+> present into the past, it should be possible to "notice" when it hits
+> existing bits in the repository and stop automatically. I think this
+> will just take saving a bit of state in the git repository to mark where
+> in CVS the tips of each branch come from.
 
-  2232310 44.3485 /home/good/vmlinux
-   757114 15.0413 /lib/libcrypto.so.0.9.8a
-   507282 10.0780 /lib/libc-2.4.so
-   203440  4.0417 /usr/lib/libz.so.1.2.3
-   179105  3.5582 /usr/lib/libapr-1.so.0.2.2
-   169724  3.3718 /usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE/libperl.so
-   114384  2.2724 /usr/local/bin/git-update-index
-   102350  2.0334 /usr/lib/libsvn_subr-1.so.0.0.0
-    74673  1.4835 /usr/lib/libaprutil-1.so.0.2.2
-    69987  1.3904 /usr/lib/libsvn_fs_fs-1.so.0.0.0
+Ok. Before starting to read the RCS files, I would look at all the
+branch tips in the git repo, and read some metadata of the last commit
+of each head into memory (author, commitmsg, timestamp, diffstat).
 
-Kernel:
+When parsing RCS files and building changesets to import, compare them
+with the 'head' data. The timestamp granularity is seconds which is
+pretty coarse -- you can ask for history post those timestamps, but
+there's the risk of missing commits (this affects git-cvsimport today,
+and I'm thinking how to fix it there). So borderline changesets should
+be compared against the metadata you have.
 
-543264   21.2518  copy_page_range
-243383    9.5208  check_poison_obj
-227788    8.9108  unmap_vmas
-161806    6.3296  page_remove_rmap
-153201    5.9930  release_pages
-119092    4.6587  page_fault
-100116    3.9164  get_page_from_freelist
-45014     1.7609  do_wp_page
-42130     1.6481  vm_normal_page
-34804     1.3615  poison_obj
-28231     1.1044  do_page_fault
-27403     1.0720  __handle_mm_fault
-24558     0.9607  __copy_to_user_ll
-20618     0.8066  flush_tlb_page
+There is the chance that your earlier import caught a commit partway
+through, so you may end up putting in the 'rest' of the commit. That's
+why diffstat can be useful.
+
+Is that useful?
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+cheers,
+
+
+
+martin
