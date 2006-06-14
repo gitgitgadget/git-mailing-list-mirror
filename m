@@ -1,56 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git-diff --cc broken in 1.4.0?
-Date: Wed, 14 Jun 2006 13:32:46 -0700
-Message-ID: <7vmzcfcwb5.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 15 Jun 2006 08:58:28 +1200
+Message-ID: <46a038f90606141358l5ee4f8abv207b68dc534ce02c@mail.gmail.com>
 References: <46a038f90606112132jaf33a25x5794a19db2a06d8d@mail.gmail.com>
+	 <7vmzcfcwb5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 14 22:32:56 2006
+X-From: git-owner@vger.kernel.org Wed Jun 14 22:58:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqc2k-0003WJ-OP
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 22:32:51 +0200
+	id 1FqcRc-0001CL-8k
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 22:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbWFNUcs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 16:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932255AbWFNUcs
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 16:32:48 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:32496 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932251AbWFNUcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jun 2006 16:32:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060614203247.SFBH554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Jun 2006 16:32:47 -0400
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90606112132jaf33a25x5794a19db2a06d8d@mail.gmail.com>
-	(Martin Langhoff's message of "Mon, 12 Jun 2006 16:32:45 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932301AbWFNU6a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 16:58:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932310AbWFNU6a
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 16:58:30 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:22672 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932301AbWFNU63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jun 2006 16:58:29 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so222617wra
+        for <git@vger.kernel.org>; Wed, 14 Jun 2006 13:58:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Q/Cv48w1Gh18YcqG7jqUkztEZdr23pzA5SYz8aM4SrX+CNys7+JrNkNIr0iqJ2YYCZfQ/5+tsMvLTDb9Xa7vjrR1xUCIZXGH1OyobanzE2DDoEYBep0lTtjmCMoER39+wz6/5DucyebVVWM5nd5QwahA48wJ9VL9i5+w5IJiIXk=
+Received: by 10.54.98.5 with SMTP id v5mr1007628wrb;
+        Wed, 14 Jun 2006 13:58:28 -0700 (PDT)
+Received: by 10.54.71.9 with HTTP; Wed, 14 Jun 2006 13:58:28 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vmzcfcwb5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21862>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+On 6/15/06, Junio C Hamano <junkio@cox.net> wrote:
+> One thing to note is that --cc does not show a hunk in which you
+> take only from one side.
 
-> I was looking at some merges in gitk and lamenting the apparent loss
-> of the nice two-sided diff we get with -cc, and now duting a slightly
-> messy merge I did git-diff -cc only to get...
+Must have been that. I was looking at a big (but clean) merge, and
+where gitk used to show a large-ish diff there was nothing. I somehow
+expected an even larger diff with the changes against both sides.
 
-This not a regression that I know of in 1.4.0; mind showing the
-stage 2 and 3 blobs and the file in the resolution result (I do
-not need stage 1)?
+thanks for the clarification and sorry about that!
 
-One thing to note is that --cc does not show a hunk in which you
-take only from one side.
 
->
-> $ git-ls-files --unmerged
-> 100644 f1d3843b2b2e42ba78adcf37da6440f0d321852e 1       local/version.php
-> 100644 9352efa45cd25d9ad58df12b4ac241ac226a8ad4 2       local/version.php
-> 100644 50da9b47903f6179f55a3f44290e7feaa08342f4 3       local/version.php
+
+m
