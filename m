@@ -1,74 +1,69 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Repacking many disconnected blobs
-Date: Wed, 14 Jun 2006 03:29:24 -0400
-Message-ID: <20060614072923.GB13886@spearce.org>
-References: <1150269478.20536.150.camel@neko.keithp.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: 'sparse' clone idea
+Date: Wed, 14 Jun 2006 10:23:54 +0200
+Organization: At home
+Message-ID: <e6oh2g$ngh$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 14 09:29:47 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Jun 14 10:24:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqPou-0005OS-AU
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 09:29:44 +0200
+	id 1FqQfm-0006rM-QV
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 10:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799AbWFNH3k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 03:29:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbWFNH3k
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 03:29:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33221 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750799AbWFNH3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jun 2006 03:29:40 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FqPod-0007KB-Lo; Wed, 14 Jun 2006 03:29:27 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7225D20FB20; Wed, 14 Jun 2006 03:29:24 -0400 (EDT)
-To: Keith Packard <keithp@keithp.com>
-Content-Disposition: inline
-In-Reply-To: <1150269478.20536.150.camel@neko.keithp.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751242AbWFNIYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 04:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWFNIYM
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 04:24:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:44491 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751242AbWFNIYL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 04:24:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FqQfP-0006mA-89
+	for git@vger.kernel.org; Wed, 14 Jun 2006 10:24:00 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jun 2006 10:23:59 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jun 2006 10:23:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21832>
 
-Keith Packard <keithp@keithp.com> wrote:
-> parsecvs scans every ,v file and creates a blob for every revision of
-> every file right up front. Once these are created, it discards the
-> actual file contents and deals solely with the hash values.
-> 
-> The problem is that while this is going on, the repository consists
-> solely of disconnected objects, and I can't make git-repack put those
-> into pack objects. This leaves the directories bloated, and operations
-> within the tree quite sluggish. I'm importing a project with 30000 files
-> and 30000 revisions (the CVS repository is about 700MB), and after
-> scanning the files, and constructing (in memory) a complete revision
-> history, the actual construction of the commits is happening at about 2
-> per second, and about 70% of that time is in the kernel, presumably
-> playing around in the repository.
-> 
-> I'm assuming that if I could get these disconnected blobs all neatly
-> tucked into a pack object, things might go a bit faster.
+I wonder if 'sparse clone' idea described below would avoid the most
+difficult part of 'shallow clone' idea, namely the [sometimes] need to
+un-cauterize history. See: (<7vac8lidwi.fsf@assigned-by-dhcp.cox.net>).
 
-What about running git-update-index using .git/objects as the
-current working directory and adding all files in ??/* into the
-index, then git-write-tree that index and git-commit-tree the tree.
+'sparse clone' begins like 'shallow clone': full history is copied down to
+specified point of history (cut-off or cauterization point for shallow
+clone), but instead of cauterizing the history from that point downwards,
+the history is simplified using grafts.
 
-When you are done you have a bunch of orphan trees and a commit
-but these shouldn't be very big and I'd guess would prune out with
-a repack if you don't hold a ref to the orphan commit.
+In the sparse part we need:
+ * all commits pointed by tags (if we clone/copy tags) 
+   and other refs (if we clone/copy those tags)
+ * merge bases for all commits in full, and in the sparse part,
+   _including_ merge bases themselves
+ * all roots
+
+Commits in sparse part would be connected like in original history, only
+skipping "uniteresting" commits.
+
+
+Thoughts? Comments?
 
 -- 
-Shawn.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
