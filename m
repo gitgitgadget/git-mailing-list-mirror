@@ -1,65 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: oprofile on svn import
-Date: Wed, 14 Jun 2006 21:38:09 +0200
-Organization: At home
-Message-ID: <e6poil$e8l$1@sea.gmane.org>
-References: <9e4733910606131810ya6aa585m5d2349f651b01492@mail.gmail.com> <9e4733910606131932w362c6ddcx5bf36ea5591feba1@mail.gmail.com> <9e4733910606141225n11b406fte6229ea9993825dd@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] auto-detect changed $prefix in Makefile and properly rebuild to avoid broken install
+Date: Wed, 14 Jun 2006 13:04:43 -0700
+Message-ID: <7vver3cxlw.fsf@assigned-by-dhcp.cox.net>
+References: <0J0V00LDT7B9BU00@mxout2.netvision.net.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Jun 14 21:38:25 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 14 22:05:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqbBz-0001M2-9q
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 21:38:19 +0200
+	id 1Fqbbm-0006Va-9T
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 22:04:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751063AbWFNTiO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 15:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbWFNTiO
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 15:38:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:4491 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751063AbWFNTiN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 15:38:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FqbBl-0001JJ-5F
-	for git@vger.kernel.org; Wed, 14 Jun 2006 21:38:05 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jun 2006 21:38:05 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jun 2006 21:38:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750884AbWFNUEp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 16:04:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbWFNUEp
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 16:04:45 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43479 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750884AbWFNUEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jun 2006 16:04:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060614200444.QUYC554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Jun 2006 16:04:44 -0400
+To: Yakov Lerner <iler.ml@gmail.com>
+In-Reply-To: <0J0V00LDT7B9BU00@mxout2.netvision.net.il> (Yakov Lerner's
+	message of "Wed, 14 Jun 2006 22:26 +0300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21858>
 
-Jon Smirl wrote:
+Yakov Lerner <iler.ml@gmail.com> writes:
 
-> Stats after 18 hours into git-svnimport. Process is now stuck in the
-> kernel 64% of the time. All of the kernel time is in page management.
-> Perl svnimport process is 290MB now.
-> 
-> My top candidates for causing the problem are the fork in the perl
-> code or the execing of a million tiny git processes.
-> 
-> The key low level git functions could be made into a library to avoid
-> the need to exec them continuously. The svn functions are libraries
-> and they hardly show up.
+> Many times, I mistakenly used 'make prefix=... install' where prefix value
+> was different from prefix value during build. This resulted in broken
+> install. This patch adds auto-detection of $prefix change to the Makefile.
+> This results in correct install whenever prefix is changed.
+>
+> Signed-off-by: Yakov Lerner <iler.ml@gmail.com>
 
-There is ongoing effort to translate git functions into builtins.
-Still you would need to translate git-svnimport Perl code into C,
-or somehow access git library from Perl.
+I do not mind this per se, and probably even agree that this is
+an improvement compared to the current state of affairs, but a few
+points:
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+ - please make sure you clean that state file in "make clean";
+
+ - we may want to make the state file a bit more visible (IOW, I
+   somewhat do mind the name being dot-git-dot-prefix).
+
+ - we might want to later (or at the same time as this patch)
+   do "consistent set of compilation flags" (e.g. run early
+   part of compilation with openssl SHA-1 implementation,
+   interrupt it and build and link the rest with mozilla SHA-1
+   implementation -- then you will get a nonsense binary without
+   linker errors).  It might make sense to prepare this
+   mechanism so we could reuse it for that purpose.
