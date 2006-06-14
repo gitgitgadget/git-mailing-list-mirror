@@ -1,63 +1,51 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] auto-detect changed $prefix in Makefile and properly rebuild to avoid broken install
-Date: Wed, 14 Jun 2006 13:04:43 -0700
-Message-ID: <7vver3cxlw.fsf@assigned-by-dhcp.cox.net>
-References: <0J0V00LDT7B9BU00@mxout2.netvision.net.il>
+Subject: Re: [PATCH] gitweb: Adding a `blame' interface.
+Date: Wed, 14 Jun 2006 13:27:21 -0700
+Message-ID: <7vr71rcwk6.fsf@assigned-by-dhcp.cox.net>
+References: <11500407193506-git-send-email-octo@verplant.org>
+	<46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 14 22:05:04 2006
+Cc: "Florian Forster" <octo@verplant.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 14 22:27:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqbbm-0006Va-9T
-	for gcvg-git@gmane.org; Wed, 14 Jun 2006 22:04:58 +0200
+	id 1FqbxW-0002LV-1A
+	for gcvg-git@gmane.org; Wed, 14 Jun 2006 22:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750884AbWFNUEp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 16:04:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbWFNUEp
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 16:04:45 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43479 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750884AbWFNUEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jun 2006 16:04:45 -0400
+	id S932238AbWFNU1X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 16:27:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932239AbWFNU1X
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 16:27:23 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:10230 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932238AbWFNU1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jun 2006 16:27:22 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060614200444.QUYC554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 14 Jun 2006 16:04:44 -0400
-To: Yakov Lerner <iler.ml@gmail.com>
-In-Reply-To: <0J0V00LDT7B9BU00@mxout2.netvision.net.il> (Yakov Lerner's
-	message of "Wed, 14 Jun 2006 22:26 +0300")
+          id <20060614202722.UHDG12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 14 Jun 2006 16:27:22 -0400
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606111502g607be3cfnf83ce81764a5f909@mail.gmail.com>
+	(Martin Langhoff's message of "Mon, 12 Jun 2006 10:02:05 +1200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21859>
 
-Yakov Lerner <iler.ml@gmail.com> writes:
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> Many times, I mistakenly used 'make prefix=... install' where prefix value
-> was different from prefix value during build. This resulted in broken
-> install. This patch adds auto-detection of $prefix change to the Makefile.
-> This results in correct install whenever prefix is changed.
+> Florian,
 >
-> Signed-off-by: Yakov Lerner <iler.ml@gmail.com>
+> Looks good! git-blame/git-annotate are quite expensive to run. Do you
+> think it would make sense making it conditional on a git-repo-config
+> option (gitweb.blame=1)?
+>
+> kernel.org is the flagship user for gitweb, so expensive options
+> should default to off :-/
 
-I do not mind this per se, and probably even agree that this is
-an improvement compared to the current state of affairs, but a few
-points:
-
- - please make sure you clean that state file in "make clean";
-
- - we may want to make the state file a bit more visible (IOW, I
-   somewhat do mind the name being dot-git-dot-prefix).
-
- - we might want to later (or at the same time as this patch)
-   do "consistent set of compilation flags" (e.g. run early
-   part of compilation with openssl SHA-1 implementation,
-   interrupt it and build and link the rest with mozilla SHA-1
-   implementation -- then you will get a nonsense binary without
-   linker errors).  It might make sense to prepare this
-   mechanism so we could reuse it for that purpose.
+Seconded.  Thanks Florian and Martin.
