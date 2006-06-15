@@ -1,86 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Olivier Galibert <galibert@pobox.com>
 Subject: Re: Autoconf/Automake
-Date: Thu, 15 Jun 2006 10:02:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth>
- <20060615133146.GA5794@steel.home> <20060615163209.GJ7766@nowhere.earth>
+Date: Thu, 15 Jun 2006 19:48:33 +0200
+Message-ID: <20060615174833.GA32247@dspnet.fr.eu.org>
+References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth> <20060615133146.GA5794@steel.home> <20060615163209.GJ7766@nowhere.earth> <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>, Pavel Roskin <proski@gnu.org>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 15 19:02:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <ydirson@altern.org>, Alex Riesen <raa.lkml@gmail.com>,
+	Pavel Roskin <proski@gnu.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 15 19:48:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqvEi-0003XT-Kd
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 19:02:28 +0200
+	id 1FqvxU-0004pq-2q
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 19:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030367AbWFORCZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 13:02:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030408AbWFORCZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 13:02:25 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41349 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030367AbWFORCZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 13:02:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5FH2Bgt006541
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 15 Jun 2006 10:02:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5FH2AiK019210;
-	Thu, 15 Jun 2006 10:02:10 -0700
-To: Yann Dirson <ydirson@altern.org>
-In-Reply-To: <20060615163209.GJ7766@nowhere.earth>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030918AbWFORsh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 13:48:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030920AbWFORsh
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 13:48:37 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:34064 "EHLO dspnet.fr.eu.org")
+	by vger.kernel.org with ESMTP id S1030918AbWFORsg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 13:48:36 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id 51C71A424C; Thu, 15 Jun 2006 19:48:33 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21898>
 
+On Thu, Jun 15, 2006 at 10:02:10AM -0700, Linus Torvalds wrote:
+> These days, there aren't fifteen different versions of UNIX. There's a 
+> couple, and it's perfectly ok to actually say "fix your damn system and 
+> just install GNU make". It's easier to install GNU make than it is to 
+> install autoconf/automake.
 
+You should be careful to separate autoconf and automake.  Autoconf is
+not so bad, and you can make clean, maintainable Makefile.in and
+config.h.in files with it, because it uses simple substitution.  It is
+quite useful to detect available librairies when some are optional,
+and also to lightly[1] ensure that prefix and friends will stay the
+same between make and make install.  Also, especially if you hack a
+little bit to alias 'enable' and 'with', you get a sane interface to
+optional feature selection.  Oh, and to seperate compilation
+directories too (vpath generation).
 
-On Thu, 15 Jun 2006, Yann Dirson wrote:
-> 
-> Well, being hated is often the fate of tools for which users got no
-> training, but are forced to used because of a corporate decision.
+OTOH, automake is a BDSM session gone bad.  The makefiles it generates
+are atrocious and outdated, even buggy on some lesser makes, which is
+quite annoying when what you try to build is gnu make.
 
-That's one possible reason.
+The worst of the lot is libtool, though.  That one explicitely tries
+to make your experience as painful as possible.  Including, but not
+limited to, hiding the files in dot-directories so that you try to run
+gdb on a script, relinking at install time, silently removing flags
+you want to pass to ld or the compiler because it thinks it knows
+better, locking C++ shared libraries to the exact compiler version
+that compiled them through the .la file crap, etc.
 
-> That does not necessarily mean the tool is bad in itself.
+So, autoconf can be useful.  The rest should die.
 
-It does not _necessarily_ mean that, but let's face it, it really usually 
-does.
+  OG.
 
-Too many developers shrug off the "it's hard to use" argument. THEY think 
-it's fine. THEY think it's "lack of training". THEY think the tools are 
-fine, and the problem is the user.
-
-THEY are wrong.
-
-Almost every time when a user says "it's hard to use", the user is right. 
-Sometimes it's a lack of documentation, but quite often it's just that the 
-tool interfaces are bad.
-
-Oh, I'm sure git has the same problems, but dammit, I think we've tried 
-very hard to listen to user opinions, and make the things that make them 
-go "that's hard" be more obvious. All the things that were _possible_ to 
-do if you did them by hand, that you now can do pretty obviously without 
-even knowing what it really does. "git commit -a". "git log -p". "git show 
-<name>", etc etc. 
-
-Sometimes the problem space makes the interfaces fundamentally hard. But 
-sometimes the program itself just makes things ugly and hard, and autoconf 
-and automake definitely didn't make it easier for users - they were 
-designed for people who knew fifteen different versions of UNIX, and not 
-for sane people.
-
-These days, there aren't fifteen different versions of UNIX. There's a 
-couple, and it's perfectly ok to actually say "fix your damn system and 
-just install GNU make". It's easier to install GNU make than it is to 
-install autoconf/automake.
-
-		Linus
+[1] As in, you can still override when running make, but if you don't
+    override anything you'll get the value you passed to configure every
+    time.
