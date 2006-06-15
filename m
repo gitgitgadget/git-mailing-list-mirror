@@ -1,71 +1,68 @@
-From: Alexander Litvinov <lan@academsoft.ru>
-Subject: Re: Collecting cvsps patches
-Date: Thu, 15 Jun 2006 09:21:34 +0700
-Organization: AcademSoft Ltd.
-Message-ID: <200606150921.34690.lan@academsoft.ru>
-References: <20060611122746.GB7766@nowhere.earth> <46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com> <20060611224205.GF1297@nowhere.earth>
+From: "Marquis Brennan" <MarquisBrennan@mail.ru>
+Subject: Hi, mummy case
+Date: Thu, 15 Jun 2006 02:42:14 -0540
+Message-ID: <662161c806040n1elhp7wd9j5el8g4nn61bsyyselv6nqjy@mxs.mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 15 04:22:06 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Jun 15 04:42:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqhUg-00063C-Ia
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 04:22:02 +0200
+	id 1Fqhop-0000tL-4L
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 04:42:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750740AbWFOCVv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Jun 2006 22:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbWFOCVv
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 22:21:51 -0400
-Received: from gw.ac-sw.com ([81.1.223.2]:14802 "EHLO gw.ac-sw.com")
-	by vger.kernel.org with ESMTP id S1750740AbWFOCVu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 22:21:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by gw.ac-sw.com (Postfix) with ESMTP
-	id 0CC33BDDD; Thu, 15 Jun 2006 09:21:47 +0700 (NOVST)
-Received: from gw.ac-sw.com ([127.0.0.1])
- by localhost (gw.ac-sw.com [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 11608-09; Thu, 15 Jun 2006 09:21:37 +0700 (NOVST)
-Received: from lan.ac-sw.lcl (lan.ac-sw.lcl [192.168.0.69])
-	by gw.ac-sw.com (Postfix) with ESMTP
-	id C95CEBDC5; Thu, 15 Jun 2006 09:21:37 +0700 (NOVST)
-Received: by lan.ac-sw.lcl (Postfix, from userid 65534)
-	id B9FC18D943C5; Thu, 15 Jun 2006 09:21:37 +0700 (NOVST)
-Received: from localhost (localhost [127.0.0.1])
-	by lan.ac-sw.lcl (Postfix) with ESMTP id 3336E8D943C2;
-	Thu, 15 Jun 2006 09:21:35 +0700 (NOVST)
-To: Yann Dirson <ydirson@altern.org>
-User-Agent: KMail/1.8
-In-Reply-To: <20060611224205.GF1297@nowhere.earth>
+	id S1750958AbWFOClz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Jun 2006 22:41:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbWFOClz
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jun 2006 22:41:55 -0400
+Received: from p80339a.osakac00.ap.so-net.ne.jp ([211.128.51.154]:38389 "EHLO
+	p80339a.osakac00.ap.so-net.ne.jp") by vger.kernel.org with ESMTP
+	id S1750854AbWFOCly convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jun 2006 22:41:54 -0400
+To: linux-newbie@vger.kernel.org
 Content-Disposition: inline
-X-Virus-Scanned: amavisd-new at gw.ac-sw.com
+X-Spam: Not detected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21876>
+X-Spam-Report: 12.0 points;
+ *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: motivefood.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: motivefood.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: motivefood.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: motivefood.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21877>
 
-Your master branch is not compilable. This is the fix for it.
+Even if you have no erectin problems SOFT CIAzLIS 
+would help you to make BETTER SE  X MORE OFTEN!
+and to bring  unimagnable plesure to her.
 
----
- cache.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Just disolve half a pil under your tongue 
+and get ready for action in 15 minutes. 
 
-diff --git a/cache.c b/cache.c
-index 409392d..2b2179a 100644
---- a/cache.c
-+++ b/cache.c
-@@ -501,7 +501,7 @@ static void dump_patch_set(FILE * fp, Pa
-        struct list_head * tag;
-        for (tag = ps->tags.next; tag != &ps->tags; tag = tag->next)
-        {
--            TagName* tagname = list_entry (tag, TagName, tagnames);
-+            TagName* tagname = list_entry (tag, TagName, name);
+The tests showed that the majority of men 
+after taking this medic ation were able to have 
+PERFECT ER ECTI ON during 36 hours!
 
-            fprintf(fp, " %s %d%s", tagname->name, tagname->flags,
-                    (tag->next == &ps->tags) ? "" : ",");
---
-1.4.0
+VISIT US, AND GET OUR SPECIAL 70% DISC OUNT OFER!
+
+http://jsdhuu.motivefood.com/?23868551
+
+=====
+storm. Eyes glazed, beaks sharp, they closed in to destroy.
+wriggling your fingers and  cursing in frustration. OK, let's say you've got
+that this was what they were doing.
+The suits are too percent protection against the burning fluff, for example,
+     "Of course if you wish to learn."
+     "I'm looking for what I should be looking for. Wait, I'll throw another
+
+end it all.
+lowered an anchor on a steel cable from a  helicopter and  hooked a piece of
