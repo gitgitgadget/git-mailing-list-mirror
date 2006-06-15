@@ -1,70 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Autoconf/Automake
-Date: Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606152239270.7480@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth>
- <20060615133146.GA5794@steel.home> <20060615201000.600939E2BC@derisoft.derived-software.demon.co.uk>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: observations on parsecvs testing
+Date: Thu, 15 Jun 2006 16:47:42 -0400
+Message-ID: <BAYC1-PASMTP10021C1A6034B8753D06DDAE820@CEZ.ICE>
+References: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 15 22:43:00 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: keithp@keithp.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 15 22:49:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqyfx-0004yf-Lv
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:42:50 +0200
+	id 1FqymD-00062M-2r
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932426AbWFOUmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 16:42:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932429AbWFOUmm
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:42:42 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62179 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932426AbWFOUml (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jun 2006 16:42:41 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 7010DDB6;
-	Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 646DFDB4;
-	Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 403CEB34;
-	Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Phil Richards <news@derived-software.ltd.uk>
-In-Reply-To: <20060615201000.600939E2BC@derisoft.derived-software.demon.co.uk>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932502AbWFOUtI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 16:49:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932505AbWFOUtI
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:49:08 -0400
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:15498 "EHLO
+	BAYC1-PASMTP10.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
+	id S932502AbWFOUtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 16:49:07 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP10.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 15 Jun 2006 13:51:24 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id 0C999644C2A;
+	Thu, 15 Jun 2006 16:49:05 -0400 (EDT)
+To: Nicolas Pitre <nico@cam.org>
+Message-Id: <20060615164742.570e33a0.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.9.2; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 15 Jun 2006 20:51:24.0750 (UTC) FILETIME=[77119EE0:01C690BD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21907>
 
-Hi,
+On Thu, 15 Jun 2006 16:37:30 -0400 (EDT)
+Nicolas Pitre <nico@cam.org> wrote:
 
-On Thu, 15 Jun 2006, Phil Richards wrote:
+> Also rcs2git() is very inefficient especially with files having many 
+> revisions as it reconstructs the delta chain on every call.  For example 
+> mozilla/configure,v has at least 1690 revisions, and actually converting 
+> it into GIT blobs goes at a rate of 2.4 objects per second _only_ on my 
+> machine.  Can't objects be created as the delta list is walked/applied 
+> instead?  That would significantly reduce the initial convertion time.
 
-> On 2006-06-15, Alex Riesen <fork0@t-online.de> wrote:
->
-> >  Git already has enough external dependencies (crypto, Python, Perl,
-> >  bash, gmake), why create another one?
-> > 
-> >  If we are about to need a configuration system (and I doubt it), may
-> >  be we should at least select a system small enough to have it always
-> >  in git repo? (yes, as linux kernel configuration system is)
-> 
-> Well, since Python is already a dependency, why not use a build system
-> that has Python as its scripting/extension language?  It's also quite
-> small, and it's called SCons.  I found it rather easy to learn
-> when I was having a quick look around at alternative build systems.
+Hi Nicolas,
 
-Okay, let's face it. There are gazillions of make clones which "guarantee" 
-to fix all shortcomings of make. None of them are even close to make 
-(regarding developer exposure: take 3 developers, and 1 does not know 
-make, and 2 do not know whatever-your-favourite-make-clone-is).
+That was a planned optimization which I did mention to Keith previously.
+Was kinda waiting to hear back how it was working for him, and if there
+was an interest to put more work into it to include in his mainline.
 
-As for now, I fail to see why the current system is not adequate for git!
-
-Ciao,
-Dscho
+Sean
