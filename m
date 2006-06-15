@@ -1,50 +1,41 @@
-From: "Rickie" <RickieHollingsworth@hot-shot.com>
-Subject: Hot'n'new I think, yes.
-Date: Thu, 15 Jun 2006 16:31:17 +0800
-Message-ID: <16502485200377.C2F759966E@HU9Q4B>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] auto-detect changed $prefix in Makefile and properly rebuild to avoid broken install
+Date: Thu, 15 Jun 2006 11:26:02 +0200
+Message-ID: <E1Fqo70-0003pZ-PU@moooo.ath.cx>
+References: <0J0V00LDT7B9BU00@mxout2.netvision.net.il> <7vver3cxlw.fsf@assigned-by-dhcp.cox.net> <f36b08ee0606141330l28330d79hab1aec5c741188c7@mail.gmail.com> <7vhd2nctjk.fsf@assigned-by-dhcp.cox.net> <f36b08ee0606141438u7d7b59e1ra68bc23e2e926290@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jun 15 10:32:32 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 15 11:26:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqnH6-0006Fu-6L
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 10:32:25 +0200
+	id 1Fqo7A-0006Re-Kx
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 11:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbWFOIcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 04:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbWFOIcT
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 04:32:19 -0400
-Received: from 61-223-178-68.dynamic.hinet.net ([61.223.178.68]:27402 "EHLO
-	2006-D90A00E2C3.aa5p.org") by vger.kernel.org with ESMTP
-	id S1751409AbWFOIcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jun 2006 04:32:19 -0400
-To: <glenn@vger.kernel.org>
+	id S932456AbWFOJ0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 05:26:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbWFOJ0I
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 05:26:08 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:52884 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932456AbWFOJ0H (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 05:26:07 -0400
+To: Yakov Lerner <iler.ml@gmail.com>
+Mail-Followup-To: Yakov Lerner <iler.ml@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <f36b08ee0606141438u7d7b59e1ra68bc23e2e926290@mail.gmail.com>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 13.0 points;
- * -1.1 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
- *      [score: 0.3673]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: lutetiaaj.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: lutetiaaj.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: lutetiaaj.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: lutetiaaj.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: lutetiaaj.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21887>
 
-Happy day to you! ;)
+> Either GIT-CFLAGS or GIT-BUILD-FLAGS,
+> whichever is shorter :-)
 
-Masculine performance has never been so easy to increase with these products 
-Low prices, handy delivery, everything for your convenience.
- World famous brands which keep men happy all over the world
- Check up here: http://www.lutetiaaj.com	
- We thank you for being our customer!
+I would not take GIT-CFLAGS because there is an environment variable
+used by make named CFLAGS and means something else.
+
+What is the target test-prefix-change good for? Should it really be
+included?
