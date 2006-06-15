@@ -1,53 +1,69 @@
-From: Yann Dirson <ydirson@altern.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Autoconf/Automake
-Date: Fri, 16 Jun 2006 00:05:34 +0200
-Message-ID: <20060615220534.GL7766@nowhere.earth>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth> <20060615133146.GA5794@steel.home> <20060615201000.600939E2BC@derisoft.derived-software.demon.co.uk> <Pine.LNX.4.63.0606152239270.7480@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Thu, 15 Jun 2006 15:54:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606151545050.5498@g5.osdl.org>
+References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth>
+ <20060615133146.GA5794@steel.home> <20060615163209.GJ7766@nowhere.earth>
+ <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org> <20060615211454.GK7766@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Richards <news@derived-software.ltd.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 16 00:05:29 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, Pavel Roskin <proski@gnu.org>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 16 00:54:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqzxp-0004Fp-Gn
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 00:05:21 +0200
+	id 1Fr0jh-00038y-10
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 00:54:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750717AbWFOWFS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 18:05:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750714AbWFOWFS
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 18:05:18 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:58025 "EHLO smtp3-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750712AbWFOWFR (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 18:05:17 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id A140F4444D;
-	Fri, 16 Jun 2006 00:05:16 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1Fqzy2-0007xW-SR; Fri, 16 Jun 2006 00:05:34 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0606152239270.7480@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1750726AbWFOWyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 18:54:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750729AbWFOWyn
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 18:54:43 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:31655 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750726AbWFOWyn (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 18:54:43 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5FMsagt026125
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Jun 2006 15:54:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5FMsY4L030224;
+	Thu, 15 Jun 2006 15:54:35 -0700
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060615211454.GK7766@nowhere.earth>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21919>
 
-On Thu, Jun 15, 2006 at 10:42:40PM +0200, Johannes Schindelin wrote:
-> As for now, I fail to see why the current system is not adequate for git!
 
-I can reassure you, gazillions of people still fail to see why cvs is
-not adequate for their project.  And the ratio of devs in the
-corporate world not knowning git to those not knowning cvs is far
-superior to 2.  And everyone here knows cvs is not more adequate than
-git for so many tasks :)
 
-Best regards,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+On Thu, 15 Jun 2006, Yann Dirson wrote:
+> 
+> In tha case of jam, the doc issue can certainly be raised, but the
+> most prominent problem is probably that everyone and their dog knows
+> make,
+
+Oh, I agree. A "simpler" thing that people don't know is often much 
+inferior to a complex thing that people are generally intimately familiar 
+with.
+
+I just personally believe that autoconf/automake are the worst of both 
+worlds (ie it's a _complex_ thing that a lot of people don't know).
+
+GNU make in many ways is actually not that bad. Yeah, the makefiles get 
+more complex, but it's usually not totally unreadable, and you can do some 
+clever stuff with it. 
+
+The kernel makefiles are a pretty extreme example (and it hides a lot of 
+the complexity in files that get included and that most people never ever 
+need to look at). I suspect that git could more easily do something like 
+that (on a _much_ smaller scale - don't get me wrong).
+
+			Linus
