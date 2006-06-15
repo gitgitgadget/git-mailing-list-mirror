@@ -1,49 +1,54 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Collecting cvsps patches
-Date: Thu, 15 Jun 2006 09:35:50 +0200
-Message-ID: <20060615073550.GH7766@nowhere.earth>
-References: <20060611122746.GB7766@nowhere.earth> <46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com> <20060611224205.GF1297@nowhere.earth> <200606150921.34690.lan@academsoft.ru>
+From: "Erika" <ErikaPurvis@financier.com>
+Subject: Recent stuff Every man wishes it.
+Date: Thu, 15 Jun 2006 03:19:48 -0500
+Message-ID: <80473504495191.77FBE0BB64@ZEXXTY>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 15 09:35:44 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jun 15 10:20:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqmO6-0003eN-5B
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 09:35:34 +0200
+	id 1Fqn5d-00043z-Ek
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 10:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbWFOHfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 03:35:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWFOHfb
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 03:35:31 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:58580 "EHLO smtp4-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1751309AbWFOHfb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 03:35:31 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 2075454ACF;
-	Thu, 15 Jun 2006 09:35:30 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FqmOM-0007WY-TV; Thu, 15 Jun 2006 09:35:50 +0200
-To: Alexander Litvinov <lan@academsoft.ru>
-Content-Disposition: inline
-In-Reply-To: <200606150921.34690.lan@academsoft.ru>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1751333AbWFOIU3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 04:20:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbWFOIU3
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 04:20:29 -0400
+Received: from [24.219.125.93] ([24.219.125.93]:34322 "EHLO
+	tiag94a.194xb.aol.com") by vger.kernel.org with ESMTP
+	id S932090AbWFOIU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 04:20:29 -0400
+To: <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21884>
+X-Spam-Report: 18.7 points;
+ *  1.6 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4870]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?24.219.125.93>]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: kissyii.com]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: kissyii.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: kissyii.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: kissyii.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: kissyii.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21885>
 
-On Thu, Jun 15, 2006 at 09:21:34AM +0700, Alexander Litvinov wrote:
-> Your master branch is not compilable. This is the fix for it.
+Good day dear Sir,
+Have more success with women and impress them with your power and stamina in bed 
+You are just a couple of clicks away from our great prices and handy shipment
+ Unique offers on most recognized and famous brands on Earth.
 
-Right, it was fixed already.
+ Find what you need here: http://www.kissyii.com
 
-Best regards,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+ The quality is realt high and the prices are the cheapest on the market!
