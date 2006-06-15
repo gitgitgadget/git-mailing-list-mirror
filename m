@@ -1,40 +1,62 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: Autoconf/Automake
-Date: Thu, 15 Jun 2006 20:19:22 +0200
-Message-ID: <20060615181922.GA36286@dspnet.fr.eu.org>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth> <20060615133146.GA5794@steel.home> <20060615163209.GJ7766@nowhere.earth> <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org> <20060615174833.GA32247@dspnet.fr.eu.org> <e6s7eb$78h$1@sea.gmane.org>
+From: "Galinka" <makeprogress@74.ru>
+Subject: hello from Galechka
+Date: Thu, 15 Jun 2006 21:24:12 +0300
+Message-ID: <003c01c690a8$e2c36700$0100a8c0@USER.21.124.4.201.dial-ip.telemar.net.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 15 20:19:41 2006
+Content-Type: text/plain;
+	charset="windows-1251"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Jun 15 20:24:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqwRJ-0002br-V6
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 20:19:35 +0200
+	id 1FqwVR-0003Wp-Fp
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 20:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030365AbWFOSTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 14:19:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030513AbWFOSTb
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 14:19:31 -0400
-Received: from dspnet.fr.eu.org ([213.186.44.138]:50446 "EHLO dspnet.fr.eu.org")
-	by vger.kernel.org with ESMTP id S1030365AbWFOSTa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 14:19:30 -0400
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id C7CA6A4986; Thu, 15 Jun 2006 20:19:22 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <e6s7eb$78h$1@sea.gmane.org>
-User-Agent: Mutt/1.4.2.1i
+	id S1030982AbWFOSXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 14:23:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030981AbWFOSXi
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 14:23:38 -0400
+Received: from USER.21.124.4.201.dial-ip.telemar.net.br ([201.4.124.21]:15625
+	"EHLO USER.21.124.4.201.dial-ip.telemar.net.br") by vger.kernel.org
+	with ESMTP id S1030954AbWFOSXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 14:23:36 -0400
+Received: from [192.168.0.1] by USER.21.124.4.201.dial-ip.telemar.net.br
+	id LWu9cCgXah3K; Thu, 15 Jun 2006 21:24:12 +0300
+Received: from 192.168.53.121 ([192.168.53.121]) 
+	by 192.168.0.1 (WinRoute Pro 4.2.8) with SMTP;
+	Thu, 15 Jun 2006 21:24:12 +0300
+To: "Georg" <bk-commits-head-owner@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21900>
+X-Spam-Report: 17.8 points;
+ *  0.0 SUB_HELLO Subject starts with "Hello"
+ *  0.1 RCVD_BY_IP Received by mail server with no name
+ *  1.6 DOMAIN_4U2 BODY: Domain name containing a "4u" variant
+ *  2.0 URI_4YOU URI: Message has URI 4you
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4254]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: im-waiting-4you.net]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: im-waiting-4you.net]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: im-waiting-4you.net]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: im-waiting-4you.net]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: im-waiting-4you.net]
+ *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21901>
 
-On Thu, Jun 15, 2006 at 08:03:56PM +0200, Jakub Narebski wrote:
-> Does autoconf generate configure script in POSIX shell, or in bash?
+Ave!	
 
-It seems that it still generates bare /bin/sh compatible scripts.
-ICBvery easilyW, though.
+I am a lovely and lonely Lady who is looking for the man who will make me happy and whom I want to feel like in paradise with!
+If you want to be my beautiful Hero who will save me from this loneliness find me 
+http://www.Xp5vdUZ.im-waiting-4you.net/
+and wake me up with a warm kiss.
 
-  OG.
+au revoir
+Galinka S.
