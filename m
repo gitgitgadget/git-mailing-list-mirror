@@ -1,58 +1,53 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: observations on parsecvs testing
-Date: Thu, 15 Jun 2006 16:47:42 -0400
-Message-ID: <BAYC1-PASMTP10021C1A6034B8753D06DDAE820@CEZ.ICE>
-References: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
+From: "Kellie" <Kellie.Norwood@earthlink.net>
+Subject: Hottest new offer Now you have chance to do it
+Date: Thu, 15 Jun 2006 22:53:23 +0200
+Message-ID: <44451321451802.A25B9DCE7F@82M7>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-Cc: keithp@keithp.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 15 22:49:28 2006
+X-From: git-owner@vger.kernel.org Thu Jun 15 22:54:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqymD-00062M-2r
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:49:17 +0200
+	id 1Fqyqi-0006v5-KM
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:53:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932502AbWFOUtI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 16:49:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932505AbWFOUtI
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:49:08 -0400
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:15498 "EHLO
-	BAYC1-PASMTP10.BAYC1.HOTMAIL.COM") by vger.kernel.org with ESMTP
-	id S932502AbWFOUtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jun 2006 16:49:07 -0400
-X-Originating-IP: [65.93.43.191]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP10.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 15 Jun 2006 13:51:24 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id 0C999644C2A;
-	Thu, 15 Jun 2006 16:49:05 -0400 (EDT)
-To: Nicolas Pitre <nico@cam.org>
-Message-Id: <20060615164742.570e33a0.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.9.2; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 15 Jun 2006 20:51:24.0750 (UTC) FILETIME=[77119EE0:01C690BD]
+	id S1031289AbWFOUxx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 16:53:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030842AbWFOUxx
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:53:53 -0400
+Received: from ejm48.neoplus.adsl.tpnet.pl ([83.21.154.48]:37138 "EHLO
+	STEROWNIA.eoujizno.com") by vger.kernel.org with ESMTP
+	id S965068AbWFOUxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 16:53:52 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: ZGi8TxXPrIXhgDNUrnNh38X7o4Yv26qd1tU5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+X-Spam-Report: 14.7 points;
+ * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
+ *      [score: 0.0189]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: hoopcc.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: hoopcc.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: hoopcc.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: hoopcc.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: hoopcc.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21909>
 
-On Thu, 15 Jun 2006 16:37:30 -0400 (EDT)
-Nicolas Pitre <nico@cam.org> wrote:
+Hello,
+Most quality products for anyone who wants to become a champion in bed 
 
-> Also rcs2git() is very inefficient especially with files having many 
-> revisions as it reconstructs the delta chain on every call.  For example 
-> mozilla/configure,v has at least 1690 revisions, and actually converting 
-> it into GIT blobs goes at a rate of 2.4 objects per second _only_ on my 
-> machine.  Can't objects be created as the delta list is walked/applied 
-> instead?  That would significantly reduce the initial convertion time.
-
-Hi Nicolas,
-
-That was a planned optimization which I did mention to Keith previously.
-Was kinda waiting to hear back how it was working for him, and if there
-was an interest to put more work into it to include in his mainline.
-
-Sean
+You are just a couple of clicks away from our great prices and handy shipment
+ Most trusted brands of the world, join the thousands of happy customers
+ Come in: http://www.hoopcc.com
+ Just check yourself!
