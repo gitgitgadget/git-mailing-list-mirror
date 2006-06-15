@@ -1,103 +1,128 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Autoconf/Automake
-Date: Thu, 15 Jun 2006 23:14:54 +0200
-Message-ID: <20060615211454.GK7766@nowhere.earth>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth> <20060615133146.GA5794@steel.home> <20060615163209.GJ7766@nowhere.earth> <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: [PATCH] Add a "--notags" option for git-p4import.
+Date: Thu, 15 Jun 2006 17:26:21 -0400
+Message-ID: <BAYC1-PASMTP0215C04B53D4FD5E21BE9FAE820@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, Pavel Roskin <proski@gnu.org>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 15 23:14:42 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jun 15 23:27:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqzAn-0002Qt-Q8
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 23:14:42 +0200
+	id 1FqzNW-0004ue-4F
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 23:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031392AbWFOVOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 17:14:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031394AbWFOVOj
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 17:14:39 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:7356 "EHLO smtp1-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1031392AbWFOVOi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 17:14:38 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 8988E9AA2F;
-	Thu, 15 Jun 2006 23:14:37 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FqzB1-0007vS-40; Thu, 15 Jun 2006 23:14:55 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1031426AbWFOV1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 17:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031438AbWFOV1p
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 17:27:45 -0400
+Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:53004 "EHLO
+	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S1031426AbWFOV1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 17:27:44 -0400
+X-Originating-IP: [65.93.43.191]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 15 Jun 2006 14:27:43 -0700
+Received: from guru.attic.local (guru.attic.local [10.10.10.28])
+	by linux1.attic.local (Postfix) with ESMTP id BEDF6644C2A
+	for <git@vger.kernel.org>; Thu, 15 Jun 2006 17:27:42 -0400 (EDT)
+To: git@vger.kernel.org
+Message-Id: <20060615172621.fac974f2.seanlkml@sympatico.ca>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.9.2; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 15 Jun 2006 21:27:44.0043 (UTC) FILETIME=[8A0757B0:01C690C2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21914>
-
-On Thu, Jun 15, 2006 at 10:02:10AM -0700, Linus Torvalds wrote:
-> Too many developers shrug off the "it's hard to use" argument. THEY think 
-> it's fine. THEY think it's "lack of training". THEY think the tools are 
-> fine, and the problem is the user.
-> 
-> THEY are wrong.
-> 
-> Almost every time when a user says "it's hard to use", the user is right. 
-> Sometimes it's a lack of documentation, but quite often it's just that the 
-> tool interfaces are bad.
-
-In tha case of jam, the doc issue can certainly be raised, but the
-most prominent problem is probably that everyone and their dog knows
-make, and expects a replacement to work in a similar fashion.  The
-current documentation and tutorial unfortunately does not show
-precisely how people used to "make" can easily switch to jam.
-
-For those not knowing about jam, I'd say the 1st thing to anchor in
-one's mind is that jam gives complete (programmatic) control on the
-dependency tree (eg. you just have to write once that the results of a
-compilation have to be removed by "jam clean", and everytime you
-declare a file to be built with your rule, you don't have to remember
-to add it to the Clean rule - and more importantly, as soon as you
-remove that declaration, you don't have to fear the Clean target to
-remove it, in case it would be precious).
 
 
-> Sometimes the problem space makes the interfaces fundamentally hard. But 
-> sometimes the program itself just makes things ugly and hard, and autoconf 
-> and automake definitely didn't make it easier for users - they were 
-> designed for people who knew fifteen different versions of UNIX, and not 
-> for sane people.
-> 
-> These days, there aren't fifteen different versions of UNIX. There's a 
-> couple, and it's perfectly ok to actually say "fix your damn system and 
-> just install GNU make". It's easier to install GNU make than it is to 
-> install autoconf/automake.
+P4import currently creates a git tag for every commit it imports.
+When importing from a large repository too many tags can be created
+for git to manage, so this provides an option to shut that feature
+off if necessary.
 
-Right, autoconf would be much more sane if it would not insist on
-supporting vintage unices. OTOH, people having to work on these
-systems (eg. for professional reason - not everyone has the luck to
-work with modern systems all the time) are more than happy to be able
-to build some recent tools to make there task easier.  Except when it
-fails in that task (eg. a configure script for the bash package
-failing to run on an years-old lynxos version because of a sh bug on
-the OS), it still does a wonderful job in the end.
+Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+---
+ Documentation/git-p4import.txt |    5 ++++-
+ git-p4import.py                |   12 ++++++++----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-But I agree having to carry all this compat stuff, when one just wants
-to benefit from higher-level features (like those mentionned by
-Oliver), is annoying.  Maybe the support for legacy platforms could be
-restricted in some way to the bare minimum.  Eg. using a "legacy"
-backend where the cruft would go, and stubs for modern things, that
-would generate a hopefully-more-portable-but-limited
-./configure-simple script, and a "modern" backend generating a sane
-full-fledged bash script.
-
-But I'm going off-topic :)
-
-Best regards,
+diff --git a/Documentation/git-p4import.txt b/Documentation/git-p4import.txt
+index c198ff2..0858e5e 100644
+--- a/Documentation/git-p4import.txt
++++ b/Documentation/git-p4import.txt
+@@ -8,7 +8,7 @@ git-p4import - Import a Perforce reposit
+ 
+ SYNOPSIS
+ --------
+-`git-p4import` [-q|-v] [--authors <file>] [-t <timezone>] <//p4repo/path> <branch>
++`git-p4import` [-q|-v] [--notags] [--authors <file>] [-t <timezone>] <//p4repo/path> <branch>
+ 
+ `git-p4import` --stitch <//p4repo/path>
+ 
+@@ -43,6 +43,9 @@ OPTIONS
+ 	Specify an authors file containing a mapping of Perforce user
+ 	ids to full names and email addresses (see Notes below).
+ 
++\--notags::
++	Do not create a tag for each imported commit.
++
+ \--stitch::
+ 	Import the contents of the given perforce branch into the
+ 	currently checked out git branch.
+diff --git a/git-p4import.py b/git-p4import.py
+index 74172ab..908941d 100644
+--- a/git-p4import.py
++++ b/git-p4import.py
+@@ -23,7 +23,6 @@ s = signal(SIGINT, SIG_DFL)
+ if s != default_int_handler:
+    signal(SIGINT, s)
+ 
+-
+ def die(msg, *args):
+     for a in args:
+         msg = "%s %s" % (msg, a)
+@@ -38,6 +37,7 @@ verbosity = 1
+ logfile = "/dev/null"
+ ignore_warnings = False
+ stitch = 0
++tagall = True
+ 
+ def report(level, msg, *args):
+     global verbosity
+@@ -261,10 +261,9 @@ class git_command:
+         self.make_tag("p4/%s"%id, commit)
+         self.git("update-ref HEAD %s %s" % (commit, current) )
+ 
+-
+ try:
+     opts, args = getopt.getopt(sys.argv[1:], "qhvt:",
+-                    ["authors=","help","stitch=","timezone=","log=","ignore"])
++            ["authors=","help","stitch=","timezone=","log=","ignore","notags"])
+ except getopt.GetoptError:
+     usage()
+ 
+@@ -275,6 +274,8 @@ for o, a in opts:
+         verbosity += 1
+     if o in ("--log"):
+         logfile = a
++    if o in ("--notags"):
++        tagall = False
+     if o in ("-h", "--help"):
+         usage()
+     if o in ("--ignore"):
+@@ -350,7 +351,10 @@ for id in changes:
+     report(1, "Importing changeset", id)
+     change = p4.describe(id)
+     p4.sync(id)
+-    git.commit(change.author, change.email, change.date, change.msg, id)
++    if tagall :
++            git.commit(change.author, change.email, change.date, change.msg, id)
++    else:
++            git.commit(change.author, change.email, change.date, change.msg, "import")
+     if stitch == 1:
+         git.clean_directories()
+         stitch = 0
 -- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+1.4.0.rc2
