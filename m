@@ -1,66 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: observations on parsecvs testing
-Date: Thu, 15 Jun 2006 16:37:30 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Autoconf/Automake
+Date: Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606152239270.7480@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth>
+ <20060615133146.GA5794@steel.home> <20060615201000.600939E2BC@derisoft.derived-software.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 15 22:37:43 2006
+X-From: git-owner@vger.kernel.org Thu Jun 15 22:43:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqyas-00045j-8g
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:37:35 +0200
+	id 1Fqyfx-0004yf-Lv
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbWFOUhb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 16:37:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWFOUhb
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:37:31 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:49080 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751336AbWFOUhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jun 2006 16:37:31 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J0X00ARS5AIO600@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 15 Jun 2006 16:37:30 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: Keith Packard <keithp@keithp.com>
+	id S932426AbWFOUmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 16:42:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932429AbWFOUmm
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:42:42 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62179 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932426AbWFOUml (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 16:42:41 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 7010DDB6;
+	Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 646DFDB4;
+	Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 403CEB34;
+	Thu, 15 Jun 2006 22:42:40 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Phil Richards <news@derived-software.ltd.uk>
+In-Reply-To: <20060615201000.600939E2BC@derisoft.derived-software.demon.co.uk>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21907>
 
+Hi,
 
-My machine is a P4 @ 3GHz with 1GB ram.
+On Thu, 15 Jun 2006, Phil Richards wrote:
 
-Feeding parsecvs with the Mozilla repository, it first ran for 175 
-minutes with about 98% CPU spent in user space reading the 100458 ,v 
-files and writing 700000+ blob objects.  Memory usage grew to 1789MB 
-total while the resident memory saturated around 700MB.  This part was 
-fine even with 1GB of ram since unused memory was gently pushed to swap.  
-Only problem is that spawned git-pack-object instances started failing 
-with memory allocation by that time, which is unffortunate but not 
-fatal.
+> On 2006-06-15, Alex Riesen <fork0@t-online.de> wrote:
+>
+> >  Git already has enough external dependencies (crypto, Python, Perl,
+> >  bash, gmake), why create another one?
+> > 
+> >  If we are about to need a configuration system (and I doubt it), may
+> >  be we should at least select a system small enough to have it always
+> >  in git repo? (yes, as linux kernel configuration system is)
+> 
+> Well, since Python is already a dependency, why not use a build system
+> that has Python as its scripting/extension language?  It's also quite
+> small, and it's called SCons.  I found it rather easy to learn
+> when I was having a quick look around at alternative build systems.
 
-But then things started to go bad after all ,v files were parsed.  The 
-parsecvs dropped to 3% CPU while the rest of the time was spent waiting 
-after swap IO and therefore no substantial progress was made at that 
-point.
+Okay, let's face it. There are gazillions of make clones which "guarantee" 
+to fix all shortcomings of make. None of them are even close to make 
+(regarding developer exposure: take 3 developers, and 1 does not know 
+make, and 2 do not know whatever-your-favourite-make-clone-is).
 
-So the Mozilla clearly requires 2GB of ram to realistically be converted 
-to GIT using parsecvs, unless its second phase is reworked to avoid 
-totally random access in memory in order to improve swap behavior, or 
-its in-memory data set is shrinked at least by half.
+As for now, I fail to see why the current system is not adequate for git!
 
-Also rcs2git() is very inefficient especially with files having many 
-revisions as it reconstructs the delta chain on every call.  For example 
-mozilla/configure,v has at least 1690 revisions, and actually converting 
-it into GIT blobs goes at a rate of 2.4 objects per second _only_ on my 
-machine.  Can't objects be created as the delta list is walked/applied 
-instead?  That would significantly reduce the initial convertion time.
-
-
-Nicolas
+Ciao,
+Dscho
