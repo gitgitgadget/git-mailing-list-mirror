@@ -1,66 +1,86 @@
-From: Yann Dirson <ydirson@altern.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Autoconf/Automake
-Date: Thu, 15 Jun 2006 18:32:09 +0200
-Message-ID: <20060615163209.GJ7766@nowhere.earth>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth> <20060615133146.GA5794@steel.home>
+Date: Thu, 15 Jun 2006 10:02:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606150954430.5498@g5.osdl.org>
+References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth>
+ <20060615133146.GA5794@steel.home> <20060615163209.GJ7766@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 15 18:31:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, Pavel Roskin <proski@gnu.org>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 15 19:02:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fqul5-00069G-SD
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 18:31:52 +0200
+	id 1FqvEi-0003XT-Kd
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 19:02:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030799AbWFOQbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 12:31:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030808AbWFOQbt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 12:31:49 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:27052 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1030799AbWFOQbs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 12:31:48 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 67DF527718;
-	Thu, 15 Jun 2006 18:31:47 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FqulN-0007mb-L2; Thu, 15 Jun 2006 18:32:09 +0200
-To: Alex Riesen <raa.lkml@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20060615133146.GA5794@steel.home>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1030367AbWFORCZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 13:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030408AbWFORCZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 13:02:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41349 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030367AbWFORCZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 13:02:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5FH2Bgt006541
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Jun 2006 10:02:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5FH2AiK019210;
+	Thu, 15 Jun 2006 10:02:10 -0700
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060615163209.GJ7766@nowhere.earth>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21897>
 
-On Thu, Jun 15, 2006 at 03:31:46PM +0200, Alex Riesen wrote:
-> Yann Dirson, Thu, Jun 15, 2006 09:24:50 +0200:
-> > Since there are many people objecting to autotools, what about using
-> > Jam instead ?  It has the advantage of being designed to be
-> > cross-platform, and should have all the features we would need for *git.
+
+
+On Thu, 15 Jun 2006, Yann Dirson wrote:
 > 
-> Except that it is not readily available everywhere, has unreadable
-> and illogical syntax, and lots of unknown assumptions built in.
-> We are forced to use that thing at work, and it is mostly hated.
+> Well, being hated is often the fate of tools for which users got no
+> training, but are forced to used because of a corporate decision.
 
-Well, being hated is often the fate of tools for which users got no
-training, but are forced to used because of a corporate decision.
-That does not necessarily mean the tool is bad in itself.
+That's one possible reason.
 
-> If we are about to need a configuration system (and I doubt it), may
-> be we should at least select a system small enough to have it always
-> in git repo? (yes, as linux kernel configuration system is)
+> That does not necessarily mean the tool is bad in itself.
 
-The kernel is a beast that is specific enough to need its own build
-system, and does not support that many platforms, IIRC.  Wrong
-example, if you want my opinion :)
+It does not _necessarily_ mean that, but let's face it, it really usually 
+does.
 
-Best regards,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+Too many developers shrug off the "it's hard to use" argument. THEY think 
+it's fine. THEY think it's "lack of training". THEY think the tools are 
+fine, and the problem is the user.
+
+THEY are wrong.
+
+Almost every time when a user says "it's hard to use", the user is right. 
+Sometimes it's a lack of documentation, but quite often it's just that the 
+tool interfaces are bad.
+
+Oh, I'm sure git has the same problems, but dammit, I think we've tried 
+very hard to listen to user opinions, and make the things that make them 
+go "that's hard" be more obvious. All the things that were _possible_ to 
+do if you did them by hand, that you now can do pretty obviously without 
+even knowing what it really does. "git commit -a". "git log -p". "git show 
+<name>", etc etc. 
+
+Sometimes the problem space makes the interfaces fundamentally hard. But 
+sometimes the program itself just makes things ugly and hard, and autoconf 
+and automake definitely didn't make it easier for users - they were 
+designed for people who knew fifteen different versions of UNIX, and not 
+for sane people.
+
+These days, there aren't fifteen different versions of UNIX. There's a 
+couple, and it's perfectly ok to actually say "fix your damn system and 
+just install GNU make". It's easier to install GNU make than it is to 
+install autoconf/automake.
+
+		Linus
