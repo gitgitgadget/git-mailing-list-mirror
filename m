@@ -1,128 +1,131 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: [PATCH] Add a "--notags" option for git-p4import.
-Date: Thu, 15 Jun 2006 17:26:21 -0400
-Message-ID: <BAYC1-PASMTP0215C04B53D4FD5E21BE9FAE820@CEZ.ICE>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: observations on parsecvs testing
+Date: Thu, 15 Jun 2006 15:03:26 -0700
+Message-ID: <1150409006.30681.132.camel@neko.keithp.com>
+References: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jun 15 23:27:54 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-PlVbTIwL/bWdSRqQ7HAT"
+Cc: keithp@keithp.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 16 00:04:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqzNW-0004ue-4F
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 23:27:50 +0200
+	id 1FqzwP-0003ty-3a
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 00:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031426AbWFOV1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 17:27:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031438AbWFOV1p
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 17:27:45 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:53004 "EHLO
-	BAYC1-PASMTP02.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1031426AbWFOV1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jun 2006 17:27:44 -0400
-X-Originating-IP: [65.93.43.191]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.191]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 15 Jun 2006 14:27:43 -0700
-Received: from guru.attic.local (guru.attic.local [10.10.10.28])
-	by linux1.attic.local (Postfix) with ESMTP id BEDF6644C2A
-	for <git@vger.kernel.org>; Thu, 15 Jun 2006 17:27:42 -0400 (EDT)
-To: git@vger.kernel.org
-Message-Id: <20060615172621.fac974f2.seanlkml@sympatico.ca>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.9.2; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 15 Jun 2006 21:27:44.0043 (UTC) FILETIME=[8A0757B0:01C690C2]
+	id S1750700AbWFOWDu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 18:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750704AbWFOWDu
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 18:03:50 -0400
+Received: from home.keithp.com ([63.227.221.253]:58894 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1750700AbWFOWDt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 18:03:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id AE06F13001F;
+	Thu, 15 Jun 2006 15:03:48 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 30295-06-2; Thu, 15 Jun 2006 15:03:48 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 595AD13001E; Thu, 15 Jun 2006 15:03:48 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id EF42614001;
+	Thu, 15 Jun 2006 15:03:47 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 6E59754337; Thu, 15 Jun 2006 15:03:27 -0700 (PDT)
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21916>
 
 
-P4import currently creates a git tag for every commit it imports.
-When importing from a large repository too many tags can be created
-for git to manage, so this provides an option to shut that feature
-off if necessary.
+--=-PlVbTIwL/bWdSRqQ7HAT
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
----
- Documentation/git-p4import.txt |    5 ++++-
- git-p4import.py                |   12 ++++++++----
- 2 files changed, 12 insertions(+), 5 deletions(-)
+On Thu, 2006-06-15 at 16:37 -0400, Nicolas Pitre wrote:
+> My machine is a P4 @ 3GHz with 1GB ram.
+>=20
+> Feeding parsecvs with the Mozilla repository, it first ran for 175=20
+> minutes with about 98% CPU spent in user space reading the 100458 ,v=20
+> files and writing 700000+ blob objects.  Memory usage grew to 1789MB=20
+> total while the resident memory saturated around 700MB.  This part was=20
+> fine even with 1GB of ram since unused memory was gently pushed to swap. =
+=20
+> Only problem is that spawned git-pack-object instances started failing=20
+> with memory allocation by that time, which is unffortunate but not=20
+> fatal.
 
-diff --git a/Documentation/git-p4import.txt b/Documentation/git-p4import.txt
-index c198ff2..0858e5e 100644
---- a/Documentation/git-p4import.txt
-+++ b/Documentation/git-p4import.txt
-@@ -8,7 +8,7 @@ git-p4import - Import a Perforce reposit
- 
- SYNOPSIS
- --------
--`git-p4import` [-q|-v] [--authors <file>] [-t <timezone>] <//p4repo/path> <branch>
-+`git-p4import` [-q|-v] [--notags] [--authors <file>] [-t <timezone>] <//p4repo/path> <branch>
- 
- `git-p4import` --stitch <//p4repo/path>
- 
-@@ -43,6 +43,9 @@ OPTIONS
- 	Specify an authors file containing a mapping of Perforce user
- 	ids to full names and email addresses (see Notes below).
- 
-+\--notags::
-+	Do not create a tag for each imported commit.
-+
- \--stitch::
- 	Import the contents of the given perforce branch into the
- 	currently checked out git branch.
-diff --git a/git-p4import.py b/git-p4import.py
-index 74172ab..908941d 100644
---- a/git-p4import.py
-+++ b/git-p4import.py
-@@ -23,7 +23,6 @@ s = signal(SIGINT, SIG_DFL)
- if s != default_int_handler:
-    signal(SIGINT, s)
- 
--
- def die(msg, *args):
-     for a in args:
-         msg = "%s %s" % (msg, a)
-@@ -38,6 +37,7 @@ verbosity = 1
- logfile = "/dev/null"
- ignore_warnings = False
- stitch = 0
-+tagall = True
- 
- def report(level, msg, *args):
-     global verbosity
-@@ -261,10 +261,9 @@ class git_command:
-         self.make_tag("p4/%s"%id, commit)
-         self.git("update-ref HEAD %s %s" % (commit, current) )
- 
--
- try:
-     opts, args = getopt.getopt(sys.argv[1:], "qhvt:",
--                    ["authors=","help","stitch=","timezone=","log=","ignore"])
-+            ["authors=","help","stitch=","timezone=","log=","ignore","notags"])
- except getopt.GetoptError:
-     usage()
- 
-@@ -275,6 +274,8 @@ for o, a in opts:
-         verbosity += 1
-     if o in ("--log"):
-         logfile = a
-+    if o in ("--notags"):
-+        tagall = False
-     if o in ("-h", "--help"):
-         usage()
-     if o in ("--ignore"):
-@@ -350,7 +351,10 @@ for id in changes:
-     report(1, "Importing changeset", id)
-     change = p4.describe(id)
-     p4.sync(id)
--    git.commit(change.author, change.email, change.date, change.msg, id)
-+    if tagall :
-+            git.commit(change.author, change.email, change.date, change.msg, id)
-+    else:
-+            git.commit(change.author, change.email, change.date, change.msg, "import")
-     if stitch == 1:
-         git.clean_directories()
-         stitch = 0
--- 
-1.4.0.rc2
+Right, the ,v -> blob conversion process uses around 160 bytes per
+revision as best I can count (one rev_commit, one rev_file and=20
+a 41-byte sha1 string); 700000 revisions would therefore use 1.1GB just
+for the revision objects. It should be possible to reduce the size of
+this data structure fairly significantly; converting the sha1 value to
+binary and compressing the CVS revision number to minimal length.
+Switching from the general git/cvs structure to this cvs-specific
+structure is 'on the list' of things I'd like to do.
+
+> But then things started to go bad after all ,v files were parsed.  The=20
+> parsecvs dropped to 3% CPU while the rest of the time was spent waiting=20
+> after swap IO and therefore no substantial progress was made at that=20
+> point.
+
+Yeah, after this point, parsecvs is merging the computed revision
+historys of the individual files into a global history. This means it's
+walking across the whole set of files to compute each git commit. For
+each branch, it computes the set of files visible at the head of that
+branch and then sorts the last revision of the visible files to discover
+the last change set along that branch, constructing a commit for each
+logical changeset backwards from the present into the past. As it's
+constructing commits from the present backwards, it must go all the way
+to the past before it can emit any commits to the repository. So, it has
+to save them somewhere; right now, it's saving them in memory. What it
+could do is construct tree objects for each commit, saving only the sha1
+that results and dump the rest of the data. That should save plenty of
+memory, but would require a radical restructuring of the code (which is
+desparately needed, btw). With this change, parsecvs should actually
+*shrink* over time, instead of grow.
+
+> So the Mozilla clearly requires 2GB of ram to realistically be converted=20
+> to GIT using parsecvs, unless its second phase is reworked to avoid=20
+> totally random access in memory in order to improve swap behavior, or=20
+> its in-memory data set is shrinked at least by half.
+
+Changing the data structures used in the first phase will shrink them
+significantly; replacing the second state data structures with sha1 tree
+hash values and disposing of the first phase objects incrementally
+should elicit a shrinking memory pattern rather than growing. It might
+well be easier at this point to just take the basic CVS parser and start
+afresh though; the code is a horror show of incremental refinements.
+
+> Also rcs2git() is very inefficient especially with files having many=20
+> revisions as it reconstructs the delta chain on every call.  For example=20
+> mozilla/configure,v has at least 1690 revisions, and actually converting=20
+> it into GIT blobs goes at a rate of 2.4 objects per second _only_ on my=20
+> machine.  Can't objects be created as the delta list is walked/applied=20
+> instead?  That would significantly reduce the initial convertion time.
+
+Yes, I wanted to do this, but also wanted to ensure that the constructed
+versions exactly matched the native rcs output. Starting with 'real' rcs
+code seemed likely to ensure the latter. This "should" be easy to fix...
+
+--=20
+keith.packard@intel.com
+
+--=-PlVbTIwL/bWdSRqQ7HAT
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+
+iD8DBQBEkdkuQp8BWwlsTdMRAsQfAJ4up1nr2kHdvmjbflOJuwpV6RYOngCgs5EQ
+YUbuvDCVZqF9wxx+lAgxb0Q=
+=qNI4
+-----END PGP SIGNATURE-----
+
+--=-PlVbTIwL/bWdSRqQ7HAT--
