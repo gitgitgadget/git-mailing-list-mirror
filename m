@@ -1,103 +1,61 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 1/3] git-svn: avoid creating some small files
-Date: Thu, 15 Jun 2006 13:55:29 -0700
-Message-ID: <11504049313192-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jun 15 22:55:49 2006
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: observations on parsecvs testing
+Date: Thu, 15 Jun 2006 16:55:38 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0606151653440.16002@localhost.localdomain>
+References: <Pine.LNX.4.64.0606151529350.16002@localhost.localdomain>
+ <BAYC1-PASMTP10021C1A6034B8753D06DDAE820@CEZ.ICE>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: keithp@keithp.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 15 22:56:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FqysK-0007IT-VW
-	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:55:37 +0200
+	id 1FqysY-0007Kg-6u
+	for gcvg-git@gmane.org; Thu, 15 Jun 2006 22:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031335AbWFOUze (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Jun 2006 16:55:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031347AbWFOUze
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:55:34 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:7132 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1031335AbWFOUzd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jun 2006 16:55:33 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 61C0E7DC020;
-	Thu, 15 Jun 2006 13:55:31 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 15 Jun 2006 13:55:31 -0700
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Mailer: git-send-email 1.4.0
+	id S1031351AbWFOUzj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Jun 2006 16:55:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031350AbWFOUzj
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jun 2006 16:55:39 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:20982 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1031349AbWFOUzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jun 2006 16:55:38 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J0X00HAS64QG200@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 15 Jun 2006 16:55:38 -0400 (EDT)
+In-reply-to: <BAYC1-PASMTP10021C1A6034B8753D06DDAE820@CEZ.ICE>
+X-X-Sender: nico@localhost.localdomain
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21913>
 
-repo_path_split() is already pretty fast, and is already
-optimized via caching.
+On Thu, 15 Jun 2006, Sean wrote:
 
-We also don't need to create an exclude file if we're
-relying on the SVN libraries.
+> On Thu, 15 Jun 2006 16:37:30 -0400 (EDT)
+> Nicolas Pitre <nico@cam.org> wrote:
+> 
+> > Also rcs2git() is very inefficient especially with files having many 
+> > revisions as it reconstructs the delta chain on every call.  For example 
+> > mozilla/configure,v has at least 1690 revisions, and actually converting 
+> > it into GIT blobs goes at a rate of 2.4 objects per second _only_ on my 
+> > machine.  Can't objects be created as the delta list is walked/applied 
+> > instead?  That would significantly reduce the initial convertion time.
+> 
+> Hi Nicolas,
+> 
+> That was a planned optimization which I did mention to Keith previously.
+> Was kinda waiting to hear back how it was working for him, and if there
+> was an interest to put more work into it to include in his mainline.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- contrib/git-svn/git-svn.perl |   26 ++++++++------------------
- 1 files changed, 8 insertions(+), 18 deletions(-)
+I think it is really worth it.  I'd expect the first half of the 
+convertion to go significantly faster then.
 
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 884969e..88af9c5 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -1005,12 +1005,6 @@ sub setup_git_svn {
- 	close $fh;
- 	s_to_file($SVN_URL,"$GIT_SVN_DIR/info/url");
- 
--	open my $fd, '>>', "$GIT_SVN_DIR/info/exclude" or croak $!;
--	print $fd '.svn',"\n";
--	close $fd or croak $!;
--	my ($url, $path) = repo_path_split($SVN_URL);
--	s_to_file($url, "$GIT_SVN_DIR/info/repo_url");
--	s_to_file($path, "$GIT_SVN_DIR/info/repo_path");
- }
- 
- sub assert_svn_wc_clean {
-@@ -1649,6 +1643,12 @@ sub do_update_index {
- 
- sub index_changes {
- 	return if $_use_lib;
-+
-+	if (!-f "$GIT_SVN_DIR/info/exclude") {
-+		open my $fd, '>>', "$GIT_SVN_DIR/info/exclude" or croak $!;
-+		print $fd '.svn',"\n";
-+		close $fd or croak $!;
-+	}
- 	my $no_text_base = shift;
- 	do_update_index([qw/git-diff-files --name-only -z/],
- 			'remove',
-@@ -2018,9 +2018,6 @@ sub migration_check {
- 		my $dn = dirname("$GIT_DIR/svn/$x");
- 		mkpath([$dn]) unless -d $dn;
- 		rename "$GIT_DIR/$x", "$GIT_DIR/svn/$x" or croak "$!: $x";
--		my ($url, $path) = repo_path_split($u);
--		s_to_file($url, "$GIT_DIR/svn/$x/info/repo_url");
--		s_to_file($path, "$GIT_DIR/svn/$x/info/repo_path");
- 	}
- 	migrate_revdb() if (-d $GIT_SVN_DIR && !-w $REVDB);
- 	print "Done upgrading.\n";
-@@ -2138,15 +2135,8 @@ sub write_grafts {
- sub read_url_paths {
- 	my $l_map = {};
- 	git_svn_each(sub { my $x = shift;
--			my $u = file_to_s("$GIT_DIR/svn/$x/info/repo_url");
--			my $p = file_to_s("$GIT_DIR/svn/$x/info/repo_path");
--			# we hate trailing slashes
--			if ($u =~ s#(?:^\/+|\/+$)##g) {
--				s_to_file($u,"$GIT_DIR/svn/$x/info/repo_url");
--			}
--			if ($p =~ s#(?:^\/+|\/+$)##g) {
--				s_to_file($p,"$GIT_DIR/svn/$x/info/repo_path");
--			}
-+			my $url = file_to_s("$GIT_DIR/svn/$x/info/url");
-+			my ($u, $p) = repo_path_split($url);
- 			$l_map->{$u}->{$p} = $x;
- 			});
- 	return $l_map;
--- 
-1.4.0
+
+Nicolas
