@@ -1,55 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Autoconf/Automake
-Date: Fri, 16 Jun 2006 20:31:00 +0200
-Message-ID: <20060616183100.GG2609@pasky.or.cz>
-References: <1150324030.23268.12.camel@dv> <20060615072450.GF7766@nowhere.earth> <20060615133146.GA5794@steel.home> <20060615201000.600939E2BC@derisoft.derived-software.demon.co.uk> <Pine.LNX.4.63.0606152239270.7480@wbgn013.biozentrum.uni-wuerzburg.de> <20060615220534.GL7766@nowhere.earth>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Why so much time in the kernel?
+Date: Fri, 16 Jun 2006 11:32:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606161132160.5498@g5.osdl.org>
+References: <9e4733910606160749t4d7a541ev72a67383e96d86da@mail.gmail.com> 
+ <Pine.LNX.4.64.0606160755170.5498@g5.osdl.org> 
+ <9e4733910606160825hb538d6fo4c9f1d7d9768e100@mail.gmail.com> 
+ <Pine.LNX.4.64.0606160906250.5498@g5.osdl.org>
+ <9e4733910606161000t53328571u10a350eca894ccdc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phil Richards <news@derived-software.ltd.uk>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 16 20:30:36 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 16 20:33:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrJ5E-0004CU-5c
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 20:30:17 +0200
+	id 1FrJ7l-0004cQ-GK
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 20:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbWFPSaM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 14:30:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbWFPSaL
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 14:30:11 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:28834 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751332AbWFPSaK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 14:30:10 -0400
-Received: (qmail 24829 invoked by uid 2001); 16 Jun 2006 20:31:00 +0200
-To: Yann Dirson <ydirson@altern.org>
-Content-Disposition: inline
-In-Reply-To: <20060615220534.GL7766@nowhere.earth>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751335AbWFPScu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 14:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbWFPScu
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 14:32:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:38281 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751335AbWFPSct (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 14:32:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5GIWigt018644
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 16 Jun 2006 11:32:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5GIWgXB026005;
+	Fri, 16 Jun 2006 11:32:43 -0700
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910606161000t53328571u10a350eca894ccdc@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21963>
 
-Dear diary, on Fri, Jun 16, 2006 at 12:05:34AM CEST, I got a letter
-where Yann Dirson <ydirson@altern.org> said that...
-> On Thu, Jun 15, 2006 at 10:42:40PM +0200, Johannes Schindelin wrote:
-> > As for now, I fail to see why the current system is not adequate for git!
-> 
-> I can reassure you, gazillions of people still fail to see why cvs is
-> not adequate for their project.  And the ratio of devs in the
-> corporate world not knowning git to those not knowning cvs is far
-> superior to 2.  And everyone here knows cvs is not more adequate than
-> git for so many tasks :)
 
-Duh. That works the same way when I replace the original question with
-"As for now, I fail to see to see why Linux is not adequate for my
-desktop! (In contrast with AIX.)".
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+On Fri, 16 Jun 2006, Jon Smirl wrote:
+>
+> Is it a crazy idea to read the cvs files, compute an sha1 on each
+> expanded delta and then write the delta straight into a pack file? Are
+> the cvs and git delta formats the same? What about CVS's forward and
+> reverse delta use? While this is going on, track the
+> branches/changsets in memory and then finish up by writing these trees
+> into the pack file too. This should take no more ram than cvsps needs
+> currently.
+
+What you want is parsecvs, which does it much more like that.
+
+		Linus
