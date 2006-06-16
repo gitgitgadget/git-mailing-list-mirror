@@ -1,52 +1,65 @@
 From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Running parse cvs
-Date: Fri, 16 Jun 2006 14:47:29 -0400
-Message-ID: <9e4733910606161147m403a3f36r6657bd7b620958f3@mail.gmail.com>
+Subject: Re: Running parse cvs
+Date: Fri, 16 Jun 2006 15:10:22 -0400
+Message-ID: <9e4733910606161210r12306622g139b54eeb87dc68d@mail.gmail.com>
+References: <9e4733910606161147m403a3f36r6657bd7b620958f3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jun 16 20:48:06 2006
+X-From: git-owner@vger.kernel.org Fri Jun 16 21:10:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrJM8-0007Fo-16
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 20:47:44 +0200
+	id 1FrJi8-0002F3-Bw
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 21:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbWFPSrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 14:47:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWFPSrb
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 14:47:31 -0400
-Received: from nz-out-0102.google.com ([64.233.162.194]:38111 "EHLO
+	id S1751384AbWFPTKX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 15:10:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbWFPTKX
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 15:10:23 -0400
+Received: from nz-out-0102.google.com ([64.233.162.206]:62902 "EHLO
 	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751422AbWFPSra (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 14:47:30 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so1107658nze
-        for <git@vger.kernel.org>; Fri, 16 Jun 2006 11:47:29 -0700 (PDT)
+	id S1751384AbWFPTKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jun 2006 15:10:22 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so1138320nze
+        for <git@vger.kernel.org>; Fri, 16 Jun 2006 12:10:22 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=rlk2dr+L78TmCpebEaYWiwLI8dWmDBO91YyFrt3RvoF/a0u1YEf4WzIJQuyrP/5Q43HJz/cqL4pN6uDJXIQFUu5Mt16cPGUMIvEObi/VGciRKj634Qb9yn2bsRCHtbbGP4aoSQlEu5sS+HH2B1B6m2NIdR2iFPvavUYN7A+bnQs=
-Received: by 10.36.48.8 with SMTP id v8mr85108nzv;
-        Fri, 16 Jun 2006 11:47:29 -0700 (PDT)
-Received: by 10.36.36.7 with HTTP; Fri, 16 Jun 2006 11:47:29 -0700 (PDT)
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=P78p8039wDDZgXmmJOsAWZjcLnzOWXWFzDsyViOFdXIQ7ZsgvGnn5dk0ifgWwyXTkXn83wUc65s8lne258EFGoJxexgLmRzCjjOBqFthzxwc0rD1LNH9rd7o+S98BJEOavbWzHvjFZLkm0M6ocAfPnc9VZVuNN8Hrd1nWaVjDwU=
+Received: by 10.36.38.19 with SMTP id l19mr859732nzl;
+        Fri, 16 Jun 2006 12:10:22 -0700 (PDT)
+Received: by 10.36.36.7 with HTTP; Fri, 16 Jun 2006 12:10:22 -0700 (PDT)
 To: git <git@vger.kernel.org>, "Keith Packard" <keithp@keithp.com>
+In-Reply-To: <9e4733910606161147m403a3f36r6657bd7b620958f3@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21965>
 
-I am running the latest parsecvs from your git tree. I am hitting a quick gpf.
+On 6/16/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> I am running the latest parsecvs from your git tree. I am hitting a quick gpf.
+>
+> oad: sible/src/html/nsHTMLLinkAccessible *....................   253 of 100111
+> Load: essible/src/html/nsHTMLLinkAccessib *....................   254 of 100111
+> Load: ble/src/html/nsHTMLSelectAccessible *....................   255 of 100111
+> *** glibc detected *** /home/jonsmirl/workspace/parsecvs/parsecvs:
+> munmap_chunk(): invalid pointer: 0x08fd1db0 ***
+>
+> In the call stack I am in git_rev_list_pack line 619 doing a free.
+> Called from parsecvs.c at 776
 
-oad: sible/src/html/nsHTMLLinkAccessible *....................   253 of 100111
-Load: essible/src/html/nsHTMLLinkAccessib *....................   254 of 100111
-Load: ble/src/html/nsHTMLSelectAccessible *....................   255 of 100111
-*** glibc detected *** /home/jonsmirl/workspace/parsecvs/parsecvs:
-munmap_chunk(): invalid pointer: 0x08fd1db0 ***
+The GPF is because git-Pack_directory is calling free(git_dir) when
+git_dir is an atom.
 
-In the call stack I am in git_rev_list_pack line 619 doing a free.
-Called from parsecvs.c at 776
+>
+> --
+> Jon Smirl
+> jonsmirl@gmail.com
+>
+
 
 -- 
 Jon Smirl
