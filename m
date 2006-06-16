@@ -1,185 +1,101 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 3/4] git-svn: svn (command-line) 1.0.x compatibility
-Date: Fri, 16 Jun 2006 10:57:25 -0700
-Message-ID: <11504806492195-git-send-email-normalperson@yhbt.net>
-References: <11504049343825-git-send-email-normalperson@yhbt.net> <11504806463470-git-send-email-normalperson@yhbt.net> <11504806472857-git-send-email-normalperson@yhbt.net> <11504806481800-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jun 16 19:57:56 2006
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: Why so much time in the kernel?
+Date: Fri, 16 Jun 2006 11:02:05 -0700
+Message-ID: <1150480925.6983.15.camel@neko.keithp.com>
+References: <9e4733910606160749t4d7a541ev72a67383e96d86da@mail.gmail.com>
+	 <Pine.LNX.4.64.0606160755170.5498@g5.osdl.org>
+	 <9e4733910606160825hb538d6fo4c9f1d7d9768e100@mail.gmail.com>
+	 <Pine.LNX.4.64.0606160906250.5498@g5.osdl.org>
+	 <9e4733910606161000t53328571u10a350eca894ccdc@mail.gmail.com>
+	 <1150478968.6983.7.camel@neko.keithp.com>
+	 <9e4733910606161044h736c9675kc91ff77904c5a1d0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-MgqxIL/A9Yw8pNxao9E1"
+Cc: keithp@keithp.com, Linus Torvalds <torvalds@osdl.org>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 16 20:03:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrIZh-0006lH-KH
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:57:42 +0200
+	id 1FrIeX-0007hR-FM
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 20:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbWFPR5d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 13:57:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbWFPR5d
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:57:33 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:12516 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751199AbWFPR5c (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 13:57:32 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 188917DC024;
-	Fri, 16 Jun 2006 10:57:30 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 16 Jun 2006 10:57:29 -0700
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Mailer: git-send-email 1.4.0
-In-Reply-To: <11504806481800-git-send-email-normalperson@yhbt.net>
+	id S1750916AbWFPSCg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 14:02:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750878AbWFPSCg
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 14:02:36 -0400
+Received: from home.keithp.com ([63.227.221.253]:59140 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1750783AbWFPSCf (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 14:02:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 676FD13001F;
+	Fri, 16 Jun 2006 11:02:34 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 23547-01; Fri, 16 Jun 2006 11:02:32 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id C28FE13001E; Fri, 16 Jun 2006 11:02:31 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id E8E6814002;
+	Fri, 16 Jun 2006 11:02:30 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id F06C7542B2; Fri, 16 Jun 2006 11:02:05 -0700 (PDT)
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910606161044h736c9675kc91ff77904c5a1d0@mail.gmail.com>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21959>
 
-Tested on a plain Ubuntu Warty installation
-using subversion 1.0.6-1.2ubuntu3
 
-svn add --force was never needed, as it only affected
-directories, which git (thankfully) doesn't track
+--=-MgqxIL/A9Yw8pNxao9E1
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-The 1.0.x also didn't support symlinks(!), so allow NO_SYMLINK
-to be defined for running tests
+On Fri, 2006-06-16 at 13:44 -0400, Jon Smirl wrote:
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- contrib/git-svn/git-svn.perl               |    4 +
- contrib/git-svn/t/t0000-contrib-git-svn.sh |   90 +++++++++++++++-------------
- 2 files changed, 51 insertions(+), 43 deletions(-)
+> I've been extracting versions from cvs and adding them to git now for
+> 2.5 days and the process still isn't finished. It is completely CPU
+> bound. It's just a loop of cvs co, add it to git, make tree, commit,
+> etc.
 
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 417fcf1..ab1d065 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -1306,12 +1306,12 @@ sub svn_checkout_tree {
- 		} elsif ($m->{chg} eq 'T') {
- 			sys(qw(svn rm --force),$m->{file_b});
- 			apply_mod_line_blob($m);
--			sys(qw(svn add --force), $m->{file_b});
-+			sys(qw(svn add), $m->{file_b});
- 			svn_check_prop_executable($m);
- 		} elsif ($m->{chg} eq 'A') {
- 			svn_ensure_parent_path( $m->{file_b} );
- 			apply_mod_line_blob($m);
--			sys(qw(svn add --force), $m->{file_b});
-+			sys(qw(svn add), $m->{file_b});
- 			svn_check_prop_executable($m);
- 		} else {
- 			croak "Invalid chg: $m->{chg}\n";
-diff --git a/contrib/git-svn/t/t0000-contrib-git-svn.sh b/contrib/git-svn/t/t0000-contrib-git-svn.sh
-index 0f52746..443d518 100644
---- a/contrib/git-svn/t/t0000-contrib-git-svn.sh
-+++ b/contrib/git-svn/t/t0000-contrib-git-svn.sh
-@@ -11,7 +11,10 @@ mkdir import
- cd import
- 
- echo foo > foo
--ln -s foo foo.link
-+if test -z "$NO_SYMLINK"
-+then
-+	ln -s foo foo.link
-+fi
- mkdir -p dir/a/b/c/d/e
- echo 'deep dir' > dir/a/b/c/d/e/file
- mkdir -p bar
-@@ -129,46 +132,45 @@ test_expect_success "$name" \
- 
- 
- 
--name='executable file becomes a symlink to bar/zzz (file)'
--rm exec.sh
--ln -s bar/zzz exec.sh
--git update-index exec.sh
--git commit -m "$name"
--
--test_expect_success "$name" \
--    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
--     svn up $SVN_TREE &&
--     test -L $SVN_TREE/exec.sh"
--
--
--
--name='new symlink is added to a file that was also just made executable'
--chmod +x bar/zzz
--ln -s bar/zzz exec-2.sh
--git update-index --add bar/zzz exec-2.sh
--git commit -m "$name"
--
--test_expect_success "$name" \
--    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
--     svn up $SVN_TREE &&
--     test -x $SVN_TREE/bar/zzz &&
--     test -L $SVN_TREE/exec-2.sh"
--
--
--
--name='modify a symlink to become a file'
--git help > help || true
--rm exec-2.sh
--cp help exec-2.sh
--git update-index exec-2.sh
--git commit -m "$name"
--
--test_expect_success "$name" \
--    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
--     svn up $SVN_TREE &&
--     test -f $SVN_TREE/exec-2.sh &&
--     test ! -L $SVN_TREE/exec-2.sh &&
--     diff -u help $SVN_TREE/exec-2.sh"
-+if test -z "$NO_SYMLINK"
-+then
-+	name='executable file becomes a symlink to bar/zzz (file)'
-+	rm exec.sh
-+	ln -s bar/zzz exec.sh
-+	git update-index exec.sh
-+	git commit -m "$name"
-+
-+	test_expect_success "$name" \
-+	    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
-+	     svn up $SVN_TREE &&
-+	     test -L $SVN_TREE/exec.sh"
-+
-+	name='new symlink is added to a file that was also just made executable'
-+	chmod +x bar/zzz
-+	ln -s bar/zzz exec-2.sh
-+	git update-index --add bar/zzz exec-2.sh
-+	git commit -m "$name"
-+
-+	test_expect_success "$name" \
-+	    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
-+	     svn up $SVN_TREE &&
-+	     test -x $SVN_TREE/bar/zzz &&
-+	     test -L $SVN_TREE/exec-2.sh"
-+
-+	name='modify a symlink to become a file'
-+	git help > help || true
-+	rm exec-2.sh
-+	cp help exec-2.sh
-+	git update-index exec-2.sh
-+	git commit -m "$name"
-+
-+	test_expect_success "$name" \
-+	    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
-+	     svn up $SVN_TREE &&
-+	     test -f $SVN_TREE/exec-2.sh &&
-+	     test ! -L $SVN_TREE/exec-2.sh &&
-+	     diff -u help $SVN_TREE/exec-2.sh"
-+fi
- 
- 
- if test -n "$GIT_SVN_LC_ALL" && echo $GIT_SVN_LC_ALL | grep -q '\.UTF-8$'
-@@ -193,6 +195,12 @@ test_expect_success "$name" \
-      git-rev-list --pretty=raw remotes/alt | grep ^tree | uniq > b &&
-      diff -u a b"
- 
-+if test -n "$NO_SYMLINK"
-+then
-+	test_done
-+	exit 0
-+fi
-+
- name='check imported tree checksums expected tree checksums'
- rm -f expected
- if test -n "$GIT_SVN_LC_ALL" && echo $GIT_SVN_LC_ALL | grep -q '\.UTF-8$'
--- 
-1.4.0
+To do all of mozilla using parsecvs (even with the quadratic algorithm)
+takes about three hours on annarchy.freedesktop.org (two dual-core
+Opteron with 4GB memory), including all conversion to packs. The pack
+time is a tiny fraction of that.
+
+> What about the cvs2svn algorithm described in the attachment? A ram
+> based version could be faster. Compression could be acheived by
+> switching from using the full path to a version to the sha1 for it.
+
+Yes, parsecvs currently keeps everything in memory when doing the tree
+conversion, which means it grows to a huge size to compute the full tree
+of revisions. Computing git tree objects from the top down, then
+computing commit objects from the bottom up should allow us to free most
+of that during the full branch history computation process. I'm starting
+a rewrite of parsecvs to try this approach and see how well it works.
+
+If you've looked at the parsecvs source code, you'll notice it's a mess
+at present; I started by attempting to do pair-wise tree merges in a
+mistaken attempt to convert a linear term to log. Hacking that code into
+its present form should be viewed more as a demonstration of how the
+overall process can work, not as an optimal expression of the algorithm.
+
+--=20
+keith.packard@intel.com
+
+--=-MgqxIL/A9Yw8pNxao9E1
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+
+iD8DBQBEkvIdQp8BWwlsTdMRAvQ+AJ98+qALObg4ynkyiVnWAhTydMb8jwCeLBbA
+CDm8SHiTcESeMZqR+36Ahpc=
+=PMoV
+-----END PGP SIGNATURE-----
+
+--=-MgqxIL/A9Yw8pNxao9E1--
