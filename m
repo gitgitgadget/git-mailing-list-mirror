@@ -1,68 +1,57 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: 2.6.17-rc6-mm2
-Date: Fri, 16 Jun 2006 13:56:29 -0700
-Message-ID: <44931AFD.4070809@zytor.com>
-References: <ef5305790606142040r5912ce58kf9f889c3d61b2cc0@mail.gmail.com>  <ef5305790606151814i252c37c4mdd005f11f06ceac@mail.gmail.com>  <Pine.LNX.4.64.0606151937360.5498@g5.osdl.org> <ef5305790606152249n2702873fy7b708d9c47c78470@mail.gmail.com> <Pine.LNX.4.64.0606152335130.5498@g5.osdl.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Collecting cvsps patches
+Date: Fri, 16 Jun 2006 23:23:34 +0200
+Message-ID: <20060616212334.GN7766@nowhere.earth>
+References: <20060611122746.GB7766@nowhere.earth> <46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com> <20060611224205.GF1297@nowhere.earth> <e6jj39$6ua$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Goo GGooo <googgooo@gmail.com>, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 16 22:56:52 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 16 23:23:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrLN1-0002cR-Sq
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 22:56:48 +0200
+	id 1FrLmc-0007Dn-8E
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 23:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751225AbWFPU4h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 16:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbWFPU4h
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 16:56:37 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:14999 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1751225AbWFPU4g
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 16:56:36 -0400
-Received: from [192.168.10.106] (63-207-7-10.ded.pacbell.net [63.207.7.10])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.6/8.13.4) with ESMTP id k5GKuTbU011882
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 16 Jun 2006 13:56:29 -0700
-User-Agent: Thunderbird 1.5.0.2 (X11/20060501)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606152335130.5498@g5.osdl.org>
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=3.0.6
-X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on terminus.zytor.com
+	id S1751472AbWFPVXL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 17:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbWFPVXL
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 17:23:11 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:52866 "EHLO smtp5-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751472AbWFPVXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 17:23:10 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id F0F2A24D65;
+	Fri, 16 Jun 2006 23:23:08 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FrLmx-0000cj-25; Fri, 16 Jun 2006 23:23:35 +0200
+To: Anand Kumria <wildfire@progsoc.org>
+Content-Disposition: inline
+In-Reply-To: <e6jj39$6ua$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21971>
 
-Linus Torvalds wrote:
+On Mon, Jun 12, 2006 at 11:27:37AM +0000, Anand Kumria wrote:
+> On Mon, 12 Jun 2006 00:42:05 +0200, Yann Dirson wrote:
 > 
-> Actually, the really irritating thing is that we actually generate all 
-> these nice status updates, which just makes pulling and cloning a lot more 
-> comfortable, because you actually see what is going on, and what to 
-> expect. 
+> > http://ydirson.free.fr/soft/git/cvsps.git
 > 
-> Except they only work over ssh, where we have a separate channel (for 
-> stderr), and with the native git protocol all that nice status work just 
-> gets flushed to /dev/null :(
+> I think you need to chmod +x hooks/post-update
 > 
-> Dang. It's literally the most irritating part of the thing: the protocol 
-> itself is exactly the same whether you go over ssh:// or over git://, but 
-> that visual information about what is going on is missing, and it's 
-> surprisingly important from a usability standpoint.
-> 
+> and then run 'git-update-server-info'.
 
-Perhaps we shouldn't rely on stderr, and instead have a backchannel as part of the 
-protocol itself.  After all, the protocol already does packetization, so all it needs is a 
-reliable way to pick out the error/status packets; we could even combine that with a 
-machine-readable code (like SMTP et al) that could get interpreted by the other side as 
-needed.
+Unfortunately, I only have FTP access to push to this site, so I have
+to run git-update-server-info myself, and occasionally forget.  I'll
+have to bring up-to-date my old cg-ftppush script some day :)
 
-	-hpa
+Best regards,
+-- 
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
