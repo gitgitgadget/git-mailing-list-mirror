@@ -1,76 +1,91 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Collecting cvsps patches
-Date: Fri, 16 Jun 2006 23:34:42 +0200
-Message-ID: <20060616213442.GO7766@nowhere.earth>
-References: <20060611122746.GB7766@nowhere.earth> <1150173310.15831.6.camel@dv> <20060613095445.GM1297@nowhere.earth> <448EC1C6.5060902@dm.cobite.com> <20060613151504.GN1297@nowhere.earth> <Pine.LNX.4.64.0606130841200.5498@g5.osdl.org>
+Subject: What's in cvsps.git
+Date: Fri, 16 Jun 2006 23:44:58 +0200
+Message-ID: <20060616214458.GP7766@nowhere.earth>
+References: <20060611122746.GB7766@nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Mansfield <centos@dm.cobite.com>,
-	Pavel Roskin <proski@gnu.org>, GIT list <git@vger.kernel.org>,
-	cvsps@dm.cobite.com
-X-From: git-owner@vger.kernel.org Fri Jun 16 23:34:35 2006
+Cc: cvsps@dm.cobite.com, "David D. Kilzer" <ddkilzer@kilzer.net>,
+	Marcus Crafter <crafterm@debian.org>
+X-From: git-owner@vger.kernel.org Fri Jun 16 23:44:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrLxN-0000v1-FN
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 23:34:21 +0200
+	id 1FrM7J-0002y1-9f
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 23:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751473AbWFPVeR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 17:34:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbWFPVeR
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 17:34:17 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:10900 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1751473AbWFPVeR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 17:34:17 -0400
+	id S1751521AbWFPVoe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 17:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbWFPVoe
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 17:44:34 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:14518 "EHLO smtp3-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751519AbWFPVod (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 17:44:33 -0400
 Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id C94497312D;
-	Fri, 16 Jun 2006 23:34:15 +0200 (CEST)
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 8B0F348D51;
+	Fri, 16 Jun 2006 23:44:32 +0200 (CEST)
 Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
 	(envelope-from <ydirson@altern.org>)
-	id 1FrLxi-0000d1-Qz; Fri, 16 Jun 2006 23:34:42 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id 1FrM7f-0000do-5B; Fri, 16 Jun 2006 23:44:59 +0200
+To: GIT list <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606130841200.5498@g5.osdl.org>
+In-Reply-To: <20060611122746.GB7766@nowhere.earth>
 User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21974>
-
-On Tue, Jun 13, 2006 at 08:47:15AM -0700, Linus Torvalds wrote:
-> 
-> On Tue, 13 Jun 2006, Yann Dirson wrote:
-> > 
-> > I have setup a Q&D page at
-> > http://ydirson.free.fr/en/software/scm/cvsps.html to link to.
-> > 
-> > I'll expand it later with more information.
-> 
-> Will you be able to set up gitweb on that site, perhaps? 
-
-No, CGI's on this hosting platform are restricted to ISP-provided
-ones.
-
-Do you think it would be adequate to have this repo hosted on
-kernel.org ?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21975>
 
 
-> Also, I guess that patch I posted in the "cvsps wierdness" thread (yeah, 
-> yeah, bad spelling, but it wasn't me who started the thread) should 
-> probably be added, since it fixed at least one test-case.
-> 
-> Although it should probably get more testing with a bigger and more 
-> real-life repository..
+I have now added all patches gathered from here, as well as those in
+the current Debian package.  Still have to dig other distros.
 
-Added, in the to-check branch.  At least the idea is sound.
+Note the log-length limit increment is being superceded by a dynamic
+allocation patch.
 
-Anyway, there are quite a number of hairy repos out there, which
-appear to cause problem to cvsps.  I'll see if I can identify more
-problems precisely - I have already collected a handful of them to
-http://bugs.debian.org/cvsps.
+Repo URL:  http://ydirson.free.fr/soft/git/cvsps.git
 
-Best regards,
+==============================
+
+	* master has:
+
+Alexander Litvinov:
+      Handle cvs repo with modules
+
+Anand Kumria:
+      FreeBSD isn't evil - just misguided
+
+David D. Kilzer:
+      cvsps: should ignore TRUNK branch if it exists in log
+      Dynamically allocate the log buffer to prevent warning messages
+
+Linus Torvalds:
+      Increase log-length limit to 64kB
+      Improve handling of file collisions in the same patchset
+      Fix branch ancestor calculation
+
+Pavel Roskin:
+      Use __linux__ conditional, not LINUX.
+      Use INADDR_NONE instead of -1 to check inet_addr() result
+
+Roberto C. Sanchez:
+      Diff opts typo fix.
+
+Yann Dirson:
+      Call cvs with -q flag when fetching the log
+      Dependency handling
+
+
+	* to-check additionally has:
+
+Linus Torvalds:
+      Make time ordering less important than revision ordering
+
+
+	* dev branches still have incomplete stuff, so I don't list it
+	here.
+
 -- 
 Yann Dirson    <ydirson@altern.org> |
 Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
