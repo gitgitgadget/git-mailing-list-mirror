@@ -1,124 +1,185 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 4/4] git-svn: rebuild convenience and bugfixes
-Date: Fri, 16 Jun 2006 10:57:26 -0700
-Message-ID: <11504806511326-git-send-email-normalperson@yhbt.net>
-References: <11504049343825-git-send-email-normalperson@yhbt.net> <11504806463470-git-send-email-normalperson@yhbt.net> <11504806472857-git-send-email-normalperson@yhbt.net> <11504806481800-git-send-email-normalperson@yhbt.net> <11504806492195-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH 3/4] git-svn: svn (command-line) 1.0.x compatibility
+Date: Fri, 16 Jun 2006 10:57:25 -0700
+Message-ID: <11504806492195-git-send-email-normalperson@yhbt.net>
+References: <11504049343825-git-send-email-normalperson@yhbt.net> <11504806463470-git-send-email-normalperson@yhbt.net> <11504806472857-git-send-email-normalperson@yhbt.net> <11504806481800-git-send-email-normalperson@yhbt.net>
 Reply-To: Eric Wong <normalperson@yhbt.net>
 Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jun 16 19:57:53 2006
+X-From: git-owner@vger.kernel.org Fri Jun 16 19:57:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrIZi-0006lH-Th
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:57:43 +0200
+	id 1FrIZh-0006lH-KH
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbWFPR5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 13:57:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbWFPR5e
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:57:34 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:13028 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751205AbWFPR5c (ORCPT
+	id S1751257AbWFPR5d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 13:57:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbWFPR5d
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:57:33 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:12516 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751199AbWFPR5c (ORCPT
 	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 13:57:32 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 656B17DC020;
-	Fri, 16 Jun 2006 10:57:31 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 16 Jun 2006 10:57:31 -0700
+	by hand.yhbt.net (Postfix) with SMTP id 188917DC024;
+	Fri, 16 Jun 2006 10:57:30 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 16 Jun 2006 10:57:29 -0700
 To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 X-Mailer: git-send-email 1.4.0
-In-Reply-To: <11504806492195-git-send-email-normalperson@yhbt.net>
+In-Reply-To: <11504806481800-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21958>
 
-We will now automatically fetch the refs/remotes/git-svn ref
-from origin and store a Pull: line for it.
+Tested on a plain Ubuntu Warty installation
+using subversion 1.0.6-1.2ubuntu3
 
---remote=<origin> may be passed if your remote is named something
-other than 'origin'
+svn add --force was never needed, as it only affected
+directories, which git (thankfully) doesn't track
 
-Also, remember to make GIT_SVN_DIR whenever we need to create
-.rev_db
+The 1.0.x also didn't support symlinks(!), so allow NO_SYMLINK
+to be defined for running tests
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- contrib/git-svn/git-svn.perl |   21 +++++++++++++++++++--
- 1 files changed, 19 insertions(+), 2 deletions(-)
+ contrib/git-svn/git-svn.perl               |    4 +
+ contrib/git-svn/t/t0000-contrib-git-svn.sh |   90 +++++++++++++++-------------
+ 2 files changed, 51 insertions(+), 43 deletions(-)
 
 diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index ab1d065..da0ff9a 100755
+index 417fcf1..ab1d065 100755
 --- a/contrib/git-svn/git-svn.perl
 +++ b/contrib/git-svn/git-svn.perl
-@@ -42,7 +42,7 @@ my $_optimize_commits = 1 unless $ENV{GI
- my $sha1 = qr/[a-f\d]{40}/;
- my $sha1_short = qr/[a-f\d]{4,40}/;
- my ($_revision,$_stdin,$_no_ignore_ext,$_no_stop_copy,$_help,$_rmdir,$_edit,
--	$_find_copies_harder, $_l, $_cp_similarity,
-+	$_find_copies_harder, $_l, $_cp_similarity, $_cp_remote,
- 	$_repack, $_repack_nr, $_repack_flags,
- 	$_template, $_shared, $_no_default_regex, $_no_graft_copy,
- 	$_limit, $_verbose, $_incremental, $_oneline, $_l_fmt, $_show_commit,
-@@ -86,6 +86,7 @@ my %cmd = (
- 			{ 'revision|r=i' => \$_revision } ],
- 	rebuild => [ \&rebuild, "Rebuild git-svn metadata (after git clone)",
- 			{ 'no-ignore-externals' => \$_no_ignore_ext,
-+			  'copy-remote|remote=s' => \$_cp_remote,
- 			  'upgrade' => \$_upgrade } ],
- 	'graft-branches' => [ \&graft_branches,
- 			'Detect merges/branches from already imported history',
-@@ -134,7 +135,7 @@ init_vars();
- load_authors() if $_authors;
- load_all_refs() if $_branch_all_refs;
- svn_compat_check();
--migration_check() unless $cmd =~ /^(?:init|multi-init)$/;
-+migration_check() unless $cmd =~ /^(?:init|rebuild|multi-init)$/;
- $cmd{$cmd}->[0]->(@ARGV);
- exit 0;
+@@ -1306,12 +1306,12 @@ sub svn_checkout_tree {
+ 		} elsif ($m->{chg} eq 'T') {
+ 			sys(qw(svn rm --force),$m->{file_b});
+ 			apply_mod_line_blob($m);
+-			sys(qw(svn add --force), $m->{file_b});
++			sys(qw(svn add), $m->{file_b});
+ 			svn_check_prop_executable($m);
+ 		} elsif ($m->{chg} eq 'A') {
+ 			svn_ensure_parent_path( $m->{file_b} );
+ 			apply_mod_line_blob($m);
+-			sys(qw(svn add --force), $m->{file_b});
++			sys(qw(svn add), $m->{file_b});
+ 			svn_check_prop_executable($m);
+ 		} else {
+ 			croak "Invalid chg: $m->{chg}\n";
+diff --git a/contrib/git-svn/t/t0000-contrib-git-svn.sh b/contrib/git-svn/t/t0000-contrib-git-svn.sh
+index 0f52746..443d518 100644
+--- a/contrib/git-svn/t/t0000-contrib-git-svn.sh
++++ b/contrib/git-svn/t/t0000-contrib-git-svn.sh
+@@ -11,7 +11,10 @@ mkdir import
+ cd import
  
-@@ -174,6 +175,9 @@ sub version {
- }
+ echo foo > foo
+-ln -s foo foo.link
++if test -z "$NO_SYMLINK"
++then
++	ln -s foo foo.link
++fi
+ mkdir -p dir/a/b/c/d/e
+ echo 'deep dir' > dir/a/b/c/d/e/file
+ mkdir -p bar
+@@ -129,46 +132,45 @@ test_expect_success "$name" \
  
- sub rebuild {
-+	if (quiet_run(qw/git-rev-parse --verify/,"refs/remotes/$GIT_SVN^0")) {
-+		copy_remote_ref();
-+	}
- 	$SVN_URL = shift or undef;
- 	my $newest_rev = 0;
- 	if ($_upgrade) {
-@@ -1940,6 +1944,7 @@ sub svn_cmd_checkout {
  
- sub check_upgrade_needed {
- 	if (!-r $REVDB) {
-+		-d $GIT_SVN_DIR or mkpath([$GIT_SVN_DIR]);
- 		open my $fh, '>>',$REVDB or croak $!;
- 		close $fh;
- 	}
-@@ -2052,6 +2057,7 @@ sub migrate_revdb {
- 			init_vars();
- 			exit 0 if -r $REVDB;
- 			print "Upgrading svn => git mapping...\n";
-+			-d $GIT_SVN_DIR or mkpath([$GIT_SVN_DIR]);
- 			open my $fh, '>>',$REVDB or croak $!;
- 			close $fh;
- 			rebuild();
-@@ -2763,6 +2769,17 @@ sub revdb_get {
- 	return $ret;
- }
  
-+sub copy_remote_ref {
-+	my $origin = $_cp_remote ? $_cp_remote : 'origin';
-+	my $ref = "refs/remotes/$GIT_SVN";
-+	if (safe_qx('git-ls-remote', $origin, $ref)) {
-+		sys(qw/git fetch/, $origin, "$ref:$ref");
-+	} else {
-+		die "Unable to find remote reference: ",
-+				"refs/remotes/$GIT_SVN on $origin\n";
-+	}
-+}
+-name='executable file becomes a symlink to bar/zzz (file)'
+-rm exec.sh
+-ln -s bar/zzz exec.sh
+-git update-index exec.sh
+-git commit -m "$name"
+-
+-test_expect_success "$name" \
+-    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
+-     svn up $SVN_TREE &&
+-     test -L $SVN_TREE/exec.sh"
+-
+-
+-
+-name='new symlink is added to a file that was also just made executable'
+-chmod +x bar/zzz
+-ln -s bar/zzz exec-2.sh
+-git update-index --add bar/zzz exec-2.sh
+-git commit -m "$name"
+-
+-test_expect_success "$name" \
+-    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
+-     svn up $SVN_TREE &&
+-     test -x $SVN_TREE/bar/zzz &&
+-     test -L $SVN_TREE/exec-2.sh"
+-
+-
+-
+-name='modify a symlink to become a file'
+-git help > help || true
+-rm exec-2.sh
+-cp help exec-2.sh
+-git update-index exec-2.sh
+-git commit -m "$name"
+-
+-test_expect_success "$name" \
+-    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
+-     svn up $SVN_TREE &&
+-     test -f $SVN_TREE/exec-2.sh &&
+-     test ! -L $SVN_TREE/exec-2.sh &&
+-     diff -u help $SVN_TREE/exec-2.sh"
++if test -z "$NO_SYMLINK"
++then
++	name='executable file becomes a symlink to bar/zzz (file)'
++	rm exec.sh
++	ln -s bar/zzz exec.sh
++	git update-index exec.sh
++	git commit -m "$name"
 +
- package SVN::Git::Editor;
- use vars qw/@ISA/;
- use strict;
++	test_expect_success "$name" \
++	    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
++	     svn up $SVN_TREE &&
++	     test -L $SVN_TREE/exec.sh"
++
++	name='new symlink is added to a file that was also just made executable'
++	chmod +x bar/zzz
++	ln -s bar/zzz exec-2.sh
++	git update-index --add bar/zzz exec-2.sh
++	git commit -m "$name"
++
++	test_expect_success "$name" \
++	    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
++	     svn up $SVN_TREE &&
++	     test -x $SVN_TREE/bar/zzz &&
++	     test -L $SVN_TREE/exec-2.sh"
++
++	name='modify a symlink to become a file'
++	git help > help || true
++	rm exec-2.sh
++	cp help exec-2.sh
++	git update-index exec-2.sh
++	git commit -m "$name"
++
++	test_expect_success "$name" \
++	    "git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch5 &&
++	     svn up $SVN_TREE &&
++	     test -f $SVN_TREE/exec-2.sh &&
++	     test ! -L $SVN_TREE/exec-2.sh &&
++	     diff -u help $SVN_TREE/exec-2.sh"
++fi
+ 
+ 
+ if test -n "$GIT_SVN_LC_ALL" && echo $GIT_SVN_LC_ALL | grep -q '\.UTF-8$'
+@@ -193,6 +195,12 @@ test_expect_success "$name" \
+      git-rev-list --pretty=raw remotes/alt | grep ^tree | uniq > b &&
+      diff -u a b"
+ 
++if test -n "$NO_SYMLINK"
++then
++	test_done
++	exit 0
++fi
++
+ name='check imported tree checksums expected tree checksums'
+ rm -f expected
+ if test -n "$GIT_SVN_LC_ALL" && echo $GIT_SVN_LC_ALL | grep -q '\.UTF-8$'
 -- 
 1.4.0
