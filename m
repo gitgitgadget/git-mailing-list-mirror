@@ -1,61 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Running parse cvs
-Date: Fri, 16 Jun 2006 12:24:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606161220360.5498@g5.osdl.org>
+Date: Fri, 16 Jun 2006 21:56:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606162156140.17616@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <9e4733910606161147m403a3f36r6657bd7b620958f3@mail.gmail.com>
+ <Pine.LNX.4.64.0606161220360.5498@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>, Keith Packard <keithp@keithp.com>
-X-From: git-owner@vger.kernel.org Fri Jun 16 21:24:20 2006
+Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>,
+	Keith Packard <keithp@keithp.com>
+X-From: git-owner@vger.kernel.org Fri Jun 16 21:56:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrJvX-0004ge-5y
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 21:24:19 +0200
+	id 1FrKQu-00010W-3U
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 21:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbWFPTYQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 15:24:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbWFPTYQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 15:24:16 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4765 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751403AbWFPTYP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 15:24:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5GJO8gt021815
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 16 Jun 2006 12:24:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5GJO7UP027429;
-	Fri, 16 Jun 2006 12:24:07 -0700
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606161147m403a3f36r6657bd7b620958f3@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750835AbWFPT4i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 15:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbWFPT4i
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 15:56:38 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:12476 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750835AbWFPT4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jun 2006 15:56:37 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 6F5EA14B5;
+	Fri, 16 Jun 2006 21:56:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 62CD014B3;
+	Fri, 16 Jun 2006 21:56:36 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id C52AB149E;
+	Fri, 16 Jun 2006 21:56:33 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606161220360.5498@g5.osdl.org>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21967>
 
+Hi,
 
+On Fri, 16 Jun 2006, Linus Torvalds wrote:
 
-On Fri, 16 Jun 2006, Jon Smirl wrote:
->
-> I am running the latest parsecvs from your git tree. I am hitting a quick gpf.
+> Valgrind is da bomb.
 
-If it's really quick, run it under valgrind. It will slow down things 
-enormously, but if it happens early on, you won't care, and it will 
-generally give a much better reason for why the problem happened than the 
-glibc malloc debugger will.
-
-Ie just
-
-	valgrind --tool=memcheck parsecvs ..
-
-should do it.
-
-Valgrind is da bomb.
-
-		Linus
+Now you are officially on the NSA black list.
