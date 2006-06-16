@@ -1,99 +1,105 @@
-From: Keith Packard <keithp@keithp.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: parsecvs and unnamed branches
-Date: Fri, 16 Jun 2006 15:19:22 -0700
-Message-ID: <1150496362.6983.34.camel@neko.keithp.com>
+Date: Fri, 16 Jun 2006 18:28:08 -0400
+Message-ID: <9e4733910606161528n668a96afgefca16644f8038b6@mail.gmail.com>
 References: <9e4733910606161444i2f996096sbd1f9b3f3ff3a32d@mail.gmail.com>
+	 <1150496362.6983.34.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-bYiSboa78REY1Fu5U5+5"
-Cc: keithp@keithp.com, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 17 00:20:00 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 17 00:28:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrMfW-0000mm-EP
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 00:19:58 +0200
+	id 1FrMnV-00023f-Ve
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 00:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751087AbWFPWTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 18:19:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbWFPWTs
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 18:19:48 -0400
-Received: from home.keithp.com ([63.227.221.253]:20486 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1751087AbWFPWTr (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 18:19:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 85D2C13001F;
-	Fri, 16 Jun 2006 15:19:46 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 27624-01; Fri, 16 Jun 2006 15:19:45 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id CEEB213001E; Fri, 16 Jun 2006 15:19:44 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 55A5C14001;
-	Fri, 16 Jun 2006 15:19:44 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 4BCBC542B2; Fri, 16 Jun 2006 15:19:23 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606161444i2f996096sbd1f9b3f3ff3a32d@mail.gmail.com>
-X-Mailer: Evolution 2.6.1 
+	id S1751451AbWFPW2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 18:28:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbWFPW2K
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 18:28:10 -0400
+Received: from nz-out-0102.google.com ([64.233.162.197]:58513 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751451AbWFPW2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jun 2006 18:28:08 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so1251032nze
+        for <git@vger.kernel.org>; Fri, 16 Jun 2006 15:28:08 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VBIMvlNCryeWPcgDPQcrw0lsbQJ+ay++QB4ir0W9y6LmLiHNqFLBFQIhrwJVeXEzyS8ajOEE7l4DI6ual2pEl9xPDr9Px7sauZaSomXmFvu2zyMu+XXw0edj9ARAdg8fMsVq0PctnEVPXy8ZDKcHch9L/+C+3Ko25UyMOeaj6HA=
+Received: by 10.36.227.78 with SMTP id z78mr4376120nzg;
+        Fri, 16 Jun 2006 15:28:08 -0700 (PDT)
+Received: by 10.36.36.7 with HTTP; Fri, 16 Jun 2006 15:28:08 -0700 (PDT)
+To: "Keith Packard" <keithp@keithp.com>
+In-Reply-To: <1150496362.6983.34.camel@neko.keithp.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21980>
+
+On 6/16/06, Keith Packard <keithp@keithp.com> wrote:
+> On Fri, 2006-06-16 at 17:44 -0400, Jon Smirl wrote:
+> > I'm getting thousands of messages about unnamed branches and even
+> > 'unnamed branch from master-UNNAMED-BRANCH'.
+> >
+> > How do you get unnamed branches into CVS, are these check-in errors or
+> > are people actually working on unnamed branches? Or is parsecvs not
+> > finding all of the branch info?
+>
+> branch names rely on a special 'branch tag' in the "symbols" section of
+> the CVS file, but actual branches are flagged directly in the revision
+> list. I don't know how it happens, but ,v files often end up with
+> branches in the revision tree which haven't an associated tag. Go
+> figure.
+>
+> For example, in the top level mozilla/Makefile.in,v file, you'll see a
+> branch from version 1.36 with an initial commit 1.36.2.1. Using the
+> wacky CVS branch revision numbering scheme, there should be an
+> associated tag for version 1.36.0.2 (yes, the last two digits are
+> flipped). But, none is present in the file.
+
+I was reading the CVS manual and it talks about magic branch number as
+being the ones with zero in them. Doesn't go into a lot of detail.
+Apparently they are autogenerated internally.
+
+http://ximbiot.com/cvs/wiki/index.php?title=CVS--Concurrent_Versions_System_v1.12.12.1:_Branching_and_merging#Magic_branch_numbers
 
 
---=-bYiSboa78REY1Fu5U5+5
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+>
+> The reverse situation also occurs, with tags for branches that have no
+> revisions in the file. This case makes sense -- until you make a change
+> in a file along a branch, there will be no other record in the file of
+> where the branch came from.
+>
+> I'd love to figure out a better mechanism for merging these nameless
+> branches into the resulting repository, but I don't know how to
+> correlate unnamed branches in one file with unnamed branches in other
+> files.
+>
+> The current scheme of making up a fixed name and hoping that there
+> aren't multiple unmamed branches from the same root is probably fraught
+> with peril.
+>
+> --
+> keith.packard@intel.com
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.3 (GNU/Linux)
+>
+> iD8DBQBEky5qQp8BWwlsTdMRAvI1AJ4nXKyzeupTDarXI+yM0zvuHaCoTQCdEBYC
+> Kl7lEHIJgi5Tk24quc9FZyM=
+> =FA7H
+> -----END PGP SIGNATURE-----
+>
+>
+>
 
-On Fri, 2006-06-16 at 17:44 -0400, Jon Smirl wrote:
-> I'm getting thousands of messages about unnamed branches and even
-> 'unnamed branch from master-UNNAMED-BRANCH'.
->=20
-> How do you get unnamed branches into CVS, are these check-in errors or
-> are people actually working on unnamed branches? Or is parsecvs not
-> finding all of the branch info?
 
-branch names rely on a special 'branch tag' in the "symbols" section of
-the CVS file, but actual branches are flagged directly in the revision
-list. I don't know how it happens, but ,v files often end up with
-branches in the revision tree which haven't an associated tag. Go
-figure.
-
-For example, in the top level mozilla/Makefile.in,v file, you'll see a
-branch from version 1.36 with an initial commit 1.36.2.1. Using the
-wacky CVS branch revision numbering scheme, there should be an
-associated tag for version 1.36.0.2 (yes, the last two digits are
-flipped). But, none is present in the file.
-
-The reverse situation also occurs, with tags for branches that have no
-revisions in the file. This case makes sense -- until you make a change
-in a file along a branch, there will be no other record in the file of
-where the branch came from.
-
-I'd love to figure out a better mechanism for merging these nameless
-branches into the resulting repository, but I don't know how to
-correlate unnamed branches in one file with unnamed branches in other
-files.
-
-The current scheme of making up a fixed name and hoping that there
-aren't multiple unmamed branches from the same root is probably fraught
-with peril.
-
---=20
-keith.packard@intel.com
-
---=-bYiSboa78REY1Fu5U5+5
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBEky5qQp8BWwlsTdMRAvI1AJ4nXKyzeupTDarXI+yM0zvuHaCoTQCdEBYC
-Kl7lEHIJgi5Tk24quc9FZyM=
-=FA7H
------END PGP SIGNATURE-----
-
---=-bYiSboa78REY1Fu5U5+5--
+-- 
+Jon Smirl
+jonsmirl@gmail.com
