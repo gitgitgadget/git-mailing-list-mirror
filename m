@@ -1,80 +1,84 @@
-From: Juergen Ruehle <j.ruehle@bmiag.de>
-Subject: Re: Cygwin git and windows network shares
-Date: Fri, 16 Jun 2006 16:24:30 +0200
-Message-ID: <17554.48926.852000.679014@lapjr.intranet.kiel.bmiag.de>
-References: <4492AAFA.20807@grin.se>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Why so much time in the kernel?
+Date: Fri, 16 Jun 2006 10:49:39 -0400
+Message-ID: <9e4733910606160749t4d7a541ev72a67383e96d86da@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 16 16:24:55 2006
+X-From: git-owner@vger.kernel.org Fri Jun 16 16:49:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrFFf-0000Ou-5K
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 16:24:47 +0200
+	id 1FrFdo-0004XE-Pd
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 16:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbWFPOYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 10:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWFPOYo
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 10:24:44 -0400
-Received: from meriadoc.bmiag.de ([62.154.210.133]:2434 "EHLO
-	meriadoc.bmiag.de") by vger.kernel.org with ESMTP id S1751418AbWFPOYn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 10:24:43 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by meriadoc.bmiag.de (Postfix) with ESMTP id 2FACA3AED9;
-	Fri, 16 Jun 2006 16:24:40 +0200 (CEST)
-Received: from meriadoc.bmiag.de ([127.0.0.1])
-	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 14896-01; Fri, 16 Jun 2006 16:24:40 +0200 (CEST)
-Received: from eorl.intranet.kiel.bmiag.de (eorl.intranet.kiel.bmiag.de [10.131.2.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by meriadoc.bmiag.de (Postfix) with ESMTP id DDEA63AED8;
-	Fri, 16 Jun 2006 16:24:37 +0200 (CEST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id DC2C53BB4E;
-	Fri, 16 Jun 2006 16:24:36 +0200 (CEST)
-Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1])
-	by localhost (eorl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
-	id 03380-08; Fri, 16 Jun 2006 16:24:33 +0200 (CEST)
-Received: from LAPJR (lapjr.intranet.kiel.bmiag.de [10.191.7.182])
-	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 5869C3BB4D;
-	Fri, 16 Jun 2006 16:24:31 +0200 (CEST)
-To: Niklas Frykholm <niklas@grin.se>
-In-Reply-To: <4492AAFA.20807@grin.se>
-X-Mailer: VM 7.19 under Emacs 21.3.1
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eorl.intranet.kiel.bmiag.de
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
+	id S1751412AbWFPOtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 10:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWFPOtk
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 10:49:40 -0400
+Received: from nz-out-0102.google.com ([64.233.162.204]:62367 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751412AbWFPOtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jun 2006 10:49:39 -0400
+Received: by nz-out-0102.google.com with SMTP id s18so930370nze
+        for <git@vger.kernel.org>; Fri, 16 Jun 2006 07:49:39 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZY1uBSFvlD3WfLE2JZ+XZWBwPJc3JdUvzeYbl65Rx3UDuzCI7F2mqQ30HCvS798CD+uPqJei8ClxrbrYLYm644IsIWm49aOTbc0KqHmimRh2u1i5y40GGBCwbp3qBnN4BNO0YWh49DRcaJMXFPF8QDXOvRYjqPTk1ik9EcoytPo=
+Received: by 10.36.38.13 with SMTP id l13mr591762nzl;
+        Fri, 16 Jun 2006 07:49:39 -0700 (PDT)
+Received: by 10.36.36.7 with HTTP; Fri, 16 Jun 2006 07:49:38 -0700 (PDT)
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21943>
 
-Niklas Frykholm writes:
- > I'm trying to use cygwin git (compiled from the 1.4.0 tarball) to create 
- > repository on a windows network share, but I get an error message.
- > 
- >     $ cd //computer/git/project
- >     $ git init-db
- >     defaulting to local storage area
- >     Could not rename the lock file?
+I'm still working on importing Mozilla CVS. I'm at the phase now where
+all of the changeset have been identified. The scripts are pulling the
+changesets one at a time out of CVS and putting them into git. I've
+been running this phase for 2 days now on a 3GB machine and it still
+isn't finished.
 
-cygwin's rename seems to be capable of overwriting an existing target
-only on NTFS. The following hack is a workaround, but is probably not
-safe.
+I am spending over 40% of the time in the kernel. This looks to be
+caused from forks and starting small tasks, is that the correct
+interpretation? Is the number of process that have been run recorded
+any where? 1.4% of the time is spend in the dynamic linker.
 
-diff --git a/lockfile.c b/lockfile.c
-index 2346e0e..5e78211 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -48,6 +48,7 @@ int commit_lock_file(struct lock_file *l
- 	strcpy(result_file, lk->filename);
- 	i = strlen(result_file) - 5; /* .lock */
- 	result_file[i] = 0;
-+	unlink(result_file);
- 	i = rename(lk->filename, result_file);
- 	lk->filename[0] = 0;
- 	return i;
+Checking with oprofile I see this:
+
+  18262372 41.0441 /home/good/vmlinux
+  5465741 12.2841 /usr/bin/cvs
+  4374336  9.8312 /lib/libc-2.4.so
+  3627709  8.1532 /lib/libcrypto.so.0.9.8a
+  2494610  5.6066 /usr/bin/oprofiled
+  2471238  5.5540 /usr/lib/libz.so.1.2.3
+   945349  2.1246 /usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE/libperl.so
+   933646  2.0983 /usr/local/bin/git-read-tree
+   758776  1.7053 /usr/local/bin/git-write-tree
+   642502  1.4440 /lib/ld-2.4.so
+   472903  1.0628 /nvidia
+   379254  0.8524 /usr/local/bin/git-pack-objects
+
+and breaking down the kernel number:
+
+3467889  18.9893  copy_page_range
+2190416  11.9941  unmap_vmas
+1156011   6.3300  page_fault
+887794    4.8613  release_pages
+860853    4.7138  page_remove_rmap
+633243    3.4675  get_page_from_freelist
+398773    2.1836  do_wp_page
+344422    1.8860  __mutex_lock_slowpath
+280070    1.5336  __handle_mm_fault
+241713    1.3236  do_page_fault
+238398    1.3054  __d_lookup
+236654    1.2959  vm_normal_page
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
