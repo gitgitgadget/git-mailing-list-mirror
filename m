@@ -1,65 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Yann Dirson <ydirson@altern.org>
 Subject: Re: Collecting cvsps patches
-Date: Fri, 16 Jun 2006 23:31:46 +0200
-Organization: At home
-Message-ID: <e6v7vr$ila$1@sea.gmane.org>
-References: <20060611122746.GB7766@nowhere.earth> <46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com> <20060611224205.GF1297@nowhere.earth> <e6jj39$6ua$1@sea.gmane.org> <20060616212334.GN7766@nowhere.earth>
+Date: Fri, 16 Jun 2006 23:34:42 +0200
+Message-ID: <20060616213442.GO7766@nowhere.earth>
+References: <20060611122746.GB7766@nowhere.earth> <1150173310.15831.6.camel@dv> <20060613095445.GM1297@nowhere.earth> <448EC1C6.5060902@dm.cobite.com> <20060613151504.GN1297@nowhere.earth> <Pine.LNX.4.64.0606130841200.5498@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jun 16 23:32:26 2006
+Cc: David Mansfield <centos@dm.cobite.com>,
+	Pavel Roskin <proski@gnu.org>, GIT list <git@vger.kernel.org>,
+	cvsps@dm.cobite.com
+X-From: git-owner@vger.kernel.org Fri Jun 16 23:34:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrLvQ-0000a1-GW
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 23:32:20 +0200
+	id 1FrLxN-0000v1-FN
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 23:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751462AbWFPVcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 17:32:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbWFPVcP
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 17:32:15 -0400
-Received: from main.gmane.org ([80.91.229.2]:47009 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751462AbWFPVcO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 17:32:14 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FrLv3-0000U1-1q
-	for git@vger.kernel.org; Fri, 16 Jun 2006 23:31:57 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Jun 2006 23:31:57 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Jun 2006 23:31:57 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751473AbWFPVeR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 17:34:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbWFPVeR
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 17:34:17 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:10900 "EHLO smtp2-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751473AbWFPVeR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 17:34:17 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id C94497312D;
+	Fri, 16 Jun 2006 23:34:15 +0200 (CEST)
+Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FrLxi-0000d1-Qz; Fri, 16 Jun 2006 23:34:42 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606130841200.5498@g5.osdl.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21974>
 
-Yann Dirson wrote:
-
-> On Mon, Jun 12, 2006 at 11:27:37AM +0000, Anand Kumria wrote:
->> On Mon, 12 Jun 2006 00:42:05 +0200, Yann Dirson wrote:
->> 
->> > http://ydirson.free.fr/soft/git/cvsps.git
->> 
->> I think you need to chmod +x hooks/post-update
->> 
->> and then run 'git-update-server-info'.
+On Tue, Jun 13, 2006 at 08:47:15AM -0700, Linus Torvalds wrote:
 > 
-> Unfortunately, I only have FTP access to push to this site, so I have
-> to run git-update-server-info myself, and occasionally forget.  I'll
-> have to bring up-to-date my old cg-ftppush script some day :)
+> On Tue, 13 Jun 2006, Yann Dirson wrote:
+> > 
+> > I have setup a Q&D page at
+> > http://ydirson.free.fr/en/software/scm/cvsps.html to link to.
+> > 
+> > I'll expand it later with more information.
+> 
+> Will you be able to set up gitweb on that site, perhaps? 
 
-Or extend git to allow push/pull also via ftp?
+No, CGI's on this hosting platform are restricted to ISP-provided
+ones.
 
+Do you think it would be adequate to have this repo hosted on
+kernel.org ?
+
+
+> Also, I guess that patch I posted in the "cvsps wierdness" thread (yeah, 
+> yeah, bad spelling, but it wasn't me who started the thread) should 
+> probably be added, since it fixed at least one test-case.
+> 
+> Although it should probably get more testing with a bigger and more 
+> real-life repository..
+
+Added, in the to-check branch.  At least the idea is sound.
+
+Anyway, there are quite a number of hairy repos out there, which
+appear to cause problem to cvsps.  I'll see if I can identify more
+problems precisely - I have already collected a handful of them to
+http://bugs.debian.org/cvsps.
+
+Best regards,
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
