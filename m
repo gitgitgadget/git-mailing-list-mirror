@@ -1,105 +1,75 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: parsecvs and unnamed branches
-Date: Fri, 16 Jun 2006 18:28:08 -0400
-Message-ID: <9e4733910606161528n668a96afgefca16644f8038b6@mail.gmail.com>
-References: <9e4733910606161444i2f996096sbd1f9b3f3ff3a32d@mail.gmail.com>
-	 <1150496362.6983.34.camel@neko.keithp.com>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: Cygwin git and windows network shares
+Date: Fri, 16 Jun 2006 18:30:06 -0400
+Message-ID: <20060616223006.GA23737@trixie.casa.cgf.cx>
+References: <4492AAFA.20807@grin.se> <17554.48926.852000.679014@lapjr.intranet.kiel.bmiag.de> <20060616221014.GA22181@trixie.casa.cgf.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 17 00:28:20 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Jun 17 00:30:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrMnV-00023f-Ve
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 00:28:14 +0200
+	id 1FrMpR-0002Mm-1q
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 00:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbWFPW2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 18:28:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbWFPW2K
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 18:28:10 -0400
-Received: from nz-out-0102.google.com ([64.233.162.197]:58513 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751451AbWFPW2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 18:28:08 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so1251032nze
-        for <git@vger.kernel.org>; Fri, 16 Jun 2006 15:28:08 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VBIMvlNCryeWPcgDPQcrw0lsbQJ+ay++QB4ir0W9y6LmLiHNqFLBFQIhrwJVeXEzyS8ajOEE7l4DI6ual2pEl9xPDr9Px7sauZaSomXmFvu2zyMu+XXw0edj9ARAdg8fMsVq0PctnEVPXy8ZDKcHch9L/+C+3Ko25UyMOeaj6HA=
-Received: by 10.36.227.78 with SMTP id z78mr4376120nzg;
-        Fri, 16 Jun 2006 15:28:08 -0700 (PDT)
-Received: by 10.36.36.7 with HTTP; Fri, 16 Jun 2006 15:28:08 -0700 (PDT)
-To: "Keith Packard" <keithp@keithp.com>
-In-Reply-To: <1150496362.6983.34.camel@neko.keithp.com>
+	id S1751523AbWFPWaI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 18:30:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbWFPWaI
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 18:30:08 -0400
+Received: from pool-71-248-179-97.bstnma.fios.verizon.net ([71.248.179.97]:8920
+	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1751523AbWFPWaH
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jun 2006 18:30:07 -0400
+Received: by cgf.cx (Postfix, from userid 201)
+	id 7A76113C01F; Fri, 16 Jun 2006 18:30:06 -0400 (EDT)
+To: Niklas Frykholm <niklas@grin.se>, git@vger.kernel.org,
+	Juergen Ruehle <j.ruehle@bmiag.de>
 Content-Disposition: inline
+In-Reply-To: <20060616221014.GA22181@trixie.casa.cgf.cx>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21981>
 
-On 6/16/06, Keith Packard <keithp@keithp.com> wrote:
-> On Fri, 2006-06-16 at 17:44 -0400, Jon Smirl wrote:
-> > I'm getting thousands of messages about unnamed branches and even
-> > 'unnamed branch from master-UNNAMED-BRANCH'.
-> >
-> > How do you get unnamed branches into CVS, are these check-in errors or
-> > are people actually working on unnamed branches? Or is parsecvs not
-> > finding all of the branch info?
+On Fri, Jun 16, 2006 at 06:10:14PM -0400, Christopher Faylor wrote:
+>On Fri, Jun 16, 2006 at 04:24:30PM +0200, Juergen Ruehle wrote:
+>>Niklas Frykholm writes:
+>> > I'm trying to use cygwin git (compiled from the 1.4.0 tarball) to create 
+>> > repository on a windows network share, but I get an error message.
+>> > 
+>> >     $ cd //computer/git/project
+>> >     $ git init-db
+>> >     defaulting to local storage area
+>> >     Could not rename the lock file?
+>>
+>>cygwin's rename seems to be capable of overwriting an existing target
+>>only on NTFS. The following hack is a workaround, but is probably not
+>>safe.
 >
-> branch names rely on a special 'branch tag' in the "symbols" section of
-> the CVS file, but actual branches are flagged directly in the revision
-> list. I don't know how it happens, but ,v files often end up with
-> branches in the revision tree which haven't an associated tag. Go
-> figure.
->
-> For example, in the top level mozilla/Makefile.in,v file, you'll see a
-> branch from version 1.36 with an initial commit 1.36.2.1. Using the
-> wacky CVS branch revision numbering scheme, there should be an
-> associated tag for version 1.36.0.2 (yes, the last two digits are
-> flipped). But, none is present in the file.
+>Actually, Cygwin's rename has a specific check to make sure that the
+>file is deleted.  It tries very hard to do things the right way but if
+>your samba server doesn't return the correct error code then it is
+>possible that it could be confused.
 
-I was reading the CVS manual and it talks about magic branch number as
-being the ones with zero in them. Doesn't go into a lot of detail.
-Apparently they are autogenerated internally.
+>diff --git a/lockfile.c b/lockfile.c
+>index 2346e0e..5e78211 100644
+>--- a/lockfile.c
+>+++ b/lockfile.c
+>@@ -48,6 +48,7 @@ int commit_lock_file(struct lock_file *l
+>       strcpy(result_file, lk->filename);
+>       i = strlen(result_file) - 5; /* .lock */
+>       result_file[i] = 0;
+>+      unlink(result_file);
+>       i = rename(lk->filename, result_file);
+>       lk->filename[0] = 0;
+>       return i;
 
-http://ximbiot.com/cvs/wiki/index.php?title=CVS--Concurrent_Versions_System_v1.12.12.1:_Branching_and_merging#Magic_branch_numbers
+I also meant to ask if there was an i is nonzero after the call to the
+rename() above?  If so, what was the errno?  If not, it is a huge
+problem if rename is reporting that it is able to rename a file but is
+not actually doing it.
 
-
->
-> The reverse situation also occurs, with tags for branches that have no
-> revisions in the file. This case makes sense -- until you make a change
-> in a file along a branch, there will be no other record in the file of
-> where the branch came from.
->
-> I'd love to figure out a better mechanism for merging these nameless
-> branches into the resulting repository, but I don't know how to
-> correlate unnamed branches in one file with unnamed branches in other
-> files.
->
-> The current scheme of making up a fixed name and hoping that there
-> aren't multiple unmamed branches from the same root is probably fraught
-> with peril.
->
-> --
-> keith.packard@intel.com
->
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.3 (GNU/Linux)
->
-> iD8DBQBEky5qQp8BWwlsTdMRAvI1AJ4nXKyzeupTDarXI+yM0zvuHaCoTQCdEBYC
-> Kl7lEHIJgi5Tk24quc9FZyM=
-> =FA7H
-> -----END PGP SIGNATURE-----
->
->
->
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+cgf
+(cygwin maintainer)
