@@ -1,85 +1,159 @@
-From: David Kowis <dkowis@shlrm.org>
-Subject: Re: git-rebase nukes multiline comments
-Date: Fri, 16 Jun 2006 12:55:43 -0500
-Message-ID: <4492F09F.9080906@shlrm.org>
-References: <20060616171251.GA29820@suse.de> <4492E8F9.4000106@shlrm.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhopf@suse.de
-X-From: git-owner@vger.kernel.org Fri Jun 16 19:55:48 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 1/4] git-svn: bugfix and optimize the 'log' command
+Date: Fri, 16 Jun 2006 10:57:23 -0700
+Message-ID: <11504806472857-git-send-email-normalperson@yhbt.net>
+References: <11504049343825-git-send-email-normalperson@yhbt.net> <11504806463470-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jun 16 19:57:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrIXq-0006Sd-KT
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:55:47 +0200
+	id 1FrIZX-0006j0-KQ
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:57:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbWFPRzn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 13:55:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbWFPRzn
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:55:43 -0400
-Received: from adsl-66-143-246-231.dsl.snantx.swbell.net ([66.143.246.231]:21932
-	"EHLO mail.shlrm.org") by vger.kernel.org with ESMTP
-	id S1750839AbWFPRzn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 13:55:43 -0400
-Received: from [192.168.2.111] (rrcs-24-173-63-133.sw.biz.rr.com [24.173.63.133])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.shlrm.org (Postfix) with ESMTP id 73D732816BBC;
-	Fri, 16 Jun 2006 12:55:42 -0500 (CDT)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: David Kowis <dkowis@shlrm.org>
-In-Reply-To: <4492E8F9.4000106@shlrm.org>
-X-Enigmail-Version: 0.94.0.0
+	id S1751097AbWFPR53 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 13:57:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbWFPR53
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:57:29 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:10212 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751097AbWFPR52 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 13:57:28 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 859D27DC022;
+	Fri, 16 Jun 2006 10:57:27 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 16 Jun 2006 10:57:27 -0700
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-Mailer: git-send-email 1.4.0
+In-Reply-To: <11504806463470-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21954>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Revisions with long commit messages were being skipped, since
+the 'git-svn-id' metadata line was at the end and git-log uses a
+32k buffer to print the commits.
 
-David Kowis wrote:
-<snip>
-> 
-> I'm new to git, but I tried what you said.
-> my git log:
-> commit c846bea8c61bec7cf0f7688c48abc42577b9ac7f
-> Author: David Kowis <dkowis@kain.org>
-> Date:   Fri Jun 16 12:20:08 2006 -0500
-> 
->     this is a multi
-> 
->     line comment
->     with three lines
-> 
-> 
-> I'm using git 1.4.0. It added a blank line in there...
+Also the last 'git-svn-id' metadata line in a commit is always
+the valid one, so make sure we use that, as well.
 
-I'm going to note that the xorg ML cc doesn't work for anyone not
-subscribed... You may miss out on replies.
+Made the verbose flag work by passing the correct option switch
+('--summary') to git-log.
 
-- --
-David Kowis
+Finally, optimize -r/--revision argument handling by passing
+the appropriate limits to revision
 
-ISO Team Lead - www.sourcemage.org
-Source Mage GNU/Linux
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ contrib/git-svn/git-svn.perl |   60 ++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 52 insertions(+), 8 deletions(-)
 
-Progress isn't made by early risers. It's made by lazy men trying to
-find easier ways to do something.
-  - Robert Heinlein
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (MingW32)
-
-iQGVAwUBRJLwn8nf+vRw63ObAQqhmwv7BXLqVSJa2FV6RVhLnmARqh+MHBAX+XLu
-zgg/kcYd97pXz9bUEFEmY9tp3afzghA6EQlrV/zRHe/R/e1ZFjvTE27mUe3CvtHu
-dUPgx6b85vMLkT2k6jbZ5BoA9KtbNITQlZnQJcEAMBv7aUrclRFykABnXwfh3YxM
-jVOGbqoNaKzeB5/Sccb27xnzU91UjztB5X7yNgJYosO6tTz164bQQQbIMGWGztPw
-wTwQOPK2+v4oUqfvYbKlX/Fd/Fve6PPWOAj5cUjxPHf47oiF/HY3ir/V/k04qO34
-KFKAr10ss/sVm7kbURyj7AWJ/putgy9zzYzSWjqh+4ahTwIFb2ciPsU64o1MsO1K
-Mnwz0IowmUUZO57qV0gkYdZyPvudOpV2v52aqMEhMyq8GU56Fvsy0KJma235Sv0r
-D0ucIrrorCG0FyY7wKpEM83GJDBaTzxb/Mv8bjCD9/av1uQMjmMvqcPFWsZL+nRx
-igTF8LiWzBBEG5b+PPjKlS8uofj8cW5g
-=90TM
------END PGP SIGNATURE-----
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index 149149f..417fcf1 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -663,17 +663,15 @@ sub show_log {
+ 	my $pid = open(my $log,'-|');
+ 	defined $pid or croak $!;
+ 	if (!$pid) {
+-		my @rl = (qw/git-log --abbrev-commit --pretty=raw
+-				--default/, "remotes/$GIT_SVN");
+-		push @rl, '--raw' if $_verbose;
+-		exec(@rl, @args) or croak $!;
++		exec(git_svn_log_cmd($r_min,$r_max), @args) or croak $!;
+ 	}
+ 	setup_pager();
+ 	my (@k, $c, $d);
++
+ 	while (<$log>) {
+ 		if (/^commit ($sha1_short)/o) {
+ 			my $cmt = $1;
+-			if ($c && defined $c->{r} && $c->{r} != $r_last) {
++			if ($c && cmt_showable($c) && $c->{r} != $r_last) {
+ 				$r_last = $c->{r};
+ 				process_commit($c, $r_min, $r_max, \@k) or
+ 								goto out;
+@@ -692,8 +690,7 @@ sub show_log {
+ 		} elsif ($d) {
+ 			push @{$c->{diff}}, $_;
+ 		} elsif (/^    (git-svn-id:.+)$/) {
+-			my ($url, $rev, $uuid) = extract_metadata($1);
+-			$c->{r} = $rev;
++			(undef, $c->{r}, undef) = extract_metadata($1);
+ 		} elsif (s/^    //) {
+ 			push @{$c->{l}}, $_;
+ 		}
+@@ -715,6 +712,52 @@ out:
+ 
+ ########################### utility functions #########################
+ 
++sub cmt_showable {
++	my ($c) = @_;
++	return 1 if defined $c->{r};
++	if ($c->{l} && $c->{l}->[-1] eq "...\n" &&
++				$c->{a_raw} =~ /\@([a-f\d\-]+)>$/) {
++		my @msg = safe_qx(qw/git-cat-file commit/, $c->{c});
++		shift @msg while ($msg[0] ne "\n");
++		shift @msg;
++		@{$c->{l}} = grep !/^git-svn-id: /, @msg;
++
++		(undef, $c->{r}, undef) = extract_metadata(
++				(grep(/^git-svn-id: /, @msg))[-1]);
++	}
++	return defined $c->{r};
++}
++
++sub git_svn_log_cmd {
++	my ($r_min, $r_max) = @_;
++	my @cmd = (qw/git-log --abbrev-commit --pretty=raw
++			--default/, "refs/remotes/$GIT_SVN");
++	push @cmd, '--summary' if $_verbose;
++	return @cmd unless defined $r_max;
++	if ($r_max == $r_min) {
++		push @cmd, '--max-count=1';
++		if (my $c = revdb_get($REVDB, $r_max)) {
++			push @cmd, $c;
++		}
++	} else {
++		my ($c_min, $c_max);
++		$c_max = revdb_get($REVDB, $r_max);
++		$c_min = revdb_get($REVDB, $r_min);
++		if ($c_min && $c_max) {
++			if ($r_max > $r_max) {
++				push @cmd, "$c_min..$c_max";
++			} else {
++				push @cmd, "$c_max..$c_min";
++			}
++		} elsif ($r_max > $r_min) {
++			push @cmd, $c_max;
++		} else {
++			push @cmd, $c_min;
++		}
++	}
++	return @cmd;
++}
++
+ sub fetch_child_id {
+ 	my $id = shift;
+ 	print "Fetching $id\n";
+@@ -2206,6 +2249,7 @@ sub setup_pager { # translated to Perl f
+ sub get_author_info {
+ 	my ($dest, $author, $t, $tz) = @_;
+ 	$author =~ s/(?:^\s*|\s*$)//g;
++	$dest->{a_raw} = $author;
+ 	my $_a;
+ 	if ($_authors) {
+ 		$_a = $rusers{$author} || undef;
+@@ -2440,7 +2484,7 @@ sub svn_grab_base_rev {
+ 	close $fh;
+ 	if (defined $c && length $c) {
+ 		my ($url, $rev, $uuid) = extract_metadata((grep(/^git-svn-id: /,
+-			safe_qx(qw/git-cat-file commit/, $c)))[0]);
++			safe_qx(qw/git-cat-file commit/, $c)))[-1]);
+ 		return ($rev, $c);
+ 	}
+ 	return (undef, undef);
+-- 
+1.4.0
