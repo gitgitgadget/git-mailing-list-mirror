@@ -1,115 +1,94 @@
-From: David Kowis <dkowis@shlrm.org>
-Subject: Re: git-rebase nukes multiline comments
-Date: Fri, 16 Jun 2006 12:23:05 -0500
-Message-ID: <4492E8F9.4000106@shlrm.org>
-References: <20060616171251.GA29820@suse.de>
+From: Keith Packard <keithp@keithp.com>
+Subject: Re: Why so much time in the kernel?
+Date: Fri, 16 Jun 2006 10:29:28 -0700
+Message-ID: <1150478968.6983.7.camel@neko.keithp.com>
+References: <9e4733910606160749t4d7a541ev72a67383e96d86da@mail.gmail.com>
+	 <Pine.LNX.4.64.0606160755170.5498@g5.osdl.org>
+	 <9e4733910606160825hb538d6fo4c9f1d7d9768e100@mail.gmail.com>
+	 <Pine.LNX.4.64.0606160906250.5498@g5.osdl.org>
+	 <9e4733910606161000t53328571u10a350eca894ccdc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jun 16 19:23:16 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-hjjXTMgzSDLlqzN+49zo"
+Cc: keithp@keithp.com, Linus Torvalds <torvalds@osdl.org>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 16 19:30:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrI2I-0000q3-55
-	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:23:10 +0200
+	id 1FrI9B-00029e-0i
+	for gcvg-git@gmane.org; Fri, 16 Jun 2006 19:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751497AbWFPRXG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 13:23:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751501AbWFPRXG
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:23:06 -0400
-Received: from adsl-66-143-246-231.dsl.snantx.swbell.net ([66.143.246.231]:22190
-	"EHLO mail.shlrm.org") by vger.kernel.org with ESMTP
-	id S1751497AbWFPRXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 13:23:05 -0400
-Received: from [192.168.2.111] (rrcs-24-173-63-133.sw.biz.rr.com [24.173.63.133])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.shlrm.org (Postfix) with ESMTP id 040FB2816BBC;
-	Fri, 16 Jun 2006 12:23:03 -0500 (CDT)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: git@vger.kernel.org, xorg@lists.freedesktop.org
-In-Reply-To: <20060616171251.GA29820@suse.de>
-X-Enigmail-Version: 0.94.0.0
+	id S1751499AbWFPRaI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 13:30:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751501AbWFPRaI
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 13:30:08 -0400
+Received: from home.keithp.com ([63.227.221.253]:33553 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1751499AbWFPRaG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 13:30:06 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 6273D13001F;
+	Fri, 16 Jun 2006 10:30:04 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 22941-02; Fri, 16 Jun 2006 10:30:03 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 8DFAA13001E; Fri, 16 Jun 2006 10:30:03 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id F369714002;
+	Fri, 16 Jun 2006 10:30:02 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id CA052542B2; Fri, 16 Jun 2006 10:29:29 -0700 (PDT)
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910606161000t53328571u10a350eca894ccdc@mail.gmail.com>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21950>
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-Matthias Hopf wrote:
-> Hi all,
-> 
-> I'm using git-1.2.4 on SL10.1, in centralized style development (for X.org).
-> 
-> I wanted to commit a set of changes (4 local commits) upstream, so I had
-> to do a git-rebase first (in that particular case a git-pull would have
-> been possible as well, but git-rebase fits the CVS style development
-> better). After git-fetch, git-rebase origin, and git-push all my changes
-> had only the first line of the changelog comment, the remainder was
-> nuked.
-> 
-> To reproduce:
-> 
-> mkdir /var/tmp/blaup
-> cd /var/tmp/blaup
-> git-init-db
-> echo test > foo
-> git-add foo
-> git-commit      (any comment)
-> cd ..
-> git-clone /var/tmp/blaup bla
-> cd bla
-> echo test2 >>foo 
-> git-commit foo  (multiline comment)
-> cd ../blaup
-> echo test3 >bar
-> git-add bar
-> git-commit      (any comment)
-> cd ../bla
-> git-fetch
-> git-log         (shows multiline comment for 'test2')
-> git-rebase origin
-> git-log         (shows only the first line of the multiline comment!)
-> 
-> 
-
-I'm new to git, but I tried what you said.
-my git log:
-commit c846bea8c61bec7cf0f7688c48abc42577b9ac7f
-Author: David Kowis <dkowis@kain.org>
-Date:   Fri Jun 16 12:20:08 2006 -0500
-
-    this is a multi
-
-    line comment
-    with three lines
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21951>
 
 
-I'm using git 1.4.0. It added a blank line in there...
+--=-hjjXTMgzSDLlqzN+49zo
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, 2006-06-16 at 13:00 -0400, Jon Smirl wrote:
+> Is it a crazy idea to read the cvs files, compute an sha1 on each
+> expanded delta and then write the delta straight into a pack file? Are
+> the cvs and git delta formats the same? What about CVS's forward and
+> reverse delta use?
 
-David Kowis
+At this point, merging blobs into packs isn't a significant part of the
+computational cost. parsecvs is spending all of its time in the
+quadratic traversal of the diff chains; fixing that to emit all of the
+versions in a single pass should speed up that part of the conversion
+process dramatically.
 
-ISO Team Lead - www.sourcemage.org
-Source Mage GNU/Linux
+>  While this is going on, track the
+> branches/changsets in memory and then finish up by writing these trees
+> into the pack file too. This should take no more ram than cvsps needs
+> currently.
 
-Progress isn't made by early risers. It's made by lazy men trying to
-find easier ways to do something.
-  - Robert Heinlein
+cvsps drops too much state on the floor making branch point and branch
+contents inaccurate. What I'm hoping is that I can figure out a way to
+discard most of the per-version information by computing tree objects in
+reverse order, saving only the tree sha1 and other per-commit info, then
+stitch the commits together using that, without needing the full
+per-file data.
+
+--=20
+keith.packard@intel.com
+
+--=-hjjXTMgzSDLlqzN+49zo
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (MingW32)
+Version: GnuPG v1.4.3 (GNU/Linux)
 
-iQGVAwUBRJLo+cnf+vRw63ObAQomewv+L18ogJHgx3jQPt/B+K84GIAX5SugrSnZ
-ASC2jm/sbMdidU1goOepXILw2DBOWKSpuDwTZXE0uDrldMTK4RW/2dDACbGVEQX/
-Ter4cclIxNztaAwzXGHqKyOI24c5jQmlzW+yDcnErJZTexDA6xyp4xVZlySJpZev
-tzfj1Di/uYNJ83lcgS9ID64JToZ5sYZjeqy5HjfEpEQR7xHSYoaR94LNjSHMrqU8
-S32ryCMeBSX9SWP8lX7lv6YzIlPGYbOVIsskANVN4GyYVdoMXyXpNtDvziIXrxJj
-FkSCloMq5bzVuykthPer0FQRXiySyM1bWsUt9i7Xf3fF8qzyVpIJghP3GAlwh4Gs
-LRefaUkkVH61FmN+Uw65xxdx99L4ABoZJDpPBhQdOnY+BXbhNGM5p/lAi3iX72Bx
-eIMmaWiwxF8XlIaLJFbDVtGA7lwJzneQQUyHHlTZhzu+VXf4ulKPE93NKEuWWqnL
-FD9Tgmu5sFANq5iKSCyocvyAqiWljR8w
-=hQWx
+iD8DBQBEkup4Qp8BWwlsTdMRAs3aAKCJ8sbZdfg/xa/CH1Q8GVMjlevuQACeIXc9
+M6eTqHXEbHGH6YP0p70AQHQ=
+=HOzP
 -----END PGP SIGNATURE-----
+
+--=-hjjXTMgzSDLlqzN+49zo--
