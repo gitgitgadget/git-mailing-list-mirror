@@ -1,57 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-1.4.0 make problems
-Date: Sat, 17 Jun 2006 15:40:05 -0700
-Message-ID: <7vac8b76ey.fsf@assigned-by-dhcp.cox.net>
-References: <200606170218.k5H2I0o0003192@grail.cba.csuohio.edu>
-	<4493A810.6010706@lsrfire.ath.cx>
-	<7vbqsra4d2.fsf@assigned-by-dhcp.cox.net>
-	<44947A43.7070909@lsrfire.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFD] gitweb configuration
+Date: Sun, 18 Jun 2006 00:48:12 +0200
+Organization: At home
+Message-ID: <e720r0$qdv$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 00:40:16 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Jun 18 00:48:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrjSe-0002C6-O8
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:40:13 +0200
+	id 1FrjaX-0003OG-5y
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbWFQWkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 18:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbWFQWkI
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:40:08 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:26778 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750999AbWFQWkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jun 2006 18:40:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060617224006.XECM12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 17 Jun 2006 18:40:06 -0400
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <44947A43.7070909@lsrfire.ath.cx> (Rene Scharfe's message of
-	"Sat, 17 Jun 2006 23:55:15 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751052AbWFQWsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 18:48:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbWFQWsN
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:48:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:52166 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751046AbWFQWsN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 18:48:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FrjaN-0003Me-7x
+	for git@vger.kernel.org; Sun, 18 Jun 2006 00:48:11 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 00:48:11 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 00:48:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22040>
 
-Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Petr Baudis <pasky@suse.cz> writes:
+>  - we might want to have a configuration mechanism in place
+>    before enhancing gitweb.  My gut feeling is that we can use
+>    [gitweb] section in project.git/config (and probably
+>    duplicate first and deprecate later existing "description" as
+>    well).
 
-> Hrm.  Is the header really that unfriendly?  With a non-POSIX tar you
-> get an extra file and a nice, if somewhat cryptic, reminder to upgrade
-> your archiver. ;-)  Seriously, this is way below my annoyance-radar,
-> but I'm obviously biased.
+The problem is we have different types of configuration in gitweb, and we
+should take care where to put appropriate configuration options/variables.
 
-I do not mind tar-tree producing the header by default and
-having to override it with ^{tree} -- actually I think it is a
-good default.  I think that particular use in our Makefile,
-however, is not necessary.
+- build time options, like $gitexecdir ($gitbin now) or $gitweb_version 
+  ($version now) which could be set at build time a la ./configure i.e
+  my $gitexecdir = "@GIT_EXEC_DIR@"; or something like that.
 
-> What do you think about the following patch for starters?
+- gitweb installation options (gitweb version need not to correspond to 
+  git version, and we could theoretically have more than one gitweb
+  installation while one git-core installation). It was proposed to put
+  such options on gitweb.conf file in the same directory as gitweb.cgi.
+  Unfortunately if one would want to use git-repo-config for managing
+  gitweb.conf one is out of luck: git-repo-config uses $GIT_DIR/config.
 
-Documentation updates are always welcome, and I think this is a
-good change.  Thanks.
+  Among installation options we could put also defaults for repository-wide
+  (repository specific) options.
+
+  Global gitweb options include:
+  * $projectroot - absolute fs-path which will be prepended to the 
+    project path, i.e. where projects to display are located (dir)
+  * $projects_list - source of projects list (file)
+  * $home_text - html text to include at home page (file)
+  * $stylesheet - default gitweb stylesheet (file)
+  * $git_temp - where to place temporary files (dir)
+
+- repository specific options, of which gitweb for now uses only 
+  $GIT_DIR/description, and which could use repository configuration,
+  [gitweb] section.
+
+  Repository specific options [can] include:
+  * description - One line description of repository; 
+    theoretical problem: HTML escaping.
+  * blame - to make 'blame'/'annotate' interface available.
+  * blobmimemapfile - for repository specific mime map for blob_plain.
+  * favicon - if default favicon is not used.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
