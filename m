@@ -1,49 +1,75 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git-1.4.0 make problems
-Date: Sun, 18 Jun 2006 00:11:01 +0200
-Message-ID: <44947DF5.7080905@lsrfire.ath.cx>
-References: <200606171016.k5HAGQ1D005560@grail.cba.csuohio.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: safely output binary files for 'blob_plain' action
+Date: Sat, 17 Jun 2006 15:30:59 -0700
+Message-ID: <7vejxn76u4.fsf@assigned-by-dhcp.cox.net>
+References: <200606171332.15591.jnareb@gmail.com>
+	<20060617153540.GI2609@pasky.or.cz>
+	<7v8xnv8ozp.fsf@assigned-by-dhcp.cox.net>
+	<20060617220106.GJ2609@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 18 00:11:11 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Kay Sievers <kay.sievers@vrfy.org>
+X-From: git-owner@vger.kernel.org Sun Jun 18 00:31:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Frj0U-0006g2-FL
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:11:06 +0200
+	id 1FrjJq-0000wm-7f
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:31:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbWFQWK5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Jun 2006 18:10:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbWFQWK5
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:10:57 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:54753
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1750992AbWFQWK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jun 2006 18:10:56 -0400
-Received: from [10.0.1.3] (p508E50CB.dip.t-dialin.net [80.142.80.203])
-	by neapel230.server4you.de (Postfix) with ESMTP id BFDEE2E074;
-	Sun, 18 Jun 2006 00:10:54 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: Michael Somos <somos@grail.cba.csuohio.edu>
-In-Reply-To: <200606171016.k5HAGQ1D005560@grail.cba.csuohio.edu>
-X-Enigmail-Version: 0.94.0.0
+	id S1751006AbWFQWbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 18:31:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbWFQWbB
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:31:01 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47103 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751006AbWFQWbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jun 2006 18:31:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060617223100.DPDK19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 17 Jun 2006 18:31:00 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060617220106.GJ2609@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 18 Jun 2006 00:01:06 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22038>
 
-Michael Somos wrote:
-> A good suggestion, but I am a newbie as you can tell, and would prefe=
-r to
-> play in a sandbox for some time before I would attempt it.
+Petr Baudis <pasky@suse.cz> writes:
 
-You already sent a diff in your first message, so you're not that much
-of a newbie. :-)
+>> In other words, something like this:
+>> 
+>>   (in torvalds/linux-2.6.git/config)
+>> 
+>> 	[gitweb]
+>>         description = "Linus's kernel tree"
+>>         ; defaultblobcharset = "latin1"
+>>         blobmimemapfile = "mime-map"
+>> 
+>>   (in torvalds/linux-2.6.git/mime-map, first match decides)
+>> 
+>> 	fs/nls/nls_euc-jp.c	text/plain; charset=euc_jp
+>>         *.c	text/plain; charset=utf-8
+>>         *.h     text/plain; charset=utf-8
+>
+> You could as well just support the mime.types format and load
+> /etc/mime.types for this kind of mapping (see below for a patch). The
+> advantage is that this pretty much covers all the MIME types you will
+> need, the disadvantage is that it's less flexible and the charset part
+> wouldn't probably fit in nicely.
 
-Thanks for telling us about your first encounter with git, by the way.
-Take your time, and have fun learning and using git!
+Ah, I thought Jakub's patch was already taking care of
+mime.types but apparently that was not the case.  As you say,
+using /etc/mime.types for this is obviously a good point to
+start.
 
-Ren=E9
+> We could obviously do both. :-)
+
+The point of my example was about charset part; comparing the
+suffix part only is not good enough for .po files, so we should
+obviously do both.
