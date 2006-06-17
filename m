@@ -1,75 +1,57 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: safely output binary files for 'blob_plain' action
-Date: Sat, 17 Jun 2006 15:30:59 -0700
-Message-ID: <7vejxn76u4.fsf@assigned-by-dhcp.cox.net>
-References: <200606171332.15591.jnareb@gmail.com>
-	<20060617153540.GI2609@pasky.or.cz>
-	<7v8xnv8ozp.fsf@assigned-by-dhcp.cox.net>
-	<20060617220106.GJ2609@pasky.or.cz>
+Subject: Re: git-1.4.0 make problems
+Date: Sat, 17 Jun 2006 15:40:05 -0700
+Message-ID: <7vac8b76ey.fsf@assigned-by-dhcp.cox.net>
+References: <200606170218.k5H2I0o0003192@grail.cba.csuohio.edu>
+	<4493A810.6010706@lsrfire.ath.cx>
+	<7vbqsra4d2.fsf@assigned-by-dhcp.cox.net>
+	<44947A43.7070909@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Kay Sievers <kay.sievers@vrfy.org>
-X-From: git-owner@vger.kernel.org Sun Jun 18 00:31:13 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 18 00:40:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrjJq-0000wm-7f
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:31:06 +0200
+	id 1FrjSe-0002C6-O8
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbWFQWbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 18:31:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbWFQWbB
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:31:01 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47103 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751006AbWFQWbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jun 2006 18:31:00 -0400
+	id S1750999AbWFQWkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 18:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbWFQWkI
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:40:08 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:26778 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750999AbWFQWkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jun 2006 18:40:06 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060617223100.DPDK19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 17 Jun 2006 18:31:00 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060617220106.GJ2609@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 18 Jun 2006 00:01:06 +0200")
+          id <20060617224006.XECM12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 17 Jun 2006 18:40:06 -0400
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+In-Reply-To: <44947A43.7070909@lsrfire.ath.cx> (Rene Scharfe's message of
+	"Sat, 17 Jun 2006 23:55:15 +0200")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22039>
 
-Petr Baudis <pasky@suse.cz> writes:
+Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
->> In other words, something like this:
->> 
->>   (in torvalds/linux-2.6.git/config)
->> 
->> 	[gitweb]
->>         description = "Linus's kernel tree"
->>         ; defaultblobcharset = "latin1"
->>         blobmimemapfile = "mime-map"
->> 
->>   (in torvalds/linux-2.6.git/mime-map, first match decides)
->> 
->> 	fs/nls/nls_euc-jp.c	text/plain; charset=euc_jp
->>         *.c	text/plain; charset=utf-8
->>         *.h     text/plain; charset=utf-8
->
-> You could as well just support the mime.types format and load
-> /etc/mime.types for this kind of mapping (see below for a patch). The
-> advantage is that this pretty much covers all the MIME types you will
-> need, the disadvantage is that it's less flexible and the charset part
-> wouldn't probably fit in nicely.
+> Hrm.  Is the header really that unfriendly?  With a non-POSIX tar you
+> get an extra file and a nice, if somewhat cryptic, reminder to upgrade
+> your archiver. ;-)  Seriously, this is way below my annoyance-radar,
+> but I'm obviously biased.
 
-Ah, I thought Jakub's patch was already taking care of
-mime.types but apparently that was not the case.  As you say,
-using /etc/mime.types for this is obviously a good point to
-start.
+I do not mind tar-tree producing the header by default and
+having to override it with ^{tree} -- actually I think it is a
+good default.  I think that particular use in our Makefile,
+however, is not necessary.
 
-> We could obviously do both. :-)
+> What do you think about the following patch for starters?
 
-The point of my example was about charset part; comparing the
-suffix part only is not good enough for .po files, so we should
-obviously do both.
+Documentation updates are always welcome, and I think this is a
+good change.  Thanks.
