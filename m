@@ -1,66 +1,54 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH] cvsimport: ignore CVSPS_NO_BRANCH and impossible branches
-Date: Sat, 17 Jun 2006 23:27:41 +0200
-Message-ID: <20060617212741.GT7766@nowhere.earth>
-References: <11500135293734-git-send-email-martin@catalyst.net.nz> <7vzmgb8plx.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [BUG] stgit branch renaming into new dir crashes
+Date: Sat, 17 Jun 2006 23:31:21 +0200
+Message-ID: <20060617213120.GV1297@nowhere.earth>
+References: <20060613214053.GD7766@nowhere.earth> <b0943d9e0606160506g23179531v7921b67ac0e0aa0d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 17 23:27:48 2006
+Cc: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 17 23:30:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FriK4-00087H-5c
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 23:27:16 +0200
+	id 1FriNb-0000Ob-WC
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 23:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750937AbWFQV1N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 17:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750940AbWFQV1N
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 17:27:13 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:25495 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750937AbWFQV1N (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 17:27:13 -0400
+	id S1750932AbWFQVax (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 17:30:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbWFQVax
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 17:30:53 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:19353 "EHLO smtp5-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750932AbWFQVaw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 17:30:52 -0400
 Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id C37C726563;
-	Sat, 17 Jun 2006 23:27:11 +0200 (CEST)
+	by smtp5-g19.free.fr (Postfix) with ESMTP id C858326516;
+	Sat, 17 Jun 2006 23:30:51 +0200 (CEST)
 Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
 	(envelope-from <ydirson@altern.org>)
-	id 1FriKU-0002kM-0r; Sat, 17 Jun 2006 23:27:42 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id 1FriO1-0002kn-An; Sat, 17 Jun 2006 23:31:21 +0200
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vzmgb8plx.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <b0943d9e0606160506g23179531v7921b67ac0e0aa0d@mail.gmail.com>
 User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22032>
 
-On Sat, Jun 17, 2006 at 02:00:10PM -0700, Junio C Hamano wrote:
-> Martin Langhoff <martin@catalyst.net.nz> writes:
-> 
-> > cvsps output often contains references to CVSPS_NO_BRANCH, commits that it
-> > could not trace to a branch. Ignore that branch.
+On Fri, Jun 16, 2006 at 01:06:56PM +0100, Catalin Marinas wrote:
+> On 13/06/06, Yann Dirson <ydirson@altern.org> wrote:
+> >When trying to rename a branch to a name including a slash, there is
+> >no explicit creation of leading dirs, and stgit crashes:
 > >
-> > Additionally, cvsps will sometimes draw circular relationships between
-> > branches -- where two branches are recorded as opening from the other.
-> > In those cases, and where the ancestor branch hasn't been seen, ignore
-> > it.
+> >$ stg branch -r multitag dev/multitag
+> >Traceback (most recent call last):
+> [...]
 > 
-> This sounds more like an workaround than a real fix to me,
-> although I'd apply it for now.  I see Yann is collecting cvsps
-> patches but maybe there will be a real fix soonish?
+> What version of StGIT are you using? It seems to be OK with 0.10.
 
-I have not dig yet into the cases that trigger CVSPS_NO_BRANCH so
-can't make any promise, unless someone comes in with a patch already
-written :)
-
-Since the patch seems to ensure the user gets warned when a branch
-gets ignored this way, allowing it in could probably allow at least
-some people to have cvsimport does a partial job, rather than failing
-midway.  Maybe a final warning when all patchsets could not be
-imported could be issued, so the existing ones do not get simply lost
-in the verbose output.
+Right, that was with 0.9, and works perfectly with 0.10.  Relying too
+much on /usr/bin/ ... :)
 
 Best regards,
 -- 
