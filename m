@@ -1,67 +1,66 @@
-From: Juergen Ruehle <j.ruehle@bmiag.de>
+From: Christopher Faylor <me@cgf.cx>
 Subject: Re: Cygwin git and windows network shares
-Date: Sat, 17 Jun 2006 03:02:06 +0200
-Message-ID: <17555.21646.398000.619804@lapjr.intranet.kiel.bmiag.de>
-References: <4492AAFA.20807@grin.se>
-	<17554.48926.852000.679014@lapjr.intranet.kiel.bmiag.de>
+Date: Fri, 16 Jun 2006 21:23:38 -0400
+Message-ID: <20060617012338.GB23924@trixie.casa.cgf.cx>
+References: <4492AAFA.20807@grin.se> <17554.48926.852000.679014@lapjr.intranet.kiel.bmiag.de> <20060616221014.GA22181@trixie.casa.cgf.cx> <20060616223006.GA23737@trixie.casa.cgf.cx> <17555.21858.292000.494454@lapjr.intranet.kiel.bmiag.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jun 17 03:02:39 2006
+X-From: git-owner@vger.kernel.org Sat Jun 17 03:23:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrPCq-00032z-E3
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 03:02:32 +0200
+	id 1FrPXU-0005fV-Qf
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 03:23:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578AbWFQBCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 21:02:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbWFQBCW
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 21:02:22 -0400
-Received: from meriadoc.bmiag.de ([62.154.210.133]:13697 "EHLO
-	meriadoc.bmiag.de") by vger.kernel.org with ESMTP id S1751139AbWFQBCV
+	id S1751042AbWFQBXj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 21:23:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbWFQBXj
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 21:23:39 -0400
+Received: from pool-71-248-179-97.bstnma.fios.verizon.net ([71.248.179.97]:63409
+	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1751042AbWFQBXj
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 21:02:21 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by meriadoc.bmiag.de (Postfix) with ESMTP id 976813AED7
-	for <git@vger.kernel.org>; Sat, 17 Jun 2006 03:02:18 +0200 (CEST)
-Received: from meriadoc.bmiag.de ([127.0.0.1])
-	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 01679-08 for <git@vger.kernel.org>;
-	Sat, 17 Jun 2006 03:02:18 +0200 (CEST)
-Received: from eotheod.intranet.kiel.bmiag.de (eotheod.intranet.kiel.bmiag.de [10.130.2.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by meriadoc.bmiag.de (Postfix) with ESMTP id 5F9BC3AED2
-	for <git@vger.kernel.org>; Sat, 17 Jun 2006 03:02:18 +0200 (CEST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 8F07A3BB4D
-	for <git@vger.kernel.org>; Sat, 17 Jun 2006 03:02:17 +0200 (CEST)
-Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
-	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 00678-10 for <git@vger.kernel.org>;
-	Sat, 17 Jun 2006 03:02:11 +0200 (CEST)
-Received: from bmiag.de (elros.intranet.kiel.bmiag.de [10.132.1.1])
-	by eotheod.intranet.kiel.bmiag.de (Postfix) with SMTP id 4F40D3AF51
-	for <git@vger.kernel.org>; Sat, 17 Jun 2006 03:02:11 +0200 (CEST)
-Received: (qmail 18023 invoked by uid 5002); 17 Jun 2006 01:02:11 -0000
-Received: from dialin5.galadriel.bmiag.de (HELO LAPJR) (192.168.251.5)
-  by elros.intranet.kiel.bmiag.de with SMTP; 17 Jun 2006 01:02:11 -0000
-To: Niklas Frykholm <niklas@grin.se>, git@vger.kernel.org
-In-Reply-To: <17554.48926.852000.679014@lapjr.intranet.kiel.bmiag.de>
-X-Mailer: VM 7.19 under Emacs 21.3.1
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
+	Fri, 16 Jun 2006 21:23:39 -0400
+Received: by cgf.cx (Postfix, from userid 201)
+	id B8AE813C01F; Fri, 16 Jun 2006 21:23:38 -0400 (EDT)
+To: git@vger.kernel.org, Juergen Ruehle <j.ruehle@bmiag.de>
+Content-Disposition: inline
+In-Reply-To: <17555.21858.292000.494454@lapjr.intranet.kiel.bmiag.de>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21992>
 
-Juergen Ruehle writes:
- > The following hack is a workaround, but is probably not safe.
+On Sat, Jun 17, 2006 at 03:05:38AM +0200, Juergen Ruehle wrote:
+>Christopher Faylor writes:
+> > I also meant to ask if there was an i is nonzero after the call to the
+> > rename() above?  If so, what was the errno?  If not, it is a huge
+> > problem if rename is reporting that it is able to rename a file but is
+> > not actually doing it.
+>
+>After some testing the conclusion is that it's not lying, but only
+>failing in interesting ways on my (and seemingly also Niklas') system:
+>
+> - rename on NTFS succeeds (and returns 0)
+>
+> - rename on FAT32 succeeds if target does not exist (and returns 0)
+>
+>   rename on FAT32 fails if target exists with EACCESS
+>
+>   (manual mv on commandline works)
+>
+> - rename on a network share always hangs for a while and then fails
+>   with EBUSY (even if target does not exist)
+>
+>   (share served by XP, tested both NTFS and FAT32)
+>
+>   (manual mv still works)
+>
+>Various combinations of server, ntsec, and smbntsec didn't seem to
+>make a difference; /etc/{passwd,group} have been freshly created.
 
-Please just ignore it, it only helps on FAT32 partitions. Sorry for
-the confusion.
+Thanks.  I really appreciate the details.  I've passed them on to the
+last person to touch the rename code.
 
-  jr
+cgf
