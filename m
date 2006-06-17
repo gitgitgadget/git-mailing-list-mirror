@@ -1,52 +1,91 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH for cvsps] Handle cvs repo with modules
-Date: Sat, 17 Jun 2006 23:33:27 +0200
-Message-ID: <20060617213327.GW1297@nowhere.earth>
-References: <200606151249.17518.lan@academsoft.ru>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Post 1.4.0 merge status
+Date: Sat, 17 Jun 2006 14:38:59 -0700
+Message-ID: <7virmz798s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, cvsps@dm.cobite.com
-X-From: git-owner@vger.kernel.org Sat Jun 17 23:33:12 2006
+X-From: git-owner@vger.kernel.org Sat Jun 17 23:39:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FriPg-0000ji-42
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 23:33:04 +0200
+	id 1FriVV-0001hc-CX
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 23:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbWFQVdA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 17:33:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750946AbWFQVdA
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 17:33:00 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:48361 "EHLO smtp1-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750941AbWFQVc7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 17:32:59 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 3AD079AA82;
-	Sat, 17 Jun 2006 23:32:56 +0200 (CEST)
-Received: from dwitch by bylbo.nowhere.earth with local (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FriQ3-0002l0-KK; Sat, 17 Jun 2006 23:33:27 +0200
-To: Alexander Litvinov <lan@academsoft.ru>
-Content-Disposition: inline
-In-Reply-To: <200606151249.17518.lan@academsoft.ru>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1750952AbWFQVjB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 17:39:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbWFQVjB
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 17:39:01 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:47055 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750947AbWFQVjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jun 2006 17:39:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060617213900.MOMQ23482.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 17 Jun 2006 17:39:00 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22034>
 
-On Thu, Jun 15, 2006 at 12:49:17PM +0700, Alexander Litvinov wrote:
-> Parse 'Working file' lines from cvs log output. This alow to work
-> with cvs repos with modules. To enable this you need to add
-> --no-rlog to cvsps command line args.  This patch was made to import
-> such repo into git. But git-cvsimport can't load such data.
+I thank everybody who submitted patches while I was away.  
 
-Just forgot to mention it, but this patch was applied to master.
+I'm trying to catch up with you and have merged the following so
+far to "master".  Will push them out shortly after I review them
+for the last time, hopefully sometime today:
 
-Thanks,
--- 
-Yann Dirson    <ydirson@altern.org> |
-Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
-                                    |  Freedom, Power, Stability, Gratis
-     http://ydirson.free.fr/        | Check <http://www.debian.org/>
+ - pulled git-svn updates from Eric Wong (I first applied the
+   patches from the list to a test branch, and compared it with
+   the result of the pull onto the master -- they match, so I
+   decided to take the pull result).
+
+ - pulled gitk from Paul to fix "Re-read references".
+
+ - git whatchanged to show full-history from Linus.
+
+ - Portability of t4101 test for diff implementations that do
+   not do "\No newline..." from Dennis Stosberg.
+
+ - mailinfo fix from Eric W Biederman not to confuse "From: "
+   lines in the middle of log message as an in-body header.
+
+ - gitweb 'blame' that can be switched on/off from Florian
+   Foster.
+
+ - gitweb README update from Jakub.
+
+ - git-blame updates to add -time from Fredrik.
+
+ - three patches to cvsimport from Martin.
+
+ - strlcpy from Peter Eriksen.
+
+ - a p4import update from Sean.
+
+ - cvsexportcommit typofix  from Sven Verdoolaege.
+
+
+I'll be looking at these after the above;
+
+ - 2 patches to diff (color and -b/w) from Johannes.
+
+ - avoiding "make prefix=A ; make prefix=B install" confusion
+   from Yakov.
+
+I've queued the following to look at in the next round;
+
+ - format-patch -s fix from Eric W Biederman;
+
+ - 7+1 patches to make am and commands required for it built-in
+   from Lukas.
+
+ - raw-blob output from gitweb by Jakub.
+
+ - big "SHA1"->"SHA-1" and other documentation updates from
+   Horst; I was hoping to merge this while flying over Pacific,
+   but I seemed to have duplicates and was too tired and fell
+   asleep.
