@@ -1,95 +1,85 @@
-From: Philip Pokorny <ppokorny@mindspring.com>
-Subject: Re: Shrink "struct object" a bit
-Date: Sat, 17 Jun 2006 08:36:22 -0700
-Message-ID: <44942176.1070107@mindspring.com>
-References: <Pine.LNX.4.64.0606141630570.5498@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: text files for 'blob_plain' action without charset by default
+Date: Sat, 17 Jun 2006 18:07:24 +0200
+Organization: At home
+Message-ID: <e719bi$vfd$1@sea.gmane.org>
+References: <200606171332.15591.jnareb@gmail.com> <20060617153540.GI2609@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 17 17:36:39 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Jun 17 18:07:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Frcqf-0003gP-MQ
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 17:36:34 +0200
+	id 1FrdKl-0007Fj-6g
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 18:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbWFQPga (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 11:36:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbWFQPga
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 11:36:30 -0400
-Received: from elasmtp-mealy.atl.sa.earthlink.net ([209.86.89.69]:61417 "EHLO
-	elasmtp-mealy.atl.sa.earthlink.net") by vger.kernel.org with ESMTP
-	id S1751662AbWFQPg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jun 2006 11:36:29 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=dk20050327; d=mindspring.com;
-  b=oaDimHGZbUbM+b8kd0aaRdhrynkAe9Y2el3s+jyYekZAjzdedoqFP6fouQZQAuqP;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-ELNK-Trace:X-Originating-IP;
-Received: from [67.101.149.109] (helo=[172.21.42.101])
-	by elasmtp-mealy.atl.sa.earthlink.net with asmtp (TLSv1:AES256-SHA:256)
-	(Exim 4.34)
-	id 1FrcqZ-0003o0-2U; Sat, 17 Jun 2006 11:36:27 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.5) Gecko/20041217
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606141630570.5498@g5.osdl.org>
-X-ELNK-Trace: 662518af21fc89ef9c7f779228e2f6aeda0071232e20db4da64a342ebe0440cc78f1e297a3f416a8350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
-X-Originating-IP: 67.101.149.109
+	id S1751634AbWFQQHa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 12:07:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbWFQQHa
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 12:07:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:48328 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751634AbWFQQHa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 12:07:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FrdKT-0007DI-Lk
+	for git@vger.kernel.org; Sat, 17 Jun 2006 18:07:21 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 17 Jun 2006 18:07:21 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 17 Jun 2006 18:07:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22022>
 
-Linus Torvalds wrote:
+$default_text_plain_charset is undefined (no specified charset) by
+default. Additionally ':raw' layer for binmode is used for outputting file
+content.
 
->This shrinks "struct object" by a small amount, by getting rid of the 
->"struct type *" pointer and replacing it with a 3-bit bitfield instead.
->
->@@ -179,9 +179,7 @@ static int loop(void)
-> 		 */
-> 		if (! (obj->flags & TO_SCAN)) {
-> 			if (fetch(obj->sha1)) {
->-				report_missing(obj->type
->-					       ? obj->type
->-					       : "object", obj->sha1);
->+				report_missing(typename(obj->type), obj->sha1);
-> 				return -1;
-> 			}
-> 		}
->  
->
+---
+This patch depends on the previous patch in the thread:
+  "gitweb: safely output binary files for 'blob_plain' action"
+Contrary to the previous patch it is not based on other unrelated gitweb.cgi
+patches (this changes only line numbers in patch).
 
->diff --git a/object.c b/object.c
->index 9adc874..0f70890 100644
->--- a/object.c
->+++ b/object.c
->@@ -9,6 +9,10 @@ struct object **objs;
-> static int nr_objs;
-> int obj_allocs;
-> 
->+const char *type_names[] = {
->+	"none", "blob", "tree", "commit", "bad"
->+};
->+
->  
->
+ gitweb/gitweb.cgi |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-A minor thing, but doesn't this mean the "report_missing" message would 
-change from:
-
- > Cannot obtain needed object ab12cdef1234567890abcd
- > while processing commit fedcbadeadbeefdeadbe
-
-to
-
- > Cannot obtain needed none ab12cdef1234567890abcd
- > while processing commit fedcbadeadbeefdeadbe
-
-in some cases? I'm not sure that it's possible for the type value to be 
-unspecified at this point in the code, but it seemed like the output 
-from report_missing would be confusing if this ever happened.
-
-:v)
+53209981db06a5dde7c59caada279bf63d329da8
+diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
+index acac1f4..f082e5d 100755
+--- a/gitweb/gitweb.cgi
++++ b/gitweb/gitweb.cgi
+@@ -44,7 +44,7 @@ my $projects_list =   "index/index.aux";
+ 
+ # default blob_plain mimetype and default charset for text/plain blob
+ my $default_blob_plain_mimetype = 'text/plain';
+-my $default_text_plain_charset  = 'utf-8';     # can be undefined
++my $default_text_plain_charset  = undef;       # was: 'utf-8'
+ 
+ # input validation and dispatch
+ my $action = $cgi->param('a');
+@@ -1451,9 +1451,9 @@ sub git_blob_plain {
+ 
+        print $cgi->header(-type => "$type", '-content-disposition' => "inline; filename=\"$save_as\"");
+        undef $/;
+-       binmode STDOUT, ':raw' unless $type =~ m/^text\//;
++       binmode STDOUT, ':raw';
+        print <$fd>;
+-       binmode STDOUT, ':utf8' unless $type =~ m/^text\//;
++       binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+        $/ = "\n";
+        close $fd;
+ }
+-- 
+1.3.0
