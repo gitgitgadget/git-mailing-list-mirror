@@ -1,90 +1,115 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFD] gitweb configuration
-Date: Sun, 18 Jun 2006 00:48:12 +0200
-Organization: At home
-Message-ID: <e720r0$qdv$1@sea.gmane.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH 1/3] cg-admin-rewritehist: catch git-rev-list returning no commit
+Date: Sun, 18 Jun 2006 01:21:43 +0200
+Message-ID: <20060617232143.GN11941@pasky.or.cz>
+References: <20060611120431.12116.74005.stgit@gandelf.nowhere.earth> <20060611120459.12116.87606.stgit@gandelf.nowhere.earth> <20060611120431.12116.74005.stgit@gandelf.nowhere.earth> <20060611120457.12116.81253.stgit@gandelf.nowhere.earth> <20060611120431.12116.74005.stgit@gandelf.nowhere.earth> <20060611120455.12116.14042.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jun 18 00:48:23 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 18 01:21:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrjaX-0003OG-5y
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 00:48:21 +0200
+	id 1Frk65-0008Nq-3L
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 01:20:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052AbWFQWsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 18:48:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbWFQWsN
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 18:48:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:52166 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751046AbWFQWsN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 18:48:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FrjaN-0003Me-7x
-	for git@vger.kernel.org; Sun, 18 Jun 2006 00:48:11 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Jun 2006 00:48:11 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Jun 2006 00:48:11 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1751050AbWFQXUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 19:20:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbWFQXUm
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 19:20:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:30593 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750987AbWFQXUl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 19:20:41 -0400
+Received: (qmail 22459 invoked by uid 2001); 18 Jun 2006 01:21:43 +0200
+To: Yann Dirson <ydirson@altern.org>
+Content-Disposition: inline
+In-Reply-To: <20060611120459.12116.87606.stgit@gandelf.nowhere.earth> <20060611120457.12116.81253.stgit@gandelf.nowhere.earth> <20060611120455.12116.14042.stgit@gandelf.nowhere.earth>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22041>
 
-Petr Baudis <pasky@suse.cz> writes:
->  - we might want to have a configuration mechanism in place
->    before enhancing gitweb.  My gut feeling is that we can use
->    [gitweb] section in project.git/config (and probably
->    duplicate first and deprecate later existing "description" as
->    well).
+Dear diary, on Sun, Jun 11, 2006 at 02:04:55PM CEST, I got a letter
+where Yann Dirson <ydirson@altern.org> said that...
+> Signed-off-by: Yann Dirson <ydirson@altern.org>
+> ---
+> 
+>  cg-admin-rewritehist |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+> 
+> diff --git a/cg-admin-rewritehist b/cg-admin-rewritehist
+> index 861c7f6..fe3f210 100755
+> --- a/cg-admin-rewritehist
+> +++ b/cg-admin-rewritehist
+> @@ -199,6 +199,10 @@ done
+>  git-rev-list --topo-order HEAD $startrev | tac >../revs
+>  commits=$(cat ../revs | wc -l)
+>  
+> +if [ $commits -eq 0 ]; then
+> +    die "Found nothing to rewrite"
+> +fi
+> +
+>  i=0
+>  while read commit; do
+>  	i=$((i+1))
 
-The problem is we have different types of configuration in gitweb, and we
-should take care where to put appropriate configuration options/variables.
+Thanks, applied.
 
-- build time options, like $gitexecdir ($gitbin now) or $gitweb_version 
-  ($version now) which could be set at build time a la ./configure i.e
-  my $gitexecdir = "@GIT_EXEC_DIR@"; or something like that.
+Dear diary, on Sun, Jun 11, 2006 at 02:04:57PM CEST, I got a letter
+where Yann Dirson <ydirson@altern.org> said that...
+> Signed-off-by: Yann Dirson <ydirson@altern.org>
+> ---
+> 
+>  cg-admin-rewritehist |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/cg-admin-rewritehist b/cg-admin-rewritehist
+> index fe3f210..7cbdb30 100755
+> --- a/cg-admin-rewritehist
+> +++ b/cg-admin-rewritehist
+> @@ -154,6 +154,8 @@ while optparse; do
+>  	if optparse -d=; then
+>  		tempdir="$OPTARG"
+>  	elif optparse -r=; then
+> +		git-rev-parse "$OPTARG" >/dev/null || die "Unknown revision '$OPTARG'"
+> +		git-rev-parse "$OPTARG^" >/dev/null || die "Revision '$OPTARG' does not have parents, check what you really want"
+>  		startrev="^$OPTARG^ $OPTARG $startrev"
+>  		startrevparents="$OPTARG $startrevparents"
+>  	elif optparse --env-filter=; then
 
-- gitweb installation options (gitweb version need not to correspond to 
-  git version, and we could theoretically have more than one gitweb
-  installation while one git-core installation). It was proposed to put
-  such options on gitweb.conf file in the same directory as gitweb.cgi.
-  Unfortunately if one would want to use git-repo-config for managing
-  gitweb.conf one is out of luck: git-repo-config uses $GIT_DIR/config.
+Thanks, I've adapted it to the current codebase.
 
-  Among installation options we could put also defaults for repository-wide
-  (repository specific) options.
+Dear diary, on Sun, Jun 11, 2006 at 02:05:00PM CEST, I got a letter
+where Yann Dirson <ydirson@altern.org> said that...
+> This is a fix for 95621e54cedef1c4a270af5570a72fc1331b5fcb.
+> 
+> Signed-off-by: Yann Dirson <ydirson@altern.org>
+> ---
+> 
+>  cg-admin-rewritehist |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/cg-admin-rewritehist b/cg-admin-rewritehist
+> index 7cbdb30..6dd8b92 100755
+> --- a/cg-admin-rewritehist
+> +++ b/cg-admin-rewritehist
+> @@ -157,7 +157,7 @@ while optparse; do
+>  		git-rev-parse "$OPTARG" >/dev/null || die "Unknown revision '$OPTARG'"
+>  		git-rev-parse "$OPTARG^" >/dev/null || die "Revision '$OPTARG' does not have parents, check what you really want"
+>  		startrev="^$OPTARG^ $OPTARG $startrev"
+> -		startrevparents="$OPTARG $startrevparents"
+> +		startrevparents="$OPTARG^ $startrevparents"
+>  	elif optparse --env-filter=; then
+>  		filter_env="$OPTARG"
+>  	elif optparse --tree-filter=; then
 
-  Global gitweb options include:
-  * $projectroot - absolute fs-path which will be prepended to the 
-    project path, i.e. where projects to display are located (dir)
-  * $projects_list - source of projects list (file)
-  * $home_text - html text to include at home page (file)
-  * $stylesheet - default gitweb stylesheet (file)
-  * $git_temp - where to place temporary files (dir)
-
-- repository specific options, of which gitweb for now uses only 
-  $GIT_DIR/description, and which could use repository configuration,
-  [gitweb] section.
-
-  Repository specific options [can] include:
-  * description - One line description of repository; 
-    theoretical problem: HTML escaping.
-  * blame - to make 'blame'/'annotate' interface available.
-  * blobmimemapfile - for repository specific mime map for blob_plain.
-  * favicon - if default favicon is not used.
+Thanks; I've already applied a patch similar in spirit from someone
+else.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
