@@ -1,66 +1,77 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: Cygwin git and windows network shares
-Date: Fri, 16 Jun 2006 21:23:38 -0400
-Message-ID: <20060617012338.GB23924@trixie.casa.cgf.cx>
-References: <4492AAFA.20807@grin.se> <17554.48926.852000.679014@lapjr.intranet.kiel.bmiag.de> <20060616221014.GA22181@trixie.casa.cgf.cx> <20060616223006.GA23737@trixie.casa.cgf.cx> <17555.21858.292000.494454@lapjr.intranet.kiel.bmiag.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Jun 17 03:23:55 2006
+From: Michael Somos <somos@grail.cba.csuohio.edu>
+Subject: git-1.4.0 make problems
+Date: Fri, 16 Jun 2006 22:18:00 -0400
+Message-ID: <200606170218.k5H2I0o0003192@grail.cba.csuohio.edu>
+X-From: git-owner@vger.kernel.org Sat Jun 17 04:24:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrPXU-0005fV-Qf
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 03:23:53 +0200
+	id 1FrQUU-0005UL-Tb
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 04:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbWFQBXj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 21:23:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbWFQBXj
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 21:23:39 -0400
-Received: from pool-71-248-179-97.bstnma.fios.verizon.net ([71.248.179.97]:63409
-	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1751042AbWFQBXj
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 21:23:39 -0400
-Received: by cgf.cx (Postfix, from userid 201)
-	id B8AE813C01F; Fri, 16 Jun 2006 21:23:38 -0400 (EDT)
-To: git@vger.kernel.org, Juergen Ruehle <j.ruehle@bmiag.de>
-Content-Disposition: inline
-In-Reply-To: <17555.21858.292000.494454@lapjr.intranet.kiel.bmiag.de>
-User-Agent: Mutt/1.5.11
+	id S1751582AbWFQCY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 22:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751583AbWFQCY2
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 22:24:28 -0400
+Received: from grail.cba.csuohio.edu ([137.148.216.15]:717 "EHLO
+	grail.cba.csuohio.edu") by vger.kernel.org with ESMTP
+	id S1751581AbWFQCY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jun 2006 22:24:27 -0400
+Received: from grail.cba.csuohio.edu (localhost [127.0.0.1])
+	by grail.cba.csuohio.edu (8.12.11/8.12.10) with ESMTP id k5H2I0DA003194
+	for <git@vger.kernel.org>; Fri, 16 Jun 2006 22:18:00 -0400
+Received: (from somos@localhost)
+	by grail.cba.csuohio.edu (8.12.11/8.12.11/Submit) id k5H2I0o0003192
+	for git@vger.kernel.org; Fri, 16 Jun 2006 22:18:00 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21993>
 
-On Sat, Jun 17, 2006 at 03:05:38AM +0200, Juergen Ruehle wrote:
->Christopher Faylor writes:
-> > I also meant to ask if there was an i is nonzero after the call to the
-> > rename() above?  If so, what was the errno?  If not, it is a huge
-> > problem if rename is reporting that it is able to rename a file but is
-> > not actually doing it.
->
->After some testing the conclusion is that it's not lying, but only
->failing in interesting ways on my (and seemingly also Niklas') system:
->
-> - rename on NTFS succeeds (and returns 0)
->
-> - rename on FAT32 succeeds if target does not exist (and returns 0)
->
->   rename on FAT32 fails if target exists with EACCESS
->
->   (manual mv on commandline works)
->
-> - rename on a network share always hangs for a while and then fails
->   with EBUSY (even if target does not exist)
->
->   (share served by XP, tested both NTFS and FAT32)
->
->   (manual mv still works)
->
->Various combinations of server, ntsec, and smbntsec didn't seem to
->make a difference; /etc/{passwd,group} have been freshly created.
+I downloaded the git-1.4.0.tar.bz2 recently and encountered a few problems.
 
-Thanks.  I really appreciate the details.  I've passed them on to the
-last person to touch the rename code.
+1) The untar process creates a stray file "pax_global_header".
+I am using GNU tar v1.13.22 and I get this message :
 
-cgf
+======================================================================
+> tar jxf ~/u/source/git-1.4.0.tar.bz2
+tar: pax_global_header: Unknown file type 'g', extracted as normal file
+======================================================================
+
+2) The make install process ignores the "prefix=..." argument. I have
+to comment out one line for this :
+
+======================================================================
+> diff Makefile git-1.4.0/
+94c94 
+< #prefix = $(HOME)
+---
+> prefix = $(HOME)
+======================================================================
+
+3) The make has a problem with "expat" include and libararies.
+I have to add more lines to the Makefile to handle this like some
+of the other include and libraries :
+
+======================================================================
+351,358c351
+< endif
+<
+< ifndef NO_EXPAT
+<       ifdef EXPATDIR
+<               # This is still problematic -- gcc does not always want -R.
+<               ALL_CFLAGS += -I$(EXPATDIR)/include
+<               EXPAT_LIBEXPAT = -L$(EXPATDIR)/lib -R$(EXPATDIR)/lib -lexpat
+<           else
+---
+>       ifndef NO_EXPAT
+360c353
+<           endif
+---
+>       endif
+======================================================================
+
+Other than that, it installed okay. I will have to read the docs and
+use it to see how it goes otherwise.
