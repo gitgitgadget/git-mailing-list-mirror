@@ -1,61 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Collecting cvsps patches
-Date: Fri, 16 Jun 2006 16:22:39 -0700
-Message-ID: <7vslm4bs8w.fsf@assigned-by-dhcp.cox.net>
-References: <20060611122746.GB7766@nowhere.earth>
-	<46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com>
-	<20060611224205.GF1297@nowhere.earth> <e6jj39$6ua$1@sea.gmane.org>
-	<20060616212334.GN7766@nowhere.earth> <e6v7vr$ila$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: 2.6.17-rc6-mm2
+Date: Fri, 16 Jun 2006 17:22:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606161720590.5498@g5.osdl.org>
+References: <ef5305790606142040r5912ce58kf9f889c3d61b2cc0@mail.gmail.com> 
+ <ef5305790606151814i252c37c4mdd005f11f06ceac@mail.gmail.com> 
+ <Pine.LNX.4.64.0606151937360.5498@g5.osdl.org>
+ <ef5305790606152249n2702873fy7b708d9c47c78470@mail.gmail.com>
+ <Pine.LNX.4.64.0606152335130.5498@g5.osdl.org> <44931AFD.4070809@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 17 01:22:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Goo GGooo <googgooo@gmail.com>, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 17 02:22:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrNeG-00029a-7J
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 01:22:44 +0200
+	id 1FrOZr-0002MC-0U
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 02:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932472AbWFPXWl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Jun 2006 19:22:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932476AbWFPXWl
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 19:22:41 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45984 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932472AbWFPXWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jun 2006 19:22:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060616232239.WPJG27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 16 Jun 2006 19:22:39 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e6v7vr$ila$1@sea.gmane.org> (Jakub Narebski's message of "Fri,
-	16 Jun 2006 23:31:46 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751568AbWFQAWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Jun 2006 20:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbWFQAWG
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jun 2006 20:22:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49558 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751568AbWFQAWE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jun 2006 20:22:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5H0M2gt003487
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 16 Jun 2006 17:22:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5H0M1Wv003290;
+	Fri, 16 Jun 2006 17:22:02 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <44931AFD.4070809@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21989>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
-> Yann Dirson wrote:
->
->> On Mon, Jun 12, 2006 at 11:27:37AM +0000, Anand Kumria wrote:
->>> On Mon, 12 Jun 2006 00:42:05 +0200, Yann Dirson wrote:
->>> 
->>> > http://ydirson.free.fr/soft/git/cvsps.git
->>> 
->>> I think you need to chmod +x hooks/post-update
->>> 
->>> and then run 'git-update-server-info'.
->> 
->> Unfortunately, I only have FTP access to push to this site, so I have
->> to run git-update-server-info myself, and occasionally forget.  I'll
->> have to bring up-to-date my old cg-ftppush script some day :)
->
-> Or extend git to allow push/pull also via ftp?
 
-Patches welcome.
+On Fri, 16 Jun 2006, H. Peter Anvin wrote:
+> 
+> Perhaps we shouldn't rely on stderr, and instead have a backchannel as part of
+> the protocol itself.
+
+Absolutely. I'm just irritated at myself for not going that way in the 
+first place, but when I originally wrote it, I had my eyes on other 
+issues, and the nice status updates got added later..
+
+		Linus
