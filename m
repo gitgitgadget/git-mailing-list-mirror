@@ -1,101 +1,60 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: Re: parsecvs and unnamed branches
-Date: Fri, 16 Jun 2006 22:30:46 -0700
-Message-ID: <1150522246.6983.52.camel@neko.keithp.com>
-References: <9e4733910606161444i2f996096sbd1f9b3f3ff3a32d@mail.gmail.com>
-	 <1150496362.6983.34.camel@neko.keithp.com>
-	 <9e4733910606162002x508ec6ccjbc36e4220ca44fd6@mail.gmail.com>
-	 <1150513943.29738.15.camel@dv>
-	 <9e4733910606162031o69df27fdje50c88949ed990b5@mail.gmail.com>
-	 <1150517336.9144.8.camel@dv>
-	 <9e4733910606162115g2165212bgf32a2e328cce751a@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Collecting cvsps patches
+Date: Fri, 16 Jun 2006 22:50:38 -0700
+Message-ID: <7v4pykbaa9.fsf@assigned-by-dhcp.cox.net>
+References: <20060611122746.GB7766@nowhere.earth>
+	<46a038f90606111516v2c8c68e2v818a0a0f9dca2da6@mail.gmail.com>
+	<20060611224205.GF1297@nowhere.earth> <e6jj39$6ua$1@sea.gmane.org>
+	<20060616212334.GN7766@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-xDd9Gk+zY8GOQBxMgUOz"
-Cc: keithp@keithp.com, Pavel Roskin <proski@gnu.org>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 17 07:31:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 17 07:50:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrTP1-0006Es-N1
-	for gcvg-git@gmane.org; Sat, 17 Jun 2006 07:31:24 +0200
+	id 1FrThj-0008NA-SX
+	for gcvg-git@gmane.org; Sat, 17 Jun 2006 07:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbWFQFbV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 01:31:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbWFQFbV
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 01:31:21 -0400
-Received: from home.keithp.com ([63.227.221.253]:44045 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1750856AbWFQFbU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 01:31:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 0320913001F;
-	Fri, 16 Jun 2006 22:31:19 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 03977-06; Fri, 16 Jun 2006 22:31:18 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 9628D13001E; Fri, 16 Jun 2006 22:31:18 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 4662214001;
-	Fri, 16 Jun 2006 22:31:18 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id D30F76AC09F; Fri, 16 Jun 2006 22:30:47 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606162115g2165212bgf32a2e328cce751a@mail.gmail.com>
-X-Mailer: Evolution 2.6.1 
+	id S1751151AbWFQFuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 01:50:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWFQFuk
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 01:50:40 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:41898 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751151AbWFQFuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jun 2006 01:50:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060617055039.QCKZ11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 17 Jun 2006 01:50:39 -0400
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20060616212334.GN7766@nowhere.earth> (Yann Dirson's message of
+	"Fri, 16 Jun 2006 23:23:34 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22003>
 
+Yann Dirson <ydirson@altern.org> writes:
 
---=-xDd9Gk+zY8GOQBxMgUOz
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> On Mon, Jun 12, 2006 at 11:27:37AM +0000, Anand Kumria wrote:
+>> On Mon, 12 Jun 2006 00:42:05 +0200, Yann Dirson wrote:
+>> 
+>> > http://ydirson.free.fr/soft/git/cvsps.git
+>> 
+>> I think you need to chmod +x hooks/post-update
+>> 
+>> and then run 'git-update-server-info'.
+>
+> Unfortunately, I only have FTP access to push to this site, so I have
+> to run git-update-server-info myself, and occasionally forget.  I'll
+> have to bring up-to-date my old cg-ftppush script some day :)
 
-On Sat, 2006-06-17 at 00:15 -0400, Jon Smirl wrote:
-
-> >>But the real problem is why does it think the branches are in a loop?
-
-I haven't figured it out yet either; mine didn't detect the loop though,
-it just ended up spinning in the tsort code, unable to compute a valid
-order to execute branches in. Something funky must be up with the
-mozilla branches.
-
-What this code does is find an order that will 'work' when computing
-branch contents. The requirement is that the 'parent' branch be computed
-before any 'child' branches.=20
-
-It does this with a nice quadratic algorithm, building a list of 'ready'
-branches who have no 'unready' dependencies in any of the incoming file
-objects. If there are conflicts where one incoming file shows branch 'B'
-as the parent of branch 'A' while another shows branch 'A' as the parent
-of branch 'B', the sorting cannot succeed.
-
-Ideally, I'd figure out a way to eliminate the parent/child relationship
-and just treat the branches as peers with a common ancestor. I haven't
-figure out how to manage that yet; attempting to find the precise
-divergence point where the child forks from the parent remains
-complicated, it seems like trying to do that without a strong
-parent/child relationship would be even more error prone.
-
-Better error messsages here would clearly help discover which branches
-were in conflict, and show the files causing problems.
-
---=20
-keith.packard@intel.com
-
---=-xDd9Gk+zY8GOQBxMgUOz
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBEk5OGQp8BWwlsTdMRAuyZAKC3URBHR/SWgG7azMqKe3efGNxNZwCdFAVA
-GEIKF8z/MtdbBnKRMDneSH8=
-=ShEA
------END PGP SIGNATURE-----
-
---=-xDd9Gk+zY8GOQBxMgUOz--
+When I only had "serving HTTP, published via FTP" ISP accounts,
+I essentially ended up having a bare repository on my local
+machine, update it with real git-push (with the post-update hook
+there), and copied that to the ISP via lftp batch.
