@@ -1,71 +1,61 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] auto-detect changed $prefix in Makefile and properly rebuild to avoid broken install
-Date: Sun, 18 Jun 2006 16:44:47 +0200
-Message-ID: <20060618144447.GB2446@diana.vm.bytemark.co.uk>
-References: <0J0V00LDT7B9BU00@mxout2.netvision.net.il> <8aa486160606150426q19b0a661s@mail.gmail.com> <7vk67gbbe9.fsf@assigned-by-dhcp.cox.net> <20060618112404.GA2446@diana.vm.bytemark.co.uk> <7vzmga1y9k.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Santi <sbejar@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 16:45:05 2006
+From: linux@horizon.com
+Subject: Is there such a thing as a git:// proxy?
+Date: 18 Jun 2006 08:42:50 -0400
+Message-ID: <20060618124250.15471.qmail@science.horizon.com>
+X-From: git-owner@vger.kernel.org Sun Jun 18 16:46:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FryWN-0000R3-OL
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 16:45:04 +0200
+	id 1FryXL-0000Yy-EC
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 16:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbWFROoy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 18 Jun 2006 10:44:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932234AbWFROoy
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 10:44:54 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:22798 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S932190AbWFROox (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 10:44:53 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1FryW7-0001EA-00; Sun, 18 Jun 2006 15:44:47 +0100
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vzmga1y9k.fsf@assigned-by-dhcp.cox.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S932234AbWFROp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 10:45:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbWFROp6
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 10:45:58 -0400
+Received: from science.horizon.com ([192.35.100.1]:31280 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932234AbWFROp6
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jun 2006 10:45:58 -0400
+Received: (qmail 15472 invoked by uid 1000); 18 Jun 2006 08:42:50 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22083>
 
-On 2006-06-18 04:47:19 -0700, Junio C Hamano wrote:
+I have several machines tracking kernel.org, and I've been moving away
+from downloading patch files periodically (cached very nicely by squid)
+to just doing "git pull".
 
-> Thanks for the explanation.
->
-> If that's the case, I think it makes the original problem Santi
-> brought up a non-issue. In this sequence:
->
->         make prefix=3D/home/santi/usr
->         make install prefix=3D/home/santi/usr/stow/git
->         cd /home/santi/usr/stow/
->         stow -v git
->
-> the building phase could have used the same prefix as the install
-> phase uses, and git can find its subprograms in gitexecdir (=3D
-> ~/usr/stow/git/bin) just fine. It probably is even slightly more
-> efficient since it does not have to go through the symlink stow
-> installs.
+But it seems silly to be sucking four copies of the same data from
+kernel.org.
 
-Yes, exactly. I've always built git like this:
+Now, one obvious solution is to have one master copy track kernel.org
+and have all the other local machines track that.  But then I have to
+manually pull the local master every time.
 
-  $ make prefix=3D/usr/local/stow/git
-  $ sudo make prefix=3D/usr/local/stow/git install
-  $ cd /usr/local/stow
-  $ sudo stow git
+Has anyone put together something that can automatically check
+upstream for updates when someone fetches from it?
 
-It works for all other programs I've tried too (most of which only
-require me to specify the prefix once, with ./configure --prefix=3D...)=
-=2E
-The programs never need to know about the symlinks; they're only there
-for when other programs need to access them (via PATH, etc.).
+Ultimately desirable features would, I suppose include:
+- Pulling over ssh as well (using auth agent forwarding to pull
+  from upstream)
+- Support for arbitrary projects (so the cache server can handle
+  "git clone" requests), if I develop a desire to pull an -mm or
+  -libata-dev or whatever kernel, it will also work.
+- Using a single shared object pool for the above.
+- Cache cleanup if a project hasn't been used in long enough.
+  (You'd probably just time out the heads and let git-prune get
+  rid of the objects.)
+- Recycling the pack from the upstream server rather than regenerating it.
+- Progress reporting on the upstream fetch (since the point is that
+  the upstream server pipe is narrower).
+- Transparent proxy support
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+... but I'll settle for the simple solution to start.  Perhaps it could
+be as simple as a pre-upload hook invoked by git-upload-pack?
+
+This hasn't gotten itchy enough for me to start scratching it myself,
+but I figured I'd mention it and see if anyone was interested.
