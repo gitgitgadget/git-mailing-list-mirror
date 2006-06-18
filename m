@@ -1,68 +1,108 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH] Fix git to be (more) ANSI C99 compliant.
-Date: Sun, 18 Jun 2006 11:43:52 +0300
-Message-ID: <20060618114352.15191199.tihirvon@gmail.com>
-References: <1150609831500-git-send-email-octo@verplant.org>
-	<20060618110749.e6fb9030.tihirvon@gmail.com>
-	<20060618082103.GA1331@verplant.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] rebase: Allow merge strategies to be used when rebasing
+Date: Sun, 18 Jun 2006 02:08:04 -0700
+Message-ID: <7vd5d63k7f.fsf@assigned-by-dhcp.cox.net>
+References: <1150599735483-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 10:44:00 2006
+X-From: git-owner@vger.kernel.org Sun Jun 18 11:08:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Frssx-0000uz-2k
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:43:59 +0200
+	id 1FrtGR-0003vm-Ql
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 11:08:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932168AbWFRIn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 04:43:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932174AbWFRIn4
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:43:56 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:32950 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932172AbWFRInz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 04:43:55 -0400
-Received: by nf-out-0910.google.com with SMTP id y25so1136237nfb
-        for <git@vger.kernel.org>; Sun, 18 Jun 2006 01:43:54 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=VMwzgRFpDuhC/moaUMh9cCLSroUwagXqsToEQJYVQ5urkgNifJ7Wk6QNXgEOvXS2V3BfEl0V2yAZ5vuSWYoJvTRpCsSuy5be/vWrxgkN2c6qFlowk6rfdqPz6Jc1BLg1RTm06e9HvBd1FQpDNuu4RwEDFyrgfiN2wCi76vPKc2M=
-Received: by 10.49.72.7 with SMTP id z7mr3512721nfk;
-        Sun, 18 Jun 2006 01:43:54 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id c10sm5481389nfb.2006.06.18.01.43.53;
-        Sun, 18 Jun 2006 01:43:54 -0700 (PDT)
-To: Florian Forster <octo@verplant.org>
-In-Reply-To: <20060618082103.GA1331@verplant.org>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S932175AbWFRJIH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 05:08:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932176AbWFRJIG
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 05:08:06 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:58270 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932175AbWFRJIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jun 2006 05:08:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060618090805.FGJN5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 18 Jun 2006 05:08:05 -0400
+To: Eric Wong <normalperson@yhbt.net>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22064>
 
-Florian Forster <octo@verplant.org> wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> GCC ignores the FAM in this case and allocates `sizeof (struct
-> combine_diff_path)' bytes. However, this is not correct according to
-> ANSI and prevents building using other compilers (e.g. Sun cc).
+> This solves the problem of rebasing local commits against an
+> upstream that has renamed files.
 
-Fair enough.
+I think leveraging the merge strategy to perform rebase is
+sound, but the selection of merge base for this purpose is quite
+different from the regular merge, and I think unfortunately this
+patch is probably wrong in letting git-merge choose the merge
+base.
 
-> To be honest, I don't get the point of FAMs anyways. Why don't we just
-> use a pointer to `struct combine_diff_parent' there in the first place?
+But let's mention other things as well.
 
-In general FAMs are used to replace two mallocs with one.
+ - You kept the original "format-patch piped to am" workflow
+   optionally working.
 
-    x = malloc(sizeof(struct foo) + 100)
+ - You check if merge or patch was used for failed rebase and
+   follow the appropriate codepath while resuming, which is
+   good.
 
-instead of 
+ - The list of commits you generate with tac seem to include
+   merge commit -- you may want to give --no-merges to
+   rev-list.
 
-    x = malloc(sizeof(struct foo));
-    x->y = malloc(100);
+ - I do not think we use "tac" elsewhere -- is it portable
+   enough?
 
--- 
-http://onion.dynserv.net/~timo/
+ - Exiting with success unconditionally after "git am" feels
+   wrong.  I would do "exit $?" instead of "exit 0" there.
+
+Suppose you have this commit ancestry graph:
+
+----------------------------------------------------------------
+Example:       git-rebase --onto master A topic
+
+        A---B---C topic                       B'--C' topic
+       /                   -->               /
+  D---E---F---G master          D---E---F---G master
+----------------------------------------------------------------
+
+This is slightly different from the one at the beginning of the
+script.  The idea is A turned out to be not so cool, and we
+would want to drop it.
+
+> +call_merge () {
+> +	cmt="$(cat $dotest/`printf %0${prec}d $1`)"
+> +	echo "$cmt" > "$dotest/current"
+> +	git-merge $strategy_args "rebase-merge: $cmt" HEAD "$cmt" \
+> +			|| die "$MRESOLVEMSG"
+> +}
+
+call_merge is first called with B in cmt, and HEAD is pointing
+at G.  But the merge in this function makes a merge between B
+and G, taking the effect of E->A.
+
+I think the three-way merge you would want here is not between B
+and G using E as the pivot, but between B and G using A as the
+pivot.  That's how cherry-pick and revert works.  I would
+leverage the interface that is one level lower for this -- the
+strategy modules themselves.
+
+	git-merge-$strategy $cmt^ -- HEAD $cmt
+
+The strategy modules take merge base(s), double-dash as the
+separator, our head and the other head.  They do not make commit
+themselves (instead they leave working tree and index in
+committable state) and signal the results with their exit
+status:
+
+	0 -- success
+        1 -- conflicts
+        2 -- did not handle the merge at all
