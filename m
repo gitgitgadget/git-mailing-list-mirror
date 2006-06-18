@@ -1,71 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFD] gitweb configuration
-Date: Sun, 18 Jun 2006 02:40:58 -0700
-Message-ID: <7v8xnu3iol.fsf@assigned-by-dhcp.cox.net>
-References: <e720r0$qdv$1@sea.gmane.org> <20060617232358.GK2609@pasky.or.cz>
-	<e72j53$1m1$1@sea.gmane.org>
-	<46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com>
-	<e731ai$su1$1@sea.gmane.org>
-	<20060618113052.660e1017.tihirvon@gmail.com>
-	<e735d7$6dq$1@sea.gmane.org>
+Date: Sun, 18 Jun 2006 12:05:36 +0200
+Organization: At home
+Message-ID: <e738h3$e74$1@sea.gmane.org>
+References: <e720r0$qdv$1@sea.gmane.org> <20060617232358.GK2609@pasky.or.cz> <e72j53$1m1$1@sea.gmane.org> <46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com> <e731ai$su1$1@sea.gmane.org> <20060618113052.660e1017.tihirvon@gmail.com> <e735d7$6dq$1@sea.gmane.org> <7v8xnu3iol.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Timo Hirvonen <tihirvon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 18 11:41:08 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Jun 18 12:06:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrtmD-0007nf-Fz
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 11:41:05 +0200
+	id 1FruAc-00023D-TD
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 12:06:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750752AbWFRJlA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 05:41:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbWFRJlA
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 05:41:00 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:7061 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750752AbWFRJk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 05:40:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060618094059.QEXX554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Jun 2006 05:40:59 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e735d7$6dq$1@sea.gmane.org> (Jakub Narebski's message of "Sun,
-	18 Jun 2006 11:12:21 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750824AbWFRKGO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 06:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbWFRKGO
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 06:06:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:24485 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750824AbWFRKGN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 06:06:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FruAS-00020Q-81
+	for git@vger.kernel.org; Sun, 18 Jun 2006 12:06:08 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 12:06:08 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 12:06:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22067>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Timo Hirvonen wrote:
->
->> Just use "git command" and you don't have to know $gitexecdir.
->
-> First, 'git' might be not in PATH for the webserver user which runs
-> gitweb.cgi.
+> So I am with Timo on this one, except that in some cases munging
+> gitweb.cgi script itself might be needed if the installation
+> chose to hide git somewhere inaccessible from ordinary users.
+                                                ^^^^^^^^^^^^^^
 
-For that we would have a chicken-and-egg problem if we make
-configuration mechanism based on git-repo-config, so I would say
-per-site customization is needed somehow.
+The problem is with webserver user (nobody, web, apache, ...),
+which might have nonstandard PATH and/or be run from jail/chroot.
 
-Hardcoding the path into gitweb.cgi could be one way.
-Hardcoding the path to gitweb per-site configuration file and
-implement the logic to parse the configuration file without
-using git-repo-config would be another.  Even if you wanted to
-use "git --exec-path" to bootstrap, not having "git" in the path
-would make it, eh, cumbersome.
-
-My gut feeling is that it is sensible to assume git is on
-everybody's path -- after all the site is running gitweb and
-majority would be using binary packaged distribution, so git
-would be installed somewhere sensible and accessible.
-
-So I am with Timo on this one, except that in some cases munging
-gitweb.cgi script itself might be needed if the installation
-chose to hide git somewhere inaccessible from ordinary users.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
