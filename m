@@ -1,309 +1,72 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] rebase: Allow merge strategies to be used when rebasing
-Date: Sat, 17 Jun 2006 20:02:15 -0700
-Message-ID: <1150599735483-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Jun 18 05:02:30 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] gitweb configuration
+Date: Sun, 18 Jun 2006 06:00:47 +0200
+Organization: At home
+Message-ID: <e72j53$1m1$1@sea.gmane.org>
+References: <e720r0$qdv$1@sea.gmane.org> <20060617232358.GK2609@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Jun 18 06:01:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrnYL-0004S4-OZ
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 05:02:22 +0200
+	id 1FroTI-00032E-Lf
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 06:01:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932074AbWFRDCS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 23:02:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932075AbWFRDCS
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 23:02:18 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:27264 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S932074AbWFRDCS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 23:02:18 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 5E2DD7DC020;
-	Sat, 17 Jun 2006 20:02:16 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 17 Jun 2006 20:02:15 -0700
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.0.ge24c
+	id S1751073AbWFREBD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 18 Jun 2006 00:01:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbWFREBD
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 00:01:03 -0400
+Received: from main.gmane.org ([80.91.229.2]:22725 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751073AbWFREBB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 00:01:01 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FroSz-00030A-Eo
+	for git@vger.kernel.org; Sun, 18 Jun 2006 06:00:53 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 06:00:53 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 06:00:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22049>
 
-This solves the problem of rebasing local commits against an
-upstream that has renamed files.
+Petr Baudis wrote:
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Documentation/git-rebase.txt |   20 +++++
- git-rebase.sh                |  176 ++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 186 insertions(+), 10 deletions(-)
+>> - gitweb installation options (gitweb version need not to correspond=
+ to=20
+>>   git version, and we could theoretically have more than one gitweb
+>>   installation while one git-core installation). It was proposed to =
+put
+>>   such options on gitweb.conf file in the same directory as gitweb.c=
+gi.
+>>   Unfortunately if one would want to use git-repo-config for managin=
+g
+>>   gitweb.conf one is out of luck: git-repo-config uses $GIT_DIR/conf=
+ig.
+>=20
+> In the longer term, perhaps this kind of configuration might land in =
+the
+> global git configuration file.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 08ee4aa..c339c45 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -7,7 +7,7 @@ git-rebase - Rebase local commits to a n
- 
- SYNOPSIS
- --------
--'git-rebase' [--onto <newbase>] <upstream> [<branch>]
-+'git-rebase' [--merge] [--onto <newbase>] <upstream> [<branch>]
- 
- 'git-rebase' --continue | --skip | --abort
- 
-@@ -106,6 +106,24 @@ OPTIONS
- --abort::
- 	Restore the original branch and abort the rebase operation.
- 
-+--skip::
-+	Restart the rebasing process by skipping the current patch.
-+	This does not work with the --merge option.
-+
-+--merge::
-+	Use merging strategies to rebase.  When the recursive (default) merge
-+	strategy is used, this allows rebase to be aware of renames on the
-+	upstream side.
-+
-+-s <strategy>, \--strategy=<strategy>::
-+	Use the given merge strategy; can be supplied more than
-+	once to specify them in the order they should be tried.
-+	If there is no `-s` option, a built-in list of strategies
-+	is used instead (`git-merge-recursive` when merging a single
-+	head, `git-merge-octopus` otherwise).  This implies --merge.
-+
-+include::merge-strategies.txt[]
-+
- NOTES
- -----
- When you rebase a branch, you are changing its history in a way that
-diff --git a/git-rebase.sh b/git-rebase.sh
-index e6b57b8..68bddfb 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -34,7 +34,81 @@ When you have resolved this problem run 
- If you would prefer to skip this patch, instead run \"git rebase --skip\".
- To restore the original branch and stop rebasing run \"git rebase --abort\".
- "
-+
-+MRESOLVEMSG="
-+When you have resolved this problem run \"git rebase --continue\".
-+To restore the original branch and stop rebasing run \"git rebase --abort\".
-+"
- unset newbase
-+strategy_args=
-+do_merge=
-+dotest=$GIT_DIR/.dotest-merge
-+prec=4
-+
-+continue_merge () {
-+	test -n "$prev_head" || die "prev_head must be defined"
-+	test -d "$dotest" || die "$dotest directory does not exist"
-+
-+	unmerged=$(git-ls-files -u)
-+	if test -n "$unmerged"
-+	then
-+		echo "You still have unmerged paths in your index"
-+		echo "did you forget update-index?"
-+		die "$MRESOLVEMSG"
-+	fi
-+
-+	mh="$GIT_DIR/MERGE_HEAD"
-+	mm="$GIT_DIR/MERGE_MSG"
-+	if test -f "$mh" && test -f "$mm"
-+	then
-+		git-commit -F "$mm" || die "commit failed: $MRESOLVEMSG"
-+	else
-+		echo "Previous merge succeeded automatically"
-+	fi
-+
-+	prev_head=`git-rev-parse HEAD^0`
-+
-+	# save the resulting commit so we can read-tree on it later
-+	echo "$prev_head" > "$dotest/`printf %0${prec}d $msgnum`.result"
-+	echo "$prev_head" > "$dotest/prev_head"
-+
-+	# onto the next patch:
-+	msgnum=$(($msgnum + 1))
-+	printf "%0${prec}d" "$msgnum" > "$dotest/msgnum"
-+}
-+
-+call_merge () {
-+	cmt="$(cat $dotest/`printf %0${prec}d $1`)"
-+	echo "$cmt" > "$dotest/current"
-+	git-merge $strategy_args "rebase-merge: $cmt" HEAD "$cmt" \
-+			|| die "$MRESOLVEMSG"
-+}
-+
-+finish_rb_merge () {
-+	set -e
-+
-+	msgnum=1
-+	echo "Finalizing rebased commits..."
-+	git-reset --hard "`cat $dotest/upstream`"
-+	end="`cat $dotest/end`"
-+	while test "$msgnum" -le "$end"
-+	do
-+		msgnum=`printf "%0${prec}d" "$msgnum"`
-+		printf "%0${prec}d" "$msgnum" > "$dotest/msgnum"
-+
-+		git-read-tree `cat "$dotest/$msgnum.result"`
-+		git-checkout-index -q -f -u -a
-+		git-commit -C "`cat $dotest/$msgnum`"
-+
-+		echo "Committed $msgnum"
-+		echo '    '`git-rev-list --pretty=oneline -1 HEAD | \
-+					sed 's/^[a-f0-9]\+ //'`
-+		msgnum=$(($msgnum + 1))
-+	done
-+	rm -r "$dotest"
-+	echo "All done."
-+}
-+
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -46,17 +120,42 @@ do
- 			exit 1
- 			;;
- 		esac
-+		if test -d "$dotest"
-+		then
-+			prev_head="`cat $dotest/prev_head`"
-+			end="`cat $dotest/end`"
-+			msgnum="`cat $dotest/msgnum`"
-+			continue_merge
-+			while test "$msgnum" -le "$end"
-+			do
-+				call_merge "$msgnum"
-+				continue_merge
-+			done
-+			finish_rb_merge
-+			exit
-+		fi
- 		git am --resolved --3way --resolvemsg="$RESOLVEMSG"
- 		exit
- 		;;
- 	--skip)
-+		if test -d "$dotest"
-+		then
-+			die "--skip is not supported when using --merge"
-+		fi
- 		git am -3 --skip --resolvemsg="$RESOLVEMSG"
- 		exit
- 		;;
- 	--abort)
--		[ -d .dotest ] || die "No rebase in progress?"
-+		if test -d "$dotest"
-+		then
-+			rm -r "$dotest"
-+		elif test -d .dotest
-+		then
-+			rm -r .dotest
-+		else
-+			die "No rebase in progress?"
-+		fi
- 		git reset --hard ORIG_HEAD
--		rm -r .dotest
- 		exit
- 		;;
- 	--onto)
-@@ -64,6 +163,24 @@ do
- 		newbase="$2"
- 		shift
- 		;;
-+	-M|-m|--m|--me|--mer|--merg|--merge)
-+		do_merge=t
-+		;;
-+	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
-+		--strateg=*|--strategy=*|\
-+	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-+		case "$#,$1" in
-+		*,*=*)
-+			strategy=`expr "$1" : '-[^=]*=\(.*\)'` ;;
-+		1,*)
-+			usage ;;
-+		*)
-+			strategy="$2"
-+			shift ;;
-+		esac
-+		do_merge=t
-+		strategy_args="${strategy_args}-s $strategy "
-+		;;
- 	-*)
- 		usage
- 		;;
-@@ -75,16 +192,25 @@ do
- done
- 
- # Make sure we do not have .dotest
--if mkdir .dotest
-+if test -z "$do_merge"
- then
--	rmdir .dotest
--else
--	echo >&2 '
-+	if mkdir .dotest
-+	then
-+		rmdir .dotest
-+	else
-+		echo >&2 '
- It seems that I cannot create a .dotest directory, and I wonder if you
- are in the middle of patch application or another rebase.  If that is not
- the case, please rm -fr .dotest and run me again.  I am stopping in case
- you still have something valuable there.'
--	exit 1
-+		exit 1
-+	fi
-+else
-+	if test -d "$dotest"
-+	then
-+		die "previous dotest directory $dotest still exists." \
-+			'try git-rebase < --continue | --abort >'
-+	fi
- fi
- 
- # The tree must be really really clean.
-@@ -152,6 +278,38 @@ then
- 	exit 0
- fi
- 
--git-format-patch -k --stdout --full-index "$upstream"..ORIG_HEAD |
--git am --binary -3 -k --resolvemsg="$RESOLVEMSG"
-+if test -z "$do_merge"
-+then
-+	git-format-patch -k --stdout --full-index "$upstream"..ORIG_HEAD |
-+	git am --binary -3 -k --resolvemsg="$RESOLVEMSG"
-+	exit 0
-+fi
-+
-+# start doing a rebase with git-merge
-+# this is rename-aware if the recursive (default) strategy is used
-+
-+mkdir -p "$dotest"
-+echo "$upstream" > "$dotest/upstream"
-+prev_head=`git-rev-parse HEAD^0`
-+echo "$prev_head" > "$dotest/prev_head"
-+
-+msgnum=0
-+for cmt in `git-rev-list "$upstream"..ORIG_HEAD | tac`
-+do
-+	msgnum=$(($msgnum + 1))
-+	echo "$cmt" > "$dotest/`printf "%0${prec}d" $msgnum`"
-+done
-+
-+printf "%0${prec}d" 1 > "$dotest/msgnum"
-+printf "%0${prec}d" "$msgnum" > "$dotest/end"
-+
-+end=$msgnum
-+msgnum=1
-+
-+while test "$msgnum" -le "$end"
-+do
-+	call_merge "$msgnum"
-+	continue_merge
-+done
- 
-+finish_rb_merge
--- 
-1.4.0.ge24c
+We could use user's "global" configuration file, ~/.gitconfig, in patch
+from Johannes=A0Schindelin (and now in 'pu').
+
+So GIT_CONFIG would be ~/.gitconfig, and GIT_CONFIG_LOCAL would be=20
+$GIT_DIR/config or what?
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
