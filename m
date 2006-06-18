@@ -1,71 +1,57 @@
-From: Florian Forster <octo@verplant.org>
-Subject: Re: [PATCH] Fix git to be (more) ANSI C99 compliant.
-Date: Sun, 18 Jun 2006 10:35:03 +0200
-Message-ID: <20060618083502.GB1331@verplant.org>
-References: <1150609831500-git-send-email-octo@verplant.org> <44950E32.10904@lsrfire.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFD] gitweb configuration
+Date: Sun, 18 Jun 2006 01:38:02 -0700
+Message-ID: <7v64iy505x.fsf@assigned-by-dhcp.cox.net>
+References: <e720r0$qdv$1@sea.gmane.org> <20060617232358.GK2609@pasky.or.cz>
+	<e72j53$1m1$1@sea.gmane.org>
+	<46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MW5yreqqjyrRcusr"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 10:35:18 2006
+X-From: git-owner@vger.kernel.org Sun Jun 18 10:38:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrskO-0008Dd-Sy
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:35:09 +0200
+	id 1FrsnI-0000C6-R3
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:38:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751128AbWFRIfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 04:35:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbWFRIfF
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:35:05 -0400
-Received: from verplant.org ([213.95.21.52]:4588 "EHLO huhu.verplant.org")
-	by vger.kernel.org with ESMTP id S1751128AbWFRIfE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 04:35:04 -0400
-Received: from octo by huhu.verplant.org with local (Exim 4.50)
-	id 1FrskJ-0002cO-8T; Sun, 18 Jun 2006 10:35:03 +0200
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Content-Disposition: inline
-In-Reply-To: <44950E32.10904@lsrfire.ath.cx>
-X-Pgp-Fingerprint: E7F2 3FEC B693 9F6F 9B77  ACF6 8EF9 1EF5 9152 3C3D
-X-Pgp-Public-Key: http://verplant.org/pubkey.txt
-User-Agent: Mutt/1.5.9i
+	id S1751131AbWFRIiF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 04:38:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbWFRIiE
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:38:04 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40604 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751131AbWFRIiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jun 2006 04:38:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060618083803.EVWQ5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 18 Jun 2006 04:38:03 -0400
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com>
+	(Martin Langhoff's message of "Sun, 18 Jun 2006 19:42:48 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22062>
 
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
---MW5yreqqjyrRcusr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 6/18/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>> So GIT_CONFIG would be ~/.gitconfig, and GIT_CONFIG_LOCAL would be
+>> $GIT_DIR/config or what?
+>
+> I don't quite follow why gitweb needs a GIT_CONFIG_LOCAL defined.
+> Given that it works in a CGI environment, it should read
+> $GIT_DIR/config by default, and $GIT_CONFIG if set (from httpd.conf).
 
-Hi Rene,
-
-On Sun, Jun 18, 2006 at 10:26:26AM +0200, Rene Scharfe wrote:
-> However, could you split it up a bit?
-
-Sure, I'll follow up on this in a short while..
-
--octo
---=20
-Florian octo Forster
-Hacker in training
-GnuPG: 0x91523C3D
-http://verplant.org/
-
---MW5yreqqjyrRcusr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFElRA2jvke9ZFSPD0RAsMUAJ9JYtYEnGygLIJO+osZo5PMTv9SQwCeKDWX
-XUQOccOAEGAUhJU1U/P2/ZM=
-=VTng
------END PGP SIGNATURE-----
-
---MW5yreqqjyrRcusr--
+I am not Pasky, but I think the intent of the patch is to run
+"git repo-config" with GIT_CONFIG pointing at /etc/gitweb.conf
+to obtain server-wide configuration (e.g. finding out where
+repositories are) and then when serving individual repository
+(i.e. after we set up GIT_DIR to point at it) run "git
+repo-config" without GIT_CONFIG to read per-repository
+configuration.  That way we can reuse the configuration parser.
