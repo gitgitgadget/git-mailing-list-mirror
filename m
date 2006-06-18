@@ -1,60 +1,66 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH 1/7] Remove ranges from switch statements.
-Date: Mon, 19 Jun 2006 00:24:45 +0300
-Message-ID: <20060619002445.3af68c2b.tihirvon@gmail.com>
-References: <11506438892865-git-send-email-octo@verplant.org>
-	<1150643889264-git-send-email-octo@verplant.org>
-	<7vveqyyxyj.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Figured out how to get Mozilla into git
+Date: Mon, 19 Jun 2006 09:40:44 +1200
+Message-ID: <46a038f90606181440q4fd03bebl9495ace131eb958@mail.gmail.com>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+	 <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+	 <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
+	 <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
+	 <Pine.LNX.4.64.0606111747110.2703@localhost.localdomain>
+	 <Pine.LNX.4.64.0606181223580.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 23:24:58 2006
+Cc: "Nicolas Pitre" <nico@cam.org>, "Jon Smirl" <jonsmirl@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 18 23:41:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fs4lL-0007HE-Fm
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 23:24:55 +0200
+	id 1Fs518-0000lG-HO
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 23:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932088AbWFRVYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 17:24:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932091AbWFRVYw
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 17:24:52 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:791 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932088AbWFRVYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 17:24:52 -0400
-Received: by nf-out-0910.google.com with SMTP id y25so1185155nfb
-        for <git@vger.kernel.org>; Sun, 18 Jun 2006 14:24:50 -0700 (PDT)
+	id S932311AbWFRVkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 17:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbWFRVkq
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 17:40:46 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:38846 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932311AbWFRVkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jun 2006 17:40:45 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so1547103ugf
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 14:40:44 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=r1pSwVa8cpgHO3fTckZ5ANGoty3XOFxG5qKBJU0MMeLlGy3JbYKjYCX8KN0sNqpgbxnPpN8IiJutD08K1u0V7lcViJjqtfkuOIPDoRene+FsMlPNGm9otOZ6N4tx7XY0qbcjp6JTgs596oWu83YXIdUttrqFea85kKK2LSugY2o=
-Received: by 10.49.60.12 with SMTP id n12mr3939082nfk;
-        Sun, 18 Jun 2006 14:24:50 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id l22sm4878320nfc.2006.06.18.14.24.48;
-        Sun, 18 Jun 2006 14:24:49 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vveqyyxyj.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h9iAefr/zyJv6DJRHq2gv7qdw6IHZng6Pk3zSfAWP0YySbFa6XqAWw7yoZTJ4mt3SSi7EJSGavXc4Bl92OrPU1q7NDqXV6FBgkmEbNiZNfo3uO8rn+RLemJNSM9/Cuqdhx//wuKNICVjQMzlyMS8N/t54saZeTR0G7TrwlVLRRk=
+Received: by 10.78.51.9 with SMTP id y9mr1700016huy;
+        Sun, 18 Jun 2006 14:40:44 -0700 (PDT)
+Received: by 10.78.128.15 with HTTP; Sun, 18 Jun 2006 14:40:44 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606181223580.5498@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22104>
 
-Junio C Hamano <junkio@cox.net> wrote:
+On 6/19/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> Or is it just me?
 
-> Sorry for bringing up an old topic again, but wouldn't people
-> agree that this is easier to read if it were written this way ;-)?
->  
-> 	if (	   (('A' <= ch) && (ch <= 'Z'))
->         	|| (('a' <= ch) && (ch <= 'z'))
-> 		|| (('0' <= ch) && (ch <= '9'))
-> 	...
+No problems here with my latest import run. fsck-objects --full comes
+clean, takes 14m:
 
-Yes, but isalnum(ch) even better ;)
+/usr/bin/time git-fsck-objects --full
+737.22user 38.79system 14:09.40elapsed 91%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (20807major+19483471minor)pagefaults 0swaps
 
--- 
-http://onion.dynserv.net/~timo/
+BTW, that import (with the latest code Junio has) took 37hs even with
+the aggressive repack -a -d. I want to bench it dropping the -a from
+the recurrring repack, and doing a final repack -a -d.
+
+cheers,
+
+
+martin
