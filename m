@@ -1,130 +1,74 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: git 1.4.0 usability problem
-Date: Sun, 18 Jun 2006 19:01:15 -0400
-Message-ID: <4495DB3B.10403@garzik.org>
-References: <449557B6.1080907@garzik.org> <7vbqsqdru0.fsf@assigned-by-dhcp.cox.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: [PATCH] Fix PPC SHA1 routine for large input buffers
+Date: Mon, 19 Jun 2006 09:25:16 +1000
+Message-ID: <17557.57564.267469.561683@cargo.ozlabs.ibm.com>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+	<46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+	<46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
+	<Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
+	<Pine.LNX.4.64.0606111747110.2703@localhost.localdomain>
+	<Pine.LNX.4.64.0606181223580.5498@g5.osdl.org>
+	<46a038f90606181440q4fd03bebl9495ace131eb958@mail.gmail.com>
+	<Pine.LNX.4.64.0606181532130.5498@g5.osdl.org>
+	<Pine.LNX.4.64.0606181543270.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Mon Jun 19 01:01:52 2006
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Nicolas Pitre <nico@cam.org>, Jon Smirl <jonsmirl@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 19 01:25:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fs6H9-0003q9-Jd
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 01:01:52 +0200
+	id 1Fs6dz-0006O0-4P
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 01:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750727AbWFRXBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 19:01:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbWFRXBS
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 19:01:18 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:42630 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1750727AbWFRXBS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 19:01:18 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1Fs6GZ-0005LB-Vu; Sun, 18 Jun 2006 23:01:16 +0000
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqsqdru0.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Score: -4.2 (----)
-X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.2 points, 5.0 required)
+	id S1750847AbWFRXZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 19:25:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbWFRXZX
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 19:25:23 -0400
+Received: from ozlabs.org ([203.10.76.45]:31708 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1750847AbWFRXZW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 19:25:22 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 5EE7A67B28; Mon, 19 Jun 2006 09:25:21 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606181543270.5498@g5.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22112>
 
-Junio C Hamano wrote:
-> Jeff Garzik <jeff@garzik.org> writes:
-> 
->> Here is how to reproduce:
-> 
-> This is not related to the "not clobbering untracked files"
-> safety valve under discussion, but one thing I noticed.
-> 
->> git clone -l $url/torvalds/linux-2.6.git tmp-2.6
->> cd tmp-2.6
->> cp .git/refs/tags/v2.6.12 .git/refs/heads/tmp
->> git checkout -f tmp
-> 
-> This should never have been supported.  At this point tmp is a
-> tag object that is under heads/ -- a definite no-no.  We should
-> make checkout more careful to complain about it.
-> 
-> Doing
-> 
->         git update-ref refs/heads/tmp $(git rev-parse v2.6.12^0)
-> 
-> instead of "cp" is kosher, and
-> 
-> 	git-rev-parse v2.6.12^0 >.git/refs/heads/tmp
-> 
-> is OK under the current implementation of refs.
+The PPC SHA1 routine had an overflow which meant that it gave
+incorrect results for input buffers >= 512MB.  This fixes it by
+ensuring that the update of the total length in bits is done using
+64-bit arithmetic.
 
-Sorry about that.  The contrived example produced the same results as 
-the real-world example (updating jgarzik/{libata-dev,scsilun-2.6}.git 
-branches).
+Signed-off-by: Paul Mackerras <paulus@samba.org>
+---
+Linus Torvalds writes:
 
+> Paul - I think the ppc SHA1_Update() overflows in 32 bits, when the length 
+> of the memory area to be checksummed is huge.
 
->> git pull . master
->> # watch OBVIOUS FAST-FORWARD MERGE complain about untracked
->> # working tree files
-> 
-> In any case, here is a patch I think would alleviate your
-> original problem.
-> 
-> Sorry for the trouble.  I really did not want to disrupt the
-> workflow of old timers in the name of making it safer for new
-> people.  Could you comment on whether this is an acceptable
-> approach?
-> 
-> -- >8 --
-> [PATCH] Conditionally loosen "no clobber untracked files" safety valve.
-> 
-> This introduces a new configuration item "core.oktoclobber" to
-> control how untracked working tree file is handled during branch
-> switching.
-> 
-> The safety valve introduced during 1.4.0 development cycle
-> refrains from checking out a file that exists in the working
-> tree, not in the current HEAD tree and exists in the branch we
-> are switching to, in order to prevent accidental and
-> irreversible lossage of user data.  This can be controlled by
-> having core.oktoclobber configuration item:
+Yep.  I checked the assembly output of this, and it looks right, but I
+haven't actually tested it by running it...
 
-I'm a bit under the weather today, so I must defer thinking about this. 
-  :)  But if what Ryan says is true, about simply needing to ditch the 
-"-f" argument I habitually pass to 'git checkout', would that alleviate 
-the need for a patch?
+Paul.
 
-FWIW, my workflow is
-
-	cd /repos
-	cd linux-2.6
-	git pull
-	cd ../libata-dev
-	git checkout -f master	# guarantee any WIP goes away
-	git pull ../linux-2.6	# update vanilla branch
-	git checkout -f upstream# switch to working branch,
-				# guarantee any WIP goes away.
-	git pull . master	# pull latest upstream updates
-	build/test/etc.
-	git checkout -f sii-m15w # switch to topic-specific branch,
-				 # whose parent is always #upstream
-	git pull . upstream
-	build/test/etc.
-	repeat for several topics (on-going devel branches)
-	git checkout -f -b ALL upstream	# create everything-together
-					# test branch
-	git pull . sii-m15w
-	git pull . topicB
-	git pull . topicC
-	build/test/etc.
-	git checkout -f master
-	./push		# calls 'git push --force --all $url'
-
-More tomorrow,
-
-	Jeff
+diff --git a/ppc/sha1.c b/ppc/sha1.c
+index 5ba4fc5..0820398 100644
+--- a/ppc/sha1.c
++++ b/ppc/sha1.c
+@@ -30,7 +30,7 @@ int SHA1_Update(SHA_CTX *c, const void *
+ 	unsigned long nb;
+ 	const unsigned char *p = ptr;
+ 
+-	c->len += n << 3;
++	c->len += (uint64_t) n << 3;
+ 	while (n != 0) {
+ 		if (c->cnt || n < 64) {
+ 			nb = 64 - c->cnt;
