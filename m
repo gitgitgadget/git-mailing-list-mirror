@@ -1,59 +1,71 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [RFD] gitweb configuration
-Date: Sun, 18 Jun 2006 11:30:52 +0300
-Message-ID: <20060618113052.660e1017.tihirvon@gmail.com>
-References: <e720r0$qdv$1@sea.gmane.org>
-	<20060617232358.GK2609@pasky.or.cz>
-	<e72j53$1m1$1@sea.gmane.org>
-	<46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com>
-	<e731ai$su1$1@sea.gmane.org>
+From: Florian Forster <octo@verplant.org>
+Subject: Re: [PATCH] Fix git to be (more) ANSI C99 compliant.
+Date: Sun, 18 Jun 2006 10:35:03 +0200
+Message-ID: <20060618083502.GB1331@verplant.org>
+References: <1150609831500-git-send-email-octo@verplant.org> <44950E32.10904@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="MW5yreqqjyrRcusr"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 10:31:01 2006
+X-From: git-owner@vger.kernel.org Sun Jun 18 10:35:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrsgN-0007jo-LI
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:31:00 +0200
+	id 1FrskO-0008Dd-Sy
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbWFRIa4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 04:30:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbWFRIa4
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:30:56 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:61604 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751126AbWFRIaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 04:30:55 -0400
-Received: by nf-out-0910.google.com with SMTP id y25so1135589nfb
-        for <git@vger.kernel.org>; Sun, 18 Jun 2006 01:30:54 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=s8XD2NyZ7vSDIvTcvBm4/kPXE644Hie9ZQv4hQDzM+2ier0Q3ljH+/A0SQeqeZO9YAWm7Rn/hdNiFq7o+T6Ocp+wxNtkbbCguaQW3+psYpJSG/kxTymoRayy5jyOMfAsjAVog8x5csAedfjjLyBReWDNm5+QlL5xy8wxT7lEjp4=
-Received: by 10.48.43.7 with SMTP id q7mr3491822nfq;
-        Sun, 18 Jun 2006 01:30:54 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id p43sm2585059nfa.2006.06.18.01.30.53;
-        Sun, 18 Jun 2006 01:30:54 -0700 (PDT)
-To: jnareb@gmail.com
-In-Reply-To: <e731ai$su1$1@sea.gmane.org>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S1751128AbWFRIfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 04:35:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbWFRIfF
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:35:05 -0400
+Received: from verplant.org ([213.95.21.52]:4588 "EHLO huhu.verplant.org")
+	by vger.kernel.org with ESMTP id S1751128AbWFRIfE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 04:35:04 -0400
+Received: from octo by huhu.verplant.org with local (Exim 4.50)
+	id 1FrskJ-0002cO-8T; Sun, 18 Jun 2006 10:35:03 +0200
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Content-Disposition: inline
+In-Reply-To: <44950E32.10904@lsrfire.ath.cx>
+X-Pgp-Fingerprint: E7F2 3FEC B693 9F6F 9B77  ACF6 8EF9 1EF5 9152 3C3D
+X-Pgp-Public-Key: http://verplant.org/pubkey.txt
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22061>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
 
-> - use ~/.gitconfig, /etc/gitconfig or some other global git configuration 
->   file, reading values using '$gitexecdir/git-repo-config'.
->   Problem: bootstraping, namely value of $gitexecdir ($gitbin now)
->   needs to be set in gitweb.cgi, perhaps during the build process.
+--MW5yreqqjyrRcusr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Just use "git command" and you don't have to know $gitexecdir.
+Hi Rene,
 
--- 
-http://onion.dynserv.net/~timo/
+On Sun, Jun 18, 2006 at 10:26:26AM +0200, Rene Scharfe wrote:
+> However, could you split it up a bit?
+
+Sure, I'll follow up on this in a short while..
+
+-octo
+--=20
+Florian octo Forster
+Hacker in training
+GnuPG: 0x91523C3D
+http://verplant.org/
+
+--MW5yreqqjyrRcusr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFElRA2jvke9ZFSPD0RAsMUAJ9JYtYEnGygLIJO+osZo5PMTv9SQwCeKDWX
+XUQOccOAEGAUhJU1U/P2/ZM=
+=VTng
+-----END PGP SIGNATURE-----
+
+--MW5yreqqjyrRcusr--
