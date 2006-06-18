@@ -1,121 +1,117 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFD] gitweb configuration
-Date: Sun, 18 Jun 2006 01:23:58 +0200
-Message-ID: <20060617232358.GK2609@pasky.or.cz>
-References: <e720r0$qdv$1@sea.gmane.org>
+Subject: [ANNOUNCE] Cogito-0.17.3
+Date: Sun, 18 Jun 2006 02:19:30 +0200
+Message-ID: <20060618001930.GL2609@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 01:23:02 2006
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 18 02:18:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Frk84-0000DS-LE
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 01:23:01 +0200
+	id 1Frkzt-0006xG-W0
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 02:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751068AbWFQXW4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Jun 2006 19:22:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbWFQXW4
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 19:22:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63917 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751066AbWFQXWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 19:22:55 -0400
-Received: (qmail 24319 invoked by uid 2001); 18 Jun 2006 01:23:58 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+	id S1751075AbWFRAS2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Jun 2006 20:18:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbWFRAS2
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jun 2006 20:18:28 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:22240 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751075AbWFRAS1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Jun 2006 20:18:27 -0400
+Received: (qmail 6827 invoked by uid 2001); 18 Jun 2006 02:19:30 +0200
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <e720r0$qdv$1@sea.gmane.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22043>
 
-Dear diary, on Sun, Jun 18, 2006 at 12:48:12AM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> >  - we might want to have a configuration mechanism in place
-> >    before enhancing gitweb.  My gut feeling is that we can use
-> >    [gitweb] section in project.git/config (and probably
-> >    duplicate first and deprecate later existing "description" as
-> >    well).
+  Hello,
 
-(Note that this is what Junio said, not me.)
+  cogito-0.17.3 was just released - bugfixes release on the latest
+stable line of the Cogito user-friendly Git user interface.
 
-> - gitweb installation options (gitweb version need not to correspond to 
->   git version, and we could theoretically have more than one gitweb
->   installation while one git-core installation). It was proposed to put
->   such options on gitweb.conf file in the same directory as gitweb.cgi.
->   Unfortunately if one would want to use git-repo-config for managing
->   gitweb.conf one is out of luck: git-repo-config uses $GIT_DIR/config.
+  Plenty of new stuff, mostly bugfixes - especially cg-admin-rewritehist
+was particularily bug-ridden and Git 1.4.0 broke some backwards
+compatibility, Cogito 0.17.3 should work smoothly with it again.
 
-In the longer term, perhaps this kind of configuration might land in the
-global git configuration file.
+  So, what's new?
 
----
-[PATCH] Support for extracting configuration from different files
+  * Many cg-admin-rewritehist bugfixes; note that -r semantics was
+    changed to match documentation, -k steps in to mean what -r used
+    to in practice
+  * Some documentation fixes
+  * Adjust to some Git 1.4.0 usage changes and new-style git-http-push
+  * Several other random things
 
-Add $GIT_CONFIG environment variable whose content is used instead
-of .git/config if set. Also add $GIT_CONFIG_LOCAL as a
-forward-compatibility cue for whenever we will finally come to support]
-global configuration files (properly).
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+  Who did what:
 
- Documentation/git-repo-config.txt |   12 ++++++++++++
- config.c                          |   12 +++++++++++-
- 2 files changed, 23 insertions(+), 1 deletions(-)
+Bertrand Jacquin:
+      Push over HTTP now works with refs/heads/foo instead of foo
 
-diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
-index d5142e0..803c0d5 100644
---- a/Documentation/git-repo-config.txt
-+++ b/Documentation/git-repo-config.txt
-@@ -73,6 +73,18 @@ OPTIONS
- 	List all variables set in .git/config.
- 
- 
-+ENVIRONMENT
-+-----------
-+
-+GIT_CONFIG::
-+	Take the configuration from the given file instead of .git/config.
-+
-+GIT_CONFIG_LOCAL::
-+	Currently the same as $GIT_CONFIG; when Git will support global
-+	configuration files, this will cause it to take the configuration
-+	from the global configuration file in addition to the given file.
-+
-+
- EXAMPLE
- -------
- 
-diff --git a/config.c b/config.c
-index c474970..42e1493 100644
---- a/config.c
-+++ b/config.c
-@@ -317,7 +317,17 @@ int git_config_from_file(config_fn_t fn,
- 
- int git_config(config_fn_t fn)
- {
--	return git_config_from_file(fn, git_path("config"));
-+	const char *filename = git_path("config");
-+	/* Forward-compatibility cue: $GIT_CONFIG makes git read _only_
-+	 * the given config file, $GIT_CONFIG_LOCAL will make it process
-+	 * it in addition to the global config file, the same way it would
-+	 * the per-repository config file otherwise. */
-+	if (getenv("GIT_CONFIG")) {
-+		filename = getenv("GIT_CONFIG");
-+	} else if (getenv("GIT_CONFIG_LOCAL")) {
-+		filename = getenv("GIT_CONFIG_LOCAL");
-+	}
-+	return git_config_from_file(fn, filename);
- }
- 
- /*
+Dennis Stosberg:
+      cg-clean fails on files beginning with a dash
+
+Johannes Sixt:
+      cg-admin-rewritehist: Seed the commit map with the parents specified with -r
+      Enhance the rewritemap seeding when given symbolic commit ids
+      cg-admin-rewritehist: fix reappearing files with --filter-tree
+      cg-admin-rewritehist: Add the documented but missing --msg-filter option.
+      cg-admin-rewritehist: Must use the parent of the start rev to seed the map.
+      cg-admin-rewritehist: Support multiple parents of the start revision (-r).
+      cg-admin-rewritehist: Support partial rewriting of complicated history.
+
+Jonas Fonseca:
+      ciabot: fix post-update hook description
+      Portfile: bring it up to date; use description from cogito.spec.in
+      Minor doc fixes
+      Fix section slicing so help options are not misplaced in cg-commit(1)
+
+Martin Langhoff:
+      cg-status -- disambiguate parameters to git-diff-files
+
+Pavel Roskin:
+      Fix cg-status with recent git versions
+      [PATCH 1/2] Fix cg-patch hanging on terminals with TOSTOP flag
+      [PATCH 2/2] Improve the tutorial script
+
+Petr Baudis:
+      mkdir -p .git/info since git-init-db won't always create it
+      Separate git-diff-* file arguments by --
+      Export the $PATH we've set
+      Use local Cogito version when running the tutorial script
+      Fix cg-rm -r in a subdirectory
+      Do not export relpath - fixes cg-add -r in a subdir
+      Fix output of cg-status path with path given w/o trailing slash
+      cg-status: do not strip subdirs given in path specifier
+      Make cg-rm -r subdir fix actually safe
+      Fix broken tree timewarp with late git versions
+      Use tail -n +2 inst. of tail +2
+      Make testcases take input from /dev/null
+      Fix cg-tag calls changed by the backported update
+      Fix cg-admin-rewritehist -r
+      Indentation fix
+      cg-admin-rewritehist: Die in case of invalid revisions
+      cogito-0.17.3
+
+Yann Dirson:
+      [PATCH 2/2] Catch history inconsistency in cg-admin-rewritehist
+      Fix cg-object-id to lookup parents in the Right Way
+      [PATCH 1/3] cg-admin-rewritehist: catch git-rev-list returning no commit
+
+
+P.S.: See us at #git @ FreeNode!
+
+  Happy hacking,
 
 -- 
-				Petr "Pasky" Baudis
+				Petr "Pasky the lousy poet" Baudis
 Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
