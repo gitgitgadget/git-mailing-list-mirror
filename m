@@ -1,107 +1,130 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Broken PPC sha1.. (Re: Figured out how to get Mozilla into git)
-Date: Sun, 18 Jun 2006 15:51:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606181543270.5498@g5.osdl.org>
-References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com> 
- <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com> 
- <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com> 
- <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org> 
- <Pine.LNX.4.64.0606111747110.2703@localhost.localdomain> 
- <Pine.LNX.4.64.0606181223580.5498@g5.osdl.org>
- <46a038f90606181440q4fd03bebl9495ace131eb958@mail.gmail.com>
- <Pine.LNX.4.64.0606181532130.5498@g5.osdl.org>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: git 1.4.0 usability problem
+Date: Sun, 18 Jun 2006 19:01:15 -0400
+Message-ID: <4495DB3B.10403@garzik.org>
+References: <449557B6.1080907@garzik.org> <7vbqsqdru0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Jon Smirl <jonsmirl@gmail.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 19 00:51:16 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Mon Jun 19 01:01:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fs66t-0002cH-3j
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 00:51:15 +0200
+	id 1Fs6H9-0003q9-Jd
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 01:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbWFRWvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 18:51:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbWFRWvM
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 18:51:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:31688 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750958AbWFRWvL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 18:51:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5IMp3gt006125
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 18 Jun 2006 15:51:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5IMp2de006616;
-	Sun, 18 Jun 2006 15:51:02 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>,
-	Paul Mackerras <paulus@samba.org>
-In-Reply-To: <Pine.LNX.4.64.0606181532130.5498@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750727AbWFRXBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 19:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbWFRXBS
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 19:01:18 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:42630 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S1750727AbWFRXBS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 19:01:18 -0400
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
+	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1Fs6GZ-0005LB-Vu; Sun, 18 Jun 2006 23:01:16 +0000
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqsqdru0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: -4.2 (----)
+X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.2 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22111>
 
-
-
-
-On Sun, 18 Jun 2006, Linus Torvalds wrote:
+Junio C Hamano wrote:
+> Jeff Garzik <jeff@garzik.org> writes:
 > 
-> On Mon, 19 Jun 2006, Martin Langhoff wrote:
-> > 
-> > No problems here with my latest import run. fsck-objects --full comes
-> > clean, takes 14m:
-> >
-> > /usr/bin/time git-fsck-objects --full
-> > 737.22user 38.79system 14:09.40elapsed 91%CPU (0avgtext+0avgdata 0maxresident)k
-> > 0inputs+0outputs (20807major+19483471minor)pagefaults 0swaps
+>> Here is how to reproduce:
 > 
-> It takes much less than that for me: 
+> This is not related to the "not clobbering untracked files"
+> safety valve under discussion, but one thing I noticed.
 > 
-> 	408.40user 32.56system 7:22.07elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-> 	0inputs+0outputs (145major+13455672minor)pagefaults 0swaps
+>> git clone -l $url/torvalds/linux-2.6.git tmp-2.6
+>> cd tmp-2.6
+>> cp .git/refs/tags/v2.6.12 .git/refs/heads/tmp
+>> git checkout -f tmp
+> 
+> This should never have been supported.  At this point tmp is a
+> tag object that is under heads/ -- a definite no-no.  We should
+> make checkout more careful to complain about it.
+> 
+> Doing
+> 
+>         git update-ref refs/heads/tmp $(git rev-parse v2.6.12^0)
+> 
+> instead of "cp" is kosher, and
+> 
+> 	git-rev-parse v2.6.12^0 >.git/refs/heads/tmp
+> 
+> is OK under the current implementation of refs.
 
-Ok, re-building the thing with MOZILLA_SHA1=1 rather than my default 
-PPC_SHA1=1 fixes the problem. I no longer get that "SHA1 mismatch with 
-itself" on the pack-file.
+Sorry about that.  The contrived example produced the same results as 
+the real-world example (updating jgarzik/{libata-dev,scsilun-2.6}.git 
+branches).
 
-Sadly, it also takes a _lot_ longer to fsck.
 
-Paul - I think the ppc SHA1_Update() overflows in 32 bits, when the length 
-of the memory area to be checksummed is huge.
+>> git pull . master
+>> # watch OBVIOUS FAST-FORWARD MERGE complain about untracked
+>> # working tree files
+> 
+> In any case, here is a patch I think would alleviate your
+> original problem.
+> 
+> Sorry for the trouble.  I really did not want to disrupt the
+> workflow of old timers in the name of making it safer for new
+> people.  Could you comment on whether this is an acceptable
+> approach?
+> 
+> -- >8 --
+> [PATCH] Conditionally loosen "no clobber untracked files" safety valve.
+> 
+> This introduces a new configuration item "core.oktoclobber" to
+> control how untracked working tree file is handled during branch
+> switching.
+> 
+> The safety valve introduced during 1.4.0 development cycle
+> refrains from checking out a file that exists in the working
+> tree, not in the current HEAD tree and exists in the branch we
+> are switching to, in order to prevent accidental and
+> irreversible lossage of user data.  This can be controlled by
+> having core.oktoclobber configuration item:
 
-In particular, the pack-file is 535MB in size, and the way we check the 
-SHA1 checksum is by just mapping it all, doing a single SHA1_Update() over 
-the whole pack-file, and comparing the end result with the internal SHA1 
-at the end of the pack-file.
+I'm a bit under the weather today, so I must defer thinking about this. 
+  :)  But if what Ryan says is true, about simply needing to ditch the 
+"-f" argument I habitually pass to 'git checkout', would that alleviate 
+the need for a patch?
 
-The PPC SHA1_Update() function starts off with:
+FWIW, my workflow is
 
-	int SHA1_Update(SHA_CTX *c, const void *ptr, unsigned long n)
-	{
-	...
-		c->len += n << 3;
+	cd /repos
+	cd linux-2.6
+	git pull
+	cd ../libata-dev
+	git checkout -f master	# guarantee any WIP goes away
+	git pull ../linux-2.6	# update vanilla branch
+	git checkout -f upstream# switch to working branch,
+				# guarantee any WIP goes away.
+	git pull . master	# pull latest upstream updates
+	build/test/etc.
+	git checkout -f sii-m15w # switch to topic-specific branch,
+				 # whose parent is always #upstream
+	git pull . upstream
+	build/test/etc.
+	repeat for several topics (on-going devel branches)
+	git checkout -f -b ALL upstream	# create everything-together
+					# test branch
+	git pull . sii-m15w
+	git pull . topicB
+	git pull . topicC
+	build/test/etc.
+	git checkout -f master
+	./push		# calls 'git push --force --all $url'
 
-which will obviously overflow if "n" is bigger than 29 bits, ie 512MB.
+More tomorrow,
 
-So doing the length in bits (or whatever that "<<3" is there for) doesn't 
-seem to be such a great idea.
-
-I guess we could make the caller just always chunk it up, but wouldn't it 
-be nice to fix the PPC SHA1 implementation instead?
-
-That said, the _only_ thing this will ever trigger on in practice is 
-exactly this one case: a large packfile whose checksum was _correctly_ 
-generated - because pack-file generation does it in IO chunks using the 
-csum-file interfaces - but that will be incorrectly checked because we 
-check it all at once.
-
-So as bugs go, it's a fairly benign one.
-
-			Linus
+	Jeff
