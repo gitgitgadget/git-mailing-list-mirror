@@ -1,57 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] gitweb configuration
-Date: Sun, 18 Jun 2006 01:38:02 -0700
-Message-ID: <7v64iy505x.fsf@assigned-by-dhcp.cox.net>
-References: <e720r0$qdv$1@sea.gmane.org> <20060617232358.GK2609@pasky.or.cz>
-	<e72j53$1m1$1@sea.gmane.org>
-	<46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [PATCH] Fix git to be (more) ANSI C99 compliant.
+Date: Sun, 18 Jun 2006 11:43:52 +0300
+Message-ID: <20060618114352.15191199.tihirvon@gmail.com>
+References: <1150609831500-git-send-email-octo@verplant.org>
+	<20060618110749.e6fb9030.tihirvon@gmail.com>
+	<20060618082103.GA1331@verplant.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 10:38:16 2006
+X-From: git-owner@vger.kernel.org Sun Jun 18 10:44:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrsnI-0000C6-R3
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:38:09 +0200
+	id 1Frssx-0000uz-2k
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 10:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751131AbWFRIiF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 04:38:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbWFRIiE
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:38:04 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40604 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751131AbWFRIiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 04:38:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060618083803.EVWQ5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Jun 2006 04:38:03 -0400
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90606180042w7b4d11dbvbea28b750ddbc6e2@mail.gmail.com>
-	(Martin Langhoff's message of "Sun, 18 Jun 2006 19:42:48 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932168AbWFRIn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 04:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932174AbWFRIn4
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 04:43:56 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:32950 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932172AbWFRInz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jun 2006 04:43:55 -0400
+Received: by nf-out-0910.google.com with SMTP id y25so1136237nfb
+        for <git@vger.kernel.org>; Sun, 18 Jun 2006 01:43:54 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=VMwzgRFpDuhC/moaUMh9cCLSroUwagXqsToEQJYVQ5urkgNifJ7Wk6QNXgEOvXS2V3BfEl0V2yAZ5vuSWYoJvTRpCsSuy5be/vWrxgkN2c6qFlowk6rfdqPz6Jc1BLg1RTm06e9HvBd1FQpDNuu4RwEDFyrgfiN2wCi76vPKc2M=
+Received: by 10.49.72.7 with SMTP id z7mr3512721nfk;
+        Sun, 18 Jun 2006 01:43:54 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.229.197])
+        by mx.gmail.com with ESMTP id c10sm5481389nfb.2006.06.18.01.43.53;
+        Sun, 18 Jun 2006 01:43:54 -0700 (PDT)
+To: Florian Forster <octo@verplant.org>
+In-Reply-To: <20060618082103.GA1331@verplant.org>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22063>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+Florian Forster <octo@verplant.org> wrote:
 
-> On 6/18/06, Jakub Narebski <jnareb@gmail.com> wrote:
->> So GIT_CONFIG would be ~/.gitconfig, and GIT_CONFIG_LOCAL would be
->> $GIT_DIR/config or what?
->
-> I don't quite follow why gitweb needs a GIT_CONFIG_LOCAL defined.
-> Given that it works in a CGI environment, it should read
-> $GIT_DIR/config by default, and $GIT_CONFIG if set (from httpd.conf).
+> GCC ignores the FAM in this case and allocates `sizeof (struct
+> combine_diff_path)' bytes. However, this is not correct according to
+> ANSI and prevents building using other compilers (e.g. Sun cc).
 
-I am not Pasky, but I think the intent of the patch is to run
-"git repo-config" with GIT_CONFIG pointing at /etc/gitweb.conf
-to obtain server-wide configuration (e.g. finding out where
-repositories are) and then when serving individual repository
-(i.e. after we set up GIT_DIR to point at it) run "git
-repo-config" without GIT_CONFIG to read per-repository
-configuration.  That way we can reuse the configuration parser.
+Fair enough.
+
+> To be honest, I don't get the point of FAMs anyways. Why don't we just
+> use a pointer to `struct combine_diff_parent' there in the first place?
+
+In general FAMs are used to replace two mallocs with one.
+
+    x = malloc(sizeof(struct foo) + 100)
+
+instead of 
+
+    x = malloc(sizeof(struct foo));
+    x->y = malloc(100);
+
+-- 
+http://onion.dynserv.net/~timo/
