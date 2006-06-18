@@ -1,64 +1,71 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: git 1.4.0 usability problem
-Date: Sun, 18 Jun 2006 09:40:06 -0400
-Message-ID: <449557B6.1080907@garzik.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] auto-detect changed $prefix in Makefile and properly rebuild to avoid broken install
+Date: Sun, 18 Jun 2006 16:44:47 +0200
+Message-ID: <20060618144447.GB2446@diana.vm.bytemark.co.uk>
+References: <0J0V00LDT7B9BU00@mxout2.netvision.net.il> <8aa486160606150426q19b0a661s@mail.gmail.com> <7vk67gbbe9.fsf@assigned-by-dhcp.cox.net> <20060618112404.GA2446@diana.vm.bytemark.co.uk> <7vzmga1y9k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jun 18 15:40:22 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Santi <sbejar@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 18 16:45:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrxVg-0008MN-Qe
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 15:40:17 +0200
+	id 1FryWN-0000R3-OL
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 16:45:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932233AbWFRNkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 09:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWFRNkN
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 09:40:13 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:15595 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S932233AbWFRNkM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 09:40:12 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1FrxVa-0004Sg-WA
-	for git@vger.kernel.org; Sun, 18 Jun 2006 13:40:11 +0000
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: -4.2 (----)
-X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.2 points, 5.0 required)
+	id S932190AbWFROoy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 18 Jun 2006 10:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932234AbWFROoy
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 10:44:54 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:22798 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S932190AbWFROox (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jun 2006 10:44:53 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1FryW7-0001EA-00; Sun, 18 Jun 2006 15:44:47 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vzmga1y9k.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22082>
 
-Now that kernel 2.6.17 is out, I updated all my repositories to be based 
-against that kernel.  And for each repository I updated, my merge was 
-rejected, due to an error similar to:
+On 2006-06-18 04:47:19 -0700, Junio C Hamano wrote:
 
-> fatal: Untracked working tree file '.gitignore' would be overwritten by merge.
+> Thanks for the explanation.
+>
+> If that's the case, I think it makes the original problem Santi
+> brought up a non-issue. In this sequence:
+>
+>         make prefix=3D/home/santi/usr
+>         make install prefix=3D/home/santi/usr/stow/git
+>         cd /home/santi/usr/stow/
+>         stow -v git
+>
+> the building phase could have used the same prefix as the install
+> phase uses, and git can find its subprograms in gitexecdir (=3D
+> ~/usr/stow/git/bin) just fine. It probably is even slightly more
+> efficient since it does not have to go through the symlink stow
+> installs.
 
-I am only able to merge if I delete files in the working directory, so 
-that git stops complaining on merge.
+Yes, exactly. I've always built git like this:
 
-This behavior is new with git 1.4.0, which Fedora Extras just added.  I 
-verified that merges work as expected in git 1.3.3, the last version 
-Fedora Extras shipped prior to 1.4.0.
+  $ make prefix=3D/usr/local/stow/git
+  $ sudo make prefix=3D/usr/local/stow/git install
+  $ cd /usr/local/stow
+  $ sudo stow git
 
-This behavior is a definite regression, that impacts workflow :(
+It works for all other programs I've tried too (most of which only
+require me to specify the prefix once, with ./configure --prefix=3D...)=
+=2E
+The programs never need to know about the symlinks; they're only there
+for when other programs need to access them (via PATH, etc.).
 
-Here is how to reproduce:
-
-git clone -l $url/torvalds/linux-2.6.git tmp-2.6
-cd tmp-2.6
-cp .git/refs/tags/v2.6.12 .git/refs/heads/tmp
-git checkout -f tmp
-git pull . master
-# watch OBVIOUS FAST-FORWARD MERGE complain about untracked
-# working tree files
-
-Regards,
-
-	Jeff
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
