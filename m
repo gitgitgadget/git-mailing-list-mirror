@@ -1,54 +1,47 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] Make release tarballs friendlier to older tar versions
-Date: Sun, 18 Jun 2006 15:25:33 +0200
-Message-ID: <20060618132533.GA31005@lsrfire.ath.cx>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] auto-detect changed $prefix in Makefile and properly rebuild to avoid broken install
+Date: Sun, 18 Jun 2006 15:31:38 +0200
+Message-ID: <20060618133138.GO2609@pasky.or.cz>
+References: <0J0V00LDT7B9BU00@mxout2.netvision.net.il> <7vver3cxlw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 18 15:25:38 2006
+Cc: Yakov Lerner <iler.ml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 18 15:30:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FrxHV-0006my-N7
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 15:25:38 +0200
+	id 1FrxMJ-0007Ey-EX
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 15:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226AbWFRNZf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 09:25:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbWFRNZe
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 09:25:34 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:63928
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S932226AbWFRNZe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 09:25:34 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id 809151A037; Sun, 18 Jun 2006 15:25:33 +0200 (CEST)
+	id S932221AbWFRNac (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 09:30:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932229AbWFRNac
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 09:30:32 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:2264 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932221AbWFRNac (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 09:30:32 -0400
+Received: (qmail 22405 invoked by uid 2001); 18 Jun 2006 15:31:38 +0200
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <7vver3cxlw.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22080>
 
-git-tar-tree adds an extended pax header to archives if its first
-parameter points to a commit.  It confuses older tars and isn't
-very useful in the case of git anyway, so stop doing it.
+Dear diary, on Wed, Jun 14, 2006 at 10:04:43PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+>  - we may want to make the state file a bit more visible (IOW, I
+>    somewhat do mind the name being dot-git-dot-prefix).
 
-Idea: Junio, implementation: Junio.  I just wrote it up. :-)
+What is the point? It is just a bit of internal build system state made
+persistent and shouldn't be interesting for the user, so why give it
+extra publicity in the tree?
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-
-diff --git a/Makefile b/Makefile
-index 2a1e639..28517f4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -667,7 +667,7 @@ git.spec: git.spec.in
- 
- GIT_TARNAME=git-$(GIT_VERSION)
- dist: git.spec git-tar-tree
--	./git-tar-tree HEAD $(GIT_TARNAME) > $(GIT_TARNAME).tar
-+	./git-tar-tree HEAD^{tree} $(GIT_TARNAME) > $(GIT_TARNAME).tar
- 	@mkdir -p $(GIT_TARNAME)
- 	@cp git.spec $(GIT_TARNAME)
- 	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
