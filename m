@@ -1,35 +1,40 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Remove "refs" field from "struct object"
-Date: Sun, 18 Jun 2006 11:57:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606181147080.5498@g5.osdl.org>
-References: <Pine.LNX.4.64.0606181137380.5498@g5.osdl.org>
+Subject: Re: Figured out how to get Mozilla into git
+Date: Sun, 18 Jun 2006 12:26:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606181223580.5498@g5.osdl.org>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+ <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+ <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
+ <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
+ <Pine.LNX.4.64.0606111747110.2703@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Jun 18 20:57:51 2006
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 18 21:26:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fs2Sz-0006FM-84
-	for gcvg-git@gmane.org; Sun, 18 Jun 2006 20:57:49 +0200
+	id 1Fs2uw-00014S-4K
+	for gcvg-git@gmane.org; Sun, 18 Jun 2006 21:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932296AbWFRS5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 14:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWFRS5q
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 14:57:46 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:20624 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932290AbWFRS5p (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 14:57:45 -0400
+	id S932305AbWFRT0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Jun 2006 15:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932303AbWFRT0j
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 15:26:39 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12949 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932299AbWFRT0i (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jun 2006 15:26:38 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5IIvfgt028664
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5IJQPgt029858
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 18 Jun 2006 11:57:41 -0700
+	Sun, 18 Jun 2006 12:26:26 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5IIvebQ001219;
-	Sun, 18 Jun 2006 11:57:41 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0606181137380.5498@g5.osdl.org>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5IJQOkX001983;
+	Sun, 18 Jun 2006 12:26:25 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0606111747110.2703@localhost.localdomain>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
 X-MIMEDefang-Filter: osdl$Revision: 1.135 $
@@ -37,44 +42,26 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22098>
 
 
 
-On Sun, 18 Jun 2006, Linus Torvalds wrote:
->
-> The "refs" field, which is really needed only for fsck, is maintained in
-> a separate hashed lookup-table, allowing all normal users to totally
-> ignore it.
+On Sun, 11 Jun 2006, Nicolas Pitre wrote:
+> 
+> Then I used git-repack -a -f --window=20 --depth=20 which produced a 
+> nice 468MB pack file along with the invariant 45MB index file for a 
+> grand total of 535MB for the whole repo (the .git/refs/ directory alone 
+> still occupies 17MB on disk).
 
-Btw, in case people wondered: the cost to git-fsck-objects seems to be 
-zero and sometimes apparently even negative.
+Btw, can others with that mozilla repo confirm that a mozilla repository 
+that has been repacked seems to be entirely fine, but git-fsck-objects 
+(with "--full", of course) will report
 
-In order to remove "refs" from "struct object", I had to add it to the 
-object_refs structure instead, and so you'd think that the memory usage 
-for git-fsck-objects (which needs the object refs) should be unchanged, 
-while the hashed lookup should be more expensive than just the direct 
-pointer lookup.
+	error: Packfile .git/objects/pack/pack-06389c21fc3c4312cbc9a4ddde087c907c1a840b.pack SHA1 mismatch with itself
 
-Actually testing it, though, implies that isn't the case. Lots of objects 
-(every single blob object, in fact) have no refs at all, and for that case 
-we don't create any "object_refs" structure at all, so we don't actually 
-end up with a 1:1 relationship, and we win a small amount of memory.
+for me (the fsck then completes with no other errors what-so-ever, so the 
+contents are actually fine).
 
-And the hashing seems to be effective enough that it's no costlier than 
-looking up the ref pointer directly from the object. There's probably 
-some bad cache behaviour from the hashing, but it didn't show up in the 
-benchmarking I did (ie fsck took as long before as it did afterwards, 
-both for git and for the kernel archive).
-
-It may be (probably is) that the reachability analysis is just a very 
-small portion of the overall costs, and it's just not very noticeable. It 
-may also be that whatever bad cache behaviours you get from the extra hash 
-lookup are just balanced out by the objects themselves being slightly 
-denser and better in the cache (although that is probably partly hidden 
-again by the extra malloc padding).
-
-Regardless, there doesn't really seem to be any downsides, but I didn't 
-test it _that_ exhaustively.
+Or is it just me?
 
 		Linus
