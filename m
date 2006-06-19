@@ -1,83 +1,139 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rebase: Allow merge strategies to be used when rebasing
-Date: Mon, 19 Jun 2006 14:55:28 -0700
-Message-ID: <7vbqso95f3.fsf@assigned-by-dhcp.cox.net>
-References: <1150599735483-git-send-email-normalperson@yhbt.net>
-	<7vd5d63k7f.fsf@assigned-by-dhcp.cox.net>
-	<20060619213951.GA6987@hand.yhbt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Fix setting config variables with an alternative GIT_CONFIG
+Date: Tue, 20 Jun 2006 00:51:58 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606200050150.26329@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 19 23:56:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Jun 20 00:52:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsRiY-0004j5-1Z
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 23:55:36 +0200
+	id 1FsSbD-0005P5-GI
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 00:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964923AbWFSVza (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 17:55:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964927AbWFSVza
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 17:55:30 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:31464 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S964923AbWFSVz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jun 2006 17:55:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060619215529.LIWP15767.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 19 Jun 2006 17:55:29 -0400
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <20060619213951.GA6987@hand.yhbt.net> (Eric Wong's message of
-	"Mon, 19 Jun 2006 14:39:51 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964964AbWFSWwA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 18:52:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964965AbWFSWwA
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 18:52:00 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6324 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964964AbWFSWwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jun 2006 18:52:00 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id BB35B2060;
+	Tue, 20 Jun 2006 00:51:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id AFBD0205E;
+	Tue, 20 Jun 2006 00:51:58 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 9B6F81D7D;
+	Tue, 20 Jun 2006 00:51:58 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22142>
 
-Eric Wong <normalperson@yhbt.net> writes:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->
->>  - You kept the original "format-patch piped to am" workflow
->>    optionally working.
->
-> I left it as the default, too.  I figured that it's best not
-> to change the default (and most likely faster) behavior of
-> something people rely on.
+When setting a config variable, git_config_set() ignored the variables
+GIT_CONFIG and GIT_CONFIG_LOCAL. Now, when GIT_CONFIG_LOCAL is set, it
+will write to that file. If not, GIT_CONFIG is checked, and only as a
+fallback, the change is written to $GIT_DIR/config.
 
-I should have said: "You kept ... working, which is good".
+Add a test for it, and also future-proof the test for the upcoming
+$HOME/.gitconfig support.
 
->> I think the three-way merge you would want here is not between B
->> and G using E as the pivot, but between B and G using A as the
->> pivot.  That's how cherry-pick and revert works.  I would
->> leverage the interface that is one level lower for this -- the
->> strategy modules themselves.
->> 
->> 	git-merge-$strategy $cmt^ -- HEAD $cmt
->
-> Changing the 'git-merge $strategy_args "rebase-merge: $cmt" HEAD "$cmt"'
-> line in call_merge() to this seems to have broken more tests.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ config.c               |   15 ++++++++++++---
+ t/Makefile             |    2 +-
+ t/t1300-repo-config.sh |   24 ++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 4 deletions(-)
 
-Oh, that is to be expected if you changed git-merge -s recursive
-with git-merge-recursive without other changes.  The former
-makes a commit (which your original patch later used to create a
-separate commit chain and discarded); the latter does not make a
-commit but expects the caller to create a commit out of the
-resulting index file.
-
-> I'm not an expert at merging strategies by any measure, I've just
-> trusted merge-recursive to Do The Right Thing(TM) more often than not,
-> and use rerere to avoid repeating work.
-
-I was originally hoping that rebasing would just be a matter of
-listing sequence of commits to be ported onto a new base and
-running "git-cherry-pick" on each of them in sequence.  Now
-cherry-pick does not use merge machinery (hence does not use
-git-merge-recursive), but if we change that then updating rebase
-would be pretty much straightforward.  It just needs a UI layer
-to guide the user through recovery process when the merge does
-not resolve cleanly in the middle, no?
+diff --git a/config.c b/config.c
+index d46eb6d..69aa05f 100644
+--- a/config.c
++++ b/config.c
+@@ -500,10 +500,19 @@ int git_config_set_multivar(const char* 
+ 	int i, dot;
+ 	int fd = -1, in_fd;
+ 	int ret;
+-	char* config_filename = strdup(git_path("config"));
+-	char* lock_file = strdup(git_path("config.lock"));
++	char* config_filename;
++	char* lock_file;
+ 	const char* last_dot = strrchr(key, '.');
+ 
++	config_filename = getenv("GIT_CONFIG_LOCAL");
++	if (!config_filename) {
++		config_filename = getenv("GIT_CONFIG");
++		if (!config_filename)
++			config_filename  = git_path("config");
++	}
++	config_filename = strdup(config_filename);
++	lock_file = strdup(mkpath("%s.lock", config_filename));
++
+ 	/*
+ 	 * Since "key" actually contains the section name and the real
+ 	 * key name separated by a dot, we have to know where the dot is.
+@@ -610,7 +619,7 @@ int git_config_set_multivar(const char* 
+ 		 * As a side effect, we make sure to transform only a valid
+ 		 * existing config file.
+ 		 */
+-		if (git_config(store_aux)) {
++		if (git_config_from_file(store_aux, config_filename)) {
+ 			fprintf(stderr, "invalid config file\n");
+ 			free(store.key);
+ 			if (store.value_regex != NULL) {
+diff --git a/t/Makefile b/t/Makefile
+index 5495985..632c55f 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -19,7 +19,7 @@ endif
+ all: $(T) clean
+ 
+ $(T):
+-	@echo "*** $@ ***"; '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
++	@echo "*** $@ ***"; GIT_CONFIG=.git/config '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
+ 
+ clean:
+ 	rm -fr trash
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 8260d57..0de2497 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -309,5 +309,29 @@ EOF
+ 
+ test_expect_success 'new variable inserts into proper section' 'cmp .git/config expect'
+ 
++cat > other-config << EOF
++[ein]
++	bahn = strasse
++EOF
++
++cat > expect << EOF
++ein.bahn=strasse
++EOF
++
++GIT_CONFIG=other-config git-repo-config -l > output
++
++test_expect_success 'alternative GIT_CONFIG' 'cmp output expect'
++
++GIT_CONFIG=other-config git-repo-config anwohner.park ausweis
++
++cat > expect << EOF
++[ein]
++	bahn = strasse
++[anwohner]
++	park = ausweis
++EOF
++
++test_expect_success '--set in alternative GIT_CONFIG' 'cmp other-config expect'
++
+ test_done
+ 
+-- 
+1.4.0.g275f-dirty
