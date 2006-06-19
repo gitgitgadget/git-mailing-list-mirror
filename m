@@ -1,40 +1,54 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: git-svn: don't use the --rmdir feature with SVN libs
-Date: Mon, 19 Jun 2006 16:34:25 -0700
-Message-ID: <20060619233424.GD3929@localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix setting config variables with an alternative GIT_CONFIG
+Date: Tue, 20 Jun 2006 01:46:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606200145310.26329@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606200050150.26329@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jun 20 01:34:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Jun 20 01:46:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsTGK-000404-Fv
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 01:34:33 +0200
+	id 1FsTS1-0005n3-TX
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 01:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964987AbWFSXe3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 19:34:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964988AbWFSXe3
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 19:34:29 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:14734 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S964987AbWFSXe2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 19:34:28 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id BE6DC7DC022;
-	Mon, 19 Jun 2006 16:34:24 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 19 Jun 2006 16:34:25 -0700
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S964999AbWFSXqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 19:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965000AbWFSXqf
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 19:46:35 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:36236 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964999AbWFSXqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jun 2006 19:46:34 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 536D420FD;
+	Tue, 20 Jun 2006 01:46:33 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 47C262406;
+	Tue, 20 Jun 2006 01:46:33 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 2C0241D21;
+	Tue, 20 Jun 2006 01:46:33 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+In-Reply-To: <Pine.LNX.4.63.0606200050150.26329@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22145>
 
-It's very broken when committing.  It's off by default, and somehow my
-tests didn't catch it.  I'll fix it ASAP tonight.
+Hi,
 
-Sorry if anybody else hit it before I did.
+On Tue, 20 Jun 2006, Johannes Schindelin wrote:
 
--- 
-Eric Wong
+> +	config_filename = getenv("GIT_CONFIG_LOCAL");
+> +	if (!config_filename) {
+> +		config_filename = getenv("GIT_CONFIG");
+
+Oops. At the other places, GIT_CONFIG overrides GIT_CONFIG_LOCAL, so these 
+two must be exchanged in the patch.
+
+Sorry,
+Dscho
