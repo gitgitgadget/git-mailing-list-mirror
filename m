@@ -1,91 +1,60 @@
-From: Florian Forster <octo@verplant.org>
-Subject: Re: [PATCH] Fix git to be (more) ANSI C99 compliant.
-Date: Mon, 19 Jun 2006 23:21:16 +0200
-Message-ID: <20060619212116.GL1331@verplant.org>
-References: <1150609831500-git-send-email-octo@verplant.org> <Pine.LNX.4.64.0606180946090.5498@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Add specialized object allocator
+Date: Mon, 19 Jun 2006 14:38:45 -0700
+Message-ID: <7vhd2g966y.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0606191028540.5498@g5.osdl.org>
+	<7vejxl9bi0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606191327240.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oYAXToTM8kn9Ra/9"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 19 23:21:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 19 23:39:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsRBR-0006tT-FV
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 23:21:21 +0200
+	id 1FsRSX-0001Yz-Ap
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 23:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964892AbWFSVVS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 17:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964895AbWFSVVS
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 17:21:18 -0400
-Received: from verplant.org ([213.95.21.52]:53950 "EHLO huhu.verplant.org")
-	by vger.kernel.org with ESMTP id S964892AbWFSVVR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 17:21:17 -0400
-Received: from octo by huhu.verplant.org with local (Exim 4.50)
-	id 1FsRBM-0008N7-5f; Mon, 19 Jun 2006 23:21:16 +0200
+	id S964903AbWFSVis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 17:38:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964904AbWFSVir
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 17:38:47 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37318 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S964902AbWFSViq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jun 2006 17:38:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060619213846.JUFJ22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 19 Jun 2006 17:38:46 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606180946090.5498@g5.osdl.org>
-X-Pgp-Fingerprint: E7F2 3FEC B693 9F6F 9B77  ACF6 8EF9 1EF5 9152 3C3D
-X-Pgp-Public-Key: http://verplant.org/pubkey.txt
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <Pine.LNX.4.64.0606191327240.5498@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 19 Jun 2006 13:30:29 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22139>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
---oYAXToTM8kn9Ra/9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, 19 Jun 2006, Junio C Hamano wrote:
+>>
+>> Impressed.  I wonder if we want to deal with any_object
+>> structure as well.
+>
+> Well, it would certainly be very easily doable, but none of the core code 
+> actually uses it, so it wasn't even on my radar. 
 
-On Sun, Jun 18, 2006 at 09:50:37AM -0700, Linus Torvalds wrote:
-> > While most of this patch fixes void-pointer arithmetic
->=20
-> This one I disagree with. Doing arithmetic on "void *" is _really_ useful=
-,=20
+I think the definition of "the core" in your earlier message was
+"stuff I [jc: Linus] use myself", and I think the above
+statement is in line with that definition.
 
-Agreed: If you want to walk over the memory pointed to by a void-pointer
-you want to do that byte-wise in the great majority of all cases.
+It is hereby officially declared that commit walkers are not
+part of the core ;-).
 
-> and I think most compilers end up supporting it either to be
-> compatible with gcc, or just because it's hard to not do it.
-
-Now this statement I don't agree with. (And by that I don't mean I
-assume it to be false.)
-
-I didn't start writing the patch because I like C99 so much. In fact, in
-my opinion it introduces some possibilities I'd rather not have in C
-because people might actually use them. But by default the Sun cc
-complains about void-pointer arithmetic and I feel awkward to force the
-compiler to accept broken code.
-
-Maybe Rene Scharfe's method (as used in the patch to git-tar-tree) is a
-good way around it? There are no explicit casts involved and standard-
-compliant compilers like it, too. The downside is that you have two
-variables for the same thing/memory.
-
-Regards,
--octo
---=20
-Florian octo Forster
-Hacker in training
-GnuPG: 0x91523C3D
-http://verplant.org/
-
---oYAXToTM8kn9Ra/9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFElxVLjvke9ZFSPD0RAqcFAJ0X0n3LxdR/leHKgnOnFI9lAGok5ACeJmY0
-eG8t7jylp4ERIQtjnpLqxS0=
-=x5uj
------END PGP SIGNATURE-----
-
---oYAXToTM8kn9Ra/9--
+Even the commit walker uses lookup_unknown only for the starting
+object and all the rest are of known type, so it does not help
+even if we did "union any_object" that much.
