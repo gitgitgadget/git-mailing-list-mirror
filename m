@@ -1,198 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Read configuration also from $HOME/.gitconfig
-Date: Tue, 20 Jun 2006 01:48:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606200146490.26329@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [Q] what to do when waitpid() returns ECHILD under signal(SIGCHLD, SIG_IGN)?
+Date: Mon, 19 Jun 2006 16:49:09 -0700
+Message-ID: <7vwtbc7ll6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Jun 20 01:48:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Jun 20 01:49:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsTTV-00061m-JY
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 01:48:10 +0200
+	id 1FsTUl-0006Ee-PQ
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 01:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932537AbWFSXsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 19:48:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932541AbWFSXsG
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 19:48:06 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:26846 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932537AbWFSXsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jun 2006 19:48:05 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id EF57E216B;
-	Tue, 20 Jun 2006 01:48:03 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id E314A216E;
-	Tue, 20 Jun 2006 01:48:03 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id BF0EA208F;
-	Tue, 20 Jun 2006 01:48:03 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkiot@cox.net
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+	id S932541AbWFSXtP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 19:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932552AbWFSXtO
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 19:49:14 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:59783 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932541AbWFSXtM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jun 2006 19:49:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060619234910.SHFO19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 19 Jun 2006 19:49:10 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22147>
 
+Somebody I met last week in Japan reported that the socks client
+he uses to cross the firewall to connect to git:// port from his
+company environment seems to do signal(SIGCHLD, SIG_IGN) before
+spawning git.  When "git clone" is invoked this way, we get a
+mysterious failure.
 
-This patch is based on Pasky's, with three notable differences:
+I can reproduce the problem without using funny socks client
+like this:
 
-- I did not yet update the documentation
-- I named it .gitconfig, not .gitrc
-- git-repo-config does not barf when a unique key is overridden locally
+        : gitster; trap '' SIGCHLD
+        : gitster; git clone git://git.kernel.org/pub/scm/git/git.git/ foo.git
+        error: waitpid failed (No child processes)
+        fetch-pack from 'git://git.kernel.org/pub/scm/git/git.git/' failed.
+        : gitster; ls foo.git
+        ls: foo.git: No such file or directory
 
-The last means that if you have something like
+We could work this around by having signal(SIGCHLD, SIG_DFL)
+upfront in git.c::main(), but I am wondering what the standard
+practice for programs that use waitpid() call.  Do they protect
+themselves from this in order to reliably obtain child exit
+status?  Or do they simply consider it is a user error to run a
+program that use waitpid() with SIGCHLD ignored?
 
-	[alias]
-		l = log --stat -M
+http://www.opengroup.org/onlinepubs/009695399/functions/waitpid.html
 
-in ~/.gitconfig, and
-
-	[alias]
-		l = log --stat -M next..
-
-in $GIT_DIR/config, then
-
-	git-repo-config alias.l
-
-returns only one value, namely the value from $GIT_DIR/config.
-
-If you set the environment variable GIT_CONFIG, $HOME/.gitconfig is not
-read, and neither $GIT_DIR/config, but $GIT_CONFIG instead.
-
-If you set GIT_CONFIG_LOCAL instead, it is interpreted instead of
-$GIT_DIR/config, but $HOME/.gitconfig is still read.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- config.c      |   34 +++++++++++++++++++++++++---------
- repo-config.c |   39 +++++++++++++++++++++++++++++++++------
- 2 files changed, 58 insertions(+), 15 deletions(-)
-
-diff --git a/config.c b/config.c
-index 69aa05f..edbe5ed 100644
---- a/config.c
-+++ b/config.c
-@@ -317,17 +317,33 @@ int git_config_from_file(config_fn_t fn,
- 
- int git_config(config_fn_t fn)
- {
--	const char *filename = git_path("config");
--	/* Forward-compatibility cue: $GIT_CONFIG makes git read _only_
--	 * the given config file, $GIT_CONFIG_LOCAL will make it process
--	 * it in addition to the global config file, the same way it would
--	 * the per-repository config file otherwise. */
--	if (getenv("GIT_CONFIG")) {
--		filename = getenv("GIT_CONFIG");
--	} else if (getenv("GIT_CONFIG_LOCAL")) {
-+	int ret = 0;
-+	char *repo_config = NULL;
-+	const char *home = NULL, *filename;
-+
-+	/* $GIT_CONFIG makes git read _only_ the given config file,
-+	 * $GIT_CONFIG_LOCAL will make it process it in addition to the
-+	 * global config file, the same way it would the per-repository
-+	 * config file otherwise. */
-+	filename = getenv("GIT_CONFIG");
-+	if (!filename) {
-+		home = getenv("HOME");
- 		filename = getenv("GIT_CONFIG_LOCAL");
-+		if (!filename)
-+			filename = repo_config = strdup(git_path("config"));
- 	}
--	return git_config_from_file(fn, filename);
-+
-+	if (home) {
-+		const char *user_config = strdup(mkpath("%s/.gitconfig", home));
-+		if (access(user_config, R_OK) > 0)
-+			ret = git_config_from_file(fn, user_config);
-+		free(user_config);
-+	}
-+
-+	ret += git_config_from_file(fn, filename);
-+	if (repo_config)
-+		free(repo_config);
-+	return ret;
- }
- 
- /*
-diff --git a/repo-config.c b/repo-config.c
-index 08fc4cc..03f108f 100644
---- a/repo-config.c
-+++ b/repo-config.c
-@@ -64,7 +64,22 @@ static int show_config(const char* key_,
- 
- static int get_value(const char* key_, const char* regex_)
- {
-+	int ret = -1;
- 	char *tl;
-+	char *global = NULL, *repo_config = NULL;
-+	const char *local;
-+
-+	local = getenv("GIT_CONFIG");
-+	if (!local) {
-+		const char *home = getenv("HOME");
-+		local = getenv("GIT_CONFIG_LOCAL");
-+		if (!local)
-+			local = repo_config;
-+		else
-+			local = repo_config = strdup(git_path("config"));
-+		if (home)
-+			global = strdup(mkpath("%s/.gitconfig", home));
-+	}
- 
- 	key = strdup(key_);
- 	for (tl=key+strlen(key)-1; tl >= key && *tl != '.'; --tl)
-@@ -76,7 +91,7 @@ static int get_value(const char* key_, c
- 		key_regexp = (regex_t*)malloc(sizeof(regex_t));
- 		if (regcomp(key_regexp, key, REG_EXTENDED)) {
- 			fprintf(stderr, "Invalid key pattern: %s\n", key_);
--			return -1;
-+			goto free_strings;
- 		}
- 	}
- 
-@@ -89,11 +104,16 @@ static int get_value(const char* key_, c
- 		regexp = (regex_t*)malloc(sizeof(regex_t));
- 		if (regcomp(regexp, regex_, REG_EXTENDED)) {
- 			fprintf(stderr, "Invalid pattern: %s\n", regex_);
--			return -1;
-+			goto free_strings;
- 		}
- 	}
- 
--	git_config(show_config);
-+	if (do_all && global)
-+		git_config_from_file(show_config, global);
-+	git_config_from_file(show_config, local);
-+	if (!do_all && !seen && global)
-+		git_config_from_file(show_config, global);
-+
- 	free(key);
- 	if (regexp) {
- 		regfree(regexp);
-@@ -101,9 +121,16 @@ static int get_value(const char* key_, c
- 	}
- 
- 	if (do_all)
--		return !seen;
--
--	return (seen == 1) ? 0 : 1;
-+		ret = !seen;
-+	else
-+		ret =  (seen == 1) ? 0 : 1;
-+
-+free_strings:
-+	if (repo_config)
-+		free(repo_config);
-+	if (global)
-+		free(global);
-+	return ret;
- }
- 
- int main(int argc, const char **argv)
--- 
-1.4.0.g6685
+explicitly says this is an expected behaviour, so barfing upon
+ECHILD sounds like a bug on our part.
