@@ -1,54 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make CSS file gitweb/gitweb.css more readable
-Date: Mon, 19 Jun 2006 13:14:02 -0700
-Message-ID: <7vwtbc9a45.fsf@assigned-by-dhcp.cox.net>
-References: <e76qbi$tt9$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Add specialized object allocator
+Date: Mon, 19 Jun 2006 13:30:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606191327240.5498@g5.osdl.org>
+References: <Pine.LNX.4.64.0606191028540.5498@g5.osdl.org>
+ <7vejxl9bi0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 19 22:15:05 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 19 22:30:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsQ8P-0003wa-Az
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 22:14:09 +0200
+	id 1FsQOP-0006qe-4p
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 22:30:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbWFSUOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 16:14:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964886AbWFSUOF
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 16:14:05 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:3036 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S964884AbWFSUOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jun 2006 16:14:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060619201403.DCWV24290.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 19 Jun 2006 16:14:03 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750968AbWFSUai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 16:30:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbWFSUai
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 16:30:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34720 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750968AbWFSUah (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 16:30:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5JKUVgt007705
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Jun 2006 13:30:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5JKUUcf011308;
+	Mon, 19 Jun 2006 13:30:30 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vejxl9bi0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22137>
 
-Jakub, I've been applying your patches after hand-fixing but it
-appears that there is serious whitespace breakage on the mail
-path somewhere between you and the mailing list.  Please check
-your MUA.
 
-For example:
 
->  div.title, a.title {
-> -       display:block; padding:6px 8px;
-> -       font-weight:bold; background-color:#edece6; text-decoration:none; color:#000000;
+On Mon, 19 Jun 2006, Junio C Hamano wrote:
+>
+> Impressed.  I wonder if we want to deal with any_object
+> structure as well.
 
-The original indents these two lines with a TAB.
+Well, it would certainly be very easily doable, but none of the core code 
+actually uses it, so it wasn't even on my radar. 
 
-I'll hand-munge your patch again and will clean-up the
-indentation and push the result out as part of "next" sometime
-later.
-
-Also I've removed the commented out "padding-left" in div.pre.
+		Linus
