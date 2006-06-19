@@ -1,95 +1,341 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Add specialized object allocator
-Date: Mon, 19 Jun 2006 11:10:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606191101380.5498@g5.osdl.org>
-References: <Pine.LNX.4.64.0606191028540.5498@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Make CSS file gitweb/gitweb.css more readable
+Date: Mon, 19 Jun 2006 20:27:59 +0200
+Organization: At home
+Message-ID: <e76qbi$tt9$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Jun 19 20:11:11 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jun 19 20:28:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsODN-0007qR-FF
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 20:11:09 +0200
+	id 1FsOUR-0002KM-HF
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 20:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276AbWFSSLG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 14:11:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbWFSSLG
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 14:11:06 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41947 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751276AbWFSSLF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 14:11:05 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5JIAxgt031927
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Jun 2006 11:11:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5JIAxkc005918;
-	Mon, 19 Jun 2006 11:10:59 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0606191028540.5498@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751286AbWFSS2b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 14:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbWFSS2b
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 14:28:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:40426 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751286AbWFSS2a (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 14:28:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FsOTx-0002Ey-O9
+	for git@vger.kernel.org; Mon, 19 Jun 2006 20:28:18 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Jun 2006 20:28:17 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Jun 2006 20:28:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22133>
 
+Taken from git://git.xmms.se/xmms2/gitweb-xmms2.git
+commit  561262030d58a6325f500b36d836dbe02a5abc68
+"Make CSS readable" by Daniel Svensson, with extra
+parts removed and consistent whitespace usage.
+---
 
+ gitweb/gitweb.css |  273 +++++++++++++++++++++++++++++++++++++++++++----------
+ 1 files changed, 223 insertions(+), 50 deletions(-)
 
-On Mon, 19 Jun 2006, Linus Torvalds wrote:
-> 
-> It also allows us to track some basic statistics about object
-> allocations. For example, for the mozilla import, it shows
-> object usage as follows:
-> 
->      blobs:   627629 (14710 kB)
->      trees:  1119035 (34969 kB)
->    commits:   196423  (8440 kB)
->       tags:     1336    (46 kB)
-
-Btw, this is the trivial additional patch to allow you to say
-
-	git --report rev-list --all --objects > /dev/null
-
-and have it report object allocation usage after the op.
-
-Useful? Probably not. It was useful for me to verify that everything 
-looked ok (and while I knew we had more trees than blobs, it's actually 
-interesting to see how projects differ.
-
-The "git" tree, for example, has more blobs than trees: because it's a 
-fairly flat development tree, a commit that changes more than one file 
-will generate more new blobs than it generates trees.
-
-In contrast, the kernel has about 30% more trees than blobs (but since 
-trees have the extra data/size fields, 30% extra trees take 75% more space 
-than blobs).
-
-The mozilla import has a _lot_ more trees than blobs (80% more trees, and 
-they use up more than twice as much memory). It's probably a pretty deep 
-tree structure and/or they often commit changes to single files deep into 
-the tree).
-
-		Linus
-
-----
-diff --git a/git.c b/git.c
-index 329ebec..6149499 100644
---- a/git.c
-+++ b/git.c
-@@ -271,6 +271,10 @@ int main(int argc, const char **argv, ch
- 			puts(git_exec_path());
- 			exit(0);
- 		}
-+		if (!strcmp(cmd, "report")) {
-+			atexit(alloc_report);
-+			continue;
-+		}
- 		cmd_usage(0, NULL, NULL);
- 	}
- 	argv[0] = cmd;
+72888c0a080d95117d54dc9578dc2a0de7b19abd
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 5900916..9d91426 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -1,58 +1,231 @@
+ body {
+-       font-family: sans-serif; font-size: 12px; border:solid #d9d8d1; border-width:1px;
+-       margin:10px; background-color:#ffffff; color:#000000;
+-}
+-a { color:#0000cc; }
+-a:hover, a:visited, a:active { color:#880000; }
+-div.page_header { height:25px; padding:8px; font-size:18px; font-weight:bold; background-color:#d9d8d1; }
+-div.page_header a:visited, a.header { color:#0000cc; }
+-div.page_header a:hover { color:#880000; }
+-div.page_nav { padding:8px; }
+-div.page_nav a:visited { color:#0000cc; }
+-div.page_path { padding:8px; border:solid #d9d8d1; border-width:0px 0px 1px}
+-div.page_footer { height:17px; padding:4px 8px; background-color: #d9d8d1; }
+-div.page_footer_text { float:left; color:#555555; font-style:italic; }
+-div.page_body { padding:8px; }
++       font-family: sans-serif;
++       font-size: 12px;
++       border:solid #d9d8d1;
++       border-width: 1px;
++       margin: 10px;
++       background-color: #ffffff;
++       color: #000000;
++}
++
++a { 
++       color: #0000cc;
++}
++
++a:hover, a:visited, a:active {
++       color: #880000;
++}
++
++div.page_header {
++       height: 25px;
++       padding: 8px;
++       font-size: 18px;
++       font-weight: bold;
++       background-color: #d9d8d1;
++}
++
++div.page_header a:visited, a.header {
++       color: #0000cc;
++}
++
++div.page_header a:hover {
++       color: #880000;
++}
++
++div.page_nav {
++       padding:8px;
++}
++
++div.page_nav a:visited {
++       color: #0000cc;
++}
++
++div.page_path {
++       padding: 8px;
++       border: solid #d9d8d1;
++       border-width: 0px 0px 1px;
++}
++
++div.page_footer {
++       height: 17px;
++       padding: 4px 8px;
++       background-color: #d9d8d1;
++}
++
++div.page_footer_text {
++       float: left;
++       color: #555555;
++       font-style: italic;
++}
++
++div.page_body {
++       padding: 8px;
++}
++
+ div.title, a.title {
+-       display:block; padding:6px 8px;
+-       font-weight:bold; background-color:#edece6; text-decoration:none; color:#000000;
++       display: block;
++       padding: 6px 8px;
++       font-weight: bold;
++       background-color: #edece6;
++       text-decoration: none;
++       color: #000000;
++}
++
++a.title:hover {
++       background-color: #d9d8d1;
++}
++
++div.title_text {
++       padding: 6px 0px;
++       border: solid #d9d8d1;
++       border-width: 0px 0px 1px;
+ }
+-a.title:hover { background-color: #d9d8d1; }
+-div.title_text { padding:6px 0px; border: solid #d9d8d1; border-width:0px 0px 1px; }
+-div.log_body { padding:8px 8px 8px 150px; }
+-span.age { position:relative; float:left; width:142px; font-style:italic; }
++
++div.log_body {
++       padding: 8px 8px 8px 150px;
++}
++
++span.age {
++       position: relative;
++       float: left;
++       width: 142px;
++       font-style:italic;
++}
++
+ div.log_link {
+-       padding:0px 8px;
+-       font-size:10px; font-family:sans-serif; font-style:normal;
+-       position:relative; float:left; width:136px;
+-}
+-div.list_head { padding:6px 8px 4px; border:solid #d9d8d1; border-width:1px 0px 0px; font-style:italic; }
+-a.list { text-decoration:none; color:#000000; }
+-a.list:hover { text-decoration:underline; color:#880000; }
+-a.text { text-decoration:none; color:#0000cc; }
+-a.text:visited { text-decoration:none; color:#880000; }
+-a.text:hover { text-decoration:underline; color:#880000; }
+-table { padding:8px 4px; }
+-th { padding:2px 5px; font-size:12px; text-align:left; }
+-tr.light:hover { background-color:#edece6; }
+-tr.dark { background-color:#f6f6f0; }
+-tr.dark:hover { background-color:#edece6; }
+-td { padding:2px 5px; font-size:12px; vertical-align:top; }
+-td.link { padding:2px 5px; font-family:sans-serif; font-size:10px; }
+-div.pre { font-family:monospace; font-size:12px; white-space:pre; }
+-div.diff_info { font-family:monospace; color:#000099; background-color:#edece6; font-style:italic; }
+-div.index_include { border:solid #d9d8d1; border-width:0px 0px 1px; padding:12px 8px; }
+-div.search { margin:4px 8px; position:absolute; top:56px; right:12px }
+-a.linenr { color:#999999; text-decoration:none }
++       padding: 0px 8px;
++       font-size: 10px;
++       font-family: sans-serif;
++       font-style:normal;
++       position: relative;
++       float: left;
++       width: 136px;
++}
++
++div.list_head {
++       padding: 6px 8px 4px;
++       border: solid #d9d8d1;
++       border-width: 1px 0px 0px;
++       font-style: italic;
++}
++
++a.list {
++       text-decoration: none;
++       color: #000000;
++}
++
++a.list:hover {
++       text-decoration: underline;
++       color: #880000;
++}
++
++a.text {
++       text-decoration: none;
++       color: #0000cc;
++}
++
++a.text:visited {
++       text-decoration: none;
++       color: #880000;
++}
++
++a.text:hover {
++       text-decoration: underline;
++       color: #880000;
++}
++
++table {
++       padding: 8px 4px;
++}
++
++th {
++       padding: 2px 5px;
++       font-size: 12px;
++       text-align: left;
++}
++
++tr.light:hover {
++       background-color: #edece6;
++}
++
++tr.dark {
++       background-color: #f6f6f0;
++}
++
++tr.dark:hover {
++       background-color: #edece6;
++}
++
++
++td {
++       padding: 2px 5px;
++       font-size: 12px;
++       vertical-align:top;
++}
++
++td.link {
++       padding: 2px 5px;
++       font-family: sans-serif;
++       font-size: 10px;
++}
++
++div.pre {
++       font-family: monospace;
++       font-size: 12px;
++       white-space: pre;
++       /* padding-left: 5px; */
++}
++
++div.diff_info {
++       font-family: monospace;
++       color: #000099;
++       background-color: #edece6;
++       font-style: italic;
++}
++
++div.index_include {
++       border: solid #d9d8d1;
++       border-width: 0px 0px 1px;
++       padding: 12px 8px;
++}
++
++div.search {
++       margin: 4px 8px;
++       position: absolute;
++       top: 56px;
++       right: 12px
++}
++
++a.linenr {
++       color: #999999;
++       text-decoration: none
++}
++
+ a.rss_logo {
+-       float:right; padding:3px 0px; width:35px; line-height:10px;
+-       border:1px solid; border-color:#fcc7a5 #7d3302 #3e1a01 #ff954e;
+-       color:#ffffff; background-color:#ff6600;
+-       font-weight:bold; font-family:sans-serif; font-size:10px;
+-       text-align:center; text-decoration:none;
++       float: right;
++       padding: 3px 0px;
++       width: 35px;
++       line-height: 10px;
++       border: 1px solid;
++       border-color: #fcc7a5 #7d3302 #3e1a01 #ff954e;
++       color: #ffffff;
++       background-color: #ff6600;
++       font-weight: bold;
++       font-family: sans-serif;
++       font-size: 10px;
++       text-align: center;
++       text-decoration: none;
++}
++
++a.rss_logo:hover {
++       background-color: #ee5500;
+ }
+-a.rss_logo:hover { background-color:#ee5500; }
++
+ span.tag {
+-       padding:0px 4px; font-size:10px; font-weight:normal;
+-       background-color:#ffffaa; border:1px solid; border-color:#ffffcc #ffee00 #ffee00 #ffffcc;
++       padding: 0px 4px;
++       font-size: 10px;
++       font-weight: normal;
++       background-color: #ffffaa;
++       border: 1px solid;
++       border-color: #ffffcc #ffee00 #ffee00 #ffffcc;
+ }
+-- 
+1.3.0
