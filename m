@@ -1,79 +1,69 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Re: simple use case scenario for --read-tree and --write-tree with --prefix option
-Date: Mon, 19 Jun 2006 13:28:31 +0530
-Message-ID: <cc723f590606190058w2d7481ecsaded46095aee2355@mail.gmail.com>
-References: <cc723f590606190028t65c76c74t6a90d1dcec411598@mail.gmail.com>
-	 <7vpsh5a8gs.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git
+Date: Mon, 19 Jun 2006 10:35:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606191034350.26329@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vpsh75lx1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0606181417090.26803@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060618130837.GN2609@pasky.or.cz> <7vy7vta9ae.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 19 09:58:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 19 10:35:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsEed-0006hh-He
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 09:58:40 +0200
+	id 1FsFE3-0005Gl-39
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 10:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbWFSH6e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 03:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932244AbWFSH6e
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 03:58:34 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:3848 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751006AbWFSH6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jun 2006 03:58:33 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1204766nfa
-        for <git@vger.kernel.org>; Mon, 19 Jun 2006 00:58:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jao8pvcOnARMFWzJJlnN6L5Uw5Femg/OnVqSewefriaib4mRg9nRa2RRToDGxdvcUm4Ek0K9ERo2hM9b9ZcFNy2fu+2v6WFAIWjTP36eK1scFBJxfvsBUVqWS8T1sY4fAvh8xOQ5dbLp97jEDkZlHTUTyS+Awtzb7N2JXGw2IXs=
-Received: by 10.48.235.2 with SMTP id i2mr3250476nfh;
-        Mon, 19 Jun 2006 00:56:53 -0700 (PDT)
-Received: by 10.49.90.13 with HTTP; Mon, 19 Jun 2006 00:58:31 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vpsh5a8gs.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932330AbWFSIfJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 04:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932327AbWFSIfJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 04:35:09 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:1949 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932330AbWFSIfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jun 2006 04:35:07 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id A9F0AD29;
+	Mon, 19 Jun 2006 10:35:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 9E1A4D0C;
+	Mon, 19 Jun 2006 10:35:06 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 816C1B68;
+	Mon, 19 Jun 2006 10:35:06 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy7vta9ae.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22120>
 
-On 6/19/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
->
-> > I searched the archives but didn't find anything. If i understand
-> > correctly the sub project idea is using the gitlink object type. So
-> > what is read-tree and write-tree with --prefix option supposed to
-> > achieve.
->
-> The --prefix option to read-tree was very useful when I did a
-> hand merge of gitweb for example.  I am reasonably sure clever
-> people will find other uses as well.
->
+Hi,
 
-Ok i tried this
-mkdir test/test1
-mkdir test/test2
-cd test
-git init-db
-cd test1
-git init-db
-cd ../test2
-git init-db
+On Mon, 19 Jun 2006, Junio C Hamano wrote:
 
-now  i do some devel under test2
-now if i want to pull this with the history to toplevel directory test
-should i be doing
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > Dear diary, on Sun, Jun 18, 2006 at 02:26:14PM CEST, I got a letter
+> > where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> >
+> >> Note that this issue is orthogonal to the need for a user-specific config 
+> >> file. I still think that this one should go in.
+> >
+> > I agree as well.
+> 
+> OK, let's have it then.
+> 
+> Johannes, this makes your earlier ~/.gitconfig and --no-local
+> patches no longer applicable, so I'd drop them from "pu" for
+> now.  But I suspect we do want to have per user configuration
+> that is used as a fallback for per repo configuration, right?
 
-cd test
+I'll redo the patches, then.
 
-kvaneesh@satan:/tmp/test$ git read-tree --prefix=test1/ $(cat
-test1/.git/refs/heads/master)
-fatal: failed to unpack tree object c6c049d03f0bee0ac546ff6e436d5f6f3a5f4864
-
-But the above command doesn't work for me. I guess i am missing something.
-
--aneesh
+Ciao,
+Dscho
