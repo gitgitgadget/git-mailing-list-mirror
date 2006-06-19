@@ -1,111 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git 1.4.0 usability problem
-Date: Sun, 18 Jun 2006 20:11:34 -0700
-Message-ID: <7v4pyhdel5.fsf@assigned-by-dhcp.cox.net>
-References: <449557B6.1080907@garzik.org>
-	<7vbqsqdru0.fsf@assigned-by-dhcp.cox.net> <4495DB3B.10403@garzik.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Fix PPC SHA1 routine for large input buffers
+Date: Sun, 18 Jun 2006 22:02:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606182145370.5498@g5.osdl.org>
+References: <9e4733910606081917l11354e49q25f0c4aea40618ea@mail.gmail.com>
+ <46a038f90606082006t5c6a5623q4b9cf7b036dad1e5@mail.gmail.com>
+ <46a038f90606091814n1922bf25l94d913238b260296@mail.gmail.com>
+ <Pine.LNX.4.64.0606091825080.5498@g5.osdl.org>
+ <Pine.LNX.4.64.0606111747110.2703@localhost.localdomain>
+ <Pine.LNX.4.64.0606181223580.5498@g5.osdl.org>
+ <46a038f90606181440q4fd03bebl9495ace131eb958@mail.gmail.com>
+ <Pine.LNX.4.64.0606181532130.5498@g5.osdl.org> <Pine.LNX.4.64.0606181543270.5498@g5.osdl.org>
+ <17557.57564.267469.561683@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 19 05:11:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Nicolas Pitre <nico@cam.org>, Jon Smirl <jonsmirl@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 19 07:03:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsAB4-0000Fq-Hj
-	for gcvg-git@gmane.org; Mon, 19 Jun 2006 05:11:50 +0200
+	id 1FsBup-00085X-IN
+	for gcvg-git@gmane.org; Mon, 19 Jun 2006 07:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151AbWFSDLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Jun 2006 23:11:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWFSDLg
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jun 2006 23:11:36 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:48044 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751151AbWFSDLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jun 2006 23:11:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060619031135.YAYK11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 18 Jun 2006 23:11:35 -0400
-To: Jeff Garzik <jeff@garzik.org>
-In-Reply-To: <4495DB3B.10403@garzik.org> (Jeff Garzik's message of "Sun, 18
-	Jun 2006 19:01:15 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750756AbWFSFDG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 01:03:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbWFSFDG
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 01:03:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:38583 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750756AbWFSFDF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 01:03:05 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5J52vgt023436
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 18 Jun 2006 22:02:57 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5J52u45016114;
+	Sun, 18 Jun 2006 22:02:56 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17557.57564.267469.561683@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22115>
 
-Jeff Garzik <jeff@garzik.org> writes:
 
-> But if what Ryan says is true, about simply needing to ditch
-> the "-f" argument I habitually pass to 'git checkout', would that
-> alleviate the need for a patch?
 
-To a certain degree, yes.
-
-But I suspect (I am not a kernel person so I can only speculate)
-in the kernel workflow you would often pick up a patch from the
-list, apply it to your working tree (without applying it to your
-index, IOW with "patch -p1" or "git apply", not with "git apply
---index"), and then decide to pull from somewhere else while
-your working tree is dirty (but index is not).  The patch might
-have created a new file or two, and the pull may also contain a
-commit that applied the same patch in question.  The no-clobber
-check would trigger in such a case preventing you from pulling,
-and neither "checkout" nor "checkout -f" would clean these new
-files that you have not told git about.
-
-> FWIW, my workflow is
+On Mon, 19 Jun 2006, Paul Mackerras wrote:
 >
-> 	cd /repos
-> 	cd linux-2.6
-> 	git pull
-> 	cd ../libata-dev
-> 	git checkout -f master	# guarantee any WIP goes away
+> The PPC SHA1 routine had an overflow which meant that it gave
+> incorrect results for input buffers >= 512MB.  This fixes it by
+> ensuring that the update of the total length in bits is done using
+> 64-bit arithmetic.
+> 
+> Signed-off-by: Paul Mackerras <paulus@samba.org>
 
-We kept saying "with checkout -f any dirty state goes away from
-your working tree".  It is true only with respect to the files
-git knows about.  The trouble you experienced was about
-untracked files -- files git does not know about, and they will
-be left behind.
+Acked-by: Linus Torvalds <torvalds@osdl.org>
 
-So if path F is in test branch head and linus branch head, but
-not in your master branch head, and you have checked out test in
-your working tree, even if path F in the working tree is clean:
+This fixes git-fsck-objects for me on the mozilla archive, no more 
+complaints about bad SHA1's.
 
-	git checkout -f master
+And yeah, now it's taking me 14 minutes too, so the 7-minute fsck was just 
+because it didn't actually check the SHA1 of the large pack fully.
 
-will leave F behind.  If you pull from linus at this point, the
-check would trigger.  Running "git checkout master" without -f
-would however remove it and you would not have the problem.
-That is what Ryan's suggestion is about.
+(Which is actually good news - half of the time is literally checking the 
+pack integrity. That implies that the individual object integrity isn't as 
+dominating as I thought it would be, and that things like hw-accelerated 
+SHA1 engines will help with fsck. I'd not be surprised to see things like 
+that in a couple of years).
 
-However, if you have a patch you got from somebody on the net
-that creates F (maybe it is the same patch linus accepted
-recently) while on your master branch, and you tried to examine
-it by applying it to your working tree with "patch -p1" or "git
-apply", your working tree will have F that is not in index (and
-in your branch head).  In that state if you pull from linus, the
-no-clobber check triggers.  In this case, neither "git checkout
-master", "git checkout -f master", nor "git reset --hard master"
-would remove F, because git does not even know about it, so
-pulling from linus would fail.  "git clean" would removes F, so
-it may not be a big deal, but it is rather a heavy-handed
-operation that removes all crufts, so you may find it a
-not-so-useful workaround (I certainly would, and that is the
-primary reason I rarely use "git clean" myself).
-
-It's a bit sad situation.  One of the useful feature of git is
-that you can continue working in a dirty working tree as long as
-your index is clean and your local changes do not interfere with
-a merge, patch application, or branch switching.  Strictly
-speaking, this no-clobber check _is_ about a local change that
-does interfere with the operation, so from theoretical point of
-view it is a good safety measure, but at the same time we did
-not consider untracked files as precious until recently, and I
-suspect that "the same patch applied elsewhere to create the
-same file" pattern is reasonably common that this safety valve
-may interfere the work more often than it may help avoiding
-mistakes.
+		Linus
