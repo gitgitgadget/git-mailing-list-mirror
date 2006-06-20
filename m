@@ -1,85 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Tue, 20 Jun 2006 21:56:34 +0200
-Organization: At home
-Message-ID: <e79jtd$51j$1@sea.gmane.org>
-References: <e79921$u0e$1@sea.gmane.org> <46a038f90606201233p6283febbn9a46e36c3a666903@mail.gmail.com>
+Date: Tue, 20 Jun 2006 22:10:35 +0200
+Message-ID: <20060620201035.GT2609@pasky.or.cz>
+References: <e79921$u0e$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Jun 20 21:57:19 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 20 22:24:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsmLR-0007Ek-Ur
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 21:57:06 +0200
+	id 1FsmlT-0003Is-PP
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 22:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbWFTT5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 15:57:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbWFTT5B
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 15:57:01 -0400
-Received: from main.gmane.org ([80.91.229.2]:55729 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750842AbWFTT5A (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jun 2006 15:57:00 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FsmLA-0007BI-LW
-	for git@vger.kernel.org; Tue, 20 Jun 2006 21:56:48 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Jun 2006 21:56:48 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Jun 2006 21:56:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1750885AbWFTUXt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 16:23:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750882AbWFTUXt
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 16:23:49 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56757 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750878AbWFTUXs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jun 2006 16:23:48 -0400
+Received: (qmail 27996 invoked by uid 2001); 20 Jun 2006 22:10:35 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <e79921$u0e$1@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22223>
 
-Martin Langhoff wrote:
-
-> On 6/21/06, Jakub Narebski <jnareb@gmail.com> wrote:
->> 
->> * Add (of course optional, like blame support) snapshot support. There are
->>   at least two different implementations. I'd prefer to do without second
->>   CGI script, but perhaps this is better from the performance point of view.
->>   gitweb-xmms2 has snapshot.cgi in Python: should it be rewritten in Perl?
+Dear diary, on Tue, Jun 20, 2006 at 06:51:18PM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> * Add git fetch URL to the project page from gitweb-xmms2. Needs site-wide
+>   base_url, which need not to be set as there is sane default: use base 
+>   of gitweb URL.
 > 
-> I intend to post a patch that adds snapshot support in Perl, in the
-> main code. Just need to make it optional ;-)
+>   Is it useful to allow repository configuration to override it?
 
-Check http://marc.theaimsgroup.com/?l=git&m=111909432415478&w=2 for 
-in the main code snapshot implementation.
+Certainly. E.g. http://pasky.or.cz/gitweb.cgi hosts some random projects
+but generally they are to be fetched from totally different locations.
 
-http://www.liacs.nl/~sverdool/gitweb.cgi?p=gitweb.git;a=summary
-http://www.liacs.nl/~sverdool/gitweb.git
+> * Refactor dispatch from if...elsif...else construction 
+>   to using 'name' => \&sub hash.
 
-Would separate snapshot CGI script make it work faster?
+In other words, you say the result of the IRC discussion we had about
+symbol lookups and evals turned out really scary? ;-)
 
->> Any further ideas for other useful features?
-> 
-> Now what I think would rock too is something similar to gitk's "nearby
-> tags" feature. When reading a commit, it lists the heads and tags that
-> this commit is part of. It's very useful. Now I'll have to read up on
-> how gitk does it.
+> * gitweb-xmms2 has something called committags support: it means that
+>   'BUG(n)', 'FEATURE(n)' and 'RELEASE: xx' in commit message are turned into
+>   bugtracker (Mantis for xmms2) or wiki links. It is extension of turning
+>   sha1-ids into references. Probably needs some extra configuration file,
+>   and some per repository configuration. Of course we want to support not
+>   only Mantis, but also e.g. Bugzilla (e.g. Linux kernel) and conventions
+>   for marking bugs therein.
 
-If I remember correctly, it was done in the background, and it was done 
-at least partially _in_ gitk (Tcl/Tk).
- 
-> And, as you mention in your other post, mod_perl support. And a bit of
-> speed. Gitweb right now is really really slow.
+For Bugzilla, just /\bbug (\d+)/i is frequently used so many people are
+probably used to it while it feels natural and doesn't make you tumble
+over it when reading the message.
 
-Perhaps mod_cache would help. Especially if cache can be configured to 
-look only at the hash part, plus formatting (normal, plain/raw, blame,
-search match highlighting).
+For these things it's simplest to give the user ability to specify some
+regexp substitutions to be applied on commit messages.
+
+About sha1 turned to references, I don't think that's practical until
+you will have some way of finding out whether a given sha1 is a valid
+object reference without Theta(n) forks.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
