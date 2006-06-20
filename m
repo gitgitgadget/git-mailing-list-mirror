@@ -1,88 +1,68 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Add title attribute with unshortened value
- for table cells
-Date: Tue, 20 Jun 2006 13:57:50 +0300
-Message-ID: <20060620135750.7880c62d.tihirvon@gmail.com>
-References: <200606201012.31684.jnareb@gmail.com>
-	<7vd5d4chmg.fsf@assigned-by-dhcp.cox.net>
-	<20060620124606.4e3e226c.tihirvon@gmail.com>
-	<e78gun$65s$1@sea.gmane.org>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: Re: [PATCH] checkout -f: do not leave untracked working tree files.
+Date: Tue, 20 Jun 2006 13:01:50 +0200
+Message-ID: <8764iw5bvl.fsf@gmail.com>
+References: <449557B6.1080907@garzik.org>
+	<7vbqsqdru0.fsf@assigned-by-dhcp.cox.net> <4495DB3B.10403@garzik.org>
+	<7v4pyhdel5.fsf@assigned-by-dhcp.cox.net>
+	<4497B39E.2050205@garzik.org>
+	<7vr71kb257.fsf@assigned-by-dhcp.cox.net>
+	<7vfyi0b1gv.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 20 12:58:08 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff Garzik <jeff@garzik.org>, git@vger.kernel.org,
+	Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Tue Jun 20 13:02:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fsdvi-0002TR-GQ
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 12:57:59 +0200
+	id 1Fsdze-00030g-0T
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 13:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932585AbWFTK5z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 06:57:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932590AbWFTK5y
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 06:57:54 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:29670 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932585AbWFTK5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 06:57:54 -0400
-Received: by nf-out-0910.google.com with SMTP id y25so1393301nfb
-        for <git@vger.kernel.org>; Tue, 20 Jun 2006 03:57:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=aHmu+4Pmi4YEyvWCfB1pmaOXS/QAFvgOgm2QGwqvh0FYI9fRcbFDGGl/WUcMc7zMxmKjeL3kq+VdHFzzACapnPZFL6/JfVU/lr9rRzv2MvQungFzWRjlTpzKpzQm3O2Ft25YY/ES+MUcj0eHnPGXk4S6cavxVnV3265RId4seio=
-Received: by 10.49.72.16 with SMTP id z16mr5513620nfk;
-        Tue, 20 Jun 2006 03:57:52 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id l38sm7882660nfc.2006.06.20.03.57.51;
-        Tue, 20 Jun 2006 03:57:52 -0700 (PDT)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e78gun$65s$1@sea.gmane.org>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S932594AbWFTLB7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 07:01:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932595AbWFTLB7
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 07:01:59 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:2771 "EHLO ifae-s0.ifae.es")
+	by vger.kernel.org with ESMTP id S932594AbWFTLB6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jun 2006 07:01:58 -0400
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k5KA0q920183;
+	Tue, 20 Jun 2006 12:00:52 +0200
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyi0b1gv.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 20 Jun 2006 02:50:08 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22190>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Timo Hirvonen wrote:
-> 
-> > http://onion.dynserv.net/git/gitweb.cgi
-> > 
-> > Global symbol "$path" requires explicit package name at
-> > /var/www/localhost/htdocs/git/gitweb.cgi line 1521.
-> > Execution of /var/www/localhost/htdocs/git/gitweb.cgi aborted due to
-> > compilation errors.
-> > 
-> > The line is:
-> > 
-> > $file =~ m#^/# or $file = "$projectroot/$path/$file";
-> > 
-> > $path seems to be undefined.  I don't understand perl very well so I
-> > can't fix it.
-> 
-> Temporary fix is in:
->  
->   "[PATCH] Fix: Support for the standard mime.types map in gitweb"
->   (Message-Id: <11507843541678-git-send-email-jnareb@gmail.com>)
->     http://permalink.gmane.org/gmane.comp.version-control.git/22172
+> Earlier we did not consider untracked working tree files
+> "precious", but we have always considered them fair game to
+> clobber.  These days, branch switching by read-tree is more
+> careful and tries to protect untracked working tree files.  This
+> caused the following workflow to stop working:
+>
+> 	git checkout one-branch-with-file-F
+> 	git checkout -f another-without-file-F
+> 	git pull . one-branch-with-file-F
+>
+> Because the second checkout leaves F from the previous state as
+> untracked file in the working tree, the merge would fail, trying
+> to protect F from being clobbered.
+>
+> This changes "git checkout -f" to remove working tree files that
+> are known to git in the switched-from state but do not exist in
+> the switched-to state, borrowing the same logic from "reset --hard".
+>
 
-Seems to work now.  I also enabled blame and it works too. But I noticed
-that the search is sometimes broken.  If you click a "blob" link and
-then try to search something gitweb will complain:
+I agree with this patch (without testing).
 
-    403 Forbidden - Unknown commit object. 
+Another thing to take into account is that, for this particular
+case/sequence, the untracked file-F is exactly the same as the one from
+the pull, so you are not overwritting that file and it could succeed.
 
-"h" parameter is blob, not commit. Shouldn't the h parameter be set to
-HEAD always when searching?  Searching starts at h so the search results
-vary:
-
-http://onion.dynserv.net/git/gitweb.cgi?p=cmus.git&a=search&h=HEAD&s=pickaxe%3Atheme
-
-http://onion.dynserv.net/git/gitweb.cgi?p=cmus.git&a=search&h=fd2d983d51858e25cc71b14b59c787e1683ba7c5&s=pickaxe%3Atheme
-
--- 
-http://onion.dynserv.net/~timo/
+    Santi
