@@ -1,63 +1,92 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: packs and trees
-Date: Tue, 20 Jun 2006 16:51:11 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606201650180.3377@localhost.localdomain>
-References: <9e4733910606192257y1516e966t848a3b1e29e5667f@mail.gmail.com>
- <46a038f90606192313l16b16132r1523f5e05ae1566a@mail.gmail.com>
- <Pine.LNX.4.64.0606201102410.3377@localhost.localdomain>
- <46a038f90606201241x3dec242dicde245a24c3ab9ab@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Tue, 20 Jun 2006 22:59:46 +0200
+Organization: At home
+Message-ID: <e79njs$hue$1@sea.gmane.org>
+References: <e79921$u0e$1@sea.gmane.org> <20060620201035.GT2609@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 20 22:51:40 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jun 20 23:00:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsnC6-0007jg-UZ
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 22:51:31 +0200
+	id 1FsnKL-0000XI-De
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 23:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbWFTUvO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 16:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbWFTUvO
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 16:51:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35265 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751039AbWFTUvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 16:51:12 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J160049LF9BBVB0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 20 Jun 2006 16:51:11 -0400 (EDT)
-In-reply-to: <46a038f90606201241x3dec242dicde245a24c3ab9ab@mail.gmail.com>
-X-X-Sender: nico@localhost.localdomain
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	id S1751059AbWFTU76 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 16:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbWFTU76
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 16:59:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:7640 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751031AbWFTU76 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jun 2006 16:59:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FsnK9-0000UZ-GM
+	for git@vger.kernel.org; Tue, 20 Jun 2006 22:59:49 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Jun 2006 22:59:49 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Jun 2006 22:59:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22225>
 
-On Wed, 21 Jun 2006, Martin Langhoff wrote:
+Petr Baudis wrote:
 
-> On 6/21/06, Nicolas Pitre <nico@cam.org> wrote:
-> > On Tue, 20 Jun 2006, Martin Langhoff wrote:
-> > 
-> > > On 6/20/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > > > The plan is to modify rcs2git from parsecvs to create all of the git
-> > > > objects for the tree.
-> > >
-> > > Sounds like a good plan. Have you seen recent discussions about it
-> > > being impossible to repack usefully when you don't have trees (and
-> > > resulting performance problems on ext3).
-> > 
-> > What do you mean?
+> Dear diary, on Tue, Jun 20, 2006 at 06:51:18PM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+
+>> * Refactor dispatch from if...elsif...else construction 
+>>   to using 'name' => \&sub hash.
 > 
-> I was thinking of the "repacking disconnected objects" thread, but now
-> I see it did have a solution in listing all the objects and paths. I
-> take that back.
+> In other words, you say the result of the IRC discussion we had about
+> symbol lookups and evals turned out really scary? ;-)
 
-OK.
+First, we need arrays (ordering!) of sets of possible actions for navbar,
+so we will have list of all possible actions.
 
+Besides, simple test
 
-Nicolas
+        [...]
+        sub dispatch {
+          dispatch_ifelse(@_);
+          #dispatch_hash(@_);
+          #dispatch_callname(@_);
+          #dispatch_anonsub(@_);
+        }
+        
+        sub test_dispatch_all {
+          dispatch(undef);
+        
+          dispatch("summary");
+          [...]
+          dispatch("tag");
+                
+          dispatch("unknown");
+          dispatch("tag();injected();");
+        }
+        
+        test_dispatch_all() foreach (1..10000);
+
+run with '$ time ./test.pl > /dev/null' has shown that (suprise, suprise!)
+that hash is fastest, then if...elsif...else variant, then 
+  my $sub = \&{"git_$action"}; eval { &$sub() };
+and last, much much worse is eval "..." version.
+
+Of course test leaves something to be desired...
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
