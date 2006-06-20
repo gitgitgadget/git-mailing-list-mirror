@@ -1,70 +1,66 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: packs and trees
-Date: Wed, 21 Jun 2006 07:41:57 +1200
-Message-ID: <46a038f90606201241x3dec242dicde245a24c3ab9ab@mail.gmail.com>
-References: <9e4733910606192257y1516e966t848a3b1e29e5667f@mail.gmail.com>
-	 <46a038f90606192313l16b16132r1523f5e05ae1566a@mail.gmail.com>
-	 <Pine.LNX.4.64.0606201102410.3377@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Tue, 20 Jun 2006 12:46:01 -0700
+Message-ID: <7vpsh37gqu.fsf@assigned-by-dhcp.cox.net>
+References: <e79921$u0e$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jon Smirl" <jonsmirl@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 20 21:42:13 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 20 21:46:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fsm6s-0004x6-9z
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 21:42:02 +0200
+	id 1FsmAp-0005aG-3C
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 21:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbWFTTl7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 15:41:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbWFTTl7
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 15:41:59 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:54956 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750823AbWFTTl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 15:41:58 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so2441535ugf
-        for <git@vger.kernel.org>; Tue, 20 Jun 2006 12:41:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=T99gSS3l68w2Fatz8PVpOY8IPmeYVZS9PmFBBHmgBn6n53yVu7OhoBXyvORyEZJE8ZOSmtXdB/nMa9KO0A+Sne3+gmZ1ye5HNgx7cmYeSLk9AOMgz1pxzlbWYECyLX14YMLTygtNOdFRMdRSU2tLSpdbVzh5GZHcSitTKvCHjQ0=
-Received: by 10.78.51.9 with SMTP id y9mr2932360huy;
-        Tue, 20 Jun 2006 12:41:57 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Tue, 20 Jun 2006 12:41:57 -0700 (PDT)
-To: "Nicolas Pitre" <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0606201102410.3377@localhost.localdomain>
-Content-Disposition: inline
+	id S1750764AbWFTTqE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 15:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbWFTTqE
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 15:46:04 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:35816 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750764AbWFTTqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jun 2006 15:46:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060620194602.IUOP18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 20 Jun 2006 15:46:02 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e79921$u0e$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
+	20 Jun 2006 18:51:18 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22221>
 
-On 6/21/06, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 20 Jun 2006, Martin Langhoff wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> I am planning on copying features from xmms2's gitweb version 
+> to git's gitweb, and introducing new ones.
 >
-> > On 6/20/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > > The plan is to modify rcs2git from parsecvs to create all of the git
-> > > objects for the tree.
-> >
-> > Sounds like a good plan. Have you seen recent discussions about it
-> > being impossible to repack usefully when you don't have trees (and
-> > resulting performance problems on ext3).
->
-> What do you mean?
+> Which of those should be implemented first?
 
-I was thinking of the "repacking disconnected objects" thread, but now
-I see it did have a solution in listing all the objects and paths. I
-take that back.
+Clean-ups and obvious fixes without introducing new features
+first please.
 
-If you are asking about the ext3 performance problems, I think Linus
-discussed that a while ago, why unpacked repos are slow (in addition
-to huge), and there were some suggestions of using hashed directory
-indexes.
+> * Add (of course optional, like blame support) snapshot support. There are
+>   at least two different implementations. I'd prefer to do without second
+>   CGI script, but perhaps this is better from the performance point of view.
+>   gitweb-xmms2 has snapshot.cgi in Python: should it be rewritten in Perl?
 
-cheers,
+Isn't it just the matter of spawning git-tar-tree?
 
+> * gitweb-xmms2 has something called committags support: it means that
+>   'BUG(n)', 'FEATURE(n)' and 'RELEASE: xx' in commit message are turned into
+>   bugtracker (Mantis for xmms2) or wiki links. It is extension of turning
+>   sha1-ids into references. Probably needs some extra configuration file,
+>   and some per repository configuration. Of course we want to support not
+>   only Mantis, but also e.g. Bugzilla (e.g. Linux kernel) and conventions
+>   for marking bugs therein.
 
-martin
+Yes, I found this quite nice.
+
+BTW, are you in touch with xmms2 folks?
