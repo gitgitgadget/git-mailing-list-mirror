@@ -1,61 +1,35 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [Q] what to do when waitpid() returns ECHILD under signal(SIGCHLD,
- SIG_IGN)?
-Date: Mon, 19 Jun 2006 17:44:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606191742470.5498@g5.osdl.org>
-References: <7vwtbc7ll6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606191654590.5498@g5.osdl.org> <7vfyi07jf2.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 20 02:44:33 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: don't use the --rmdir feature with SVN libs
+Date: Mon, 19 Jun 2006 17:48:24 -0700
+Message-ID: <11507645052855-git-send-email-normalperson@yhbt.net>
+References: <20060619233424.GD3929@localdomain>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Jun 20 02:48:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsULu-0008T3-5K
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 02:44:22 +0200
+	id 1FsUPu-0001pJ-RL
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 02:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965016AbWFTAoT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 20:44:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965017AbWFTAoT
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 20:44:19 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:51844 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965016AbWFTAoT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 20:44:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5K0iFgt021826
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Jun 2006 17:44:15 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5K0iETd020326;
-	Mon, 19 Jun 2006 17:44:14 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfyi07jf2.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.76__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965019AbWFTAs2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 20:48:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965021AbWFTAs2
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 20:48:28 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:52110 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S965019AbWFTAs1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 20:48:27 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 833A27DC022;
+	Mon, 19 Jun 2006 17:48:25 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 19 Jun 2006 17:48:26 -0700
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.GIT
+In-Reply-To: <20060619233424.GD3929@localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22154>
 
-
-
-On Mon, 19 Jun 2006, Junio C Hamano wrote:
->
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > Whether we want to do that in the main() routine or when we actually do 
-> > the fork() or whatever is a different issue.
-> 
-> I do not offhand think of a place where we do fork() but not
-> waitpid(), and it is very tempting to cheat and do that in the
-> main(), since I do not see a downside to it.
-
-Yeah, it probably does make sense. That said, there are several "main()" 
-functions, so you'd still end up having to verify that we catch all the 
-paths.. Are all users of fork() built-in by now? 
-
-			Linus
+Fortunately, the fix is pretty simple.  But yes, this is the
+scariest bug in git-svn that's ever happened :x
