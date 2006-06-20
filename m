@@ -1,73 +1,70 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Add title attribute with unshortened value
- for table cells
-Date: Tue, 20 Jun 2006 12:46:06 +0300
-Message-ID: <20060620124606.4e3e226c.tihirvon@gmail.com>
-References: <200606201012.31684.jnareb@gmail.com>
-	<7vd5d4chmg.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] gitweb: Add title attribute with unshortened value for table cells
+Date: Tue, 20 Jun 2006 11:48:19 +0200
+Organization: At home
+Message-ID: <e78g90$40u$1@sea.gmane.org>
+References: <200606201012.31684.jnareb@gmail.com> <7vd5d4chmg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: jnareb@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 20 11:46:26 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jun 20 11:48:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FscoJ-0007BY-S5
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 11:46:16 +0200
+	id 1FscqV-0007bp-34
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 11:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965102AbWFTJqN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 05:46:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932497AbWFTJqN
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 05:46:13 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:33880 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932537AbWFTJqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 05:46:11 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1377678nfa
-        for <git@vger.kernel.org>; Tue, 20 Jun 2006 02:46:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=d2uHVDCe2XPxcQ9kLLm6DHT26A99DMccpBgD6awSCzRNkvvBta7dftYsS23wp8syIevTowo/XJQRA0t82AF4scqsWoiANt3Z0F9BtnhFM+Eh99palaDydThgbgbISJEdDqB8DVtVVW0s7b4w3uNKTXTzrhofPs5Bs2jWJLqadr8=
-Received: by 10.48.232.17 with SMTP id e17mr3541456nfh;
-        Tue, 20 Jun 2006 02:46:10 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id x27sm6611492nfb.2006.06.20.02.46.08;
-        Tue, 20 Jun 2006 02:46:09 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5d4chmg.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S964937AbWFTJs2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 05:48:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932543AbWFTJs2
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 05:48:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:24499 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932537AbWFTJs2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jun 2006 05:48:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FscqO-0007aR-15
+	for git@vger.kernel.org; Tue, 20 Jun 2006 11:48:25 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Jun 2006 11:48:24 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Jun 2006 11:48:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22187>
 
-Junio C Hamano <junkio@cox.net> wrote:
+Junio C Hamano wrote:
 
-> I wonder if there is somebody who is willing to run gitweb from
-> the "next" branch on some public site, so that I can be
-> reasonably confident before breaking one of the most important
-> infrastructure of the kernel development?  Volunteers?
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Doesn't work well with values outside us-ascii, but that might be
+>> considered web browser bug (misfeature), not a bug in gitweb.
+> 
+> That's sad.
+> 
+> Are you sure about it?
 
-I can help.
+Now I see I was wrong.
 
-http://onion.dynserv.net/git/gitweb.cgi
+> What does start_td({-title=>"blah"}) produce? <td title="blah">?
+> If so, is http://members.cox.net/junkio/t.html close to what you
+> are trying to achieve here?
 
-Note: http://onion.dynserv.net/git/ (index.cgi) is an old version.
-
-Global symbol "$path" requires explicit package name at
-/var/www/localhost/htdocs/git/gitweb.cgi line 1521.
-Execution of /var/www/localhost/htdocs/git/gitweb.cgi aborted due to
-compilation errors.
-
-The line is:
-
-$file =~ m#^/# or $file = "$projectroot/$path/$file";
-
-$path seems to be undefined.  I don't understand perl very well so I
-can't fix it.
+Yes, that is what I tried to achieve. Using CGI to set attributes
+was to quote characters which cannot be in double quited attribute values,
+i.e. change '"' to '&#34;' or '&quot;'. I don't know what start_td did with
+\"o character (Perl v5.8.6, CGI::VERSION=3.05).
 
 -- 
-http://onion.dynserv.net/~timo/
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
