@@ -1,71 +1,64 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: packs and trees
-Date: Tue, 20 Jun 2006 18:13:21 +1200
-Message-ID: <46a038f90606192313l16b16132r1523f5e05ae1566a@mail.gmail.com>
-References: <9e4733910606192257y1516e966t848a3b1e29e5667f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 20 08:13:29 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 1/2] gitweb: Add filename to page title if set
+Date: Tue, 20 Jun 2006 06:17:03 +0000 (UTC)
+Message-ID: <11507842063504-git-send-email-jnareb@gmail.com>
+References: <11507842053885-git-send-email-jnareb@gmail.com>
+Reply-To: Jakub Narebski <jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 20 08:17:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsZUM-0005Fa-M2
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 08:13:27 +0200
+	id 1FsZXn-0005s8-PP
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 08:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965074AbWFTGNX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 02:13:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965075AbWFTGNX
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 02:13:23 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:12416 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S965074AbWFTGNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 02:13:22 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so2117598ugf
-        for <git@vger.kernel.org>; Mon, 19 Jun 2006 23:13:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KC/lC/v2sSfV0c9sp22SIbM5mH/f8K360FiYoSxvEdV402spLCRw2aKpMIe0JXWJcVzDMosZ+V+oM48ChBkhD5giTiZ3m7FeXgc8AKg8Zdjnwt1cnvKv/Yp55DrNQHPFrbCPivHzE6Z2slM44fmNJKVP17n1TWpab11/oYkqBBE=
-Received: by 10.78.52.17 with SMTP id z17mr2507126huz;
-        Mon, 19 Jun 2006 23:13:21 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Mon, 19 Jun 2006 23:13:20 -0700 (PDT)
-To: "Jon Smirl" <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910606192257y1516e966t848a3b1e29e5667f@mail.gmail.com>
-Content-Disposition: inline
+	id S965081AbWFTGQx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 02:16:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965077AbWFTGQx
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 02:16:53 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:51329 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S965081AbWFTGQu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jun 2006 02:16:50 -0400
+Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k5K6GQsN018469
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 20 Jun 2006 08:16:27 +0200
+Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k5K6GkvX001829;
+	Tue, 20 Jun 2006 08:16:46 +0200
+Received: (from jnareb@localhost)
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k5K6GkYQ001828;
+	Tue, 20 Jun 2006 08:16:46 +0200
+To: git@vger.kernel.org
+Date: wto, 20 cze 2006 08:16:44 +0200
+X-Mailer: git-send-email 1.3.0
+In-Reply-To: <11507842053885-git-send-email-jnareb@gmail.com>
+X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22169>
 
-On 6/20/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> The plan is to modify rcs2git from parsecvs to create all of the git
-> objects for the tree.
+---
 
-Sounds like a good plan. Have you seen recent discussions about it
-being impossible to repack usefully when you don't have trees (and
-resulting performance problems on ext3).
+ gitweb/gitweb.cgi |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-> cvs2svn seems to do a good job at generating the trees.
-
-No doubt. Gut the last stage, and use all the data in the intermediate
-DBs to run a git import. It's a great plan, and if you can understand
-that Python code... all yours ;-)
-
-> exactly sure how the changeset detection algorithms in the three apps
-> compare, but cvs2svn is not having any trouble building changesets for
-> Mozilla. The other two apps have some issues, cvsps throws away some
-> of the branches and parsecvs can't complete the analysis.
-
-Have you tried a recent parsecvs from Keith's tree? There's been quite
-a bit of activity there too. And Keith's interested in sorting out
-incremental imports too, which you need for a reasonable Moz
-transition plan as well.
-
-cheers,
-
-
-
-martin
+a54751bb328072baed5446bdc4076f1e00002737
+diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
+index 12d5271..1e1a044 100755
+--- a/gitweb/gitweb.cgi
++++ b/gitweb/gitweb.cgi
+@@ -260,7 +260,10 @@ sub git_header_html {
+ 	if (defined $project) {
+ 		$title .= " - $project";
+ 		if (defined $action) {
++			if (defined $file_name) {
++				$title .= " - $file_name";
++			}
+ 		}
+ 	}
+ 	print $cgi->header(-type=>'text/html',  -charset => 'utf-8', -status=> $status, -expires => $expires);
+-- 
+1.3.0
