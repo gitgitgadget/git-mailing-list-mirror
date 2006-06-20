@@ -1,47 +1,51 @@
-From: "=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
-	<pclouds@gmail.com>
-Subject: wrong check condition in patch-delta.c?
-Date: Tue, 20 Jun 2006 13:32:21 +0700
-Message-ID: <fcaeb9bf0606192332j5b2ee4b9ycf2c63c7b1820204@mail.gmail.com>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: wrong check condition in patch-delta.c?
+Date: Tue, 20 Jun 2006 09:21:50 +0200
+Message-ID: <20060620072150.GB26656@fiberbit.xs4all.nl>
+References: <fcaeb9bf0606192332j5b2ee4b9ycf2c63c7b1820204@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 20 08:32:34 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 20 09:22:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsZmm-0007zt-CJ
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 08:32:28 +0200
+	id 1FsaYg-00077m-0P
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 09:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964987AbWFTGcW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 02:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964999AbWFTGcW
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 02:32:22 -0400
-Received: from wx-out-0102.google.com ([66.249.82.196]:34442 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S964987AbWFTGcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 02:32:22 -0400
-Received: by wx-out-0102.google.com with SMTP id h28so897894wxd
-        for <git@vger.kernel.org>; Mon, 19 Jun 2006 23:32:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=HHk/gekauwnV10UPpp4f0IlQvnD8N9p6V1P6G7J5Wd8fzuwAvayI9DXXe4OknIfY7LOWAUsH971+W1bUVOmA/yho8z7gQtM8xZf5LJXLX6YfSwZ+euXjbhsasFAsBiZoByzHlBzThbseBkChWA0xYbvwNTJRMRNgKDDJ8EQbZ6Q=
-Received: by 10.70.92.17 with SMTP id p17mr9868535wxb;
-        Mon, 19 Jun 2006 23:32:21 -0700 (PDT)
-Received: by 10.70.45.11 with HTTP; Mon, 19 Jun 2006 23:32:21 -0700 (PDT)
-To: git@vger.kernel.org
+	id S965112AbWFTHVx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Jun 2006 03:21:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbWFTHVx
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 03:21:53 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:21698 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S965112AbWFTHVw
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jun 2006 03:21:52 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.62)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1FsaYY-0006ym-Ge; Tue, 20 Jun 2006 09:21:50 +0200
+To: Nguy???n =?iso-8859-1?Q?Th=E1i?= Ng???c Duy <pclouds@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <fcaeb9bf0606192332j5b2ee4b9ycf2c63c7b1820204@mail.gmail.com>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22175>
 
-Hi,
-While inspecting patch-delta.c, I encounter this:
-                       if (cp_off + cp_size < cp_size ||
-                           cp_off + cp_size > src_size ||
-                           cp_size > size)
-                               goto bad;
-"cp_off + cp_size < cp_size" doesn't make sense to me. Is it on purpose?
+On Tuesday June 20th 2006 Nguy???n Th=E1i Ng???c Duy wrote:
+
+> While inspecting patch-delta.c, I encounter this:
+>                       if (cp_off + cp_size < cp_size ||
+>                           cp_off + cp_size > src_size ||
+>                           cp_size > size)
+>                               goto bad;
+> "cp_off + cp_size < cp_size" doesn't make sense to me. Is it on purpo=
+se?
+
+It protects against possible overflow. Adding fixed length integers is
+"wraparound" after all and discards the "carry" bit.
+--=20
+Marco Roeland
