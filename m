@@ -1,99 +1,129 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix git to be (more) ANSI C99 compliant.
-Date: Mon, 19 Jun 2006 18:59:38 -0700
-Message-ID: <7vac8860z9.fsf@assigned-by-dhcp.cox.net>
-References: <1150609831500-git-send-email-octo@verplant.org>
-	<Pine.LNX.4.64.0606180946090.5498@g5.osdl.org>
-	<20060619212116.GL1331@verplant.org>
+From: Michal Ludvig <michal@logix.cz>
+Subject: Re: 2.6.17-rc6-mm2
+Date: Tue, 20 Jun 2006 15:01:26 +1200
+Message-ID: <44976506.8040205@logix.cz>
+References: <ef5305790606142040r5912ce58kf9f889c3d61b2cc0@mail.gmail.com>  <ef5305790606151814i252c37c4mdd005f11f06ceac@mail.gmail.com>  <Pine.LNX.4.64.0606151937360.5498@g5.osdl.org> <ef5305790606152249n2702873fy7b708d9c47c78470@mail.gmail.com> <Pine.LNX.4.64.0606152335130.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Jun 20 03:59:47 2006
+Content-Type: multipart/mixed;
+ boundary="------------050501040206000406000902"
+Cc: Goo GGooo <googgooo@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Jun 20 05:01:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsVWq-00006i-FQ
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 03:59:44 +0200
+	id 1FsWUl-0008Ga-0r
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 05:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964806AbWFTB7l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Jun 2006 21:59:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbWFTB7l
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 21:59:41 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58589 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S964806AbWFTB7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jun 2006 21:59:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060620015940.YPOS27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 19 Jun 2006 21:59:40 -0400
-To: Florian Forster <octo@verplant.org>
-In-Reply-To: <20060619212116.GL1331@verplant.org> (Florian Forster's message
-	of "Mon, 19 Jun 2006 23:21:16 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965069AbWFTDBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Jun 2006 23:01:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965072AbWFTDBf
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jun 2006 23:01:35 -0400
+Received: from maxipes.logix.cz ([217.11.251.249]:34254 "EHLO maxipes.logix.cz")
+	by vger.kernel.org with ESMTP id S965069AbWFTDBe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jun 2006 23:01:34 -0400
+Received: from [192.168.159.18] (unknown [192.168.159.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by maxipes.logix.cz (Postfix) with ESMTP id 14440BCC2F;
+	Tue, 20 Jun 2006 05:01:30 +0200 (CEST)
+User-Agent: Thunderbird 1.5 (X11/20060317)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606152335130.5498@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22159>
 
-Florian Forster <octo@verplant.org> writes:
+This is a multi-part message in MIME format.
+--------------050501040206000406000902
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-> I didn't start writing the patch because I like C99 so much. In fact, in
-> my opinion it introduces some possibilities I'd rather not have in C
-> because people might actually use them. But by default the Sun cc
-> complains about void-pointer arithmetic...
+Linus Torvalds wrote:
+> 
+> On Fri, 16 Jun 2006, Goo GGooo wrote:
+> 
+>> I suggest adding SO_KEEPALIVE option on the git socket.
+> 
+> Actually, the really irritating thing is that we actually generate all 
+> these nice status updates, which just makes pulling and cloning a lot more 
+> comfortable, because you actually see what is going on, and what to 
+> expect. 
+> 
+> Except they only work over ssh, where we have a separate channel (for 
+> stderr), and with the native git protocol all that nice status work just 
+> gets flushed to /dev/null :(
 
-I am reasonably sympathetic to that, and judging from the number
-of lines the patch touches, I am not as strongly opposed to it
-as Linus seems to be.
+OpenBSD has CVS access to their repos over SSH even for anonymous users.
+Could something similar be set up on git.kernel.org as well?
 
-> Maybe Rene Scharfe's method (as used in the patch to git-tar-tree) is a
-> good way around it? There are no explicit casts involved and standard-
-> compliant compilers like it, too. The downside is that you have two
-> variables for the same thing/memory.
+> And in your case, the usability downside actually turned into a real 
+> accessibility bug.
 
-I think Rene's patch makes sense primarily because the functions
-affected are small and we can easily see that the aliased input
-variable ("data") is not used -- IOW, there is no confusion.
+Same issue here. Thanks for the hint. Attached is a patch against git
+1.4.0 that solves it perfectly in my case.
 
-If it were a big function and the code used one variable for
-some purpose and the other one for another purpose, it would be
-far worse than having to cast the same variable occasionally.
+Sysctl settings (for keepalive every 10 sec):
+net.ipv4.tcp_keepalive_intvl=10
+net.ipv4.tcp_keepalive_time=10
 
-BTW, I think we would probably want to have this patch on top of
-Rene's patch.  In all instances, the variable "buf" is of type
-"const char *" and the existing casts do not make sense to me.
+Michal
 
+--------------050501040206000406000902
+Content-Type: text/x-patch;
+ name="keepalive.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="keepalive.diff"
 
-diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
-index 5c8a5f0..39a61b6 100644
---- a/builtin-tar-tree.c
-+++ b/builtin-tar-tree.c
-@@ -36,7 +36,7 @@ static void reliable_write(const void *d
- 			die("git-tar-tree: disk full?");
- 		}
- 		size -= ret;
--		buf = (char *) buf + ret;
-+		buf += ret;
- 	}
- }
+Set SO_KEEPALIVE option on native git:// sockets.
+
+Signed-off-by: Michal Ludvig <michal@logix.cz>
+
+Index: git-1.4.0/connect.c
+===================================================================
+--- git-1.4.0.orig/connect.c
++++ git-1.4.0/connect.c
+@@ -331,7 +331,7 @@ static int git_tcp_connect_sock(char *ho
+ 	char *colon, *end;
+ 	char *port = STR(DEFAULT_GIT_PORT);
+ 	struct addrinfo hints, *ai0, *ai;
+-	int gai;
++	int gai, option;
  
-@@ -65,13 +65,13 @@ static void write_blocked(const void *da
- 		memcpy(block + offset, buf, chunk);
- 		size -= chunk;
- 		offset += chunk;
--		buf = (char *) buf + chunk;
-+		buf += chunk;
- 		write_if_needed();
- 	}
- 	while (size >= BLOCKSIZE) {
- 		reliable_write(buf, BLOCKSIZE);
- 		size -= BLOCKSIZE;
--		buf = (char *) buf + BLOCKSIZE;
-+		buf += BLOCKSIZE;
- 	}
- 	if (size) {
- 		memcpy(block + offset, buf, size);
+ 	if (host[0] == '[') {
+ 		end = strchr(host + 1, ']');
+@@ -363,6 +363,10 @@ static int git_tcp_connect_sock(char *ho
+ 				ai->ai_socktype, ai->ai_protocol);
+ 		if (sockfd < 0)
+ 			continue;
++
++		option = 1;
++		setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &option, sizeof(option));
++
+ 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+ 			close(sockfd);
+ 			sockfd = -1;
+@@ -392,7 +396,7 @@ static int git_tcp_connect_sock(char *ho
+ 	struct hostent *he;
+ 	struct sockaddr_in sa;
+ 	char **ap;
+-	unsigned int nport;
++	unsigned int nport, option;
+ 
+ 	if (host[0] == '[') {
+ 		end = strchr(host + 1, ']');
+@@ -433,6 +437,9 @@ static int git_tcp_connect_sock(char *ho
+ 		sa.sin_port = htons(nport);
+ 		memcpy(&sa.sin_addr, *ap, he->h_length);
+ 
++		option = 1;
++		setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &option, sizeof(option));
++
+ 		if (connect(sockfd, (struct sockaddr *)&sa, sizeof sa) < 0) {
+ 			close(sockfd);
+ 			sockfd = -1;
+
+--------------050501040206000406000902--
