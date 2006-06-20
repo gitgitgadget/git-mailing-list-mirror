@@ -1,120 +1,70 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Wed, 21 Jun 2006 07:33:25 +1200
-Message-ID: <46a038f90606201233p6283febbn9a46e36c3a666903@mail.gmail.com>
-References: <e79921$u0e$1@sea.gmane.org>
+Subject: Re: packs and trees
+Date: Wed, 21 Jun 2006 07:41:57 +1200
+Message-ID: <46a038f90606201241x3dec242dicde245a24c3ab9ab@mail.gmail.com>
+References: <9e4733910606192257y1516e966t848a3b1e29e5667f@mail.gmail.com>
+	 <46a038f90606192313l16b16132r1523f5e05ae1566a@mail.gmail.com>
+	 <Pine.LNX.4.64.0606201102410.3377@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 20 21:33:34 2006
+Cc: "Jon Smirl" <jonsmirl@gmail.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 20 21:42:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fslyd-0003iQ-2L
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 21:33:31 +0200
+	id 1Fsm6s-0004x6-9z
+	for gcvg-git@gmane.org; Tue, 20 Jun 2006 21:42:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806AbWFTTd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 15:33:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750811AbWFTTd1
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 15:33:27 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:54937 "EHLO
+	id S1750823AbWFTTl7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 15:41:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbWFTTl7
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 15:41:59 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:54956 "EHLO
 	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750806AbWFTTd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 15:33:27 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so2437774ugf
-        for <git@vger.kernel.org>; Tue, 20 Jun 2006 12:33:25 -0700 (PDT)
+	id S1750823AbWFTTl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jun 2006 15:41:58 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so2441535ugf
+        for <git@vger.kernel.org>; Tue, 20 Jun 2006 12:41:57 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RRS55EqKvZlSL66+4hLP7KsQd8yl3fgK1fJK9Uaf8fs5p8Ow9ZX2rq7HZtLsylJe1i280SQok9J4jWyEKN8yKpZwtQWIKQn+lgbD0A2NUgh4EYcGruS81ln3DwSj7KYIoH+4JCnapUoOlOeSJ0GJptQtrPJxNYhGA3A6TgGYgfU=
-Received: by 10.78.52.17 with SMTP id z17mr2917322huz;
-        Tue, 20 Jun 2006 12:33:25 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Tue, 20 Jun 2006 12:33:25 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <e79921$u0e$1@sea.gmane.org>
+        b=T99gSS3l68w2Fatz8PVpOY8IPmeYVZS9PmFBBHmgBn6n53yVu7OhoBXyvORyEZJE8ZOSmtXdB/nMa9KO0A+Sne3+gmZ1ye5HNgx7cmYeSLk9AOMgz1pxzlbWYECyLX14YMLTygtNOdFRMdRSU2tLSpdbVzh5GZHcSitTKvCHjQ0=
+Received: by 10.78.51.9 with SMTP id y9mr2932360huy;
+        Tue, 20 Jun 2006 12:41:57 -0700 (PDT)
+Received: by 10.78.117.11 with HTTP; Tue, 20 Jun 2006 12:41:57 -0700 (PDT)
+To: "Nicolas Pitre" <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0606201102410.3377@localhost.localdomain>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22220>
 
-On 6/21/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> I am planning on copying features from xmms2's gitweb version
-> to git's gitweb, and introducing new ones.
-
-Cool!
-
-> * Storing site-wide gitweb configuration in separate gitweb.conf file.
->   Needs GIT_CONFIG patch. Not implemented yet.
+On 6/21/06, Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 20 Jun 2006, Martin Langhoff wrote:
 >
->   Bootstrapping: gitweb would need location of configuration file.
->   Has to be changed in gitweb.cgi itself. Additionally gitexecdir or
->   git in PATH is needed to be able to run git-repo-config to read config;
->   the solution might be home-grown "parser" to find gitexecdir only.
+> > On 6/20/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > > The plan is to modify rcs2git from parsecvs to create all of the git
+> > > objects for the tree.
+> >
+> > Sounds like a good plan. Have you seen recent discussions about it
+> > being impossible to repack usefully when you don't have trees (and
+> > resulting performance problems on ext3).
 >
->   Both could be set from Makefile at install stage.
+> What do you mean?
 
-There's been some discussion about reading GIT_CONFIG from %ENV (but
-defaulting to the repo config). If GIT_CONFIG is set, I think we can
-trick git-repo-config to parse it for us.
+I was thinking of the "repacking disconnected objects" thread, but now
+I see it did have a solution in listing all the objects and paths. I
+take that back.
 
-Now, I suspect we'll want to read _both_ the per-repo config and
-GIT_CONFIG, which is likely to be /etc/gitweb.conf or similar.
-
-> * Add git fetch URL to the project page from gitweb-xmms2. Needs site-wide
->   base_url, which need not to be set as there is sane default: use base
->   of gitweb URL.
->
->   Is it useful to allow repository configuration to override it?
-
-I think so, as mentioned above.
-
-> * Add (of course optional, like blame support) snapshot support. There are
->   at least two different implementations. I'd prefer to do without second
->   CGI script, but perhaps this is better from the performance point of view.
->   gitweb-xmms2 has snapshot.cgi in Python: should it be rewritten in Perl?
-
-I intend to post a patch that adds snapshot support in Perl, in the
-main code. Just need to make it optional ;-)
-
-> * Code highlighting for plain view for blobs. gitweb-xmms2 did that using
->   GNU highlight program and some embedded configuration (filename regexp to
->   syntax used). More generic: run some post-processing. Configurable
->   globally (perhaps separate "syntax type" filename or file magic mapping),
->   and enabled per repository (default off).
-
-Yep, probably a generic filter facility is better...
-
-> * gitweb-xmms2 has something called committags support: it means that
->   'BUG(n)', 'FEATURE(n)' and 'RELEASE: xx' in commit message are turned into
->   bugtracker (Mantis for xmms2) or wiki links. It is extension of turning
->   sha1-ids into references. Probably needs some extra configuration file,
->   and some per repository configuration. Of course we want to support not
->   only Mantis, but also e.g. Bugzilla (e.g. Linux kernel) and conventions
->   for marking bugs therein.
-
-That would be great.
-
-...
-
-> Which of those should be implemented first?
-
-I like the order the list has... but it's up to you.
-
-> Any further ideas for other useful features?
-
-Now what I think would rock too is something similar to gitk's "nearby
-tags" feature. When reading a commit, it lists the heads and tags that
-this commit is part of. It's very useful. Now I'll have to read up on
-how gitk does it.
-
-And, as you mention in your other post, mod_perl support. And a bit of
-speed. Gitweb rght now is really really slow.
+If you are asking about the ext3 performance problems, I think Linus
+discussed that a while ago, why unpacked repos are slow (in addition
+to huge), and there were some suggestions of using hashed directory
+indexes.
 
 cheers,
-
 
 
 martin
