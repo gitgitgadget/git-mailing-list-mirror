@@ -1,327 +1,86 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 1/3] rebase: Allow merge strategies to be used when rebasing
-Date: Wed, 21 Jun 2006 03:04:41 -0700
-Message-ID: <11508842842125-git-send-email-normalperson@yhbt.net>
-References: <20060621100138.GA15748@localdomain> <11508842824018-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH 3/3] rebase: error out for NO_PYTHON if they use recursive merge
+Date: Wed, 21 Jun 2006 03:04:42 -0700
+Message-ID: <11508842853098-git-send-email-normalperson@yhbt.net>
+References: <20060621100138.GA15748@localdomain> <11508842824018-git-send-email-normalperson@yhbt.net> <11508842842125-git-send-email-normalperson@yhbt.net>
 Reply-To: Eric Wong <normalperson@yhbt.net>
 Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jun 21 12:05:04 2006
+X-From: git-owner@vger.kernel.org Wed Jun 21 12:05:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FszZu-0006Ob-1d
-	for gcvg-git@gmane.org; Wed, 21 Jun 2006 12:04:55 +0200
+	id 1FszZs-0006Ob-7y
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 12:04:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbWFUKEq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 06:04:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbWFUKEq
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 06:04:46 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:8604 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751445AbWFUKEp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 06:04:45 -0400
+	id S1751461AbWFUKEs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 06:04:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbWFUKEs
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 06:04:48 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:9372 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751461AbWFUKEs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 06:04:48 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 563377DC023;
-	Wed, 21 Jun 2006 03:04:44 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 21 Jun 2006 03:04:44 -0700
+	by hand.yhbt.net (Postfix) with SMTP id A1FEC7DC024;
+	Wed, 21 Jun 2006 03:04:45 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 21 Jun 2006 03:04:45 -0700
 To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 X-Mailer: git-send-email 1.4.0.g65f3
-In-Reply-To: <11508842824018-git-send-email-normalperson@yhbt.net>
+In-Reply-To: <11508842842125-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22254>
 
-This solves the problem of rebasing local commits against an
-upstream that has renamed files.
+recursive merge relies on Python, and we can't perform
+rename-aware merges without the recursive merge.  So bail out
+before trying it.
+
+The test won't work w/o recursive merge, either, so skip that,
+too.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- Documentation/git-rebase.txt |   20 ++++
- git-rebase.sh                |  192 ++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 202 insertions(+), 10 deletions(-)
+ git-rebase.sh           |    9 +++++++++
+ t/t3402-rebase-merge.sh |    6 ++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 08ee4aa..c339c45 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -7,7 +7,7 @@ git-rebase - Rebase local commits to a n
- 
- SYNOPSIS
- --------
--'git-rebase' [--onto <newbase>] <upstream> [<branch>]
-+'git-rebase' [--merge] [--onto <newbase>] <upstream> [<branch>]
- 
- 'git-rebase' --continue | --skip | --abort
- 
-@@ -106,6 +106,24 @@ OPTIONS
- --abort::
- 	Restore the original branch and abort the rebase operation.
- 
-+--skip::
-+	Restart the rebasing process by skipping the current patch.
-+	This does not work with the --merge option.
-+
-+--merge::
-+	Use merging strategies to rebase.  When the recursive (default) merge
-+	strategy is used, this allows rebase to be aware of renames on the
-+	upstream side.
-+
-+-s <strategy>, \--strategy=<strategy>::
-+	Use the given merge strategy; can be supplied more than
-+	once to specify them in the order they should be tried.
-+	If there is no `-s` option, a built-in list of strategies
-+	is used instead (`git-merge-recursive` when merging a single
-+	head, `git-merge-octopus` otherwise).  This implies --merge.
-+
-+include::merge-strategies.txt[]
-+
- NOTES
- -----
- When you rebase a branch, you are changing its history in a way that
 diff --git a/git-rebase.sh b/git-rebase.sh
-index e6b57b8..bce7bf8 100755
+index bce7bf8..b9ce112 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -34,7 +34,96 @@ When you have resolved this problem run 
- If you would prefer to skip this patch, instead run \"git rebase --skip\".
- To restore the original branch and stop rebasing run \"git rebase --abort\".
- "
-+
-+MRESOLVEMSG="
-+When you have resolved this problem run \"git rebase --continue\".
-+To restore the original branch and stop rebasing run \"git rebase --abort\".
-+"
- unset newbase
-+strategy=recursive
-+do_merge=
-+dotest=$GIT_DIR/.dotest-merge
-+prec=4
-+
-+continue_merge () {
-+	test -n "$prev_head" || die "prev_head must be defined"
-+	test -d "$dotest" || die "$dotest directory does not exist"
-+
-+	unmerged=$(git-ls-files -u)
-+	if test -n "$unmerged"
-+	then
-+		echo "You still have unmerged paths in your index"
-+		echo "did you forget update-index?"
-+		die "$MRESOLVEMSG"
-+	fi
-+
-+	if test -n "`git-diff-index HEAD`"
-+	then
-+		git-commit -C "`cat $dotest/current`"
-+	else
-+		echo "Previous merge succeeded automatically"
-+	fi
-+
-+	prev_head=`git-rev-parse HEAD^0`
-+
-+	# save the resulting commit so we can read-tree on it later
-+	echo "$prev_head" > "$dotest/`printf %0${prec}d $msgnum`.result"
-+	echo "$prev_head" > "$dotest/prev_head"
-+
-+	# onto the next patch:
-+	msgnum=$(($msgnum + 1))
-+	printf "%0${prec}d" "$msgnum" > "$dotest/msgnum"
-+}
-+
-+call_merge () {
-+	cmt="$(cat $dotest/`printf %0${prec}d $1`)"
-+	echo "$cmt" > "$dotest/current"
-+	git-merge-$strategy "$cmt^" -- HEAD "$cmt"
-+	rv=$?
-+	case "$rv" in
-+	0)
-+		git-commit -C "$cmt" || die "commit failed: $MRESOLVEMSG"
-+		;;
-+	1)
-+		test -d "$GIT_DIR/rr-cache" && git-rerere
-+		die "$MRESOLVEMSG"
-+		;;
-+	2)
-+		echo "Strategy: $rv $strategy failed, try another" 1>&2
-+		die "$MRESOLVEMSG"
-+		;;
-+	*)
-+		die "Unknown exit code ($rv) from command:" \
-+			"git-merge-$strategy $cmt^ -- HEAD $cmt"
-+		;;
-+	esac
-+}
-+
-+finish_rb_merge () {
-+	set -e
-+
-+	msgnum=1
-+	echo "Finalizing rebased commits..."
-+	git-reset --hard "`cat $dotest/onto`"
-+	end="`cat $dotest/end`"
-+	while test "$msgnum" -le "$end"
-+	do
-+		msgnum=`printf "%0${prec}d" "$msgnum"`
-+		printf "%0${prec}d" "$msgnum" > "$dotest/msgnum"
-+
-+		git-read-tree `cat "$dotest/$msgnum.result"`
-+		git-checkout-index -q -f -u -a
-+		git-commit -C "`cat $dotest/$msgnum`"
-+
-+		echo "Committed $msgnum"
-+		echo '    '`git-rev-list --pretty=oneline -1 HEAD | \
-+					sed 's/^[a-f0-9]\+ //'`
-+		msgnum=$(($msgnum + 1))
-+	done
-+	rm -r "$dotest"
-+	echo "All done."
-+}
-+
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -46,17 +135,43 @@ do
- 			exit 1
- 			;;
- 		esac
-+		if test -d "$dotest"
-+		then
-+			prev_head="`cat $dotest/prev_head`"
-+			end="`cat $dotest/end`"
-+			msgnum="`cat $dotest/msgnum`"
-+			onto="`cat $dotest/onto`"
-+			continue_merge
-+			while test "$msgnum" -le "$end"
-+			do
-+				call_merge "$msgnum"
-+				continue_merge
-+			done
-+			finish_rb_merge
-+			exit
-+		fi
- 		git am --resolved --3way --resolvemsg="$RESOLVEMSG"
- 		exit
- 		;;
- 	--skip)
-+		if test -d "$dotest"
-+		then
-+			die "--skip is not supported when using --merge"
-+		fi
- 		git am -3 --skip --resolvemsg="$RESOLVEMSG"
- 		exit
- 		;;
- 	--abort)
--		[ -d .dotest ] || die "No rebase in progress?"
-+		if test -d "$dotest"
-+		then
-+			rm -r "$dotest"
-+		elif test -d .dotest
-+		then
-+			rm -r .dotest
-+		else
-+			die "No rebase in progress?"
-+		fi
- 		git reset --hard ORIG_HEAD
--		rm -r .dotest
- 		exit
- 		;;
- 	--onto)
-@@ -64,6 +179,23 @@ do
- 		newbase="$2"
- 		shift
- 		;;
-+	-M|-m|--m|--me|--mer|--merg|--merge)
-+		do_merge=t
-+		;;
-+	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
-+		--strateg=*|--strategy=*|\
-+	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-+		case "$#,$1" in
-+		*,*=*)
-+			strategy=`expr "$1" : '-[^=]*=\(.*\)'` ;;
-+		1,*)
-+			usage ;;
-+		*)
-+			strategy="$2"
-+			shift ;;
-+		esac
-+		do_merge=t
-+		;;
- 	-*)
- 		usage
- 		;;
-@@ -75,16 +207,25 @@ do
- done
- 
- # Make sure we do not have .dotest
--if mkdir .dotest
-+if test -z "$do_merge"
- then
--	rmdir .dotest
--else
--	echo >&2 '
-+	if mkdir .dotest
-+	then
-+		rmdir .dotest
-+	else
-+		echo >&2 '
- It seems that I cannot create a .dotest directory, and I wonder if you
- are in the middle of patch application or another rebase.  If that is not
- the case, please rm -fr .dotest and run me again.  I am stopping in case
- you still have something valuable there.'
--	exit 1
-+		exit 1
-+	fi
-+else
-+	if test -d "$dotest"
-+	then
-+		die "previous dotest directory $dotest still exists." \
-+			'try git-rebase < --continue | --abort >'
-+	fi
+@@ -300,6 +300,15 @@ then
+ 	exit $?
  fi
  
- # The tree must be really really clean.
-@@ -152,6 +293,39 @@ then
- 	exit 0
- fi
- 
--git-format-patch -k --stdout --full-index "$upstream"..ORIG_HEAD |
--git am --binary -3 -k --resolvemsg="$RESOLVEMSG"
-+if test -z "$do_merge"
++if test "@@NO_PYTHON@@" && test "$strategy" = "recursive"
 +then
-+	git-format-patch -k --stdout --full-index "$upstream"..ORIG_HEAD |
-+	git am --binary -3 -k --resolvemsg="$RESOLVEMSG"
-+	exit $?
++	die 'The recursive merge strategy currently relies on Python,
++which this installation of git was not configured with.  Please consider
++a different merge strategy (e.g. octopus, resolve, stupid, ours)
++or install Python and git with Python support.'
++
 +fi
 +
-+# start doing a rebase with git-merge
-+# this is rename-aware if the recursive (default) strategy is used
-+
-+mkdir -p "$dotest"
-+echo "$onto" > "$dotest/onto"
-+prev_head=`git-rev-parse HEAD^0`
-+echo "$prev_head" > "$dotest/prev_head"
-+
-+msgnum=0
-+for cmt in `git-rev-list --no-merges "$upstream"..ORIG_HEAD \
-+			| perl -e 'print reverse <>'`
-+do
-+	msgnum=$(($msgnum + 1))
-+	echo "$cmt" > "$dotest/`printf "%0${prec}d" $msgnum`"
-+done
-+
-+printf "%0${prec}d" 1 > "$dotest/msgnum"
-+printf "%0${prec}d" "$msgnum" > "$dotest/end"
-+
-+end=$msgnum
-+msgnum=1
-+
-+while test "$msgnum" -le "$end"
-+do
-+	call_merge "$msgnum"
-+	continue_merge
-+done
+ # start doing a rebase with git-merge
+ # this is rename-aware if the recursive (default) strategy is used
  
-+finish_rb_merge
+diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
+index 8c7a519..f1c1f35 100755
+--- a/t/t3402-rebase-merge.sh
++++ b/t/t3402-rebase-merge.sh
+@@ -7,6 +7,12 @@ test_description='git rebase --merge tes
+ 
+ . ./test-lib.sh
+ 
++if test "$no_python"; then
++	echo "Skipping: no python => no recursive merge"
++	test_done
++	exit 0
++fi
++
+ T="A quick brown fox
+ jumps over the lazy dog."
+ for i in 1 2 3 4 5 6 7 8 9 10
 -- 
 1.4.0.g65f3
