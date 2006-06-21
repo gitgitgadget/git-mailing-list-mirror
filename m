@@ -1,35 +1,35 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (amend)] gitweb: Make use of $PATH_INFO for project parameter
-Date: Wed, 21 Jun 2006 17:03:39 +0200
-Message-ID: <11509022191149-git-send-email-jnareb@gmail.com>
+Subject: [PATCH] gitweb: Make use of $PATH_INFO for project parameter
+Date: Wed, 21 Jun 2006 17:06:39 +0200
+Message-ID: <11509023994002-git-send-email-jnareb@gmail.com>
 References: <11509012742493-git-send-email-jnareb@gmail.com>
 Reply-To: Jakub Narebski <jnareb@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 21 17:04:00 2006
+X-From: git-owner@vger.kernel.org Wed Jun 21 17:06:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ft4F8-0007qn-Ms
-	for gcvg-git@gmane.org; Wed, 21 Jun 2006 17:03:47 +0200
+	id 1Ft4I2-0008SC-8y
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 17:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750784AbWFUPDn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 11:03:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWFUPDn
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 11:03:43 -0400
-Received: from mail.fuw.edu.pl ([193.0.80.14]:51412 "EHLO mail.fuw.edu.pl")
-	by vger.kernel.org with ESMTP id S1750784AbWFUPDn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 11:03:43 -0400
+	id S1751639AbWFUPGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 11:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbWFUPGn
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 11:06:43 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:28850 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S1751272AbWFUPGm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 11:06:42 -0400
 Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
-	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k5LF3ITi026398
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k5LF6HED026921
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 21 Jun 2006 17:03:18 +0200
+	Wed, 21 Jun 2006 17:06:17 +0200
 Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
-	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k5LF3dv3018445;
-	Wed, 21 Jun 2006 17:03:39 +0200
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k5LF6dXa018565;
+	Wed, 21 Jun 2006 17:06:39 +0200
 Received: (from jnareb@localhost)
-	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k5LF3dZH018444;
-	Wed, 21 Jun 2006 17:03:39 +0200
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k5LF6dR9018564;
+	Wed, 21 Jun 2006 17:06:39 +0200
 To: git@vger.kernel.org
 X-Mailer: git-send-email 1.3.0
 In-Reply-To: <11509012742493-git-send-email-jnareb@gmail.com>
@@ -37,7 +37,7 @@ X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22278>
 
 Allow to have project name in the path part of URL, just after the name of
 script. For example instead of gitweb.cgi?p=git.git you can write
@@ -52,24 +52,26 @@ trailing slash before validation.
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
 ---
+This is final, correct version of the patch.
 
  gitweb/gitweb.cgi |    3 ++-
  1 files changed, 2 insertions(+), 1 deletions(-)
 
-63ffc79283d23aeedbdc259e3b069f1e97498e09
+b9df055ae8d3aafe03744537026823dbaf7342ba
 diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index e044c61..91698df 100755
+index e044c61..e2108de 100755
 --- a/gitweb/gitweb.cgi
 +++ b/gitweb/gitweb.cgi
-@@ -86,7 +86,8 @@ if (defined $order) {
+@@ -86,8 +86,9 @@ if (defined $order) {
  	}
  }
  
 -my $project = $cgi->param('p');
 +my $project = ($cgi->param('p') || $ENV{'PATH_INFO'});
-+$project =~ s|^/||; $project =~ s|/$||;
  if (defined $project) {
++	$project =~ s|^/||; $project =~ s|/$||;
  	$project = validate_input($project);
  	if (!defined($project)) {
+ 		die_error(undef, "Invalid project parameter.");
 -- 
 1.3.0
