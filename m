@@ -1,81 +1,61 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: [PATCH] Fix possible out-of-bounds array access
-Date: Wed, 21 Jun 2006 11:04:12 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060621090412.GA9267@informatik.uni-freiburg.de>
-References: <20060620160836.GA20153@informatik.uni-freiburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/3] Minor gitweb modifications and cleanups
+Date: Wed, 21 Jun 2006 02:04:43 -0700
+Message-ID: <7v3bdy5178.fsf@assigned-by-dhcp.cox.net>
+References: <11508760843417-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jun 21 11:04:32 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 21 11:05:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsydF-0004Yv-PO
-	for gcvg-git@gmane.org; Wed, 21 Jun 2006 11:04:18 +0200
+	id 1Fsydj-0004eX-Jx
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 11:04:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751155AbWFUJEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 05:04:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbWFUJEO
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 05:04:14 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:10998 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S1751155AbWFUJEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jun 2006 05:04:14 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1FsydA-0002Bt-RB
-	for git@vger.kernel.org; Wed, 21 Jun 2006 11:04:12 +0200
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k5L94Cs09288
-	for git@vger.kernel.org; Wed, 21 Jun 2006 11:04:12 +0200 (MEST)
-To: git@vger.kernel.org
-Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060620160836.GA20153@informatik.uni-freiburg.de>
-User-Agent: Mutt/1.5.6+20040523i
+	id S1751401AbWFUJEp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 05:04:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbWFUJEo
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 05:04:44 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:15548 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751401AbWFUJEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jun 2006 05:04:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060621090444.YSBG19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 21 Jun 2006 05:04:44 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <11508760843417-git-send-email-jnareb@gmail.com> (Jakub
+	Narebski's message of =?utf-8?Q?=22=EF=BD=B6ro=2C?= 21 cze 2006 09:48:01
+ +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22243>
 
-If match is "", match[-1] is accessed.  Let pathspec_matches return 1 in that
-case indicating that "" matches everything.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Incidently this fixes git-grep'ing in ".".
+> This series of patches is based on git.git 'next' branch
+> 69d830d1a3a1236036bd0f84dd9794d7c8d34b3f
+>
+> My future gitweb-related batches will be based on this series.
+>
+> ---
+>
+>  gitweb/gitweb.cgi |   53 +++++++++++++++++++++++++++++++----------------------
+>  gitweb/gitweb.css |    4 ++--
+>  2 files changed, 33 insertions(+), 24 deletions(-)
+>
+> -- 
+> Jakub Narebski
+> Poland
 
-Signed-off-by: Uwe Zeisberger <Uwe_Zeisberger@digi.com>
----
+All three applied cleanly (finally!), but with hand munging of
+Date: field.
 
- builtin-grep.c |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 9806499..f7767bb 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -29,10 +29,11 @@ static int pathspec_matches(const char *
- 		int matchlen = strlen(match);
- 		const char *cp, *meta;
- 
--		if ((matchlen <= namelen) &&
--		    !strncmp(name, match, matchlen) &&
--		    (match[matchlen-1] == '/' ||
--		     name[matchlen] == '\0' || name[matchlen] == '/'))
-+		if (!matchlen ||
-+		    ((matchlen <= namelen) &&
-+		     !strncmp(name, match, matchlen) &&
-+		     (match[matchlen-1] == '/' ||
-+		      name[matchlen] == '\0' || name[matchlen] == '/')))
- 			return 1;
- 		if (!fnmatch(match, name, 0))
- 			return 1;
--- 
-1.4.0
-
--- 
-Uwe Zeisberger
-
-http://www.google.com/search?q=12+mol+in+dozen
+I think git-send-email should internally do LC_ALL=C or stop
+using strftime() or both.
