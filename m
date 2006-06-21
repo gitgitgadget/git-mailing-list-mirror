@@ -1,86 +1,66 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 3/3] rebase: error out for NO_PYTHON if they use recursive merge
-Date: Wed, 21 Jun 2006 03:04:42 -0700
-Message-ID: <11508842853098-git-send-email-normalperson@yhbt.net>
-References: <20060621100138.GA15748@localdomain> <11508842824018-git-send-email-normalperson@yhbt.net> <11508842842125-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jun 21 12:05:14 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] send-email: Use setlocale in addition to $ENV{LC_ALL} to set locale
+Date: Wed, 21 Jun 2006 12:33:18 +0200
+Organization: At home
+Message-ID: <e7b796$lj$1@sea.gmane.org>
+References: <7v3bdy5178.fsf@assigned-by-dhcp.cox.net> <11508811631669-git-send-email-jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Jun 21 12:33:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FszZs-0006Ob-7y
-	for gcvg-git@gmane.org; Wed, 21 Jun 2006 12:04:53 +0200
+	id 1Ft01e-0003Mb-Fn
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 12:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbWFUKEs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 06:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbWFUKEs
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 06:04:48 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:9372 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751461AbWFUKEs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 06:04:48 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id A1FEC7DC024;
-	Wed, 21 Jun 2006 03:04:45 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 21 Jun 2006 03:04:45 -0700
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Mailer: git-send-email 1.4.0.g65f3
-In-Reply-To: <11508842842125-git-send-email-normalperson@yhbt.net>
+	id S1751491AbWFUKdb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 06:33:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbWFUKdb
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 06:33:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:16298 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751491AbWFUKda (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 06:33:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ft01U-0003Ko-Md
+	for git@vger.kernel.org; Wed, 21 Jun 2006 12:33:24 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Jun 2006 12:33:24 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Jun 2006 12:33:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22255>
 
-recursive merge relies on Python, and we can't perform
-rename-aware merges without the recursive merge.  So bail out
-before trying it.
+Jakub Narebski wrote:
 
-The test won't work w/o recursive merge, either, so skip that,
-too.
+> $ENV{LC_ALL} = 'C'; does not change locale used by strftime.
+> Use setlocale( LC_ALL, 'C' ); instead.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-rebase.sh           |    9 +++++++++
- t/t3402-rebase-merge.sh |    6 ++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+>  # most mail servers generate the Date: header, but not all...
+>  $ENV{LC_ALL} = 'C';
+> -use POSIX qw/strftime/;
+> +use POSIX qw/strftime setlocale LC_ALL/;
+> +setlocale( &LC_ALL, 'C' );
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index bce7bf8..b9ce112 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -300,6 +300,15 @@ then
- 	exit $?
- fi
- 
-+if test "@@NO_PYTHON@@" && test "$strategy" = "recursive"
-+then
-+	die 'The recursive merge strategy currently relies on Python,
-+which this installation of git was not configured with.  Please consider
-+a different merge strategy (e.g. octopus, resolve, stupid, ours)
-+or install Python and git with Python support.'
-+
-+fi
-+
- # start doing a rebase with git-merge
- # this is rename-aware if the recursive (default) strategy is used
- 
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index 8c7a519..f1c1f35 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -7,6 +7,12 @@ test_description='git rebase --merge tes
- 
- . ./test-lib.sh
- 
-+if test "$no_python"; then
-+	echo "Skipping: no python => no recursive merge"
-+	test_done
-+	exit 0
-+fi
-+
- T="A quick brown fox
- jumps over the lazy dog."
- for i in 1 2 3 4 5 6 7 8 9 10
+Perhaps instead of 
+  setlocale( &LC_ALL, 'C' );
+we should use
+  setlocale( &LC_ALL, '' );
+(i.e. set the LC_ALL behaviour according to the locale environment
+variables). I'm not that versed in locale, POSIX and Perl.
+
 -- 
-1.4.0.g65f3
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
