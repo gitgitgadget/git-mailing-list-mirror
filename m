@@ -1,56 +1,92 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Tue, 20 Jun 2006 23:53:31 +0200
-Message-ID: <20060620215331.GB25183@cip.informatik.uni-erlangen.de>
-References: <e79921$u0e$1@sea.gmane.org>
+From: "Art Haas" <ahaas@airmail.net>
+Subject: Odd behavior with git and cairo-devel repo
+Date: Tue, 20 Jun 2006 20:00:30 -0500
+Message-ID: <20060621010030.GP2820@artsapartment.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Michael Gernoth <simigern@stud.uni-erlangen.de>
-X-From: git-owner@vger.kernel.org Tue Jun 20 23:53:45 2006
+X-From: git-owner@vger.kernel.org Wed Jun 21 03:03:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FsoAD-0000ho-2d
-	for gcvg-git@gmane.org; Tue, 20 Jun 2006 23:53:37 +0200
+	id 1Fsr60-0000FR-Ji
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 03:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbWFTVxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Jun 2006 17:53:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbWFTVxe
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 17:53:34 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:25230 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S1751122AbWFTVxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jun 2006 17:53:33 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id C841B30618; Tue, 20 Jun 2006 23:53:31 +0200 (CEST)
-To: Jakub Narebski <jnareb@gmail.com>
+	id S932342AbWFUBBZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Jun 2006 21:01:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbWFUBBZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jun 2006 21:01:25 -0400
+Received: from 8f.7b.d1c4.cidr.airmail.net ([209.196.123.143]:33292 "EHLO
+	covert.brown-ring.iadfw.net") by vger.kernel.org with ESMTP
+	id S932342AbWFUBBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jun 2006 21:01:24 -0400
+Received: from cpe-24-28-121-3.houston.res.rr.com ([24.28.121.3] helo=pcdebian)
+	by covert.iadfw.net with esmtp (Exim 4.24)
+	id 1FsrAo-00011I-TP
+	for git@vger.kernel.org; Tue, 20 Jun 2006 20:06:26 -0500
+Received: (qmail 21477 invoked by uid 1000); 21 Jun 2006 01:00:30 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <e79921$u0e$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11-2006-06-13
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22233>
 
-Hello,
+Hi.
 
-> Any further ideas for other useful features?
+I've been seeing some odd errors with git when it is dealing with
+the Cairo graphics library repo. The errors include git failing
+a 'fsck-objects' with a 'Floating point exception' error message
+and 'git prune' mangling the repo.
 
-a friend of mine was yesterday complained to me about not be able to see
-which file was last touched in a given directory like it is possible
-with viewcvs[1]. I told him that he should just call 'git whatchanged
--p'. And he answered back 'downloading 128Mbytes' for a few bytes
-of history? I told him to address this list with his feature request, but
-he didn't do so far. So I use this opportunity. Maybe something else
-would be much more handier: Use gitweb to request the log and shortlog
-of a directory tree, like git-whatchanged arch/i386 does for example.
-Maybe it is already possible and I missed it?
+A fresh cloning of the repo is needed to see the FPE error. The
+repo is about 13M in size, btw.
 
-        Thomas
+$ git clone git://git.cairographics.org/git/cairo cairo
+[ ... git clones the repo without problem ... ]
+$ cd cairo
+$ git fsck-objects
+Floating point exception
+$
 
-[1] viewcvs prints the last touch of a a file in a directory and you can
-tell it to sort after the date criteria:
+The strace of this shows that things bomb after the '.git/index' file is
+read. Here's the tail end of the strace output ...
 
-http://faumachine.informatik.uni-erlangen.de/cgi-bin/viewcvs.cgi/mutt/?sortby=date#dirlist
+close(3)                                = 0
+open(".git/index", O_RDONLY|O_LARGEFILE) = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=51472, ...}) = 0
+mmap2(NULL, 51472, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0xb7f4b000
+close(3)                                = 0
+--- SIGFPE (Floating point exception) @ 0 (0) ---
++++ killed by SIGFPE +++
+
+Now, if the repo is added to and you 'git pull' to update your copy,
+the 'git fsck-objects' command completes without error.
+
+As for the problem where 'git prune' mangles the local copy, it would
+happen after a 'git fsck-objects' run succeeds without incident.
+Then 'git prune' would run, seemingly without problems, and I would
+try and repack my repo with 'git repack -a -d'. Here, things go
+boom with SHA1 errors, and subsequent 'git fsck-objects' runs
+produce errors.
+
+My local 'git' build is current with the 'master' branch. I've observed
+these problems with the Cairo repo on a machine running Debian unstable,
+Fedora Core 4, and Fedora Rawhide. The Debian machine uses git built
+by the current gcc-4.1 package, FC4 uses its current gcc-4.0 package,
+and rawhide uses its current gcc-4.1 package. All these machines are
+kept up-to-date with the respective current packages versions for
+that distro.
+
+Can anyone out in git-land seeing problems with the Cairo
+git repo, or able to duplicate these problems?
+
+Thanks in advance,
+
+Art Haas
+-- 
+Man once surrendering his reason, has no remaining guard against absurdities
+the most monstrous, and like a ship without rudder, is the sport of every wind.
+
+-Thomas Jefferson to James Smith, 1822
