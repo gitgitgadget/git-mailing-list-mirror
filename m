@@ -1,320 +1,117 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH 3/3] gitweb: Use --git-dir parameter instead of setting $ENV{'GIT_DIR'}
-Date: Wed, 21 Jun 2006 15:09:30 +0200
-Message-ID: <20060621130930.G421234bb@leonov.stosberg.net>
-References: <e79921$u0e$1@sea.gmane.org> <46a038f90606201233p6283febbn9a46e36c3a666903@mail.gmail.com> <20060621130535.G2b34d382@leonov.stosberg.net>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: [PATCH] Check and document the options to prevent mistakes.
+Date: Wed, 21 Jun 2006 07:17:31 -0600
+Message-ID: <m164iu8x78.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 21 15:10:49 2006
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 21 15:17:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ft2St-0000lK-Sm
-	for gcvg-git@gmane.org; Wed, 21 Jun 2006 15:09:52 +0200
+	id 1Ft2aZ-0002vD-AG
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 15:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbWFUNJh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 09:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751564AbWFUNJh
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 09:09:37 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:36836 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1751563AbWFUNJf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 09:09:35 -0400
-Received: from leonov.stosberg.net (p213.54.85.218.tisdip.tiscali.de [213.54.85.218])
-	by ncs.stosberg.net (Postfix) with ESMTP id 8C7CBAEBA065;
-	Wed, 21 Jun 2006 15:09:26 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id E627E10E081; Wed, 21 Jun 2006 15:09:30 +0200 (CEST)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20060621130535.G2b34d382@leonov.stosberg.net>
-OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
-User-Agent: mutt-ng/devel-r802 (Debian)
+	id S932108AbWFUNRn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 09:17:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbWFUNRm
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 09:17:42 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:24478 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1751559AbWFUNRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jun 2006 09:17:42 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k5LDHWkl009110;
+	Wed, 21 Jun 2006 07:17:32 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k5LDHVsr009109;
+	Wed, 21 Jun 2006 07:17:31 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22270>
+
+
+When multiple recipients are given to git-send-email on the same
+--cc line the code does not properly handle it.
+
+Full and proper parsing of the email addresses so I can detect
+which commas mean a new email address is more than I care to implement.
+
+In particular this email address: "bibo,mao" <bibo.mao@intel.com>
+must not be treated as two email addresses.
+
+So this patch simply treats all commas in recipient lists as
+an error and fails if one is given.
+
+At the same time it documents that git-send-email wants multiple
+instances of --cc specified on the command line if you want to
+cc multiple recipients.
+
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 
 ---
- gitweb/gitweb.cgi |   67 +++++++++++++++++++++++++++--------------------------
- 1 files changed, 34 insertions(+), 33 deletions(-)
 
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index 8f19fdb..57ac3a3 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -61,6 +61,9 @@ # file to use for guessing MIME types be
- # (relative to the current git repository)
- our $mimetypes_file = undef;
+ Documentation/git-send-email.txt |    9 +++++++++
+ git-send-email.perl              |   14 ++++++++++++++
+ 2 files changed, 23 insertions(+)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index ad1b9cf..481b3f5 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -24,9 +24,16 @@ OPTIONS
+ -------
+ The options available are:
  
-+# path to the project's repository
-+our $git_dir = undef;
++--bcc::
++	Specify a "Bcc:" value for each email.
 +
- # input validation and dispatch
- our $action = $cgi->param('a');
- if (defined $action) {
-@@ -101,7 +104,7 @@ if (defined $project) {
- 	}
- 	$rss_link = "<link rel=\"alternate\" title=\"" . esc_param($project) . " log\" href=\"" .
- 		    "$my_uri?" . esc_param("p=$project;a=rss") . "\" type=\"application/rss+xml\"/>";
--	$ENV{'GIT_DIR'} = "$projectroot/$project";
-+	$git_dir = "$projectroot/$project";
- } else {
- 	git_project_list();
- 	exit;
-@@ -372,7 +375,7 @@ sub die_error {
- sub git_get_type {
- 	my $hash = shift;
- 
--	open my $fd, "-|", "$gitbin/git-cat-file -t $hash" or return;
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir cat-file -t $hash" or return;
- 	my $type = <$fd>;
- 	close $fd or return;
- 	chomp $type;
-@@ -381,19 +384,15 @@ sub git_get_type {
- 
- sub git_read_head {
- 	my $project = shift;
--	my $oENV = $ENV{'GIT_DIR'};
- 	my $retval = undef;
--	$ENV{'GIT_DIR'} = "$projectroot/$project";
--	if (open my $fd, "-|", "$gitbin/git-rev-parse", "--verify", "HEAD") {
++	The --bcc option must be repeated for each user you want on the bcc list.
 +
-+	if (open my $fd, "-|", "$gitbin/git", "--git-dir=$projectroot/$project", "rev-parse", "--verify", "HEAD") {
- 		my $head = <$fd>;
- 		close $fd;
- 		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
- 			$retval = $1;
- 		}
- 	}
--	if (defined $oENV) {
--		$ENV{'GIT_DIR'} = $oENV;
--	}
- 	return $retval;
- }
+ --cc::
+ 	Specify a starting "Cc:" value for each email.
  
-@@ -424,7 +423,7 @@ sub git_read_tag {
- 	my %tag;
- 	my @comment;
- 
--	open my $fd, "-|", "$gitbin/git-cat-file tag $tag_id" or return;
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir cat-file tag $tag_id" or return;
- 	$tag{'id'} = $tag_id;
- 	while (my $line = <$fd>) {
- 		chomp $line;
-@@ -496,7 +495,7 @@ sub git_read_commit {
- 		@commit_lines = @$commit_text;
- 	} else {
- 		$/ = "\0";
--		open my $fd, "-|", "$gitbin/git-rev-list --header --parents --max-count=1 $commit_id" or return;
-+		open my $fd, "-|", "$gitbin/git  --git-dir=$git_dir rev-list --header --parents --max-count=1 $commit_id" or return;
- 		@commit_lines = split '\n', <$fd>;
- 		close $fd or return;
- 		$/ = "\n";
-@@ -594,7 +593,7 @@ sub git_diff_print {
- 	if (defined $from) {
- 		$from_tmp = "$git_temp/gitweb_" . $$ . "_from";
- 		open my $fd2, "> $from_tmp";
--		open my $fd, "-|", "$gitbin/git-cat-file blob $from";
-+		open my $fd, "-|", "$gitbin/git --git-dir=$git_dir cat-file blob $from";
- 		my @file = <$fd>;
- 		print $fd2 @file;
- 		close $fd2;
-@@ -605,7 +604,7 @@ sub git_diff_print {
- 	if (defined $to) {
- 		$to_tmp = "$git_temp/gitweb_" . $$ . "_to";
- 		open my $fd2, "> $to_tmp";
--		open my $fd, "-|", "$gitbin/git-cat-file blob $to";
-+		open my $fd, "-|", "$gitbin/git --git-dir=$git_dir cat-file blob $to";
- 		my @file = <$fd>;
- 		print $fd2 @file;
- 		close $fd2;
-@@ -844,10 +843,12 @@ sub git_project_list {
- 	}
- 	foreach my $pr (@list) {
- 		my $head = git_read_head($pr->{'path'});
-+		print STDERR $head;
++	The --cc option must be repeated for each user you want on the cc list.
 +
- 		if (!defined $head) {
- 			next;
- 		}
--		$ENV{'GIT_DIR'} = "$projectroot/$pr->{'path'}";
-+		$git_dir = "$projectroot/$pr->{'path'}";
- 		my %co = git_read_commit($head);
- 		if (!%co) {
- 			next;
-@@ -1046,7 +1047,7 @@ sub git_summary {
- 	      "<tr><td>owner</td><td>$owner</td></tr>\n" .
- 	      "<tr><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n" .
- 	      "</table>\n";
--	open my $fd, "-|", "$gitbin/git-rev-list --max-count=17 " . git_read_head($project) or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list --max-count=17 " . git_read_head($project) or die_error(undef, "Open failed.");
- 	my (@revlist) = map { chomp; $_ } <$fd>;
- 	close $fd;
- 	print "<div>\n" .
-@@ -1224,7 +1225,7 @@ sub git_tag {
+ --chain-reply-to, --no-chain-reply-to::
+ 	If this is set, each email will be sent as a reply to the previous
+ 	email sent.  If disabled with "--no-chain-reply-to", all emails after
+@@ -76,6 +83,8 @@ The options available are:
+ 	Generally, this will be the upstream maintainer of the
+ 	project involved.
  
- sub git_blame {
- 	my $fd;
--	die_error('403 Permission denied', "Permission denied.") if (!git_get_project_config_bool ('blame'));
-+	#die_error('403 Permission denied', "Permission denied.") if (!git_get_project_config_bool ('blame'));
- 	die_error('404 Not Found', "What file will it be, master?") if (!$file_name);
- 	$hash_base ||= git_read_head($project);
- 	die_error(undef, "Reading commit failed.") unless ($hash_base);
-@@ -1234,7 +1235,7 @@ sub git_blame {
- 		$hash = git_get_hash_by_path($hash_base, $file_name, "blob")
- 			or die_error(undef, "Error lookup file.");
- 	}
--	open ($fd, "-|", "$gitbin/git-annotate", '-l', '-t', '-r', $file_name, $hash_base)
-+	open ($fd, "-|", "$gitbin/git", "--git-dir=$git_dir", "annotate", '-l', '-t', '-r', $file_name, $hash_base)
- 		or die_error(undef, "Open failed.");
- 	git_header_html();
- 	print "<div class=\"page_nav\">\n" .
-@@ -1429,7 +1430,7 @@ sub git_get_hash_by_path {
- 	my $tree = $base;
- 	my @parts = split '/', $path;
- 	while (my $part = shift @parts) {
--		open my $fd, "-|", "$gitbin/git-ls-tree $tree" or die_error(undef, "Open git-ls-tree failed.");
-+		open my $fd, "-|", "$gitbin/git --git-dir=$git_dir ls-tree $tree" or die_error(undef, "Open git-ls-tree failed.");
- 		my (@entries) = map { chomp; $_ } <$fd>;
- 		close $fd or return undef;
- 		foreach my $line (@entries) {
-@@ -1457,8 +1458,8 @@ sub git_blob {
- 		my $base = $hash_base || git_read_head($project);
- 		$hash = git_get_hash_by_path($base, $file_name, "blob") || die_error(undef, "Error lookup file.");
- 	}
--	my $have_blame = git_get_project_config_bool ('blame');
--	open my $fd, "-|", "$gitbin/git-cat-file blob $hash" or die_error(undef, "Open failed.");
-+	my $have_blame = 1; #git_get_project_config_bool ('blame');
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir cat-file blob $hash" or die_error(undef, "Open failed.");
- 	git_header_html();
- 	if (defined $hash_base && (my %co = git_read_commit($hash_base))) {
- 		print "<div class=\"page_nav\">\n" .
-@@ -1570,7 +1571,7 @@ sub git_blob_plain_mimetype {
- }
++	The --to option must be repeated for each user you want on the to list.
++
  
- sub git_blob_plain {
--	open my $fd, "-|", "$gitbin/git-cat-file blob $hash" or return;
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir cat-file blob $hash" or return;
- 	my $type = git_blob_plain_mimetype($fd, $file_name);
+ Author
+ ------
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 7b1cca7..c5d9e73 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -65,6 +65,20 @@ my $rc = GetOptions("from=s" => \$from,
+ 		    "no-signed-off-cc|no-signed-off-by-cc" => \$no_signed_off_cc,
+ 	 );
  
- 	# save as filename, even when no $file_name is given
-@@ -1602,7 +1603,7 @@ sub git_tree {
- 		}
- 	}
- 	$/ = "\0";
--	open my $fd, "-|", "$gitbin/git-ls-tree -z $hash" or die_error(undef, "Open git-ls-tree failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir ls-tree -z $hash" or die_error(undef, "Open git-ls-tree failed.");
- 	chomp (my (@entries) = <$fd>);
- 	close $fd or die_error(undef, "Reading tree failed.");
- 	$/ = "\n";
-@@ -1683,7 +1684,7 @@ #			      " | " . $cgi->a({-href => "$my
++# Verify the user input
++
++foreach my $entry (@to) {
++	die "Comma in --to entry: $entry'\n" unless $entry !~ m/,/;
++}
++
++foreach my $entry (@initial_cc) {
++	die "Comma in --cc entry: $entry'\n" unless $entry !~ m/,/;
++}
++
++foreach my $entry (@bcclist) {
++	die "Comma in --bcclist entry: $entry'\n" unless $entry !~ m/,/;
++}
++
+ # Now, let's fill any that aren't set in with defaults:
  
- sub git_rss {
- 	# http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
--	open my $fd, "-|", "$gitbin/git-rev-list --max-count=150 " . git_read_head($project) or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list --max-count=150 " . git_read_head($project) or die_error(undef, "Open failed.");
- 	my (@revlist) = map { chomp; $_ } <$fd>;
- 	close $fd or die_error(undef, "Reading rev-list failed.");
- 	print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
-@@ -1703,7 +1704,7 @@ sub git_rss {
- 			last;
- 		}
- 		my %cd = date_str($co{'committer_epoch'});
--		open $fd, "-|", "$gitbin/git-diff-tree -r $co{'parent'} $co{'id'}" or next;
-+		open $fd, "-|", "$gitbin/git --git-dir=$git_dir diff-tree -r $co{'parent'} $co{'id'}" or next;
- 		my @difftree = map { chomp; $_ } <$fd>;
- 		close $fd or next;
- 		print "<item>\n" .
-@@ -1756,7 +1757,7 @@ sub git_opml {
- 		if (!defined $head) {
- 			next;
- 		}
--		$ENV{'GIT_DIR'} = "$projectroot/$proj{'path'}";
-+		$git_dir = "$projectroot/$proj{'path'}";
- 		my %co = git_read_commit($head);
- 		if (!%co) {
- 			next;
-@@ -1791,7 +1792,7 @@ sub git_log {
- 	      " | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$hash;hb=$hash")}, "tree") . "<br/>\n";
- 
- 	my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
--	open my $fd, "-|", "$gitbin/git-rev-list $limit $hash" or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list $limit $hash" or die_error(undef, "Open failed.");
- 	my (@revlist) = map { chomp; $_ } <$fd>;
- 	close $fd;
- 
-@@ -1882,7 +1883,7 @@ sub git_commit {
- 		$root = " --root";
- 		$parent = "";
- 	}
--	open my $fd, "-|", "$gitbin/git-diff-tree -r -M $root $parent $hash" or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir diff-tree -r -M $root $parent $hash" or die_error(undef, "Open failed.");
- 	@difftree = map { chomp; $_ } <$fd>;
- 	close $fd or die_error(undef, "Reading diff-tree failed.");
- 
-@@ -2124,7 +2125,7 @@ sub git_commitdiff {
- 	if (!defined $hash_parent) {
- 		$hash_parent = $co{'parent'};
- 	}
--	open my $fd, "-|", "$gitbin/git-diff-tree -r $hash_parent $hash" or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir diff-tree -r $hash_parent $hash" or die_error(undef, "Open failed.");
- 	my (@difftree) = map { chomp; $_ } <$fd>;
- 	close $fd or die_error(undef, "Reading diff-tree failed.");
- 
-@@ -2214,14 +2215,14 @@ sub git_commitdiff {
- 
- sub git_commitdiff_plain {
- 	mkdir($git_temp, 0700);
--	open my $fd, "-|", "$gitbin/git-diff-tree -r $hash_parent $hash" or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir diff-tree -r $hash_parent $hash" or die_error(undef, "Open failed.");
- 	my (@difftree) = map { chomp; $_ } <$fd>;
- 	close $fd or die_error(undef, "Reading diff-tree failed.");
- 
- 	# try to figure out the next tag after this commit
- 	my $tagname;
- 	my $refs = read_info_ref("tags");
--	open $fd, "-|", "$gitbin/git-rev-list HEAD";
-+	open $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list HEAD";
- 	chomp (my (@commits) = <$fd>);
- 	close $fd;
- 	foreach my $commit (@commits) {
-@@ -2291,7 +2292,7 @@ sub git_history {
- 	      "</div>\n";
- 	print "<div class=\"page_path\"><b>/" . esc_html($file_name) . "</b><br/></div>\n";
- 
--	open my $fd, "-|", "$gitbin/git-rev-list $hash | $gitbin/git-diff-tree -r --stdin -- \'$file_name\'";
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list $hash | $gitbin/git --git-dir=$git_dir diff-tree -r --stdin -- \'$file_name\'";
- 	my $commit;
- 	print "<table cellspacing=\"0\">\n";
- 	my $alternate = 0;
-@@ -2383,7 +2384,7 @@ sub git_search {
- 	my $alternate = 0;
- 	if ($commit_search) {
- 		$/ = "\0";
--		open my $fd, "-|", "$gitbin/git-rev-list --header --parents $hash" or next;
-+		open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list --header --parents $hash" or next;
- 		while (my $commit_text = <$fd>) {
- 			if (!grep m/$searchtext/i, $commit_text) {
- 				next;
-@@ -2433,7 +2434,7 @@ sub git_search {
- 
- 	if ($pickaxe_search) {
- 		$/ = "\n";
--		open my $fd, "-|", "$gitbin/git-rev-list $hash | $gitbin/git-diff-tree -r --stdin -S\'$searchtext\'";
-+		open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list $hash | $gitbin/git --git-dir=$git_dir diff-tree -r --stdin -S\'$searchtext\'";
- 		undef %co;
- 		my @files;
- 		while (my $line = <$fd>) {
-@@ -2504,7 +2505,7 @@ sub git_shortlog {
- 	      " | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$hash;hb=$hash")}, "tree") . "<br/>\n";
- 
- 	my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
--	open my $fd, "-|", "$gitbin/git-rev-list $limit $hash" or die_error(undef, "Open failed.");
-+	open my $fd, "-|", "$gitbin/git --git-dir=$git_dir rev-list $limit $hash" or die_error(undef, "Open failed.");
- 	my (@revlist) = map { chomp; $_ } <$fd>;
- 	close $fd;
- 
--- 
-1.4.0
+ sub gitvar {
