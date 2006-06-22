@@ -1,70 +1,48 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] rebase --merge: fix for rebasing more than 7 commits.
-Date: Thu, 22 Jun 2006 04:09:41 -0700
-Message-ID: <20060622110941.GA32261@hand.yhbt.net>
-References: <7vy7vptw8p.fsf@assigned-by-dhcp.cox.net> <7vpsh1tvt1.fsf@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Incremental CVS update
+Date: Thu, 22 Jun 2006 08:26:59 -0400
+Message-ID: <9e4733910606220526o14ebe76ala4d327f012a0e8f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 13:09:59 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jun 22 14:27:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtN4D-0001pp-Oe
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 13:09:46 +0200
+	id 1FtOH3-0004YU-Ag
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 14:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030626AbWFVLJn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 07:09:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030627AbWFVLJn
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 07:09:43 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:5798 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1030626AbWFVLJm (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 07:09:42 -0400
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id 9609B7DC021; Thu, 22 Jun 2006 04:09:41 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
+	id S1751324AbWFVM1B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 08:27:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbWFVM1B
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 08:27:01 -0400
+Received: from nz-out-0102.google.com ([64.233.162.200]:1834 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751324AbWFVM1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 08:27:00 -0400
+Received: by nz-out-0102.google.com with SMTP id l1so438564nzf
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 05:27:00 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=PdTt62ExBWl8xDgBoVXKIWDQ5SueNlD3hX5Iylm0I980EfuHX+fROBF43zJJy6uuGD7cg5l1A7xB+QXVOh4wAsDoO/xoroVSMWUOZD+yLN5H1UaoTYnheQa1Bsnc2etG0Iawey0DMAyOQard+FoZOAa5NoL2xbaNSAKqcpLkQZ0=
+Received: by 10.36.247.57 with SMTP id u57mr1897084nzh;
+        Thu, 22 Jun 2006 05:26:59 -0700 (PDT)
+Received: by 10.36.37.5 with HTTP; Thu, 22 Jun 2006 05:26:59 -0700 (PDT)
+To: "Keith Packard" <keithp@keithp.com>, git <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7vpsh1tvt1.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22324>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> >  * I wanted to raise my confidence level in the new rebase --merge
-> >    code, so I did a little exercise which resulted in finding this
-> >    buglet.
-> >...
-> >    So the exercise went like this:
-> >...
-> >   With this fix, the above works beautifully.  I am reasonably
-> >   happy with this shiny new toy.  Good job, Eric! and thanks.
-
-:)  Thanks for the extra QA and fix.
-
-> By the way, I do not quite understand the reasoning behind not
-> moving the head being rebased until the finalization phase.
-
-That's because my original patch that only used git-merge, which didn't
-let me manually commit with all the information from a previous commit.
-
-> Also I think --skip would be straightforward.  What you look at
-> in call_merge() is the current HEAD, the commit being rebased
-> and its direct parent (actually what you are interested in are
-> trees of these commits and not ancestry chains among them -- if
-> we can tell git-merge-recursive not to try its own "recursive"
-> merge base finding but just use what we give it as the base, I
-> could sleep better.  I think the current code could misbehave in
-> funnier ancestry graph if we allow it to pick merge base on its
-> own), so skipping is just a matter of, eh, skipping the commit.
-
-Another consequence of relying on plain git-merge in my original
-patch.  --skip should be very doable now that we can specify
-the correct base.  I'll look into it more when I'm more awake.
+cvsps keeps it's incremental status in ~/.cvps/*. parsecvs might want
+to keep it's status in the .git repository and use tags to locate it.
+You could even have a utility to show when and what was imported. By
+keeping everything in git it doesn't matter who runs the incremental
+update commands.
 
 -- 
-Eric Wong
+Jon Smirl
+jonsmirl@gmail.com
