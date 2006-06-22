@@ -1,54 +1,55 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH 4/4] upload-pack/fetch-pack: support side-band
-	communication
-Date: Thu, 22 Jun 2006 11:22:14 -0500
-Message-ID: <1150993333.9022.51.camel@cashmere.sps.mot.com>
-References: <7vsllyzs9w.fsf@assigned-by-dhcp.cox.net>
-	 <7vpsh2xcv1.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Tracking CVS
+Date: Thu, 22 Jun 2006 10:05:10 -0700
+Message-ID: <7vveqtp1dl.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910606220541y15d66fa6t33ab0c80ae05f764@mail.gmail.com>
+	<20060622135831.GB21864@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 22 18:23:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 22 19:06:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtRxV-0006Ug-Mc
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 18:23:10 +0200
+	id 1FtScb-0007u3-F8
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 19:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbWFVQXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 12:23:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbWFVQXG
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 12:23:06 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:22928 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1751834AbWFVQXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 12:23:05 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k5MGMnSN000979;
-	Thu, 22 Jun 2006 09:22:49 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k5MGMmOo009484;
-	Thu, 22 Jun 2006 11:22:48 -0500 (CDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsh2xcv1.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S932557AbWFVRFU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 13:05:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932563AbWFVRFU
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 13:05:20 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:14251 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932557AbWFVRFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 13:05:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060622170512.NYQH554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 22 Jun 2006 13:05:12 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060622135831.GB21864@pasky.or.cz> (Petr Baudis's message of
+	"Thu, 22 Jun 2006 15:58:31 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22347>
 
-On Wed, 2006-06-21 at 19:17, Junio C Hamano wrote:
-> >    Somehow this does not work when connecting to git daemon that
-> >    runs under inetd.  Fixes appreciated.
-> 
-> This seems to fix it.
+Petr Baudis <pasky@suse.cz> writes:
 
-> -		fclose(stderr); //FIXME: workaround
-> +		freopen("/dev/null", "w", stderr);
->  
+> If you want to be safe even with filenames containing newlines, you need
+> to go at the Git level:
+>
+> 	git-ls-files -z --others | \
+> 		xargs -0 git-update-index --add --
 
-Sweet.  Thanks!
+If you want to avoid "xargs -0", you can replace it with
+"git-update-index -z --stdin" I think.
 
-jdl
+> Perhaps we might make a special command which would sync the index set
+> with the working copy set...
+
+I think that makes sense.  Something like what "git-commit -a"
+does before making a commit.
