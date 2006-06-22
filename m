@@ -1,66 +1,50 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: whitespace cleanup around '='
-Date: Thu, 22 Jun 2006 11:52:53 +0200
-Organization: At home
-Message-ID: <e7dp9m$v48$1@sea.gmane.org>
-References: <20060622023546.28cb4291.froese@gmx.de> <11509591773212-git-send-email-jnareb@gmail.com> <7vejxhwts4.fsf@assigned-by-dhcp.cox.net> <e7dh1c$61n$1@sea.gmane.org> <7vodwlsfek.fsf@assigned-by-dhcp.cox.net>
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Thu, 22 Jun 2006 12:00:25 +0200
+Message-ID: <20060622100024.G7f491d4a@leonov.stosberg.net>
+References: <e79921$u0e$1@sea.gmane.org> <46a038f90606201233p6283febbn9a46e36c3a666903@mail.gmail.com> <20060621130535.G2b34d382@leonov.stosberg.net> <e7bhlf$5j2$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 22 11:53:44 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 22 12:01:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtLsS-0006DV-NU
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 11:53:33 +0200
+	id 1FtLzn-0007Jq-ER
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 12:01:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161022AbWFVJx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 05:53:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161025AbWFVJx2
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 05:53:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:13536 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161022AbWFVJx1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 05:53:27 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FtLsB-0006Ar-R1
-	for git@vger.kernel.org; Thu, 22 Jun 2006 11:53:15 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 11:53:15 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 11:53:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S1161025AbWFVKA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 06:00:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161028AbWFVKA7
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 06:00:59 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:20973 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1161025AbWFVKA6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 06:00:58 -0400
+Received: from leonov.stosberg.net (p213.54.83.34.tisdip.tiscali.de [213.54.83.34])
+	by ncs.stosberg.net (Postfix) with ESMTP id 19118590C04E;
+	Thu, 22 Jun 2006 12:00:32 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id 51F7510E79B; Thu, 22 Jun 2006 12:00:25 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <e7bhlf$5j2$1@sea.gmane.org>
+OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22320>
 
-Junio C Hamano wrote:
+Jakub Narebski wrote:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+> So now you have extra git redirector being spawned, instead of extra shell
+> being spawned. 
 
->> I'm very sorry, I forgot that I applied Timo Hirvonen patch
->>
->>   "[PATCH] gitweb: Start search from HEAD"
->>   Message-ID: <20060620152515.23e59396.tihirvon@gmail.com>
-> 
-> But I think what you have is this one instead:
-> 
-> Message-ID: <20060620164105.7276a45f.tihirvon@gmail.com>
+Most of the commands that Gitweb uses are built-ins, so there
+shouldn't be any extra overhead by calling "git command" instead of
+"git-command".  If I haven't missed one, git-annotate is the only one
+which is not a built-in.
 
-Is the 'note' extension to commit header implemented yet? It it is,then it
-would be nice if git-am recorded original email message-ids in the note
-header. Usually it is of no interest to user, so it should be hidden by
-default.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Regards,
+Dennis
