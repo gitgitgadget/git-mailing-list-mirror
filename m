@@ -1,92 +1,105 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: [GIT PATCH] USB patches for 2.6.17
-Date: Thu, 22 Jun 2006 22:01:47 +0200
-Message-ID: <20060622200147.GA10712@mars.ravnborg.org>
-References: <20060621220656.GA10652@kroah.com>
-	<Pine.LNX.4.64.0606211519550.5498@g5.osdl.org>
-	<20060621225134.GA13618@kroah.com>
-	<Pine.LNX.4.64.0606211814200.5498@g5.osdl.org>
-	<20060622181826.GB22867@kroah.com>
-	<20060622183021.GA5857@kroah.com>
-	<Pine.LNX.4.64.0606221239100.5498@g5.osdl.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Incremental CVS update
+Date: Thu, 22 Jun 2006 16:08:09 -0400
+Message-ID: <9e4733910606221308v2f995adev8c5b721be0a009e2@mail.gmail.com>
+References: <9e4733910606220526o14ebe76ala4d327f012a0e8f5@mail.gmail.com>
+	 <46a038f90606221236j2c5c9692yecef924aa769c1c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Andrew Morton <akpm@osdl.org>, Greg KH <gregkh@suse.de>,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org,
-	linux-usb-devel@lists.sourceforge.net
-X-From: linux-usb-devel-bounces@lists.sourceforge.net Thu Jun 22 22:03:03 2006
-Return-path: <linux-usb-devel-bounces@lists.sourceforge.net>
-Envelope-to: linux-usb-devel-3@m.gmane.org
-Received: from lists-outbound.sourceforge.net ([66.35.250.225])
+Cc: "Keith Packard" <keithp@keithp.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 22 22:09:13 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtVNJ-0007Ww-GE
-	for linux-usb-devel-3@m.gmane.org; Thu, 22 Jun 2006 22:02:02 +0200
-Received: from sc8-sf-list1-new.sourceforge.net (unknown [10.3.1.93])
-	by sc8-sf-spam2.sourceforge.net (Postfix) with ESMTP
-	id E144512C5E; Thu, 22 Jun 2006 13:01:59 -0700 (PDT)
-Received: from sc8-sf-mx1-b.sourceforge.net ([10.3.1.91]
-	helo=mail.sourceforge.net)
-	by sc8-sf-list1-new.sourceforge.net with esmtp (Exim 4.43)
-	id 1FtVNG-00039s-S3 for linux-usb-devel@lists.sourceforge.net;
-	Thu, 22 Jun 2006 13:01:58 -0700
-Received: from pasmtpa.tele.dk ([80.160.77.114] helo=pasmtp.tele.dk)
-	by mail.sourceforge.net with esmtp (Exim 4.44) id 1FtVNG-0003Zz-Ew
-	for linux-usb-devel@lists.sourceforge.net;
-	Thu, 22 Jun 2006 13:01:58 -0700
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk
-	[80.160.117.125])
-	by pasmtp.tele.dk (Postfix) with ESMTP id 7745E8013CD;
-	Thu, 22 Jun 2006 22:01:54 +0200 (CEST)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id 3932C43C062; Thu, 22 Jun 2006 22:01:47 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
+	id 1FtVTM-0000VK-2c
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 22:08:16 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1030355AbWFVUIM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 16:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030375AbWFVUIL
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 16:08:11 -0400
+Received: from nz-out-0102.google.com ([64.233.162.200]:18161 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1030355AbWFVUIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 16:08:10 -0400
+Received: by nz-out-0102.google.com with SMTP id z31so526758nzd
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 13:08:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lhDDYZpwFl8a2kg3efe9HdsmoeOCsCTDt4MTspFjhG8ZHB9c+2K/Nc5NWk8xEkwldi/cF1IYMCTA+63fyzq5TNs/CF8H7HSMLp/C0vSHnnrJo8RF50ty8n2vqVPY0/ZpDbGDLNXUcdUq7fa9RMWiQa59IFyCVns7BRqq01rz00U=
+Received: by 10.36.221.38 with SMTP id t38mr1427210nzg;
+        Thu, 22 Jun 2006 13:08:09 -0700 (PDT)
+Received: by 10.36.37.5 with HTTP; Thu, 22 Jun 2006 13:08:09 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606221236j2c5c9692yecef924aa769c1c9@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606221239100.5498@g5.osdl.org>
-User-Agent: Mutt/1.5.11
-X-Spam-Score: 1.0 (+)
-X-Spam-Report: Spam Filtering performed by sourceforge.net.
-	See http://spamassassin.org/tag/ for more details.
-	Report problems to
-	http://sf.net/tracker/?func=add&group_id=1&atid=200001
-	1.0 FORGED_RCVD_HELO       Received: contains a forged HELO
-X-BeenThere: linux-usb-devel@lists.sourceforge.net
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: <linux-usb-devel.lists.sourceforge.net>
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/linux-usb-devel>, 
-	<mailto:linux-usb-devel-request@lists.sourceforge.net?subject=unsubscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=linux-usb-devel>
-List-Post: <mailto:linux-usb-devel@lists.sourceforge.net>
-List-Help: <mailto:linux-usb-devel-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/linux-usb-devel>, 
-	<mailto:linux-usb-devel-request@lists.sourceforge.net?subject=subscribe>
-Sender: linux-usb-devel-bounces@lists.sourceforge.net
-Errors-To: linux-usb-devel-bounces@lists.sourceforge.net
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22364>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22365>
 
-> I'm just constantly surprised by how people don't even seem to realize 
-> what it can do sometimes. Part of it is that development has been pretty 
-> active (and some of the things it can do simply weren't there three months 
-> ago), but part of it must be because people don't even expect it to be 
-> able to do something like that.
+On 6/22/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 6/23/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > cvsps keeps it's incremental status in ~/.cvps/*. parsecvs might want
+> > to keep it's status in the .git repository and use tags to locate it.
+> > You could even have a utility to show when and what was imported. By
+> > keeping everything in git it doesn't matter who runs the incremental
+> > update commands.
+>
+> Jon,
+>
+> what cvsps keeps is a cache of what it knows about the repo history,
+> to ask only for new commits. Now, cvsps will always write to STDOUT
+> the full history, and git-cvsimport discards the commits it has
+> already seen, based on reading the state of each git head.
 
-Personally I'm still missing two things:
-1) A command to let me see what this Linus guy have applied compared to
-my tree - without touching anything in my tree. bk changes -R
-2) A dry-run of a fetch+pull. I can do that if I really study the man
-pages I know. But "git pull --dry-run" would be more convinient.
+The cache is 723MB for the Mozilla repo. Since the info gets cached in
+my home directory anyone else who needs to sync the repo doesn't get
+to use the cache.
 
-Other than that I will say that I'm pleased with the funtionality that
-I use - that's maybe 10% of the possibilities...
+[jonsmirl@jonsmirl .cvsps]$ pwd
+/home/jonsmirl/.cvsps
+[jonsmirl@jonsmirl .cvsps]$ ls -l
+total 707492
+-rw-rw-r-- 1 jonsmirl jonsmirl 723758657 Jun 15 16:10 #home#mozcvs##mozilla
+[jonsmirl@jonsmirl .cvsps]$
 
-	Sam
 
-Using Tomcat but need to do more? Need to support web services, security?
-Get stuff done quickly with pre-integrated technology to make your job easier
-Download IBM WebSphere Application Server v.1.0.1 based on Apache Geronimo
-http://sel.as-us.falkag.net/sel?cmd=lnk&kid=120709&bid=263057&dat=121642
-_______________________________________________
-linux-usb-devel@lists.sourceforge.net
-To unsubscribe, use the last form field at:
-https://lists.sourceforge.net/lists/listinfo/linux-usb-devel
+Keith is rewriting parsecvs. If you analyze all of the data
+structures, the info needed for the conversion should be able to fit
+into well under 100MB instead of the ~2GB the current programs are
+using.
+
+There are lots of ways to reduce memory consumption. You can turm CVS
+revisions into git IDs as soon as the revision is seen. That lets you
+get away from tracking file names and long CVS revision numbers. It
+also works to turn the author/log fields immediately into a hash. When
+possible switching to arrays instead of linked list is smaller too.
+
+Some stats:
+1M revisions
+200K unique changesets (author/log combos)
+200KB symbols
+1,800 branches
+
+cvsps has the lowest memory consumption, it uses 1200 bytes per
+revision. It looks like it is possible to lower this to less than 100
+bytes per rev.
+
+>
+> So cvsps + git-cvsimport don't keep any extra data around, and I am
+> 100% certain that parsecvs don't need that either.
+>
+> cheers,
+>
+>
+> martin
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
