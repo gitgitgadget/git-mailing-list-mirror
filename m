@@ -1,33 +1,33 @@
 From: Kumar Gala <galak@kernel.crashing.org>
 Subject: Re: git pull w/o checkout?
-Date: Thu, 22 Jun 2006 08:13:54 -0500
-Message-ID: <6F96D77C-FE27-4B74-ADBF-9964B5FD72DF@kernel.crashing.org>
-References: <E65F8DB5-677B-4C7B-A4EC-5F6FB76D6E9A@kernel.crashing.org> <20060622131129.GB5134@spinlock.ch>
+Date: Thu, 22 Jun 2006 08:15:31 -0500
+Message-ID: <A4C01915-3337-460C-BE19-7AC17249BE50@kernel.crashing.org>
+References: <E65F8DB5-677B-4C7B-A4EC-5F6FB76D6E9A@kernel.crashing.org> <20060622130523.GA6893@coredump.intra.peff.net> <E333ADD9-1096-4137-9D72-D58A8E2A5582@kernel.crashing.org> <20060622131344.GA7168@coredump.intra.peff.net>
 Mime-Version: 1.0 (Apple Message framework v750)
 Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 15:15:10 2006
+X-From: git-owner@vger.kernel.org Thu Jun 22 15:17:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtP0d-00048g-3e
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 15:14:11 +0200
+	id 1FtP25-0004d2-8f
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 15:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161100AbWFVNN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 09:13:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161101AbWFVNN6
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 09:13:58 -0400
-Received: from nommos.sslcatacombnetworking.com ([67.18.224.114]:46140 "EHLO
+	id S1030634AbWFVNPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 09:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030638AbWFVNPi
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 09:15:38 -0400
+Received: from nommos.sslcatacombnetworking.com ([67.18.224.114]:52540 "EHLO
 	nommos.sslcatacombnetworking.com") by vger.kernel.org with ESMTP
-	id S1161100AbWFVNN6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 09:13:58 -0400
+	id S1030634AbWFVNPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 09:15:37 -0400
 Received: from cpe-66-69-212-100.austin.res.rr.com ([66.69.212.100] helo=[192.168.1.100])
 	by nommos.sslcatacombnetworking.com with esmtp (Exim 4.52)
-	id 1FtP0P-0003wk-3i; Thu, 22 Jun 2006 08:13:57 -0500
-In-Reply-To: <20060622131129.GB5134@spinlock.ch>
-To: Matthias Kestenholz <lists@spinlock.ch>
+	id 1FtP20-000435-1E; Thu, 22 Jun 2006 08:15:36 -0500
+In-Reply-To: <20060622131344.GA7168@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
 X-Mailer: Apple Mail (2.750)
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - nommos.sslcatacombnetworking.com
@@ -40,26 +40,19 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22333>
 
 
-On Jun 22, 2006, at 8:11 AM, Matthias Kestenholz wrote:
+On Jun 22, 2006, at 8:13 AM, Jeff King wrote:
 
-> * Kumar Gala (galak@kernel.crashing.org) wrote:
->> I trying to see if there is a way to get the effect of a git-pull w/o
->> getting the checked out files.
->>
->> Any ideas?
+> On Thu, Jun 22, 2006 at 08:10:10AM -0500, Kumar Gala wrote:
 >
-> Do you want to fetch remote changes without merging them into your
-> working tree? If you, "git fetch" is your friend.
+>>> git-fetch?
+>> Its the first half, still need to resolve FETCH_HEAD, HEAD, etc..
+>
+> Can you elaborate on what you're trying to accomplish?
 
-that's what I want, however fetch isn't updating any refs/ as far as  
-I can tell.
-
-> By the way, pull does the equivalent of a fetch and a subsequent
-> merge.
-
-right, its the merge that seems to be doing the checkout.
+A local mirror of a git tree.  I can do the clone easy enough, its  
+trying to figure out the updates after the fact that is the issue.
 
 - k
