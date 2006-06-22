@@ -1,50 +1,63 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Thu, 22 Jun 2006 12:00:25 +0200
-Message-ID: <20060622100024.G7f491d4a@leonov.stosberg.net>
-References: <e79921$u0e$1@sea.gmane.org> <46a038f90606201233p6283febbn9a46e36c3a666903@mail.gmail.com> <20060621130535.G2b34d382@leonov.stosberg.net> <e7bhlf$5j2$1@sea.gmane.org>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: Re: [PATCH] gitweb: whitespace cleanup around '='
+Date: Thu, 22 Jun 2006 12:19:22 +0200
+Message-ID: <87psh1ze51.fsf@gmail.com>
+References: <20060622023546.28cb4291.froese@gmx.de>
+	<11509591773212-git-send-email-jnareb@gmail.com>
+	<7vejxhwts4.fsf@assigned-by-dhcp.cox.net> <e7dh1c$61n$1@sea.gmane.org>
+	<7vodwlsfek.fsf@assigned-by-dhcp.cox.net> <e7dp9m$v48$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 12:01:08 2006
+X-From: git-owner@vger.kernel.org Thu Jun 22 12:19:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtLzn-0007Jq-ER
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 12:01:07 +0200
+	id 1FtMHo-0001Ui-8j
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 12:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161025AbWFVKA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 06:00:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161028AbWFVKA7
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 06:00:59 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:20973 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1161025AbWFVKA6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 06:00:58 -0400
-Received: from leonov.stosberg.net (p213.54.83.34.tisdip.tiscali.de [213.54.83.34])
-	by ncs.stosberg.net (Postfix) with ESMTP id 19118590C04E;
-	Thu, 22 Jun 2006 12:00:32 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id 51F7510E79B; Thu, 22 Jun 2006 12:00:25 +0200 (CEST)
+	id S1751776AbWFVKT2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 06:19:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWFVKT2
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 06:19:28 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:64192 "EHLO ifae-s0.ifae.es")
+	by vger.kernel.org with ESMTP id S1751776AbWFVKT2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 06:19:28 -0400
+Received: from bela (nb-sbejar.ifae.es [192.101.162.156])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k5M9ISu14171;
+	Thu, 22 Jun 2006 11:18:33 +0200
 To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <e7bhlf$5j2$1@sea.gmane.org>
-OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
-User-Agent: mutt-ng/devel-r802 (Debian)
+In-Reply-To: <e7dp9m$v48$1@sea.gmane.org> (Jakub Narebski's message of "Thu,
+	22 Jun 2006 11:52:53 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22321>
 
-Jakub Narebski wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> So now you have extra git redirector being spawned, instead of extra shell
-> being spawned. 
+> Junio C Hamano wrote:
+>
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>
+>>> I'm very sorry, I forgot that I applied Timo Hirvonen patch
+>>>
+>>>   "[PATCH] gitweb: Start search from HEAD"
+>>>   Message-ID: <20060620152515.23e59396.tihirvon@gmail.com>
+>> 
+>> But I think what you have is this one instead:
+>> 
+>> Message-ID: <20060620164105.7276a45f.tihirvon@gmail.com>
+>
+> Is the 'note' extension to commit header implemented yet? It it is,then it
+> would be nice if git-am recorded original email message-ids in the note
+> header. Usually it is of no interest to user, so it should be hidden by
+> default.
 
-Most of the commands that Gitweb uses are built-ins, so there
-shouldn't be any extra overhead by calling "git command" instead of
-"git-command".  If I haven't missed one, git-annotate is the only one
-which is not a built-in.
+I put it at the end of the commit message, like the Signed-of-by
+lines. And, yes, it would be nice if git-am would add it (--message-id
+flag?). If more people is interested I'll try to send a patch.
 
-Regards,
-Dennis
+        Santi
