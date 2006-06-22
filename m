@@ -1,91 +1,85 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH] Pass -DDEFAULT_GIT_TEMPLATE_DIR only where actually
- used.
-Date: Thu, 22 Jun 2006 10:49:01 +0300
-Message-ID: <20060622104901.f3543f07.tihirvon@gmail.com>
-References: <0J1800MC1NKJD2C0@mxout2.netvision.net.il>
-	<7vwtb9veqv.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [WORKAROUND] gitk lower pane scrollbar extends past gitk window
+Date: Thu, 22 Jun 2006 09:48:52 +0200
+Organization: At home
+Message-ID: <e7di0n$7hh$1@sea.gmane.org>
+References: <e7ber7$qh9$1@sea.gmane.org> <20060622023546.28cb4291.froese@gmx.de> <81b0412b0606220010p6c2e62ffv3914abafd95e4bb2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: iler.ml@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 X-From: git-owner@vger.kernel.org Thu Jun 22 09:49:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtJw7-0002Z3-Kn
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 09:49:12 +0200
+	id 1FtJw1-0002Yy-Mi
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 09:49:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932828AbWFVHtG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 03:49:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932832AbWFVHtG
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 03:49:06 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:19276 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932828AbWFVHtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 03:49:05 -0400
-Received: by nf-out-0910.google.com with SMTP id o60so234481nfa
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 00:49:04 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=L0r9SZXmXTXMBtRfkHmiP6Pv02EbhGrMlmPi6Y4085fgs5s/TBrLKb76S2713vg93SCupbMrVBvofEmFjTulJ6WOR/TfAHcnK/Kq69kwE2pOKcWVkDeyJZ9f8IQ18dHWTn3rPRUOAJB64qUOAycW/wgR1hYokIy2+5WSyVeUwDA=
-Received: by 10.49.92.10 with SMTP id u10mr1331820nfl;
-        Thu, 22 Jun 2006 00:49:03 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id l21sm1180245nfc.2006.06.22.00.49.03;
-        Thu, 22 Jun 2006 00:49:03 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtb9veqv.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S932490AbWFVHtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 03:49:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932828AbWFVHtB
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 03:49:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:50068 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932490AbWFVHtA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 03:49:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FtJvl-0002Ww-Tt
+	for git@vger.kernel.org; Thu, 22 Jun 2006 09:48:49 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 09:48:49 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 09:48:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22308>
 
-Junio C Hamano <junkio@cox.net> wrote:
+Alex Riesen wrote:
 
-> Yakov Lerner <iler.ml@gmail.com> writes:
+> On 6/22/06, Edgar Toernig <froese@gmx.de> wrote:
+>> Jakub Narebski wrote:
+>>>
+>>> In gitk from the current 'next' branch, post git version 1.4.0
+>>> (blob ba4644f) scrollbar for lower pane, i.e. for commitdiff and files
+>>> (Comments) views extends past the bottom of the gitk window. Therefore
+>>> I cannnot see lower part of commit diff if it is larger than 
+>>> window height. 
+>>
+>> Yes, and the search field at the bottom is invisible too.  Removing
+>> line 431:
+>>
+>>         .ctop conf -width $geometry(width) -height $geometry(height)
+>>
+>> seems to fix it and the window still gets the right size.
+>>
 > 
-> > Before this patch, -DDEFAULT_GIT_TEMPLATE_DIR was passed on compilation
-> > command line to all and every %c compiled. In fact the macro
-> > is used by only one .c file, and unused by all other .c files.
-> > Remove -DDEFAULT_GIT_TEMPLATE_DIR where unused. Follow the examlpe of 
-> > exec_cmd.o. Pass -DDEFAULT_GIT_TEMPLATE_DIR only where actually used. 
-> 
-> Thanks.
-> 
-> By the way, I really started hating that we have $(GIT_VERSION)
-> in $(TRACK_CFLAGS).  Since the version string is tied to the
-> HEAD commit object name, having it in $(TRACK_CFLAGS) means that
-> every time I switch branches, make a new commit on top of the
-> current branch, or checkout-compile-and-then-make-local-change
-> sequence would force pretty much everything to be rebuilt.
+> No, it does not. It gets the default geometry, not the one it had last time.
 
-I think this already makes sure git is compiled if version changes:
+Now I see. It is the case when I used gitk from a computer with a desktop
+with larger screen height, then on computer with screen height smaller than 
+gitk height was I had mentioned problem.
 
-# These can record GIT_VERSION
-git$X git.spec \
-        $(patsubst %.sh,%,$(SCRIPT_SH)) \
-        $(patsubst %.perl,%,$(SCRIPT_PERL)) \
-        $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
-        : GIT-VERSION-FILE
+Workaround for now is to delete old geometry info from ~/.gitk file 
+(or just delete whole file).
 
-$ git grep GIT_VERSION *.sh *.perl
-git-send-email.perl:	my $gitversion = '@@GIT_VERSION@@';
-git-send-email.perl:	if ($gitversion =~ m/..GIT_VERSION../) {
+I don't know Tcl/Tk to make proper fix, i.e. check if restored size is not
+larger than available screen size, and use min(saved size, screen size).
+Another improvement would be to save the fact that gitk window is maximized
+as a symbol, e.g. as equivalent of 
 
-Only git-send-email and git needs to depend on GIT_VERSION.
+  set geometry(height) screen(height)
 
-> For that matter, I do not think tracking prefix_SQ makes much
-> sense since what matters are bindir, gitexecdir and template_dir
-> which are already covered, and prefix is merely a convenience to
-> set these three (four, counting GIT_PYTHON_DIR; we probably
-> should add it to TRACK_CFLAGS).
-
-Yes, only ALL_CFLAGS, bindir, gitexecdir, template_dir and
-GIT_PYTHON_DIR should be in TRACK_CFLAGS.
+in ~/.gitk
 
 -- 
-http://onion.dynserv.net/~timo/
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
