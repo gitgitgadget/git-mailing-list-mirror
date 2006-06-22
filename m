@@ -1,90 +1,55 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Tracking CVS
-Date: Thu, 22 Jun 2006 10:17:15 -0400
-Message-ID: <9e4733910606220717of2ba299ta8a38c7d63fd5635@mail.gmail.com>
-References: <9e4733910606220541y15d66fa6t33ab0c80ae05f764@mail.gmail.com>
-	 <20060622135831.GB21864@pasky.or.cz>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Thu, 22 Jun 2006 07:47:27 -0700
+Message-ID: <20060622144725.GB3154@h4x0r5.com>
+References: <e79921$u0e$1@sea.gmane.org> <46a038f90606201233p6283febbn9a46e36c3a666903@mail.gmail.com> <20060621130535.G2b34d382@leonov.stosberg.net> <e7bhlf$5j2$1@sea.gmane.org> <20060622100024.G7f491d4a@leonov.stosberg.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 22 16:17:47 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 22 16:47:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtPzm-0008JN-WD
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 16:17:23 +0200
+	id 1FtQTA-000504-Sz
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 16:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751791AbWFVORR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 10:17:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751796AbWFVORR
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 10:17:17 -0400
-Received: from nz-out-0102.google.com ([64.233.162.192]:20398 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751791AbWFVORQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 10:17:16 -0400
-Received: by nz-out-0102.google.com with SMTP id l1so472007nzf
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 07:17:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RuXjNksEQoL+lchuTD5P7vjv+s/IsvK3O+RyQIY/xD6soaU9KblX1+3tF+OgIKx91LydJoDQ0KykVeoAgwPe/sISZaNDYvezech+3KqVAnJfjlUpC4Pnt50EJBvir+R2e9zjiTG35BBNYMfcw5vcwcVzuKEZ5VzFqMRj+jkf994=
-Received: by 10.36.25.2 with SMTP id 2mr771926nzy;
-        Thu, 22 Jun 2006 07:17:15 -0700 (PDT)
-Received: by 10.36.37.5 with HTTP; Thu, 22 Jun 2006 07:17:15 -0700 (PDT)
-To: "Petr Baudis" <pasky@suse.cz>
-In-Reply-To: <20060622135831.GB21864@pasky.or.cz>
+	id S1161156AbWFVOrm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 10:47:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWFVOrm
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 10:47:42 -0400
+Received: from h4x0r5.com ([70.85.31.202]:49161 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1751113AbWFVOrl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 10:47:41 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1FtQSt-0006un-Bt; Thu, 22 Jun 2006 07:47:27 -0700
+To: Dennis Stosberg <dennis@stosberg.net>
 Content-Disposition: inline
+In-Reply-To: <20060622100024.G7f491d4a@leonov.stosberg.net>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22344>
 
-On 6/22/06, Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Thu, Jun 22, 2006 at 02:41:16PM CEST, I got a letter
-> where Jon Smirl <jonsmirl@gmail.com> said that...
-> > I'm tracking cvs using this sequence.
-> >
-> > cvs update
-> > cg rm -a
-> > cg commit
-> > cg add -r .
-> > cg commit
-> >
-> > Is there a way to avoid the two commits? If you do the add with out
-> > the intervening commit it just adds the files back.
->
-> I think the most straightforward way is:
->
->         cvs update
->         cg-rm -a
->         cg-status -wns \? | xargs cg-add
->         cg-commit
->
-> If you want to be careful about filenames polluted by non-newline
-> whitespaces,
->
->         cg-status -wns \? | tr '\n' '\0' | xargs -0 cg-add
->
-> If you want to be safe even with filenames containing newlines, you need
-> to go at the Git level:
->
->         git-ls-files -z --others | \
->                 xargs -0 git-update-index --add --
->
-> Perhaps we might make a special command which would sync the index set
-> with the working copy set...
+On Thu, Jun 22, 2006 at 12:00:25PM +0200, Dennis Stosberg wrote:
+> Jakub Narebski wrote:
+> 
+> > So now you have extra git redirector being spawned, instead of extra shell
+> > being spawned. 
+> 
+> Most of the commands that Gitweb uses are built-ins, so there
+> shouldn't be any extra overhead by calling "git command" instead of
+> "git-command".  If I haven't missed one, git-annotate is the only one
+> which is not a built-in.
 
-How about a cg-sync? Tracking cvs (or other SCM) with git is probably
-a common activitiy while you try to convince the other CVS users to
-switch. It is probably worth a little write up in the readme on the
-best way to do it.
+git-annotate is a Perl script anyway, so it's not unreasonable to
+consider making it a .pm module and just using it directly in gitweb.
 
-cg-sync should probably default to having a prompt before actually
-adding/removing the files. Add a -f or something to get rid of the
-prompt.
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+
+Ryan Anderson
+  sometimes Pug Majere
