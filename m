@@ -1,70 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] [RFC] Introduce Git.pm
-Date: Thu, 22 Jun 2006 10:07:58 +0200
-Organization: At home
-Message-ID: <e7dj4h$cv7$1@sea.gmane.org>
-References: <20060622003546.17760.23089.stgit@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 22 10:08:39 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: fix commit --edit flag when using SVN:: libraries
+Date: Thu, 22 Jun 2006 01:22:46 -0700
+Message-ID: <11509645661829-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Jun 22 10:22:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtKEs-0005Zl-Dj
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 10:08:34 +0200
+	id 1FtKSk-0007ed-6b
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 10:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbWFVII1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 04:08:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWFVII1
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 04:08:27 -0400
-Received: from main.gmane.org ([80.91.229.2]:13705 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932321AbWFVII0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 04:08:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FtKEb-0005Vv-0U
-	for git@vger.kernel.org; Thu, 22 Jun 2006 10:08:17 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 10:08:17 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 10:08:17 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S964859AbWFVIWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 04:22:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964870AbWFVIWt
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 04:22:49 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:61348 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S964859AbWFVIWs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 04:22:48 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 89EB17DC021;
+	Thu, 22 Jun 2006 01:22:46 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 22 Jun 2006 01:22:46 -0700
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-Mailer: git-send-email 1.4.0.g937a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22310>
 
-Petr Baudis wrote:
+Trying to open an interactive editor in the console while stdout is
+being piped to the parent process doesn't work out very well.
 
-> Most desirable now is proper error reporting, generic_in() for feeding
-> input to Git commands and the repository() constructor doing some poking
-> with git-rev-parse to get the git directory and subdirectory prefix.
-> Those three are basically the prerequisities for converting git-mv.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ contrib/git-svn/git-svn.perl |   14 ++++++++------
+ 1 files changed, 8 insertions(+), 6 deletions(-)
 
-I think that repository() constructor (to be converted in the 'new'
-constructor I guess) should take 'binbin => "/usr/bin"' argument
-optionally, to find where git binary is. 'libexecdir' can be also
-supported, or one can get it from 'git --exec-path' and save.
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index 7e7f2f0..08c3010 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -479,17 +479,18 @@ sub commit_lib {
+ 	my @lock = $SVN::Core::VERSION ge '1.2.0' ? (undef, 0) : ();
+ 	my $commit_msg = "$GIT_SVN_DIR/.svn-commit.tmp.$$";
  
-> Currently Git.pm just wraps up exec()s of Git commands, but even that
-> is not trivial to get right and various Git perl scripts do it in
-> various inconsistent ways.
-
-It would be nice to have also wrapers to reading files from git 
-repository, ate least some generic read_file/readdir.
-
-For example it might be faster to list branches and/or tags by directly
-reading $GIT_DIR/refs directory than using 'git branch' or 'git tag -l'.
-
++	if (defined $LC_ALL) {
++		$ENV{LC_ALL} = $LC_ALL;
++	} else {
++		delete $ENV{LC_ALL};
++	}
+ 	foreach my $c (@revs) {
++		my $log_msg = get_commit_message($c, $commit_msg);
++
+ 		# fork for each commit because there's a memory leak I
+ 		# can't track down... (it's probably in the SVN code)
+ 		defined(my $pid = open my $fh, '-|') or croak $!;
+ 		if (!$pid) {
+-			if (defined $LC_ALL) {
+-				$ENV{LC_ALL} = $LC_ALL;
+-			} else {
+-				delete $ENV{LC_ALL};
+-			}
+-			my $log_msg = get_commit_message($c, $commit_msg);
+ 			my $ed = SVN::Git::Editor->new(
+ 					{	r => $r_last,
+ 						ra => $SVN,
+@@ -535,6 +536,7 @@ sub commit_lib {
+ 			($r_last, $cmt_last) = ($r_new, $cmt_new);
+ 		}
+ 	}
++	$ENV{LC_ALL} = 'C';
+ 	unlink $commit_msg;
+ }
+ 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.0.g937a
