@@ -1,85 +1,68 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: whitespace cleanup around '='
-Date: Thu, 22 Jun 2006 08:52:57 +0200
-Message-ID: <11509591773212-git-send-email-jnareb@gmail.com>
-References: <20060622023546.28cb4291.froese@gmx.de>
-Reply-To: Jakub Narebski <jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 22 08:53:11 2006
+Subject: Re: [PATCH] gitweb: Add title attribute with full first line of tag comment if it is needed
+Date: Thu, 22 Jun 2006 08:54:32 +0200
+Organization: At home
+Message-ID: <e7deqs$vso$1@sea.gmane.org>
+References: <11509297422173-git-send-email-jnareb@gmail.com> <7vu06exfym.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 22 08:54:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtJ3t-0003Hr-Il
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 08:53:09 +0200
+	id 1FtJ5E-0003P2-HG
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 08:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710AbWFVGxE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 02:53:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbWFVGxD
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 02:53:03 -0400
-Received: from mail.fuw.edu.pl ([193.0.80.14]:52645 "EHLO mail.fuw.edu.pl")
-	by vger.kernel.org with ESMTP id S1751710AbWFVGxB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 02:53:01 -0400
-Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
-	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k5M6qZ1N015850
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 22 Jun 2006 08:52:35 +0200
-Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
-	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k5M6qviv030438;
-	Thu, 22 Jun 2006 08:52:57 +0200
-Received: (from jnareb@localhost)
-	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k5M6qv3B030437;
-	Thu, 22 Jun 2006 08:52:57 +0200
+	id S1751713AbWFVGya (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 02:54:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbWFVGy3
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 02:54:29 -0400
+Received: from main.gmane.org ([80.91.229.2]:28343 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750973AbWFVGy3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 02:54:29 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FtJ57-0003Oh-Pb
+	for git@vger.kernel.org; Thu, 22 Jun 2006 08:54:25 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 08:54:25 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 08:54:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-X-Mailer: git-send-email 1.3.0
-In-Reply-To: <20060622023546.28cb4291.froese@gmx.de>
-X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22300>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Junio C Hamano wrote:
 
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> For commits in oneline view (summary, shortlog, history) commit title
+>> (first line of commit message) is link to commit itself. If commit title
+>> (commit description) is shortened in output, hyperlink has title attribute
+>> with full title.
+> 
+> There are pure fixes and this "-title" enhancement intermixed.
+> Can we have fixes-only first?
 
----
+O.K. done.
 
- gitweb/gitweb.cgi |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-82c8812870e9c40fd495e9c3e2eae0eb78ac2759
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index e044c61..adc4a42 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -326,7 +326,7 @@ EOF
- 		} elsif (defined $hash) {
- 			$search_hash = $hash;
- 		} else {
--			$search_hash  = "HEAD";
-+			$search_hash = "HEAD";
- 		}
- 		$cgi->param("a", "search");
- 		$cgi->param("h", $search_hash);
-@@ -1766,8 +1766,8 @@ sub git_opml {
- 		}
+> And as you say, git_summary and git_tags do look similar.  Maybe
+> we would want to refactor them first to clean things up before
+> piling up more features?
  
- 		my $path = esc_html(chop_str($proj{'path'}, 25, 5));
--		my $rss =  "$my_url?p=$proj{'path'};a=rss";
--		my $html =  "$my_url?p=$proj{'path'};a=summary";
-+		my $rss  = "$my_url?p=$proj{'path'};a=rss";
-+		my $html = "$my_url?p=$proj{'path'};a=summary";
- 		print "<outline type=\"rss\" text=\"$path\" title=\"$path\" xmlUrl=\"$rss\" htmlUrl=\"$html\"/>\n";
- 	}
- 	print "</outline>\n".
-@@ -1942,7 +1942,7 @@ sub git_commit {
- 	      "<td class=\"link\">" . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$co{'tree'};hb=$hash")}, "tree") .
- 	      "</td>" .
- 	      "</tr>\n";
--	my $parents  = $co{'parents'};
-+	my $parents = $co{'parents'};
- 	foreach my $par (@$parents) {
- 		print "<tr>" .
- 		      "<td>parent</td>" .
+O.K. will do.
+
 -- 
-1.3.0
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
