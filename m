@@ -1,90 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git and announcing v1.4.1-rc1
-Date: Thu, 22 Jun 2006 15:38:42 -0700
-Message-ID: <7vsllwhl3h.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606221301500.5498@g5.osdl.org>
-	<7v7j38j144.fsf@assigned-by-dhcp.cox.net>
+From: dormando <dormando@rydia.net>
+Subject: Resurrecting symlink problem
+Date: Thu, 22 Jun 2006 16:00:53 -0700
+Message-ID: <449B2125.7020402@rydia.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 23 00:38:51 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jun 23 01:00:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtXp0-00019s-Jp
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 00:38:46 +0200
+	id 1FtYAM-000513-VP
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 01:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932181AbWFVWio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 18:38:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932660AbWFVWio
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 18:38:44 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12463 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932181AbWFVWin (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 18:38:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060622223842.ZEFE5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 22 Jun 2006 18:38:42 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7v7j38j144.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 22 Jun 2006 15:07:23 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1161375AbWFVXAs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 19:00:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161374AbWFVXAr
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 19:00:47 -0400
+Received: from mail.gaiaonline.com ([72.5.72.76]:51138 "EHLO gaiaonline.com")
+	by vger.kernel.org with ESMTP id S1161373AbWFVXAr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 19:00:47 -0400
+Received: from [66.134.139.190] (account akasindorf HELO [10.50.1.172])
+  by gaiaonline.com (CommuniGate Pro SMTP 4.3.6)
+  with ESMTPA id 1529618 for git@vger.kernel.org; Thu, 22 Jun 2006 15:48:47 -0700
+User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22382>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hey,
 
-> Well, I admit I do not use colorized diffs myself.  As a matter
-> of fact, I use specialized terminfo to disable coloring on my
-> terminal session, since fontifying in GNUS otherwise gives me
-> unreadable screen and I am too lazy to figure out how to turn it
-> off.
->
-> I do however usually test colored stuff with at least white and
-> black backgrounds,
+We have an issue with cogito/git and not being able to remove symlinks 
+from a central remote repo.
 
-By the way, in the ancient history, in commit 3443546 you did:
+First try: cg-rm symlinks*
+Complains that I'm trying to delete directories without the -r option. 
+So it's resolving the symlinks to the target directory.
 
---- a/Makefile
-+++ b/Makefile
-@@ -544,12 +545,18 @@ init-db.o: init-db.c
-                -DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"' $*.c
+git rm -f symlinks*
 
- $(LIB_OBJS): $(LIB_H)
--$(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H)
-+$(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIBS)
- $(DIFF_OBJS): diffcore.h
+works. Symlinks are gone, push to repo, everything's happy.
 
- $(LIB_FILE): $(LIB_OBJS)
-        $(AR) rcs $@ $(LIB_OBJS)
+However:
 
-which we kept until today.  This causes checkout-index.o and
-friends to be recompiled when we touch diff.c (I do not mind
-relinking git-checkout-index because libgit.a has changed, but
-recompiling checkout-index.c is unneeded).  I think this was
-done to make sure anything that includes xdiff/*.h files via
-"xdiff-interface.h" are recompiled when xdiff/*.h are changed,
-so I am thinking about loosening it a bit to depend on our
-headers and xdiff/*.h headers, perhaps like this:
+user A git rm -f's the symlinks, pushes to origin
+user B cg-update's, then cg-commit's, cg-push's a one line change in an 
+unrelated file.
 
-diff --git a/Makefile b/Makefile
-index a5b6784..e29e3fa 100644
---- a/Makefile
-+++ b/Makefile
-@@ -582,7 +582,7 @@ git-http-push$X: revision.o http.o http-
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
- $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
--$(patsubst git-%$X,%.o,$(PROGRAMS)): $(GITLIBS)
-+$(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
- $(DIFF_OBJS): diffcore.h
- 
- $(LIB_FILE): $(LIB_OBJS)
-diff --git a/diff.c b/diff.c
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+user A cg-update's, and the symlinks come back.
+
+This happens over and over. They appear to disappear if cg-update does a 
+fast forward, but not if it does a merge. Any suggestions on how to 
+resolve this issue?
+
+I'm still looking at what exactly is going on when user B does that 
+cg-update.
+
+Thanks,
+-Dormando
