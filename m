@@ -1,128 +1,90 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Git.pm: Implement Git::exec_path()
-Date: Fri, 23 Jun 2006 00:31:50 +0200
-Message-ID: <20060622223150.21622.22126.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 23 00:31:57 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git and announcing v1.4.1-rc1
+Date: Thu, 22 Jun 2006 15:38:42 -0700
+Message-ID: <7vsllwhl3h.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606221301500.5498@g5.osdl.org>
+	<7v7j38j144.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 23 00:38:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtXiO-0008P1-Ki
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 00:31:56 +0200
+	id 1FtXp0-00019s-Jp
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 00:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030422AbWFVWby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 18:31:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030428AbWFVWby
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 18:31:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43936 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030422AbWFVWbx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 18:31:53 -0400
-Received: (qmail 21632 invoked from network); 23 Jun 2006 00:31:50 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 23 Jun 2006 00:31:50 +0200
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.9
+	id S932181AbWFVWio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 18:38:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932660AbWFVWio
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 18:38:44 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12463 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932181AbWFVWin (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 18:38:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060622223842.ZEFE5347.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 22 Jun 2006 18:38:42 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7v7j38j144.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 22 Jun 2006 15:07:23 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22381>
 
-This patch implements Git::exec_path() (as a direct XS call).
+Junio C Hamano <junkio@cox.net> writes:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> Well, I admit I do not use colorized diffs myself.  As a matter
+> of fact, I use specialized terminfo to disable coloring on my
+> terminal session, since fontifying in GNUS otherwise gives me
+> unreadable screen and I am too lazy to figure out how to turn it
+> off.
+>
+> I do however usually test colored stuff with at least white and
+> black backgrounds,
 
- perl/Git.pm |   20 +++++++++++++++++++-
- perl/Git.xs |   10 ++++++++++
- 2 files changed, 29 insertions(+), 1 deletions(-)
+By the way, in the ancient history, in commit 3443546 you did:
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 4bb7c50..516c065 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -47,7 +47,8 @@ require Exporter;
- @EXPORT = qw();
+--- a/Makefile
++++ b/Makefile
+@@ -544,12 +545,18 @@ init-db.o: init-db.c
+                -DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"' $*.c
+
+ $(LIB_OBJS): $(LIB_H)
+-$(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H)
++$(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIBS)
+ $(DIFF_OBJS): diffcore.h
+
+ $(LIB_FILE): $(LIB_OBJS)
+        $(AR) rcs $@ $(LIB_OBJS)
+
+which we kept until today.  This causes checkout-index.o and
+friends to be recompiled when we touch diff.c (I do not mind
+relinking git-checkout-index because libgit.a has changed, but
+recompiling checkout-index.c is unneeded).  I think this was
+done to make sure anything that includes xdiff/*.h files via
+"xdiff-interface.h" are recompiled when xdiff/*.h are changed,
+so I am thinking about loosening it a bit to depend on our
+headers and xdiff/*.h headers, perhaps like this:
+
+diff --git a/Makefile b/Makefile
+index a5b6784..e29e3fa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -582,7 +582,7 @@ git-http-push$X: revision.o http.o http-
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
  
- # Methods which can be called as standalone functions as well:
--@EXPORT_OK = qw(command command_oneline command_pipe command_noisy);
-+@EXPORT_OK = qw(command command_oneline command_pipe command_noisy
-+                exec_path hash_object);
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+-$(patsubst git-%$X,%.o,$(PROGRAMS)): $(GITLIBS)
++$(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
+ $(DIFF_OBJS): diffcore.h
  
- 
- =head1 DESCRIPTION
-@@ -213,6 +214,7 @@ sub command {
- 	}
- }
- 
-+
- =item command_oneline ( COMMAND [, ARGUMENTS... ] )
- 
- Execute the given C<COMMAND> in the same way as command()
-@@ -231,6 +233,7 @@ sub command_oneline {
- 	return $line;
- }
- 
-+
- =item command_pipe ( COMMAND [, ARGUMENTS... ] )
- 
- Execute the given C<COMMAND> in the same way as command()
-@@ -253,6 +256,7 @@ sub command_pipe {
- 	return $fh;
- }
- 
-+
- =item command_noisy ( COMMAND [, ARGUMENTS... ] )
- 
- Execute the given C<COMMAND> in the same way as command() does but do not
-@@ -283,6 +287,20 @@ sub command_noisy {
- 	}
- }
- 
-+
-+=item exec_path ()
-+
-+Return path to the git sub-command executables (the same as
-+C<git --exec-path>). Useful mostly only internally.
-+
-+Implementation of this function is very fast; no external command calls
-+are involved.
-+
-+=cut
-+
-+# Implemented in Git.xs.
-+
-+
- =item hash_object ( FILENAME [, TYPE ] )
- 
- =item hash_object ( FILEHANDLE [, TYPE ] )
-diff --git a/perl/Git.xs b/perl/Git.xs
-index 33bb3ca..d1f94a4 100644
---- a/perl/Git.xs
-+++ b/perl/Git.xs
-@@ -6,6 +6,7 @@ #include <ctype.h>
- 
- /* libgit interface */
- #include "../cache.h"
-+#include "../exec_cmd.h"
- 
- /* XS and Perl interface */
- #include "EXTERN.h"
-@@ -19,6 +20,15 @@ MODULE = Git		PACKAGE = Git		
- 
- # /* TODO: xs_call_gate(). See Git.pm. */
- 
-+
-+const char *
-+xs_exec_path()
-+CODE:
-+	RETVAL = git_exec_path();
-+OUTPUT:
-+	RETVAL
-+
-+
- char *
- xs_hash_object(file, type = "blob")
- 	SV *file;
+ $(LIB_FILE): $(LIB_OBJS)
+diff --git a/diff.c b/diff.c
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
