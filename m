@@ -1,80 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/4] upload-pack/fetch-pack: support side-band communication
-Date: Wed, 21 Jun 2006 17:17:38 -0700
-Message-ID: <7vpsh2xcv1.fsf@assigned-by-dhcp.cox.net>
-References: <7vsllyzs9w.fsf@assigned-by-dhcp.cox.net>
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: gitk lower pane (commit and files view) scrollbar extends past
+ gitk window
+Date: Thu, 22 Jun 2006 02:35:46 +0200
+Message-ID: <20060622023546.28cb4291.froese@gmx.de>
+References: <e7ber7$qh9$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Thu Jun 22 02:17:45 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 22 02:35:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtCtC-0004Bp-NV
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 02:17:43 +0200
+	id 1FtDAp-0007Mv-1u
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 02:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbWFVARk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 20:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932128AbWFVARk
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 20:17:40 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:25336 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751524AbWFVARj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jun 2006 20:17:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060622001738.IQOU554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 21 Jun 2006 20:17:38 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vsllyzs9w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 21 Jun 2006 04:01:47 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932736AbWFVAfw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 20:35:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932158AbWFVAfw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 20:35:52 -0400
+Received: from mail.gmx.de ([213.165.64.21]:39573 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932147AbWFVAfv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 20:35:51 -0400
+Received: (qmail invoked by alias); 22 Jun 2006 00:35:50 -0000
+Received: from p5090017D.dip0.t-ipconnect.de (EHLO dialup) [80.144.1.125]
+  by mail.gmx.net (mp017) with SMTP; 22 Jun 2006 02:35:50 +0200
+X-Authenticated: #271361
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e7ber7$qh9$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22291>
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> This implements a protocol extension between fetch-pack and
-> upload-pack to allow stderr stream from upload-pack (primarily
-> used for the progress bar display) to be passed back.
+Jakub Narebski wrote:
 >
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
->
->  * With this, fetching and cloning over git+ssh:// and git://
->    does not discard the progress bar and error messages that
->    upload-pack emits on its standard output.  They are sent to
->    the downloader and shown to the user.
->
->    Somehow this does not work when connecting to git daemon that
->    runs under inetd.  Fixes appreciated.
+> In gitk from the current 'next' branch, post git version 1.4.0 
+> (blob ba4644f) scrollbar for lower pane, i.e. for commitdiff and files
+> (Comments) views extends past the bottom of the gitk window. Therefore 
+> I cannnot see lower part of commit diff if it is larger than window height.
 
-This seems to fix it.
+Yes, and the search field at the bottom is invisible too.  Removing
+line 431:
 
--- >8 --
-Subject: [PATCH] daemon: send stderr to /dev/null instead of closing.
+        .ctop conf -width $geometry(width) -height $geometry(height)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- daemon.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+seems to fix it and the window still gets the right size.
 
-diff --git a/daemon.c b/daemon.c
-index bdfe80d..0747ce2 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -757,7 +757,7 @@ int main(int argc, char **argv)
- 		struct sockaddr *peer = (struct sockaddr *)&ss;
- 		socklen_t slen = sizeof(ss);
- 
--		fclose(stderr); //FIXME: workaround
-+		freopen("/dev/null", "w", stderr);
- 
- 		if (getpeername(0, peer, &slen))
- 			peer = NULL;
--- 
-1.4.0.g7883
+Ciao, ET.
