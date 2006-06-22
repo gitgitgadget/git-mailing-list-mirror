@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [WORKAROUND] gitk lower pane scrollbar extends past gitk window
-Date: Thu, 22 Jun 2006 09:48:52 +0200
+Subject: Re: [PATCH] [RFC] Introduce Git.pm
+Date: Thu, 22 Jun 2006 10:07:58 +0200
 Organization: At home
-Message-ID: <e7di0n$7hh$1@sea.gmane.org>
-References: <e7ber7$qh9$1@sea.gmane.org> <20060622023546.28cb4291.froese@gmx.de> <81b0412b0606220010p6c2e62ffv3914abafd95e4bb2@mail.gmail.com>
+Message-ID: <e7dj4h$cv7$1@sea.gmane.org>
+References: <20060622003546.17760.23089.stgit@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 22 09:49:12 2006
+X-From: git-owner@vger.kernel.org Thu Jun 22 10:08:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtJw1-0002Yy-Mi
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 09:49:06 +0200
+	id 1FtKEs-0005Zl-Dj
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 10:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932490AbWFVHtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 03:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932828AbWFVHtB
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 03:49:01 -0400
-Received: from main.gmane.org ([80.91.229.2]:50068 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932490AbWFVHtA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 03:49:00 -0400
+	id S932321AbWFVII1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 04:08:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWFVII1
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 04:08:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:13705 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932321AbWFVII0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 04:08:26 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FtJvl-0002Ww-Tt
-	for git@vger.kernel.org; Thu, 22 Jun 2006 09:48:49 +0200
+	id 1FtKEb-0005Vv-0U
+	for git@vger.kernel.org; Thu, 22 Jun 2006 10:08:17 +0200
 Received: from 193.0.122.19 ([193.0.122.19])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 09:48:49 +0200
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 10:08:17 +0200
 Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 09:48:49 +0200
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 10:08:17 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -40,44 +40,29 @@ User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22309>
 
-Alex Riesen wrote:
+Petr Baudis wrote:
 
-> On 6/22/06, Edgar Toernig <froese@gmx.de> wrote:
->> Jakub Narebski wrote:
->>>
->>> In gitk from the current 'next' branch, post git version 1.4.0
->>> (blob ba4644f) scrollbar for lower pane, i.e. for commitdiff and files
->>> (Comments) views extends past the bottom of the gitk window. Therefore
->>> I cannnot see lower part of commit diff if it is larger than 
->>> window height. 
->>
->> Yes, and the search field at the bottom is invisible too.  Removing
->> line 431:
->>
->>         .ctop conf -width $geometry(width) -height $geometry(height)
->>
->> seems to fix it and the window still gets the right size.
->>
-> 
-> No, it does not. It gets the default geometry, not the one it had last time.
+> Most desirable now is proper error reporting, generic_in() for feeding
+> input to Git commands and the repository() constructor doing some poking
+> with git-rev-parse to get the git directory and subdirectory prefix.
+> Those three are basically the prerequisities for converting git-mv.
 
-Now I see. It is the case when I used gitk from a computer with a desktop
-with larger screen height, then on computer with screen height smaller than 
-gitk height was I had mentioned problem.
+I think that repository() constructor (to be converted in the 'new'
+constructor I guess) should take 'binbin => "/usr/bin"' argument
+optionally, to find where git binary is. 'libexecdir' can be also
+supported, or one can get it from 'git --exec-path' and save.
+ 
+> Currently Git.pm just wraps up exec()s of Git commands, but even that
+> is not trivial to get right and various Git perl scripts do it in
+> various inconsistent ways.
 
-Workaround for now is to delete old geometry info from ~/.gitk file 
-(or just delete whole file).
+It would be nice to have also wrapers to reading files from git 
+repository, ate least some generic read_file/readdir.
 
-I don't know Tcl/Tk to make proper fix, i.e. check if restored size is not
-larger than available screen size, and use min(saved size, screen size).
-Another improvement would be to save the fact that gitk window is maximized
-as a symbol, e.g. as equivalent of 
-
-  set geometry(height) screen(height)
-
-in ~/.gitk
+For example it might be faster to list branches and/or tags by directly
+reading $GIT_DIR/refs directory than using 'git branch' or 'git tag -l'.
 
 -- 
 Jakub Narebski
