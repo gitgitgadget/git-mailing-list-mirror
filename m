@@ -1,65 +1,116 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Pass -DDEFAULT_GIT_TEMPLATE_DIR only where actually used.
-Date: Thu, 22 Jun 2006 00:19:52 -0700
-Message-ID: <7vwtb9veqv.fsf@assigned-by-dhcp.cox.net>
-References: <0J1800MC1NKJD2C0@mxout2.netvision.net.il>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: whitespace cleanup around '='
+Date: Thu, 22 Jun 2006 09:32:09 +0200
+Organization: At home
+Message-ID: <e7dh1c$61n$1@sea.gmane.org>
+References: <20060622023546.28cb4291.froese@gmx.de> <11509591773212-git-send-email-jnareb@gmail.com> <7vejxhwts4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 09:20:08 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 22 09:32:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtJTo-0006cB-KG
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 09:19:57 +0200
+	id 1FtJfl-0000G2-O2
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 09:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090AbWFVHTy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 03:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbWFVHTy
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 03:19:54 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33270 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751090AbWFVHTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 03:19:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060622071953.ZINY8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 22 Jun 2006 03:19:53 -0400
-To: Yakov Lerner <iler.ml@gmail.com>
-In-Reply-To: <0J1800MC1NKJD2C0@mxout2.netvision.net.il> (Yakov Lerner's
-	message of "Thu, 22 Jun 2006 04:47 +0300")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932821AbWFVHcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 03:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932825AbWFVHcP
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 03:32:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:31897 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932821AbWFVHcO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 03:32:14 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FtJfa-0000Ey-Jn
+	for git@vger.kernel.org; Thu, 22 Jun 2006 09:32:06 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 09:32:06 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 09:32:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22306>
 
-Yakov Lerner <iler.ml@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Before this patch, -DDEFAULT_GIT_TEMPLATE_DIR was passed on compilation
-> command line to all and every %c compiled. In fact the macro
-> is used by only one .c file, and unused by all other .c files.
-> Remove -DDEFAULT_GIT_TEMPLATE_DIR where unused. Follow the examlpe of 
-> exec_cmd.o. Pass -DDEFAULT_GIT_TEMPLATE_DIR only where actually used. 
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> @@ -326,7 +326,7 @@ EOF
+>>              } elsif (defined $hash) {
+>>                      $search_hash = $hash;
+>>              } else {
+>> -                    $search_hash  = "HEAD";
+>> +                    $search_hash = "HEAD";
+>>              }
+>>              $cgi->param("a", "search");
+>>              $cgi->param("h", $search_hash);
+> 
+> My copy from "next" has this part like the following:
+> 
+>               if (!defined $searchtext) {
+>                       $searchtext = "";
+>               }
+>               my $search_hash;
+>               if (defined $hash) {
+>                       $search_hash = $hash;
+>               } else {
+>                       $search_hash  = "HEAD";
+>               }
+> 
+> I thought we were both reasonably sure that we are now in
+> sync...  I could apply it by hand but once I start doing that
+> I'm afraid we will never converge.
+> 
+> It's quite frustrating.
 
-Thanks.
+I'm very sorry, I forgot that I applied Timo Hirvonen patch
 
-By the way, I really started hating that we have $(GIT_VERSION)
-in $(TRACK_CFLAGS).  Since the version string is tied to the
-HEAD commit object name, having it in $(TRACK_CFLAGS) means that
-every time I switch branches, make a new commit on top of the
-current branch, or checkout-compile-and-then-make-local-change
-sequence would force pretty much everything to be rebuilt.
+  "[PATCH] gitweb: Start search from HEAD"
+  (<20060620152515.23e59396.tihirvon@gmail.com>)
+  http://permalink.gmane.org/gmane.comp.version-control.git/22197>
 
-Do you think of any downside if I remove it from the list of
-symbols in TRACK_CFLAGS?
+on top of 'next'.
 
-For that matter, I do not think tracking prefix_SQ makes much
-sense since what matters are bindir, gitexecdir and template_dir
-which are already covered, and prefix is merely a convenience to
-set these three (four, counting GIT_PYTHON_DIR; we probably
-should add it to TRACK_CFLAGS).
+This patch fixes search quite nicely, reducing significantly number of error
+messages during search (e.g. starting search from blob or file view).
 
-Thoughts?
+Any reason not to apply it?
+
+>>              my $path = esc_html(chop_str($proj{'path'}, 25, 5));
+>> -            my $rss =  "$my_url?p=$proj{'path'};a=rss";
+>> -            my $html =  "$my_url?p=$proj{'path'};a=summary";
+>> +            my $rss  = "$my_url?p=$proj{'path'};a=rss";
+>> +            my $html = "$my_url?p=$proj{'path'};a=summary";
+> 
+> Are you sure you want to do "my $rss two-spaces equal space"?
+> 
+> I've fixed up the whitespace you missed and will be applying the
+> following on top of what is in "next" tonight.
+> 
+> -- >8 --
+> gitweb: do not align assignment = with extra whitespaces
+
+My idea for coding style is to align assignment = with extra whitespaces,
+but only where aligned assignments statements are one after another.
+
+The above "my $rss" example was mistyped as " =  " instead of "  = ",
+but I think it was meant to be aligned at '='. IMHO aligning at assign 
+makes code more readable.
+
+But that is just my opinion.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
