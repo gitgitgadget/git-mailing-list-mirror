@@ -1,227 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git and announcing v1.4.1-rc1
-Date: Thu, 22 Jun 2006 12:49:47 -0700
-Message-ID: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: [GIT PATCH] USB patches for 2.6.17
+Date: Thu, 22 Jun 2006 22:01:47 +0200
+Message-ID: <20060622200147.GA10712@mars.ravnborg.org>
+References: <20060621220656.GA10652@kroah.com>
+	<Pine.LNX.4.64.0606211519550.5498@g5.osdl.org>
+	<20060621225134.GA13618@kroah.com>
+	<Pine.LNX.4.64.0606211814200.5498@g5.osdl.org>
+	<20060622181826.GB22867@kroah.com>
+	<20060622183021.GA5857@kroah.com>
+	<Pine.LNX.4.64.0606221239100.5498@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 21:50:19 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Morton <akpm@osdl.org>, Greg KH <gregkh@suse.de>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	linux-usb-devel@lists.sourceforge.net
+X-From: linux-usb-devel-bounces@lists.sourceforge.net Thu Jun 22 22:03:03 2006
+Return-path: <linux-usb-devel-bounces@lists.sourceforge.net>
+Envelope-to: linux-usb-devel-3@m.gmane.org
+Received: from lists-outbound.sourceforge.net ([66.35.250.225])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtVBk-0005br-Ig
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 21:50:05 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161227AbWFVTtv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 22 Jun 2006 15:49:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161222AbWFVTtv
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 15:49:51 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:23705 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1161211AbWFVTtt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 15:49:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060622194948.NWKO19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 22 Jun 2006 15:49:48 -0400
-To: git@vger.kernel.org
-X-maint-at: be0c7e069738fbb697b0719f2252107261c9340e
-X-master-at: bf9e9542f94bc39e8bc653065d477bd25e79010e
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22363>
+	id 1FtVNJ-0007Ww-GE
+	for linux-usb-devel-3@m.gmane.org; Thu, 22 Jun 2006 22:02:02 +0200
+Received: from sc8-sf-list1-new.sourceforge.net (unknown [10.3.1.93])
+	by sc8-sf-spam2.sourceforge.net (Postfix) with ESMTP
+	id E144512C5E; Thu, 22 Jun 2006 13:01:59 -0700 (PDT)
+Received: from sc8-sf-mx1-b.sourceforge.net ([10.3.1.91]
+	helo=mail.sourceforge.net)
+	by sc8-sf-list1-new.sourceforge.net with esmtp (Exim 4.43)
+	id 1FtVNG-00039s-S3 for linux-usb-devel@lists.sourceforge.net;
+	Thu, 22 Jun 2006 13:01:58 -0700
+Received: from pasmtpa.tele.dk ([80.160.77.114] helo=pasmtp.tele.dk)
+	by mail.sourceforge.net with esmtp (Exim 4.44) id 1FtVNG-0003Zz-Ew
+	for linux-usb-devel@lists.sourceforge.net;
+	Thu, 22 Jun 2006 13:01:58 -0700
+Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk
+	[80.160.117.125])
+	by pasmtp.tele.dk (Postfix) with ESMTP id 7745E8013CD;
+	Thu, 22 Jun 2006 22:01:54 +0200 (CEST)
+Received: by mars.ravnborg.org (Postfix, from userid 1000)
+	id 3932C43C062; Thu, 22 Jun 2006 22:01:47 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606221239100.5498@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-Spam-Score: 1.0 (+)
+X-Spam-Report: Spam Filtering performed by sourceforge.net.
+	See http://spamassassin.org/tag/ for more details.
+	Report problems to
+	http://sf.net/tracker/?func=add&group_id=1&atid=200001
+	1.0 FORGED_RCVD_HELO       Received: contains a forged HELO
+X-BeenThere: linux-usb-devel@lists.sourceforge.net
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: <linux-usb-devel.lists.sourceforge.net>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/linux-usb-devel>, 
+	<mailto:linux-usb-devel-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=linux-usb-devel>
+List-Post: <mailto:linux-usb-devel@lists.sourceforge.net>
+List-Help: <mailto:linux-usb-devel-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/linux-usb-devel>, 
+	<mailto:linux-usb-devel-request@lists.sourceforge.net?subject=subscribe>
+Sender: linux-usb-devel-bounces@lists.sourceforge.net
+Errors-To: linux-usb-devel-bounces@lists.sourceforge.net
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22364>
 
-I've merged quite a bit of stuff and tagged the tip of "master"
-as GIT 1.4.1-rc1.
+> I'm just constantly surprised by how people don't even seem to realize 
+> what it can do sometimes. Part of it is that development has been pretty 
+> active (and some of the things it can do simply weren't there three months 
+> ago), but part of it must be because people don't even expect it to be 
+> able to do something like that.
 
-As promised, 1.4.X series will be managed slightly differently,
-and this is in preparation of the first installment of it.  The
-releases will come from the "master" branch to contain both
-fixes and enhancements from now on.  Hotfix releases when
-necessary would have 1.4.X.Y revision numbers, but I am hoping
-that we do not have to do that very often.
+Personally I'm still missing two things:
+1) A command to let me see what this Linus guy have applied compared to
+my tree - without touching anything in my tree. bk changes -R
+2) A dry-run of a fetch+pull. I can do that if I really study the man
+pages I know. But "git pull --dry-run" would be more convinient.
 
-Since all the exciting and potentially risky developments are to
-happen on the "next" branch and they are supposed to graduate to
-"master" branch after they are reasonably well cooked, this
-change will help the end-users to stay reasonably current
-without hopefully not introducing unexpected problems.  The
-older scheme left out all the enhancements if people followed
-packaged versions, and gave big surprises when upgrading from
-version X.Y.Z to X.(Y+1).0 which was not so nice.
+Other than that I will say that I'm pleased with the funtionality that
+I use - that's maybe 10% of the possibilities...
 
-Notable improvements since v1.4.0 are:
+	Sam
 
- - PPC SHA1 routine can grok more than half-gig of data (Paul
-   Mackerras)
-
- - rev-list and object-layer in general is less (much less)
-   space hungry (Linus).
-
- - the source is more friendly to stricter compilers such as
-   Sun's (Florian Forster).
-
- - git rebase --merge (Eric Wong).  This uses the usual 3-way
-   merge machinery while running rebase, and you can rebase
-   across renames if you use the recursive strategy which is the
-   default.
-
- - gitweb updates -- mostly cleanups (Jakub Narebski with help
-   from Pasky and Timo Hirvonen).
-
- - diff --color (Johannes).
-
- - ~/.gitconfig and $ENV{GIT_CONFIG} (Pasky and Johannes).
-
- - core.sharedrepository can take umask, group or world (Linus
-   and I)
-
- - "git checkout -f" removes files that becomes untracked from
-   the working tree
-
- - "git clone/fetch" from a corrupt repository does not
-   propagate brokenness to the downloaders.
-
- - "git clone/fetch" over the network gives better progress
-   updates; this may also help TCP timeout problems for people
-   behind NAT.
-
- - Many more commands are built-in (Lukas Sandstr=F6m)
-
- - git can now be used on Kiritimati (Paul Eggert)
-
-----------------------------------------------------------------
-
-* The 'master' branch has these since the last announcement.
-
-   Andre Noll:
-      object-refs: avoid division by zero
-
-   David Woodhouse:
-      Log peer address when git-daemon called from inetd
-
-   Dennis Stosberg:
-      Make t8001-annotate and t8002-blame more portable
-      Fix t8001-annotate and t8002-blame for ActiveState Perl
-
-   Eric W. Biederman:
-      Fix git-format-patch -s
-      Check and document the options to prevent mistakes.
-
-   Eric Wong:
-      git-svn: fix --rmdir when using SVN:: libraries
-      rebase: Allow merge strategies to be used when rebasing
-      rebase: error out for NO_PYTHON if they use recursive merge
-      git-svn: fix commit --edit flag when using SVN:: libraries
-
-   Florian Forster:
-      Remove ranges from switch statements.
-      Initialize FAMs using `FLEX_ARRAY'.
-      Don't instantiate structures with FAMs.
-      Cast pointers to `void *' when used in a format.
-      Don't use empty structure initializers.
-      Change types used in bitfields to be `int's.
-      Remove all void-pointer arithmetic.
-
-   Jakub Narebski:
-      Move gitweb style to gitweb.css
-      gitweb: safely output binary files for 'blob_plain' action
-      gitweb: text files for 'blob_plain' action without charset by def=
-ault
-      Fix gitweb stylesheet
-      Make CSS file gitweb/gitweb.css more readable
-      gitweb: add type=3D"text/css" to stylesheet link
-      Fix: Support for the standard mime.types map in gitweb
-      gitweb: A couple of page title tweaking
-      gitweb: style done with stylesheet
-      gitweb: whitespace cleanup
-      Add git version to gitweb output
-      Move $gitbin earlier in gitweb.cgi
-      gitweb: Make use of $PATH_INFO for project parameter
-      gitweb: whitespace cleanup around '=3D'
-
-   Johannes Schindelin:
-      diff options: add --color
-      Initialize lock_file struct to all zero.
-      Fix setting config variables with an alternative GIT_CONFIG
-      Read configuration also from $HOME/.gitconfig
-      repo-config: Fix late-night bug
-      git_config: access() returns 0 on success, not > 0
-
-   Junio C Hamano:
-      read-tree: --prefix=3D<path>/ option.
-      write-tree: --prefix=3D<path>
-      read-tree: reorganize bind_merge code.
-      fetch-pack: give up after getting too many "ack continue"
-      shared repository: optionally allow reading to "others".
-      fix rfc2047 formatter.
-      xdiff: minor changes to match libxdiff-0.21
-      Restore SIGCHLD to SIG_DFL where we care about waitpid().
-      checkout -f: do not leave untracked working tree files.
-      upload-pack: avoid sending an incomplete pack upon failure
-      upload-pack: prepare for sideband message support.
-      Retire git-clone-pack
-      upload-pack/fetch-pack: support side-band communication
-      Add renaming-rebase test.
-      daemon: send stderr to /dev/null instead of closing.
-      rebase --merge: fix for rebasing more than 7 commits.
-      Makefile: do not force unneeded recompilation upon GIT_VERSION ch=
-anges
-
-   Linus Torvalds:
-      Shrink "struct object" a bit
-      Move "void *util" from "struct object" into "struct commit"
-      Some more memory leak avoidance
-      Remove "refs" field from "struct object"
-      Add specialized object allocator
-      Add "named object array" concept
-      Fix grow_refs_hash()
-
-   Lukas Sandstr=F6m:
-      Make git-write-tree a builtin
-      Make git-mailsplit a builtin
-      Make git-mailinfo a builtin
-      Make git-stripspace a builtin
-      Make git-update-index a builtin
-      Make git-update-ref a builtin
-
-   Paul Eggert:
-      date.c: improve guess between timezone offset and year.
-
-   Paul Mackerras:
-      Fix PPC SHA1 routine for large input buffers
-
-   Petr Baudis:
-      Support for extracting configuration from different files
-      Support for the standard mime.types map in gitweb
-
-   Rene Scharfe:
-      git-tar-tree: Simplify write_trailer()
-      git-tar-tree: documentation update
-      git-tar-tree: no more void pointer arithmetic
-      Make release tarballs friendlier to older tar versions
-
-   Timo Hirvonen:
-      gitweb: Use $hash_base as $search_hash if possible
-
-   Uwe Zeisberger:
-      Fix possible out-of-bounds array access
-
-   Yakov Lerner:
-      auto-detect changed prefix and/or changed build flags
-      Pass -DDEFAULT_GIT_TEMPLATE_DIR only where actually used.
-
-
-* The 'pu' branch, in addition, has these.
-
-   Johannes Schindelin:
-      Teach diff about -b and -w flags
-
-   Lukas Sandstr=F6m:
-      Make it possible to call cmd_apply multiple times
-      Make git-am a builtin
+Using Tomcat but need to do more? Need to support web services, security?
+Get stuff done quickly with pre-integrated technology to make your job easier
+Download IBM WebSphere Application Server v.1.0.1 based on Apache Geronimo
+http://sel.as-us.falkag.net/sel?cmd=lnk&kid=120709&bid=263057&dat=121642
+_______________________________________________
+linux-usb-devel@lists.sourceforge.net
+To unsubscribe, use the last form field at:
+https://lists.sourceforge.net/lists/listinfo/linux-usb-devel
