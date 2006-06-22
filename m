@@ -1,66 +1,90 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Added macro support to qgit
-Date: Thu, 22 Jun 2006 16:04:55 +0200
-Message-ID: <e5bfff550606220704q568d8345o1420a0a3e29544e8@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Tracking CVS
+Date: Thu, 22 Jun 2006 10:17:15 -0400
+Message-ID: <9e4733910606220717of2ba299ta8a38c7d63fd5635@mail.gmail.com>
+References: <9e4733910606220541y15d66fa6t33ab0c80ae05f764@mail.gmail.com>
+	 <20060622135831.GB21864@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: proski@gnu.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 16:05:43 2006
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 22 16:17:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtPnp-0005xX-2v
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 16:05:01 +0200
+	id 1FtPzm-0008JN-WD
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 16:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbWFVOE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 10:04:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751791AbWFVOE5
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 10:04:57 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:42352 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751787AbWFVOE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 10:04:56 -0400
-Received: by py-out-1112.google.com with SMTP id f28so315940pyf
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 07:04:55 -0700 (PDT)
+	id S1751791AbWFVORR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 10:17:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751796AbWFVORR
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 10:17:17 -0400
+Received: from nz-out-0102.google.com ([64.233.162.192]:20398 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751791AbWFVORQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 10:17:16 -0400
+Received: by nz-out-0102.google.com with SMTP id l1so472007nzf
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 07:17:15 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=eaJ1zG54pd+UEU66aiLs1QEtrPoAtCLzKtTNFFzsZDE5Ig2N8IwmIwV6dw3R61ZZZywFOyAsHOt0U+Io16GNFtGPKSb+TTnH63UWhwK3cQtHhaS84QNvX7VFuhZ+wlNsUTLFvF3s9p+tw0TA/8AF33DTN1+yrVlOMTJ68Q57V6U=
-Received: by 10.35.135.12 with SMTP id m12mr1126848pyn;
-        Thu, 22 Jun 2006 07:04:55 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Thu, 22 Jun 2006 07:04:55 -0700 (PDT)
-To: git@vger.kernel.org
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RuXjNksEQoL+lchuTD5P7vjv+s/IsvK3O+RyQIY/xD6soaU9KblX1+3tF+OgIKx91LydJoDQ0KykVeoAgwPe/sISZaNDYvezech+3KqVAnJfjlUpC4Pnt50EJBvir+R2e9zjiTG35BBNYMfcw5vcwcVzuKEZ5VzFqMRj+jkf994=
+Received: by 10.36.25.2 with SMTP id 2mr771926nzy;
+        Thu, 22 Jun 2006 07:17:15 -0700 (PDT)
+Received: by 10.36.37.5 with HTTP; Thu, 22 Jun 2006 07:17:15 -0700 (PDT)
+To: "Petr Baudis" <pasky@suse.cz>
+In-Reply-To: <20060622135831.GB21864@pasky.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22343>
 
-I have pushed some patches that add macros to qgit.
+On 6/22/06, Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Thu, Jun 22, 2006 at 02:41:16PM CEST, I got a letter
+> where Jon Smirl <jonsmirl@gmail.com> said that...
+> > I'm tracking cvs using this sequence.
+> >
+> > cvs update
+> > cg rm -a
+> > cg commit
+> > cg add -r .
+> > cg commit
+> >
+> > Is there a way to avoid the two commits? If you do the add with out
+> > the intervening commit it just adds the files back.
+>
+> I think the most straightforward way is:
+>
+>         cvs update
+>         cg-rm -a
+>         cg-status -wns \? | xargs cg-add
+>         cg-commit
+>
+> If you want to be careful about filenames polluted by non-newline
+> whitespaces,
+>
+>         cg-status -wns \? | tr '\n' '\0' | xargs -0 cg-add
+>
+> If you want to be safe even with filenames containing newlines, you need
+> to go at the Git level:
+>
+>         git-ls-files -z --others | \
+>                 xargs -0 git-update-index --add --
+>
+> Perhaps we might make a special command which would sync the index set
+> with the working copy set...
 
->From menu bar it is possible to  run a macro created by a fancy new
-dialog invoked by 'Macros->Setup macros...' menu.
+How about a cg-sync? Tracking cvs (or other SCM) with git is probably
+a common activitiy while you try to convince the other CVS users to
+switch. It is probably worth a little write up in the readme on the
+best way to do it.
 
-See http://digilander.libero.it/mcostalba/macros_menu.png
-        http://digilander.libero.it/mcostalba/macros_dialog.png
+cg-sync should probably default to having a prompt before actually
+adding/removing the files. Add a -f or something to get rid of the
+prompt.
 
-A macro can be associated to a any sequence of commands or to an
-external script.
-
-In case of commands sequence, these will be wrapped up in a temporary
-script and executed as a whole.
-
-A macro can also ask for command line arguments before to be run so to
-allow for maximum flexibility. In case of multi commands sequence
-given command line arguments will be bounded to first one only.
-
-While a macro is running a terminal window is shown to display the
-corresponding output.
-
-qgit repository is: git://git.kernel.org/pub/scm/qgit/qgit.git
-
-Comments and feedback are welcomed.
-
-     Marco
+-- 
+Jon Smirl
+jonsmirl@gmail.com
