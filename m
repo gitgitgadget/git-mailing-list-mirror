@@ -1,61 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rebase --merge: fix for rebasing more than 7 commits.
-Date: Thu, 22 Jun 2006 01:54:18 -0700
-Message-ID: <7vpsh1tvt1.fsf@assigned-by-dhcp.cox.net>
-References: <7vy7vptw8p.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Thu, 22 Jun 2006 11:01:04 +0200
+Organization: At home
+Message-ID: <e7dm8g$mc9$1@sea.gmane.org>
+References: <e79921$u0e$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 10:54:25 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 22 11:01:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtKxC-00043O-Lu
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 10:54:23 +0200
+	id 1FtL43-0005Bd-9I
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 11:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932453AbWFVIyU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 04:54:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932454AbWFVIyU
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 04:54:20 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:20356 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932453AbWFVIyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 04:54:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060622085418.ZJJX554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 22 Jun 2006 04:54:18 -0400
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <7vy7vptw8p.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 22 Jun 2006 01:44:54 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932481AbWFVJBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 05:01:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932505AbWFVJBY
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 05:01:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:27603 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932481AbWFVJBX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 05:01:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FtL3r-00059a-5U
+	for git@vger.kernel.org; Thu, 22 Jun 2006 11:01:15 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 11:01:15 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 11:01:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22313>
 
-Junio C Hamano <junkio@cox.net> writes:
+Jakub Narebski wrote:
 
->  * I wanted to raise my confidence level in the new rebase --merge
->    code, so I did a little exercise which resulted in finding this
->    buglet.
->...
->    So the exercise went like this:
->...
->   With this fix, the above works beautifully.  I am reasonably
->   happy with this shiny new toy.  Good job, Eric! and thanks.
+> I am planning on copying features from xmms2's gitweb version 
+> to git's gitweb, and introducing new ones.
 
-By the way, I do not quite understand the reasoning behind not
-moving the head being rebased until the finalization phase.
+> * Refactor generation of navigation bar. There are at least two
+>   implementations of that. With hash dispatch it would be easy to
+>   list all possibilities.
 
-Also I think --skip would be straightforward.  What you look at
-in call_merge() is the current HEAD, the commit being rebased
-and its direct parent (actually what you are interested in are
-trees of these commits and not ancestry chains among them -- if
-we can tell git-merge-recursive not to try its own "recursive"
-merge base finding but just use what we give it as the base, I
-could sleep better.  I think the current code could misbehave in
-funnier ancestry graph if we allow it to pick merge base on its
-own), so skipping is just a matter of, eh, skipping the commit.
+Actually I think that whole gitweb.cgi needs refactoring, badly. Generation
+of navigation bar is only one, admittedly worst, example of code
+duplication.
+
+
+Another gitweb feature I can think of:
+
+* Add information about from which repository and which branch in the
+  remote repository given branch (head) came from. Should support both
+  $GIT_DIR/branches and $GIT_DIR/remotes format, and be easy extendable
+  to support branch/repo/remotes configuration in config.
+
+  I think it would be best to show this info (as it is variable long length,
+  and optional) as the last column of heads listing. Or would be better to
+  just add link with the remote name as text?
+
+  Is git://host.xz/path/to/repo.git#branch correct branch URI?
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
