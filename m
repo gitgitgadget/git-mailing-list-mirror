@@ -1,75 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Thu, 22 Jun 2006 11:01:04 +0200
-Organization: At home
-Message-ID: <e7dm8g$mc9$1@sea.gmane.org>
-References: <e79921$u0e$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] [RFC] Introduce Git.pm
+Date: Thu, 22 Jun 2006 02:01:46 -0700
+Message-ID: <7vfyhxtvgl.fsf@assigned-by-dhcp.cox.net>
+References: <20060622003546.17760.23089.stgit@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 22 11:01:34 2006
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 22 11:01:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtL43-0005Bd-9I
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 11:01:28 +0200
+	id 1FtL4R-0005EZ-2O
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 11:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932481AbWFVJBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 05:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932505AbWFVJBY
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 05:01:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:27603 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932481AbWFVJBX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 05:01:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FtL3r-00059a-5U
-	for git@vger.kernel.org; Thu, 22 Jun 2006 11:01:15 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 11:01:15 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 11:01:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-User-Agent: KNode/0.7.7
+	id S932511AbWFVJBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 05:01:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932519AbWFVJBs
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 05:01:48 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:25264 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932511AbWFVJBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jun 2006 05:01:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060622090147.XCER11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 22 Jun 2006 05:01:47 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060622003546.17760.23089.stgit@machine.or.cz> (Petr Baudis's
+	message of "Thu, 22 Jun 2006 02:35:46 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22314>
 
-Jakub Narebski wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> I am planning on copying features from xmms2's gitweb version 
-> to git's gitweb, and introducing new ones.
+> This patch introduces a very basic and barebone Git.pm module
+> with a sketch of how the generic interface would look like;
 
-> * Refactor generation of navigation bar. There are at least two
->   implementations of that. With hash dispatch it would be easy to
->   list all possibilities.
+In addition to my previous comments...
 
-Actually I think that whole gitweb.cgi needs refactoring, badly. Generation
-of navigation bar is only one, admittedly worst, example of code
-duplication.
+> +  my $version = Git::generic_oneval('version');
+> +  my $lastrev = $repo->generic_oneval('rev-list', '--all');
+> +...
+> +=item generic_oneline ( COMMAND [, ARGUMENTS... ] )
+> +...
+> +sub generic_oneline {
+> +	my $fh = generic(@_);
+> +	my $line = <$fh>;
+> +	close $fh;
+> +	chomp $line;
+> +	return $line;
+> +}
 
-
-Another gitweb feature I can think of:
-
-* Add information about from which repository and which branch in the
-  remote repository given branch (head) came from. Should support both
-  $GIT_DIR/branches and $GIT_DIR/remotes format, and be easy extendable
-  to support branch/repo/remotes configuration in config.
-
-  I think it would be best to show this info (as it is variable long length,
-  and optional) as the last column of heads listing. Or would be better to
-  just add link with the remote name as text?
-
-  Is git://host.xz/path/to/repo.git#branch correct branch URI?
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Let's have a cleaned up version of Git.pm, Makefile changes and
+changes to git-fmt-merge-msg.perl that shows how to use the
+module.  Being in-tree would help people to view, use and
+comment on it.
