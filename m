@@ -1,103 +1,88 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] Make -p --stat and --stat -p behave like --patch-with-stat
-Date: Thu, 22 Jun 2006 16:25:11 +0300
-Message-ID: <20060622162511.4788505e.tihirvon@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git pull w/o checkout?
+Date: Thu, 22 Jun 2006 15:32:31 +0200
+Organization: At home
+Message-ID: <e7e65f$dhf$1@sea.gmane.org>
+References: <E65F8DB5-677B-4C7B-A4EC-5F6FB76D6E9A@kernel.crashing.org> <20060622130523.GA6893@coredump.intra.peff.net> <E333ADD9-1096-4137-9D72-D58A8E2A5582@kernel.crashing.org> <20060622131344.GA7168@coredump.intra.peff.net> <A4C01915-3337-460C-BE19-7AC17249BE50@kernel.crashing.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 22 15:26:05 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 22 15:33:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtPBm-0006rF-8z
-	for gcvg-git@gmane.org; Thu, 22 Jun 2006 15:25:42 +0200
+	id 1FtPJ5-0008S4-0l
+	for gcvg-git@gmane.org; Thu, 22 Jun 2006 15:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161116AbWFVNZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 09:25:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161117AbWFVNZj
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 09:25:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:968 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1161116AbWFVNZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 09:25:38 -0400
-Received: by nf-out-0910.google.com with SMTP id o60so257101nfa
-        for <git@vger.kernel.org>; Thu, 22 Jun 2006 06:25:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=MduzHXbrchuamex9kTRRIS/e2yetnkfq2dxFRBndTwIKUKJZHwTHb2FmXtYbVhaJrMtZqP//dlx5DzAMgA9m3IGaZdnIYX1M4vUFkxwIz7EwujtrpBlqliO+arkUVDnuKSTEMGGyqzIZp9rx5B5FuwLjKKFAD3HpUgUCnJGvOpI=
-Received: by 10.48.233.18 with SMTP id f18mr1399236nfh;
-        Thu, 22 Jun 2006 06:25:37 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id q28sm1813894nfc.2006.06.22.06.25.11;
-        Thu, 22 Jun 2006 06:25:25 -0700 (PDT)
-To: junkio@cox.net
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S1161121AbWFVNdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 09:33:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161119AbWFVNdI
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 09:33:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:24720 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751787AbWFVNdH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jun 2006 09:33:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FtPIi-0008Mk-QD
+	for git@vger.kernel.org; Thu, 22 Jun 2006 15:32:52 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 15:32:52 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Jun 2006 15:32:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+User-Agent: KNode/0.7.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22339>
 
-git log                    log only
-git log --stat             log with stat
-git log -p                 log with patch
-git log --stat -p          log with patch (no stat!)
-git log -p --stat          log with stat (no patch!)
-git log --patch-with-stat  log with patch and stat
+Kumar Gala wrote:
 
-This patch makes -p --stat and --stat -p work like --patch-with-stat.
+> 
+> On Jun 22, 2006, at 8:13 AM, Jeff King wrote:
+> 
+>> On Thu, Jun 22, 2006 at 08:10:10AM -0500, Kumar Gala wrote:
+>>
+>>>> git-fetch?
+>>> Its the first half, still need to resolve FETCH_HEAD, HEAD, etc..
+>>
+>> Can you elaborate on what you're trying to accomplish?
+> 
+> A local mirror of a git tree.  I can do the clone easy enough, its  
+> trying to figure out the updates after the fact that is the issue.
 
-Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
----
+Assuming typical configuration, with the following in remotes/origin
 
-  Maybe DIFF_FORMAT_* should be reworked instead but this was easy.
+---[ <path-to-repo>/.git/remotes/origin ]----
+URL: git://git.kernel.org/pub/scm/git/git.git
+Pull: refs/heads/master:refs/heads/origin
+Pull:+refs/heads/pu:refs/heads/pu
+Pull: refs/heads/man:refs/heads/man
+Pull: refs/heads/html:refs/heads/html
+Pull: refs/heads/next:refs/heads/next
+Pull: refs/heads/todo:refs/heads/todo
+Pull: refs/heads/maint:refs/heads/maint
+---------------------------------------------
 
-  Only negative impact of this patch is that if you have a alias
+to update your repository, do:
 
-     l=log --stat
+$ git checkout master
+$ git fetch origin
 
-  then you can't override --stat with "git l -p", it will still show
-  diffstat, but I don't think it matters.
+Any branch except listed ot fhose fetched to will do, or even any command
+that leaves HEAD different than one of the branches fetched to. Everything
+is updated. Then you can do the second part of pull, using
 
- diff.c |   17 ++++++++++++++---
- 1 files changed, 14 insertions(+), 3 deletions(-)
+$ git checkout master
+$ git pull . master
 
-diff --git a/diff.c b/diff.c
-index 9e9cfc8..75632d3 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1382,16 +1382,27 @@ int opt_arg(const char *arg, int arg_sho
- int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- {
- 	const char *arg = av[0];
--	if (!strcmp(arg, "-p") || !strcmp(arg, "-u"))
-+	if (!strcmp(arg, "-p") || !strcmp(arg, "-u")) {
-+		if (options->output_format == DIFF_FORMAT_DIFFSTAT) {
-+			// --stat -p
-+			options->with_stat = 1;
-+		}
- 		options->output_format = DIFF_FORMAT_PATCH;
-+	}
- 	else if (opt_arg(arg, 'U', "unified", &options->context))
- 		options->output_format = DIFF_FORMAT_PATCH;
- 	else if (!strcmp(arg, "--patch-with-raw")) {
- 		options->output_format = DIFF_FORMAT_PATCH;
- 		options->with_raw = 1;
- 	}
--	else if (!strcmp(arg, "--stat"))
--		options->output_format = DIFF_FORMAT_DIFFSTAT;
-+	else if (!strcmp(arg, "--stat")) {
-+		if (options->output_format == DIFF_FORMAT_PATCH) {
-+			// -p --stat
-+			options->with_stat = 1;
-+		} else {
-+			options->output_format = DIFF_FORMAT_DIFFSTAT;
-+		}
-+	}
- 	else if (!strcmp(arg, "--check"))
- 		options->output_format = DIFF_FORMAT_CHECKDIFF;
- 	else if (!strcmp(arg, "--summary"))
 -- 
-1.4.0.g5fdc-dirty
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
