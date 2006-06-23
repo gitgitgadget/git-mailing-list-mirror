@@ -1,34 +1,76 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Customizable error handlers
-Date: Fri, 23 Jun 2006 15:32:27 +0200
-Message-ID: <20060623133227.27854.65567.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 23 15:32:56 2006
+Subject: Re: [PATCH] Customizable error handlers
+Date: Fri, 23 Jun 2006 15:38:47 +0200
+Message-ID: <20060623133847.GN21864@pasky.or.cz>
+References: <20060623133227.27854.65567.stgit@machine.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 23 15:58:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtlmE-0002x5-5b
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 15:32:50 +0200
+	id 1FtmAZ-0008FD-3W
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 15:57:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964824AbWFWNca (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 09:32:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbWFWNca
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 09:32:30 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:16366 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964824AbWFWNc3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 09:32:29 -0400
-Received: (qmail 27864 invoked from network); 23 Jun 2006 15:32:27 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 23 Jun 2006 15:32:27 +0200
+	id S1750759AbWFWN5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 09:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWFWN5m
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 09:57:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:30178 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750707AbWFWNit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 09:38:49 -0400
+Received: (qmail 28303 invoked by uid 2001); 23 Jun 2006 15:38:47 +0200
 To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.9
+Content-Disposition: inline
+In-Reply-To: <20060623133227.27854.65567.stgit@machine.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22420>
+
+Dear diary, on Fri, Jun 23, 2006 at 03:32:27PM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5d543d2..e954002 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -36,9 +36,13 @@ #endif
+>  #endif
+>  
+>  /* General helper functions */
+> -extern void usage(const char *err) NORETURN;
+> -extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
+> -extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+> +void usage(const char *err) NORETURN;
+> +void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
+> +int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+
+Wah, this kind of slipped through. Below is a patch without the
+externs removed. Sorry about the noise.
+
+>  int error(const char *err, ...)
+>  {
+>  	va_list params;
+> +	int ret;
+>  
+>  	va_start(params, err);
+> -	report("error: ", err, params);
+> +	ret = error_routine(err, params);
+>  	va_end(params);
+> -	return -1;
+> +	return ret;
+>  }
+
+BTW, I don't mind if you just force the return value to -1 here.
+It might be saner.
+
+---
+
+[PATCH] Customizable error handlers
 
 This patch makes the usage(), die() and error() handlers customizable.
 Nothing in the git code itself uses that but many other libgit users
@@ -40,33 +82,24 @@ dlopen()ed it, apparently. But having functions for that is a better API
 anyway.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
+
 ---
 
- git-compat-util.h |   10 +++++++---
- usage.c           |   50 +++++++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 52 insertions(+), 8 deletions(-)
-
 diff --git a/git-compat-util.h b/git-compat-util.h
-index 5d543d2..e954002 100644
+index 5d543d2..0c5ceb3 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -36,9 +36,13 @@ #endif
- #endif
+@@ -40,6 +40,10 @@ extern void usage(const char *err) NORET
+ extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
+ extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
  
- /* General helper functions */
--extern void usage(const char *err) NORETURN;
--extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
--extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
-+void usage(const char *err) NORETURN;
-+void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
-+int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
++extern void set_usage_routine(void (*routine)(const char *err) NORETURN);
++extern void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN);
++extern void set_error_routine(int (*routine)(const char *err, va_list params));
 +
-+void set_usage_routine(void (*routine)(const char *err) NORETURN);
-+void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN);
-+void set_error_routine(int (*routine)(const char *err, va_list params));
- 
  #ifdef NO_MMAP
  
+ #ifndef PROT_READ
 diff --git a/usage.c b/usage.c
 index 1fa924c..445456d 100644
 --- a/usage.c
@@ -145,3 +178,8 @@ index 1fa924c..445456d 100644
 -	return -1;
 +	return ret;
  }
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
