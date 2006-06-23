@@ -1,55 +1,90 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 0/5] Rework diff options
-Date: Fri, 23 Jun 2006 16:16:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606231615150.6483@g5.osdl.org>
+Date: Sat, 24 Jun 2006 01:18:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606240111590.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <20060624011538.9bb179e7.tihirvon@gmail.com>
+ <Pine.LNX.4.63.0606240024460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060624014420.2c3df276.tihirvon@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 01:16:33 2006
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 24 01:18:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ftut4-0003hi-T1
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 01:16:31 +0200
+	id 1Ftuuh-0003v7-No
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 01:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171AbWFWXQ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 19:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752172AbWFWXQ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 19:16:28 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:35043 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1752171AbWFWXQ2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 19:16:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5NNGNUT029802
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 23 Jun 2006 16:16:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5NNGMZF001723;
-	Fri, 23 Jun 2006 16:16:22 -0700
+	id S1752170AbWFWXSI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 19:18:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752172AbWFWXSI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 19:18:08 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:31956 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1752170AbWFWXSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 19:18:07 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 7C8552AAB;
+	Sat, 24 Jun 2006 01:18:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 700E02AF0;
+	Sat, 24 Jun 2006 01:18:06 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 4A34B23DB;
+	Sat, 24 Jun 2006 01:18:06 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060624011538.9bb179e7.tihirvon@gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <20060624014420.2c3df276.tihirvon@gmail.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22454>
 
-
+Hi,
 
 On Sat, 24 Jun 2006, Timo Hirvonen wrote:
->
-> This patch series cleans up diff output format options.
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > 
-> This makes it possible to use any combination of --raw, -p, --stat and
-> --summary options and they work as you would expect.
+> > Although I understand that to convert all users to the new convention, it 
+> > is sensible to rename the constants, I think it is not good to change 
+> > something as DIFF_FORMAT_RAW to OUTPUT_FMT_RAW in the resulting patch.
 
-Looks good to me. I'll be very happy never having to remember the option 
-(or type) --patch-with-stat ever again. Doing just "-p --stat" is just 
-_so_ much better.
+Note that I understand this for the purpose of not forgetting to change 
+things over to "|=" and "&": the compiler will warn you about that now.
 
-		Linus
+But after it compiles, you can change the names back to reduce patch size 
+and to avoid confusing of dumb people like me.
+
+> > IMHO it is an unnecessary change, and accounts for a lot of the diffstat.
+> 
+> I did it because you can't have many DIFF_FORMAT_* options at the same
+> time but OUTPUT_FMT_* can be combined.
+
+But you just renamed them! The name alone does not say "you cannot combine 
+them".
+
+-- snip --
+@@ -150,15 +162,6 @@ #define COMMON_DIFF_OPTIONS_HELP \
+ "                show all files diff when -S is used and hit is found.\n"
+ 
+ extern int diff_queue_is_empty(void);
+-
+-#define DIFF_FORMAT_RAW                1
+-#define DIFF_FORMAT_PATCH      2
+-#define DIFF_FORMAT_NO_OUTPUT  3
+-#define DIFF_FORMAT_NAME       4
+-#define DIFF_FORMAT_NAME_STATUS        5
+-#define DIFF_FORMAT_DIFFSTAT   6
+-#define DIFF_FORMAT_CHECKDIFF  7
+-
+-- snap --
+
+You also sneak in some other things, such as renaming output_format to 
+output_fmt in struct diff_options, making a function static, and expanding 
+a "(a ? b : c)", without accounting for it in the commit message.
+
+Ciao,
+Dscho
