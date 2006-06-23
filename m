@@ -1,50 +1,63 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [PATCH] git-merge --squash
-Date: Fri, 23 Jun 2006 14:25:01 +0200
-Message-ID: <20060623122501.GD15631@cip.informatik.uni-erlangen.de>
-References: <7virmscl2u.fsf@assigned-by-dhcp.cox.net> <7vd5d09pe2.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-format-patch builtin isn't using git-cherry?
+Date: Fri, 23 Jun 2006 14:33:25 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606231431420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <46a038f90606221732k6d93bcceic2761081d7a7c72b@mail.gmail.com>
+ <Pine.LNX.4.63.0606231357420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060623152321.2c20e9f8.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 23 14:25:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: martin.langhoff@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 23 14:33:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ftkig-0006qP-WA
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 14:25:07 +0200
+	id 1Ftkr0-0000Ah-SW
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 14:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964777AbWFWMZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 08:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964779AbWFWMZE
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 08:25:04 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:10997 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S964777AbWFWMZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 08:25:03 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 5F58C305F9; Fri, 23 Jun 2006 14:25:01 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5d09pe2.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11-2006-06-13
+	id S932580AbWFWMdg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 08:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964785AbWFWMdd
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 08:33:33 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:1692 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932580AbWFWMd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 08:33:26 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id BAF2F21EF;
+	Fri, 23 Jun 2006 14:33:25 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id AEADA20F5;
+	Fri, 23 Jun 2006 14:33:25 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 922521CB4;
+	Fri, 23 Jun 2006 14:33:25 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Timo Hirvonen <tihirvon@gmail.com>
+In-Reply-To: <20060623152321.2c20e9f8.tihirvon@gmail.com>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22414>
 
-Hello Junio,
+Hi,
 
-> So in that sense I would imagine --squash is not really useless
-> in such a situation as I made it sound like, but at the same
-> time I suspect people might be better off to use tools like
-> StGIT which are specially designed to support such a workflow if
-> they were to do this.
+On Fri, 23 Jun 2006, Timo Hirvonen wrote:
 
-thanks for --squash. So --squash is basically a 'suck multiple deltas
-from another branch into ., but don't commit it'. I very often use that
-way of work flow. I do small and many commits, and when I am done I
-merge them to one a bit bigger one and submit it upstream. I useally use
-'one branch per feature'.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > Basically, it will involve the following recipe:
+> > 
+> > 	- add a DIFF_FORMAT_PATCH_ID
+> 
+> Please don't add any DIFF_FORMAT_*.  I'm cleaning the diff output code
+> and replacing diff_options.output_format with one-bit flags.
 
-        Thomas
+Okay. For the purposes of git-format-patch, this is not needed anyway, but 
+rather a function which takes two tree objects and returns the patch id. 
+When you are finished it should be easy to add this as a display format.
+
+Ciao,
+Dscho
