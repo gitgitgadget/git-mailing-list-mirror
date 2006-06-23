@@ -1,75 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git-commit: allow -e option anywhere on command line
-Date: Fri, 23 Jun 2006 09:43:38 -0400
-Message-ID: <20060623134338.GA12630@coredump.intra.peff.net>
+From: =?ISO-8859-1?Q?P=E1draig_Brady?= <P@draigBrady.com>
+Subject: Re: What's in git.git and announcing v1.4.1-rc1
+Date: Fri, 23 Jun 2006 15:04:56 +0100
+Message-ID: <449BF508.9040207@draigBrady.com>
+References: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606221301500.5498@g5.osdl.org> <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 23 15:58:02 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 23 16:05:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtmAY-0008FD-04
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 15:57:58 +0200
+	id 1FtmIA-0002JJ-Bj
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 16:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750737AbWFWN5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 09:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbWFWN5l
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 09:57:41 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:36748 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750718AbWFWNnk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 09:43:40 -0400
-Received: (qmail 7873 invoked from network); 23 Jun 2006 09:43:19 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Jun 2006 09:43:19 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jun 2006 09:43:38 -0400
-To: junkio@cox.net
-Mail-Followup-To: junkio@cox.net, git@vger.kernel.org
-Content-Disposition: inline
+	id S1750735AbWFWOFq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Jun 2006 10:05:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750730AbWFWOFq
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 10:05:46 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:21942 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1750720AbWFWOFp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 10:05:45 -0400
+Received: from yzordderrex.lincor.com (mail@yzordderrex.netnoteinc.com [212.17.35.167] (may be forged))
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k5NE5VwB006442;
+	Fri, 23 Jun 2006 14:05:43 GMT
+Received: from jumpgate ([84.203.137.218] helo=[192.168.2.25])
+	by yzordderrex.lincor.com with asmtp (Exim 3.35 #1 (Debian))
+	id 1FtmHc-0001rT-00; Fri, 23 Jun 2006 15:05:16 +0100
+User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060502)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.92.1.0
+X-Virus-Scanned: ClamAV 0.88.2/1562/Fri Jun 23 07:50:07 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22422>
 
-Previously, the command 'git-commit -e -m foo' would ignore the '-e' option
-because the '-m' option overwrites the no_edit flag during sequential
-option parsing. Now we cause -e to reset the no_edit flag after all
-options are parsed.
+Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Thu, 22 Jun 2006, Linus Torvalds wrote:
+>=20
+>=20
+>>On Thu, 22 Jun 2006, Junio C Hamano wrote:
+>>
+>>> - diff --color (Johannes).
+>>
+>> - default to red/green for old/new lines. That's the norm, I'd think=
+=2E
+>=20
+>=20
+> ... and which happens to be useless for 10% of the male population (a=
+nd=20
+> even more if you look specifically at Asian people). But then, I just=
+=20
+> pasted that part from somewhere else.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-commit.sh |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+:)
 
-diff --git a/git-commit.sh b/git-commit.sh
-index 6dd04fd..4bb16db 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -199,6 +199,7 @@ only=
- logfile=
- use_commit=
- amend=
-+edit_flag=
- no_edit=
- log_given=
- log_message=
-@@ -246,7 +247,7 @@ do
-       shift
-       ;;
-   -e|--e|--ed|--edi|--edit)
--      no_edit=
-+      edit_flag=t
-       shift
-       ;;
-   -i|--i|--in|--inc|--incl|--inclu|--includ|--include)
-@@ -384,6 +385,7 @@ do
-       ;;
-   esac
- done
-+case "$edit_flag" in t) no_edit= ;; esac 
- 
- ################################################################
- # Sanity check options
--- 
-1.4.1.rc1.gf603-dirty
+So 10% of the male population need to learn
+traffic light positions rather than colours?
+
+I'm red/green colour blind which means I can't
+distinguish _subtley_ different shades of red and green.
+
+vim is another fondue fork offender as it merges
+syntax highlighting and diff colours in diff mode (vimdiff).
+I put the following in ~/.vimrc to disable that madness:
+
+if &diff
+    "I'm only interested in diff colours
+    syntax off
+endif
+
+P=E1draig.
