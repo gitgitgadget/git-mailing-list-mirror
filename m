@@ -1,63 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: What's in git.git and announcing v1.4.1-rc1
-Date: Fri, 23 Jun 2006 16:25:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606231624200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 23 Jun 2006 07:59:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606230756050.6483@g5.osdl.org>
 References: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net>
  <Pine.LNX.4.64.0606221301500.5498@g5.osdl.org>
  <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <449BF508.9040207@draigBrady.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1698894413-1151072750=:29667"
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>,
 	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 23 16:26:10 2006
+X-From: git-owner@vger.kernel.org Fri Jun 23 17:00:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ftmbc-0006No-D2
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 16:25:58 +0200
+	id 1Ftn8P-0003mM-Ob
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 16:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750747AbWFWOZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 10:25:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWFWOZx
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 10:25:53 -0400
-Received: from mail.gmx.de ([213.165.64.21]:40102 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750747AbWFWOZw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 10:25:52 -0400
-Received: (qmail invoked by alias); 23 Jun 2006 14:25:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 23 Jun 2006 16:25:51 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: =?ISO-8859-1?Q?P=E1draig_Brady?= <P@draigBrady.com>
-In-Reply-To: <449BF508.9040207@draigBrady.com>
-X-Y-GMX-Trusted: 0
+	id S1750942AbWFWO7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 10:59:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbWFWO7o
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 10:59:44 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:61614 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750852AbWFWO7m (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 10:59:42 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5NExYUT028410
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 23 Jun 2006 07:59:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5NExXqo014458;
+	Fri, 23 Jun 2006 07:59:33 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22424>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-1698894413-1151072750=:29667
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
 
-Hi,
+On Fri, 23 Jun 2006, Johannes Schindelin wrote:
+> > 
+> >  - default to red/green for old/new lines. That's the norm, I'd think.
+> 
+> ... and which happens to be useless for 10% of the male population (and 
+> even more if you look specifically at Asian people). But then, I just 
+> pasted that part from somewhere else.
 
-On Fri, 23 Jun 2006, Pádraig Brady wrote:
+Sure. 
 
-> So 10% of the male population need to learn traffic light positions 
-> rather than colours?
+(Although I think it's 7% in general, and more in certain populations, 
+some Western European countries included)
 
-A friend of mine was at the military and had to check new recruits for 
-color-blindness. Only after the 20th color-blind man in a row he realized 
-for the first time in hist life that it was _him_, being the color-blind.
+Which just means that we should have some way to let people set their own 
+colors.
 
-Ciao,
-Dscho
----1148973799-1698894413-1151072750=:29667--
+The _default_ should be the one people expect, though.
+
+		Linus
