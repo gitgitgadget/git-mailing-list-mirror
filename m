@@ -1,8 +1,7 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Customizable error handlers
-Date: Fri, 23 Jun 2006 15:38:47 +0200
-Message-ID: <20060623133847.GN21864@pasky.or.cz>
-References: <20060623133227.27854.65567.stgit@machine.or.cz>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-commit: allow -e option anywhere on command line
+Date: Fri, 23 Jun 2006 09:43:38 -0400
+Message-ID: <20060623134338.GA12630@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
@@ -11,175 +10,66 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtmAZ-0008FD-3W
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 15:57:59 +0200
+	id 1FtmAY-0008FD-04
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 15:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbWFWN5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1750737AbWFWN5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Fri, 23 Jun 2006 09:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWFWN5m
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 09:57:42 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:30178 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750707AbWFWNit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 09:38:49 -0400
-Received: (qmail 28303 invoked by uid 2001); 23 Jun 2006 15:38:47 +0200
-To: Junio C Hamano <junkio@cox.net>
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbWFWN5l
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 09:57:41 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:36748 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1750718AbWFWNnk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 09:43:40 -0400
+Received: (qmail 7873 invoked from network); 23 Jun 2006 09:43:19 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Jun 2006 09:43:19 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jun 2006 09:43:38 -0400
+To: junkio@cox.net
+Mail-Followup-To: junkio@cox.net, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060623133227.27854.65567.stgit@machine.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22421>
 
-Dear diary, on Fri, Jun 23, 2006 at 03:32:27PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 5d543d2..e954002 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -36,9 +36,13 @@ #endif
->  #endif
->  
->  /* General helper functions */
-> -extern void usage(const char *err) NORETURN;
-> -extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
-> -extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
-> +void usage(const char *err) NORETURN;
-> +void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
-> +int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+Previously, the command 'git-commit -e -m foo' would ignore the '-e' option
+because the '-m' option overwrites the no_edit flag during sequential
+option parsing. Now we cause -e to reset the no_edit flag after all
+options are parsed.
 
-Wah, this kind of slipped through. Below is a patch without the
-externs removed. Sorry about the noise.
-
->  int error(const char *err, ...)
->  {
->  	va_list params;
-> +	int ret;
->  
->  	va_start(params, err);
-> -	report("error: ", err, params);
-> +	ret = error_routine(err, params);
->  	va_end(params);
-> -	return -1;
-> +	return ret;
->  }
-
-BTW, I don't mind if you just force the return value to -1 here.
-It might be saner.
-
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+ git-commit.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-[PATCH] Customizable error handlers
-
-This patch makes the usage(), die() and error() handlers customizable.
-Nothing in the git code itself uses that but many other libgit users
-(like Git.pm) will.
-
-This is implemented using the mutator functions primarily because you
-cannot directly modifying global variables of libgit from a program that
-dlopen()ed it, apparently. But having functions for that is a better API
-anyway.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
-
----
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 5d543d2..0c5ceb3 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -40,6 +40,10 @@ extern void usage(const char *err) NORET
- extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
- extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+diff --git a/git-commit.sh b/git-commit.sh
+index 6dd04fd..4bb16db 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -199,6 +199,7 @@ only=
+ logfile=
+ use_commit=
+ amend=
++edit_flag=
+ no_edit=
+ log_given=
+ log_message=
+@@ -246,7 +247,7 @@ do
+       shift
+       ;;
+   -e|--e|--ed|--edi|--edit)
+-      no_edit=
++      edit_flag=t
+       shift
+       ;;
+   -i|--i|--in|--inc|--incl|--inclu|--includ|--include)
+@@ -384,6 +385,7 @@ do
+       ;;
+   esac
+ done
++case "$edit_flag" in t) no_edit= ;; esac 
  
-+extern void set_usage_routine(void (*routine)(const char *err) NORETURN);
-+extern void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN);
-+extern void set_error_routine(int (*routine)(const char *err, va_list params));
-+
- #ifdef NO_MMAP
- 
- #ifndef PROT_READ
-diff --git a/usage.c b/usage.c
-index 1fa924c..445456d 100644
---- a/usage.c
-+++ b/usage.c
-@@ -12,28 +12,68 @@ static void report(const char *prefix, c
- 	fputs("\n", stderr);
- }
- 
--void usage(const char *err)
-+void usage_builtin(const char *err)
- {
- 	fprintf(stderr, "usage: %s\n", err);
- 	exit(129);
- }
- 
-+void die_builtin(const char *err, va_list params)
-+{
-+	report("fatal: ", err, params);
-+	exit(128);
-+}
-+
-+int error_builtin(const char *err, va_list params)
-+{
-+	report("error: ", err, params);
-+	return -1;
-+}
-+
-+
-+/* If we are in a dlopen()ed .so write to a global variable would segfault
-+ * (ugh), so keep things static. */
-+static void (*usage_routine)(const char *err) NORETURN = usage_builtin;
-+static void (*die_routine)(const char *err, va_list params) NORETURN = die_builtin;
-+static int (*error_routine)(const char *err, va_list params) = error_builtin;
-+
-+void set_usage_routine(void (*routine)(const char *err) NORETURN)
-+{
-+	usage_routine = routine;
-+}
-+
-+void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN)
-+{
-+	die_routine = routine;
-+}
-+
-+void set_error_routine(int (*routine)(const char *err, va_list params))
-+{
-+	error_routine = routine;
-+}
-+
-+
-+void usage(const char *err)
-+{
-+	usage_routine(err);
-+}
-+
- void die(const char *err, ...)
- {
- 	va_list params;
- 
- 	va_start(params, err);
--	report("fatal: ", err, params);
-+	die_routine(err, params);
- 	va_end(params);
--	exit(128);
- }
- 
- int error(const char *err, ...)
- {
- 	va_list params;
-+	int ret;
- 
- 	va_start(params, err);
--	report("error: ", err, params);
-+	ret = error_routine(err, params);
- 	va_end(params);
--	return -1;
-+	return ret;
- }
-
+ ################################################################
+ # Sanity check options
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+1.4.1.rc1.gf603-dirty
