@@ -1,66 +1,56 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH 0/5] Rework diff options
-Date: Sat, 24 Jun 2006 01:44:20 +0300
-Message-ID: <20060624014420.2c3df276.tihirvon@gmail.com>
-References: <20060624011538.9bb179e7.tihirvon@gmail.com>
-	<Pine.LNX.4.63.0606240024460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-merge --squash
+Date: Fri, 23 Jun 2006 16:11:26 -0700
+Message-ID: <7vwtb78o2p.fsf@assigned-by-dhcp.cox.net>
+References: <7virmscl2u.fsf@assigned-by-dhcp.cox.net>
+	<7vd5d09pe2.fsf@assigned-by-dhcp.cox.net>
+	<20060623122501.GD15631@cip.informatik.uni-erlangen.de>
+	<Pine.LNX.4.63.0606231433370.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 00:44:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 24 01:11:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtuO1-000812-Bp
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 00:44:26 +0200
+	id 1FtuoF-000367-Tj
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 01:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133AbWFWWoX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 18:44:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbWFWWoX
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 18:44:23 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:21040 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1752133AbWFWWoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 18:44:22 -0400
-Received: by nf-out-0910.google.com with SMTP id m19so280603nfc
-        for <git@vger.kernel.org>; Fri, 23 Jun 2006 15:44:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=GWSo4yszFIhD8pSlU9lYNoPwbssfND0Hrh+MKtrbYjlX64tZ+etnllWsgXA51An1LSMGvLJOLMtN0aU1fDYRmfSyZx60OhEwBQKSAxNQSCgBemiuYyD/mmrqv2FGxJczB09aC41stoDethXPBGxUW3wSX5WwMrLN0kqMn6M99XY=
-Received: by 10.49.81.12 with SMTP id i12mr2895476nfl;
-        Fri, 23 Jun 2006 15:44:20 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id v20sm85771nfc.2006.06.23.15.44.20;
-        Fri, 23 Jun 2006 15:44:20 -0700 (PDT)
+	id S1752167AbWFWXL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 19:11:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752169AbWFWXL2
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 19:11:28 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:47612 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1752167AbWFWXL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 19:11:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060623231127.QOIA1341.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 23 Jun 2006 19:11:27 -0400
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606240024460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+In-Reply-To: <Pine.LNX.4.63.0606231433370.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 23 Jun 2006 14:36:11 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22451>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi,
-> 
-> On Sat, 24 Jun 2006, Timo Hirvonen wrote:
-> 
-> > This patch series cleans up diff output format options.
-> 
-> Very good.
-> 
-> Although I understand that to convert all users to the new convention, it 
-> is sensible to rename the constants, I think it is not good to change 
-> something as DIFF_FORMAT_RAW to OUTPUT_FMT_RAW in the resulting patch.
-> 
-> IMHO it is an unnecessary change, and accounts for a lot of the diffstat.
+> Isn't this the same as 'git-cherry-pick -n'? I often do a poor man's StGIT 
+> by cherry picking my way through a messy branch, often combining patches 
+> by '-n'.
 
-I did it because you can't have many DIFF_FORMAT_* options at the same
-time but OUTPUT_FMT_* can be combined.
-
--- 
-http://onion.dynserv.net/~timo/
+Operationally, it probably is equivalent to the repeated use of
+'cherry-pick -n' for all commits on a topic, but that would risk
+you having to resolve conflicts unnecessarily when you are
+shooting for as the result is a single commit, because you would
+have to do N merges with that workflow.  Squashing is about
+merging the tip of the topic into mainline, so the conflict
+resolution needs to be done only once.
