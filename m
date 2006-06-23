@@ -1,66 +1,65 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What's in git.git and announcing v1.4.1-rc1
-Date: Fri, 23 Jun 2006 07:59:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606230756050.6483@g5.osdl.org>
-References: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606221301500.5498@g5.osdl.org>
- <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] patch-id: "diff-tree" => "commit"
+Date: Fri, 23 Jun 2006 17:36:21 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606231731280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 23 17:00:15 2006
+X-From: git-owner@vger.kernel.org Fri Jun 23 17:36:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ftn8P-0003mM-Ob
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 16:59:50 +0200
+	id 1Ftnhu-0002Xl-PH
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 17:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbWFWO7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 10:59:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbWFWO7o
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 10:59:44 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:61614 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750852AbWFWO7m (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 10:59:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5NExYUT028410
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 23 Jun 2006 07:59:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5NExXqo014458;
-	Fri, 23 Jun 2006 07:59:33 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751471AbWFWPgX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 11:36:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWFWPgX
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 11:36:23 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:26822 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751471AbWFWPgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 11:36:22 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 699062470;
+	Fri, 23 Jun 2006 17:36:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 5E1FA243B;
+	Fri, 23 Jun 2006 17:36:21 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 43663235B;
+	Fri, 23 Jun 2006 17:36:21 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22425>
 
 
+Some time ago we changed git-log in a massive way, and one consequence is
+that the keyword changed. Adjust patch-id for that.
 
-On Fri, 23 Jun 2006, Johannes Schindelin wrote:
-> > 
-> >  - default to red/green for old/new lines. That's the norm, I'd think.
-> 
-> ... and which happens to be useless for 10% of the male population (and 
-> even more if you look specifically at Asian people). But then, I just 
-> pasted that part from somewhere else.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ patch-id.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Sure. 
-
-(Although I think it's 7% in general, and more in certain populations, 
-some Western European countries included)
-
-Which just means that we should have some way to let people set their own 
-colors.
-
-The _default_ should be the one people expect, though.
-
-		Linus
+diff --git a/patch-id.c b/patch-id.c
+index edbc4aa..01845be 100644
+--- a/patch-id.c
++++ b/patch-id.c
+@@ -40,8 +40,8 @@ static void generate_id_list(void)
+ 		char *p = line;
+ 		int len;
+ 
+-		if (!memcmp(line, "diff-tree ", 10))
+-			p += 10;
++		if (!memcmp(line, "commit ", 7))
++			p += 7;
+ 
+ 		if (!get_sha1_hex(p, n)) {
+ 			flush_current_id(patchlen, sha1, &ctx);
+-- 
+1.4.1.rc1.g406e
