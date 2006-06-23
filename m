@@ -1,84 +1,66 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] git-commit: filter out log message lines only when editor was run.
-Date: Sat, 24 Jun 2006 00:04:05 +0200
-Message-ID: <20060623220405.1915.28636.stgit@gandelf.nowhere.earth>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: [PATCH 1/5] git-merge: Don't use -p when outputting summary
+Date: Sat, 24 Jun 2006 00:45:40 +0300
+Message-ID: <20060624004540.3a6705e1.tihirvon@gmail.com>
+References: <20060624003315.804a1796.tihirvon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 00:04:36 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 00:17:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FttlK-0002ch-6h
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 00:04:26 +0200
+	id 1FttxS-0004Mf-CT
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 00:16:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbWFWWD7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 18:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbWFWWD7
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 18:03:59 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:41133 "EHLO smtp4-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1752091AbWFWWD7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 18:03:59 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 7121052946;
-	Sat, 24 Jun 2006 00:03:58 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by bylbo.nowhere.earth with esmtp (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1FttlF-0003JW-S9; Sat, 24 Jun 2006 00:04:21 +0200
+	id S1752119AbWFWWQz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 18:16:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752118AbWFWWQz
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 18:16:55 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:45557 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1752119AbWFWWQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 18:16:54 -0400
+Received: by nf-out-0910.google.com with SMTP id m19so277746nfc
+        for <git@vger.kernel.org>; Fri, 23 Jun 2006 15:16:53 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=M7H5m4zGq+65wC3nvgtmc2EmKgl0hpeXfnSbVUAiFvwBhNRcsiwYFJEV0p62CVsYa++gZmY7h+ycpXuinEUXF+BxYL8AvuSwU+9dEJBnkzLlqGtJBePulowzG4xDMb7zBPY9+4YkMTyyGPjPxeuZh6g2THcKW6wUuHPtO6evh2E=
+Received: by 10.48.255.5 with SMTP id c5mr1393797nfi;
+        Fri, 23 Jun 2006 15:16:53 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.229.197])
+        by mx.gmail.com with ESMTP id g1sm3393424nfe.2006.06.23.15.16.52;
+        Fri, 23 Jun 2006 15:16:53 -0700 (PDT)
 To: junkio@cox.net
-User-Agent: StGIT/0.10
+In-Reply-To: <20060624003315.804a1796.tihirvon@gmail.com>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22442>
 
+-p is not needed and we only want diffstat and summary.
 
-The current behaviour strips out lines starting with a # even when fed
-through stdin or -m.  This is particularly bad when importing history from
-another SCM (tailor 0.9.23 uses git-commit).  In the best cases all lines
-are stripped and the commit fails with a confusing "empty log message"
-error, but in many cases the commit is done, with loss of information.
-
-Note that it is quite peculiar to just have "#" handled as a leading
-comment char here.  One commonly meet CVS: or CG: or STG: as prefixes, and
-using GIT: would be more robust as well as consistent with other commit
-tools.  However, that would break any tool relying on the # (if any).
-
-Signed-off-by: Yann Dirson <ydirson@altern.org>
+Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
 ---
+ git-merge.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
- git-commit.sh |   19 ++++++++++++-------
- 1 files changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/git-commit.sh b/git-commit.sh
-index 6dd04fd..aa3b1ea 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -691,13 +691,18 @@ t)
- 	fi
- esac
+diff --git a/git-merge.sh b/git-merge.sh
+index af1f25b..da5657e 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -55,7 +55,7 @@ finish () {
  
--sed -e '
--    /^diff --git a\/.*/{
--	s///
--	q
--    }
--    /^#/d
--' "$GIT_DIR"/COMMIT_EDITMSG |
-+if test -z "$no_edit"
-+then
-+    sed -e '
-+        /^diff --git a\/.*/{
-+	    s///
-+	    q
-+	}
-+	/^#/d
-+    ' "$GIT_DIR"/COMMIT_EDITMSG
-+else
-+    cat "$GIT_DIR"/COMMIT_EDITMSG
-+fi |
- git-stripspace >"$GIT_DIR"/COMMIT_MSG
- 
- if cnt=`grep -v -i '^Signed-off-by' "$GIT_DIR"/COMMIT_MSG |
+ 	case "$no_summary" in
+ 	'')
+-		git-diff-tree -p --stat --summary -M "$head" "$1"
++		git-diff-tree --stat --summary -M "$head" "$1"
+ 		;;
+ 	esac
+ }
+-- 
+1.4.1.rc1.gf603-dirty
