@@ -1,66 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: A series file for git?
-Date: Fri, 23 Jun 2006 14:52:57 -0700
-Message-ID: <7v64ira69y.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
-	<7virno79a7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605291739430.5623@g5.osdl.org>
-	<7vmzd05i25.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0605292112530.5623@g5.osdl.org>
-	<7vpshtyffk.fsf@assigned-by-dhcp.cox.net>
-	<m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH] git-commit: filter out log message lines only when editor was run.
+Date: Sat, 24 Jun 2006 00:04:05 +0200
+Message-ID: <20060623220405.1915.28636.stgit@gandelf.nowhere.earth>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 23 23:53:14 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 00:04:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FttaM-00012x-5z
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 23:53:06 +0200
+	id 1FttlK-0002ch-6h
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 00:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbWFWVxA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 17:53:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbWFWVxA
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 17:53:00 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:35829 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1752090AbWFWVw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 17:52:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060623215258.MIUA8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Jun 2006 17:52:58 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com> (Eric
-	W. Biederman's message of "Fri, 23 Jun 2006 05:37:34 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1752111AbWFWWD7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 18:03:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbWFWWD7
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 18:03:59 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:41133 "EHLO smtp4-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1752091AbWFWWD7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 18:03:59 -0400
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 7121052946;
+	Sat, 24 Jun 2006 00:03:58 +0200 (CEST)
+Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
+	by bylbo.nowhere.earth with esmtp (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1FttlF-0003JW-S9; Sat, 24 Jun 2006 00:04:21 +0200
+To: junkio@cox.net
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22441>
 
-ebiederm@xmission.com (Eric W. Biederman) writes:
 
-> Is there any real difference between using git-format-patch | git-am
-> and using git-am to apply patches.  I was using git-cherry-pick simply
-> because it was easier to sha1 too.
->
-> - When you reorder patches minor merge conflicts are common
->   so a big pipe won't work very often in practice.  So you
->   need a way to handle failures in the middle.
+The current behaviour strips out lines starting with a # even when fed
+through stdin or -m.  This is particularly bad when importing history from
+another SCM (tailor 0.9.23 uses git-commit).  In the best cases all lines
+are stripped and the commit fails with a confusing "empty log message"
+error, but in many cases the commit is done, with loss of information.
 
-True.  The big pipe's answer to that question is that git-am
-stashes what is fed to it just like when it is applying multiple
-patches in .dotest/ and lets you continue from where a breakage
-happened.  Also the way rebase (without the new --merge flag)
-worked was to produce format-patch with full blob SHA1's on the
-index lines and run git-am with --3way, so it can fall back on
-three-way merge when the patch does not apply.  This often
-resulted in "git-am --3way" detecting a patch that does not
-apply, falling back to do a three way to notice that the patch
-has already been applied.
+Note that it is quite peculiar to just have "#" handled as a leading
+comment char here.  One commonly meet CVS: or CG: or STG: as prefixes, and
+using GIT: would be more robust as well as consistent with other commit
+tools.  However, that would break any tool relying on the # (if any).
 
-I have to think about the rest of your message on "series" file.
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
+
+ git-commit.sh |   19 ++++++++++++-------
+ 1 files changed, 12 insertions(+), 7 deletions(-)
+
+diff --git a/git-commit.sh b/git-commit.sh
+index 6dd04fd..aa3b1ea 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -691,13 +691,18 @@ t)
+ 	fi
+ esac
+ 
+-sed -e '
+-    /^diff --git a\/.*/{
+-	s///
+-	q
+-    }
+-    /^#/d
+-' "$GIT_DIR"/COMMIT_EDITMSG |
++if test -z "$no_edit"
++then
++    sed -e '
++        /^diff --git a\/.*/{
++	    s///
++	    q
++	}
++	/^#/d
++    ' "$GIT_DIR"/COMMIT_EDITMSG
++else
++    cat "$GIT_DIR"/COMMIT_EDITMSG
++fi |
+ git-stripspace >"$GIT_DIR"/COMMIT_MSG
+ 
+ if cnt=`grep -v -i '^Signed-off-by' "$GIT_DIR"/COMMIT_MSG |
