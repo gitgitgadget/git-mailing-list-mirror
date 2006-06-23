@@ -1,55 +1,35 @@
 From: linux@horizon.com
-Subject: Fixed PPC SHA1
-Date: 22 Jun 2006 20:09:08 -0400
-Message-ID: <20060623000908.9370.qmail@science.horizon.com>
-References: <20060619084135.18632.qmail@science.horizon.com>
+Subject: Re: Fixed PPC SHA1
+Date: 22 Jun 2006 20:54:56 -0400
+Message-ID: <20060623005456.21460.qmail@science.horizon.com>
+References: <20060623000908.9370.qmail@science.horizon.com>
 Cc: linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Jun 23 04:43:21 2006
+X-From: git-owner@vger.kernel.org Fri Jun 23 05:04:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtbdW-0003Aq-RQ
-	for gcvg-git@gmane.org; Fri, 23 Jun 2006 04:43:11 +0200
+	id 1Ftby0-00061P-0k
+	for gcvg-git@gmane.org; Fri, 23 Jun 2006 05:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750906AbWFWCmy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Jun 2006 22:42:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbWFWCmy
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 22:42:54 -0400
-Received: from science.horizon.com ([192.35.100.1]:12605 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750906AbWFWCmx
+	id S1751025AbWFWDER (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Jun 2006 23:04:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbWFWDER
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jun 2006 23:04:17 -0400
+Received: from science.horizon.com ([192.35.100.1]:61517 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751015AbWFWDEQ
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jun 2006 22:42:53 -0400
-Received: (qmail 9371 invoked by uid 1000); 22 Jun 2006 20:09:08 -0400
+	Thu, 22 Jun 2006 23:04:16 -0400
+Received: (qmail 21461 invoked by uid 1000); 22 Jun 2006 20:54:56 -0400
 To: git@vger.kernel.org, linuxppc-dev@ozlabs.org
-In-Reply-To: <20060619084135.18632.qmail@science.horizon.com>
+In-Reply-To: <20060623000908.9370.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22396>
 
-Okay, here's a tested and working version (the earlier version worked,
-too) of a better-scheduled PPC SHA1.  This is about 15% faster that the
-current sha1ppc.S on a G4, and 5% faster on a G5 when hashing 10 million
-bytes, unaligned.  (The G5 ratio seems to get better as the sizes fall.)
-
-It's also somewhat smaller, due to using load-multiple instructions.
-
-I have a variant that uses load string (lswi) to load the values to be
-hashed that is a few percent faster on a G5, but a few percent slower
-on a G4.  It's also 52 bytes smaller (out of 4000).
-
-Does anyone have any feeling for the ratio of G4 and G5 machines
-out there?  I presume for that small a percentage, run-time processor
-detection isn't worth it.  (Cc: to linuxppc-dev for the experts on
-this question.)
-
-I've tried using lmw to load the data, and it's faster if the data is
-aligned, but it absolutely dies if the data is not.  And due to git's
-variable-sized hash prefix, most of git's hashes are of unaligned data.
-
-(No copyright is claimed on the changes to Paul Mackerras' work below.
-Enjoy.)
+Here's the lwsi-based version that's slightly faster on a G5, but slightly
+slower on a G4.
 
 /*
  * SHA-1 implementation for PowerPC.
@@ -71,30 +51,34 @@ Enjoy.)
  * %r0 - temp
  * %r3 - argument (pointer to 5 words of SHA state)
  * %r4 - argument (pointer to data to hash)
- * %r5 - Contant K in SHA round (initially number of blocks to hash)
- * %r6-%r10 - Working copies of SHA variables A..E (actually E..A order)
- * %r11-%r26 - Data being hashed W[].
+ * %r5-%r20 - Data being hashed W[]. (%r5 is initially count of blocks)
+ * %r21 - Contant K in SHA round
+ * %r22-%r26 - Working copies of SHA variables A..E (actually E..A order) 
  * %r27-%r31 - Previous copies of A..E, for final add back.
- * %ctr - loop count
+ * %ctr - loop count (copied from %r5 argument)
+ *
+ * It's also worth mentioning that PPC assembly accept a bare
+ * number as a register specifier; the "%r" prefix is actually optional.
+ * And that number cna be an expression!  That simplifies the
+ * loop unrolling significantly.
  */
-
 
 /*
  * We roll the registers for A, B, C, D, E around on each
  * iteration; E on iteration t is D on iteration t+1, and so on.
- * We use registers 6 - 10 for this.  (Registers 27 - 31 hold
+ * We use registers 22 - 26 for this.  (Registers 27 - 31 hold
  * the previous values.)
  */
-#define RA(t)	(((t)+4)%5+6)
-#define RB(t)	(((t)+3)%5+6)
-#define RC(t)	(((t)+2)%5+6)
-#define RD(t)	(((t)+1)%5+6)
-#define RE(t)	(((t)+0)%5+6)
+#define RA(t)	(((t)+4)%5+22)
+#define RB(t)	(((t)+3)%5+22)
+#define RC(t)	(((t)+2)%5+22)
+#define RD(t)	(((t)+1)%5+22)
+#define RE(t)	(((t)+0)%5+22)
 
-/* We use registers 11 - 26 for the W values */
-#define W(t)	((t)%16+11)
+/* Register 21 is used for the constant k */
 
-/* Register 5 is used for the constant k */
+/* We use registers 5 - 20 for the W values */
+#define W(t)	((t)%16+5)
 
 /*
  * The basic SHA-1 round function is:
@@ -121,12 +105,15 @@ Enjoy.)
  * - The next 64 compute W(i+4) in parallel. 8*f0, 20*f1, 20*f2, 16*f1.
  * - The last 4 (all f1) do not do anything with W.
  *
- * Therefore, we have 6 different round functions:
- * STEPD0_LOAD(t,s) - Perform round t and load W(s).  s < 16
+ * Therefore, we have 5 different round functions:
+ * STEPD0(t,s) - Perform round t
  * STEPD0_UPDATE(t,s) - Perform round t and compute W(s).  s >= 16.
  * STEPD1_UPDATE(t,s)
  * STEPD2_UPDATE(t,s)
  * STEPD1(t) - Perform round t with no load or update.
+ *
+ * There's also provision for inserting an instruction to start loading
+ * the new K value after it's last used in the given step.
  * 
  * The G5 is more fully out-of-order, and can find the parallelism
  * by itself.  The big limit is that it has a 2-cycle ALU latency, so
@@ -137,40 +124,33 @@ Enjoy.)
  * as possible while reading RC(t) (= RB(t-1)) as late as possible.
  */
 
-/* the initial loads. */
-#define LOADW(s) \
-	lwz	W(s),(s)*4(%r4)
-
 /*
- * Perform a step with F0, and load W(s).  Uses W(s) as a temporary
- * before loading it.
- * This is actually 10 instructions, which is an awkward fit.
- * It can execute grouped as listed, or delayed one instruction.
- * (If delayed two instructions, there is a stall before the start of the
- * second line.)  Thus, two iterations take 7 cycles, 3.5 cycles per round.
+ * Okay, we need a naked version of STEPD0.  It's 9 instructions.
+ * Can that be done in 3 cycles, WITHOUT using W(s) as a temp?
+ * NO.  So we need W(s) as a temp.  That can be arranged with some
+ * clever scheduling.
  */
-#define STEPD0_LOAD(t,s) \
-add RE(t),RE(t),W(t); andc   %r0,RD(t),RB(t);  and    W(s),RC(t),RB(t); \
-add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;      rotlwi RB(t),RB(t),30;   \
-add RE(t),RE(t),W(s); add    %r0,%r0,%r5;      lwz    W(s),(s)*4(%r4);  \
-add RE(t),RE(t),%r0
+#define STEPD0(t,s) \
+/* spare slot */      add RE(t),RE(t),W(t); andc   %r0,RD(t),RB(t); \
+add RE(t),RE(t),%r0;  and W(s),RC(t),RB(t); rotlwi %r0,RA(t),5;     \
+add RE(t),RE(t),W(s); add %r0,%r0,%r21;     rotlwi RB(t),RB(t),30;  \
+add RE(t),RE(t),%r0;
 
 /*
- * This is likewise awkward, 13 instructions.  However, it can also
- * execute starting with 2 out of 3 possible moduli, so it does 2 rounds
- * in 9 cycles, 4.5 cycles/round.
+ * This can execute starting with 2 out of 3 possible moduli, so it
+ * does 2 rounds in 9 cycles, 4.5 cycles/round.
  */
 #define STEPD0_UPDATE(t,s,loadk...) \
 add RE(t),RE(t),W(t); andc   %r0,RD(t),RB(t); xor    W(s),W((s)-16),W((s)-3); \
 add RE(t),RE(t),%r0;  and    %r0,RC(t),RB(t); xor    W(s),W(s),W((s)-8);      \
 add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     xor    W(s),W(s),W((s)-14);     \
-add RE(t),RE(t),%r5;  loadk; rotlwi RB(t),RB(t),30;  rotlwi W(s),W(s),1;     \
+add RE(t),RE(t),%r21; loadk; rotlwi RB(t),RB(t),30;  rotlwi W(s),W(s),1;     \
 add RE(t),RE(t),%r0
 
 /* Nicely optimal.  Conveniently, also the most common. */
 #define STEPD1_UPDATE(t,s,loadk...) \
 add RE(t),RE(t),W(t); xor    %r0,RD(t),RB(t); xor    W(s),W((s)-16),W((s)-3); \
-add RE(t),RE(t),%r5;  loadk; xor %r0,%r0,RC(t);  xor W(s),W(s),W((s)-8);      \
+add RE(t),RE(t),%r21; loadk; xor %r0,%r0,RC(t);  xor W(s),W(s),W((s)-8);      \
 add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     xor    W(s),W(s),W((s)-14);     \
 add RE(t),RE(t),%r0;  rotlwi RB(t),RB(t),30;  rotlwi W(s),W(s),1
 
@@ -179,20 +159,16 @@ add RE(t),RE(t),%r0;  rotlwi RB(t),RB(t),30;  rotlwi W(s),W(s),1
  * We could use W(s) as a temp register, but we don't need it.
  */
 #define STEPD1(t) \
-                        add   RE(t),RE(t),W(t); xor    %r0,RD(t),RB(t); \
-rotlwi RB(t),RB(t),30;  add   RE(t),RE(t),%r5;  xor    %r0,%r0,RC(t);   \
-add    RE(t),RE(t),%r0; rotlwi %r0,RA(t),5;     /* spare slot */        \
-add    RE(t),RE(t),%r0
+                      add   RE(t),RE(t),W(t); xor    %r0,RD(t),RB(t); \
+add RE(t),RE(t),%r21; xor    %r0,%r0,RC(t);   rotlwi RB(t),RB(t),30;  \
+add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     /* spare slot */        \
+add RE(t),RE(t),%r0
 
-/*
- * 14 instructions, 5 cycles per.  The majority function is a bit
- * awkward to compute.  This can execute with a 1-instruction delay,
- * but it causes a 2-instruction delay, which triggers a stall.
- */
+/* 5 cycles per */
 #define STEPD2_UPDATE(t,s,loadk...) \
 add RE(t),RE(t),W(t); and    %r0,RD(t),RB(t); xor    W(s),W((s)-16),W((s)-3); \
 add RE(t),RE(t),%r0;  xor    %r0,RD(t),RB(t); xor    W(s),W(s),W((s)-8);      \
-add RE(t),RE(t),%r5;  loadk; and %r0,%r0,RC(t);  xor W(s),W(s),W((s)-14);     \
+add RE(t),RE(t),%r21; loadk; and %r0,%r0,RC(t);  xor W(s),W(s),W((s)-14);     \
 add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     rotlwi W(s),W(s),1;             \
 add RE(t),RE(t),%r0;  rotlwi RB(t),RB(t),30
 
@@ -200,7 +176,19 @@ add RE(t),RE(t),%r0;  rotlwi RB(t),RB(t),30
 	STEPD0_LOAD(t,s);		\
 	STEPD0_LOAD((t+1),(s)+1);	\
 	STEPD0_LOAD((t)+2,(s)+2);	\
-	STEPD0_LOAD((t)+3,(s)+3)
+	STEPD0_LOAD((t)+3,(s)+3);
+
+#define STEP0_4(t,s)		\
+	STEPD0(t,s);		\
+	STEPD0((t+1),(s)+1);	\
+	STEPD0((t)+2,(s)+2);	\
+	STEPD0((t)+3,(s)+3);
+
+#define STEP1_4(t)		\
+	STEPD1(t);		\
+	STEPD1((t+1));		\
+	STEPD1((t)+2);		\
+	STEPD1((t)+3);
 
 #define STEPUP4(fn, t, s, loadk...)		\
 	STEP##fn##_UPDATE(t,s,);		\
@@ -226,40 +214,36 @@ sha1_core:
 	mtctr	%r5
 
 1:
-	LOADW(0)
-	lis	%r5,0x5a82
+	lswi	W(0),%r4,32
+	lis	%r21,0x5a82
+	addi	%r4,%r4,32
 	mr	RE(0),%r31
-	LOADW(1)
 	mr	RD(0),%r30
 	mr	RC(0),%r29
-	LOADW(2)
-	ori	%r5,%r5,0x7999	/* K0-19 */
+	ori	%r21,%r21,0x7999	/* K0-19 */
 	mr	RB(0),%r28
-	LOADW(3)
 	mr	RA(0),%r27
 
-	STEP0_LOAD4(0, 4)
-	STEP0_LOAD4(4, 8)
-	STEP0_LOAD4(8, 12)
-	STEPUP4(D0, 12, 16,)
-	STEPUP4(D0, 16, 20, lis %r5,0x6ed9)
+	STEP0_4(0, 8)
+	STEP0_4(4, 12)
+	lswi	W(8),%r4,32
+	STEPUP4(D0, 8, 16,)
+	STEPUP4(D0, 12, 20,)
+	STEPUP4(D0, 16, 24, lis %r21,0x6ed9)
 
-	ori	%r5,%r5,0xeba1	/* K20-39 */
-	STEPUP20(D1, 20, 24, lis %r5,0x8f1b)
+	ori	%r21,%r21,0xeba1	/* K20-39 */
+	STEPUP20(D1, 20, 28, lis %r21,0x8f1b)
 
-	ori	%r5,%r5,0xbcdc	/* K40-59 */
-	STEPUP20(D2, 40, 44, lis %r5,0xca62)
+	ori	%r21,%r21,0xbcdc	/* K40-59 */
+	STEPUP20(D2, 40, 48, lis %r21,0xca62)
 
-	ori	%r5,%r5,0xc1d6	/* K60-79 */
-	STEPUP4(D1, 60, 64,)
-	STEPUP4(D1, 64, 68,)
-	STEPUP4(D1, 68, 72,)
-	STEPUP4(D1, 72, 76,)
-	addi	%r4,%r4,64
-	STEPD1(76)
-	STEPD1(77)
-	STEPD1(78)
-	STEPD1(79)
+	ori	%r21,%r21,0xc1d6	/* K60-79 */
+	STEPUP4(D1, 60, 68,)
+	STEPUP4(D1, 64, 72,)
+	STEPUP4(D1, 68, 76,)
+	addi	%r4,%r4,32
+	STEP1_4(72);
+	STEP1_4(76);
 
 	/* Add results to original values */
 	add	%r31,%r31,RE(0)
