@@ -1,39 +1,70 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 01/12] Introduce Git.pm (v4)
-Date: Sat, 24 Jun 2006 13:52:27 +0200
-Message-ID: <20060624115227.GS21864@pasky.or.cz>
-References: <20060624023429.32751.80619.stgit@machine.or.cz> <7vr71f5kzs.fsf@assigned-by-dhcp.cox.net> <7vu06bymtr.fsf@assigned-by-dhcp.cox.net> <20060624111657.GR21864@pasky.or.cz>
+Date: Sat, 24 Jun 2006 04:57:31 -0700
+Message-ID: <7vac82wytw.fsf@assigned-by-dhcp.cox.net>
+References: <20060624023429.32751.80619.stgit@machine.or.cz>
+	<7vr71f5kzs.fsf@assigned-by-dhcp.cox.net>
+	<7vu06bymtr.fsf@assigned-by-dhcp.cox.net>
+	<20060624111657.GR21864@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 13:52:33 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 13:57:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu6gi-00067X-Sr
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 13:52:33 +0200
+	id 1Fu6lc-0006qn-0d
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 13:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964773AbWFXLwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 07:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964782AbWFXLw3
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 07:52:29 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:12691 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964773AbWFXLw3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 07:52:29 -0400
-Received: (qmail 27471 invoked by uid 2001); 24 Jun 2006 13:52:27 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060624111657.GR21864@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S964786AbWFXL5d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 07:57:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964787AbWFXL5d
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 07:57:33 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:7617 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S964786AbWFXL5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 07:57:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060624115732.SAQR1341.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 24 Jun 2006 07:57:32 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060624111657.GR21864@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 24 Jun 2006 13:16:57 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22510>
 
-Dear diary, on Sat, Jun 24, 2006 at 01:16:57PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
+Petr Baudis <pasky@suse.cz> writes:
+
+> (This is also why I was a bit confused by your make test patch - it does
+> not "fix" anything per se since no tests directly use Git.pm.)
+
+You are right.
+
+You do not want to be testing installed version, but the one
+freshly built, so the patch does not have any effect, except for
+one case: testing before installing Git.pm for the first time
+anywhere yet.  -I prepends the directory to the search path, so
+we are not testing the freshly built copy at all.
+
+Is there a way from the environment to override this behaviour,
+so that we can run the tests properly?  I think PERL5LIB and
+PERLLIB are defeated by having -I there (that's why I said I
+liked what Fredrik did with his Python script, which appends the
+final installed location to the search path).  I think unshift
+into @INC by hand (i.e. without even using use lib "$path")
+would do what we want, but I feel that is a bit too ugly just 
+for the testing X-<.
+
+I suspect we would need to think this a bit more... sigh.
+
+> ...because well, they do:
+>
 > $(patsubst %.perl,%,$(SCRIPT_PERL)) : % : %.perl
 > 	rm -f $@ $@+
 > 	sed -e '1s|#!.*perl\(.*\)|#!$(PERL_PATH_SQ)\1 -I'"$$(make -s -C perl instlibdir)"'|' \
@@ -41,45 +72,42 @@ where Petr Baudis <pasky@suse.cz> said that...
 > 	    $@.perl >$@+
 > 	chmod +x $@+
 > 	mv $@+ $@
-> 
-> (This is also why I was a bit confused by your make test patch - it does
-> not "fix" anything per se since no tests directly use Git.pm.)
 
-And this makes the Perl scripts work even without make install:
+I'll need to look at why it fails for me, but the above seems to
+be doing the right thing, from a superficial look at least.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+git-fmt-merge-msg substituted like the above begins with:
 
-diff --git a/Makefile b/Makefile
-index 7842195..d614f18 100644
---- a/Makefile
-+++ b/Makefile
-@@ -509,7 +509,9 @@ common-cmds.h: Documentation/git-*.txt
- 
- $(patsubst %.perl,%,$(SCRIPT_PERL)) : % : %.perl
- 	rm -f $@ $@+
--	sed -e '1s|#!.*perl\(.*\)|#!$(PERL_PATH_SQ)\1 -I'"$$(make -s -C perl instlibdir)"'|' \
-+	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
-+	    -e '2i\
-+	        use lib qw ('"$$(make -s -C perl instlibdir)"' '"$$(pwd)"'/perl/blib/lib);' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    $@.perl >$@+
- 	chmod +x $@+
+	#!/usr/bin/perl -w -I/home/junio/git-pu/share/perl/5.8.8
+
+because my $(prefix) is /home/junio/git-pu/ when building from "pu"
+branch.  Then it goes on to create ~/git-pu/{lib,share}/perl/5.8.8
+and does this:
+
+make -C perl install
+make[1]: Entering directory `/opt/git/git.git/perl'
+Installing /home/junio/git-pu/lib/perl/5.8.8/auto/Git/Git.so
+Installing /home/junio/git-pu/lib/perl/5.8.8/auto/Git/Git.bs
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /home/junio/git-pu/lib/perl/5.8.8/Git.pm
+Installing /home/junio/git-pu/lib/perl/5.8.8/Error.pm
+Installing /home/junio/git-pu/man/man3/Error.3pm
+Installing /home/junio/git-pu/man/man3/Git.3pm
+Writing /home/junio/git-pu/lib/perl/5.8.8/auto/Git/.packlist
+Appending installation info to /home/junio/git-pu/lib/perl/5.8.8/perllocal.pod
+
+It appears that this is needed perhaps?
+
 diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 54e8b20..2cbd227 100644
+index 54e8b20..92c140d 100644
 --- a/perl/Makefile.PL
 +++ b/perl/Makefile.PL
-@@ -2,6 +2,9 @@ use ExtUtils::MakeMaker;
- 
+@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
  sub MY::postamble {
  	return <<'MAKE_FRAG';
-+all::
-+	cp blib/arch/auto/Git/* blib/lib/auto/Git/
-+
  instlibdir:
- 	@echo $(INSTALLSITELIB)
+-	@echo $(INSTALLSITELIB)
++	@echo $(INSTALLSITEARCH)
  
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+ MAKE_FRAG
+ }
