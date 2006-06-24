@@ -1,84 +1,112 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 01/12] Introduce Git.pm (v4)
-Date: Sat, 24 Jun 2006 15:02:34 +0200
-Message-ID: <20060624130234.GT21864@pasky.or.cz>
-References: <20060624023429.32751.80619.stgit@machine.or.cz> <7vr71f5kzs.fsf@assigned-by-dhcp.cox.net> <7vu06bymtr.fsf@assigned-by-dhcp.cox.net> <20060624111657.GR21864@pasky.or.cz> <7vac82wytw.fsf@assigned-by-dhcp.cox.net>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] cvsimport: setup indexes correctly for ancestors and  
+ incremental imports
+Date: Sat, 24 Jun 2006 17:06:38 +0400
+Message-ID: <20060624170638.6f127420.vsu@altlinux.ru>
+References: <11511475882820-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 15:02:47 2006
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Sat__24_Jun_2006_17_06_38_+0400_fGvoje0oyB6w86lB"
+Cc: git@vger.kernel.org, junkio@cox.net, Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Sat Jun 24 15:07:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu7mb-0006gR-EB
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 15:02:41 +0200
+	id 1Fu7qm-0007UL-WB
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 15:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWFXNCg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 09:02:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbWFXNCg
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 09:02:36 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2191 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750760AbWFXNCg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 09:02:36 -0400
-Received: (qmail 32184 invoked by uid 2001); 24 Jun 2006 15:02:34 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vac82wytw.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1752225AbWFXNG6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 09:06:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbWFXNG5
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 09:06:57 -0400
+Received: from master.altlinux.org ([62.118.250.235]:23313 "EHLO
+	master.altlinux.org") by vger.kernel.org with ESMTP
+	id S1751495AbWFXNG5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 09:06:57 -0400
+Received: from procyon.home (localhost.localdomain [127.0.0.1])
+	by master.altlinux.org (Postfix) with ESMTP
+	id C7393E34DB; Sat, 24 Jun 2006 17:06:54 +0400 (MSD)
+Received: by procyon.home (Postfix, from userid 500)
+	id B0A7AE36BCF; Sat, 24 Jun 2006 17:06:41 +0400 (MSD)
+To: Martin Langhoff <martin@catalyst.net.nz>
+In-Reply-To: <11511475882820-git-send-email-martin@catalyst.net.nz>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.17; i586-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22516>
 
-Dear diary, on Sat, Jun 24, 2006 at 01:57:31PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > (This is also why I was a bit confused by your make test patch - it does
-> > not "fix" anything per se since no tests directly use Git.pm.)
-> 
-> You are right.
-> 
-> You do not want to be testing installed version, but the one
-> freshly built, so the patch does not have any effect, except for
-> one case: testing before installing Git.pm for the first time
-> anywhere yet.  -I prepends the directory to the search path, so
-> we are not testing the freshly built copy at all.
-> 
-> Is there a way from the environment to override this behaviour,
-> so that we can run the tests properly?  I think PERL5LIB and
-> PERLLIB are defeated by having -I there (that's why I said I
-> liked what Fredrik did with his Python script, which appends the
-> final installed location to the search path).  I think unshift
-> into @INC by hand (i.e. without even using use lib "$path")
-> would do what we want, but I feel that is a bit too ugly just 
-> for the testing X-<.
+--Signature=_Sat__24_Jun_2006_17_06_38_+0400_fGvoje0oyB6w86lB
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-PERL5LIB and use lib at the same time works for me. Anyway, with the
-second patch I've sent things should work well even if you don't have
-Git.pm installed anywhere yet.
+On Sat, 24 Jun 2006 23:13:08 +1200 Martin Langhoff wrote:
 
-> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-> index 54e8b20..92c140d 100644
-> --- a/perl/Makefile.PL
-> +++ b/perl/Makefile.PL
-> @@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
->  sub MY::postamble {
->  	return <<'MAKE_FRAG';
->  instlibdir:
-> -	@echo $(INSTALLSITELIB)
-> +	@echo $(INSTALLSITEARCH)
->  
->  MAKE_FRAG
->  }
+> Two bugs had slipped in the "keep one index per branch during import"
+> patch. Both incremental imports and new branches would see an
+> empty tree for their initial commit. Now we cover all the relevant
+> cases, checking whether we actually need to setup the index before
+> preparing the actual commit, and doing it.
+>=20
+> Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+>=20
+> ---
+>  git-cvsimport.perl |   19 +++++++++++++++++--
+>  1 files changed, 17 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+> old mode 100644
+> new mode 100755
+> index d961b7b..1c1fd02
+> --- a/git-cvsimport.perl
+> +++ b/git-cvsimport.perl
+> @@ -813,11 +813,26 @@ while(<CVS>) {
+>  			unless ($index{$branch}) {
+>  			    $index{$branch} =3D tmpnam();
+>  			    $ENV{GIT_INDEX_FILE} =3D $index{$branch};
+> -			    system("git-read-tree", $branch);
+> +			}
+> +			if ($ancestor) {
+> +			    system("git-read-tree", $ancestor);
+>  			    die "read-tree failed: $?\n" if $?;
+>  			} else {
+> +			    unless ($index{$branch}) {
 
-Oh, yes; that line came from the time when we had no .xs yet. It is not
-visible here since both arch-specific and non-arch-specific libraries
-get installed to ~/lib.
+This seems to be dead code - even if $index{$branch} was not set, it
+will be set inside "unless ($index{$branch})" above.  Or there is
+another bug here?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+> +				$index{$branch} =3D tmpnam();
+> +				$ENV{GIT_INDEX_FILE} =3D $index{$branch};
+> +				system("git-read-tree", $branch);
+> +				die "read-tree failed: $?\n" if $?;
+> +			    }
+> +			}   =20
+> +		} else {
+> +			# just in case
+> +			unless ($index{$branch}) {
+> +			    $index{$branch} =3D tmpnam();
+>  			    $ENV{GIT_INDEX_FILE} =3D $index{$branch};
+> -		        }
+> +			    system("git-read-tree", $branch);
+> +			    die "read-tree failed: $?\n" if $?;
+> +			}
+>  		}
+>  		$last_branch =3D $branch if $branch ne $last_branch;
+>  		$state =3D 9;
+
+--Signature=_Sat__24_Jun_2006_17_06_38_+0400_fGvoje0oyB6w86lB
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.9.17 (GNU/Linux)
+
+iD8DBQFEnTjhW82GfkQfsqIRAg6mAJ90o5FQsV6Y/buytpwYBfoHVfnnXgCglG7r
+0+sASCiKAWAfFBXKOIFyqA8=
+=xCja
+-----END PGP SIGNATURE-----
+
+--Signature=_Sat__24_Jun_2006_17_06_38_+0400_fGvoje0oyB6w86lB--
