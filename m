@@ -1,7 +1,8 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 01/12] Introduce Git.pm (v4)
-Date: Sat, 24 Jun 2006 04:34:29 +0200
-Message-ID: <20060624023429.32751.80619.stgit@machine.or.cz>
+Subject: [PATCH 02/12] Git.pm: Implement Git::exec_path()
+Date: Sat, 24 Jun 2006 04:34:31 +0200
+Message-ID: <20060624023431.32751.75101.stgit@machine.or.cz>
+References: <20060624023429.32751.80619.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
@@ -10,506 +11,57 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ftxz7-0006e9-TO
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:34:58 +0200
+	id 1Ftxz8-0006e9-Pl
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:34:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933188AbWFXCeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 22:34:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933189AbWFXCeu
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:34:50 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58263 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S933188AbWFXCet (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:34:49 -0400
-Received: (qmail 32761 invoked from network); 24 Jun 2006 04:34:29 +0200
+	id S933189AbWFXCe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 22:34:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933191AbWFXCe4
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:34:56 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59799 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S933189AbWFXCez (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:34:55 -0400
+Received: (qmail 300 invoked from network); 24 Jun 2006 04:34:31 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 24 Jun 2006 04:34:29 +0200
+  by localhost with SMTP; 24 Jun 2006 04:34:31 +0200
 To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20060624023429.32751.80619.stgit@machine.or.cz>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22467>
 
-This patch introduces a very basic and barebone Git.pm module
-with a sketch of how the generic interface would look like;
-most functions are missing, but this should give some good base.
-I will continue expanding it.
-
-Most desirable now is more careful error reporting, generic_in() for feeding
-input to Git commands and the repository() constructor doing some poking
-with git-rev-parse to get the git directory and subdirectory prefix.
-Those three are basically the prerequisities for converting git-mv.
-I will send them as follow-ups to this patch.
-
-Currently Git.pm just wraps up exec()s of Git commands, but even that
-is not trivial to get right and various Git perl scripts do it in
-various inconsistent ways. In addition to Git.pm, there is now also
-Git.xs which provides barebone Git.xs for directly interfacing with
-libgit.a, and as an example providing the hash_object() function using
-libgit.
-
-This adds the Git module, integrates it to the build system and as
-an example converts the git-fmt-merge-msg.perl script to it (the result
-is not very impressive since its advantage is not quite apparent in this
-one, but I just picked up the simplest Git user around).
-
-Compared to v3, only very minor things were fixed in this patch (some
-whitespaces, a missing export, tiny bug in git-fmt-merge-msg.perl);
-at first I wanted to post them as a separate patch but since this
-is still only in pu, I decided that it will be cleaner to just resend
-the patch.
-
-My current working state is available all the time at
-
-	http://pasky.or.cz/~xpasky/git-perl/Git.pm
-
-and an irregularily updated API documentation is at
-
-	http://pasky.or.cz/~xpasky/git-perl/Git.html
-
-Many thanks to Jakub Narebski, Junio and others for their feedback.
+This patch implements Git::exec_path() (as a direct XS call).
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- Makefile               |   12 +
- git-fmt-merge-msg.perl |   13 +-
- perl/.gitignore        |    7 +
- perl/Git.pm            |  408 ++++++++++++++++++++++++++++++++++++++++++++++++
- perl/Git.xs            |   64 ++++++++
- perl/Makefile.PL       |   21 ++
- 6 files changed, 516 insertions(+), 9 deletions(-)
+ perl/Git.pm |   15 ++++++++++++++-
+ perl/Git.xs |   12 ++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a5b6784..4d20b22 100644
---- a/Makefile
-+++ b/Makefile
-@@ -476,7 +476,8 @@ ### Build rules
- 
- all: $(ALL_PROGRAMS) $(BUILT_INS) git$X gitk
- 
--all:
-+all: perl/Makefile
-+	$(MAKE) -C perl
- 	$(MAKE) -C templates
- 
- strip: $(PROGRAMS) git$X
-@@ -508,7 +509,7 @@ common-cmds.h: Documentation/git-*.txt
- 
- $(patsubst %.perl,%,$(SCRIPT_PERL)) : % : %.perl
- 	rm -f $@ $@+
--	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
-+	sed -e '1s|#!.*perl\(.*\)|#!$(PERL_PATH_SQ)\1 -I'"$$(make -s -C perl instlibdir)"'|' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    $@.perl >$@+
- 	chmod +x $@+
-@@ -594,6 +595,9 @@ XDIFF_OBJS=xdiff/xdiffi.o xdiff/xprepare
- 	rm -f $@ && $(AR) rcs $@ $(XDIFF_OBJS)
- 
- 
-+perl/Makefile:	perl/Git.pm perl/Makefile.PL
-+	(cd perl && $(PERL_PATH) Makefile.PL PREFIX="$(prefix)" DEFINE="$(ALL_CFLAGS)" LIBS="$(LIBS)")
-+
- doc:
- 	$(MAKE) -C Documentation all
- 
-@@ -649,6 +653,7 @@ install: all
- 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
- 	$(INSTALL) git$X gitk '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(MAKE) -C templates install
-+	$(MAKE) -C perl install
- 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
- 	$(INSTALL) $(PYMODULES) '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
- 	if test 'z$(bindir_SQ)' != 'z$(gitexecdir_SQ)'; \
-@@ -716,7 +721,8 @@ clean:
- 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	rm -f $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
--	$(MAKE) -C templates clean
-+	[ ! -e perl/Makefile ] || $(MAKE) -C perl/ clean
-+	$(MAKE) -C templates/ clean
- 	$(MAKE) -C t/ clean
- 	rm -f GIT-VERSION-FILE GIT-CFLAGS
- 
-diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
-index 5986e54..be2a48c 100755
---- a/git-fmt-merge-msg.perl
-+++ b/git-fmt-merge-msg.perl
-@@ -6,6 +6,9 @@ # Read .git/FETCH_HEAD and make a human 
- # by grouping branches and tags together to form a single line.
- 
- use strict;
-+use Git;
-+
-+my $repo = Git->repository();
- 
- my @src;
- my %src;
-@@ -28,13 +31,12 @@ sub andjoin {
- }
- 
- sub repoconfig {
--	my ($val) = qx{git-repo-config --get merge.summary};
-+	my ($val) = $repo->command_oneline('repo-config', '--get', 'merge.summary');
- 	return $val;
- }
- 
- sub current_branch {
--	my ($bra) = qx{git-symbolic-ref HEAD};
--	chomp($bra);
-+	my ($bra) = $repo->command_oneline('symbolic-ref', 'HEAD');
- 	$bra =~ s|^refs/heads/||;
- 	if ($bra ne 'master') {
- 		$bra = " into $bra";
-@@ -47,11 +49,10 @@ sub current_branch {
- sub shortlog {
- 	my ($tip) = @_;
- 	my @result;
--	foreach ( qx{git-log --no-merges --topo-order --pretty=oneline $tip ^HEAD} ) {
-+	foreach ($repo->command('log', '--no-merges', '--topo-order', '--pretty=oneline', $tip, '^HEAD')) {
- 		s/^[0-9a-f]{40}\s+//;
- 		push @result, $_;
- 	}
--	die "git-log failed\n" if $?;
- 	return @result;
- }
- 
-@@ -168,6 +169,6 @@ for (@origin) {
- 			print "  ...\n";
- 			last;
- 		}
--		print "  $log";
-+		print "  $log\n";
- 	}
- }
-diff --git a/perl/.gitignore b/perl/.gitignore
-new file mode 100644
-index 0000000..6d778f3
---- /dev/null
-+++ b/perl/.gitignore
-@@ -0,0 +1,7 @@
-+Git.bs
-+Git.c
-+Makefile
-+blib
-+blibdirs
-+pm_to_blib
-+ppport.h
 diff --git a/perl/Git.pm b/perl/Git.pm
-new file mode 100644
-index 0000000..8fff785
---- /dev/null
+index 8fff785..5c5ae12 100644
+--- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -0,0 +1,408 @@
-+=head1 NAME
-+
-+Git - Perl interface to the Git version control system
-+
-+=cut
-+
-+
-+package Git;
-+
-+use strict;
-+
-+
-+BEGIN {
-+
-+our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
-+
-+# Totally unstable API.
-+$VERSION = '0.01';
-+
-+
-+=head1 SYNOPSIS
-+
-+  use Git;
-+
-+  my $version = Git::command_oneline('version');
-+
-+  Git::command_noisy('update-server-info');
-+
-+  my $repo = Git->repository (Directory => '/srv/git/cogito.git');
-+
-+
-+  my @revs = $repo->command('rev-list', '--since=last monday', '--all');
-+
-+  my $fh = $repo->command_pipe('rev-list', '--since=last monday', '--all');
-+  my $lastrev = <$fh>; chomp $lastrev;
-+  close $fh; # You may want to test rev-list exit status here
-+
-+  my $lastrev = $repo->command_oneline('rev-list', '--all');
-+
-+=cut
-+
-+
-+require Exporter;
-+
-+@ISA = qw(Exporter);
-+
-+@EXPORT = qw();
-+
-+# Methods which can be called as standalone functions as well:
-+@EXPORT_OK = qw(command command_oneline command_pipe command_noisy
-+                hash_object);
-+
-+
-+=head1 DESCRIPTION
-+
-+This module provides Perl scripts easy way to interface the Git version control
-+system. The modules have an easy and well-tested way to call arbitrary Git
-+commands; in the future, the interface will also provide specialized methods
-+for doing easily operations which are not totally trivial to do over
-+the generic command interface.
-+
-+While some commands can be executed outside of any context (e.g. 'version'
-+or 'init-db'), most operations require a repository context, which in practice
-+means getting an instance of the Git object using the repository() constructor.
-+(In the future, we will also get a new_repository() constructor.) All commands
-+called as methods of the object are then executed in the context of the
-+repository.
-+
-+TODO: In the future, we might also do
-+
-+	my $subdir = $repo->subdir('Documentation');
-+	# Gets called in the subdirectory context:
-+	$subdir->command('status');
-+
-+	my $remoterepo = $repo->remote_repository (Name => 'cogito', Branch => 'master');
-+	$remoterepo ||= Git->remote_repository ('http://git.or.cz/cogito.git/');
-+	my @refs = $remoterepo->refs();
-+
-+So far, all functions just die if anything goes wrong. If you don't want that,
-+make appropriate provisions to catch the possible deaths. Better error recovery
-+mechanisms will be provided in the future.
-+
-+Currently, the module merely wraps calls to external Git tools. In the future,
-+it will provide a much faster way to interact with Git by linking directly
-+to libgit. This should be completely opaque to the user, though (performance
-+increate nonwithstanding).
-+
-+=cut
-+
-+
-+use Carp qw(carp croak);
-+
-+require XSLoader;
-+XSLoader::load('Git', $VERSION);
-+
-+}
-+
-+
-+=head1 CONSTRUCTORS
-+
-+=over 4
-+
-+=item repository ( OPTIONS )
-+
-+=item repository ( DIRECTORY )
-+
-+=item repository ()
-+
-+Construct a new repository object.
-+C<OPTIONS> are passed in a hash like fashion, using key and value pairs.
-+Possible options are:
-+
-+B<Repository> - Path to the Git repository.
-+
-+B<WorkingCopy> - Path to the associated working copy; not strictly required
-+as many commands will happily crunch on a bare repository.
-+
-+B<Directory> - Path to the Git working directory in its usual setup. This
-+is just for convenient setting of both C<Repository> and C<WorkingCopy>
-+at once: If the directory as a C<.git> subdirectory, C<Repository> is pointed
-+to the subdirectory and the directory is assumed to be the working copy.
-+If the directory does not have the subdirectory, C<WorkingCopy> is left
-+undefined and C<Repository> is pointed to the directory itself.
-+
-+B<GitPath> - Path to the C<git> binary executable. By default the C<$PATH>
-+is searched for it.
-+
-+You should not use both C<Directory> and either of C<Repository> and
-+C<WorkingCopy> - the results of that are undefined.
-+
-+Alternatively, a directory path may be passed as a single scalar argument
-+to the constructor; it is equivalent to setting only the C<Directory> option
-+field.
-+
-+Calling the constructor with no options whatsoever is equivalent to
-+calling it with C<< Directory => '.' >>.
-+
-+=cut
-+
-+sub repository {
-+	my $class = shift;
-+	my @args = @_;
-+	my %opts = ();
-+	my $self;
-+
-+	if (defined $args[0]) {
-+		if ($#args % 2 != 1) {
-+			# Not a hash.
-+			$#args == 0 or croak "bad usage";
-+			%opts = (Directory => $args[0]);
-+		} else {
-+			%opts = @args;
-+		}
-+
-+		if ($opts{Directory}) {
-+			-d $opts{Directory} or croak "Directory not found: $!";
-+			if (-d $opts{Directory}."/.git") {
-+				# TODO: Might make this more clever
-+				$opts{WorkingCopy} = $opts{Directory};
-+				$opts{Repository} = $opts{Directory}."/.git";
-+			} else {
-+				$opts{Repository} = $opts{Directory};
-+			}
-+			delete $opts{Directory};
-+		}
-+	}
-+
-+	$self = { opts => \%opts };
-+	bless $self, $class;
-+}
-+
-+
-+=back
-+
-+=head1 METHODS
-+
-+=over 4
-+
-+=item command ( COMMAND [, ARGUMENTS... ] )
-+
-+Execute the given Git C<COMMAND> (specify it without the 'git-'
-+prefix), optionally with the specified extra C<ARGUMENTS>.
-+
-+The method can be called without any instance or on a specified Git repository
-+(in that case the command will be run in the repository context).
-+
-+In scalar context, it returns all the command output in a single string
-+(verbatim).
-+
-+In array context, it returns an array containing lines printed to the
-+command's stdout (without trailing newlines).
-+
-+In both cases, the command's stdin and stderr are the same as the caller's.
-+
-+=cut
-+
-+sub command {
-+	my $fh = command_pipe(@_);
-+
-+	if (not defined wantarray) {
-+		_cmd_close($fh);
-+
-+	} elsif (not wantarray) {
-+		local $/;
-+		my $text = <$fh>;
-+		_cmd_close($fh);
-+		return $text;
-+
-+	} else {
-+		my @lines = <$fh>;
-+		_cmd_close($fh);
-+		chomp @lines;
-+		return @lines;
-+	}
-+}
-+
-+
-+=item command_oneline ( COMMAND [, ARGUMENTS... ] )
-+
-+Execute the given C<COMMAND> in the same way as command()
-+does but always return a scalar string containing the first line
-+of the command's standard output.
-+
-+=cut
-+
-+sub command_oneline {
-+	my $fh = command_pipe(@_);
-+
-+	my $line = <$fh>;
-+	_cmd_close($fh);
-+
-+	chomp $line;
-+	return $line;
-+}
-+
-+
-+=item command_pipe ( COMMAND [, ARGUMENTS... ] )
-+
-+Execute the given C<COMMAND> in the same way as command()
-+does but return a pipe filehandle from which the command output can be
-+read.
-+
-+=cut
-+
-+sub command_pipe {
-+	my ($self, $cmd, @args) = _maybe_self(@_);
-+
-+	$cmd =~ /^[a-z0-9A-Z_-]+$/ or croak "bad command: $cmd";
-+
-+	my $pid = open(my $fh, "-|");
-+	if (not defined $pid) {
-+		croak "open failed: $!";
-+	} elsif ($pid == 0) {
-+		_cmd_exec($self, $cmd, @args);
-+	}
-+	return $fh;
-+}
-+
-+
-+=item command_noisy ( COMMAND [, ARGUMENTS... ] )
-+
-+Execute the given C<COMMAND> in the same way as command() does but do not
-+capture the command output - the standard output is not redirected and goes
-+to the standard output of the caller application.
-+
-+While the method is called command_noisy(), you might want to as well use
-+it for the most silent Git commands which you know will never pollute your
-+stdout but you want to avoid the overhead of the pipe setup when calling them.
-+
-+The function returns only after the command has finished running.
-+
-+=cut
-+
-+sub command_noisy {
-+	my ($self, $cmd, @args) = _maybe_self(@_);
-+
-+	$cmd =~ /^[a-z0-9A-Z_-]+$/ or croak "bad command: $cmd";
-+
-+	my $pid = fork;
-+	if (not defined $pid) {
-+		croak "fork failed: $!";
-+	} elsif ($pid == 0) {
-+		_cmd_exec($self, $cmd, @args);
-+	}
-+	if (waitpid($pid, 0) > 0 and $? != 0) {
-+		croak "exit status: $?";
-+	}
-+}
-+
-+
-+=item hash_object ( FILENAME [, TYPE ] )
-+
-+=item hash_object ( FILEHANDLE [, TYPE ] )
-+
-+Compute the SHA1 object id of the given C<FILENAME> (or data waiting in
-+C<FILEHANDLE>) considering it is of the C<TYPE> object type (C<blob>
-+(default), C<commit>, C<tree>).
-+
-+In case of C<FILEHANDLE> passed instead of file name, all the data
-+available are read and hashed, and the filehandle is automatically
-+closed. The file handle should be freshly opened - if you have already
-+read anything from the file handle, the results are undefined (since
-+this function works directly with the file descriptor and internal
-+PerlIO buffering might have messed things up).
-+
-+The method can be called without any instance or on a specified Git repository,
-+it makes zero difference.
-+
-+The function returns the SHA1 hash.
+@@ -48,7 +48,7 @@ require Exporter;
+ 
+ # Methods which can be called as standalone functions as well:
+ @EXPORT_OK = qw(command command_oneline command_pipe command_noisy
+-                hash_object);
++                exec_path hash_object);
+ 
+ 
+ =head1 DESCRIPTION
+@@ -288,6 +288,19 @@ sub command_noisy {
+ }
+ 
+ 
++=item exec_path ()
++
++Return path to the git sub-command executables (the same as
++C<git --exec-path>). Useful mostly only internally.
 +
 +Implementation of this function is very fast; no external command calls
 +are involved.
@@ -519,190 +71,36 @@ index 0000000..8fff785
 +# Implemented in Git.xs.
 +
 +
-+=back
-+
-+=head1 TODO
-+
-+This is still fairly crude.
-+We need some good way to report errors back except just dying.
-+
-+=head1 COPYRIGHT
-+
-+Copyright 2006 by Petr Baudis E<lt>pasky@suse.czE<gt>.
-+
-+This module is free software; it may be used, copied, modified
-+and distributed under the terms of the GNU General Public Licence,
-+either version 2, or (at your option) any later version.
-+
-+=cut
-+
-+
-+# Take raw method argument list and return ($obj, @args) in case
-+# the method was called upon an instance and (undef, @args) if
-+# it was called directly.
-+sub _maybe_self {
-+	# This breaks inheritance. Oh well.
-+	ref $_[0] eq 'Git' ? @_ : (undef, @_);
-+}
-+
-+# When already in the subprocess, set up the appropriate state
-+# for the given repository and execute the git command.
-+sub _cmd_exec {
-+	my ($self, @args) = @_;
-+	if ($self) {
-+		$self->{opts}->{Repository} and $ENV{'GIT_DIR'} = $self->{opts}->{Repository};
-+		$self->{opts}->{WorkingCopy} and chdir($self->{opts}->{WorkingCopy});
-+	}
-+	my $git = $self->{opts}->{GitPath};
-+	$git ||= 'git';
-+	exec ($git, @args) or croak "exec failed: $!";
-+}
-+
-+# Close pipe to a subprocess.
-+sub _cmd_close {
-+	my ($fh) = @_;
-+	if (not close $fh) {
-+		if ($!) {
-+			# It's just close, no point in fatalities
-+			carp "error closing pipe: $!";
-+		} elsif ($? >> 8) {
-+			croak "exit status: ".($? >> 8);
-+		}
-+		# else we might e.g. closed a live stream; the command
-+		# dying of SIGPIPE would drive us here.
-+	}
-+}
-+
-+
-+# Trickery for .xs routines: In order to avoid having some horrid
-+# C code trying to do stuff with undefs and hashes, we gate all
-+# xs calls through the following and in case we are being ran upon
-+# an instance call a C part of the gate which will set up the
-+# environment properly.
-+sub _call_gate {
-+	my $xsfunc = shift;
-+	my ($self, @args) = _maybe_self(@_);
-+
-+	if (defined $self) {
-+		# XXX: We ignore the WorkingCopy! To properly support
-+		# that will require heavy changes in libgit.
-+
-+		# XXX: And we ignore everything else as well. libgit
-+		# at least needs to be extended to let us specify
-+		# the $GIT_DIR instead of looking it up in environment.
-+		#xs_call_gate($self->{opts}->{Repository});
-+	}
-+
-+	&$xsfunc(@args);
-+}
-+
-+sub AUTOLOAD {
-+	my $xsname;
-+	our $AUTOLOAD;
-+	($xsname = $AUTOLOAD) =~ s/.*:://;
-+	croak "&Git::$xsname not defined" if $xsname =~ /^xs_/;
-+	$xsname = 'xs_'.$xsname;
-+	_call_gate(\&$xsname, @_);
-+}
-+
-+sub DESTROY { }
-+
-+
-+1; # Famous last words
+ =item hash_object ( FILENAME [, TYPE ] )
+ 
+ =item hash_object ( FILEHANDLE [, TYPE ] )
 diff --git a/perl/Git.xs b/perl/Git.xs
-new file mode 100644
-index 0000000..9885e2c
---- /dev/null
+index 9885e2c..b6f6d13 100644
+--- a/perl/Git.xs
 +++ b/perl/Git.xs
-@@ -0,0 +1,64 @@
-+/* By carefully stacking #includes here (even if WE don't really need them)
-+ * we strive to make the thing actually compile. Git header files aren't very
-+ * nice. Perl headers are one of the signs of the coming apocalypse. */
-+#include <ctype.h>
-+/* Ok, it hasn't been so bad so far. */
+@@ -6,6 +6,7 @@ #include <ctype.h>
+ 
+ /* libgit interface */
+ #include "../cache.h"
++#include "../exec_cmd.h"
+ 
+ /* XS and Perl interface */
+ #include "EXTERN.h"
+@@ -21,6 +22,17 @@ PROTOTYPES: DISABLE
+ 
+ # /* TODO: xs_call_gate(). See Git.pm. */
+ 
 +
-+/* libgit interface */
-+#include "../cache.h"
-+
-+/* XS and Perl interface */
-+#include "EXTERN.h"
-+#include "perl.h"
-+#include "XSUB.h"
-+
-+#include "ppport.h"
-+
-+
-+MODULE = Git		PACKAGE = Git		
-+
-+PROTOTYPES: DISABLE
-+
-+# /* TODO: xs_call_gate(). See Git.pm. */
-+
-+char *
-+xs_hash_object(file, type = "blob")
-+	SV *file;
-+	char *type;
++const char *
++xs_exec_path()
 +CODE:
 +{
-+	unsigned char sha1[20];
-+
-+	if (SvTYPE(file) == SVt_RV)
-+		file = SvRV(file);
-+
-+	if (SvTYPE(file) == SVt_PVGV) {
-+		/* Filehandle */
-+		PerlIO *pio;
-+
-+		pio = IoIFP(sv_2io(file));
-+		if (!pio)
-+			croak("You passed me something weird - a dir glob?");
-+		/* XXX: I just hope PerlIO didn't read anything from it yet.
-+		 * --pasky */
-+		if (index_pipe(sha1, PerlIO_fileno(pio), type, 0))
-+			croak("Unable to hash given filehandle");
-+		/* Avoid any nasty surprises. */
-+		PerlIO_close(pio);
-+
-+	} else {
-+		/* String */
-+		char *path = SvPV_nolen(file);
-+		int fd = open(path, O_RDONLY);
-+		struct stat st;
-+
-+		if (fd < 0 ||
-+		    fstat(fd, &st) < 0 ||
-+		    index_fd(sha1, fd, &st, 0, type))
-+			croak("Unable to hash %s", path);
-+		close(fd);
-+	}
-+	RETVAL = sha1_to_hex(sha1);
++	RETVAL = git_exec_path();
 +}
 +OUTPUT:
 +	RETVAL
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-new file mode 100644
-index 0000000..dd61056
---- /dev/null
-+++ b/perl/Makefile.PL
-@@ -0,0 +1,21 @@
-+use ExtUtils::MakeMaker;
-+
-+sub MY::postamble {
-+	return <<'MAKE_FRAG';
-+instlibdir:
-+	@echo $(INSTALLSITELIB)
-+
-+MAKE_FRAG
-+}
-+
-+WriteMakefile(
-+	NAME            => 'Git',
-+	VERSION_FROM    => 'Git.pm',
-+	MYEXTLIB        => '../libgit.a',
-+	INC             => '-I. -I..',
-+);
 +
 +
-+use Devel::PPPort;
-+
-+-s 'ppport.h' or Devel::PPPort::WriteFile();
+ char *
+ xs_hash_object(file, type = "blob")
+ 	SV *file;
