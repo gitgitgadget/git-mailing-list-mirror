@@ -1,124 +1,101 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 07/12] Git.pm: Better error handling
-Date: Sat, 24 Jun 2006 01:37:25 -0700
-Message-ID: <7vmzc3ymnu.fsf@assigned-by-dhcp.cox.net>
-References: <20060624023429.32751.80619.stgit@machine.or.cz>
-	<20060624023442.32751.28342.stgit@machine.or.cz>
+Subject: Re: A series file for git?
+Date: Sat, 24 Jun 2006 02:01:13 -0700
+Message-ID: <7vac83ylk6.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0605291145360.5623@g5.osdl.org>
+	<7virno79a7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605291739430.5623@g5.osdl.org>
+	<7vmzd05i25.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0605292112530.5623@g5.osdl.org>
+	<7vpshtyffk.fsf@assigned-by-dhcp.cox.net>
+	<m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 24 10:37:31 2006
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 24 11:01:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu3dy-0006Iq-Mw
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 10:37:31 +0200
+	id 1Fu417-0001Xe-Bl
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 11:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933321AbWFXIh2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 04:37:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933323AbWFXIh1
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 04:37:27 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:45477 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S933321AbWFXIh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jun 2006 04:37:27 -0400
+	id S932987AbWFXJBQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 05:01:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933359AbWFXJBQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 05:01:16 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12438 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932987AbWFXJBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 05:01:15 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060624083726.NGAC19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Jun 2006 04:37:26 -0400
-To: Petr Baudis <pasky@suse.cz>
+          id <20060624090115.DCZV19057.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 24 Jun 2006 05:01:15 -0400
+To: ebiederm@xmission.com (Eric W. Biederman)
+In-Reply-To: <m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com> (Eric
+	W. Biederman's message of "Fri, 23 Jun 2006 05:37:34 -0600")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22494>
 
-Petr Baudis <pasky@suse.cz> writes:
+ebiederm@xmission.com (Eric W. Biederman) writes:
 
-> +int
-> +error_xs(const char *err, va_list params)
-> +{
+> I was using:
+> 	git-rev-list $revargs | tac > list
+> 	for sha1 in $(cat list); do git-cherry-pick -r $sha1 ; done
+>...
+> - Keeping patches in git and just remembering their sha1 is nice
+>   but it has the downside that it can be really easy to loose
+>   the sha1, and thus the patch.  So some sort of history mechanism
+>   so you can get back to where you were would be nice.
 
-You said in git-compat-util.h that set_error_routine takes a
-function that returns void, so this gives unnecessary type
-clash.
+Actually, the $revargs above is composed of your branch names
+(e.g. "^master this-topic that-topic"), so as long as you do not
+lose these branches they are protected.
+>
+> - This is a similar technique to topic branches.  However in some
+>   of the more interesting cases a topic branch can't be used because
+>   you have a whole series of little changes, that allow depend on
+>   each other.  So topic branches need not apply.
 
---------------------------------
-In file included from /usr/lib/perl/5.8/CORE/perl.h:756,
-                 from Git.xs:15:
-/usr/lib/perl/5.8/CORE/embed.h:4193:1: warning: "die" redefined
-Git.xs:11:1: warning: this is the location of the previous definition
-Git.xs: In function 'boot_Git':
-Git.xs:57: warning: passing argument 1 of 'set_error_routine' from incompatible pointer type
-Git.xs:58: warning: passing argument 1 of 'set_die_routine' makes qualified function pointer from unqualified
---------------------------------
+Sorry I fail to see why.  A series of little changes that depend
+on each other would be a string of pearls on a topic branch in
+the simplest case, or a handful of topic branches that
+occasionally merge with each other if you want to get fancier.
+Cherry-picking from a DAG of the latter kind with your rev-list
+piped to tac is no different than cherry-picking from a simple
+straight line of the former kind, isn't it?
 
-Other troubles I saw with the v4 series while compiling:
+> - One of the places where we currently uses series files
+>   (patch-scripts && quilt), and heavy cherry picking is for patch
+>   aging.  That is letting patches sit in a testing branch for 
+>   a while so people have a chance to test and look at them.
 
---------------------------------
-usage.c:35: warning: initialization makes qualified function pointer from unqualified
-usage.c:36: warning: initialization makes qualified function pointer from unqualified
+I agree that patch aging and updating does not mesh well with
+how git inherently works, as git regards commits immutable
+objects.  Even then, I use my "pu" branch (and topics that
+hasn't merged to "next" but in "pu") pretty much as patch aging
+area and I regularly do "git commit --amend" to update them.
+This however is cumbersome with core git tools alone, and I
+suspect is better done with StGIT.
 
-I'd fix it with this
+> If we create a meta data branch with just the series file
+> we can remove the risk of loosing things, as we always
+> have a path back to the old history if we want it.
 
-diff --git a/usage.c b/usage.c
-index b781b00..52c2e96 100644
---- a/usage.c
-+++ b/usage.c
-@@ -12,19 +12,19 @@ static void report(const char *prefix, c
- 	fputs("\n", stderr);
- }
- 
--void usage_builtin(const char *err)
-+static NORETURN void usage_builtin(const char *err)
- {
- 	fprintf(stderr, "usage: %s\n", err);
- 	exit(129);
- }
- 
--void die_builtin(const char *err, va_list params)
-+static NORETURN void die_builtin(const char *err, va_list params)
- {
- 	report("fatal: ", err, params);
- 	exit(128);
- }
- 
--void error_builtin(const char *err, va_list params)
-+static void error_builtin(const char *err, va_list params)
- {
- 	report("error: ", err, params);
- }
+I am not sure about that.  What does the series file contain,
+and what other things the meta data branch contain?  If you are
+listing commit SHA1 in the series file, you _do_ have the risk
+of losing things -- git-fsck-objects needs to look at such blob
+object and consider that as the root of reachability chain; to
+me that seems too specialized hack.
 
---------------------------------
-
-(cd perl && /usr/bin/perl Makefile.PL \
-                PREFIX="/home/junio/git-test" \
-                DEFINE="-O2 -Wall -Wdeclaration-after-statement
-                -g -DSHA1_HEADER='<openssl/sha.h>'
-                -DGIT_VERSION=\\\"1.4.1.rc1.gab0df\\\"" \
-                LIBS="libgit.a xdiff/lib.a -lz  -lcrypto")
-Unrecognized argument in LIBS ignored: 'libgit.a'
-Unrecognized argument in LIBS ignored: 'xdiff/lib.a'
-
-Do you need to pass LIBS, and if so maybe this is not a way
-Makefile.PL expects it to be passed perhaps?
-
---------------------------------
-Makefile out-of-date with respect to Makefile.PL
-Cleaning current config before rebuilding Makefile...
-make -f Makefile.old clean > /dev/null 2>&1
-/usr/bin/perl Makefile.PL "PREFIX=/home/junio/git-test" "DEFINE=-O2 -Wall -Wdeclaration-after-statement -g -DSHA1_HEADER='<openssl/sha.h>'  -DGIT_VERSION=\"1.4.1.rc1.gab0df\"" "LIBS=libgit.a xdiff/lib.a -lz  -lcrypto"
-Unrecognized argument in LIBS ignored: 'libgit.a'
-Unrecognized argument in LIBS ignored: 'xdiff/lib.a'
-Writing Makefile for Git
-==> Your Makefile has been rebuilt. <==
-==> Please rerun the make command.  <==
-false
-make[1]: *** [Makefile] Error 1
---------------------------------
-
-The latter is what Perl's build mechanism does so it is not
-strictly your fault, but it nevertheless is irritating that we
-have to say make clean twice.
+I have a feeling that I really should study how well StGIT does
+things before talking about this further.  It may suit your
+needs perfectly.  What do you feel is lacking in StGIT that you
+need?
