@@ -1,193 +1,356 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 07/12] Git.pm: Better error handling
-Date: Sat, 24 Jun 2006 15:17:31 +0200
-Message-ID: <20060624131731.GU21864@pasky.or.cz>
-References: <20060624023429.32751.80619.stgit@machine.or.cz> <20060624023442.32751.28342.stgit@machine.or.cz> <7vmzc3ymnu.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: [PATCH] Rename safe_strncpy() to strlcpy().
+Date: Sat, 24 Jun 2006 16:01:25 +0200
+Message-ID: <20060624140124.GA1323@ebar092.ebar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 15:17:42 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 16:19:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu812-0000Rn-Ls
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 15:17:37 +0200
+	id 1Fu8yU-0000b8-GA
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 16:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbWFXNRe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 09:17:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964814AbWFXNRe
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 09:17:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48292 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1752233AbWFXNRd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 09:17:33 -0400
-Received: (qmail 3042 invoked by uid 2001); 24 Jun 2006 15:17:31 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1752245AbWFXOS7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 10:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbWFXOS7
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 10:18:59 -0400
+Received: from ebar092.ebar.dtu.dk ([192.38.93.107]:40935 "HELO
+	ebar092.ebar.dtu.dk") by vger.kernel.org with SMTP id S1752244AbWFXOS7
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 10:18:59 -0400
+Received: (qmail 1673 invoked by uid 5842); 24 Jun 2006 14:01:25 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vmzc3ymnu.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22519>
 
-Dear diary, on Sat, Jun 24, 2006 at 10:37:25AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > +int
-> > +error_xs(const char *err, va_list params)
-> > +{
-> 
-> You said in git-compat-util.h that set_error_routine takes a
-> function that returns void, so this gives unnecessary type
-> clash.
-> 
-> --------------------------------
-> In file included from /usr/lib/perl/5.8/CORE/perl.h:756,
->                  from Git.xs:15:
-> /usr/lib/perl/5.8/CORE/embed.h:4193:1: warning: "die" redefined
-> Git.xs:11:1: warning: this is the location of the previous definition
-> Git.xs: In function 'boot_Git':
-> Git.xs:57: warning: passing argument 1 of 'set_error_routine' from incompatible pointer type
-> Git.xs:58: warning: passing argument 1 of 'set_die_routine' makes qualified function pointer from unqualified
-> --------------------------------
+This cleans up the use of safe_strncpy() even more.  Since it has the
+same semantics as strlcpy() use this name instead.  Also move the
+definition from inside path.c to its own file compat/strlcpy.c, and use
+it conditionally at compile time, since some platforms already has
+strlcpy().  It's included in the same way as compat/setenv.c.
 
-Oh, I forgot to fix it in the .xs. :-(
+Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
+---
 
-> Other troubles I saw with the v4 series while compiling:
-> 
-> --------------------------------
-> usage.c:35: warning: initialization makes qualified function pointer from unqualified
-> usage.c:36: warning: initialization makes qualified function pointer from unqualified
-> 
-> I'd fix it with this
-...
+I've introduced a NO_STRLCPY variable in the Makefile.  What do
+you think about this?
 
-Ah, so THAT's where you put the NORETURN thing. ;-)
+I've made a qualified guess as to what systems have strlcpy() in
+their standard library, but I am probably not completely right.
 
-> --------------------------------
-> 
-> (cd perl && /usr/bin/perl Makefile.PL \
->                 PREFIX="/home/junio/git-test" \
->                 DEFINE="-O2 -Wall -Wdeclaration-after-statement
->                 -g -DSHA1_HEADER='<openssl/sha.h>'
->                 -DGIT_VERSION=\\\"1.4.1.rc1.gab0df\\\"" \
->                 LIBS="libgit.a xdiff/lib.a -lz  -lcrypto")
-> Unrecognized argument in LIBS ignored: 'libgit.a'
-> Unrecognized argument in LIBS ignored: 'xdiff/lib.a'
-> 
-> Do you need to pass LIBS, and if so maybe this is not a way
-> Makefile.PL expects it to be passed perhaps?
+These are the ones I've said have it:
+OpenBSD, FreeBSD, NetBSD
 
-It is harmless, but this should fix it:
+These I've said don't:
+Linux, Darwin, SunOS, Cygwin, AIX, IRIX64
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+Regards,
+
+Peter
+
+ Makefile           |   14 ++++++++++++++
+ builtin-log.c      |    2 +-
+ builtin-tar-tree.c |    4 ++--
+ cache.h            |    1 -
+ compat/strlcpy.c   |   13 +++++++++++++
+ config.c           |    6 +++---
+ git-compat-util.h  |    5 +++++
+ http-fetch.c       |    6 +++---
+ http-push.c        |    6 +++---
+ ident.c            |    4 ++--
+ path.c             |   15 +--------------
+ sha1_name.c        |    2 +-
+ 12 files changed, 48 insertions(+), 30 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index d614f18..91bef4e 100644
+index e29e3fa..cde619c 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -230,7 +230,8 @@ BUILTIN_OBJS = \
- 	builtin-update-ref.o
- 
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
--LIBS = $(GITLIBS) -lz
-+
-+EXTLIBS = -lz
- 
+@@ -26,6 +26,8 @@ # d_type in struct dirent (latest Cygwin
  #
- # Platform specific tweaks
-@@ -380,14 +381,14 @@ ifdef NEEDS_LIBICONV
- 	else
- 		ICONV_LINK =
- 	endif
--	LIBS += $(ICONV_LINK) -liconv
-+	EXTLIBS += $(ICONV_LINK) -liconv
- endif
- ifdef NEEDS_SOCKET
--	LIBS += -lsocket
-+	EXTLIBS += -lsocket
- 	SIMPLE_LIB += -lsocket
- endif
- ifdef NEEDS_NSL
--	LIBS += -lnsl
-+	EXTLIBS += -lnsl
- 	SIMPLE_LIB += -lnsl
- endif
- ifdef NO_D_TYPE_IN_DIRENT
-@@ -446,7 +447,7 @@ ifdef MOZILLA_SHA1
- 	LIB_OBJS += mozilla-sha1/sha1.o
- else
- 	SHA1_HEADER = <openssl/sha.h>
--	LIBS += $(LIB_4_CRYPTO)
-+	EXTLIBS += $(LIB_4_CRYPTO)
- endif
- endif
- endif
-@@ -469,9 +470,13 @@ PERL_PATH_SQ = $(subst ','\'',$(PERL_PAT
- PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
- GIT_PYTHON_DIR_SQ = $(subst ','\'',$(GIT_PYTHON_DIR))
+ # Define NO_STRCASESTR if you don't have strcasestr.
+ #
++# Define NO_STRLCPY if you don't have strlcpy.
++#
+ # Define NO_SETENV if you don't have setenv in the C library.
+ #
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
+@@ -240,9 +242,13 @@ # We choose to avoid "if .. else if .. e
+ # because maintaining the nesting to match is a pain.  If
+ # we had "elif" things would have been much nicer...
  
-+LIBS = $(GITLIBS) $(EXTLIBS)
-+
- ALL_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' $(COMPAT_CFLAGS)
- LIB_OBJS += $(COMPAT_OBJS)
- export prefix TAR INSTALL DESTDIR SHELL_PATH template_dir
-+
-+
- ### Build rules
++ifeq ($(uname_S),Linux)
++	NO_STRLCPY = YesPlease
++endif
+ ifeq ($(uname_S),Darwin)
+ 	NEEDS_SSL_WITH_CRYPTO = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
++	NO_STRLCPY = YesPlease
+ 	## fink
+ 	ifeq ($(shell test -d /sw/lib && echo y),y)
+ 		ALL_CFLAGS += -I/sw/include
+@@ -259,6 +265,7 @@ ifeq ($(uname_S),SunOS)
+ 	NEEDS_NSL = YesPlease
+ 	SHELL_PATH = /bin/bash
+ 	NO_STRCASESTR = YesPlease
++	NO_STRLCPY = YesPlease
+ 	ifeq ($(uname_R),5.8)
+ 		NEEDS_LIBICONV = YesPlease
+ 		NO_UNSETENV = YesPlease
+@@ -276,6 +283,7 @@ ifeq ($(uname_O),Cygwin)
+ 	NO_D_TYPE_IN_DIRENT = YesPlease
+ 	NO_D_INO_IN_DIRENT = YesPlease
+ 	NO_STRCASESTR = YesPlease
++	NO_STRLCPY = YesPlease
+ 	NO_SYMLINK_HEAD = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	# There are conflicting reports about this.
+@@ -305,12 +313,14 @@ ifeq ($(uname_S),NetBSD)
+ endif
+ ifeq ($(uname_S),AIX)
+ 	NO_STRCASESTR=YesPlease
++	NO_STRLCPY = YesPlease
+ 	NEEDS_LIBICONV=YesPlease
+ endif
+ ifeq ($(uname_S),IRIX64)
+ 	NO_IPV6=YesPlease
+ 	NO_SETENV=YesPlease
+ 	NO_STRCASESTR=YesPlease
++	NO_STRLCPY = YesPlease
+ 	NO_SOCKADDR_STORAGE=YesPlease
+ 	SHELL_PATH=/usr/gnu/bin/bash
+ 	ALL_CFLAGS += -DPATH_MAX=1024
+@@ -403,6 +413,10 @@ ifdef NO_STRCASESTR
+ 	COMPAT_CFLAGS += -DNO_STRCASESTR
+ 	COMPAT_OBJS += compat/strcasestr.o
+ endif
++ifdef NO_STRLCPY
++	COMPAT_CFLAGS += -DNO_STRLCPY
++	COMPAT_OBJS += compat/strlcpy.o
++endif
+ ifdef NO_SETENV
+ 	COMPAT_CFLAGS += -DNO_SETENV
+ 	COMPAT_OBJS += compat/setenv.o
+diff --git a/builtin-log.c b/builtin-log.c
+index 5a8a50b..44d2d13 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -115,7 +115,7 @@ static void reopen_stdout(struct commit 
+ 	int len = 0;
  
- all: $(ALL_PROGRAMS) $(BUILT_INS) git$X gitk
-@@ -601,7 +606,7 @@ perl/Makefile:	perl/Git.pm perl/Makefile
- 	(cd perl && $(PERL_PATH) Makefile.PL \
- 		PREFIX="$(prefix)" \
- 		DEFINE="$(ALL_CFLAGS) -DGIT_VERSION=\\\"$(GIT_VERSION)\\\"" \
--		LIBS="$(LIBS)")
-+		LIBS="$(EXTLIBS)")
+ 	if (output_directory) {
+-		safe_strncpy(filename, output_directory, 1010);
++		strlcpy(filename, output_directory, 1010);
+ 		len = strlen(filename);
+ 		if (filename[len - 1] != '/')
+ 			filename[len++] = '/';
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index 39a61b6..f2e48aa 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -233,8 +233,8 @@ static void write_entry(const unsigned c
+ 	/* XXX: should we provide more meaningful info here? */
+ 	sprintf(header.uid, "%07o", 0);
+ 	sprintf(header.gid, "%07o", 0);
+-	safe_strncpy(header.uname, "git", sizeof(header.uname));
+-	safe_strncpy(header.gname, "git", sizeof(header.gname));
++	strlcpy(header.uname, "git", sizeof(header.uname));
++	strlcpy(header.gname, "git", sizeof(header.gname));
+ 	sprintf(header.devmajor, "%07o", 0);
+ 	sprintf(header.devminor, "%07o", 0);
  
- doc:
- 	$(MAKE) -C Documentation all
-
-> --------------------------------
-> Makefile out-of-date with respect to Makefile.PL
-> Cleaning current config before rebuilding Makefile...
-> make -f Makefile.old clean > /dev/null 2>&1
-> /usr/bin/perl Makefile.PL "PREFIX=/home/junio/git-test" "DEFINE=-O2 -Wall -Wdeclaration-after-statement -g -DSHA1_HEADER='<openssl/sha.h>'  -DGIT_VERSION=\"1.4.1.rc1.gab0df\"" "LIBS=libgit.a xdiff/lib.a -lz  -lcrypto"
-> Unrecognized argument in LIBS ignored: 'libgit.a'
-> Unrecognized argument in LIBS ignored: 'xdiff/lib.a'
-> Writing Makefile for Git
-> ==> Your Makefile has been rebuilt. <==
-> ==> Please rerun the make command.  <==
-> false
-> make[1]: *** [Makefile] Error 1
-> --------------------------------
-> 
-> The latter is what Perl's build mechanism does so it is not
-> strictly your fault, but it nevertheless is irritating that we
-> have to say make clean twice.
-
-What about just this?
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
-
-diff --git a/Makefile b/Makefile
-index 91bef4e..55c07b6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -731,7 +731,8 @@ clean:
- 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	rm -f $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
--	[ ! -e perl/Makefile ] || $(MAKE) -C perl/ clean
-+	# Try twice in case the Makefile has been rebuilt
-+	[ ! -e perl/Makefile ] || $(MAKE) -C perl/ clean || $(MAKE) -C perl/ clean
- 	$(MAKE) -C templates/ clean
- 	$(MAKE) -C t/ clean
- 	rm -f GIT-VERSION-FILE GIT-CFLAGS
-
+diff --git a/cache.h b/cache.h
+index efeafea..14358a8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -216,7 +216,6 @@ enum sharedrepo {
+ int git_config_perm(const char *var, const char *value);
+ int adjust_shared_perm(const char *path);
+ int safe_create_leading_directories(char *path);
+-size_t safe_strncpy(char *, const char *, size_t);
+ char *enter_repo(char *path, int strict);
+ 
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+diff --git a/compat/strlcpy.c b/compat/strlcpy.c
+new file mode 100644
+index 0000000..b66856a
+--- /dev/null
++++ b/compat/strlcpy.c
+@@ -0,0 +1,13 @@
++#include <string.h>
++
++size_t gitstrlcpy(char *dest, const char *src, size_t size)
++{
++	size_t ret = strlen(src);
++
++	if (size) {
++		size_t len = (ret >= size) ? size - 1 : ret;
++		memcpy(dest, src, len);
++		dest[len] = '\0';
++	}
++	return ret;
++}
+diff --git a/config.c b/config.c
+index 3e077d4..ec44827 100644
+--- a/config.c
++++ b/config.c
+@@ -280,17 +280,17 @@ int git_default_config(const char *var, 
+ 	}
+ 
+ 	if (!strcmp(var, "user.name")) {
+-		safe_strncpy(git_default_name, value, sizeof(git_default_name));
++		strlcpy(git_default_name, value, sizeof(git_default_name));
+ 		return 0;
+ 	}
+ 
+ 	if (!strcmp(var, "user.email")) {
+-		safe_strncpy(git_default_email, value, sizeof(git_default_email));
++		strlcpy(git_default_email, value, sizeof(git_default_email));
+ 		return 0;
+ 	}
+ 
+ 	if (!strcmp(var, "i18n.commitencoding")) {
+-		safe_strncpy(git_commit_encoding, value, sizeof(git_commit_encoding));
++		strlcpy(git_commit_encoding, value, sizeof(git_commit_encoding));
+ 		return 0;
+ 	}
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index b3d4cf5..93f5580 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -79,6 +79,11 @@ #define strcasestr gitstrcasestr
+ extern char *gitstrcasestr(const char *haystack, const char *needle);
+ #endif
+ 
++#ifdef NO_STRLCPY
++#define strlcpy gitstrlcpy
++extern size_t gitstrlcpy(char *, const char *, size_t);
++#endif
++
+ static inline void *xmalloc(size_t size)
+ {
+ 	void *ret = malloc(size);
+diff --git a/http-fetch.c b/http-fetch.c
+index 2b63d89..44eba5f 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -584,8 +584,8 @@ static void process_alternates_response(
+ 			// skip 'objects' at end
+ 			if (okay) {
+ 				target = xmalloc(serverlen + posn - i - 6);
+-				safe_strncpy(target, base, serverlen);
+-				safe_strncpy(target + serverlen, data + i, posn - i - 6);
++				strlcpy(target, base, serverlen);
++				strlcpy(target + serverlen, data + i, posn - i - 6);
+ 				if (get_verbosely)
+ 					fprintf(stderr,
+ 						"Also look at %s\n", target);
+@@ -727,7 +727,7 @@ xml_cdata(void *userData, const XML_Char
+ 	if (ctx->cdata)
+ 		free(ctx->cdata);
+ 	ctx->cdata = xmalloc(len + 1);
+-	safe_strncpy(ctx->cdata, s, len + 1);
++	strlcpy(ctx->cdata, s, len + 1);
+ }
+ 
+ static int remote_ls(struct alt_base *repo, const char *path, int flags,
+diff --git a/http-push.c b/http-push.c
+index 8d472f0..3c89a17 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1271,7 +1271,7 @@ xml_cdata(void *userData, const XML_Char
+ 	if (ctx->cdata)
+ 		free(ctx->cdata);
+ 	ctx->cdata = xmalloc(len + 1);
+-	safe_strncpy(ctx->cdata, s, len + 1);
++	strlcpy(ctx->cdata, s, len + 1);
+ }
+ 
+ static struct remote_lock *lock_remote(char *path, long timeout)
+@@ -1473,7 +1473,7 @@ static void process_ls_object(struct rem
+ 		return;
+ 	path += 8;
+ 	obj_hex = xmalloc(strlen(path));
+-	safe_strncpy(obj_hex, path, 3);
++	strlcpy(obj_hex, path, 3);
+ 	strcpy(obj_hex + 2, path + 3);
+ 	one_remote_object(obj_hex);
+ 	free(obj_hex);
+@@ -2172,7 +2172,7 @@ static void fetch_symref(char *path, cha
+ 	/* If it's a symref, set the refname; otherwise try for a sha1 */
+ 	if (!strncmp((char *)buffer.buffer, "ref: ", 5)) {
+ 		*symref = xmalloc(buffer.posn - 5);
+-		safe_strncpy(*symref, (char *)buffer.buffer + 5, buffer.posn - 5);
++		strlcpy(*symref, (char *)buffer.buffer + 5, buffer.posn - 5);
+ 	} else {
+ 		get_sha1_hex(buffer.buffer, sha1);
+ 	}
+diff --git a/ident.c b/ident.c
+index 7b44cbd..efec97f 100644
+--- a/ident.c
++++ b/ident.c
+@@ -71,9 +71,9 @@ int setup_ident(void)
+ 		len = strlen(git_default_email);
+ 		git_default_email[len++] = '.';
+ 		if (he && (domainname = strchr(he->h_name, '.')))
+-			safe_strncpy(git_default_email + len, domainname + 1, sizeof(git_default_email) - len);
++			strlcpy(git_default_email + len, domainname + 1, sizeof(git_default_email) - len);
+ 		else
+-			safe_strncpy(git_default_email + len, "(none)", sizeof(git_default_email) - len);
++			strlcpy(git_default_email + len, "(none)", sizeof(git_default_email) - len);
+ 	}
+ 	/* And set the default date */
+ 	datestamp(git_default_date, sizeof(git_default_date));
+diff --git a/path.c b/path.c
+index 36972fd..db8905f 100644
+--- a/path.c
++++ b/path.c
+@@ -77,25 +77,12 @@ int git_mkstemp(char *path, size_t len, 
+ 		pch += n;
+ 	}
+ 
+-	safe_strncpy(pch, template, len);
++	strlcpy(pch, template, len);
+ 
+ 	return mkstemp(path);
+ }
+ 
+ 
+-size_t safe_strncpy(char *dest, const char *src, size_t size)
+-{
+-	size_t ret = strlen(src);
+-
+-	if (size) {
+-		size_t len = (ret >= size) ? size - 1 : ret;
+-		memcpy(dest, src, len);
+-		dest[len] = '\0';
+-	}
+-	return ret;
+-}
+-
+-
+ int validate_symref(const char *path)
+ {
+ 	struct stat st;
+diff --git a/sha1_name.c b/sha1_name.c
+index cd85d1f..f2cbafa 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -262,7 +262,7 @@ static int get_sha1_basic(const char *st
+ 		if (str[am] == '@' && str[am+1] == '{' && str[len-1] == '}') {
+ 			int date_len = len - am - 3;
+ 			char *date_spec = xmalloc(date_len + 1);
+-			safe_strncpy(date_spec, str + am + 2, date_len + 1);
++			strlcpy(date_spec, str + am + 2, date_len + 1);
+ 			at_time = approxidate(date_spec);
+ 			free(date_spec);
+ 			len = am;
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+1.4.1.rc1.g8637
