@@ -1,87 +1,59 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsimport: setup indexes correctly for ancestors and
- incremental imports
-Date: Sat, 24 Jun 2006 23:13:08 +1200
-Message-ID: <11511475882820-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Sat Jun 24 13:13:12 2006
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] cvsimport - streamline temp index file creation and avoid creating empty tmpfiles
+Date: Sat, 24 Jun 2006 23:16:04 +1200
+Message-ID: <46a038f90606240416n563288f5q99a5ac81723776c3@mail.gmail.com>
+References: <Pine.LNX.4.63.0606231811200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <11511257501323-git-send-email-martin@catalyst.net.nz>
+	 <Pine.LNX.4.63.0606241145280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vslluyika.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Martin Langhoff" <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Sat Jun 24 13:16:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu64c-0001Aj-9k
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 13:13:10 +0200
+	id 1Fu67V-0001VI-Nw
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 13:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752208AbWFXLNH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 07:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752212AbWFXLNH
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 07:13:07 -0400
-Received: from bm-3a.paradise.net.nz ([203.96.152.182]:19941 "EHLO
-	linda-3.paradise.net.nz") by vger.kernel.org with ESMTP
-	id S1752208AbWFXLNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jun 2006 07:13:05 -0400
-Received: from smtp-1.paradise.net.nz
- (tclsnelb1-src-1.paradise.net.nz [203.96.152.172]) by linda-3.paradise.net.nz
- (Paradise.net.nz) with ESMTP id <0J1D001Y235S1D@linda-3.paradise.net.nz> for
- git@vger.kernel.org; Sat, 24 Jun 2006 23:13:04 +1200 (NZST)
-Received: from localhost.localdomain
- (203-79-116-174.cable.paradise.net.nz [203.79.116.174])
-	by smtp-1.paradise.net.nz (Postfix) with ESMTP id 34BFD421750; Sat,
- 24 Jun 2006 23:13:04 +1200 (NZST)
-To: git@vger.kernel.org, junkio@cox.net, Johannes.Schindelin@gmx.de
-X-Mailer: git-send-email 1.4.1.rc1.g59c8
+	id S932374AbWFXLQG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 07:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbWFXLQG
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 07:16:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:4975 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932374AbWFXLQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 07:16:05 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so1407385ugf
+        for <git@vger.kernel.org>; Sat, 24 Jun 2006 04:16:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Fca36TUAiFUrTgQERPiqj9pAyCj9BKGq9ZLxGDnEBJU92yycKGanahW9avj7U6S1UAVfj3qxSOSGaqSnF/oGlHXq7Z15AMxxqagKhMj70OvKap45gpgY/iY4jDCz4l1pTbYwfLqpDWXIqcg402TD7vZrx1M5mllmMZ+qBfJ9XT4=
+Received: by 10.78.151.3 with SMTP id y3mr1557415hud;
+        Sat, 24 Jun 2006 04:16:04 -0700 (PDT)
+Received: by 10.78.117.11 with HTTP; Sat, 24 Jun 2006 04:16:04 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vslluyika.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22502>
 
-Two bugs had slipped in the "keep one index per branch during import"
-patch. Both incremental imports and new branches would see an
-empty tree for their initial commit. Now we cover all the relevant
-cases, checking whether we actually need to setup the index before
-preparing the actual commit, and doing it.
+Johannes, Junio,
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+I've managed to repro the problem -- which was totally reproduceable,
+I was just testing the wrong version of the script. The problem was
+quite obvious: when running an incremental, the first head would not
+get the index created properly. Even worse, when forking a new branch,
+the index would be empty too.
 
----
- git-cvsimport.perl |   19 +++++++++++++++++--
- 1 files changed, 17 insertions(+), 2 deletions(-)
+Fixed both cases and posted separately. Thanks for the sharp eyes, and
+sorry about the bug!
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-old mode 100644
-new mode 100755
-index d961b7b..1c1fd02
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -813,11 +813,26 @@ while(<CVS>) {
- 			unless ($index{$branch}) {
- 			    $index{$branch} = tmpnam();
- 			    $ENV{GIT_INDEX_FILE} = $index{$branch};
--			    system("git-read-tree", $branch);
-+			}
-+			if ($ancestor) {
-+			    system("git-read-tree", $ancestor);
- 			    die "read-tree failed: $?\n" if $?;
- 			} else {
-+			    unless ($index{$branch}) {
-+				$index{$branch} = tmpnam();
-+				$ENV{GIT_INDEX_FILE} = $index{$branch};
-+				system("git-read-tree", $branch);
-+				die "read-tree failed: $?\n" if $?;
-+			    }
-+			}    
-+		} else {
-+			# just in case
-+			unless ($index{$branch}) {
-+			    $index{$branch} = tmpnam();
- 			    $ENV{GIT_INDEX_FILE} = $index{$branch};
--		        }
-+			    system("git-read-tree", $branch);
-+			    die "read-tree failed: $?\n" if $?;
-+			}
- 		}
- 		$last_branch = $branch if $branch ne $last_branch;
- 		$state = 9;
--- 
-1.4.1.rc1.g59c8
+
+martin
