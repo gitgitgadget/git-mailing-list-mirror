@@ -1,106 +1,140 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 02/12] Git.pm: Implement Git::exec_path()
-Date: Sat, 24 Jun 2006 04:34:31 +0200
-Message-ID: <20060624023431.32751.75101.stgit@machine.or.cz>
+Subject: [PATCH 05/12] Customizable error handlers
+Date: Sat, 24 Jun 2006 04:34:38 +0200
+Message-ID: <20060624023438.32751.46867.stgit@machine.or.cz>
 References: <20060624023429.32751.80619.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 24 04:35:06 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 04:35:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ftxz8-0006e9-Pl
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:34:59 +0200
+	id 1FtxzS-0006hJ-27
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933189AbWFXCe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 22:34:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933191AbWFXCe4
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:34:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59799 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S933189AbWFXCez (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:34:55 -0400
-Received: (qmail 300 invoked from network); 24 Jun 2006 04:34:31 +0200
+	id S933192AbWFXCfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 22:35:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933195AbWFXCfM
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:35:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:61591 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S933194AbWFXCfJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:35:09 -0400
+Received: (qmail 333 invoked from network); 24 Jun 2006 04:34:38 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 24 Jun 2006 04:34:31 +0200
+  by localhost with SMTP; 24 Jun 2006 04:34:38 +0200
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <20060624023429.32751.80619.stgit@machine.or.cz>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22468>
 
-This patch implements Git::exec_path() (as a direct XS call).
+This patch makes the usage(), die() and error() handlers customizable.
+Nothing in the git code itself uses that but many other libgit users
+(like Git.pm) will.
+
+This is implemented using the mutator functions primarily because you
+cannot directly modifying global variables of libgit from a program that
+dlopen()ed it, apparently. But having functions for that is a better API
+anyway.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- perl/Git.pm |   15 ++++++++++++++-
- perl/Git.xs |   12 ++++++++++++
- 2 files changed, 26 insertions(+), 1 deletions(-)
+ git-compat-util.h |    4 ++++
+ usage.c           |   46 ++++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 46 insertions(+), 4 deletions(-)
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 8fff785..5c5ae12 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -48,7 +48,7 @@ require Exporter;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5d543d2..b3d4cf5 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -40,6 +40,10 @@ extern void usage(const char *err) NORET
+ extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
+ extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
  
- # Methods which can be called as standalone functions as well:
- @EXPORT_OK = qw(command command_oneline command_pipe command_noisy
--                hash_object);
-+                exec_path hash_object);
++extern void set_usage_routine(void (*routine)(const char *err) NORETURN);
++extern void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN);
++extern void set_error_routine(void (*routine)(const char *err, va_list params));
++
+ #ifdef NO_MMAP
  
- 
- =head1 DESCRIPTION
-@@ -288,6 +288,19 @@ sub command_noisy {
+ #ifndef PROT_READ
+diff --git a/usage.c b/usage.c
+index 1fa924c..b781b00 100644
+--- a/usage.c
++++ b/usage.c
+@@ -12,20 +12,58 @@ static void report(const char *prefix, c
+ 	fputs("\n", stderr);
  }
  
+-void usage(const char *err)
++void usage_builtin(const char *err)
+ {
+ 	fprintf(stderr, "usage: %s\n", err);
+ 	exit(129);
+ }
  
-+=item exec_path ()
-+
-+Return path to the git sub-command executables (the same as
-+C<git --exec-path>). Useful mostly only internally.
-+
-+Implementation of this function is very fast; no external command calls
-+are involved.
-+
-+=cut
-+
-+# Implemented in Git.xs.
-+
-+
- =item hash_object ( FILENAME [, TYPE ] )
- 
- =item hash_object ( FILEHANDLE [, TYPE ] )
-diff --git a/perl/Git.xs b/perl/Git.xs
-index 9885e2c..b6f6d13 100644
---- a/perl/Git.xs
-+++ b/perl/Git.xs
-@@ -6,6 +6,7 @@ #include <ctype.h>
- 
- /* libgit interface */
- #include "../cache.h"
-+#include "../exec_cmd.h"
- 
- /* XS and Perl interface */
- #include "EXTERN.h"
-@@ -21,6 +22,17 @@ PROTOTYPES: DISABLE
- 
- # /* TODO: xs_call_gate(). See Git.pm. */
- 
-+
-+const char *
-+xs_exec_path()
-+CODE:
++void die_builtin(const char *err, va_list params)
 +{
-+	RETVAL = git_exec_path();
++	report("fatal: ", err, params);
++	exit(128);
 +}
-+OUTPUT:
-+	RETVAL
++
++void error_builtin(const char *err, va_list params)
++{
++	report("error: ", err, params);
++}
 +
 +
- char *
- xs_hash_object(file, type = "blob")
- 	SV *file;
++/* If we are in a dlopen()ed .so write to a global variable would segfault
++ * (ugh), so keep things static. */
++static void (*usage_routine)(const char *err) NORETURN = usage_builtin;
++static void (*die_routine)(const char *err, va_list params) NORETURN = die_builtin;
++static void (*error_routine)(const char *err, va_list params) = error_builtin;
++
++void set_usage_routine(void (*routine)(const char *err) NORETURN)
++{
++	usage_routine = routine;
++}
++
++void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN)
++{
++	die_routine = routine;
++}
++
++void set_error_routine(void (*routine)(const char *err, va_list params))
++{
++	error_routine = routine;
++}
++
++
++void usage(const char *err)
++{
++	usage_routine(err);
++}
++
+ void die(const char *err, ...)
+ {
+ 	va_list params;
+ 
+ 	va_start(params, err);
+-	report("fatal: ", err, params);
++	die_routine(err, params);
+ 	va_end(params);
+-	exit(128);
+ }
+ 
+ int error(const char *err, ...)
+@@ -33,7 +71,7 @@ int error(const char *err, ...)
+ 	va_list params;
+ 
+ 	va_start(params, err);
+-	report("error: ", err, params);
++	error_routine(err, params);
+ 	va_end(params);
+ 	return -1;
+ }
