@@ -1,92 +1,96 @@
-From: "=?utf-8?q?S=2E=C3=87a=C4=9Flar?= Onur" <caglar@pardus.org.tr>
-Subject: Re: [Patch] trap: exit: invalid signal specification
-Date: Sat, 24 Jun 2006 15:54:55 +0300
-Organization: =?utf-8?q?T=C3=9CB=C4=B0TAK_/?= UEKAE
-Message-ID: <200606241555.03147.caglar@pardus.org.tr>
-References: <200606240410.18334.caglar@pardus.org.tr> <7vejxf5ktc.fsf@assigned-by-dhcp.cox.net>
-Reply-To: caglar@pardus.org.tr
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart10468769.bAHluHYy1n";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 14:55:15 2006
+From: linux@horizon.com
+Subject: Re: x86 asm SHA1 (draft)
+Date: 24 Jun 2006 05:20:26 -0400
+Message-ID: <20060624092026.31029.qmail@science.horizon.com>
+References: <7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
+Cc: linux@horizon.com
+X-From: git-owner@vger.kernel.org Sat Jun 24 15:02:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu7fO-0005XQ-BG
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 14:55:14 +0200
+	id 1Fu7mL-0006d6-Ry
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 15:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750731AbWFXMzK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 08:55:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbWFXMzK
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 08:55:10 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:26510 "EHLO uludag.org.tr")
-	by vger.kernel.org with ESMTP id S1750731AbWFXMzI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 08:55:08 -0400
-Received: from zangetsu.local (unknown [85.101.118.248])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 0899B17A5A4;
-	Sat, 24 Jun 2006 15:55:04 +0300 (EEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vejxf5ktc.fsf@assigned-by-dhcp.cox.net>
+	id S1750737AbWFXNCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 09:02:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbWFXNCQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 09:02:16 -0400
+Received: from science.horizon.com ([192.35.100.1]:2862 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1750737AbWFXNCP
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 09:02:15 -0400
+Received: (qmail 31030 invoked by uid 1000); 24 Jun 2006 05:20:26 -0400
+To: git@vger.kernel.org, junkio@cox.net
+In-Reply-To: <7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22514>
 
---nextPart10468769.bAHluHYy1n
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+> OK.  I somehow got an impression that your two versions had
+> quite different performance characteristics on G4 and G5 and
+> there was a real choice.  If they are between a few per-cent,
+> then I agree it is not worth doing at all.
 
-Cumartesi 24 Haziran 2006 05:50 tarihinde, Junio C Hamano =C5=9Funlar=C4=B1=
- yazm=C4=B1=C5=9Ft=C4=B1:=20
-> I am not quite sure what to make out this...  Do you mean your
-> shell does not like the command "exit" spelled in lowercase
-> under Turkic locale?
+My apologies for being unclear.
 
-Sorry to not clear enough previously, for Turkic locales (tr_TR, az_AZ etc.=
-)=20
-upper(i) !=3D I. More detailed analysis can be found at=20
-http://www.i18nguy.com/unicode/turkish-i18n.html, "Why Applications Fail Wi=
-th=20
-The Turkish Language" section. This is the main reason of this problem.=20
+The place where a noticeable (if not disastrous) difference can appear
+is x86, which has a lot more models with "interesting" performance
+characteristics.  In particular, Intel is fond of building CPUs with a
+very small "sweet spot".
 
-According to its man page signals defined with uppercase letters but also=20
-different trap implementations may permit lowercase signal names as an=20
-extension.=20
+The openssl SHA1 code had to be reworked to not suck on a P4, with the
+resultant performance change:
 
-As an example bash (v. 3.1.17) permits lowercase signal names but it conver=
-ts=20
-this lowercase signal names into uppercase ones while interpreting the=20
-script. But for our "Turkish has 4 letter "I"s" problem this convert to=20
-uppercase one process fails but for bash invalid signal names not be=20
-considered a syntax error and do not cause the shell to abort.=20
+#               compared with original  compared with Intel cc
+#               assembler impl.         generated code
+# Pentium       -16%                    +48%
+# PIII/AMD      +8%                     +16%
+# P4            +85%(!)                 +45%
 
-Yours
-=2D-=20
-S.=C3=87a=C4=9Flar Onur <caglar@pardus.org.tr>
-http://cekirdek.pardus.org.tr/~caglar/
+The original code had the most popular round (what I call
+ROUND_MIX(F2,...))) implemented as follows, with single-uop
+instructions (no load+op) scheduled for the Pentium pipeline:
+(A..E are working variables, S and T are temps)
 
-Linux is like living in a teepee. No Windows, no Gates and an Apache in hou=
-se!
+	movl    16(%esp),S	U  \
+        movl    24(%esp),T	 V  \
+        xorl    S,T		U    \
+        movl    48(%esp),S	 V    > "MIX", pentium-optimized
+        xorl    S,T		U    /
+        movl    4(%esp),S	 V  /
+        xorl    S,T		U  /
+        movl	B,S		 V
+	roll	$1,T		U	Rotate of mix (SHA0 -> SHA1 fix)
+	xor	C,S		 V
+	mov	T,16(%esp)	U	Store back W[i]
+	xor	D,S		 V	Finish computing F(B,C,D) = B^C^D
+	lea	K(T,E),E	U	Add K and W[i] to E
+	mov	A,T		 V
+	roll	$5,T		UV
+	rorl	$1,B		U
+	add	S,E		 V
+	rorl	$1,B		U
+	add	T,E		 V
 
---nextPart10468769.bAHluHYy1n
-Content-Type: application/pgp-signature
+While the P4-optimized version goes:
+	movl	B,S
+	movl	16(%esp),T
+	rorl	$2,B
+	xorl	24(%esp),T
+	xorl	C,S
+	xorl	48(%esp),T
+	xorl	D,S		This is F(B,C,D) = B^C^D
+	xorl	4(%esp),T
+	roll	$1,T		Rotate of mix (SHA0 -> SHA1 fix)
+	addl	S,E
+	movl	T,16(%esp)
+	movl	A,S
+	roll	$5,S
+	lea	K(E,T),E
+	add	S,E
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBEnTYny7E6i0LKo6YRAhclAKCqPg6XAPpw0r7uPT34Kr3Xqe6pNgCgyKCP
-d+m1r0FjcW5oswYIoesMj6I=
-=RccQ
------END PGP SIGNATURE-----
-
---nextPart10468769.bAHluHYy1n--
+(The original code actually rotates the working variables around 6
+registers, not 5, but I've rearranged the last couple of instructions
+to rotate around 5.)
