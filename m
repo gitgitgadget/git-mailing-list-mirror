@@ -1,113 +1,113 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 03/12] Git.pm: Call external commands using execv_git_cmd()
-Date: Sat, 24 Jun 2006 04:34:34 +0200
-Message-ID: <20060624023433.32751.68321.stgit@machine.or.cz>
+Subject: [PATCH 04/12] Git.pm: Implement Git::version()
+Date: Sat, 24 Jun 2006 04:34:36 +0200
+Message-ID: <20060624023436.32751.67240.stgit@machine.or.cz>
 References: <20060624023429.32751.80619.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 24 04:35:22 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 04:35:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtxzN-0006gs-0h
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:35:13 +0200
+	id 1FtxzS-0006hJ-KY
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:35:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933191AbWFXCfE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 22:35:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933194AbWFXCfE
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:35:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60311 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S933191AbWFXCfB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:35:01 -0400
-Received: (qmail 310 invoked from network); 24 Jun 2006 04:34:34 +0200
+	id S933193AbWFXCfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 22:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933192AbWFXCfK
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:35:10 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:61079 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S933193AbWFXCfH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:35:07 -0400
+Received: (qmail 317 invoked from network); 24 Jun 2006 04:34:36 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 24 Jun 2006 04:34:34 +0200
+  by localhost with SMTP; 24 Jun 2006 04:34:36 +0200
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <20060624023429.32751.80619.stgit@machine.or.cz>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22470>
 
-Instead of explicitly using the git wrapper to call external commands,
-use the execv_git_cmd() function which will directly call whatever
-needs to be called. GitBin option becomes useless so drop it.
-
-This actually means the exec_path() thing I planned to use worthless
-internally, but Jakub wants it in anyway and I don't mind, so...
+Git::version() returns the Git version string.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- perl/Git.pm |   12 ++++++------
- perl/Git.xs |   22 ++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ Makefile    |    5 ++++-
+ perl/Git.pm |   14 +++++++++++++-
+ perl/Git.xs |   10 ++++++++++
+ 3 files changed, 27 insertions(+), 2 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 4d20b22..7842195 100644
+--- a/Makefile
++++ b/Makefile
+@@ -596,7 +596,10 @@ XDIFF_OBJS=xdiff/xdiffi.o xdiff/xprepare
+ 
+ 
+ perl/Makefile:	perl/Git.pm perl/Makefile.PL
+-	(cd perl && $(PERL_PATH) Makefile.PL PREFIX="$(prefix)" DEFINE="$(ALL_CFLAGS)" LIBS="$(LIBS)")
++	(cd perl && $(PERL_PATH) Makefile.PL \
++		PREFIX="$(prefix)" \
++		DEFINE="$(ALL_CFLAGS) -DGIT_VERSION=\\\"$(GIT_VERSION)\\\"" \
++		LIBS="$(LIBS)")
+ 
+ doc:
+ 	$(MAKE) -C Documentation all
 diff --git a/perl/Git.pm b/perl/Git.pm
-index 5c5ae12..212337e 100644
+index 212337e..dcd769b 100644
 --- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -122,9 +122,6 @@ to the subdirectory and the directory is
- If the directory does not have the subdirectory, C<WorkingCopy> is left
- undefined and C<Repository> is pointed to the directory itself.
+@@ -48,7 +48,7 @@ require Exporter;
  
--B<GitPath> - Path to the C<git> binary executable. By default the C<$PATH>
--is searched for it.
--
- You should not use both C<Directory> and either of C<Repository> and
- C<WorkingCopy> - the results of that are undefined.
+ # Methods which can be called as standalone functions as well:
+ @EXPORT_OK = qw(command command_oneline command_pipe command_noisy
+-                exec_path hash_object);
++                version exec_path hash_object);
  
-@@ -363,11 +360,14 @@ sub _cmd_exec {
- 		$self->{opts}->{Repository} and $ENV{'GIT_DIR'} = $self->{opts}->{Repository};
- 		$self->{opts}->{WorkingCopy} and chdir($self->{opts}->{WorkingCopy});
- 	}
--	my $git = $self->{opts}->{GitPath};
--	$git ||= 'git';
--	exec ($git, @args) or croak "exec failed: $!";
-+	xs__execv_git_cmd(@args);
-+	croak "exec failed: $!";
+ 
+ =head1 DESCRIPTION
+@@ -285,6 +285,18 @@ sub command_noisy {
  }
  
-+# Execute the given Git command ($_[0]) with arguments ($_[1..])
-+# by searching for it at proper places.
-+# _execv_git_cmd(), implemented in Git.xs.
+ 
++=item version ()
 +
- # Close pipe to a subprocess.
- sub _cmd_close {
- 	my ($fh) = @_;
++Return the Git version in use.
++
++Implementation of this function is very fast; no external command calls
++are involved.
++
++=cut
++
++# Implemented in Git.xs.
++
++
+ =item exec_path ()
+ 
+ Return path to the git sub-command executables (the same as
 diff --git a/perl/Git.xs b/perl/Git.xs
-index b6f6d13..c8220e2 100644
+index c8220e2..9623fdd 100644
 --- a/perl/Git.xs
 +++ b/perl/Git.xs
-@@ -33,6 +33,28 @@ OUTPUT:
- 	RETVAL
+@@ -24,6 +24,16 @@ # /* TODO: xs_call_gate(). See Git.pm. *
  
  
-+void
-+xs__execv_git_cmd(...)
+ const char *
++xs_version()
 +CODE:
 +{
-+	const char **argv;
-+	int i;
-+
-+	argv = malloc(sizeof(const char *) * (items + 1));
-+	if (!argv)
-+		croak("malloc failed");
-+	for (i = 0; i < items; i++)
-+		argv[i] = strdup(SvPV_nolen(ST(i)));
-+	argv[i] = NULL;
-+
-+	execv_git_cmd(argv);
-+
-+	for (i = 0; i < items; i++)
-+		if (argv[i])
-+			free((char *) argv[i]);
-+	free((char **) argv);
++	RETVAL = GIT_VERSION;
 +}
++OUTPUT:
++	RETVAL
 +
- char *
- xs_hash_object(file, type = "blob")
- 	SV *file;
++
++const char *
+ xs_exec_path()
+ CODE:
+ {
