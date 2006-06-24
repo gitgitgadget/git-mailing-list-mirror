@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Introduce Git.pm (v3)
-Date: Fri, 23 Jun 2006 18:04:02 -0700
-Message-ID: <7v4pyb74al.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 23 Jun 2006 18:07:14 -0700
+Message-ID: <7vzmg35pkt.fsf@assigned-by-dhcp.cox.net>
 References: <7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
 	<20060623011205.GJ21864@pasky.or.cz>
 	<7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
@@ -13,68 +13,67 @@ References: <7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
 	<20060623011205.GJ21864@pasky.or.cz>
 	<7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
 	<20060623123904.GL21864@pasky.or.cz>
+	<7vejxf74e3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 03:04:31 2006
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 24 03:07:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtwZR-00059c-Ie
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 03:04:22 +0200
+	id 1FtwcM-0005Oh-H2
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 03:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933171AbWFXBEF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 21:04:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933172AbWFXBEF
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 21:04:05 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:4568 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S933171AbWFXBEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 21:04:04 -0400
+	id S932346AbWFXBHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 21:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933172AbWFXBHS
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 21:07:18 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:22739 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932346AbWFXBHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 21:07:16 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060624010403.PUIB554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Jun 2006 21:04:03 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060623123904.GL21864@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 23 Jun 2006 14:39:04 +0200")
+          id <20060624010715.JDBN12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 23 Jun 2006 21:07:15 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7vejxf74e3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 23 Jun 2006 18:01:56 -0700")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22464>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
->> By the way, you also need to adjust the testsuite so that it
->> finds the Perl modules from freshly built tree before
->> installing.  I think (but haven't checked yet) the stuff written
->> in Python does that already, so you might want to mimic it.
+>> It should be enough to -I../perl/blib/lib -I../perl/blib/arch/auto/Git.
 >
-> It should be enough to -I../perl/blib/lib -I../perl/blib/arch/auto/Git.
+> -- >8 --
+> [PATCH] Perl interface: add build-time configuration to allow building with -fPIC
+>
+> On x86-64 it seems that Git.xs does not link without compiling
+> the main git objects with -fPIC.
+>
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
--- >8 --
-[PATCH] Perl interface: make testsuite work again.
+Eh, sorry this was in response to this part of Pasky's message:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- t/test-lib.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+>> Well, for the .xs you do need an .so and for that you apparently need
+>> -fPIC on most architectures, so there's no way around it.
+>> 
+>> There's a patch to build libgit.so, would you take it as an excuse to
+>> always compile with -fPIC? ;-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 05f6e79..fba0c51 100755
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -206,6 +206,8 @@ PYTHON=`sed -e '1{
- 	PYTHONPATH=$(pwd)/../compat
- 	export PYTHONPATH
- }
-+PERL5LIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
-+export PERL5LIB
- test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
--- 
-1.4.1.rc1.gf2641
+By the way, I noticed NO_ACCURATE_DIFF is a compile time option
+to cause git-apply to accept diff output from implementations
+that botch "\No newline at the end of file", and I think it is
+wrong -- it should be a run time option to git-apply if we would
+want to support it, because the version of diff you have does
+not have much to do with which implementations of diff were used
+to generate patches you would receive and apply.
+
+Thoughts?
