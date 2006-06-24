@@ -1,39 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-commit: allow -e option anywhere on command line
-Date: Fri, 23 Jun 2006 16:56:22 -0700
-Message-ID: <7vk6778lzt.fsf@assigned-by-dhcp.cox.net>
-References: <20060623134338.GA12630@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Rework diff options
+Date: Sat, 24 Jun 2006 02:04:44 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606240201580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060624011538.9bb179e7.tihirvon@gmail.com>
+ <Pine.LNX.4.63.0606240024460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vodwj8n9s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 01:56:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 24 02:06:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtvVj-0008UO-76
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 01:56:27 +0200
+	id 1Ftvdq-0001Ed-Ne
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 02:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbWFWX4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 19:56:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752184AbWFWX4Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 19:56:24 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:48006 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1752181AbWFWX4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 19:56:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060623235623.DIMI22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Jun 2006 19:56:23 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20060623134338.GA12630@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 23 Jun 2006 09:43:38 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932730AbWFXAEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 20:04:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933043AbWFXAEq
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 20:04:46 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:31109 "EHLO
+	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932730AbWFXAEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jun 2006 20:04:46 -0400
+Received: from virusscan.mail (localhost [127.0.0.1])
+	by mailrelay.mail (Postfix) with ESMTP id 34CFA2874;
+	Sat, 24 Jun 2006 02:04:45 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by virusscan.mail (Postfix) with ESMTP id 28F732870;
+	Sat, 24 Jun 2006 02:04:45 +0200 (CEST)
+Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
+	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id E890121CC;
+	Sat, 24 Jun 2006 02:04:44 +0200 (CEST)
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodwj8n9s.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22458>
 
-Makes sense.  Thanks.
+Hi,
+
+On Fri, 23 Jun 2006, Junio C Hamano wrote:
+
+> I personally feel that the benefit of being able to make sure you 
+> covered everything outweighs the size of initial diff.
+
+IMHO the difficulty of finding bugs is proportional to the square of the 
+diff size, while the number of people willing to review it is proportional 
+to its square root. So, if it is not difficult (which it is not at all in 
+this case), I politely ask to cut the patch size down.
+
+Ciao,
+Dscho
