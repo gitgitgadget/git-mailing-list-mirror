@@ -1,79 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: PPC SHA-1 Updates in "pu"
-Date: Sat, 24 Jun 2006 13:21:30 -0700
-Message-ID: <7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 24 Jun 2006 13:42:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606241338370.6483@g5.osdl.org>
 References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
-	<20060624012202.4822.qmail@science.horizon.com>
-	<7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
-	<7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
+ <20060624012202.4822.qmail@science.horizon.com> <7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
+ <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
+ <7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Jun 24 22:21:56 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 22:42:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuEdT-0005ja-TK
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 22:21:44 +0200
+	id 1FuExo-00086i-41
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 22:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085AbWFXUVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 16:21:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbWFXUVd
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 16:21:33 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:947 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751085AbWFXUVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jun 2006 16:21:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060624202131.TZGA11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Jun 2006 16:21:31 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606241147480.6483@g5.osdl.org> (Linus Torvalds's
-	message of "Sat, 24 Jun 2006 11:55:46 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751097AbWFXUmf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 16:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbWFXUmf
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 16:42:35 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:7639 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751097AbWFXUmf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 16:42:35 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5OKgQUT032046
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 24 Jun 2006 13:42:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5OKgPON003914;
+	Sat, 24 Jun 2006 13:42:26 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22545>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> Also, "pu" in general is totally unusable. It doesn't even compile.
 
-Care to share problems with Pasky and I to take a look at,
-please?
+On Sat, 24 Jun 2006, Junio C Hamano wrote:
 
-> I think that "Git.xs" thing is fine for random hacks, but please please 
-> PLEASE don't make any central program depend on it.
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > Also, "pu" in general is totally unusable. It doesn't even compile.
+> 
+> Care to share problems with Pasky and I to take a look at,
+> please?
 
-I agree.  I got really disgusted when I tentatively pulled the
-current Git.xs into "next" and installed it for my own use to
-notice that it broke git-fmt-merge-msg hence git-pull workflow.
+Don't everybody see them?
 
-Pasky, can we first iron out kinks in the build procedure and
-installation before converting existing programs further?  The
-things I worry about currently are:
+	In file included from Git.xs:8:
+	../cache.h:6:10: error: #include expects "FILENAME" or <FILENAME>
+	In file included from /usr/lib/perl5/5.8.8/ppc-linux-thread-multi/CORE/perl.h:756,
+	                 from Git.xs:15:
+	/usr/lib/perl5/5.8.8/ppc-linux-thread-multi/CORE/embed.h:4195:1: warning: "die" redefined
+	Git.xs:11:1: warning: this is the location of the previous definition
+	Git.xs: In function 'boot_Git':
+	Git.xs:57: warning: passing argument 1 of 'set_error_routine' from incompatible pointer type
+	Git.xs:58: warning: passing argument 1 of 'set_die_routine' makes qualified function pointer from unqualified
+	make[1]: *** [Git.o] Error 1
+	make[1]: Leaving directory `/home/torvalds/git/perl'
+	make: *** [all] Error 2
 
- - the SITELIBARCH gotcha I sent you a message about (and you
-   responded to it already -- was that an Acked-by?);
+how does that compile for anybody else, when -DSHA1_HEADER isn't set 
+correctly? The quotes have gone missing:
 
- - RPM target -- we probably acquired a new build-dependency in
-   which case the .spec file needs to be updated;
+	-DSHA1_HEADER='ppc/sha1.h' 
 
- - Make sure Git.xs builds and installed result works fine on
-   all platforms we care about, including Cygwin and other
-   non-Linux boxes.
+don't ask me why.
 
-I'd even suggest we revert the changes to git-fmt-merge-msg to
-keep it working for now, until the above worries are resolved.
-Otherwise we cannot have it in "next" safely (and I REALLY _do_
-want to have Git.pm infrastructure in "next" soonish).
-
-We can start using Git.xs and friends in some _new_ ancillary
-programs, once we solve building and installing problems for
-everybody.  That way it would help us gain portability and
-confidence without disrupting existing users.
+		Linus
