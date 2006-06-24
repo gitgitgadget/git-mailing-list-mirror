@@ -1,55 +1,46 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff --color: use $GIT_DIR/config
-Date: Sat, 24 Jun 2006 21:44:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606242037550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v8xnpj7hg.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606221301500.5498@g5.osdl.org>
- <Pine.LNX.4.63.0606231305000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0606230756050.6483@g5.osdl.org> <7v7j36yfh1.fsf_-_@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: From b65bc21e7d8dc8cafc70dfa6354cb66b8874b2d9 Mon Sep 17 00:00:00 2001 [PATCH] Makefile: add framework to verify and bench sha1 implementations.
+Date: Sat, 24 Jun 2006 12:47:12 -0700
+Message-ID: <7virmquyin.fsf@assigned-by-dhcp.cox.net>
+References: <20060624092921.32165.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Jun 24 21:45:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Jun 24 21:47:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuE3r-0001RU-SC
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 21:44:56 +0200
+	id 1FuE69-0001qo-DV
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 21:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751074AbWFXTow (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 15:44:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbWFXTow
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 15:44:52 -0400
-Received: from mail.gmx.net ([213.165.64.21]:55466 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751074AbWFXTow (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 15:44:52 -0400
-Received: (qmail invoked by alias); 24 Jun 2006 19:44:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 24 Jun 2006 21:44:51 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j36yfh1.fsf_-_@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751077AbWFXTrP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 15:47:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbWFXTrO
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 15:47:14 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46242 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1751077AbWFXTrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 15:47:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060624194713.BKGV1341.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 24 Jun 2006 15:47:13 -0400
+To: linux@horizon.com
+In-Reply-To: <20060624092921.32165.qmail@science.horizon.com>
+	(linux@horizon.com's message of "24 Jun 2006 05:29:21 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22540>
 
-Hi,
+linux@horizon.com writes:
 
-On Sat, 24 Jun 2006, Junio C Hamano wrote:
+> Nice work, but I might point out that the original PPC SHA bug was hashing
+> more than 0.5G of contiguous data in a *single* call to SHA1_Update,
+> while your test program works with 8K buffers.
 
->  BTW, while doing this, I noticed that the patch does not do the
->  color output for combined diffs.  Care to look into it after
->  Timo's output format series settles?
-
-You mean just copying the relevant parts from your patch, which I missed, 
-and do minimal testing? Sure ;-)
-
-But first, by way of thanks to Martin, I have to reintroduce into 
-format-patch the check for patches which are already upstream.
-
-Ciao,
-Dscho
+Blush.  I realized it and updated the version in "pu" after I
+sen the message.
