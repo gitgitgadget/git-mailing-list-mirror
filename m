@@ -1,56 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/5] Rework diff options
-Date: Fri, 23 Jun 2006 19:51:09 -0700
-Message-ID: <7vac835krm.fsf@assigned-by-dhcp.cox.net>
-References: <20060624011538.9bb179e7.tihirvon@gmail.com>
-	<Pine.LNX.4.63.0606240024460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vodwj8n9s.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0606240201580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 01/12] Introduce Git.pm (v4)
+Date: Sat, 24 Jun 2006 05:14:36 +0200
+Message-ID: <20060624031436.GQ21864@pasky.or.cz>
+References: <20060624023429.32751.80619.stgit@machine.or.cz> <7vr71f5kzs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 04:51:21 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 24 05:14:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtyEt-0008Vn-8Q
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:51:15 +0200
+	id 1Ftybc-0002dP-3f
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 05:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933207AbWFXCvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 22:51:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933206AbWFXCvM
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:51:12 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:1998 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S933207AbWFXCvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 22:51:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060624025110.KTPD8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Jun 2006 22:51:10 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606240201580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 24 Jun 2006 02:04:44 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750881AbWFXDOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 23:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbWFXDOj
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 23:14:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:206 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750881AbWFXDOi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 23:14:38 -0400
+Received: (qmail 2553 invoked by uid 2001); 24 Jun 2006 05:14:36 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr71f5kzs.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22482>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Dear diary, on Sat, Jun 24, 2006 at 04:46:15AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Just to let you know, I already have v3 in my tree which is
+> merged in "pu".  With the two fixes I sent you earlier I think
+> it is in a good shape to be cooked in "next".
 
-> On Fri, 23 Jun 2006, Junio C Hamano wrote:
->
->> I personally feel that the benefit of being able to make sure you 
->> covered everything outweighs the size of initial diff.
->
-> IMHO the difficulty of finding bugs is proportional to the square of the 
-> diff size, while the number of people willing to review it is proportional 
-> to its square root. So, if it is not difficult (which it is not at all in 
-> this case), I politely ask to cut the patch size down.
+Ah, yes, could you please apply your fixes as well? :-)
 
-Yeah, your "renaming in private while you are making sure but
-rename them back" suggestion actually would work in this case.
+> I do not think I'd have trouble applying this new series (I
+> would probably start from "master" to apply it and perhaps merge
+> or --squash merge it onto pb/gitpm topic branch that has v3 with
+> the two fixes I sent you separately) but we will see soon
+> enough.
+
+I noticed v3 in pu but thought that it should be trivial to just throw
+that away from pu and take v4 instead - I'm sorry if that turns out to
+be an issue.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
