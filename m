@@ -1,53 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: commit triggers.
-Date: Fri, 23 Jun 2006 23:43:03 -0700
-Message-ID: <7vmzc32gw8.fsf@assigned-by-dhcp.cox.net>
-References: <20060624032908.GH19461@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 24 08:43:13 2006
+From: linux@horizon.com
+Subject: Re: x86 asm SHA1 (draft)
+Date: 23 Jun 2006 21:22:02 -0400
+Message-ID: <20060624012202.4822.qmail@science.horizon.com>
+References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
+Cc: linux@horizon.com
+X-From: git-owner@vger.kernel.org Sat Jun 24 08:47:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fu1rK-0008Tk-Db
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 08:43:10 +0200
+	id 1Fu1vq-0000U0-K7
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 08:47:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932902AbWFXGnF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 02:43:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932905AbWFXGnF
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 02:43:05 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:13722 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932902AbWFXGnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jun 2006 02:43:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060624064304.QWHB18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 24 Jun 2006 02:43:04 -0400
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20060624032908.GH19461@redhat.com> (Dave Jones's message of
-	"Fri, 23 Jun 2006 23:29:08 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932907AbWFXGrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 02:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932908AbWFXGrr
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 02:47:47 -0400
+Received: from science.horizon.com ([192.35.100.1]:33350 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932907AbWFXGrq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 02:47:46 -0400
+Received: (qmail 4823 invoked by uid 1000); 23 Jun 2006 21:22:02 -0400
+To: git@vger.kernel.org, junkio@cox.net
+In-Reply-To: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22486>
 
-Dave Jones <davej@redhat.com> writes:
+> The series to revamp SHA1 is good but judging the merit of each
+> is outside my expertise, so I'd appreciate help to evaluate
+> these changes.  For example, I cannot choose between competing
+> three implementations for ppc without having access to a variety
+> of ppc machines, and even if I did, ppc is not what I normally
+> use, so incentive to try picking the best one for everybody is
+> relatively low on my part.
 
-> I've grepped around, and come up with nothing, so hopefully
-> I'm not overlooking some already-implemented feature
-> (though it'd be great if I am).  How much work is involved in
-> creating a mechanism where some scripts living in say .git/triggers/
-> get executed on commits ?
+Well, I'm not sure it's worth this much trouble.  Both of my PPC
+implementations are smaller and faster than the current one,
+so that's a pretty easy decision.  The difference between them
+is 2-3%, which is, I think, not enough to be worth the maintenance
+burden of a run-time decision infrastructure.  Just pick either one
+and call it a day.
 
-Perhaps "grep hooks/ git-commit.sh"?
+> The only external interface for the set of SHA1 implementation
+> alternatives to the outside world is a well established SHA_CTX
+> type, and three functions SHA1_Init(), SHA1_Update() and
+> SHA1_Final(), and the alternative implementations are supposed
+> to be drop-in replaceable.
 
-The hooks we have right now are more interested in preventing
-you from making crappy commits, so we might not have a
-post-commit hook you can use for notification purposes, but if
-that is the case I am open to suggestions to add one.  I think
-post-commit hook is already there, though.
+I'd prefer it it was an *opaque* SHA_CTX type.  Sometimes you can achieve
+some useful benefits by rearranging the fields.  For example, keeping the
+64-bit length field as a native-order 64-bit number when appropriate.
+And sometimes it's useful to have the full 80-word W[] array, while
+other implementations don't want it.
+
+> We probably would want to collect the benchmark results from
+> popular platforms, have a summary to help people to choose a
+> sensible one in the toplevel INSTALL file, and include the raw
+> numbers in Documentation/technical/sha1-implementations.txt.
+
+Not that numbers are bad, but I think that until there's a real
+need for more than a single good-enough version per instruction set,
+this is excessive.  Does hashing even show up on a profile?
