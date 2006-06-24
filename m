@@ -1,229 +1,137 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 07/12] Git.pm: Better error handling
-Date: Sat, 24 Jun 2006 04:34:42 +0200
-Message-ID: <20060624023442.32751.28342.stgit@machine.or.cz>
+Subject: [PATCH 10/12] Git.pm: Implement options for the command interface
+Date: Sat, 24 Jun 2006 04:34:49 +0200
+Message-ID: <20060624023449.32751.90490.stgit@machine.or.cz>
 References: <20060624023429.32751.80619.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 24 04:35:33 2006
+X-From: git-owner@vger.kernel.org Sat Jun 24 04:35:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtxzZ-0006iq-95
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:35:25 +0200
+	id 1Ftxzj-0006kM-9u
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 04:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933197AbWFXCfV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 22:35:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933196AbWFXCfV
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:35:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:62871 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S933197AbWFXCfU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:35:20 -0400
-Received: (qmail 352 invoked from network); 24 Jun 2006 04:34:42 +0200
+	id S933201AbWFXCfa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 22:35:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933199AbWFXCfa
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 22:35:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:64407 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S933201AbWFXCf2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 22:35:28 -0400
+Received: (qmail 376 invoked from network); 24 Jun 2006 04:34:49 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 24 Jun 2006 04:34:42 +0200
+  by localhost with SMTP; 24 Jun 2006 04:34:49 +0200
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <20060624023429.32751.80619.stgit@machine.or.cz>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22473>
 
-So far, errors just killed the whole program and in case of an error
-inside of libgit it would be totally uncatchable. This patch makes
-Git.pm throw standard Perl exceptions instead. In the future we might
-subclass Error to Git::Error or something but for now Error::Simple
-is more than enough.
+This gives the user a way to easily pass options to the command routines.
+Currently only the STDERR option is implemented and can be used to adjust
+what shall be done with error output of the called command (most usefully,
+it can be used to silence it).
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- perl/Git.pm |   37 +++++++++++++++++++++----------------
- perl/Git.xs |   39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 16 deletions(-)
+ perl/Git.pm |   37 +++++++++++++++++++++++++++++++++++--
+ 1 files changed, 35 insertions(+), 2 deletions(-)
 
 diff --git a/perl/Git.pm b/perl/Git.pm
-index dcd769b..733fec9 100644
+index 11ec62d..e2b66c4 100644
 --- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -88,7 +88,8 @@ increate nonwithstanding).
+@@ -36,7 +36,8 @@ # Totally unstable API.
+   my $lastrev = <$fh>; chomp $lastrev;
+   $repo->command_close_pipe($fh, $c);
+ 
+-  my $lastrev = $repo->command_oneline('rev-list', '--all');
++  my $lastrev = $repo->command_oneline( [ 'rev-list', '--all' ],
++                                        STDERR => 0 );
+ 
  =cut
  
+@@ -178,9 +179,21 @@ sub repository {
  
--use Carp qw(carp croak);
-+use Carp qw(carp); # croak is bad - throw instead
-+use Error qw(:try);
+ =item command ( COMMAND [, ARGUMENTS... ] )
  
- require XSLoader;
- XSLoader::load('Git', $VERSION);
-@@ -143,14 +144,14 @@ sub repository {
- 	if (defined $args[0]) {
- 		if ($#args % 2 != 1) {
- 			# Not a hash.
--			$#args == 0 or croak "bad usage";
--			%opts = (Directory => $args[0]);
-+			$#args == 0 or throw Error::Simple("bad usage");
-+			%opts = ( Directory => $args[0] );
- 		} else {
- 			%opts = @args;
- 		}
++=item command ( [ COMMAND, ARGUMENTS... ], { Opt => Val ... } )
++
+ Execute the given Git C<COMMAND> (specify it without the 'git-'
+ prefix), optionally with the specified extra C<ARGUMENTS>.
  
- 		if ($opts{Directory}) {
--			-d $opts{Directory} or croak "Directory not found: $!";
-+			-d $opts{Directory} or throw Error::Simple("Directory not found: $!");
- 			if (-d $opts{Directory}."/.git") {
- 				# TODO: Might make this more clever
- 				$opts{WorkingCopy} = $opts{Directory};
-@@ -242,11 +243,11 @@ read.
- sub command_pipe {
- 	my ($self, $cmd, @args) = _maybe_self(@_);
++The second more elaborate form can be used if you want to further adjust
++the command execution. Currently, only one option is supported:
++
++B<STDERR> - How to deal with the command's error output. By default (C<undef>)
++it is delivered to the caller's C<STDERR>. A false value (0 or '') will cause
++it to be thrown away. If you want to process it, you can get it in a filehandle
++you specify, but you must be extremely careful; if the error output is not
++very short and you want to read it in the same process as where you called
++C<command()>, you are set up for a nice deadlock!
++
+ The method can be called without any instance or on a specified Git repository
+ (in that case the command will be run in the repository context).
  
--	$cmd =~ /^[a-z0-9A-Z_-]+$/ or croak "bad command: $cmd";
-+	$cmd =~ /^[a-z0-9A-Z_-]+$/ or throw Error::Simple("bad command: $cmd");
+@@ -231,6 +244,8 @@ sub command {
  
- 	my $pid = open(my $fh, "-|");
+ =item command_oneline ( COMMAND [, ARGUMENTS... ] )
+ 
++=item command_oneline ( [ COMMAND, ARGUMENTS... ], { Opt => Val ... } )
++
+ Execute the given C<COMMAND> in the same way as command()
+ does but always return a scalar string containing the first line
+ of the command's standard output.
+@@ -256,6 +271,8 @@ sub command_oneline {
+ 
+ =item command_output_pipe ( COMMAND [, ARGUMENTS... ] )
+ 
++=item command_output_pipe ( [ COMMAND, ARGUMENTS... ], { Opt => Val ... } )
++
+ Execute the given C<COMMAND> in the same way as command()
+ does but return a pipe filehandle from which the command output can be
+ read.
+@@ -272,6 +289,8 @@ sub command_output_pipe {
+ 
+ =item command_input_pipe ( COMMAND [, ARGUMENTS... ] )
+ 
++=item command_input_pipe ( [ COMMAND, ARGUMENTS... ], { Opt => Val ... } )
++
+ Execute the given C<COMMAND> in the same way as command_output_pipe()
+ does but return an input pipe filehandle instead; the command output
+ is not captured.
+@@ -534,13 +553,27 @@ sub _check_valid_cmd {
+ # Common backend for the pipe creators.
+ sub _command_common_pipe {
+ 	my $direction = shift;
+-	my ($self, $cmd, @args) = _maybe_self(@_);
++	my ($self, @p) = _maybe_self(@_);
++	my (%opts, $cmd, @args);
++	if (ref $p[0]) {
++		($cmd, @args) = @{shift @p};
++		%opts = ref $p[0] ? %{$p[0]} : @p;
++	} else {
++		($cmd, @args) = @p;
++	}
+ 	_check_valid_cmd($cmd);
+ 
+ 	my $pid = open(my $fh, $direction);
  	if (not defined $pid) {
--		croak "open failed: $!";
-+		throw Error::Simple("open failed: $!");
+ 		throw Error::Simple("open failed: $!");
  	} elsif ($pid == 0) {
++		if (defined $opts{STDERR}) {
++			close STDERR;
++		}
++		if ($opts{STDERR}) {
++			open (STDERR, '>&', $opts{STDERR})
++				or die "dup failed: $!";
++		}
  		_cmd_exec($self, $cmd, @args);
  	}
-@@ -271,16 +272,17 @@ The function returns only after the comm
- sub command_noisy {
- 	my ($self, $cmd, @args) = _maybe_self(@_);
- 
--	$cmd =~ /^[a-z0-9A-Z_-]+$/ or croak "bad command: $cmd";
-+	$cmd =~ /^[a-z0-9A-Z_-]+$/ or throw Error::Simple("bad command: $cmd");
- 
- 	my $pid = fork;
- 	if (not defined $pid) {
--		croak "fork failed: $!";
-+		throw Error::Simple("fork failed: $!");
- 	} elsif ($pid == 0) {
- 		_cmd_exec($self, $cmd, @args);
- 	}
- 	if (waitpid($pid, 0) > 0 and $? != 0) {
--		croak "exit status: $?";
-+		# This is the best candidate for a custom exception class.
-+		throw Error::Simple("exit status: $?");
- 	}
- }
- 
-@@ -340,10 +342,10 @@ # Implemented in Git.xs.
- 
- =back
- 
--=head1 TODO
-+=head1 ERROR HANDLING
- 
--This is still fairly crude.
--We need some good way to report errors back except just dying.
-+All functions are supposed to throw Perl exceptions in case of errors.
-+See L<Error>.
- 
- =head1 COPYRIGHT
- 
-@@ -372,8 +374,8 @@ sub _cmd_exec {
- 		$self->{opts}->{Repository} and $ENV{'GIT_DIR'} = $self->{opts}->{Repository};
- 		$self->{opts}->{WorkingCopy} and chdir($self->{opts}->{WorkingCopy});
- 	}
--	xs__execv_git_cmd(@args);
--	croak "exec failed: $!";
-+	_execv_git_cmd(@args);
-+	die "exec failed: $!";
- }
- 
- # Execute the given Git command ($_[0]) with arguments ($_[1..])
-@@ -388,7 +390,8 @@ sub _cmd_close {
- 			# It's just close, no point in fatalities
- 			carp "error closing pipe: $!";
- 		} elsif ($? >> 8) {
--			croak "exit status: ".($? >> 8);
-+			# This is the best candidate for a custom exception class.
-+			throw Error::Simple("exit status: ".($? >> 8));
- 		}
- 		# else we might e.g. closed a live stream; the command
- 		# dying of SIGPIPE would drive us here.
-@@ -415,6 +418,8 @@ sub _call_gate {
- 		#xs_call_gate($self->{opts}->{Repository});
- 	}
- 
-+	# Having to call throw from the C code is a sure path to insanity.
-+	local $SIG{__DIE__} = sub { throw Error::Simple("@_"); };
- 	&$xsfunc(@args);
- }
- 
-@@ -422,7 +427,7 @@ sub AUTOLOAD {
- 	my $xsname;
- 	our $AUTOLOAD;
- 	($xsname = $AUTOLOAD) =~ s/.*:://;
--	croak "&Git::$xsname not defined" if $xsname =~ /^xs_/;
-+	throw Error::Simple("&Git::$xsname not defined") if $xsname =~ /^xs_/;
- 	$xsname = 'xs_'.$xsname;
- 	_call_gate(\&$xsname, @_);
- }
-diff --git a/perl/Git.xs b/perl/Git.xs
-index 9623fdd..ebaac4b 100644
---- a/perl/Git.xs
-+++ b/perl/Git.xs
-@@ -8,6 +8,8 @@ #include <ctype.h>
- #include "../cache.h"
- #include "../exec_cmd.h"
- 
-+#define die perlyshadow_die__
-+
- /* XS and Perl interface */
- #include "EXTERN.h"
- #include "perl.h"
-@@ -15,11 +17,48 @@ #include "XSUB.h"
- 
- #include "ppport.h"
- 
-+#undef die
-+
-+
-+static char *
-+report_xs(const char *prefix, const char *err, va_list params)
-+{
-+	static char buf[4096];
-+	strcpy(buf, prefix);
-+	vsnprintf(buf + strlen(prefix), 4096 - strlen(prefix), err, params);
-+	return buf;
-+}
-+
-+void
-+die_xs(const char *err, va_list params)
-+{
-+	char *str;
-+	str = report_xs("fatal: ", err, params);
-+	croak(str);
-+}
-+
-+int
-+error_xs(const char *err, va_list params)
-+{
-+	char *str;
-+	str = report_xs("error: ", err, params);
-+	warn(str);
-+	return -1;
-+}
-+
- 
- MODULE = Git		PACKAGE = Git		
- 
- PROTOTYPES: DISABLE
- 
-+
-+BOOT:
-+{
-+	set_error_routine(error_xs);
-+	set_die_routine(die_xs);
-+}
-+
-+
- # /* TODO: xs_call_gate(). See Git.pm. */
- 
- 
+ 	return wantarray ? ($fh, join(' ', $cmd, @args)) : $fh;
