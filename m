@@ -1,79 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Introduce Git.pm (v3)
-Date: Fri, 23 Jun 2006 18:07:14 -0700
-Message-ID: <7vzmg35pkt.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
-	<20060623011205.GJ21864@pasky.or.cz>
-	<7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
-	<m1k678yt6m.fsf@ebiederm.dsl.xmission.com>
-	<20060622220201.19132.67536.stgit@machine.or.cz>
-	<7vlkrohj9p.fsf@assigned-by-dhcp.cox.net>
-	<20060622235017.GH21864@pasky.or.cz>
-	<7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
-	<20060623011205.GJ21864@pasky.or.cz>
-	<7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
-	<20060623123904.GL21864@pasky.or.cz>
-	<7vejxf74e3.fsf@assigned-by-dhcp.cox.net>
+From: "=?utf-8?q?S=2E=C3=87a=C4=9Flar?= Onur" <caglar@pardus.org.tr>
+Subject: [Patch] trap: exit: invalid signal specification
+Date: Sat, 24 Jun 2006 04:10:12 +0300
+Organization: =?utf-8?q?T=C3=9CB=C4=B0TAK_/?= UEKAE
+Message-ID: <200606240410.18334.caglar@pardus.org.tr>
+Reply-To: caglar@pardus.org.tr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 24 03:07:26 2006
+Content-Type: multipart/signed;
+  boundary="nextPart20559460.BHK1FWBiLA";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jun 24 03:10:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FtwcM-0005Oh-H2
-	for gcvg-git@gmane.org; Sat, 24 Jun 2006 03:07:22 +0200
+	id 1FtwfI-0005hx-Ok
+	for gcvg-git@gmane.org; Sat, 24 Jun 2006 03:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346AbWFXBHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Jun 2006 21:07:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933172AbWFXBHS
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 21:07:18 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:22739 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932346AbWFXBHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jun 2006 21:07:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060624010715.JDBN12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 23 Jun 2006 21:07:15 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vejxf74e3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 23 Jun 2006 18:01:56 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S933172AbWFXBKW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Jun 2006 21:10:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933174AbWFXBKW
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jun 2006 21:10:22 -0400
+Received: from ns2.uludag.org.tr ([193.140.100.220]:2780 "EHLO uludag.org.tr")
+	by vger.kernel.org with ESMTP id S933172AbWFXBKV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jun 2006 21:10:21 -0400
+Received: from zangetsu.local (unknown [85.101.118.248])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 274EE34C6BA
+	for <git@vger.kernel.org>; Sat, 24 Jun 2006 04:10:19 +0300 (EEST)
+To: Git Mailing List <git@vger.kernel.org>
+User-Agent: KMail/1.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22465>
 
-Junio C Hamano <junkio@cox.net> writes:
+--nextPart20559460.BHK1FWBiLA
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
->> It should be enough to -I../perl/blib/lib -I../perl/blib/arch/auto/Git.
->
-> -- >8 --
-> [PATCH] Perl interface: add build-time configuration to allow building with -fPIC
->
-> On x86-64 it seems that Git.xs does not link without compiling
-> the main git objects with -fPIC.
->
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
+Hi;
 
-Eh, sorry this was in response to this part of Pasky's message:
+This tiny patch is needed to solve
 
->> Well, for the .xs you do need an .so and for that you apparently need
->> -fPIC on most architectures, so there's no way around it.
->> 
->> There's a patch to build libgit.so, would you take it as an excuse to
->> always compile with -fPIC? ;-)
+caglar@zangetsu ~ $ git-clone=20
+/usr/bin/git-clone: line 121: trap: exit: invalid signal specification
 
-By the way, I noticed NO_ACCURATE_DIFF is a compile time option
-to cause git-apply to accept diff output from implementations
-that botch "\No newline at the end of file", and I think it is
-wrong -- it should be a run time option to git-apply if we would
-want to support it, because the version of diff you have does
-not have much to do with which implementations of diff were used
-to generate patches you would receive and apply.
+error under tr_TR.UTF-8 (and other Turkic locales). For these locales=20
+upper(i) !=3D I .
 
-Thoughts?
+P.S: If needed please CC me, i'm not subscribed to list
+
+Signed-off-by: S.=C3=87a=C4=9Flar Onur <caglar@pardus.org.tr>
+=2D--
+
+diff -ur git-1.4.0.orig/git-clone.sh git-1.4.0/git-clone.sh
+=2D-- git-1.4.0.orig/git-clone.sh=C2=A02006-06-10 22:41:54.000000000 +0300
++++ git-1.4.0/git-clone.sh=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A02006-06-24 03=
+:54:49.000000000 +0300
+@@ -205,7 +205,7 @@
+=C2=A0[ -e "$dir" ] && echo "$dir already exists." && usage
+=C2=A0mkdir -p "$dir" &&
+=C2=A0D=3D$(cd "$dir" && pwd) &&
+=2Dtrap 'err=3D$?; cd ..; rm -r "$D"; exit $err' 0
++trap 'err=3D$?; cd ..; rm -r "$D"; EXIT $err' 0
+=C2=A0case "$bare" in
+=C2=A0yes)
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0GIT_DIR=3D"$D" ;;
+
+=2D-=20
+S.=C3=87a=C4=9Flar Onur <caglar@pardus.org.tr>
+http://cekirdek.pardus.org.tr/~caglar/
+
+Linux is like living in a teepee. No Windows, no Gates and an Apache in hou=
+se!
+
+--nextPart20559460.BHK1FWBiLA
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+
+iD8DBQBEnJD6y7E6i0LKo6YRAqeJAJ0YI9isWFMb3aJ19MnhWUOIaPei0ACgtMZ8
+uXjiIGMAsV/ZXV4Pp8xrDjQ=
+=ttY0
+-----END PGP SIGNATURE-----
+
+--nextPart20559460.BHK1FWBiLA--
