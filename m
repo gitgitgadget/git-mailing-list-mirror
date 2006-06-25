@@ -1,165 +1,98 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [RFC] git --trace: trace command execution
-Date: Sun, 25 Jun 2006 12:57:09 +0200
-Message-ID: <E1FuSIf-0004jK-Tp@moooo.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] GIT user survey
+Date: Sun, 25 Jun 2006 04:06:31 -0700
+Message-ID: <7vfyhtv6iw.fsf@assigned-by-dhcp.cox.net>
+References: <4d8e3fd30606240918m6b452314m6514b5e5fc86f147@mail.gmail.com>
+	<46a038f90606241642q1467d577q329412f4ad09da34@mail.gmail.com>
+	<4d8e3fd30606250347o47c4b200t6feb0406bfa535fa@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jun 25 12:57:19 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 25 13:06:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuSIn-000255-KW
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 12:57:17 +0200
+	id 1FuSRq-0003Hg-Al
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 13:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346AbWFYK5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 06:57:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932347AbWFYK5P
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 06:57:15 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:45988 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S932346AbWFYK5O (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 06:57:14 -0400
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: mutt-ng/devel-r790 (Linux)
+	id S932355AbWFYLGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 07:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbWFYLGe
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 07:06:34 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:29434 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932358AbWFYLGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jun 2006 07:06:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060625110632.BJZU8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Jun 2006 07:06:32 -0400
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+In-Reply-To: <4d8e3fd30606250347o47c4b200t6feb0406bfa535fa@mail.gmail.com>
+	(Paolo Ciarrocchi's message of "Sun, 25 Jun 2006 12:47:50 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22611>
 
-Show parameters to execve/builtin-cmds before executing them. This
-version does not yet have a parameter --trace to git to enable this I
-just want to get feedback first :)
+"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
 
-I think this is quite useful to debug what is going on since a command
-may be another program (shell/python/perl/.. script etc) or just an
-alias for a internal command. Before that many commands became
-built-ins this was quite easy to do with strace.
+> About you
+>
+>    1. What country are you in?
+>    2. What is your preferred language?
+>    3. What's your gender?
 
-Example:
-% git repo-config alias.showtag
-trace: exec: /home/matled/local/stow/git/bin/git-repo-config
-alias.showtag
-% git showtag v1.4.1-rc1 > /dev/null
-trace: exec: /home/matled/local/stow/git/bin/git-showtag v1.4.1-rc1
-trace: exec failed: No such file or directory
-trace: built-in command: git cat-file tag v1.4.1-rc1
-% git showtag 'a b "c" `d` $e \f'
-trace: exec: /home/matled/local/stow/git/bin/git-showtag "a b \"c\" \`d\` \$e \\f"
-trace: exec failed: No such file or directory
-trace: built-in command: git cat-file tag "a b \"c\" \`d\` \$e \\f"
-fatal: Not a valid object name a b "c" `d` $e \f
-% git cat-file tag "a b \"c\" \`d\` \$e \\f"
-trace: built-in command: git cat-file tag "a b \"c\" \`d\` \$e \\f"
-fatal: Not a valid object name a b "c" `d` $e \f
+Demography is interesting and quite relevant to understand the
+bias in the answers to the rest of the questions, although I do
+not see much point about #3.  Question #2 is relevant in i18n,
+of course.
 
-print_shell_escape will escape the arguments to be used as strings in
-the shell to prevent ambiguity with spaces and other special
-characters and make them copy-and-pastable.
+I would also ask if the respondent has her own patch in the
+git.git repository.  If most of them are git developers, the
+answer to the question "was git easy to learn" becomes
+suspicious, for example.
 
----
- exec_cmd.c |   42 ++++++++++++++++++++++++++++++++++++++++++
- exec_cmd.h |    1 +
- git.c      |   10 ++++++++++
- 3 files changed, 53 insertions(+), 0 deletions(-)
+> Getting started with GIT
+>
+>    1. How did you hear about GIT?
+>    2. Did you find GIT easy to learn?
+>    3. What helped you most in learning to use it?
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index c1539d1..85afbf3 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -87,6 +87,16 @@ int execv_git_cmd(const char **argv)
- 			break;
- 		}
- 
-+		fprintf(stderr, "trace: exec: ");
-+		print_shell_escape(stderr, git_command);
-+		const char **p = argv;
-+		while (*(++p)) {
-+			putc(' ', stderr);
-+			print_shell_escape(stderr, *p);
-+		}
-+		putc('\n', stderr);
-+		fflush(stderr);
-+
- 		/* argv[0] must be the git command, but the argv array
- 		 * belongs to the caller, and my be reused in
- 		 * subsequent loop iterations. Save argv[0] and
-@@ -98,6 +108,8 @@ int execv_git_cmd(const char **argv)
- 
- 		/* execve() can only ever return if it fails */
- 		execve(git_command, (char **)argv, environ);
-+		fprintf(stderr, "trace: exec failed: %s\n", strerror(errno));
-+		fflush(stderr);
- 
- 		argv[0] = tmp;
- 	}
-@@ -128,3 +140,33 @@ int execl_git_cmd(const char *cmd,...)
- 	argv[argc] = NULL;
- 	return execv_git_cmd(argv);
- }
-+
-+void print_shell_escape(FILE *stream, const char *s)
-+{
-+	const char *c = s;
-+	short int quote = 0;
-+	while (*c) {
-+		if (*c == '"' || *c == '`' || *c == '$' || *c == '\\' ||
-+			isspace(*c))
-+		{
-+			quote = 1;
-+			break;
-+		}
-+		++c;
-+	}
-+
-+	if (!quote) {
-+		fputs(s, stream);
-+		return;
-+	}
-+
-+	putc('"', stream);
-+	c = s;
-+	while (*c) {
-+		if (*c == '"' || *c == '`' || *c == '$' || *c == '\\')
-+			putc('\\', stream);
-+		putc(*c, stream);
-+		++c;
-+	}
-+	putc('"', stream);
-+}
-diff --git a/exec_cmd.h b/exec_cmd.h
-index 989621f..8b237fa 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -5,6 +5,7 @@ extern void git_set_exec_path(const char
- extern const char* git_exec_path(void);
- extern int execv_git_cmd(const char **argv); /* NULL terminated */
- extern int execl_git_cmd(const char *cmd, ...);
-+extern void print_shell_escape(FILE *stream, const char *s);
- 
- 
- #endif /* __GIT_EXEC_CMD_H_ */
-diff --git a/git.c b/git.c
-index 94e9a4a..361fb25 100644
---- a/git.c
-+++ b/git.c
-@@ -198,6 +198,16 @@ static void handle_internal_command(int 
- 		struct cmd_struct *p = commands+i;
- 		if (strcmp(p->cmd, cmd))
- 			continue;
-+
-+		fprintf(stderr, "trace: built-in command: git");
-+		int i;
-+		for (i = 0; i < argc; ++i) {
-+			putc(' ', stderr);
-+			print_shell_escape(stderr, argv[i]);
-+		}
-+		putc('\n', stderr);
-+		fflush(stderr);
-+
- 		exit(p->fn(argc, argv, envp));
- 	}
- }
--- 
-1.4.GIT
+Also "When did you start using git?" -- old timers who learned
+git when it was still young and small would have had an easier
+time to learn it.
+
+> How you use GIT
+>
+>    1. Do you use GIT for work, unpaid projects, or both?
+>    2. How do you obtain GIT?  Source tarball, binary package, or
+>       pull the main repository?
+>    3. What platforms (hardware, OS, version) do you use GIT on?
+>    4. How many people do you collaborate with using GIT?
+>    5. How big are the repositories that you work on? (e.g. how many
+>       files, how much disk space)
+>    6. How many different projects do you manage using GIT?
+>    7. Which porcelains do you use?
+
+After seeing the Mercurial survey result, I think question #3
+should be stated a bit more concretely.  The results having
+mixture of i386 and Linux are not very interesting.  I would
+also add "how deep the history" to #5.
+
+> Getting help, staying in touch
+>
+>    1. Have you tried to get GIT help from other people?
+>          * If yes, did you get these problems resolved quickly and to
+>            your liking?
+>    2. Do you subscribe to the mailing list?
+>          * If yes, do you find it useful, and traffic levels OK?
+>    3. Do you use the IRC channel (#git on irc.freenode.net)?
+>          * If no, did you know that all of the core developers use
+>            IRC, and that there's almost 24-hour help available?
+
+About #3, I do not see some people I consider "core" often on
+the IRC.  Maybe "most of the core".
