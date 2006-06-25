@@ -1,52 +1,54 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 1/3] rebase: allow --merge option to handle patches merged upstream
-Date: Sat, 24 Jun 2006 21:59:12 -0700
-Message-ID: <20060625045912.GB17674@hand.yhbt.net>
-References: <20060622110941.GA32261@hand.yhbt.net> <11511989902239-git-send-email-normalperson@yhbt.net> <Pine.LNX.4.63.0606250401490.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/7] Git.pm: Introduce ident() and ident_person() methods
+Date: Sat, 24 Jun 2006 22:25:32 -0700
+Message-ID: <7vhd29zu0j.fsf@assigned-by-dhcp.cox.net>
+References: <20060625015421.29906.50002.stgit@machine.or.cz>
+	<20060625015751.GB21864@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 06:59:24 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 25 07:25:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuMiM-0000bk-KD
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 06:59:18 +0200
+	id 1FuN82-000395-MB
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 07:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbWFYE7O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 00:59:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbWFYE7O
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 00:59:14 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:64700 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751367AbWFYE7N (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 00:59:13 -0400
-Received: by hand.yhbt.net (Postfix, from userid 500)
-	id C78E67DC022; Sat, 24 Jun 2006 21:59:12 -0700 (PDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0606250401490.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
+	id S1751389AbWFYFZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 01:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbWFYFZe
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 01:25:34 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:2995 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751389AbWFYFZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jun 2006 01:25:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060625052533.EAKL18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Jun 2006 01:25:33 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060625015751.GB21864@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 25 Jun 2006 03:57:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22589>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Sat, 24 Jun 2006, Eric Wong wrote:
-> 
-> > +		if test -n "`git-diff-index HEAD`"
-> 
-> This is not a sufficient test if the patch was already merged to upstream. 
-> For example, you can have two patches which touched the same file, and one 
-> of them was applied to upstream, the other not. The test fails to see 
-> that. Or am I missing something?
+Petr Baudis <pasky@suse.cz> writes:
 
-This is just to tell if there's anything worth committing after a merge
-is complete.  If not, then it assumes it's been a) merged upstream or b)
-empty in the first place (very unlikely).
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> index e794e44..79e82f5 100755
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>
+> BTW, please tell me if you want to redo the patches without any script
+> updates (and how large portion of the patches to resend; my stg stack
+> now has 28 patches and I'm finally using it for some real workload!)
+> - given that the plan is to have the converted scripts only in pu
+> (or entirely outside your tree) but full-fledged Git.pm in tree.
 
--- 
-Eric Wong
+I'd avoid asking you to resend, but give me some time to see how
+the series looks like first.
