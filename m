@@ -1,75 +1,124 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Introduce Git.pm (v3)
-Date: Sun, 25 Jun 2006 03:54:01 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606250353220.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v1wtghga6.fsf@assigned-by-dhcp.cox.net> <20060623011205.GJ21864@pasky.or.cz>
- <7vejxgckq9.fsf@assigned-by-dhcp.cox.net> <m1k678yt6m.fsf@ebiederm.dsl.xmission.com>
- <20060622220201.19132.67536.stgit@machine.or.cz> <7vlkrohj9p.fsf@assigned-by-dhcp.cox.net>
- <20060622235017.GH21864@pasky.or.cz> <7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
- <20060623011205.GJ21864@pasky.or.cz> <7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
- <20060623123904.GL21864@pasky.or.cz> <7vejxf74e3.fsf@assigned-by-dhcp.cox.net>
- <7vzmg35pkt.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0606242207510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmg2rpxt.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 03:54:09 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH 1/7] Git.pm: Introduce ident() and ident_person() methods
+Date: Sun, 25 Jun 2006 03:54:21 +0200
+Message-ID: <20060625015421.29906.50002.stgit@machine.or.cz>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 25 03:54:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuJp9-00066L-Fw
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 03:54:07 +0200
+	id 1FuJpS-00068g-Dy
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 03:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344AbWFYByE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 21:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbWFYByE
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 21:54:04 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62435 "EHLO
-	mailrelay.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751344AbWFYByC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jun 2006 21:54:02 -0400
-Received: from virusscan.mail (localhost [127.0.0.1])
-	by mailrelay.mail (Postfix) with ESMTP id 4769B21F6;
-	Sun, 25 Jun 2006 03:54:01 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by virusscan.mail (Postfix) with ESMTP id 3BBF0221D;
-	Sun, 25 Jun 2006 03:54:01 +0200 (CEST)
-Received: from dumbo2 (wbgn013.biozentrum.uni-wuerzburg.de [132.187.25.13])
-	by mailmaster.uni-wuerzburg.de (Postfix) with ESMTP id 193D321C7;
-	Sun, 25 Jun 2006 03:54:01 +0200 (CEST)
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1751347AbWFYByY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 21:54:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWFYByY
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 21:54:24 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:63913 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751347AbWFYByX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 21:54:23 -0400
+Received: (qmail 29916 invoked from network); 25 Jun 2006 03:54:21 +0200
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
+  by localhost with SMTP; 25 Jun 2006 03:54:21 +0200
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmg2rpxt.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at uni-wuerzburg.de
+User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22570>
 
-Hi,
+These methods can retrieve/parse the author/committer ident.
 
-On Sat, 24 Jun 2006, Junio C Hamano wrote:
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > My original idea: on a machine where you have no accurate diff, you at 
-> > least want to pass the tests, and you want to ensure you can apply a diff 
-> > you generated on that machine.
-> 
-> I remember that, but I think recently we converted t4100 and
-> t4101 to use pregenerated test vectors so it might not be an
-> issue anymore?
+ git-send-email.perl |   11 ++---------
+ perl/Git.pm         |   50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 9 deletions(-)
 
-Exactly.
-
-> I would maybe rename the option to --inaccurate-eof and default
-> it to off (i.e. no --accurate-eof option).  After all we are not
-> talking about arbitrary inaccuracy but the particular botch of
-> not having "\No newline at the end of file."
-
-Sure. Want me to redo the patch?
-
-Ciao,
-Dscho
+diff --git a/git-send-email.perl b/git-send-email.perl
+index e794e44..79e82f5 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -84,15 +84,8 @@ foreach my $entry (@bcclist) {
+ 
+ # Now, let's fill any that aren't set in with defaults:
+ 
+-sub gitvar_ident {
+-    my ($name) = @_;
+-    my $val = $repo->command('var', $name);
+-    my @field = split(/\s+/, $val);
+-    return join(' ', @field[0...(@field-3)]);
+-}
+-
+-my ($author) = gitvar_ident('GIT_AUTHOR_IDENT');
+-my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
++my ($author) = $repo->ident_person('author');
++my ($committer) = $repo->ident_person('committer');
+ 
+ my %aliases;
+ my @alias_files = $repo->config('sendemail.aliasesfile');
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 2e1241b..08f56c0 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -520,6 +520,56 @@ sub config {
+ }
+ 
+ 
++=item ident ( TYPE | IDENTSTR )
++
++=item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
++
++This suite of functions retrieves and parses ident information, as stored
++in the commit and tag objects or produced by C<var GIT_type_IDENT> (thus
++C<TYPE> can be either I<author> or I<committer>; case is insignificant).
++
++The C<ident> method retrieves the ident information from C<git-var>
++and either returns it as a scalar string or as an array with the fields parsed.
++Alternatively, it can take a prepared ident string (e.g. from the commit
++object) and just parse it.
++
++C<ident_person> returns the person part of the ident - name and email;
++it can take the same arguments as C<ident> or the array returned by C<ident>.
++
++The synopsis is like:
++
++	my ($name, $email, $time_tz) = ident('author');
++	"$name <$email>" eq ident_person('author');
++	"$name <$email>" eq ident_person($name);
++	$time_tz =~ /^\d+ [+-]\d{4}$/;
++
++Both methods must be called on a repository instance.
++
++=cut
++
++sub ident {
++	my ($self, $type) = @_;
++	my $identstr;
++	if (lc $type eq lc 'committer' or lc $type eq lc 'author') {
++		$identstr = $self->command_oneline('var', 'GIT_'.uc($type).'_IDENT');
++	} else {
++		$identstr = $type;
++	}
++	if (wantarray) {
++		return $identstr =~ /^(.*) <(.*)> (\d+ [+-]\d{4})$/;
++	} else {
++		return $identstr;
++	}
++}
++
++sub ident_person {
++	my ($self, @ident) = @_;
++	$#ident == 0 and @ident = $self->ident($ident[0]);
++	return "$ident[0] <$ident[1]>";
++}
++
++
++
+ =item hash_object ( FILENAME [, TYPE ] )
+ 
+ =item hash_object ( FILEHANDLE [, TYPE ] )
