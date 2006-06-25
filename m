@@ -1,73 +1,74 @@
-From: "Anand Kumria" <wildfire@progsoc.org>
-Subject: Re: On boolean configuration variables...
-Date: Sun, 25 Jun 2006 13:33:26 +0000 (UTC)
-Message-ID: <e7m3b6$eoa$1@sea.gmane.org>
-References: <7vy7vmviul.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: PPC SHA-1 Updates in "pu"
+Date: Sun, 25 Jun 2006 15:44:29 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606251537450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
+ <20060624012202.4822.qmail@science.horizon.com> <7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
+ <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
+ <7vhd2atid1.fsf@assigned-by-dhcp.cox.net> <20060625012435.GZ21864@pasky.or.cz>
+ <7vfyhtopjm.fsf@assigned-by-dhcp.cox.net> <20060625093444.GD21864@pasky.or.cz>
+ <Pine.LNX.4.63.0606251202320.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060625102037.GI29364@pasky.or.cz> <7vzmg1v7ci.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sun Jun 25 15:33:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Sun Jun 25 15:44:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuUk7-0003PC-9y
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 15:33:39 +0200
+	id 1FuUup-0004hz-0V
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 15:44:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902AbWFYNde (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 09:33:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbWFYNde
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 09:33:34 -0400
-Received: from main.gmane.org ([80.91.229.2]:53125 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750790AbWFYNde (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 09:33:34 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FuUk0-0003P1-Fd
-	for git@vger.kernel.org; Sun, 25 Jun 2006 15:33:32 +0200
-Received: from mail.globalcapital.cc ([80.85.66.210])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Jun 2006 15:33:32 +0200
-Received: from wildfire by mail.globalcapital.cc with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Jun 2006 15:33:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mail.globalcapital.cc
-User-Agent: pan 0.98 ("The plain old chaos of undifferentiated weirdness.")
+	id S1750904AbWFYNoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 09:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbWFYNoc
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 09:44:32 -0400
+Received: from mail.gmx.de ([213.165.64.21]:39060 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750899AbWFYNoc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 09:44:32 -0400
+Received: (qmail invoked by alias); 25 Jun 2006 13:44:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp041) with SMTP; 25 Jun 2006 15:44:30 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmg1v7ci.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22623>
 
-On Sat, 24 Jun 2006 05:28:02 -0700, Junio C Hamano wrote:
+Hi,
 
-> Boolean configuration variables in $GIT_DIR/config are a bit
-> strange.
+On Sun, 25 Jun 2006, Junio C Hamano wrote:
+
+> I vaguely recall that last time we discussed the minimum Perl
+> version requirement somebody perhaps Merlyn said 5.6 is old
+> enough but in some corporate settings people may still be stuck
+> with 5.004.
 > 
-> 	[bool]
->         	var1
->                 var2 =
->                 var3 = true
->                 var4 = yes
->                 var5 = 1
->                 var6 = 2
->                 var7 = false
->                 var8 = no
->                 var9 = 0
-> 
-> var1, var3, var5, and var6 are "true"; var2, var7 and var9 are
-> "false".  var4 and var8 are syntax errors.
-> 
-> Currently "git repo-config --bool --get bool.var1" returns
-> "false", which is fixed by the attached patch, but I am
-> wondering if it is a good idea to allow "yes" and "no" as well.
-> 
+> Tentatively let's say our cut-off point is somewhere around 5.6.
+> If we can get away without relying on extra from CPAN that would
+> be great.  Otherwise as long as the modules from CPAN we end up
+> depending on are all compatible with the cut-off version of Perl
+> that would be acceptable.  We might even try to be nicer and
+> carry a straight copy of what we require from CPAN in compat/
+> just like we have subprocess.py there (modulo licensing worries
+> if any, of course).
 
-Allowing 'yes' and 'no' to equal 'true' and 'false' respectively sounds
-pretty sane and user-friendly.
+I can live with it. Although I still think that it would be a good idea to 
+convert (at least the most commonly used) scripts to C.
 
-Why wouldn't you want to do that?
+Perl, Python and sometimes even bash are good for fast prototyping. But 
+for serious work, such as profiling, they are not that good.
 
-Anand
+And you can see different behaviour on different platforms (plus things 
+like the SunCC requirement for XS on Solaris), which make the scripts less 
+robust.
+
+Ciao,
+Dscho
