@@ -1,68 +1,51 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: PPC SHA-1 Updates in "pu"
-Date: 25 Jun 2006 11:46:29 -0700
-Message-ID: <86veqp8456.fsf@blue.stonehenge.com>
-References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
-	<20060624012202.4822.qmail@science.horizon.com>
-	<7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
-	<7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
-	<7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
-	<20060625012435.GZ21864@pasky.or.cz>
-	<7vfyhtopjm.fsf@assigned-by-dhcp.cox.net>
-	<20060625093444.GD21864@pasky.or.cz>
-	<Pine.LNX.4.63.0606251202320.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20060625102037.GI29364@pasky.or.cz>
-	<7vzmg1v7ci.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0606251537450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] correct documentation for git grep
+Date: Mon, 26 Jun 2006 01:10:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <E1FuWh7-0008Ry-HX@moooo.ath.cx> <20060625184757.f8273820.tihirvon@gmail.com>
+ <E1FuX8l-0001H5-2z@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Jun 25 20:46:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 26 01:10:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuZcw-0007Ck-4I
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 20:46:34 +0200
+	id 1FudkW-0000Zg-6u
+	for gcvg-git@gmane.org; Mon, 26 Jun 2006 01:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932104AbWFYSqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 14:46:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbWFYSqb
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 14:46:31 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:16519 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932104AbWFYSqa
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jun 2006 14:46:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id E70CA8EA77;
-	Sun, 25 Jun 2006 11:46:29 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 06264-01-18; Sun, 25 Jun 2006 11:46:29 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 6BEEE8F296; Sun, 25 Jun 2006 11:46:29 -0700 (PDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-x-mayan-date: Long count = 12.19.13.7.9; tzolkin = 12 Muluc; haab = 2 Tzec
-In-Reply-To: <Pine.LNX.4.63.0606251537450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S932414AbWFYXKg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 19:10:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932415AbWFYXKf
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 19:10:35 -0400
+Received: from mail.gmx.net ([213.165.64.21]:38844 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932414AbWFYXKf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 19:10:35 -0400
+Received: (qmail invoked by alias); 25 Jun 2006 23:10:33 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp006) with SMTP; 26 Jun 2006 01:10:33 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <E1FuX8l-0001H5-2z@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22646>
 
->>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-Johannes> Perl, Python and sometimes even bash are good for fast
-Johannes> prototyping. But for serious work, such as profiling, they are not
-Johannes> that good.
+On Sun, 25 Jun 2006, Matthias Lederhofer wrote:
 
-Allow my to register my strong disagreement to that statement, but then I'll
-crawl back in my hole.
+> +-e::
+> +	The next parameter is the pattern. This option has to be
+> +	used for patterns starting with - and should be used in
+> +	scripts passing user input to grep.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+... and by the far the most common use is to pass more than one pattern. 
+Also, the usage is "[-e] <pattern> [-e <pattern>...]".
+
+Ciao,
+Dscho
