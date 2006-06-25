@@ -1,54 +1,53 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/7] Git.pm: Introduce ident() and ident_person() methods
-Date: Sat, 24 Jun 2006 22:25:32 -0700
-Message-ID: <7vhd29zu0j.fsf@assigned-by-dhcp.cox.net>
-References: <20060625015421.29906.50002.stgit@machine.or.cz>
-	<20060625015751.GB21864@pasky.or.cz>
+Subject: Re: [PATCH] Rename safe_strncpy() to strlcpy().
+Date: Sat, 24 Jun 2006 22:29:30 -0700
+Message-ID: <7vd5cxzttx.fsf@assigned-by-dhcp.cox.net>
+References: <20060624140124.GA1323@ebar092.ebar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 07:25:52 2006
+X-From: git-owner@vger.kernel.org Sun Jun 25 07:29:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuN82-000395-MB
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 07:25:51 +0200
+	id 1FuNBi-0003PB-KB
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 07:29:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751389AbWFYFZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 01:25:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbWFYFZe
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 01:25:34 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:2995 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751389AbWFYFZe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jun 2006 01:25:34 -0400
+	id S1751397AbWFYF3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 01:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbWFYF3c
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 01:29:32 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:21168 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751397AbWFYF3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jun 2006 01:29:31 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060625052533.EAKL18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 25 Jun 2006 01:25:33 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060625015751.GB21864@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 25 Jun 2006 03:57:51 +0200")
+          id <20060625052931.VCWF554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Jun 2006 01:29:31 -0400
+To: "Peter Eriksen" <s022018@student.dtu.dk>
+In-Reply-To: <20060624140124.GA1323@ebar092.ebar.dtu.dk> (Peter Eriksen's
+	message of "Sat, 24 Jun 2006 16:01:25 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22590>
 
-Petr Baudis <pasky@suse.cz> writes:
+"Peter Eriksen" <s022018@student.dtu.dk> writes:
 
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index e794e44..79e82f5 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
+> This cleans up the use of safe_strncpy() even more.  Since it has the
+> same semantics as strlcpy() use this name instead.
+> ---
 >
-> BTW, please tell me if you want to redo the patches without any script
-> updates (and how large portion of the patches to resend; my stg stack
-> now has 28 patches and I'm finally using it for some real workload!)
-> - given that the plan is to have the converted scripts only in pu
-> (or entirely outside your tree) but full-fledged Git.pm in tree.
+> I've introduced a NO_STRLCPY variable in the Makefile.  What do
+> you think about this?
 
-I'd avoid asking you to resend, but give me some time to see how
-the series looks like first.
+No strong preference -- I can go with either name.  But people
+with more BSD exposure than I am are probably used to see this
+function as strlcpy(), so if that is the case let's use this
+patch.
+
+Thanks.
