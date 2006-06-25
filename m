@@ -1,80 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What's in git.git
-Date: Sun, 25 Jun 2006 11:43:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606251138580.3747@g5.osdl.org>
-References: <7v7j35wp84.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606251033030.3747@g5.osdl.org> <20060625210724.934617c4.tihirvon@gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: PPC SHA-1 Updates in "pu"
+Date: 25 Jun 2006 11:46:29 -0700
+Message-ID: <86veqp8456.fsf@blue.stonehenge.com>
+References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
+	<20060624012202.4822.qmail@science.horizon.com>
+	<7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
+	<7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
+	<7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
+	<20060625012435.GZ21864@pasky.or.cz>
+	<7vfyhtopjm.fsf@assigned-by-dhcp.cox.net>
+	<20060625093444.GD21864@pasky.or.cz>
+	<Pine.LNX.4.63.0606251202320.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060625102037.GI29364@pasky.or.cz>
+	<7vzmg1v7ci.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0606251537450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 20:43:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Jun 25 20:46:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuZaE-0006uo-6S
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 20:43:46 +0200
+	id 1FuZcw-0007Ck-4I
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 20:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210AbWFYSnm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 14:43:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbWFYSnm
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 14:43:42 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2203 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751210AbWFYSnl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 14:43:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5PIhVnW013042
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 25 Jun 2006 11:43:31 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5PIhUr3007010;
-	Sun, 25 Jun 2006 11:43:30 -0700
-To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060625210724.934617c4.tihirvon@gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932104AbWFYSqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 14:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbWFYSqb
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 14:46:31 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:16519 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932104AbWFYSqa
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jun 2006 14:46:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id E70CA8EA77;
+	Sun, 25 Jun 2006 11:46:29 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 06264-01-18; Sun, 25 Jun 2006 11:46:29 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 6BEEE8F296; Sun, 25 Jun 2006 11:46:29 -0700 (PDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+x-mayan-date: Long count = 12.19.13.7.9; tzolkin = 12 Muluc; haab = 2 Tzec
+In-Reply-To: <Pine.LNX.4.63.0606251537450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22645>
 
+>>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+Johannes> Perl, Python and sometimes even bash are good for fast
+Johannes> prototyping. But for serious work, such as profiling, they are not
+Johannes> that good.
 
-On Sun, 25 Jun 2006, Timo Hirvonen wrote:
-> > 
-> > I suspect that both could have been made to use NULL instead to indicate 
-> > that no pointer exists.
-> 
-> I'll look into this.
+Allow my to register my strong disagreement to that statement, but then I'll
+crawl back in my hole.
 
-An alternative is to really mark the char pointer structure members const. 
-That is often the preferred thing to do, if usage allows it.
-
-The biggest problem I've traditionally had with structure members that are 
-"const char *" has ironically been that the standard C definition of 
-"free()" is misdesigned. 
-
-"free()" should take a "const volatile void *", not just a "void *". As it 
-is, you often have to cast things to free() just to avoid the warning 
-about discarding qualifiers. Which is really sad.
-
-It's perfectly valid to do something like
-
-	struct xyzzy {
-		const char *member;
-		..
-	};
-
-	s->member = strdup(string);
-	..
-	free(s->member);
-	free(s)
-
-but sadly, that member free generates a (bogus) warning.
-
-Of course, we should probably do a "xfree()" anyway, to match our 
-"x[c|re]alloc()".
-
-			Linus
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
