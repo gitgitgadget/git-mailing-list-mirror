@@ -1,27 +1,27 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] add diff_flush_patch_id() to calculate the patch id
-Date: Sun, 25 Jun 2006 03:51:08 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606250350530.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 2/2] format-patch: introduce "--ignore-if-in-upstream"
+Date: Sun, 25 Jun 2006 03:52:01 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606250351180.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sun Jun 25 03:51:14 2006
+X-From: git-owner@vger.kernel.org Sun Jun 25 03:52:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuJmL-0005fm-M0
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 03:51:14 +0200
+	id 1FuJnE-0005oA-21
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 03:52:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbWFYBvL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 21:51:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbWFYBvL
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 21:51:11 -0400
-Received: from mail.gmx.de ([213.165.64.21]:14061 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751314AbWFYBvK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 21:51:10 -0400
-Received: (qmail invoked by alias); 25 Jun 2006 01:51:09 -0000
+	id S1751345AbWFYBwF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 21:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbWFYBwF
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 21:52:05 -0400
+Received: from mail.gmx.de ([213.165.64.21]:48787 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751345AbWFYBwE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 21:52:04 -0400
+Received: (qmail invoked by alias); 25 Jun 2006 01:52:02 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 25 Jun 2006 03:51:09 +0200
+  by mail.gmx.net (mp043) with SMTP; 25 Jun 2006 03:52:02 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net, martin@catalyst.net.nz
@@ -29,181 +29,136 @@ X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22568>
 
 
-Call it like this:
-
-unsigned char id[20];
-if (diff_flush_patch_id(diff_options, id))
-	printf("And the patch id is: %s\n", sha1_to_hex(id));
+With this flag, format-patch will try very hard not to output patches which
+are already in the upstream branch.
 
 Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 ---
- diff.c |  139 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- diff.h |    2 +
- 2 files changed, 141 insertions(+), 0 deletions(-)
+ builtin-log.c |   80 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 80 insertions(+), 0 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 5b34f73..3beecb9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2027,6 +2027,145 @@ static void diff_summary(struct diff_fil
- 	}
+diff --git a/builtin-log.c b/builtin-log.c
+index 5a8a50b..e78a9a4 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -160,6 +160,71 @@ static void reopen_stdout(struct commit 
+ 	freopen(filename, "w", stdout);
  }
  
-+struct patch_id_t {
-+	struct xdiff_emit_state xm;
-+	SHA_CTX *ctx;
-+	int patchlen;
-+};
-+
-+static int remove_space(char *line, int len)
++static void reset_all_objects_flags()
 +{
 +	int i;
-+        char *dst = line;
-+        unsigned char c;
 +
-+        for (i = 0; i < len; i++)
-+                if (!isspace((c = line[i])))
-+                        *dst++ = c;
-+
-+        return dst - line;
++	for (i = 0; i < obj_allocs; i++)
++		if (objs[i])
++			objs[i]->flags = 0;
 +}
 +
-+static void patch_id_consume(void *priv, char *line, unsigned long len)
++static int get_patch_id(struct commit *commit, struct diff_options *options,
++		unsigned char *sha1)
 +{
-+	struct patch_id_t *data = priv;
-+	int new_len;
-+
-+	/* Ignore line numbers when computing the SHA1 of the patch */
-+	if (!strncmp(line, "@@ -", 4))
-+		return;
-+
-+	new_len = remove_space(line, len);
-+
-+	SHA1_Update(data->ctx, line, new_len);
-+	data->patchlen += new_len;
++	diff_tree_sha1(commit->parents->item->object.sha1, commit->object.sha1,
++			"", options);
++	diffcore_std(options);
++	return diff_flush_patch_id(options, sha1);
 +}
 +
-+/* returns 0 upon success, and writes result into sha1 */
-+static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
++static void get_patch_ids(struct rev_info *rev, struct diff_options *options)
 +{
-+	struct diff_queue_struct *q = &diff_queued_diff;
-+	int i;
-+	SHA_CTX ctx;
-+	struct patch_id_t data;
-+	char buffer[PATH_MAX * 4 + 20];
++	struct rev_info check_rev;
++	struct commit *commit;
++	struct object *o1, *o2;
++	unsigned flags1, flags2;
++	unsigned char sha1[20];
 +
-+	SHA1_Init(&ctx);
-+	memset(&data, 0, sizeof(struct patch_id_t));
-+	data.ctx = &ctx;
-+	data.xm.consume = patch_id_consume;
-+	
-+	for (i = 0; i < q->nr; i++) {
-+		xpparam_t xpp;
-+		xdemitconf_t xecfg;
-+		xdemitcb_t ecb;
-+		mmfile_t mf1, mf2;
-+		struct diff_filepair *p = q->queue[i];
-+		int len1, len2;
++	if (rev->pending.nr != 2)
++		die("Need exactly one range.");
 +
-+		if (p->status == 0)
-+			return error("internal diff status error");
-+		if (p->status == DIFF_STATUS_UNKNOWN)
-+			continue;
-+		if (diff_unmodified_pair(p))
-+			continue;
-+		if ((DIFF_FILE_VALID(p->one) && S_ISDIR(p->one->mode)) ||
-+		    (DIFF_FILE_VALID(p->two) && S_ISDIR(p->two->mode)))
-+			continue;
-+		if (DIFF_PAIR_UNMERGED(p))
-+			continue;
++	o1 = rev->pending.objects[0].item;
++	flags1 = o1->flags;
++	o2 = rev->pending.objects[1].item;
++	flags2 = o2->flags;
 +
-+		diff_fill_sha1_info(p->one);
-+		diff_fill_sha1_info(p->two);
-+		if (fill_mmfile(&mf1, p->one) < 0 ||
-+				fill_mmfile(&mf2, p->two) < 0)
-+			return error("unable to read files to diff");
++	if ((flags1 & UNINTERESTING) == (flags2 & UNINTERESTING))
++		die("Not a range.");
 +
-+		/* Maybe hash p->two? into the patch id? */
-+		if (mmfile_is_binary(&mf2))
++	diff_setup(options);
++	options->recursive = 1;
++	if (diff_setup_done(options) < 0)
++		die("diff_setup_done failed");
++
++	/* given a range a..b get all patch ids for b..a */
++	init_revisions(&check_rev);
++	o1->flags ^= UNINTERESTING;
++	o2->flags ^= UNINTERESTING;
++	add_pending_object(&check_rev, o1, "o1");
++	add_pending_object(&check_rev, o2, "o2");
++	prepare_revision_walk(&check_rev);
++
++	while ((commit = get_revision(&check_rev)) != NULL) {
++		/* ignore merges */
++		if (commit->parents && commit->parents->next)
 +			continue;
 +
-+		len1 = remove_space(p->one->path, strlen(p->one->path));
-+		len2 = remove_space(p->two->path, strlen(p->two->path));
-+		if (p->one->mode == 0)
-+			len1 = snprintf(buffer, sizeof(buffer),
-+					"diff--gita/%.*sb/%.*s"
-+					"newfilemode%06o"
-+					"---/dev/null"
-+					"+++b/%.*s",
-+					len1, p->one->path,
-+					len2, p->two->path,
-+					p->two->mode,
-+					len2, p->two->path);
-+		else if (p->two->mode == 0)
-+			len1 = snprintf(buffer, sizeof(buffer),
-+					"diff--gita/%.*sb/%.*s"
-+					"deletedfilemode%06o"
-+					"---a/%.*s"
-+					"+++/dev/null",
-+					len1, p->one->path,
-+					len2, p->two->path,
-+					p->one->mode,
-+					len1, p->one->path);
-+		else
-+			len1 = snprintf(buffer, sizeof(buffer),
-+					"diff--gita/%.*sb/%.*s"
-+					"---a/%.*s"
-+					"+++b/%.*s",
-+					len1, p->one->path,
-+					len2, p->two->path,
-+					len1, p->one->path,
-+					len2, p->two->path);
-+		SHA1_Update(&ctx, buffer, len1);
-+
-+		xpp.flags = XDF_NEED_MINIMAL;
-+		xecfg.ctxlen = 3;
-+		xecfg.flags = 3;
-+		ecb.outf = xdiff_outf;
-+		ecb.priv = &data;
-+		xdl_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
++		if (!get_patch_id(commit, options, sha1))
++			created_object(sha1, xcalloc(1, sizeof(struct object)));
 +	}
 +
-+	SHA1_Final(sha1, &ctx);
-+	return 0;
++	/* reset for next revision walk */
++	reset_all_objects_flags();
++	o1->flags = flags1;
++	o2->flags = flags2;
 +}
 +
-+int diff_flush_patch_id(struct diff_options *options, unsigned char *sha1)
-+{
-+	struct diff_queue_struct *q = &diff_queued_diff;
-+	int i;
-+	int result = diff_get_patch_id(options, sha1);
-+
-+	for (i = 0; i < q->nr; i++)
-+		diff_free_filepair(q->queue[i]);
-+
-+	free(q->queue);
-+	q->queue = NULL;
-+	q->nr = q->alloc = 0;
-+
-+	return result;
-+}
-+
- void diff_flush(struct diff_options *options)
+ int cmd_format_patch(int argc, const char **argv, char **envp)
  {
- 	struct diff_queue_struct *q = &diff_queued_diff;
-diff --git a/diff.h b/diff.h
-index 7d7b6cd..850c15f 100644
---- a/diff.h
-+++ b/diff.h
-@@ -185,4 +185,6 @@ extern int run_diff_files(struct rev_inf
+ 	struct commit *commit;
+@@ -170,6 +235,8 @@ int cmd_format_patch(int argc, const cha
+ 	int numbered = 0;
+ 	int start_number = -1;
+ 	int keep_subject = 0;
++	int ignore_if_in_upstream = 0;
++	struct diff_options patch_id_opts;
+ 	char *add_signoff = NULL;
  
- extern int run_diff_index(struct rev_info *revs, int cached);
+ 	init_revisions(&rev);
+@@ -235,6 +302,8 @@ int cmd_format_patch(int argc, const cha
+ 			rev.mime_boundary = git_version_string;
+ 		else if (!strncmp(argv[i], "--attach=", 9))
+ 			rev.mime_boundary = argv[i] + 9;
++		else if (!strcmp(argv[i], "--ignore-if-in-upstream"))
++			ignore_if_in_upstream = 1;
+ 		else
+ 			argv[j++] = argv[i];
+ 	}
+@@ -262,14 +331,25 @@ int cmd_format_patch(int argc, const cha
+ 		add_head(&rev);
+ 	}
  
-+extern int diff_flush_patch_id(struct diff_options *, unsigned char *);
++	if (ignore_if_in_upstream)
++		get_patch_ids(&rev, &patch_id_opts);
 +
- #endif /* DIFF_H */
+ 	if (!use_stdout)
+ 		realstdout = fdopen(dup(1), "w");
+ 
+ 	prepare_revision_walk(&rev);
+ 	while ((commit = get_revision(&rev)) != NULL) {
++		unsigned char sha1[20];
++
+ 		/* ignore merges */
+ 		if (commit->parents && commit->parents->next)
+ 			continue;
++
++		if (ignore_if_in_upstream &&
++				!get_patch_id(commit, &patch_id_opts, sha1) &&
++				lookup_object(sha1))
++			continue;
++
+ 		nr++;
+ 		list = realloc(list, nr * sizeof(list[0]));
+ 		list[nr - 1] = commit;
 -- 
 1.4.0.g7a200-dirty
