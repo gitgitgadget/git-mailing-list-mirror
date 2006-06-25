@@ -1,127 +1,67 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: [PATCH] whatchanged: Default to DIFF_FORMAT_RAW
-Date: Sun, 25 Jun 2006 15:39:35 +0300
-Message-ID: <20060625153935.6b1e485c.tihirvon@gmail.com>
-References: <20060624201843.a5b4f7b9.tihirvon@gmail.com>
-	<20060624202153.1001a66c.tihirvon@gmail.com>
-	<20060625141102.b68a7cae.tihirvon@gmail.com>
-	<7vy7vltppj.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [RFC] git --trace: trace command execution
+Date: Sun, 25 Jun 2006 14:51:46 +0200
+Message-ID: <E1FuU5a-0000u3-Bc@moooo.ath.cx>
+References: <E1FuSIf-0004jK-Tp@moooo.ath.cx> <7v3bdtv4h3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 14:39:59 2006
+X-From: git-owner@vger.kernel.org Sun Jun 25 14:52:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuTu9-00061d-Pj
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 14:39:58 +0200
+	id 1FuU5n-0007MB-TQ
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 14:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWFYMjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 08:39:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbWFYMjj
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 08:39:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:15694 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750760AbWFYMjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jun 2006 08:39:39 -0400
-Received: by nf-out-0910.google.com with SMTP id m19so465603nfc
-        for <git@vger.kernel.org>; Sun, 25 Jun 2006 05:39:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=SlbprjwFJy0x5dn/U3F4G20JR+glICGmNj9/sJBG7jazqKx1cOHeXaqXMCl5ls55Jt+Uz0hYozilzQcGOJsm0IKykkMnQarPAeYX6kBCcz2DHq7eL80sYHMFqwZhez8IuSOi4gC+yHAcImzLhaEClQ86osoIE4MSUo6wBZJNhtk=
-Received: by 10.48.223.13 with SMTP id v13mr4052800nfg;
-        Sun, 25 Jun 2006 05:39:37 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id p20sm4392661nfc.2006.06.25.05.39.36;
-        Sun, 25 Jun 2006 05:39:37 -0700 (PDT)
+	id S1751239AbWFYMvw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 08:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbWFYMvw
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 08:51:52 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:43239 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751239AbWFYMvw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 08:51:52 -0400
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7vltppj.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v3bdtv4h3.fsf@assigned-by-dhcp.cox.net>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22621>
 
-Split cmd_log_wc() to cmd_log_init() and cmd_log_walk() and set default
-diff output format for whatchanged to DIFF_FORMAT_RAW.
+> Interesting.  Debugging one's alias entries would be helped with
+> this I would imagine, and for that you would want something like
+> this:
+> 
+> > Example:
+> > % git showtag v1.4.1-rc1 > /dev/null
+> > trace: exec: /home/matled/local/stow/git/bin/git-showtag v1.4.1-rc1
+> > trace: exec failed: No such file or directory
+> * trace: expanded alias "showtag" => "cat-file tag"
+That's a good idea, I'll integrate that.
 
-Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
----
+> By the way "git cat-file -p" or "git verify-tag -v" might be
+> more pleasant to view a tag since they make the tagger timestamp
+> human readable.
+Ok, yesterday I was searching for something to see the annotation of a
+tag. verify-tag -v looks quite much like that, is there any other way
+to read this? Or in general: how do I work with tags? I want to build
+a version tagged as v1.2 so currently I'll do
+> git checkout -b 1.2 v1.2
+and built it. But then I've to type the version number twice (typing
+it once is annoying enough :)) and I've to type it once more to get
+the tag annotation.
 
-  Forget the previous patch, this is cleaner.
+> Might be worth reusing quote.c::sq_quote(), perhaps?
+Oh, sure, did not know about this. This would result in a loop of
+malloc'ing memory for the buffer. Is this ok? Or should I add a
+function like sq_quote which takes a stream and writes to it?
 
- builtin-log.c |   27 ++++++++++++++++-----------
- 1 files changed, 16 insertions(+), 11 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 5b3fadc..28cd8bf 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -14,22 +14,22 @@ #include "builtin.h"
- /* this is in builtin-diff.c */
- void add_head(struct rev_info *revs);
- 
--static int cmd_log_wc(int argc, const char **argv, char **envp,
-+static void cmd_log_init(int argc, const char **argv, char **envp,
- 		      struct rev_info *rev)
- {
--	struct commit *commit;
--
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
- 	rev->verbose_header = 1;
- 	argc = setup_revisions(argc, argv, rev, "HEAD");
--	if (rev->always_show_header) {
--		if (rev->diffopt.pickaxe || rev->diffopt.filter)
--			rev->always_show_header = 0;
--	}
--
-+	if (rev->diffopt.pickaxe || rev->diffopt.filter)
-+		rev->always_show_header = 0;
- 	if (argc > 1)
- 		die("unrecognized argument: %s", argv[1]);
-+}
-+
-+static int cmd_log_walk(struct rev_info *rev)
-+{
-+	struct commit *commit;
- 
- 	prepare_revision_walk(rev);
- 	setup_pager();
-@@ -51,7 +51,10 @@ int cmd_whatchanged(int argc, const char
- 	rev.diff = 1;
- 	rev.diffopt.recursive = 1;
- 	rev.simplify_history = 0;
--	return cmd_log_wc(argc, argv, envp, &rev);
-+	cmd_log_init(argc, argv, envp, &rev);
-+	if (!rev.diffopt.output_format)
-+		rev.diffopt.output_format = DIFF_FORMAT_RAW;
-+	return cmd_log_walk(&rev);
- }
- 
- int cmd_show(int argc, const char **argv, char **envp)
-@@ -66,7 +69,8 @@ int cmd_show(int argc, const char **argv
- 	rev.always_show_header = 1;
- 	rev.ignore_merges = 0;
- 	rev.no_walk = 1;
--	return cmd_log_wc(argc, argv, envp, &rev);
-+	cmd_log_init(argc, argv, envp, &rev);
-+	return cmd_log_walk(&rev);
- }
- 
- int cmd_log(int argc, const char **argv, char **envp)
-@@ -76,7 +80,8 @@ int cmd_log(int argc, const char **argv,
- 	init_revisions(&rev);
- 	rev.always_show_header = 1;
- 	rev.diffopt.recursive = 1;
--	return cmd_log_wc(argc, argv, envp, &rev);
-+	cmd_log_init(argc, argv, envp, &rev);
-+	return cmd_log_walk(&rev);
- }
- 
- static int istitlechar(char c)
--- 
-1.4.1.rc1.g39849-dirty
+So for the --trace part I think an environment variable GIT_TRACE is
+more suitable for this because children inherit this. So running git
+status will show what internal commands the shell script uses.
+Otherwise I see no way to pass the --trace option down because an
+extern program like git-status, git-annotate etc will not accept
+parameters which can be passed to `git'.
