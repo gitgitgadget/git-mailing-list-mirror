@@ -1,38 +1,35 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] git-fetch - repack in the background after fetching
-Date: Sun, 25 Jun 2006 10:29:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606251025100.3747@g5.osdl.org>
-References: <11511486003924-git-send-email-martin@catalyst.net.nz>
- <Pine.LNX.4.64.0606242049500.3747@g5.osdl.org>
- <Pine.LNX.4.63.0606251122260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: What's in git.git
+Date: Sun, 25 Jun 2006 10:47:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606251033030.3747@g5.osdl.org>
+References: <7v7j35wp84.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org,
-	junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Jun 25 19:30:26 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 25 19:47:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuYR1-0005iI-Oc
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 19:30:12 +0200
+	id 1FuYhc-00082g-PP
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 19:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbWFYRaI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 13:30:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbWFYRaH
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 13:30:07 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:48005 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751337AbWFYRaG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 13:30:06 -0400
+	id S964876AbWFYRrR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 13:47:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964877AbWFYRrR
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 13:47:17 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:58761 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964876AbWFYRrQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 13:47:16 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5PHTpnW006687
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5PHlBnW007624
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 25 Jun 2006 10:29:51 -0700
+	Sun, 25 Jun 2006 10:47:11 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5PHTnMZ003626;
-	Sun, 25 Jun 2006 10:29:50 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606251122260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5PHlACs004231;
+	Sun, 25 Jun 2006 10:47:11 -0700
+To: Junio C Hamano <junkio@cox.net>, Timo Hirvonen <tihirvon@gmail.com>
+In-Reply-To: <7v7j35wp84.fsf@assigned-by-dhcp.cox.net>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
 X-MIMEDefang-Filter: osdl$Revision: 1.135 $
@@ -40,38 +37,63 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22641>
 
 
 
-On Sun, 25 Jun 2006, Johannes Schindelin wrote:
+On Sun, 25 Jun 2006, Junio C Hamano wrote:
 > 
-> On Sat, 24 Jun 2006, Linus Torvalds wrote:
-> 
-> > However, the more worrisome thing about background repacking is that while 
-> > it should be safe against normal users, if you have two _repacks_ at the 
-> > same time, they can decide to remove each others packs. Yeah, yeah, that's 
-> > pretty damn unlikely, but hey, "pretty damn unlikely" is not "impossible".
-> 
-> Why not introduce a lock file for repack?
+>    Timo Hirvonen:
+>       Clean up diff.c
 
-You can do that. The problem is, lock-files are really hard to do 
-right, and portably. Especially from scripts.
+THIS IS CRAP!
 
-But _I_ think the basic issue is that it's wrong to even try to do this 
-background repack.
+Dammit, anybody who claims that casting a constant string to "(char *)" is 
+a _cleanup_ is doing something seriously wrong.
 
-Git does explicit repacking. That's just how it is. If the worry is that 
-people forget to pack often enough, why not just have the "git pull" 
-script _tell_ the user, something like
+That's crap, crap, crap, CRAP!
 
-	if [lots of unpacked objects]; then
-		echo "You've got a boatload of unpacked objects now."
-		echo "Maybe you'd like to repack using"
-		echo "   git repack -a -d"
-		echo "Thank you for not smoking"
-	fi >&2
+If the "cleanup" was about hiding compiler warnings, then dammit, those 
+warnings should be fixed by fixing the code, not by casting the warning 
+away but leaving the broken code.
 
-which is educational on so many levels.
+If the ptr really is never accessed, and doesn't matter, then don't use a 
+constant empty string, use NULL.
 
-		Linus
+And if it _is_ accessed, then casting a constant string to "char *" is 
+_wrong_. 
+
+The whole and only point about the "const" warnings is not to hide them, 
+but to fix the code. If you're not going to fix the code, then you 
+shouldn't ask the compiler to warn about it, it's that simple. Adding 
+bogus casts is not the answer.
+
+I really hate how many _bogus_ casts we're growing. Casts are one of the 
+most important features of C (it's what allows you to break the type 
+system if you need to, and turns C into the truly extensible language it 
+is), but they should be used with reverence and care, not to shut up a 
+compiler.
+
+I'm _especially_ disgusted by how this was claimed to be a "cleanup". 
+Adding a cast is _never_ a cleanup.
+
+Dammit, don't do crap like this!
+
+THIS is a cleanup:
+
+-               char *prefix = "";
++               const char *prefix = "";
+
+but THESE are total and utter CRAP:
+
+-               mf->ptr = ""; /* does not matter */
++               mf->ptr = (char *)""; /* does not matter */
+-                               s->data = "";
++                               s->data = (char *)"";
+
+and we're better off with the warning than with the new code.
+
+I suspect that both could have been made to use NULL instead to indicate 
+that no pointer exists.
+
+			Linus
