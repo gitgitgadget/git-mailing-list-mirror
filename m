@@ -1,69 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cvsimport: setup indexes correctly for ancestors and incremental imports
-Date: Sun, 25 Jun 2006 02:27:30 -0700
-Message-ID: <7v4py9y48t.fsf@assigned-by-dhcp.cox.net>
-References: <11511475882820-git-send-email-martin@catalyst.net.nz>
-	<Pine.LNX.4.63.0606242111250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v64iqq6ab.fsf@assigned-by-dhcp.cox.net>
-	<20060625085359.GC21864@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: PPC SHA-1 Updates in "pu"
+Date: Sun, 25 Jun 2006 11:34:44 +0200
+Message-ID: <20060625093444.GD21864@pasky.or.cz>
+References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net> <20060624012202.4822.qmail@science.horizon.com> <7vfyhv11ej.fsf@assigned-by-dhcp.cox.net> <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606241147480.6483@g5.osdl.org> <7vhd2atid1.fsf@assigned-by-dhcp.cox.net> <20060625012435.GZ21864@pasky.or.cz> <7vfyhtopjm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 11:27:37 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 25 11:34:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuQu0-0007vb-Gb
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 11:27:36 +0200
+	id 1FuR10-0000IM-4w
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 11:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932170AbWFYJ1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 05:27:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932177AbWFYJ1d
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 05:27:33 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:16864 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932170AbWFYJ1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jun 2006 05:27:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060625092732.IKL554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 25 Jun 2006 05:27:32 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060625085359.GC21864@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 25 Jun 2006 10:53:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932181AbWFYJer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 05:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932182AbWFYJer
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 05:34:47 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:20434 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932181AbWFYJeq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 05:34:46 -0400
+Received: (qmail 22395 invoked by uid 2001); 25 Jun 2006 11:34:44 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfyhtopjm.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22598>
 
-Petr Baudis <pasky@suse.cz> writes:
+Dear diary, on Sun, Jun 25, 2006 at 05:57:33AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> >>  - RPM target -- we probably acquired a new build-dependency in
+> >>    which case the .spec file needs to be updated;
+> >
+> > Well, perl is currently not listed even as a runtime dependency,
+> > so does it really need to be listed as a build dependency?
+> 
+> Really?  I think rpmbuild is getting anything that matches "^use "
+> and listing the perl modules as dependencies.
 
-> Dear diary, on Sun, Jun 25, 2006 at 05:10:36AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> said that...
->> Please please please do not use --- between the cover letter and
->> commit message body if you choose to do the cover letter first.
->
-> Oops, I suspect that I'm a huge offender in this regard in that case.
-> Can I format my patch mails so that they look like natural replies _and_
-> you can still apply them easily?
+I had on my mind to depend only on modules that are part of the default
+Perl distribution, since installing them from CPAN is a bother if you
+are installing Git to your home directory. That is why we bundle Error.
 
-It's not a big deal.
+All the modules we depend on should come bundled with Perl since 5.8.1.
+Now, I'm not sure what our "cutoff" point is, and even if it is
+something like 5.6.0 whether we can just require users of Perl older
+than 5.8.1 (which should be only some rare and obscure systems anyway)
+to install the modules from CPAN.
 
-I do it with scissors mark "-- >8 --" because I can use "git-am"
-while still in GNUS with '|' (gnus-summary-pipe-output) on the
-message, and immediately after that I can amend the commit with
-"git-commit --amend" to remove everything up to the scissors
-mark.
+If not, we can just get rid of Scalar::Util and XSLoader and we should
+be clean; XSLoader should be easy, Scalar::Util somewhat more messy
+since we will have to get Error.pm own .xs as well.
 
-If you have --- then I have to save the message in a separate
-file with 'C-o' (gnus-summary-save-article-mail), open the file
-and remove up to that first --- in the editor, and then run
-git-am on the file.
-
-Only when the cover letter is short, I'd prefer Linus style,
-which places cover letter material after the --- and the
-diffstat, although that makes the message like top-posting.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+A person is just about as big as the things that make them angry.
