@@ -1,59 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] GIT_TRACE: show which built-in/external commands are
- executed
-Date: Mon, 26 Jun 2006 01:30:42 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606260129410.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <E1FuSIf-0004jK-Tp@moooo.ath.cx> <7v3bdtv4h3.fsf@assigned-by-dhcp.cox.net>
- <E1FuV62-0004Jd-Ve@moooo.ath.cx> <Pine.LNX.4.63.0606251607090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <E1FuXBk-0001SG-3n@moooo.ath.cx>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] correct documentation for git grep
+Date: Mon, 26 Jun 2006 01:39:18 +0200
+Message-ID: <E1FueCE-0003W3-4Q@moooo.ath.cx>
+References: <E1FuWh7-0008Ry-HX@moooo.ath.cx> <20060625184757.f8273820.tihirvon@gmail.com> <E1FuX8l-0001H5-2z@moooo.ath.cx> <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 26 01:31:04 2006
+X-From: git-owner@vger.kernel.org Mon Jun 26 01:39:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fue4D-0002co-WE
-	for gcvg-git@gmane.org; Mon, 26 Jun 2006 01:31:02 +0200
+	id 1FueCL-0003Zb-Ix
+	for gcvg-git@gmane.org; Mon, 26 Jun 2006 01:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751297AbWFYXap (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 19:30:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbWFYXap
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 19:30:45 -0400
-Received: from mail.gmx.net ([213.165.64.21]:3488 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751297AbWFYXao (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 19:30:44 -0400
-Received: (qmail invoked by alias); 25 Jun 2006 23:30:42 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 26 Jun 2006 01:30:42 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1FuXBk-0001SG-3n@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S964899AbWFYXjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 19:39:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964900AbWFYXjV
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 19:39:21 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:52430 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S964899AbWFYXjV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 19:39:21 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22649>
 
-Hi,
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+> ... and by the far the most common use is to pass more than one pattern. 
+> Also, the usage is "[-e] <pattern> [-e <pattern>...]".
+Ok, so I changed the patch :)
 
-On Sun, 25 Jun 2006, Matthias Lederhofer wrote:
+ Documentation/git-grep.txt |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-> > P.S.: Now we only have to convert all "git-" invocations in the scripts to
-> > "git " invocations so we can benefit from it. But that would mean two 
-> > forks instead of one for the non-builtins. Hmm.
-> 
-> Why do we not use this policy:
-> 
-> git-* is guaranteed to be the normal command without any strange alias
-> expansion, default parameters or something else a script does not like
-> to be changed in the commands. So all scripts use git-*, this will
-> prevent a double exec. The path to git-* should be obtained using git
-> --exec-path in the beginnig.
-
-That still leaves my problem: GIT_TRACE=1 on scripts is incomplete.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 7b810df..3dd1bdd 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 	   [-n] [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [-c | --count]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+-	   [-f <file>] [-e <pattern>]
++	   [-f <file>] [-e] <pattern> [-e <pattern> [..]]
+ 	   [<tree>...]
+ 	   [--] [<path>...]
+ 
+@@ -71,6 +71,12 @@ OPTIONS
+ -f <file>::
+ 	Read patterns from <file>, one per line.
+ 
++-e::
++	The next parameter is a pattern. This option has to be
++	used for patterns starting with - and should be used in
++	scripts passing user input to grep. You can specify multiple
++	patterns which will be combined by or.
++
+ `<tree>...`::
+ 	Search blobs in the trees for specified patterns.
+ 
+-- 
+1.4.1.rc1.g72a4-dirty
