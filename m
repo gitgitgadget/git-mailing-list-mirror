@@ -1,106 +1,70 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 07/12] Git.pm: Better error handling
-Date: Sun, 25 Jun 2006 03:13:47 +0200
-Message-ID: <20060625011347.GY21864@pasky.or.cz>
-References: <20060624023429.32751.80619.stgit@machine.or.cz> <20060624023442.32751.28342.stgit@machine.or.cz> <7vmzc3ymnu.fsf@assigned-by-dhcp.cox.net> <20060624131731.GU21864@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Introduce Git.pm (v3)
+Date: Sat, 24 Jun 2006 18:20:46 -0700
+Message-ID: <7vzmg2rpxt.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
+	<20060623011205.GJ21864@pasky.or.cz>
+	<7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
+	<m1k678yt6m.fsf@ebiederm.dsl.xmission.com>
+	<20060622220201.19132.67536.stgit@machine.or.cz>
+	<7vlkrohj9p.fsf@assigned-by-dhcp.cox.net>
+	<20060622235017.GH21864@pasky.or.cz>
+	<7v1wtghga6.fsf@assigned-by-dhcp.cox.net>
+	<20060623011205.GJ21864@pasky.or.cz>
+	<7vejxgckq9.fsf@assigned-by-dhcp.cox.net>
+	<20060623123904.GL21864@pasky.or.cz>
+	<7vejxf74e3.fsf@assigned-by-dhcp.cox.net>
+	<7vzmg35pkt.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0606242207510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 03:14:01 2006
+X-From: git-owner@vger.kernel.org Sun Jun 25 03:20:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuJCK-0000c7-CI
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 03:14:00 +0200
+	id 1FuJIy-0001d2-8h
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 03:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751282AbWFYBNu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Jun 2006 21:13:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbWFYBNt
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 21:13:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58793 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751282AbWFYBNt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jun 2006 21:13:49 -0400
-Received: (qmail 21461 invoked by uid 2001); 25 Jun 2006 03:13:47 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060624131731.GU21864@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S964841AbWFYBUt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Jun 2006 21:20:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964885AbWFYBUt
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jun 2006 21:20:49 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34252 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964841AbWFYBUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jun 2006 21:20:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060625012048.PNKU18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 24 Jun 2006 21:20:48 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606242207510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 24 Jun 2006 22:10:11 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22557>
 
-Dear diary, on Sat, Jun 24, 2006 at 03:17:31PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> Dear diary, on Sat, Jun 24, 2006 at 10:37:25AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> said that...
-> > Petr Baudis <pasky@suse.cz> writes:
-> > 
-> > > +int
-> > > +error_xs(const char *err, va_list params)
-> > > +{
-> > 
-> > You said in git-compat-util.h that set_error_routine takes a
-> > function that returns void, so this gives unnecessary type
-> > clash.
-> > 
-> > --------------------------------
-> > In file included from /usr/lib/perl/5.8/CORE/perl.h:756,
-> >                  from Git.xs:15:
-> > /usr/lib/perl/5.8/CORE/embed.h:4193:1: warning: "die" redefined
-> > Git.xs:11:1: warning: this is the location of the previous definition
-> > Git.xs: In function 'boot_Git':
-> > Git.xs:57: warning: passing argument 1 of 'set_error_routine' from incompatible pointer type
-> > Git.xs:58: warning: passing argument 1 of 'set_die_routine' makes qualified function pointer from unqualified
-> > --------------------------------
-> 
-> Oh, I forgot to fix it in the .xs. :-(
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
----
-[PATCH] Git.pm: Squash some annoying warnings in Git.xs
+> My original idea: on a machine where you have no accurate diff, you at 
+> least want to pass the tests, and you want to ensure you can apply a diff 
+> you generated on that machine.
 
-From: Petr Baudis <pasky@suse.cz>
+I remember that, but I think recently we converted t4100 and
+t4101 to use pregenerated test vectors so it might not be an
+issue anymore?
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> This patch is just compile tested, but obviously correct 
 
- perl/Git.xs |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
+Looks sane, thanks.
 
-diff --git a/perl/Git.xs b/perl/Git.xs
-index e841e4a..d7a2b75 100644
---- a/perl/Git.xs
-+++ b/perl/Git.xs
-@@ -29,21 +29,18 @@ report_xs(const char *prefix, const char
- 	return buf;
- }
- 
--void
-+void NORETURN
- die_xs(const char *err, va_list params)
- {
--	char *str;
--	str = report_xs("fatal: ", err, params);
-+	char *str = report_xs("fatal: ", err, params);
- 	croak(str);
- }
- 
--int
-+void
- error_xs(const char *err, va_list params)
- {
--	char *str;
--	str = report_xs("error: ", err, params);
-+	char *str = report_xs("error: ", err, params);
- 	warn(str);
--	return -1;
- }
- 
- 
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-A person is just about as big as the things that make them angry.
+I would maybe rename the option to --inaccurate-eof and default
+it to off (i.e. no --accurate-eof option).  After all we are not
+talking about arbitrary inaccuracy but the particular botch of
+not having "\No newline at the end of file."
