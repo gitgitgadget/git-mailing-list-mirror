@@ -1,78 +1,69 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH 7/7] Convert git-annotate to use Git.pm
-Date: Sun, 25 Jun 2006 02:27:23 -0700
-Message-ID: <20060625092719.GH3154@h4x0r5.com>
-References: <20060625015421.29906.50002.stgit@machine.or.cz> <20060625015434.29906.23422.stgit@machine.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsimport: setup indexes correctly for ancestors and incremental imports
+Date: Sun, 25 Jun 2006 02:27:30 -0700
+Message-ID: <7v4py9y48t.fsf@assigned-by-dhcp.cox.net>
+References: <11511475882820-git-send-email-martin@catalyst.net.nz>
+	<Pine.LNX.4.63.0606242111250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v64iqq6ab.fsf@assigned-by-dhcp.cox.net>
+	<20060625085359.GC21864@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin@catalyst.net.nz>, git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Jun 25 11:27:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuQu1-0007vb-24
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 11:27:37 +0200
+	id 1FuQu0-0007vb-Gb
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 11:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166AbWFYJ1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S932170AbWFYJ1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Sun, 25 Jun 2006 05:27:33 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932177AbWFYJ1d
 	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 05:27:33 -0400
-Received: from h4x0r5.com ([70.85.31.202]:12301 "EHLO h4x0r5.com")
-	by vger.kernel.org with ESMTP id S932166AbWFYJ1c (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 05:27:32 -0400
-Received: from ryan by h4x0r5.com with local (Exim 4.50)
-	id 1FuQtn-0000cg-SD; Sun, 25 Jun 2006 02:27:24 -0700
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:16864 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932170AbWFYJ1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jun 2006 05:27:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060625092732.IKL554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Jun 2006 05:27:32 -0400
 To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20060625015434.29906.23422.stgit@machine.or.cz>
-User-Agent: Mutt/1.5.9i
-X-michonline.com-MailScanner: Found to be clean
-X-michonline.com-MailScanner-From: ryan@h4x0r5.com
+In-Reply-To: <20060625085359.GC21864@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 25 Jun 2006 10:53:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22597>
 
-On Sun, Jun 25, 2006 at 03:54:34AM +0200, Petr Baudis wrote:
-> -sub open_pipe {
-> -	if ($^O eq '##INSERT_ACTIVESTATE_STRING_HERE##') {
-> -		return open_pipe_activestate(@_);
-> -	} else {
-> -		return open_pipe_normal(@_);
-> -	}
-> -}
-> -
-> -sub open_pipe_activestate {
-> -	tie *fh, "Git::ActiveStatePipe", @_;
-> -	return *fh;
-> -}
-> -
-> -sub open_pipe_normal {
-> -	my (@execlist) = @_;
-> -
-> -	my $pid = open my $kid, "-|";
-> -	defined $pid or die "Cannot fork: $!";
-> -
-> -	unless ($pid) {
-> -		exec @execlist;
-> -		die "Cannot exec @execlist: $!";
-> -	}
-> -
-> -	return $kid;
-> -}
+Petr Baudis <pasky@suse.cz> writes:
 
-I don't see that Git.pm provides the compatibility functionality we have
-stubbed out, here.
+> Dear diary, on Sun, Jun 25, 2006 at 05:10:36AM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+>> Please please please do not use --- between the cover letter and
+>> commit message body if you choose to do the cover letter first.
+>
+> Oops, I suspect that I'm a huge offender in this regard in that case.
+> Can I format my patch mails so that they look like natural replies _and_
+> you can still apply them easily?
 
-(It clearly has never been used, because there hasn't been a patch to
-set the actual ActiveState string there.. 'MSWin32', btw.)
+It's not a big deal.
 
-I suspect that the other scripts, that have more users, will see
-regression complaints when the qx() calls get replaced by calls to
-open(my $fh, "-|"), indirectly, in Git.pm
+I do it with scissors mark "-- >8 --" because I can use "git-am"
+while still in GNUS with '|' (gnus-summary-pipe-output) on the
+message, and immediately after that I can amend the commit with
+"git-commit --amend" to remove everything up to the scissors
+mark.
 
--- 
+If you have --- then I have to save the message in a separate
+file with 'C-o' (gnus-summary-save-article-mail), open the file
+and remove up to that first --- in the editor, and then run
+git-am on the file.
 
-Ryan Anderson
-  sometimes Pug Majere
+Only when the cover letter is short, I'd prefer Linus style,
+which places cover letter material after the --- and the
+diffstat, although that makes the message like top-posting.
