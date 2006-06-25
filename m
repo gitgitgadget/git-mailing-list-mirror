@@ -1,60 +1,69 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH] git-grep: allow patterns starting with -
-Date: Sun, 25 Jun 2006 18:47:57 +0300
-Message-ID: <20060625184757.f8273820.tihirvon@gmail.com>
-References: <E1FuWh7-0008Ry-HX@moooo.ath.cx>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] correct documentation for git grep
+Date: Sun, 25 Jun 2006 18:07:15 +0200
+Message-ID: <E1FuX8l-0001H5-2z@moooo.ath.cx>
+References: <E1FuWh7-0008Ry-HX@moooo.ath.cx> <20060625184757.f8273820.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 25 17:48:09 2006
+X-From: git-owner@vger.kernel.org Sun Jun 25 18:07:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuWqF-0002C8-0A
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 17:48:07 +0200
+	id 1FuX8u-00047M-S0
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 18:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbWFYPsD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 11:48:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932427AbWFYPsD
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 11:48:03 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:15199 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751460AbWFYPsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jun 2006 11:48:01 -0400
-Received: by nf-out-0910.google.com with SMTP id m19so479659nfc
-        for <git@vger.kernel.org>; Sun, 25 Jun 2006 08:48:00 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=OeYDPMJ1CX+NhQh5NtUcVfZGuyVl05lMz6aMmfQN/oxLt4Qpy5BH0tEaONcZ3OH1dGpKgAdCPg4kBCVmqQB1dEnI+fi/qui72Q0y+l017GH20CwKspmU6hXMXu2wwbtP7/EShrQAZsKh+REeJa6TfN8wiS0xnvgNB2LTHYbe/Is=
-Received: by 10.49.90.19 with SMTP id s19mr231758nfl;
-        Sun, 25 Jun 2006 08:47:58 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.197])
-        by mx.gmail.com with ESMTP id b1sm5125812nfe.2006.06.25.08.47.58;
-        Sun, 25 Jun 2006 08:47:58 -0700 (PDT)
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1FuWh7-0008Ry-HX@moooo.ath.cx>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
+	id S1751123AbWFYQHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 12:07:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751127AbWFYQHV
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 12:07:21 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:8634 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751123AbWFYQHU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 12:07:20 -0400
+To: Timo Hirvonen <tihirvon@gmail.com>
+Mail-Followup-To: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060625184757.f8273820.tihirvon@gmail.com>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22636>
 
-Matthias Lederhofer <matled@gmx.net> wrote:
+---
+> git grep -e --bla
+> 
+> It's not very well documented.
+Let's change that!
 
-> Signed-off-by: Matthias Lederhofer <matled@gmx.net>
-> ---
-> I did not find another way to use patterns starting with -, if it is
-> possible without the patch please tell me and ignore the patch :)
-> example:
-> % git grep -- --bla HEAD HEAD~1 -- --foo
-> HEAD:--foo/bla:test --bla foo
+ Documentation/git-grep.txt |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-git grep -e --bla
-
-It's not very well documented.
-
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 7b810df..62a8e7f 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 	   [-n] [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [-c | --count]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+-	   [-f <file>] [-e <pattern>]
++	   [-f <file>] [-e] <pattern>
+ 	   [<tree>...]
+ 	   [--] [<path>...]
+ 
+@@ -71,6 +71,11 @@ OPTIONS
+ -f <file>::
+ 	Read patterns from <file>, one per line.
+ 
++-e::
++	The next parameter is the pattern. This option has to be
++	used for patterns starting with - and should be used in
++	scripts passing user input to grep.
++
+ `<tree>...`::
+ 	Search blobs in the trees for specified patterns.
+ 
 -- 
-http://onion.dynserv.net/~timo/
+1.4.1.rc1.gc594
