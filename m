@@ -1,61 +1,69 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: git-repack -a -d produces unusable packs with 1.4.0
-Date: Sun, 25 Jun 2006 13:35:22 +0200
-Message-ID: <20060625113522.GC19210@cip.informatik.uni-erlangen.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add msg_sep to diff_options
+Date: Sun, 25 Jun 2006 04:40:42 -0700
+Message-ID: <7v8xnlv4xx.fsf@assigned-by-dhcp.cox.net>
+References: <20060624201843.a5b4f7b9.tihirvon@gmail.com>
+	<20060624202153.1001a66c.tihirvon@gmail.com>
+	<20060625135414.425580d1.tihirvon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jun 25 13:35:32 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 25 13:40:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuStj-0007CG-Ii
-	for gcvg-git@gmane.org; Sun, 25 Jun 2006 13:35:27 +0200
+	id 1FuSyt-0007md-21
+	for gcvg-git@gmane.org; Sun, 25 Jun 2006 13:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932376AbWFYLfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 07:35:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932379AbWFYLfY
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 07:35:24 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:63982 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S932376AbWFYLfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jun 2006 07:35:24 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id B10FF30DFF; Sun, 25 Jun 2006 13:35:22 +0200 (CEST)
-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11-2006-06-13
+	id S932383AbWFYLko (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Jun 2006 07:40:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWFYLko
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 07:40:44 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:33734 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932383AbWFYLkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jun 2006 07:40:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060625114043.WLOK6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 25 Jun 2006 07:40:43 -0400
+To: Timo Hirvonen <tihirvon@gmail.com>
+In-Reply-To: <20060625135414.425580d1.tihirvon@gmail.com> (Timo Hirvonen's
+	message of "Sun, 25 Jun 2006 13:54:14 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22616>
 
-Hello everyone,
-what on earth is going wrong here (this is with 1.4.0):
+Timo Hirvonen <tihirvon@gmail.com> writes:
 
-        (node01) [~] git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-        Checking files out...)
-        100% (19830/19830) done
-        (node01) [~] cd linux-2.6/
-        (node01) [~/linux-2.6] git repack -a -d
-        Generating pack...
-        Done counting 263175 objects.
-        Deltifying 263175 objects.
-        100% (263175/263175) done
-        Writing 263175 objects.
-        100% (263175/263175) done
-        Total 263175, written 263175 (delta 206825), reused 262943 (delta 206593)
-        Pack pack-ce49d2efd5af06ed6093049050b5ba41da8b683f created.
-        mv: overwrite `.git/objects/pack/pack-ce49d2efd5af06ed6093049050b5ba41da8b683f.pack', overriding mode 0444? y
-        mv: overwrite `.git/objects/pack/pack-ce49d2efd5af06ed6093049050b5ba41da8b683f.idx', overriding mode 0444? y
-        fatal: packfile .git/objects/pack/pack-ce49d2efd5af06ed6093049050b5ba41da8b683f.pack does not match index.
-        (node01) [~/linux-2.6] git repack -a -d
-        Generating pack...
-        fatal: expected sha1, got garbage:
-        fatal: packfile .git/objects/pack/pack-ce49d2efd5af06ed6093049050b5ba41da8b683f.pack does not match index.
+> Add msg_sep variable to struct diff_options.  msg_sep is printed after
+> commit message.  Default is "\n", format-patch sets it to "---\n".
+>
+> This also removes the second argument from show_log() because all
+> callers derived it from the first argument:
+>
+>     show_log(rev, rev->loginfo, ...
 
-Oh and are there localized git mirrors like for example
-git.de.kernel.org or is the git protocoll only available from the
-primary site?
+Good catch.  Thanks.
 
-        Thomas
+> Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+> ---
+
+I often wonder if the separator should be "\n---\n" instead when
+I see something like the above, but do not change it yet please.
+
+>   I'm not 100% sure if format-patch is the only one wanting "---\n".
+
+git log --patch-with-stat should also show "---\n".
+
+>   But I think "\n" should be used for every command that doesn't create
+>   patches.
+
+This sounds good.
+
+We probably would want to have an output format testsuite to
+catch regression.
