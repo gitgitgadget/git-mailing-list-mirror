@@ -1,46 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Dennis Stosberg <dennis@stosberg.net>
 Subject: Re: [PATCH] Git.pm: Support for perl/ being built by a different compiler
-Date: Mon, 26 Jun 2006 02:26:43 -0700
-Message-ID: <7vmzc0i7xo.fsf@assigned-by-dhcp.cox.net>
-References: <20060625014703.29304.12715.stgit@machine.or.cz>
-	<7vk676orjy.fsf@assigned-by-dhcp.cox.net>
-	<20060626082428.G52c9608e@leonov.stosberg.net>
+Date: Mon, 26 Jun 2006 11:32:14 +0200
+Message-ID: <20060626093214.G4d831c9c@leonov.stosberg.net>
+References: <20060625014703.29304.12715.stgit@machine.or.cz> <7vk676orjy.fsf@assigned-by-dhcp.cox.net> <20060626082428.G52c9608e@leonov.stosberg.net> <7vmzc0i7xo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 26 11:27:07 2006
+X-From: git-owner@vger.kernel.org Mon Jun 26 11:32:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FunMm-0004VW-HI
-	for gcvg-git@gmane.org; Mon, 26 Jun 2006 11:26:49 +0200
+	id 1FunS8-0005S9-CU
+	for gcvg-git@gmane.org; Mon, 26 Jun 2006 11:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964951AbWFZJ0p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Jun 2006 05:26:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964964AbWFZJ0p
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 05:26:45 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:21221 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S964951AbWFZJ0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jun 2006 05:26:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060626092644.ZTJQ19057.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 26 Jun 2006 05:26:44 -0400
-To: Dennis Stosberg <dennis@stosberg.net>
-In-Reply-To: <20060626082428.G52c9608e@leonov.stosberg.net> (Dennis Stosberg's
-	message of "Mon, 26 Jun 2006 10:24:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751263AbWFZJcR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Jun 2006 05:32:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbWFZJcR
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 05:32:17 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:50320 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1751263AbWFZJcQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jun 2006 05:32:16 -0400
+Received: from leonov.stosberg.net (p213.54.83.220.tisdip.tiscali.de [213.54.83.220])
+	by ncs.stosberg.net (Postfix) with ESMTP id 7F835AEBA065;
+	Mon, 26 Jun 2006 11:32:11 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id 60A2311048F; Mon, 26 Jun 2006 11:32:14 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vmzc0i7xo.fsf@assigned-by-dhcp.cox.net>
+OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22670>
 
-Dennis Stosberg <dennis@stosberg.net> writes:
+Junio C Hamano wrote:
 
-> Yesterday I could build the next branch with Sun CC 5.8 with a few
-> trivial changes.  I will send four patches in reply to this mail.
+> Dennis Stosberg <dennis@stosberg.net> writes:
+> 
+> > Yesterday I could build the next branch with Sun CC 5.8 with a few
+> > trivial changes.  I will send four patches in reply to this mail.
+> 
+> Thanks.  Next time around please sign off your patches.
 
-Thanks.  Next time around please sign off your patches.
+Sorry, I forgot and will do next time.  Please assume the Signed-Off
+is present on the first three patches.
+
+Regards,
+Dennis
