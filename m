@@ -1,47 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: perl profiling (was: PPC SHA-1 Updates in "pu")
-Date: Sun, 25 Jun 2006 21:51:44 -0400
-Message-ID: <20060626015144.GA6706@coredump.intra.peff.net>
-References: <7vhd2atid1.fsf@assigned-by-dhcp.cox.net> <20060625012435.GZ21864@pasky.or.cz> <7vfyhtopjm.fsf@assigned-by-dhcp.cox.net> <20060625093444.GD21864@pasky.or.cz> <Pine.LNX.4.63.0606251202320.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060625102037.GI29364@pasky.or.cz> <7vzmg1v7ci.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606251537450.29667@wbgn013.biozentrum.uni-wuerzburg.de> <86veqp8456.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0606260121040.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Git.pm build: Fix quoting and missing GIT-CFLAGS dependency
+Date: Sun, 25 Jun 2006 23:48:31 -0700
+Message-ID: <7vk674mmyo.fsf@assigned-by-dhcp.cox.net>
+References: <20060624012202.4822.qmail@science.horizon.com>
+	<7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
+	<7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
+	<7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606241338370.6483@g5.osdl.org>
+	<7vd5cyt8a3.fsf@assigned-by-dhcp.cox.net>
+	<20060625010202.GX21864@pasky.or.cz>
+	<20060625014009.GA21864@pasky.or.cz>
+	<7vac82q6mb.fsf@assigned-by-dhcp.cox.net>
+	<20060625152157.GG21864@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 26 03:51:55 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 26 08:48:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FugGU-0004Nl-KX
-	for gcvg-git@gmane.org; Mon, 26 Jun 2006 03:51:51 +0200
+	id 1Fuktk-00009U-OQ
+	for gcvg-git@gmane.org; Mon, 26 Jun 2006 08:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965179AbWFZBvr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Jun 2006 21:51:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965195AbWFZBvr
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jun 2006 21:51:47 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:14734 "HELO
-	peff.net") by vger.kernel.org with SMTP id S965179AbWFZBvq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jun 2006 21:51:46 -0400
-Received: (qmail 30332 invoked from network); 25 Jun 2006 21:51:24 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 25 Jun 2006 21:51:24 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Jun 2006 21:51:44 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0606260121040.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751159AbWFZGsd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Jun 2006 02:48:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbWFZGsd
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 02:48:33 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:19096 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751159AbWFZGsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jun 2006 02:48:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060626064832.WRBV554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 26 Jun 2006 02:48:32 -0400
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22654>
 
-On Mon, Jun 26, 2006 at 01:23:21AM +0200, Johannes Schindelin wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> one-liner, you probably want to say that profiling Perl is easy. Can you 
-> enlighten me how to do memory _and_ timing profiling on, say, a per-line 
-> basis?
+> Could you please also throw in these two?
+>
+> [PATCH 3/7] Git.pm: Swap hash_object() parameters
+> [PATCH 4/7] Git.pm: Fix Git->repository("/somewhere/totally/elsewhere")
 
-For the timing, have you tried using Devel::SmallProf?
-  perl -d:SmallProf foo.pl
+Will take a look.
 
--Peff
+> Yes, -I is very broken. I have abandoned it in:
+>
+> 	Subject: Re: [PATCH 01/12] Introduce Git.pm (v4)
+> 	Date:   Sat, 24 Jun 2006 13:52:27 +0200
+>
+> The advantage to your approach is that it works properly without
+> requiring to make install even outside of the testsuite.
+
+I remember myself getting utterly discusted when I saw the
+inclusion of the build-time blib directory in the search path in
+some other Perl code outside git.
+
+Worse yet, I suspect the order you do the two directories is
+wrong to prefer the freshly built one over the one you installed
+the last time, but I was trying not to stare at too much for
+health reasons so ... ;-).
