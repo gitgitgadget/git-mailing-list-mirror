@@ -1,102 +1,121 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/7] Rework diff options
-Date: Mon, 26 Jun 2006 11:24:17 -0700
-Message-ID: <7v64inixm6.fsf@assigned-by-dhcp.cox.net>
-References: <20060624201843.a5b4f7b9.tihirvon@gmail.com>
-	<7vslltopzg.fsf@assigned-by-dhcp.cox.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit: bunch of bugreports/wishes
+Date: Mon, 26 Jun 2006 22:04:07 +0100
+Message-ID: <b0943d9e0606261404s38d4e316ja1af671f2d0d6e73@mail.gmail.com>
+References: <20060622221425.GA7851@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 26 20:25:10 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "GIT list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 26 23:04:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuvlY-0006gW-AU
-	for gcvg-git@gmane.org; Mon, 26 Jun 2006 20:24:56 +0200
+	id 1FuyFm-0004KM-Ni
+	for gcvg-git@gmane.org; Mon, 26 Jun 2006 23:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932616AbWFZSYj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Jun 2006 14:24:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932619AbWFZSYj
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 14:24:39 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:60635 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932616AbWFZSYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jun 2006 14:24:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060626182438.TEDL8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 26 Jun 2006 14:24:38 -0400
-To: Timo Hirvonen <tihirvon@gmail.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933031AbWFZVEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Jun 2006 17:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933037AbWFZVEL
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 17:04:11 -0400
+Received: from nz-out-0102.google.com ([64.233.162.204]:50310 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S933031AbWFZVEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jun 2006 17:04:08 -0400
+Received: by nz-out-0102.google.com with SMTP id 12so1472400nzp
+        for <git@vger.kernel.org>; Mon, 26 Jun 2006 14:04:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LvHtF4LJ4WV0w1xLhF2tSLzS69E13IBIxI5E85qf1QyF7y9CB5MPDWmIXd4SsddOlgU3oZPlHxJQQWfkyeuhQorSZE2gcI/IOUtLpBXuqgncxzNMi5HhyXZ04qzsoAqJwOpQLXBkyVbhBfM8cfkKTaAT4D3WEkEGmSd34w5LoCU=
+Received: by 10.36.133.20 with SMTP id g20mr4617210nzd;
+        Mon, 26 Jun 2006 14:04:07 -0700 (PDT)
+Received: by 10.36.250.28 with HTTP; Mon, 26 Jun 2006 14:04:07 -0700 (PDT)
+To: "Yann Dirson" <ydirson@altern.org>
+In-Reply-To: <20060622221425.GA7851@nowhere.earth>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22679>
 
-Junio C Hamano <junkio@cox.net> writes:
+On 22/06/06, Yann Dirson <ydirson@altern.org> wrote:
+> Here are a number of problems I encountered while playing with
+> uncommit with 0.10:
 
-> Here are a few problems I have seen:
+"uncommit" was really intended as generating some simple patches from
+a linear list of commits (maybe for undoing a "stg commit" or after a
+git-am to modify some patches before pushint upstream). History
+re-writing is somehow outside StGIT's goals.
+
+> - uncommit ignores grafts.  This causes "uncommit -n" to through
+> "graft merges" without asking, and surely gives unexpected result
+> when a graft is used to change an ancestor rather than adding one.
+[...]
+
+I could fix "uncommit" to fail at this point but, as I said above, I
+wouldn't add extra features to this command.
+
+Maybe you can explain your workflow a bit as I don't see the need for
+mass uncommitting.
+
+> - uncommit could be more flexible to help with mass-uncommitting,
+> eg. with something like "--to <commit>" (to avoid counting manually),
+> or "--to-merge" to cleanly stop on first merge instead of failing
+> there.  This may have an impact on how uncommits are numbered.
 >
->  - "git show --stat HEAD" gives '---' marker as Johannes and you
->    have already discussed (I do not mind this that much though);
+> - uncommit synopsis is incomplete (lacks " | -n <n> <basename>")
 >
->  - "--cc" seems to be quite broken.  "git show v1.0.0" nor "git
->    diff-tree --pretty --cc v1.0.0" does not give the log
->    message, and gives something quite confused instead.  I think
->    it is showing "-m -p" followed by "--cc".
->
-> We may find more minor breakages, in addition to these, but I am
-> reasonably sure we should be able to fix them in-tree.
+> - after mass-uncommitting, more help to look at the stack would be
+> needed.  Eg. a "stg series" flag to print more commit info (author,
+> files), or to limit the listing to a given author (like "stg patches"
+> limits for a file).
 
-Further impressions, while with a clean index and working tree.
+These would be good indeed. I also had a plan to generate the patch
+name from the subject line (i.e. replacing the spaces with a dash) to
+be more meaningful. But got really busy with my job recently and
+didn't have time.
 
-First the good ones (improvements).
+> - when a push is not committed because of a conflict, looking at the
+> previous diff for the patch would help.  Maybe something like "stg
+> show --old" ?
 
- - "git diff-index --patch-with-raw HEAD" gives empty result;
-   the traditional one shows one empty line.
+"stg show <patch>//top.old" should show it (well, with a bit more
+typing than --old).
 
- - "git diff-tree -p --stat" and "git diff-tree --stat -p"
-   works, as you planned.
+> - the help string for push should say "patches", and possibly document
+> more precisely the syntax, something like:
 
- - "git diff-tree --root --patch-with-raw --summary" works; the
-   traditional one misses --summary.
+I plan to change the syntax of push a bit to allow things like
+patch1..patch2 without the --to option (the latter would still be
+there but taking a single patch).
 
- - "git show --name-only HEAD" works; the traditional one always
-   does --cc -p; the same for "git show -s HEAD".
+> -help = 'push a patch on top of the series'
+> -usage = """%prog [options] [<patch1> [<patch2>...]]
+> +help = 'push patches on top of the series'
+> +usage = """%prog [options] [<patch1> [<patch2>...] | -n <n> <patchroot>]
 
-Regressions, most of the minor.
+Does the <patchroot> syntax work?
 
- - "git diff-index -p --stat HEAD" gives one empty line; the
-   traditional one gives empty.
+> - "push --undo" is not robust.  On the occasion reproduced below, I
+> had to rollback the push myself by hand-modifying the stgit data,
+> which took me some effort.  I'll have to gather precise info, but the
+> issue occurs on patch reordering, on a genuine conflict, and seems to
+> be involve a change to a non-existent file, when that file would have
+> been added by a non-applied patch originally below the one I attempted
+> to apply.
+[...]
+> ydirson$ stg push --undo
+> Undoing the "patch10" push...stg push: ['git-diff-index', 'HEAD', 'path/to/the/file.java'] failed (fatal: ambiguous argument
+> 'path/to/the/file.java': unknown revision or path not in the working tree.
+> Use '--' to separate paths from revisions)
 
- - "git diff-tree --patch-with-raw HEAD" for a non-merge commit
-   misses the empty line between raw and patch.
+I got this problem as well. StGIT needs fixing but I think a quick
+workaround is to create an empty file (touch patch/to/the/file.java)
+before the undo and git-diff-index will be happy.
 
- - "git diff-tree --cc HEAD" for an evil merge (a merge whose
-   result does not match either parents, e.g. v1.0.0) shows extra
-   two-tree diffs (presumably HEAD^1..HEAD and HEAD^2..HEAD)
-   before showing what is expected.  The same for "git show". 
+Thanks for the bug reports/suggestions.
 
- - "git show --name-only HEAD" for an evil merge similarly shows
-   extra two-tree diffs in --name-only format before showing
-   what is expected.  Presumably the same bug as the above.
-
- - "git diff-tree -c HEAD" for an evil merge shows extra newline
-   after the output.
-
- - Neither "git diff-tree -m -s HEAD" for a merge, "git diff-tree -s
-   HEAD" for a non-merge does not squelch the output; same for
-   "git whatchanged".
-
- - "git log --raw HEAD" descends into subdirectories.  It
-   instead should show the top-level tree differences.
-
- - "git diff-tree --pretty --patch-with-stat HEAD" for a
-   non-merge misses "---\n" before stat (I think you are aware
-   of this).
-
- - "git show --cc HEAD" for a merge should do "---\n", followed
-   by a stat for diff between HEAD^1..HEAD, followed by dense
-   combined-diff for HEAD.
+-- 
+Catalin
