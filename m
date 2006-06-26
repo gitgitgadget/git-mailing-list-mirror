@@ -1,58 +1,61 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: Re: [PATCH] "test" in Solaris' /bin/sh does not support -e
-Date: Tue, 27 Jun 2006 00:25:52 +0200
-Message-ID: <20060626222552.G4c7c6c98@leonov.stosberg.net>
-References: <20060625014703.29304.12715.stgit@machine.or.cz> <7vk676orjy.fsf@assigned-by-dhcp.cox.net> <20060626082428.G52c9608e@leonov.stosberg.net> <20060626082754.G6ec0a61e@leonov.stosberg.net> <7vwtb4i89d.fsf@assigned-by-dhcp.cox.net> <20060626094211.G3b49c5c3@leonov.stosberg.net> <20060626100402.G5761a3ea@leonov.stosberg.net> <7vd5cvj1d0.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/2] format-patch: use clear_commit_marks() instead of
+ some adhocery
+Date: Tue, 27 Jun 2006 00:44:12 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606270042420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vhd27j3v8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 00:26:01 2006
+X-From: git-owner@vger.kernel.org Tue Jun 27 00:45:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FuzWq-0002YJ-GI
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 00:26:00 +0200
+	id 1FuzpL-0005nP-Vt
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 00:45:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933096AbWFZWZ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Jun 2006 18:25:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933097AbWFZWZ4
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 18:25:56 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:11751 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S933096AbWFZWZz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jun 2006 18:25:55 -0400
-Received: from leonov.stosberg.net (p213.54.83.220.tisdip.tiscali.de [213.54.83.220])
-	by ncs.stosberg.net (Postfix) with ESMTP id 60654AEBA065;
-	Tue, 27 Jun 2006 00:25:42 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id 053BE110CF0; Tue, 27 Jun 2006 00:25:52 +0200 (CEST)
+	id S933361AbWFZWow (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Jun 2006 18:44:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933349AbWFZWod
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 18:44:33 -0400
+Received: from mail.gmx.de ([213.165.64.21]:23942 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S933347AbWFZWoN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jun 2006 18:44:13 -0400
+Received: (qmail invoked by alias); 26 Jun 2006 22:44:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 27 Jun 2006 00:44:12 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5cvj1d0.fsf@assigned-by-dhcp.cox.net>
-OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
-User-Agent: mutt-ng/devel-r802 (Debian)
+In-Reply-To: <7vhd27j3v8.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22685>
 
-Junio C Hamano wrote:
+Hi,
 
-> Which means this in pb/gitpm topic needs further changes,
-> perhaps.
+On Mon, 26 Jun 2006, Junio C Hamano wrote:
 
-Indeed.
+> diff --git a/commit.c b/commit.c
+> index 946615d..69fbc41 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -397,8 +397,7 @@ void clear_commit_marks(struct commit *c
+>  	commit->object.flags &= ~mark;
+>  	while (parents) {
+>  		struct commit *parent = parents->item;
+> -		if (parent && parent->object.parsed &&
+> -		    (parent->object.flags & mark))
+> +		if (parent && (parent->object.flags & mark))
 
-The second patch makes it possible to give additional CFLAGS and
-LDFLAGS for compiling the perl module.  Otherwise the compiler may
-not be able to find headers and libraries for curl, expat and
-openssl.  This is needed on Solaris where these libraries will
-usually be in paths like /usr/local or /opt/gnu.
+This is probably not necessary for existing users, but it's a good change 
+for the future: new users might be surprised to learn that there are 
+unparsed objects, which still want to be handled.
 
-With the patch Pasky started this thread with, the four patches I
-sent earlier and these last two patches the pu branch compiles,
-tests and installs cleanly on Solaris 9, both with Sun CC 5.8 and
-GCC 4.1.1.
-
-Regards,
-Dennis
+Ciao,
+Dscho
