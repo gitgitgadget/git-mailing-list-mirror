@@ -1,98 +1,64 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: CFT: merge-recursive in C (test updates)
-Date: Tue, 27 Jun 2006 01:42:42 +0200
-Message-ID: <20060626234242.GB3121@steel.home>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: CFT: merge-recursive in C
+Date: Mon, 26 Jun 2006 16:54:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606261652350.3927@g5.osdl.org>
 References: <20060626233838.GA3121@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
 	Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Tue Jun 27 01:44:31 2006
+X-From: git-owner@vger.kernel.org Tue Jun 27 01:55:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fv0kf-0006nc-Uo
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 01:44:22 +0200
+	id 1Fv0ux-0008Lz-A3
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 01:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933125AbWFZXnP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Jun 2006 19:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933286AbWFZXnO
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 19:43:14 -0400
-Received: from mailout04.sul.t-online.com ([194.25.134.18]:5795 "EHLO
-	mailout04.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S933125AbWFZXm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jun 2006 19:42:56 -0400
-Received: from fwd34.aul.t-online.de 
-	by mailout04.sul.t-online.com with smtp 
-	id 1Fv0jE-0003FL-02; Tue, 27 Jun 2006 01:42:52 +0200
-Received: from tigra.home (Jr8fZuZGQeN8QSwE4dVFBRw5fAFS7+n89rYPqf6nXE8klr8Bcm4IYq@[84.160.112.192]) by fwd34.sul.t-online.de
-	with esmtp id 1Fv0j5-0vn1GK0; Tue, 27 Jun 2006 01:42:43 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 18DEA277B5;
-	Tue, 27 Jun 2006 01:42:43 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1Fv0j4-0000pS-Vw; Tue, 27 Jun 2006 01:42:43 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S933139AbWFZXy4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Jun 2006 19:54:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933135AbWFZXyz
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 19:54:55 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:17380 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S933139AbWFZXyy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jun 2006 19:54:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5QNsJnW016057
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 26 Jun 2006 16:54:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5QNsIGw005253;
+	Mon, 26 Jun 2006 16:54:19 -0700
+To: Alex Riesen <raa.lkml@gmail.com>
 In-Reply-To: <20060626233838.GA3121@steel.home>
-User-Agent: Mutt/1.5.6i
-X-ID: Jr8fZuZGQeN8QSwE4dVFBRw5fAFS7+n89rYPqf6nXE8klr8Bcm4IYq
-X-TOI-MSGID: d0ff024f-75a6-4da4-85cb-d49fa4ac510c
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22698>
 
-I had to change the tests a little, to avoid skipping test on systems
-without python and to force t3402-rebase-merge.sh test the converted
-program (this one shouldn't be merged at all of course. I think we'd
-still want have git-merge-recursive.py around and test it too. It is
-reference implementation, to say the least).
 
----
 
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index d34c6cf..c13d154 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -7,12 +7,6 @@ test_description='git rebase --merge tes
- 
- . ./test-lib.sh
- 
--if test "$no_python"; then
--	echo "Skipping: no python => no recursive merge"
--	test_done
--	exit 0
--fi
--
- T="A quick brown fox
- jumps over the lazy dog."
- for i in 1 2 3 4 5 6 7 8 9 10
-@@ -51,7 +45,7 @@ test_expect_success setup '
- '
- 
- test_expect_success 'reference merge' '
--	git merge -s recursive "reference merge" HEAD master
-+	git merge -s recur "reference merge" HEAD master
- '
- 
- test_expect_success rebase '
-diff --git a/t/t6021-merge-criss-cross.sh b/t/t6021-merge-criss-cross.sh
-index 2623813..e8606c7 100755
---- a/t/t6021-merge-criss-cross.sh
-+++ b/t/t6021-merge-criss-cross.sh
-@@ -10,12 +10,6 @@ # nice decription of what this is about.
- test_description='Test criss-cross merge'
- . ./test-lib.sh
- 
--if test "$no_python"; then
--	echo "Skipping: no python => no recursive merge"
--	test_done
--	exit 0
--fi
--
- test_expect_success 'prepare repository' \
- 'echo "1
- 2
+On Tue, 27 Jun 2006, Alex Riesen wrote:
+> 
+> To my deep disappointment, it didn't work out as good as I hoped: one
+> program I see most often and for longest time in the process list
+> (git-diff-tree) is a too complex thing to be put directly into
+> merge-recursive.c, so any help in this direction will be greatly
+> appreciated.
+
+Are you sure?
+
+git-diff-tree is one of the simplest git operations. We've got absolutely 
+_tons_ of infrastructure in place to do it efficiently, since it's done 
+all over the map (a "git-rev-list" with path limiting will do a diff-tree 
+against all the commits).
+
+Some of the interfaces might be a bit non-obvious, but the diff stuff was 
+some of the first ones to be libified exactly because they end up being so 
+fundamental.
+
+		Linus
