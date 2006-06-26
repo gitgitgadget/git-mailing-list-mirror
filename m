@@ -1,93 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] format-patch: support really old non-range syntax, with a
- warning
-Date: Tue, 27 Jun 2006 01:14:59 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606270113360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <46a038f90606261520k7df8cb3ci7a4a609644e0be12@mail.gmail.com>
- <Pine.LNX.4.63.0606270038200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <46a038f90606261550p145b20a6gbe960e0abc16e8a4@mail.gmail.com>
- <Pine.LNX.4.63.0606270057260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vk673h62w.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Introduce Git.pm (v3)
+Date: Tue, 27 Jun 2006 01:20:41 +0200
+Message-ID: <200606270120.42031.jnareb@gmail.com>
+References: <20060622220201.19132.67536.stgit@machine.or.cz> <e7g079$8qt$1@sea.gmane.org> <20060623124539.GM21864@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 01:17:19 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Jun 27 01:21:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fv0KK-0002jQ-Kv
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 01:17:09 +0200
+	id 1Fv0OH-0003Nv-UJ
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 01:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933249AbWFZXP6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Jun 2006 19:15:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933245AbWFZXPH
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 19:15:07 -0400
-Received: from mail.gmx.net ([213.165.64.21]:1180 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S933248AbWFZXPB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jun 2006 19:15:01 -0400
-Received: (qmail invoked by alias); 26 Jun 2006 23:15:00 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp003) with SMTP; 27 Jun 2006 01:15:00 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk673h62w.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S933240AbWFZXUy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 26 Jun 2006 19:20:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933252AbWFZXUx
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 19:20:53 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:14760 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S933256AbWFZXUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jun 2006 19:20:41 -0400
+Received: by nf-out-0910.google.com with SMTP id m19so653040nfc
+        for <git@vger.kernel.org>; Mon, 26 Jun 2006 16:20:40 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZXZMndSkaMR/poW6kQtfNBlHi0IVccokO1SUBtNkGdBueCXXL+2M9LPreN1bBN67VgrUwS/R9g7gntNHKnG2hhzKbqh4cxox01HcdlPR9jzWV3lnqIra4CJ8FDnFbSAQgq6ApTYatKSTWKu7n3DW/A32WeIAf/tcFt+dV53icmU=
+Received: by 10.48.163.7 with SMTP id l7mr5128364nfe;
+        Mon, 26 Jun 2006 16:20:40 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id m15sm2011518nfc.2006.06.26.16.20.38;
+        Mon, 26 Jun 2006 16:20:39 -0700 (PDT)
+To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+User-Agent: KMail/1.8.2
+In-Reply-To: <20060623124539.GM21864@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22694>
 
+Dnia pi=B1tek 23. czerwca 2006 14:45, napisa=B3e=B6:
+> Dear diary, on Fri, Jun 23, 2006 at 08:03:23AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+>> Perhaps Git.pm should provide also generic, pure Perl (and slower)
+>> fallback implementation (when for some reason we cannot compile XS).
+>=20
+> I fiercely want to avoid this if there is any other possible way to g=
+o
+> about it - this is a path to hell of massive code duplication and
+> additional work, as the number of routines will grow. If it is questi=
+on
+> of spending many developer-hours uselessly duplicating code in a way
+> that'll be much slower than possible anyway OR building with -fPIC...=
+ ;-)
 
-Now you can say (again)
+I have thought about reimplementing only the parts which are in XS. In =
+C
+one would probably write
 
-	git format-patch <theirs> <mine>
+#if can_asm
+ asm (...)
+#else
+ /* C code equivalent */
+#endif
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In addition to allowing use of Git.pm for people who cannot compile=20
+Git.xs, it would be helpful I guess in Git.pm development.
 
----
-
-
-	Re: [PATCH 3/2] format-patch: use clear_commit_marks() instead of some 
-	adhocery
-
-	On Mon, 26 Jun 2006, Junio C Hamano wrote:
-
-	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-	> 
-	> >> > Could you test with "origin..master" instead of "origin master"?
-	> >> 
-	> >> Funny you mention that! Now it works ;-) and it even produces the
-	> >> patches I would expect.
-	> >
-	> > The funny thing is: I did something to account for the old syntax, but 
-	> > only if you specified _one_ ref, not _two_. It would be easy, but is it 
-	> > needed? (I.e. are your fingers so trained on it?)
-	> 
-	> If possible I'd rather correct the two syntaxes once and for all now.
-	> Maybe accept two with a warning for deprecation?
-
-	Here you are. (Tested once -- works great!)
-
- builtin-log.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 44d2d13..64b2830 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -260,6 +260,11 @@ int cmd_format_patch(int argc, const cha
- 	if (rev.pending.nr == 1) {
- 		rev.pending.objects[0].item->flags |= UNINTERESTING;
- 		add_head(&rev);
-+	} else if (rev.pending.nr == 2
-+			&& !(rev.pending.objects[0].item->flags & UNINTERESTING)
-+			&& !(rev.pending.objects[1].item->flags & UNINTERESTING)) {
-+		rev.pending.objects[0].item->flags |= UNINTERESTING;
-+		fprintf(stderr, "WARNING: obsolete syntax (no range)!\n");
- 	}
- 
- 	if (!use_stdout)
+--=20
+Jakub Narebski
+Poland
