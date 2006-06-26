@@ -1,52 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] correct documentation for git grep
-Date: Mon, 26 Jun 2006 08:59:46 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606260858050.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <E1FuWh7-0008Ry-HX@moooo.ath.cx> <20060625184757.f8273820.tihirvon@gmail.com>
- <E1FuX8l-0001H5-2z@moooo.ath.cx> <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <E1FueCE-0003W3-4Q@moooo.ath.cx> <E1Fuecp-0004iI-RG@moooo.ath.cx>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: Solaris 8
+Date: Mon, 26 Jun 2006 10:09:12 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060626080912.GA3646@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 26 08:59:59 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jun 26 10:09:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ful4a-0001hX-Ln
-	for gcvg-git@gmane.org; Mon, 26 Jun 2006 08:59:53 +0200
+	id 1Fum9o-0001qn-Fc
+	for gcvg-git@gmane.org; Mon, 26 Jun 2006 10:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbWFZG7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Jun 2006 02:59:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWFZG7t
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 02:59:49 -0400
-Received: from mail.gmx.de ([213.165.64.21]:59075 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751196AbWFZG7t (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jun 2006 02:59:49 -0400
-Received: (qmail invoked by alias); 26 Jun 2006 06:59:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp016) with SMTP; 26 Jun 2006 08:59:47 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1Fuecp-0004iI-RG@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S964862AbWFZIJQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Jun 2006 04:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964863AbWFZIJQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jun 2006 04:09:16 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:8920 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S964862AbWFZIJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jun 2006 04:09:14 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1Fum9h-00068j-0Q
+	for git@vger.kernel.org; Mon, 26 Jun 2006 10:09:13 +0200
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.11.7p2+Sun/8.12.11) id k5Q89CD10215
+	for git@vger.kernel.org; Mon, 26 Jun 2006 10:09:12 +0200 (MEST)
+To: git@vger.kernel.org
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22656>
 
-Hi,
+Hello,
 
-On Mon, 26 Jun 2006, Matthias Lederhofer wrote:
+when trying to get git running on Solaris 8 (gcc 2.95), there are
+several pit-falls:
 
-> -	   [-f <file>] [-e <pattern>]
-> +	   [-f <file>] [-e] <pattern> [-e <pattern> [..]]
->  	   [<tree>...]
->  	   [--] [<path>...]
+1) for me, install and tar are GNUish, ginstall and gtar don't exist.
+   (INSTALL = ginstall, TAR = gtar for SunOS in Makefile)
 
-Minor nit: as you can see from the two latter lines, "<bla>..." is the 
-standard notation, whereas "<bla> [..]" is not.
+2) connect.c and merge-index.c use signal() without including signal.h
 
-Ciao,
-Dscho
+3) Solaris ships zlib 1.1.3.  That version doesn't define
+   ZLIB_VERNUM.  But no, that's not my problem, ... I have it: There is
+   another zlib version in /usr/local.  That's 1.2.3, defining
+   ZLIB_VERNUM as 0x1230.  The compiler uses include files from
+   /usr/local, but lib from /usr/lib.  Aargh, I have to dig the admins
+   here...
+
+4) libc don't know printf z and t modifier:
+
+	alloc.c: In function `alloc_report':
+	alloc.c:47: warning: unknown conversion type character `z' in format
+	alloc.c:47: warning: too many arguments for format
+	alloc.c:48: warning: unknown conversion type character `z' in format
+	alloc.c:48: warning: too many arguments for format
+	alloc.c:49: warning: unknown conversion type character `z' in format
+	alloc.c:49: warning: too many arguments for format
+	alloc.c:50: warning: unknown conversion type character `z' in format
+	alloc.c:50: warning: too many arguments for format
+	mktag.c: In function `verify_tag':
+	mktag.c:69: warning: unknown conversion type character `t' in format
+	mktag.c:69: warning: too many arguments for format
+	mktag.c:72: warning: unknown conversion type character `t' in format
+	mktag.c:72: warning: too many arguments for format
+	mktag.c:77: warning: unknown conversion type character `t' in format
+	mktag.c:77: warning: too many arguments for format
+	mktag.c:97: warning: unknown conversion type character `t' in format
+	mktag.c:97: warning: too many arguments for format
+	mktag.c:104: warning: unknown conversion type character `t' in format
+	mktag.c:104: warning: too many arguments for format
+
+5) I don't understand why I get this warning for EMIT(c), but not for
+   EMIT('\\'):
+
+	quote.c:34: warning: value computed is not used
+	quote.c:37: warning: value computed is not used
+
+6) typedef long pid_t
+	upload-pack.c: In function `create_pack_file':
+	upload-pack.c:277: warning: int format, pid_t arg (arg 2)
+	daemon.c: In function `remove_child':
+	daemon.c:371: warning: int format, pid_t arg (arg 2)
+	daemon.c: In function `child_handler':
+	daemon.c:481: warning: int format, pid_t arg (arg 3)
+
+7) I think these can safely be ignored:
+	builtin-help.c: In function `cmd_help':
+	builtin-help.c:234: warning: null format string
+	builtin-help.c:236: warning: null format string
+	git.c: In function `main':
+	git.c:280: warning: null format string
+
+I'll send out patches in reply to this mail for 2) and 6)
+
+-- 
+Uwe Zeisberger
+
+main(){char*a="main(){char*a=%c%s%c;printf(a,34,a,34%c";printf(a,34,a,34
+,10);a=",10);a=%c%s%c;printf(a,34,a,34,10);}%c";printf(a,34,a,34,10);}
