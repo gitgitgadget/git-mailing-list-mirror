@@ -1,104 +1,76 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH 3/2] format-patch: use clear_commit_marks() instead of some adhocery
-Date: Tue, 27 Jun 2006 21:52:21 +1200
-Message-ID: <46a038f90606270252p2beac88bo3cf7aa8d3845450c@mail.gmail.com>
-References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <46a038f90606261520k7df8cb3ci7a4a609644e0be12@mail.gmail.com>
-	 <Pine.LNX.4.63.0606270038200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <46a038f90606261550p145b20a6gbe960e0abc16e8a4@mail.gmail.com>
-	 <Pine.LNX.4.63.0606270057260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <44A06A8D.7080202@catalyst.net.nz>
-	 <Pine.LNX.4.63.0606271016450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: cvs importer woes
+Date: Tue, 27 Jun 2006 12:05:36 +0200
+Message-ID: <44A102F0.9090604@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
-	git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Jun 27 11:52:33 2006
+X-From: git-owner@vger.kernel.org Tue Jun 27 12:05:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvAF9-0000HQ-FY
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 11:52:27 +0200
+	id 1FvARy-0002OX-CQ
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbWF0JwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 05:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbWF0JwY
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 05:52:24 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:41402 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750749AbWF0JwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 05:52:23 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so2494442ugf
-        for <git@vger.kernel.org>; Tue, 27 Jun 2006 02:52:22 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PVKQ1SxIn+JPFSgzHejPtgovsru5f3yyLKr7oZHw+7sl5rwBZwLxKz7M6+uX7GAMHLr56rIX1uUijZI7TiXmUAjir+upi+O6SC2VT4afrGcxcQ5YupVdgMwfv3WlXKrPbKZT2K39obEW1uIrM0QhGasA5fZxVzy+KvfzHGaKvNY=
-Received: by 10.78.177.11 with SMTP id z11mr2438563hue;
-        Tue, 27 Jun 2006 02:52:22 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Tue, 27 Jun 2006 02:52:21 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606271016450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1751311AbWF0KFj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 06:05:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWF0KFj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:05:39 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:13490 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751311AbWF0KFi
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jun 2006 06:05:38 -0400
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP id BD2766BCE0
+	for <git@vger.kernel.org>; Tue, 27 Jun 2006 12:05:36 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22721>
 
-On 6/27/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> I just cloned your repo, and as far as I can tell, the latest commit is on
-> June 23rd. So your numbers should be the same as mine. But not all are.
+Sadly, the cvsimport command no longer works to create new repositories 
+from scratch. I'm not nearly perl literate enough to fix it, but the 
+problem seems to be firstly 061303f0b50a648db8e0af23791fc56181f6bf93. In 
+particular "Also, make sure that the initial git-read-tree is 
+performed." which fails if there is not a complete git repo already 
+created with at least one tree committed.
 
-Taht repo is on a machine at work, but it's possible that I've cherry
-picked a new commit onto master that isn't on the publc repo yet.
+Some sample output:
 
-> The problem I see: from the 53 non-merges in nzvleportfolio (who makes up
-> your branch names anyway?), there are two already in upstream: e3f56c and
-> 7e448c5c. So it really should be 51.
->
-> >   $ git-rev-list svnhead..master  | wc -l
-> >   61
->
-> Same on my repo.
+$ git cvsimport -k -u -d:local:/home/CVS packages
+fatal: Not a git repository: '/data/home/exon/git/packages/.git'
+read-tree failed: 32768
 
-And if you add --no-merges it'll give you 51 or 52, depending...
+Removing the unconditional read-tree call, I get this (still in an empty 
+directory which isn't a repo):
 
-> >   $ ~/local/git/git-format-patch.sh  -o .patchesold svnhead master
-> >   ...
-> >   $ ls .patchesold | wc -l
-> >   52
->
-> I guess this propagates from git-cherry. (Did not test here, since I do
-> not have an old git-format-patch.sh handy, and am too lazy to get the last
-> version from my git repo.)
+$ git cvsimport -k -u -d:local:/home/CVS packages
+fatal: Not a git repository: '/data/home/exon/git/packages/.git'
+read-tree failed: 32768
 
-I think I did something like
+$ git init-db
+defaulting to local storage area
 
-  git-cat-file blob v1.3.3:git-format-patch.sh > git-format-patch.sh
-  chmod ugo+x git-format-patch.sh
+$ git cvsimport -k -u -d:local:/home/CVS packages
+fatal: Not a valid object name origin
+read-tree failed: 32768
 
-> But anyway, looking at your numbers I take it that the new format-patch
-> with --ignore-if-in-upstream has the same output as the old format-patch,
-> right?
+Bisect running now. v1.3.1 is good and imports the stuff properly to an 
+empty directory.
 
-It does, but it may be "right" even though it's not realising that
-some of the patches were cherry picked. git-cherry doesn't either. So
-that algorythm isn't so hot in this case :-/
+Oh, now it's done (4 minutes for 620 revisions with automated testing 
+between good/bad. *LOVE* bisect).
 
-I jumped to conclusions earlier because I called git format-patch with
-the old syntax (theirs ours) and it gave me 186 patches, which may
-very well be the whole repo history, like it did earlier with git
-itself. I thought that 186 were the patches pending, and that
-git-cherry was cutting that to 52. Not so: it was a syntax issue.
-Sorry about the noise!
+The culprit is definitely 061303f0b50a648db8e0af23791fc56181f6bf93.
 
-cheers,
+Any perl-literate takers? Otherwise, just reverting the patch makes 
+things work (for me) again.
 
-
-
-martin
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
