@@ -1,61 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Print empty line between raw, stat, summary and patch
-Date: Tue, 27 Jun 2006 11:03:24 -0700
-Message-ID: <7vhd268oib.fsf@assigned-by-dhcp.cox.net>
-References: <20060627150917.7eabde58.tihirvon@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: CFT: merge-recursive in C (updated)
+Date: Tue, 27 Jun 2006 11:22:53 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606271116360.3927@g5.osdl.org>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 20:03:36 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Fredrik Kuivinen <freku045@student.liu.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 27 20:23:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvHuL-0006TQ-H1
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 20:03:30 +0200
+	id 1FvIDT-0001MR-Eu
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 20:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161238AbWF0SD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 14:03:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161249AbWF0SD0
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 14:03:26 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:35467 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1161238AbWF0SD0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 14:03:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060627180325.TQGB11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 27 Jun 2006 14:03:25 -0400
-To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060627150917.7eabde58.tihirvon@gmail.com> (Timo Hirvonen's
-	message of "Tue, 27 Jun 2006 15:09:17 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030201AbWF0SXL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 14:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030256AbWF0SXL
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 14:23:11 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:58501 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030201AbWF0SXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 14:23:10 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5RIMsnW015906
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Jun 2006 11:22:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5RIMrVR007226;
+	Tue, 27 Jun 2006 11:22:53 -0700
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22749>
 
-Timo Hirvonen <tihirvon@gmail.com> writes:
 
-> Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
-> ---
->
->   Should we print options->line_termination instead of \n between all
->   fields?
 
-I personally do not think it is a big deal since combination of
-stat, summary and patch are primarily for human consumption, but
-somebody might want to write a frontend GUI on top of this
-output and having an easy way to seperate the parts for machine
-consumption might be helpful.
+On Tue, 27 Jun 2006, Alex Riesen wrote:
+> 
+> Good news is that it is faster: 6min vs 10min. Bad news is that it is still
+> not enough for me and it is only on Linux (Windows will be slower,
+> still testing),
+> uses an awful lot of memory and CPU.
 
->   The old code didn't support as many combinations of raw,
->   stat, summary and patch so I'm not 100% sure about this.
+Why do you do that horrible node_list, and the broken "find common 
+ancestors?"
 
-Think of it as an opportunity to come up with the most sensible
-without having to worry about backward compatibility ;-)  I'll
-let you know what I think after I stare at its output for some
-time.
+I can't follow your code, but it _looks_ like you are using some totally 
+broken graph walking function.
 
-Thanks.
+For git, the #1 optimization ALWAYS is to avoid walking the full commit 
+graph. That fundamentally _cannot_ scale. 
+
+Almost all of the "hard work" in git has been to try to read the minimum 
+amount of commits possible. That means that you absolutely must not just 
+walk the commits the "obvious" way, because that will always require you 
+to build up the whole graph of the whole history, even if the common 
+shared point is much closer.
+
+So it look slike your "graph.c" is _fundamentally_ flawed.
+
+You need to really read "git-merge-base.c" and understand it thoroughly. 
+And then you need to throw away your graph.c, and use git-merge-base 
+instead.
+
+			Linus
