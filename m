@@ -1,96 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: [PATCH] git.c: Re-introduce sane error messages on missing commands.
-Date: Tue, 27 Jun 2006 10:28:22 +0200
-Message-ID: <20060627083508.E912A5BBAB@nox.op5.se>
-X-From: git-owner@vger.kernel.org Tue Jun 27 10:35:18 2006
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Notes on diffcore API
+Date: Tue, 27 Jun 2006 10:41:34 +0200
+Message-ID: <81b0412b0606270141x7e38af5i8a97b27e37da17bf@mail.gmail.com>
+References: <20060626233838.GA3121@steel.home>
+	 <7v4py7h2b9.fsf@assigned-by-dhcp.cox.net>
+	 <7virmn9hx8.fsf_-_@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Timo Hirvonen" <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 27 10:41:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fv92R-00037k-FG
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 10:35:15 +0200
+	id 1Fv98s-0004DI-8K
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 10:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751165AbWF0IfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 04:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbWF0IfL
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 04:35:11 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:62896 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751165AbWF0IfK
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 04:35:10 -0400
-Received: from nox.op5.se (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 283986BCF3
-	for <git@vger.kernel.org>; Tue, 27 Jun 2006 10:35:09 +0200 (CEST)
-Received: by nox.op5.se (Postfix, from userid 500)
-	id E912A5BBAB; Tue, 27 Jun 2006 10:35:08 +0200 (CEST)
-To: git@vger.kernel.org
+	id S1751296AbWF0Ilg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 04:41:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbWF0Ilg
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 04:41:36 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:35875 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932577AbWF0Ile (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jun 2006 04:41:34 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so2469038ugf
+        for <git@vger.kernel.org>; Tue, 27 Jun 2006 01:41:34 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=k7RJSkQy8F3a5yw5EKU6mSxoPHRQ32cuBEiSJ8W78GNtMQ1Z+lrsKBwceitp+34dA9d6sHLs+6DAGv/NvHjL7ytLarfLsUWlsHpECJaFpW1pG9MdX2X1Nv3ZolOwGX01gYZwvj3kjQTuggK9ldSiFuMEnBx+/V0HOxU9x6uGezo=
+Received: by 10.78.156.6 with SMTP id d6mr2408528hue;
+        Tue, 27 Jun 2006 01:41:34 -0700 (PDT)
+Received: by 10.78.37.7 with HTTP; Tue, 27 Jun 2006 01:41:34 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7virmn9hx8.fsf_-_@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22714>
 
-Somewhere in the alias handling git turned hostile on fat fingers:
+On 6/27/06, Junio C Hamano <junkio@cox.net> wrote:
+> -- >8 --
+> Notes on diffcore API
+> =====================
 
-	$ git showbranch
-	Failed to run command '': Is a directory
+Thanks!
 
-This patch fixes that by doing 2 things:
- * The variable git_command[MAX_PATH + 1] is now retired from
-   git.c:main() where it was never set. Instead the variable "cmd"
-   is used for all error messages.
- * The introduction of the "exec_errno" variable which preserves the
-   errno number from the execve() attempt. Later "why did it fail"
-   tests evaluate exec_errno, which gives the correct error message
-   along with the brief command-list (telling me I missed the dash in
-   "show-branch").
+> Diffcore Transformation
+> -----------------------
+>
+> The input file pairs recorded in the previous phase are
+> collected in diff_queued_diff (a global variable -- which means
+> that you cannot have two diffs running in parallel with the
+> current setup).  This is an expandable array of pointers to
+> `struct diff_filepair` structure.
+>
 
-It's possible that alias handling can fail and set errno to something
-proper, making this change less sane than I think, but handle_alias()
-seems to take care of its own error-handling so it shouldn't matter.
-
-Signed-off-by: Andreas Ericsson <ae@op5.se>
----
- git.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/git.c b/git.c
-index 94e9a4a..b04424f 100644
---- a/git.c
-+++ b/git.c
-@@ -206,9 +206,8 @@ int main(int argc, const char **argv, ch
- {
- 	const char *cmd = argv[0];
- 	char *slash = strrchr(cmd, '/');
--	char git_command[PATH_MAX + 1];
- 	const char *exec_path = NULL;
--	int done_alias = 0;
-+	int exec_errno = 0, done_alias = 0;
- 
- 	/*
- 	 * Take the basename of argv[0] as the command
-@@ -300,6 +299,9 @@ int main(int argc, const char **argv, ch
- 		/* .. then try the external ones */
- 		execv_git_cmd(argv);
- 
-+		/* if it's not an alias, the execve() errno is what we want */
-+		exec_errno = errno;
-+
- 		/* It could be an alias -- this works around the insanity
- 		 * of overriding "git log" with "git show" by having
- 		 * alias.log = show
-@@ -309,11 +311,11 @@ int main(int argc, const char **argv, ch
- 		done_alias = 1;
- 	}
- 
--	if (errno == ENOENT)
-+	if (exec_errno == ENOENT)
- 		cmd_usage(0, exec_path, "'%s' is not a git-command", cmd);
- 
- 	fprintf(stderr, "Failed to run command '%s': %s\n",
--		git_command, strerror(errno));
-+		cmd, strerror(exec_errno));
- 
- 	return 1;
- }
--- 
-1.4.1.rc1.g1ef9
+merge-recursive shouldn't have any problems with that, as the
+renames are just read in the current implementation.
+Still, it is somehow uncomfortable to see the amount of APIs
+with the above restriction. Never know when it'll bite.
