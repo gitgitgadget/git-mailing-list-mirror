@@ -1,53 +1,70 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: CFT: merge-recursive in C
-Date: Tue, 27 Jun 2006 14:17:05 +0200
-Message-ID: <81b0412b0606270517y199fbc5cn9e19639b01813a7f@mail.gmail.com>
-References: <20060626233838.GA3121@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/2] format-patch: use clear_commit_marks() instead of
+ some adhocery
+Date: Tue, 27 Jun 2006 14:39:15 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606271434210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+  <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <46a038f90606261520k7df8cb3ci7a4a609644e0be12@mail.gmail.com> 
+ <Pine.LNX.4.63.0606270038200.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <46a038f90606261550p145b20a6gbe960e0abc16e8a4@mail.gmail.com> 
+ <Pine.LNX.4.63.0606270057260.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <44A06A8D.7080202@catalyst.net.nz>  <Pine.LNX.4.63.0606271016450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+  <46a038f90606270252p2beac88bo3cf7aa8d3845450c@mail.gmail.com> 
+ <Pine.LNX.4.63.0606271251440.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <46a038f90606270409t6724b105h6c56d55138fd58c5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>,
-	"Fredrik Kuivinen" <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Tue Jun 27 14:17:31 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
+	git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Jun 27 14:39:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvCVR-0000F0-4i
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 14:17:25 +0200
+	id 1FvCqt-00041N-I4
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 14:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbWF0MRK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 08:17:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbWF0MRK
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 08:17:10 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:16117 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751318AbWF0MRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 08:17:07 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so2548030ugf
-        for <git@vger.kernel.org>; Tue, 27 Jun 2006 05:17:05 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=U7mz221S2FzIH58nolSJDPj604Q/fwTYiiK2zzFGEZq3Z6HXtRuhbGRiEdTBY8Q0slZ4RdlQIOqPLDApFc6C1v/bMpUFoqwEBkPF64Kf+9OAbCEwHHoRMNgpgdOJ0pfo+pnbPEep0rhIVU6E24NWKen2EvDqri7q9W3GXTrBvzs=
-Received: by 10.78.151.3 with SMTP id y3mr2479137hud;
-        Tue, 27 Jun 2006 05:17:05 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Tue, 27 Jun 2006 05:17:05 -0700 (PDT)
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <20060626233838.GA3121@steel.home>
-Content-Disposition: inline
+	id S932236AbWF0MjU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 08:39:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932183AbWF0MjT
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 08:39:19 -0400
+Received: from mail.gmx.net ([213.165.64.21]:54172 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932300AbWF0MjS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 08:39:18 -0400
+Received: (qmail invoked by alias); 27 Jun 2006 12:39:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp018) with SMTP; 27 Jun 2006 14:39:17 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606270409t6724b105h6c56d55138fd58c5@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22735>
 
-On 6/27/06, Alex Riesen <fork0@t-online.de> wrote:
-> Hi all.
->
-> I finally got pis^Witched enough by my platform at work and decided
-> to start the effort of converting Fredriks git-merge-recursive to C.
-> At the moment it is the only one annoyingly slow thing there.
->
+Hi,
 
-Just tested it on my project. It's still the slow thing (even a bit
-slower, looks CPU bound).
+On Tue, 27 Jun 2006, Martin Langhoff wrote:
+
+> the patches should be rather obvious, GNU patch recognises them as
+> 'already applied', but they may be slightly different in ways that
+> break the hashing.
+
+Did you try with git-apply? This is much more anal than GNU patch, and 
+should give you an idea what is happening.
+
+> I'll play with git-cherry to see, I assume that you've copied the logic 
+> from there.
+
+Yup. Well, from git-patch-id, but that was used by git-cherry.
+
+Note that I made sure that the patch-id is the same as for git-patch-id. 
+It only differs with renaming patches (the "---" and "+++" lines are 
+hashed, to make sure it is the same patch, but the "rename from" and 
+"rename to" lines are not generated by diff_flush_patch_id()).
+
+Ciao,
+Dscho
