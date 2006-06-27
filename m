@@ -1,101 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] format-patch: use clear_commit_marks() instead of some
- adhocery
-Date: Tue, 27 Jun 2006 22:38:04 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606272236350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <46a038f90606261520k7df8cb3ci7a4a609644e0be12@mail.gmail.com>
- <7vr71bh6sv.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: bisect help
+Date: Tue, 27 Jun 2006 14:31:09 -0700
+Message-ID: <7vy7vi70bm.fsf@assigned-by-dhcp.cox.net>
+References: <20060627201302.GA16658@bork.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 22:38:23 2006
+X-From: git-owner@vger.kernel.org Tue Jun 27 23:31:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvKK3-0005Pw-Tm
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 22:38:12 +0200
+	id 1FvL9O-000506-Nq
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 23:31:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161293AbWF0UiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 16:38:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161294AbWF0UiI
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 16:38:08 -0400
-Received: from mail.gmx.de ([213.165.64.21]:26337 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1161293AbWF0UiG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 16:38:06 -0400
-Received: (qmail invoked by alias); 27 Jun 2006 20:38:05 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp029) with SMTP; 27 Jun 2006 22:38:05 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr71bh6sv.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1161309AbWF0VbL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 17:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161310AbWF0VbL
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 17:31:11 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:43439 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1161309AbWF0VbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jun 2006 17:31:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060627213110.PIWI12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 27 Jun 2006 17:31:10 -0400
+To: Martin Hicks <mort@bork.org>
+In-Reply-To: <20060627201302.GA16658@bork.org> (Martin Hicks's message of
+	"Tue, 27 Jun 2006 16:13:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22754>
 
+Martin Hicks <mort@bork.org> writes:
 
-It is cleaner, and it describes better what is the idea behind the code.
+> I've got a use-case that I can't figure out.  The problem:
+>
+> - I have a tree with 2.6.17 + changes to make my target board work.
+> - SATA works as of 2.6.17, but stops working in the libata dev tree.
+>
+> I want to do a bisect on this to figure out why.  I think the problem is
+> that the common ancestor between the two trees is 2.6.17, and when I
+> bisect I don't have any of my arch-specific changes still in the tree
+> (so the kernel doesn't boot, but not for SATA reasons)
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+I suspect this is what you have.
 
----
+                    
+              o---o---o---o satadev
+             /
+            /
+           /
+   2.6.17 o---o---o---o---o master
 
-	On Mon, 26 Jun 2006, Junio C Hamano wrote:
+In order to test, since vanilla "satadev" would not work with
+your board (for that matter neither vanilla 2.6.17 would), I
+presume you would have created a throw-away test branch and
+merged them for testing:
+                    
+              o---o---o---o satadev
+             /             \   
+            /               o test
+           /               / 
+   2.6.17 o---o---o---o---o master
 
-	> I'll be pushing out a new test for format-patch shortly in
-	> "next".
+You say master works but test does not.  But everything between
+2.6.17 and satadev would not work with your board *anyway*, so
+bisect by itself is not very useful between master and test.
 
-	... and this test fails with my original patch: We also need to 
-	reset ADDED, and I threw in SHOWN for good measure.
+I think you could bisect between 2.6.17 and satadev, and every
+time bisect suggests to test a revision (that is, it moves the
+head of .git/refs/heads/bisect branch), temporarily merge
+"master" in for testing, and discard that temporary merge after
+you finished testing, like this:
 
-	Maybe there is room for improvement of the revision walker here;
-	It smells a little like ADDED is not only used to avoid duplicate
-	parsing (which I guess is now happening, even with
-	reset_all_objects_flags() instead of clear_commit_marks()), but
-	also to decide if the revision walker should walk on.
+                  bisect  
+              o---o---o---o satadev
+             /     \
+            /       .-------o test
+           /               / 
+   2.6.17 o---o---o---o---o master
 
-	We are getting more and more users of the revision walker, and this
-	is just the first to call the walker more than once.
+	$ git bisect good 2.6.17
+        $ git bisect bad satadev
+        Bisectiong: 1745 revisions left to test after this
+	[a04da91...] arch/i386/kernel/apic.c: make modern_...
+        $ git pull . master
+        .. test this thing ..
+        $ git reset --hard HEAD^
+        $ git bisect bad ;# if it is bad
+        Bisectiong: 1745 revisions left to test after this
+	[050335d...] Merge branch 'devel' of ...
+        $ git pull . master
+        .. test this thing ..
+        $ git reset --hard HEAD^
 
- builtin-log.c |   14 ++++----------
- 1 files changed, 4 insertions(+), 10 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 4ee5891..f9515a8 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -160,15 +160,6 @@ static void reopen_stdout(struct commit 
- 	freopen(filename, "w", stdout);
- }
- 
--static void reset_all_objects_flags()
--{
--	int i;
--
--	for (i = 0; i < obj_allocs; i++)
--		if (objs[i])
--			objs[i]->flags = 0;
--}
--
- static int get_patch_id(struct commit *commit, struct diff_options *options,
- 		unsigned char *sha1)
- {
-@@ -220,7 +211,10 @@ static void get_patch_ids(struct rev_inf
- 	}
- 
- 	/* reset for next revision walk */
--	reset_all_objects_flags();
-+	clear_commit_marks((struct commit *)o1,
-+			SEEN | UNINTERESTING | SHOWN | ADDED);
-+	clear_commit_marks((struct commit *)o2,
-+			SEEN | UNINTERESTING | SHOWN | ADDED);
- 	o1->flags = flags1;
- 	o2->flags = flags2;
- }
--- 
-1.4.1.rc1.g9de8f-dirty
+If your merges involve textual conflicts, it might be worthwhile
+to enable git-rerere when you do this.
