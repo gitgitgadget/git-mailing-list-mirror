@@ -1,56 +1,62 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Rework a patch serie
-Date: Tue, 27 Jun 2006 12:16:44 +0200
-Message-ID: <20060627101644.GA397@diana.vm.bytemark.co.uk>
-References: <20060627084130.28886.qmail@web25814.mail.ukl.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [TRYTHIS] cvsimport: fix initial import
+Date: Tue, 27 Jun 2006 12:35:43 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606271234350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44A102F0.9090604@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 12:17:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 27 12:36:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvAcv-0004j7-30
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:17:01 +0200
+	id 1FvAvH-0007he-81
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:35:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739AbWF0KQ6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Jun 2006 06:16:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932775AbWF0KQ6
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:16:58 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:60425 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S932739AbWF0KQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 06:16:57 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1FvAce-00008t-00; Tue, 27 Jun 2006 11:16:44 +0100
-To: moreau francis <francis_moreau2000@yahoo.fr>
-Content-Disposition: inline
-In-Reply-To: <20060627084130.28886.qmail@web25814.mail.ukl.yahoo.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S932467AbWF0Kfr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 06:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWF0Kfr
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:35:47 -0400
+Received: from mail.gmx.net ([213.165.64.21]:14246 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751087AbWF0Kfq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 06:35:46 -0400
+Received: (qmail invoked by alias); 27 Jun 2006 10:35:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 27 Jun 2006 12:35:44 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <44A102F0.9090604@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22723>
 
-On 2006-06-27 08:41:30 +0000, moreau francis wrote:
+---
+Hi,
 
-> Then I submit these patches for reviewing. Unfortunately, they're
-> not perfect, so after some feedbacks from the communauty it appears
-> that I need to make small modifications in the second commit in the
-> topic branch for example...
->
-> What is the best and fastest way to do that ? Should I create a new
-> topic branch and cherry pick from the old one ?
+On Tue, 27 Jun 2006, Andreas Ericsson wrote:
 
-stgit is a good fit for this situation. You just pop patches off the
-stack untill you reach the one you want to modify, then do your
-changes, refresh the patch, and push the other patches back. (If you
-want to keep the original series for future reference, you can simply
-tag HEAD before you embark on this procedure.)
+> Sadly, the cvsimport command no longer works to create new repositories from
+> scratch. I'm not nearly perl literate enough to fix it, but the problem seems
+> to be firstly 061303f0b50a648db8e0af23791fc56181f6bf93.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+My bad. Could you try this patch on top of 'next'?
+
+ git-cvsimport.perl |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 50f5d96..f8eb6ef 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -471,7 +471,6 @@ my %index; # holds filenames of one inde
+ 
+ $ENV{GIT_INDEX_FILE} = $index{$opt_o};
+ system("git-read-tree", $opt_o);
+-die "read-tree failed: $?\n" if $?;
+ 
+ unless(-d $git_dir) {
+ 	system("git-init-db");
