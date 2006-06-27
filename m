@@ -1,81 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: CFT: merge-recursive in C
-Date: Tue, 27 Jun 2006 12:51:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606271248270.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060626233838.GA3121@steel.home> 
- <Pine.LNX.4.63.0606270936520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0606270158i16ebee20me81ca2b9fa71db5c@mail.gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [TRYTHIS] cvsimport: fix initial import
+Date: Tue, 27 Jun 2006 22:52:48 +1200
+Message-ID: <46a038f90606270352w32e3888dk1557eefbe1043d92@mail.gmail.com>
+References: <44A102F0.9090604@op5.se>
+	 <Pine.LNX.4.63.0606271234350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Tue Jun 27 12:51:54 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 27 12:52:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvBAS-0001qm-Ie
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:51:41 +0200
+	id 1FvBBd-000227-64
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932677AbWF0Kvh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 06:51:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933367AbWF0Kvh
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:51:37 -0400
-Received: from mail.gmx.net ([213.165.64.21]:35276 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932677AbWF0Kvg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 06:51:36 -0400
-Received: (qmail invoked by alias); 27 Jun 2006 10:51:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp030) with SMTP; 27 Jun 2006 12:51:35 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0606270158i16ebee20me81ca2b9fa71db5c@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S933367AbWF0Kwu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 06:52:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933385AbWF0Kwu
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:52:50 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:36158 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S933367AbWF0Kwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jun 2006 06:52:49 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so2515403ugf
+        for <git@vger.kernel.org>; Tue, 27 Jun 2006 03:52:48 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Za1oiQq694vnjg11z+opIEyE8hOIVoOJH3Kbsr9uOnZETCIlvQqHb+qvZA5B+eLen1xool/HnK7Jh/UaCtBK+4fpT2A9qrc87mThH1ZEsGvyJ8AGrVfWAR1hPpnUVOur0/8dxyr2Du+Ys3Z4AErIX61yy5GB3r58RdilbO0R+mM=
+Received: by 10.78.151.3 with SMTP id y3mr2453556hud;
+        Tue, 27 Jun 2006 03:52:48 -0700 (PDT)
+Received: by 10.78.117.11 with HTTP; Tue, 27 Jun 2006 03:52:48 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606271234350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22728>
 
-Hi,
+Hi Johannes,
 
-On Tue, 27 Jun 2006, Alex Riesen wrote:
+this patch doesn't quite make sense to me. The git-read-tree should be
+in the else block of the unless you have right there (and it's
+actually there, but it may be breaking in some cases? Perhaps should
+happen a bit earlier?).
 
-> On 6/27/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > > I finally got pis^Witched enough by my platform at work and decided
-> > > to start the effort of converting Fredriks git-merge-recursive to C.
-> > 
-> > Darn. I was working on the same thing since a few days.
-> 
-> I didn't know :)
+How do you expect to run git-read-tree or die _before_ git-init-db?
 
-Vice versa, I guess.
+cheers,
 
-> > - have you considered using run-command() instead of system()?
-> 
-> No. What run-program?
 
-run-command.c:run_command(). Call it like this:
-
-int return_code = run_command("git-read-tree", sha1_to_hex(sha1), NULL);
-
-> > - in setup_index(), you set GIT_INDEX_FILE, but I do not think that the
-> >   rest of git picks up on it. environment.cc:get_index_file() checks if
-> >   the variable was set already, but not if it changed.
-> 
-> Not even sure it's needed. Leftover from conversion
-
-I think it _is_ needed, in order not to mess up the current index. Setting 
-the environment variable works for exec()ed processes, but I think we need 
-to add a set_index_file(const char *) to environment.c.
-
-> > - I always wondered why merge-recursive did not call merge-base, but did
-> >   its own thing. Hmm?
-> 
-> No idea yet.
-
-Frederik?
-
-Ciao,
-Dscho
+martin
