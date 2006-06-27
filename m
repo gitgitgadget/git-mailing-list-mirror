@@ -1,57 +1,84 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [TRYTHIS] cvsimport: fix initial import
-Date: Tue, 27 Jun 2006 22:52:48 +1200
-Message-ID: <46a038f90606270352w32e3888dk1557eefbe1043d92@mail.gmail.com>
-References: <44A102F0.9090604@op5.se>
-	 <Pine.LNX.4.63.0606271234350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/2] format-patch: use clear_commit_marks() instead of
+ some adhocery
+Date: Tue, 27 Jun 2006 12:54:39 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606271251440.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+  <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <46a038f90606261520k7df8cb3ci7a4a609644e0be12@mail.gmail.com> 
+ <Pine.LNX.4.63.0606270038200.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <46a038f90606261550p145b20a6gbe960e0abc16e8a4@mail.gmail.com> 
+ <Pine.LNX.4.63.0606270057260.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <44A06A8D.7080202@catalyst.net.nz>  <Pine.LNX.4.63.0606271016450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <46a038f90606270252p2beac88bo3cf7aa8d3845450c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 27 12:52:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
+	git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Jun 27 12:54:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvBBd-000227-64
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:52:53 +0200
+	id 1FvBDR-0002Kr-Nh
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 12:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933367AbWF0Kwu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 06:52:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933385AbWF0Kwu
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:52:50 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:36158 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S933367AbWF0Kwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 06:52:49 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so2515403ugf
-        for <git@vger.kernel.org>; Tue, 27 Jun 2006 03:52:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Za1oiQq694vnjg11z+opIEyE8hOIVoOJH3Kbsr9uOnZETCIlvQqHb+qvZA5B+eLen1xool/HnK7Jh/UaCtBK+4fpT2A9qrc87mThH1ZEsGvyJ8AGrVfWAR1hPpnUVOur0/8dxyr2Du+Ys3Z4AErIX61yy5GB3r58RdilbO0R+mM=
-Received: by 10.78.151.3 with SMTP id y3mr2453556hud;
-        Tue, 27 Jun 2006 03:52:48 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Tue, 27 Jun 2006 03:52:48 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606271234350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S933074AbWF0Kyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 06:54:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932882AbWF0Kym
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 06:54:42 -0400
+Received: from mail.gmx.net ([213.165.64.21]:404 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S933074AbWF0Kym (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 06:54:42 -0400
+Received: (qmail invoked by alias); 27 Jun 2006 10:54:40 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp004) with SMTP; 27 Jun 2006 12:54:40 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90606270252p2beac88bo3cf7aa8d3845450c@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22729>
 
-Hi Johannes,
+Hi,
 
-this patch doesn't quite make sense to me. The git-read-tree should be
-in the else block of the unless you have right there (and it's
-actually there, but it may be breaking in some cases? Perhaps should
-happen a bit earlier?).
+On Tue, 27 Jun 2006, Martin Langhoff wrote:
 
-How do you expect to run git-read-tree or die _before_ git-init-db?
+> On 6/27/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > I just cloned your repo, and as far as I can tell, the latest commit is on
+> > June 23rd. So your numbers should be the same as mine. But not all are.
+> 
+> Taht repo is on a machine at work, but it's possible that I've cherry
+> picked a new commit onto master that isn't on the publc repo yet.
 
-cheers,
+I hoped that much.
 
+> > (Did not test here, since I do not have an old git-format-patch.sh 
+> > handy, and am too lazy to get the last version from my git repo.)
+> 
+> I think I did something like
+> 
+>  git-cat-file blob v1.3.3:git-format-patch.sh > git-format-patch.sh
+>  chmod ugo+x git-format-patch.sh
 
-martin
+Yes, I am lazy.
+
+> > But anyway, looking at your numbers I take it that the new format-patch
+> > with --ignore-if-in-upstream has the same output as the old format-patch,
+> > right?
+> 
+> It does, but it may be "right" even though it's not realising that
+> some of the patches were cherry picked. git-cherry doesn't either. So
+> that algorythm isn't so hot in this case :-/
+
+What do you mean? Is the patch-id of the cherry-picked different? (If 
+there was a conflict which was manually resolved, I think there is no way 
+we can detect that that patch was cherry-picked, but if it applied 
+cleanly, the patch-id should be equal both in upstream and downstream.)
+
+Ciao,
+Dscho
