@@ -1,81 +1,97 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Rework a patch serie
-Date: Tue, 27 Jun 2006 10:53:11 +0200
-Message-ID: <44A0F1F7.9010503@op5.se>
-References: <20060627084130.28886.qmail@web25814.mail.ukl.yahoo.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: CFT: merge-recursive in C
+Date: Tue, 27 Jun 2006 10:58:41 +0200
+Message-ID: <81b0412b0606270158i16ebee20me81ca2b9fa71db5c@mail.gmail.com>
+References: <20060626233838.GA3121@steel.home>
+	 <Pine.LNX.4.63.0606270936520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 10:53:52 2006
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>,
+	"Fredrik Kuivinen" <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Tue Jun 27 10:59:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fv9KP-0006I4-Lf
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 10:53:50 +0200
+	id 1Fv9PJ-00074t-Dr
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 10:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932660AbWF0IxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 04:53:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932800AbWF0IxO
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 04:53:14 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:10929 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932660AbWF0IxN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jun 2006 04:53:13 -0400
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 078B86BCBC; Tue, 27 Jun 2006 10:53:12 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
-X-Accept-Language: en-us, en
-To: moreau francis <francis_moreau2000@yahoo.fr>
-In-Reply-To: <20060627084130.28886.qmail@web25814.mail.ukl.yahoo.com>
+	id S932853AbWF0I6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 04:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932925AbWF0I6n
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 04:58:43 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:13384 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932853AbWF0I6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jun 2006 04:58:42 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so2475162ugf
+        for <git@vger.kernel.org>; Tue, 27 Jun 2006 01:58:41 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=K7Lz15Q8lUhpnsp4bVFjRi7hMjMkI16ThHYfBeg+6MhLGWF2uXEbsV37i9oItSAVU67f3SwNu60M+dPQXRbI0N1gAYQzDJb/5+Zb2ygm77uKnbXGgfsXxtisxHqelQc+WU2QI6sw4rQH49wWv7lKF8qKPdPdH9n+2bKl3MfwLXk=
+Received: by 10.78.117.10 with SMTP id p10mr2414669huc;
+        Tue, 27 Jun 2006 01:58:41 -0700 (PDT)
+Received: by 10.78.37.7 with HTTP; Tue, 27 Jun 2006 01:58:41 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606270936520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22717>
 
-moreau francis wrote:
-> Hello
-> 
-> Several times I have a topic branch that contains several commits like
-> this:
-> 
->             "master"
->         o---o
->              \                    "topic"
->               o---o---o---o---o---o
-> 
-> 
-> When I think everything is in a good shape I generate several patches to
-> submit them. For that, I do:
-> 
->         $ git checkout topic
->         $ git-format-patch -s -k -n master
->         001-aaa.patch
->         002-bbb.patch
->         [...]
->         006-fff.patch
-> 
-> Then I submit these patches for reviewing. Unfortunately, they're not perfect,
-> so after some feedbacks from the communauty it appears that I need to make
-> small modifications in the second commit in the topic branch for example...
-> 
-> What is the best and fastest way to do that ? Should I create a new topic branch
-> and cherry pick from the old one ?
-> 
+On 6/27/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > I finally got pis^Witched enough by my platform at work and decided
+> > to start the effort of converting Fredriks git-merge-recursive to C.
+>
+> Darn. I was working on the same thing since a few days.
 
-It really depends on what the problem is. If it's a thinko in the design 
-I usually find it worth keeping to avoid falling in the same trap again. 
-  I do the same for bugfixes, although some don't like that (I'm lazy, 
-they're anal). In this case, patches go on top of topic. Typos and stuff 
-can usually be changed inside the patch-file, in which case you can just 
-apply them to a new topic-branch.
+I didn't know :)
 
-It all boils down to how lazy you are, how much of your f***ups you want 
-to preserve (they *are* useful sometimes) and what you prefer, really.
+> - have you considered using run-command() instead of system()?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+No. What run-program?
+
+> - in setup_index(), you set GIT_INDEX_FILE, but I do not think that the
+>   rest of git picks up on it. environment.cc:get_index_file() checks if
+>   the variable was set already, but not if it changed.
+
+Not even sure it's needed. Leftover from conversion
+
+> - You work with linked lists all the time. This is slow, especially for
+>   the checks, if a file/directory is already there. Sorted lists would be
+>   way faster there. Since you encapsulated that, it is no problem to
+>   change that later (before inclusion).
+
+Right, that's why it is mostly encapsulated.
+
+> - is not "struct commit_list" more appropriate than "struct graph"?
+
+Not even properly considered it yet. It probably is.
+
+> - I always wondered why merge-recursive did not call merge-base, but did
+>   its own thing. Hmm?
+
+No idea yet.
+
+> > To my deep disappointment, it didn't work out as good as I hoped: one
+> > program I see most often and for longest time in the process list
+> > (git-diff-tree) is a too complex thing to be put directly into
+> > merge-recursive.c, so any help in this direction will be greatly
+> > appreciated.
+>
+> Maybe something like this (ripped from my fragment of merge-recursive.c):
+>
+> static struct container *get_renames(struct tree *tree,
+>                 struct tree *o, struct tree *a, struct tree *b,
+>                 struct container *cache_entries)
+...
+> It is not tested, evidently, since I did not get the merge-base code
+> integrated yet. But it should give you an idea.
+>
+
+Thanks! It was something I was getting at after Junio explained it.
+Will have to wait until after work.
