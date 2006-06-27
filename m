@@ -1,71 +1,55 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH] cogito: "make clean" fails if make is not GNU make
-Date: Tue, 27 Jun 2006 18:58:54 +0200
-Message-ID: <20060627165854.G5b420f27@leonov.stosberg.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: CFT: merge-recursive in C
+Date: Tue, 27 Jun 2006 10:05:37 -0700
+Message-ID: <7vac7ya5r2.fsf@assigned-by-dhcp.cox.net>
+References: <20060626233838.GA3121@steel.home>
+	<Pine.LNX.4.63.0606270936520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0606270158i16ebee20me81ca2b9fa71db5c@mail.gmail.com>
+	<Pine.LNX.4.63.0606271248270.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 27 18:59:09 2006
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Tue Jun 27 19:05:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvGtz-00047h-K0
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 18:59:04 +0200
+	id 1FvH0Q-00057E-Qi
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 19:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161212AbWF0Q67 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 12:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161214AbWF0Q67
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 12:58:59 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:42474 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1161212AbWF0Q66 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 12:58:58 -0400
-Received: from leonov.stosberg.net (p213.54.84.32.tisdip.tiscali.de [213.54.84.32])
-	by ncs.stosberg.net (Postfix) with ESMTP id 78791AEBA065;
-	Tue, 27 Jun 2006 18:58:47 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id 9249011141C; Tue, 27 Jun 2006 18:58:54 +0200 (CEST)
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Tue, 27 Jun 2006 18:31:06 +0200
-X-Sieve: CMU Sieve 2.2
-User-Agent: mutt-ng/devel-r802 (Debian)
+	id S1161217AbWF0RFj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 13:05:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161218AbWF0RFj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 13:05:39 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:39902 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1161217AbWF0RFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jun 2006 13:05:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060627170538.JIHJ12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 27 Jun 2006 13:05:38 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606271248270.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 27 Jun 2006 12:51:35 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22745>
 
-GNU make automatically passes the -w option when -C is used.  On
-systems where GNU make is called "gmake", invoking "make" from within
-the Makefile will run a make that may not understand that option:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-$ gmake -C Documentation/ clean
-gmake: Entering directory `/usr/home/dennis/tmp/cogito/Documentation'
-make -C tutorial-script clean
-make: don't know how to make w. Stop
-gmake: *** [clean] Error 2
+>> > - I always wondered why merge-recursive did not call merge-base, but did
+>> >   its own thing. Hmm?
+>> 
+>> No idea yet.
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
----
- Documentation/Makefile |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 36295a7..b48e49c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -60,10 +60,10 @@ install-html: html
- 	$(INSTALL) $(DOC_HTML) $(DESTDIR)/$(htmldir)
- 
- test:
--	make -C tutorial-script test
-+	$(MAKE) -C tutorial-script test
- 
- clean:
--	make -C tutorial-script clean
-+	$(MAKE) -C tutorial-script clean
- 	rm -f *.xml *.html *.pdf *.1 *.7 cg*.[17].txt $(PACKAGE).7.txt
- 
- .PRECIOUS: cg%.txt introduction.txt
--- 
-1.4.1.rc1.ge6b53
+A somewhat related issue is that when one head is given I'd
+strongly prefer that merge-recursive did not call merge-base nor
+did its own thing (that is, for the top-level).  Otherwise we
+cannot use it for historyless three tree merge that we need for
+rebase/revert/cherry-pick.
