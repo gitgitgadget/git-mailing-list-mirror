@@ -1,68 +1,101 @@
-From: Martin Hicks <mort@bork.org>
-Subject: bisect help
-Date: Tue, 27 Jun 2006 16:13:02 -0400
-Message-ID: <20060627201302.GA16658@bork.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] format-patch: use clear_commit_marks() instead of some
+ adhocery
+Date: Tue, 27 Jun 2006 22:38:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606272236350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0606250349280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0606261728340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <46a038f90606261520k7df8cb3ci7a4a609644e0be12@mail.gmail.com>
+ <7vr71bh6sv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jun 27 22:13:38 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 27 22:38:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvJvt-0001f2-Qv
-	for gcvg-git@gmane.org; Tue, 27 Jun 2006 22:13:14 +0200
+	id 1FvKK3-0005Pw-Tm
+	for gcvg-git@gmane.org; Tue, 27 Jun 2006 22:38:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161259AbWF0UNH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 16:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161266AbWF0UNG
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 16:13:06 -0400
-Received: from galileo.bork.org ([134.117.69.57]:1181 "EHLO galileo.bork.org")
-	by vger.kernel.org with ESMTP id S1161259AbWF0UND (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 16:13:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by galileo.bork.org (Postfix) with ESMTP id DC81D4105
-	for <git@vger.kernel.org>; Tue, 27 Jun 2006 16:13:02 -0400 (EDT)
-Received: from galileo.bork.org ([127.0.0.1])
-	by localhost (galileo.bork.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 18955-03 for <git@vger.kernel.org>;
-	Tue, 27 Jun 2006 16:13:02 -0400 (EDT)
-Received: by galileo.bork.org (Postfix, from userid 1000)
-	id C4D2D4198; Tue, 27 Jun 2006 16:13:02 -0400 (EDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at bork.org
+	id S1161293AbWF0UiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 16:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161294AbWF0UiI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 16:38:08 -0400
+Received: from mail.gmx.de ([213.165.64.21]:26337 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161293AbWF0UiG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 16:38:06 -0400
+Received: (qmail invoked by alias); 27 Jun 2006 20:38:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp029) with SMTP; 27 Jun 2006 22:38:05 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr71bh6sv.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22753>
 
 
-I've got a use-case that I can't figure out.  The problem:
+It is cleaner, and it describes better what is the idea behind the code.
 
-- I have a tree with 2.6.17 + changes to make my target board work.
-- SATA works as of 2.6.17, but stops working in the libata dev tree.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-I want to do a bisect on this to figure out why.  I think the problem is
-that the common ancestor between the two trees is 2.6.17, and when I
-bisect I don't have any of my arch-specific changes still in the tree
-(so the kernel doesn't boot, but not for SATA reasons)
+---
 
-I have my tree in "master", Jeff's SATA tree in "satadev".  I've tried a
-few things like:
+	On Mon, 26 Jun 2006, Junio C Hamano wrote:
 
-git checkout -b garbage master
-git pull . satadev			# to get all the sata changes
-git bisect start
-git bisect bad
-git bisect good master
+	> I'll be pushing out a new test for format-patch shortly in
+	> "next".
 
-but it seems like this causes the bisect to happen between the common
-ancestor (v2.6.17) and the merge of master & satadev.
+	... and this test fails with my original patch: We also need to 
+	reset ADDED, and I threw in SHOWN for good measure.
 
-help!
-thanks
-mh
+	Maybe there is room for improvement of the revision walker here;
+	It smells a little like ADDED is not only used to avoid duplicate
+	parsing (which I guess is now happening, even with
+	reset_all_objects_flags() instead of clear_commit_marks()), but
+	also to decide if the revision walker should walk on.
 
+	We are getting more and more users of the revision walker, and this
+	is just the first to call the walker more than once.
+
+ builtin-log.c |   14 ++++----------
+ 1 files changed, 4 insertions(+), 10 deletions(-)
+
+diff --git a/builtin-log.c b/builtin-log.c
+index 4ee5891..f9515a8 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -160,15 +160,6 @@ static void reopen_stdout(struct commit 
+ 	freopen(filename, "w", stdout);
+ }
+ 
+-static void reset_all_objects_flags()
+-{
+-	int i;
+-
+-	for (i = 0; i < obj_allocs; i++)
+-		if (objs[i])
+-			objs[i]->flags = 0;
+-}
+-
+ static int get_patch_id(struct commit *commit, struct diff_options *options,
+ 		unsigned char *sha1)
+ {
+@@ -220,7 +211,10 @@ static void get_patch_ids(struct rev_inf
+ 	}
+ 
+ 	/* reset for next revision walk */
+-	reset_all_objects_flags();
++	clear_commit_marks((struct commit *)o1,
++			SEEN | UNINTERESTING | SHOWN | ADDED);
++	clear_commit_marks((struct commit *)o2,
++			SEEN | UNINTERESTING | SHOWN | ADDED);
+ 	o1->flags = flags1;
+ 	o2->flags = flags2;
+ }
 -- 
-Martin Hicks || mort@bork.org || PGP/GnuPG: 0x4C7F2BEE
+1.4.1.rc1.g9de8f-dirty
