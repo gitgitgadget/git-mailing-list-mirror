@@ -1,54 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Quick merge status updates.
-Date: Wed, 28 Jun 2006 03:14:29 -0700
-Message-ID: <7v4py537ui.fsf@assigned-by-dhcp.cox.net>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
-	<1151471040.4940.17.camel@dv>
-	<7v7j3164xd.fsf@assigned-by-dhcp.cox.net>
-	<1151489103.28036.6.camel@dv>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH (fixed) 1/2] rebase: check for errors from git-commit
+Date: Wed, 28 Jun 2006 03:24:23 -0700
+Message-ID: <20060628102423.GA25093@soma>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 12:14:43 2006
+X-From: git-owner@vger.kernel.org Wed Jun 28 12:25:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvX46-0001qh-I0
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 12:14:35 +0200
+	id 1FvXDi-0003Ls-5Z
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 12:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423257AbWF1KOb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 06:14:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932567AbWF1KOb
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 06:14:31 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:18309 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932538AbWF1KOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 06:14:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060628101430.FMWO8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 28 Jun 2006 06:14:30 -0400
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1151489103.28036.6.camel@dv> (Pavel Roskin's message of "Wed, 28
-	Jun 2006 06:05:03 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423262AbWF1KY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 06:24:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423266AbWF1KY0
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 06:24:26 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:6874 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1423262AbWF1KYZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 06:24:25 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 649DB7DC022;
+	Wed, 28 Jun 2006 03:24:23 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 28 Jun 2006 03:24:23 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22800>
 
-Pavel Roskin <proski@gnu.org> writes:
+commit does not always succeed, so we'll have to check for
+it in the absence of set -e.  This fixes a regression
+introduced in 9e4bc7dd1bb9d92491c475cec55147fa0b3f954d
 
-> I think my Perl 5.8.8 is "too new".  "man perlfunc" says about "use":
-> ...
-> I think the BEGIN block has priority over other statements.  My solution
-> was to put the @INC change in the BEGIN block as well.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-rebase.sh |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-Actually I do use 5.8.8 and everything you quoted makes perfect
-sense, -- in fact now I do not know *why* it did _not_ break for
-me without the BEGIN {} block, especially I do not have any
-PERL* environment variable to point at anywhere under $HOME.
-
-Thanks for the fix.
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 9ad1c44..28860fc 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -59,8 +59,13 @@ continue_merge () {
+ 
+ 	if test -n "`git-diff-index HEAD`"
+ 	then
++		if ! git-commit -C "`cat $dotest/current`"
++		then
++			echo "Commit failed, please do not call \"git commit\""
++			echo "directly, but instead do one of the following: "
++			die "$RESOLVEMSG"
++		fi
+ 		printf "Committed: %0${prec}d" $msgnum
+-		git-commit -C "`cat $dotest/current`"
+ 	else
+ 		printf "Already applied: %0${prec}d" $msgnum
+ 	fi
+-- 
+1.4.1.rc1.gc7c5
