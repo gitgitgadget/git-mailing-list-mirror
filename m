@@ -1,78 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Quick merge status updates.
-Date: Wed, 28 Jun 2006 11:13:13 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606281109010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7vh4q8w.fsf@assigned-by-dhcp.cox.net>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: [PATCH] Fix a mixed declarations and code warning
+Date: Wed, 28 Jun 2006 12:15:00 +0300
+Message-ID: <20060628121500.3c61b120.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, pasky@suse.cz
-X-From: git-owner@vger.kernel.org Wed Jun 28 11:13:23 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 11:15:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvW6r-0002Zg-8w
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 11:13:21 +0200
+	id 1FvW8c-0002vX-3V
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 11:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423231AbWF1JNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 05:13:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423237AbWF1JNQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 05:13:16 -0400
-Received: from mail.gmx.net ([213.165.64.21]:425 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1423231AbWF1JNP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 05:13:15 -0400
-Received: (qmail invoked by alias); 28 Jun 2006 09:13:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp024) with SMTP; 28 Jun 2006 11:13:13 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7vh4q8w.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1423237AbWF1JPG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 05:15:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423238AbWF1JPF
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 05:15:05 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:5380 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1423237AbWF1JPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 05:15:04 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so3038374ugf
+        for <git@vger.kernel.org>; Wed, 28 Jun 2006 02:15:03 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=YKFGmwi143+G2j/rLy2lyOW+ICWdbhC9PpFAykmJ04uFfxHDw3VDICd2r+VNibPeQwTj+NY9zdG5CM7mDyqKOy7vm+VXcq5steu/2fT9MWpCs0TE9qGBubABNm8W14fmaoemO9tDLcrYr0jo05Ob9pqfgroi+SQP0r9k+0OPNWc=
+Received: by 10.78.166.7 with SMTP id o7mr152903hue;
+        Wed, 28 Jun 2006 02:15:03 -0700 (PDT)
+Received: from garlic.home.net ( [82.128.229.197])
+        by mx.gmail.com with ESMTP id 37sm2398178hua.2006.06.28.02.15.02;
+        Wed, 28 Jun 2006 02:15:02 -0700 (PDT)
+To: junkio@cox.net
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.18; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22787>
 
-Hi,
+Signed-off-by: Timo Hirvonen <tihirvon@gmail.com>
+---
 
-On Wed, 28 Jun 2006, Junio C Hamano wrote:
+  NOTE: This is for the pu branch
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Hi,
-> >
-> > on my iBook, make in pu outputs:
-> >
-> > GIT_VERSION = 1.4.1.rc1.gf5d3
-> >     * new build flags or prefix
-> > (cd perl && /usr/bin/perl Makefile.PL \
-> >      PREFIX='/Users/gene099' \
-> >      DEFINE=' -I/sw/include -DSHA1_HEADER='\''<openssl/sha.h>'\'' 
-> > -DNO_STRCASESTR -DNO_STRLCPY -DGIT_VERSION='\''"1.4.1.rc1.gf5d3"'\''' \
-> >      LIBS=' -L/sw/lib -lz  -liconv  -lcrypto -lssl')
-> > Can't locate Devel/PPPort.pm in @INC (@INC contains: 
-> > /System/Library/Perl/darwin /System/Library/Perl /Library/Perl/darwin 
-> > /Library/Perl /Library/Perl /Network/Library/Perl/darwin 
-> > /Network/Library/Perl /Network/Library/Perl .) at Makefile.PL line 29.
-> > BEGIN failed--compilation aborted at Makefile.PL line 29.
-> > make: *** [perl/Makefile] Error 2
-> >
-> > FWIW all Perl scripts in git, except git-send-email, work here.
-> 
-> I suspect git-fmt-merge-msg doesn't, and perhaps git-mv.
+ exec_cmd.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Last time I checked, git-mv worked (couple of weeks ago). And if I am not 
-mistaken, git-fmt-merge-msg is needed when git-pull does not fast forward? 
-I definitely successfully merged on my iBook, IIRC last time was last 
-week.
-
-BTW: Devel/PPPort.pm is introduced by this line in perl/Git.xs:
-
-> #include "ppport.h"
-
-Ciao,
-Dscho
+diff --git a/exec_cmd.c b/exec_cmd.c
+index f2133ec..62f51fc 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -98,8 +98,8 @@ int execv_git_cmd(const char **argv)
+ 		argv[0] = git_command;
+ 
+ 		if (getenv("GIT_TRACE")) {
+-			fputs("trace: exec:", stderr);
+ 			const char **p = argv;
++			fputs("trace: exec:", stderr);
+ 			while (*p) {
+ 				fputc(' ', stderr);
+ 				sq_quote_print(stderr, *p);
+-- 
+1.4.1.rc1.g1ef9
