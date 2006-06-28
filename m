@@ -1,427 +1,403 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/5] git-svn: several graft-branches improvements
-Date: Tue, 27 Jun 2006 19:39:11 -0700
-Message-ID: <11514623571599-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH 4/5] git-svn: add --follow-parent and --no-metadata options to fetch
+Date: Tue, 27 Jun 2006 19:39:13 -0700
+Message-ID: <11514623601954-git-send-email-normalperson@yhbt.net>
 References: <11514623542848-git-send-email-normalperson@yhbt.net>
 Reply-To: Eric Wong <normalperson@yhbt.net>
 Cc: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jun 28 04:39:34 2006
+X-From: git-owner@vger.kernel.org Wed Jun 28 04:39:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvPxj-0007c1-Pr
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 04:39:32 +0200
+	id 1FvPxl-0007c1-9M
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 04:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422928AbWF1CjU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Jun 2006 22:39:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422924AbWF1CjU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 22:39:20 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:25815 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1422926AbWF1CjT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 22:39:19 -0400
+	id S1422924AbWF1CjY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Jun 2006 22:39:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422926AbWF1CjY
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jun 2006 22:39:24 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:27607 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1422924AbWF1CjW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jun 2006 22:39:22 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id A07A17DC025;
-	Tue, 27 Jun 2006 19:39:17 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 27 Jun 2006 19:39:17 -0700
+	by hand.yhbt.net (Postfix) with SMTP id B897B7DC024;
+	Tue, 27 Jun 2006 19:39:20 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 27 Jun 2006 19:39:20 -0700
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 X-Mailer: git-send-email 1.4.1.rc1.g3cc8
 In-Reply-To: <11514623542848-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22771>
 
-The 'graft-branches' command can now analyze tree matches for
-merge detection after commits are done, when --branch or
---branch-all-refs options are used.
+--follow-parent:
+  This is especially helpful when we're tracking a directory
+  that has been moved around within the repository, or if we
+  started tracking a branch and never tracked the trunk it was
+  descended from.
 
-We ensure that tree joins (--branch and --branch-all-refs
-options) during commit time only add SVN parents that occurred
-before the commit we're importing
+  This relies on the SVN::* libraries to work.  We can't
+  reliably parse path info from the svn command-line client
+  without relying on XML, so it's better just to have the SVN::*
+  libs installed.
 
-Also fixed branch detection via merge messages, this manner of
-merge detection (a la git-svnimport) is really all fuzzy, but at
-least it actually works now :)
+  This also removes oldvalue verification when calling update-ref
 
-Add some new tests to go along with these fixes, too.
+  In SVN, branches can be deleted, and then recreated under the
+  same path as the original one with different ancestry
+  information, causing parent information to be mismatched /
+  misordered.
+
+  Also force the current ref, if existing, to be a parent,
+  regardless of whether or not it was specified.
+
+--no-metadata:
+  This gets rid of the git-svn-id: lines at the end of every commit.
+
+  With this, you lose the ability to use the rebuild command.  If
+  you ever lose your .git/svn/git-svn/.rev_db file, you won't be
+  able to fetch again, either.  This is fine for one-shot imports.
+
+  Also fix some issues with multi-fetch --follow-parent that were
+  exposed while testing this.  Additionally, repack checking is
+  simplified greatly.
+
+  git-svn log will not work on repositories using this, either.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- contrib/git-svn/git-svn.perl              |  180 +++++++++++++++++++++++++++--
- contrib/git-svn/t/t0003-graft-branches.sh |   63 ++++++++++
- 2 files changed, 230 insertions(+), 13 deletions(-)
+ contrib/git-svn/git-svn.perl             |  169 ++++++++++++++++++++++--------
+ contrib/git-svn/t/t0004-follow-parent.sh |   44 ++++++++
+ 2 files changed, 167 insertions(+), 46 deletions(-)
 
 diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 711b558..4fafe7a 100755
+index 73b339a..33fd82a 100755
 --- a/contrib/git-svn/git-svn.perl
 +++ b/contrib/git-svn/git-svn.perl
-@@ -34,6 +34,8 @@ use POSIX qw/strftime/;
- use IPC::Open3;
- use Memoize;
- memoize('revisions_eq');
-+memoize('cmt_metadata');
-+memoize('get_commit_time');
+@@ -19,6 +19,7 @@ my $TZ = $ENV{TZ};
+ # make sure the svn binary gives consistent output between locales and TZs:
+ $ENV{TZ} = 'UTC';
+ $ENV{LC_ALL} = 'C';
++$| = 1; # unbuffer STDOUT
  
- my ($SVN_PATH, $SVN, $SVN_LOG, $_use_lib);
- $_use_lib = 1 unless $ENV{GIT_SVN_NO_LIB};
-@@ -91,6 +93,8 @@ my %cmd = (
- 	'graft-branches' => [ \&graft_branches,
- 			'Detect merges/branches from already imported history',
- 			{ 'merge-rx|m' => \@_opt_m,
-+			  'branch|b=s' => \@_branch_from,
-+			  'branch-all-refs|B' => \$_branch_all_refs,
- 			  'no-default-regex' => \$_no_default_regex,
- 			  'no-graft-copy' => \$_no_graft_copy } ],
- 	'multi-init' => [ \&multi_init,
-@@ -591,13 +595,14 @@ sub graft_branches {
- 	my $l_map = read_url_paths();
- 	my @re = map { qr/$_/is } @_opt_m if @_opt_m;
- 	unless ($_no_default_regex) {
--		push @re, (	qr/\b(?:merge|merging|merged)\s+(\S.+)/is,
--				qr/\b(?:from|of)\s+(\S.+)/is );
-+		push @re, (qr/\b(?:merge|merging|merged)\s+with\s+([\w\.\-]+)/i,
-+			qr/\b(?:merge|merging|merged)\s+([\w\.\-]+)/i,
-+			qr/\b(?:from|of)\s+([\w\.\-]+)/i );
- 	}
- 	foreach my $u (keys %$l_map) {
- 		if (@re) {
- 			foreach my $p (keys %{$l_map->{$u}}) {
--				graft_merge_msg($grafts,$l_map,$u,$p);
-+				graft_merge_msg($grafts,$l_map,$u,$p,@re);
- 			}
- 		}
- 		unless ($_no_graft_copy) {
-@@ -608,6 +613,7 @@ sub graft_branches {
- 			}
- 		}
- 	}
-+	graft_tree_joins($grafts);
+ # If SVN:: library support is added, please make the dependencies
+ # optional and preserve the capability to use the command-line client.
+@@ -46,7 +47,7 @@ my $sha1_short = qr/[a-f\d]{4,40}/;
+ my ($_revision,$_stdin,$_no_ignore_ext,$_no_stop_copy,$_help,$_rmdir,$_edit,
+ 	$_find_copies_harder, $_l, $_cp_similarity, $_cp_remote,
+ 	$_repack, $_repack_nr, $_repack_flags,
+-	$_message, $_file,
++	$_message, $_file, $_follow_parent, $_no_metadata,
+ 	$_template, $_shared, $_no_default_regex, $_no_graft_copy,
+ 	$_limit, $_verbose, $_incremental, $_oneline, $_l_fmt, $_show_commit,
+ 	$_version, $_upgrade, $_authors, $_branch_all_refs, @_opt_m);
+@@ -56,9 +57,11 @@ my @repo_path_split_cache;
  
- 	write_grafts($grafts, $comments, $gr_file);
- 	unlink "$gr_file~$gr_sha1" if $gr_sha1;
-@@ -880,6 +886,77 @@ sub common_prefix {
- 	return '';
+ my %fc_opts = ( 'no-ignore-externals' => \$_no_ignore_ext,
+ 		'branch|b=s' => \@_branch_from,
++		'follow-parent|follow' => \$_follow_parent,
+ 		'branch-all-refs|B' => \$_branch_all_refs,
+ 		'authors-file|A=s' => \$_authors,
+ 		'repack:i' => \$_repack,
++		'no-metadata' => \$_no_metadata,
+ 		'repack-flags|repack-args|repack-opts=s' => \$_repack_flags);
+ 
+ my ($_trunk, $_tags, $_branches);
+@@ -825,35 +828,19 @@ sub fetch_child_id {
+ 	my $id = shift;
+ 	print "Fetching $id\n";
+ 	my $ref = "$GIT_DIR/refs/remotes/$id";
+-	my $ca = file_to_s($ref) if (-r $ref);
+-	defined(my $pid = fork) or croak $!;
++	defined(my $pid = open my $fh, '-|') or croak $!;
+ 	if (!$pid) {
++		$_repack = undef;
+ 		$GIT_SVN = $ENV{GIT_SVN_ID} = $id;
+ 		init_vars();
+ 		fetch(@_);
+ 		exit 0;
+ 	}
+-	waitpid $pid, 0;
+-	croak $? if $?;
+-	return unless $_repack || -r $ref;
+-
+-	my $cb = file_to_s($ref);
+-
+-	defined($pid = open my $fh, '-|') or croak $!;
+-	my $url = file_to_s("$GIT_DIR/svn/$id/info/url");
+-	$url = qr/\Q$url\E/;
+-	if (!$pid) {
+-		exec qw/git-rev-list --pretty=raw/,
+-				$ca ? "$ca..$cb" : $cb or croak $!;
+-	}
+ 	while (<$fh>) {
+-		if (/^    git-svn-id: $url\@\d+ [a-f0-9\-]+$/) {
+-			check_repack();
+-		} elsif (/^    git-svn-id: \S+\@\d+ [a-f0-9\-]+$/) {
+-			last;
+-		}
++		print $_;
++		check_repack() if (/^r\d+ = $sha1/);
+ 	}
+-	close $fh;
++	close $fh or croak $?;
  }
  
-+# grafts set here are 'stronger' in that they're based on actual tree
-+# matches, and won't be deleted from merge-base checking in write_grafts()
-+sub graft_tree_joins {
-+	my $grafts = shift;
-+	map_tree_joins() if (@_branch_from && !%tree_map);
-+	return unless %tree_map;
-+
-+	git_svn_each(sub {
-+		my $i = shift;
-+		defined(my $pid = open my $fh, '-|') or croak $!;
-+		if (!$pid) {
-+			exec qw/git-rev-list --pretty=raw/,
-+					"refs/remotes/$i" or croak $!;
-+		}
-+		while (<$fh>) {
-+			next unless /^commit ($sha1)$/o;
-+			my $c = $1;
-+			my ($t) = (<$fh> =~ /^tree ($sha1)$/o);
-+			next unless $tree_map{$t};
-+
-+			my $l;
-+			do {
-+				$l = readline $fh;
-+			} until ($l =~ /^committer (?:.+) (\d+) ([\-\+]?\d+)$/);
-+
-+			my ($s, $tz) = ($1, $2);
-+			if ($tz =~ s/^\+//) {
-+				$s += tz_to_s_offset($tz);
-+			} elsif ($tz =~ s/^\-//) {
-+				$s -= tz_to_s_offset($tz);
-+			}
-+
-+			my ($url_a, $r_a, $uuid_a) = cmt_metadata($c);
-+
-+			foreach my $p (@{$tree_map{$t}}) {
-+				next if $p eq $c;
-+				my $mb = eval {
-+					safe_qx('git-merge-base', $c, $p)
-+				};
-+				next unless ($@ || $?);
-+				if (defined $r_a) {
-+					# see if SVN says it's a relative
-+					my ($url_b, $r_b, $uuid_b) =
-+							cmt_metadata($p);
-+					next if (defined $url_b &&
-+							defined $url_a &&
-+							($url_a eq $url_b) &&
-+							($uuid_a eq $uuid_b));
-+					if ($uuid_a eq $uuid_b) {
-+						if ($r_b < $r_a) {
-+							$grafts->{$c}->{$p} = 2;
-+							next;
-+						} elsif ($r_b > $r_a) {
-+							$grafts->{$p}->{$c} = 2;
-+							next;
-+						}
-+					}
-+				}
-+				my $ct = get_commit_time($p);
-+				if ($ct < $s) {
-+					$grafts->{$c}->{$p} = 2;
-+				} elsif ($ct > $s) {
-+					$grafts->{$p}->{$c} = 2;
-+				}
-+				# what should we do when $ct == $s ?
-+			}
-+		}
-+		close $fh or croak $?;
-+	});
-+}
-+
- # this isn't funky-filename safe, but good enough for now...
- sub graft_file_copy_cmd {
- 	my ($grafts, $l_map, $u) = @_;
-@@ -960,7 +1037,7 @@ sub process_merge_msg_matches {
- 		my $re = qr/\Q$w\E/i;
- 		foreach (keys %{$l_map->{$u}}) {
- 			if (/$re/) {
--				push @strong, $_;
-+				push @strong, $l_map->{$u}->{$_};
- 				last;
- 			}
- 		}
-@@ -969,7 +1046,7 @@ sub process_merge_msg_matches {
- 		$re = qr/\Q$w\E/i;
- 		foreach (keys %{$l_map->{$u}}) {
- 			if (/$re/) {
--				push @strong, $_;
-+				push @strong, $l_map->{$u}->{$_};
- 				last;
- 			}
- 		}
-@@ -982,7 +1059,7 @@ sub process_merge_msg_matches {
- 		return unless defined $rev;
- 	}
- 	foreach my $m (@strong) {
--		my ($r0, $s0) = find_rev_before($rev, $m);
-+		my ($r0, $s0) = find_rev_before($rev, $m, 1);
- 		$grafts->{$c->{c}}->{$s0} = 1 if defined $s0;
- 	}
- }
-@@ -1794,7 +1871,26 @@ sub git_commit {
+ sub rec_fetch {
+@@ -1922,6 +1909,13 @@ sub git_commit {
+ 		croak $? if $?;
  		restore_index($index);
  	}
++
++	# just in case we clobber the existing ref, we still want that ref
++	# as our parent:
++	if (my $cur = eval { file_to_s("$GIT_DIR/refs/remotes/$GIT_SVN") }) {
++		push @tmp_parents, $cur;
++	}
++
  	if (exists $tree_map{$tree}) {
--		push @tmp_parents, @{$tree_map{$tree}};
-+		foreach my $p (@{$tree_map{$tree}}) {
-+			my $skip;
-+			foreach (@tmp_parents) {
-+				# see if a common parent is found
-+				my $mb = eval {
-+					safe_qx('git-merge-base', $_, $p)
-+				};
-+				next if ($@ || $?);
-+				$skip = 1;
-+				last;
-+			}
-+			next if $skip;
-+			my ($url_p, $r_p, $uuid_p) = cmt_metadata($p);
-+			next if (($SVN_UUID eq $uuid_p) &&
-+						($log_msg->{revision} > $r_p));
-+			next if (defined $url_p && defined $SVN_URL &&
-+						($SVN_UUID eq $uuid_p) &&
-+						($url_p eq $SVN_URL));
-+			push @tmp_parents, $p;
-+		}
+ 		foreach my $p (@{$tree_map{$tree}}) {
+ 			my $skip;
+@@ -1952,31 +1946,26 @@ sub git_commit {
+ 		last if @exec_parents > 16;
  	}
- 	foreach (@tmp_parents) {
- 		next if $seen_parent{$_};
-@@ -2122,6 +2218,7 @@ sub init_vars {
- 	$GIT_SVN_INDEX = "$GIT_SVN_DIR/index";
- 	$SVN_URL = undef;
- 	$SVN_WC = "$GIT_SVN_DIR/tree";
-+	%tree_map = ();
- }
  
- # convert GetOpt::Long specs for use by git-repo-config
-@@ -2189,6 +2286,7 @@ sub write_grafts {
- 			print $fh $_ foreach @{$comments->{$c}};
- 		}
- 		my $p = $grafts->{$c};
-+		my %x; # real parents
- 		delete $p->{$c}; # commits are not self-reproducing...
- 		my $pid = open my $ch, '-|';
- 		defined $pid or croak $!;
-@@ -2196,13 +2294,41 @@ sub write_grafts {
- 			exec(qw/git-cat-file commit/, $c) or croak $!;
- 		}
- 		while (<$ch>) {
--			if (/^parent ([a-f\d]{40})/) {
--				$p->{$1} = 1;
-+			if (/^parent ($sha1)/) {
-+				$x{$1} = $p->{$1} = 1;
- 			} else {
--				last unless /^\S/i;
-+				last unless /^\S/;
- 			}
- 		}
- 		close $ch; # breaking the pipe
-+
-+		# if real parents are the only ones in the grafts, drop it
-+		next if join(' ',sort keys %$p) eq join(' ',sort keys %x);
-+
-+		my (@ip, @jp, $mb);
-+		my %del = %x;
-+		@ip = @jp = keys %$p;
-+		foreach my $i (@ip) {
-+			next if $del{$i} || $p->{$i} == 2;
-+			foreach my $j (@jp) {
-+				next if $i eq $j || $del{$j} || $p->{$j} == 2;
-+				$mb = eval { safe_qx('git-merge-base',$i,$j) };
-+				next unless $mb;
-+				chomp $mb;
-+				next if $x{$mb};
-+				if ($mb eq $j) {
-+					delete $p->{$i};
-+					$del{$i} = 1;
-+				} elsif ($mb eq $i) {
-+					delete $p->{$j};
-+					$del{$j} = 1;
-+				}
-+			}
-+		}
-+
-+		# if real parents are the only ones in the grafts, drop it
-+		next if join(' ',sort keys %$p) eq join(' ',sort keys %x);
-+
- 		print $fh $c, ' ', join(' ', sort keys %$p),"\n";
+-	defined(my $pid = open my $out_fh, '-|') or croak $!;
+-	if ($pid == 0) {
+-		my $msg_fh = IO::File->new_tmpfile or croak $!;
+-		print $msg_fh $log_msg->{msg}, "\ngit-svn-id: ",
+-					"$SVN_URL\@$log_msg->{revision}",
++	set_commit_env($log_msg);
++	my @exec = ('git-commit-tree', $tree);
++	push @exec, '-p', $_  foreach @exec_parents;
++	defined(my $pid = open3(my $msg_fh, my $out_fh, '>&STDERR', @exec))
++								or croak $!;
++	print $msg_fh $log_msg->{msg} or croak $!;
++	unless ($_no_metadata) {
++		print $msg_fh "\ngit-svn-id: $SVN_URL\@$log_msg->{revision}",
+ 					" $SVN_UUID\n" or croak $!;
+-		$msg_fh->flush == 0 or croak $!;
+-		seek $msg_fh, 0, 0 or croak $!;
+-		set_commit_env($log_msg);
+-		my @exec = ('git-commit-tree',$tree);
+-		push @exec, '-p', $_  foreach @exec_parents;
+-		open STDIN, '<&', $msg_fh or croak $!;
+-		exec @exec or croak $!;
  	}
- 	if ($comments->{'END'}) {
-@@ -2222,7 +2348,7 @@ sub read_url_paths {
++	$msg_fh->flush == 0 or croak $!;
++	close $msg_fh or croak $!;
+ 	chomp(my $commit = do { local $/; <$out_fh> });
+-	close $out_fh or croak $?;
++	close $out_fh or croak $!;
++	waitpid $pid, 0;
++	croak $? if $?;
+ 	if ($commit !~ /^$sha1$/o) {
+-		croak "Failed to commit, invalid sha1: $commit\n";
++		die "Failed to commit, invalid sha1: $commit\n";
+ 	}
+-	my @update_ref = ('git-update-ref',"refs/remotes/$GIT_SVN",$commit);
+-	if (my $primary_parent = shift @exec_parents) {
+-		quiet_run(qw/git-rev-parse --verify/,"refs/remotes/$GIT_SVN^0");
+-		push @update_ref, $primary_parent unless $?;
+-	}
+-	sys(@update_ref);
++	sys('git-update-ref',"refs/remotes/$GIT_SVN",$commit);
+ 	revdb_set($REVDB, $log_msg->{revision}, $commit);
+ 
+ 	# this output is read via pipe, do not change:
+@@ -2061,6 +2050,11 @@ sub safe_qx {
  }
  
- sub extract_metadata {
--	my $id = shift;
-+	my $id = shift or return (undef, undef, undef);
- 	my ($url, $rev, $uuid) = ($id =~ /^git-svn-id:\s(\S+?)\@(\d+)
- 							\s([a-f\d\-]+)$/x);
- 	if (!$rev || !$uuid || !$url) {
-@@ -2233,6 +2359,31 @@ sub extract_metadata {
- 	return ($url, $rev, $uuid);
+ sub svn_compat_check {
++	if ($_follow_parent) {
++		print STDERR 'E: --follow-parent functionality is only ',
++				"available when SVN libraries are used\n";
++		exit 1;
++	}
+ 	my @co_help = safe_qx(qw(svn co -h));
+ 	unless (grep /ignore-externals/,@co_help) {
+ 		print STDERR "W: Installed svn version does not support ",
+@@ -2389,6 +2383,28 @@ sub write_grafts {
+ 	close $fh or croak $!;
  }
  
-+sub cmt_metadata {
-+	return extract_metadata((grep(/^git-svn-id: /,
-+		safe_qx(qw/git-cat-file commit/, shift)))[-1]);
++sub read_url_paths_all {
++	my ($l_map, $pfx, $p) = @_;
++	my @dir;
++	foreach (<$p/*>) {
++		if (-r "$_/info/url") {
++			$pfx .= '/' if $pfx && $pfx !~ m!/$!;
++			my $id = $pfx . basename $_;
++			my $url = file_to_s("$_/info/url");
++			my ($u, $p) = repo_path_split($url);
++			$l_map->{$u}->{$p} = $id;
++		} elsif (-d $_) {
++			push @dir, $_;
++		}
++	}
++	foreach (@dir) {
++		my $x = $_;
++		$x =~ s!^\Q$GIT_DIR\E/svn/!!o;
++		read_url_paths_all($l_map, $x, $_);
++	}
 +}
 +
-+sub get_commit_time {
-+	my $cmt = shift;
-+	defined(my $pid = open my $fh, '-|') or croak $!;
-+	if (!$pid) {
-+		exec qw/git-rev-list --pretty=raw -n1/, $cmt or croak $!;
-+	}
-+	while (<$fh>) {
-+		/^committer\s(?:.+) (\d+) ([\-\+]?\d+)$/ or next;
-+		my ($s, $tz) = ($1, $2);
-+		if ($tz =~ s/^\+//) {
-+			$s += tz_to_s_offset($tz);
-+		} elsif ($tz =~ s/^\-//) {
-+			$s -= tz_to_s_offset($tz);
-+		}
-+		close $fh;
-+		return $s;
-+	}
-+	die "Can't get commit time for commit: $cmt\n";
-+}
-+
- sub tz_to_s_offset {
- 	my ($tz) = @_;
- 	$tz =~ s/(\d\d)$//;
-@@ -2501,8 +2652,7 @@ sub svn_grab_base_rev {
- 	chomp(my $c = do { local $/; <$fh> });
++# this one only gets ids that have been imported, not new ones
+ sub read_url_paths {
+ 	my $l_map = {};
+ 	git_svn_each(sub { my $x = shift;
+@@ -2602,7 +2618,6 @@ sub libsvn_get_file {
+ 	# redirect STDOUT for SVN 1.1.x compatibility
+ 	open my $stdout, '>&', \*STDOUT or croak $!;
+ 	open STDOUT, '>&', $in or croak $!;
+-	$| = 1; # not sure if this is necessary, better safe than sorry...
+ 	my ($r, $props) = $SVN->get_file($f, $rev, \*STDOUT, $pool);
+ 	$in->flush == 0 or croak $!;
+ 	open STDOUT, '>&', $stdout or croak $!;
+@@ -2705,6 +2720,28 @@ sub svn_grab_base_rev {
  	close $fh;
  	if (defined $c && length $c) {
--		my ($url, $rev, $uuid) = extract_metadata((grep(/^git-svn-id: /,
--			safe_qx(qw/git-cat-file commit/, $c)))[-1]);
-+		my ($url, $rev, $uuid) = cmt_metadata($c);
+ 		my ($url, $rev, $uuid) = cmt_metadata($c);
++		return ($rev, $c) if defined $rev;
++	}
++	if ($_no_metadata) {
++		my $offset = -41; # from tail
++		my $rl;
++		open my $fh, '<', $REVDB or
++			die "--no-metadata specified and $REVDB not readable\n";
++		seek $fh, $offset, 2;
++		$rl = readline $fh;
++		defined $rl or return (undef, undef);
++		chomp $rl;
++		while ($c ne $rl && tell $fh != 0) {
++			$offset -= 41;
++			seek $fh, $offset, 2;
++			$rl = readline $fh;
++			defined $rl or return (undef, undef);
++			chomp $rl;
++		}
++		my $rev = tell $fh;
++		croak $! if ($rev < -1);
++		$rev =  ($rev - 41) / 41;
++		close $fh or croak $!;
  		return ($rev, $c);
  	}
  	return (undef, undef);
-@@ -2651,6 +2801,10 @@ sub find_graft_path_parents {
- 		my $i = $tree_paths->{$x};
- 		my ($r, $parent) = find_rev_before($r0, $i, 1);
- 		if (defined $r && defined $parent && revisions_eq($x,$r,$r0)) {
-+			my ($url_b, undef, $uuid_b) = cmt_metadata($c);
-+			my ($url_a, undef, $uuid_a) = cmt_metadata($parent);
-+			next if ($url_a && $url_b && $url_a eq $url_b &&
-+							$uuid_b eq $uuid_a);
- 			$grafts->{$c}->{$parent} = 1;
- 		}
- 	}
-diff --git a/contrib/git-svn/t/t0003-graft-branches.sh b/contrib/git-svn/t/t0003-graft-branches.sh
+@@ -2803,15 +2840,45 @@ sub libsvn_find_parent_branch {
+ 	print STDERR  "Found possible branch point: ",
+ 				"$branch_from => $svn_path, $r\n";
+ 	$branch_from =~ s#^/##;
+-	my $l_map = read_url_paths();
++	my $l_map = {};
++	read_url_paths_all($l_map, '', "$GIT_DIR/svn");
+ 	my $url = $SVN->{url};
+ 	defined $l_map->{$url} or return;
+-	my $id = $l_map->{$url}->{$branch_from} or return;
++	my $id = $l_map->{$url}->{$branch_from};
++	if (!defined $id && $_follow_parent) {
++		print STDERR "Following parent: $branch_from\@$r\n";
++		# auto create a new branch and follow it
++		$id = basename($branch_from);
++		$id .= '@'.$r if -r "$GIT_DIR/svn/$id";
++		while (-r "$GIT_DIR/svn/$id") {
++			# just grow a tail if we're not unique enough :x
++			$id .= '-';
++		}
++	}
++	return unless defined $id;
++
+ 	my ($r0, $parent) = find_rev_before($r,$id,1);
++	if ($_follow_parent && (!defined $r0 || !defined $parent)) {
++		defined(my $pid = fork) or croak $!;
++		if (!$pid) {
++			$GIT_SVN = $ENV{GIT_SVN_ID} = $id;
++			init_vars();
++			$SVN_URL = "$url/$branch_from";
++			$SVN_LOG = $SVN = undef;
++			setup_git_svn();
++			# we can't assume SVN_URL exists at r+1:
++			$_revision = "0:$r";
++			fetch_lib();
++			exit 0;
++		}
++		waitpid $pid, 0;
++		croak $? if $?;
++		($r0, $parent) = find_rev_before($r,$id,1);
++	}
+ 	return unless (defined $r0 && defined $parent);
+ 	if (revisions_eq($branch_from, $r0, $r)) {
+ 		unlink $GIT_SVN_INDEX;
+-		print STDERR "Found branch parent: $parent\n";
++		print STDERR "Found branch parent: ($GIT_SVN) $parent\n";
+ 		sys(qw/git-read-tree/, $parent);
+ 		return libsvn_fetch($parent, $paths, $rev,
+ 					$author, $date, $msg);
+@@ -3270,6 +3337,16 @@ diff-index line ($m hash)
+ }
+ ;
+ 
++# retval of read_url_paths{,_all}();
++$l_map = {
++	# repository root url
++	'https://svn.musicpd.org' => {
++		# repository path 		# GIT_SVN_ID
++		'mpd/trunk'		=>	'trunk',
++		'mpd/tags/0.11.5'	=>	'tags/0.11.5',
++	},
++}
++
+ Notes:
+ 	I don't trust the each() function on unless I created %hash myself
+ 	because the internal iterator may not have started at base.
+diff --git a/contrib/git-svn/t/t0004-follow-parent.sh b/contrib/git-svn/t/t0004-follow-parent.sh
 new file mode 100644
-index 0000000..cc62d4e
+index 0000000..01488ff
 --- /dev/null
-+++ b/contrib/git-svn/t/t0003-graft-branches.sh
-@@ -0,0 +1,63 @@
-+test_description='git-svn graft-branches'
++++ b/contrib/git-svn/t/t0004-follow-parent.sh
+@@ -0,0 +1,44 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 Eric Wong
++#
++
++test_description='git-svn --follow-parent fetching'
 +. ./lib-git-svn.sh
++
++if test -n "$GIT_SVN_NO_LIB" && test "$GIT_SVN_NO_LIB" -ne 0
++then
++	echo 'Skipping: --follow-parent needs SVN libraries'
++	test_done
++	exit 0
++fi
 +
 +test_expect_success 'initialize repo' "
 +	mkdir import &&
 +	cd import &&
-+	mkdir -p trunk branches tags &&
++	mkdir -p trunk &&
 +	echo hello > trunk/readme &&
-+	svn import -m 'import for git-svn' . $svnrepo &&
++	svn import -m 'initial' . $svnrepo &&
 +	cd .. &&
-+	svn cp -m 'tag a' $svnrepo/trunk $svnrepo/tags/a &&
-+	svn cp -m 'branch a' $svnrepo/trunk $svnrepo/branches/a &&
 +	svn co $svnrepo wc &&
 +	cd wc &&
-+	echo feedme >> branches/a/readme &&
-+	svn commit -m hungry &&
++	echo world >> trunk/readme &&
++	svn commit -m 'another commit' &&
 +	svn up &&
-+	cd trunk &&
-+	svn merge -r3:4 $svnrepo/branches/a &&
-+	svn commit -m 'merge with a' &&
-+	cd ../.. &&
-+	svn log -v $svnrepo &&
-+	git-svn init -i trunk $svnrepo/trunk &&
-+	git-svn init -i a $svnrepo/branches/a &&
-+	git-svn init -i tags/a $svnrepo/tags/a &&
-+	git-svn fetch -i tags/a &&
-+	git-svn fetch -i a &&
-+	git-svn fetch -i trunk
++	svn mv -m 'rename to thunk' trunk thunk &&
++	svn up &&
++	echo goodbye >> thunk/readme &&
++	svn commit -m 'bye now' &&
++	cd ..
 +	"
 +
-+r1=`git-rev-list remotes/trunk | tail -n1`
-+r2=`git-rev-list remotes/tags/a | tail -n1`
-+r3=`git-rev-list remotes/a | tail -n1`
-+r4=`git-rev-list remotes/a | head -n1`
-+r5=`git-rev-list remotes/trunk | head -n1`
-+
-+test_expect_success 'test graft-branches regexes and copies' "
-+	test -n "$r1" &&
-+	test -n "$r2" &&
-+	test -n "$r3" &&
-+	test -n "$r4" &&
-+	test -n "$r5" &&
-+	git-svn graft-branches &&
-+	grep '^$r2 $r1' $GIT_DIR/info/grafts &&
-+	grep '^$r3 $r1' $GIT_DIR/info/grafts &&
-+	grep '^$r5 ' $GIT_DIR/info/grafts | grep '$r4' | grep '$r1'
++test_expect_success 'init and fetch --follow-parent a moved directory' "
++	git-svn init -i thunk $svnrepo/thunk &&
++	git-svn fetch --follow-parent -i thunk &&
++	git-rev-parse --verify refs/remotes/trunk &&
++	test '$?' -eq '0'
 +	"
 +
-+test_debug 'gitk --all & sleep 1'
-+
-+test_expect_success 'test graft-branches with tree-joins' "
-+	rm $GIT_DIR/info/grafts &&
-+	git-svn graft-branches --no-default-regex --no-graft-copy -B &&
-+	grep '^$r3 ' $GIT_DIR/info/grafts | grep '$r1' | grep '$r2' &&
-+	grep '^$r2 $r1' $GIT_DIR/info/grafts &&
-+	grep '^$r5 ' $GIT_DIR/info/grafts | grep '$r1' | grep '$r4'
-+	"
-+
-+# the result of this is kinda funky, we have a strange history and
-+# this is just a test :)
 +test_debug 'gitk --all &'
 +
 +test_done
