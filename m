@@ -1,64 +1,58 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: Re: CFT: merge-recursive in C
-Date: Wed, 28 Jun 2006 08:37:48 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060628063747.GA983@informatik.uni-freiburg.de>
-References: <20060626233838.GA3121@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Quick merge status updates.
+Date: Wed, 28 Jun 2006 09:32:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 08:37:55 2006
+X-From: git-owner@vger.kernel.org Wed Jun 28 09:33:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvTgQ-0003Ql-CN
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 08:37:54 +0200
+	id 1FvUXR-0002rg-6Y
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 09:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423153AbWF1Ghv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 02:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423184AbWF1Ghv
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 02:37:51 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:46495 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S1423153AbWF1Ghu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 02:37:50 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1FvTgL-0004Hj-Df; Wed, 28 Jun 2006 08:37:49 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id k5S6bm5x001235;
-	Wed, 28 Jun 2006 08:37:48 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.6/8.12.11/Submit) id k5S6bmHi001234;
-	Wed, 28 Jun 2006 08:37:48 +0200 (MEST)
-To: Alex Riesen <raa.lkml@gmail.com>
-Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060626233838.GA3121@steel.home>
-User-Agent: Mutt/1.5.6+20040523i
+	id S1423203AbWF1Hcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 03:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423201AbWF1Hci
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 03:32:38 -0400
+Received: from mail.gmx.net ([213.165.64.21]:62684 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1423203AbWF1Hch (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 03:32:37 -0400
+Received: (qmail invoked by alias); 28 Jun 2006 07:32:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 28 Jun 2006 09:32:35 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22775>
 
-Hello Alex,
+Hi,
 
-> +// does not belong here
-Some C compiler (e.g. Sun Forte) don't like C++-style comments.
+On Tue, 27 Jun 2006, Junio C Hamano wrote:
 
-(So the line could read:
+> Immediately after 1.4.1 happens, I would like to pull in
+> "Git.xs/Git.pm" series by Pasky into "next".
 
-  /* "//" does not belong here :-) */
+Earlier, you said that this is primarily for gitweb, not so much for the 
+core of git. But...
 
-)
+> Breakage there would stop your "git pull" working, so this is somewhat 
+> important.
 
-Best regards
-Uwe
+May I respectfully offer my objection? This is the _heart_ of git. You do 
+not want to muck around with this.
 
--- 
-Uwe Zeisberger
+I am not opposed to a sane interface between Perl and git, but please 
+please PLEASE do not make such an important part of git dependent on 
+Git.pm. (Somehow I have the impressions there are echoes here.)
 
-http://www.google.com/search?q=1+degree+celsius+in+kelvin
+Ciao,
+Dscho
