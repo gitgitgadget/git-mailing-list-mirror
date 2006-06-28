@@ -1,48 +1,79 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: CFT: merge-recursive in C
-Date: Wed, 28 Jun 2006 09:32:57 +0200
-Message-ID: <81b0412b0606280032j2cd6135bpdd48babddd4da98f@mail.gmail.com>
-References: <20060626233838.GA3121@steel.home>
-	 <20060628063747.GA983@informatik.uni-freiburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Notes on diffcore API
+Date: Wed, 28 Jun 2006 09:36:00 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606280934550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060626233838.GA3121@steel.home> <7v4py7h2b9.fsf@assigned-by-dhcp.cox.net>
+ <7virmn9hx8.fsf_-_@assigned-by-dhcp.cox.net>
+ <81b0412b0606270141x7e38af5i8a97b27e37da17bf@mail.gmail.com>
+ <7vbqse6unx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 28 09:33:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 09:36:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvUXs-0002vE-MA
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 09:33:09 +0200
+	id 1FvUal-0003Np-NS
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 09:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423201AbWF1HdA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 03:33:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423205AbWF1HdA
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 03:33:00 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:51553 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1423201AbWF1Hc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 03:32:58 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so3014984ugf
-        for <git@vger.kernel.org>; Wed, 28 Jun 2006 00:32:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HJqGC8IESmiBtzAjpSaDpfkZuAlejMZA4x03Fa4BIXtpgceUsUZ59985wJ47QmdBUb79WOiH9GP19cTuWyb45p8gMLW88z1Nmh/T2B9f0LcA1LNU5kcZSNGRMgcEyjligfIGeMup2EGOA0DpWoOijb8ZVbjjZa7yl18GV4vpzqo=
-Received: by 10.78.165.16 with SMTP id n16mr55550hue;
-        Wed, 28 Jun 2006 00:32:57 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Wed, 28 Jun 2006 00:32:57 -0700 (PDT)
-To: "Uwe Zeisberger" <zeisberg@informatik.uni-freiburg.de>,
-	"Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
-In-Reply-To: <20060628063747.GA983@informatik.uni-freiburg.de>
-Content-Disposition: inline
+	id S1423207AbWF1HgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 03:36:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423211AbWF1HgD
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 03:36:03 -0400
+Received: from mail.gmx.de ([213.165.64.21]:730 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1423207AbWF1HgB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 03:36:01 -0400
+Received: (qmail invoked by alias); 28 Jun 2006 07:36:00 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 28 Jun 2006 09:36:00 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqse6unx.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22777>
 
-On 6/28/06, Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> wrote:
-> > +// does not belong here
-> Some C compiler (e.g. Sun Forte) don't like C++-style comments.
+Hi,
 
-Yep, I'll change them
+On Tue, 27 Jun 2006, Junio C Hamano wrote:
+
+> "Alex Riesen" <raa.lkml@gmail.com> writes:
+> 
+> > On 6/27/06, Junio C Hamano <junkio@cox.net> wrote:
+> >> -- >8 --
+> >> Notes on diffcore API
+> >> =====================
+> >
+> > Thanks!
+> >
+> >> Diffcore Transformation
+> >> -----------------------
+> >>
+> >> The input file pairs recorded in the previous phase are
+> >> collected in diff_queued_diff (a global variable -- which means
+> >> that you cannot have two diffs running in parallel with the
+> >> current setup).  This is an expandable array of pointers to
+> >> `struct diff_filepair` structure.
+> >>
+> >
+> > merge-recursive shouldn't have any problems with that, as the
+> > renames are just read in the current implementation.
+> > Still, it is somehow uncomfortable to see the amount of APIs
+> > with the above restriction. Never know when it'll bite.
+> 
+> I think it is simply the matter of moving diff_queued_diff a
+> field in diff_optionss structure and adding an extra parameter
+> to point at the current diff_options to handful functions if we
+> ever need to support it.  I haven't bothered doing that because
+> we haven't had the need to run more than one diff at once.
+
+And we shouldn't bother until we need it. It has a small performance 
+impact, and the code gets more ugly.
+
+Ciao,
+Dscho
