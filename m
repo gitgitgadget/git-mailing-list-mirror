@@ -1,50 +1,64 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: CFT: merge-recursive in C
-Date: Wed, 28 Jun 2006 11:06:47 -0400
-Message-ID: <20060628150647.GA16935@trixie.casa.cgf.cx>
-References: <20060626233838.GA3121@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: CFT: merge-recursive in C (updated)
+Date: Wed, 28 Jun 2006 17:09:51 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606281707570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com> 
+ <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <20060627223249.GA8177@steel.home>  <81b0412b0606280234x7d07fbbck7887b5214d98bf91@mail.gmail.com>
+  <Pine.LNX.4.63.0606281202360.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <81b0412b0606280435t70ac9957jae2c4d1c10b7681d@mail.gmail.com> 
+ <Pine.LNX.4.63.0606281342290.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <81b0412b0606280727k2f4d5c26m5d37f2835821c93b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jun 28 17:07:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 17:10:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fvbcx-0005hg-Ok
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 17:06:52 +0200
+	id 1Fvbfy-0006Fg-0b
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 17:09:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbWF1PGt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 11:06:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbWF1PGt
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 11:06:49 -0400
-Received: from pool-71-248-179-197.bstnma.fios.verizon.net ([71.248.179.197]:235
-	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1751135AbWF1PGs
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 11:06:48 -0400
-Received: by cgf.cx (Postfix, from userid 201)
-	id CB4E813C01F; Wed, 28 Jun 2006 11:06:47 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060626233838.GA3121@steel.home>
-User-Agent: Mutt/1.5.11
+	id S932822AbWF1PJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 11:09:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932823AbWF1PJy
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 11:09:54 -0400
+Received: from mail.gmx.de ([213.165.64.21]:1162 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932822AbWF1PJx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 11:09:53 -0400
+Received: (qmail invoked by alias); 28 Jun 2006 15:09:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 28 Jun 2006 17:09:52 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0606280727k2f4d5c26m5d37f2835821c93b@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22811>
 
-On Tue, Jun 27, 2006 at 01:38:38AM +0200, Alex Riesen wrote:
->It still uses some calls to git programs (git-update-index,
->git-hash-object, git-diff-tree and git-write-tree), and merge(1) has
->the labels (-L) missing - I was unsure how to tackle this on windows -
->it has only argv[1].
+Hi,
 
-Actually, Windows should behave the same as Linux wrt argv handling.
-You can use argv[1] ... argv[n] modulo any differences in command line
-quoting.
+On Wed, 28 Jun 2006, Alex Riesen wrote:
 
-On Windows the arguments are broken into individual components by the
-runtime, e.g., MSVCRT.dll or Cygwin1.dll.
+> On 6/28/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > > What stands out next is getRenames (to be renamed into get_renames), a
+> > > little profiling shows that the renames lists are the culprit this time
+> > > too.
+> > 
+> > In my attempts, the path_list did not contain paths, but structs
+> > containing a path and a void pointer. I think I will resurrect this idea
+> > for the renames.
+> > 
+> 
+> What was the pointer for?
 
-cgf
+We want to emulate the set with a sorted list. The pointer is for the 
+payload.
+
+Ciao,
+Dscho
