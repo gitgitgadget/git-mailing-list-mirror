@@ -1,52 +1,61 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Problem with GITK
-Date: Wed, 28 Jun 2006 22:40:25 +0200
-Message-ID: <4d8e3fd30606281340n147821e2hcbd4ccaf9551173f@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Makefile: set USE_PIC on Linux x86_64 for linking with
+	Git.pm
+Date: Wed, 28 Jun 2006 16:52:25 -0400
+Message-ID: <1151527945.1619.17.camel@dv>
+References: <20060628183557.GA5713@fiberbit.xs4all.nl>
+	 <7vr719159v.fsf@assigned-by-dhcp.cox.net>
+	 <7virml14za.fsf@assigned-by-dhcp.cox.net>
+	 <20060628192145.GD5713@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 28 22:40:33 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 22:52:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fvgps-0002zV-Ou
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 22:40:33 +0200
+	id 1Fvh1X-00056V-3g
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 22:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbWF1Uk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 16:40:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbWF1Uk1
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 16:40:27 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:18638 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751498AbWF1Uk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 16:40:27 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so3328471ugf
-        for <git@vger.kernel.org>; Wed, 28 Jun 2006 13:40:26 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=uty8NNQB4eUwTzw1JL6kMC+AN9nzY7Y5/k7eGv2+8qXdvYK2idkSSrUaZAJ4yDSs0xXzJJSPXG2tuYSxQPzPD70hGiZ0BkEanjU3gBCPDT67rUH1asAyZcyviYHoEUYGIPKxnpmtIhDlQHYoTNmsN8wl6wGy1BT8L+P8jir+Bp4=
-Received: by 10.78.178.5 with SMTP id a5mr723256huf;
-        Wed, 28 Jun 2006 13:40:26 -0700 (PDT)
-Received: by 10.78.121.12 with HTTP; Wed, 28 Jun 2006 13:40:25 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1751526AbWF1Uwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 16:52:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbWF1Uwc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 16:52:32 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:9703 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751523AbWF1Uwb
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 16:52:31 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Fvh1R-0004eL-0E
+	for git@vger.kernel.org; Wed, 28 Jun 2006 16:52:29 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Fvh1N-0000Xj-Di; Wed, 28 Jun 2006 16:52:25 -0400
+To: Marco Roeland <marco.roeland@xs4all.nl>
+In-Reply-To: <20060628192145.GD5713@fiberbit.xs4all.nl>
+X-Mailer: Evolution 2.7.3 (2.7.3-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22823>
 
-Hi all,
-there is a strange orange line in the following screenshot from gitk:
-http://paolo.ciarrocchi.googlepages.com/Screenshotgit.png
+On Wed, 2006-06-28 at 21:21 +0200, Marco Roeland wrote:
+> I certainly do not know cases outside Linux where this might break on
+> x86-64. I just tried to limit it to the case I could test. But perhaps
+> someone with an x86-64 BSD or Solaris might try it?
+> 
+> To paraphrase Dave Jones: I type 'make', it fails. Some 'git log' later
+> I realise I have to manually define 'USE_PIC'. Hey, why doesn't it work
+> automagically?
 
-paolo@Italia:~/linux-2.6$ git version
-git version 1.4.1.rc1.g47e5
+Automagically?  You should search the archives for "Autoconf".  When I
+proposed using it, the hell broke loose.  Now let me indulge in
+Schadenfreude :-)
 
-Ciao,
+I guess I'll need to argue with a working patch next time.
 
 -- 
-Paolo
-http://paolociarrocchi.googlepages.com
-http://picasaweb.google.com/paolo.ciarrocchi
+Regards,
+Pavel Roskin
