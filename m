@@ -1,64 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: CFT: merge-recursive in C (updated)
-Date: Wed, 28 Jun 2006 17:09:51 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606281707570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com> 
- <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
- <20060627223249.GA8177@steel.home>  <81b0412b0606280234x7d07fbbck7887b5214d98bf91@mail.gmail.com>
-  <Pine.LNX.4.63.0606281202360.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
- <81b0412b0606280435t70ac9957jae2c4d1c10b7681d@mail.gmail.com> 
- <Pine.LNX.4.63.0606281342290.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0606280727k2f4d5c26m5d37f2835821c93b@mail.gmail.com>
+From: "Coleman" <Coleman.Andrade@earthlink.net>
+Subject: Discover the latest Lots of pleasure waits for you right after you take this medicine
+Date: Wed, 28 Jun 2006 17:31:11 +0100
+Message-ID: <83566380607908.F99FB411C5@J1MPUE3Q>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 17:10:10 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jun 28 18:32:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fvbfy-0006Fg-0b
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 17:09:58 +0200
+	id 1Fvcx5-0005qO-73
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 18:31:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932822AbWF1PJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 11:09:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932823AbWF1PJy
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 11:09:54 -0400
-Received: from mail.gmx.de ([213.165.64.21]:1162 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932822AbWF1PJx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 11:09:53 -0400
-Received: (qmail invoked by alias); 28 Jun 2006 15:09:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 28 Jun 2006 17:09:52 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0606280727k2f4d5c26m5d37f2835821c93b@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751348AbWF1Qbk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 12:31:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWF1Qbk
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 12:31:40 -0400
+Received: from cpc2-tall4-0-0-cust196.dbln.cable.ntl.com ([86.14.172.197]:30217
+	"EHLO SONACZ") by vger.kernel.org with ESMTP id S1751348AbWF1Qbj
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 12:31:39 -0400
+To: <glenda@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: ckQU2ihPVs4sLRoRTuYTetiZrqm8og0ca6sI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22811>
+X-Spam-Report: 14.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?86.14.172.197>]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: magpills.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: magpills.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: magpills.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: magpills.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: magpills.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22812>
 
-Hi,
+How are you? 
 
-On Wed, 28 Jun 2006, Alex Riesen wrote:
 
-> On 6/28/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > > What stands out next is getRenames (to be renamed into get_renames), a
-> > > little profiling shows that the renames lists are the culprit this time
-> > > too.
-> > 
-> > In my attempts, the path_list did not contain paths, but structs
-> > containing a path and a void pointer. I think I will resurrect this idea
-> > for the renames.
-> > 
-> 
-> What was the pointer for?
+ Prolong your ssex. You have smaall peniis? Gain an extra 20% in thikness! Come on in here: http://magpills.com/gal/ms 
 
-We want to emulate the set with a sorted list. The pointer is for the 
-payload.
 
-Ciao,
-Dscho
+ Never look a gift horse in the mouth Blessings Are Not Valued Until They Are Gone Experience is a wonderful thing It enables you to recognize a mistake when you make it again  First Impressions are the Most Lasting Abstinence makes the heart go wander. Plant the crab tree where you will, it will never bear pippins 
