@@ -1,95 +1,46 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git.c: Re-introduce sane error messages on missing
- commands.
-Date: Wed, 28 Jun 2006 12:45:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606281240480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060627083508.E912A5BBAB@nox.op5.se> <7vpsgu6wba.fsf@assigned-by-dhcp.cox.net>
- <44A23A38.3090206@op5.se> <Pine.LNX.4.63.0606281118330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vr71938t4.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsimport - cleanup of the multi-indexes handling
+Date: Wed, 28 Jun 2006 04:10:38 -0700
+Message-ID: <7vzmfx1qoh.fsf@assigned-by-dhcp.cox.net>
+References: <11514896033560-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 12:46:07 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, junkio@cox.net, Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Wed Jun 28 13:10:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvXY5-00074i-8h
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 12:45:36 +0200
+	id 1FvXwR-0003R1-Us
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 13:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932504AbWF1Kpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 06:45:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932764AbWF1Kpa
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 06:45:30 -0400
-Received: from mail.gmx.net ([213.165.64.21]:44781 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932504AbWF1Kp3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 06:45:29 -0400
-Received: (qmail invoked by alias); 28 Jun 2006 10:45:28 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp043) with SMTP; 28 Jun 2006 12:45:28 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr71938t4.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932778AbWF1LKl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 07:10:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932779AbWF1LKl
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 07:10:41 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:51144 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932778AbWF1LKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 07:10:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060628111039.WWNM12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 28 Jun 2006 07:10:39 -0400
+To: Martin Langhoff <martin@catalyst.net.nz>
+In-Reply-To: <11514896033560-git-send-email-martin@catalyst.net.nz> (Martin
+	Langhoff's message of "Wed, 28 Jun 2006 22:13:23 +1200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22803>
 
-Hi,
+Martin Langhoff <martin@catalyst.net.nz> writes:
 
-On Wed, 28 Jun 2006, Junio C Hamano wrote:
+> Indexes are only needed when we are about preparing to commit. Prime them
+> inside commit() when we have all the info we need, and remove all the
+> redundant index setups.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Try this:
-> >
-> > $ mkdir 5
-> > $ cd 5
-> > $ git-init-db
-> > $ rm .git/config # yes, really.
-> > $ git abc
-> 
-> Thanks for trying to help, but not really.
-
-Okay. Does not happen with 'next' here, too. I have some changes in my 
-private repo (which eventually should culminate in the big mmap()ed sooper 
-config parsing / writing thingie), which make it break. The following 
-patch fixes this (and potentially Andreas' problem, too).
-
--- cut here --
-
-[PATCH] save errno in handle_alias()
-
-git.c:main() relies on the value of errno being set by the last attempt to 
-execute the command. However, if something goes awry in handle_alias(), 
-that assumption is wrong. So restore errno before returning from 
-handle_alias().
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
----
-
-diff --git a/git.c b/git.c
-index 94e9a4a..7c7106e 100644
---- a/git.c
-+++ b/git.c
-@@ -99,7 +99,7 @@ static int split_cmdline(char *cmdline, 
- 
- static int handle_alias(int *argcp, const char ***argv)
- {
--	int nongit = 0, ret = 0;
-+	int nongit = 0, ret = 0, saved_errno = errno;
- 	const char *subdir;
- 
- 	subdir = setup_git_directory_gently(&nongit);
-@@ -137,6 +137,8 @@ static int handle_alias(int *argcp, cons
- 	if (subdir)
- 		chdir(subdir);
- 
-+	errno = saved_errno;
-+
- 	return ret;
- }
- 
+Obviously makes sense although I admit I do not have to interact
+with CVS these days anymore (lucky me ;-).
