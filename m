@@ -1,93 +1,53 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Marco Roeland <marco.roeland@xs4all.nl>
 Subject: Re: [PATCH] git.c: Re-introduce sane error messages on missing commands.
-Date: Wed, 28 Jun 2006 13:53:26 +0200
-Message-ID: <44A26DB6.1080408@op5.se>
+Date: Wed, 28 Jun 2006 14:00:44 +0200
+Message-ID: <20060628120044.GA3228@fiberbit.xs4all.nl>
 References: <20060627083508.E912A5BBAB@nox.op5.se> <7vpsgu6wba.fsf@assigned-by-dhcp.cox.net> <44A23A38.3090206@op5.se> <Pine.LNX.4.63.0606281118330.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7vr71938t4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606281240480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 13:54:09 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <junkio@cox.net>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 14:01:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvYcI-0002Tr-Qw
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 13:53:59 +0200
+	id 1FvYjB-0003le-Ju
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 14:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423292AbWF1Lxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 07:53:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423290AbWF1Lxa
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 07:53:30 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:41412 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1423291AbWF1Lx2
+	id S1423296AbWF1MAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 08:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423297AbWF1MAu
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 08:00:50 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:47810 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1423296AbWF1MAt
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 07:53:28 -0400
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id ED1FA6BCBF; Wed, 28 Jun 2006 13:53:26 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
-X-Accept-Language: en-us, en
+	Wed, 28 Jun 2006 08:00:49 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.62)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1FvYir-0000yB-0E; Wed, 28 Jun 2006 14:00:45 +0200
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.63.0606281240480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22806>
 
-Johannes Schindelin wrote:
-> Hi,
+On Wednesday June 28th 2006 Johannes Schindelin wrote:
+
+> [PATCH] save errno in handle_alias()
 > 
-> On Wed, 28 Jun 2006, Junio C Hamano wrote:
-> 
-> 
->>Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->>
->>>Try this:
->>>
->>>$ mkdir 5
->>>$ cd 5
->>>$ git-init-db
->>>$ rm .git/config # yes, really.
->>>$ git abc
->>
->>Thanks for trying to help, but not really.
-> 
-> 
-> Okay. Does not happen with 'next' here, too. I have some changes in my 
-> private repo (which eventually should culminate in the big mmap()ed sooper 
-> config parsing / writing thingie), which make it break. The following 
-> patch fixes this (and potentially Andreas' problem, too).
-> 
+> git.c:main() relies on the value of errno being set by the last attempt to 
+> execute the command. However, if something goes awry in handle_alias(), 
+> that assumption is wrong. So restore errno before returning from 
+> handle_alias().
 
-It should, although the command it tried to execute will still be empty 
-if it fails for some other reason (file not executable / permission 
-denied), since it only does the right thing on ENOENT.
-
-This is also, imo, a bit worse than preserving the errno from the 
-execve() call in the caller, since errno is sometimes a macro (yes, only 
-in threaded apps atm, but still...), and it will be easy to forget to 
-look in handle_alias() if other things change in main() that makes this 
-bug resurface.
-
-Oh, and the part of my patch removing the git_command variable from 
-git.c:main() still has to be applied for arbitrary error-messages to 
-look sane.
-
-$ grep -B1 git_command git.c
-         char *slash = strrchr(cmd, '/');
-         char git_command[PATH_MAX + 1];
---
-         fprintf(stderr, "Failed to run command '%s': %s\n",
-                 git_command, strerror(errno));
-
-
-Btw, Junio, did you try this with 'master' as of yesterday morning (git 
-version 1.4.1.rc1.g1ef9)? It's reproducible on every machine I've tried 
-so far (well, only five, but still), so it seems odd that you don't see it.
-
+If we rely on the value of errno we should always immediately store it's
+value anyway. On some neolithic systems like the "MSVCRT.DLL" C runtime
+library on Windows (used by e.g. the Mingw compiler, don't know about
+Cygwin) a lot of runtime functions actually even reset the value of
+errno to 0 on success!
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Marco Roeland
