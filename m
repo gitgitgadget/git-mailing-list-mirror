@@ -1,65 +1,48 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git.c: Re-introduce sane error messages on missing
- commands.
-Date: Wed, 28 Jun 2006 11:21:21 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606281118330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060627083508.E912A5BBAB@nox.op5.se> <7vpsgu6wba.fsf@assigned-by-dhcp.cox.net>
- <44A23A38.3090206@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: CFT: merge-recursive in C
+Date: Wed, 28 Jun 2006 02:22:30 -0700
+Message-ID: <7v64il4otl.fsf@assigned-by-dhcp.cox.net>
+References: <20060626233838.GA3121@steel.home>
+	<20060628063747.GA983@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 11:21:32 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 11:22:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvWEh-0003v8-Ah
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 11:21:27 +0200
+	id 1FvWFm-00045K-OI
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 11:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932125AbWF1JVY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 05:21:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030302AbWF1JVX
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 05:21:23 -0400
-Received: from mail.gmx.net ([213.165.64.21]:36254 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932125AbWF1JVX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 05:21:23 -0400
-Received: (qmail invoked by alias); 28 Jun 2006 09:21:21 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp036) with SMTP; 28 Jun 2006 11:21:21 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <44A23A38.3090206@op5.se>
-X-Y-GMX-Trusted: 0
+	id S1423239AbWF1JWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 05:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423240AbWF1JWc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 05:22:32 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:5326 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1423239AbWF1JWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 05:22:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060628092231.EONM19057.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 28 Jun 2006 05:22:31 -0400
+To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20060628063747.GA983@informatik.uni-freiburg.de> (Uwe
+	Zeisberger's message of "Wed, 28 Jun 2006 08:37:48 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22789>
 
-Hi,
+Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de> writes:
 
-On Wed, 28 Jun 2006, Andreas Ericsson wrote:
+> Hello Alex,
+>
+>> +// does not belong here
+> Some C compiler (e.g. Sun Forte) don't like C++-style comments.
 
-> Junio C Hamano wrote:
-> > Andreas Ericsson <ae@op5.se> writes:
-> > 
-> > 
-> > > Somewhere in the alias handling git turned hostile on fat fingers:
-> > > 
-> > > 	$ git showbranch
-> > > 	Failed to run command '': Is a directory
-> > 
-> > 
-> > Does not happen here (nor on Cygwin 1.4.1.rc1).  Care to help
-> > reproducing it?
-
-Try this:
-
-$ mkdir 5
-$ cd 5
-$ git-init-db
-$ rm .git/config # yes, really.
-$ git abc
-
-Ciao,
-Dscho
+Heh, I said something like that last year and was scolded by
+Linus who responded "what century are you living in?" ;-).
