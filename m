@@ -1,77 +1,93 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: CFT: merge-recursive in C (updated)
-Date: Wed, 28 Jun 2006 13:35:10 +0200
-Message-ID: <81b0412b0606280435t70ac9957jae2c4d1c10b7681d@mail.gmail.com>
-References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
-	 <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20060627223249.GA8177@steel.home>
-	 <81b0412b0606280234x7d07fbbck7887b5214d98bf91@mail.gmail.com>
-	 <Pine.LNX.4.63.0606281202360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git.c: Re-introduce sane error messages on missing commands.
+Date: Wed, 28 Jun 2006 13:53:26 +0200
+Message-ID: <44A26DB6.1080408@op5.se>
+References: <20060627083508.E912A5BBAB@nox.op5.se> <7vpsgu6wba.fsf@assigned-by-dhcp.cox.net> <44A23A38.3090206@op5.se> <Pine.LNX.4.63.0606281118330.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7vr71938t4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606281240480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>,
-	"Fredrik Kuivinen" <freku045@student.liu.se>,
-	"Linus Torvalds" <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Jun 28 13:35:28 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 13:54:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvYKE-0007Yc-Dm
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 13:35:18 +0200
+	id 1FvYcI-0002Tr-Qw
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 13:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423279AbWF1LfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 07:35:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423281AbWF1LfN
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 07:35:13 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:54494 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1423279AbWF1LfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 07:35:11 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so3073392ugf
-        for <git@vger.kernel.org>; Wed, 28 Jun 2006 04:35:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LSO8PqkvNF9aOyCf2rHRSKgSlNogY3dM1r1brxsz+mnvzTgeU9/EeReSMWYyZYM+S8zyTsliEkETOQ23QV8IqtLTCfmYIsUbyZIp0HbAFYanxz4/0kKGSsePo3szH4u7CmnQ1634B7VClcPEjWjthwiazeYl9RdJnHBPh/zfnYE=
-Received: by 10.78.97.7 with SMTP id u7mr233344hub;
-        Wed, 28 Jun 2006 04:35:10 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Wed, 28 Jun 2006 04:35:10 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606281202360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1423292AbWF1Lxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 07:53:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423290AbWF1Lxa
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 07:53:30 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:41412 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1423291AbWF1Lx2
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 07:53:28 -0400
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id ED1FA6BCBF; Wed, 28 Jun 2006 13:53:26 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606281240480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22805>
 
-On 6/28/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > > - use a pipe to "git-update-index --index-info" instead of using command
-> > > > > line
-> >
-> > ...and to take it a step further, a patch (0002) to avoid too many calls to
-> > git-write-tree and to git-update-index.
->
-> ... and introduces a lot more lines doing debug output.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 28 Jun 2006, Junio C Hamano wrote:
+> 
+> 
+>>Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>
+>>>Try this:
+>>>
+>>>$ mkdir 5
+>>>$ cd 5
+>>>$ git-init-db
+>>>$ rm .git/config # yes, really.
+>>>$ git abc
+>>
+>>Thanks for trying to help, but not really.
+> 
+> 
+> Okay. Does not happen with 'next' here, too. I have some changes in my 
+> private repo (which eventually should culminate in the big mmap()ed sooper 
+> config parsing / writing thingie), which make it break. The following 
+> patch fixes this (and potentially Andreas' problem, too).
+> 
 
-well, that's how I found out about what to fix. Was really impressed
-when saw the difference :)
-What stands out next is getRenames (to be renamed into get_renames),
-a little profiling shows that the renames lists are the culprit this time too.
+It should, although the command it tried to execute will still be empty 
+if it fails for some other reason (file not executable / permission 
+denied), since it only does the right thing on ENOENT.
 
-I actually expected these problems, but decided to postpone the
-optimization for later: linked lists are comfortable to work with.
-I didn't had much time for this project, and the first commit is
-dated 7th June - it was a very slow progress.
+This is also, imo, a bit worse than preserving the errno from the 
+execve() call in the caller, since errno is sometimes a macro (yes, only 
+in threaded apps atm, but still...), and it will be easy to forget to 
+look in handle_alias() if other things change in main() that makes this 
+bug resurface.
 
-> However, the change is good, but I would not call it "FILE *fp". IMHO
-> "FILE *update_index_pipe" would explain better what you do there.
+Oh, and the part of my patch removing the git_command variable from 
+git.c:main() still has to be applied for arbitrary error-messages to 
+look sane.
 
-just update_index would be enough. It can't possibly mean anything else,
-being FILE* in that context.
+$ grep -B1 git_command git.c
+         char *slash = strrchr(cmd, '/');
+         char git_command[PATH_MAX + 1];
+--
+         fprintf(stderr, "Failed to run command '%s': %s\n",
+                 git_command, strerror(errno));
 
-By the way, is it safe to use "git-update-index --index-info"?
-AFAICS it was designed for this kind of use, but the most
-visible user of it (git-update-recursive.py) didn't use --index-info
-this way! Was there any specific reasons?
+
+Btw, Junio, did you try this with 'master' as of yesterday morning (git 
+version 1.4.1.rc1.g1ef9)? It's reproducible on every machine I've tried 
+so far (well, only five, but still), so it seems odd that you don't see it.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
