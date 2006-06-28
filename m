@@ -1,76 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git.c: Re-introduce sane error messages on missing commands.
-Date: Wed, 28 Jun 2006 02:53:43 -0700
-Message-ID: <7vr71938t4.fsf@assigned-by-dhcp.cox.net>
-References: <20060627083508.E912A5BBAB@nox.op5.se>
-	<7vpsgu6wba.fsf@assigned-by-dhcp.cox.net> <44A23A38.3090206@op5.se>
-	<Pine.LNX.4.63.0606281118330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/2] rebase: check for errors from git-commit
+Date: Wed, 28 Jun 2006 02:54:54 -0700
+Message-ID: <20060628095454.GA23948@soma>
+References: <20060628093322.GA29036@hand.yhbt.net> <7vveql38zr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 28 11:53:55 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 28 11:55:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvWk0-0006zz-Cf
-	for gcvg-git@gmane.org; Wed, 28 Jun 2006 11:53:48 +0200
+	id 1FvWlA-00075o-MI
+	for gcvg-git@gmane.org; Wed, 28 Jun 2006 11:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030502AbWF1Jxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 05:53:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030503AbWF1Jxp
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 05:53:45 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:42157 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030502AbWF1Jxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 05:53:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060628095344.RUMX12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 28 Jun 2006 05:53:44 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606281118330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 28 Jun 2006 11:21:21 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423245AbWF1Jy5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 05:54:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423247AbWF1Jy5
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 05:54:57 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:48601 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1423245AbWF1Jy4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 05:54:56 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 2BCB77DC022;
+	Wed, 28 Jun 2006 02:54:55 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 28 Jun 2006 02:54:54 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vveql38zr.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22793>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Junio C Hamano <junkio@cox.net> wrote:
+> >
+> >> Anticipating failure from "git-commit" is the right thing to do,
+> >> but this is a "Now what?" situation.  What is the expected
+> >> course of action to recover from this for the end user, and how
+> >> can we phrase the error message to help that process?
+> >
+> > I would expect git-commit to show the correct error message (or the
+> > pre-commit hook), die "$RESOLVEMSG" might be a better option, though.
+> 
+> It would say 'resolve conflicts, mark them with update-index as
+> necessary, and say git-commit' or somesuch.  I am not sure you
+> would want the user to make a commit like suggested -- instead
+> you would want him to say 'git rebase --continue' wouldn't you?
 
-> Try this:
->
-> $ mkdir 5
-> $ cd 5
-> $ git-init-db
-> $ rm .git/config # yes, really.
-> $ git abc
+Actually RESOLVEMSG in git-rebase just tells the user about the
+--continue, --skip, --abort options.
 
-Thanks for trying to help, but not really.
-
-: gitster; mkdir 5
-: gitster; cd 5
-: gitster; git-init-db
-defaulting to local storage area
-: gitster; rm .git/config
-: gitster; ~/git-master/bin/git abc
-git: 'abc' is not a git-command
-
-The most commonly used git commands are:
-    add            Add files to the index file
-    apply          Apply patch on a git index file and a work
-...
-    tag            Create a tag object signed with GPG
-    verify-tag     Check the GPG signature of tag
-(use 'git help -a' to get a list of all installed git commands)
-: gitster; ~/git-master/bin/git --version
-git version 1.4.1.rc1.g8096
-: gitster; ls -ld ~/.gitrc ~/.gitconfig ~/.git-config
-: gitster; ls -ld ~/.gitrc ~/.gitconfig ~/.git-config
-ls: /home/junio/.gitrc: No such file or directory
-ls: /home/junio/.gitconfig: No such file or directory
-ls: /home/junio/.git-config: No such file or directory
-: gitster; : confused...
+-- 
+Eric Wong
