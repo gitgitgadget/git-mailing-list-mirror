@@ -1,75 +1,71 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: rebasing trouble
-Date: Thu, 29 Jun 2006 15:34:21 -0700
-Message-ID: <7vlkrfoaky.fsf@assigned-by-dhcp.cox.net>
-References: <20060629194723.GD14287@fieldses.org>
-	<20060629215725.GI14287@fieldses.org>
+Subject: Re: [PATCH] git-grep: --and to combine patterns with and instead of or
+Date: Thu, 29 Jun 2006 15:44:34 -0700
+Message-ID: <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
+References: <E1FuWh7-0008Ry-HX@moooo.ath.cx>
+	<20060625184757.f8273820.tihirvon@gmail.com>
+	<E1FuX8l-0001H5-2z@moooo.ath.cx>
+	<Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<E1FueYh-0004XE-Fg@moooo.ath.cx>
+	<20060629222009.GA9310@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 00:34:30 2006
+Cc: git@vger.kernel.org, Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jun 30 00:44:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw55e-0001mk-GS
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:34:26 +0200
+	id 1Fw5FY-0003di-Mp
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933065AbWF2WeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 18:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933066AbWF2WeX
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:34:23 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:55490 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S933065AbWF2WeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 18:34:22 -0400
+	id S933068AbWF2Woh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 18:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933069AbWF2Woh
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:44:37 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:50141 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932779AbWF2Wof (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 18:44:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060629223421.JUGI12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Jun 2006 18:34:21 -0400
-To: "J. Bruce Fields" <bfields@fieldses.org>
-In-Reply-To: <20060629215725.GI14287@fieldses.org> (J. Bruce Fields's message
-	of "Thu, 29 Jun 2006 17:57:25 -0400")
+          id <20060629224435.PCFW27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 18:44:35 -0400
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+In-Reply-To: <20060629222009.GA9310@cip.informatik.uni-erlangen.de> (Thomas
+	Glanzmann's message of "Fri, 30 Jun 2006 00:20:09 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22924>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
 
-> In my defense, it is a little confusing: none of
-> the examples in the man page that use --onto actually need it, and the
-> "upstream" argument probably should be described as a commit or something
-> instead of a branch.
+> Hello,
 >
-> (What is --onto actually useful for?)
+>> *AND* more than one pattern. (something I miss in normal grep)
+>
+> so do I.
 
-Think of it as a replacement of cherry-picking series of patches
-from remotely related branches.
+So do I.
 
-For example, I maintain two public branches "master" and
-"next", the former is supposed to be quite stable and the latter
-to contain sane proposed updates that need to be proven before
-graduating to "master".
+I am wondering if we would rather want to do something like
+expression `find` command let's you build.  In other words:
 
-Sometimes I get patches that I have to apply on top of "next"
-because of textual dependency, but the changes are worthwhile to
-have it in "master" earlier than the changes the other series
-depends on.
+	git grep --extended-expression '(' 'foo' -o 'bar' ')' -a 'frotz'
 
- o---o---o---o---o master
-      \
-       o---o---o---o---o next
-                        \
-                         o---o---o good
+might be what we would eventually want.  And I have this nagging
+suspicion that if we allow to say something like this
 
-	$ git checkout good
-        $ git rebase --onto master next
+	git grep --and -e a -e b
 
- o---o---o---o---o master
-     |            \
-     |             o---o---o good
-      \
-       o---o---o---o---o next
+right now, it would make it more cumbersome (read: backward
+compatibility wart) to support both styles later.
+
+I could be talked into
+
+	git grep -e a -a -e b
+
+but that would already be building that expression engine, so...
