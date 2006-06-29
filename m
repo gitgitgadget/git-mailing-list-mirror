@@ -1,80 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] autoconf: Use autoconf to write installation directories to config.mak
-Date: Thu, 29 Jun 2006 15:48:48 +0200
-Organization: At home
-Message-ID: <e80lnq$9mi$1@sea.gmane.org>
-References: <200606290301.51657.jnareb@gmail.com> <E1FvvuX-0002Lr-Nt@moooo.ath.cx>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
+Date: Thu, 29 Jun 2006 16:12:38 +0200
+Message-ID: <81b0412b0606290712h4960ee8et7ea219d4dd6428b4@mail.gmail.com>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
+	 <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20060627223249.GA8177@steel.home>
+	 <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.63.0606291519440.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 29 15:50:10 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>,
+	"Fredrik Kuivinen" <freku045@student.liu.se>,
+	"Linus Torvalds" <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Jun 29 16:12:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvwuH-0005Y4-KV
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 15:50:09 +0200
+	id 1FvxG7-0002G0-Iw
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 16:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750722AbWF2Ntc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 09:49:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbWF2Ntc
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 09:49:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:64406 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750722AbWF2Ntb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 09:49:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FvwtU-0005KV-0Z
-	for git@vger.kernel.org; Thu, 29 Jun 2006 15:49:20 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Jun 2006 15:49:20 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Jun 2006 15:49:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750747AbWF2OMl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 10:12:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbWF2OMk
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 10:12:40 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:65105 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750747AbWF2OMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 10:12:40 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so348661ugf
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 07:12:39 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TE+OD5QINkUmSPIvGQHmEedT18xFisBfPiO8ToceeU+ZQIUJa+C1vPhRG2zi7IfGaEWszHRRN8tdz8s7PYgLoOH0UL68dwr1R+2WLIufLsDFuZpCc1IT+blx1ezUxeBfOf3Nshu5Oql5nY9656hGhgG6mn2zwYlT4lX7LYrtirw=
+Received: by 10.78.159.7 with SMTP id h7mr964374hue;
+        Thu, 29 Jun 2006 07:12:38 -0700 (PDT)
+Received: by 10.78.37.7 with HTTP; Thu, 29 Jun 2006 07:12:38 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606291519440.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22865>
 
-Matthias Lederhofer wrote:
+On 6/29/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Aargh! Of course this is [PATCH 2/2]. BTW, no signoff, since the whole
+> merge-recursive is not mergeable yet (passes the tests, but we have a
+> small way to go).
 
->> This is beginning of patch series introducing installation configuration
->> using autoconf (and no other autotools) to git. The idea is to generate
->> config.mak using ./configure (generated from configure.ac) from
->> config.mak.in, so one can use autoconf as an _alternative_ to ordinary
->> Makefile, and creating one's own config.mak.
-> 
-> Are you sure this should be named config.mak? From INSTALL:
->> You can place local settings in config.mak and the Makefile
->> will include them.  Note that config.mak is not distributed;
->> the name is reserved for local settings.
-> 
-> So with another filename either include it
-> - before config.mak: the user may override ./configure options with
->   config.mak
-> - after config.mak: ./configure overrides config.mak
-
-The idea was to use ./configure to _generate_ config.mak, which the user can
-then edit.
-
-But perhaps using another filename for results of ./configure script 
-(and including it in main Makefile) would be better idea.
-
-> At least do not overwrite config.mak if it exists.
-
-But one might want to run ./configure with different options, to finally
-arrive at the set which is satisfactionary. So unless some magic to detect
-if config.mak was generated from ./configure script, or generated by user
-is used...
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+How did you get it to pass the tests? Maybe you still have git-merge-recursive
+as default merge strategy?
