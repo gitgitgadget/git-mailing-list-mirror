@@ -1,73 +1,70 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: rebasing trouble
-Date: Thu, 29 Jun 2006 17:57:25 -0400
-Message-ID: <20060629215725.GI14287@fieldses.org>
-References: <20060629194723.GD14287@fieldses.org>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: [RFC] Cache negative delta pairs
+Date: Thu, 29 Jun 2006 14:43:49 -0700
+Message-ID: <20060629214349.GA11640@ca-server1.us.oracle.com>
+References: <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain> <20060629180011.GA4392@coredump.intra.peff.net> <Pine.LNX.4.64.0606291410420.1213@localhost.localdomain> <20060629185335.GA6704@coredump.intra.peff.net> <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain> <20060629195201.GA10786@coredump.intra.peff.net> <Pine.LNX.4.64.0606291616480.1213@localhost.localdomain> <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org> <Pine.LNX.4.64.0606291723060.1213@localhost.localdomain> <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 29 23:58:47 2006
+Cc: Nicolas Pitre <nico@cam.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 00:05:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw4X5-00048b-Q7
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:58:44 +0200
+	id 1Fw4bs-00052h-Ms
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932963AbWF2V5v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 17:57:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932928AbWF2V5b
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:57:31 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:12728 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932903AbWF2V51
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 17:57:27 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Fw4Vp-0001AJ-Qj
-	for git@vger.kernel.org; Thu, 29 Jun 2006 17:57:25 -0400
-To: Git Mailing List <git@vger.kernel.org>
+	id S932859AbWF2WCu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 18:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932830AbWF2VoJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:44:09 -0400
+Received: from agminet01.oracle.com ([141.146.126.228]:12184 "EHLO
+	agminet01.oracle.com") by vger.kernel.org with ESMTP
+	id S932812AbWF2VoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 17:44:06 -0400
+Received: from rgmsgw02.us.oracle.com (rgmsgw02.us.oracle.com [138.1.186.52])
+	by agminet01.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k5TLhpq3010709;
+	Thu, 29 Jun 2006 16:43:51 -0500
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
+	by rgmsgw02.us.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id k5TLhorA021828
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 29 Jun 2006 15:43:50 -0600
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.62)
+	(envelope-from <joel.becker@oracle.com>)
+	id 1Fw4If-0000os-NV; Thu, 29 Jun 2006 14:43:49 -0700
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20060629194723.GD14287@fieldses.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.11
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22917>
 
-On Thu, Jun 29, 2006 at 03:47:23PM -0400, J. Bruce Fields wrote:
-> I must be missing something obvious:
-> 
-> bfields@puzzle:linux-2.6$ git checkout -b TMP nfs-client-stable^^^
-> bfields@puzzle:linux-2.6$ git-describe
-> v2.6.17-rc6-g28df955
-> bfields@puzzle:linux-2.6$ git-rebase --onto v2.6.17 origin
-> Nothing to do.
-> bfields@puzzle:linux-2.6$ git-describe
-> v2.6.17
-> 
-> So the git-rebase just reset TMP to v2.6.17.  But I know that nfs-client-stable
-> isn't a subset of origin, so this doesn't make sense to me.
+On Thu, Jun 29, 2006 at 02:30:11PM -0700, Linus Torvalds wrote:
+> However, that is obviously also the dis-advantage, since it means that 
+> repacking cannot improve packing. So adding a flag to say "please try to 
+> incrementally improve the pack" might well be worth it, even if this new 
+> behaviour would be the _default_.
 
-Oops, sorry, I lied; nfs-client-stable *is* a subset of origin, since Linus
-merged it.
+	I nominate "--pack-me-harder".
 
-But it *isn't* a subset of v2.6.17.
+Joel
 
-So the semantics of git-rebase just aren't quite what I expected.  It first
-removes anything that isn't in the given upstream branch, *then* rebases to the
-commit given after --onto.  Which may mean it throws out some stuff that is in
-the upstream branch even though it isn't yet included as of the given commit.
+-- 
 
-So what I really meant to do was just
+"Behind every successful man there's a lot of unsuccessful years."
+        - Bob Brown
 
-	git-rebase v2.6.17
-
-And rereading the man page, I see that git-rebase was working exactly as
-advertised.  So I'm an idiot.  In my defense, it is a little confusing: none of
-the examples in the man page that use --onto actually need it, and the
-"upstream" argument probably should be described as a commit or something
-instead of a branch.
-
-(What is --onto actually useful for?)
-
---b.
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
