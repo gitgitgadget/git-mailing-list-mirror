@@ -1,59 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 14:07:19 -0400
-Message-ID: <20060629180719.GB4392@coredump.intra.peff.net>
-References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net> <20060629035849.GA30749@coredump.intra.peff.net> <Pine.LNX.4.64.0606291154510.1213@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] git --trace: trace command execution
+Date: Thu, 29 Jun 2006 20:06:21 +0200
+Organization: At home
+Message-ID: <e814qm$sa$1@sea.gmane.org>
+References: <E1FuSIf-0004jK-Tp@moooo.ath.cx> <7v3bdtv4h3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 20:07:47 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 29 20:09:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw0vF-0005JY-DK
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 20:07:25 +0200
+	id 1Fw0wc-0005b2-Up
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 20:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751225AbWF2SHW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 14:07:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWF2SHW
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 14:07:22 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:50857 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1751228AbWF2SHV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 14:07:21 -0400
-Received: (qmail 2889 invoked from network); 29 Jun 2006 14:06:59 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 29 Jun 2006 14:06:59 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jun 2006 14:07:19 -0400
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606291154510.1213@localhost.localdomain>
+	id S1751228AbWF2SIr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 14:08:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWF2SIr
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 14:08:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:19096 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751228AbWF2SIq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 14:08:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fw0vI-0005Kc-LL
+	for git@vger.kernel.org; Thu, 29 Jun 2006 20:07:29 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 20:07:28 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 20:07:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22879>
 
-On Thu, Jun 29, 2006 at 12:39:31PM -0400, Nicolas Pitre wrote:
+Junio C Hamano wrote:
 
-> You do that lookup for every delta match attempt.  Instead it could be 
-> done once for the whole window attempt, potentially reducing the cache 
-> size by a factor of 20, and it might be faster too.
+> By the way "git cat-file -p" or "git verify-tag -v" might be
+> more pleasant to view a tag since they make the tagger timestamp
+> human readable.
 
-I'm not convinced this will provide good cache hit characteristics, and
-I'm not convinced it's semantically correct (see my other mail).
+Interesting, -p makes tagger timestamp human readable, but not author or
+commiter:
 
-> You could simply recreate the cache on each run.  Or just keep a bitmap 
+$ git cat-file -p `cat .git/refs/tags/v1.4.0`
+tagger Junio C Hamano <junkio@cox.net> Sat Jun 10 12:43:37 2006 -0700
 
-Yes, that would probably work and would be quite easy to do with the
-existing code.
+$ git cat-file -p `cat .git/refs/heads/origin`
+author Johannes Schindelin <Johannes.Schindelin@gmx.de> 1151491527 +0200
+committer Junio C Hamano <junkio@cox.net> 1151492136 -0700
 
-> First, I think it should be ignored (but still created) when 
-> --no-reuse-delta is passed.  Then, it should not be created (but still 
-> looked up if it exists and --no-reuse-delta is not provided) when the 
-> pack index file is also not created.  I don't think it is worth making 
-> this further configurable, and given the suggested strategy above the 
-> cache should remain fairly small.
+Is it intended, or a bug/missing feature (git 1.4.0)?
 
-Those suggestions make sense to me.
-
--Peff
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
