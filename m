@@ -1,69 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Fri, 30 Jun 2006 00:31:59 +0200
-Organization: At home
-Message-ID: <e81kcm$p3c$1@sea.gmane.org>
-References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: rebasing trouble
+Date: Thu, 29 Jun 2006 15:34:21 -0700
+Message-ID: <7vlkrfoaky.fsf@assigned-by-dhcp.cox.net>
+References: <20060629194723.GD14287@fieldses.org>
+	<20060629215725.GI14287@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jun 30 00:32:11 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 00:34:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw53R-0001Nd-5V
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:32:09 +0200
+	id 1Fw55e-0001mk-GS
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:34:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932420AbWF2WcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 18:32:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933065AbWF2WcC
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:32:02 -0400
-Received: from main.gmane.org ([80.91.229.2]:34012 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932420AbWF2WcA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 18:32:00 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fw53G-0001Ly-T9
-	for git@vger.kernel.org; Fri, 30 Jun 2006 00:31:58 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:31:58 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:31:58 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S933065AbWF2WeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 18:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933066AbWF2WeX
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:34:23 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:55490 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S933065AbWF2WeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 18:34:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629223421.JUGI12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 18:34:21 -0400
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20060629215725.GI14287@fieldses.org> (J. Bruce Fields's message
+	of "Thu, 29 Jun 2006 17:57:25 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22923>
 
-Junio C Hamano wrote:
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-> [...] For example, we currently do
-> not delta OpenOffice documents (*.odt, *.odp, etc) very well.
-> If one has a repository that tracks the history of "file.odp",
-> we know each revision of "file.odp" would not delta against any
-> other version anyway, and could skip attempting to deltify them.
+> In my defense, it is a little confusing: none of
+> the examples in the man page that use --onto actually need it, and the
+> "upstream" argument probably should be described as a commit or something
+> instead of a branch.
+>
+> (What is --onto actually useful for?)
 
-Perhaps we should steal Mercurial idea of EncodeDecodeFilter, and store
-OpenOffice documents, Mozilla extensions, Java packages in object store as
-uncompressed archive, and checkout them to working area in original format.
-All diff should be of course done on in-repository (after-filter) format.
+Think of it as a replacement of cherry-picking series of patches
+from remotely related branches.
 
-The original example at 
-  http://www.selenic.com/mercurial/wiki/index.cgi/EncodeDecodeFilter
-talks about archives (zip files) and unix2dos endline convention conversion.
+For example, I maintain two public branches "master" and
+"next", the former is supposed to be quite stable and the latter
+to contain sane proposed updates that need to be proven before
+graduating to "master".
 
-Perhaps for OpenOffice and Mozilla we would need to use [external] XML-aware
-diff, too...
+Sometimes I get patches that I have to apply on top of "next"
+because of textual dependency, but the changes are worthwhile to
+have it in "master" earlier than the changes the other series
+depends on.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+ o---o---o---o---o master
+      \
+       o---o---o---o---o next
+                        \
+                         o---o---o good
+
+	$ git checkout good
+        $ git rebase --onto master next
+
+ o---o---o---o---o master
+     |            \
+     |             o---o---o good
+      \
+       o---o---o---o---o next
