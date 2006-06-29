@@ -1,137 +1,144 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 12:39:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606291154510.1213@localhost.localdomain>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
- <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
- <20060629035849.GA30749@coredump.intra.peff.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Improved three-way blob merging code
+Date: Thu, 29 Jun 2006 10:45:20 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606291028010.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606282157210.12404@g5.osdl.org>
+ <81b0412b0606290043s15e19b9fl853627e815f009ff@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 18:39:52 2006
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Davide Libenzi <davidel@xmailserver.org>
+X-From: git-owner@vger.kernel.org Thu Jun 29 19:45:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvzYG-0006aL-8N
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 18:39:36 +0200
+	id 1Fw0a5-0001br-5k
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 19:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750898AbWF2Qjd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 12:39:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbWF2Qjd
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 12:39:33 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63596 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750894AbWF2Qjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 12:39:33 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J1M00AUHRLVGDH0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 29 Jun 2006 12:39:32 -0400 (EDT)
-In-reply-to: <20060629035849.GA30749@coredump.intra.peff.net>
-X-X-Sender: nico@localhost.localdomain
-To: Jeff King <peff@peff.net>
+	id S1751105AbWF2Rpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 13:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbWF2Rpa
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 13:45:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:11963 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751105AbWF2Rp3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 13:45:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5THjMnW008630
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 29 Jun 2006 10:45:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5THjK6s032582;
+	Thu, 29 Jun 2006 10:45:21 -0700
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0606290043s15e19b9fl853627e815f009ff@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22875>
 
-On Wed, 28 Jun 2006, Jeff King wrote:
 
-> >From repack to repack, we end up trying to delta many of the same object
-> pairs, which is computationally expensive.  This patch makes a
-> persistent cache, $GIT_DIR/delta-cache, which contains pairs of sha1
-> hashes (the presence of a pair indicates that it's not worth trying to
-> delta those two objects).
 
-I think this could be done differently to be even more space efficient 
-as I suggested earlier.
-
-> Here are some of my thoughts:
+On Thu, 29 Jun 2006, Alex Riesen wrote:
+>
+> On 6/29/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> > +static void *three_way_filemerge(mmfile_t *base, mmfile_t *our, mmfile_t
+> > *their, unsigned long *size)
+> > +{
+> ...
+> > +       if (t1 && t2 && t3) {
+> > +               int code = run_command("merge", t2, t1, t3, NULL);
 > 
->  - speed. The implementation is quite fast. The sha1 pairs are stored
->    sorted, and we mmap and binary search them. Certainly the extra time
->    spent in lookup is justified by avoiding the delta attempts.
+> This does not use the labels of merge(1) and the merged file will contain
+> the names of temporary files at conflict places, which is very confusing if
+> you happen to loose context while doing a merge with lots of conflicts.
 
-You do that lookup for every delta match attempt.  Instead it could be 
-done once for the whole window attempt, potentially reducing the cache 
-size by a factor of 20, and it might be faster too.
+Yes. 
 
->  - size. The cache is a packed sequence of binary sha1 pairs. I was
->    concerned that it would grow too large (obviously for n blobs you can
->    end up with n^2/2 entries), but it doesn't seem unreasonable for most
->    repos (either you don't have a lot of files, or if you do, they delta
->    reasonably well). My test repo's cache is only 144K. The git cache is
->    about 2.7M. The linux-2.6 cache is 22M.
+I was really really _really_ just hoping that I could do the nasty core 
+code that others might feel uncomfortable with, and get it working from a 
+_technical_ level well enough that others (hint hint) would decide that 
+they can fix up the details.
 
-See my previous email for comments about this.
+Getting the first version working is often the hardest. When you reach the 
+point of "it works, but I want to extend it to do X", you've usually 
+already gotten pretty far.
 
->    Theoretically, I could bound the cache size and boot old entries.
->    However, that means storing age information, which increases the
->    required size. I think keeping it simple is best.
+Anyway, all of this was really just preparatory work to show what 
+git-merge-tree does. A few more improvements to git-merge-tree, and 
+hopefully it can start being useful - perhaps not initially for actually 
+merging, but for doing a tree-level three-way diff between two branches.
 
-You could simply recreate the cache on each run.  Or just keep a bitmap 
-of referenced cache entries, and a list of new entries.  At the end if 
-the new entry list is empty and the bitmap is all set (or clear) then 
-you just keep the current cache.  ONce, say, more than 10% of cache 
-entries are not used anymore then you regenerate the cache.  But since 
-you need to regenerate it when new entries are added then the 10% unused 
-entry criteria might not be used that often anyway, unless packs shrink 
-with time which might not be the case really often.
+In other words, my current goal is really do make it possible to get good 
+diffs out of git from two branches that aren't directly related. You and 
+Dscho seem to be doing well on the git-merge-recursive front, so my 
+personal goal is actually to be able to get a saner diff than what
 
->  - correctness. Currently the code uses the output of try_delta for
->    negative caching. Should the cache checking be moved inside try_delta
->    instead? This would give more control over which reasons to mark a
->    delta negative (I believe right now hitting the depth limit will
->    cause a negative mark; we should perhaps only do so if the content
->    itself makes the delta unpalatable).
+	git diff mine..theirs
 
-Like I said earlier I think this should be moved up a bit i.e. outside 
-the delta loop.  In find_deltas() right before the ...
+gives you.
 
-		j = window;
-		while (--j > 0) {
+The above "git diff" is a perfectly fine thing to do, but it's usually not 
+what you actually _want_. Almost always, what you want a diff between two 
+branches, what you want is actually the diff after a merge of the 
+branches, not the raw _current_ differences.
 
-loop, just insert another loop that compute the sha1 of the current 
-target object and window:
+For example, look at our current 
 
-		SHA1_Init(&c);
-		j = window;
-		while (j-- > 0) { /* postdec include the current object as well */
-			unsigned int other_idx = idx + j;
-			struct unpacked *m;
-			if (other_idx >= window)
-				other_idx -= window;
-			m = array + other_idx;
-			if (!m->entry)
-				break;
-			SHA1_Update(&c, m->entry.sha1, 20);
-		}
-		SHA1_Final(negative_delta_hash, &c);			
+	Documentation/howto/using-topic-branches.txt
 
-Then you can skip over the whole of the delta loop right away if that 
-negative_delta_hash matches one entry in the cache since you already 
-know that this object with this window doesn't produce any delta result.
+file, and realize that the current scripts it suggests are actually 
+broken:
 
-Otherwise, after the delta loop has proceeded, if there is no delta 
-found then you can add negative_delta_hash to the cache.
+	To create diffstat and shortlog summaries of changes to include in 
+	a "pleasepull" request to Linus you can use:
 
->  - optionalness. Currently the delta-cache is always used. Since it is a
->    space-time tradeoff, maybe it should be optional (it will have
->    negligible performance and horrible size impact on a repo that
->    consists of many very small but unrelated objects).  Possible methods
->    include:
->      - enable cache saves only if .git/delta-cache is present; turn it
->        on initially with 'touch .git/delta-cache'
->      - config variable
+	 $ git-whatchanged -p release ^linus | diffstat -p1
+	and
+	 $ git-whatchanged release ^linus | git-shortlog
 
-First, I think it should be ignored (but still created) when 
---no-reuse-delta is passed.  Then, it should not be created (but still 
-looked up if it exists and --no-reuse-delta is not provided) when the 
-pack index file is also not created.  I don't think it is worth making 
-this further configurable, and given the suggested strategy above the 
-cache should remain fairly small.
+where that "git-whatchanged -p release ^linus | diffstat -p1" won't 
+actually be what I see when I merge (although it will hopefully be close 
+enough). Also, there's no indication that the merge will fail when I pull, 
+something that _would_ be very useful.
 
+IOW, what I'd like git-merge-tree to do is to be able to at a minimum say:
 
-Nicolas
+ - will a merge succeed cleanly, and if not, show me where the problem 
+   spots are.
+ - what will the result of the merge look like.
+
+because that's actually what a downstream developer wants to do. He'd just 
+do
+
+	git fetch linus
+	git show-changes linus..my-branch
+
+which would basically be the preparatory thing for sending me an email 
+saying "please merge 'my-branch', and you'll see this".
+
+Now, obviously, I think that there's a _lot_ of overlap between doing this 
+and actually doing the merge itself, so hopefully the things I do will at 
+least have some things in common and perhaps help you do the proper 
+recursive merger.
+
+But one thing I was actually hoping to do was to literally be able to do 
+this without either tree being checked out, exactly so that you can check 
+the status of a branch that you may not even _be_ on (eg that "my-branch" 
+in the example above may not even be your current HEAD: you might be on 
+your development branch when you actually ask me to pull from your stable 
+branch).
+
+So the "show differences" has a lot in common with "merge them", but there 
+are literally a few stages missing. One thing missing in just showing 
+differences is that you can't actually fix up the merge clashes: if you 
+don't have a checked-out tree, you're not going to be able to do a real 
+merge. But you can see what a merge would _look_ like, and whether there 
+are any clashes that you will have to fix..
+
+		Linus
