@@ -1,71 +1,48 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-grep: --and to combine patterns with and instead of or
-Date: Thu, 29 Jun 2006 15:44:34 -0700
-Message-ID: <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
-References: <E1FuWh7-0008Ry-HX@moooo.ath.cx>
-	<20060625184757.f8273820.tihirvon@gmail.com>
-	<E1FuX8l-0001H5-2z@moooo.ath.cx>
-	<Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<E1FueYh-0004XE-Fg@moooo.ath.cx>
-	<20060629222009.GA9310@cip.informatik.uni-erlangen.de>
+Subject: Re: [PATCH 2/2] Rename man1 and man7 variables to man1dir and man7dir
+Date: Thu, 29 Jun 2006 15:45:30 -0700
+Message-ID: <7vac7voa2d.fsf@assigned-by-dhcp.cox.net>
+References: <200606292211.28352.jnareb@gmail.com>
+	<200606292213.00726.jnareb@gmail.com>
+	<7v1wt7ra1h.fsf@assigned-by-dhcp.cox.net> <e81gim$cf7$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jun 30 00:44:51 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 00:45:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw5FY-0003di-Mp
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:44:41 +0200
+	id 1Fw5GT-0003oo-04
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933068AbWF2Woh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 18:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933069AbWF2Woh
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:44:37 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:50141 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932779AbWF2Wof (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 18:44:35 -0400
+	id S933071AbWF2Wpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 18:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933072AbWF2Wpd
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:45:33 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:41419 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S933071AbWF2Wpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 18:45:32 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060629224435.PCFW27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Jun 2006 18:44:35 -0400
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20060629222009.GA9310@cip.informatik.uni-erlangen.de> (Thomas
-	Glanzmann's message of "Fri, 30 Jun 2006 00:20:09 +0200")
+          id <20060629224531.KHXO12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 18:45:31 -0400
+To: jnareb@gmail.com
+In-Reply-To: <e81gim$cf7$1@sea.gmane.org> (Jakub Narebski's message of "Thu,
+	29 Jun 2006 23:26:54 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22925>
 
-Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Hello,
+> This is corrected patch. I think I catched all occurences, but I cannot
+> do 'make dist-doc' because I haven't got asciidoc installed.
 >
->> *AND* more than one pattern. (something I miss in normal grep)
->
-> so do I.
+> Could some kind soul check changes introduced by this patch, please?
 
-So do I.
-
-I am wondering if we would rather want to do something like
-expression `find` command let's you build.  In other words:
-
-	git grep --extended-expression '(' 'foo' -o 'bar' ')' -a 'frotz'
-
-might be what we would eventually want.  And I have this nagging
-suspicion that if we allow to say something like this
-
-	git grep --and -e a -e b
-
-right now, it would make it more cumbersome (read: backward
-compatibility wart) to support both styles later.
-
-I could be talked into
-
-	git grep -e a -a -e b
-
-but that would already be building that expression engine, so...
+Thanks.  Will do.
