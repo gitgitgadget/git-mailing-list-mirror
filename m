@@ -1,70 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 14:54:54 -0700
-Message-ID: <7v1wt7pqz5.fsf@assigned-by-dhcp.cox.net>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
-	<7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
-	<20060629180011.GA4392@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291410420.1213@localhost.localdomain>
-	<20060629185335.GA6704@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
-	<20060629195201.GA10786@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291616480.1213@localhost.localdomain>
-	<Pine.LNX.4.64.0606291352110.12404@g5.osdl.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: rebasing trouble
+Date: Thu, 29 Jun 2006 17:57:25 -0400
+Message-ID: <20060629215725.GI14287@fieldses.org>
+References: <20060629194723.GD14287@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 23:56:53 2006
+X-From: git-owner@vger.kernel.org Thu Jun 29 23:58:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw4Uy-0003dq-Em
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:56:33 +0200
+	id 1Fw4X5-00048b-Q7
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:58:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932899AbWF2V4A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 17:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932972AbWF2VzJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:55:09 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:42695 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932968AbWF2Vy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 17:54:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060629215455.CZFU12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Jun 2006 17:54:55 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 29 Jun 2006 14:04:01 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932963AbWF2V5v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 17:57:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932928AbWF2V5b
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:57:31 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:12728 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932903AbWF2V51
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 17:57:27 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Fw4Vp-0001AJ-Qj
+	for git@vger.kernel.org; Thu, 29 Jun 2006 17:57:25 -0400
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20060629194723.GD14287@fieldses.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22916>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Thu, Jun 29, 2006 at 03:47:23PM -0400, J. Bruce Fields wrote:
+> I must be missing something obvious:
+> 
+> bfields@puzzle:linux-2.6$ git checkout -b TMP nfs-client-stable^^^
+> bfields@puzzle:linux-2.6$ git-describe
+> v2.6.17-rc6-g28df955
+> bfields@puzzle:linux-2.6$ git-rebase --onto v2.6.17 origin
+> Nothing to do.
+> bfields@puzzle:linux-2.6$ git-describe
+> v2.6.17
+> 
+> So the git-rebase just reset TMP to v2.6.17.  But I know that nfs-client-stable
+> isn't a subset of origin, so this doesn't make sense to me.
 
-> Instead of having a separate cache, wouldn't it be much better to just 
-> take the hint from the previous pack-file?
->
-> In the repacking window, if both objects we are looking at already came 
-> from the same (old) pack-file, don't bother delta'ing them against each 
-> other. 
->
-> That means that we'll still always check for better deltas for (and 
-> against!) _unpacked_ objects, but assuming incremental repacks, you'll 
-> avoid the delta creation 99% of the time.
+Oops, sorry, I lied; nfs-client-stable *is* a subset of origin, since Linus
+merged it.
 
-I bow down before you.
+But it *isn't* a subset of v2.6.17.
 
-No ugly special-case caching, just automatically "the right
-thing", with very little overhead.
+So the semantics of git-rebase just aren't quite what I expected.  It first
+removes anything that isn't in the given upstream branch, *then* rebases to the
+commit given after --onto.  Which may mean it throws out some stuff that is in
+the upstream branch even though it isn't yet included as of the given commit.
 
-It just makes sense.
+So what I really meant to do was just
 
-We have a winner.
+	git-rebase v2.6.17
 
-;-)
+And rereading the man page, I see that git-rebase was working exactly as
+advertised.  So I'm an idiot.  In my defense, it is a little confusing: none of
+the examples in the man page that use --onto actually need it, and the
+"upstream" argument probably should be described as a commit or something
+instead of a branch.
+
+(What is --onto actually useful for?)
+
+--b.
