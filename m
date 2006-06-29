@@ -1,66 +1,117 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 00:09:59 -0400
-Message-ID: <20060629040959.GA32156@coredump.intra.peff.net>
-References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 29 Jun 2006 00:30:53 -0400
+Message-ID: <20060629043053.GA32630@coredump.intra.peff.net>
+References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net> <20060629035849.GA30749@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 06:10:12 2006
+X-From: git-owner@vger.kernel.org Thu Jun 29 06:31:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fvnqy-00013Y-Ti
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 06:10:09 +0200
+	id 1FvoBM-0003ID-Fh
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 06:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716AbWF2EKE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 00:10:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbWF2EKE
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 00:10:04 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:59370 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1751716AbWF2EKB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 00:10:01 -0400
-Received: (qmail 8652 invoked from network); 29 Jun 2006 00:09:39 -0400
+	id S932181AbWF2Ea4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 00:30:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932190AbWF2Ea4
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 00:30:56 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:22658 "HELO
+	peff.net") by vger.kernel.org with SMTP id S932181AbWF2Eaz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 00:30:55 -0400
+Received: (qmail 9400 invoked from network); 29 Jun 2006 00:30:33 -0400
 Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 29 Jun 2006 00:09:39 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jun 2006 00:09:59 -0400
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 29 Jun 2006 00:30:33 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jun 2006 00:30:53 -0400
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20060629035849.GA30749@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22838>
 
-On Wed, Jun 28, 2006 at 08:09:43PM -0700, Junio C Hamano wrote:
+On Wed, Jun 28, 2006 at 11:58:49PM -0400, Jeff King wrote:
 
-> that hit your the negative cache are?  That is, in find_deltas()
-> function, we have "while (--j > 0)" loop that attempts to delta
-> with the entry that is j (modulo window size) entries away from
-> the current one, then j-1, j-2, ...; I am interested in the
-> distribution of "j" value for the pair "n,m" that hits your
-> negative cache for normal repositories, and I am speculating
-> that the value would probably be small relative to the delta
-> window size.
+>    about 2.7M. The linux-2.6 cache is 22M.
+>    [...]
+>  - correctness. Currently the code uses the output of try_delta for
+>    negative caching. Should the cache checking be moved inside try_delta
+>    instead? This would give more control over which reasons to mark a
 
-Just to make sure I am understanding you correctly, you're interested in
-the distribution of 'j' each time we skip a delta for being negative
-(or each time we mark a negative, but that should simply equal the
-lookup times for the next run). The instrumentation I added simply
-prints the value of j each time we skip a delta. The counts are
-surprisingly uniform (this is for linux-2.6):
-  57209 j=1
-  57213 j=2
-  57217 j=3
-  57221 j=4
-  57225 j=5
-  57229 j=6
-  57233 j=7
-  57237 j=8
-  57241 j=9
-  57245 j=10
-They're so uniform (and in order by j!) that I feel like I must have done
-something wrong...
+I tried moving the cache check/mark to wrap the call to create_delta in
+try_delta. The speedup is the same (since all of the CPU time is spent
+in create_delta anyway), and the linux-2.6 cache size dropped to 18M.
+I also think this is probably more correct (it ignores every reason not
+to delta EXCEPT create_delta failing).
+
+The distribution of the window parameter 'j' is similarly uniform:
+  44900 j=2
+  44907 j=3
+  44943 j=1
+  45001 j=4
+  45014 j=5
+  45023 j=6
+  45063 j=7
+  45158 j=8
+  45288 j=9
+  45466 j=10
+
+Patch on top of my other one is below.
 
 -Peff
+
+-- >8 --
+pack-objects: move delta-cache check/mark closer to create_delta
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ pack-objects.c |   15 ++++++---------
+ 1 files changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/pack-objects.c b/pack-objects.c
+index 46b9775..83ccc8a 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -1014,9 +1014,13 @@ static int try_delta(struct unpacked *tr
+ 	if (sizediff >= max_size)
+ 		return 0;
+ 
++	if (delta_cache_check(src->entry->sha1, trg->entry->sha1))
++		return 0;
+ 	delta_buf = create_delta(src_index, trg->data, size, &delta_size, max_size);
+-	if (!delta_buf)
++	if (!delta_buf) {
++		delta_cache_mark(src->entry->sha1, trg->entry->sha1);
+ 		return 0;
++	}
+ 
+ 	trg_entry->delta = src_entry;
+ 	trg_entry->delta_size = delta_size;
+@@ -1084,21 +1088,14 @@ static void find_deltas(struct object_en
+ 		j = window;
+ 		while (--j > 0) {
+ 			unsigned int other_idx = idx + j;
+-			int r;
+ 			struct unpacked *m;
+ 			if (other_idx >= window)
+ 				other_idx -= window;
+ 			m = array + other_idx;
+ 			if (!m->entry)
+ 				break;
+-			if (delta_cache_check(n->entry->sha1, m->entry->sha1))
+-				continue;
+-			r = try_delta(n, m, m->index, depth);
+-			if (r < 0)
++			if (try_delta(n, m, m->index, depth) < 0)
+ 				break;
+-			if (r == 0)
+-				delta_cache_mark(n->entry->sha1,
+-						 m->entry->sha1);
+ 		}
+ 		/* if we made n a delta, and if n is already at max
+ 		 * depth, leaving it in the window is pointless.  we
+-- 
+1.4.1.rc1.g0458-dirty
