@@ -1,97 +1,138 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 14:26:37 -0700
-Message-ID: <7vbqsbpsaa.fsf@assigned-by-dhcp.cox.net>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
-	<7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
-	<20060629180011.GA4392@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291410420.1213@localhost.localdomain>
-	<20060629185335.GA6704@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
-	<20060629195201.GA10786@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291616480.1213@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 2/2] Rename man1 and man7 variables to man1dir and man7dir
+Date: Thu, 29 Jun 2006 23:26:54 +0200
+Organization: At home
+Message-ID: <e81gim$cf7$1@sea.gmane.org>
+References: <200606292211.28352.jnareb@gmail.com> <200606292213.00726.jnareb@gmail.com> <7v1wt7ra1h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 29 23:26:52 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jun 29 23:27:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw426-0006rI-P8
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:26:43 +0200
+	id 1Fw42d-0006xy-Ey
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932717AbWF2V0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 17:26:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932716AbWF2V0k
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:26:40 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:25739 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932717AbWF2V0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 17:26:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060629212638.YTID16011.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Jun 2006 17:26:38 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0606291616480.1213@localhost.localdomain> (Nicolas
-	Pitre's message of "Thu, 29 Jun 2006 16:24:01 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932718AbWF2V1M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 17:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932695AbWF2V1M
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:27:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:29133 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932718AbWF2V1L (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 17:27:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fw42R-0006vs-Mi
+	for git@vger.kernel.org; Thu, 29 Jun 2006 23:27:03 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 23:27:03 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 23:27:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22908>
 
-Nicolas Pitre <nico@cam.org> writes:
+This patch renames man1 and man7 variables to man1dir and man7dir,
+according to "Makefile Conventions: Variables for Installation
+Directories" in make.info of GNU Make.
 
-> The negative delta cache concept is certainly attractive even for normal 
-> repositories, especially for public servers, since when used in 
-> conjonction with delta reuse it makes the creation of a pack basically 
-> free.  So I think this idea really has merits, as long as the cache 
-> remains small.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
 
-Yes, I agree it is very attractive.
+Junio C Hamano wrote:
 
-One thing to watch out for is that we probably would not want to
-let git-daemon write into public repositories.  Which means that
-use of negative cache should be strict "opt-in".
+> Doesn't this break "make dist-doc" by _REMOVING_ make variables
+> man1 and man7, which I mentioned earlier?
 
- - "$GIT_DIR/delta-cache" is read but not necessarily is written
-   back when it exists; git-daemon uses it that way.
+This is corrected patch. I think I catched all occurences, but I cannot
+do 'make dist-doc' because I haven't got asciidoc installed.
 
- - The owner of the repository shouldn't have to tell the tool
-   to update the negative cache every time repack happens.
+Could some kind soul check changes introduced by this patch, please?
 
-Which suggests that pack-objects.c can learn an option that
-tells it to call delta_cache_save(), and we use it in
-git-repack, perhaps like this:
 
-diff --git a/git-repack.sh b/git-repack.sh
-index 640ad8d..b07ed9b 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -44,7 +44,7 @@ case ",$all_into_one," in
- esac
- pack_objects="$pack_objects $local $quiet $no_reuse_delta$extra"
- name=$(git-rev-list --objects --all $rev_list 2>&1 |
--	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
-+	git-pack-objects --update-delta-cache --non-empty $pack_objects .tmp-pack) ||
- 	exit 1
- if [ -z "$name" ]; then
- 	echo Nothing new to pack.
+P.S. This patch is sent from newsreader, not mail program. I hope
+it doesn't mangle whitespaces in patch.
+
+ Documentation/Makefile   |   10 +++++-----
+ Makefile                 |    4 ++--
+ contrib/git-svn/Makefile |    4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index ca6b77d..cc83610 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -27,8 +27,8 @@ DOC_MAN7=$(patsubst %.txt,%.7,$(MAN7_TXT
+ prefix?=$(HOME)
+ bindir?=$(prefix)/bin
+ mandir?=$(prefix)/man
+-man1=$(mandir)/man1
+-man7=$(mandir)/man7
++man1dir=$(mandir)/man1
++man7dir=$(mandir)/man7
+ # DESTDIR=
  
-diff --git a/pack-objects.c b/pack-objects.c
-index bed2497..46b9775 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-...
-@@ -1342,5 +1350,7 @@ int main(int argc, char **argv)
- 	if (progress)
- 		fprintf(stderr, "Total %d, written %d (delta %d), reused %d (delta %d)\n",
- 			nr_result, written, written_delta, reused, reused_delta);
-+	if (update_delta_cache)
-+		delta_cache_save();
- 	return 0;
- }
+ INSTALL?=install
+@@ -52,9 +52,9 @@ man1: $(DOC_MAN1)
+ man7: $(DOC_MAN7)
+ 
+ install: man
+-       $(INSTALL) -d -m755 $(DESTDIR)$(man1) $(DESTDIR)$(man7)
+-       $(INSTALL) $(DOC_MAN1) $(DESTDIR)$(man1)
+-       $(INSTALL) $(DOC_MAN7) $(DESTDIR)$(man7)
++       $(INSTALL) -d -m755 $(DESTDIR)$(man1dir) $(DESTDIR)$(man7dir)
++       $(INSTALL) $(DOC_MAN1) $(DESTDIR)$(man1dir)
++       $(INSTALL) $(DOC_MAN7) $(DESTDIR)$(man7dir)
+ 
+ 
+ #
+diff --git a/Makefile b/Makefile
+index b8fe669..ccd7c62 100644
+--- a/Makefile
++++ b/Makefile
+@@ -714,8 +714,8 @@ dist-doc:
+        rm -fr .doc-tmp-dir
+        mkdir .doc-tmp-dir .doc-tmp-dir/man1 .doc-tmp-dir/man7
+        $(MAKE) -C Documentation DESTDIR=./ \
+-               man1=../.doc-tmp-dir/man1 \
+-               man7=../.doc-tmp-dir/man7 \
++               man1dir=../.doc-tmp-dir/man1 \
++               man7dir=../.doc-tmp-dir/man7 \
+                install
+        cd .doc-tmp-dir && $(TAR) cf ../$(manpages).tar .
+        gzip -n -9 -f $(manpages).tar
+diff --git a/contrib/git-svn/Makefile b/contrib/git-svn/Makefile
+index 1a6585e..8cac688 100644
+--- a/contrib/git-svn/Makefile
++++ b/contrib/git-svn/Makefile
+@@ -3,7 +3,7 @@ all: git-svn
+ prefix?=$(HOME)
+ bindir?=$(prefix)/bin
+ mandir?=$(prefix)/man
+-man1=$(mandir)/man1
++man1dir=$(mandir)/man1
+ INSTALL?=install
+ doc_conf=../../Documentation/asciidoc.conf
+ -include ../../config.mak
+@@ -17,7 +17,7 @@ install: all
+        $(INSTALL) git-svn $(DESTDIR)$(bindir)
+ 
+ install-doc: doc
+-       $(INSTALL) git-svn.1 $(DESTDIR)$(man1)
++       $(INSTALL) git-svn.1 $(DESTDIR)$(man1dir)
+ 
+ doc: git-svn.1
+ git-svn.1 : git-svn.xml
+-- 
+1.4.0
