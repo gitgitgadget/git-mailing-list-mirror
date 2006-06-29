@@ -1,71 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
-Date: Thu, 29 Jun 2006 21:06:56 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606292050380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
- <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060627223249.GA8177@steel.home> <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com>
- <Pine.LNX.4.63.0606291814200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vmzbvrela.fsf@assigned-by-dhcp.cox.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: rebasing trouble
+Date: Thu, 29 Jun 2006 15:47:23 -0400
+Message-ID: <20060629194723.GD14287@fieldses.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 21:08:01 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jun 29 21:47:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw1r3-00079K-C3
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 21:07:09 +0200
+	id 1Fw2U4-0005TY-FT
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 21:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbWF2THF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 15:07:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbWF2THE
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 15:07:04 -0400
-Received: from mail.gmx.de ([213.165.64.21]:61146 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932250AbWF2THB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 15:07:01 -0400
-Received: (qmail invoked by alias); 29 Jun 2006 19:06:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp043) with SMTP; 29 Jun 2006 21:06:57 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzbvrela.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932350AbWF2TrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 15:47:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932352AbWF2TrZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 15:47:25 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:63972 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932350AbWF2TrY
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 15:47:24 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Fw2Tz-0007Sv-PG
+	for git@vger.kernel.org; Thu, 29 Jun 2006 15:47:23 -0400
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22894>
 
-Hi Linus, Hi Junio
+I must be missing something obvious:
 
-[this is a response to both of your responses; mail threads cannot yet be 
-merged a la git ;-)]
+bfields@puzzle:linux-2.6$ git checkout -b TMP nfs-client-stable^^^
+bfields@puzzle:linux-2.6$ git-describe
+v2.6.17-rc6-g28df955
+bfields@puzzle:linux-2.6$ git-rebase --onto v2.6.17 origin
+Nothing to do.
+bfields@puzzle:linux-2.6$ git-describe
+v2.6.17
 
-On Thu, 29 Jun 2006, Junio C Hamano wrote:
+So the git-rebase just reset TMP to v2.6.17.  But I know that nfs-client-stable
+isn't a subset of origin, so this doesn't make sense to me.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > My point being: it makes no sense to split off get_merge_bases() if nobody 
-> > uses it except for git-merge-base.
-> 
-> I do not think that is a good reasoning.  If something is
-> reusable (or you made it reusable) and you are planning to reuse
-> it later, splitting it out without changing anything else to
-> make sure the split is correct is a seemingly small but a very
-> important step.
+The tree in question is actually at git://linux-nfs.org/~bfields/linux.git, if
+it matters.
 
-Okay. Convinced.
-
-I tested my patch again, and like Alex said, a test fails. But I tested on 
-top of Alex's latest merge-recursive patch, which has that nasty 
-update-index bug, and that is the reason for the test to fail.
-
-So, a few tests later, I am pretty sure that my patches do not break 
-git-merge-base. I'll prepare another patch series which builds-in 
-merge-base.
-
-Ciao,
-Dscho
+--b.
