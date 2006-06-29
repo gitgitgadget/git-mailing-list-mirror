@@ -1,76 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 15:52:01 -0400
-Message-ID: <20060629195201.GA10786@coredump.intra.peff.net>
-References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain> <20060629180011.GA4392@coredump.intra.peff.net> <Pine.LNX.4.64.0606291410420.1213@localhost.localdomain> <20060629185335.GA6704@coredump.intra.peff.net> <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: rebasing trouble
+Date: Thu, 29 Jun 2006 13:04:25 -0700
+Message-ID: <7vd5crranq.fsf@assigned-by-dhcp.cox.net>
+References: <20060629194723.GD14287@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 21:52:27 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 29 22:05:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw2Yc-0006H0-Qo
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 21:52:11 +0200
+	id 1Fw2ka-0008Re-SP
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 22:04:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932355AbWF2TwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 15:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932357AbWF2TwF
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 15:52:05 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:27794 "HELO
-	peff.net") by vger.kernel.org with SMTP id S932355AbWF2TwD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 15:52:03 -0400
-Received: (qmail 6867 invoked from network); 29 Jun 2006 15:51:41 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 29 Jun 2006 15:51:41 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jun 2006 15:52:01 -0400
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
+	id S932354AbWF2UE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 16:04:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932380AbWF2UE3
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 16:04:29 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:57073 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932354AbWF2UE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 16:04:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629200426.JWOU8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 16:04:26 -0400
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20060629194723.GD14287@fieldses.org> (J. Bruce Fields's message
+	of "Thu, 29 Jun 2006 15:47:23 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22896>
 
-On Thu, Jun 29, 2006 at 03:04:15PM -0400, Nicolas Pitre wrote:
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-> Right.  Your use pattern is a special case that doesn't work well with 
-> the whole window hash approach.  I'd expect it to work beautifully with 
-> the kernel repository though.
+> I must be missing something obvious:
+>
+> bfields@puzzle:linux-2.6$ git checkout -b TMP nfs-client-stable^^^
+> bfields@puzzle:linux-2.6$ git-describe
+> v2.6.17-rc6-g28df955
+> bfields@puzzle:linux-2.6$ git-rebase --onto v2.6.17 origin
+> Nothing to do.
+> bfields@puzzle:linux-2.6$ git-describe
+> v2.6.17
+>
+> So the git-rebase just reset TMP to v2.6.17.  But I know that nfs-client-stable
+> isn't a subset of origin, so this doesn't make sense to me.
+>
+> The tree in question is actually at git://linux-nfs.org/~bfields/linux.git, if
+> it matters.
 
-I don't necessarily care about the kernel repository. It packs fine as
-it is, and you only waste 30 seconds on a repack checking deltas that
-could be avoided. I do care on my special repository where packing is
-virtually unusable and I can achieve a 45x speedup. Maybe my original
-caching is not worth it for the kernel and should be configurable,
-but obviously this window caching cannot REPLACE mine since it fails
-utterly for the one thing I wanted it for.
-
-That being said, I'm not sure that window caching is all that great for
-"normal" repos.
-
-Same test as before, but instead of simulating the commits, I merely
-looked at the window hashes produced by 
-  git-rev-list --objects master~$x
-
-For the git repo:
-x=0 tries 6698 windows
-x=0 and x=50 contain 5197 identical windows
-x=0 and x=100 contain 2484 identical windows
-x=0 and x=500 contain 455 identical windows
-
-For linux-2.6 repo:
-x=0 tries 57208 windows
-x=0 and x=50 contain 53677 identical windows
-x=0 and x=100 contain 52886 identical windows
-x=0 and x=500 contain 41196 identical windows
-
-Obviously the kernel repo is doing better, but x=500 is only 4 days ago.
-Trying with --before=2.weeks.ago yields only 31505 matches.
-
-So the windows do clearly experience a fair bit of churn, but whether or
-not this is worth it depends on how long you think is reasonable before
-something gets "churned out" .
-
--Peff
+It matters of course.  Where is the "origin"?
+ 
