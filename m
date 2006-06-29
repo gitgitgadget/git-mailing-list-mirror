@@ -1,74 +1,104 @@
 From: fork0@t-online.de (Alex Riesen)
-Subject: Re: Improved three-way blob merging code
-Date: Fri, 30 Jun 2006 01:07:22 +0200
-Message-ID: <20060629230722.GA7216@steel.home>
-References: <Pine.LNX.4.64.0606282157210.12404@g5.osdl.org> <81b0412b0606290043s15e19b9fl853627e815f009ff@mail.gmail.com> <Pine.LNX.4.64.0606291028010.12404@g5.osdl.org>
+Subject: Re: CFT: merge-recursive in C (updated)
+Date: Fri, 30 Jun 2006 01:28:36 +0200
+Message-ID: <20060629232836.GB7216@steel.home>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com> <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060627223249.GA8177@steel.home> <81b0412b0606280234x7d07fbbck7887b5214d98bf91@mail.gmail.com> <20060629002547.GA27507@steel.home> <7vzmfwy97w.fsf@assigned-by-dhcp.cox.net> <81b0412b0606290143g5a3a0f5atbda3f4250411e92e@mail.gmail.com> <Pine.LNX.4.63.0606291945200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Fri Jun 30 01:08:32 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Fredrik Kuivinen <freku045@student.liu.se>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Jun 30 01:29:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw5cd-0007Qd-MN
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 01:08:32 +0200
+	id 1Fw5wY-0001wA-JH
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 01:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933088AbWF2XIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 19:08:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933087AbWF2XIT
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 19:08:19 -0400
-Received: from mailout01.sul.t-online.com ([194.25.134.80]:61889 "EHLO
-	mailout01.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S933089AbWF2XIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 19:08:18 -0400
-Received: from fwd28.aul.t-online.de 
-	by mailout01.sul.t-online.com with smtp 
-	id 1Fw5bZ-0004ss-00; Fri, 30 Jun 2006 01:07:25 +0200
-Received: from tigra.home (rSULAGZdgejm3+yS6XyZ0MYOr1i188J1Rx1vnqLM+ZOc53mU3h1qYo@[84.160.88.232]) by fwd28.sul.t-online.de
-	with esmtp id 1Fw5bX-2DlVA00; Fri, 30 Jun 2006 01:07:23 +0200
+	id S933095AbWF2X26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 19:28:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933099AbWF2X26
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 19:28:58 -0400
+Received: from mailout10.sul.t-online.com ([194.25.134.21]:7119 "EHLO
+	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S933098AbWF2X25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 19:28:57 -0400
+Received: from fwd26.aul.t-online.de 
+	by mailout10.sul.t-online.com with smtp 
+	id 1Fw5wH-0005EQ-00; Fri, 30 Jun 2006 01:28:49 +0200
+Received: from tigra.home (Ee0FZ4ZvreayHGmRJu8pUx+Q0QCRk0BE9zPlViKwFzu3heU-4Zs6Eh@[84.160.88.232]) by fwd26.sul.t-online.de
+	with esmtp id 1Fw5w5-0px8ts0; Fri, 30 Jun 2006 01:28:37 +0200
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 3A1E0277B5;
-	Fri, 30 Jun 2006 01:07:23 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id 636A6277B5;
+	Fri, 30 Jun 2006 01:28:36 +0200 (CEST)
 Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1Fw5bW-00034y-SQ; Fri, 30 Jun 2006 01:07:22 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+	id 1Fw5w4-0004yL-9I; Fri, 30 Jun 2006 01:28:36 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0606291028010.12404@g5.osdl.org>
+In-Reply-To: <Pine.LNX.4.63.0606291945200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 User-Agent: Mutt/1.5.6i
-X-ID: rSULAGZdgejm3+yS6XyZ0MYOr1i188J1Rx1vnqLM+ZOc53mU3h1qYo
-X-TOI-MSGID: 107b6925-861f-4c27-8dcd-f70e96886c4f
+X-ID: Ee0FZ4ZvreayHGmRJu8pUx+Q0QCRk0BE9zPlViKwFzu3heU-4Zs6Eh
+X-TOI-MSGID: 991e5aef-b38f-4438-b92e-2fdab2558e04
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22927>
 
-Linus Torvalds, Thu, Jun 29, 2006 19:45:20 +0200:
-> IOW, what I'd like git-merge-tree to do is to be able to at a minimum say:
+Johannes Schindelin, Thu, Jun 29, 2006 20:40:46 +0200:
+> > > 
+> > > When diff-index and diff-files compare a tree entry or an index
+> > > entry with a file in the working tree, they do not compute the
+> > > blob hash value for the file in the working tree.  0{40} is used
+> > > on the RHS in such a case.  When the working tree file matches
+> > > the corresponding index entry, then we know RHS matches what is
+> > > in the index, so both sides have the blob hash value.
+> > 
+> > Ok. Am I correct in the assumption, that if the file in working tree has
+> > the same SHA1 as LHS, than the next "git-update-index --refresh" will
+> > remove the entry from git-diff-index output?
+> > This is what actually happens, if I do "git-update-index --refresh", so I
+> > suspect that I have an SHA1 update gone missing somewhere.
 > 
->  - will a merge succeed cleanly, and if not, show me where the problem 
->    spots are.
->  - what will the result of the merge look like.
+> I think the problem is more like this (in ce_match_stat_basic()):
 > 
-> because that's actually what a downstream developer wants to do. He'd just 
-> do
+>         if (ce->ce_mtime.sec != htonl(st->st_mtime))
+>                 changed |= MTIME_CHANGED;
+>         if (ce->ce_ctime.sec != htonl(st->st_ctime))
+>                 changed |= CTIME_CHANGED;
 > 
-> 	git fetch linus
-> 	git show-changes linus..my-branch
-> 
-> which would basically be the preparatory thing for sending me an email 
-> saying "please merge 'my-branch', and you'll see this".
+> If you update with --index-info, the mtime and ctime is not updated 
+> from the file in the working directory.
 
-it's a "git show-merge linus..my-branch" :)
+Oh, I see. I was under impression git-diff-index does not use mtime/ctime.
+Thought it was just mode+sha between treeish and index.
+    $ man git-diff-index
+       git-diff-index <tree-ish>
+              compares the <tree-ish> and the files on the filesystem.
+       git-diff-index --cached <tree-ish>
+              compares the <tree-ish> and the index.
+So it does compare treeish ad index, but only if explicitly told so.
+Pity, there seem to be no way to update the times in --index-info
+protocol yet. Maybe it'll be even never needed, after cache functions
+gone libraries.
 
-> Now, obviously, I think that there's a _lot_ of overlap between doing this 
-> and actually doing the merge itself, so hopefully the things I do will at 
-> least have some things in common and perhaps help you do the proper 
-> recursive merger.
+> All the more a reason to go forward with direct calls to read_cache() and 
+> write_cache(). At the moment, my plan is
+> 
+> - trivially split the read_cache() code into read_cache()/read_cache_from(),
+> - introduce flush_cache(),
+> - trivially rewrite add_file_to_cache(), and add_cache_info() from
+>   builtin-update-index.c, move that to read-tree.c, too, and
+> - throw out the pipe to git-update-index from merge-recursive.c 
+>   altogether.
+> 
+> This should be less intrusive than it sounds: with the introduction of 
+> read_cache_from() it should be trivial to handle the problem of different 
+> index files.
+> 
+> We have to put a lock_file on the index file at the start, and write the 
+> index file at the end.
+> 
 
-I certanly hope so: only the last pass of the recursive merge seem to
-really need the index. It's use in all the previuos recursions looks
-more like abuse.
+Yes, very nice plan, all by itself :)
