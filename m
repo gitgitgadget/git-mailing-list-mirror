@@ -1,58 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
-Date: Thu, 29 Jun 2006 18:14:48 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606291814200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com> 
- <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
- <20060627223249.GA8177@steel.home>  <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] Cache negative delta pairs
+Date: Thu, 29 Jun 2006 12:35:36 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0606291233120.1213@localhost.localdomain>
+References: <20060628223744.GA24421@coredump.intra.peff.net>
+ <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Jun 29 18:14:56 2006
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 29 18:35:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvzAL-0002Fq-4k
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 18:14:53 +0200
+	id 1FvzUT-0005k8-Il
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 18:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbWF2QOu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 12:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbWF2QOu
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 12:14:50 -0400
-Received: from mail.gmx.net ([213.165.64.21]:49048 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750910AbWF2QOu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 12:14:50 -0400
-Received: (qmail invoked by alias); 29 Jun 2006 16:14:48 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 29 Jun 2006 18:14:48 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1750798AbWF2Qfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 12:35:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbWF2Qfi
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 12:35:38 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:14433 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750798AbWF2Qfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 12:35:38 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J1M00AIIRFCGDH0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 29 Jun 2006 12:35:37 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22872>
 
-Hi,
+On Thu, 29 Jun 2006, Nicolas Pitre wrote:
 
-On Thu, 29 Jun 2006, Alex Riesen wrote:
-
-> On 6/29/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > most of this patch is just a "sub-file rename", i.e. moving code
-> > literally (sue me, SCO!) from merge-base.c to commit.c.
-> > 
+> And this can be pushed even further by just including the sha1 of the 
+> victim object inside the list of objects therefore computing a hash of 
+> all objects (the victim and the window) for which no delta results. The 
+> cache is therefore a list of hash values corresponding to bad 
+> victim+window combinations.
 > 
-> BTW, you probably want to post merge-recursive.c changes separately.
+> So given my GIT repository such a cache would be 7610 * 40 = 304400 
+> bytes if we stick to the full 40 bytes of sha1 to hash bad combinations.
 
-My point being: it makes no sense to split off get_merge_bases() if nobody 
-uses it except for git-merge-base.
+Correction: the 40 bytes figure is for _ascii_ representation of sha1 
+values.  The cache doesn't need ascii and therefore this number can be 
+reduced by half.
 
-Ciao,
-Dscho
+
+Nicolas
