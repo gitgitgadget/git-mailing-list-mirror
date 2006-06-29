@@ -1,54 +1,80 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
-Date: Thu, 29 Jun 2006 16:14:38 +0200
-Message-ID: <81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com>
-References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
-	 <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20060627223249.GA8177@steel.home>
-	 <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] autoconf: Cleanup generation of config.mak.append by ./configure
+Date: Thu, 29 Jun 2006 17:04:26 +0200
+Message-ID: <200606291704.27677.jnareb@gmail.com>
+References: <200606290301.51657.jnareb@gmail.com> <200606291359.43640.jnareb@gmail.com> <200606291536.18667.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>,
-	"Fredrik Kuivinen" <freku045@student.liu.se>,
-	"Linus Torvalds" <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Jun 29 16:15:09 2006
+X-From: git-owner@vger.kernel.org Thu Jun 29 17:04:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvxI3-0002k8-0g
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 16:14:43 +0200
+	id 1Fvy4E-0004fA-Ig
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 17:04:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWF2OOk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 10:14:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbWF2OOk
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 10:14:40 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:6488 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750760AbWF2OOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 10:14:39 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so349809ugf
-        for <git@vger.kernel.org>; Thu, 29 Jun 2006 07:14:38 -0700 (PDT)
+	id S1750768AbWF2PE1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 11:04:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbWF2PE1
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 11:04:27 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:62145 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750768AbWF2PE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 11:04:27 -0400
+Received: by nf-out-0910.google.com with SMTP id a4so87602nfc
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 08:04:25 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lj4WX8CWRFV/6dCBwavecCMGO7aVn4RYhgW7qZBNKpgrjRojdh3SjnElStHhnqNT363GS5OafcuOZDOzk0z6Tu6n9SyswoY3yJyRFLtPFX4bBBwwJCVaTqPigD5eHXB1iHAyWEG+T9lYUxAEFARKIBm7DxA3zeBuqlJDwLFdFSA=
-Received: by 10.78.157.15 with SMTP id f15mr973699hue;
-        Thu, 29 Jun 2006 07:14:38 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Thu, 29 Jun 2006 07:14:38 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sDWaffrY7eLG4gunzJhmVA23McQKGOpp3rD9dZ6v9RJik4fJf6fD1SztMQB0z3v4rvD/Prn81UgfcHn0QZsSq03YvjiC9XPdwN/2xKZfKoDvujvgs6Ump6z9LHL1f4QxApdkJoyQXMKI4/Dg7LIoM4cKN/mDGGp8NqEgbSSbV5w=
+Received: by 10.48.246.8 with SMTP id t8mr453456nfh;
+        Thu, 29 Jun 2006 08:04:25 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id c1sm576573nfe.2006.06.29.08.04.24;
+        Thu, 29 Jun 2006 08:04:25 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200606291536.18667.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22868>
 
-On 6/29/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> most of this patch is just a "sub-file rename", i.e. moving code
-> literally (sue me, SCO!) from merge-base.c to commit.c.
->
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ configure.ac |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-BTW, you probably want to post merge-recursive.c changes separately.
+diff --git a/configure.ac b/configure.ac
+index fbd46e2..f48307c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -6,12 +6,14 @@ AC_INIT([git], [1.4.0], [git@vger.kernel
+ 
+ AC_CONFIG_SRCDIR([git.c])
+ 
++echo "# config.mak.append.  Generated by configure." >> config.mak.append
++
+ # Definitions of macros
+ # MY_APPEND_LINE(LINE)
+ # --------------------
+ # Append LINE to file config.mak.append
+ AC_DEFUN([MY_APPEND_LINE],
+-[[echo "$1" >> config.mak.append]])# AC_APPEND_LINE
++[[echo "$1" >> config.mak.append]])# MY_APPEND_LINE
+ 
+ 
+ # Checks for libraries.
+@@ -45,6 +47,5 @@ AC_CHECK_FUNC(setenv,,MY_APPEND_LINE(NO_
+ 
+ # Output files
+ AC_CONFIG_FILES([config.mak:config.mak.in:config.mak.append], 
+-[rm -f config.mak.append], 
+-[echo >> config.mak.append])
++[rm -f config.mak.append])
+ AC_OUTPUT
+-- 
+1.4.0
