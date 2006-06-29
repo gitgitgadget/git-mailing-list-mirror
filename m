@@ -1,78 +1,54 @@
-From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] autoconf: Use autoconf to write installation directories to config.mak
-Date: Thu, 29 Jun 2006 09:18:13 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20060629071813.GB1127@informatik.uni-freiburg.de>
-References: <200606290301.51657.jnareb@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Improved three-way blob merging code
+Date: Thu, 29 Jun 2006 09:43:02 +0200
+Message-ID: <81b0412b0606290043s15e19b9fl853627e815f009ff@mail.gmail.com>
+References: <Pine.LNX.4.64.0606282157210.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 09:18:41 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Davide Libenzi" <davidel@xmailserver.org>
+X-From: git-owner@vger.kernel.org Thu Jun 29 09:43:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvqnL-00023o-2J
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 09:18:35 +0200
+	id 1FvrB7-0005JT-1b
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 09:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751749AbWF2HSS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 03:18:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751752AbWF2HSS
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 03:18:18 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:48318 "EHLO
-	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
-	id S1751750AbWF2HSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 03:18:17 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1Fvqn1-0003qD-Il; Thu, 29 Jun 2006 09:18:15 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id k5T7IE1v001448;
-	Thu, 29 Jun 2006 09:18:14 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.6/8.12.11/Submit) id k5T7IEQw001447;
-	Thu, 29 Jun 2006 09:18:14 +0200 (MEST)
-To: Jakub Narebski <jnareb@gmail.com>
-Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+	id S932723AbWF2HnF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 03:43:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932734AbWF2HnF
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 03:43:05 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:13246 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932723AbWF2HnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 03:43:03 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so190859ugf
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 00:43:02 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=K2PSEOAtlVlRdFomhOWnOmEDm6DZjQY5FNCLc3U4t/0dZQpJdoIm7u53h50siFBwv3e4uiNIeJxW9+QGUMa987SR/+X62vx94mqzPKVKOgJkZgOzwNnHW/TIEuJRYKyLoqkj3BcyRannN+zVi3sb9UtQgUGJELAaZfDzQWNVZvc=
+Received: by 10.78.139.5 with SMTP id m5mr909611hud;
+        Thu, 29 Jun 2006 00:43:02 -0700 (PDT)
+Received: by 10.78.37.7 with HTTP; Thu, 29 Jun 2006 00:43:02 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606282157210.12404@g5.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <200606290301.51657.jnareb@gmail.com>
-User-Agent: Mutt/1.5.6+20040523i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22846>
 
-Jakub Narebski wrote:
-> This is beginning of patch series introducing installation configuration
-> using autoconf (and no other autotools) to git. The idea is to generate
-> config.mak using ./configure (generated from configure.ac) from
-> config.mak.in, so one can use autoconf as an _alternative_ to ordinary
-> Makefile, and creating one's own config.mak.
-> 
-> This patch includes minimal configure.ac and config.mak.in, so one 
-> can set installation directories using ./configure script
-> e.g. ./configure --prefix=/usr
+On 6/29/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> +static void *three_way_filemerge(mmfile_t *base, mmfile_t *our, mmfile_t *their, unsigned long *size)
+> +{
+...
+> +       if (t1 && t2 && t3) {
+> +               int code = run_command("merge", t2, t1, t3, NULL);
 
-autoconf does to much things, even with that little configure.ac.  (But
-I agree, it's much better than automake :-)
-
-E.g.
-
-	./configure --prefix=$HOME/usr --mandir=$HOME/usr/share/man
-
-is supported by the configure script, but the manpages are installed in
-$HOME/usr/man all the same.
-
-BTW: Even if I specify mandir=... in config.mak, it is not respected,
-because only the toplevel Makefile includes config.mak.  (I didn't test
-it, but I think I could export mandir in config.mak ...)
-
-Best regards
-Uwe
-
--- 
-Uwe Zeisberger
-
-http://www.google.com/search?q=1+hertz+in+sec**-1
+This does not use the labels of merge(1) and the merged file will contain
+the names of temporary files at conflict places, which is very confusing if
+you happen to loose context while doing a merge with lots of conflicts.
