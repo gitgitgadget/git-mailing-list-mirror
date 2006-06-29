@@ -1,93 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 15:22:59 -0700
-Message-ID: <7vsllnob3w.fsf@assigned-by-dhcp.cox.net>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
-	<7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
-	<20060629180011.GA4392@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291410420.1213@localhost.localdomain>
-	<20060629185335.GA6704@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
-	<20060629195201.GA10786@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0606291616480.1213@localhost.localdomain>
-	<Pine.LNX.4.64.0606291352110.12404@g5.osdl.org>
+Date: Fri, 30 Jun 2006 00:31:59 +0200
+Organization: At home
+Message-ID: <e81kcm$p3c$1@sea.gmane.org>
+References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 00:23:09 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Jun 30 00:32:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw4ui-0008Qn-6S
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:23:08 +0200
+	id 1Fw53R-0001Nd-5V
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933058AbWF2WXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 18:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933061AbWF2WXD
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:23:03 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:62183 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S933060AbWF2WXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 18:23:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060629222300.FELH554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Jun 2006 18:23:00 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 29 Jun 2006 14:04:01 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932420AbWF2WcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 18:32:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933065AbWF2WcC
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:32:02 -0400
+Received: from main.gmane.org ([80.91.229.2]:34012 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932420AbWF2WcA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 18:32:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fw53G-0001Ly-T9
+	for git@vger.kernel.org; Fri, 30 Jun 2006 00:31:58 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:31:58 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:31:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22922>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano wrote:
 
-> On Thu, 29 Jun 2006, Nicolas Pitre wrote:
->> 
->> The negative delta cache concept is certainly attractive even for normal 
->> repositories, especially for public servers, since when used in 
->> conjonction with delta reuse it makes the creation of a pack basically 
->> free.  So I think this idea really has merits, as long as the cache 
->> remains small.
->
-> I don't really see much of a point of this all.
->
-> Instead of having a separate cache, wouldn't it be much better to just 
-> take the hint from the previous pack-file?
->
-> In the repacking window, if both objects we are looking at already came 
-> from the same (old) pack-file, don't bother delta'ing them against each 
-> other. 
->
-> That means that we'll still always check for better deltas for (and 
-> against!) _unpacked_ objects, but assuming incremental repacks, you'll 
-> avoid the delta creation 99% of the time.
->
-> Ie somethng really simple like the appended.
->
-> 		Linus
-> ---
-> diff --git a/pack-objects.c b/pack-objects.c
-> index bed2497..cea63e7 100644
-> --- a/pack-objects.c
-> +++ b/pack-objects.c
-> @@ -988,6 +988,13 @@ static int try_delta(struct unpacked *tr
->  		return -1;
->  
->  	/*
-> +	 * We do not bother to try a delta that we discarded
-> +	 * on an earlier try
-> +	 */
-> +	if (trg_entry->in_pack && trg_entry->in_pack == src_entry->in_pack)
-> +		return -1;
-> +
-> +	/*
+> [...] For example, we currently do
+> not delta OpenOffice documents (*.odt, *.odp, etc) very well.
+> If one has a repository that tracks the history of "file.odp",
+> we know each revision of "file.odp" would not delta against any
+> other version anyway, and could skip attempting to deltify them.
 
-I think you meant to return 0 from here though.  -1 means "do
-not use this pair and do not bother try improving it with the
-remaining candidates".
+Perhaps we should steal Mercurial idea of EncodeDecodeFilter, and store
+OpenOffice documents, Mozilla extensions, Java packages in object store as
+uncompressed archive, and checkout them to working area in original format.
+All diff should be of course done on in-repository (after-filter) format.
+
+The original example at 
+  http://www.selenic.com/mercurial/wiki/index.cgi/EncodeDecodeFilter
+talks about archives (zip files) and unix2dos endline convention conversion.
+
+Perhaps for OpenOffice and Mozilla we would need to use [external] XML-aware
+diff, too...
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
