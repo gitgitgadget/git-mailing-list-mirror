@@ -1,66 +1,109 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: CFT: merge-recursive in C
-Date: Thu, 29 Jun 2006 02:38:37 +0200
-Message-ID: <20060629003837.GB27507@steel.home>
-References: <20060626233838.GA3121@steel.home> <20060628150647.GA16935@trixie.casa.cgf.cx>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Luca Barbato <lu_zero@gentoo.org>
+Subject: Re: [patch] Make git-svn init accept a target dir
+Date: Thu, 29 Jun 2006 02:41:14 +0200
+Message-ID: <44A321AA.6080703@gentoo.org>
+References: <44A30BAD.60907@gentoo.org> <20060629002852.GA29147@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed;
+ boundary="------------090207090705040003090005"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 02:39:05 2006
+X-From: git-owner@vger.kernel.org Thu Jun 29 02:41:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FvkYf-0000Zs-6T
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 02:39:02 +0200
+	id 1Fvkb9-0001Ag-Ad
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 02:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075AbWF2Ai6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 20:38:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932095AbWF2Ai6
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 20:38:58 -0400
-Received: from mailout08.sul.t-online.com ([194.25.134.20]:725 "EHLO
-	mailout08.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S932075AbWF2Aix (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 20:38:53 -0400
-Received: from fwd31.aul.t-online.de 
-	by mailout08.sul.t-online.com with smtp 
-	id 1FvkYS-0004Jj-00; Thu, 29 Jun 2006 02:38:48 +0200
-Received: from tigra.home (G5N+F8ZQoeaL4NtLO5w6J5ICMb3GQfEhkzNW-36sHbvtJt4mnqUNEL@[84.160.100.234]) by fwd31.sul.t-online.de
-	with esmtp id 1FvkYI-29Uy6y0; Thu, 29 Jun 2006 02:38:38 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 85038277B5;
-	Thu, 29 Jun 2006 02:38:37 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FvkYH-0002Go-CO; Thu, 29 Jun 2006 02:38:37 +0200
-To: Christopher Faylor <me@cgf.cx>
-Content-Disposition: inline
-In-Reply-To: <20060628150647.GA16935@trixie.casa.cgf.cx>
-User-Agent: Mutt/1.5.6i
-X-ID: G5N+F8ZQoeaL4NtLO5w6J5ICMb3GQfEhkzNW-36sHbvtJt4mnqUNEL
-X-TOI-MSGID: b10fe1ec-8306-4208-8277-1895416d1cc0
+	id S932098AbWF2AlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 20:41:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932103AbWF2AlT
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 20:41:19 -0400
+Received: from smtp0.libero.it ([193.70.192.33]:43741 "EHLO smtp0.libero.it")
+	by vger.kernel.org with ESMTP id S932096AbWF2AlR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jun 2006 20:41:17 -0400
+Received: from localhost (172.16.1.246) by smtp0.libero.it (7.0.027-DD01)
+        id 446C5C4E02AAFB11; Thu, 29 Jun 2006 02:41:16 +0200
+Received: from smtp2.libero.it ([172.16.1.225])
+ by localhost (asav14.libero.it [193.70.193.42]) (amavisd-new, port 10024)
+ with ESMTP id 07263-02; Thu, 29 Jun 2006 02:41:16 +0200 (CEST)
+Received: from [192.168.0.6] (adsl-ull-62-62.44-151.net24.it [151.44.62.62])
+	by smtp2.libero.it (Postfix) with ESMTP id 13886A8C14;
+	Thu, 29 Jun 2006 02:41:15 +0200 (MEST)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060603)
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <20060629002852.GA29147@hand.yhbt.net>
+X-Enigmail-Version: 0.94.0.0
+X-Scanned: with antispam and antivirus automated system at libero.it
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22830>
 
-Christopher Faylor, Wed, Jun 28, 2006 17:06:47 +0200:
-> >It still uses some calls to git programs (git-update-index,
-> >git-hash-object, git-diff-tree and git-write-tree), and merge(1) has
-> >the labels (-L) missing - I was unsure how to tackle this on windows -
-> >it has only argv[1].
+This is a multi-part message in MIME format.
+--------------090207090705040003090005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+Eric Wong wrote:
+
 > 
-> Actually, Windows should behave the same as Linux wrt argv handling.
-> You can use argv[1] ... argv[n] modulo any differences in command line
-> quoting.
+> Sounds useful and I'll probably accept it, but I don't see the actual
+> patch, though...
+> 
 
-which leaves us (without quoting) with exactly one argument. argv[1],
-aka GetCommandLine.
+ops...
 
-> On Windows the arguments are broken into individual components by the
-> runtime, e.g., MSVCRT.dll or Cygwin1.dll.
+-- 
 
-And the rules for quoting are the same for ms and cygwin? It's just
-passing arguments between cygwin programs and windows natives never
-works as one might them expect. Try passing "^" to a batch script (to
-a perl script with cmd wrapper around it).
+Luca Barbato
+
+Gentoo/linux Gentoo/PPC
+http://dev.gentoo.org/~lu_zero
+
+
+--------------090207090705040003090005
+Content-Type: text/plain;
+ name="git-svn-init.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="git-svn-init.patch"
+
+--- /usr/bin/git-svn	2006-06-29 00:57:26.000000000 +0200
++++ /usr/bin/git-svn.new	2006-06-28 03:40:11.000000000 +0200
+@@ -5,7 +5,7 @@
+ use strict;
+ use vars qw/	$AUTHOR $VERSION
+ 		$SVN_URL $SVN_INFO $SVN_WC $SVN_UUID
+-		$GIT_SVN_INDEX $GIT_SVN
++		$GIT_SVN_INDEX $GIT_SVN $REPO_PATH
+ 		$GIT_DIR $REV_DIR/;
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+ $VERSION = '1.1.0-pre';
+@@ -98,6 +98,7 @@
+ $GIT_SVN ||= $ENV{GIT_SVN_ID} || 'git-svn';
+ $GIT_SVN_INDEX = "$GIT_DIR/$GIT_SVN/index";
+ $SVN_URL = undef;
++$REPO_PATH = undef;
+ $REV_DIR = "$GIT_DIR/$GIT_SVN/revs";
+ $SVN_WC = "$GIT_DIR/$GIT_SVN/tree";
+ 
+@@ -227,6 +228,16 @@
+ sub init {
+ 	$SVN_URL = shift or die "SVN repository location required " .
+ 				"as a command-line argument\n";
++        $REPO_PATH = shift;
++        
++        if ($REPO_PATH) {
++            unless (-d $REPO_PATH) {
++                mkpath([$REPO_PATH]);
++            }
++            $GIT_DIR=$REPO_PATH . "/.git";
++            $ENV{GIT_DIR}=$GIT_DIR;
++        }
++
+ 	unless (-d $GIT_DIR) {
+ 		sys('git-init-db');
+ 	}
+
+--------------090207090705040003090005--
