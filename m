@@ -1,67 +1,52 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] git --trace: trace command execution
-Date: Thu, 29 Jun 2006 20:06:21 +0200
-Organization: At home
-Message-ID: <e814qm$sa$1@sea.gmane.org>
-References: <E1FuSIf-0004jK-Tp@moooo.ath.cx> <7v3bdtv4h3.fsf@assigned-by-dhcp.cox.net>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: xdiff: generate "anti-diffs" aka what is common to two files
+Date: Thu, 29 Jun 2006 11:18:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606291117030.8615@alien.or.mcafeemobile.com>
+References: <Pine.LNX.4.64.0606282149060.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jun 29 20:09:03 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 29 20:18:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw0wc-0005b2-Up
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 20:08:53 +0200
+	id 1Fw15y-0007Hx-D7
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 20:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228AbWF2SIr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 14:08:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWF2SIr
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 14:08:47 -0400
-Received: from main.gmane.org ([80.91.229.2]:19096 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751228AbWF2SIq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 14:08:46 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fw0vI-0005Kc-LL
-	for git@vger.kernel.org; Thu, 29 Jun 2006 20:07:29 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Jun 2006 20:07:28 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Jun 2006 20:07:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751239AbWF2SSZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 14:18:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWF2SSZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 14:18:25 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:25995 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1751241AbWF2SSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 14:18:24 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
+	id <S1DACF6> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Thu, 29 Jun 2006 11:18:03 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606282149060.12404@g5.osdl.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22880>
 
-Junio C Hamano wrote:
+On Wed, 28 Jun 2006, Linus Torvalds wrote:
 
-> By the way "git cat-file -p" or "git verify-tag -v" might be
-> more pleasant to view a tag since they make the tagger timestamp
-> human readable.
+> Davide, I say it's a "fairly trivial patch", but quite frankly, I'm
+> winging it. I'm not that comfortable with the libxdiff internal workings,
+> so while this seems to work for me and make sense, can you please take a
+> quick look.
 
-Interesting, -p makes tagger timestamp human readable, but not author or
-commiter:
+Looks fine to me.
 
-$ git cat-file -p `cat .git/refs/tags/v1.4.0`
-tagger Junio C Hamano <junkio@cox.net> Sat Jun 10 12:43:37 2006 -0700
 
-$ git cat-file -p `cat .git/refs/heads/origin`
-author Johannes Schindelin <Johannes.Schindelin@gmx.de> 1151491527 +0200
-committer Junio C Hamano <junkio@cox.net> 1151492136 -0700
 
-Is it intended, or a bug/missing feature (git 1.4.0)?
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+- Davide
