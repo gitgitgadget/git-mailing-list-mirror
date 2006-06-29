@@ -1,80 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Makefile: set USE_PIC on Linux x86_64 for linking with Git.pm
-Date: Fri, 30 Jun 2006 00:22:37 +0200
-Organization: At home
-Message-ID: <e81jr5$l1c$1@sea.gmane.org>
-References: <20060628183557.GA5713@fiberbit.xs4all.nl> <7vr719159v.fsf@assigned-by-dhcp.cox.net> <7virml14za.fsf@assigned-by-dhcp.cox.net> <20060628192145.GD5713@fiberbit.xs4all.nl> <1151527945.1619.17.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Cache negative delta pairs
+Date: Thu, 29 Jun 2006 15:22:59 -0700
+Message-ID: <7vsllnob3w.fsf@assigned-by-dhcp.cox.net>
+References: <20060628223744.GA24421@coredump.intra.peff.net>
+	<7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
+	<20060629180011.GA4392@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0606291410420.1213@localhost.localdomain>
+	<20060629185335.GA6704@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
+	<20060629195201.GA10786@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0606291616480.1213@localhost.localdomain>
+	<Pine.LNX.4.64.0606291352110.12404@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jun 30 00:23:08 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 00:23:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw4ub-0008QG-Qg
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:23:02 +0200
+	id 1Fw4ui-0008Qn-6S
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 00:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933059AbWF2WW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 18:22:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933060AbWF2WW6
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:22:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:52189 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S933059AbWF2WW5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 18:22:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fw4uP-0008OA-7O
-	for git@vger.kernel.org; Fri, 30 Jun 2006 00:22:49 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:22:49 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:22:49 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S933058AbWF2WXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 18:23:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933061AbWF2WXD
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 18:23:03 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:62183 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S933060AbWF2WXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 18:23:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629222300.FELH554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 18:23:00 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 29 Jun 2006 14:04:01 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22921>
 
-Pavel Roskin <proski@gnu.org> wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Wed, 2006-06-28 at 21:21 +0200, Marco Roeland wrote:
->> I certainly do not know cases outside Linux where this might break on
->> x86-64. I just tried to limit it to the case I could test. But perhaps
->> someone with an x86-64 BSD or Solaris might try it?
+> On Thu, 29 Jun 2006, Nicolas Pitre wrote:
 >> 
->> To paraphrase Dave Jones: I type 'make', it fails. Some 'git log' later
->> I realise I have to manually define 'USE_PIC'. Hey, why doesn't it work
->> automagically?
-> 
-> Automagically?  You should search the archives for "Autoconf".  When I
-> proposed using it, the hell broke loose.  Now let me indulge in
-> Schadenfreude :-)
+>> The negative delta cache concept is certainly attractive even for normal 
+>> repositories, especially for public servers, since when used in 
+>> conjonction with delta reuse it makes the creation of a pack basically 
+>> free.  So I think this idea really has merits, as long as the cache 
+>> remains small.
+>
+> I don't really see much of a point of this all.
+>
+> Instead of having a separate cache, wouldn't it be much better to just 
+> take the hint from the previous pack-file?
+>
+> In the repacking window, if both objects we are looking at already came 
+> from the same (old) pack-file, don't bother delta'ing them against each 
+> other. 
+>
+> That means that we'll still always check for better deltas for (and 
+> against!) _unpacked_ objects, but assuming incremental repacks, you'll 
+> avoid the delta creation 99% of the time.
+>
+> Ie somethng really simple like the appended.
+>
+> 		Linus
+> ---
+> diff --git a/pack-objects.c b/pack-objects.c
+> index bed2497..cea63e7 100644
+> --- a/pack-objects.c
+> +++ b/pack-objects.c
+> @@ -988,6 +988,13 @@ static int try_delta(struct unpacked *tr
+>  		return -1;
+>  
+>  	/*
+> +	 * We do not bother to try a delta that we discarded
+> +	 * on an earlier try
+> +	 */
+> +	if (trg_entry->in_pack && trg_entry->in_pack == src_entry->in_pack)
+> +		return -1;
+> +
+> +	/*
 
-If I remember correctly everybody agreed that autoconf is least evil of the
-whole autotools package. pasky suggested to write ./configure script by
-hand on #git...
-
-I'm trying to do inobtrusive _optional_ autoconf support in the patch series
-beginning with
-  Message-ID: <200606290301.51657.jnareb@gmail.com>
-  http://permalink.gmane.org/gmane.comp.version-control.git/22832
-
-Please wait for the patch moving ./autoconf output away from config.mak
-(as some people here requested), and do contribute! My autoconf/m4
-experience is nonexistent (I'm learning it as I go). See comments in the
-third [PATCH/RFC] in series.
-
-BTW. patches are against master.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I think you meant to return 0 from here though.  -1 means "do
+not use this pair and do not bother try improving it with the
+remaining candidates".
