@@ -1,59 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 15:06:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606291505070.1213@localhost.localdomain>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
- <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
- <20060629035849.GA30749@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291154510.1213@localhost.localdomain>
- <20060629180719.GB4392@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291444370.1213@localhost.localdomain>
- <20060629185759.GB6704@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
+Date: Thu, 29 Jun 2006 21:06:56 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606292050380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
+ <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060627223249.GA8177@steel.home> <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com>
+ <Pine.LNX.4.63.0606291814200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmzbvrela.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 21:07:26 2006
+X-From: git-owner@vger.kernel.org Thu Jun 29 21:08:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw1qW-00070h-KT
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 21:06:38 +0200
+	id 1Fw1r3-00079K-C3
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 21:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932242AbWF2TGd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 15:06:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932250AbWF2TGd
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 15:06:33 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:46215 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932242AbWF2TGc
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 15:06:32 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J1M00946YEV18Y0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 29 Jun 2006 15:06:32 -0400 (EDT)
-In-reply-to: <20060629185759.GB6704@coredump.intra.peff.net>
-X-X-Sender: nico@localhost.localdomain
-To: Jeff King <peff@peff.net>
+	id S932250AbWF2THF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 15:07:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbWF2THE
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 15:07:04 -0400
+Received: from mail.gmx.de ([213.165.64.21]:61146 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932250AbWF2THB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 15:07:01 -0400
+Received: (qmail invoked by alias); 29 Jun 2006 19:06:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp043) with SMTP; 29 Jun 2006 21:06:57 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzbvrela.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22893>
 
-On Thu, 29 Jun 2006, Jeff King wrote:
+Hi Linus, Hi Junio
 
-> On Thu, Jun 29, 2006 at 02:48:23PM -0400, Nicolas Pitre wrote:
+[this is a response to both of your responses; mail threads cannot yet be 
+merged a la git ;-)]
+
+On Thu, 29 Jun 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Dare to test it?  I provided you with most of the code difference 
-> > already.
+> > My point being: it makes no sense to split off get_merge_bases() if nobody 
+> > uses it except for git-merge-base.
 > 
-> See my other mail. Unless I did something horribly wrong, caching full
-> windows is largely useless.
+> I do not think that is a good reasoning.  If something is
+> reusable (or you made it reusable) and you are planning to reuse
+> it later, splitting it out without changing anything else to
+> make sure the split is correct is a seemingly small but a very
+> important step.
 
-... on your special photo repository I agree.
+Okay. Convinced.
 
-I'm still unconvinced for large repos though.
+I tested my patch again, and like Alex said, a test fails. But I tested on 
+top of Alex's latest merge-recursive patch, which has that nasty 
+update-index bug, and that is the reason for the test to fail.
 
+So, a few tests later, I am pretty sure that my patches do not break 
+git-merge-base. I'll prepare another patch series which builds-in 
+merge-base.
 
-Nicolas
+Ciao,
+Dscho
