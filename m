@@ -1,47 +1,55 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: rebasing trouble
-Date: Thu, 29 Jun 2006 16:38:56 -0400
-Message-ID: <20060629203856.GG14287@fieldses.org>
-References: <20060629194723.GD14287@fieldses.org> <7vd5crranq.fsf@assigned-by-dhcp.cox.net> <20060629202234.GE14287@fieldses.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
+Date: Thu, 29 Jun 2006 13:58:02 -0700
+Message-ID: <7vr717ptlx.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
+	<Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060627223249.GA8177@steel.home>
+	<Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com>
+	<Pine.LNX.4.63.0606291814200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vmzbvrela.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0606292050380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 22:39:37 2006
+X-From: git-owner@vger.kernel.org Thu Jun 29 22:58:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw3IK-0006Nz-KZ
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 22:39:25 +0200
+	id 1Fw3aY-0001dz-1y
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 22:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932452AbWF2UjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 16:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932451AbWF2Ui7
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 16:38:59 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:41114 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S932447AbWF2Ui6
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 16:38:58 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Fw3Ht-0008GN-0k; Thu, 29 Jun 2006 16:38:57 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060629202234.GE14287@fieldses.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932543AbWF2U6I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 16:58:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932549AbWF2U6H
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 16:58:07 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:39122 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932543AbWF2U6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 16:58:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629205803.VZGV16011.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 16:58:03 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606292050380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 29 Jun 2006 21:06:56 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22904>
 
-On Thu, Jun 29, 2006 at 04:22:34PM -0400, bfields wrote:
-> I realized after I sent that that "origin" in that public repository actually
-> isn't the same as "origin" in the local repo that I'm working on.  So I just
-> ran a GIT_DIR=. git-fetch there, and now both branches agree.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-By the way, I should also have said:
+> So, a few tests later, I am pretty sure that my patches do not break 
+> git-merge-base. I'll prepare another patch series which builds-in 
+> merge-base.
 
-bfields@puzzle:git$ git --version
-git version 1.4.1.rc2
-
---b.
+I'll take your two patches to refactor merge-base and to move
+the bulk of the code to commit.c for now.  Updated "next" coming
+shortly.
