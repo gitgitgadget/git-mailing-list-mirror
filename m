@@ -1,118 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] autoconf: Use autoconf to write installation directories to config.mak
-Date: Thu, 29 Jun 2006 03:01:50 +0200
-Message-ID: <200606290301.51657.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: CFT: merge-recursive in C (updated)
+Date: Wed, 28 Jun 2006 19:41:23 -0700
+Message-ID: <7vzmfwy97w.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com>
+	<Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060627223249.GA8177@steel.home>
+	<81b0412b0606280234x7d07fbbck7887b5214d98bf91@mail.gmail.com>
+	<20060629002547.GA27507@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jun 29 03:02:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 29 04:41:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fvkuq-0007Rl-5k
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 03:01:56 +0200
+	id 1FvmTB-00065t-3E
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 04:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932076AbWF2BBx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 21:01:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbWF2BBx
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 21:01:53 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:59223 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751848AbWF2BBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 21:01:52 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so1212116nfe
-        for <git@vger.kernel.org>; Wed, 28 Jun 2006 18:01:50 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=NPQXfC33F2OQAnfEAW+IeoKpNinPqpbmnyMOrgNpDNbLAmJTzENlUOnAb4DHBmRWddatxhCvK+lRr8gDqWtmqrLIm+qtBH6QnB/Q2qJYl22irvEOLCCLTwY+nmNF+yDnICA1X+9E2W21jw/gVcX/tpHL3FGRz4qykeyBmp4JRI4=
-Received: by 10.49.51.8 with SMTP id d8mr1174051nfk;
-        Wed, 28 Jun 2006 18:01:50 -0700 (PDT)
-Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
-        by mx.gmail.com with ESMTP id z73sm8875835nfb.2006.06.28.18.01.50;
-        Wed, 28 Jun 2006 18:01:50 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751358AbWF2ClZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 22:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWF2ClZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 22:41:25 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:5251 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751358AbWF2ClZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 22:41:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629024124.IBID12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 28 Jun 2006 22:41:24 -0400
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060629002547.GA27507@steel.home> (Alex Riesen's message of
+	"Thu, 29 Jun 2006 02:25:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22833>
 
-This is beginning of patch series introducing installation configuration
-using autoconf (and no other autotools) to git. The idea is to generate
-config.mak using ./configure (generated from configure.ac) from
-config.mak.in, so one can use autoconf as an _alternative_ to ordinary
-Makefile, and creating one's own config.mak.
+fork0@t-online.de (Alex Riesen) writes:
 
-This patch includes minimal configure.ac and config.mak.in, so one 
-can set installation directories using ./configure script
-e.g. ./configure --prefix=/usr
+> this broke t6022-merge-rename.sh (the second test). It produces an
+> index with this:
+>
+> .../t/trash$ git-diff-index white
+> :100644 100644 2d603156dc5bdf6295c789cac08e3c9942a0b82a 0000000000000000000000000000000000000000 M      B
+> :100644 100644 ba41fb96393979b22691106b06bf5231eab57b85 0000000000000000000000000000000000000000 M      N
+>
+> whereas git-merge-recursive (and the previous version, without pipe):
+>
+> .../t/trash$ git-diff-index white
+> :100644 100644 2d603156dc5bdf6295c789cac08e3c9942a0b82a 0000000000000000000000000000000000000000 M      B
+>
+> I can see that "git update-index --add" is somehow different from a
+> pipe to "git update-index --index-info", but not very clear. Does this
+> "zero-sha1" mean that the file "N" is not in the index?
 
-Ignoring files generated by running autoconf and ./configure
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-
----
-
-One of the ideas is to use in .spec RPM macro %configure which takes
-care of setting all installation directories correctly.
-
-Thoughts?
-
- .gitignore    |    4 ++++
- config.mak.in |   12 ++++++++++++
- configure.ac  |   11 +++++++++++
- 3 files changed, 27 insertions(+), 0 deletions(-)
-
-diff --git a/.gitignore b/.gitignore
-index 7b954d5..b0dd54d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -136,3 +136,7 @@ git-core.spec
- *.py[co]
- config.mak
- git-blame
-+autom4te.cache
-+config.log
-+config.status
-+configure
-diff --git a/config.mak.in b/config.mak.in
-new file mode 100644
-index 0000000..82d80e2
---- /dev/null
-+++ b/config.mak.in
-@@ -0,0 +1,12 @@
-+# git Makefile configuration, included in main Makefile
-+# @configure_input@
-+
-+prefix = @prefix@
-+exec_prefix = @exec_prefix@
-+bindir = @bindir@
-+#gitexecdir = @libexecdir@/git-core/
-+template_dir = @datadir@/git-core/templates/
-+GIT_PYTHON_DIR = @datadir@/git-core/python
-+
-+srcdir = @srcdir@
-+VPATH = @srcdir@
-diff --git a/configure.ac b/configure.ac
-new file mode 100644
-index 0000000..4003ff6
---- /dev/null
-+++ b/configure.ac
-@@ -0,0 +1,11 @@
-+#                                               -*- Autoconf -*-
-+# Process this file with autoconf to produce a configure script.
-+
-+AC_PREREQ(2.59)
-+AC_INIT([git], [1.4.0], [git@vger.kernel.org])
-+
-+AC_CONFIG_SRCDIR([git.c])
-+
-+# Output files
-+AC_CONFIG_FILES([config.mak])
-+AC_OUTPUT
--- 
-1.4.0
+When diff-index and diff-files compare a tree entry or an index
+entry with a file in the working tree, they do not compute the
+blob hash value for the file in the working tree.  0{40} is used
+on the RHS in such a case.  When the working tree file matches
+the corresponding index entry, then we know RHS matches what is
+in the index, so both sides have the blob hash value.
