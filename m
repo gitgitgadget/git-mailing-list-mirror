@@ -1,63 +1,118 @@
-From: Christopher Faylor <me@cgf.cx>
-Subject: Re: CFT: merge-recursive in C
-Date: Wed, 28 Jun 2006 20:49:22 -0400
-Message-ID: <20060629004922.GG20940@trixie.casa.cgf.cx>
-References: <20060626233838.GA3121@steel.home> <20060628150647.GA16935@trixie.casa.cgf.cx> <20060629003837.GB27507@steel.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] autoconf: Use autoconf to write installation directories to config.mak
+Date: Thu, 29 Jun 2006 03:01:50 +0200
+Message-ID: <200606290301.51657.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 29 02:49:31 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jun 29 03:02:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fvkik-0003sc-Oi
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 02:49:27 +0200
+	id 1Fvkuq-0007Rl-5k
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 03:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103AbWF2AtY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Jun 2006 20:49:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWF2AtY
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 20:49:24 -0400
-Received: from pool-71-248-179-197.bstnma.fios.verizon.net ([71.248.179.197]:64984
-	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S932103AbWF2AtX
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jun 2006 20:49:23 -0400
-Received: by cgf.cx (Postfix, from userid 201)
-	id C0FAF13C01F; Wed, 28 Jun 2006 20:49:22 -0400 (EDT)
-To: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+	id S932076AbWF2BBx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Jun 2006 21:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbWF2BBx
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jun 2006 21:01:53 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:59223 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751848AbWF2BBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jun 2006 21:01:52 -0400
+Received: by nf-out-0910.google.com with SMTP id c2so1212116nfe
+        for <git@vger.kernel.org>; Wed, 28 Jun 2006 18:01:50 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NPQXfC33F2OQAnfEAW+IeoKpNinPqpbmnyMOrgNpDNbLAmJTzENlUOnAb4DHBmRWddatxhCvK+lRr8gDqWtmqrLIm+qtBH6QnB/Q2qJYl22irvEOLCCLTwY+nmNF+yDnICA1X+9E2W21jw/gVcX/tpHL3FGRz4qykeyBmp4JRI4=
+Received: by 10.49.51.8 with SMTP id d8mr1174051nfk;
+        Wed, 28 Jun 2006 18:01:50 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id z73sm8875835nfb.2006.06.28.18.01.50;
+        Wed, 28 Jun 2006 18:01:50 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <20060629003837.GB27507@steel.home>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22832>
 
-On Thu, Jun 29, 2006 at 02:38:37AM +0200, Alex Riesen wrote:
->Christopher Faylor, Wed, Jun 28, 2006 17:06:47 +0200:
->>>It still uses some calls to git programs (git-update-index,
->>>git-hash-object, git-diff-tree and git-write-tree), and merge(1) has
->>>the labels (-L) missing - I was unsure how to tackle this on windows -
->>>it has only argv[1].
->>
->>Actually, Windows should behave the same as Linux wrt argv handling.
->>You can use argv[1] ...  argv[n] modulo any differences in command line
->>quoting.
->
->which leaves us (without quoting) with exactly one argument.  argv[1],
->aka GetCommandLine.
->
->>On Windows the arguments are broken into individual components by the
->>runtime, e.g., MSVCRT.dll or Cygwin1.dll.
->
->And the rules for quoting are the same for ms and cygwin?
+This is beginning of patch series introducing installation configuration
+using autoconf (and no other autotools) to git. The idea is to generate
+config.mak using ./configure (generated from configure.ac) from
+config.mak.in, so one can use autoconf as an _alternative_ to ordinary
+Makefile, and creating one's own config.mak.
 
-Probably not but I was the one who raised the issue of quoting, not you.
-Quoting is irrelevant to the general assertion that there is only an
-argv[1] on Windows.  If that is the behavior that you're seeing then
-something is wrong in the way the program is being invoked.
+This patch includes minimal configure.ac and config.mak.in, so one 
+can set installation directories using ./configure script
+e.g. ./configure --prefix=/usr
 
-Maybe I'm missing something here and you're talking about some specific
-case in git.  It's hard to see how anyone could make this assertion
-otherwise.
+Ignoring files generated by running autoconf and ./configure
 
-cgf
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+
+---
+
+One of the ideas is to use in .spec RPM macro %configure which takes
+care of setting all installation directories correctly.
+
+Thoughts?
+
+ .gitignore    |    4 ++++
+ config.mak.in |   12 ++++++++++++
+ configure.ac  |   11 +++++++++++
+ 3 files changed, 27 insertions(+), 0 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index 7b954d5..b0dd54d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -136,3 +136,7 @@ git-core.spec
+ *.py[co]
+ config.mak
+ git-blame
++autom4te.cache
++config.log
++config.status
++configure
+diff --git a/config.mak.in b/config.mak.in
+new file mode 100644
+index 0000000..82d80e2
+--- /dev/null
++++ b/config.mak.in
+@@ -0,0 +1,12 @@
++# git Makefile configuration, included in main Makefile
++# @configure_input@
++
++prefix = @prefix@
++exec_prefix = @exec_prefix@
++bindir = @bindir@
++#gitexecdir = @libexecdir@/git-core/
++template_dir = @datadir@/git-core/templates/
++GIT_PYTHON_DIR = @datadir@/git-core/python
++
++srcdir = @srcdir@
++VPATH = @srcdir@
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..4003ff6
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,11 @@
++#                                               -*- Autoconf -*-
++# Process this file with autoconf to produce a configure script.
++
++AC_PREREQ(2.59)
++AC_INIT([git], [1.4.0], [git@vger.kernel.org])
++
++AC_CONFIG_SRCDIR([git.c])
++
++# Output files
++AC_CONFIG_FILES([config.mak])
++AC_OUTPUT
+-- 
+1.4.0
