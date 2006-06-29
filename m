@@ -1,82 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Cache negative delta pairs
-Date: Thu, 29 Jun 2006 17:47:09 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0606291743010.1213@localhost.localdomain>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
- <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
- <20060629180011.GA4392@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291410420.1213@localhost.localdomain>
- <20060629185335.GA6704@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
- <20060629195201.GA10786@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291616480.1213@localhost.localdomain>
- <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org>
- <Pine.LNX.4.64.0606291723060.1213@localhost.localdomain>
- <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH/RFH] Racy GIT (part #3)
+Date: Thu, 29 Jun 2006 14:50:27 -0700
+Message-ID: <7v7j2zpr6k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 29 23:48:42 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jun 29 23:52:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw4Me-0001u0-6X
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:47:56 +0200
+	id 1Fw4R9-0002oV-Iv
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 23:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932616AbWF2VrW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 17:47:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932919AbWF2VrR
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:47:17 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11469 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932616AbWF2VrL
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 17:47:11 -0400
-Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J1N008EI5UL8400@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 29 Jun 2006 17:47:10 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S932906AbWF2VvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 17:51:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932908AbWF2Vue
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 17:50:34 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:39842 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932933AbWF2Vu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 17:50:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629215028.OAQN19057.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 17:50:28 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22914>
 
-On Thu, 29 Jun 2006, Linus Torvalds wrote:
+Does everybody have "cp -p" to preserve the file timestamps on
+his/her platform?  I am assuming this is safe (it is in POSIX),
+but please raise hand if that is not a case for you.
 
-> 
-> 
-> On Thu, 29 Jun 2006, Nicolas Pitre wrote:
-> >
-> > On Thu, 29 Jun 2006, Linus Torvalds wrote:
-> > 
-> > > Instead of having a separate cache, wouldn't it be much better to just 
-> > > take the hint from the previous pack-file?
-> > 
-> > DOH!  ;-)
-> 
-> Btw, I think this could do with a flag to turn it on/off (but probably 
-> default to on).
+-- >8 --
+Commit 29e4d3635709778bcc808dbad0477efad82f8d7e fixed the
+underlying update-index races but git-commit was not careful
+enough to preserve the index file timestamp when copying the
+index file.  This caused t3402 test to occasionally fail.
 
-I think it should simply be coupled with the --no-reuse-delta flag.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ git-commit.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> The advantage of this patch is that it should guarantee that if everything 
-> is already packed, a repack will basically keep the pack identical. 
-> 
-> However, that is obviously also the dis-advantage, since it means that 
-> repacking cannot improve packing. So adding a flag to say "please try to 
-> incrementally improve the pack" might well be worth it, even if this new 
-> behaviour would be the _default_.
-
-Actually, the delta reusing already prevents those deltas from being 
-improved.  So your patch only extend this notion to the non-deltified 
-objects as well.  And the way out is to provide the --no-reuse-delta 
-flag.
-
-
-Nicolas
+diff --git a/git-commit.sh b/git-commit.sh
+index 7e50cf3..22c4ce8 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -29,7 +29,7 @@ THIS_INDEX="$GIT_DIR/index"
+ NEXT_INDEX="$GIT_DIR/next-index$$"
+ rm -f "$NEXT_INDEX"
+ save_index () {
+-	cp "$THIS_INDEX" "$NEXT_INDEX"
++	cp -p "$THIS_INDEX" "$NEXT_INDEX"
+ }
+ 
+ report () {
+-- 
+1.4.1.rc2.g3257-dirty
