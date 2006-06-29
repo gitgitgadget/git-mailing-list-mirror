@@ -1,52 +1,53 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: Improved three-way blob merging code
-Date: Thu, 29 Jun 2006 11:21:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606291118110.8615@alien.or.mcafeemobile.com>
-References: <Pine.LNX.4.64.0606282157210.12404@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Allow INSTALL, bindir, mandir to be set in main Makefile
+Date: Thu, 29 Jun 2006 11:23:21 -0700
+Message-ID: <7vy7vfrfc6.fsf@assigned-by-dhcp.cox.net>
+References: <200606290301.51657.jnareb@gmail.com>
+	<200606291536.18667.jnareb@gmail.com>
+	<200606291704.27677.jnareb@gmail.com>
+	<200606291835.53788.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 29 20:21:11 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 29 20:23:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw18V-0007jk-KR
-	for gcvg-git@gmane.org; Thu, 29 Jun 2006 20:21:07 +0200
+	id 1Fw1Ao-0008CN-UD
+	for gcvg-git@gmane.org; Thu, 29 Jun 2006 20:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751241AbWF2SVD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 14:21:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWF2SVD
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 14:21:03 -0400
-Received: from x35.xmailserver.org ([69.30.125.51]:26763 "EHLO
-	x35.xmailserver.org") by vger.kernel.org with ESMTP
-	id S1751241AbWF2SVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 14:21:02 -0400
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.dev.mdolabs.com with [XMail 1.23 ESMTP Server]
-	id <S1DACF9> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Thu, 29 Jun 2006 11:21:01 -0700
-X-X-Sender: davide@alien.or.mcafeemobile.com
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606282157210.12404@g5.osdl.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1751243AbWF2SXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 14:23:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbWF2SXX
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 14:23:23 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:43227 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751243AbWF2SXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 14:23:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060629182322.OLUS12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 14:23:22 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22882>
 
-On Wed, 28 Jun 2006, Linus Torvalds wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> It would be lovely if libxdiff did a 3-way merge on its own, but this
-> basically approximates it within that three_way_filemerge() function
-> using external functionality.
+> Part of autoconf series, but independent.
 
-This is my todo-list, that unfortunately is pretty crowded nowadays. I'll 
-come graveling you main window once I have it ;)
+I'd like to take something like this, independently from
+"optionally managing config.mak with autoconf" series.
 
+> Should probably be split into two patches:
+>  * first with export + '?='
+>  * second renaming man1 and man7 to man1dir and man7dir
 
-
-- Davide
+And I think it is probably a good idea to somehow keep people's
+configurations that have been overriding man1 and man7 if
+possible.  Otherwise things would regress for them.
