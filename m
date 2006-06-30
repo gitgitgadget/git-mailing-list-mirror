@@ -1,93 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 13] autoconf: Append '-include config.mak.autogen' to config.mak if it is not present
-Date: Fri, 30 Jun 2006 17:11:39 +0200
-Message-ID: <200606301711.39635.jnareb@gmail.com>
-References: <200606290301.51657.jnareb@gmail.com> <200606301441.01327.jnareb@gmail.com> <200606301708.19521.jnareb@gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git-grep: boolean expression on pattern matching.
+Date: Fri, 30 Jun 2006 17:11:19 +0200
+Message-ID: <E1FwKeN-000087-5x@moooo.ath.cx>
+References: <E1FuX8l-0001H5-2z@moooo.ath.cx> <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de> <E1FueYh-0004XE-Fg@moooo.ath.cx> <20060629222009.GA9310@cip.informatik.uni-erlangen.de> <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net> <E1Fw8hS-00023y-FY@moooo.ath.cx> <7v7j2zmgbu.fsf@assigned-by-dhcp.cox.net> <E1FwDiI-0007Xp-2s@moooo.ath.cx> <7v3bdnkrfb.fsf@assigned-by-dhcp.cox.net> <7vsllnj6rh.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Jun 30 17:11:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwKeo-00089z-Dt
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 17:11:46 +0200
+	id 1FwKeo-00089z-VW
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 17:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794AbWF3PLd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 11:11:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbWF3PLc
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 11:11:32 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:26952 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751794AbWF3PLb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 11:11:31 -0400
-Received: by nf-out-0910.google.com with SMTP id k27so169062nfc
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 08:11:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=oQEAoJFELdYl/U50ooLkTOWLsr5u4tcPM7eozX5bObopV59MfODxmSAIqWOcxd+acetUBq/QRWGV0PC8xibQBeodX4HeoR8QsoPrjM8Kku1OGVOuBnv5dZHc8L9c3QOVi30PVaMQ459AOQQw8QCrVnCZt4HzozpYFhUW6I3jjLg=
-Received: by 10.49.21.14 with SMTP id y14mr398460nfi;
-        Fri, 30 Jun 2006 08:11:29 -0700 (PDT)
-Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
-        by mx.gmail.com with ESMTP id y23sm1689581nfb.2006.06.30.08.11.29;
-        Fri, 30 Jun 2006 08:11:29 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200606301708.19521.jnareb@gmail.com>
+	id S1751409AbWF3PLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 11:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbWF3PLY
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 11:11:24 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:46509 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751409AbWF3PLX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 11:11:23 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vsllnj6rh.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22993>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Andreas Ericsson wrote:
-> Jakub Narebski wrote:
->>
->> The idea was to use ./configure to _generate_ config.mak, which the user can
->> then edit.
->
-> This is bad, since it forces users to do one thing first and then do
-> what they're used to. Better to have the script add
->
-> -include config.mak.autogen
->
-> LAST in config.mak, unless it's already in the file and generate
-> config.mak.autogen with configure, e.g. with
->
-> grep -q autogen config.mak || \
->         echo "-include config.mak.autogen" >> config.mak
->
-> Since Make does things bottoms-up (much like swedish students and
-> midsummer celebrators), the previous hand-edited defaults in config.mak
-> will beat the ones in config.mak.autogen (a good thing).
->
-> I wouldn't want my long-standing, functioning config.mak overwritten,
-> but I *might* be interested in trying some of the options provided by
-> ./configure.
+> This extends the behaviour of git-grep when multiple -e options
+> are given.  So far, we allowed multiple -e to behave just like
+> regular grep with multiple -e, i.e. the patterns are OR'ed
+> together.
+> 
+> With this change, you can also have multiple patterns AND'ed
+> together, or form boolean expressions, like this (the
+> parentheses are quoted from the shell in this example):
+> 
+> 	$ git grep -e _PATTERN --and \( -e atom -e token \)
+This looks really nice. So for a few trivial tests it did not fail :)
 
-Done, with small changes.
+I noticed an unrelated bug. The context separators ("--") are missing
+between matches in different files:
 
-Can anyone tell me if frep use is portable enough?
+$ git-grep -e foobar -A 1 (this uses external grep)
+Documentation/git-diff-tree.txt:I.e. "foo" does not pick up `foobar.h`.  "foo" does match `foo/bar.h`
+Documentation/git-diff-tree.txt-so it can be used to name subdirectories.
+--
+git-send-email.perl:#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
+git-send-email.perl-
+--
+[..]
 
- configure.ac |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+$ git-grep -e foobar -A 1 master (this is internal grep)
+master:Documentation/git-diff-tree.txt:I.e. "foo" does not pick up `foobar.h`.  "foo" does match `foo/bar.h`
+master:Documentation/git-diff-tree.txt-so it can be used to name subdirectories.
+master:git-send-email.perl:#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
+master:git-send-email.perl-
+[..]
 
-diff --git a/configure.ac b/configure.ac
-index 1ead656..2904077 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -54,3 +54,6 @@ AC_CONFIG_FILES(["${config_file}":"${con
- AC_OUTPUT
- 
- rm -f "${config_append}"
-+
-+grep -q -s -F "-include ${config_file}" config.mak || \
-+        echo  "-include ${config_file}" >> config.mak
--- 
-1.4.0
+I think this cannot be fixed in the loop in builtin-grep.c:grep_cache
+because after the last hit there should be no separator but it is not
+known if a grep_sha1/grep_file will match and produce output. So I
+think there has to be a variable passed down which tells those
+functions to print the separator before any other output.
