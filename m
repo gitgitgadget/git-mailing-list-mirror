@@ -1,93 +1,69 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 7] autoconf: configure.ac uses variables to set in, out and temp files
-Date: Fri, 30 Jun 2006 02:11:18 +0200
-Message-ID: <200606300211.21922.jnareb@gmail.com>
-References: <200606290301.51657.jnareb@gmail.com> <200606291835.53788.jnareb@gmail.com> <200606291947.50980.jnareb@gmail.com>
+Subject: [PATCH 8] autoconf: ./configure script outputs to config.mac.auto
+Date: Fri, 30 Jun 2006 02:32:33 +0200
+Message-ID: <200606300232.34472.jnareb@gmail.com>
+References: <200606290301.51657.jnareb@gmail.com> <200606291947.50980.jnareb@gmail.com> <200606300211.21922.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jun 30 02:30:11 2006
+X-From: git-owner@vger.kernel.org Fri Jun 30 02:32:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw6tR-0002Tu-O2
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:29:58 +0200
+	id 1Fw6w0-0003QI-IG
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:32:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbWF3A3Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 20:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbWF3A3V
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:29:21 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:31979 "EHLO
+	id S1751346AbWF3Aca (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 20:32:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbWF3Aca
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:32:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:6130 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S964820AbWF3A3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 20:29:15 -0400
-Received: by nf-out-0910.google.com with SMTP id m19so37913nfc
-        for <git@vger.kernel.org>; Thu, 29 Jun 2006 17:29:14 -0700 (PDT)
+	id S1751338AbWF3Ac2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 20:32:28 -0400
+Received: by nf-out-0910.google.com with SMTP id m19so38347nfc
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 17:32:27 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=X4EAZbphbXocCkBn7svNF3zUwYh5KO+9FL0924E4WxaIKAr997wMgCLfDTWm58amXz4U7zlMyGcCv89IYF5WU97pIRrHqZj/z0W/W/QG6SCk+mgTOn3SripHt6Pl22caABRQu9Jt2krwdM7HyqM/vDpBbYongOrrtw0O0JyagI8=
-Received: by 10.48.1.4 with SMTP id 4mr1809250nfa;
-        Thu, 29 Jun 2006 17:29:14 -0700 (PDT)
+        b=ol9ThfkF7PStpQtSBxKUdC3/sjssGa/nHnmeO3MKBHYndEsFfu66VYPz8B91mlSSn0LW2ezBWcZLTopSZowY4AtkmaeazYrO3Qs7eszd3WXRVXRRO8YvQi5ywupnn6CGf/arFKhlUy5RKCXdLEC/lCEzggLuNcGacRYp3qBUYKs=
+Received: by 10.48.233.18 with SMTP id f18mr175028nfh;
+        Thu, 29 Jun 2006 17:32:27 -0700 (PDT)
 Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
-        by mx.gmail.com with ESMTP id a24sm941958nfc.2006.06.29.17.29.14;
-        Thu, 29 Jun 2006 17:29:14 -0700 (PDT)
+        by mx.gmail.com with ESMTP id v20sm1007789nfc.2006.06.29.17.32.27;
+        Thu, 29 Jun 2006 17:32:27 -0700 (PDT)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
-In-Reply-To: <200606291947.50980.jnareb@gmail.com>
+In-Reply-To: <200606300211.21922.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22937>
 
-configure.ac now uses variables to set input file (containing strings
-substituted by ./configure script), temporary file (for appending
-lines to output file) and output file (with the result configuration).
-
-This is preparation to using other file than config.mak for output.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- configure.ac |   14 +++++++++-----
- 1 files changed, 9 insertions(+), 5 deletions(-)
+So now to actually use ./configure output you either have to add
+  -include config.mak.auto
+to Makefile before including config.mak, link config.mak.auto to config.mak, 
+or rename (move) config.mak.auto to config.mak after done with ./configure
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index f48307c..58ec57a 100644
+index 58ec57a..799bc87 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -6,14 +6,18 @@ AC_INIT([git], [1.4.0], [git@vger.kernel
+@@ -6,7 +6,7 @@ AC_INIT([git], [1.4.0], [git@vger.kernel
  
  AC_CONFIG_SRCDIR([git.c])
  
--echo "# config.mak.append.  Generated by configure." >> config.mak.append
-+config_file=config.mak
-+config_append=config.mak.append
-+config_in=config.mak.in
-+
-+echo "# ${config_append}.  Generated by configure." >> "${config_append}"
+-config_file=config.mak
++config_file=config.mak.auto
+ config_append=config.mak.append
+ config_in=config.mak.in
  
- # Definitions of macros
- # MY_APPEND_LINE(LINE)
- # --------------------
--# Append LINE to file config.mak.append
-+# Append LINE to file ${config_append}
- AC_DEFUN([MY_APPEND_LINE],
--[[echo "$1" >> config.mak.append]])# MY_APPEND_LINE
-+[[echo "$1" >> "${config_append}"]])# MY_APPEND_LINE
- 
- 
- # Checks for libraries.
-@@ -46,6 +50,6 @@ AC_CHECK_FUNC(setenv,,MY_APPEND_LINE(NO_
- 
- 
- # Output files
--AC_CONFIG_FILES([config.mak:config.mak.in:config.mak.append], 
--[rm -f config.mak.append])
-+AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"], 
-+[rm -f "${config_append}"])
- AC_OUTPUT
 -- 
 1.4.0
