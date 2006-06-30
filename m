@@ -1,72 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Prepare "git-merge-tree" for future work
-Date: Thu, 29 Jun 2006 19:32:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606291925230.12404@g5.osdl.org>
-References: <Pine.LNX.4.64.0606281054470.3782@g5.osdl.org>
- <Pine.LNX.4.64.0606281401540.12404@g5.osdl.org> <7vejx7mmaj.fsf@assigned-by-dhcp.cox.net>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: Creating diff from 2.6.16 from cryptodev-2.6 git tree
+Date: Fri, 30 Jun 2006 12:32:28 +1000
+Message-ID: <20060630023228.GA28850@gondor.apana.org.au>
+References: <44A47BE0.9060504@logix.cz> <20060630013627.GA27527@gondor.apana.org.au> <Pine.LNX.4.64.0606291904250.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 04:32:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Ludvig <michal@logix.cz>, linux-crypto@vger.kernel.org,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 04:33:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw8o6-0007HV-P8
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 04:32:35 +0200
+	id 1Fw8pD-0007PX-LR
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 04:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbWF3Cc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 22:32:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbWF3Cc3
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 22:32:29 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43159 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751416AbWF3Cc2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 22:32:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5U2WNnW010135
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 29 Jun 2006 19:32:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5U2WMs7022173;
-	Thu, 29 Jun 2006 19:32:23 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejx7mmaj.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751423AbWF3Cdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 22:33:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbWF3Cdj
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 22:33:39 -0400
+Received: from [64.62.148.172] ([64.62.148.172]:3590 "EHLO arnor.apana.org.au")
+	by vger.kernel.org with ESMTP id S1751423AbWF3Cdi (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 22:33:38 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6])
+	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
+	id 1Fw8o5-00008H-Te; Fri, 30 Jun 2006 12:32:33 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1Fw8o0-0007W3-00; Fri, 30 Jun 2006 12:32:28 +1000
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606291904250.12404@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22948>
 
-
-
-On Thu, 29 Jun 2006, Junio C Hamano wrote:
-
-> Linus Torvalds <torvalds@osdl.org> writes:
+On Thu, Jun 29, 2006 at 07:25:01PM -0700, Linus Torvalds wrote:
 > 
-> > I punted on trying to use the proper git diff interfaces (they are very 
-> > tightly tied into the "diff_filespec" model - Junio, it might be nice if 
-> > there was some way to use them in a setting where that isn't necessarily 
-> > as natural).
+> The easiest by far is if you only care about a certain sub-directory. 
+> Then, assuming the branch "crypto" is the top-most commit of the cryptodev 
+> repo, just do
 > 
-> I am not quite sure what you mean.
+> 	git diff v2.6.16..crypto -- crypto/
 
-For what I wanted to do, I didn't see an easy way to add/populate a new 
-filespec. It was easier to just use the raw libxdiff interfaces, but 
-that's really just because I know the interfaces.
+Yes, you should always do something like this when backporting to make
+sure that you haven't missed patches merged in ways that you didn't
+anticipate.
 
-In contrast, the ones to diff_filespec I've never really used, and I did 
-not want to compare blob objects, I very much wanted to compare in-memory 
-buffers (_and_ potentially blobs).
+Although I'm not aware of any such patches in the time frame that Michal
+has in mind.
 
-So if you can show an easy example of how to populate a set of filespec 
-pairs (not with blobs - with in-memory generated data) and insert them 
-onto the lists, that would be good.
-
-In fact, maybe you can show me what git-merge-tree needs to do..
-
-Hint hint.
-
-		Linus
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
