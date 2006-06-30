@@ -1,51 +1,62 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 4/4] save another call to git-update-index
-Date: Fri, 30 Jun 2006 09:22:17 +0200
-Message-ID: <81b0412b0606300022k68d13dg8e292d9b768df51c@mail.gmail.com>
-References: <20060630002756.GD22618@steel.home>
-	 <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/3] Fix probing for already installed Error.pm
+Date: Fri, 30 Jun 2006 00:28:08 -0700
+Message-ID: <7vfyhnksqf.fsf@assigned-by-dhcp.cox.net>
+References: <20060630050923.701.37665.stgit@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Alex Riesen" <fork0@t-online.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 09:22:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 09:28:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwDKY-0003A8-T1
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 09:22:23 +0200
+	id 1FwDQF-00040r-0k
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 09:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932119AbWF3HWU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 03:22:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932127AbWF3HWU
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 03:22:20 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:5478 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932119AbWF3HWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 03:22:18 -0400
-Received: by nf-out-0910.google.com with SMTP id o63so187386nfa
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 00:22:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Np4p6MhceBLvkwJUHQ2gFuslzqO9PScxLnpBFyl+fVYIGSTmGdZBt0ABEHtFIbydUTcHa3+hANmSFNjCSXn9Fufuh2mO4r4fN7PHA/btrwCYj3GJSzhc7OmbPgbnMEBBjhWaFBBl+9LfRcjQrXulOGKnnQUUzxz9sNvNdKSQjdU=
-Received: by 10.78.177.3 with SMTP id z3mr5046hue;
-        Fri, 30 Jun 2006 00:22:17 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Fri, 30 Jun 2006 00:22:17 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1750852AbWF3H2L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 03:28:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWF3H2L
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 03:28:11 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:32728 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750852AbWF3H2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 03:28:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060630072809.QMY16011.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 30 Jun 2006 03:28:09 -0400
+To: Pavel Roskin <proski@gnu.org>, Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060630050923.701.37665.stgit@dv.roinet.com> (Pavel Roskin's
+	message of "Fri, 30 Jun 2006 01:09:23 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22963>
 
-On 6/30/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> FYI I've been just battling this pipe for a couple of hours. The first
-> steps were easy, but since I wanted to do it incrementally, the index has
-> to be written every so often, and I seem not to be able to get that right.
->
-Are you sure? Does something use the index between starting update-index
-pipe and pclose?
+Pavel Roskin <proski@gnu.org> writes:
+
+> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+> index d401a66..b3fbb73 100644
+> --- a/perl/Makefile.PL
+> +++ b/perl/Makefile.PL
+> @@ -12,7 +12,7 @@ my %pm = ('Git.pm' => '$(INST_LIBDIR)/Gi
+>  
+>  # We come with our own bundled Error.pm. It's not in the set of default
+>  # Perl modules so install it if it's not available on the system yet.
+> -eval { require 'Error' };
+> +eval { require Error };
+>  if ($@) {
+>  	$pm{'Error.pm'} = '$(INST_LIBDIR)/Error.pm';
+>  }
+
+The syntax updates is correct, but this is still wrong, I am
+afraid.
+
+It is trying to see if we need to install the Error.pm we ship
+just in case the system does not have Error.pm available.  But
+this script is run in perl/ directory where we have that private
+copy of Error.pm, so "require Error" always succeeds, eh, at
+least after you fixed the above syntax error X-<.
