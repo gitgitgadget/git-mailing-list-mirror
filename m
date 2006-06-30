@@ -1,112 +1,554 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Incorporating gitweb-xmms2 features in trunk gitweb
-Date: Fri, 30 Jun 2006 11:59:37 +0200
-Message-ID: <200606301159.38431.jnareb@gmail.com>
-References: <200606210845.31807.jnareb@gmail.com> <449EF8A9.3080301@xmms.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-grep: boolean expression on pattern matching.
+Date: Fri, 30 Jun 2006 03:08:02 -0700
+Message-ID: <7vsllnj6rh.fsf_-_@assigned-by-dhcp.cox.net>
+References: <E1FuWh7-0008Ry-HX@moooo.ath.cx>
+	<20060625184757.f8273820.tihirvon@gmail.com>
+	<E1FuX8l-0001H5-2z@moooo.ath.cx>
+	<Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<E1FueYh-0004XE-Fg@moooo.ath.cx>
+	<20060629222009.GA9310@cip.informatik.uni-erlangen.de>
+	<7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
+	<E1Fw8hS-00023y-FY@moooo.ath.cx>
+	<7v7j2zmgbu.fsf@assigned-by-dhcp.cox.net>
+	<E1FwDiI-0007Xp-2s@moooo.ath.cx>
+	<7v3bdnkrfb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jun 30 11:59:45 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 12:08:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwFmk-0003AH-Al
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 11:59:38 +0200
+	id 1FwFv7-0004Ee-MB
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 12:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbWF3J7f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 05:59:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932461AbWF3J7f
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 05:59:35 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:25304 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932495AbWF3J7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 05:59:34 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so212740nfe
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 02:59:33 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ISxvo8TS4VwHuIGVV2zTq1qJrxIS29AA9Nk/uiUrJdU2Xc35ivVHJWPaK6j4Tc77XyncymvOyel/u0JUjp7FflGM60KbOLJWJNHL5FRGdQvSHTZsgKcFv7LB+yBJsS0Uwt7WFVshtBpKlCSio862wvEABE70c+PepAZ+wacIZko=
-Received: by 10.49.21.14 with SMTP id y14mr152123nfi;
-        Fri, 30 Jun 2006 02:59:31 -0700 (PDT)
-Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
-        by mx.gmail.com with ESMTP id a23sm1404288nfc.2006.06.30.02.59.30;
-        Fri, 30 Jun 2006 02:59:31 -0700 (PDT)
-To: Sham Chukoury <eleusis@xmms.org>, git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <449EF8A9.3080301@xmms.org>
-Content-Disposition: inline
+	id S1750748AbWF3KIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 06:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbWF3KIF
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 06:08:05 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:11904 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750748AbWF3KID (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 06:08:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060630100803.EZAI16011.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 30 Jun 2006 06:08:03 -0400
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <7v3bdnkrfb.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 30 Jun 2006 00:56:24 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22976>
 
-Sham Chukoury <eleusis[@]xmms[.]org> wrote:
-> Jakub Narebski wrote:
->> Now (from git 1.4.0) that gitweb is incorporated in main git.git 
->> repository, and patches to it are accepted by Junio on git mailing 
->> list, I have taken to adding new features to gitweb.
->> 
->> I've planned on adding gitweb-xmms2 features (using separate topic 
->> branches for each feature, like snapshots, hightlighting, committags).
->> Perhaps we could coordinate efforts?
-> 
-> Coordination sounds great. What do you have in mind? :)
+This extends the behaviour of git-grep when multiple -e options
+are given.  So far, we allowed multiple -e to behave just like
+regular grep with multiple -e, i.e. the patterns are OR'ed
+together.
 
-Actually it seems that I wouldn't have much time (at least in near future)
-for work on gitweb. The main thing stopping me is that gitweb needs
-refactoring before adding (or re-adding) new features, as it is written
-partially at least in copy'n'paste style, AND waiting for Git.pm Perly git
-interface (I'd like to have perl-only Git.pm and use it in gitweb, but 
-pasky who develops it uses XS for speed).
+With this change, you can also have multiple patterns AND'ed
+together, or form boolean expressions, like this (the
+parentheses are quoted from the shell in this example):
+
+	$ git grep -e _PATTERN --and \( -e atom -e token \)
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+ * OR'ing together, admittably, can be done easily by saying
+   something like -e 'atom\|token', so being able to say --and
+   as you argued is of more practical importance, and doing
+   boolean expression like this might be too much frill.
+
+   Only very lightly tested; it is obviously not slated for
+   1.4.1.
+
+ builtin-grep.c |  378 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 files changed, 327 insertions(+), 51 deletions(-)
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 2e7986c..70b1fd2 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -82,17 +82,47 @@ static int pathspec_matches(const char *
+ 	return 0;
+ }
  
-An example of such refactoring is your separation of navbar generation
-code. Similar work was done by Sven Verdoolaege when introducing in-gitweb
-snapshot code in
-  "gitweb and tar snapshots"
-  http://marc.theaimsgroup.com/?l=git&m=111909432415478&w=2
-  http://www.liacs.nl/~sverdool/gitweb.cgi?p=gitweb.git;a=summary
-  http://www.liacs.nl/~sverdool/gitweb.git#master
-In my opinion your navbar code is too tied up with current navbar, while
-sverdool is a little too perl-hackerish (e.g. there is only one instance,
-i.e. root commit, where "top" part of navbar is not default, i.e. it
-lacks "commitdiff" (to parent)).
-
->> For now from gitweb-xmms2.git I have only cherry-picked "Make CSS 
->> readable" commit 561262030d58a6325f500b36d836dbe02a5abc68.
-> 
-> Bear in mind that, since 'forking' (for lack of a better word) from v264, I 
-> haven't merged any changes from the 'official' gitweb tree.. Last time I 
-> checked, there's at least one changeset I reimplemented differently (perhaps 
-> wrongly). I need to go back and see what needs to be fixed properly..
-
-gitweb-xmms2 merged quite cleanly with 1.4.0. It was later changes in next
-(among  others adding optional "blame" view for blobs, using old navbar 
-generation) that makes automatic merge fail. 
-
-> Going back to the point on coordination - I currently track bugs and feature 
-> requests for gitweb-xmms2 using the xmms2 bug tracker at 
-> http://bugs.xmms2.xmms.se (You'll need to select the 'Misc - gitweb' project 
-> from the dropdown at the top right of the page to see the relevant reports)
-
-Check my two threads on gitweb wishlist features, and plans on refactoring
-on git mailing list:
-  "[RFC] gitweb wishlist and TODO list"
-  Message-ID: <e79921$u0e$1@sea.gmane.org>
-  http://permalink.gmane.org/gmane.comp.version-control.git/22213
-  http://marc.theaimsgroup.com/?l=git&m=115082279425118&w=2
-and
-  "gitweb refactoring"
-  Message-ID: <e7ed1r$9ve$1@sea.gmane.org>
-  http://permalink.gmane.org/gmane.comp.version-control.git/22345
-  http://marc.theaimsgroup.com/?l=git&m=115099031220954&w=2
-
-
-P.S. Now that gitweb is included in git.git (from git version 1.4.0), you should
-have easier to have your patches accepted into gitweb trunk.
-
++enum grep_pat_token {
++	GREP_PATTERN,
++	GREP_AND,
++	GREP_OPEN_PAREN,
++	GREP_CLOSE_PAREN,
++	GREP_NOT,
++	GREP_OR,
++};
++
+ struct grep_pat {
+ 	struct grep_pat *next;
+ 	const char *origin;
+ 	int no;
++	enum grep_pat_token token;
+ 	const char *pattern;
+ 	regex_t regexp;
+ };
+ 
++enum grep_expr_node {
++	GREP_NODE_ATOM,
++	GREP_NODE_NOT,
++	GREP_NODE_AND,
++	GREP_NODE_OR,
++};
++
++struct grep_expr {
++	enum grep_expr_node node;
++	union {
++		struct grep_pat *atom;
++		struct grep_expr *unary;
++		struct {
++			struct grep_expr *left;
++			struct grep_expr *right;
++		} binary;
++	} u;
++};
++
+ struct grep_opt {
+ 	struct grep_pat *pattern_list;
+ 	struct grep_pat **pattern_tail;
++	struct grep_expr *pattern_expression;
+ 	regex_t regexp;
+ 	unsigned linenum:1;
+ 	unsigned invert:1;
+@@ -105,43 +135,224 @@ #define GREP_BINARY_DEFAULT	0
+ #define GREP_BINARY_NOMATCH	1
+ #define GREP_BINARY_TEXT	2
+ 	unsigned binary:2;
++	unsigned extended:1;
+ 	int regflags;
+ 	unsigned pre_context;
+ 	unsigned post_context;
+ };
+ 
+ static void add_pattern(struct grep_opt *opt, const char *pat,
+-			const char *origin, int no)
++			const char *origin, int no, enum grep_pat_token t)
+ {
+ 	struct grep_pat *p = xcalloc(1, sizeof(*p));
+ 	p->pattern = pat;
+ 	p->origin = origin;
+ 	p->no = no;
++	p->token = t;
+ 	*opt->pattern_tail = p;
+ 	opt->pattern_tail = &p->next;
+ 	p->next = NULL;
+ }
+ 
++static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
++{
++	int err = regcomp(&p->regexp, p->pattern, opt->regflags);
++	if (err) {
++		char errbuf[1024];
++		char where[1024];
++		if (p->no)
++			sprintf(where, "In '%s' at %d, ",
++				p->origin, p->no);
++		else if (p->origin)
++			sprintf(where, "%s, ", p->origin);
++		else
++			where[0] = 0;
++		regerror(err, &p->regexp, errbuf, 1024);
++		regfree(&p->regexp);
++		die("%s'%s': %s", where, p->pattern, errbuf);
++	}
++}
++
++#if DEBUG
++static inline void indent(int in)
++{
++	int i;
++	for (i = 0; i < in; i++) putchar(' ');
++}
++
++static void dump_pattern_exp(struct grep_expr *x, int in)
++{
++	switch (x->node) {
++	case GREP_NODE_ATOM:
++		indent(in);
++		puts(x->u.atom->pattern);
++		break;
++	case GREP_NODE_NOT:
++		indent(in);
++		puts("--not");
++		dump_pattern_exp(x->u.unary, in+1);
++		break;
++	case GREP_NODE_AND:
++		dump_pattern_exp(x->u.binary.left, in+1);
++		indent(in);
++		puts("--and");
++		dump_pattern_exp(x->u.binary.right, in+1);
++		break;
++	case GREP_NODE_OR:
++		dump_pattern_exp(x->u.binary.left, in+1);
++		indent(in);
++		puts("--or");
++		dump_pattern_exp(x->u.binary.right, in+1);
++		break;
++	}
++}
++
++static void looking_at(const char *msg, struct grep_pat **list)
++{
++	struct grep_pat *p = *list;
++	fprintf(stderr, "%s: looking at ", msg);
++	if (!p)
++		fprintf(stderr, "empty\n");
++	else
++		fprintf(stderr, "<%s>\n", p->pattern);
++}
++#else
++#define looking_at(a,b) do {} while(0)
++#endif
++
++static struct grep_expr *compile_pattern_expr(struct grep_pat **);
++static struct grep_expr *compile_pattern_atom(struct grep_pat **list)
++{
++	struct grep_pat *p;
++	struct grep_expr *x;
++
++	looking_at("atom", list);
++
++	p = *list;
++	switch (p->token) {
++	case GREP_PATTERN: /* atom */
++		x = xcalloc(1, sizeof (struct grep_expr));
++		x->node = GREP_NODE_ATOM;
++		x->u.atom = p;
++		*list = p->next;
++		return x;
++	case GREP_OPEN_PAREN:
++		*list = p->next;
++		x = compile_pattern_expr(list);
++		if (!x)
++			return NULL;
++		if (!*list || (*list)->token != GREP_CLOSE_PAREN)
++			die("unmatched parenthesis");
++		*list = (*list)->next;
++		return x;
++	default:
++		return NULL;
++	}
++}
++
++static struct grep_expr *compile_pattern_not(struct grep_pat **list)
++{
++	struct grep_pat *p;
++	struct grep_expr *x;
++
++	looking_at("not", list);
++
++	p = *list;
++	switch (p->token) {
++	case GREP_NOT:
++		if (!p->next)
++			die("--not not followed by pattern expression");
++		*list = p->next;
++		x = xcalloc(1, sizeof (struct grep_expr));
++		x->node = GREP_NODE_NOT;
++		x->u.unary = compile_pattern_not(list);
++		if (!x->u.unary)
++			die("--not followed by non pattern expression");
++		return x;
++	default:
++		return compile_pattern_atom(list);
++	}
++}
++
++static struct grep_expr *compile_pattern_and(struct grep_pat **list)
++{
++	struct grep_pat *p;
++	struct grep_expr *x, *y, *z;
++
++	looking_at("and", list);
++
++	x = compile_pattern_not(list);
++	p = *list;
++	if (p && p->token == GREP_AND) {
++		if (!p->next)
++			die("--and not followed by pattern expression");
++		*list = p->next;
++		y = compile_pattern_and(list);
++		if (!y)
++			die("--and not followed by pattern expression");
++		z = xcalloc(1, sizeof (struct grep_expr));
++		z->node = GREP_NODE_AND;
++		z->u.binary.left = x;
++		z->u.binary.right = y;
++		return z;
++	}
++	return x;
++}
++
++static struct grep_expr *compile_pattern_or(struct grep_pat **list)
++{
++	struct grep_pat *p;
++	struct grep_expr *x, *y, *z;
++
++	looking_at("or", list);
++
++	x = compile_pattern_and(list);
++	p = *list;
++	if (x && p && p->token != GREP_CLOSE_PAREN) {
++		y = compile_pattern_or(list);
++		if (!y)
++			die("not a pattern expression %s", p->pattern);
++		z = xcalloc(1, sizeof (struct grep_expr));
++		z->node = GREP_NODE_OR;
++		z->u.binary.left = x;
++		z->u.binary.right = y;
++		return z;
++	}
++	return x;
++}
++
++static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
++{
++	looking_at("expr", list);
++
++	return compile_pattern_or(list);
++}
++
+ static void compile_patterns(struct grep_opt *opt)
+ {
+ 	struct grep_pat *p;
++
++	/* First compile regexps */
+ 	for (p = opt->pattern_list; p; p = p->next) {
+-		int err = regcomp(&p->regexp, p->pattern, opt->regflags);
+-		if (err) {
+-			char errbuf[1024];
+-			char where[1024];
+-			if (p->no)
+-				sprintf(where, "In '%s' at %d, ",
+-					p->origin, p->no);
+-			else if (p->origin)
+-				sprintf(where, "%s, ", p->origin);
+-			else
+-				where[0] = 0;
+-			regerror(err, &p->regexp, errbuf, 1024);
+-			regfree(&p->regexp);
+-			die("%s'%s': %s", where, p->pattern, errbuf);
+-		}
++		if (p->token == GREP_PATTERN)
++			compile_regexp(p, opt);
++		else
++			opt->extended = 1;
+ 	}
++
++	if (!opt->extended)
++		return;
++
++	/* Then bundle them up in an expression.
++	 * A classic recursive descent parser would do.
++	 */
++	p = opt->pattern_list;
++	opt->pattern_expression = compile_pattern_expr(&p);
++#if DEBUG
++	dump_pattern_exp(opt->pattern_expression, 0);
++#endif
++	if (p)
++		die("incomplete pattern expression: %s", p->pattern);
+ }
+ 
+ static char *end_of_line(char *cp, unsigned long *left)
+@@ -196,6 +407,79 @@ static int fixmatch(const char *pattern,
+ 	}
+ }
+ 
++static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol, char *eol)
++{
++	int hit = 0;
++	regmatch_t pmatch[10];
++
++	if (!opt->fixed) {
++		regex_t *exp = &p->regexp;
++		hit = !regexec(exp, bol, ARRAY_SIZE(pmatch),
++			       pmatch, 0);
++	}
++	else {
++		hit = !fixmatch(p->pattern, bol, pmatch);
++	}
++
++	if (hit && opt->word_regexp) {
++		/* Match beginning must be either
++		 * beginning of the line, or at word
++		 * boundary (i.e. the last char must
++		 * not be alnum or underscore).
++		 */
++		if ((pmatch[0].rm_so < 0) ||
++		    (eol - bol) <= pmatch[0].rm_so ||
++		    (pmatch[0].rm_eo < 0) ||
++		    (eol - bol) < pmatch[0].rm_eo)
++			die("regexp returned nonsense");
++		if (pmatch[0].rm_so != 0 &&
++		    word_char(bol[pmatch[0].rm_so-1]))
++			hit = 0;
++		if (pmatch[0].rm_eo != (eol-bol) &&
++		    word_char(bol[pmatch[0].rm_eo]))
++			hit = 0;
++	}
++	return hit;
++}
++
++static int match_expr_eval(struct grep_opt *opt,
++			   struct grep_expr *x,
++			   char *bol, char *eol)
++{
++	switch (x->node) {
++	case GREP_NODE_ATOM:
++		return match_one_pattern(opt, x->u.atom, bol, eol);
++		break;
++	case GREP_NODE_NOT:
++		return !match_expr_eval(opt, x->u.unary, bol, eol);
++	case GREP_NODE_AND:
++		return (match_expr_eval(opt, x->u.binary.left, bol, eol) &&
++			match_expr_eval(opt, x->u.binary.right, bol, eol));
++	case GREP_NODE_OR:
++		return (match_expr_eval(opt, x->u.binary.left, bol, eol) ||
++			match_expr_eval(opt, x->u.binary.right, bol, eol));
++	}
++	die("Unexpected node type (internal error) %d\n", x->node);
++}
++
++static int match_expr(struct grep_opt *opt, char *bol, char *eol)
++{
++	struct grep_expr *x = opt->pattern_expression;
++	return match_expr_eval(opt, x, bol, eol);
++}
++
++static int match_line(struct grep_opt *opt, char *bol, char *eol)
++{
++	struct grep_pat *p;
++	if (opt->extended)
++		return match_expr(opt, bol, eol);
++	for (p = opt->pattern_list; p; p = p->next) {
++		if (match_one_pattern(opt, p, bol, eol))
++			return 1;
++	}
++	return 0;
++}
++
+ static int grep_buffer(struct grep_opt *opt, const char *name,
+ 		       char *buf, unsigned long size)
+ {
+@@ -231,46 +515,15 @@ static int grep_buffer(struct grep_opt *
+ 		hunk_mark = "--\n";
+ 
+ 	while (left) {
+-		regmatch_t pmatch[10];
+ 		char *eol, ch;
+ 		int hit = 0;
+-		struct grep_pat *p;
+ 
+ 		eol = end_of_line(bol, &left);
+ 		ch = *eol;
+ 		*eol = 0;
+ 
+-		for (p = opt->pattern_list; p; p = p->next) {
+-			if (!opt->fixed) {
+-				regex_t *exp = &p->regexp;
+-				hit = !regexec(exp, bol, ARRAY_SIZE(pmatch),
+-					       pmatch, 0);
+-			}
+-			else {
+-				hit = !fixmatch(p->pattern, bol, pmatch);
+-			}
++		hit = match_line(opt, bol, eol);
+ 
+-			if (hit && opt->word_regexp) {
+-				/* Match beginning must be either
+-				 * beginning of the line, or at word
+-				 * boundary (i.e. the last char must
+-				 * not be alnum or underscore).
+-				 */
+-				if ((pmatch[0].rm_so < 0) ||
+-				    (eol - bol) <= pmatch[0].rm_so ||
+-				    (pmatch[0].rm_eo < 0) ||
+-				    (eol - bol) < pmatch[0].rm_eo)
+-					die("regexp returned nonsense");
+-				if (pmatch[0].rm_so != 0 &&
+-				    word_char(bol[pmatch[0].rm_so-1]))
+-					hit = 0;
+-				if (pmatch[0].rm_eo != (eol-bol) &&
+-				    word_char(bol[pmatch[0].rm_eo]))
+-					hit = 0;
+-			}
+-			if (hit)
+-				break;
+-		}
+ 		/* "grep -v -e foo -e bla" should list lines
+ 		 * that do not have either, so inversion should
+ 		 * be done outside.
+@@ -452,6 +705,8 @@ static int external_grep(struct grep_opt
+ 	char *argptr = randarg;
+ 	struct grep_pat *p;
+ 
++	if (opt->extended)
++		return -1;
+ 	len = nr = 0;
+ 	push_arg("grep");
+ 	if (opt->fixed)
+@@ -801,16 +1056,36 @@ int cmd_grep(int argc, const char **argv
+ 				/* ignore empty line like grep does */
+ 				if (!buf[0])
+ 					continue;
+-				add_pattern(&opt, strdup(buf), argv[1], ++lno);
++				add_pattern(&opt, strdup(buf), argv[1], ++lno,
++					    GREP_PATTERN);
+ 			}
+ 			fclose(patterns);
+ 			argv++;
+ 			argc--;
+ 			continue;
+ 		}
++		if (!strcmp("--not", arg)) {
++			add_pattern(&opt, arg, "command line", 0, GREP_NOT);
++			continue;
++		}
++		if (!strcmp("--and", arg)) {
++			add_pattern(&opt, arg, "command line", 0, GREP_AND);
++			continue;
++		}
++		if (!strcmp("--or", arg))
++			continue; /* no-op */
++		if (!strcmp("(", arg)) {
++			add_pattern(&opt, arg, "command line", 0, GREP_OPEN_PAREN);
++			continue;
++		}
++		if (!strcmp(")", arg)) {
++			add_pattern(&opt, arg, "command line", 0, GREP_CLOSE_PAREN);
++			continue;
++		}
+ 		if (!strcmp("-e", arg)) {
+ 			if (1 < argc) {
+-				add_pattern(&opt, argv[1], "-e option", 0);
++				add_pattern(&opt, argv[1], "-e option", 0,
++					    GREP_PATTERN);
+ 				argv++;
+ 				argc--;
+ 				continue;
+@@ -824,7 +1099,8 @@ int cmd_grep(int argc, const char **argv
+ 
+ 		/* First unrecognized non-option token */
+ 		if (!opt.pattern_list) {
+-			add_pattern(&opt, arg, "command line", 0);
++			add_pattern(&opt, arg, "command line", 0,
++				    GREP_PATTERN);
+ 			break;
+ 		}
+ 		else {
 -- 
-Jakub Narebski
-ShadeHawk on #git
+1.4.1.rc2.gfff62
