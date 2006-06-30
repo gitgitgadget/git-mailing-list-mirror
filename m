@@ -1,118 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Creating diff from 2.6.16 from cryptodev-2.6 git tree
-Date: Thu, 29 Jun 2006 19:25:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606291904250.12404@g5.osdl.org>
-References: <44A47BE0.9060504@logix.cz> <20060630013627.GA27527@gondor.apana.org.au>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git-grep: --and to combine patterns with and instead of or
+Date: Fri, 30 Jun 2006 04:25:42 +0200
+Message-ID: <E1Fw8hS-00023y-FY@moooo.ath.cx>
+References: <E1FuWh7-0008Ry-HX@moooo.ath.cx> <20060625184757.f8273820.tihirvon@gmail.com> <E1FuX8l-0001H5-2z@moooo.ath.cx> <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de> <E1FueYh-0004XE-Fg@moooo.ath.cx> <20060629222009.GA9310@cip.informatik.uni-erlangen.de> <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michal Ludvig <michal@logix.cz>, linux-crypto@vger.kernel.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 04:25:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 04:25:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw8h9-0006PG-5B
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 04:25:23 +0200
+	id 1Fw8hb-0006TR-BF
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 04:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964926AbWF3CZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 22:25:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWF3CZS
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 22:25:18 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:39062 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751416AbWF3CZQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 22:25:16 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5U2P2nW009852
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 29 Jun 2006 19:25:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5U2P19Z022015;
-	Thu, 29 Jun 2006 19:25:01 -0700
-To: Herbert Xu <herbert@gondor.apana.org.au>
-In-Reply-To: <20060630013627.GA27527@gondor.apana.org.au>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751414AbWF3CZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 22:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbWF3CZs
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 22:25:48 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:65418 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751414AbWF3CZr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 22:25:47 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22946>
 
+So here is my proposal how extended expressions would work:
 
+extended expressions have three operators:
+    AND, OR (binary), NOT (unary)
+extended expressions do not need an extra option. They will be usable
+by adding operators between the expressions; a default operator is
+used if no operator is specified. The default operator is by default
+OR because currently multiple patterns are combined by OR.
 
-On Fri, 30 Jun 2006, Herbert Xu wrote:
->
-> On Fri, Jun 30, 2006 at 01:18:24PM +1200, Michal Ludvig wrote:
-> > 
-> > just a quick question: how can I create a patch with all changes in
-> > cryptodev-2.6 tree against tag v2.6.16 in Linus tree? I've got
-> > git://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git
-> > cloned here and want to extract all your commits in this tree since
-> > 2.6.16. Is there a way to do it in Git/Cogito?
-> 
-> OK, it's easier if you break this into three problems.
-> 
-> You start by getting all the changes merged right after 2.6.16.  This
-> can be done by locating the merge changeset in Linus's tree.  It looks
-> like this:
+OR and AND have precedence, so there are two possibilities, I'd take
+the first one.
+1. OR, AND:
+    This will make it easier to read because OR can be skipped:
+      pat1 pat2 AND pat3 pat4
+    = pat1 OR pat2 AND pat3 OR pat4
+    = (pat1 OR pat2) AND (pat3 OR pat4)
+2. AND, OR:
+    This is a bit more logic if you think of AND as * and OR as +.
 
-Actually, there are certainly other, potentially easier, ways to do this.
+Parenthesis may be used to explicitly override the default precedence.
 
-It depends a bit on what Michal wants, though. Since the current trees 
-(both mine and the cryptodev tree) have been merging things back and 
-forth, it's _not_ as easy as just saying "pick all commits that exist in 
-one branch but not the other", but depending on what Michal wants to do, 
-git gives other ways to prune out just the info he wants.
+With this setup we can add an option -FOO (I don't now how to call it,
+it is the --and from the patch) which changes the default operator and
+the precedence.  With -FOO you'd get AND as default operator and
+precedence AND, OR.  Without this option it was easy to write the
+formula in a conjungtive form (conjunction of disjunctions), now it is
+easy to write a disjunctive form (disjunction of conjunctions):
+  pat1 pat2 OR pat3 pat4
+= pat1 AND pat2 OR pat3 AND pat4
+= (pat1 AND pat2) OR (pat3 AND pat4)
 
-The easiest by far is if you only care about a certain sub-directory. 
-Then, assuming the branch "crypto" is the top-most commit of the cryptodev 
-repo, just do
+With all this as plan for extended expressions we may also introduce
+-FOO now with exactly the behaviour of --and in my patch because
+currently no explicit operators and parenthesis are allowed, so only
+the default operator may be used and -FOO would change the default
+operator.
 
-	git diff v2.6.16..crypto -- crypto/
+A short example:
+(pat1 AND pat2 AND pat3) OR pat4
+could be written as
+-FOO pat1 pat2 pat3 OR pat4
+which is imho quite readable.
 
-and that will give you a diff of all the changes since v2.6.16 inside that 
-subdirectory. That may or may not be sufficient and what Michal wants.
-
-Now, the cryptodev-2.6.git tree doesn't even contain the v2.6.16 tags, but 
-you can fix that by just doing
-
-	git fetch --tags git://git.kernel.org//pub/scm/linux/kernel/git/torvalds/linux-2.6
-
-even if your clone is actually from just the cryptodev-2.6 archive.
-
-Alternatively, if you want to see the individual changes, you can just do
-
-	git log -p --full-diff v2.6.16..crypto -- crypto/
-
-which shows you all the commits that changed the crypto/ subdirectory, AND 
-it shows the other changes those same commits did to other subdirectories 
-too (which is usually something you want in a case like this).
-
-Finally, what you can also do is that instead of matching for stuff that 
-changed the crypto/ subdirectory, you could try to match commits where the 
-committer is somebody special, eg Herbert Xu. We don't have that kind of 
-thing automated, but here's one way to do it:
-
-	git-rev-list --header v2.6.16..crypto |
-		grep -z 'committer Herbert Xu' |
-		tr '\0' '\n' |
-		sed -n '/^[a-f0-9][a-f0-9]*$/p' |
-		git diff-tree --pretty -p --stdin |
-		less -S
-
-where the "git-rev-list --header | grep -z" part picks out any commits 
-committed by Herbert, the "tr '\0' '\n' | sed -n" part then picks up just 
-the commit ID's from those lines, and the "git-diff-tree" part then shows 
-those commits as diffs.
-
-(The above should really be quite possible to shorten as
-
-	git log -p --committer="Herbert Xu"
-
-but we don't actually support git-rev-list doing matching on 
-committer/author names - although it should be easy to do in case somebody 
-wants to have a small git project to get their toes wet, hint hint)
-
-			Linus
+So the next problem are names for the options. We would need
+ - AND: between patterns
+ - OR:  between patterns
+ - NOT: before a pattern
+ - FOO: change default operator and precedence
+Unfortunately -o, -a, -n are taken and I think the options should be
+unique even though they are only allowed at certain positions of the
+argument list. I'll think about it a bit, perhaps someone else has a
+good idea. FOO should not be named --and imo but I don't have any idea
+for a good name atm.
