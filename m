@@ -1,105 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: GIt.xs merge status
-Date: Thu, 29 Jun 2006 18:28:35 -0700
-Message-ID: <7vmzbvmny4.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
-	<20060624012202.4822.qmail@science.horizon.com>
-	<7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
-	<7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
-	<7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: Creating diff from 2.6.16 from cryptodev-2.6 git tree
+Date: Fri, 30 Jun 2006 11:36:27 +1000
+Message-ID: <20060630013627.GA27527@gondor.apana.org.au>
+References: <44A47BE0.9060504@logix.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Jun 30 03:29:00 2006
+Cc: linux-crypto@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 03:37:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw7oR-0006ji-Uf
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 03:28:52 +0200
+	id 1Fw7wW-0007mE-FB
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 03:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964924AbWF3B2i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 21:28:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751396AbWF3B2i
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 21:28:38 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:7301 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751394AbWF3B2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 21:28:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060630012836.DAWD8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 29 Jun 2006 21:28:36 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vhd2atid1.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 24 Jun 2006 13:21:30 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751402AbWF3BhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 21:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbWF3BhH
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 21:37:07 -0400
+Received: from [64.62.148.172] ([64.62.148.172]:12037 "EHLO arnor.apana.org.au")
+	by vger.kernel.org with ESMTP id S1751402AbWF3BhF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 21:37:05 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6])
+	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
+	id 1Fw7vp-0008D4-1H; Fri, 30 Jun 2006 11:36:29 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1Fw7vo-0007CB-00; Fri, 30 Jun 2006 11:36:28 +1000
+To: Michal Ludvig <michal@logix.cz>
+Content-Disposition: inline
+In-Reply-To: <44A47BE0.9060504@logix.cz>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22943>
 
-Junio C Hamano <junkio@cox.net> writes:
+On Fri, Jun 30, 2006 at 01:18:24PM +1200, Michal Ludvig wrote:
+> 
+> just a quick question: how can I create a patch with all changes in
+> cryptodev-2.6 tree against tag v2.6.16 in Linus tree? I've got
+> git://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git
+> cloned here and want to extract all your commits in this tree since
+> 2.6.16. Is there a way to do it in Git/Cogito?
 
-> Pasky, can we first iron out kinks in the build procedure and
-> installation before converting existing programs further?  The
-> things I worry about currently are:
->
->  - the SITELIBARCH gotcha I sent you a message about (and you
->    responded to it already -- was that an Acked-by?);
+OK, it's easier if you break this into three problems.
 
-I think this finally was cleared thanks to Pavel Roskin (and an
-unrelated workaround at the tip of "pu" by me).
-
->  - RPM target -- we probably acquired a new build-dependency in
->    which case the .spec file needs to be updated;
-
-I am having trouble with this.  I'd appreciate help from RPM
-savvy people (the build failure log at the end).
-
->  - Make sure Git.xs builds and installed result works fine on
->    all platforms we care about, including Cygwin and other
->    non-Linux boxes.
-
-Help wanted from the list here.  One thing to note is that I
-understand Pasky is working on not using Devel::PPPort to make
-the code work with 5.6, so if your build dies with problems in
-that area you might want to wait until that is fixed.
-
-> I'd even suggest we revert the changes to git-fmt-merge-msg to
-> keep it working for now, until the above worries are resolved.
-> Otherwise we cannot have it in "next" safely (and I REALLY _do_
-> want to have Git.pm infrastructure in "next" soonish).
-
-I am still undecided about the reverting, since in the places I
-personally care about the program works ;-).
-
-I test-built the tip of "pu" 57628f0e; the RPM build log ends
+You start by getting all the changes merged right after 2.6.16.  This
+can be done by locating the merge changeset in Linus's tree.  It looks
 like this:
 
-Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
-Requires: /bin/sh git-core = 1.4.1.rc2.g5762-1 tk >= 8.4
-Processing files: git-debuginfo-1.4.1.rc2.g5762-1
-Provides: Git.so.debug()(64bit)
-Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
-Checking for unpackaged file(s): /usr/lib/rpm/check-files /var/tmp/git-1.4.1.rc2.g5762-1-root-junio
-error: Installed (but unpackaged) file(s) found:
-   /usr/lib64/perl5/5.8.6/x86_64-linux-thread-multi/perllocal.pod
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/Error.pm
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/Git.pm
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/auto/Git/.packlist
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/auto/Git/Git.bs
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/auto/Git/Git.so
+commit ec1248e70edc5cf7b485efcc7b41e44e10f422e5
+Merge: 3d1f337b3e7378923c89f37afb573a918ef40be5 55e9dce37ddf3ab358ba1d1e9eef4ee4bd8174a6
+Author: Linus Torvalds <torvalds@g5.osdl.org>
+Date:   Tue Mar 21 09:33:19 2006 -0800
 
+    Merge master.kernel.org:/pub/scm/linux/kernel/git/herbert/crypto-2.6
 
-RPM build errors:
-    Installed (but unpackaged) file(s) found:
-   /usr/lib64/perl5/5.8.6/x86_64-linux-thread-multi/perllocal.pod
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/Error.pm
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/Git.pm
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/auto/Git/.packlist
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/auto/Git/Git.bs
-   /usr/lib64/perl5/site_perl/5.8.6/x86_64-linux-thread-multi/auto/Git/Git.so
-make: *** [rpm] Error 1
+    * master.kernel.org:/pub/scm/linux/kernel/git/herbert/crypto-2.6:
+      [CRYPTO] aes: Fixed array boundary violation
+      [CRYPTO] tcrypt: Fix key alignment
+      [CRYPTO] all: Add missing cra_alignmask
+      [CRYPTO] all: Use kzalloc where possible
+      [CRYPTO] api: Align tfm context as wide as possible
+      [CRYPTO] twofish: Use rol32/ror32 where appropriate
+
+You can get the diff for this merge by doing
+
+$ git-diff-tree -p 3d1f337b3e7378923c89f37afb573a918ef40be5 ec1248e70edc5cf7b485efcc7b41e44e10f422e5
+
+You then repeat this for 2.6.17 where the merge changeset is:
+
+commit 972d19e837833b93466c6f6a8ef2a7d653000aa3
+Merge: cdf4f383a4b0ffbf458f65380ecffbeee1f79841 b9d0a25a484a90c1d60b974d115eff2fe580ce16
+Author: Linus Torvalds <torvalds@g5.osdl.org>
+Date:   Mon Jun 26 11:03:29 2006 -0700
+
+Finally you get the changes since that merge by find the common changeset
+between cryptodev-2.6 and Linus's tree and getting all the changes after
+that.
+
+This method works because all crypto changes since 2.6.16 were merged
+from my tree.  If this wasn't the case, then you'd have to search
+through the history since 2.6.16 to identify the crypto patches that
+were merged from other sources.
+
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
