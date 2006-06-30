@@ -1,68 +1,119 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Prepare "git-merge-tree" for future work
-Date: Fri, 30 Jun 2006 13:52:27 -0700
-Message-ID: <7vbqsagyd0.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0606281054470.3782@g5.osdl.org>
-	<Pine.LNX.4.64.0606281401540.12404@g5.osdl.org>
-	<7vejx7mmaj.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606291925230.12404@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH 14] autoconf: Added --with/--without for openssl, curl, expat to ./configure
+Date: Fri, 30 Jun 2006 23:45:12 +0200
+Message-ID: <200606302345.17045.jnareb@gmail.com>
+References: <200606290301.51657.jnareb@gmail.com> <200606301708.19521.jnareb@gmail.com> <200606301711.39635.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 22:52:42 2006
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jun 30 23:45:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwPyc-0001i3-MV
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 22:52:35 +0200
+	id 1FwQnl-0000sV-EI
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 23:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932294AbWF3Uwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 16:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932321AbWF3Uwa
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 16:52:30 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64236 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932294AbWF3Uw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 16:52:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060630205228.VWYP554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 30 Jun 2006 16:52:28 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606291925230.12404@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 29 Jun 2006 19:32:22 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750778AbWF3VpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 17:45:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbWF3VpK
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 17:45:10 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:45149 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750778AbWF3VpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 17:45:09 -0400
+Received: by nf-out-0910.google.com with SMTP id k26so9567nfc
+        for <git@vger.kernel.org>; Fri, 30 Jun 2006 14:45:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=CUJgW8mKaaQxwJAEXnN5iayslmxwr1ecu1ab5Bf36znBzTpKNH57Wsi8AWDr2YhD10lNd5WvIhvEyxNEfBZdtmmQmQ4sdGVj0I4SzAsxfulv/alrHzTh5uxTiWsgouagps8E6w8NyuXyBwXWxlrpVOQq0wrmibZWu7TJ2tk7rjc=
+Received: by 10.48.233.18 with SMTP id f18mr634558nfh;
+        Fri, 30 Jun 2006 14:45:07 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id n22sm1981301nfc.2006.06.30.14.45.06;
+        Fri, 30 Jun 2006 14:45:07 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200606301711.39635.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23019>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> In contrast, the ones to diff_filespec I've never really used, and I did 
-> not want to compare blob objects, I very much wanted to compare in-memory 
-> buffers (_and_ potentially blobs).
->
-> So if you can show an easy example of how to populate a set of filespec 
-> pairs (not with blobs - with in-memory generated data) and insert them 
-> onto the lists, that would be good.
+Added --with-PACKAGE[=PATH] (where PATH is prefix for PACKAGE
+libraries and includes) and --without-PACKAGE (--with-PACKAGE=no)
+support for curl, openssl, expat to configure.ac
 
-Ah, I see.  Your origin() function always returns a in-core
-buffer from an existing blob (or NULL if it is a new file) but
-result() returns either an existing blob resulting from the
-tree-level merge, or a 3-way content merge result that does not
-have an existing blob, and it is not obvious how to express the
-latter as a filespec (all other cases you can stuff the blob
-object name in the sha1[] member and if you choose to do the
-read_sha1_file() yourself store the result in data member or you
-can let diff_populate_filespec() read the data when diff
-machinery needs it).
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
-I think a filespec that has 0{40} sha1, with data already
-populated and should_free/should_munmap members both set to
-false might work for the in-memory data but I haven't tried.
+---
 
-I'd take the hint, and I will (eventually) take a look at it
-if nobody beats me to it, but most likely not now, sorry.
+I'm not autoconf/m4 expert: could anyone tell me how to uppercase
+PACKAGE name, so one could write MY_PARSE_WITH(openssl)?
+
+How to add [=PATH] to --with-PACKAGE option description in a way
+which does not screw up AS_HELP_WITH calculations. I could use
+@<:@=PATH@:>@ which transforms to [=PATH], but AS_HELP_WITH counts
+number of characters in source I think.
+
+ configure.ac |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index fcfc9ce..26d6f4d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -19,6 +19,22 @@ # Append LINE to file ${config_append}
+ AC_DEFUN([MY_APPEND_LINE],
+ [[echo "$1" >> "${config_append}"]])# MY_APPEND_LINE
+ 
++# MY_PARSE_WITH(PACKAGE)
++# ----------------------
++# For use in AC_ARG_WITH action-if-found, for packages default ON. 
++# * Set NO_PACKAGE=YesPlease  for --without-PACKAGE
++# * Set PACKAGEDIR=ARG for --with-PACKAGE=ARG
++# * Do nothing for --with-PACKAGE without ARG
++# PACKAGE option must be all uppercase
++AC_DEFUN([MY_PARSE_WITH],
++[[if test "$withval" = "no"; then \
++    MY_APPEND_LINE(NO_$1=YesPlease); \
++  elif test "$withval" != "yes"; then \
++    MY_APPEND_LINE($1DIR=$withval); \
++  fi; \
++]])# MY_PARSE_WITH
++
++
+ # Checks for libraries.
+ AC_MSG_NOTICE([CHECKS for libraries])
+ AC_CHECK_LIB([crypto], [SHA1_Init],,MY_APPEND_LINE(NO_OPENSSL=YesPlease))
+@@ -48,6 +64,24 @@ AC_CHECK_FUNC(strlcpy,,MY_APPEND_LINE(NO
+ AC_CHECK_FUNC(setenv,,MY_APPEND_LINE(NO_SETENV=YesPlease))
+ 
+ 
++# Site configuration
++AC_MSG_NOTICE([CHECKS for site configuration])
++AC_ARG_WITH(curl, 
++AS_HELP_STRING([--with-curl],[support http(s):// transports (default is YES)])
++AS_HELP_STRING([],           [ARG can be also prefix for curl library and headers]),\
++MY_PARSE_WITH(CURL))
++
++AC_ARG_WITH(openssl,
++AS_HELP_STRING([--with-openssl],[use OpenSSL library (default is YES)])
++AS_HELP_STRING([],              [ARG can be prefix for openssl library and headers]),\
++MY_PARSE_WITH(OPENSSL))
++
++AC_ARG_WITH(expat,
++AS_HELP_STRING([--with-expat],[support git-push using http:// and https:// transports via WebDAV (default is YES)])
++AS_HELP_STRING([],            [ARG can be also prefix for expat library and headers]),\
++MY_PARSE_WITH(EXPAT))
++
++
+ # Output files
+ AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
+ AC_OUTPUT
+-- 
+1.4.0
