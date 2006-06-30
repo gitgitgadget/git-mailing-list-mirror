@@ -1,98 +1,56 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] autoconf: Use autoconf to write installation directories
- to config.mak
-Date: Fri, 30 Jun 2006 14:18:27 +0200
-Message-ID: <44A51693.5020501@op5.se>
-References: <200606290301.51657.jnareb@gmail.com> <E1FvvuX-0002Lr-Nt@moooo.ath.cx> <e80lnq$9mi$1@sea.gmane.org>
+Subject: Re: [PATCH] consider previous pack undeltified object state only
+ when reusing delta data
+Date: Fri, 30 Jun 2006 14:28:06 +0200
+Message-ID: <44A518D6.8040901@op5.se>
+References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain> <20060629180011.GA4392@coredump.intra.peff.net> <Pine.LNX.4.64.0606291410420.1213@localhost.localdomain> <20060629185335.GA6704@coredump.intra.peff.net> <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain> <20060629195201.GA10786@coredump.intra.peff.net> <Pine.LNX.4.64.0606291616480.1213@localhost.localdomain> <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org> <Pine.LNX.4.64.0606291723060.1213@localhost.localdomain> <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org> <Pine.LNX.4.64.0606291743010.1213@localhost.localdomain> <7vwtazobkw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606292335190.1213@localhost.localdomain> <Pine.LNX.4.63.0606301144450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 14:18:33 2006
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 14:28:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwHxA-0005Ln-S7
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 14:18:33 +0200
+	id 1FwI6Y-0006ix-3p
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 14:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220AbWF3MS3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 08:18:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932460AbWF3MS3
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 08:18:29 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:63454 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932220AbWF3MS2
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 08:18:28 -0400
+	id S932559AbWF3M2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 08:28:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932562AbWF3M2J
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 08:28:09 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:7135 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S932559AbWF3M2I (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 08:28:08 -0400
 Received: from [192.168.1.20] (unknown [213.88.215.14])
 	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 4E4F06BCC0; Fri, 30 Jun 2006 14:18:27 +0200 (CEST)
+	id 3EBB96BCD8; Fri, 30 Jun 2006 14:28:07 +0200 (CEST)
 User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
 X-Accept-Language: en-us, en
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e80lnq$9mi$1@sea.gmane.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0606301144450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22983>
 
-Jakub Narebski wrote:
-> Matthias Lederhofer wrote:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 29 Jun 2006, Nicolas Pitre wrote:
 > 
 > 
->>>This is beginning of patch series introducing installation configuration
->>>using autoconf (and no other autotools) to git. The idea is to generate
->>>config.mak using ./configure (generated from configure.ac) from
->>>config.mak.in, so one can use autoconf as an _alternative_ to ordinary
->>>Makefile, and creating one's own config.mak.
->>
->>Are you sure this should be named config.mak? From INSTALL:
->>
->>>You can place local settings in config.mak and the Makefile
->>>will include them.  Note that config.mak is not distributed;
->>>the name is reserved for local settings.
->>
->>So with another filename either include it
->>- before config.mak: the user may override ./configure options with
->>  config.mak
->>- after config.mak: ./configure overrides config.mak
+>>Without this there would never be a chance to improve packing for 
+>>previously undeltified objects.
 > 
 > 
-> The idea was to use ./configure to _generate_ config.mak, which the user can
-> then edit.
+> Earlier this year, I was quite surprised to learn that multiple repackings 
+> actually improved packing. Does that patch mean this feature is gone?
 > 
 
-This is bad, since it forces users to do one thing first and then do 
-what they're used to. Better to have the script add
-
--include config.mak.autogen
-
-LAST in config.mak, unless it's already in the file and generate 
-config.mak.autogen with configure.
-
-Since Make does things bottoms-up (much like swedish students and 
-midsummer celebrators), the previous hand-edited defaults in config.mak 
-will beat the ones in config.mak.autogen (a good thing).
-
-> But perhaps using another filename for results of ./configure script 
-> (and including it in main Makefile) would be better idea.
-> 
-> 
->>At least do not overwrite config.mak if it exists.
-> 
-> 
-> But one might want to run ./configure with different options, to finally
-> arrive at the set which is satisfactionary. So unless some magic to detect
-> if config.mak was generated from ./configure script, or generated by user
-> is used...
-> 
-
-grep -q autogen config.mak || \
-	echo "-include config.mak.autogen" >> config.mak
-
-I wouldn't want my long-standing, functioning config.mak overwritten, 
-but I *might* be interested in trying some of the options provided by 
-./configure.
+The patch Linus sent removes that feature. This one re-introduces it.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
