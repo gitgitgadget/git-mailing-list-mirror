@@ -1,46 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] save another call to git-update-index
-Date: Fri, 30 Jun 2006 02:37:49 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060630002756.GD22618@steel.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: rebasing trouble
+Date: Thu, 29 Jun 2006 18:12:32 -0700
+Message-ID: <7v3bdno39b.fsf@assigned-by-dhcp.cox.net>
+References: <20060629194723.GD14287@fieldses.org>
+	<20060629215725.GI14287@fieldses.org>
+	<7vlkrfoaky.fsf@assigned-by-dhcp.cox.net>
+	<20060629234502.GB10041@fieldses.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 02:38:04 2006
+X-From: git-owner@vger.kernel.org Fri Jun 30 03:12:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw719-0004ks-Ga
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:37:55 +0200
+	id 1Fw7Yk-0004pC-LZ
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 03:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750816AbWF3Ahv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 20:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbWF3Ahv
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:37:51 -0400
-Received: from mail.gmx.net ([213.165.64.21]:8411 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750816AbWF3Ahv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 20:37:51 -0400
-Received: (qmail invoked by alias); 30 Jun 2006 00:37:49 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 30 Jun 2006 02:37:49 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <fork0@t-online.de>
-In-Reply-To: <20060630002756.GD22618@steel.home>
-X-Y-GMX-Trusted: 0
+	id S1751376AbWF3BMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 21:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbWF3BMe
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 21:12:34 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:5017 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751376AbWF3BMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 21:12:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060630011233.GPPX6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 29 Jun 2006 21:12:33 -0400
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20060629234502.GB10041@fieldses.org> (J. Bruce Fields's message
+	of "Thu, 29 Jun 2006 19:45:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22939>
 
-Hi,
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-FYI I've been just battling this pipe for a couple of hours. The first 
-steps were easy, but since I wanted to do it incrementally, the index has 
-to be written every so often, and I seem not to be able to get that right.
+> I don't know why I find that syntax so counterintuitive.  Something like
+>
+> 	git checkout -b newgood master
+> 	git cherry-pick next..good
+>
+> would seem more obvious.
 
-But now it's time to go to bed, so this will wait for tomorrow.
-
-Ciao,
-Dscho
+Yes.  Everybody loves to hate this syntax.
