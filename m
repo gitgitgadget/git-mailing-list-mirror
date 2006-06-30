@@ -1,75 +1,85 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: rebasing trouble
-Date: Thu, 29 Jun 2006 19:45:02 -0400
-Message-ID: <20060629234502.GB10041@fieldses.org>
-References: <20060629194723.GD14287@fieldses.org> <20060629215725.GI14287@fieldses.org> <7vlkrfoaky.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Makefile: set USE_PIC on Linux x86_64 for linking with
+	Git.pm
+Date: Thu, 29 Jun 2006 20:03:00 -0400
+Message-ID: <1151625780.10358.13.camel@dv>
+References: <20060628183557.GA5713@fiberbit.xs4all.nl>
+	 <7vr719159v.fsf@assigned-by-dhcp.cox.net>
+	 <7virml14za.fsf@assigned-by-dhcp.cox.net>
+	 <20060628192145.GD5713@fiberbit.xs4all.nl> <1151527945.1619.17.camel@dv>
+	 <e81jr5$l1c$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 01:45:16 2006
+X-From: git-owner@vger.kernel.org Fri Jun 30 02:03:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw6C9-0004BQ-P1
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 01:45:14 +0200
+	id 1Fw6Tj-0006vk-6v
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:03:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933105AbWF2XpG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 19:45:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933109AbWF2XpF
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 19:45:05 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:14512 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S933105AbWF2XpD
+	id S1751328AbWF3ADH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 20:03:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbWF3ADG
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:03:06 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:61879 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751328AbWF3ADE
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 19:45:03 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Fw6By-0003Fz-Jj; Thu, 29 Jun 2006 19:45:02 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vlkrfoaky.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+	Thu, 29 Jun 2006 20:03:04 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Fw6TP-0004nz-NS
+	for git@vger.kernel.org; Thu, 29 Jun 2006 20:03:03 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Fw6TN-0002iz-C1; Thu, 29 Jun 2006 20:03:01 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e81jr5$l1c$1@sea.gmane.org>
+X-Mailer: Evolution 2.7.3 (2.7.3-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22929>
 
-On Thu, Jun 29, 2006 at 03:34:21PM -0700, Junio C Hamano wrote:
-> For example, I maintain two public branches "master" and
-> "next", the former is supposed to be quite stable and the latter
-> to contain sane proposed updates that need to be proven before
-> graduating to "master".
+Hi, Jakub!
+
+I don't have the newsgroup access, so I'm copying to the mailing list
+instead.
+
+On Fri, 2006-06-30 at 00:22 +0200, Jakub Narebski wrote:
+
+> If I remember correctly everybody agreed that autoconf is least evil of the
+> whole autotools package.
+
+Sort of.  Some people were less dismissive than others.
+
+>  pasky suggested to write ./configure script by
+> hand on #git...
+
+That's probably not a good idea.  Autoconf can do this very well if used
+correctly.  And I'm ready to help when it comes to correctness.
+
+> I'm trying to do inobtrusive _optional_ autoconf support in the patch series
+> beginning with
+>   Message-ID: <200606290301.51657.jnareb@gmail.com>
+>   http://permalink.gmane.org/gmane.comp.version-control.git/22832
+
+The problem with optional support is that you suddenly have two
+alternative mechanisms to adjust the build to the system, and both
+should be kept in a  working condition.  But it's a good first step.
+
+> Please wait for the patch moving ./autoconf output away from config.mak
+> (as some people here requested), and do contribute! My autoconf/m4
+> experience is nonexistent (I'm learning it as I go). See comments in the
+> third [PATCH/RFC] in series.
 > 
-> Sometimes I get patches that I have to apply on top of "next"
-> because of textual dependency, but the changes are worthwhile to
-> have it in "master" earlier than the changes the other series
-> depends on.
-> 
->  o---o---o---o---o master
->       \
->        o---o---o---o---o next
->                         \
->                          o---o---o good
-> 
-> 	$ git checkout good
->         $ git rebase --onto master next
-> 
->  o---o---o---o---o master
->      |            \
->      |             o---o---o good
->       \
->        o---o---o---o---o next
-> 
+> BTW. patches are against master.
 
-OK, so you're saying "take everything in good but not in next, and try to apply
-it to master."
+The link doesn't show the "@" characters correctly.  Maybe somebody
+could establish a git repository?  Ideally, the autoconf changes should
+go to one of the Git branches.
 
-I don't know why I find that syntax so counterintuitive.  Something like
-
-	git checkout -b newgood master
-	git cherry-pick next..good
-
-would seem more obvious.  But I think this has been discussed before.  OK,
-thanks for the explanation.
-
---b.
+-- 
+Regards,
+Pavel Roskin
