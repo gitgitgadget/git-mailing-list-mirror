@@ -1,58 +1,75 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] consider previous pack undeltified object state only
- when reusing delta data
-Date: Fri, 30 Jun 2006 14:28:06 +0200
-Message-ID: <44A518D6.8040901@op5.se>
-References: <20060628223744.GA24421@coredump.intra.peff.net> <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain> <20060629180011.GA4392@coredump.intra.peff.net> <Pine.LNX.4.64.0606291410420.1213@localhost.localdomain> <20060629185335.GA6704@coredump.intra.peff.net> <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain> <20060629195201.GA10786@coredump.intra.peff.net> <Pine.LNX.4.64.0606291616480.1213@localhost.localdomain> <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org> <Pine.LNX.4.64.0606291723060.1213@localhost.localdomain> <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org> <Pine.LNX.4.64.0606291743010.1213@localhost.localdomain> <7vwtazobkw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606292335190.1213@localhost.localdomain> <Pine.LNX.4.63.0606301144450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 9] autoconf: Cleanup generation of temporary "append" file
+Date: Fri, 30 Jun 2006 14:37:50 +0200
+Message-ID: <200606301437.52590.jnareb@gmail.com>
+References: <200606290301.51657.jnareb@gmail.com> <200606300211.21922.jnareb@gmail.com> <200606300232.34472.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 14:28:18 2006
+X-From: git-owner@vger.kernel.org Fri Jun 30 14:37:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwI6Y-0006ix-3p
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 14:28:14 +0200
+	id 1FwIFr-00083Z-2r
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 14:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559AbWF3M2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 08:28:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932562AbWF3M2J
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 08:28:09 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:7135 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S932559AbWF3M2I (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 08:28:08 -0400
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 3EBB96BCD8; Fri, 30 Jun 2006 14:28:07 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0606301144450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S932557AbWF3Mhs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 08:37:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932564AbWF3Mhs
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 08:37:48 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:49773 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932557AbWF3Mhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 08:37:47 -0400
+Received: by nf-out-0910.google.com with SMTP id c2so238274nfe
+        for <git@vger.kernel.org>; Fri, 30 Jun 2006 05:37:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nRYvPRnxQ/Yx998RJzqBdyV6SwZdfsIwlMQ70wmyFIcf0gDYBSZ50n+AjmxUKN+BIbOFaqAVwo8VVlv1n2roMI1T/dZwFb3GVgcFUrgVXDgiIXi+tcsa377xdoPQntaDhkGUHzNq1G5m4u5U+QRqOempkW6YblPCAMZCsvdt+Pg=
+Received: by 10.48.47.3 with SMTP id u3mr255128nfu;
+        Fri, 30 Jun 2006 05:37:45 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id p72sm1477612nfc.2006.06.30.05.37.44;
+        Fri, 30 Jun 2006 05:37:45 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200606300232.34472.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22984>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 29 Jun 2006, Nicolas Pitre wrote:
-> 
-> 
->>Without this there would never be a chance to improve packing for 
->>previously undeltified objects.
-> 
-> 
-> Earlier this year, I was quite surprised to learn that multiple repackings 
-> actually improved packing. Does that patch mean this feature is gone?
-> 
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ configure.ac |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-The patch Linus sent removes that feature. This one re-introduces it.
-
+diff --git a/configure.ac b/configure.ac
+index 799bc87..e387f5b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -10,7 +10,7 @@ config_file=config.mak.auto
+ config_append=config.mak.append
+ config_in=config.mak.in
+ 
+-echo "# ${config_append}.  Generated by configure." >> "${config_append}"
++echo "# ${config_append}.  Generated by configure." > "${config_append}"
+ 
+ # Definitions of macros
+ # MY_APPEND_LINE(LINE)
+@@ -50,6 +50,7 @@ AC_CHECK_FUNC(setenv,,MY_APPEND_LINE(NO_
+ 
+ 
+ # Output files
+-AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"], 
+-[rm -f "${config_append}"])
++AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
+ AC_OUTPUT
++
++rm -f "${config_append}"
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.4.0
