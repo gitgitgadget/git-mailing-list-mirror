@@ -1,68 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 1/2] New stg command: assimilate
-Date: Wed, 25 Oct 2006 17:41:50 +0100
-Message-ID: <b0943d9e0610250941jfd5d11fk467ab586773ba205@mail.gmail.com>
-References: <20061022130559.17015.51385.stgit@localhost>
-	 <20061022130802.17015.50188.stgit@localhost>
-	 <20061025163231.GA30478@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: fc046a75d539a78e6b2c16534c4078617a69a327 fails on OpenBSD 3.8
+Date: Fri, 30 Jun 2006 10:06:44 -0700
+Message-ID: <7vy7veindn.fsf@assigned-by-dhcp.cox.net>
+References: <86wtayy42o.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 25 Oct 2006 16:42:31 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 30 Jun 2006 17:07:45 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QIyCfvtflskE3AK+0FhGiVib0i3XbIjjPrYbttLSWWzgrbNzxlMWzLy+4GlOMEzLInqawEwpJEAXO8Hwp/AtrQCQugOPXiP9RByeCfUwHtTX8E2WSrnBKZSIu9qiJxh/6fYaQXF9VZ5KK5Z2x9loNxcChR2CsCGCPiio4RUN6bc=
-In-Reply-To: <20061025163231.GA30478@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+In-Reply-To: <86wtayy42o.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "30 Jun 2006 09:57:03 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23000>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GclpF-0002as-Vu for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 18:41:58 +0200
+ esmtp (Exim 4.43) id 1FwMSA-0000LI-09 for gcvg-git@gmane.org; Fri, 30 Jun
+ 2006 19:06:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423241AbWJYQlw convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 12:41:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423245AbWJYQlv
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 12:41:51 -0400
-Received: from nz-out-0102.google.com ([64.233.162.199]:5139 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1423241AbWJYQlv
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006
- 12:41:51 -0400
-Received: by nz-out-0102.google.com with SMTP id z3so136890nzf for
- <git@vger.kernel.org>; Wed, 25 Oct 2006 09:41:50 -0700 (PDT)
-Received: by 10.35.12.13 with SMTP id p13mr1345132pyi; Wed, 25 Oct 2006
- 09:41:50 -0700 (PDT)
-Received: by 10.35.103.18 with HTTP; Wed, 25 Oct 2006 09:41:50 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S1751813AbWF3RGr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 30 Jun 2006
+ 13:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbWF3RGr
+ (ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 13:06:47 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:19917 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1751813AbWF3RGq
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 13:06:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127]) by
+ fed1rmmtao05.cox.net (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with
+ ESMTP id
+ <20060630170645.UPUT12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+ Fri, 30 Jun 2006 13:06:45 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 25/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-10-22 15:08:02 +0200, Karl Hasselstr=F6m wrote:
->
-> > +    def name_taken(name):
-> > +        return patchname in name2patch or crt_series.patch_exists(=
-patchname)
->
-> I just realized, by means of an infinite loop, that "patchname" shoul=
-d
-> be replaced with just "name" in the body of this function. Would you
-> like me to resend the patch?
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-I can do it, no need to resend. I'll push the patch tonight and you
-can check it (I also fixed the "reversed" call as it is not available
-in my Python implementation).
+> gcc -o upload-pack.o -c -g -O2 -Wall -I/usr/local/include -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR upload-pack.c
+> In file included from /usr/include/sys/poll.h:54,
+>                  from upload-pack.c:9:
+> /usr/include/ctype.h:67: error: syntax error before ']' token
+> /usr/include/ctype.h:68: error: syntax error before ']' token
+> /usr/include/ctype.h:70: error: syntax error before ']' token
+> /usr/include/ctype.h:75: error: syntax error before ']' token
+> /usr/include/ctype.h:78: error: syntax error before '(' token
+> /usr/include/ctype.h:79: error: syntax error before '(' token
+> /usr/include/ctype.h:93: error: syntax error before "c"
+> In file included from /usr/include/sys/poll.h:54,
+>                  from upload-pack.c:9:
+> /usr/include/ctype.h:91:1: unterminated #if
+> /usr/include/ctype.h:40:1: unterminated #ifndef
 
---=20
+Crap.  Including <sys/poll.h> pollutes your namespace with ctype
+macros?
