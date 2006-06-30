@@ -1,69 +1,60 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] git-grep: boolean expression on pattern matching.
-Date: Fri, 30 Jun 2006 17:11:19 +0200
-Message-ID: <E1FwKeN-000087-5x@moooo.ath.cx>
-References: <E1FuX8l-0001H5-2z@moooo.ath.cx> <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de> <E1FueYh-0004XE-Fg@moooo.ath.cx> <20060629222009.GA9310@cip.informatik.uni-erlangen.de> <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net> <E1Fw8hS-00023y-FY@moooo.ath.cx> <7v7j2zmgbu.fsf@assigned-by-dhcp.cox.net> <E1FwDiI-0007Xp-2s@moooo.ath.cx> <7v3bdnkrfb.fsf@assigned-by-dhcp.cox.net> <7vsllnj6rh.fsf_-_@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] autoconf: Use autoconf to write installation directories to config.mak
+Date: Fri, 30 Jun 2006 17:15:10 +0200
+Organization: At home
+Message-ID: <e83f5j$e6f$1@sea.gmane.org>
+References: <200606290301.51657.jnareb@gmail.com> <E1FvvuX-0002Lr-Nt@moooo.ath.cx> <e80lnq$9mi$1@sea.gmane.org> <44A51693.5020501@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 17:11:54 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Jun 30 17:15:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwKeo-00089z-VW
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 17:11:47 +0200
+	id 1FwKiY-0000LK-Cl
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 17:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbWF3PLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 11:11:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbWF3PLY
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 11:11:24 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:46509 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751409AbWF3PLX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 11:11:23 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vsllnj6rh.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: mutt-ng/devel-r790 (Linux)
+	id S932182AbWF3PPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 11:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbWF3PPf
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 11:15:35 -0400
+Received: from main.gmane.org ([80.91.229.2]:49577 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932182AbWF3PPe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 11:15:34 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FwKiC-0000HL-VG
+	for git@vger.kernel.org; Fri, 30 Jun 2006 17:15:16 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Jun 2006 17:15:16 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Jun 2006 17:15:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22994>
 
-> This extends the behaviour of git-grep when multiple -e options
-> are given.  So far, we allowed multiple -e to behave just like
-> regular grep with multiple -e, i.e. the patterns are OR'ed
-> together.
+Andreas Ericsson wrote:
+
+> grep -q autogen config.mak || \
+>       echo "-include config.mak.autogen" >> config.mak
 > 
-> With this change, you can also have multiple patterns AND'ed
-> together, or form boolean expressions, like this (the
-> parentheses are quoted from the shell in this example):
-> 
-> 	$ git grep -e _PATTERN --and \( -e atom -e token \)
-This looks really nice. So for a few trivial tests it did not fail :)
+> I wouldn't want my long-standing, functioning config.mak overwritten, 
+> but I *might* be interested in trying some of the options provided by 
+> ./configure.
 
-I noticed an unrelated bug. The context separators ("--") are missing
-between matches in different files:
+Thanks for the solution. Done in my latest patch.
 
-$ git-grep -e foobar -A 1 (this uses external grep)
-Documentation/git-diff-tree.txt:I.e. "foo" does not pick up `foobar.h`.  "foo" does match `foo/bar.h`
-Documentation/git-diff-tree.txt-so it can be used to name subdirectories.
---
-git-send-email.perl:#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
-git-send-email.perl-
---
-[..]
-
-$ git-grep -e foobar -A 1 master (this is internal grep)
-master:Documentation/git-diff-tree.txt:I.e. "foo" does not pick up `foobar.h`.  "foo" does match `foo/bar.h`
-master:Documentation/git-diff-tree.txt-so it can be used to name subdirectories.
-master:git-send-email.perl:#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
-master:git-send-email.perl-
-[..]
-
-I think this cannot be fixed in the loop in builtin-grep.c:grep_cache
-because after the last hit there should be no separator but it is not
-known if a grep_sha1/grep_file will match and produce output. So I
-think there has to be a variable passed down which tells those
-functions to print the separator before any other output.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
