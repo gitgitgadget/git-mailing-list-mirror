@@ -1,86 +1,72 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] git-grep: --and to combine patterns with and instead of or
-Date: Fri, 30 Jun 2006 04:25:42 +0200
-Message-ID: <E1Fw8hS-00023y-FY@moooo.ath.cx>
-References: <E1FuWh7-0008Ry-HX@moooo.ath.cx> <20060625184757.f8273820.tihirvon@gmail.com> <E1FuX8l-0001H5-2z@moooo.ath.cx> <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de> <E1FueYh-0004XE-Fg@moooo.ath.cx> <20060629222009.GA9310@cip.informatik.uni-erlangen.de> <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Prepare "git-merge-tree" for future work
+Date: Thu, 29 Jun 2006 19:32:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606291925230.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606281054470.3782@g5.osdl.org>
+ <Pine.LNX.4.64.0606281401540.12404@g5.osdl.org> <7vejx7mmaj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 04:25:52 2006
+X-From: git-owner@vger.kernel.org Fri Jun 30 04:32:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw8hb-0006TR-BF
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 04:25:51 +0200
+	id 1Fw8o6-0007HV-P8
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 04:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751414AbWF3CZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 22:25:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbWF3CZs
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 22:25:48 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:65418 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751414AbWF3CZr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 22:25:47 -0400
+	id S1751416AbWF3Cc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 22:32:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbWF3Cc3
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 22:32:29 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:43159 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751416AbWF3Cc2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jun 2006 22:32:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k5U2WNnW010135
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 29 Jun 2006 19:32:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k5U2WMs7022173;
+	Thu, 29 Jun 2006 19:32:23 -0700
 To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>
-User-Agent: mutt-ng/devel-r790 (Linux)
+In-Reply-To: <7vejx7mmaj.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22947>
 
-So here is my proposal how extended expressions would work:
 
-extended expressions have three operators:
-    AND, OR (binary), NOT (unary)
-extended expressions do not need an extra option. They will be usable
-by adding operators between the expressions; a default operator is
-used if no operator is specified. The default operator is by default
-OR because currently multiple patterns are combined by OR.
 
-OR and AND have precedence, so there are two possibilities, I'd take
-the first one.
-1. OR, AND:
-    This will make it easier to read because OR can be skipped:
-      pat1 pat2 AND pat3 pat4
-    = pat1 OR pat2 AND pat3 OR pat4
-    = (pat1 OR pat2) AND (pat3 OR pat4)
-2. AND, OR:
-    This is a bit more logic if you think of AND as * and OR as +.
+On Thu, 29 Jun 2006, Junio C Hamano wrote:
 
-Parenthesis may be used to explicitly override the default precedence.
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > I punted on trying to use the proper git diff interfaces (they are very 
+> > tightly tied into the "diff_filespec" model - Junio, it might be nice if 
+> > there was some way to use them in a setting where that isn't necessarily 
+> > as natural).
+> 
+> I am not quite sure what you mean.
 
-With this setup we can add an option -FOO (I don't now how to call it,
-it is the --and from the patch) which changes the default operator and
-the precedence.  With -FOO you'd get AND as default operator and
-precedence AND, OR.  Without this option it was easy to write the
-formula in a conjungtive form (conjunction of disjunctions), now it is
-easy to write a disjunctive form (disjunction of conjunctions):
-  pat1 pat2 OR pat3 pat4
-= pat1 AND pat2 OR pat3 AND pat4
-= (pat1 AND pat2) OR (pat3 AND pat4)
+For what I wanted to do, I didn't see an easy way to add/populate a new 
+filespec. It was easier to just use the raw libxdiff interfaces, but 
+that's really just because I know the interfaces.
 
-With all this as plan for extended expressions we may also introduce
--FOO now with exactly the behaviour of --and in my patch because
-currently no explicit operators and parenthesis are allowed, so only
-the default operator may be used and -FOO would change the default
-operator.
+In contrast, the ones to diff_filespec I've never really used, and I did 
+not want to compare blob objects, I very much wanted to compare in-memory 
+buffers (_and_ potentially blobs).
 
-A short example:
-(pat1 AND pat2 AND pat3) OR pat4
-could be written as
--FOO pat1 pat2 pat3 OR pat4
-which is imho quite readable.
+So if you can show an easy example of how to populate a set of filespec 
+pairs (not with blobs - with in-memory generated data) and insert them 
+onto the lists, that would be good.
 
-So the next problem are names for the options. We would need
- - AND: between patterns
- - OR:  between patterns
- - NOT: before a pattern
- - FOO: change default operator and precedence
-Unfortunately -o, -a, -n are taken and I think the options should be
-unique even though they are only allowed at certain positions of the
-argument list. I'll think about it a bit, perhaps someone else has a
-good idea. FOO should not be named --and imo but I don't have any idea
-for a good name atm.
+In fact, maybe you can show me what git-merge-tree needs to do..
+
+Hint hint.
+
+		Linus
