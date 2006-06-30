@@ -1,85 +1,75 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: fc046a75d539a78e6b2c16534c4078617a69a327 fails on OpenBSD 3.8
-Date: 30 Jun 2006 09:57:03 -0700
-Message-ID: <86wtayy42o.fsf@blue.stonehenge.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git-grep: --and to combine patterns with and instead of or
+Date: Fri, 30 Jun 2006 19:04:15 +0200
+Message-ID: <E1FwMPf-0005XA-N9@moooo.ath.cx>
+References: <Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de> <E1FueYh-0004XE-Fg@moooo.ath.cx> <20060629222009.GA9310@cip.informatik.uni-erlangen.de> <7vejx7oa3x.fsf@assigned-by-dhcp.cox.net> <E1Fw8hS-00023y-FY@moooo.ath.cx> <7v7j2zmgbu.fsf@assigned-by-dhcp.cox.net> <E1FwDiI-0007Xp-2s@moooo.ath.cx> <7v3bdnkrfb.fsf@assigned-by-dhcp.cox.net> <E1FwGgm-0006Nc-9a@moooo.ath.cx> <7vejx6k54p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jun 30 18:57:11 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 19:04:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwMIm-0007Tf-SI
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 18:57:09 +0200
+	id 1FwMPo-000058-6o
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 19:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751462AbWF3Q5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 12:57:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbWF3Q5F
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 12:57:05 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:10253 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751462AbWF3Q5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 12:57:04 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 1BFE38F2B8
-	for <git@vger.kernel.org>; Fri, 30 Jun 2006 09:57:04 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 22462-01-27 for <git@vger.kernel.org>;
- Fri, 30 Jun 2006 09:57:03 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 631DC8F2D9; Fri, 30 Jun 2006 09:57:03 -0700 (PDT)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.13.7.14; tzolkin = 4 Ix; haab = 7 Tzec
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751810AbWF3REV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 13:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbWF3REU
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 13:04:20 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:40089 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751810AbWF3REU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 13:04:20 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vejx6k54p.fsf@assigned-by-dhcp.cox.net>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22999>
 
+> Side note.  It would be interesting to have a slightly different
+> form of --and called --near.  You would use it like this:
+> 
+> 	git grep -C -e AND --near -e OR
+> 
+> to find lines that has AND on it, and within the context
+> distance there is a line that has OR on it.  The lines that are
+> hit with such a query are still the ones that have AND on them
+> (in other words, a line that has OR is used to further filter
+> out the results so it will be prefixed with '-', not ':', unless
+> that line happens to also have AND on it).
+Nice idea even though I don't now about practical importance but it
+sounds quite handy.  A few questions about this (some or all of those
+features may make it quite complex):
+1. Should the context of near be the same as -[ABC] or perhaps
+   --near=N / --near=N:M (default could be the same as specified by
+   -[ABC]).
+2. Should it be possible to specify another boolean expression after
+   --near? e.g. --near ( -e foo --or ( -e bar --and -e baz )) to match
+   if the context contains foo or 'bar and baz'.
+3. Is --near just another subexpression? e.g. search for foo with
+   either A or B in the context:
+   -e foo --and ( --near A --or --near B )
+   This does not make sense without 1 and 2.
 
-gcc -o upload-pack.o -c -g -O2 -Wall -I/usr/local/include -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR upload-pack.c
-In file included from /usr/include/sys/poll.h:54,
-                 from upload-pack.c:9:
-/usr/include/ctype.h:67: error: syntax error before ']' token
-/usr/include/ctype.h:68: error: syntax error before ']' token
-/usr/include/ctype.h:70: error: syntax error before ']' token
-/usr/include/ctype.h:75: error: syntax error before ']' token
-/usr/include/ctype.h:78: error: syntax error before '(' token
-/usr/include/ctype.h:79: error: syntax error before '(' token
-/usr/include/ctype.h:93: error: syntax error before "c"
-In file included from /usr/include/sys/poll.h:54,
-                 from upload-pack.c:9:
-/usr/include/ctype.h:91:1: unterminated #if
-/usr/include/ctype.h:40:1: unterminated #ifndef
-In file included from upload-pack.c:9:
-/usr/include/sys/poll.h:53:1: unterminated #ifndef
-/usr/include/sys/poll.h:28:1: unterminated #ifndef
-gmake: *** [upload-pack.o] Error 1
+With some or all of those features quite mighty and complex
+expressions can be build:
+-e A --and --near=3:-1 ( -e B --and --near=0:0 ( -e foo --and -e bar ) )
+This could mean: find lines containing A and have B in any of the 3
+lines before A (without the line containing A). Additionally foo and
+bar have to be found on the same line before A.
 
-The lines in ctype.h that are probably relevant are:
+I'm really not asking for this, just telling about some ideas that
+come to my mind for --near.
 
-    #if defined(__GNUC__) || defined(_ANSI_LIBRARY) || defined(lint)
-    int	isalnum(int);
-    int	isalpha(int);
-    int	iscntrl(int);
-    int	isdigit(int);
-    int	isgraph(int);
-    int	islower(int);
-    int	isprint(int);
-    int	ispunct(int);
-    int	isspace(int);
-    int	isupper(int);
-    int	isxdigit(int);
-    int	tolower(int);
-    int	toupper(int);
+> With your syntax perhaps this is spelled as "--near -C -e AND -e
+> OR".
+Huh? What do you mean by "my syntax"? The only thing different is the
+option to change the default operator to 'and'.
 
-Line 67 is "int isalnum(int)"
-
-Are you defining a macro when you shouldn't be in upload-pack?
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+With the new extended expressions it would be really nice if git-grep
+could also be used outside a git repository :)
