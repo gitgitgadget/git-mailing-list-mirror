@@ -1,61 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] consider previous pack undeltified object state only
- when reusing delta data
-Date: Fri, 30 Jun 2006 11:45:55 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0606301144450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060628223744.GA24421@coredump.intra.peff.net>
- <7v4py4y7wo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606291053280.1213@localhost.localdomain>
- <20060629180011.GA4392@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291410420.1213@localhost.localdomain>
- <20060629185335.GA6704@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291458110.1213@localhost.localdomain>
- <20060629195201.GA10786@coredump.intra.peff.net>
- <Pine.LNX.4.64.0606291616480.1213@localhost.localdomain>
- <Pine.LNX.4.64.0606291352110.12404@g5.osdl.org>
- <Pine.LNX.4.64.0606291723060.1213@localhost.localdomain>
- <Pine.LNX.4.64.0606291428150.12404@g5.osdl.org>
- <Pine.LNX.4.64.0606291743010.1213@localhost.localdomain>
- <7vwtazobkw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606292335190.1213@localhost.localdomain>
+Subject: Re: GIt.xs merge status
+Date: Fri, 30 Jun 2006 11:53:53 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606301150250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vzmg376ee.fsf@assigned-by-dhcp.cox.net>
+ <20060624012202.4822.qmail@science.horizon.com> <7vfyhv11ej.fsf@assigned-by-dhcp.cox.net>
+ <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
+ <7vhd2atid1.fsf@assigned-by-dhcp.cox.net> <7vmzbvmny4.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 11:46:27 2006
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Jun 30 11:54:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwFZY-0000v6-N0
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 11:46:01 +0200
+	id 1FwFhJ-0002Ki-5l
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 11:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932223AbWF3Jp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 05:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbWF3Jp5
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 05:45:57 -0400
-Received: from mail.gmx.net ([213.165.64.21]:52864 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932223AbWF3Jp5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 05:45:57 -0400
-Received: (qmail invoked by alias); 30 Jun 2006 09:45:55 -0000
+	id S932400AbWF3Jx5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 05:53:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbWF3Jx4
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 05:53:56 -0400
+Received: from mail.gmx.de ([213.165.64.21]:36054 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932400AbWF3Jxz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 05:53:55 -0400
+Received: (qmail invoked by alias); 30 Jun 2006 09:53:54 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp008) with SMTP; 30 Jun 2006 11:45:55 +0200
+  by mail.gmx.net (mp012) with SMTP; 30 Jun 2006 11:53:54 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0606292335190.1213@localhost.localdomain>
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzbvmny4.fsf_-_@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22973>
 
 Hi,
 
-On Thu, 29 Jun 2006, Nicolas Pitre wrote:
+On Thu, 29 Jun 2006, Junio C Hamano wrote:
 
-> Without this there would never be a chance to improve packing for 
-> previously undeltified objects.
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> >  - Make sure Git.xs builds and installed result works fine on
+> >    all platforms we care about, including Cygwin and other
+> >    non-Linux boxes.
+> 
+> Help wanted from the list here.  One thing to note is that I
+> understand Pasky is working on not using Devel::PPPort to make
+> the code work with 5.6, so if your build dies with problems in
+> that area you might want to wait until that is fixed.
 
-Earlier this year, I was quite surprised to learn that multiple repackings 
-actually improved packing. Does that patch mean this feature is gone?
+I'll try it (it's in pu, right?). Note that breaking git-fmt-merge-msg 
+might be a good way to force somebody to rewrite it in C ;-)
+
+Note that on my iBook (where I reported the Devel::PPPort problem), I _do_ 
+have perl modules compiled from source, using SWIG. So, there _should_ be 
+no problem to get it to run (although I have problems with my eyes ever 
+since I looked into the code generated by SWIG).
 
 Ciao,
 Dscho
