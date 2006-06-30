@@ -1,85 +1,62 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Makefile: set USE_PIC on Linux x86_64 for linking with
-	Git.pm
-Date: Thu, 29 Jun 2006 20:03:00 -0400
-Message-ID: <1151625780.10358.13.camel@dv>
-References: <20060628183557.GA5713@fiberbit.xs4all.nl>
-	 <7vr719159v.fsf@assigned-by-dhcp.cox.net>
-	 <7virml14za.fsf@assigned-by-dhcp.cox.net>
-	 <20060628192145.GD5713@fiberbit.xs4all.nl> <1151527945.1619.17.camel@dv>
-	 <e81jr5$l1c$1@sea.gmane.org>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [PATCH] move get_merge_bases() to core lib; use it in merge-recursive
+Date: Fri, 30 Jun 2006 02:27:13 +0200
+Message-ID: <20060630002713.GD7216@steel.home>
+References: <81b0412b0606270848v2253209aw52466de632ab25c1@mail.gmail.com> <Pine.LNX.4.63.0606271830210.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060627223249.GA8177@steel.home> <Pine.LNX.4.63.0606291517010.29667@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0606290714v66a32976j531e2077ce6c1d77@mail.gmail.com> <Pine.LNX.4.63.0606291814200.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7vmzbvrela.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606292050380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 30 02:03:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 02:27:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw6Tj-0006vk-6v
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:03:23 +0200
+	id 1Fw6r5-0002AN-Ie
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328AbWF3ADH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 20:03:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbWF3ADG
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:03:06 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:61879 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751328AbWF3ADE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 20:03:04 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Fw6TP-0004nz-NS
-	for git@vger.kernel.org; Thu, 29 Jun 2006 20:03:03 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1Fw6TN-0002iz-C1; Thu, 29 Jun 2006 20:03:01 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e81jr5$l1c$1@sea.gmane.org>
-X-Mailer: Evolution 2.7.3 (2.7.3-4) 
+	id S964810AbWF3A11 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 20:27:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964811AbWF3A11
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:27:27 -0400
+Received: from mailout08.sul.t-online.com ([194.25.134.20]:53903 "EHLO
+	mailout08.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S964810AbWF3A10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 20:27:26 -0400
+Received: from fwd30.aul.t-online.de 
+	by mailout08.sul.t-online.com with smtp 
+	id 1Fw6qv-00015Y-00; Fri, 30 Jun 2006 02:27:21 +0200
+Received: from tigra.home (EY224yZZoeO3yqREyjdRKv32qFlnK6ijTZ5-000ytggJIdUOOvREQH@[84.160.88.232]) by fwd30.sul.t-online.de
+	with esmtp id 1Fw6qo-0n4P6u0; Fri, 30 Jun 2006 02:27:14 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E51D8277B5;
+	Fri, 30 Jun 2006 02:27:13 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1Fw6qn-0007g9-QA; Fri, 30 Jun 2006 02:27:13 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0606292050380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.6i
+X-ID: EY224yZZoeO3yqREyjdRKv32qFlnK6ijTZ5-000ytggJIdUOOvREQH
+X-TOI-MSGID: f09d8a83-efcc-429a-bf65-cc02a58dfdbf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22930>
 
-Hi, Jakub!
-
-I don't have the newsgroup access, so I'm copying to the mailing list
-instead.
-
-On Fri, 2006-06-30 at 00:22 +0200, Jakub Narebski wrote:
-
-> If I remember correctly everybody agreed that autoconf is least evil of the
-> whole autotools package.
-
-Sort of.  Some people were less dismissive than others.
-
->  pasky suggested to write ./configure script by
-> hand on #git...
-
-That's probably not a good idea.  Autoconf can do this very well if used
-correctly.  And I'm ready to help when it comes to correctness.
-
-> I'm trying to do inobtrusive _optional_ autoconf support in the patch series
-> beginning with
->   Message-ID: <200606290301.51657.jnareb@gmail.com>
->   http://permalink.gmane.org/gmane.comp.version-control.git/22832
-
-The problem with optional support is that you suddenly have two
-alternative mechanisms to adjust the build to the system, and both
-should be kept in a  working condition.  But it's a good first step.
-
-> Please wait for the patch moving ./autoconf output away from config.mak
-> (as some people here requested), and do contribute! My autoconf/m4
-> experience is nonexistent (I'm learning it as I go). See comments in the
-> third [PATCH/RFC] in series.
+Johannes Schindelin, Thu, Jun 29, 2006 21:06:56 +0200:
 > 
-> BTW. patches are against master.
+> Okay. Convinced.
+> 
+> I tested my patch again, and like Alex said, a test fails. But I tested on 
+> top of Alex's latest merge-recursive patch, which has that nasty 
+> update-index bug, and that is the reason for the test to fail.
+> 
+> So, a few tests later, I am pretty sure that my patches do not break 
+> git-merge-base. I'll prepare another patch series which builds-in 
+> merge-base.
+> 
 
-The link doesn't show the "@" characters correctly.  Maybe somebody
-could establish a git repository?  Ideally, the autoconf changes should
-go to one of the Git branches.
-
--- 
-Regards,
-Pavel Roskin
+Just for reference, I'll repost all my patches again, somewhat
+consolidated. Your merge_base patches can be applied on top of that
+series.
