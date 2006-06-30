@@ -1,164 +1,87 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: [PATCH 4/4] save another call to git-update-index
-Date: Fri, 30 Jun 2006 02:27:56 +0200
-Message-ID: <20060630002756.GD22618@steel.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Makefile: set USE_PIC on Linux x86_64 for linking with Git.pm
+Date: Fri, 30 Jun 2006 02:29:12 +0200
+Message-ID: <200606300229.17607.jnareb@gmail.com>
+References: <20060628183557.GA5713@fiberbit.xs4all.nl> <e81jr5$l1c$1@sea.gmane.org> <1151625780.10358.13.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jun 30 02:28:21 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jun 30 02:29:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fw6rq-0002HI-P3
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:28:19 +0200
+	id 1Fw6sw-0002RN-RZ
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 02:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964816AbWF3A2N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Jun 2006 20:28:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964817AbWF3A2M
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:28:12 -0400
-Received: from mailout04.sul.t-online.com ([194.25.134.18]:63394 "EHLO
-	mailout04.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S964816AbWF3A2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jun 2006 20:28:11 -0400
-Received: from fwd28.aul.t-online.de 
-	by mailout04.sul.t-online.com with smtp 
-	id 1Fw6re-0000Jb-00; Fri, 30 Jun 2006 02:28:06 +0200
-Received: from tigra.home (XdjHZ4ZBYeXdXFbHJfsJ36KLkUQ+68OyMdIZ+-1XAiqjehCqquvN00@[84.160.88.232]) by fwd28.sul.t-online.de
-	with esmtp id 1Fw6rU-1I0PEu0; Fri, 30 Jun 2006 02:27:56 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 46B4F277B5;
-	Fri, 30 Jun 2006 02:27:56 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1Fw6rU-0007gk-8f; Fri, 30 Jun 2006 02:27:56 +0200
-To: git@vger.kernel.org
+	id S964822AbWF3A3U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Jun 2006 20:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbWF3A3T
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jun 2006 20:29:19 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:41963 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S964825AbWF3A3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jun 2006 20:29:16 -0400
+Received: by nf-out-0910.google.com with SMTP id m19so37915nfc
+        for <git@vger.kernel.org>; Thu, 29 Jun 2006 17:29:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=F84C5k1Y4+zvhAMY8OrqItEvV6lAQaGrIoSBMoKXBq8UqteE0IydKN0XYxCFdeQgwn++ZqfvKUTLJ6+OB6LFWZqN4HpE39ZCupHl4lHY5MOPM/hUaZBLAitzvQivFF3dnOP6CAquG9WCenAXP24fwewozgdHlc4QrLIKE0ZHGp8=
+Received: by 10.49.43.8 with SMTP id v8mr183861nfj;
+        Thu, 29 Jun 2006 17:29:15 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id a24sm941958nfc.2006.06.29.17.29.14;
+        Thu, 29 Jun 2006 17:29:14 -0700 (PDT)
+To: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <1151625780.10358.13.camel@dv>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-ID: XdjHZ4ZBYeXdXFbHJfsJ36KLkUQ+68OyMdIZ+-1XAiqjehCqquvN00
-X-TOI-MSGID: e0dc215c-3217-40d6-ada8-8d9f63f5f206
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22935>
 
-and a small cleanup
----
- merge-recursive.c |   41 ++++++++++++++++++-----------------------
- 1 files changed, 18 insertions(+), 23 deletions(-)
+Pavel Roskin write:
+> I don't have the newsgroup access, so I'm copying to the mailing list
+> instead.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9a18e06..f3f8e7d 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -21,7 +21,7 @@ #include "graph.h"
- #include "path-list.h"
- 
- #define HAVE_ALLOCA
--#define DEBUG
-+/*#define DEBUG*/
- 
- #ifdef DEBUG
- #define debug(args, ...) fprintf(stderr, args, ## __VA_ARGS__)
-@@ -629,8 +629,10 @@ static struct rename_entry *get_renames(
- 					struct tree *bTree,
- 					struct index_entry **entries)
- {
-+#ifdef DEBUG
- 	time_t t = time(0);
- 	debug("getRenames ...\n");
-+#endif
- 	struct rename_entry *renames = NULL;
- 	struct rename_entry **rptr = &renames;
- 	struct diff_options opts;
-@@ -691,22 +693,16 @@ static int update_stages(FILE *up_index,
- {
- 	if ( !up_index )
- 		return -1;
--	if ( clear ) {
-+	if ( clear )
- 		fprintf(up_index, "0 %s\t%s", sha1_to_hex(null_sha1), path);
--		fputc('\0', up_index);
--	}
--	if ( omode ) {
-+	if ( omode )
- 		fprintf(up_index, "0%o %s 1\t%s", omode, sha1_to_hex(osha), path);
--		fputc('\0', up_index);
--	}
--	if ( amode ) {
-+	if ( amode )
- 		fprintf(up_index, "0%o %s 2\t%s", amode, sha1_to_hex(asha), path);
--		fputc('\0', up_index);
--	}
--	if ( bmode ) {
-+	if ( bmode )
- 		fprintf(up_index, "0%o %s 3\t%s", bmode, sha1_to_hex(bsha), path);
-+	if ( clear || omode || amode || bmode )
- 		fputc('\0', up_index);
--	}
- 	return 0;
- }
- 
-@@ -1080,7 +1076,8 @@ static void conflict_rename_rename_2(FIL
- 	free(newPath1);
- }
- 
--static int process_renames(struct rename_entry *renamesA,
-+static int process_renames(FILE* fp,
-+			   struct rename_entry *renamesA,
- 			   struct rename_entry *renamesB,
- 			   const char *branchNameA,
- 			   const char *branchNameB)
-@@ -1097,7 +1094,6 @@ static int process_renames(struct rename
- 	for (sre = renamesB; sre; sre = sre->next)
- 		path_list_insert(sre->pair->one->path, &srcNames);
- 
--	FILE *fp = git_update_index_pipe();
- 	for_each_path(src,&srcNames) {
- 		struct rename_entry *renames1, *renames2, *ren1, *ren2;
- 		const char *branchName1, *branchName2;
-@@ -1282,9 +1278,6 @@ static int process_renames(struct rename
- 		}
- 	}
- 	path_list_clear(&srcNames, 0);
--	if (pclose(fp)) {
--		die("git update-index --index-info failed");
--	}
- 	debug("  processRenames done\n");
- 	return cleanMerge;
- }
-@@ -1467,24 +1460,26 @@ static struct merge_tree_result merge_tr
- 		struct rename_entry *re_head, *re_merge;
- 		re_head  = get_renames(head, common, head, merge, &entries);
- 		re_merge = get_renames(merge, common, head, merge, &entries);
--		result.clean = process_renames(re_head, re_merge,
-+		FILE *up_index = git_update_index_pipe();
-+		result.clean = process_renames(up_index,
-+					       re_head, re_merge,
- 					       branch1Name, branch2Name);
- 		debug("\tprocessing entries...\n");
--		FILE *fp = git_update_index_pipe();
- 		struct index_entry *e;
- 		for (e = entries; e; e = e->next) {
- 			if (e->processed)
- 				continue;
--			if (!process_entry(fp, e, branch1Name, branch2Name))
-+			if (!process_entry(up_index, e,
-+					   branch1Name, branch2Name))
- 				result.clean = 0;
- 		}
-+		if (pclose(up_index))
-+			die("updating entry failed in git update-index");
-+
- 		free_rename_entries(&re_merge);
- 		free_rename_entries(&re_head);
- 		free_index_entries(&entries);
- 
--		if (pclose(fp))
--			die("updating entry failed in git update-index");
--
- 		if (result.clean || index_only)
- 			result.tree = git_write_tree();
- 		else
+Newsgroup should be tied to mailing list, so messages on newsgroup 
+would appear on mailing list and vice versa. Patches were sent to 
+mailing list.
+
+>> I'm trying to do inobtrusive _optional_ autoconf support in the patch series
+>> beginning with
+>>   Message-ID: <200606290301.51657.jnareb@gmail.com>
+>>   http://permalink.gmane.org/gmane.comp.version-control.git/22832
+> 
+> The problem with optional support is that you suddenly have two
+> alternative mechanisms to adjust the build to the system, and both
+> should be kept in a  working condition.  But it's a good first step.
+
+The idea I started working with autoconf was to be able to say
+%configure in .spec file. Then I thought that it would be nice
+to have --without-expat, --with-curl=PATH etc. options. Then...
+
+Additionally, optional support would be easier to accept I think.
+
+[repeated]
+>>   Message-ID: <200606290301.51657.jnareb@gmail.com>
+>>   http://permalink.gmane.org/gmane.comp.version-control.git/22832
+> 
+> The link doesn't show the "@" characters correctly.  Maybe somebody
+> could establish a git repository?  Ideally, the autoconf changes should
+> go to one of the Git branches.
+
+Try yet another git mailing list archive:
+  http://www.gelato.unsw.edu.au/archives/git/0606/23225.html
+
+I'll try to publish changes at
+  http://front.fuw.edu.pl/jnareb/scm/git.git/
+  http://front.fuw.edu.pl/cgi-bin/jnareb/gitweb.cgi?p=git.git
+after I learn how to setup ssh proxy or equivalent...
+
 -- 
-1.4.1.rc1.g17dc
+Jakub Narebski
+Poland
