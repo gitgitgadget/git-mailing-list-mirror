@@ -1,67 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 11] autoconf: Rename ./configure output file to config.mak.autogen
-Date: Fri, 30 Jun 2006 14:41:01 +0200
-Message-ID: <200606301441.01327.jnareb@gmail.com>
-References: <200606290301.51657.jnareb@gmail.com> <200606301437.52590.jnareb@gmail.com> <200606301439.40584.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] save another call to git-update-index
+Date: Fri, 30 Jun 2006 16:43:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0606301641540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060630002756.GD22618@steel.home>
+ <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jun 30 14:41:06 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 30 16:43:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwIIq-0008Vn-Om
-	for gcvg-git@gmane.org; Fri, 30 Jun 2006 14:40:58 +0200
+	id 1FwKDE-0003PL-QO
+	for gcvg-git@gmane.org; Fri, 30 Jun 2006 16:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932577AbWF3Mky (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 08:40:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbWF3Mky
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 08:40:54 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:7798 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932577AbWF3Mkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 08:40:53 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so238826nfe
-        for <git@vger.kernel.org>; Fri, 30 Jun 2006 05:40:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=E1v39D9KD4KW8D1uz/rUWIYtKOxd3qpF4YmtVY4aFxrLrV6zatf8mTeGyRaT65M0vdLXMmYIEK9RzTgPqJ8BBZqBOCMPIqiRWsRPhBPw8VE5j5lF5hRZYF1BitadNzk+BU6CCi9PkwBqiXNuJZpMUGZkbp5LRInRb1bLDs2X3+E=
-Received: by 10.49.41.10 with SMTP id t10mr256497nfj;
-        Fri, 30 Jun 2006 05:40:52 -0700 (PDT)
-Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
-        by mx.gmail.com with ESMTP id r33sm1543941nfc.2006.06.30.05.40.51;
-        Fri, 30 Jun 2006 05:40:52 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200606301439.40584.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751015AbWF3OnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 10:43:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbWF3OnJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 10:43:09 -0400
+Received: from mail.gmx.de ([213.165.64.21]:33733 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751015AbWF3OnI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 10:43:08 -0400
+Received: (qmail invoked by alias); 30 Jun 2006 14:43:07 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 30 Jun 2006 16:43:07 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alex Riesen <fork0@t-online.de>
+In-Reply-To: <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22987>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Choose the name you are more comfortable with
+Hi,
 
- configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Fri, 30 Jun 2006, Johannes Schindelin wrote:
 
-diff --git a/configure.ac b/configure.ac
-index ef310ee..f01fc17 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -6,7 +6,7 @@ AC_INIT([git], [1.4.0], [git@vger.kernel
- 
- AC_CONFIG_SRCDIR([git.c])
- 
--config_file=config.mak.auto
-+config_file=config.mak.autogen
- config_append=config.mak.append
- config_in=config.mak.in
- 
--- 
-1.4.0
+> FYI I've been just battling this pipe for a couple of hours. The first 
+> steps were easy, but since I wanted to do it incrementally, the index has 
+> to be written every so often, and I seem not to be able to get that right.
+
+I just finished it. See my upcoming series of three patches. These apply 
+on top of your last cumulative patch (sometimes yesterday), although I am 
+certain we can merge our efforts.
+
+Ciao,
+Dscho
