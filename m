@@ -1,123 +1,81 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Enable tree (directory) history display
-Date: Fri, 30 Jun 2006 20:45:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606302029310.12404@g5.osdl.org>
-References: <20060701024309.63001.qmail@web31805.mail.mud.yahoo.com>
- <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
+Subject: Re: A note on merging conflicts..
+Date: Fri, 30 Jun 2006 20:54:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+ <7vy7vedntn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 05:45:54 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 01 05:54:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwWQb-0000XL-IS
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 05:45:53 +0200
+	id 1FwWZ8-0001Nl-Jx
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 05:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964867AbWGADpt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 23:45:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964876AbWGADpt
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:45:49 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:9449 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964867AbWGADps (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 23:45:48 -0400
+	id S932704AbWGADyj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 23:54:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932765AbWGADyj
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:54:39 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:1515 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932704AbWGADyi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 23:54:38 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k613jinW025014
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k613sYnW025361
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Jun 2006 20:45:44 -0700
+	Fri, 30 Jun 2006 20:54:35 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k613jhra009277;
-	Fri, 30 Jun 2006 20:45:43 -0700
-To: Luben Tuikov <ltuikov@yahoo.com>
-In-Reply-To: <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
-X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k613sYux009547;
+	Fri, 30 Jun 2006 20:54:34 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy7vedntn.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
 X-MIMEDefang-Filter: osdl$Revision: 1.135 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23039>
 
 
 
-On Fri, 30 Jun 2006, Linus Torvalds wrote:
+On Fri, 30 Jun 2006, Junio C Hamano wrote:
 > 
-> BTW! Junio, I think this patch actually fixes a real bug.
-> 
-> Without this patch, the "--parents --full-history" combination (which 
-> you'd get if you do something like
-> 
-> 	gitk --full-history Makefile
-> 
-> or similar) will actually _drop_ merges where all children are identical. 
-> That's wrong in the --full-history case, because it measn that the graph 
-> ends up missing lots of entries.
+> Heh, that's why I kept saying I want somebody to teach rev-list
+> a new notation, A...B, to mean $(merge-base A B)..B ;-).
 
-Here's some real numbers.
+I actually don't think that expression makes any sense.
 
-Before this patch
+	$(merge-base A B)..B
 
-	git-rev-list --full-history HEAD -- Makefile | wc -l
-	git-rev-list --parents --full-history HEAD -- Makefile | wc -l
+as an expression only makes sense if there is a single point of forking, 
+and no contact apart from that. In that case, what you suggest makes 
+sense, because doing
 
-both returned 971 commits on my current kernel tree, while
+	git diff A...B
 
-	git-rev-list --parents HEAD -- Makefile | wc -l
+is exactly what you want. 
 
-returned 145 commits, and
+HOWEVER. If there has been any other merges in between (but they aren't 
+merge-bases because either branch _also_ did other things), your A...B
+expression is meaningless, I think. To do a diff in that case, you really 
+need to do my "merge+diff" thing, and no amount of "A...B" expressions on 
+a commit relationship level can be meaningful.
 
-	git-rev-list --parents --no-merges HEAD -- Makefile | wc -l
+Now, the expression
 
-returns 136.
+	A...B == B...A == A B --not $(git-merge-base --all A B)
 
-That count of 145 is the number of commits that actually _change_ Makefile 
-some way - and some of them really are merges, because they have a content 
-merge, and the merge result is thus different from any of the children. So 
-that's a real number. So is 136, in some sense - it just says that we 
-don't care about commits, even if those commits _do_ end up changing the 
-file.
+is meaningful (and the one I want for merges), but it's largely useless 
+for anything else. It just means "the set of all commits that aren't 
+trivially in both" (it's not strictly a valid set operation, but it
+approaches being an "xor" instead of a union or an intersection or a 
+difference).
 
-But the important part to realize is that the "971" number is always 
-wrong. It's never a really valid number. It contains a lot of extra 
-merges, but it does _not_ contain enough of them to connect all the dots, 
-and it's thus never correct. Either you should drop merges that don't 
-change things (in which case you cannot have full connectivity, and 
-"--parents" doesn't make sense), or you should keep them all (or at least 
-enough to get full connectivity).
+But the above isn't useful for "git diff" and friends any more, it's 
+mainly just for merging.
 
-Now, AFTER this patch
-
-	git-rev-list --full-history HEAD -- Makefile | wc -l
-
-returns 145 commits (the same 145 commits that really change Makefile, but 
-we've now properly decided that because we don't have "--parents" and 
-don't need to keep connectivity we drop _all_ of the merges that have a 
-child that is identical), while
-
-	git-rev-list --parents --full-history HEAD -- Makefile | wc -l
-
-returns 2323 commits, and now really has _all_ the merges (because it 
-needs to include every single merge in the tree - otherwise the 
-connectivity doesn't make sense).
-
-Now, that 2323 is a bit unnecessary - we end up having merges to merges 
-that don't actually have any changes at all in between, and it might be 
-nice to simplify the merge history to create a minimal tree that still has 
-all potential changes in it, but that's a much harder problem.
-
-Anyway, the patch definitely makes a difference, and I think it's correct. 
-The effects might be a bit easier to visualize on a smaller tree than the 
-kernel ;)
-
-We could still potentially improve on the "--parents --full-history" case, 
-but --full-history currently means always walking all possible chains, and 
-that will be shown in the output (ie we will have all possible paths in 
-the result if "--parents" is used, even if those paths end up being 
-totally uninteresting)
-
-  "Hey - you asked for full history, you got it. Don't blame me if you got 
-   a lot of totally uninteresting crud"
-
-				Linus
+			Linus
