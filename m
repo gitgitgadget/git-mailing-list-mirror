@@ -1,76 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] Add read_cache_from() and discard_cache()
-Date: Sat, 01 Jul 2006 11:51:44 -0700
-Message-ID: <7v64ihdupr.fsf@assigned-by-dhcp.cox.net>
-References: <20060630002756.GD22618@steel.home>
-	<Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.63.0606301643150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v3bdmk2zj.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0607011657460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: A note on merging conflicts..
+Date: Sat, 1 Jul 2006 11:52:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607011146530.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+ <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+ <20060701150926.GA25800@lsrfire.ath.cx> <20060701180125.GA27550@fieldses.org>
+ <e86ega$gnc$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 20:51:52 2006
+X-From: git-owner@vger.kernel.org Sat Jul 01 20:52:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwkZK-0003Se-Co
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 20:51:50 +0200
+	id 1FwkZz-0003WV-CA
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 20:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbWGASvq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 14:51:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbWGASvq
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 14:51:46 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:64425 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751913AbWGASvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jul 2006 14:51:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060701185145.ZHRU6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 1 Jul 2006 14:51:45 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607011657460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 1 Jul 2006 17:06:14 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751543AbWGASw2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 14:52:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbWGASw2
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 14:52:28 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51932 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751543AbWGASw1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 14:52:27 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k61IqOnW011250
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 1 Jul 2006 11:52:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k61IqNPU007758;
+	Sat, 1 Jul 2006 11:52:23 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e86ega$gnc$1@sea.gmane.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23058>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> True, I missed that one. But it is just a call to 
-> cache_tree_free(active_cache_tree); in discard_cache(), right?
 
-On the codepath to write out the new index file, calling
-cache_free_tree(&active_cache_tree) before write_cache() is all
-that should be needed.  When "active_cache_tree == NULL",
-write_cache() would write out an index file without the cached
-tree information.
+On Sat, 1 Jul 2006, Jakub Narebski wrote:
+> 
+> Caret is used twice, with different meaning. As prefix operator "^" means 
+> "exclude lineage of commit" (while commit without "^" in front means:
+> "include lineage of commit and commit itself"). BTW. why we don't use '!'
+> for that?
 
-Currently not many things take advantage of cached tree
-information to optimize its operation.  But I'd like to change
-that.  For example, tree merges by read-tree should be able to
-take advantage of the fact that a cached tree read from the
-index and three trees being read all match for a subdirectory
-and do the merge of the directory without descending into it.
+Using '!' is really nasty with most shells. Avoid, avoid, avoid.
 
->>  - index_timestamp is left as the old value in this patch when
->>    you switch cache using read_cache_from() directly.  I have a
->>    suspicion you may be bitten by "Racy Git" problem, especially
->>    because the operations are supposed to happen quickly thanks
->>    to the effort of you two ;-) increasing the risks that the
->>    file timestamp of the working tree file and the cached entry
->>    match.
->
-> Yes. Again, just one line to discard_cache(), right?
->
-> 	index_file_timestamp = 0;
+It would be more sensible to use ~ (mathematical negation), but that also 
+has magic meaning for shell at the beginning of a word..
 
-This one I am not sure.  Read the comment in ce_match_stat() and
-see the problematic sequence of events that this variable tries
-to help resolve applies to your use.
+			Linus
