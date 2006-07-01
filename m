@@ -1,35 +1,36 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Enable tree (directory) history display
-Date: Fri, 30 Jun 2006 20:21:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
+Date: Fri, 30 Jun 2006 20:45:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606302029310.12404@g5.osdl.org>
 References: <20060701024309.63001.qmail@web31805.mail.mud.yahoo.com>
+ <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 05:22:13 2006
+X-From: git-owner@vger.kernel.org Sat Jul 01 05:45:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwW3g-0005S2-Kb
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 05:22:13 +0200
+	id 1FwWQb-0000XL-IS
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 05:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbWGADWI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 23:22:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbWGADWI
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:22:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60387 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751727AbWGADWG (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 23:22:06 -0400
+	id S964867AbWGADpt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 23:45:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964876AbWGADpt
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:45:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:9449 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964867AbWGADps (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 23:45:48 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k613M0nW023902
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k613jinW025014
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Jun 2006 20:22:00 -0700
+	Fri, 30 Jun 2006 20:45:44 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k613Lxhq008547;
-	Fri, 30 Jun 2006 20:21:59 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k613jhra009277;
+	Fri, 30 Jun 2006 20:45:43 -0700
 To: Luben Tuikov <ltuikov@yahoo.com>
-In-Reply-To: <20060701024309.63001.qmail@web31805.mail.mud.yahoo.com>
+In-Reply-To: <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
 X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
 X-MIMEDefang-Filter: osdl$Revision: 1.135 $
@@ -37,133 +38,86 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23038>
 
 
 
-On Fri, 30 Jun 2006, Luben Tuikov wrote:
+On Fri, 30 Jun 2006, Linus Torvalds wrote:
 > 
-> I took a comparative look with and without "--full-history",
-> and FWIW, enabling full history just clobbers the output with a lot
-> of unnecessary information.  I.e. it shows merges which do not have
-> direct consequence or change to the files in the path spec specified
-> after the "--".
+> BTW! Junio, I think this patch actually fixes a real bug.
+> 
+> Without this patch, the "--parents --full-history" combination (which 
+> you'd get if you do something like
+> 
+> 	gitk --full-history Makefile
+> 
+> or similar) will actually _drop_ merges where all children are identical. 
+> That's wrong in the --full-history case, because it measn that the graph 
+> ends up missing lots of entries.
 
-Oh, you're right - "--full-history" right now is literally geared solely 
-towards the graphical kind, which needs all the merges (regardless of 
-whether they change a file or not) to make sense of the history.
+Here's some real numbers.
 
-> I.e. no new, relevant information is being shown when "--full-history"
-> is enabled.  In fact the default git-rev-list case, simplify_history=1,
-> still shows a merge here and there which doesn't have any direct
-> changes into what is being sought, but the difference is
-> about 48% less clobber.
+Before this patch
 
-Well, with history simplification, we still show merges that are required 
-to make the history _complete_, ie say that you had
+	git-rev-list --full-history HEAD -- Makefile | wc -l
+	git-rev-list --parents --full-history HEAD -- Makefile | wc -l
 
-	  a
-	  |
-	  b
-	 / \
-	c   d
-	|   |
+both returned 971 commits on my current kernel tree, while
 
-and neither "a" nor "b" actually changed the file, but both "c" and "d" 
-did: in this case we have to leave "b" around just because otherwise there 
-would be no way to show the _relationship_, even if "b" itself doesn't 
-actually change the tree in any way what-so-ever.
+	git-rev-list --parents HEAD -- Makefile | wc -l
 
-> Can you consider the default case to be simplify_history=1,
-> which is currently the default behaviour of git-rev-list.
+returned 145 commits, and
 
-Actually, for your case, you don't want _any_ merges, unless those merges 
-literally changed the tree from all of the parents.
+	git-rev-list --parents --no-merges HEAD -- Makefile | wc -l
 
-I think it would make sense to make that further simplification if the 
-"--parents" flag wasn't present. 
+returns 136.
 
-Hmm. Maybe something like this..
+That count of 145 is the number of commits that actually _change_ Makefile 
+some way - and some of them really are merges, because they have a content 
+merge, and the merge result is thus different from any of the children. So 
+that's a real number. So is 136, in some sense - it just says that we 
+don't care about commits, even if those commits _do_ end up changing the 
+file.
 
-BTW! Junio, I think this patch actually fixes a real bug.
+But the important part to realize is that the "971" number is always 
+wrong. It's never a really valid number. It contains a lot of extra 
+merges, but it does _not_ contain enough of them to connect all the dots, 
+and it's thus never correct. Either you should drop merges that don't 
+change things (in which case you cannot have full connectivity, and 
+"--parents" doesn't make sense), or you should keep them all (or at least 
+enough to get full connectivity).
 
-Without this patch, the "--parents --full-history" combination (which 
-you'd get if you do something like
+Now, AFTER this patch
 
-	gitk --full-history Makefile
+	git-rev-list --full-history HEAD -- Makefile | wc -l
 
-or similar) will actually _drop_ merges where all children are identical. 
-That's wrong in the --full-history case, because it measn that the graph 
-ends up missing lots of entries.
+returns 145 commits (the same 145 commits that really change Makefile, but 
+we've now properly decided that because we don't have "--parents" and 
+don't need to keep connectivity we drop _all_ of the merges that have a 
+child that is identical), while
 
-In the process, this also should make
+	git-rev-list --parents --full-history HEAD -- Makefile | wc -l
 
-	git-rev-list --full-history Makefile
+returns 2323 commits, and now really has _all_ the merges (because it 
+needs to include every single merge in the tree - otherwise the 
+connectivity doesn't make sense).
 
-give just the _true_ list of all commits that changed Makefile (and 
-properly ignore merges that were identical in one parent), because now 
-we're not asking for "--parent", so we don't need the unnecessary merge 
-commits to keep the history together.
+Now, that 2323 is a bit unnecessary - we end up having merges to merges 
+that don't actually have any changes at all in between, and it might be 
+nice to simplify the merge history to create a minimal tree that still has 
+all potential changes in it, but that's a much harder problem.
 
-Luben, does this fix the problem for you?
+Anyway, the patch definitely makes a difference, and I think it's correct. 
+The effects might be a bit easier to visualize on a smaller tree than the 
+kernel ;)
 
-		Linus
+We could still potentially improve on the "--parents --full-history" case, 
+but --full-history currently means always walking all possible chains, and 
+that will be shown in the output (ie we will have all possible paths in 
+the result if "--parents" is used, even if those paths end up being 
+totally uninteresting)
 
-----
-diff --git a/revision.c b/revision.c
-index b963f2a..1cf6276 100644
---- a/revision.c
-+++ b/revision.c
-@@ -280,7 +280,7 @@ int rev_same_tree_as_empty(struct rev_in
- static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- {
- 	struct commit_list **pp, *parent;
--	int tree_changed = 0;
-+	int tree_changed = 0, tree_same = 0;
- 
- 	if (!commit->tree)
- 		return;
-@@ -298,6 +298,7 @@ static void try_to_simplify_commit(struc
- 		parse_commit(p);
- 		switch (rev_compare_tree(revs, p->tree, commit->tree)) {
- 		case REV_TREE_SAME:
-+			tree_same = 1;
- 			if (!revs->simplify_history || (p->object.flags & UNINTERESTING)) {
- 				/* Even if a merge with an uninteresting
- 				 * side branch brought the entire change
-@@ -334,7 +335,7 @@ static void try_to_simplify_commit(struc
- 		}
- 		die("bad tree compare for commit %s", sha1_to_hex(commit->object.sha1));
- 	}
--	if (tree_changed)
-+	if (tree_changed && !tree_same)
- 		commit->object.flags |= TREECHANGE;
- }
- 
-@@ -896,6 +897,8 @@ static int rewrite_one(struct rev_info *
- 		struct commit *p = *pp;
- 		if (!revs->limited)
- 			add_parents_to_list(revs, p, &revs->commits);
-+		if (p->parents && p->parents->next)
-+			return 0;
- 		if (p->object.flags & (TREECHANGE | UNINTERESTING))
- 			return 0;
- 		if (!p->parents)
-@@ -988,8 +991,15 @@ struct commit *get_revision(struct rev_i
- 		    commit->parents && commit->parents->next)
- 			continue;
- 		if (revs->prune_fn && revs->dense) {
--			if (!(commit->object.flags & TREECHANGE))
--				continue;
-+			/* Commit without changes? */
-+			if (!(commit->object.flags & TREECHANGE)) {
-+				/* drop merges unless we want parenthood */
-+				if (!revs->parents)
-+					continue;
-+				/* non-merge - always ignore it */
-+				if (commit->parents && !commit->parents->next)
-+					continue;
-+			}
- 			if (revs->parents)
- 				rewrite_parents(revs, commit);
- 		}
+  "Hey - you asked for full history, you got it. Don't blame me if you got 
+   a lot of totally uninteresting crud"
+
+				Linus
