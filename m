@@ -1,93 +1,145 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] Add read_cache_from() and discard_cache()
-Date: Sat, 1 Jul 2006 17:06:14 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607011657460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060630002756.GD22618@steel.home>
- <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0606301643150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v3bdmk2zj.fsf@assigned-by-dhcp.cox.net>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: A note on merging conflicts..
+Date: Sat, 1 Jul 2006 17:09:26 +0200
+Message-ID: <20060701150926.GA25800@lsrfire.ath.cx>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org> <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Alex Riesen <fork0@t-online.de>
-X-From: git-owner@vger.kernel.org Sat Jul 01 17:07:57 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 01 17:11:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fwh4a-0004ZJ-MC
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 17:07:53 +0200
+	id 1Fwh7m-0004tT-MC
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 17:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbWGAPGX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 11:06:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbWGAPGV
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 11:06:21 -0400
-Received: from mail.gmx.de ([213.165.64.21]:24467 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751518AbWGAPGP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 11:06:15 -0400
-Received: (qmail invoked by alias); 01 Jul 2006 15:06:14 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 01 Jul 2006 17:06:14 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bdmk2zj.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751837AbWGAPJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 11:09:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbWGAPJj
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 11:09:39 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:40406
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751837AbWGAPJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jul 2006 11:09:27 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 6509D2400D; Sat,  1 Jul 2006 17:09:26 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23047>
 
-Hi,
-
-On Fri, 30 Jun 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Jun 30, 2006 at 08:54:33PM -0700, Linus Torvalds wrote:
+> Now, the expression
 > 
-> > +int discard_cache()
-> > +{
-> > +	int ret;
-> > +	
-> > +	if (cache_mmap == NULL)
-> > +		return 0;
-> > +	ret = munmap(cache_mmap, cache_mmap_size);
-> > +	cache_mmap = NULL;
-> > +	cache_mmap_size = 0;
-> > +	active_nr = active_cache_changed = 0;
-> > +	/* no need to throw away allocated active_cache */
-> > +	return ret;
-> > +}
-> > +
+> 	A...B == B...A == A B --not $(git-merge-base --all A B)
 > 
-> I haven't been following the details of the patches in this
-> thread while they are being cooked actively, but two things to
-> look out for are:
-> 
->  - I am guessing you run discard_cache() because you want to
->    read in a new cache (or start from a clean slate).  I am not
->    sure what you are doing with the old cache tree data
->    structure.  If you are starting from a clean slate
->    (i.e. there is no read_cache_from() after you call
->    discard_cache), you would probably need to discard the old
->    cache tree; otherwise your next write-tree may produce an
->    incorrect index file.  If you keep the old one and later
->    swap it in, the problem might be even more severe.
+> is meaningful (and the one I want for merges), but it's largely useless 
+> for anything else. It just means "the set of all commits that aren't 
+> trivially in both" (it's not strictly a valid set operation, but it
+> approaches being an "xor" instead of a union or an intersection or a 
+> difference).
 
-True, I missed that one. But it is just a call to 
-cache_tree_free(active_cache_tree); in discard_cache(), right?
+You mean something like the following patch on top of the 'next' branch?
+It also documents the --not switch because I needed it for the example.
 
->  - index_timestamp is left as the old value in this patch when
->    you switch cache using read_cache_from() directly.  I have a
->    suspicion you may be bitten by "Racy Git" problem, especially
->    because the operations are supposed to happen quickly thanks
->    to the effort of you two ;-) increasing the risks that the
->    file timestamp of the working tree file and the cached entry
->    match.
+TODO: There are still a few undocumented options left and setup_revisions()
+is fat and ugly.  Any volunteers?  I'd clean it up if I only could
+write comprehensible documentation and wasn't that lazy..
 
-Yes. Again, just one line to discard_cache(), right?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-	index_file_timestamp = 0;
-
-If there is more to it, please don't let me die dumb.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index ad6d14c..ffbf0c9 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 	     [ \--sparse ]
+ 	     [ \--no-merges ]
+ 	     [ \--remove-empty ]
++	     [ \--not ]
+ 	     [ \--all ]
+ 	     [ \--topo-order ]
+ 	     [ \--parents ]
+@@ -37,6 +38,14 @@ not in 'baz'".
+ A special notation <commit1>..<commit2> can be used as a
+ short-hand for {caret}<commit1> <commit2>.
+ 
++Another special notation is <commit1>...<commit2> which is useful for
++merges.  The resulting set of commits is the symmetric difference
++between the two operands.  The following two commands are equivalent:
++
++------------
++$ git-rev-list A B --not $(git-merge-base --all A B)
++$ git-rev-list A...B
++------------
+ 
+ OPTIONS
+ -------
+@@ -93,6 +102,11 @@ OPTIONS
+ --remove-empty::
+ 	Stop when a given path disappears from the tree.
+ 
++--not::
++	Reverses the meaning of the '{caret}' prefix (or lack
++	thereof) for all following revision specifiers, up to
++	the next `--not`.
++
+ --all::
+ 	Pretend as if all the refs in `$GIT_DIR/refs/` are
+ 	listed on the command line as <commit>.
+diff --git a/revision.c b/revision.c
+index ae4ca82..d4224a1 100644
+--- a/revision.c
++++ b/revision.c
+@@ -766,6 +766,47 @@ int setup_revisions(int argc, const char
+ 			left++;
+ 			continue;
+ 		}
++		dotdot = strstr(arg, "...");
++		if (dotdot) {
++			unsigned char other_sha1[20];
++			const char *one = arg;
++			const char *two = dotdot + 3;
++			*dotdot = '\0';
++			if (dotdot == arg)
++				one = "HEAD";
++			if (!*two)
++				two = "HEAD";
++			if (!get_sha1(one, sha1) &&
++			    !get_sha1(two, other_sha1)) {
++				struct commit *a, *b;
++				struct commit_list *exclude;
++
++				a = lookup_commit_reference(sha1);
++				b = lookup_commit_reference(other_sha1);
++				if (!a || !b)
++					die("Invalid symmetric difference expression %s...%s", arg, two);
++
++				if (!seen_dashdash) {
++					*dotdot = '.';
++					verify_non_filename(revs->prefix, arg);
++
++				}
++				exclude = get_merge_bases(a, b);
++				while (exclude) {
++					struct object *object =
++						&exclude->item->object;
++					object->flags |= flags ^ UNINTERESTING;
++					add_pending_object(revs, object, sha1_to_hex(object->sha1));
++					exclude = exclude->next;
++				}
++				a->object.flags |= flags;
++				add_pending_object(revs, &a->object, one);
++				b->object.flags |= flags;
++				add_pending_object(revs, &b->object, two);
++				continue;
++			}
++			*dotdot = '.';
++		}
+ 		dotdot = strstr(arg, "..");
+ 		if (dotdot) {
+ 			unsigned char from_sha1[20];
