@@ -1,58 +1,83 @@
-From: "Mark" <neil@neilboucher.com.au>
-Subject: (unknown)
-Date: Sun, 02 Jul 2006 02:33:21 +1100
-Message-ID: <F7353845.4D53A52@neilboucher.com.au>
-Reply-To: "Mark" <neil@neilboucher.com.au>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: A note on merging conflicts..
+Date: Sat, 1 Jul 2006 15:57:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607011552170.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+ <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+ <20060701150926.GA25800@lsrfire.ath.cx> <20060701180125.GA27550@fieldses.org>
+ <Pine.LNX.4.64.0607011115500.12404@g5.osdl.org> <Pine.LNX.4.64.0607011754370.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jul 02 00:51:58 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 00:57:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwoJg-00046y-UW
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 00:51:57 +0200
+	id 1FwoPW-0004e6-8O
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 00:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365AbWGAWvy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 18:51:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbWGAWvy
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 18:51:54 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:17077 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1750778AbWGAWvx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 18:51:53 -0400
-Received: from zeus2.kernel.org (zeus2.kernel.org [204.152.191.36])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k61Ftkl6010865
-	for <git@vger.kernel.org>; Sat, 1 Jul 2006 15:55:47 GMT
-Received: from neilboucher.com.au (ppp-124.120.206.252.revip2.asianet.co.th [124.120.206.252])
-	by zeus2.kernel.org (8.13.1/8.13.1) with SMTP id k61Fn7KZ026544
-	for <git@vger.kernel.org>; Sat, 1 Jul 2006 15:49:22 GMT
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC; en-US; rv:1.0.2) Gecko/20030208 Netscape/7.02
-X-Accept-Language: en-us
-To: <git@vger.kernel.org>
-Subject: 
-X-Virus-Scanned: ClamAV 0.88.2/1579/Sat Jul  1 10:20:41 2006 on zeus1.kernel.org
-X-Virus-Scanned: ClamAV 0.88.2/1579/Sat Jul  1 10:20:41 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+	id S1751452AbWGAW5z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 18:57:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbWGAW5z
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 18:57:55 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49302 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751452AbWGAW5y (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 18:57:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k61MvhnW021158
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 1 Jul 2006 15:57:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k61Mvgaw014413;
+	Sat, 1 Jul 2006 15:57:43 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0607011754370.9789@iabervon.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.7 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?124.120.206.252>]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: job-alert.net]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: job-alert.net]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: job-alert.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: job-alert.net]
- *  1.2 MISSING_SUBJECT Missing Subject: header
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23072>
 
- One of your friends used our send-to-a-friend-option: Check this out:
-register for job alert, as well as i did - http://job-alert.net
+
+
+On Sat, 1 Jul 2006, Daniel Barkalow wrote:
+> 
+> I think a...b can be computed by (in pseudocode, obviously):
+
+Nope.
+
+> It's basically the original merge-bases code, from way back;
+
+And it has basically the same bug.
+
+It is possible to have
+
+		a
+	       / \
+	      b   c
+	      |\ /|
+	      d e f
+	       \|/
+		g
+
+and clearly "e" is the only valid merge-base of b and c.
+
+HOWEVER. It's actually possible that we traverse d, f and g before we even 
+look at 'e' (because somebody had a bogus date, and 'e' _looks_ old).
+
+Remember: in a distributed system we have no global clock, so any graph 
+traversal ordering we choose is by definition always arbitrary, even 
+though we can obviously _try_ to choose one that is efficient in practice 
+(ie the "sort the heap by date).
+
+So that's why git-merge-base has all that extra "unnecessary" complexity. 
+You cannot output anything at all until you've guaranteed that all pending 
+objects are uninteresting.
+
+				Linus
