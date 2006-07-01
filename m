@@ -1,99 +1,115 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: A note on merging conflicts..
-Date: Sat, 1 Jul 2006 19:45:33 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0607011937190.9789@iabervon.org>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
- <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
- <20060701150926.GA25800@lsrfire.ath.cx> <20060701180125.GA27550@fieldses.org>
- <Pine.LNX.4.64.0607011115500.12404@g5.osdl.org> <Pine.LNX.4.64.0607011754370.9789@iabervon.org>
- <Pine.LNX.4.64.0607011552170.12404@g5.osdl.org> <Pine.LNX.4.64.0607011905030.9789@iabervon.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Git.pm: Avoid ppport.h
+Date: Sun, 2 Jul 2006 01:48:32 +0200
+Message-ID: <20060701234832.GD29115@pasky.or.cz>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 01:45:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 01:48:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fwp9Q-0000ze-C7
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 01:45:24 +0200
+	id 1FwpCY-0001JW-9f
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 01:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932372AbWGAXpR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 19:45:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932389AbWGAXpR
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 19:45:17 -0400
-Received: from iabervon.org ([66.92.72.58]:29714 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932372AbWGAXpP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 19:45:15 -0400
-Received: (qmail 23057 invoked by uid 1000); 1 Jul 2006 19:45:33 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 1 Jul 2006 19:45:33 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607011905030.9789@iabervon.org>
+	id S964857AbWGAXsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 19:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbWGAXsf
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 19:48:35 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:46982 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964857AbWGAXse (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 19:48:34 -0400
+Received: (qmail 3626 invoked by uid 2001); 2 Jul 2006 01:48:32 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23083>
 
-On Sat, 1 Jul 2006, Daniel Barkalow wrote:
+  Hi,
 
-> Actually, I think that it would work to have object flags "LEFT" and 
-> "RIGHT", mark b with left, mark c with right, and mark anything with both 
-> LEFT and RIGHT as UNINTERESTING as we go through the revisions. The 
-> time-ordering problem with symmetric difference isn't absent with regular 
-> difference, and, assuming that b..c works in the tricky cases, the same 
-> logic should handle symmetric difference.
+Dear diary, on Wed, Jun 28, 2006 at 09:39:46AM CEST, I got a letter
+where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> on my iBook, make in pu outputs:
+> 
+> GIT_VERSION = 1.4.1.rc1.gf5d3
+>     * new build flags or prefix
+> (cd perl && /usr/bin/perl Makefile.PL \
+>      PREFIX='/Users/gene099' \
+>      DEFINE=' -I/sw/include -DSHA1_HEADER='\''<openssl/sha.h>'\'' 
+> -DNO_STRCASESTR -DNO_STRLCPY -DGIT_VERSION='\''"1.4.1.rc1.gf5d3"'\''' \
+>      LIBS=' -L/sw/lib -lz  -liconv  -lcrypto -lssl')
+> Can't locate Devel/PPPort.pm in @INC (@INC contains: 
+> /System/Library/Perl/darwin /System/Library/Perl /Library/Perl/darwin 
+> /Library/Perl /Library/Perl /Network/Library/Perl/darwin 
+> /Network/Library/Perl /Network/Library/Perl .) at Makefile.PL line 29.
+> BEGIN failed--compilation aborted at Makefile.PL line 29.
+> make: *** [perl/Makefile] Error 2
 
-That is: (this only has the logic portion, and it's against master, so it 
-isn't actually a really working patch or anything; also, it doesn't handle 
-"--not a...b" correctly, whatever that should mean)
+  ow, Devel::PPPort might not be around all the way back to 5.6.0. What
+is your Perl version, BTW?
 
+->8-
+
+This makes us not include ppport.h which seems not to give us anything real
+anyway; it is useful for checking for portability warts but since Devel::PPPort
+is a portability wart itself, we shouldn't require it for build. You can check
+for portability problems by calling make check in perl/.
+
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
-diff --git a/revision.c b/revision.c
-index 6a6952c..c21d332 100644
---- a/revision.c
-+++ b/revision.c
-@@ -351,6 +351,9 @@ static void add_parents_to_list(struct r
- 		return;
- 	commit->object.flags |= ADDED;
+ perl/Git.xs      |    2 --
+ perl/Makefile.PL |   10 +++++-----
+ 2 files changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/perl/Git.xs b/perl/Git.xs
+index cb23261..51bfac3 100644
+--- a/perl/Git.xs
++++ b/perl/Git.xs
+@@ -15,8 +15,6 @@ #include "EXTERN.h"
+ #include "perl.h"
+ #include "XSUB.h"
  
-+	if (commit->object.flags & LEFT && commit->objects.flags & RIGHT)
-+		commit->object.flags |= UNINTERESTING;
+-#include "ppport.h"
+-
+ #undef die
+ 
+ 
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 25ae54a..97ee9af 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -5,6 +5,11 @@ sub MY::postamble {
+ instlibdir:
+ 	@echo '$(INSTALLSITEARCH)'
+ 
++check:
++	perl -MDevel::PPPort -le 'Devel::PPPort::WriteFile(".ppport.h")' && \
++	perl .ppport.h --compat-version=5.6.0 Git.xs && \
++	rm .ppport.h
 +
- 	/*
- 	 * If the commit is uninteresting, don't try to
- 	 * prune parents - we want the maximal uninteresting
-@@ -781,8 +784,13 @@ int setup_revisions(int argc, const char
- 				struct object *exclude;
- 				struct object *include;
+ MAKE_FRAG
+ }
  
--				exclude = get_reference(revs, this, from_sha1, flags ^ UNINTERESTING);
--				include = get_reference(revs, next, sha1, flags);
-+				if (symmetric) {
-+					exclude = get_reference(revs, this, from_sha1, flags ^ UNINTERESTING);
-+					include = get_reference(revs, next, sha1, flags);
-+				} else {
-+					exclude = get_reference(revs, this, from_sha1, flags | LEFT_HALF);
-+					include = get_reference(revs, next, sha1, flags | RIGHT_HALF);
-+				}
- 				if (!exclude || !include)
- 					die("Invalid revision range %s..%s", arg, next);
- 
-diff --git a/revision.h b/revision.h
-index 7d85b0f..93421e6 100644
---- a/revision.h
-+++ b/revision.h
-@@ -9,6 +9,8 @@
- #define BOUNDARY	(1u<<5)
- #define BOUNDARY_SHOW	(1u<<6)
- #define ADDED		(1u<<7)	/* Parents already parsed and added? */
-+#define LEFT_HALF	(1u<<8) /* Reachable from start of dotdotdot */
-+#define RIGHT_HALF	(1u<<9) /* Reachable from end of dotdotdot */
- 
- struct rev_info;
- struct log_info;
+@@ -24,8 +29,3 @@ WriteMakefile(
+ 	MYEXTLIB        => '../libgit.a',
+ 	INC             => '-I. -I..',
+ );
+-
+-
+-use Devel::PPPort;
+-
+--s 'ppport.h' or Devel::PPPort::WriteFile();
+
 -- 
-1.2.4
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
