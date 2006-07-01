@@ -1,106 +1,152 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: A note on merging conflicts..
-Date: Fri, 30 Jun 2006 19:44:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] don't load objects needlessly when repacking
+Date: Fri, 30 Jun 2006 22:55:30 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0606302243120.1213@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Jul 01 04:44:43 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 01 04:55:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwVTN-0000cM-Fx
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 04:44:41 +0200
+	id 1FwVdw-0001qX-Bv
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 04:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750907AbWGACoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 22:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbWGACoi
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 22:44:38 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:49882 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750907AbWGACoh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 22:44:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k612iXnW022238
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Jun 2006 19:44:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k612iWI8007539;
-	Fri, 30 Jun 2006 19:44:33 -0700
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751031AbWGACzc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 22:55:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbWGACzc
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 22:55:32 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49204 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751031AbWGACzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 22:55:31 -0400
+Received: from xanadu.home ([74.56.108.184]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J1P00828ESI7N40@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 30 Jun 2006 22:55:31 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23033>
 
+If no delta is attempted on some objects then it is useless to load them 
+in memory, neither create any delta index for them.  The best thing to 
+do is therefore to load and index them only when really needed.
 
-Ok, over the last week or so, I've been having a lot more content 
-conflicts than usual, mostly because of 
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
- (a) just the fact that the way the merge window happens for the kernel 
-     these days, rather than have incremental small merges, we often end 
-     up having lots of big ones.
-and
+---
 
- (b) I ended up merging a few trees that had lots of small changes all 
-     over, notably to header files having their <config.h> include 
-     removed, causing trivial conflicts.
+With this patch, a git-repack -a on the Linux kernel repo takes 19 
+seconds instead of 25 seconds on my machine.  At this point the cost of 
+creating a pack is largely dominated by git-rev-list alone while the 
+actual pack creation is basically free.
 
-Now, the good news is that I have to say that our conflict resolution 
-rocks. It's all been _very_ easy to do. In fact, it's been even more 
-pleasant than BK was, because of one big issue: you could resolve the 
-conflict in the tree, then _test_ it (perhaps just compile-test it), and 
-commit the resolved result separately. With BK, you had to resolve and 
-commit atomically, and you never had access to a "preliminary resolve" to 
-test.
-
-However, I also notived one particular thing that I did that we make less 
-than perfectly easy.
-
-One thing that is _very_ useful to do is to do when you have a conflict is 
-this:
-
-	git log -p HEAD MERGE_BASE..MERGE_HEAD -- conflicting-filename
-
-because this shows all the changes (with their explanations) for that 
-filename since the MERGE_BASE in _both_ branches you're trying to merge. 
-This simple command really makes conflict resolution a hell of a lot 
-easier, because you can see what caused the conflict, and you get a real 
-feel for what both branches were doing, making it a _lot_ more likely that 
-you actually do the right thing.
-
-Now, the downside is that the above is both a pain to type, and we don't 
-actually even save the MERGE_BASE as a head, so you actually have to 
-compute it yourself. It's easy enough to do:
-
-	git-merge-base HEAD MERGE_HEAD > .git/MERGE_BASE
-
-will do it, but the fact is, we should make this even easier.
-
-In fact, after writing the above a few times, I really think there's a 
-case for making a helper function that does exactly the above for us. 
-Including all the "conflicting-filename" thing. It would be nice if
-
-	git log -p --merge [[--] filenames...]
-
-would basically expand to
-
-	git log -p HEAD MERGE_HEAD
-		^$(git-merge-base HEAD MERGE_HEAD)
-		-- $(git-ls-files -u [filenames...])
-
-so that I wouldn't have to type that by hand ever again, and doing a
-
-	git log -p --merge drivers/
-
-would automatically give me exactly that for all the unmerged files in 
-drivers/.
-
-Anybody want to try to make me happy, and learn some git internals at the 
-same time?
-
-			Linus
+diff --git a/pack-objects.c b/pack-objects.c
+index 47da33b..b486ea5 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -970,11 +970,12 @@ struct unpacked {
+  * one.
+  */
+ static int try_delta(struct unpacked *trg, struct unpacked *src,
+-		     struct delta_index *src_index, unsigned max_depth)
++		     unsigned max_depth)
+ {
+ 	struct object_entry *trg_entry = trg->entry;
+ 	struct object_entry *src_entry = src->entry;
+-	unsigned long size, src_size, delta_size, sizediff, max_size;
++	unsigned long trg_size, src_size, delta_size, sizediff, max_size, sz;
++	char type[10];
+ 	void *delta_buf;
+ 
+ 	/* Don't bother doing diffs between different types */
+@@ -1009,19 +1010,38 @@ static int try_delta(struct unpacked *tr
+ 		return 0;
+ 
+ 	/* Now some size filtering heuristics. */
+-	size = trg_entry->size;
+-	max_size = size/2 - 20;
++	trg_size = trg_entry->size;
++	max_size = trg_size/2 - 20;
+ 	max_size = max_size * (max_depth - src_entry->depth) / max_depth;
+ 	if (max_size == 0)
+ 		return 0;
+ 	if (trg_entry->delta && trg_entry->delta_size <= max_size)
+ 		max_size = trg_entry->delta_size-1;
+ 	src_size = src_entry->size;
+-	sizediff = src_size < size ? size - src_size : 0;
++	sizediff = src_size < trg_size ? trg_size - src_size : 0;
+ 	if (sizediff >= max_size)
+ 		return 0;
+ 
+-	delta_buf = create_delta(src_index, trg->data, size, &delta_size, max_size);
++	/* Load data if not already done */
++	if (!trg->data) {
++		trg->data = read_sha1_file(trg_entry->sha1, type, &sz);
++		if (sz != trg_size)
++			die("object %s inconsistent object length (%lu vs %lu)",
++			    sha1_to_hex(trg_entry->sha1), sz, trg_size);
++	}
++	if (!src->data) {
++		src->data = read_sha1_file(src_entry->sha1, type, &sz);
++		if (sz != src_size)
++			die("object %s inconsistent object length (%lu vs %lu)",
++			    sha1_to_hex(src_entry->sha1), sz, src_size);
++	}
++	if (!src->index) {
++		src->index = create_delta_index(src->data, src_size);
++		if (!src->index)
++			die("out of memory");
++	}
++
++	delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
+ 	if (!delta_buf)
+ 		return 0;
+ 
+@@ -1054,8 +1074,6 @@ static void find_deltas(struct object_en
+ 	while (--i >= 0) {
+ 		struct object_entry *entry = list[i];
+ 		struct unpacked *n = array + idx;
+-		unsigned long size;
+-		char type[10];
+ 		int j;
+ 
+ 		if (!entry->preferred_base)
+@@ -1082,11 +1100,8 @@ static void find_deltas(struct object_en
+ 		free_delta_index(n->index);
+ 		n->index = NULL;
+ 		free(n->data);
++		n->data = NULL;
+ 		n->entry = entry;
+-		n->data = read_sha1_file(entry->sha1, type, &size);
+-		if (size != entry->size)
+-			die("object %s inconsistent object length (%lu vs %lu)",
+-			    sha1_to_hex(entry->sha1), size, entry->size);
+ 
+ 		j = window;
+ 		while (--j > 0) {
+@@ -1097,7 +1112,7 @@ static void find_deltas(struct object_en
+ 			m = array + other_idx;
+ 			if (!m->entry)
+ 				break;
+-			if (try_delta(n, m, m->index, depth) < 0)
++			if (try_delta(n, m, depth) < 0)
+ 				break;
+ 		}
+ 		/* if we made n a delta, and if n is already at max
+@@ -1107,10 +1122,6 @@ static void find_deltas(struct object_en
+ 		if (entry->delta && depth <= entry->depth)
+ 			continue;
+ 
+-		n->index = create_delta_index(n->data, size);
+-		if (!n->index)
+-			die("out of memory");
+-
+ 		idx++;
+ 		if (idx >= window)
+ 			idx = 0;
