@@ -1,140 +1,133 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: A note on merging conflicts..
-Date: Sat, 01 Jul 2006 13:14:59 -0700
-Message-ID: <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
-	<7vy7vedntn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
-	<20060701150926.GA25800@lsrfire.ath.cx>
-	<7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
-	<44A6CD1D.2000600@lsrfire.ath.cx>
-	<Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
-	<7vveqhccnk.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Fix errno usage in connect.c
+Date: Sat, 1 Jul 2006 23:56:26 +0200
+Message-ID: <20060701215626.GB29115@pasky.or.cz>
+References: <118833cc0606280956s4081029ci5b3cd1fdf4b10c97@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Jul 01 22:15:09 2006
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 01 23:56:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fwlrw-0002UP-Sc
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 22:15:09 +0200
+	id 1FwnSD-0006Dl-RE
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 23:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbWGAUPE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 16:15:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbWGAUPC
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 16:15:02 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:2278 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751825AbWGAUPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jul 2006 16:15:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060701201500.CBUT6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 1 Jul 2006 16:15:00 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vveqhccnk.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 01 Jul 2006 13:07:11 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750734AbWGAV4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 17:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbWGAV43
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 17:56:29 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52364 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750734AbWGAV42 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 17:56:28 -0400
+Received: (qmail 24532 invoked by uid 2001); 1 Jul 2006 23:56:26 +0200
+To: Morten Welinder <mwelinder@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <118833cc0606280956s4081029ci5b3cd1fdf4b10c97@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23065>
 
-Junio C Hamano <junkio@cox.net> writes:
+Dear diary, on Wed, Jun 28, 2006 at 06:56:12PM CEST, I got a letter
+where Morten Welinder <mwelinder@gmail.com> said that...
+> It looks like connect.c waits too long before it uses errno in both copies
+> of git_tcp_connect_sock.  Both close and freeaddrinfo can poke any
+> non-zero value in there.
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> On Sat, 1 Jul 2006, Rene Scharfe wrote:
->>> 
->>> I wonder why the two clear_commit_marks() calls at the end of
->>> get_merge_bases() are not sufficient, though.
->>
->> Why does that thing check for "parent->object.parsed"?
->
-> Oh, I thought I fixed that up when I merged.  Sorry.
->
->> Also, it only clears commit marks if they are contiguous, but some commit 
->> marking may not be dense (eg, the "UNINTERESTING" mark may have been set 
->> by (PARENT1 && PARENT2) triggering, but is not set in the commits that 
->> reach it.
->
-> That is true.
+Nice catch.
 
-I'll be offline for a few hours, but if anybody is inclined to
-fix this up, I'd appreciate it to be based on top of 7c6f8aa
-commit (which is the tip of js/merge-base topic branch).
+->8-
 
-Perhaps as a starter (not even compile tested)... 
+errno was used after it could've been modified by a subsequent library call.
+Spotted by Morten Welinder.
 
-diff --git a/commit.c b/commit.c
-index 0431027..23ac210 100644
---- a/commit.c
-+++ b/commit.c
-@@ -397,13 +397,13 @@ void clear_commit_marks(struct commit *c
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
+
+ connect.c |   18 ++++++++++++------
+ 1 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index cb4656d..9a87bd9 100644
+--- a/connect.c
++++ b/connect.c
+@@ -328,7 +328,7 @@ #ifndef NO_IPV6
+  */
+ static int git_tcp_connect_sock(char *host)
  {
- 	struct commit_list *parents;
+-	int sockfd = -1;
++	int sockfd = -1, saved_errno = 0;
+ 	char *colon, *end;
+ 	const char *port = STR(DEFAULT_GIT_PORT);
+ 	struct addrinfo hints, *ai0, *ai;
+@@ -362,9 +362,12 @@ static int git_tcp_connect_sock(char *ho
+ 	for (ai0 = ai; ai; ai = ai->ai_next) {
+ 		sockfd = socket(ai->ai_family,
+ 				ai->ai_socktype, ai->ai_protocol);
+-		if (sockfd < 0)
++		if (sockfd < 0) {
++			saved_errno = errno;
+ 			continue;
++		}
+ 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
++			saved_errno = errno;
+ 			close(sockfd);
+ 			sockfd = -1;
+ 			continue;
+@@ -375,7 +378,7 @@ static int git_tcp_connect_sock(char *ho
+ 	freeaddrinfo(ai0);
  
--	parents = commit->parents;
-+	if (!commit)
-+		return;
- 	commit->object.flags &= ~mark;
-+	parents = commit->parents;
- 	while (parents) {
- 		struct commit *parent = parents->item;
--		if (parent && parent->object.parsed &&
--		    (parent->object.flags & mark))
--			clear_commit_marks(parent, mark);
-+		clear_commit_marks(parent, mark);
- 		parents = parents->next;
- 	}
- }
-@@ -1012,7 +1012,8 @@ static void mark_reachable_commits(struc
- 	}
- }
+ 	if (sockfd < 0)
+-		die("unable to connect a socket (%s)", strerror(errno));
++		die("unable to connect a socket (%s)", strerror(saved_errno));
  
--struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2)
-+struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2,
-+				    int cleanup_needed)
+ 	return sockfd;
+ }
+@@ -387,7 +390,7 @@ #else /* NO_IPV6 */
+  */
+ static int git_tcp_connect_sock(char *host)
  {
- 	struct commit_list *list = NULL;
- 	struct commit_list *result = NULL;
-@@ -1081,8 +1082,10 @@ struct commit_list *get_merge_bases(stru
+-	int sockfd = -1;
++	int sockfd = -1, saved_errno = 0;
+ 	char *colon, *end;
+ 	char *port = STR(DEFAULT_GIT_PORT), *ep;
+ 	struct hostent *he;
+@@ -426,8 +429,10 @@ static int git_tcp_connect_sock(char *ho
+ 
+ 	for (ap = he->h_addr_list; *ap; ap++) {
+ 		sockfd = socket(he->h_addrtype, SOCK_STREAM, 0);
+-		if (sockfd < 0)
++		if (sockfd < 0) {
++			saved_errno = errno;
+ 			continue;
++		}
+ 
+ 		memset(&sa, 0, sizeof sa);
+ 		sa.sin_family = he->h_addrtype;
+@@ -435,6 +440,7 @@ static int git_tcp_connect_sock(char *ho
+ 		memcpy(&sa.sin_addr, *ap, he->h_length);
+ 
+ 		if (connect(sockfd, (struct sockaddr *)&sa, sizeof sa) < 0) {
++			saved_errno = errno;
+ 			close(sockfd);
+ 			sockfd = -1;
+ 			continue;
+@@ -443,7 +449,7 @@ static int git_tcp_connect_sock(char *ho
  	}
  
- 	/* reset flags */
--	clear_commit_marks(rev1, PARENT1 | PARENT2 | UNINTERESTING);
--	clear_commit_marks(rev2, PARENT1 | PARENT2 | UNINTERESTING);
-+	if (cleanup_needed) {
-+		clear_commit_marks(rev1, PARENT1 | PARENT2 | UNINTERESTING);
-+		clear_commit_marks(rev2, PARENT1 | PARENT2 | UNINTERESTING);
-+	}
+ 	if (sockfd < 0)
+-		die("unable to connect a socket (%s)", strerror(errno));
++		die("unable to connect a socket (%s)", strerror(saved_errno));
  
- 	return result;
+ 	return sockfd;
  }
-diff --git a/commit.h b/commit.h
-index 89b9dad..53bc697 100644
---- a/commit.h
-+++ b/commit.h
-@@ -105,6 +105,6 @@ struct commit_graft *read_graft_line(cha
- int register_commit_graft(struct commit_graft *, int);
- int read_graft_file(const char *graft_file);
- 
--extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2);
-+extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup_needed);
- 
- #endif /* COMMIT_H */
-diff --git a/merge-base.c b/merge-base.c
-index b41f76c..59f723f 100644
---- a/merge-base.c
-+++ b/merge-base.c
-@@ -6,7 +6,7 @@ static int show_all = 0;
- 
- static int merge_base(struct commit *rev1, struct commit *rev2)
- {
--	struct commit_list *result = get_merge_bases(rev1, rev2);
-+	struct commit_list *result = get_merge_bases(rev1, rev2, 0);
- 
- 	if (!result)
- 		return 1;
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
