@@ -1,49 +1,83 @@
-From: "Bertrand Jacquin" <beber.mailing@gmail.com>
-Subject: git-send-email: mail send at 1st december 2005
-Date: Sat, 1 Jul 2006 15:41:15 +0200
-Message-ID: <4fb292fa0607010641s60831eebp9c58a2098ddf7605@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] autoconf: Use autoconf to write installation directories to config.mak
+Date: Sat, 01 Jul 2006 15:58:13 +0200
+Organization: At home
+Message-ID: <e85v14$85c$1@sea.gmane.org>
+References: <200606290301.51657.jnareb@gmail.com> <E1FvvuX-0002Lr-Nt@moooo.ath.cx> <e80lnq$9mi$1@sea.gmane.org> <44A51693.5020501@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 01 15:41:23 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Jul 01 15:58:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fwfir-00036q-RK
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 15:41:22 +0200
+	id 1FwfzM-0004qJ-9n
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 15:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbWGANlS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 09:41:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWGANlS
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 09:41:18 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:20517 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751247AbWGANlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jul 2006 09:41:17 -0400
-Received: by nf-out-0910.google.com with SMTP id k26so100561nfc
-        for <git@vger.kernel.org>; Sat, 01 Jul 2006 06:41:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=tf63uYcNobOLd6PDfPitpXJWRFHYhXYqmavwboJvFAkug6BR47GzhBSW7PkmO/arEXJfPRNlCtzeShr2vSB7ijI8aJfEKtA+tsA+umV9Nx8sLsNJ5iOUoi7YQgRyDLPD6GgwjvR9qdxA8qOKNmksxJA88XAQCP7rXvzdVtvp07M=
-Received: by 10.48.1.4 with SMTP id 4mr1002413nfa;
-        Sat, 01 Jul 2006 06:41:16 -0700 (PDT)
-Received: by 10.48.48.6 with HTTP; Sat, 1 Jul 2006 06:41:15 -0700 (PDT)
-To: git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1750838AbWGAN6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 09:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbWGAN6H
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 09:58:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:32463 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750838AbWGAN6F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 09:58:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fwfz2-0004p6-Bd
+	for git@vger.kernel.org; Sat, 01 Jul 2006 15:58:04 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Jul 2006 15:58:04 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Jul 2006 15:58:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23046>
 
-Hi,
+Andreas Ericsson wrote:
 
-Since git 1.4.0 all mail send with git-send-email have a date of
-01/12/2005. Is it a known problem ?
+> This is bad, since it forces users to do one thing first and then do 
+> what they're used to. Better to have the script add
+> 
+> -include config.mak.autogen
+> 
+> LAST in config.mak, unless it's already in the file and generate 
+> config.mak.autogen with configure.
+> 
+> Since Make does things bottoms-up (much like swedish students and 
+> midsummer celebrators), the previous hand-edited defaults in config.mak 
+> will beat the ones in config.mak.autogen (a good thing).
 
-Thanks
+That's not true, unless we use '?=' assignment in Makefile. And we _want_ to
+override defaults provided in main git Makefile, so in config.mak.autoconf,
+and probably in user's own config.mak we use '=' overriding assignment. So
+it would be better to just add "-include config.mak.autogen" to makefile
+before "-include config.mak", as in patch below.
+
+diff --git a/Makefile b/Makefile
+index ccd7c62..a37d400 100644
+--- a/Makefile
++++ b/Makefile
+@@ -333,6 +333,7 @@ ifneq (,$(findstring arm,$(uname_M)))
+        ARM_SHA1 = YesPlease
+ endif
+ 
++-include config.mak.autogen
+ -include config.mak
+ 
+ ifdef WITH_OWN_SUBPROCESS_PY
+
+
 -- 
-# Beber : beber@gna.org
-# IM : beber@jabber.fr
-# http://guybrush.ath.cx, irc://irc.freenode.net/#{e.fr,gentoofr}
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
