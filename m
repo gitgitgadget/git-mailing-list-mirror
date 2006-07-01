@@ -1,60 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH 14] autoconf: Added --with/--without for openssl, curl, expat to ./configure
-Date: Sat, 01 Jul 2006 00:34:44 +0200
-Organization: At home
-Message-ID: <e848tn$e36$1@sea.gmane.org>
-References: <200606290301.51657.jnareb@gmail.com> <200606301708.19521.jnareb@gmail.com> <200606301711.39635.jnareb@gmail.com> <200606302345.17045.jnareb@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] Speed up history generation
+Date: Fri, 30 Jun 2006 17:59:24 -0700 (PDT)
+Message-ID: <20060701005924.7726.qmail@web31812.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Jul 01 00:35:14 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Jul 01 02:59:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwRZw-0007y2-0P
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 00:35:12 +0200
+	id 1FwTpa-0003uQ-Tr
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 02:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbWF3WfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 18:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbWF3WfF
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 18:35:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:22163 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750735AbWF3WfE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 18:35:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1FwRZm-0007x5-HE
-	for git@vger.kernel.org; Sat, 01 Jul 2006 00:35:02 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Jul 2006 00:35:02 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Jul 2006 00:35:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751890AbWGAA70 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 20:59:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbWGAA70
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 20:59:26 -0400
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:16790 "HELO
+	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751886AbWGAA7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 20:59:24 -0400
+Received: (qmail 7728 invoked by uid 60001); 1 Jul 2006 00:59:24 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=KV+XRV5r40KRxFbGV7D0eRkLVS6xTPSrqsUaH0+GKLq7Du2B65ccOc/jtyUP5N+29gS2/D2g8wHQ/1XTvO3Xes/ZP94SMwisqu6Bl8PL9vAWmEFXjea7OSrbzKbSo5W6fkyG8o5kE1XXra4ALsnY0IEkNyEJEmvDI3yM7JV3mSU=  ;
+Received: from [68.186.62.135] by web31812.mail.mud.yahoo.com via HTTP; Fri, 30 Jun 2006 17:59:24 PDT
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23023>
 
-Jakub Narebski wrote:
+Speed up history generation as suggested by Linus.
 
-> +AC_ARG_WITH(expat,
-> +AS_HELP_STRING([--with-expat],[support git-push using http:// and https:// transports via WebDAV (default is YES)])
-> +AS_HELP_STRING([],            [ARG can be also prefix for expat library and headers]),\
-> +MY_PARSE_WITH(EXPAT))
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.cgi |    9 ++-------
+ 1 files changed, 2 insertions(+), 7 deletions(-)
 
-Of course to do anything for --with-expat=PATH case this patch needs
-the one that introduces EXPATDIR (there was such patch on the list,
-I'm not sure if it got accepted).
-
+diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
+index 035e76d..2705a93 100755
+--- a/gitweb/gitweb.cgi
++++ b/gitweb/gitweb.cgi
+@@ -2295,16 +2295,12 @@ sub git_history {
+ 	      "</div>\n";
+ 	print "<div class=\"page_path\"><b>/" . esc_html($file_name) . "</b><br/></div>\n";
+ 
+-	open my $fd, "-|", "$gitbin/git-rev-list $hash | $gitbin/git-diff-tree -r --stdin --
+\'$file_name\'";
+-	my $commit;
++	open my $fd, "-|", "$gitbin/git-rev-list $hash -- \'$file_name\'";
+ 	print "<table cellspacing=\"0\">\n";
+ 	my $alternate = 0;
+ 	while (my $line = <$fd>) {
+ 		if ($line =~ m/^([0-9a-fA-F]{40})/){
+-			$commit = $1;
+-			next;
+-		}
+-		if ($line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)\t(.*)$/ &&
+(defined $commit)) {
++			my $commit = $1;
+ 			my %co = git_read_commit($commit);
+ 			if (!%co) {
+ 				next;
+@@ -2336,7 +2332,6 @@ sub git_history {
+ 			}
+ 			print "</td>\n" .
+ 			      "</tr>\n";
+-			undef $commit;
+ 		}
+ 	}
+ 	print "</table>\n";
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.1.rc2.g4ce4
