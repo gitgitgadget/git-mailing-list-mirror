@@ -1,76 +1,105 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: A note on merging conflicts..
-Date: Sat, 01 Jul 2006 21:29:33 +0200
-Message-ID: <44A6CD1D.2000600@lsrfire.ath.cx>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>	<7vy7vedntn.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>	<20060701150926.GA25800@lsrfire.ath.cx> <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] Enable tree (directory) history display
+Date: Sat, 1 Jul 2006 12:38:38 -0700 (PDT)
+Message-ID: <20060701193838.71618.qmail@web31802.mail.mud.yahoo.com>
+References: <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Jul 01 21:29:48 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 01 21:38:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwlA3-0006eZ-Pq
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 21:29:48 +0200
+	id 1FwlIg-0007S9-Nv
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 21:38:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914AbWGAT3m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 1 Jul 2006 15:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbWGAT3m
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 15:29:42 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:46030
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1751914AbWGAT3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jul 2006 15:29:42 -0400
-Received: from [10.0.1.3] (p508E6911.dip.t-dialin.net [80.142.105.17])
-	by neapel230.server4you.de (Postfix) with ESMTP id 01F3314014;
-	Sat,  1 Jul 2006 21:29:35 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S932142AbWGATij (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 15:38:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbWGATij
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 15:38:39 -0400
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:45709 "HELO
+	web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751918AbWGATij (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Jul 2006 15:38:39 -0400
+Received: (qmail 71620 invoked by uid 60001); 1 Jul 2006 19:38:38 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=r5kGdzUasVzVNwfHTCzfBcEbTqT3AMtYPSIf3wv0Poo+F2QK+seEFTg9++dGwhtfivM6F+Cx1RvpQfk9rm2g44vtAVOck/jm8NqocHEZ3r+XeQqe/aRMKdlsH+KAjDRFHaB8D/dzgilU1YGKjJbLehshKoCKw4oI/vzmEc2L6UI=  ;
+Received: from [68.186.62.135] by web31802.mail.mud.yahoo.com via HTTP; Sat, 01 Jul 2006 12:38:38 PDT
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0606301954140.12404@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23060>
 
-Junio C Hamano schrieb:
-> I suspect this has the same problem I pointed out to Kristian's=20
-> attempt to make git-branch a built-in.
->=20
-> Subject: Re: [PATCH] Implement git-branch and git-merge-base as
-> built-ins. Date: Thu, 08 Jun 2006 11:53:48 -0700 Message-ID:
-> <7vverbsclf.fsf@assigned-by-dhcp.cox.net>
->=20
-> Namely, merge-base code is not set up to be called more than once
-> without cleaning things up.
+--- Linus Torvalds <torvalds@osdl.org> wrote:
+> Well, with history simplification, we still show merges that are required 
+> to make the history _complete_, ie say that you had
+> 
+> 	  a
+> 	  |
+> 	  b
+> 	 / \
+> 	c   d
+> 	|   |
+> 
+> and neither "a" nor "b" actually changed the file, but both "c" and "d" 
+> did: in this case we have to leave "b" around just because otherwise there 
+> would be no way to show the _relationship_, even if "b" itself doesn't 
+> actually change the tree in any way what-so-ever.
 
-Eek!  This is not a nice interface.  Your example IDs from the your mai=
-l
-to Kristian:
+I agree.  If "c" and/or "d" changed the file but neither "a" nor "b" did,
+then by (merge/diff/etc) "inheritance" we do need to leave "b" around.
 
-   $ ./git-rev-list 89719209...262a6ef7 66ae0c77...ced9456a | wc
-        75      75    3075
-   $ git-rev-list 89719209 262a6ef7 \
-     --not $(git-merge-base --all 89719209 262a6ef7) \
-     --not 66ae0c77 ced9456a \
-     --not $(git-merge-base --all 66ae0c77 ced9456a) | wc
-        75      75    3075
+(This is similar to git-blame/git-annotate which should show "b", so that
+we can track down the change to "c" and/or "d".)
 
-   $ ./git-rev-list 66ae0c77...ced9456a 89719209...262a6ef7 | wc
-        76      76    3116
-   $ git-rev-list 66ae0c77 ced9456a \
-     --not $(git-merge-base --all 66ae0c77 ced9456a) \
-     --not 89719209 262a6ef7 \
-     --not $(git-merge-base --all 89719209 262a6ef7) | wc
-        75      75    3075
+> > Can you consider the default case to be simplify_history=1,
+> > which is currently the default behaviour of git-rev-list.
+> 
+> Actually, for your case, you don't want _any_ merges, unless those merges 
+> literally changed the tree from all of the parents.
 
-Yep, that doesn't seem right.  The additional line is 262a6ef (which is
-the merge base for 66ae0c77 and ced9456a btw.).  The other 4x 75 lines
-match.
+Yes, that's true.  s/all/one or more:
+Don't want to show a merge, unless one or more of the parents,
+changed the file.  If no parent changed the tree, then do not
+show the commit.
 
-I wonder why the two clear_commit_marks() calls at the end of
-get_merge_bases() are not sufficient, though.
+> I think it would make sense to make that further simplification if the 
+> "--parents" flag wasn't present. 
+> 
+> Hmm. Maybe something like this..
+> 
+> BTW! Junio, I think this patch actually fixes a real bug.
+> 
+> Without this patch, the "--parents --full-history" combination (which 
+> you'd get if you do something like
+> 
+> 	gitk --full-history Makefile
+> 
+> or similar) will actually _drop_ merges where all children are identical. 
+> That's wrong in the --full-history case, because it measn that the graph 
+> ends up missing lots of entries.
+> 
+> In the process, this also should make
+> 
+> 	git-rev-list --full-history Makefile
+> 
+> give just the _true_ list of all commits that changed Makefile (and 
+> properly ignore merges that were identical in one parent), because now 
+> we're not asking for "--parent", so we don't need the unnecessary merge 
+> commits to keep the history together.
+> 
+> Luben, does this fix the problem for you?
 
-Ren=E9
+Given Junio's analysis, and briefly looking at the logic, it does seem
+correct.  Let me apply it and see what I get, but I think it is a good thing.
+
+Thanks for the patch!
+
+      Luben
