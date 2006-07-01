@@ -1,77 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: A note on merging conflicts..
-Date: Fri, 30 Jun 2006 20:08:20 -0700
-Message-ID: <7vy7vedntn.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] Enable tree (directory) history display
+Date: Fri, 30 Jun 2006 20:10:04 -0700 (PDT)
+Message-ID: <20060701031004.29384.qmail@web31801.mail.mud.yahoo.com>
+References: <7v3bdmf2p6.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 05:08:29 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat Jul 01 05:10:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwVqM-0003jp-Ug
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 05:08:27 +0200
+	id 1FwVsN-00040p-OY
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 05:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbWGADIW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 23:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWGADIW
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:08:22 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:47558 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751258AbWGADIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 23:08:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060701030821.GZOE22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 30 Jun 2006 23:08:21 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 30 Jun 2006 19:44:32 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751699AbWGADKI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 23:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751727AbWGADKI
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:10:08 -0400
+Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:44930 "HELO
+	web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751704AbWGADKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 23:10:05 -0400
+Received: (qmail 29386 invoked by uid 60001); 1 Jul 2006 03:10:04 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=fiSLdJFh08Y9JeAc8odkxr4qpF0n6NDt2ud04xtkbxLMzQImkOX8L1glpDdwDWrmmJQGIhThxFS1FX97QvhCqrO41e5GJ/7QuGWPfWcvl6Xq7WEECsWxgT9dsHlUIa6xY6AZ+ef/juMpfl3xJzo+6bFrJ6a0lhKLjgle3db0XQc=  ;
+Received: from [68.186.62.135] by web31801.mail.mud.yahoo.com via HTTP; Fri, 30 Jun 2006 20:10:04 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bdmf2p6.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23036>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Luben Tuikov <ltuikov@yahoo.com> writes:
+> 
+> > I took a comparative look with and without "--full-history",
+> > and FWIW, enabling full history just clobbers the output with a lot
+> > of unnecessary information.  I.e. it shows merges which do not have
+> > direct consequence or change to the files in the path spec specified
+> > after the "--".
+> >...
+> > FWIW, I think that the original intention (had there been a choice)
+> > would've been to show only most relevant history, i.e. changes
+> > directly related to paths and files after the "--".
+> 
+> Sounds sane.  Maybe we should clearly explain this behaviour
+> change in the commit log and claim it as an improvement.  We
+> might even want to do --no-merges if we go that route.
 
-> Now, the downside is that the above is both a pain to type, and we don't 
-> actually even save the MERGE_BASE as a head, so you actually have to 
-> compute it yourself. It's easy enough to do:
->
-> 	git-merge-base HEAD MERGE_HEAD > .git/MERGE_BASE
->
-> will do it, but the fact is, we should make this even easier.
+I agree.  Indeed, this would definitely be an improvement.
 
-Heh, that's why I kept saying I want somebody to teach rev-list
-a new notation, A...B, to mean $(merge-base A B)..B ;-).
-
-> In fact, after writing the above a few times, I really think there's a 
-> case for making a helper function that does exactly the above for us. 
-> Including all the "conflicting-filename" thing. It would be nice if
->
-> 	git log -p --merge [[--] filenames...]
->
-> would basically expand to
->
-> 	git log -p HEAD MERGE_HEAD
-> 		^$(git-merge-base HEAD MERGE_HEAD)
-> 		-- $(git-ls-files -u [filenames...])
->
-> so that I wouldn't have to type that by hand ever again, and doing a
->
-> 	git log -p --merge drivers/
->
-> would automatically give me exactly that for all the unmerged files in 
-> drivers/.
-
-> Anybody want to try to make me happy, and learn some git internals at the 
-> same time?
-
-I fall in the former category but as the current maintainer I
-feel I should leave chance to do the latter to others first.  I
-wouldn't call it "trivial" but it is not that hard -- I think I
-can write it in my head (as Linus can).
+   Luben
