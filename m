@@ -1,69 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Speed up history generation
-Date: Fri, 30 Jun 2006 18:20:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606301818480.12404@g5.osdl.org>
-References: <20060701005924.7726.qmail@web31812.mail.mud.yahoo.com>
- <7v7j2ygmou.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 30 Jun 2006 18:20:51 -0700
+Message-ID: <7v3bdmglxo.fsf@assigned-by-dhcp.cox.net>
+References: <7v7j2ygmou.fsf@assigned-by-dhcp.cox.net>
+	<20060701011112.892.qmail@web31813.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: ltuikov@yahoo.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 03:20:37 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 01 03:20:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwU9u-0006SK-EX
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 03:20:30 +0200
+	id 1FwUAL-0006VV-2P
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 03:20:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbWGABU1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 21:20:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932492AbWGABU1
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 21:20:27 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:22218 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932116AbWGABU0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 21:20:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k611KMnW018939
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Jun 2006 18:20:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k611KLPU005633;
-	Fri, 30 Jun 2006 18:20:22 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j2ygmou.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.84 required=5 tests=HTML_MESSAGE,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932492AbWGABUy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 21:20:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbWGABUy
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 21:20:54 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:3262 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932492AbWGABUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jun 2006 21:20:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060701012052.XJST18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 30 Jun 2006 21:20:52 -0400
+To: ltuikov@yahoo.com
+In-Reply-To: <20060701011112.892.qmail@web31813.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Fri, 30 Jun 2006 18:11:12 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23028>
 
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
+> --- Junio C Hamano <junkio@cox.net> wrote:
+>...
+>> > @@ -2295,16 +2295,12 @@ sub git_history {
+>> >  	      "</div>\n";
+>> >  	print "<div class=\"page_path\"><b>/" . esc_html($file_name) . "</b><br/></div>\n";
+>> >  
+>> > -	open my $fd, "-|", "$gitbin/git-rev-list $hash | $gitbin/git-diff-tree -r --stdin --
+>> > \'$file_name\'";
+>> > -	my $commit;
+>> > +	open my $fd, "-|", "$gitbin/git-rev-list $hash -- \'$file_name\'";
+>> 
+>> This would speed things up but at the same time it changes the
+>> semantics because it involves merge simplification, no?
+>> 
+>> At least that should be noted in the commit log.
+>
+> Ok, I guess this should be in the log.  Can you add it please when
+> commiting to the master git branch?
 
-On Fri, 30 Jun 2006, Junio C Hamano wrote:
-
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > Speed up history generation as suggested by Linus.
-> > @@ -2295,16 +2295,12 @@ sub git_history {
-> >  	      "</div>\n";
-> >  	print "<div class=\"page_path\"><b>/" . esc_html($file_name) . "</b><br/></div>\n";
-> >  
-> > -	open my $fd, "-|", "$gitbin/git-rev-list $hash | $gitbin/git-diff-tree -r --stdin --
-> > \'$file_name\'";
-> > -	my $commit;
-> > +	open my $fd, "-|", "$gitbin/git-rev-list $hash -- \'$file_name\'";
-> 
-> This would speed things up but at the same time it changes the
-> semantics because it involves merge simplification, no?
-
-Or just add a flag or config option that enables "--full-history" on that 
-git-rev-list. Perhaps it should be the default fir gitweb.
-
-With --full-history, it should still be better to do this inside 
-git-rev-list than piping things into git-diff-tree just to limit by 
-pathname..
-
-		Linus
+Well, by "at least", what I meant was that it might make sense
+to pass "--full-history" option to be more compatible with the
+original output.  For graphical output like gitk, --full-history
+makes a mess on the screen, but a list-oriented output like
+gitweb it might be less confusing to show all the alternate
+paths that touched the path than leaving some histories out.
