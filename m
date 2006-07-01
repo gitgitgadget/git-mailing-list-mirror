@@ -1,69 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: A note on merging conflicts..
-Date: Fri, 30 Jun 2006 20:59:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0606302054580.12404@g5.osdl.org>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
- <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 06:00:14 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: allow a local target directory to be specified for init
+Date: Fri, 30 Jun 2006 21:42:53 -0700
+Message-ID: <11517289734157-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Luca Barbato <lu_zero@gentoo.org>,
+	Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jul 01 06:43:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwWeP-0001sR-NW
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 06:00:10 +0200
+	id 1FwXJy-0006lX-Vh
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 06:43:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932401AbWGAD77 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 23:59:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbWGAD77
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 23:59:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57324 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932401AbWGAD76 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 23:59:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k613xsnW025559
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Jun 2006 20:59:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k613xs5q009687;
-	Fri, 30 Jun 2006 20:59:54 -0700
+	id S932093AbWGAEm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 00:42:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932181AbWGAEm4
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 00:42:56 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:23943 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932093AbWGAEmz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 00:42:55 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id C37567DC021;
+	Fri, 30 Jun 2006 21:42:53 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 30 Jun 2006 21:42:53 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+X-Mailer: git-send-email 1.4.1.rc1.g7fe3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23041>
 
+Original patch by Luca Barbato, cleaned up and made to work for
+the current version of git-svn by me (Eric Wong).
 
-
-On Fri, 30 Jun 2006, Linus Torvalds wrote:
+Luca Barbato <lu_zero@gentoo.org> wrote:
+> Since I'm lazy I just hacked a bit git-svn in order to create a target
+> dir and init it if is passed as second parameter.
 >
-> (it's not strictly a valid set operation, but it approaches being an 
-> "xor" instead of a union or an intersection or a difference).
+> git-svn init url://to/the/repo local-repo
+>
+> will create the local-repo dir if doesn't exist yet and populate it as
+> expected.
+>
+> Maybe someone else could find it useful
 
-Oh, I guess it _is_ perfectly valid. It's called a "symmetric difference" 
-in set theory.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ contrib/git-svn/git-svn.perl |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-So from a set standpoint:
-
-	Git op:			Set theory:
-
-	git-rev-list a..b	// difference: B - A
-	git-rev-list b..a	// difference: A - B
-
-	git-rev-list a b	// union of A B (order doesn't matter)
-
-	git-rev-list a...b	// symmetric difference A B (order doesn't matter)
-
-	git-rev-list $(git-merge-base --all a b)
-				// intersection of A and B
-
-I think.
-
-		Linus
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index b3d3f47..1e19aa1 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -264,9 +264,19 @@ when you have upgraded your tools and ha
+ }
+ 
+ sub init {
+-	$SVN_URL = shift or die "SVN repository location required " .
++	my $url = shift or die "SVN repository location required " .
+ 				"as a command-line argument\n";
+-	$SVN_URL =~ s!/+$!!; # strip trailing slash
++	$url =~ s!/+$!!; # strip trailing slash
++
++	if (my $repo_path = shift) {
++		unless (-d $repo_path) {
++			mkpath([$repo_path]);
++		}
++		$GIT_DIR = $ENV{GIT_DIR} = $repo_path . "/.git";
++		init_vars();
++	}
++
++	$SVN_URL = $url;
+ 	unless (-d $GIT_DIR) {
+ 		my @init_db = ('git-init-db');
+ 		push @init_db, "--template=$_template" if defined $_template;
+-- 
+1.4.1.rc1.g7fe3
