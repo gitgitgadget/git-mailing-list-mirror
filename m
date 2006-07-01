@@ -1,43 +1,49 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Speed up history generation
-Date: Fri, 30 Jun 2006 18:11:12 -0700 (PDT)
-Message-ID: <20060701011112.892.qmail@web31813.mail.mud.yahoo.com>
-References: <7v7j2ygmou.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+Date: Fri, 30 Jun 2006 18:20:21 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606301818480.12404@g5.osdl.org>
+References: <20060701005924.7726.qmail@web31812.mail.mud.yahoo.com>
+ <7v7j2ygmou.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 01 03:11:20 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: ltuikov@yahoo.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 01 03:20:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwU0z-0005SM-Fx
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 03:11:17 +0200
+	id 1FwU9u-0006SK-EX
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 03:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932417AbWGABLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 21:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932525AbWGABLO
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 21:11:14 -0400
-Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:6303 "HELO
-	web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932417AbWGABLN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 21:11:13 -0400
-Received: (qmail 894 invoked by uid 60001); 1 Jul 2006 01:11:12 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=l1G22SxiWoBFOKz53cae/kl8FIxQFOd4elByOyfjmvSnMws4gZ3WhVN0QtfHGqCtz6a/uT97vBV5f3kephoYAZ/ZASKvmkZIUwfI2X00r9Rlk/GlCFbxYJhtWKYjiF6flFEfLo8VuggvoCbnnoShQtyNWW6L2lGx0ITVUV7uNoM=  ;
-Received: from [68.186.62.135] by web31813.mail.mud.yahoo.com via HTTP; Fri, 30 Jun 2006 18:11:12 PDT
+	id S932116AbWGABU1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 21:20:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932492AbWGABU1
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 21:20:27 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:22218 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932116AbWGABU0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 21:20:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k611KMnW018939
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 30 Jun 2006 18:20:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k611KLPU005633;
+	Fri, 30 Jun 2006 18:20:22 -0700
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <7v7j2ygmou.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.84 required=5 tests=HTML_MESSAGE,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23027>
 
---- Junio C Hamano <junkio@cox.net> wrote:
+
+
+On Fri, 30 Jun 2006, Junio C Hamano wrote:
+
 > Luben Tuikov <ltuikov@yahoo.com> writes:
 > 
 > > Speed up history generation as suggested by Linus.
@@ -52,10 +58,12 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23026>
 > 
 > This would speed things up but at the same time it changes the
 > semantics because it involves merge simplification, no?
-> 
-> At least that should be noted in the commit log.
 
-Ok, I guess this should be in the log.  Can you add it please when
-commiting to the master git branch?
+Or just add a flag or config option that enables "--full-history" on that 
+git-rev-list. Perhaps it should be the default fir gitweb.
 
-   Luben
+With --full-history, it should still be better to do this inside 
+git-rev-list than piping things into git-diff-tree just to limit by 
+pathname..
+
+		Linus
