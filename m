@@ -1,85 +1,106 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] Enable tree (directory) history display
-Date: Fri, 30 Jun 2006 19:43:09 -0700 (PDT)
-Message-ID: <20060701024309.63001.qmail@web31805.mail.mud.yahoo.com>
-References: <7vy7vef52m.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: A note on merging conflicts..
+Date: Fri, 30 Jun 2006 19:44:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Jul 01 04:43:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Jul 01 04:44:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwVS1-0000SS-QC
-	for gcvg-git@gmane.org; Sat, 01 Jul 2006 04:43:18 +0200
+	id 1FwVTN-0000cM-Fx
+	for gcvg-git@gmane.org; Sat, 01 Jul 2006 04:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbWGACnL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Jun 2006 22:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWGACnL
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 22:43:11 -0400
-Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:44924 "HELO
-	web31805.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1750792AbWGACnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jun 2006 22:43:10 -0400
-Received: (qmail 63003 invoked by uid 60001); 1 Jul 2006 02:43:09 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=5Yda8XE8/ioaktF4XIpfpj2eQaBYfl+d559xQppwD1kBISVxKYyA/Am2tz/E/JlYQEQ09+7kwxZul3BWWXiaOnsuVwhQLNKsVloUMwK55CD4I1xBarTtpELuMCMMLzNDlQjvnZQkGMuaMs2jNAVL2E+Fn1To08qX1IiKzMaAy4E=  ;
-Received: from [68.186.62.135] by web31805.mail.mud.yahoo.com via HTTP; Fri, 30 Jun 2006 19:43:09 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7vef52m.fsf@assigned-by-dhcp.cox.net>
+	id S1750907AbWGACoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Jun 2006 22:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbWGACoi
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jun 2006 22:44:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49882 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750907AbWGACoh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jun 2006 22:44:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k612iXnW022238
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 30 Jun 2006 19:44:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k612iWI8007539;
+	Fri, 30 Jun 2006 19:44:33 -0700
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23032>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > This patch allows history display of whole trees/directories a la
-> > "git-rev-list HEAD -- <dir or file>".  I find this useful especially
-> > when a project lives in its own subdirectory, as opposed to being all
-> > of the GIT repository (i.e. when a sub-project is merged into a
-> > super-project).
-> 
-> Both patches from you were seriously damaged.  Check your MUA
-> before sending further patches, please.
 
-Yes, I'll take a look.
+Ok, over the last week or so, I've been having a lot more content 
+conflicts than usual, mostly because of 
 
-> 
-> They were trivial for me to apply by hand, so no need to resend
-> them.  I like the effect of this one I am replying to very much.
+ (a) just the fact that the way the merge window happens for the kernel 
+     these days, rather than have incremental small merges, we often end 
+     up having lots of big ones.
+and
 
-Junio, Linus,
+ (b) I ended up merging a few trees that had lots of small changes all 
+     over, notably to header files having their <config.h> include 
+     removed, causing trivial conflicts.
 
-I took a comparative look with and without "--full-history",
-and FWIW, enabling full history just clobbers the output with a lot
-of unnecessary information.  I.e. it shows merges which do not have
-direct consequence or change to the files in the path spec specified
-after the "--".
+Now, the good news is that I have to say that our conflict resolution 
+rocks. It's all been _very_ easy to do. In fact, it's been even more 
+pleasant than BK was, because of one big issue: you could resolve the 
+conflict in the tree, then _test_ it (perhaps just compile-test it), and 
+commit the resolved result separately. With BK, you had to resolve and 
+commit atomically, and you never had access to a "preliminary resolve" to 
+test.
 
-I.e. no new, relevant information is being shown when "--full-history"
-is enabled.  In fact the default git-rev-list case, simplify_history=1,
-still shows a merge here and there which doesn't have any direct
-changes into what is being sought, but the difference is
-about 48% less clobber.
+However, I also notived one particular thing that I did that we make less 
+than perfectly easy.
 
-Can you consider the default case to be simplify_history=1,
-which is currently the default behaviour of git-rev-list.
+One thing that is _very_ useful to do is to do when you have a conflict is 
+this:
 
-If not, is it possible to make this a configurable flag
-in gitweb, so that people can decide how much non-related
-history to show?  I.e. I'd opt for the default case,
-no full-history.
+	git log -p HEAD MERGE_BASE..MERGE_HEAD -- conflicting-filename
 
-FWIW, I think that the original intention (had there been a choice)
-would've been to show only most relevant history, i.e. changes
-directly related to paths and files after the "--".
+because this shows all the changes (with their explanations) for that 
+filename since the MERGE_BASE in _both_ branches you're trying to merge. 
+This simple command really makes conflict resolution a hell of a lot 
+easier, because you can see what caused the conflict, and you get a real 
+feel for what both branches were doing, making it a _lot_ more likely that 
+you actually do the right thing.
 
-Thanks,
-  Luben
+Now, the downside is that the above is both a pain to type, and we don't 
+actually even save the MERGE_BASE as a head, so you actually have to 
+compute it yourself. It's easy enough to do:
+
+	git-merge-base HEAD MERGE_HEAD > .git/MERGE_BASE
+
+will do it, but the fact is, we should make this even easier.
+
+In fact, after writing the above a few times, I really think there's a 
+case for making a helper function that does exactly the above for us. 
+Including all the "conflicting-filename" thing. It would be nice if
+
+	git log -p --merge [[--] filenames...]
+
+would basically expand to
+
+	git log -p HEAD MERGE_HEAD
+		^$(git-merge-base HEAD MERGE_HEAD)
+		-- $(git-ls-files -u [filenames...])
+
+so that I wouldn't have to type that by hand ever again, and doing a
+
+	git log -p --merge drivers/
+
+would automatically give me exactly that for all the unmerged files in 
+drivers/.
+
+Anybody want to try to make me happy, and learn some git internals at the 
+same time?
+
+			Linus
