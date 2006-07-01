@@ -1,112 +1,55 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Git.pm: Avoid ppport.h
-Date: Sun, 2 Jul 2006 01:48:32 +0200
-Message-ID: <20060701234832.GD29115@pasky.or.cz>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [POOL] Who likes running Git without make install?
+Date: Sun, 2 Jul 2006 01:59:06 +0200
+Message-ID: <20060701235906.GE29115@pasky.or.cz>
+References: <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606241147480.6483@g5.osdl.org> <7vhd2atid1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606241338370.6483@g5.osdl.org> <7vd5cyt8a3.fsf@assigned-by-dhcp.cox.net> <20060625010202.GX21864@pasky.or.cz> <20060625014009.GA21864@pasky.or.cz> <7vac82q6mb.fsf@assigned-by-dhcp.cox.net> <20060625152157.GG21864@pasky.or.cz> <7vk674mmyo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 01:48:39 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 01:59:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwpCY-0001JW-9f
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 01:48:38 +0200
+	id 1FwpMn-0002OT-9F
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 01:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964857AbWGAXsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 19:48:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbWGAXsf
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 19:48:35 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46982 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964857AbWGAXse (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 19:48:34 -0400
-Received: (qmail 3626 invoked by uid 2001); 2 Jul 2006 01:48:32 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S964866AbWGAX7J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 19:59:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWGAX7J
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 19:59:09 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:2276 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964866AbWGAX7I (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 19:59:08 -0400
+Received: (qmail 4371 invoked by uid 2001); 2 Jul 2006 01:59:06 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <7vk674mmyo.fsf@assigned-by-dhcp.cox.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23084>
 
-  Hi,
+Dear diary, on Mon, Jun 26, 2006 at 08:48:31AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> I remember myself getting utterly discusted when I saw the
+> inclusion of the build-time blib directory in the search path in
+> some other Perl code outside git.
 
-Dear diary, on Wed, Jun 28, 2006 at 09:39:46AM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> on my iBook, make in pu outputs:
-> 
-> GIT_VERSION = 1.4.1.rc1.gf5d3
->     * new build flags or prefix
-> (cd perl && /usr/bin/perl Makefile.PL \
->      PREFIX='/Users/gene099' \
->      DEFINE=' -I/sw/include -DSHA1_HEADER='\''<openssl/sha.h>'\'' 
-> -DNO_STRCASESTR -DNO_STRLCPY -DGIT_VERSION='\''"1.4.1.rc1.gf5d3"'\''' \
->      LIBS=' -L/sw/lib -lz  -liconv  -lcrypto -lssl')
-> Can't locate Devel/PPPort.pm in @INC (@INC contains: 
-> /System/Library/Perl/darwin /System/Library/Perl /Library/Perl/darwin 
-> /Library/Perl /Library/Perl /Network/Library/Perl/darwin 
-> /Network/Library/Perl /Network/Library/Perl .) at Makefile.PL line 29.
-> BEGIN failed--compilation aborted at Makefile.PL line 29.
-> make: *** [perl/Makefile] Error 2
+Well, yes, it is ugly, but it was really cool that we could have used
+Git without installing it anywhere.
 
-  ow, Devel::PPPort might not be around all the way back to 5.6.0. What
-is your Perl version, BTW?
+But perhaps that's just me refusing to break his old ways of doing
+things. Does anyone else care about it? (And why?)
 
-->8-
+> Worse yet, I suspect the order you do the two directories is
+> wrong to prefer the freshly built one over the one you installed
+> the last time, but I was trying not to stare at too much for
+> health reasons so ... ;-).
 
-This makes us not include ppport.h which seems not to give us anything real
-anyway; it is useful for checking for portability warts but since Devel::PPPort
-is a portability wart itself, we shouldn't require it for build. You can check
-for portability problems by calling make check in perl/.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-
- perl/Git.xs      |    2 --
- perl/Makefile.PL |   10 +++++-----
- 2 files changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/perl/Git.xs b/perl/Git.xs
-index cb23261..51bfac3 100644
---- a/perl/Git.xs
-+++ b/perl/Git.xs
-@@ -15,8 +15,6 @@ #include "EXTERN.h"
- #include "perl.h"
- #include "XSUB.h"
- 
--#include "ppport.h"
--
- #undef die
- 
- 
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 25ae54a..97ee9af 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -5,6 +5,11 @@ sub MY::postamble {
- instlibdir:
- 	@echo '$(INSTALLSITEARCH)'
- 
-+check:
-+	perl -MDevel::PPPort -le 'Devel::PPPort::WriteFile(".ppport.h")' && \
-+	perl .ppport.h --compat-version=5.6.0 Git.xs && \
-+	rm .ppport.h
-+
- MAKE_FRAG
- }
- 
-@@ -24,8 +29,3 @@ WriteMakefile(
- 	MYEXTLIB        => '../libgit.a',
- 	INC             => '-I. -I..',
- );
--
--
--use Devel::PPPort;
--
---s 'ppport.h' or Devel::PPPort::WriteFile();
+Oh man, of course you are right. :-)
 
 -- 
 				Petr "Pasky" Baudis
