@@ -1,53 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: qgit idea: interface for cherry-picking
-Date: Sun, 02 Jul 2006 21:01:10 +0200
-Organization: At home
-Message-ID: <e8954u$srh$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Git.pm: Avoid ppport.h
+Date: Sun, 02 Jul 2006 12:05:33 -0700
+Message-ID: <7v4pxz4yki.fsf@assigned-by-dhcp.cox.net>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060701234832.GD29115@pasky.or.cz>
+	<Pine.LNX.4.63.0607021141260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jul 02 21:01:21 2006
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Jul 02 21:05:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx7C2-0006Uq-FY
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 21:01:18 +0200
+	id 1Fx7GF-000765-5D
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 21:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932792AbWGBTBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 15:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932800AbWGBTBM
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 15:01:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:47059 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932792AbWGBTBL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 15:01:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fx7Bp-0006Sp-BY
-	for git@vger.kernel.org; Sun, 02 Jul 2006 21:01:05 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Jul 2006 21:01:05 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Jul 2006 21:01:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932717AbWGBTFf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 15:05:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932800AbWGBTFf
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 15:05:35 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:62175 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932717AbWGBTFf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 15:05:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060702190534.XQYS12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Jul 2006 15:05:34 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23114>
 
-Currently in qgit one can git-format-patch a commit. It woul be nice if one
-would be able to git-cherry-pick and git-cherry-pick -n a commit (denoting
-the head, i.e. where cherry pick would be applied to). It would be very
-usefull in reordering patches (cleaning up history).  
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+>> This makes us not include ppport.h which seems not to give us anything real
+>> anyway; it is useful for checking for portability warts but since Devel::PPPort
+>> is a portability wart itself, we shouldn't require it for build.
+>
+> Why do people introduce a "portability enhancer" like that? This is soo 
+> dumb.
+
+I think that statement is a bit too harsh.
+
+My understanding is that it's more for use by developers working
+with later version to produce portability headers, so used that
+way it is very sane.  From its manual page:
+
+       How to use ppport.h
+
+       Don't direct the users of your module to download "Devel::PPPort".
+       They are most probably no XS writers. Also, don't make ppport.h
+       optional. Rather, just take the most recent copy of ppport.h that you
+       can find (e.g. by generating it with the latest "Devel::PPPort" release
+       from CPAN), copy it into your project, adjust your project to use it,
+       and distribute the header along with your module.
+
+But in the case of source distribution, and if the source
+distribution wants to be compatible with older versions, the
+above advice does not apply.
+
+> Error: 'const char *' not in typemap in Git.xs, line 69
+> Error: 'const char *' not in typemap in Git.xs, line 79
+> make: *** [Git.c] Error 1
+>
+> It seems like my typemap starts like this:
+>...
+> So, no "const char *". See next mail for a minimal patch.
+
+An alternative would be to carry our own typemap but I think
+your fix is less intrusive and fine.  Pasky?
+
+> The warning 
+> (IIRC that was mentioned already on the list) still persists:
+>
+> cc -c -I. -I.. -g -pipe -pipe -fno-common -no-cpp-precomp -flat_namespace 
+> -DHAS_TELLDIR_PROTOTYPE -fno-strict-aliasing -Os     -DVERSION=\"0.01\" 
+> -DXS_VERSION=\"0.01\"  -I/System/Library/Perl/darwin/CORE -I/sw/include 
+> -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR -DNO_STRLCPY 
+> -DGIT_VERSION='"1.4.1.g3b26"' Git.c
+> In file included from /System/Library/Perl/darwin/CORE/perl.h:500,
+>                  from Git.xs:15:
+> /System/Library/Perl/darwin/CORE/embed.h:156:1: warning: "die" redefined
+> Git.xs:11:1: warning: this is the location of the previous definition
+
+I see the same here.
