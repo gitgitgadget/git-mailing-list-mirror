@@ -1,41 +1,36 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 4/3] Fold get_merge_bases_clean() into get_merge_bases()
-Date: Sun, 2 Jul 2006 09:43:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607020935460.12404@g5.osdl.org>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
- <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
- <20060701150926.GA25800@lsrfire.ath.cx> <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
- <44A6CD1D.2000600@lsrfire.ath.cx> <Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
- <7vveqhccnk.fsf@assigned-by-dhcp.cox.net> <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
- <20060702094938.GA10944@lsrfire.ath.cx>
+Subject: Re: [POSSIBLE REGRESSION] Spurious revs after patch "revision.c:
+ --full-history fix"
+Date: Sun, 2 Jul 2006 10:14:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607021012180.12404@g5.osdl.org>
+References: <e5bfff550607020519k6007f41bne34d10c0e919f3c8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 02 18:44:23 2006
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 19:14:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx53S-00011x-SJ
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 18:44:19 +0200
+	id 1Fx5Wv-0005Vv-1g
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 19:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbWGBQoP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 12:44:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932708AbWGBQoP
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 12:44:15 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:26341 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932668AbWGBQoO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 12:44:14 -0400
+	id S932126AbWGBROm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 13:14:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbWGBROm
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 13:14:42 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15850 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932126AbWGBROl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 13:14:41 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k62GhpnW015289
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k62HEanW016613
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 2 Jul 2006 09:43:52 -0700
+	Sun, 2 Jul 2006 10:14:37 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k62GhjsN010847;
-	Sun, 2 Jul 2006 09:43:48 -0700
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <20060702094938.GA10944@lsrfire.ath.cx>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k62HEZNI011711;
+	Sun, 2 Jul 2006 10:14:36 -0700
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550607020519k6007f41bne34d10c0e919f3c8@mail.gmail.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
 X-MIMEDefang-Filter: osdl$Revision: 1.135 $
@@ -43,36 +38,39 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23107>
 
 
 
-On Sun, 2 Jul 2006, Rene Scharfe wrote:
->
-> Due to popular request ;-), change get_merge_bases() to be able to
-> clean up after itself if needed by adding a cleanup parameter.
+On Sun, 2 Jul 2006, Marco Costalba wrote:
+> 
+> What it seems is that with --parents  option two more spurious revs
+> are printed out. This revs have nothing to do with builtin-add.c, the
+> file is newer then both of them.
 
-Btw, I think the symmetric thing is still wrong.
+Gaah. Does this trivial patch fix it for you?
 
-Try this:
+It had the wrong test for whether a commit was a merge. What it did was to 
+say that a non-merge has exactly one parent (which sounds almost right), 
+but the fact is, initial trees have no parent at all, but they're 
+obviously not merges.
 
-	git rev-list ^HEAD~1 HEAD...HEAD~2
+So the test for non-merge should be "!parents || !parents->next", not 
+"parents && !parents->next".
 
-which _should_ return just HEAD ("HEAD...HEAD~2" should basically expand 
-into "HEAD HEAD~2 ^HEAD~2")
+		Linus
 
-I haven't actually tested your patch, but I think it returns HEAD and 
-HEAD~1.
-
-The reason? You clear UNINTERESTING as part of clear_commit_marks(), so 
-HEAD~1, which was marked thus by the user, gets cleared of its mark as 
-part of the get_merge_bases() invocation.
-
-I suspect the only way to fix that is to make "get_merge_bases()" not use 
-UNINTERESTING at all, but instead just explicitly use something like
-
-	(obj.flags & (LEFT | RIGHT)) == (LEFT | RIGHT)
-
-instead.
-
-			Linus
+----
+diff --git a/revision.c b/revision.c
+index 1cf6276..880fb7b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -997,7 +997,7 @@ struct commit *get_revision(struct rev_i
+ 				if (!revs->parents)
+ 					continue;
+ 				/* non-merge - always ignore it */
+-				if (commit->parents && !commit->parents->next)
++				if (!commit->parents || !commit->parents->next)
+ 					continue;
+ 			}
+ 			if (revs->parents)
