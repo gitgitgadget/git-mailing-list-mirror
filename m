@@ -1,98 +1,61 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: qgit idea: interface for cherry-picking
-Date: Mon, 3 Jul 2006 00:04:07 +0200
-Message-ID: <e5bfff550607021504l6e7fc8b8ja61f20f630c0f3f@mail.gmail.com>
-References: <e8954u$srh$1@sea.gmane.org>
-	 <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com>
-	 <e89eqj$npu$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 00:04:16 2006
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Empty author may be presented by svn as an empty string or a null value.
+Date: Mon, 03 Jul 2006 00:21:00 +0200
+Message-ID: <20060702222100.2863.72633.stgit@h15n1fls34o811.telia.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Jul 03 00:21:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxA32-00055F-Hl
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 00:04:13 +0200
+	id 1FxAJK-00075t-EY
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 00:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbWGBWEI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 18:04:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750953AbWGBWEI
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 18:04:08 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:32489 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1750920AbWGBWEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jul 2006 18:04:07 -0400
-Received: by py-out-1112.google.com with SMTP id c39so1149765pyd
-        for <git@vger.kernel.org>; Sun, 02 Jul 2006 15:04:07 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UguGq+N3V+Am4pdbt0uL1tUqp7PvKlz0qHaCwaGwN30o8KmdY++z8Vp/KhRDlgFs5+L9sOlrjD49z4pMt00XuFj85tag6kyh6y9NAbQQx3iCx2nyI3xuuzWbSG6CSRsFKSeLusuhDsN4AFjawmIjceJq5hMB61eX1XppHUoD+Xo=
-Received: by 10.35.90.20 with SMTP id s20mr422385pyl;
-        Sun, 02 Jul 2006 15:04:07 -0700 (PDT)
-Received: by 10.35.52.17 with HTTP; Sun, 2 Jul 2006 15:04:07 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <e89eqj$npu$1@sea.gmane.org>
-Content-Disposition: inline
+	id S1750867AbWGBWU6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 18:20:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbWGBWU6
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 18:20:58 -0400
+Received: from av9-2-sn3.vrr.skanova.net ([81.228.9.186]:47055 "EHLO
+	av9-2-sn3.vrr.skanova.net") by vger.kernel.org with ESMTP
+	id S1750867AbWGBWU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 18:20:58 -0400
+Received: by av9-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id BA0CF37F26; Mon,  3 Jul 2006 00:20:56 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av9-2-sn3.vrr.skanova.net (Postfix) with ESMTP id AA67937EE9
+	for <git@vger.kernel.org>; Mon,  3 Jul 2006 00:20:56 +0200 (CEST)
+Received: from h15n1fls34o811.telia.com (h15n1fls34o811.telia.com [213.67.102.15])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 9739537E46
+	for <git@vger.kernel.org>; Mon,  3 Jul 2006 00:20:56 +0200 (CEST)
+Received: from h15n1fls34o811.telia.com (idefix [127.0.0.1])
+	by h15n1fls34o811.telia.com (Postfix) with ESMTP id 667EB40661F
+	for <git@vger.kernel.org>; Mon,  3 Jul 2006 00:21:00 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23130>
 
-On 7/2/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Marco Costalba wrote:
->
-> > On 7/2/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> >> Currently in qgit one can git-format-patch a commit. It woul be nice
-> >> if one would be able to git-cherry-pick and git-cherry-pick -n a commit
-> >> (denoting the head, i.e. where cherry pick would be applied to). It would
-> >> be very usefull in reordering patches (cleaning up history).
-> >
-> > Currently in qgit you can git-format-patch a commit series and git-am
-> > a given patch file series.
-> > This can be done transparently with a drag & drop mechanic:
-> >
-> > 1) Open the source repository
-> > 2) Then open a new qgit instance (File->Open in a new window...)
-> > 3) Open the destination repository in the new qgit window
-> > 4) Drag & drop selected commits (multi selection in supported) from
-> > source to destination.
->
-> Does multi selection commits all selected commits as one merged commit?
->
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-No.  Currently it's just a shortcut for git-format-patch --> git-am
 
-> > I normally use this instead of git-cherry-pick  that, I admit, I don't
-> > know very well, so please I need some more hints on how to upgrade
-> > this behaviour introducing git.cherry-pick support.
->
-> I use git-cherry-pick -n to join few patches into one, or with editing the
-> result to split one patch/commit into few smaller.
->
-> git-cherry-pick [-n] <commit> picks up a commit and drops it on top of
-> current branch. I'd like to see it in context menu for current commit,
-> i.e. "cherry-pick to <head>", where <head> will be replaced by current
-> branch name, or/and "cherry-pick -n to <head>".
->
->
+---
 
->From the git-cherry-pick documentation I see -n option "applies the
-change necessary to cherry-pick the named commit to your working tree,
-but does not make the commit"
+ git-svnimport.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-What do you think about this:
-
-When dropping the selected commits, instead of creating new commits,
-appears a message box with something like "Do you want to apply the
-commits on top of your current branch or on your working directory?"
-
-Sounds good for you? Or you still prefer the context menu?
-In the latter case, if I have understood correctly, you are limited to
-cherry-pick among branches and/or working directory of the _same_
-repository.
-
-    Marco
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index 38ac732..26dc454 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -534,7 +534,7 @@ sub commit {
+ 	my($author_name,$author_email,$dest);
+ 	my(@old,@new,@parents);
+ 
+-	if (not defined $author) {
++	if (not defined $author or $author eq "") {
+ 		$author_name = $author_email = "unknown";
+ 	} elsif (defined $users_file) {
+ 		die "User $author is not listed in $users_file\n"
