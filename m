@@ -1,61 +1,119 @@
-From: "Ebony" <Ebonyalternate@earthlink.net>
-Subject: Make other men envy you and girls worship you Most efficient products for men
-Date: Mon, 3 Jul 2006 08:38:17 +0900
-Message-ID: <41623215774732.4904E0314A@RZW7M>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Quick merge status updates.
+Date: Sun, 02 Jul 2006 16:49:12 -0700
+Message-ID: <7vejx31sav.fsf@assigned-by-dhcp.cox.net>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
+	<1151471040.4940.17.camel@dv>
+	<7v7j3164xd.fsf@assigned-by-dhcp.cox.net>
+	<1151489103.28036.6.camel@dv> <20060702204906.GG29115@pasky.or.cz>
+	<7v64if3d50.fsf@assigned-by-dhcp.cox.net>
+	<20060702214931.GJ29115@pasky.or.cz>
+	<7vveqf1v05.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 03 01:39:12 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 01:49:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxBWu-0000VB-QF
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 01:39:09 +0200
+	id 1FxBgk-0001OU-Uq
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 01:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750772AbWGBXin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 19:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWGBXin
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 19:38:43 -0400
-Received: from softbank218112134065.bbtec.net ([218.112.134.65]:24052 "EHLO
-	FM-AAD3DF1A1785") by vger.kernel.org with ESMTP id S1750772AbWGBXil
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 19:38:41 -0400
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: 6r770h4tomO0SF8dDBDh117j2mwU7J9UUd7s
+	id S1750719AbWGBXtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 19:49:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWGBXtN
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 19:49:13 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:6063 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750719AbWGBXtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 19:49:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060702234912.LVZY8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Jul 2006 19:49:12 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <7vveqf1v05.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 02 Jul 2006 15:50:50 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 18.6 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?218.112.134.65>]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: syllabhd.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: syllabhd.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: syllabhd.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: syllabhd.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: syllabhd.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: syllabhd.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23136>
 
-Dear valued customer.
+Junio C Hamano <junkio@cox.net> writes:
 
+> Gaah.  You are right.
+>
+> PERL5LIB does not seem to just do a push (and that was I thought
+> why unshift was a way to defeat it) but do something more evil.
+> ...
+> I thought we killed this showstopper and was hoping now the
+> series is mergeable to "next" but apparently not yet X-<.
+>
+> Sigh....
 
+Yuck; that means we would need to have something evil like this.
 
-Enhanced male power and unlimited prowess with your girl The best products for the winning guys
-Achieve astounding results in bed with these products designed to make any man a winner
+-- >8 --
+Perly Git: make sure we do test the freshly built one.
 
- http://www.syllabhd.com
+We could BEGIN { push @INC, '@@INSTLIBDIR@@'; } but that is not
+a good idea for normal execution.  The would prevent a
+workaround for a user who is trying to override an old, faulty
+Git.pm installed on the system path with a newer version
+installed under $HOME/.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-A sprat to catch a mackerel. All is for the best in the best of the possible worlds A proverb is a true word. Two things a man should never be angry at: what he can help and what he cannot help 
- Yuh tel tara and tara tell tara.
+---
+diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
+index 1b23fa1..a9805dd 100755
+--- a/git-fmt-merge-msg.perl
++++ b/git-fmt-merge-msg.perl
+@@ -5,7 +5,11 @@ #
+ # Read .git/FETCH_HEAD and make a human readable merge message
+ # by grouping branches and tags together to form a single line.
+ 
+-BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
++BEGIN {
++	unless (exists $ENV{'RUNNING_GIT_TESTS'}) {
++		unshift @INC, '@@INSTLIBDIR@@';
++	}
++}
+ use strict;
+ use Git;
+ use Error qw(:try);
+diff --git a/git-mv.perl b/git-mv.perl
+index a604896..5134b80 100755
+--- a/git-mv.perl
++++ b/git-mv.perl
+@@ -6,7 +6,11 @@ #
+ # This file is licensed under the GPL v2, or a later version
+ # at the discretion of Linus Torvalds.
+ 
+-BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
++BEGIN {
++	unless (exists $ENV{'RUNNING_GIT_TESTS'}) {
++		unshift @INC, '@@INSTLIBDIR@@';
++	}
++}
+ use warnings;
+ use strict;
+ use Getopt::Std;
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index fba0c51..298c6ca 100755
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -206,8 +206,9 @@ PYTHON=`sed -e '1{
+ 	PYTHONPATH=$(pwd)/../compat
+ 	export PYTHONPATH
+ }
++RUNNING_GIT_TESTS=YesWeAre
+ PERL5LIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
+-export PERL5LIB
++export PERL5LIB RUNNING_GIT_TESTS
+ test -d ../templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
