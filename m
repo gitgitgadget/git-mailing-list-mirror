@@ -1,81 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: qgit idea: interface for cherry-picking
-Date: Sun, 02 Jul 2006 23:46:20 +0200
-Organization: At home
-Message-ID: <e89eqj$npu$1@sea.gmane.org>
-References: <e8954u$srh$1@sea.gmane.org> <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Quick merge status updates.
+Date: Sun, 2 Jul 2006 23:49:31 +0200
+Message-ID: <20060702214931.GJ29115@pasky.or.cz>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net> <1151471040.4940.17.camel@dv> <7v7j3164xd.fsf@assigned-by-dhcp.cox.net> <1151489103.28036.6.camel@dv> <20060702204906.GG29115@pasky.or.cz> <7v64if3d50.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jul 02 23:46:24 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 23:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx9lf-0002XI-UP
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 23:46:16 +0200
+	id 1Fx9ou-0002yv-8L
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 23:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008AbWGBVqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 17:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751009AbWGBVqM
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 17:46:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:65259 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750991AbWGBVqM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 17:46:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fx9lR-0002Vt-CZ
-	for git@vger.kernel.org; Sun, 02 Jul 2006 23:46:01 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Jul 2006 23:46:01 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Jul 2006 23:46:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750825AbWGBVtd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 17:49:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbWGBVtd
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 17:49:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38575 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750825AbWGBVtd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 17:49:33 -0400
+Received: (qmail 10815 invoked by uid 2001); 2 Jul 2006 23:49:31 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v64if3d50.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23127>
 
-Marco Costalba wrote:
-
-> On 7/2/06, Jakub Narebski <jnareb@gmail.com> wrote:
->> Currently in qgit one can git-format-patch a commit. It woul be nice 
->> if one would be able to git-cherry-pick and git-cherry-pick -n a commit
->> (denoting the head, i.e. where cherry pick would be applied to). It would
->> be very usefull in reordering patches (cleaning up history).   
+Dear diary, on Sun, Jul 02, 2006 at 11:33:47PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> I tried this:
 > 
-> Currently in qgit you can git-format-patch a commit series and git-am
-> a given patch file series.
-> This can be done transparently with a drag & drop mechanic:
+>  0. check out the branch that has the Perly git ("pu").  build
+>     and install normally to have a perfectly working version
+>     accessible on your usual $PATH.
 > 
-> 1) Open the source repository
-> 2) Then open a new qgit instance (File->Open in a new window...)
-> 3) Open the destination repository in the new qgit window
-> 4) Drag & drop selected commits (multi selection in supported) from
-> source to destination.
+>  1. apply the patch [1] below to make it use "use lib" instead of
+>     "unshift".
+> 
+>  2. break perl/Git.pm being built to pretend we introduced a bug
+>     in the work in progress by applying the patch [2] below.
+> 
+>  3. without installing the broken Git.pm, run "make test", and
+>     see a test that uses "git pull" and needs to create a true
+>     merge succeed.  It tells me that everything including
+>     perl/Git.pm is GOOD, and I'd find the breakage only after
+>     installing and running the test again.
 
-Does multi selection commits all selected commits as one merged commit?
-
-> I normally use this instead of git-cherry-pick  that, I admit, I don't
-> know very well, so please I need some more hints on how to upgrade
-> this behaviour introducing git.cherry-pick support.
-
-I use git-cherry-pick -n to join few patches into one, or with editing the
-result to split one patch/commit into few smaller.
-
-git-cherry-pick [-n] <commit> picks up a commit and drops it on top of
-current branch. I'd like to see it in context menu for current commit,
-i.e. "cherry-pick to <head>", where <head> will be replaced by current
-branch name, or/and "cherry-pick -n to <head>". 
+So, just to clarify and make sure we understand each other perfectly,
+you claim that when skipping (1), (3) _does_ FAIL for you? Because it
+really doesn't for me and I can't see how could it ever fail without
+installing the broken version first.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
