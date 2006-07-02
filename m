@@ -1,119 +1,177 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Quick merge status updates.
-Date: Sun, 02 Jul 2006 16:49:12 -0700
-Message-ID: <7vejx31sav.fsf@assigned-by-dhcp.cox.net>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
-	<1151471040.4940.17.camel@dv>
-	<7v7j3164xd.fsf@assigned-by-dhcp.cox.net>
-	<1151489103.28036.6.camel@dv> <20060702204906.GG29115@pasky.or.cz>
-	<7v64if3d50.fsf@assigned-by-dhcp.cox.net>
-	<20060702214931.GJ29115@pasky.or.cz>
-	<7vveqf1v05.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 1] autoconf: Use autoconf to write installation directories to config.mak.autogen
+Date: Mon, 3 Jul 2006 01:56:48 +0200
+Message-ID: <200607030156.50455.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 01:49:20 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jul 03 01:56:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxBgk-0001OU-Uq
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 01:49:19 +0200
+	id 1FxBnn-0001yV-4r
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 01:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750719AbWGBXtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 19:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWGBXtN
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 19:49:13 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:6063 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750719AbWGBXtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jul 2006 19:49:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060702234912.LVZY8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Jul 2006 19:49:12 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vveqf1v05.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 02 Jul 2006 15:50:50 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750703AbWGBX4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 19:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWGBX4a
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 19:56:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:6062 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750703AbWGBX43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 19:56:29 -0400
+Received: by nf-out-0910.google.com with SMTP id k26so310821nfc
+        for <git@vger.kernel.org>; Sun, 02 Jul 2006 16:56:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=TnjhCCxPPjqk1dU0ffeKBwd0OrhLSbuN2FGiMq9WB9VOgjmAbNg40POI7gLJmJD0s70Ngnc+B/T+Uqtj9ax/daknubmU9aAQpcdupNEQB0XZzMjrF8LnDU7PbfJUxjHudWPTgM+sJFB/rA9BZjl0R1eo/oaKJ7HbBa5RgZxne94=
+Received: by 10.48.43.11 with SMTP id q11mr1935043nfq;
+        Sun, 02 Jul 2006 16:56:28 -0700 (PDT)
+Received: from host-81-190-27-124.torun.mm.pl ( [81.190.27.124])
+        by mx.gmail.com with ESMTP id k23sm3904234nfc.2006.07.02.16.56.27;
+        Sun, 02 Jul 2006 16:56:28 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23137>
 
-Junio C Hamano <junkio@cox.net> writes:
+This is beginning of patch series introducing installation configuration
+using autoconf (and no other autotools) to git. The idea is to generate
+config.mak.autogen using ./configure (generated from configure.ac by running
+autoconf) from config.mak.in, so one can use autoconf as an _alternative_ to
+ordinary Makefile, and creating one's own config.mak. Local settings in
+config.mak override generated settings in config.mak.autogen
 
-> Gaah.  You are right.
->
-> PERL5LIB does not seem to just do a push (and that was I thought
-> why unshift was a way to defeat it) but do something more evil.
-> ...
-> I thought we killed this showstopper and was hoping now the
-> series is mergeable to "next" but apparently not yet X-<.
->
-> Sigh....
+This patch includes minimal configure.ac and config.mak.in, so one can set
+installation directories using autoconf generated ./configure script
+e.g. ./configure --prefix=/usr
 
-Yuck; that means we would need to have something evil like this.
-
--- >8 --
-Perly Git: make sure we do test the freshly built one.
-
-We could BEGIN { push @INC, '@@INSTLIBDIR@@'; } but that is not
-a good idea for normal execution.  The would prevent a
-workaround for a user who is trying to override an old, faulty
-Git.pm installed on the system path with a newer version
-installed under $HOME/.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
-index 1b23fa1..a9805dd 100755
---- a/git-fmt-merge-msg.perl
-+++ b/git-fmt-merge-msg.perl
-@@ -5,7 +5,11 @@ #
- # Read .git/FETCH_HEAD and make a human readable merge message
- # by grouping branches and tags together to form a single line.
+This patch is to be applied on top of 'next', because to work as intended
+(especially for --mandir=<path> option to ./configure) it needs
+  Allow INSTALL, bindir, mandir to be set in main Makefile
+  e14421b9aa85f11853a0dacae09498515daab7b8
+patch (commit) to be present.
+
+For now the following options do actually something:
+	$ ./configure 
+           --prefix=<prefix>         # [/usr/local]
+           --exec_prefix=<prefix>    # [PREFIX]
+           --bindir=<bindir>         # [EPREFIX/bin]
+           --datadir=<datadir>       # [PREFIX/share]
+           --mandir=<mandir>         # [PREFIX/man]
+
+	$ ./configure --help         # hardcoded version 1.4.1
+
+QUESTION: how to make autoconf _generate_ correct version string?
+
+
+Next patch will show how this infrastructure can be used.
+
+ .gitignore    |    6 ++++++
+ INSTALL       |    9 +++++++++
+ Makefile      |    1 +
+ config.mak.in |   18 ++++++++++++++++++
+ configure.ac  |   14 ++++++++++++++
+ 5 files changed, 48 insertions(+), 0 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index 2bcc604..616aa98 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -136,4 +136,10 @@ git-core.spec
+ *.[ao]
+ *.py[co]
+ config.mak
++autom4te.cache
++config.log
++config.status
++config.mak.in
++config.mak.autogen
++configure
+ git-blame
+diff --git a/INSTALL b/INSTALL
+index f8337e2..28245b3 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -13,6 +13,15 @@ that uses $prefix, the built results hav
+ which are derived from $prefix, so "make all; make prefix=/usr
+ install" would not work.
  
--BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
-+BEGIN {
-+	unless (exists $ENV{'RUNNING_GIT_TESTS'}) {
-+		unshift @INC, '@@INSTLIBDIR@@';
-+	}
-+}
- use strict;
- use Git;
- use Error qw(:try);
-diff --git a/git-mv.perl b/git-mv.perl
-index a604896..5134b80 100755
---- a/git-mv.perl
-+++ b/git-mv.perl
-@@ -6,7 +6,11 @@ #
- # This file is licensed under the GPL v2, or a later version
- # at the discretion of Linus Torvalds.
++Alternatively you can use autoconf generated ./configure script to
++set up install paths (via config.mak.autogen), so you can write instead
++
++	$ autoconf ;# as yourself if ./configure doesn't exist yet
++	$ ./configure --prefix=/usr ;# as yourself
++	$ make all doc ;# as yourself
++	# make install install-doc ;# as root
++
++
+ Issues of note:
  
--BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
-+BEGIN {
-+	unless (exists $ENV{'RUNNING_GIT_TESTS'}) {
-+		unshift @INC, '@@INSTLIBDIR@@';
-+	}
-+}
- use warnings;
- use strict;
- use Getopt::Std;
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index fba0c51..298c6ca 100755
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -206,8 +206,9 @@ PYTHON=`sed -e '1{
- 	PYTHONPATH=$(pwd)/../compat
- 	export PYTHONPATH
- }
-+RUNNING_GIT_TESTS=YesWeAre
- PERL5LIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
--export PERL5LIB
-+export PERL5LIB RUNNING_GIT_TESTS
- test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
+  - git normally installs a helper script wrapper called "git", which
+diff --git a/Makefile b/Makefile
+index 7dbb883..3c2c257 100644
+--- a/Makefile
++++ b/Makefile
+@@ -333,6 +333,7 @@ ifneq (,$(findstring arm,$(uname_M)))
+ 	ARM_SHA1 = YesPlease
+ endif
+ 
++-include config.mak.autogen
+ -include config.mak
+ 
+ ifdef WITH_OWN_SUBPROCESS_PY
+diff --git a/config.mak.in b/config.mak.in
+new file mode 100644
+index 0000000..82c9781
+--- /dev/null
++++ b/config.mak.in
+@@ -0,0 +1,18 @@
++# git Makefile configuration, included in main Makefile
++# @configure_input@
++
++prefix = @prefix@
++exec_prefix = @exec_prefix@
++bindir = @bindir@
++#gitexecdir = @libexecdir@/git-core/
++template_dir = @datadir@/git-core/templates/
++GIT_PYTHON_DIR = @datadir@/git-core/python
++
++mandir=@mandir@
++
++srcdir = @srcdir@
++VPATH = @srcdir@
++
++export exec_prefix mandir
++export srcdir VPATH
++
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..a54b164
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,14 @@
++#                                               -*- Autoconf -*-
++# Process this file with autoconf to produce a configure script.
++
++AC_PREREQ(2.59)
++AC_INIT([git], [1.4.1], [git@vger.kernel.org])
++
++AC_CONFIG_SRCDIR([git.c])
++
++config_file=config.mak.autogen
++config_in=config.mak.in
++
++# Output files
++AC_CONFIG_FILES(["${config_file}":"${config_in}"]) 
++AC_OUTPUT
+-- 
+1.4.0
