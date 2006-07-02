@@ -1,75 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [POOL] Who likes running Git without make install?
-Date: Sat, 01 Jul 2006 17:08:07 -0700
-Message-ID: <7vhd20dg2g.fsf@assigned-by-dhcp.cox.net>
-References: <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
-	<7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241338370.6483@g5.osdl.org>
-	<7vd5cyt8a3.fsf@assigned-by-dhcp.cox.net>
-	<20060625010202.GX21864@pasky.or.cz>
-	<20060625014009.GA21864@pasky.or.cz>
-	<7vac82q6mb.fsf@assigned-by-dhcp.cox.net>
-	<20060625152157.GG21864@pasky.or.cz>
-	<7vk674mmyo.fsf@assigned-by-dhcp.cox.net>
-	<20060701235906.GE29115@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: A note on merging conflicts..
+Date: Sat, 1 Jul 2006 17:08:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607011704060.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+ <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+ <20060701150926.GA25800@lsrfire.ath.cx> <20060701180125.GA27550@fieldses.org>
+ <Pine.LNX.4.64.0607011115500.12404@g5.osdl.org> <Pine.LNX.4.64.0607011754370.9789@iabervon.org>
+ <Pine.LNX.4.64.0607011552170.12404@g5.osdl.org> <Pine.LNX.4.64.0607011905030.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 02:08:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 02:09:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwpVW-0003Nm-7E
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 02:08:14 +0200
+	id 1FwpWR-0003Uj-LF
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 02:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbWGBAIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Jul 2006 20:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbWGBAIL
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 20:08:11 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:47027 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751320AbWGBAII (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Jul 2006 20:08:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060702000808.TQXV27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 1 Jul 2006 20:08:08 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060701235906.GE29115@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 2 Jul 2006 01:59:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751542AbWGBAJI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Jul 2006 20:09:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbWGBAJH
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Jul 2006 20:09:07 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:52900 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750937AbWGBAJG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Jul 2006 20:09:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6208tnW024196
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 1 Jul 2006 17:08:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6208sFi016848;
+	Sat, 1 Jul 2006 17:08:54 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0607011905030.9789@iabervon.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23089>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> Dear diary, on Mon, Jun 26, 2006 at 08:48:31AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> said that...
->> I remember myself getting utterly discusted when I saw the
->> inclusion of the build-time blib directory in the search path in
->> some other Perl code outside git.
->
-> Well, yes, it is ugly, but it was really cool that we could have used
-> Git without installing it anywhere.
->
-> But perhaps that's just me refusing to break his old ways of doing
-> things. Does anyone else care about it? (And why?)
 
-Well, for a quick test to see if I haven't broken anything, I
-use a new shell and do ". ./+denv" in my git repository where
-that file has something like this:
+On Sat, 1 Jul 2006, Daniel Barkalow wrote:
+> 
+> But that wouldn't actually affect b...c, because we don't actually care 
+> that 'e' is the correct merge-base and 'g' is not, because "b c ^e ^g" is 
+> the same as "b c ^e".
 
-        $ cat ./+denv
-        :
+You're right - in ths case we don't care about a minimal base commit set 
+at all, it's fine to have too many.
 
-        GIT_EXEC_PATH=`pwd`
-        PATH=`pwd`:/usr/bin:/bin
+I think your patch to do the LEFT/RIGHT thing in git-rev-list internally, 
+instead of generating it as part of the command line, looks fine in 
+theory. 
 
-        export GIT_EXEC_PATH PATH
+Except I think you need to set "revs->limited" for that case too (normally 
+it gets set by "handle_commit()", and only if there is an UNINTERESTING 
+commit: we'd need to add code to set it for LEFT/RIGHT commits too.
 
-So to a certain degree, yes I do care.
+		Linus
