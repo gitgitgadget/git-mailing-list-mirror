@@ -1,103 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Quick merge status updates.
-Date: Sun, 02 Jul 2006 15:50:50 -0700
-Message-ID: <7vveqf1v05.fsf@assigned-by-dhcp.cox.net>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
-	<1151471040.4940.17.camel@dv>
-	<7v7j3164xd.fsf@assigned-by-dhcp.cox.net>
-	<1151489103.28036.6.camel@dv> <20060702204906.GG29115@pasky.or.cz>
-	<7v64if3d50.fsf@assigned-by-dhcp.cox.net>
-	<20060702214931.GJ29115@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: qgit idea: interface for cherry-picking
+Date: Mon, 03 Jul 2006 00:54:39 +0200
+Organization: At home
+Message-ID: <e89iql$42a$1@sea.gmane.org>
+References: <e8954u$srh$1@sea.gmane.org> <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com> <e89eqj$npu$1@sea.gmane.org> <e5bfff550607021504l6e7fc8b8ja61f20f630c0f3f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 00:51:11 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jul 03 00:54:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxAmG-0002Xa-6M
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 00:50:56 +0200
+	id 1FxApn-00036k-Tu
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 00:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbWGBWuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 18:50:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbWGBWuw
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 18:50:52 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:6787 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1750867AbWGBWuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jul 2006 18:50:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060702225051.WSTM6385.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Jul 2006 18:50:51 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060702214931.GJ29115@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 2 Jul 2006 23:49:31 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751045AbWGBWyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 18:54:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751043AbWGBWyd
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 18:54:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:5321 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751041AbWGBWyc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 18:54:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FxApd-00035C-Lc
+	for git@vger.kernel.org; Mon, 03 Jul 2006 00:54:25 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 00:54:25 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 00:54:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23133>
 
-Petr Baudis <pasky@suse.cz> writes:
+Marco Costalba wrote:
 
-> Dear diary, on Sun, Jul 02, 2006 at 11:33:47PM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> said that...
->> I tried this:
->> 
->>  0. check out the branch that has the Perly git ("pu").  build
->>     and install normally to have a perfectly working version
->>     accessible on your usual $PATH.
->> 
->>  1. apply the patch [1] below to make it use "use lib" instead of
->>     "unshift".
->> 
->>  2. break perl/Git.pm being built to pretend we introduced a bug
->>     in the work in progress by applying the patch [2] below.
->> 
->>  3. without installing the broken Git.pm, run "make test", and
->>     see a test that uses "git pull" and needs to create a true
->>     merge succeed.  It tells me that everything including
->>     perl/Git.pm is GOOD, and I'd find the breakage only after
->>     installing and running the test again.
->
-> So, just to clarify and make sure we understand each other perfectly,
-> you claim that when skipping (1), (3) _does_ FAIL for you? Because it
-> really doesn't for me and I can't see how could it ever fail without
-> installing the broken version first.
+> What do you think about this:
+> 
+> When dropping the selected commits, instead of creating new commits,
+> appears a message box with something like "Do you want to apply the
+> commits on top of your current branch or on your working directory?"
+> 
+> Sounds good for you? Or you still prefer the context menu?
+> In the latter case, if I have understood correctly, you are limited to
+> cherry-pick among branches and/or working directory of the _same_
+> repository.
 
-Gaah.  You are right.
+Yes, git-cherry-pick works only between commits in the same repository,
+as it use merge (first "simple", i.e. git-read-tree -m -u --aggresive, if
+fails tries "automatic" i.e. git-merge-index -o git-merge-one-file -a, then
+git-write-tree), as opposed to git-format-patch and git-am or git-apply,
+which can work across repositories.
 
-PERL5LIB does not seem to just do a push (and that was I thought
-why unshift was a way to defeat it) but do something more evil.
+What I really want is "no-commit" of drag'n'dropped, or exported and applied
+commits/patches (although interface to cherry-pick would be nice, even if
+cherry-pick is limited), so I'd like message box with "Do you want to
+commit selected patches?" when dropping commits, or something like that.
+Unfortunately git-am doesn't have --no-commit flag, but one could emulate it
+with git-reset after git-am a patch, I think.
 
-With this:
-
-diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
-index 1b23fa1..5d1ae44 100755
---- a/git-fmt-merge-msg.perl
-+++ b/git-fmt-merge-msg.perl
-@@ -6,9 +6,11 @@ # Read .git/FETCH_HEAD and make a human 
- # by grouping branches and tags together to form a single line.
- 
- BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
-+use lib '@@INSTLIBDIR@@';
- use strict;
- use Git;
- use Error qw(:try);
-+print STDERR "\@INC is @INC\n";
- 
- my $repo = Git->repository();
- 
-It spits this out: 
-
-@INC is /home/junio/git-pu/lib/perl/5.8.8 /opt/git/git.git/t/../perl/blib/lib /opt/git/git.git/t/../perl/blib/arch/auto/Git /etc/perl /usr/local/lib/perl/5.8.8 /usr/local/share/perl/5.8.8 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl .
-
-So "BEGIN { unshift }" is JUST AS WRONG as "use lib".
-
-I thought we killed this showstopper and was hoping now the
-series is mergeable to "next" but apparently not yet X-<.
-
-Sigh....
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
