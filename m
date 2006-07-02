@@ -1,65 +1,108 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: qgit idea: interface for cherry-picking
-Date: Sun, 2 Jul 2006 23:33:55 +0200
-Message-ID: <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com>
-References: <e8954u$srh$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Making perl scripts include the correct Git.pm
+Date: Sun, 2 Jul 2006 23:40:13 +0200
+Message-ID: <20060702214012.GI29115@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 23:34:37 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jul 02 23:40:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx9aK-0001HE-AD
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 23:34:32 +0200
+	id 1Fx9fv-0001s0-Ey
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 23:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750935AbWGBVea (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 17:34:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbWGBVea
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 17:34:30 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:42173 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1750928AbWGBVe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jul 2006 17:34:29 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1169320pyg
-        for <git@vger.kernel.org>; Sun, 02 Jul 2006 14:33:55 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=i9SBO6Kotb3e+MoqH/ob2TOsewqvpo843kH3nfkougYEnrupBEMxz8EVwJOik2tkcCuGuDVYnu6Pu7H7uB3rWYRZSASX/Mk1azZFCoPabU3YYW8Tn/vENN8RKeLk2V//1ceZt53WrBGQ6/6u6TIx6AVHMPBJF61PVTp12lgKBlg=
-Received: by 10.35.70.17 with SMTP id x17mr2266475pyk;
-        Sun, 02 Jul 2006 14:33:55 -0700 (PDT)
-Received: by 10.35.52.17 with HTTP; Sun, 2 Jul 2006 14:33:55 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <e8954u$srh$1@sea.gmane.org>
+	id S1750942AbWGBVkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 17:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbWGBVkQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 17:40:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51946 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750942AbWGBVkP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 17:40:15 -0400
+Received: (qmail 7886 invoked by uid 2001); 2 Jul 2006 23:40:13 +0200
+To: git@vger.kernel.org
 Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23124>
 
-On 7/2/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Currently in qgit one can git-format-patch a commit. It woul be nice if one
-> would be able to git-cherry-pick and git-cherry-pick -n a commit (denoting
-> the head, i.e. where cherry pick would be applied to). It would be very
-> usefull in reordering patches (cleaning up history).
->
-> --
+  Hi,
 
-Currently in qgit you can git-format-patch a commit series and git-am
-a given patch file series.
-This can be done transparently with a drag & drop mechanic:
+  the discussion of the topic became so scatterred that it's rather
+difficult to follow now and I get a feeling that we are kind of running
+in circles now, so this is my attempt to summarize it:
 
-1) Open the source repository
-2) Then open a new qgit instance (File->Open in a new window...)
-3) Open the destination repository in the new qgit window
-4) Drag & drop selected commits (multi selection in supported) from
-source to destination.
+  Desired behaviour when running Git's perl scripts (ordered by
+degree of necessity):
 
-I normally use this instead of git-cherry-pick  that, I admit, I don't
-know very well, so please I need some more hints on how to upgrade
-this behaviour introducing git.cherry-pick support.
+  (D1) When running installed script, it should include Git.pm from the
+same installation.
 
-    Marco
+  (D2) When running the testsuite, it should include Git.pm from the
+source tree.
+
+  (D3) When running script directly from source tree, it should include
+Git.pm from the source tree.
+
+
+  (i) The original solution passed -I on the #!/usr/bin/perl line, but
+that was ugly, was prone to hit various OS limits on the shebang line
+and violated both (D2) and (D3).
+
+
+  (ii) My proposed second solution was to add an autogenerated line to
+the Git's perl scripts saying something like:
+
+	use lib ('instlibdir', 'srclibdir');
+
+This fulfills all (D1), (D2) and (D3), but is perceived by Junio as
+"disgusting".
+
+
+  (iii) The currently used solution is to effectively
+
+	use lib ('instlibdir');
+
+to the Git's perl scripts. This violated (D3) and (D2) too, since
+use lib is the last from all the @INC modifiers to be seen and thus
+overrides and $PERL5LIB set in the testsuite.
+
+
+  (iv) Variation of (iii), probably Junio's original intention when
+implementing it:
+
+	push @INC, 'instlibdir';
+
+This fulfills (D2). It does not fulfill (D3) per se since the user
+has to set $PERL5LIB manually when running Git without installing it,
+but it is at least fulfillable. However, most importantly this does
+not even fulfill (D1) since if you e.g. consider user-local installation
+of Git over system-wide installation of Git, local perl scripts will
+use the globally installed Git.pm.
+
+
+  (v) If you throw away user-friendly (D3) requirement and insist
+on (iii) being disgusting, this is a newly proposed possible variation
+"(iv) meets (i)":
+
+	#!/usr/bin/perl -Imarker
+	@INC = map { $_ eq 'marker' ? 'instlibdir' : $_ } @INC;
+
+(I think this is more disgusting than (iii), but tastes differ. ;)
+
+
+  So, what's the way out?
+
+
+  PS: Is this the only remaining problem with Git.pm or do we have
+anything else to cope with, esp. before it gets considered to be a
+next material?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
