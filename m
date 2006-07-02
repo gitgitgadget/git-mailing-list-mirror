@@ -1,75 +1,113 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: qgit idea: interface for cherry-picking
-Date: Mon, 03 Jul 2006 00:54:39 +0200
-Organization: At home
-Message-ID: <e89iql$42a$1@sea.gmane.org>
-References: <e8954u$srh$1@sea.gmane.org> <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com> <e89eqj$npu$1@sea.gmane.org> <e5bfff550607021504l6e7fc8b8ja61f20f630c0f3f@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] send-email: do not barf when Term::ReadLine does not like your terminal
+Date: Sun, 02 Jul 2006 16:03:59 -0700
+Message-ID: <7vpsgn1ue8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 03 00:54:36 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 01:04:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxApn-00036k-Tu
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 00:54:36 +0200
+	id 1FxAz8-0004U3-IR
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 01:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbWGBWyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 18:54:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751043AbWGBWyd
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 18:54:33 -0400
-Received: from main.gmane.org ([80.91.229.2]:5321 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751041AbWGBWyc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 18:54:32 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FxApd-00035C-Lc
-	for git@vger.kernel.org; Mon, 03 Jul 2006 00:54:25 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 00:54:25 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 00:54:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751458AbWGBXED (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 19:04:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbWGBXEB
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 19:04:01 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:43666 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751458AbWGBXEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 19:04:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060702230359.BJOI27967.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Jul 2006 19:03:59 -0400
+To: Ryan Anderson <ryan@michonline.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23134>
 
-Marco Costalba wrote:
+As long as we do not need to readline from the terminal, we
+should not barf when starting up the program.  Without this
+patch, t9001 test on Cygwin occasionally died with the following
+error message:
 
-> What do you think about this:
-> 
-> When dropping the selected commits, instead of creating new commits,
-> appears a message box with something like "Do you want to apply the
-> commits on top of your current branch or on your working directory?"
-> 
-> Sounds good for you? Or you still prefer the context menu?
-> In the latter case, if I have understood correctly, you are limited to
-> cherry-pick among branches and/or working directory of the _same_
-> repository.
+Unable to get Terminal Size. The TIOCGWINSZ ioctl didn't work. The COLUMNS and LINES environment variables didn't work. The resize program didn't work. at /usr/lib/perl5/vendor_perl/5.8/cygwin/Term/ReadKey.pm line 362.
+Compilation failed in require at /usr/lib/perl5/vendor_perl/5.8/Term/ReadLine/Perl.pm line 58.
 
-Yes, git-cherry-pick works only between commits in the same repository,
-as it use merge (first "simple", i.e. git-read-tree -m -u --aggresive, if
-fails tries "automatic" i.e. git-merge-index -o git-merge-one-file -a, then
-git-write-tree), as opposed to git-format-patch and git-am or git-apply,
-which can work across repositories.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-What I really want is "no-commit" of drag'n'dropped, or exported and applied
-commits/patches (although interface to cherry-pick would be nice, even if
-cherry-pick is limited), so I'd like message box with "Do you want to
-commit selected patches?" when dropping commits, or something like that.
-Unfortunately git-am doesn't have --no-commit flag, but one could emulate it
-with git-reset after git-am a patch, I think.
+ * I do not use send-email myself that often so extra sets of
+   eyeballs are appreciated.
 
+ git-send-email.perl   |   18 +++++++++++++++++-
+ t/t9001-send-email.sh |   11 +++++++----
+ 2 files changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index c5d9e73..b04b8f4 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -22,6 +22,17 @@ use Term::ReadLine;
+ use Getopt::Long;
+ use Data::Dumper;
+ 
++package FakeTerm;
++sub new {
++	my ($class, $reason) = @_;
++	return bless \$reason, shift;
++}
++sub readline {
++	my $self = shift;
++	die "Cannot use readline on FakeTerm: $$self";
++}
++package main;
++
+ # most mail servers generate the Date: header, but not all...
+ $ENV{LC_ALL} = 'C';
+ use POSIX qw/strftime/;
+@@ -46,7 +57,12 @@ my $smtp_server;
+ # Example reply to:
+ #$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
+ 
+-my $term = new Term::ReadLine 'git-send-email';
++my $term = eval {
++	new Term::ReadLine 'git-send-email';
++};
++if ($@) {
++	$term = new FakeTerm "$@: going non-interactive";
++}
+ 
+ # Begin by accumulating all the variables (defined above), that we will end up
+ # needing, first, from the command line:
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index a61da1e..e9ea33c 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -25,10 +25,13 @@ test_expect_success \
+      git add fake.sendmail
+      GIT_AUTHOR_NAME="A" git commit -a -m "Second."'
+ 
+-test_expect_success \
+-    'Extract patches and send' \
+-    'git format-patch -n HEAD^1
+-     git send-email -from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" ./0001*txt'
++test_expect_success 'Extract patches' '
++    patches=`git format-patch -n HEAD^1`
++'
++
++test_expect_success 'Send patches' '
++     git send-email -from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" $patches 2>errors
++'
+ 
+ cat >expected <<\EOF
+ !nobody@example.com!
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.1.gc92a
