@@ -1,108 +1,75 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Making perl scripts include the correct Git.pm
-Date: Sun, 2 Jul 2006 23:40:13 +0200
-Message-ID: <20060702214012.GI29115@pasky.or.cz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: A note on merging conflicts..
+Date: Sun, 2 Jul 2006 17:42:03 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0607021715370.9789@iabervon.org>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+ <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+ <20060701150926.GA25800@lsrfire.ath.cx> <20060701180125.GA27550@fieldses.org>
+ <Pine.LNX.4.64.0607011115500.12404@g5.osdl.org> <Pine.LNX.4.64.0607011754370.9789@iabervon.org>
+ <Pine.LNX.4.64.0607011552170.12404@g5.osdl.org> <Pine.LNX.4.64.0607011905030.9789@iabervon.org>
+ <Pine.LNX.4.64.0607011937190.9789@iabervon.org> <20060702113133.GA11529@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jul 02 23:40:24 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 02 23:41:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx9fv-0001s0-Ey
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 23:40:19 +0200
+	id 1Fx9hL-00022m-5u
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 23:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbWGBVkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 17:40:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbWGBVkQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 17:40:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51946 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750942AbWGBVkP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 17:40:15 -0400
-Received: (qmail 7886 invoked by uid 2001); 2 Jul 2006 23:40:13 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1750984AbWGBVlo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 17:41:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750988AbWGBVlo
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 17:41:44 -0400
+Received: from iabervon.org ([66.92.72.58]:52746 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750984AbWGBVlo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 17:41:44 -0400
+Received: (qmail 1298 invoked by uid 1000); 2 Jul 2006 17:42:03 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 2 Jul 2006 17:42:03 -0400
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+In-Reply-To: <20060702113133.GA11529@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23125>
 
-  Hi,
+On Sun, 2 Jul 2006, Rene Scharfe wrote:
 
-  the discussion of the topic became so scatterred that it's rather
-difficult to follow now and I get a feeling that we are kind of running
-in circles now, so this is my attempt to summarize it:
+> On Sat, Jul 01, 2006 at 07:45:33PM -0400, Daniel Barkalow wrote:
+> > That is: (this only has the logic portion, and it's against master, so it 
+> > isn't actually a really working patch or anything; also, it doesn't handle 
+> > "--not a...b" correctly, whatever that should mean)
+> 
+> [concept patch snipped]
+> 
+> You mean something like the patch below?  It seems to work, but in my
+> unscientific tests it's significant slower than the version based on
+> get_merge_bases() (0.17s vs 0.05s for
+> "git-rev-list 89719209...262a6ef7 66ae0c77...ced9456a").  Did I do
+> something wrong?
+> 
+> You had no mark_parents_left_right() in your patch.  I added it because
+> otherwise it wouldn't remove any common commits.  Was this supposed to
+> work some other way?
 
-  Desired behaviour when running Git's perl scripts (ordered by
-degree of necessity):
+I'd been assuming that there was something that would propagate flags to 
+parents in general in add_parents_to_list(). Of course, that doesn't make 
+sense for arbitrary flags. It might be better to handle it there, and 
+avoid traversing parent lists twice.
 
-  (D1) When running installed script, it should include Git.pm from the
-same installation.
+I'm surprised that it isn't faster than using get_merge_bases(); I'd 
+expect it to be faster than the call to get_merge_bases(), let alone 
+get_merge_bases() plus the processing of output candidates. It should be 
+doing less work that get_merge_bases() ultimately does (since 
+get_merge_bases() has to do the boundary calculation after doing 
+practically everything that the left and right addition to revision.c 
+does), so there's clearly something strange going on.
 
-  (D2) When running the testsuite, it should include Git.pm from the
-source tree.
-
-  (D3) When running script directly from source tree, it should include
-Git.pm from the source tree.
-
-
-  (i) The original solution passed -I on the #!/usr/bin/perl line, but
-that was ugly, was prone to hit various OS limits on the shebang line
-and violated both (D2) and (D3).
-
-
-  (ii) My proposed second solution was to add an autogenerated line to
-the Git's perl scripts saying something like:
-
-	use lib ('instlibdir', 'srclibdir');
-
-This fulfills all (D1), (D2) and (D3), but is perceived by Junio as
-"disgusting".
-
-
-  (iii) The currently used solution is to effectively
-
-	use lib ('instlibdir');
-
-to the Git's perl scripts. This violated (D3) and (D2) too, since
-use lib is the last from all the @INC modifiers to be seen and thus
-overrides and $PERL5LIB set in the testsuite.
-
-
-  (iv) Variation of (iii), probably Junio's original intention when
-implementing it:
-
-	push @INC, 'instlibdir';
-
-This fulfills (D2). It does not fulfill (D3) per se since the user
-has to set $PERL5LIB manually when running Git without installing it,
-but it is at least fulfillable. However, most importantly this does
-not even fulfill (D1) since if you e.g. consider user-local installation
-of Git over system-wide installation of Git, local perl scripts will
-use the globally installed Git.pm.
-
-
-  (v) If you throw away user-friendly (D3) requirement and insist
-on (iii) being disgusting, this is a newly proposed possible variation
-"(iv) meets (i)":
-
-	#!/usr/bin/perl -Imarker
-	@INC = map { $_ eq 'marker' ? 'instlibdir' : $_ } @INC;
-
-(I think this is more disgusting than (iii), but tastes differ. ;)
-
-
-  So, what's the way out?
-
-
-  PS: Is this the only remaining problem with Git.pm or do we have
-anything else to cope with, esp. before it gets considered to be a
-next material?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+	-Daniel
+*This .sig left intentionally blank*
