@@ -1,92 +1,101 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Quick merge status updates.
-Date: Sun, 2 Jul 2006 22:49:06 +0200
-Message-ID: <20060702204906.GG29115@pasky.or.cz>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net> <1151471040.4940.17.camel@dv> <7v7j3164xd.fsf@assigned-by-dhcp.cox.net> <1151489103.28036.6.camel@dv>
+Subject: [PATCH] Git.pm: Don't #define around die
+Date: Sun, 2 Jul 2006 22:57:17 +0200
+Message-ID: <20060702205717.GH29115@pasky.or.cz>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060701234832.GD29115@pasky.or.cz> <Pine.LNX.4.63.0607021141260.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7v4pxz4yki.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 22:49:22 2006
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 22:57:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx8sT-0004Xf-Er
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 22:49:14 +0200
+	id 1Fx90N-0005Q6-Ii
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 22:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbWGBUtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 16:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWGBUtJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 16:49:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:35725 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750783AbWGBUtI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 16:49:08 -0400
-Received: (qmail 3452 invoked by uid 2001); 2 Jul 2006 22:49:06 +0200
-To: Pavel Roskin <proski@gnu.org>
+	id S1750825AbWGBU5T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 16:57:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbWGBU5T
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 16:57:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:21465 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750825AbWGBU5S (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 16:57:18 -0400
+Received: (qmail 4568 invoked by uid 2001); 2 Jul 2006 22:57:17 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <1151489103.28036.6.camel@dv>
+In-Reply-To: <7v4pxz4yki.fsf@assigned-by-dhcp.cox.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23117>
 
-Dear diary, on Wed, Jun 28, 2006 at 12:05:03PM CEST, I got a letter
-where Pavel Roskin <proski@gnu.org> said that...
-> I think the BEGIN block has priority over other statements.  My solution
-> was to put the @INC change in the BEGIN block as well.
+Dear diary, on Sun, Jul 02, 2006 at 09:05:33PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > Error: 'const char *' not in typemap in Git.xs, line 69
+> > Error: 'const char *' not in typemap in Git.xs, line 79
+> > make: *** [Git.c] Error 1
+> >
+> > It seems like my typemap starts like this:
+> >...
+> > So, no "const char *". See next mail for a minimal patch.
 > 
-> This patch is working for me:
+> An alternative would be to carry our own typemap but I think
+> your fix is less intrusive and fine.  Pasky?
+
+Yes, it should be fine.
+
+> > The warning 
+> > (IIRC that was mentioned already on the list) still persists:
+> >
+> > cc -c -I. -I.. -g -pipe -pipe -fno-common -no-cpp-precomp -flat_namespace 
+> > -DHAS_TELLDIR_PROTOTYPE -fno-strict-aliasing -Os     -DVERSION=\"0.01\" 
+> > -DXS_VERSION=\"0.01\"  -I/System/Library/Perl/darwin/CORE -I/sw/include 
+> > -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR -DNO_STRLCPY 
+> > -DGIT_VERSION='"1.4.1.g3b26"' Git.c
+> > In file included from /System/Library/Perl/darwin/CORE/perl.h:500,
+> >                  from Git.xs:15:
+> > /System/Library/Perl/darwin/CORE/embed.h:156:1: warning: "die" redefined
+> > Git.xs:11:1: warning: this is the location of the previous definition
 > 
-> diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
-> index e8fad02..1b23fa1 100755
-> --- a/git-fmt-merge-msg.perl
-> +++ b/git-fmt-merge-msg.perl
-> @@ -5,7 +5,7 @@ #
->  # Read .git/FETCH_HEAD and make a human readable merge message
->  # by grouping branches and tags together to form a single line.
->  
-> -unshift @INC, '@@INSTLIBDIR@@';
-> +BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
->  use strict;
->  use Git;
->  use Error qw(:try);
+> I see the same here.
 
-I feel that it is time for another stupid question of mine - why can't
-you just use lib?
+-8<-
 
-	use lib ('@@INSTLIBDIR@@');
+Back in the old days, we called Git's die() from the .xs code, but we had to
+hijack Perl's die() for that. Now we don't call Git's die() so no need to do
+the hijacking and it silences a compiler warning.
 
-Looks a lot better than some @INC unshifting, and it should be
-equivalent.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Let's pour in to the confusion:
+ perl/Git.xs |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
 
-The unshifting was introduced w/o BEGIN{} in
-
-	From: Junio C Hamano <junkio@cox.net>
-	Subject: Re: [PATCH 01/12] Introduce Git.pm (v4)
-	Date:   Sat, 24 Jun 2006 04:57:31 -0700
-
-but that patch is not in pu anymore while the description of the new
-patch implicitly refers to it, which made it all a bit confusing.
-
-So the purpose of the original patch was to make it play nicely with
-$PERLLIB, but unshifting helps nothing, since:
-
-	There's default @INC
-	Perl spots PERLLIB and unshifts @INC
-	We then unshift @INC too, taking precedence
-
-So didn't the original patch rather want to do push?
-
-	$ PERL5LIB=perl perl -le "BEGIN { unshift @INC, '/home/xpasky/lib/perl5/site_perl/5.8.8/i686-linux'; } use Git; print Git::hash_object('blob','Makefile');"
-	17842a3657ae8e5b4fd3ddfeb69268a4b94cb97a
-	$ PERL5LIB=perl perl -le "use Git; print Git::hash_object('blob','Makefile');"
-	syntax error at perl/Git.pm line 44, near "h>"
-
-(after inserting random junk to perl/Git.pm)
+diff --git a/perl/Git.xs b/perl/Git.xs
+index 51bfac3..1e6c1eb 100644
+--- a/perl/Git.xs
++++ b/perl/Git.xs
+@@ -8,15 +8,11 @@ #include <ctype.h>
+ #include "../cache.h"
+ #include "../exec_cmd.h"
+ 
+-#define die perlyshadow_die__
+-
+ /* XS and Perl interface */
+ #include "EXTERN.h"
+ #include "perl.h"
+ #include "XSUB.h"
+ 
+-#undef die
+-
+ 
+ static char *
+ report_xs(const char *prefix, const char *err, va_list params)
 
 -- 
 				Petr "Pasky" Baudis
