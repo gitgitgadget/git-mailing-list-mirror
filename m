@@ -1,62 +1,95 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 4/3] Fold get_merge_bases_clean() into get_merge_bases()
-Date: Sun, 2 Jul 2006 13:44:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607021344040.12404@g5.osdl.org>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
- <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
- <20060701150926.GA25800@lsrfire.ath.cx> <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
- <44A6CD1D.2000600@lsrfire.ath.cx> <Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
- <7vveqhccnk.fsf@assigned-by-dhcp.cox.net> <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
- <20060702094938.GA10944@lsrfire.ath.cx> <Pine.LNX.4.64.0607020935460.12404@g5.osdl.org>
- <44A8051D.6040605@lsrfire.ath.cx>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Quick merge status updates.
+Date: Sun, 2 Jul 2006 22:49:06 +0200
+Message-ID: <20060702204906.GG29115@pasky.or.cz>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net> <1151471040.4940.17.camel@dv> <7v7j3164xd.fsf@assigned-by-dhcp.cox.net> <1151489103.28036.6.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 02 22:45:11 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 22:49:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx8oX-00047z-1i
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 22:45:09 +0200
+	id 1Fx8sT-0004Xf-Er
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 22:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750743AbWGBUo7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 16:44:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbWGBUo7
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 16:44:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:47515 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750743AbWGBUo6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 16:44:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k62KinnW024994
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 2 Jul 2006 13:44:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k62KimaX017497;
-	Sun, 2 Jul 2006 13:44:49 -0700
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <44A8051D.6040605@lsrfire.ath.cx>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750783AbWGBUtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 16:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWGBUtJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 16:49:09 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35725 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750783AbWGBUtI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 16:49:08 -0400
+Received: (qmail 3452 invoked by uid 2001); 2 Jul 2006 22:49:06 +0200
+To: Pavel Roskin <proski@gnu.org>
+Content-Disposition: inline
+In-Reply-To: <1151489103.28036.6.camel@dv>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23116>
 
-
-
-On Sun, 2 Jul 2006, Rene Scharfe wrote:
+Dear diary, on Wed, Jun 28, 2006 at 12:05:03PM CEST, I got a letter
+where Pavel Roskin <proski@gnu.org> said that...
+> I think the BEGIN block has priority over other statements.  My solution
+> was to put the @INC change in the BEGIN block as well.
 > 
-> No and yes.  Patch 1 in the 3+1 series changes the flags used in
-> commit.c to not conflict with the ones in revision.h[*].  So we have two
-> different UNINTERESTINGs, and get_merge_bases() doesn't mess up the
-> show/no-show markings.
+> This patch is working for me:
+> 
+> diff --git a/git-fmt-merge-msg.perl b/git-fmt-merge-msg.perl
+> index e8fad02..1b23fa1 100755
+> --- a/git-fmt-merge-msg.perl
+> +++ b/git-fmt-merge-msg.perl
+> @@ -5,7 +5,7 @@ #
+>  # Read .git/FETCH_HEAD and make a human readable merge message
+>  # by grouping branches and tags together to form a single line.
+>  
+> -unshift @INC, '@@INSTLIBDIR@@';
+> +BEGIN { unshift @INC, '@@INSTLIBDIR@@'; }
+>  use strict;
+>  use Git;
+>  use Error qw(:try);
 
-Gaah. So UNINTERESTING in commit.c needs something else than everywhere 
-else? That's a bug waiting to happen.
+I feel that it is time for another stupid question of mine - why can't
+you just use lib?
 
-Please give it a name of its own.
+	use lib ('@@INSTLIBDIR@@');
 
-		Linus
+Looks a lot better than some @INC unshifting, and it should be
+equivalent.
+
+Let's pour in to the confusion:
+
+The unshifting was introduced w/o BEGIN{} in
+
+	From: Junio C Hamano <junkio@cox.net>
+	Subject: Re: [PATCH 01/12] Introduce Git.pm (v4)
+	Date:   Sat, 24 Jun 2006 04:57:31 -0700
+
+but that patch is not in pu anymore while the description of the new
+patch implicitly refers to it, which made it all a bit confusing.
+
+So the purpose of the original patch was to make it play nicely with
+$PERLLIB, but unshifting helps nothing, since:
+
+	There's default @INC
+	Perl spots PERLLIB and unshifts @INC
+	We then unshift @INC too, taking precedence
+
+So didn't the original patch rather want to do push?
+
+	$ PERL5LIB=perl perl -le "BEGIN { unshift @INC, '/home/xpasky/lib/perl5/site_perl/5.8.8/i686-linux'; } use Git; print Git::hash_object('blob','Makefile');"
+	17842a3657ae8e5b4fd3ddfeb69268a4b94cb97a
+	$ PERL5LIB=perl perl -le "use Git; print Git::hash_object('blob','Makefile');"
+	syntax error at perl/Git.pm line 44, near "h>"
+
+(after inserting random junk to perl/Git.pm)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
