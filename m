@@ -1,86 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] instaweb: fix unportable ';' usage in sed
-Date: Sun, 2 Jul 2006 04:56:16 -0700
-Message-ID: <20060702115616.GA28291@soma>
-References: <7vr7145u17.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0607021109540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [POSSIBLE REGRESSION] Spurious revs after patch "revision.c: --full-history fix"
+Date: Sun, 2 Jul 2006 14:19:01 +0200
+Message-ID: <e5bfff550607020519k6007f41bne34d10c0e919f3c8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 13:56:24 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 14:19:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fx0Yp-0005DK-A2
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 13:56:23 +0200
+	id 1Fx0v4-0008Eq-C9
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 14:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932323AbWGBL4T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 07:56:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbWGBL4T
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 07:56:19 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53390 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S932323AbWGBL4S (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 07:56:18 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C06757DC021;
-	Sun,  2 Jul 2006 04:56:16 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun,  2 Jul 2006 04:56:16 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1750932AbWGBMTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 08:19:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWGBMTE
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 08:19:04 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:45668 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1750932AbWGBMTC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 08:19:02 -0400
+Received: by py-out-1112.google.com with SMTP id c39so1071533pyd
+        for <git@vger.kernel.org>; Sun, 02 Jul 2006 05:19:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=gp8s23fYZHKXNqdHZkJgeCFlOvXPiokN1zD/BBGEyVuPxbHTLOsKYfKj7Rsa8Ml5HkbRncuDbnVxrBrwNs0wZV74fWgKcHa8qsB0FoHP2kB45AgmfA274UmLj5tJt64cUhnjxoNKsngG1b0B9b8430I9QB7VB32GyOQszEVhk10=
+Received: by 10.35.27.1 with SMTP id e1mr151650pyj;
+        Sun, 02 Jul 2006 05:19:01 -0700 (PDT)
+Received: by 10.35.52.17 with HTTP; Sun, 2 Jul 2006 05:19:01 -0700 (PDT)
+To: junkio@cox.net
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607021109540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23105>
 
-Hint taken from Johannes.  I've tested this with sed --posix on
-my system with GNU sed and it works fine with and also without
-it.  Further portability testing/review would be good.
+After patch "revision.c: --full-history fix" (6631c73)
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+I have this in git tree.
 
- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
- > 
- > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
- > ---
- > 	Re: What's in git.git
- > 
- > 	On Sun, 2 Jul 2006, Junio C Hamano wrote:
- > 
- > 	>  - instaweb by Eric Wong.
- > 
- > 	This breaks make on _all_ platforms I have.
- > 
- > 	First of all, it is _ugly_ (three invocations of sed, where one 
- > 	really is sufficient). Then, it uses the non-portable ';' 
- > 	operator, and then, the non-at-all-portable 'T'.
- > 
- > 	And worst: it is unnecessary.
+I have _manually_  ( --abbrev=nr does not apply in this case)
+truncated to 7 chars the SHA to be more readable)
 
- *Blushes*  Sorry about that, I've been meaning to brush up on my
- sed skills (coming from a Perl-heavy environment).
+$ git-rev-list --topo-order --parents --remove-empty HEAD -- builtin-add.c
+021b6e4 93872e0
+93872e0 3c6a370
+3c6a370 e8f990b
+e8f990b f259339
+f259339 0d78153
+0d78153
+b4189aa
+283c8ee
+$ git-rev-list --topo-order --remove-empty HEAD -- builtin-add.c
+021b6e4
+93872e0
+3c6a370
+e8f990b
+f259339
+0d78153
+$
 
- git-instaweb.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+What it seems is that with --parents  option two more spurious revs
+are printed out. This revs have nothing to do with builtin-add.c, the
+file is newer then both of them.
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 51067d9..69aef3c 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -194,9 +194,9 @@ EOF
- }
- 
- script='
--s#^\(my\|our\) $projectroot =.*#\1 $projectroot = "'`dirname $fqgitdir`'";#;
--s#\(my\|our\) $gitbin =.*#\1 $gitbin = "'$GIT_EXEC_PATH'";#;
--s#\(my\|our\) $projects_list =.*#\1 $projects_list = $projectroot;#;
-+s#^\(my\|our\) $projectroot =.*#\1 $projectroot = "'`dirname $fqgitdir`'";#
-+s#\(my\|our\) $gitbin =.*#\1 $gitbin = "'$GIT_EXEC_PATH'";#
-+s#\(my\|our\) $projects_list =.*#\1 $projects_list = $projectroot;#
- s#\(my\|our\) $git_temp =.*#\1 $git_temp = "'$fqgitdir/gitweb/tmp'";#'
- 
- gitweb_cgi () {
--- 
-1.4.1.rc2.gbc4f
+I have tested with different files and always we have spurious
+revisions in case of files that were added after initial commit, and
+always the erroneous revisions are older then file creation one.
+
+This is a possible regression that breaks things (I've found it thanks
+to an assert in qgit).
+
+   Marco
