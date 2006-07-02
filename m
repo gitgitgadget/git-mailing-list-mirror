@@ -1,125 +1,116 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 4/3] Fold get_merge_bases_clean() into get_merge_bases()
-Date: Sun, 2 Jul 2006 11:49:38 +0200
-Message-ID: <20060702094938.GA10944@lsrfire.ath.cx>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org> <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org> <20060701150926.GA25800@lsrfire.ath.cx> <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net> <44A6CD1D.2000600@lsrfire.ath.cx> <Pine.LNX.4.64.0607011301480.12404@g5.osdl.org> <7vveqhccnk.fsf@assigned-by-dhcp.cox.net> <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Git.pm: Avoid ppport.h
+Date: Sun, 2 Jul 2006 11:52:17 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607021141260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0606280928540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0606280938420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060701234832.GD29115@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Jul 02 11:49:46 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 02 11:52:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwyaF-00050K-8o
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 11:49:43 +0200
+	id 1Fwyco-0005L1-2l
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 11:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964815AbWGBJtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 05:49:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964835AbWGBJtk
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 05:49:40 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:6316
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S964815AbWGBJtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jul 2006 05:49:40 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id DE62A1229C; Sun,  2 Jul 2006 11:49:38 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932278AbWGBJwT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 05:52:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932805AbWGBJwT
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 05:52:19 -0400
+Received: from mail.gmx.de ([213.165.64.21]:7391 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932278AbWGBJwS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 05:52:18 -0400
+Received: (qmail invoked by alias); 02 Jul 2006 09:52:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp042) with SMTP; 02 Jul 2006 11:52:17 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060701234832.GD29115@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23099>
 
-Due to popular request ;-), change get_merge_bases() to be able to
-clean up after itself if needed by adding a cleanup parameter.
+Hi,
 
-We don't need to save the flags and restore them afterwards anymore;
-that was a leftover from before the flags were moved out of the
-range used in revision.c.  clear_commit_marks() sets them to zero,
-which is enough.
+On Sun, 2 Jul 2006, Petr Baudis wrote:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+>   ow, Devel::PPPort might not be around all the way back to 5.6.0. What
+> is your Perl version, BTW?
 
-diff --git a/commit.c b/commit.c
-index 70a4eff..94c1d0e 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1012,7 +1012,8 @@ static void mark_reachable_commits(struc
- 	}
- }
- 
--struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2)
-+struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2,
-+                                    int cleanup)
- {
- 	struct commit_list *list = NULL;
- 	struct commit_list *result = NULL;
-@@ -1080,20 +1081,10 @@ struct commit_list *get_merge_bases(stru
- 		tmp = next;
- 	}
- 
--	return result;
--}
--
--struct commit_list *get_merge_bases_clean(struct commit *rev1,
--                                          struct commit *rev2)
--{
--	unsigned int flags1 = rev1->object.flags;
--	unsigned int flags2 = rev2->object.flags;
--	struct commit_list *result = get_merge_bases(rev1, rev2);
--
--	clear_commit_marks(rev1, PARENT1 | PARENT2 | UNINTERESTING);
--	clear_commit_marks(rev2, PARENT1 | PARENT2 | UNINTERESTING);
--	rev1->object.flags = flags1;
--	rev2->object.flags = flags2;
-+	if (cleanup) {
-+		clear_commit_marks(rev1, PARENT1 | PARENT2 | UNINTERESTING);
-+		clear_commit_marks(rev2, PARENT1 | PARENT2 | UNINTERESTING);
-+	}
- 
- 	return result;
- }
-diff --git a/commit.h b/commit.h
-index 3a26e29..779ed82 100644
---- a/commit.h
-+++ b/commit.h
-@@ -105,7 +105,6 @@ struct commit_graft *read_graft_line(cha
- int register_commit_graft(struct commit_graft *, int);
- int read_graft_file(const char *graft_file);
- 
--extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2);
--extern struct commit_list *get_merge_bases_clean(struct commit *rev1, struct commit *rev2);
-+extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
- 
- #endif /* COMMIT_H */
-diff --git a/merge-base.c b/merge-base.c
-index b41f76c..59f723f 100644
---- a/merge-base.c
-+++ b/merge-base.c
-@@ -6,7 +6,7 @@ static int show_all = 0;
- 
- static int merge_base(struct commit *rev1, struct commit *rev2)
- {
--	struct commit_list *result = get_merge_bases(rev1, rev2);
-+	struct commit_list *result = get_merge_bases(rev1, rev2, 0);
- 
- 	if (!result)
- 		return 1;
-diff --git a/revision.c b/revision.c
-index 1da6ce3..7865fa4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -814,7 +814,7 @@ int setup_revisions(int argc, const char
- 				}
- 
- 				if (symmetric) {
--					exclude = get_merge_bases_clean(a, b);
-+					exclude = get_merge_bases(a, b, 1);
- 					add_pending_commit_list(revs, exclude,
- 					                        flags_exclude);
- 					a->object.flags |= flags;
+This is perl, v5.6.0 built for darwin
+
+> This makes us not include ppport.h which seems not to give us anything real
+> anyway; it is useful for checking for portability warts but since Devel::PPPort
+> is a portability wart itself, we shouldn't require it for build.
+
+Why do people introduce a "portability enhancer" like that? This is soo 
+dumb.
+
+Well, your patch helped. Now the error is somewhere else:
+
+mkdir blib
+mkdir blib/lib
+mkdir blib/arch
+mkdir blib/arch/auto
+mkdir blib/arch/auto/Git
+mkdir blib/lib/auto
+mkdir blib/lib/auto/Git
+mkdir blib/man3
+cp private-Error.pm blib/lib/Error.pm
+cp Git.pm blib/lib/Git.pm
+/usr/bin/perl -I/System/Library/Perl/darwin -I/System/Library/Perl 
+/System/Library/Perl/ExtUtils/xsubpp  -typemap 
+/System/Library/Perl/ExtUtils/typemap Git.xs > Git.xsc && mv Git.xsc Git.c
+Error: 'const char *' not in typemap in Git.xs, line 69
+Error: 'const char *' not in typemap in Git.xs, line 79
+make: *** [Git.c] Error 1
+
+It seems like my typemap starts like this:
+
+-- snip --
+# $Header: /cvs/Darwin/src/live/perl/perl/lib/ExtUtils/typemap,v 1.2 
+2002/03/14 
+08:58:22 zarzycki Exp $ 
+# basic C types
+int                     T_IV
+unsigned                T_UV
+unsigned int            T_UV
+long                    T_IV
+unsigned long           T_UV
+short                   T_IV
+unsigned short          T_UV
+char                    T_CHAR
+unsigned char           T_U_CHAR
+char *                  T_PV
+unsigned char *         T_PV
+caddr_t                 T_PV
+wchar_t *               T_PV
+wchar_t                 T_IV
+bool_t                  T_IV
+size_t                  T_IV
+ssize_t                 T_IV
+time_t                  T_NV
+-- snap --
+
+So, no "const char *". See next mail for a minimal patch. The warning 
+(IIRC that was mentioned already on the list) still persists:
+
+cc -c -I. -I.. -g -pipe -pipe -fno-common -no-cpp-precomp -flat_namespace 
+-DHAS_TELLDIR_PROTOTYPE -fno-strict-aliasing -Os     -DVERSION=\"0.01\" 
+-DXS_VERSION=\"0.01\"  -I/System/Library/Perl/darwin/CORE -I/sw/include 
+-DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR -DNO_STRLCPY 
+-DGIT_VERSION='"1.4.1.g3b26"' Git.c
+In file included from /System/Library/Perl/darwin/CORE/perl.h:500,
+                 from Git.xs:15:
+/System/Library/Perl/darwin/CORE/embed.h:156:1: warning: "die" redefined
+Git.xs:11:1: warning: this is the location of the previous definition
+
+Ciao,
+Dscho
