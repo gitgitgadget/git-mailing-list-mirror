@@ -1,308 +1,152 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.1
-Date: Sat, 01 Jul 2006 23:33:42 -0700
-Message-ID: <7vlkrca52x.fsf@assigned-by-dhcp.cox.net>
+Subject: What's in git.git
+Date: Sun, 02 Jul 2006 00:45:56 -0700
+Message-ID: <7vr7145u17.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 02 08:34:01 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jul 02 09:46:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FwvWq-0000A5-Ck
-	for gcvg-git@gmane.org; Sun, 02 Jul 2006 08:34:00 +0200
+	id 1FwweX-00088e-9e
+	for gcvg-git@gmane.org; Sun, 02 Jul 2006 09:46:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbWGBGdp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Jul 2006 02:33:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbWGBGdp
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 02:33:45 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:29134 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750803AbWGBGdo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 02:33:44 -0400
+	id S1751532AbWGBHp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 03:45:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbWGBHp6
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 03:45:58 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:48260 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751532AbWGBHp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 03:45:58 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060702063343.UPFG11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Jul 2006 02:33:43 -0400
+          id <20060702074557.QRYE8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Jul 2006 03:45:57 -0400
 To: git@vger.kernel.org
+X-maint-at: 0556a11a0df6b4119e01aa77dfb795561e62eb34
+X-master-at: 0556a11a0df6b4119e01aa77dfb795561e62eb34
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23095>
 
-The latest feature release GIT 1.4.1 is available at the usual
-places:
+The 'master' branch has been pushed out as GIT 1.4.1 tonight to
+celebrate the birthday of lady gitster.
 
-  http://www.kernel.org/pub/software/scm/git/
+In "next", there are the following series:
 
-  git-1.4.1.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.1.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.1-1.$arch.rpm	(RPM)
+ - rationalize diff output options by Timo Hirvonen.
 
-As announced earlier, 1.4.1 is not just 1.4.0 plus bugfixes, but
-also has enhancements from the "master" branch.
+   This makes "diff --patch --stat" operate sensibly.  I have
+   added about 100 tests to make sure that this does not regress
+   diff/log commands, and made small fixups to Timo's version
+   here and there.
 
-----------------------------------------------------------------
+   There are still slight differences in output between the
+   current "master" version and Timo's version, but I believe
+   they are all improvements.  Curious people may want to take a
+   look at the following two commits that updates the tests to
+   match Timo's output:
 
-Changes since v1.4.0 are as follows:
+	commit 026625e78eaf8ea2ae960525c367b5e8f1629fd4
+	commit 9e76bab14e50c46c624ae35f13c527a7a1b1185d
 
-Andre Noll:
-      object-refs: avoid division by zero
+   I think this is ready to be merged into "master", but further
+   testing is appreciated.
 
-Andreas Ericsson:
-      git wrapper: fix command name in an error message.
+ - A few Makefile clean-ups by Jakub Narebski.
 
-David Woodhouse:
-      Log peer address when git-daemon called from inetd
+   This is part of Jakub's "optionally manage config.mk with
+   autoconf generated configure script" series.  I have not been
+   queueing the rest of the series but judging from the list
+   traffic and the size and quality of the later pieces, the
+   patch series might have stabilized enough to be resubmitted
+   for consideration.  Honestly, I am still somewhat reluctant,
+   but my impression was it was still strictly "opt-in" so it
+   might be OK.
 
-Dennis Stosberg:
-      Make t4101-apply-nonl bring along its patches
-      Make t8001-annotate and t8002-blame more portable
-      Fix t8001-annotate and t8002-blame for ActiveState Perl
-      Solaris needs inclusion of signal.h for signal()
-      Fix pkt-line.h to compile with a non-GCC compiler
-      Fix expr usage for FreeBSD
+ - git_merge_bases() by Johannes.
 
-Eric W. Biederman:
-      Don't parse any headers in the real body of an email message.
-      Fix git-format-patch -s
-      Check and document the options to prevent mistakes.
+   Calling commit ancestry walkers more than once correctly is
+   hard, and that is why I have accepted the libifying part with
+   the change to use the lib by one caller that calls the
+   function only once, without merging anything that calls the
+   function more than once.
 
-Eric Wong:
-      git-svn: t0000: add -f flag to checkout
-      git-svn: fix handling of filenames with embedded '@'
-      git-svn: eol_cp corner-case fixes
-      git-svn: restore original LC_ALL setting (or unset) for commit
-      git-svn: don't allow commit if svn tree is not current
-      git-svn: support -C<num> passing to git-diff-tree
-      git-svn: --branch-all-refs / -B support
-      git-svn: optimize --branch and --branch-all-ref
-      git-svn: support manually placed initial trees from fetch
-      git-svn: Move all git-svn-related paths into $GIT_DIR/svn
-      git-svn: minor cleanups, extra error-checking
-      git-svn: add --repack and --repack-flags=3D options
-      git-svn: add --shared and --template=3D options to pass to init-d=
-b
-      git-svn: add some functionality to better support branches in svn
-      git-svn: add UTF-8 message test
-      git-svn: add 'log' command, a facsimile of basic `svn log'
-      git-svn: add support for Perl SVN::* libraries
-      git-svn: make the $GIT_DIR/svn/*/revs directory obsolete
-      git-svn: avoid creating some small files
-      git-svn: fix several small bugs, enable branch optimization
-      git-svn: Eliminate temp file usage in libsvn_get_file()
-      git-svn: bugfix and optimize the 'log' command
-      git-svn: tests no longer fail if LC_ALL is not a UTF-8 locale
-      git-svn: svn (command-line) 1.0.x compatibility
-      git-svn: rebuild convenience and bugfixes
-      git-svn: fix --rmdir when using SVN:: libraries
-      rebase: Allow merge strategies to be used when rebasing
-      rebase: error out for NO_PYTHON if they use recursive merge
-      git-svn: fix commit --edit flag when using SVN:: libraries
-      rebase: allow --merge option to handle patches merged upstream
-      rebase: cleanup rebasing with --merge
-      rebase: allow --skip to work with --merge
-      git-svn: SVN 1.1.x library compatibility
-      git-svn: several graft-branches improvements
-      git-svn: add the commit-diff command
-      git-svn: add --follow-parent and --no-metadata options to fetch
-      git-svn: be verbose by default on fetch/commit, add -q/--quiet op=
-tion
-      rebase: get rid of outdated MRESOLVEMSG
-      rebase: check for errors from git-commit
-      git-svn: allow a local target directory to be specified for init
+   I think this library part, with the clean-up by Rene Scharfe
+   in "pu", is in good shape to be tested further.  The '...'
+   operator work would be a good demonstration to prove the
+   libification is sound, before proceeding to bigger and more
+   interesting users, like merge-recursive in C by Alex Riesen.
 
-=46lorian Forster:
-      gitweb: Adding a `blame' interface.
-      gitweb: Make the `blame' interface in gitweb optional.
-      Remove ranges from switch statements.
-      Initialize FAMs using `FLEX_ARRAY'.
-      Don't instantiate structures with FAMs.
-      Cast pointers to `void *' when used in a format.
-      Don't use empty structure initializers.
-      Change types used in bitfields to be `int's.
-      Remove all void-pointer arithmetic.
+   Alex/Johannes team's effort seems to be progressing nicely
+   and I am looking forward to seeing a version that is stable
+   enough for testing.
 
-=46redrik Kuivinen:
-      blame: Add --time to produce raw timestamps
+ - gitweb updates by Dennis Stosberg and Luben Tuikov.
 
-Jakub Narebski:
-      Update gitweb README: gitweb is now included with git
-      Move gitweb style to gitweb.css
-      gitweb: safely output binary files for 'blob_plain' action
-      gitweb: text files for 'blob_plain' action without charset by def=
-ault
-      Fix gitweb stylesheet
-      Make CSS file gitweb/gitweb.css more readable
-      gitweb: add type=3D"text/css" to stylesheet link
-      Fix: Support for the standard mime.types map in gitweb
-      gitweb: A couple of page title tweaking
-      gitweb: style done with stylesheet
-      gitweb: whitespace cleanup
-      Add git version to gitweb output
-      Move $gitbin earlier in gitweb.cgi
-      gitweb: Make use of $PATH_INFO for project parameter
-      gitweb: whitespace cleanup around '=3D'
+   I am personally running this on my private machine to see the
+   progress made by Jakub so far with these updates, and am
+   generally happy.  I'd like to see the code further refactored
+   before picking up any more new features, though.  I see Jakub
+   is talking with xmms2 team and am hoping to see we can see
+   more cleanups they made in our tree soon (thanks Jakub).
 
-Jeff King:
-      git-commit: allow -e option anywhere on command line
-      quote.c: silence compiler warnings from EMIT macro
+ - instaweb by Eric Wong.
 
-Johannes Schindelin:
-      diff options: add --color
-      Initialize lock_file struct to all zero.
-      Fix setting config variables with an alternative GIT_CONFIG
-      Read configuration also from $HOME/.gitconfig
-      repo-config: Fix late-night bug
-      git_config: access() returns 0 on success, not > 0
-      patch-id: take "commit" prefix as well as "diff-tree" prefix
-      Teach diff about -b and -w flags
-      cvsimport: always set $ENV{GIT_INDEX_FILE} to $index{$branch}
-      apply: replace NO_ACCURATE_DIFF with --inaccurate-eof runtime fla=
-g.
-      add diff_flush_patch_id() to calculate the patch id
-      format-patch: introduce "--ignore-if-in-upstream"
-      t4014: fix for whitespace from "wc -l"
-      format-patch: use clear_commit_marks() instead of some ad-hockery
-      Save errno in handle_alias()
+   I made a mismerge when accepting this series and "next" ended
+   up with two copies of three "gitweb" related patches.  Sorry
+   for cluttering the history.
 
-Junio C Hamano:
-      read-tree: --prefix=3D<path>/ option.
-      write-tree: --prefix=3D<path>
-      read-tree: reorganize bind_merge code.
-      fetch-pack: give up after getting too many "ack continue"
-      Fix earlier mismerges.
-      shared repository: optionally allow reading to "others".
-      gitk: rereadrefs needs listrefs
-      fix git alias
-      t5100: mailinfo and mailsplit tests.
-      mailinfo: ignore blanks after in-body headers.
-      fix rfc2047 formatter.
-      xdiff: minor changes to match libxdiff-0.21
-      Restore SIGCHLD to SIG_DFL where we care about waitpid().
-      checkout -f: do not leave untracked working tree files.
-      upload-pack: avoid sending an incomplete pack upon failure
-      upload-pack: prepare for sideband message support.
-      Retire git-clone-pack
-      upload-pack/fetch-pack: support side-band communication
-      Add renaming-rebase test.
-      daemon: send stderr to /dev/null instead of closing.
-      rebase --merge: fix for rebasing more than 7 commits.
-      Makefile: do not force unneeded recompilation upon GIT_VERSION ch=
-anges
-      Makefile: do not recompile main programs when libraries have chan=
-ged.
-      usage: minimum type fix.
-      git-pull: abort when fmt-merge-msg fails.
-      git-merge --squash
-      diff --color: use reset sequence when we mean reset.
-      repo-config: fix printing of bool
-      diff --color: use $GIT_DIR/config
-      git-repack: Be careful when updating the same pack as an existing=
- one.
-      t4014: add format-patch --ignore-if-in-upstream test
-      combine-diff.c: type sanity
-      connect.c: remove unused parameters from tcp_connect and proxy_co=
-nnect
-      connect.c: check the commit buffer boundary while parsing.
-      t/README: start testing porcelainish
-      checkout -m: fix read-tree invocation
-      t4014: fix test commit labels.
-      diff.c: fix get_patch_id()
-      Racy GIT (part #3)
-      upload-pack.c: <sys/poll.h> includes <ctype.h> on OpenBSD 3.8
+ - "A better scheduled PPC SHA-1 implementation" by linux@horizon.com
 
-Linus Torvalds:
-      gitweb.cgi history not shown
-      Shrink "struct object" a bit
-      Move "void *util" from "struct object" into "struct commit"
-      Some more memory leak avoidance
-      Remove "refs" field from "struct object"
-      Add specialized object allocator
-      Add "named object array" concept
-      Fix grow_refs_hash()
-      Tweak diff colors
-      Do not try futile object pairs when repacking.
-      Abstract out accesses to object hash array
-      revision.c: --full-history fix.
-      git object hash cleanups
+ - git-merge-tree WIP by Linus.
 
-Lukas Sandstr=F6m:
-      Make git-write-tree a builtin
-      Make git-mailsplit a builtin
-      Make git-mailinfo a builtin
-      Make git-stripspace a builtin
-      Make git-update-index a builtin
-      Make git-update-ref a builtin
+   I should take a look at this and follow it through but
+   haven't spent as much time as I should have nor I would have
+   liked yet.
 
-Martin Langhoff:
-      cvsimport: ignore CVSPS_NO_BRANCH and impossible branches
-      cvsimport: complete the cvsps run before starting the import
-      cvsimport: keep one index per branch during import
-      git-repack -- respect -q and be quiet
-      cvsimport: setup indexes correctly for ancestors and incremental =
-imports
-      cvsimport - cleanup of the multi-indexes handling
 
-Matthias Kestenholz:
-      add GIT-CFLAGS to .gitignore
+In "pu", there are more interesting pieces:
 
-Matthias Lederhofer:
-      correct documentation for git grep
+ - updates to git-merge-bases with '...' operator by Rene Scharfe.
 
-Nicolas Pitre:
-      consider previous pack undeltified object state only when reusing=
- delta data
-      don't load objects needlessly when repacking
+   This should come in "next" but I think Johannes has a point
+   that library interface should be the easier-to-use version.
 
-Paul Eggert:
-      date.c: improve guess between timezone offset and year.
+   Maybe we should have get_merge_bases_unclean() as an oddball
+   function that does not clean up for performance, and make
+   git-merge-base call that, and keep the name of the function
+   for generic callers that does clean up short and sweet
+   get_merge_bases().
 
-Paul Mackerras:
-      Fix PPC SHA1 routine for large input buffers
+ - updates to diff options rationalization by Timo Hirvonen.
 
-Peter Eriksen:
-      Implement safe_strncpy() as strlcpy() and use it more.
-      Rename safe_strncpy() to strlcpy().
+   This makes --name-only, --name-status, --check and -s
+   mutually exclusive, and makes 'git diff-files -s' behave like
+   other diff commands (i.e. -s means "silent" -- so no output
+   is seen).  These are both optional.
 
-Petr Baudis:
-      Support for extracting configuration from different files
-      Support for the standard mime.types map in gitweb
-      Customizable error handlers
-      Fix errno usage in connect.c
+ - "Perly Git" series by Pasky and Pavel Roskin.
 
-Rene Scharfe:
-      git-tar-tree: Simplify write_trailer()
-      git-tar-tree: documentation update
-      git-tar-tree: no more void pointer arithmetic
-      Make release tarballs friendlier to older tar versions
+   I've heard success stories from some but negatives from
+   others.  Feedback from people other than who are on Linux
+   i386/x86-64 with Perl 5.8 are appreciated.
 
-Robin Rosenberg:
-      Minor documentation fixup.
+   In order to get a bit wider exposure without disrupting
+   people, we might want to revert the fmt-merge-msg conversion
+   with a workaround option in Makefile to allow skipping the
+   build of perl/ subdirectory, and merge the result to "next".
 
-Sean Estabrooks:
-      Add a "--notags" option for git-p4import.
+ - GIT_TRACE by Matthias Lederhofer.
+ - "git grep boolean expression" by me.
 
-Sven Verdoolaege:
-      git-cvsexportcommit.perl: fix typo
-
-Timo Hirvonen:
-      gitweb: Use $hash_base as $search_hash if possible
-      git-merge: Don't use -p when outputting summary
-      Clean up diff.c
-      Make some strings const
-
-Uwe Zeisberger:
-      Fix possible out-of-bounds array access
-
-Yakov Lerner:
-      auto-detect changed prefix and/or changed build flags
-      Pass -DDEFAULT_GIT_TEMPLATE_DIR only where actually used.
-
-Yann Dirson:
-      git-commit: filter out log message lines only when editor was run=
-=2E
+   I am not personally interested in these two very much, but I
+   do not think they break anything.  I may push them to "next"
+   or keep them lingering on in "pu".  I do not care too much
+   either way myself -- people who are interested need to push
+   my back.
