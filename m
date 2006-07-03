@@ -1,7 +1,7 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 1/6] Git.pm: Add config() method
-Date: Mon, 03 Jul 2006 22:47:55 +0200
-Message-ID: <20060703204755.28541.48666.stgit@machine.or.cz>
+Subject: [PATCH 5/6] Git.pm: Introduce fast get_object() method
+Date: Mon, 03 Jul 2006 22:48:05 +0200
+Message-ID: <20060703204805.28541.62824.stgit@machine.or.cz>
 References: <20060703204415.28541.47920.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
@@ -11,116 +11,108 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxVLJ-0007pa-TI
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 22:48:30 +0200
+	id 1FxVLM-0007pa-5B
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 22:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbWGCUsB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 16:48:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbWGCUsA
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 16:48:00 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31411 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751288AbWGCUr7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 16:47:59 -0400
-Received: (qmail 29190 invoked from network); 3 Jul 2006 22:47:56 +0200
+	id S932095AbWGCUsL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 16:48:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbWGCUsL
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 16:48:11 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34483 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932102AbWGCUsI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 16:48:08 -0400
+Received: (qmail 29243 invoked from network); 3 Jul 2006 22:48:05 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 3 Jul 2006 22:47:56 +0200
+  by localhost with SMTP; 3 Jul 2006 22:48:05 +0200
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <20060703204415.28541.47920.stgit@machine.or.cz>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23206>
 
-This accessor will retrieve value(s) of the given configuration variable.
+Direct .xs routine. Note that it does not work 100% correctly when
+you juggle multiple repository objects, but it is not that bad either.
+The trouble is that we might reuse packs information for another
+Git project; that is not an issue since Git depends on uniqueness
+of SHA1 ids so if we have found the object somewhere else, it is
+nevertheless going to be the same object. It merely makes object
+existence detection through this method unreliable; it is duly noted
+in the documentation.
+
+At least that's how I see it, I hope I didn't overlook any other
+potential problem. I tested it for memory leaks and it appears to be
+doing ok.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- Documentation/git-repo-config.txt |    3 ++-
- perl/Git.pm                       |   37 ++++++++++++++++++++++++++++++++++++-
- repo-config.c                     |    2 +-
- 3 files changed, 39 insertions(+), 3 deletions(-)
+ perl/Git.pm |   18 ++++++++++++++++++
+ perl/Git.xs |   24 ++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
-index 803c0d5..cc72fa9 100644
---- a/Documentation/git-repo-config.txt
-+++ b/Documentation/git-repo-config.txt
-@@ -54,7 +54,8 @@ OPTIONS
- 
- --get::
- 	Get the value for a given key (optionally filtered by a regex
--	matching the value).
-+	matching the value). Returns error code 1 if the key was not
-+	found and error code 2 if multiple key values were found.
- 
- --get-all::
- 	Like get, but does not fail if the number of values for the key
 diff --git a/perl/Git.pm b/perl/Git.pm
-index b4ee88b..24fd7ce 100644
+index 895a939..65acaa7 100644
 --- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -473,7 +473,6 @@ and the directory must exist.
- 
- sub wc_chdir {
- 	my ($self, $subdir) = @_;
--
- 	$self->wc_path()
- 		or throw Error::Simple("bare repository");
- 
-@@ -486,6 +485,42 @@ sub wc_chdir {
+@@ -571,6 +571,24 @@ sub ident_person {
  }
  
  
-+=item config ( VARIABLE )
++=item get_object ( TYPE, SHA1 )
 +
-+Retrieve the configuration C<VARIABLE> in the same manner as C<repo-config>
-+does. In scalar context requires the variable to be set only one time
-+(exception is thrown otherwise), in array context returns allows the
-+variable to be set multiple times and returns all the values.
++Return contents of the given object in a scalar string. If the object has
++not been found, undef is returned; however, do not rely on this! Currently,
++if you use multiple repositories at once, get_object() on one repository
++_might_ return the object even though it exists only in another repository.
++(But do not rely on this behaviour either.)
 +
-+Must be called on a repository instance.
++The method must be called on a repository instance.
 +
-+This currently wraps command('repo-config') so it is not so fast.
++Implementation of this method is very fast; no external command calls
++are involved. That's why it is broken, too. ;-)
 +
 +=cut
 +
-+sub config {
-+	my ($self, $var) = @_;
-+	$self->repo_path()
-+		or throw Error::Simple("not a repository");
-+
-+	try {
-+		if (wantarray) {
-+			return $self->command('repo-config', '--get-all', $var);
-+		} else {
-+			return $self->command_oneline('repo-config', '--get', $var);
-+		}
-+	} catch Git::Error::Command with {
-+		my $E = shift;
-+		if ($E->value() == 1) {
-+			# Key not found.
-+			return undef;
-+		} else {
-+			throw $E;
-+		}
-+	};
-+}
++# Implemented in Git.xs.
 +
 +
  =item hash_object ( TYPE, FILENAME )
  
  =item hash_object ( TYPE, FILEHANDLE )
-diff --git a/repo-config.c b/repo-config.c
-index 743f02b..c7ed0ac 100644
---- a/repo-config.c
-+++ b/repo-config.c
-@@ -118,7 +118,7 @@ static int get_value(const char* key_, c
- 	if (do_all)
- 		ret = !seen;
- 	else
--		ret =  (seen == 1) ? 0 : 1;
-+		ret = (seen == 1) ? 0 : seen > 1 ? 2 : 1;
+diff --git a/perl/Git.xs b/perl/Git.xs
+index 6ed26a2..226dd4f 100644
+--- a/perl/Git.xs
++++ b/perl/Git.xs
+@@ -111,6 +111,30 @@ CODE:
+ 	free((char **) argv);
+ }
  
- free_strings:
- 	if (repo_config)
++
++SV *
++xs_get_object(type, id)
++	char *type;
++	char *id;
++CODE:
++{
++	unsigned char sha1[20];
++	unsigned long size;
++	void *buf;
++
++	if (strlen(id) != 40 || get_sha1_hex(id, sha1) < 0)
++		XSRETURN_UNDEF;
++
++	buf = read_sha1_file(sha1, type, &size);
++	if (!buf)
++		XSRETURN_UNDEF;
++	RETVAL = newSVpvn(buf, size);
++	free(buf);
++}
++OUTPUT:
++	RETVAL
++
++
+ char *
+ xs_hash_object_pipe(type, fd)
+ 	char *type;
