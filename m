@@ -1,68 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2] autoconf: Use ./configure script in git *.spec file
-Date: Mon, 03 Jul 2006 02:29:34 +0200
-Organization: At home
-Message-ID: <e89ock$gks$1@sea.gmane.org>
-References: <200607030156.50455.jnareb@gmail.com> <200607030202.55919.jnareb@gmail.com> <7vodw7zgt2.fsf@assigned-by-dhcp.cox.net>
+From: "Tommy" <Tommybrent@eartlink.net>
+Subject: Why don't you prevent premature creaming from ruining your personal life?
+Date: Sun, 2 Jul 2006 20:50:50 -0400
+Message-ID: <33209480765859.5E8A44A553@MUT7O>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 03 02:29:35 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jul 03 02:52:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxCJf-0005de-8m
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 02:29:31 +0200
+	id 1FxCfz-0004cV-Fr
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 02:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750797AbWGCA30 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 20:29:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbWGCA30
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 20:29:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:56961 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750797AbWGCA3Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 20:29:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FxCJS-0005cO-SV
-	for git@vger.kernel.org; Mon, 03 Jul 2006 02:29:18 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 02:29:18 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 02:29:18 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750885AbWGCAv4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 20:51:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbWGCAv4
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 20:51:56 -0400
+Received: from verizon-gw3.westbelt.calltech.com ([216.69.223.206]:16879 "EHLO
+	WBLTC25.ixgva.com") by vger.kernel.org with ESMTP id S1750775AbWGCAvj
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 20:51:39 -0400
+To: <gord@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: np4g5L1wSyVUqFZpBE77EZsVBeygvjFTluau
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23145>
+X-Spam-Report: 18.9 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4989]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?216.69.223.206>]
+ *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: kyklopescf.com]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: kyklopescf.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: kyklopescf.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: kyklopescf.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: kyklopescf.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: kyklopescf.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23146>
 
-Junio C Hamano wrote:
+Halo!
 
-> I thought this stuff was "opt-in", but make rpm now requires
-> autoconf?
+ Eliminate this problem and all the anxiety it causes! Become a better male! You'll bring your marriage to new levels of passion and dedication with this. 
 
-Ooops. No, git RPM wouldn't need autoconf, neither building git from *.spec
-file or SRPM. But rpm targed will need autoconf run, and configure script
-packed in tar file (and I think that having configure script in distribution
-tar files will be good idea... but perhaps optionally under NO_AUTOCONF
-or USE_AUTOCONF).
+ http://www.kyklopescf.com 
 
-And I of course forgot about that. So that is only half of a patch...
-
-Besides that patch was meant as example of using autoconf. 
-Automatic tool (rpmbuild) using automatic tool (./configure script).
-
-
-P.S. we could distribute ./configure script like we distribute preformatted
-documentation, in separate 'configure' branch.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+ Lil boy nah climb ladder to turn big man. Artificial intelligence is no match for natural stupidity  Still waters run deep When distrust enters in at the foregate, love goes out at the postern  What's good for the goose is good for the gander. 
