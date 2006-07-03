@@ -1,78 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] Make clear_commit_marks() clean harder
-Date: Mon, 03 Jul 2006 12:47:54 -0700
-Message-ID: <7vzmfqqxlh.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
-	<7vy7vedntn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
-	<20060701150926.GA25800@lsrfire.ath.cx>
-	<7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
-	<44A6CD1D.2000600@lsrfire.ath.cx>
-	<Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
-	<7vveqhccnk.fsf@assigned-by-dhcp.cox.net>
-	<7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
-	<20060701232958.GC2513@lsrfire.ath.cx>
-	<7vejx3rq33.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Make zlib compression level configurable, and change
+ default.
+Date: Mon, 3 Jul 2006 12:50:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607031248320.12404@g5.osdl.org>
+References: <loom.20060703T124601-969@post.gmane.org>
+ <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com>
+ <44A91C7A.6090902@fys.uio.no> <Pine.LNX.4.64.0607031030150.1213@localhost.localdomain>
+ <Pine.LNX.4.64.0607030929490.12404@g5.osdl.org> <85d5cm8qfn.fsf_-_@lupus.ig3.net>
+ <Pine.LNX.4.64.0607031226370.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 21:48:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 03 21:50:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxUOk-0005YZ-OJ
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 21:47:59 +0200
+	id 1FxURL-000664-1y
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 21:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbWGCTr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 15:47:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWGCTr4
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 15:47:56 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25341 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751261AbWGCTrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 15:47:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060703194755.PNZY22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 3 Jul 2006 15:47:55 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 3 Jul 2006 15:56:44 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751267AbWGCTug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 15:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbWGCTuf
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 15:50:35 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:64655 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751267AbWGCTuf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 15:50:35 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k63JoOnW022922
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 3 Jul 2006 12:50:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k63JoNmo030772;
+	Mon, 3 Jul 2006 12:50:23 -0700
+To: Joachim B Haga <cjhaga@fys.uio.no>
+In-Reply-To: <Pine.LNX.4.64.0607031226370.12404@g5.osdl.org>
+X-Spam-Status: No, hits=-3 required=5 tests=PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23196>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> > Don't care if objects have been parsed or not and don't stop when we
->> > reach a commit that is already clean -- its parents could be dirty.
->> 
->> There is something quite wrong with this patch.
->
-> I always had the feeling that it was wrong to traverse not-yet-parsed 
-> parents: How could a revision walk possibly come to a certain commit 
-> without at least one continuous history of now-parsed objects?
->
-> Also, AFAIK the revision walk sets flags for each commit it touched, and 
-> we should not try to be smart-asses about the flags, but just unset these 
-> flags.
 
-The main points were made by Linus already.
+On Mon, 3 Jul 2006, Linus Torvalds wrote:
+> 
+> Oh, and for all the same reasons, we should use
+> 
+> 	int zlib_compression_level = Z_BEST_COMPRESSION;
 
-Traversing is not needed -- not clearing not-yet-parsed is
-obviously wrong.
+That should be Z_DEFAULT_COMPRESSION, of course.
 
-> BTW some very quick tests showed that the clear_commit_marks() thing that 
-> I sent to the list was much faster than traversing all objects (which was 
-> in my original version).
+Anyway, I think the patches are ok as-is, and my suggestion to avoid the 
+"-1" and use Z_DEFAULT_COMPRESSION is really just an additional comment, 
+not anything fundamental.
 
-I have a crude workaround pushed out last night but will be
-replacing it with something less drastic.  I think the final
-version should be what you had, perhaps minus not looking at the
-parsed flag for unmarking purposes.
+So Junio, feel free to add an
+
+	Acked-by: Linus Torvalds <torvalds@osdl.org>
+
+regardless of whether also doing that.
+
+		Linus
