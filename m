@@ -1,75 +1,78 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use configurable zlib compression level everywhere.
-Date: Mon, 03 Jul 2006 12:43:10 -0700
-Message-ID: <7v4pxyscdt.fsf@assigned-by-dhcp.cox.net>
-References: <loom.20060703T124601-969@post.gmane.org>
-	<81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com>
-	<44A91C7A.6090902@fys.uio.no>
-	<Pine.LNX.4.64.0607031030150.1213@localhost.localdomain>
-	<Pine.LNX.4.64.0607030929490.12404@g5.osdl.org>
-	<8564ie8qbe.fsf_-_@lupus.ig3.net>
+Subject: Re: [PATCH 3/3] Make clear_commit_marks() clean harder
+Date: Mon, 03 Jul 2006 12:47:54 -0700
+Message-ID: <7vzmfqqxlh.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+	<7vy7vedntn.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+	<20060701150926.GA25800@lsrfire.ath.cx>
+	<7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
+	<44A6CD1D.2000600@lsrfire.ath.cx>
+	<Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
+	<7vveqhccnk.fsf@assigned-by-dhcp.cox.net>
+	<7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
+	<20060701232958.GC2513@lsrfire.ath.cx>
+	<7vejx3rq33.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 21:43:38 2006
+X-From: git-owner@vger.kernel.org Mon Jul 03 21:48:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxUKP-0004uB-MC
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 21:43:30 +0200
+	id 1FxUOk-0005YZ-OJ
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 21:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbWGCTnO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 15:43:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbWGCTnN
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 15:43:13 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:2761 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751259AbWGCTnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 15:43:12 -0400
+	id S1751261AbWGCTr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 15:47:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWGCTr4
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 15:47:56 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25341 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751261AbWGCTrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 15:47:55 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060703194311.EITQ19057.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 3 Jul 2006 15:43:11 -0400
-To: Joachim B Haga <cjhaga@fys.uio.no>
-In-Reply-To: <8564ie8qbe.fsf_-_@lupus.ig3.net> (Joachim B. Haga's message of
-	"03 Jul 2006 21:02:29 +0200")
+          id <20060703194755.PNZY22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Jul 2006 15:47:55 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 3 Jul 2006 15:56:44 +0200
+	(CEST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23195>
 
-Joachim B Haga <cjhaga@fys.uio.no> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This one I'm not so sure about, it's for completeness. But I don't actually use
-> git and haven't tested beyond the git add / git commit stage. Still...
+>> > Don't care if objects have been parsed or not and don't stop when we
+>> > reach a commit that is already clean -- its parents could be dirty.
+>> 
+>> There is something quite wrong with this patch.
 >
-> Signed-off-by: Joachim B Haga (cjhaga@fys.uio.no)
+> I always had the feeling that it was wrong to traverse not-yet-parsed 
+> parents: How could a revision walk possibly come to a certain commit 
+> without at least one continuous history of now-parsed objects?
+>
+> Also, AFAIK the revision walk sets flags for each commit it touched, and 
+> we should not try to be smart-asses about the flags, but just unset these 
+> flags.
 
-You made a good judgement to notice that these three are
-different.
+The main points were made by Linus already.
 
- * sha1write_compressed() in csum-file.c is for producing packs
-   and most of the things we compress there are deltas and less
-   compressible, so even when core.compression is set to high we
-   might be better off using faster compression.
+Traversing is not needed -- not clearing not-yet-parsed is
+obviously wrong.
 
- * diff's deflate_it() is about producing binary diffs (later
-   encoded in base85) for textual transfer.  Again it is almost
-   always used to compress deltas so the same comment as above
-   apply to this.
+> BTW some very quick tests showed that the clear_commit_marks() thing that 
+> I sent to the list was much faster than traversing all objects (which was 
+> in my original version).
 
- * http-push uses it to send compressed whole object, and this
-   is only used over the network, so it is plausible that the
-   user would want to use different compression level than the
-   usual core.compression.
-
-It is fine by me to use the same core.compression to these
-three.  If somebody comes up with a workload that benefits from
-having different settings for them, we can add separate
-variables, falling back on the default core.compression if there
-isn't one, as needed.
-
-Thanks for the patches.
+I have a crude workaround pushed out last night but will be
+replacing it with something less drastic.  I think the final
+version should be what you had, perhaps minus not looking at the
+parsed flag for unmarking purposes.
