@@ -1,230 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2nd try] Make git-fmt-merge-msg a builtin
-Date: Mon, 03 Jul 2006 15:39:14 -0700
-Message-ID: <7vwtaunwj1.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0607031717540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/3] Make clear_commit_marks() clean harder
+Date: Mon, 3 Jul 2006 15:55:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607031552410.12404@g5.osdl.org>
+References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
+ <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
+ <20060701150926.GA25800@lsrfire.ath.cx> <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
+ <44A6CD1D.2000600@lsrfire.ath.cx> <Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
+ <7vveqhccnk.fsf@assigned-by-dhcp.cox.net> <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
+ <20060701232958.GC2513@lsrfire.ath.cx> <7vejx3rq33.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmfqqxlh.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607032309190.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 00:39:20 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 00:55:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxX4Z-00029f-Mb
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 00:39:20 +0200
+	id 1FxXJy-0004ha-Tl
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 00:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbWGCWjQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 18:39:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbWGCWjQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 18:39:16 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:20116 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751113AbWGCWjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 18:39:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060703223915.MWPV11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 3 Jul 2006 18:39:15 -0400
+	id S932172AbWGCWzL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 18:55:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbWGCWzK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 18:55:10 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:36540 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751178AbWGCWzJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 18:55:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k63Mt1nW000650
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 3 Jul 2006 15:55:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k63Mt0q5005132;
+	Mon, 3 Jul 2006 15:55:00 -0700
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607031717540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 3 Jul 2006 17:18:43 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.63.0607032309190.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23221>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> ---
-> 	This retires git-fmt-merge-msg.perl, since it passes all the
-> 	tests, but removes the Perl version not now.
 
-There is no point not removing the script if you update git.c
-and Makefile to point at the new one.
+On Mon, 3 Jul 2006, Johannes Schindelin wrote:
+> 
+> Traversing is actually wrong. Clearing the marks does not mean to clear 
+> them on commits we did not even mark!
 
-We do not have a test specific for fmt-merge-msg, so it
-obviously passes all the tests ;-).  A new one is attached.
+If we didn't mark them, then clearing them would be a no-op, so nobody 
+really cares.
 
-I think we should extend boolean to accept 'yes' and 'no', as I
-suggested earlier on the list, but other than that things look
-good.
+> But clearing on commits we _have_ -- but not parsed -- is important, 
+> obviously.
 
-Thanks for the patch; no need to resubmit -- I'll munge the
-points I raised above.
+Right. The point is, some logic can choose to mark commits UNINTERESTING 
+without even parsing that commit, and it would be a good thing. You only 
+need to parse the commit once you decide that you need its parents (or 
+it's tree, of course), but you may be able to mark it uninteresting before 
+that.
 
--- >8 --
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-new file mode 100755
-index 0000000..63e49f3
---- /dev/null
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -0,0 +1,163 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006, Junio C Hamano
-+#
-+
-+test_description='fmt-merge-msg test'
-+
-+. ./test-lib.sh
-+
-+datestamp=1151939923
-+setdate () {
-+	GIT_COMMITTER_DATE="$datestamp +0200"
-+	GIT_AUTHOR_DATE="$datestamp +0200"
-+	datestamp=`expr "$datestamp" + 1`
-+	export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-+}
-+
-+test_expect_success setup '
-+	echo one >one &&
-+	git add one &&
-+	setdate &&
-+	git commit -m "Initial" &&
-+
-+	echo uno >one &&
-+	echo dos >two &&
-+	git add two &&
-+	setdate &&
-+	git commit -a -m "Second" &&
-+
-+	git checkout -b left &&
-+
-+	echo $datestamp >one &&
-+	setdate &&
-+	git commit -a -m "Common #1" &&
-+
-+	echo $datestamp >one &&
-+	setdate &&
-+	git commit -a -m "Common #2" &&
-+
-+	git branch right &&
-+
-+	echo $datestamp >two &&
-+	setdate &&
-+	git commit -a -m "Left #3" &&
-+
-+	echo $datestamp >two &&
-+	setdate &&
-+	git commit -a -m "Left #4" &&
-+
-+	echo $datestamp >two &&
-+	setdate &&
-+	git commit -a -m "Left #5" &&
-+
-+	git checkout right &&
-+
-+	echo $datestamp >three &&
-+	git add three &&
-+	setdate &&
-+	git commit -a -m "Right #3" &&
-+
-+	echo $datestamp >three &&
-+	setdate &&
-+	git commit -a -m "Right #4" &&
-+
-+	echo $datestamp >three &&
-+	setdate &&
-+	git commit -a -m "Right #5" &&
-+
-+	git show-branch
-+'
-+
-+cat >expected <<\EOF
-+Merge branch 'left'
-+EOF
-+
-+test_expect_success 'merge-msg test #1' '
-+
-+	git checkout master &&
-+	git fetch . left &&
-+
-+	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	diff -u actual expected
-+'
-+
-+cat >expected <<\EOF
-+Merge branch 'left' of ../trash
-+EOF
-+
-+test_expect_success 'merge-msg test #2' '
-+
-+	git checkout master &&
-+	git fetch ../trash left &&
-+
-+	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	diff -u actual expected
-+'
-+
-+cat >expected <<\EOF
-+Merge branch 'left'
-+
-+* left:
-+  Left #5
-+  Left #4
-+  Left #3
-+  Common #2
-+  Common #1
-+EOF
-+
-+test_expect_success 'merge-msg test #3' '
-+
-+	git repo-config merge.summary true &&
-+
-+	git checkout master &&
-+	setdate &&
-+	git fetch . left &&
-+
-+	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	diff -u actual expected
-+'
-+
-+cat >expected <<\EOF
-+Merge branches 'left' and 'right'
-+
-+* left:
-+  Left #5
-+  Left #4
-+  Left #3
-+  Common #2
-+  Common #1
-+
-+* right:
-+  Right #5
-+  Right #4
-+  Right #3
-+  Common #2
-+  Common #1
-+EOF
-+
-+test_expect_success 'merge-msg test #4' '
-+
-+	git repo-config merge.summary true &&
-+
-+	git checkout master &&
-+	setdate &&
-+	git fetch . left right &&
-+
-+	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	diff -u actual expected
-+'
-+
-+test_expect_success 'merge-msg test #5' '
-+
-+	git repo-config merge.summary yes &&
-+
-+	git checkout master &&
-+	setdate &&
-+	git fetch . left right &&
-+
-+	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	diff -u actual expected
-+'
-+
-+test_done
+This is why it is _wrong_ to care about the "parsed" bit when clearing the 
+flags.
+
+		Linus
