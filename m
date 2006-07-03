@@ -1,98 +1,230 @@
-From: Joachim Berdal Haga <c.j.b.haga@fys.uio.no>
-Subject: Re: Compression speed for large files
-Date: Tue, 04 Jul 2006 00:25:37 +0200
-Message-ID: <44A99961.8090504@fys.uio.no>
-References: <loom.20060703T124601-969@post.gmane.org>
- <20060703214503.GA3897@coredump.intra.peff.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2nd try] Make git-fmt-merge-msg a builtin
+Date: Mon, 03 Jul 2006 15:39:14 -0700
+Message-ID: <7vwtaunwj1.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0607031717540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Joachim B Haga <cjhaga@student.matnat.uio.no>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 00:26:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 00:39:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxWrQ-0008Cg-Fr
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 00:25:44 +0200
+	id 1FxX4Z-00029f-Mb
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 00:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932154AbWGCWZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 18:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932155AbWGCWZl
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 18:25:41 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:40688 "EHLO
-	osl1smout1.broadpark.no") by vger.kernel.org with ESMTP
-	id S932154AbWGCWZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 18:25:40 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java System Messaging Server 6.1 HotFix 0.05 (built Oct 21 2004))
- with ESMTP id <0J1U008WYMAR4O40@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Tue, 04 Jul 2006 00:25:39 +0200 (CEST)
-Received: from pep ([80.203.45.67]) by osl1sminn1.broadpark.no
- (Sun Java System Messaging Server 6.1 HotFix 0.05 (built Oct 21 2004))
- with ESMTP id <0J1U00KP2MARGH20@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Tue, 04 Jul 2006 00:25:39 +0200 (CEST)
-Received: from localhost ([127.0.0.1])	by pep with esmtp (Exim 4.62)
-	(envelope-from <c.j.b.haga@fys.uio.no>)	id 1FxWrJ-0007zR-Tj; Tue,
- 04 Jul 2006 00:25:38 +0200
-In-reply-to: <20060703214503.GA3897@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-SA-Exim-Connect-IP: 127.0.0.1
-X-SA-Exim-Mail-From: c.j.b.haga@fys.uio.no
-X-SA-Exim-Scanned: No (on pep); SAEximRunCond expanded to false
-User-Agent: Thunderbird 1.5.0.2 (X11/20060516)
+	id S1751113AbWGCWjQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 18:39:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbWGCWjQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 18:39:16 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:20116 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751113AbWGCWjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 18:39:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060703223915.MWPV11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Jul 2006 18:39:15 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607031717540.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 3 Jul 2006 17:18:43 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23220>
 
-Jeff King wrote:
-> On Mon, Jul 03, 2006 at 11:13:34AM +0000, Joachim B Haga wrote:
-> 
->> often binary. In git, committing of large files is very slow; I have
->> tested with a 45MB file, which takes about 1 minute to check in (on an
->> intel core-duo 2GHz).
-> 
-> I know this has already been somewhat solved, but I found your numbers
-> curiously high. I work quite a bit with git and large files and I
-> haven't noticed this slowdown. Can you be more specific about your load?
-> Are you sure it is zlib?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Quite sure: at least to the extent that it is fixed by lowering the
-compression level. But the wording was inexact: it's during object
-creation, which happens at initial "git add" and then later during "git
-commit".
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>
+> ---
+> 	This retires git-fmt-merge-msg.perl, since it passes all the
+> 	tests, but removes the Perl version not now.
 
-But...
+There is no point not removing the script if you update git.c
+and Makefile to point at the new one.
 
-> y 1.8Ghz Athlon, compressing 45MB of zeros into 20K takes about 2s.
-> Compressing 45MB of random data into a 45MB object takes 6.3s. In either
-> case, the commit takes only about 0.5s (since cogito stores the object
-> during the cg-add).
-> 
-> Is there some specific file pattern which is slow to compress? 
+We do not have a test specific for fmt-merge-msg, so it
+obviously passes all the tests ;-).  A new one is attached.
 
-yes, it seems so. At least the effect is much more pronounced for my
-files than for random/null data. "My" files are in this context generated
-data files, binary or ascii.
+I think we should extend boolean to accept 'yes' and 'no', as I
+suggested earlier on the list, but other than that things look
+good.
 
-Here's a test with "time gzip -[169] -c file >/dev/null". Random data
-from /dev/urandom, kernel headers are concatenation of *.h in kernel
-sources. All times in seconds, on my puny home computer (1GHz Via Nehemiah)
+Thanks for the patch; no need to resubmit -- I'll munge the
+points I raised above.
 
-       random (23MB)  data (23MB)   headers (44MB)
--9     10.2           72.5          38.5
--6     10.2           13.5          12.9
--1      9.9            4.1           7.0
-
-So... data dependent, yes. But it hits even for normal source code.
-
-(Btw; the default (-6) seems to be less data dependent than the other
-values. Maybe that's on purpose.)
-
-If you want to look at a highly-variable dataset (the one above), try
-http://lupus.ig3.net/SIMULATION.dx.gz (5MB, slow server), but that's just
-an example, I see the same variability for example also on binary data files.
-
--j.
+-- >8 --
+diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+new file mode 100755
+index 0000000..63e49f3
+--- /dev/null
++++ b/t/t6200-fmt-merge-msg.sh
+@@ -0,0 +1,163 @@
++#!/bin/sh
++#
++# Copyright (c) 2006, Junio C Hamano
++#
++
++test_description='fmt-merge-msg test'
++
++. ./test-lib.sh
++
++datestamp=1151939923
++setdate () {
++	GIT_COMMITTER_DATE="$datestamp +0200"
++	GIT_AUTHOR_DATE="$datestamp +0200"
++	datestamp=`expr "$datestamp" + 1`
++	export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
++}
++
++test_expect_success setup '
++	echo one >one &&
++	git add one &&
++	setdate &&
++	git commit -m "Initial" &&
++
++	echo uno >one &&
++	echo dos >two &&
++	git add two &&
++	setdate &&
++	git commit -a -m "Second" &&
++
++	git checkout -b left &&
++
++	echo $datestamp >one &&
++	setdate &&
++	git commit -a -m "Common #1" &&
++
++	echo $datestamp >one &&
++	setdate &&
++	git commit -a -m "Common #2" &&
++
++	git branch right &&
++
++	echo $datestamp >two &&
++	setdate &&
++	git commit -a -m "Left #3" &&
++
++	echo $datestamp >two &&
++	setdate &&
++	git commit -a -m "Left #4" &&
++
++	echo $datestamp >two &&
++	setdate &&
++	git commit -a -m "Left #5" &&
++
++	git checkout right &&
++
++	echo $datestamp >three &&
++	git add three &&
++	setdate &&
++	git commit -a -m "Right #3" &&
++
++	echo $datestamp >three &&
++	setdate &&
++	git commit -a -m "Right #4" &&
++
++	echo $datestamp >three &&
++	setdate &&
++	git commit -a -m "Right #5" &&
++
++	git show-branch
++'
++
++cat >expected <<\EOF
++Merge branch 'left'
++EOF
++
++test_expect_success 'merge-msg test #1' '
++
++	git checkout master &&
++	git fetch . left &&
++
++	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
++	diff -u actual expected
++'
++
++cat >expected <<\EOF
++Merge branch 'left' of ../trash
++EOF
++
++test_expect_success 'merge-msg test #2' '
++
++	git checkout master &&
++	git fetch ../trash left &&
++
++	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
++	diff -u actual expected
++'
++
++cat >expected <<\EOF
++Merge branch 'left'
++
++* left:
++  Left #5
++  Left #4
++  Left #3
++  Common #2
++  Common #1
++EOF
++
++test_expect_success 'merge-msg test #3' '
++
++	git repo-config merge.summary true &&
++
++	git checkout master &&
++	setdate &&
++	git fetch . left &&
++
++	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
++	diff -u actual expected
++'
++
++cat >expected <<\EOF
++Merge branches 'left' and 'right'
++
++* left:
++  Left #5
++  Left #4
++  Left #3
++  Common #2
++  Common #1
++
++* right:
++  Right #5
++  Right #4
++  Right #3
++  Common #2
++  Common #1
++EOF
++
++test_expect_success 'merge-msg test #4' '
++
++	git repo-config merge.summary true &&
++
++	git checkout master &&
++	setdate &&
++	git fetch . left right &&
++
++	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
++	diff -u actual expected
++'
++
++test_expect_success 'merge-msg test #5' '
++
++	git repo-config merge.summary yes &&
++
++	git checkout master &&
++	setdate &&
++	git fetch . left right &&
++
++	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
++	diff -u actual expected
++'
++
++test_done
