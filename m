@@ -1,57 +1,47 @@
-From: "Tommy" <Tommybrent@eartlink.net>
-Subject: Why don't you prevent premature creaming from ruining your personal life?
-Date: Sun, 2 Jul 2006 20:50:50 -0400
-Message-ID: <33209480765859.5E8A44A553@MUT7O>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: add --full-history to history generation optimization
+Date: Sun, 2 Jul 2006 18:38:06 -0700 (PDT)
+Message-ID: <20060703013806.29750.qmail@web31805.mail.mud.yahoo.com>
+References: <7vu060bmxy.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 03 02:52:37 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 03:38:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxCfz-0004cV-Fr
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 02:52:35 +0200
+	id 1FxDO7-00016t-Ez
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 03:38:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750885AbWGCAv4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 20:51:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbWGCAv4
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 20:51:56 -0400
-Received: from verizon-gw3.westbelt.calltech.com ([216.69.223.206]:16879 "EHLO
-	WBLTC25.ixgva.com") by vger.kernel.org with ESMTP id S1750775AbWGCAvj
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Jul 2006 20:51:39 -0400
-To: <gord@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: np4g5L1wSyVUqFZpBE77EZsVBeygvjFTluau
+	id S1750762AbWGCBiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 21:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbWGCBiI
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 21:38:08 -0400
+Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:64891 "HELO
+	web31805.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750762AbWGCBiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 21:38:07 -0400
+Received: (qmail 29752 invoked by uid 60001); 3 Jul 2006 01:38:06 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=nzW8/Mln+KL6H7EQortoXFyLF52f4os+pNDT/x6RLr4dNFYB3jhRxAwuKLwHcj0AXMHxhaiq9Va75Vju5B7Ga7eCXYr7eQVfUA4ZHMJ0agImW+Umx2Tlzxly3YrRI6fPzCEDvHQob62cZaUmdke+GJDZ3DAau4xxoPMXxaZFnYI=  ;
+Received: from [68.186.62.135] by web31805.mail.mud.yahoo.com via HTTP; Sun, 02 Jul 2006 18:38:06 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vu060bmxy.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 18.9 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4989]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?216.69.223.206>]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: kyklopescf.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: kyklopescf.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: kyklopescf.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: kyklopescf.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: kyklopescf.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: kyklopescf.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23147>
 
-Halo!
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Thanks.  I believe I have the same change in "next" already, but
+> I had to munge your patches by hand so please holler if there is
+> any mistake on my part.
 
- Eliminate this problem and all the anxiety it causes! Become a better male! You'll bring your marriage to new levels of passion and dedication with this. 
+Great, thanks.  I took a look at "next" and it looks good.
 
- http://www.kyklopescf.com 
-
- Lil boy nah climb ladder to turn big man. Artificial intelligence is no match for natural stupidity  Still waters run deep When distrust enters in at the foregate, love goes out at the postern  What's good for the goose is good for the gander. 
+   Luben
