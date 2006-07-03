@@ -1,128 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git-fmt-merge-msg a builtin
-Date: Mon, 3 Jul 2006 16:36:02 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607031632290.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0607031530380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060703171751.2ed33220.tihirvon@gmail.com>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: Re: Compression speed for large files
+Date: Mon, 3 Jul 2006 14:54:01 +0000
+Message-ID: <f36b08ee0607030754k4d10548pfb71dc62c6ee0b21@mail.gmail.com>
+References: <loom.20060703T124601-969@post.gmane.org>
+	 <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com>
+	 <44A91C7A.6090902@fys.uio.no>
+	 <Pine.LNX.4.64.0607031030150.1213@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Jul 03 16:36:26 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 16:55:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxPX8-0000CD-LO
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 16:36:19 +0200
+	id 1FxPoO-0003KN-Li
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 16:54:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932067AbWGCOgF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 10:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932068AbWGCOgF
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 10:36:05 -0400
-Received: from mail.gmx.de ([213.165.64.21]:31167 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932067AbWGCOgE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 10:36:04 -0400
-Received: (qmail invoked by alias); 03 Jul 2006 14:36:02 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp027) with SMTP; 03 Jul 2006 16:36:02 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060703171751.2ed33220.tihirvon@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S932069AbWGCOyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 10:54:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932072AbWGCOyE
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 10:54:04 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:45219 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932069AbWGCOyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 10:54:02 -0400
+Received: by py-out-1112.google.com with SMTP id c39so1327401pyd
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 07:54:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jq3zxqE0MFGMuMNtDjHlI2o74TlGf8i3Ek5HnsCKW5IUg/n1aynU5b0DhHWl8xiMnfm6vUylUcnrRF4VtGDLLV75FJRpBt0b75amSuQsxzfYDu/CSmdc4JK14oX7K+qX4eU28zr+xNJAk+P6Xpa0zdsgyVqdS1RMxmw42x45UTk=
+Received: by 10.35.101.9 with SMTP id d9mr944674pym;
+        Mon, 03 Jul 2006 07:54:01 -0700 (PDT)
+Received: by 10.35.14.14 with HTTP; Mon, 3 Jul 2006 07:54:01 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0607031030150.1213@localhost.localdomain>
+Content-Disposition: inline
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23181>
 
-Hi,
+On 7/3/06, Nicolas Pitre <nico@cam.org> wrote:
+> On Mon, 3 Jul 2006, Joachim Berdal Haga wrote:
+>
+> > Alex Riesen wrote:
+> > > On 7/3/06, Joachim B Haga <cjhaga@fys.uio.no> wrote:
+> > > > So: is it a good idea to change to faster compression, at least for larger
+> > > > files? From my (limited) testing I would suggest using Z_BEST_COMPRESSION
+> > > > only for small files (perhaps <1MB?) and
+> > > > Z_DEFAULT_COMPRESSION/Z_BEST_SPEED for
+> > > > larger ones.
+> > >
+> > > Probably yes, as a per-repo config option.
+> >
+> > I can send a patch later. If it's to be a per-repo option, it's probably too
+> > confusing with several values. Is it ok with
+> >
+> > core.compression = [-1..9]
+> >
+> > where the numbers are the zlib/gzip constants,
+> >   -1 = zlib default (currently 6)
+> >    0 = no compression
+> > 1..9 = various speed/size tradeoffs (9 is git default)
 
-On Mon, 3 Jul 2006, Timo Hirvonen wrote:
+It would be arguable whether, say, 10% better compression is worth
+x(3-8) slower compression. But 3-4% better compression at the cost of
+x(3-8) slower compression time as data suggest ? I think this begs
+for switching the default to Z_DEFAULT_COMPRESSION
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> > +struct list {
-> > +	char **list;
-> > +	void **payload;
-> > +	unsigned nr, alloc;
-> > +};
-> 
-> How about something like this instead to reduce mallocs to half and
-> simplify the code?
-> 
-> struct item {
-> 	char *value;
-> 	void *payload;
-> };
-> 
-> struct list {
-> 	struct item *items;
-> 	unsigned int nr, alloc;
-> };
-> 
-> (But I realize this isn't performance critical)
-
-I had in mind that I want to use path-list instead (which is cooking in 
-the merge-recursive efforts ATM). And there, I would add a flag 
-needs_payload. Opinions?
-
-> > +static void append_to_list(struct list *list, char *value)
-> 
-> Add void *payload parameter too, would simplify the code.
-
-Okay.
-
-> > +static void free_list(struct list *list)
-> > +{
-> > +	int i;
-> > +
-> > +	if (list->alloc == 0)
-> > +		return;
-> 
-> Unnecessary if nr is 0 too.
-
-No. If nr == 0, alloc need not be 0, and if it is not, list and payload 
-are still allocated.
-
-> > +	for (i = 0; i < list->nr; i++) {
-> > +		free(list->list[i]);
-> > +		if (list->payload[i])
-> > +			free(list->payload[i]);
-> 
-> free(NULL) is safe.
-
-Is it? I vaguely remember that I had problems with this on some obscure 
-platform.
-
-> > +	if (!strncmp(line, "branch ", 7)) {
-> > +		origin = strdup(line + 7);
-> > +		append_to_list(&(src_data->branch), origin);
-> 
-> Parenthesis isn't needed.
-
-Okay. Wanted to be on the safe side.
-
-> > +	head->object.flags |= UNINTERESTING;
-> > +        prepare_revision_walk(rev);
-> 
-> Spaces..
-
-True. Will fix.
-
-> > +	if (merge_summary) {
-> > +		struct commit *head;
-> > +		struct rev_info rev;
-> > +
-> > +		head = lookup_commit(head_sha1);
-> > +parse_object(head->object.sha1);
-> > +head = head->parents->item;
-> 
-> Indentation.
-
-No. Bug. This was a leftover from my tests (with this, the summary is not 
-done versus HEAD, but HEAD^).
-
-Will fix and resubmit.
-
-Ciao,
-Dscho
+Yakov
