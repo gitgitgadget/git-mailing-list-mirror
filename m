@@ -1,125 +1,58 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 3/6] Git.pm: Introduce ident() and ident_person() methods
-Date: Mon, 03 Jul 2006 22:48:01 +0200
-Message-ID: <20060703204800.28541.30447.stgit@machine.or.cz>
-References: <20060703204415.28541.47920.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 03 22:48:42 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/3] Add read_cache_from() and discard_cache()
+Date: Mon, 03 Jul 2006 14:04:10 -0700
+Message-ID: <7virmepfhx.fsf@assigned-by-dhcp.cox.net>
+References: <20060630002756.GD22618@steel.home>
+	<Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0606301643150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v3bdmk2zj.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0607011657460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v64ihdupr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0607021043550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 23:04:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxVLJ-0007pa-8f
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 22:48:29 +0200
+	id 1FxVaa-0002Cg-B3
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 23:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932066AbWGCUsH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 16:48:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbWGCUsH
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 16:48:07 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:32947 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932066AbWGCUsD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 16:48:03 -0400
-Received: (qmail 29213 invoked from network); 3 Jul 2006 22:48:01 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 3 Jul 2006 22:48:01 +0200
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <20060703204415.28541.47920.stgit@machine.or.cz>
-User-Agent: StGIT/0.9
+	id S932122AbWGCVEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 17:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbWGCVEM
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 17:04:12 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:30136 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932122AbWGCVEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 17:04:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060703210411.BMNB19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Jul 2006 17:04:11 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23209>
 
-These methods can retrieve/parse the author/committer ident.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> Okay. After reading the comment, I am quite certain we can just set the 
+> index_file_timestamp to 0.
 
- git-send-email.perl |   11 ++---------
- perl/Git.pm         |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 9 deletions(-)
+Thanks.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e794e44..79e82f5 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -84,15 +84,8 @@ foreach my $entry (@bcclist) {
- 
- # Now, let's fill any that aren't set in with defaults:
- 
--sub gitvar_ident {
--    my ($name) = @_;
--    my $val = $repo->command('var', $name);
--    my @field = split(/\s+/, $val);
--    return join(' ', @field[0...(@field-3)]);
--}
--
--my ($author) = gitvar_ident('GIT_AUTHOR_IDENT');
--my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
-+my ($author) = $repo->ident_person('author');
-+my ($committer) = $repo->ident_person('committer');
- 
- my %aliases;
- my @alias_files = $repo->config('sendemail.aliasesfile');
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 24fd7ce..9ce9fcd 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -521,6 +521,55 @@ sub config {
- }
- 
- 
-+=item ident ( TYPE | IDENTSTR )
-+
-+=item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
-+
-+This suite of functions retrieves and parses ident information, as stored
-+in the commit and tag objects or produced by C<var GIT_type_IDENT> (thus
-+C<TYPE> can be either I<author> or I<committer>; case is insignificant).
-+
-+The C<ident> method retrieves the ident information from C<git-var>
-+and either returns it as a scalar string or as an array with the fields parsed.
-+Alternatively, it can take a prepared ident string (e.g. from the commit
-+object) and just parse it.
-+
-+C<ident_person> returns the person part of the ident - name and email;
-+it can take the same arguments as C<ident> or the array returned by C<ident>.
-+
-+The synopsis is like:
-+
-+	my ($name, $email, $time_tz) = ident('author');
-+	"$name <$email>" eq ident_person('author');
-+	"$name <$email>" eq ident_person($name);
-+	$time_tz =~ /^\d+ [+-]\d{4}$/;
-+
-+Both methods must be called on a repository instance.
-+
-+=cut
-+
-+sub ident {
-+	my ($self, $type) = @_;
-+	my $identstr;
-+	if (lc $type eq lc 'committer' or lc $type eq lc 'author') {
-+		$identstr = $self->command_oneline('var', 'GIT_'.uc($type).'_IDENT');
-+	} else {
-+		$identstr = $type;
-+	}
-+	if (wantarray) {
-+		return $identstr =~ /^(.*) <(.*)> (\d+ [+-]\d{4})$/;
-+	} else {
-+		return $identstr;
-+	}
-+}
-+
-+sub ident_person {
-+	my ($self, @ident) = @_;
-+	$#ident == 0 and @ident = $self->ident($ident[0]);
-+	return "$ident[0] <$ident[1]>";
-+}
-+
-+
- =item hash_object ( TYPE, FILENAME )
- 
- =item hash_object ( TYPE, FILEHANDLE )
+> So, I still think that these two lines should be in the cleanup part of 
+> get_merge_bases().
+
+I think that is sane -- please make it so.
+
+> BTW personally, I prefer the one-function approach, i.e. a flag which says 
+> if it is okay not to clean up.
+
+Yup. Agreed.
