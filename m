@@ -1,61 +1,102 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Making perl scripts include the correct Git.pm
-Date: Sun, 02 Jul 2006 18:38:35 -0700
-Message-ID: <7vwtavxyas.fsf@assigned-by-dhcp.cox.net>
-References: <20060702214012.GI29115@pasky.or.cz>
-	<7v64if1rop.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 2] autoconf: Use ./configure script in git *.spec file
+Date: Sun, 02 Jul 2006 19:09:30 -0700
+Message-ID: <7vslljwiat.fsf@assigned-by-dhcp.cox.net>
+References: <200607030156.50455.jnareb@gmail.com>
+	<200607030202.55919.jnareb@gmail.com>
+	<7vodw7zgt2.fsf@assigned-by-dhcp.cox.net> <e89ock$gks$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 03:38:43 2006
+X-From: git-owner@vger.kernel.org Mon Jul 03 04:09:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxDOZ-00018Y-Fh
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 03:38:39 +0200
+	id 1FxDsZ-0005Rj-Sp
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 04:09:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750812AbWGCBih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Jul 2006 21:38:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbWGCBih
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 21:38:37 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:9198 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750812AbWGCBig (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jul 2006 21:38:36 -0400
+	id S1751009AbWGCCJd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Jul 2006 22:09:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbWGCCJd
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Jul 2006 22:09:33 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63966 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751005AbWGCCJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jul 2006 22:09:32 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060703013835.QVSF554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 2 Jul 2006 21:38:35 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7v64if1rop.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 02 Jul 2006 17:02:30 -0700")
+          id <20060703020931.WAWQ19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 2 Jul 2006 22:09:31 -0400
+To: jnareb@gmail.com
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23149>
 
-Junio C Hamano <junkio@cox.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Petr Baudis <pasky@suse.cz> writes:
+> Junio C Hamano wrote:
 >
->> so this is my attempt to summarize it:
+>> I thought this stuff was "opt-in", but make rpm now requires
+>> autoconf?
 >
-> Ah, our message crossed -- thanks for summarizing it.  I do not
-> particularly like any of the solution so far, but maybe the
-> patch I just sent out to "do the normal thing unless we are
-> running tests" might be the right thing to do.
+> Ooops. No, git RPM wouldn't need autoconf, neither building git from *.spec
+> file or SRPM.
 
-I see you caught Merlyn so I decided the patch I sent earlier as
-a tentative fix and merged the series in "next".  We should be
-able to fix Perly problems in-tree while we have his attention
-;-).
+I had an impression that your spec.in change made it required.
 
-Rene's merge-bases fix is also in "next".  Hopefully this would
-make merge-recursive work by Alex and Johannes go smoother?
+It is still somewhat dubious to me if we can keep this "opt-in".
+I noticed that it at least lacks a few extra commands to "clean"
+target of the main Makefile, and adding them by itself is not so
+bad, but who knows what else it would bring in when the series
+finishes.  I would not be surprised if we start touching *.c and
+*.h files with new autoconf-compatible "#ifdef HAVE_XXX" and at
+that point I will say "I told you so".
 
-On the other front, I applied the --remove-empty --parents fix
-by Linus to "master".  Since this broke gitk and qgit it might
-warrant a 1.4.1.1 hotfix.
+I am not opposed to giving an alternative, semi-automated way to
+edit config.mak to the users, and if that is our goal, we should
+ship the configure script in the source tarball at least, and
+probably we should have the configure script in the revisions as
+well.  Using autoconf is not the goal here -- giving ./configure
+as an alternative way to manage config.mak is.
+
+But if we have autoconf scripts _and_ configure script in
+revisions, we are talking about version controlling generated
+stuff, and I'd like to avoid that at all cost.
+
+Maybe an alternative is to just add configure script in the
+source tree _without_ adding any of the autoconf scripts to the
+git repository.  The users can choose to use that script to
+manage config.mak but do not have to.  And I do not mind getting
+occasional updates to the configure script in the source tree,
+and I do not care if you build it by hand or use autoconf to
+generate it, as long as the configure script is readable,
+debuggable and maintainable.
+
+The source to generate that configure script might be autoconf
+scripts and you would want to version control that.  That is
+fine but I think that would be a separate project of yours, and
+you may call that the git-build-config project.  And I do not
+mind hosting that somewhere under contrib/ area in the git
+repository in order to give it wider exposure.
+
+That would end up in the same situation as having the source and
+generated files under the version control, but I think at the
+philosophical level the two are vastly different, in that the
+things under contrib/ are not part of git.git but are there only
+for convenience.  I will not be the one who is responsible to
+run autoconf in there every time we make changes to the system
+and propagate the changes to the main configure script.  The
+configure script generated by the end user in contrib/autoconf
+may not match the toplevel configure script (the end user may
+have different version of autoconf, for example) but that is not
+a bug, as long as the toplevel configure script, which might be
+output by an older version of autoconf, works correctly.
+
+The above assumes that the configure script generated by your
+autoconf script is readable and maintainable at all.  Otherwise
+it would not make any sense to have configure under version
+control.
