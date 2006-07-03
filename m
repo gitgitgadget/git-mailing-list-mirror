@@ -1,325 +1,125 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 6/6] Convert git-annotate to use Git.pm
-Date: Mon, 03 Jul 2006 22:48:07 +0200
-Message-ID: <20060703204807.28541.5367.stgit@machine.or.cz>
+Subject: [PATCH 3/6] Git.pm: Introduce ident() and ident_person() methods
+Date: Mon, 03 Jul 2006 22:48:01 +0200
+Message-ID: <20060703204800.28541.30447.stgit@machine.or.cz>
 References: <20060703204415.28541.47920.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 03 22:48:43 2006
+X-From: git-owner@vger.kernel.org Mon Jul 03 22:48:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxVLL-0007pa-IT
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 22:48:31 +0200
+	id 1FxVLJ-0007pa-8f
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 22:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097AbWGCUsP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 16:48:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbWGCUsO
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 16:48:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:35507 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932097AbWGCUsL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 16:48:11 -0400
-Received: (qmail 29261 invoked from network); 3 Jul 2006 22:48:08 +0200
+	id S932066AbWGCUsH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 16:48:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbWGCUsH
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 16:48:07 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:32947 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932066AbWGCUsD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 16:48:03 -0400
+Received: (qmail 29213 invoked from network); 3 Jul 2006 22:48:01 +0200
 Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 3 Jul 2006 22:48:08 +0200
+  by localhost with SMTP; 3 Jul 2006 22:48:01 +0200
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <20060703204415.28541.47920.stgit@machine.or.cz>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23208>
 
-Together with the other converted scripts, this is probably still pu
-material; it appears to work fine for me, though. The speed gain from
-get_object() is about 10% (I expected more...).
+These methods can retrieve/parse the author/committer ident.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- git-annotate.perl |  167 ++++++++++-------------------------------------------
- 1 files changed, 31 insertions(+), 136 deletions(-)
+ git-send-email.perl |   11 ++---------
+ perl/Git.pm         |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 9 deletions(-)
 
-diff --git a/git-annotate.perl b/git-annotate.perl
-index a6a7a48..d924e87 100755
---- a/git-annotate.perl
-+++ b/git-annotate.perl
-@@ -11,6 +11,7 @@ use strict;
- use Getopt::Long;
- use POSIX qw(strftime gmtime);
- use File::Basename qw(basename dirname);
-+use Git;
+diff --git a/git-send-email.perl b/git-send-email.perl
+index e794e44..79e82f5 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -84,15 +84,8 @@ foreach my $entry (@bcclist) {
  
- sub usage() {
- 	print STDERR "Usage: ${\basename $0} [-s] [-S revs-file] file [ revision ]
-@@ -29,7 +30,7 @@ sub usage() {
- 	exit(1);
- }
+ # Now, let's fill any that aren't set in with defaults:
  
--our ($help, $longrev, $rename, $rawtime, $starting_rev, $rev_file) = (0, 0, 1);
-+our ($help, $longrev, $rename, $rawtime, $starting_rev, $rev_file, $repo) = (0, 0, 1);
- 
- my $rc = GetOptions(	"long|l" => \$longrev,
- 			"time|t" => \$rawtime,
-@@ -52,6 +53,8 @@ my @stack = (
- 	},
- );
- 
-+$repo = Git->repository();
-+
- our @filelines = ();
- 
- if (defined $starting_rev) {
-@@ -102,15 +105,11 @@ while (my $bound = pop @stack) {
- push @revqueue, $head;
- init_claim( defined $starting_rev ? $head : 'dirty');
- unless (defined $starting_rev) {
--	my $diff = open_pipe("git","diff","-R", "HEAD", "--",$filename)
--		or die "Failed to call git diff to check for dirty state: $!";
--
--	_git_diff_parse($diff, $head, "dirty", (
--				'author' => gitvar_name("GIT_AUTHOR_IDENT"),
--				'author_date' => sprintf("%s +0000",time()),
--				)
--			);
--	close($diff);
-+	my %ident;
-+	@ident{'author', 'author_email', 'author_date'} = $repo->ident('author');
-+	my $diff = $repo->command_output_pipe('diff', '-R', 'HEAD', '--', $filename);
-+	_git_diff_parse($diff, $head, "dirty", %ident);
-+	$repo->command_close_pipe($diff);
- }
- handle_rev();
- 
-@@ -181,8 +180,7 @@ sub git_rev_list {
- 		open($revlist, '<' . $rev_file)
- 		    or die "Failed to open $rev_file : $!";
- 	} else {
--		$revlist = open_pipe("git-rev-list","--parents","--remove-empty",$rev,"--",$file)
--			or die "Failed to exec git-rev-list: $!";
-+		$revlist = $repo->command_output_pipe('rev-list', '--parents', '--remove-empty', $rev, '--', $file);
- 	}
- 
- 	my @revs;
-@@ -191,7 +189,7 @@ sub git_rev_list {
- 		my ($rev, @parents) = split /\s+/, $line;
- 		push @revs, [ $rev, @parents ];
- 	}
--	close($revlist);
-+	$repo->command_close_pipe($revlist);
- 
- 	printf("0 revs found for rev %s (%s)\n", $rev, $file) if (@revs == 0);
- 	return @revs;
-@@ -200,8 +198,7 @@ sub git_rev_list {
- sub find_parent_renames {
- 	my ($rev, $file) = @_;
- 
--	my $patch = open_pipe("git-diff-tree", "-M50", "-r","--name-status", "-z","$rev")
--		or die "Failed to exec git-diff: $!";
-+	my $patch = $repo->command_output_pipe('diff-tree', '-M50', '-r', '--name-status', '-z', $rev);
- 
- 	local $/ = "\0";
- 	my %bound;
-@@ -227,7 +224,7 @@ sub find_parent_renames {
- 			}
- 		}
- 	}
--	close($patch);
-+	$repo->command_close_pipe($patch);
- 
- 	return \%bound;
- }
-@@ -236,14 +233,9 @@ sub find_parent_renames {
- sub git_find_parent {
- 	my ($rev, $filename) = @_;
- 
--	my $revparent = open_pipe("git-rev-list","--remove-empty", "--parents","--max-count=1","$rev","--",$filename)
--		or die "Failed to open git-rev-list to find a single parent: $!";
--
--	my $parentline = <$revparent>;
--	chomp $parentline;
--	my ($revfound,$parent) = split m/\s+/, $parentline;
--
--	close($revparent);
-+	my $parentline = $repo->command_oneline('rev-list', '--remove-empty',
-+			'--parents', '--max-count=1', $rev, '--', $filename);
-+	my ($revfound, $parent) = split m/\s+/, $parentline;
- 
- 	return $parent;
- }
-@@ -254,13 +246,13 @@ # Record the commit information that res
- sub git_diff_parse {
- 	my ($parent, $rev, %revinfo) = @_;
- 
--	my $diff = open_pipe("git-diff-tree","-M","-p",$rev,$parent,"--",
--			$revs{$rev}{'filename'}, $revs{$parent}{'filename'})
--		or die "Failed to call git-diff for annotation: $!";
-+	my $diff = $repo->command_output_pipe('diff-tree', '-M', '-p',
-+			$rev, $parent, '--',
-+			$revs{$rev}{'filename'}, $revs{$parent}{'filename'});
- 
- 	_git_diff_parse($diff, $parent, $rev, %revinfo);
- 
--	close($diff);
-+	$repo->command_close_pipe($diff);
- }
- 
- sub _git_diff_parse {
-@@ -351,36 +343,25 @@ sub git_cat_file {
- 	my $blob = git_ls_tree($rev, $filename);
- 	die "Failed to find a blob for $filename in rev $rev\n" if !defined $blob;
- 
--	my $catfile = open_pipe("git","cat-file", "blob", $blob)
--		or die "Failed to git-cat-file blob $blob (rev $rev, file $filename): " . $!;
--
--	my @lines;
--	while(<$catfile>) {
--		chomp;
--		push @lines, $_;
--	}
--	close($catfile);
--
-+	my @lines = split(/\n/, $repo->get_object('blob', $blob));
-+	pop @lines unless $lines[$#lines]; # Trailing newline
- 	return @lines;
- }
- 
- sub git_ls_tree {
- 	my ($rev, $filename) = @_;
- 
--	my $lstree = open_pipe("git","ls-tree",$rev,$filename)
--		or die "Failed to call git ls-tree: $!";
--
-+	my $lstree = $repo->command_output_pipe('ls-tree', $rev, $filename);
- 	my ($mode, $type, $blob, $tfilename);
- 	while(<$lstree>) {
- 		chomp;
- 		($mode, $type, $blob, $tfilename) = split(/\s+/, $_, 4);
- 		last if ($tfilename eq $filename);
- 	}
--	close($lstree);
-+	$repo->command_close_pipe($lstree);
- 
- 	return $blob if ($tfilename eq $filename);
- 	die "git-ls-tree failed to find blob for $filename";
--
- }
- 
- 
-@@ -396,25 +377,17 @@ sub claim_line {
- 
- sub git_commit_info {
- 	my ($rev) = @_;
--	my $commit = open_pipe("git-cat-file", "commit", $rev)
--		or die "Failed to call git-cat-file: $!";
-+	my $commit = $repo->get_object('commit', $rev);
- 
- 	my %info;
--	while(<$commit>) {
--		chomp;
--		last if (length $_ == 0);
--
--		if (m/^author (.*) <(.*)> (.*)$/) {
--			$info{'author'} = $1;
--			$info{'author_email'} = $2;
--			$info{'author_date'} = $3;
--		} elsif (m/^committer (.*) <(.*)> (.*)$/) {
--			$info{'committer'} = $1;
--			$info{'committer_email'} = $2;
--			$info{'committer_date'} = $3;
-+	while ($commit =~ /(.*?)\n/g) {
-+		my $line = $1;
-+		if ($line =~ s/^author //) {
-+			@info{'author', 'author_email', 'author_date'} = $repo->ident($line);
-+		} elsif ($line =~ s/^committer//) {
-+			@info{'committer', 'committer_email', 'committer_date'} = $repo->ident($line);
- 		}
- 	}
--	close($commit);
- 
- 	return %info;
- }
-@@ -432,81 +405,3 @@ sub format_date {
- 	my $t = $timestamp + $minutes * 60;
- 	return strftime("%Y-%m-%d %H:%M:%S " . $timezone, gmtime($t));
- }
--
--# Copied from git-send-email.perl - We need a Git.pm module..
--sub gitvar {
--    my ($var) = @_;
--    my $fh;
--    my $pid = open($fh, '-|');
--    die "$!" unless defined $pid;
--    if (!$pid) {
--	exec('git-var', $var) or die "$!";
--    }
--    my ($val) = <$fh>;
--    close $fh or die "$!";
--    chomp($val);
--    return $val;
--}
--
--sub gitvar_name {
+-sub gitvar_ident {
 -    my ($name) = @_;
--    my $val = gitvar($name);
+-    my $val = $repo->command('var', $name);
 -    my @field = split(/\s+/, $val);
--    return join(' ', @field[0...(@field-4)]);
+-    return join(' ', @field[0...(@field-3)]);
 -}
 -
--sub open_pipe {
--	if ($^O eq '##INSERT_ACTIVESTATE_STRING_HERE##') {
--		return open_pipe_activestate(@_);
--	} else {
--		return open_pipe_normal(@_);
--	}
--}
--
--sub open_pipe_activestate {
--	tie *fh, "Git::ActiveStatePipe", @_;
--	return *fh;
--}
--
--sub open_pipe_normal {
--	my (@execlist) = @_;
--
--	my $pid = open my $kid, "-|";
--	defined $pid or die "Cannot fork: $!";
--
--	unless ($pid) {
--		exec @execlist;
--		die "Cannot exec @execlist: $!";
--	}
--
--	return $kid;
--}
--
--package Git::ActiveStatePipe;
--use strict;
--
--sub TIEHANDLE {
--	my ($class, @params) = @_;
--	my $cmdline = join " ", @params;
--	my  @data = qx{$cmdline};
--	bless { i => 0, data => \@data }, $class;
--}
--
--sub READLINE {
--	my $self = shift;
--	if ($self->{i} >= scalar @{$self->{data}}) {
--		return undef;
--	}
--	return $self->{'data'}->[ $self->{i}++ ];
--}
--
--sub CLOSE {
--	my $self = shift;
--	delete $self->{data};
--	delete $self->{i};
--}
--
--sub EOF {
--	my $self = shift;
--	return ($self->{i} >= scalar @{$self->{data}});
--}
+-my ($author) = gitvar_ident('GIT_AUTHOR_IDENT');
+-my ($committer) = gitvar_ident('GIT_COMMITTER_IDENT');
++my ($author) = $repo->ident_person('author');
++my ($committer) = $repo->ident_person('committer');
+ 
+ my %aliases;
+ my @alias_files = $repo->config('sendemail.aliasesfile');
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 24fd7ce..9ce9fcd 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -521,6 +521,55 @@ sub config {
+ }
+ 
+ 
++=item ident ( TYPE | IDENTSTR )
++
++=item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
++
++This suite of functions retrieves and parses ident information, as stored
++in the commit and tag objects or produced by C<var GIT_type_IDENT> (thus
++C<TYPE> can be either I<author> or I<committer>; case is insignificant).
++
++The C<ident> method retrieves the ident information from C<git-var>
++and either returns it as a scalar string or as an array with the fields parsed.
++Alternatively, it can take a prepared ident string (e.g. from the commit
++object) and just parse it.
++
++C<ident_person> returns the person part of the ident - name and email;
++it can take the same arguments as C<ident> or the array returned by C<ident>.
++
++The synopsis is like:
++
++	my ($name, $email, $time_tz) = ident('author');
++	"$name <$email>" eq ident_person('author');
++	"$name <$email>" eq ident_person($name);
++	$time_tz =~ /^\d+ [+-]\d{4}$/;
++
++Both methods must be called on a repository instance.
++
++=cut
++
++sub ident {
++	my ($self, $type) = @_;
++	my $identstr;
++	if (lc $type eq lc 'committer' or lc $type eq lc 'author') {
++		$identstr = $self->command_oneline('var', 'GIT_'.uc($type).'_IDENT');
++	} else {
++		$identstr = $type;
++	}
++	if (wantarray) {
++		return $identstr =~ /^(.*) <(.*)> (\d+ [+-]\d{4})$/;
++	} else {
++		return $identstr;
++	}
++}
++
++sub ident_person {
++	my ($self, @ident) = @_;
++	$#ident == 0 and @ident = $self->ident($ident[0]);
++	return "$ident[0] <$ident[1]>";
++}
++
++
+ =item hash_object ( TYPE, FILENAME )
+ 
+ =item hash_object ( TYPE, FILEHANDLE )
