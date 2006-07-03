@@ -1,115 +1,147 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/3] Make clear_commit_marks() clean harder
-Date: Mon, 3 Jul 2006 10:05:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607030957420.12404@g5.osdl.org>
-References: <Pine.LNX.4.64.0606301927260.12404@g5.osdl.org>
- <7vy7vedntn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0606302046230.12404@g5.osdl.org>
- <20060701150926.GA25800@lsrfire.ath.cx> <7vfyhldvd2.fsf@assigned-by-dhcp.cox.net>
- <44A6CD1D.2000600@lsrfire.ath.cx> <Pine.LNX.4.64.0607011301480.12404@g5.osdl.org>
- <7vveqhccnk.fsf@assigned-by-dhcp.cox.net> <7vpsgpccak.fsf@assigned-by-dhcp.cox.net>
- <20060701232958.GC2513@lsrfire.ath.cx> <7vejx3rq33.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Joachim B Haga <cjhaga@fys.uio.no>
+Subject: [PATCH] Make zlib compression level configurable, and change default.
+Date: 03 Jul 2006 20:59:56 +0200
+Message-ID: <85d5cm8qfn.fsf_-_@lupus.ig3.net>
+References: <loom.20060703T124601-969@post.gmane.org> <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com> <44A91C7A.6090902@fys.uio.no> <Pine.LNX.4.64.0607031030150.1213@localhost.localdomain> <Pine.LNX.4.64.0607030929490.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 19:06:31 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Linus Torvalds <torvalds@osdl.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jul 03 21:00:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxRsE-0003Cz-NO
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 19:06:15 +0200
+	id 1FxTek-00063f-2N
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 21:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbWGCRGL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 13:06:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWGCRGK
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 13:06:10 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:10202 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751168AbWGCRGJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 13:06:09 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k63H5xnW015687
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Jul 2006 10:06:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k63H5sFT025484;
-	Mon, 3 Jul 2006 10:05:57 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607031553570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750875AbWGCTAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 15:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbWGCTAP
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 15:00:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:57240 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750875AbWGCTAN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 15:00:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FxTeP-000612-6H
+	for git@vger.kernel.org; Mon, 03 Jul 2006 21:00:05 +0200
+Received: from 67.80-203-45.nextgentel.com ([80.203.45.67])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 21:00:05 +0200
+Received: from cjhaga by 67.80-203-45.nextgentel.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 21:00:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.80-203-45.nextgentel.com
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23191>
 
+Make zlib compression level configurable, and change the default.
 
+With the change in default, "git add ." on kernel dir is about
+twice as fast as before, with only minimal (0.5%) change in
+object size. The speed difference is even more noticeable
+when committing large files, which is now up to 8 times faster.
 
-On Mon, 3 Jul 2006, Johannes Schindelin wrote:
-> 
-> On Mon, 3 Jul 2006, Junio C Hamano wrote:
-> 
-> > Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
-> > 
-> > > Don't care if objects have been parsed or not and don't stop when we
-> > > reach a commit that is already clean -- its parents could be dirty.
-> > 
-> > There is something quite wrong with this patch.
-> 
-> I always had the feeling that it was wrong to traverse not-yet-parsed 
-> parents: How could a revision walk possibly come to a certain commit 
-> without at least one continuous history of now-parsed objects?
+The configurability is through setting core.compression = [-1..9]
+which maps to the zlib constants; -1 is the default, 0 is no
+compression, and 1..9 are various speed/size tradeoffs, 9
+being slowest.
 
-No, that's not the problem.
+Signed-off-by: Joachim B Haga (cjhaga@fys.uio.no)
+---
+ Documentation/config.txt |    6 ++++++
+ cache.h                  |    1 +
+ config.c                 |    5 +++++
+ environment.c            |    1 +
+ sha1_file.c              |    4 ++--
+ 5 files changed, 15 insertions(+), 2 deletions(-)
 
-The problem is that if we unconditionally traverse parents - whether 
-parsed or not - any merge will basically result in a 2* expansion of the 
-working set: we'll traverse all children twice (whether they meet again or 
-not).
-
-So the cost of doign unconditional traversals of parents basically 
-approaches 2^n, where 'n' is the number of merges.
-
-Now, the fact that we only traverse parents without adding new ones (and 
-the decision on whether it is parsed or not is irrelevant - the only 
-relevant part being that we don't parse any _new_ ones) means that each 
-commit itself is very cheap to traverse, but O(2^n) ends up meaning that 
-even a small constant will eventually be pretty big.
-
-The proper fix is _not_ to add the "object->parsed" check (which is silly, 
-wrong, and doesn't fix anything at all), but to add a check for whether 
-the object has been seen or not.
-
-In the case of clearing flags, you have two choices:
-
- - _set_ a new flag ("already cleared"). This would work - once - but is 
-   obviously pretty bad.
-
-   This is what we do in all the other cases. We usually call the flag 
-   SEEN or similar.
-
- - depend on the flags being "dense", and saying that we depend on the 
-   fact that in order for any of the flags to have been set in the first 
-   place, at least _one_ of them needs to be set in the path leading up to 
-   that commit.
-
-Now, for the specific case of get_merge_bases(), the flags _are_ dense. 
-Individual flags may not be (eg the "UNINTERESTING" flag, whatever it's 
-called, will not be dense), but the question of "is _any_ of the flags we 
-care about set" _will_ be dense.
-
-As such, adding a
-
-	/* Have we already cleared this? */
-	if (!(mask & object->flags))
-		return;
-	object->flags &= ~mask;
-
-to the traversal function will fix the O(m+2^n) behaviour, and turn the 
-traversal into O(m+n) (where "n" is the number of merges, and "m" is the 
-total number of commits).
-
-		Linus
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a04c5ad..ac89be7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -91,6 +91,12 @@ core.warnAmbiguousRefs::
+        If true, git will warn you if the ref name you passed it is ambiguous
+        and might match multiple refs in the .git/refs/ tree. True by default.
+ 
++core.compression:
++       An integer -1..9, indicating the compression level for objects that
++       are not in a pack file. -1 is the zlib and git default. 0 means no 
++       compression, and 1..9 are various speed/size tradeoffs, 9 being
++       slowest.
++
+ alias.*::
+        Command aliases for the gitlink:git[1] command wrapper - e.g.
+        after defining "alias.last = cat-file commit HEAD", the invocation
+diff --git a/cache.h b/cache.h
+index 8719939..84770bf 100644
+--- a/cache.h
++++ b/cache.h
+@@ -183,6 +183,7 @@ extern int log_all_ref_updates;
+ extern int warn_ambiguous_refs;
+ extern int shared_repository;
+ extern const char *apply_default_whitespace;
++extern int zlib_compression_level;
+ 
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+diff --git a/config.c b/config.c
+index ec44827..61563be 100644
+--- a/config.c
++++ b/config.c
+@@ -279,6 +279,11 @@ int git_default_config(const char *var, 
+                return 0;
+        }
+ 
++       if (!strcmp(var, "core.compression")) {
++               zlib_compression_level = git_config_int(var, value);
++               return 0;
++       }
++
+        if (!strcmp(var, "user.name")) {
+                strlcpy(git_default_name, value, sizeof(git_default_name));
+                return 0;
+diff --git a/environment.c b/environment.c
+index 3de8eb3..1d8ceef 100644
+--- a/environment.c
++++ b/environment.c
+@@ -20,6 +20,7 @@ int repository_format_version = 0;
+ char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
+ int shared_repository = PERM_UMASK;
+ const char *apply_default_whitespace = NULL;
++int zlib_compression_level = -1;
+ 
+ static char *git_dir, *git_object_dir, *git_index_file, *git_refs_dir,
+        *git_graft_file;
+diff --git a/sha1_file.c b/sha1_file.c
+index 8179630..bc35808 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1458,7 +1458,7 @@ int write_sha1_file(void *buf, unsigned 
+ 
+        /* Set it up */
+        memset(&stream, 0, sizeof(stream));
+-       deflateInit(&stream, Z_BEST_COMPRESSION);
++       deflateInit(&stream, zlib_compression_level);
+        size = deflateBound(&stream, len+hdrlen);
+        compressed = xmalloc(size);
+ 
+@@ -1511,7 +1511,7 @@ static void *repack_object(const unsigne
+ 
+        /* Set it up */
+        memset(&stream, 0, sizeof(stream));
+-       deflateInit(&stream, Z_BEST_COMPRESSION);
++       deflateInit(&stream, zlib_compression_level);
+        size = deflateBound(&stream, len + hdrlen);
+        buf = xmalloc(size);
+ 
+-- 
+1.4.1.g8fced-dirty
