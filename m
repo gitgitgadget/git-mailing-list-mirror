@@ -1,88 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [POLL] Who likes running Git without make install?
-Date: Sun, 02 Jul 2006 23:54:47 -0700
-Message-ID: <7vslljrxe0.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vwtb6yip5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241147480.6483@g5.osdl.org>
-	<7vhd2atid1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0606241338370.6483@g5.osdl.org>
-	<7vd5cyt8a3.fsf@assigned-by-dhcp.cox.net>
-	<20060625010202.GX21864@pasky.or.cz>
-	<20060625014009.GA21864@pasky.or.cz>
-	<7vac82q6mb.fsf@assigned-by-dhcp.cox.net>
-	<20060625152157.GG21864@pasky.or.cz>
-	<7vk674mmyo.fsf@assigned-by-dhcp.cox.net>
-	<20060701235906.GE29115@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git-grep: --and to combine patterns with and instead
+ of or
+Date: Mon, 03 Jul 2006 09:54:22 +0200
+Message-ID: <44A8CD2E.8020208@op5.se>
+References: <20060625184757.f8273820.tihirvon@gmail.com>	<E1FuX8l-0001H5-2z@moooo.ath.cx>	<Pine.LNX.4.63.0606260108510.29667@wbgn013.biozentrum.uni-wuerzburg.de>	<E1FueYh-0004XE-Fg@moooo.ath.cx>	<20060629222009.GA9310@cip.informatik.uni-erlangen.de>	<7vejx7oa3x.fsf@assigned-by-dhcp.cox.net>	<E1Fw8hS-00023y-FY@moooo.ath.cx>	<7v7j2zmgbu.fsf@assigned-by-dhcp.cox.net>	<E1FwDiI-0007Xp-2s@moooo.ath.cx>	<7v3bdnkrfb.fsf@assigned-by-dhcp.cox.net>	<E1FwGgm-0006Nc-9a@moooo.ath.cx> <7vejx6k54p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 08:54:52 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 09:54:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxIKa-0004Wo-5D
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 08:54:52 +0200
+	id 1FxJGG-0003V3-5b
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 09:54:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbWGCGyt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 02:54:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbWGCGyt
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 02:54:49 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58599 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750883AbWGCGys (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 02:54:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060703065448.WTWK8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 3 Jul 2006 02:54:48 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060701235906.GE29115@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 2 Jul 2006 01:59:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750724AbWGCHyZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 03:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbWGCHyZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 03:54:25 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:14223 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750724AbWGCHyY
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 03:54:24 -0400
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 2BF276BCDA; Mon,  3 Jul 2006 09:54:23 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vejx6k54p.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23159>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano wrote:
+> Matthias Lederhofer <matled@gmx.net> writes:
+> 
+> 
+>>Junio C Hamano wrote:
+>>
+>>>I see you are trying hard to think of a way to justify your
+>>>original prefix "--and" (or --FOO) implementation, but I simply
+>>>do not see much point in that.  I doubt changing the default
+>>>operator from --or to --and is less confusing than changing the
+>>>precedence for the users, so you would hear the same "I
+>>>personally feel FOO should not even exist" objection from me.
+>>
+>>It just happens to make more sense to me and I don't see a reason not to
+>>add this. If no one else is interested in this I'll just stop arguing :)
+>>Here again an overview of the arguments if anyone is interested:
+>>- Less to type for common searches using only AND (or more ANDs than
+>>  ORs).
+>>- Easy to implement (both with and without extended expressions).
+>>- AND/* is the normal implicit operator in other contexts than grep
+>>  (math).
+>>- The high precedence operator (AND) should be implicit rather than
+>>  the low precedence one (OR) (so this is only fulfilled when the
+>>  option is used).
+> 
+> 
+> Side note.  It would be interesting to have a slightly different
+> form of --and called --near.  You would use it like this:
+> 
+> 	git grep -C -e AND --near -e OR
+> 
+> to find lines that has AND on it, and within the context
+> distance there is a line that has OR on it.  The lines that are
+> hit with such a query are still the ones that have AND on them
+> (in other words, a line that has OR is used to further filter
+> out the results so it will be prefixed with '-', not ':', unless
+> that line happens to also have AND on it).
+> 
 
-> Well, yes, it is ugly, but it was really cool that we could have used
-> Git without installing it anywhere.
->
-> But perhaps that's just me refusing to break his old ways of doing
-> things. Does anyone else care about it? (And why?)
+It would also be neat to have --inside main or some such, to make it 
+only check for things inside whatever's printed on the diff --git line.
 
-I do not think you need to break your old ways.  Perhaps a patch
-like this might help.
-
--- >8 --
-INSTALL: a tip for running after building but without installing.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/INSTALL b/INSTALL
-index f8337e2..ed502de 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -29,6 +29,19 @@ Issues of note:
-    has been actively developed since 1997, and people have moved over to
-    graphical file managers.
- 
-+ - You can use git after building but without installing if you
-+   wanted to.  Various git commands need to find other git
-+   commands and scripts to do their work, so you would need to
-+   arrange a few environment variables to tell them that their
-+   friends will be found in your built source area instead of at
-+   their standard installation area.  Something like this works
-+   for me:
-+
-+	GIT_EXEC_PATH=`pwd`
-+	PATH=`pwd`:$PATH
-+	PERL5LIB=`pwd`/perl/blib/lib:`pwd`/perl/blib/arch/auto/Git
-+	export GIT_EXEC_PATH PATH PERL5LIB
-+
-  - Git is reasonably self-sufficient, but does depend on a few external
-    programs and libraries:
- 
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
