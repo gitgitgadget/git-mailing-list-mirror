@@ -1,78 +1,88 @@
-From: Joachim B Haga <cjhaga@fys.uio.no>
-Subject: Compression speed for large files
-Date: Mon, 3 Jul 2006 11:13:34 +0000 (UTC)
-Message-ID: <loom.20060703T124601-969@post.gmane.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: qgit idea: interface for cherry-picking
+Date: Mon, 3 Jul 2006 13:18:46 +0200
+Message-ID: <e5bfff550607030418n6a46c0cdh1a95155e1feb4356@mail.gmail.com>
+References: <e8954u$srh$1@sea.gmane.org>
+	 <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com>
+	 <e89eqj$npu$1@sea.gmane.org>
+	 <e5bfff550607021504l6e7fc8b8ja61f20f630c0f3f@mail.gmail.com>
+	 <e89iql$42a$1@sea.gmane.org>
+	 <e5bfff550607022245s2ef160fu5ad30a822f06117d@mail.gmail.com>
+	 <7vzmfrrxyp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 03 13:14:06 2006
+Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 03 13:18:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxMNK-0007EW-Ga
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 13:13:58 +0200
+	id 1FxMS3-0007nn-7i
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 13:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750702AbWGCLNz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 07:13:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWGCLNz
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 07:13:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:17806 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750702AbWGCLNy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 07:13:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FxMN4-0007CF-1L
-	for git@vger.kernel.org; Mon, 03 Jul 2006 13:13:42 +0200
-Received: from fnasa.simula.no ([129.240.228.53])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 13:13:42 +0200
-Received: from cjhaga by fnasa.simula.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 13:13:42 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 129.240.228.53 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060608 Ubuntu/dapper-security Firefox/1.5.0.4)
+	id S1750947AbWGCLSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 07:18:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWGCLSs
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 07:18:48 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:53377 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1750925AbWGCLSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 07:18:47 -0400
+Received: by py-out-1112.google.com with SMTP id c39so1274473pyd
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 04:18:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pDWBBgsHGzgOtVwleNseR2WRFO4uwLJCut+lEC6wUuhWQIKT8rCOCOFMhlZL6ch9gtBFN4hUwDwOwCyNTJD2MHaUWL6yhELu/0QisGyssUeDpGb/JAWt3i0a+TicMO1PDFvvhRbjFSzDcfcPgOSNpnSjQqGbdSoXK2ALTBVRsTU=
+Received: by 10.35.88.18 with SMTP id q18mr797318pyl;
+        Mon, 03 Jul 2006 04:18:46 -0700 (PDT)
+Received: by 10.35.52.17 with HTTP; Mon, 3 Jul 2006 04:18:46 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vzmfrrxyp.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23171>
 
-I'm looking at doing version control of data files, potentially very large,
-often binary. In git, committing of large files is very slow; I have tested with
-a 45MB file, which takes about 1 minute to check in (on an intel core-duo 2GHz).
+On 7/3/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Marco Costalba" <mcostalba@gmail.com> writes:
+>
+> > When I need to modify the patch/revision before to import I usaually
+> > drag&drop and then I call git-reset --soft, then I edit working
+> > directory and commit again.
+>
+> These days, I tend to just let "am" or "pull" do its thing, edit
+> working tree and retest, and run "commit --amend".  Before we
+> added "commit --amend", I used to do soft reset and recommit
+> like you described above.  One advantage of "commit --amend" is
+> that it can even amend a merge, but I do not think it applies to
+> what Jakub wants in this thread.
+>
 
-Now, most of the time is spent in compressing the file. Would it be a good idea
-to change the Z_BEST_COMPRESSION flag to zlib, at least for large files? I have
-measured the time spent by git-commit with different flags in sha1_file.c:
+I cannot test your patch now, so I'm just guessing, what if we have a
+series of patches?
+Is it possible that for two patches A and B happens that
 
-  method                 time (s)  object size (kB)
-  Z_BEST_COMPRESSION     62.0      17136
-  Z_DEFAULT_COMPRESSION  10.4      16536
-  Z_BEST_SPEED            4.8      17071
+git-am A
+git-am B
+git-reset --soft HEAD^^
 
-In this case Z_BEST_COMPRESSION also compresses worse, but that's not the major
-issue: the time is. Here's a couple of other data points, measured with gzip -9,
--6 and -1 (comparable to the Z_ flags above):
+gives a different result then
 
-129MB ascii data file
-  method    time (s)  object size (kB)
-  gzip -9   158       23066
-  gzip -6    18       23619
-  gzip -1     6       32304
+git-am --fail A
+git-am --fail B
 
-3MB ascii data file
-  gzip -9   2.2        887
-  gzip -6   0.7        912
-  gzip -1   0.3       1134
+As example, if B modify the same file of A then could happen that in
+the latter case git-am --fail B stops with conflicts because the
+working dir is not synced with the index (this happens only in the
+latter case) ?
 
-So: is it a good idea to change to faster compression, at least for larger
-files? From my (limited) testing I would suggest using Z_BEST_COMPRESSION only
-for small files (perhaps <1MB?) and Z_DEFAULT_COMPRESSION/Z_BEST_SPEED for
-larger ones.
+Put in other words, I don't know if the two procedures are
+_equivalent_ because in the first case you operate under the
+assumption that working dir and index are always synced before and
+after to apply, in the second case this assumption is broken so I
+don't know if this could have side effects.
 
-
--j.
+      Marco
