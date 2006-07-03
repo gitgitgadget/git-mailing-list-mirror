@@ -1,60 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git-fmt-merge-msg a builtin
-Date: Mon, 3 Jul 2006 23:29:46 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607032327470.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0607031530380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060703171751.2ed33220.tihirvon@gmail.com>
- <Pine.LNX.4.63.0607031632290.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060703182621.dbed5b5f.tihirvon@gmail.com>
- <Pine.LNX.4.63.0607031731550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060703191635.21ba0af3.tihirvon@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 4/6] Make it possible to set up libgit directly (instead of from the environment)
+Date: Mon, 3 Jul 2006 23:30:59 +0200
+Message-ID: <20060703213059.GO29115@pasky.or.cz>
+References: <20060703204415.28541.47920.stgit@machine.or.cz> <20060703204803.28541.67315.stgit@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Jul 03 23:29:59 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 23:31:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxVzL-0007Ez-Qk
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 23:29:52 +0200
+	id 1FxW0Y-0007Si-Np
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 23:31:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbWGCV3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 17:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWGCV3s
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 17:29:48 -0400
-Received: from mail.gmx.de ([213.165.64.21]:41437 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750735AbWGCV3s (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 17:29:48 -0400
-Received: (qmail invoked by alias); 03 Jul 2006 21:29:46 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp009) with SMTP; 03 Jul 2006 23:29:46 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Timo Hirvonen <tihirvon@gmail.com>
-In-Reply-To: <20060703191635.21ba0af3.tihirvon@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1750722AbWGCVbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 17:31:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbWGCVbD
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 17:31:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:36557 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750722AbWGCVbB (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 17:31:01 -0400
+Received: (qmail 2472 invoked by uid 2001); 3 Jul 2006 23:30:59 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20060703204803.28541.67315.stgit@machine.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23215>
 
-Hi,
+Dear diary, on Mon, Jul 03, 2006 at 10:48:03PM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> This introduces a setup_git() function which is essentialy a (public)
+> backend for setup_git_env() which lets anyone specify custom sources
+> for the various paths instead of environment variables. Since the repositories
+> may get switched on the fly, this also updates code that caches paths to
+> invalidate them properly; I hope neither of those is a sweet spot.
+> 
+> It is used by Git.xs' xs__call_gate() to set up per-repository data
+> for libgit's consumption. No code actually takes advantage of it yet
+> but get_object() will in the next patches.
+> 
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
 
-On Mon, 3 Jul 2006, Timo Hirvonen wrote:
+To further clarify, this only invalidates the path cache and grafts
+list, not alternates (it assumes the environment variable stays the
+same for now; that is to be fixed when we extend Git.pm further)
+and not pack list - we will automagically extend the list of packs when
+we meet more repositories, but we will never remove old packs from the
+list. (For no special reason other than this does no harm other than
+possibly finding objects that should be missing, and the patch smells
+bad enough enough as it is now. ;-)
 
-> Seems that C89 requires free(NULL) to be a no-op but on some old systems 
-> (SunOS) it may crash.  IMNSHO these systems were designed to crash valid 
-> programs and torture developers.
-
-At least it is not Malbolge. Or even VAX. (In that order.)
-
-> There are probably many free(NULL) and realloc(NULL, ...) uses in the 
-> git source code and are not worth fixing.
-
-AFAIK realloc(NULL, ...) was fine even with K&R, whereas free(NULL) poses 
-problems. Anyway, I do not _want_ to say that NULL should be free()d, 
-because it just sounds wrong.
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
