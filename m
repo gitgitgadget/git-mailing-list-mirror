@@ -1,68 +1,73 @@
-From: Joachim Berdal Haga <cjhaga@student.matnat.uio.no>
+From: Joachim B Haga <cjhaga@fys.uio.no>
 Subject: Re: Compression speed for large files
-Date: Mon, 03 Jul 2006 15:32:42 +0200
-Message-ID: <44A91C7A.6090902@fys.uio.no>
-References: <loom.20060703T124601-969@post.gmane.org> <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com>
+Date: Mon, 3 Jul 2006 13:44:46 +0000 (UTC)
+Message-ID: <loom.20060703T153349-582@post.gmane.org>
+References: <loom.20060703T124601-969@post.gmane.org> <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com> <loom.20060703T143544-407@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 03 15:33:05 2006
+X-From: git-owner@vger.kernel.org Mon Jul 03 15:45:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxOXk-000566-Pa
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 15:32:53 +0200
+	id 1FxOk1-0007Qh-20
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 15:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbWGCNcs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 09:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751170AbWGCNcs
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 09:32:48 -0400
-Received: from pat.uio.no ([129.240.10.4]:4062 "EHLO pat.uio.no")
-	by vger.kernel.org with ESMTP id S1751161AbWGCNcs (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 09:32:48 -0400
-Received: from mail-mx2.uio.no ([129.240.10.30])
-	by pat.uio.no with esmtp (Exim 4.43)
-	id 1FxOXe-00038u-SK; Mon, 03 Jul 2006 15:32:47 +0200
-Received: from fnasa.simula.no ([129.240.228.53] helo=[192.168.100.115])
-	by mail-mx2.uio.no with esmtp (Exim 4.43)
-	id 1FxOXc-0003Ai-5Y; Mon, 03 Jul 2006 15:32:44 +0200
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com>
-X-UiO-Spam-info: not spam, SpamAssassin (score=0, required 12,
-	autolearn=disabled)
+	id S1750826AbWGCNpP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 09:45:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbWGCNpO
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 09:45:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:62604 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750826AbWGCNpN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 09:45:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FxOjU-0007JN-Nc
+	for git@vger.kernel.org; Mon, 03 Jul 2006 15:45:01 +0200
+Received: from fnasa.simula.no ([129.240.228.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 15:45:00 +0200
+Received: from cjhaga by fnasa.simula.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 15:45:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 129.240.228.53 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060608 Ubuntu/dapper-security Firefox/1.5.0.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23176>
 
-Alex Riesen wrote:
-> On 7/3/06, Joachim B Haga <cjhaga@fys.uio.no> wrote:
->> So: is it a good idea to change to faster compression, at least for 
->> larger files? From my (limited) testing I would suggest using 
->> Z_BEST_COMPRESSION only for small files (perhaps <1MB?) and 
->> Z_DEFAULT_COMPRESSION/Z_BEST_SPEED for
->> larger ones.
+Elrond <elrond+kernel.org <at> samba-tng.org> writes:
+
 > 
-> Probably yes, as a per-repo config option.
+> Joachim B Haga <cjhaga <at> fys.uio.no> writes:
+> [...]
+> > In this case Z_BEST_COMPRESSION also compresses worse,
+> [...]
+> 
+> I personally find that very interesting, is this a known "issue" with zlib?
+> It suggests, that with different options, it's possible to create smaller
+> repositories, despite the 'advertised' (by zlib, not git) "best" compression.
 
-I can send a patch later. If it's to be a per-repo option, it's probably 
-too confusing with several values. Is it ok with
+There are also other tunables in zlib, such as the balance between Huffman
+coding (good for data files) and string matching (good for text files). So with
+more knowledge of the data it should be possible to compress even better. I'm
+not advocating tuning this in git though ;)
 
-core.compression = [-1..9]
+> 
+> Alex Riesen <raa.lkml <at> gmail.com> writes:
+> [...]
+> > Probably yes, as a per-repo config option.
+> 
+> The option probably should be the size for which to start using
+> "default" compression.
 
-where the numbers are the zlib/gzip constants,
-   -1 = zlib default (currently 6)
-    0 = no compression
-1..9 = various speed/size tradeoffs (9 is git default)
+That is possible, too. I'm open to any decision or consensus, as long as I get
+my commits in less than 10s :)
 
-Btw; I just tested the kernel sources. With gzip only, but files 
-compressed individually:
-   time find . -type f | xargs gzip -9 -c | wc -c
-
-I found the space saving from -6 to -9 to be under 0.6%, at double the 
-CPU time. So perhaps Z_DEFAULT_COMPRESSION would be good as default.
-
--j
+-j.
