@@ -1,102 +1,98 @@
-From: Elrond <elrond+kernel.org@samba-tng.org>
-Subject: git-cvsimport gets parents wrong for branches
-Date: Mon, 3 Jul 2006 23:53:03 +0200
-Message-ID: <20060703215303.GA24572@memak.tu-darmstadt.de>
+From: Joachim Berdal Haga <c.j.b.haga@fys.uio.no>
+Subject: Re: Compression speed for large files
+Date: Tue, 04 Jul 2006 00:25:37 +0200
+Message-ID: <44A99961.8090504@fys.uio.no>
+References: <loom.20060703T124601-969@post.gmane.org>
+ <20060703214503.GA3897@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="huq684BweRXVnRxX"
-X-From: git-owner@vger.kernel.org Mon Jul 03 23:53:29 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Joachim B Haga <cjhaga@student.matnat.uio.no>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 00:26:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxWLu-0002ds-JI
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 23:53:10 +0200
+	id 1FxWrQ-0008Cg-Fr
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 00:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbWGCVxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 17:53:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbWGCVxH
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 17:53:07 -0400
-Received: from baerbel.mug.maschinenbau.tu-darmstadt.de ([130.83.48.97]:54471
-	"EHLO baerbel.mug.maschinenbau.tu-darmstadt.de") by vger.kernel.org
-	with ESMTP id S1750991AbWGCVxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 17:53:06 -0400
-Received: from baerbel.mug.maschinenbau.tu-darmstadt.de (localhost [127.0.0.1])
-	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4) with ESMTP id k63Lr3CS024890
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 3 Jul 2006 23:53:04 +0200
-Received: (from tacke@localhost)
-	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4/Submit) id k63Lr3cL024888
-	for git@vger.kernel.org; Mon, 3 Jul 2006 23:53:03 +0200
-To: git@vger.kernel.org
-Mail-Followup-To: Elrond <elrond+kernel.org@samba-tng.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: ClamAV 0.88.2/1581/Mon Jul  3 20:43:12 2006 on baerbel.mug.maschinenbau.tu-darmstadt.de
-X-Virus-Status: Clean
+	id S932154AbWGCWZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 18:25:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932155AbWGCWZl
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 18:25:41 -0400
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:40688 "EHLO
+	osl1smout1.broadpark.no") by vger.kernel.org with ESMTP
+	id S932154AbWGCWZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 18:25:40 -0400
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java System Messaging Server 6.1 HotFix 0.05 (built Oct 21 2004))
+ with ESMTP id <0J1U008WYMAR4O40@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Tue, 04 Jul 2006 00:25:39 +0200 (CEST)
+Received: from pep ([80.203.45.67]) by osl1sminn1.broadpark.no
+ (Sun Java System Messaging Server 6.1 HotFix 0.05 (built Oct 21 2004))
+ with ESMTP id <0J1U00KP2MARGH20@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Tue, 04 Jul 2006 00:25:39 +0200 (CEST)
+Received: from localhost ([127.0.0.1])	by pep with esmtp (Exim 4.62)
+	(envelope-from <c.j.b.haga@fys.uio.no>)	id 1FxWrJ-0007zR-Tj; Tue,
+ 04 Jul 2006 00:25:38 +0200
+In-reply-to: <20060703214503.GA3897@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: c.j.b.haga@fys.uio.no
+X-SA-Exim-Scanned: No (on pep); SAEximRunCond expanded to false
+User-Agent: Thunderbird 1.5.0.2 (X11/20060516)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23219>
 
+Jeff King wrote:
+> On Mon, Jul 03, 2006 at 11:13:34AM +0000, Joachim B Haga wrote:
+> 
+>> often binary. In git, committing of large files is very slow; I have
+>> tested with a 45MB file, which takes about 1 minute to check in (on an
+>> intel core-duo 2GHz).
+> 
+> I know this has already been somewhat solved, but I found your numbers
+> curiously high. I work quite a bit with git and large files and I
+> haven't noticed this slowdown. Can you be more specific about your load?
+> Are you sure it is zlib?
 
---huq684BweRXVnRxX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Quite sure: at least to the extent that it is fixed by lowering the
+compression level. But the wording was inexact: it's during object
+creation, which happens at initial "git add" and then later during "git
+commit".
 
+But...
 
-Hi,
+> y 1.8Ghz Athlon, compressing 45MB of zeros into 20K takes about 2s.
+> Compressing 45MB of random data into a 45MB object takes 6.3s. In either
+> case, the commit takes only about 0.5s (since cogito stores the object
+> during the cg-add).
+> 
+> Is there some specific file pattern which is slow to compress? 
 
-Just by accident I noticed, that git-cvsimport got the
-parents for branches wrong in one of my projects.
+yes, it seems so. At least the effect is much more pronounced for my
+files than for random/null data. "My" files are in this context generated
+data files, binary or ascii.
 
-To assist in debugging this, I've made up a testcase script
-(appended to this mail).
-It will create a new cvs-repo, put 4 commits in it,
-and finally run gitk to investigate it.
+Here's a test with "time gzip -[169] -c file >/dev/null". Random data
+from /dev/urandom, kernel headers are concatenation of *.h in kernel
+sources. All times in seconds, on my puny home computer (1GHz Via Nehemiah)
 
-It should look something like this:
+       random (23MB)  data (23MB)   headers (44MB)
+-9     10.2           72.5          38.5
+-6     10.2           13.5          12.9
+-1      9.9            4.1           7.0
 
-    4 [branch-stable-fixes] commit-on-branch
-  3 | [master] [origin] commit-master-after-branch
-  |/
-  2   [tag-branchpoint] commit-first-edit
-  1   commit-base
+So... data dependent, yes. But it hits even for normal source code.
 
-What it really looks like:
+(Btw; the default (-6) seems to be less data dependent than the other
+values. Maybe that's on purpose.)
 
-  4   ..
-  3   ..
-  2   ..
-  1   ..
+If you want to look at a highly-variable dataset (the one above), try
+http://lupus.ig3.net/SIMULATION.dx.gz (5MB, slow server), but that's just
+an example, I see the same variability for example also on binary data files.
 
-4's parent is 3, not (as it should) 2.
-
-
-I've tested with 1.4.0 and the current git-cvsimport from
-8fced61.
-
-I hope the testcase helps tracking the problem down.
-
-
-    Elrond
-
-p.s.: The testcase script is not nice. It just does the
-      job, nothing more.
-
---huq684BweRXVnRxX
-Content-Type: application/x-sh
-Content-Disposition: inline; filename="cvs-branches-1.sh"
-Content-Transfer-Encoding: quoted-printable
-
-#! /bin/sh=0Amkdir t-$$=0Acd t-$$=0Abase=3D$PWD=0Amkdir $base/cvs-repos=0Ae=
-xport CVSROOT=3D$base/cvs-repos=0Acvs init=0Amkdir $CVSROOT/module-1=0Acvs =
-co module-1=0Acd module-1=0Atouch file-1=0Acvs add file-1=0Asleep 2 ; cvs c=
-ommit -m commit-base=0Aecho first edit > file-1=0Asleep 2 ; cvs commit -m c=
-ommit-first-edit=0Acvs tag tag-branchpoint=0Aecho edit in head/trunk/master=
- > file-1=0Asleep 2 ; cvs commit -m commit-master-after-branch=0Acvs tag -b=
- -rtag-branchpoint branch-stable-fixes=0Acvs update -rbranch-stable-fixes=
-=0Aecho new on branch >file-1=0Asleep 2 ; cvs commit -m commit-on-branch=0A=
-cd ..=0Amkdir git-module-1=0Acd git-module-1=0Agit-cvsimport -v -d $CVSROOT=
- -i -k module-1=0Agitk branch-stable-fixes=0A
---huq684BweRXVnRxX--
+-j.
