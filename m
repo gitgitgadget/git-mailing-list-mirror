@@ -1,88 +1,49 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: qgit idea: interface for cherry-picking
-Date: Mon, 3 Jul 2006 13:18:46 +0200
-Message-ID: <e5bfff550607030418n6a46c0cdh1a95155e1feb4356@mail.gmail.com>
-References: <e8954u$srh$1@sea.gmane.org>
-	 <e5bfff550607021433l1987c32apf4453b52fc2f3e63@mail.gmail.com>
-	 <e89eqj$npu$1@sea.gmane.org>
-	 <e5bfff550607021504l6e7fc8b8ja61f20f630c0f3f@mail.gmail.com>
-	 <e89iql$42a$1@sea.gmane.org>
-	 <e5bfff550607022245s2ef160fu5ad30a822f06117d@mail.gmail.com>
-	 <7vzmfrrxyp.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Compression speed for large files
+Date: Mon, 3 Jul 2006 14:03:43 +0200
+Message-ID: <81b0412b0607030503p63b4ee31v7776bd155d3dab29@mail.gmail.com>
+References: <loom.20060703T124601-969@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 03 13:18:53 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 03 14:04:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxMS3-0007nn-7i
-	for gcvg-git@gmane.org; Mon, 03 Jul 2006 13:18:52 +0200
+	id 1FxN9X-00069a-OO
+	for gcvg-git@gmane.org; Mon, 03 Jul 2006 14:03:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750947AbWGCLSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 07:18:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWGCLSs
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 07:18:48 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:53377 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1750925AbWGCLSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jul 2006 07:18:47 -0400
-Received: by py-out-1112.google.com with SMTP id c39so1274473pyd
-        for <git@vger.kernel.org>; Mon, 03 Jul 2006 04:18:46 -0700 (PDT)
+	id S1750947AbWGCMDp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 08:03:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbWGCMDp
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 08:03:45 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:2499 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750947AbWGCMDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 08:03:44 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so1459817ugc
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 05:03:43 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pDWBBgsHGzgOtVwleNseR2WRFO4uwLJCut+lEC6wUuhWQIKT8rCOCOFMhlZL6ch9gtBFN4hUwDwOwCyNTJD2MHaUWL6yhELu/0QisGyssUeDpGb/JAWt3i0a+TicMO1PDFvvhRbjFSzDcfcPgOSNpnSjQqGbdSoXK2ALTBVRsTU=
-Received: by 10.35.88.18 with SMTP id q18mr797318pyl;
-        Mon, 03 Jul 2006 04:18:46 -0700 (PDT)
-Received: by 10.35.52.17 with HTTP; Mon, 3 Jul 2006 04:18:46 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vzmfrrxyp.fsf@assigned-by-dhcp.cox.net>
+        b=P0uV2Lx0ZNfeL3ng+1l5W0LkOilLOw0mLpM/Hj2OyZcZPhHS4gyf9oJXz7MAvN+Jb5Fz4xZPYg30PrDUdk1MpKUXQPBKpq0p8R0qWNK5T/H6Rt0fxyIcKx3EZYf2Dj2JQr9MxErb8E7DwZfEF0uutvfUYiaXXpnxUhMbts++eOQ=
+Received: by 10.78.167.12 with SMTP id p12mr2278681hue;
+        Mon, 03 Jul 2006 05:03:43 -0700 (PDT)
+Received: by 10.78.37.7 with HTTP; Mon, 3 Jul 2006 05:03:43 -0700 (PDT)
+To: "Joachim B Haga" <cjhaga@fys.uio.no>
+In-Reply-To: <loom.20060703T124601-969@post.gmane.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23172>
 
-On 7/3/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Marco Costalba" <mcostalba@gmail.com> writes:
->
-> > When I need to modify the patch/revision before to import I usaually
-> > drag&drop and then I call git-reset --soft, then I edit working
-> > directory and commit again.
->
-> These days, I tend to just let "am" or "pull" do its thing, edit
-> working tree and retest, and run "commit --amend".  Before we
-> added "commit --amend", I used to do soft reset and recommit
-> like you described above.  One advantage of "commit --amend" is
-> that it can even amend a merge, but I do not think it applies to
-> what Jakub wants in this thread.
->
+On 7/3/06, Joachim B Haga <cjhaga@fys.uio.no> wrote:
+> So: is it a good idea to change to faster compression, at least for larger
+> files? From my (limited) testing I would suggest using Z_BEST_COMPRESSION only
+> for small files (perhaps <1MB?) and Z_DEFAULT_COMPRESSION/Z_BEST_SPEED for
+> larger ones.
 
-I cannot test your patch now, so I'm just guessing, what if we have a
-series of patches?
-Is it possible that for two patches A and B happens that
-
-git-am A
-git-am B
-git-reset --soft HEAD^^
-
-gives a different result then
-
-git-am --fail A
-git-am --fail B
-
-As example, if B modify the same file of A then could happen that in
-the latter case git-am --fail B stops with conflicts because the
-working dir is not synced with the index (this happens only in the
-latter case) ?
-
-Put in other words, I don't know if the two procedures are
-_equivalent_ because in the first case you operate under the
-assumption that working dir and index are always synced before and
-after to apply, in the second case this assumption is broken so I
-don't know if this could have side effects.
-
-      Marco
+Probably yes, as a per-repo config option.
