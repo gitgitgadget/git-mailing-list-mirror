@@ -1,73 +1,147 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Keith Packard <keithp@keithp.com>
 Subject: Re: git-fetch per-repository speed issues
-Date: Mon, 3 Jul 2006 21:19:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607032115340.12404@g5.osdl.org>
-References: <1151949764.4723.51.camel@neko.keithp.com> 
- <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>  <1151973438.4723.70.camel@neko.keithp.com>
-  <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org> <1151985747.4723.102.camel@neko.keithp.com>
+Date: Mon, 03 Jul 2006 21:30:41 -0700
+Message-ID: <1151987441.4723.110.camel@neko.keithp.com>
+References: <1151949764.4723.51.camel@neko.keithp.com>
+	 <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>
+	 <1151973438.4723.70.camel@neko.keithp.com>
+	 <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>
+	 <7vsllinj1m.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0607032039010.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 04 06:20:27 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-E/fzj+r6mCelXAF8nC2z"
+Cc: keithp@keithp.com, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 06:31:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxcOc-00077C-Cx
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 06:20:22 +0200
+	id 1FxcYt-0007rB-OZ
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 06:31:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750838AbWGDET6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 00:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWGDET5
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 00:19:57 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60311 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750838AbWGDET4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 00:19:56 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k644JonW016613
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Jul 2006 21:19:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k644JnlP016318;
-	Mon, 3 Jul 2006 21:19:50 -0700
-To: Keith Packard <keithp@keithp.com>
-In-Reply-To: <1151985747.4723.102.camel@neko.keithp.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750942AbWGDEaq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 00:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWGDEap
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 00:30:45 -0400
+Received: from home.keithp.com ([63.227.221.253]:7428 "EHLO keithp.com")
+	by vger.kernel.org with ESMTP id S1750830AbWGDEap (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 00:30:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id 6DE8F13001F;
+	Mon,  3 Jul 2006 21:30:44 -0700 (PDT)
+Received: from keithp.com ([127.0.0.1])
+	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id RG4RvcI4IsFN; Mon,  3 Jul 2006 21:30:44 -0700 (PDT)
+Received: by keithp.com (Postfix, from userid 1033)
+	id 05B3C13001E; Mon,  3 Jul 2006 21:30:43 -0700 (PDT)
+Received: from neko.keithp.com (localhost [127.0.0.1])
+	by keithp.com (Postfix) with ESMTP id EC75B14001;
+	Mon,  3 Jul 2006 21:30:43 -0700 (PDT)
+Received: by neko.keithp.com (Postfix, from userid 1488)
+	id 1A9FC6AC24A; Mon,  3 Jul 2006 21:30:42 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607032039010.12404@g5.osdl.org>
+X-Mailer: Evolution 2.6.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23248>
 
 
+--=-E/fzj+r6mCelXAF8nC2z
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 3 Jul 2006, Keith Packard wrote:
-> 
-> Yeah, it says that only once. And, it runs the fetch-pack in about .5
-> seconds. And, now the whole process completes in 4.7 seconds; perhaps
-> the remote server is less loaded than earlier this afternoon?
+On Mon, 2006-07-03 at 20:40 -0700, Linus Torvalds wrote:
 
-Well, that's still strange. What takes 4.2 seconds then?
+>     "And, it's painfully slow, even when the repository is up to date"
+>=20
+> and gave a 17-second time.
 
-> > And then it should leave a "fetch.trace" file in your working directory, 
-> > which should show where that _one_ thing spends its time.
-> 
-> It looks boring to me and spent 0.55 from start to finish. I can send
-> along the whole trace if you have an acute desire to peer at it.
+It's faster this evening, down to 8 seconds using ssh and 4 seconds
+using git. I clearly need to force use of the git protocol. Anyone else
+like the attached patch?
 
-No, the 0.5 seconds is what I _expected_. There's something strange going 
-on in your git fetch that it takes any longer than that.
+---
+ connect.c |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-Can you instrument your "git-fetch.sh" script (just add random
+diff --git a/connect.c b/connect.c
+index 9a87bd9..e74eddc 100644
+--- a/connect.c
++++ b/connect.c
+@@ -303,6 +303,7 @@ enum protocol {
+ 	PROTO_LOCAL =3D 1,
+ 	PROTO_SSH,
+ 	PROTO_GIT,
++	PROTO_GIT_SSH,
+ };
+=20
+ static enum protocol get_protocol(const char *name)
+@@ -312,9 +313,9 @@ static enum protocol get_protocol(const=20
+ 	if (!strcmp(name, "git"))
+ 		return PROTO_GIT;
+ 	if (!strcmp(name, "git+ssh"))
+-		return PROTO_SSH;
++		return PROTO_GIT_SSH;
+ 	if (!strcmp(name, "ssh+git"))
+-		return PROTO_SSH;
++		return PROTO_GIT_SSH;
+ 	die("I don't handle protocol '%s'", name);
+ }
+=20
+@@ -572,6 +573,14 @@ static void git_proxy_connect(int fd[2],
+ 	close(pipefd[1][0]);
+ }
+=20
++/* returns whether the specified command can be interpreted by the
+daemon */
++int git_is_daemon_command (const char *prog)=20
++{
++	if (!strcmp("git-upload-pack", prog))
++		return 1;
++	return 0;
++}
++
+ /*
+  * Yeah, yeah, fixme. Need to pass in the heads etc.
+  */
+@@ -641,7 +650,8 @@ int git_connect(int fd[2], char *url, co
+ 		*ptr =3D '\0';
+ 	}
+=20
+-	if (protocol =3D=3D PROTO_GIT) {
++	if (protocol =3D=3D PROTO_GIT ||=20
++	    (protocol =3D=3D PROTO_GIT_SSH && git_is_daemon_command (prog))) {
+ 		/* These underlying connection commands die() if they
+ 		 * cannot connect.
+ 		 */
+@@ -678,7 +688,7 @@ int git_connect(int fd[2], char *url, co
+ 		close(pipefd[0][1]);
+ 		close(pipefd[1][0]);
+ 		close(pipefd[1][1]);
+-		if (protocol =3D=3D PROTO_SSH) {
++		if (protocol =3D=3D PROTO_SSH || protocol =3D=3D PROTO_GIT_SSH) {
+ 			const char *ssh, *ssh_basename;
+ 			ssh =3D getenv("GIT_SSH");
+ 			if (!ssh) ssh =3D "ssh";
+--=20
+1.4.1.g8fced-dirty
 
-	(echo $LINENO ; date) >&2
+--=20
+keith.packard@intel.com
 
-lines all over) to see what is so expensive? 
+--=-E/fzj+r6mCelXAF8nC2z
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-That fetch-pack really should be the most expensive part by far (and half 
-a second sounds right), but it clearly isn't. At 4.7s, your fetch is still 
-taking about ten times longer than it _should_.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
 
-		Linus
+iD8DBQBEqe7xQp8BWwlsTdMRAhYmAKCEPBJr1GVtX4A97kL2tMldDT1W+wCffUyE
+zQ1D49nOhFcS90i/kJXLTEY=
+=a+dM
+-----END PGP SIGNATURE-----
+
+--=-E/fzj+r6mCelXAF8nC2z--
