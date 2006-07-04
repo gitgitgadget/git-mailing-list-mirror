@@ -1,83 +1,62 @@
 From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: qgit idea: interface for cherry-picking
-Date: Tue, 4 Jul 2006 13:58:10 +0200
-Message-ID: <e5bfff550607040458m1e6ea6bes44b3e3eba26856f0@mail.gmail.com>
-References: <e8954u$srh$1@sea.gmane.org> <e89eqj$npu$1@sea.gmane.org>
-	 <e5bfff550607021504l6e7fc8b8ja61f20f630c0f3f@mail.gmail.com>
-	 <e89iql$42a$1@sea.gmane.org>
-	 <e5bfff550607022245s2ef160fu5ad30a822f06117d@mail.gmail.com>
-	 <7vzmfrrxyp.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550607030418n6a46c0cdh1a95155e1feb4356@mail.gmail.com>
-	 <7vd5cmqwv3.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550607032322jdf3bc79l3f41c292ebb6d3f7@mail.gmail.com>
-	 <e8d2eo$k44$1@sea.gmane.org>
+Subject: Re: qgit idea: marking refs (heads and tags)
+Date: Tue, 4 Jul 2006 14:03:23 +0200
+Message-ID: <e5bfff550607040503x75b1abdavbbeb80b41a454e7d@mail.gmail.com>
+References: <e8d3i6$ne9$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jul 04 13:58:28 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 14:03:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxjXj-0000kL-HX
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:58:18 +0200
+	id 1Fxjco-0001cU-PV
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 14:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226AbWGDL6M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 07:58:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbWGDL6M
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:58:12 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:63238 "EHLO
+	id S932232AbWGDMDZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 08:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbWGDMDZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 08:03:25 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:37136 "EHLO
 	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932226AbWGDL6L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 07:58:11 -0400
-Received: by py-out-1112.google.com with SMTP id t32so1809159pyc
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 04:58:10 -0700 (PDT)
+	id S932232AbWGDMDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 08:03:24 -0400
+Received: by py-out-1112.google.com with SMTP id t32so1810858pyc
+        for <git@vger.kernel.org>; Tue, 04 Jul 2006 05:03:23 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bpZZ4J9syKyM/mFqmJj97bAWpBiHvFGJ2rXMv7BrlZbocFkbGYqDFpEw/zGtzFTgKG/GowWMBe95ci7W9yt1+agV//iP340x/8H8Qc3YZbtV6q+3HKPRNBE9VrAwQHo4EKw4yjdkmL/I8HzZztTe7IDXO6za8E4G6GpIKVCfiF4=
-Received: by 10.35.129.19 with SMTP id g19mr2289035pyn;
-        Tue, 04 Jul 2006 04:58:10 -0700 (PDT)
-Received: by 10.35.52.17 with HTTP; Tue, 4 Jul 2006 04:58:10 -0700 (PDT)
+        b=M78St4GyqzDdHPrqe3YHyPbJEaSPH1kPL6OL4pDWarYHKouTmWlgc7+cQzhZZQLm+yzddS2g6CPhW2gMkSOmCmMVK5tvOQoZtBOExgSnMGIkJNrL1sTky0oMI7Te2E0q3UQTUmlYMG9MPrVQ4dfIfigWnDmsbpz+DaR57ydlxxg=
+Received: by 10.35.70.17 with SMTP id x17mr3914520pyk;
+        Tue, 04 Jul 2006 05:03:23 -0700 (PDT)
+Received: by 10.35.52.17 with HTTP; Tue, 4 Jul 2006 05:03:23 -0700 (PDT)
 To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <e8d2eo$k44$1@sea.gmane.org>
+In-Reply-To: <e8d3i6$ne9$1@sea.gmane.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23293>
 
 On 7/4/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Marco Costalba wrote:
+> One thing I sorely lack in qgit as compared to gitk (and even gitweb[*1*])
+> is marking commits with refs (heads and tags, marked with different colors
+> or different shape marker). gitk currently uses markers in short log line
+> before text of commit summary, gitweb uses markers after (at the end) of
+> commit log summary. In qgit head commits are marked as such, but not to
+> which branche they belong[*2*].
+
+Currently you have to select the head and the status bar will show
+related information: branch, tag message, etc.
+
 >
-> > QGit is not supposed to be a GUI replacement of git UI. QGit only let
-> > users quickly call some commonly used commands. [...]
->
-> It's a pity. Doing some of commands from visual history viewer, with view of
-> branches etc. would be so much easier: like bisect, rebasing, cherry
-> picking, reverting a commit...
+> And also somewhat (but to much lesser extent) showing explicitely sha1-ids
+> for commit, parents, tree, referenced object (in tag), to copy'n'paste to
+> shell.
 >
 
-In the past weeks I (with Pavel support) have implemented and pushed
-the concept of "custom actions".
-
-Is it possible to associate commands sequences, scripts and anything
-else executable to a custom action. Actions can be called and run from
-menu entry and corresponding output is grabbed by a terminal window.
-
-Instead of hard code each git-native command, this way you have a
-flexible framework to add shortcuts and menu entry for anything you
-would like to be a click away. BTW I use this for stuff like git pull,
-but also for 'make' and 'make install' because you have a window
-terminal for feedback.
-
-There is also the possibility to input command line parameters before
-to run, useful, as example for a git pull action that asks for source
-repository to pull from.
-
-Is this something that can fulfill you request? do you need something
-different?  perhaps something as a "default to current selected SHA as
-input argument" flag.
+Something as a typical browser "copy selected link" context menu entry?
 
   Marco
