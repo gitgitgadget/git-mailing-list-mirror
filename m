@@ -1,72 +1,78 @@
-From: "Bertrand Jacquin" <beber.mailing@gmail.com>
-Subject: Re: [PATCH] Beautifulise git-show output
-Date: Wed, 5 Jul 2006 00:59:06 +0200
-Message-ID: <4fb292fa0607041559t5dad90e3h5e764348a8b4c562@mail.gmail.com>
-References: <11520525682686-git-send-email-beber.mailing@gmail.com>
-	 <7vejx1f0fz.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH] Additional merge-base tests
+Date: Tue, 04 Jul 2006 16:07:11 -0700
+Message-ID: <44AAF49F.6090008@gmail.com>
+References: <44A9E6AE.10508@gmail.com> <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net> <44AA0DAE.1060308@gmail.com> <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7v8xn9gjh5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0607050021330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 05 00:59:13 2006
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jul 05 01:07:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxtrL-0005BP-IG
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 00:59:12 +0200
+	id 1FxtzI-0006Oe-LJ
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 01:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932356AbWGDW7I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 18:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932357AbWGDW7I
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 18:59:08 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:50135 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932356AbWGDW7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 18:59:07 -0400
-Received: by nf-out-0910.google.com with SMTP id y38so1081477nfb
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 15:59:06 -0700 (PDT)
+	id S932307AbWGDXHR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 19:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbWGDXHR
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 19:07:17 -0400
+Received: from nz-out-0102.google.com ([64.233.162.195]:56909 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932307AbWGDXHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 19:07:16 -0400
+Received: by nz-out-0102.google.com with SMTP id o1so1128198nzf
+        for <git@vger.kernel.org>; Tue, 04 Jul 2006 16:07:15 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=erhdu1lecO7hHlI0YIJIBMDdOaRqYy/cOELCnjc35p6Y/YIGPJS1lbFOKBAG/k6P+J4lZXklvaqZVIOFAe9yQbmkAh8Gb+7+deffh0kW5NaHuU4sMVjz1DzVBlCc28yTQ8N68E93rbnMCj8LVNgPoTvoohzYicTpvuEX09gG4mw=
-Received: by 10.49.31.14 with SMTP id i14mr3693507nfj;
-        Tue, 04 Jul 2006 15:59:06 -0700 (PDT)
-Received: by 10.48.48.6 with HTTP; Tue, 4 Jul 2006 15:59:06 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vejx1f0fz.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=GnnahC0tqiisYpe+kNiosfo7E5KqTXIQ7A7h198rXL1ULSCv56nZKtLT6MQZwXBTXtBVELHxpdcO+wlX4Zre/RzSGswDCa4bJC4hU2RUI8FM9bBtXPWMMTg6WuKnFFZVYtIBVv+eQLw3yWCOtSE9aCE1x59Xfdu/VH5xM7P+dGk=
+Received: by 10.36.118.1 with SMTP id q1mr5479380nzc;
+        Tue, 04 Jul 2006 16:07:15 -0700 (PDT)
+Received: from ?10.0.0.6? ( [69.160.147.208])
+        by mx.gmail.com with ESMTP id 38sm3165064nza.2006.07.04.16.07.13;
+        Tue, 04 Jul 2006 16:07:14 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.63.0607050021330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23328>
 
-On 7/5/06, Junio C Hamano <junkio@cox.net> wrote:
-> Why?
->
-> A patch like this needs to be justified with a bit more
-> explanation; the word "beautiful" is subjective.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 4 Jul 2006, Junio C Hamano wrote:
+> 
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>> We could introduce a time.maximumSkew variable, and just walk only 
+>>> that much further when traversing the commits.
+>> We could have had "commit generation number" in the commit
+>> object header, and use that instead of commit timestamps for
+>> these traversal purposes.  The generation number for a commit is
+>> defined to be max(generation number of its parents)+1 and we
+>> prime the recursive this definition by defining the generation
+>> number for the root commit to be one.
+> 
+> Are you really, really sure this is a remedy? I, for one, am quite sure of 
+> the opposite. What you propose is just another time scale, only this time, 
+> it is not universally true (not even minus local incompetence to keep the 
+> clock accurate).
 
-Arg, git-send-email seems to made a bad job after git-format-patch, sorry.
+It works[*] and it does what using the timestamp was trying to do. 
+Namely, work from "more recent" (or "closer") commits toward "older" (or 
+"farther") commits until you've gone past the point you care about.
 
-So explanation don't go here. So here it is :
-Git-show actually show (for example) :
+It's a little late to be changing the structure of a commit and you'd 
+have to deal with some size/scale issues, but it's do-able. A better 
+idea may be to generate and keep the generation number on a per 
+repository basis, and you'd be able to work around changing grafts.
 
-    Makefile: Create Makefile for Beamer theme
-    rules are : install & uninstall (be careful on this one)
-
-    Also, I hacked presentation oral's Makefile to check them presence or not
----
-
- docs/presentation_oral/Makefile        |    5 +-
- docs/presentation_oral/themes/Makefile |   91 ++++++++++++++++++++++++++++++++
- 2 files changed, 95 insertions(+), 1 deletions(-)
- create mode 100644 docs/presentation_oral/themes/Makefile
-
-I would like to have a newline after commit mesage too as there is one
-before diff-stat.
-
--- 
-# Beber : beber@gna.org
-# IM : beber@jabber.fr
-# http://guybrush.ath.cx, irc://irc.freenode.net/#{e.fr,gentoofr}
+[*] Grafts do _really_ nasty things to this. Just like clock skew does now.
