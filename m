@@ -1,65 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Why's Git called Git ?
-Date: Mon, 3 Jul 2006 20:28:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607032022050.12404@g5.osdl.org>
-References: <013001c69f04$ae4e2400$0200a8c0@amd2500>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-fetch per-repository speed issues
+Date: Mon, 03 Jul 2006 20:30:29 -0700
+Message-ID: <7vsllinj1m.fsf@assigned-by-dhcp.cox.net>
+References: <1151949764.4723.51.camel@neko.keithp.com>
+	<Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>
+	<1151973438.4723.70.camel@neko.keithp.com>
+	<Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 04 05:28:49 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 05:30:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxbae-0005vu-KV
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 05:28:45 +0200
+	id 1FxbcR-0006CD-DD
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 05:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbWGDD2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 23:28:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbWGDD2g
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 23:28:36 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:63374 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750826AbWGDD2f (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 23:28:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k643SPnW013808
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Jul 2006 20:28:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k643SHDA014669;
-	Mon, 3 Jul 2006 20:28:21 -0700
-To: Aaron Gray <angray@beeb.net>
-In-Reply-To: <013001c69f04$ae4e2400$0200a8c0@amd2500>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751309AbWGDDab (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 23:30:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751343AbWGDDab
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 23:30:31 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64971 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751309AbWGDDaa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 23:30:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060704033030.OXAU554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 3 Jul 2006 23:30:30 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 3 Jul 2006 20:21:30 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23243>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-
-On Tue, 4 Jul 2006, Aaron Gray wrote:
+> Ok, a "git fetch" really shouldn't take any longer than a single 
+> connection. However, the fact that you have 32 heads, and it takes pretty 
+> close to _exactly_ 32 times 0.410 seconds (32*0.410s = 13.1s) makes me 
+> suspect that "git fetch" is just broken and fetches one branch at a time. 
 >
-> Why the name I could not find any answer in the documentation ?
+> Which would be just stupid.
+>
+> But look as I might, I see only that one "git-fetch-pack" in git-fetch.sh 
+> that should trigger. Once. Not 32 times. But your timings sure sound like 
+> it's doing a _lot_ more than it should.
+>
+> Junio, any ideas?
 
-It's really quite random. It needs to be a two- or three-letter thing just 
-because I end up typing a lot. 
+Isn't that because the repository have 32 subprojects, totally
+unrelated content-wise?  If you have real stuff to pull from
+there your pack generation needs to do 32 time as much work as
+you would for a single head in that case.
 
-My favourite explanation is "I name all my projects after myself: first 
-'Linux', now 'git'".
-
-Which only makes sense if you know british slang.
-
-The runner up was "Because 'twerp' was too hard to type".
-
-But really, there's not a lot of real thinking behind it. The made-up 
-acronym was "global information tracker", but that's a pretty bad excuse 
-too.
-
-It just happened. Don't ask me why. All the explanations are really made 
-up after the fact.
-
-		Linus
+If you are discussing "peek-remote runs, find out the 32 heads
+are all up to date and no pack is generated" case, then you are
+right.  There is one single fetch-pack to grab the specified
+heads, and after that, an optional single ls-remote and
+fetch-pack runs only once to follow all new tags.
