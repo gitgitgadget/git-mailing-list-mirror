@@ -1,65 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] Add read_cache_from() and discard_cache()
-Date: Tue, 4 Jul 2006 16:18:49 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607041617290.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060630002756.GD22618@steel.home>
- <Pine.LNX.4.63.0606300235300.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0606301643150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v3bdmk2zj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607011657460.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v64ihdupr.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607021043550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7virmepfhx.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] GIT user survey
+Date: Tue, 04 Jul 2006 17:28:11 +0200
+Organization: At home
+Message-ID: <e8e1ea$s5c$1@sea.gmane.org>
+References: <4d8e3fd30606240918m6b452314m6514b5e5fc86f147@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 16:19:09 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jul 04 17:28:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxljq-0001nx-Ko
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 16:18:55 +0200
+	id 1FxmpG-0005su-1s
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 17:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932257AbWGDOSv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 10:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbWGDOSv
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 10:18:51 -0400
-Received: from mail.gmx.de ([213.165.64.21]:46738 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932257AbWGDOSv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 10:18:51 -0400
-Received: (qmail invoked by alias); 04 Jul 2006 14:18:49 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 04 Jul 2006 16:18:49 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virmepfhx.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932209AbWGDP2b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 11:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbWGDP2b
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 11:28:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:26599 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751228AbWGDP2a (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 11:28:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Fxmp3-0005qJ-Ou
+	for git@vger.kernel.org; Tue, 04 Jul 2006 17:28:21 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Jul 2006 17:28:21 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Jul 2006 17:28:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23300>
 
-Hi,
+Paolo Ciarrocchi wrote:
 
-On Mon, 3 Jul 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> I was wondering whether it could be a good idea to have a kind of "GIT
+> users survey" when google pointed my eyes to this page:
+> http://www.selenic.com/pipermail/mercurial/2006-April/007513.html
 > 
-> > Okay. After reading the comment, I am quite certain we can just set the 
-> > index_file_timestamp to 0.
-> 
-> Thanks.
-> 
-> > So, I still think that these two lines should be in the cleanup part of 
-> > get_merge_bases().
-> 
-> I think that is sane -- please make it so.
+> So I modified the content of the survey and published a DRAFT here:
+> http://paolo.ciarrocchi.googlepages.com/GITSurvey
 
-Ummm. After reading my original mail again: bad tobacco that was. Of 
-course, I meant discard_cache(), not get_merge_bases(). Setting 
-index_file_timestamp in get_merge_bases() would be wrong.
+Could you please add the final version (and of course results) on
+Git Wiki (http://git.or.cz/gitwiki), like original one is on Mercurial
+wiki: http://www.selenic.com/mercurial/wiki/index.cgi/UserSurvey ?
 
-Sorry for the noise,
-Dscho
+Thanks in advance
+
+P.S. I wonder why my Mozilla 1.7.12 sees GITSurvey as binary/octet-stream
+instead of text/plain file...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
