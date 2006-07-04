@@ -1,102 +1,67 @@
 From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: git-fetch per-repository speed issues
-Date: Mon, 03 Jul 2006 18:22:26 -0700
-Message-ID: <44A9C2D2.6010409@michonline.com>
-References: <1151949764.4723.51.camel@neko.keithp.com> <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org> <20060704002138.GB5716@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigB1F44A5538655AFA37A789B9"
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Keith Packard <keithp@keithp.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 04 03:23:24 2006
+Subject: [PATCH 1/2] annotate: Support annotation of files on other revisions.
+Date: Mon, 03 Jul 2006 21:30:01 -0400
+Message-ID: <11519766033852-git-send-email-ryan@michonline.com>
+References: <11519766021208-git-send-email-ryan@michonline.com>
+Reply-To: Ryan Anderson <ryan@michonline.com>
+Cc: git@vger.kernel.org, Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Tue Jul 04 03:32:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxZdE-0007cy-0J
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 03:23:16 +0200
+	id 1FxZla-0000Gi-0w
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 03:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbWGDBXM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 21:23:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbWGDBXM
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 21:23:12 -0400
-Received: from h4x0r5.com ([70.85.31.202]:7174 "EHLO h4x0r5.com")
-	by vger.kernel.org with ESMTP id S1750735AbWGDBXL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 21:23:11 -0400
-Received: from c-71-202-182-135.hsd1.ca.comcast.net ([71.202.182.135] helo=mythryan.michonline.com)
+	id S1751158AbWGDBbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 21:31:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbWGDBbt
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 21:31:49 -0400
+Received: from h4x0r5.com ([70.85.31.202]:51469 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1751158AbWGDBbt (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 21:31:49 -0400
+Received: from c-71-202-182-135.hsd1.ca.comcast.net ([71.202.182.135] helo=mythical)
 	by h4x0r5.com with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA:32)
 	(Exim 4.50)
-	id 1FxZcy-00046f-JV; Mon, 03 Jul 2006 18:23:00 -0700
-Received: from localhost ([127.0.0.1])
-	by mythryan.michonline.com with esmtp (Exim 4.62)
-	(envelope-from <ryan@michonline.com>)
-	id 1FxZcT-0002qA-9a; Mon, 03 Jul 2006 18:22:29 -0700
-User-Agent: Thunderbird 1.5.0.4 (X11/20060619)
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20060704002138.GB5716@coredump.intra.peff.net>
-X-Enigmail-Version: 0.94.0.0
+	id 1FxZkI-0004EL-LX; Mon, 03 Jul 2006 18:30:35 -0700
+Received: from ryan by mythical with local (Exim 4.62)
+	(envelope-from <ryan@mythryan2.michonline.com>)
+	id 1FxZjn-00042g-7O; Mon, 03 Jul 2006 21:30:03 -0400
+To: junkio@cox.net
+X-Mailer: git-send-email 1.4.1.g8fced
+In-Reply-To: <11519766021208-git-send-email-ryan@michonline.com>
 X-michonline.com-MailScanner: Found to be clean
 X-michonline.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23231>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigB1F44A5538655AFA37A789B9
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+This is a bug fix, and cleans up one or two other things spotted during the
+course of tracking down the main bug here.
 
-Jeff King wrote:
-> On Mon, Jul 03, 2006 at 04:14:10PM -0700, Linus Torvalds wrote:
->
->  =20
->> Well, you could use multiple branches in the same repository, even if =
-they=20
->> are totally unrealated. That would allow you to fetch them all in one =
-go.
->>    =20
->
-> One annoying thing about this is that you may want to have several of
-> the branches checked out at a time (i.e., you want the actual directory=
+Also, the test-suite is updated to reflect this case.
 
-> structure of libXrandr/, Xorg/, etc). You could pull everything down
-> into one repo and point small pseudo-repos at it with alternates, but I=
+Signed-off-by: Ryan Anderson <ryan@michonline.com>
+(cherry picked from 2f7554b4db3ab2c2d3866b160245c91c9236fc9a commit)
+---
+ t/t8001-annotate.sh |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-> would think that would become a mess with pushes. You can do some magic=
-
-> with read-tree --prefix, but again, I'm not sure how you'd make commits=
-
-> on the correct branch.  Is there an easier way to do this?
->  =20
-You can have multiple source trees, one per 'branch' (which is a bit of
-a bad term here), and have completely unrelated things in the branches.
-
-See, for an example, the main Git repo, which has the "man", "html", and
-"todo" branches, logically distinct and (somewhat) unrelated to the main
-branch tucked away in "master".
-
---=20
-
-Ryan Anderson
-  sometimes Pug Majere
-
-
-
---------------enigB1F44A5538655AFA37A789B9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFEqcLUfhVDhkBuUKURAjz/AJ9E4/XxTabPanZR5ucfQRBQW7jBkACeKHDW
-IBmKftCpiGB1UF+Fn26M+sM=
-=BSnC
------END PGP SIGNATURE-----
-
---------------enigB1F44A5538655AFA37A789B9--
+diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
+index 2496397..70e2ad2 100755
+--- a/t/t8001-annotate.sh
++++ b/t/t8001-annotate.sh
+@@ -6,4 +6,10 @@ test_description='git-annotate'
+ PROG='git annotate'
+ . ../annotate-tests.sh
+ 
++test_expect_success \
++    'Annotating an old revision works' \
++    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") == 2 ] && \
++     [ $(git annotate file master | awk "{print \$3}" | grep -c "^B$") == 2 ]'
++
++
+ test_done
+-- 
+1.4.1.g8fced
