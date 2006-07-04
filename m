@@ -1,67 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Additional merge-base tests
-Date: Mon, 03 Jul 2006 22:47:09 -0700
-Message-ID: <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net>
-References: <44A9E6AE.10508@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-fetch per-repository speed issues
+Date: Mon, 3 Jul 2006 22:53:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607032240260.12404@g5.osdl.org>
+References: <1151949764.4723.51.camel@neko.keithp.com> 
+ <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>  <1151973438.4723.70.camel@neko.keithp.com>
+  <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>  <1151985747.4723.102.camel@neko.keithp.com>
+  <Pine.LNX.4.64.0607032115340.12404@g5.osdl.org> <1151990980.4723.132.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 07:47:16 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 04 07:53:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxdkh-0006PA-2w
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 07:47:15 +0200
+	id 1Fxdqs-0006yb-Nx
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 07:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751114AbWGDFrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 01:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbWGDFrM
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 01:47:12 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47565 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751114AbWGDFrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 01:47:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060704054710.ZCRT19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Jul 2006 01:47:10 -0400
-To: gitzilla@gmail.com
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751167AbWGDFx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 01:53:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbWGDFx1
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 01:53:27 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34731 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751167AbWGDFxZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 01:53:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k645rNnW021029
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 3 Jul 2006 22:53:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k645rMbX019268;
+	Mon, 3 Jul 2006 22:53:22 -0700
+To: Keith Packard <keithp@keithp.com>
+In-Reply-To: <1151990980.4723.132.camel@neko.keithp.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23254>
 
-A Large Angry SCM <gitzilla@gmail.com> writes:
 
-> This demonstrates a problem with git-merge-base.
->  
-> +# Setup for second test set
-> +#
-> +#   PL  PR
-> +#  /  \/  \
-> +# L2  C2  R2
-> +# |   |   |
-> +# L1  C1  R1
-> +# |   |   |
-> +# L0  C0  R0
-> +#   \ |  /
-> +#     S
 
-Cute.
+On Mon, 3 Jul 2006, Keith Packard wrote:
+>
+>     361 /usr/bin/expr
+> 
+> someone sure likes 'expr'...
 
-This is a good demonstration that merge-base may not give you
-minimal set for pathological cases.  If you want to be through
-you could traverse everything to make sure we do not say 'S' is
-relevant, but that is quite expensive, so I think there will
-always be artifacts of horizon effect like this no matter how
-you try to catch it (didn't I keep saying that already?).
+Heh. That's a very Junio thing to do.
 
-However, I do not think it is really a "problem".  At least what
-"merge-base --all" did not miss any, that should be OK.
+Junio seems to like
 
-I think the practical way to proceed is to say that the test
-condition should really check that we do not _omit_ C2 in the
-merge-base --all output.
+	if expr "z$string" : "z<regexp>" >/dev/null
+	then
+		..
+
+and I think he explained it as being the way old-fashioned users do it.
+
+		Linus
+	
