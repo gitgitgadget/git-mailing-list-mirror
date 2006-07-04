@@ -1,70 +1,83 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-cvsimport gets parents wrong for branches
-Date: Tue, 4 Jul 2006 13:33:43 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607041330120.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060703215303.GA24572@memak.tu-darmstadt.de>
- <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
- <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060704110313.GC24572@memak.tu-darmstadt.de>
+Subject: Re: [PATCH] Additional merge-base tests
+Date: Tue, 4 Jul 2006 13:35:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607041334070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44A9E6AE.10508@gmail.com> <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net>
+ <44AA0DAE.1060308@gmail.com> <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vsllhhcxr.fsf@assigned-by-dhcp.cox.net> <e8dim7$8cm$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 13:34:08 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 13:35:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxjA4-0005ok-Ke
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:33:49 +0200
+	id 1FxjBg-00065B-Nl
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184AbWGDLdq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 07:33:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932210AbWGDLdq
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:33:46 -0400
-Received: from mail.gmx.de ([213.165.64.21]:54198 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932184AbWGDLdp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:33:45 -0400
-Received: (qmail invoked by alias); 04 Jul 2006 11:33:43 -0000
+	id S932210AbWGDLfI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 07:35:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932179AbWGDLfH
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:35:07 -0400
+Received: from mail.gmx.de ([213.165.64.21]:8160 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932209AbWGDLfG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:35:06 -0400
+Received: (qmail invoked by alias); 04 Jul 2006 11:35:05 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 04 Jul 2006 13:33:43 +0200
+  by mail.gmx.net (mp028) with SMTP; 04 Jul 2006 13:35:05 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Elrond <elrond+kernel.org@samba-tng.org>
-In-Reply-To: <20060704110313.GC24572@memak.tu-darmstadt.de>
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e8dim7$8cm$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23289>
 
 Hi,
 
-On Tue, 4 Jul 2006, Elrond wrote:
+On Tue, 4 Jul 2006, Jakub Narebski wrote:
 
-> On Tue, Jul 04, 2006 at 10:09:18AM +0200, Johannes Schindelin wrote:
-> > Hi,
-> > 
-> > On Tue, 4 Jul 2006, Martin Langhoff wrote:
-> > 
-> > > It is pretty hard to get that one right in any case, as there are
-> > > cases where the new branch starts from something that is not a commit
-> > > in the parent (from GIT's perspective).
-> > 
-> > But it should be easy to introduce a faked commit, which just contains 
-> > those versions (and takes the newest commit touching any of these file 
-> > versions as branch point).
+> Junio C Hamano wrote:
 > 
-> [...]
->
-> just which parent should our new fake commit have?
+> 
+> > The problem ALASCM's example demonstrates does rely on clock
+> > skews.  The timestamps used in the example looked like this:
+> > 
+> > 
+> >    1   1
+> >   /  \/  \
+> >  4  -1   4
+> >  |   |   |
+> >  3  -2   3
+> >  |   |   |
+> >  2  -3   2
+> >    \ |  /
+> >      0
+> > 
+> > The crucial clock skew the case relies on is that the tip of the
+> > middle branch (-1) is older than the common commit (0).  But the
+> > topmost commits with timestamp 1 could be with timestamp 5 to
+> > correct the clock skew and still make the example "fail".
+> > 
+> >    5   5
+> >   /  \/  \
+> >  4  -1   4
+> >  |   |   |
+> >  3  -2   3
+> >  |   |   |
+> >  2  -3   2
+> >    \ |  /
+> >      0
+> 
+> So would putting timestamp for merge be MAX(now, parents timestamps)
+> solve the problem?
 
-That is what I tried to address with the "branch point" thing. Just take 
-the newest commit (in the ancestor line) touching the file versions of 
-that particular tree, or in other words, the oldest commit having at least 
-these file versions.
-
-IMHO it is dumb enough not to branch off of a commit that it does not 
-matter that much what parent this faked commit has.
+If there is an evil committer, the parents could have bogus timestamps, 
+too. But then, I would not pull from such an evil person...
 
 Ciao,
 Dscho
