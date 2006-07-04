@@ -1,65 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-fetch per-repository speed issues
-Date: Tue, 4 Jul 2006 12:22:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607041219540.12404@g5.osdl.org>
-References: <1151949764.4723.51.camel@neko.keithp.com> <e8e28j$v8v$1@sea.gmane.org>
- <7vk66tgt6n.fsf@assigned-by-dhcp.cox.net>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] rev-list: free commit_list in ... handler
+Date: Tue, 4 Jul 2006 21:22:20 +0200
+Message-ID: <20060704192220.GA9500@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Tue Jul 04 21:22:23 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 04 21:22:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxqTR-0004e8-Oq
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 21:22:18 +0200
+	id 1FxqTZ-0004f3-2Q
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 21:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWGDTWO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 15:22:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbWGDTWO
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 15:22:14 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:21420 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751091AbWGDTWO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 15:22:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k64JM7nW029394
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 4 Jul 2006 12:22:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k64JM5Z8011877;
-	Tue, 4 Jul 2006 12:22:07 -0700
+	id S1751093AbWGDTWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 15:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbWGDTWW
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 15:22:22 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:48279
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751093AbWGDTWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 15:22:21 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id A65821089; Tue,  4 Jul 2006 21:22:20 +0200 (CEST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk66tgt6n.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23310>
 
+Johannes noticed the missing call to free_commit_list() in the
+patch from Santi to add ... support to rev-parse.  Turns out I
+forgot it too in rev-list.  This patch is against the next branch
+(3b1d06a).
 
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-On Tue, 4 Jul 2006, Junio C Hamano wrote:
-> 
-> I had an impression, though the report does not talk about this
-> specific detail, that the extra time we are paying is because
-> the "git pull" test is done without suppressing the final
-> diffstat phase.
-
-I'm pretty sure that was the reason for the particular hg issue. Looking 
-at the "clone" times, the problem is almost certainly not the actual 
-pulling.
-
-The diffstat generation is often the largest part of a git merge. It's 
-gotten cheaper since the hg benchmarks were done (I think they were done 
-back before the integrated diff generation, so they also have the overhead 
-of executing a lot of external GNU diff processes), but it's still not 
-"cheap".
-
-But I have to say that the diffstat at least for me is absolutely 
-invaluable.
-
-			Linus
+diff --git a/revision.c b/revision.c
+index 66390c9..a7750e6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -817,6 +817,7 @@ int setup_revisions(int argc, const char
+ 					exclude = get_merge_bases(a, b, 1);
+ 					add_pending_commit_list(revs, exclude,
+ 					                        flags_exclude);
++					free_commit_list(exclude);
+ 					a->object.flags |= flags;
+ 				} else
+ 					a->object.flags |= flags_exclude;
