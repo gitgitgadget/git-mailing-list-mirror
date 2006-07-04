@@ -1,34 +1,32 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: [PATCH] Add a custom ./configure script
-Date: Tue, 04 Jul 2006 02:25:46 +0200
-Message-ID: <20060704002546.21634.54935.stgit@machine.or.cz>
+Date: Tue, 04 Jul 2006 02:40:12 +0200
+Message-ID: <20060704004012.22639.44317.stgit@machine.or.cz>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 04 03:04:08 2006
+X-From: git-owner@vger.kernel.org Tue Jul 04 03:08:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxZKd-0004iN-Br
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 03:04:04 +0200
+	id 1FxZOc-0005Io-75
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 03:08:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751343AbWGDBD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 21:03:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbWGDBD6
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 21:03:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50361 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751343AbWGDBD5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 21:03:57 -0400
-Received: (qmail 21644 invoked from network); 4 Jul 2006 02:25:46 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 4 Jul 2006 02:25:46 +0200
+	id S1751345AbWGDBIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 21:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751342AbWGDBIG
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 21:08:06 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:61113 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751345AbWGDBIF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 21:08:05 -0400
+Received: (qmail 22647 invoked by uid 2089); 4 Jul 2006 02:40:13 +0200
+MBOX-Line: From pasky@suse.cz Tue Jul  4 02:40:12 2006
 To: Junio C Hamano <junkio@cox.net>
 User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23228>
 
 This patch adds a custom hand-made and supposedly easy to debug ./configure
 script. It is originally based on mplayer's ./configure script but heavily
