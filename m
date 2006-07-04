@@ -1,85 +1,65 @@
-From: Bennett Todd <bet@rahul.net>
-Subject: git2rss --- publish changes from git-log via RSS
-Date: Tue, 4 Jul 2006 19:11:35 +0000
-Message-ID: <20060704191135.GB10534@rahul.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-fetch per-repository speed issues
+Date: Tue, 4 Jul 2006 12:22:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607041219540.12404@g5.osdl.org>
+References: <1151949764.4723.51.camel@neko.keithp.com> <e8e28j$v8v$1@sea.gmane.org>
+ <7vk66tgt6n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IiVenqGWf+H9Y6IX"
-X-From: git-owner@vger.kernel.org Tue Jul 04 21:12:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, jnareb@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jul 04 21:22:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxqJZ-0002yJ-SG
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 21:12:06 +0200
+	id 1FxqTR-0004e8-Oq
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 21:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932341AbWGDTLy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 15:11:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932342AbWGDTLy
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 15:11:54 -0400
-Received: from og.latency.net ([64.21.79.2]:49423 "EHLO og.latency.net")
-	by vger.kernel.org with ESMTP id S932341AbWGDTLy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 15:11:54 -0400
-Received: by og.latency.net (Postfix, from userid 1053)
-	id 9CEF013FBCA; Tue,  4 Jul 2006 15:11:53 -0400 (EDT)
-Received: from pic.bent.dom (localhost [127.0.0.1])
-	by og.latency.net (Postfix) with ESMTP id EE5E913FB2C
-	for <git@vger.kernel.org>; Tue,  4 Jul 2006 15:11:50 -0400 (EDT)
-Received: (from bet@localhost, uid 500)
-          by pic.bent.dom (femail 0.97)
-          04 Jul 2006 19:11:35 +0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-Spam-Checker-Version: SpamAssassin asr 3.0.2 (2004-11-16) on og.latency.net
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
-X-Spam-Level: 
+	id S1751091AbWGDTWO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 15:22:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbWGDTWO
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 15:22:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:21420 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751091AbWGDTWO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 15:22:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k64JM7nW029394
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 4 Jul 2006 12:22:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k64JM5Z8011877;
+	Tue, 4 Jul 2006 12:22:07 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk66tgt6n.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23309>
 
 
---IiVenqGWf+H9Y6IX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Just switched Bent Linux[1] from darcs to git (darcs is sexy, but I
-can build git; ghc defeats me). So I hacked up a quick and simple
-git2rss to replace my use of darcs2rss for publishing updates.
+On Tue, 4 Jul 2006, Junio C Hamano wrote:
+> 
+> I had an impression, though the report does not talk about this
+> specific detail, that the extra time we are paying is because
+> the "git pull" test is done without suppressing the final
+> diffstat phase.
 
-<URL:http://bent.latency.net/git2rss>
+I'm pretty sure that was the reason for the particular hg issue. Looking 
+at the "clone" times, the problem is almost certainly not the actual 
+pulling.
 
-I hardcoded a couple of Bent-linux-specific bits in there, if
-anybody else is actually interested in this, let me know, we can
-discuss how to peel 'em out.
+The diffstat generation is often the largest part of a git merge. It's 
+gotten cheaper since the hg benchmarks were done (I think they were done 
+back before the integrated diff generation, so they also have the overhead 
+of executing a lot of external GNU diff processes), but it's still not 
+"cheap".
 
-I like to read the back archives before posting to a list I've just
-subscribed to, but couldn't find a downloadable version of the git
-list. If anybody could point me to one, I'd appreciate it.
+But I have to say that the diffstat at least for me is absolutely 
+invaluable.
 
--Bennett
-
-[1] Bent Linux probably isn't of interest to anybody else, it's my
-mid-life crisis project, sound bite "unix as I came to love hear in
-the early '80s, when she and I were both much younger, slimmer, and
-healthier". uClibc, static linking only, no dynamic loading, no
-i18n, nothing gui. Handy for building initrds, perhaps useful for
-embedded applications. Nobody but a total crank like me would use it
-as their favoured workstation OS.
-<URL:http://bent.latency.net/bent/>
-
---IiVenqGWf+H9Y6IX
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.4 (GNU/Linux)
-
-iD8DBQFEqr1mHZWg9mCTffwRAorbAJ464McRpFG3Zgif//5wIYBoHdxuywCdGmgo
-R/xjo5UJvUb8T7LLchAFUPg=
-=7/3R
------END PGP SIGNATURE-----
-
---IiVenqGWf+H9Y6IX--
+			Linus
