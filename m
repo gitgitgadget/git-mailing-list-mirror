@@ -1,84 +1,73 @@
-From: Keith Packard <keithp@keithp.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git-fetch per-repository speed issues
-Date: Mon, 03 Jul 2006 21:02:27 -0700
-Message-ID: <1151985747.4723.102.camel@neko.keithp.com>
-References: <1151949764.4723.51.camel@neko.keithp.com>
-	 <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>
-	 <1151973438.4723.70.camel@neko.keithp.com>
-	 <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>
+Date: Mon, 3 Jul 2006 21:19:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607032115340.12404@g5.osdl.org>
+References: <1151949764.4723.51.camel@neko.keithp.com> 
+ <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>  <1151973438.4723.70.camel@neko.keithp.com>
+  <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org> <1151985747.4723.102.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-JoDekWSRWve2I/ykgFwv"
-Cc: keithp@keithp.com
-X-From: git-owner@vger.kernel.org Tue Jul 04 06:02:48 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 04 06:20:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxc7Z-0005ba-QP
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 06:02:46 +0200
+	id 1FxcOc-00077C-Cx
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 06:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158AbWGDECc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 00:02:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWGDECc
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 00:02:32 -0400
-Received: from home.keithp.com ([63.227.221.253]:47374 "EHLO keithp.com")
-	by vger.kernel.org with ESMTP id S1751158AbWGDECb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 00:02:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 926C413001F;
-	Mon,  3 Jul 2006 21:02:30 -0700 (PDT)
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 5TjTl09FGAVg; Mon,  3 Jul 2006 21:02:30 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 32FD413001E; Mon,  3 Jul 2006 21:02:30 -0700 (PDT)
-Received: from neko.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 29E6214001;
-	Mon,  3 Jul 2006 21:02:30 -0700 (PDT)
-Received: by neko.keithp.com (Postfix, from userid 1488)
-	id 390A06AC24A; Mon,  3 Jul 2006 21:02:28 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>
-X-Mailer: Evolution 2.6.2 
+	id S1750838AbWGDET6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 00:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWGDET5
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 00:19:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:60311 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750838AbWGDET4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 00:19:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k644JonW016613
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 3 Jul 2006 21:19:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k644JnlP016318;
+	Mon, 3 Jul 2006 21:19:50 -0700
+To: Keith Packard <keithp@keithp.com>
+In-Reply-To: <1151985747.4723.102.camel@neko.keithp.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
+X-MIMEDefang-Filter: osdl$Revision: 1.135 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23247>
 
 
---=-JoDekWSRWve2I/ykgFwv
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2006-07-03 at 20:21 -0700, Linus Torvalds wrote:
+On Mon, 3 Jul 2006, Keith Packard wrote:
+> 
+> Yeah, it says that only once. And, it runs the fetch-pack in about .5
+> seconds. And, now the whole process completes in 4.7 seconds; perhaps
+> the remote server is less loaded than earlier this afternoon?
 
-> Keithp, can you try this trivial patch? It _should_ say something like
+Well, that's still strange. What takes 4.2 seconds then?
 
-Yeah, it says that only once. And, it runs the fetch-pack in about .5
-seconds. And, now the whole process completes in 4.7 seconds; perhaps
-the remote server is less loaded than earlier this afternoon? It's also
-possible that I was running old git bits here, but I don't think so.
+> > And then it should leave a "fetch.trace" file in your working directory, 
+> > which should show where that _one_ thing spends its time.
+> 
+> It looks boring to me and spent 0.55 from start to finish. I can send
+> along the whole trace if you have an acute desire to peer at it.
 
-> And then it should leave a "fetch.trace" file in your working directory,=20
-> which should show where that _one_ thing spends its time.
+No, the 0.5 seconds is what I _expected_. There's something strange going 
+on in your git fetch that it takes any longer than that.
 
-It looks boring to me and spent 0.55 from start to finish. I can send
-along the whole trace if you have an acute desire to peer at it.
+Can you instrument your "git-fetch.sh" script (just add random
 
---=20
-keith.packard@intel.com
+	(echo $LINENO ; date) >&2
 
---=-JoDekWSRWve2I/ykgFwv
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+lines all over) to see what is so expensive? 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
+That fetch-pack really should be the most expensive part by far (and half 
+a second sounds right), but it clearly isn't. At 4.7s, your fetch is still 
+taking about ten times longer than it _should_.
 
-iD8DBQBEqehTQp8BWwlsTdMRAkO3AJ9CV6qPVynyLD+kh5E2AqDQwxR6KwCguWeG
-z9VVmhdHuEn4EtMvm88q97s=
-=bbLJ
------END PGP SIGNATURE-----
-
---=-JoDekWSRWve2I/ykgFwv--
+		Linus
