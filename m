@@ -1,62 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach rev-parse the ... syntax.
-Date: Tue, 4 Jul 2006 12:50:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607041247200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <873bdhbv4x.fsf@gmail.com>
+From: Elrond <elrond+kernel.org@samba-tng.org>
+Subject: Re: git-cvsimport gets parents wrong for branches
+Date: Tue, 4 Jul 2006 13:03:14 +0200
+Message-ID: <20060704110313.GC24572@memak.tu-darmstadt.de>
+References: <20060703215303.GA24572@memak.tu-darmstadt.de> <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com> <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-356820123-1152010250=:29667"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Junio C. Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jul 04 12:51:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 13:03:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxiUa-0007K4-87
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 12:50:56 +0200
+	id 1Fxiga-0000mF-2Z
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932191AbWGDKux (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 06:50:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWGDKux
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 06:50:53 -0400
-Received: from mail.gmx.de ([213.165.64.21]:22688 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932191AbWGDKuw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 06:50:52 -0400
-Received: (qmail invoked by alias); 04 Jul 2006 10:50:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 04 Jul 2006 12:50:51 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-In-Reply-To: <873bdhbv4x.fsf@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751272AbWGDLDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 07:03:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751276AbWGDLDR
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:03:17 -0400
+Received: from baerbel.mug.maschinenbau.tu-darmstadt.de ([130.83.48.97]:8655
+	"EHLO baerbel.mug.maschinenbau.tu-darmstadt.de") by vger.kernel.org
+	with ESMTP id S1751272AbWGDLDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 07:03:16 -0400
+Received: from baerbel.mug.maschinenbau.tu-darmstadt.de (localhost [127.0.0.1])
+	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4) with ESMTP id k64B3EOb011262
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 4 Jul 2006 13:03:14 +0200
+Received: (from tacke@localhost)
+	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4/Submit) id k64B3E95011260;
+	Tue, 4 Jul 2006 13:03:14 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Elrond <elrond+kernel.org@samba-tng.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: ClamAV 0.88.2/1582/Mon Jul  3 23:23:18 2006 on baerbel.mug.maschinenbau.tu-darmstadt.de
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23281>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Jul 04, 2006 at 10:09:18AM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 4 Jul 2006, Martin Langhoff wrote:
+> 
+> > It is pretty hard to get that one right in any case, as there are
+> > cases where the new branch starts from something that is not a commit
+> > in the parent (from GIT's perspective).
+> 
+> But it should be easy to introduce a faked commit, which just contains 
+> those versions (and takes the newest commit touching any of these file 
+> versions as branch point).
 
----1148973799-356820123-1152010250=:29667
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Of couye in theory, (if cvs was used sanely), the base of
+each branch should be a commit on the parent-branch. But as
+we all know, cvs allows pathologic cases.
+(My script doesn't create such a case, it's sanely
+representable in git without any fake commits.)
 
-Hi,
 
-On Tue, 4 Jul 2006, Santi Béjar wrote:
+So now for the patholigic cases (when they're solved, the
+main issue is solved too):
 
-> +				  struct commit_list *exclude = get_merge_bases(a, b,1);
+Of course, the base version for a branch can be turned into
+a tree (should be easy: cvsps's first changeset of the
+branch has the previous revisions of each file).
+This tree can also be turned into a fake commit...
+just which parent should our new fake commit have?
 
-You never free_commit_list() exclude.
+My current simple answer is: The commit on the parent
+branch with the most matching number of files, so that
+the diff, that the fake commit introduces has the least
+number of files.
 
-Side thought: we do not really support multiple ranges, do we? E.g.
+In the non-patholoc case, the fake commit would introduce
+no diff at all and should be dropped.
 
-	git-rev-list HEAD~10..HEAD~8 HEAD^..
+Of couse I have no idea, how hard it would be to implement
+this. And in reality, it would be cvsps's job to do that.
 
-would not yield the intended result, right? (And same goes for ... ranges) 
-Maybe we should at least warn about that.
 
-Ciao,
-Dscho
----1148973799-356820123-1152010250=:29667--
+    Elrond
