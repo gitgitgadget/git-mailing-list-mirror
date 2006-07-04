@@ -1,80 +1,48 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Additional merge-base tests
-Date: Tue, 04 Jul 2006 13:18:57 -0700
-Message-ID: <44AACD31.70702@gmail.com>
-References: <44A9E6AE.10508@gmail.com> <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net> <44AA0DAE.1060308@gmail.com> <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-fetch per-repository speed issues
+Date: Tue, 04 Jul 2006 14:05:32 -0700
+Message-ID: <7vfyhhgjxf.fsf@assigned-by-dhcp.cox.net>
+References: <1151949764.4723.51.camel@neko.keithp.com>
+	<e8e28j$v8v$1@sea.gmane.org> <7vk66tgt6n.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0607041219540.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jul 04 22:19:07 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 23:05:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxrMP-0005Rr-Hq
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 22:19:06 +0200
+	id 1Fxs5R-0004S9-0b
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 23:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932380AbWGDUTB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 16:19:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbWGDUTB
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 16:19:01 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:51751 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932380AbWGDUTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 16:19:00 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so817283wra
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 13:18:59 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=j0bdt7zBdZvgvhelW83yBjUykuNzGbwmwcymDmcP3KDkHpfllyA1DVFlO/k5rUAE+LyQtN8YG079xYvdVv8f2M6enKU0+BDJDntU4rX+Xv+zwTlI28c0x9q/FhCVFaJAbRsXqCOYfKVe6Y3SHdjir3TnKlyYJ2kWI2ScyKovjuI=
-Received: by 10.65.218.8 with SMTP id v8mr4457857qbq;
-        Tue, 04 Jul 2006 13:18:59 -0700 (PDT)
-Received: from ?10.0.0.6? ( [69.160.147.208])
-        by mx.gmail.com with ESMTP id e16sm1154016qbe.2006.07.04.13.18.58;
-        Tue, 04 Jul 2006 13:18:59 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S932398AbWGDVFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 17:05:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932400AbWGDVFe
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 17:05:34 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:62905 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932398AbWGDVFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 17:05:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060704210533.DJVU8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 4 Jul 2006 17:05:33 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607041219540.12404@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 4 Jul 2006 12:22:05 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23315>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 4 Jul 2006, Junio C Hamano wrote:
-> 
->> A Large Angry SCM <gitzilla@gmail.com> writes:
->>
->>>> This is a good demonstration that merge-base may not give you
->>>> minimal set for pathological cases.  If you want to be through
->>>> you could traverse everything to make sure we do not say 'S' is
->>>> relevant, but that is quite expensive, so I think there will
->>>> always be artifacts of horizon effect like this no matter how
->>>> you try to catch it (didn't I keep saying that already?).
->>> The problem is in mark_reachable_commits(); it is either superfluous
->>> or it needs to parse_commit() those commits that haven't been parsed
->>> yet that it needs to traverse.
->> Yes, you could traverse everything.  But that is not practical.
->> We have known that the clean-up pass has this horizon effect,
->> and it is a compromise.
-> 
-> We could introduce a time.maximumSkew variable, and just walk only 
-> that much further when traversing the commits.
-> 
-> So, if you do not trust your clients to have a proper ntp setup, just say 
-> "I trust my peers to be off at most 1 day". That would save lots vs 
-> traverse-everything.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-The fuzz would only serve to mask, even more, that the heuristic is 
-broken. But, it would also allow the (broken) heuristic to be used _and_ 
-let the user decide how much effort may be used to find the correct bases.
+> But I have to say that the diffstat at least for me is absolutely 
+> invaluable.
 
-If this happens, it should be (yet another) user configurable; either, 
-per repository, command line, or both.
+Oh, I absolutely agree with that and somebody who suggests to
+turn it off by default needs a very good argument to convince
+me.
