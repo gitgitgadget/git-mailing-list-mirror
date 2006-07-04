@@ -1,60 +1,99 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-fetch per-repository speed issues
-Date: Mon, 3 Jul 2006 20:40:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607032039010.12404@g5.osdl.org>
-References: <1151949764.4723.51.camel@neko.keithp.com>
- <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org> <1151973438.4723.70.camel@neko.keithp.com>
- <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org> <7vsllinj1m.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: [PATCH] Additional merge-base tests
+Date: Mon, 03 Jul 2006 20:55:26 -0700
+Message-ID: <44A9E6AE.10508@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 05:41:04 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 04 05:55:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxbmX-0000kv-37
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 05:41:01 +0200
+	id 1Fxc0w-0004ma-BE
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 05:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbWGDDkt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Jul 2006 23:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWGDDkt
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 23:40:49 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2449 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750991AbWGDDks (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Jul 2006 23:40:48 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k643einW014444
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Jul 2006 20:40:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k643eh1d015065;
-	Mon, 3 Jul 2006 20:40:44 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vsllinj1m.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750895AbWGDDzo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Jul 2006 23:55:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbWGDDzo
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Jul 2006 23:55:44 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:28409 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1750895AbWGDDzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jul 2006 23:55:43 -0400
+Received: by py-out-1112.google.com with SMTP id c39so1485135pyd
+        for <git@vger.kernel.org>; Mon, 03 Jul 2006 20:55:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=XVk2QQeXqfAbWvBYlXLMHOuYar83VB9IwRF0x9JfVnvYu/PR+MdDMpNc1MK9iZheAG6TyqKwplDQLLlJfjdZXqqzrSVafFviMsaSTlqG4bQfAdZfrznaoF8MF/nDA9ajq5DJtyv68i/lcCUHWHya3amSm378OOM4c77UI0DaDOI=
+Received: by 10.35.37.18 with SMTP id p18mr1698719pyj;
+        Mon, 03 Jul 2006 20:55:33 -0700 (PDT)
+Received: from ?10.0.0.6? ( [69.160.147.208])
+        by mx.gmail.com with ESMTP id q36sm44047pyg.2006.07.03.20.55.32;
+        Mon, 03 Jul 2006 20:55:33 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23245>
 
+Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
+---
+This demonstrates a problem with git-merge-base.
 
+ t6010-merge-base.sh |   33 +++++++++++++++++++++++++++++++++
+ 1 files changed, 33 insertions(+)
 
-On Mon, 3 Jul 2006, Junio C Hamano wrote:
-> 
-> Isn't that because the repository have 32 subprojects, totally
-> unrelated content-wise?  If you have real stuff to pull from
-> there your pack generation needs to do 32 time as much work as
-> you would for a single head in that case.
-
-No, Keith said this was for the case where the fetching repository is 
-already totally up-to-date:
-
-    "And, it's painfully slow, even when the repository is up to date"
-
-and gave a 17-second time.
-
-			Linus
+diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+index 1dce123..9a815bd 100755
+--- a/t/t6010-merge-base.sh
++++ b/t/t6010-merge-base.sh
+@@ -44,6 +44,31 @@ A=$(doit 1 A $B)
+ G=$(doit 7 G $B $E)
+ H=$(doit 8 H $A $F)
+ 
++# Setup for second test set
++#
++#   PL  PR
++#  /  \/  \
++# L2  C2  R2
++# |   |   |
++# L1  C1  R1
++# |   |   |
++# L0  C0  R0
++#   \ |  /
++#     S
++
++S=$(doit  0 S)
++C0=$(doit -3 C0 $S)
++L0=$(doit  2 L0 $S)
++R0=$(doit  2 R0 $S)
++C1=$(doit -2 C1 $C0)
++L1=$(doit  3 L1 $L0)
++R1=$(doit  3 R1 $R0)
++C2=$(doit -1 C2 $C1)
++L2=$(doit  4 L2 $L1)
++R2=$(doit  4 R2 $R1)
++PL=$(doit  1 PL $L2 $C2)
++PR=$(doit  1 PR $C2 $R2)
++
+ test_expect_success 'compute merge-base (single)' \
+     'MB=$(git-merge-base G H) &&
+      expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/B"'
+@@ -56,4 +81,12 @@ test_expect_success 'compute merge-base 
+     'MB=$(git-show-branch --merge-base G H) &&
+      expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/B"'
+ 
++test_expect_success 'compute merge-base (single)' \
++    'MB=$(git-merge-base PL PR) &&
++     expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/C2"'
++
++test_expect_success 'compute merge-base (all)' \
++    'MB=$(git-merge-base --all PL PR) &&
++     expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/C2"'
++
+ test_done
