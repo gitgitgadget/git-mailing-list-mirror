@@ -1,87 +1,60 @@
-From: Elrond <elrond+kernel.org@samba-tng.org>
-Subject: Re: git-cvsimport gets parents wrong for branches
-Date: Tue, 4 Jul 2006 13:03:14 +0200
-Message-ID: <20060704110313.GC24572@memak.tu-darmstadt.de>
-References: <20060703215303.GA24572@memak.tu-darmstadt.de> <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com> <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-fetch per-repository speed issues
+Date: Tue, 04 Jul 2006 13:10:40 +0200
+Message-ID: <44AA4CB0.7020604@op5.se>
+References: <1151949764.4723.51.camel@neko.keithp.com>	 <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>	 <1151973438.4723.70.camel@neko.keithp.com>	 <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>	 <7vsllinj1m.fsf@assigned-by-dhcp.cox.net>	 <Pine.LNX.4.64.0607032039010.12404@g5.osdl.org> <1151987441.4723.110.camel@neko.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 13:03:29 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 13:11:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxiga-0000mF-2Z
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:03:20 +0200
+	id 1Fxinx-0001u9-Rx
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbWGDLDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 07:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751276AbWGDLDR
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:03:17 -0400
-Received: from baerbel.mug.maschinenbau.tu-darmstadt.de ([130.83.48.97]:8655
-	"EHLO baerbel.mug.maschinenbau.tu-darmstadt.de") by vger.kernel.org
-	with ESMTP id S1751272AbWGDLDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 07:03:16 -0400
-Received: from baerbel.mug.maschinenbau.tu-darmstadt.de (localhost [127.0.0.1])
-	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4) with ESMTP id k64B3EOb011262
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 4 Jul 2006 13:03:14 +0200
-Received: (from tacke@localhost)
-	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4/Submit) id k64B3E95011260;
-	Tue, 4 Jul 2006 13:03:14 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Mail-Followup-To: Elrond <elrond+kernel.org@samba-tng.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: ClamAV 0.88.2/1582/Mon Jul  3 23:23:18 2006 on baerbel.mug.maschinenbau.tu-darmstadt.de
-X-Virus-Status: Clean
+	id S1751266AbWGDLKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 07:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751276AbWGDLKm
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:10:42 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:53663 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751266AbWGDLKm
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:10:42 -0400
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 932EF6BCC6; Tue,  4 Jul 2006 13:10:40 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Keith Packard <keithp@keithp.com>
+In-Reply-To: <1151987441.4723.110.camel@neko.keithp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23282>
 
-On Tue, Jul 04, 2006 at 10:09:18AM +0200, Johannes Schindelin wrote:
-> Hi,
+Keith Packard wrote:
+> On Mon, 2006-07-03 at 20:40 -0700, Linus Torvalds wrote:
 > 
-> On Tue, 4 Jul 2006, Martin Langhoff wrote:
 > 
-> > It is pretty hard to get that one right in any case, as there are
-> > cases where the new branch starts from something that is not a commit
-> > in the parent (from GIT's perspective).
+>>    "And, it's painfully slow, even when the repository is up to date"
+>>
+>>and gave a 17-second time.
 > 
-> But it should be easy to introduce a faked commit, which just contains 
-> those versions (and takes the newest commit touching any of these file 
-> versions as branch point).
+> 
+> It's faster this evening, down to 8 seconds using ssh and 4 seconds
+> using git. I clearly need to force use of the git protocol. Anyone else
+> like the attached patch?
 
-Of couye in theory, (if cvs was used sanely), the base of
-each branch should be a commit on the parent-branch. But as
-we all know, cvs allows pathologic cases.
-(My script doesn't create such a case, it's sanely
-representable in git without any fake commits.)
+Since it changes the current meaning of ssh+git, I'm not exactly 
+thrilled. However, "git/ssh" or "ssh/git" would work fine for me. The 
+slash-separator could be used to say "fetch over this, push over that", 
+so we can end up with any valid protocol to use for fetches and another 
+one to push over.
 
-
-So now for the patholigic cases (when they're solved, the
-main issue is solved too):
-
-Of course, the base version for a branch can be turned into
-a tree (should be easy: cvsps's first changeset of the
-branch has the previous revisions of each file).
-This tree can also be turned into a fake commit...
-just which parent should our new fake commit have?
-
-My current simple answer is: The commit on the parent
-branch with the most matching number of files, so that
-the diff, that the fake commit introduces has the least
-number of files.
-
-In the non-patholoc case, the fake commit would introduce
-no diff at all and should be dropped.
-
-Of couse I have no idea, how hard it would be to implement
-this. And in reality, it would be cvsps's job to do that.
-
-
-    Elrond
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
