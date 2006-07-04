@@ -1,67 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Additional merge-base tests
-Date: Tue, 4 Jul 2006 10:23:09 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <44A9E6AE.10508@gmail.com> <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net>
- <44AA0DAE.1060308@gmail.com> <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
+From: llandre <r&d2@dave-tech.it>
+Subject: Can't import Xenomai svn repo
+Date: Tue, 04 Jul 2006 10:48:16 +0200
+Message-ID: <44AA2B50.4060403@dave-tech.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitzilla@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 10:23:58 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 04 10:46:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxgBr-0001Sh-Nd
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 10:23:28 +0200
+	id 1FxgY3-0005OL-0s
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 10:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932069AbWGDIXM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 04:23:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932066AbWGDIXM
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 04:23:12 -0400
-Received: from mail.gmx.de ([213.165.64.21]:34701 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932069AbWGDIXK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 04:23:10 -0400
-Received: (qmail invoked by alias); 04 Jul 2006 08:23:09 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp040) with SMTP; 04 Jul 2006 10:23:09 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932144AbWGDIqU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 04:46:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbWGDIqU
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 04:46:20 -0400
+Received: from host46-203-static.38-85-b.business.telecomitalia.it ([85.38.203.46]:58377
+	"HELO dave-tech.it") by vger.kernel.org with SMTP id S932144AbWGDIqT
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 04:46:19 -0400
+Received: (qmail 30090 invoked by uid 0); 4 Jul 2006 08:46:16 -0000
+Received: from unknown (HELO ?192.168.0.6?) (192.168.2.253)
+  by 192.168.2.1 with SMTP; 4 Jul 2006 08:46:16 -0000
+User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23273>
 
-Hi,
+Hi all,
 
-On Tue, 4 Jul 2006, Junio C Hamano wrote:
+I tried to import Xenomai svn repo but the script failed:
 
-> A Large Angry SCM <gitzilla@gmail.com> writes:
-> 
-> >> This is a good demonstration that merge-base may not give you
-> >> minimal set for pathological cases.  If you want to be through
-> >> you could traverse everything to make sure we do not say 'S' is
-> >> relevant, but that is quite expensive, so I think there will
-> >> always be artifacts of horizon effect like this no matter how
-> >> you try to catch it (didn't I keep saying that already?).
-> >
-> > The problem is in mark_reachable_commits(); it is either superfluous
-> > or it needs to parse_commit() those commits that haven't been parsed
-> > yet that it needs to traverse.
-> 
-> Yes, you could traverse everything.  But that is not practical.
-> We have known that the clean-up pass has this horizon effect,
-> and it is a compromise.
+git-svnimport -v -C xenomai.git http://svn.gna.org/xenomai/trunk
+RA layer request failed: PROPFIND request failed on '/xenomai/trunk': 
+PROPFIND of '/xenomai/trunk': 405 Method Not Allowed 
+(http://svn.gna.org) at /usr/bin/git-svnimport line 135
 
-We could introduce a time.maximumSkew variable, and just walk only 
-that much further when traversing the commits.
+Git version is 1.4.0.
+Anybody can help me?
 
-So, if you do not trust your clients to have a proper ntp setup, just say 
-"I trust my peers to be off at most 1 day". That would save lots vs 
-traverse-everything.
 
-Ciao,
-Dscho
+TIA,
+llandre
+
+DAVE Electronics System House - R&D Department
+web:   http://www.dave-tech.it
+email: r&d2@dave-tech.it
