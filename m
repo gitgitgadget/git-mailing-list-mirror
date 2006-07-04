@@ -1,99 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-fetch per-repository speed issues
-Date: Mon, 3 Jul 2006 22:36:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607032213030.12404@g5.osdl.org>
-References: <1151949764.4723.51.camel@neko.keithp.com> 
- <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org>  <1151973438.4723.70.camel@neko.keithp.com>
-  <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org>  <1151985747.4723.102.camel@neko.keithp.com>
-  <Pine.LNX.4.64.0607032115340.12404@g5.osdl.org> <1151989503.4723.126.camel@neko.keithp.com>
+From: Joachim Berdal Haga <c.j.b.haga@fys.uio.no>
+Subject: Re: Compression speed for large files
+Date: Tue, 04 Jul 2006 07:42:03 +0200
+Message-ID: <44A9FFAB.1010708@fys.uio.no>
+References: <loom.20060703T124601-969@post.gmane.org>
+ <20060703214503.GA3897@coredump.intra.peff.net> <44A99961.8090504@fys.uio.no>
+ <Pine.LNX.4.64.0607031556480.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 04 07:36:26 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 07:42:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxdaA-0005Jw-EV
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 07:36:22 +0200
+	id 1Fxdfy-0005wp-9B
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 07:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbWGDFgT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 01:36:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751102AbWGDFgT
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 01:36:19 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:20647 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751075AbWGDFgS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 01:36:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k645aFnW020305
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 3 Jul 2006 22:36:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k645aFex018715;
-	Mon, 3 Jul 2006 22:36:15 -0700
-To: Keith Packard <keithp@keithp.com>
-In-Reply-To: <1151989503.4723.126.camel@neko.keithp.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.81__
-X-MIMEDefang-Filter: osdl$Revision: 1.135 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751102AbWGDFmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 01:42:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbWGDFmJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 01:42:09 -0400
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:40655 "EHLO
+	osl1smout1.broadpark.no") by vger.kernel.org with ESMTP
+	id S1751102AbWGDFmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 01:42:08 -0400
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java System Messaging Server 6.1 HotFix 0.05 (built Oct 21 2004))
+ with ESMTP id <0J1V008U86I54SB0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Tue, 04 Jul 2006 07:42:05 +0200 (CEST)
+Received: from pep ([80.203.45.67]) by osl1sminn1.broadpark.no
+ (Sun Java System Messaging Server 6.1 HotFix 0.05 (built Oct 21 2004))
+ with ESMTP id <0J1V0071Z6I4M510@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Tue, 04 Jul 2006 07:42:05 +0200 (CEST)
+Received: from localhost ([127.0.0.1])	by pep with esmtp (Exim 4.62)
+	(envelope-from <c.j.b.haga@fys.uio.no>)	id 1Fxdfg-0001pf-KS; Tue,
+ 04 Jul 2006 07:42:04 +0200
+In-reply-to: <Pine.LNX.4.64.0607031556480.12404@g5.osdl.org>
+To: Linus Torvalds <torvalds@osdl.org>
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: c.j.b.haga@fys.uio.no
+X-SA-Exim-Scanned: No (on pep); SAEximRunCond expanded to false
+User-Agent: Thunderbird 1.5.0.2 (X11/20060516)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23252>
 
-
-
-On Mon, 3 Jul 2006, Keith Packard wrote:
+Linus Torvalds wrote:
 > 
-> 5 Start:                             21:59:01.584648000
-> 66 After args:                       21:59:01.605987000
-> 248 fetch_main() start:              21:59:02.408559000
-> 339 fetch_main() before fetch-pack:  21:59:03.293228000
-> 387 fetch_main() done:               21:59:04.784388000
-> 422 After tag following:             21:59:05.311439000
-> 438 All done:                        21:59:05.315338000
+> On Tue, 4 Jul 2006, Joachim Berdal Haga wrote:
+>> Here's a test with "time gzip -[169] -c file >/dev/null". Random data
+>> from /dev/urandom, kernel headers are concatenation of *.h in kernel
+>> sources. All times in seconds, on my puny home computer (1GHz Via Nehemiah)
 > 
-> fetch-pack itself took 0.421 seconds (measured with time(1)).
+> That "Via Nehemiah" is probably a big part of it.
 > 
-> Looks like the bulk of the time here is caused by simple shell
-> processing overhead, some of which scales with the number of heads and
-> tags to track.
+> I think the VIA Nehemiah just has a 64kB L2 cache, and I bet performance 
+> plummets if the tables end up being used past that. 
 
-Ahh.. Do you have tons of tags at the other end?
+Not really. The numbers in my original post were from a Intel core-duo,
+they were: 158/18/6 s for comparable (but larger) data.
 
-Looking closer, I suspect a big part of it is that
+And on a P4 1.8GHz with 512kB L2, the same 23MB data file compresses in
+28.1/5.9/1.3 s. That's a factor 22 slowest/fastest; the VIA was only
+factor 18, so the difference is actually *larger*.
 
-	git-ls-remote $upload_pack --tags "$remote" |
-	sed -ne 's|^\([0-9a-f]*\)[      ]\(refs/tags/.*\)^{}$|\1 \2|p' |
-	while read sha1 name
-	do
-		..
-	done
-
-loop.
-
-With a lot of tags, the shell overhead there can indeed be pretty 
-disgusting. And I was wrong - I thought it would do that git-ls-remote 
-only if the first time around we noticed that we would need to, but we do 
-actually do it all the time that we're fetching any new branches. 
-
-The sad part is that we really already got the list once, we just never 
-saved it away (ie "git-fetch-pack" actually _knows_ what the tags at the 
-other end are, and also knows which tags we already have, so if we made 
-git-fetch-pack just create that list and save it off, all the overhead 
-would just go away).
-
-And yes, the shell script loops are really really simple, but some of them 
-are actually quadratic in the number of refs (O(local*remote)). If this 
-was a C program, we'd never even care, but with shell, the thing is slow 
-enough that having even a modest amount of tags and refs is going to just 
-make it waste a lot of time in shell scripting.
-
-We already do a lot of the infrastructure for "git fetch" in C - the 
-remotes parsing etc is all things that "git fetch" used to share with "git 
-push", but "git push" has been a builtin C program for a while now. I 
-suspect we should just do the same to "git fetch", which would make all 
-these issues just totally go away.
-
-			Linus
+-j.
