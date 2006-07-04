@@ -1,75 +1,62 @@
-From: Elrond <elrond@samba-tng.org>
-Subject: Re: git-cvsimport gets parents wrong for branches
-Date: Tue, 4 Jul 2006 12:46:31 +0200
-Message-ID: <20060704104631.GB24572@memak.tu-darmstadt.de>
-References: <20060703215303.GA24572@memak.tu-darmstadt.de> <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Teach rev-parse the ... syntax.
+Date: Tue, 4 Jul 2006 12:50:50 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607041247200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <873bdhbv4x.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 12:46:37 2006
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-356820123-1152010250=:29667"
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Junio C. Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Jul 04 12:51:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxiQP-0006Z4-Go
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 12:46:37 +0200
+	id 1FxiUa-0007K4-87
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 12:50:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205AbWGDKqe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 06:46:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbWGDKqe
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 06:46:34 -0400
-Received: from baerbel.mug.maschinenbau.tu-darmstadt.de ([130.83.48.97]:63694
-	"EHLO baerbel.mug.maschinenbau.tu-darmstadt.de") by vger.kernel.org
-	with ESMTP id S932203AbWGDKqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 06:46:34 -0400
-Received: from baerbel.mug.maschinenbau.tu-darmstadt.de (localhost [127.0.0.1])
-	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4) with ESMTP id k64AkVIP010840
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 4 Jul 2006 12:46:32 +0200
-Received: (from tacke@localhost)
-	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4/Submit) id k64AkVPu010838;
-	Tue, 4 Jul 2006 12:46:31 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Mail-Followup-To: Elrond <elrond@samba-tng.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: ClamAV 0.88.2/1582/Mon Jul  3 23:23:18 2006 on baerbel.mug.maschinenbau.tu-darmstadt.de
-X-Virus-Status: Clean
+	id S932191AbWGDKux (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 06:50:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWGDKux
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 06:50:53 -0400
+Received: from mail.gmx.de ([213.165.64.21]:22688 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932191AbWGDKuw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 06:50:52 -0400
+Received: (qmail invoked by alias); 04 Jul 2006 10:50:51 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 04 Jul 2006 12:50:51 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+In-Reply-To: <873bdhbv4x.fsf@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23280>
 
-On Tue, Jul 04, 2006 at 11:15:47AM +1200, Martin Langhoff wrote:
-> Elrond,
-> 
-> you are right, the current git-cvsimport takes a very naive approach
-> to determine where branches open from. It uses cvsps internally, which
-> only reports on the ancestor branch, so we take the latest commit from
-> the ancestor.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-If there is no fix visible, it probably should be
-documented, that git-cvsimport isn't the perfect solution,
-so people aren't surprised.
+---1148973799-356820123-1152010250=:29667
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
+Hi,
 
-> Parsecvs probably has a more sophisticated approach, have you tried it?
+On Tue, 4 Jul 2006, Santi Béjar wrote:
 
-After finding the current correct git:-url [1] for it, I
-noticed, that I need libgit for it (I use git from my
-distribution), so I've postponed this.
-Of course, you can use my script and try parsecvs yourself.
+> +				  struct commit_list *exclude = get_merge_bases(a, b,1);
 
+You never free_commit_list() exclude.
 
-> If the cvs2svn documentation is not lying, it probably has the
-> smartest/correctest implementation. For small-medium repos, you may be
-> able to run cvs2svn and then import with git-svnimport.
+Side thought: we do not really support multiple ranges, do we? E.g.
 
-I'll try that soon.
+	git-rev-list HEAD~10..HEAD~8 HEAD^..
 
+would not yield the intended result, right? (And same goes for ... ranges) 
+Maybe we should at least warn about that.
 
-    Elrond
-
-[1] git://anongit.freedesktop.org/git/users/keithp/parsecvs
+Ciao,
+Dscho
+---1148973799-356820123-1152010250=:29667--
