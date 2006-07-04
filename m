@@ -1,58 +1,51 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] t8001-annotate: fix a bash-ism in this test
-Date: Tue, 4 Jul 2006 01:04:24 -0700
-Message-ID: <20060704080424.GA31612@soma>
-References: <11519766021208-git-send-email-ryan@michonline.com> <11519766033852-git-send-email-ryan@michonline.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-cvsimport gets parents wrong for branches
+Date: Tue, 4 Jul 2006 10:09:18 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060703215303.GA24572@memak.tu-darmstadt.de>
+ <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 10:04:37 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Elrond <elrond+kernel.org@samba-tng.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 10:09:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxftX-00071l-JO
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 10:04:32 +0200
+	id 1FxfyJ-0007ae-4Z
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 10:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750965AbWGDIE1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 04:04:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751053AbWGDIE1
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 04:04:27 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:21918 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1750965AbWGDIE1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 04:04:27 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 5C1E57DC021;
-	Tue,  4 Jul 2006 01:04:25 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  4 Jul 2006 01:04:25 -0700
-To: Ryan Anderson <ryan@michonline.com>
-Content-Disposition: inline
-In-Reply-To: <11519766033852-git-send-email-ryan@michonline.com>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1751116AbWGDIJW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 04:09:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbWGDIJV
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 04:09:21 -0400
+Received: from mail.gmx.de ([213.165.64.21]:21633 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751116AbWGDIJU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 04:09:20 -0400
+Received: (qmail invoked by alias); 04 Jul 2006 08:09:19 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 04 Jul 2006 10:09:19 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23269>
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/t8001-annotate.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Hi,
 
-diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
-index 70e2ad2..3a6490e 100755
---- a/t/t8001-annotate.sh
-+++ b/t/t8001-annotate.sh
-@@ -8,8 +8,8 @@ PROG='git annotate'
- 
- test_expect_success \
-     'Annotating an old revision works' \
--    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") == 2 ] && \
--     [ $(git annotate file master | awk "{print \$3}" | grep -c "^B$") == 2 ]'
-+    '[ $(git annotate file master | awk "{print \$3}" | grep -c "^A$") -eq 2 ] && \
-+     [ $(git annotate file master | awk "{print \$3}" | grep -c "^B$") -eq 2 ]'
- 
- 
- test_done
--- 
-1.4.1.g4148
+On Tue, 4 Jul 2006, Martin Langhoff wrote:
+
+> It is pretty hard to get that one right in any case, as there are
+> cases where the new branch starts from something that is not a commit
+> in the parent (from GIT's perspective).
+
+But it should be easy to introduce a faked commit, which just contains 
+those versions (and takes the newest commit touching any of these file 
+versions as branch point).
+
+Ciao,
+Dscho
