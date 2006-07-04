@@ -1,62 +1,66 @@
-From: Santi <sbejar@gmail.com>
-Subject: Re: [PATCH] Teach rev-parse the ... syntax.
-Date: Tue, 4 Jul 2006 13:17:07 +0200
-Message-ID: <8aa486160607040417n2016ecc3h70e6f3c92f851b13@mail.gmail.com>
-References: <873bdhbv4x.fsf@gmail.com>
-	 <Pine.LNX.4.63.0607041247200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthias Kestenholz <lists@spinlock.ch>
+Subject: Re: git-fetch per-repository speed issues
+Date: Tue, 4 Jul 2006 13:18:38 +0200
+Message-ID: <20060704111838.GA4285@spinlock.ch>
+References: <1151949764.4723.51.camel@neko.keithp.com> <Pine.LNX.4.64.0607031603290.12404@g5.osdl.org> <1151973438.4723.70.camel@neko.keithp.com> <Pine.LNX.4.64.0607032008590.12404@g5.osdl.org> <7vsllinj1m.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0607032039010.12404@g5.osdl.org> <1151987441.4723.110.camel@neko.keithp.com> <44AA4CB0.7020604@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C. Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jul 04 13:17:25 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 13:18:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxiu0-0002uI-Qh
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:17:13 +0200
+	id 1FxivW-0003DY-Dg
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279AbWGDLRJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Jul 2006 07:17:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbWGDLRJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:17:09 -0400
-Received: from wx-out-0102.google.com ([66.249.82.205]:44578 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751279AbWGDLRI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:17:08 -0400
-Received: by wx-out-0102.google.com with SMTP id t10so660374wxc
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 04:17:08 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SJwJ6rQZBrM8SzEv8z++tAW9QzpE9N4MmI3U9B230pphPn19hnvzeQOdN+ga3SxQkDG8T5B+iET8l1RDs0sbpM0H8lrzkoEiLQ1dVIBx9hRfiSjNCXbP+Ro9TQqIxkBFMZF06IqKcLhL9wJOwgroALoU9gIpLcS1Pl+ypX3eXhQ=
-Received: by 10.70.67.7 with SMTP id p7mr7325743wxa;
-        Tue, 04 Jul 2006 04:17:07 -0700 (PDT)
-Received: by 10.70.20.2 with HTTP; Tue, 4 Jul 2006 04:17:07 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607041247200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751282AbWGDLSo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 07:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbWGDLSn
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:18:43 -0400
+Received: from mail20.bluewin.ch ([195.186.19.65]:20655 "EHLO
+	mail20.bluewin.ch") by vger.kernel.org with ESMTP id S1751282AbWGDLSn
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:18:43 -0400
+Received: from spinlock.ch (81.62.208.146) by mail20.bluewin.ch (Bluewin 7.3.110.2)
+        id 449255CA003E99E2; Tue, 4 Jul 2006 11:18:41 +0000
+Received: (nullmailer pid 6514 invoked by uid 1000);
+	Tue, 04 Jul 2006 11:18:38 -0000
+To: Andreas Ericsson <ae@op5.se>
 Content-Disposition: inline
+In-Reply-To: <44AA4CB0.7020604@op5.se>
+X-Editor: Vim http://www.vim.org/
+X-Operating-System: GNU/Linux 2.6.17-ga39727f2 (i686)
+X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23285>
 
-2006/7/4, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Tue, 4 Jul 2006, Santi B=E9jar wrote:
->
-> > +                               struct commit_list *exclude =3D get=
-_merge_bases(a, b,1);
->
-> You never free_commit_list() exclude.
->
+* Andreas Ericsson (ae@op5.se) wrote:
+> Keith Packard wrote:
+> >On Mon, 2006-07-03 at 20:40 -0700, Linus Torvalds wrote:
+> >
+> >
+> >>   "And, it's painfully slow, even when the repository is up to date"
+> >>
+> >>and gave a 17-second time.
+> >
+> >
+> >It's faster this evening, down to 8 seconds using ssh and 4 seconds
+> >using git. I clearly need to force use of the git protocol. Anyone else
+> >like the attached patch?
+> 
+> Since it changes the current meaning of ssh+git, I'm not exactly 
+> thrilled. However, "git/ssh" or "ssh/git" would work fine for me. The 
+> slash-separator could be used to say "fetch over this, push over that", 
+> so we can end up with any valid protocol to use for fetches and another 
+> one to push over.
+> 
 
-Ups! But thanks to Junio it is already there :)
+If we would do such a thing, we would be probably better off
+allowing different URLs for pushing and pulling, because the git and
+ssh URLs will only be the same, if the git repositories are located
+in the root folder and I suspect that's almost never the case.
 
-Santi
---=20
-Looking for signature...
-Looking for signature...done
+	Matthias
