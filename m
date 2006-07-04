@@ -1,57 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: contrib/ status
-Date: Tue, 04 Jul 2006 13:26:54 +0200
-Organization: At home
-Message-ID: <e8dj9u$asn$1@sea.gmane.org>
-References: <200607030156.50455.jnareb@gmail.com> <200607030202.55919.jnareb@gmail.com> <7vodw7zgt2.fsf@assigned-by-dhcp.cox.net> <e89ock$gks$1@sea.gmane.org> <7vslljwiat.fsf@assigned-by-dhcp.cox.net> <7vmzbrwi3c.fsf_-_@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-cvsimport gets parents wrong for branches
+Date: Tue, 4 Jul 2006 13:33:43 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607041330120.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060703215303.GA24572@memak.tu-darmstadt.de>
+ <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
+ <Pine.LNX.4.63.0607041007391.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060704110313.GC24572@memak.tu-darmstadt.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Jul 04 13:27:13 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 13:34:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fxj3f-0004e1-PW
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:27:12 +0200
+	id 1FxjA4-0005ok-Ke
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 13:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbWGDL1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 07:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbWGDL1H
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:27:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:4832 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751294AbWGDL1F (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:27:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fxj3W-0004cs-Up
-	for git@vger.kernel.org; Tue, 04 Jul 2006 13:27:02 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 13:27:02 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 13:27:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932184AbWGDLdq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 07:33:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932210AbWGDLdq
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 07:33:46 -0400
+Received: from mail.gmx.de ([213.165.64.21]:54198 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932184AbWGDLdp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 07:33:45 -0400
+Received: (qmail invoked by alias); 04 Jul 2006 11:33:43 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp041) with SMTP; 04 Jul 2006 13:33:43 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Elrond <elrond+kernel.org@samba-tng.org>
+In-Reply-To: <20060704110313.GC24572@memak.tu-darmstadt.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23288>
 
-Junio C Hamano wrote:
+Hi,
 
-> OTOH I haven't seen much interest in contrib/colordiff, now
-> Johannes's built-in "diff --color" is in.  So if people do not
-> mind, I'd like to drop it.
+On Tue, 4 Jul 2006, Elrond wrote:
 
-Since when, and is it documented? 
+> On Tue, Jul 04, 2006 at 10:09:18AM +0200, Johannes Schindelin wrote:
+> > Hi,
+> > 
+> > On Tue, 4 Jul 2006, Martin Langhoff wrote:
+> > 
+> > > It is pretty hard to get that one right in any case, as there are
+> > > cases where the new branch starts from something that is not a commit
+> > > in the parent (from GIT's perspective).
+> > 
+> > But it should be easy to introduce a faked commit, which just contains 
+> > those versions (and takes the newest commit touching any of these file 
+> > versions as branch point).
+> 
+> [...]
+>
+> just which parent should our new fake commit have?
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+That is what I tried to address with the "branch point" thing. Just take 
+the newest commit (in the ancestor line) touching the file versions of 
+that particular tree, or in other words, the oldest commit having at least 
+these file versions.
+
+IMHO it is dumb enough not to branch off of a commit that it does not 
+matter that much what parent this faked commit has.
+
+Ciao,
+Dscho
