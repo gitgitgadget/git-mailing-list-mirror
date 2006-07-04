@@ -1,78 +1,55 @@
-From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] Teach rev-parse the ... syntax.
-Date: Tue, 04 Jul 2006 11:02:22 +0200
-Message-ID: <873bdhbv4x.fsf@gmail.com>
+From: "Della" <Della.Shepard@earthlink.net>
+Subject: New And the results will impress your girl
+Date: Tue, 4 Jul 2006 11:47:10 +0200
+Message-ID: <24569538380083.7DB70C0CE9@PT8XK72>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Jul 04 11:02:23 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 04 11:47:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxgnV-0007qj-2f
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 11:02:21 +0200
+	id 1FxhUS-0005XW-70
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 11:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859AbWGDJCP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Jul 2006 05:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbWGDJCP
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 05:02:15 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:13521 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S1750859AbWGDJCO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 05:02:14 -0400
-Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k64817v31987;
-	Tue, 4 Jul 2006 10:01:07 +0200
-To: Git Mailing List <git@vger.kernel.org>,
-	"Junio C. Hamano" <junkio@cox.net>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
+	id S932159AbWGDJqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 05:46:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932178AbWGDJqj
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 05:46:39 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:21693 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S932159AbWGDJqj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jul 2006 05:46:39 -0400
+Received: from qjdouu.k5lg.aol.com (cm-85-152-216-50.telecable.es [85.152.216.50])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k649k4eE013137;
+	Tue, 4 Jul 2006 09:46:38 GMT
+To: <godard@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: iWEl1Wi5Y3anEMA95HkLMDcPK1HbqEllxK5y
+X-Virus-Scanned: ClamAV 0.88.2/1582/Mon Jul  3 21:23:18 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23275>
+X-Spam-Report: 11.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: abirtes.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: abirtes.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: abirtes.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: abirtes.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: abirtes.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23276>
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
+Nice to see you! 
 
- I think this time the mail patch is OK, I've tested it.
+ Prolong your ssex. You have small  peniis? Add 3 inches in lenght! Find what you need here: http://abirtes.com/gal/ms 
 
- builtin-rev-parse.c |   17 ++++++++++++++++-
- 1 files changed, 16 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index 5f5ade4..8d2beb2 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -331,14 +331,29 @@ int cmd_rev_parse(int argc, const char *
- 			unsigned char end[20];
- 			const char *next =3D dotdot + 2;
- 			const char *this =3D arg;
-+			int symmetric =3D *next =3D=3D '.';
-+
- 			*dotdot =3D 0;
-+			next +=3D symmetric;
-+
- 			if (!*next)
- 				next =3D "HEAD";
- 			if (dotdot =3D=3D arg)
- 				this =3D "HEAD";
- 			if (!get_sha1(this, sha1) && !get_sha1(next, end)) {
- 				show_rev(NORMAL, end, next);
--				show_rev(REVERSED, sha1, this);
-+				show_rev(symmetric?NORMAL:REVERSED, sha1, this);
-+				if (symmetric) {
-+				  struct commit *a, *b;
-+				  a =3D lookup_commit_reference(sha1);
-+				  b =3D lookup_commit_reference(end);
-+				  struct commit_list *exclude =3D get_merge_bases(a, b,1);
-+				  while (exclude) {
-+				    show_rev(REVERSED,
-+					     exclude->item->object.sha1,NULL);
-+				    exclude =3D exclude->next;
-+				  }
-+				}
- 				continue;
- 			}
- 			*dotdot =3D '.';
---=20
-1.4.1.ge6c0-dirty
+ A black plum is as sweet as a white. Not to know is bad; not to wish to know is worse  Every man has his price You can lead a horse to water but.. how?. A tidy house holds a bored woman.
