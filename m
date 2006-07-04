@@ -1,91 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Additional merge-base tests
-Date: Tue, 04 Jul 2006 03:38:56 -0700
-Message-ID: <7vsllhhcxr.fsf@assigned-by-dhcp.cox.net>
-References: <44A9E6AE.10508@gmail.com>
-	<7v3bdhoraa.fsf@assigned-by-dhcp.cox.net> <44AA0DAE.1060308@gmail.com>
-	<7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Elrond <elrond@samba-tng.org>
+Subject: Re: git-cvsimport gets parents wrong for branches
+Date: Tue, 4 Jul 2006 12:46:31 +0200
+Message-ID: <20060704104631.GB24572@memak.tu-darmstadt.de>
+References: <20060703215303.GA24572@memak.tu-darmstadt.de> <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitzilla@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 04 12:39:04 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 04 12:46:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxiJ3-0005NO-7q
-	for gcvg-git@gmane.org; Tue, 04 Jul 2006 12:39:01 +0200
+	id 1FxiQP-0006Z4-Go
+	for gcvg-git@gmane.org; Tue, 04 Jul 2006 12:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932149AbWGDKi6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 06:38:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932178AbWGDKi6
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 06:38:58 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:35517 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932149AbWGDKi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 06:38:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060704103857.KYQO11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 4 Jul 2006 06:38:57 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932205AbWGDKqe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 06:46:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbWGDKqe
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 06:46:34 -0400
+Received: from baerbel.mug.maschinenbau.tu-darmstadt.de ([130.83.48.97]:63694
+	"EHLO baerbel.mug.maschinenbau.tu-darmstadt.de") by vger.kernel.org
+	with ESMTP id S932203AbWGDKqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 06:46:34 -0400
+Received: from baerbel.mug.maschinenbau.tu-darmstadt.de (localhost [127.0.0.1])
+	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4) with ESMTP id k64AkVIP010840
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 4 Jul 2006 12:46:32 +0200
+Received: (from tacke@localhost)
+	by baerbel.mug.maschinenbau.tu-darmstadt.de (8.13.4/8.13.4/Submit) id k64AkVPu010838;
+	Tue, 4 Jul 2006 12:46:31 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Mail-Followup-To: Elrond <elrond@samba-tng.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <46a038f90607031615m2cafbf05q5922fb04eae72362@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: ClamAV 0.88.2/1582/Mon Jul  3 23:23:18 2006 on baerbel.mug.maschinenbau.tu-darmstadt.de
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23279>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jul 04, 2006 at 11:15:47AM +1200, Martin Langhoff wrote:
+> Elrond,
+> 
+> you are right, the current git-cvsimport takes a very naive approach
+> to determine where branches open from. It uses cvsps internally, which
+> only reports on the ancestor branch, so we take the latest commit from
+> the ancestor.
 
-> We could introduce a time.maximumSkew variable, and just walk only 
-> that much further when traversing the commits.
->
-> So, if you do not trust your clients to have a proper ntp setup, just say 
-> "I trust my peers to be off at most 1 day". That would save lots vs 
-> traverse-everything.
-
-The problem ALASCM's example demonstrates does rely on clock
-skews.  The timestamps used in the example looked like this:
+If there is no fix visible, it probably should be
+documented, that git-cvsimport isn't the perfect solution,
+so people aren't surprised.
 
 
-   1   1
-  /  \/  \
- 4  -1   4
- |   |   |
- 3  -2   3
- |   |   |
- 2  -3   2
-   \ |  /
-     0
+> Parsecvs probably has a more sophisticated approach, have you tried it?
 
-The crucial clock skew the case relies on is that the tip of the
-middle branch (-1) is older than the common commit (0).  But the
-topmost commits with timestamp 1 could be with timestamp 5 to
-correct the clock skew and still make the example "fail".
+After finding the current correct git:-url [1] for it, I
+noticed, that I need libgit for it (I use git from my
+distribution), so I've postponed this.
+Of course, you can use my script and try parsecvs yourself.
 
-   5   5
-  /  \/  \
- 4  -1   4
- |   |   |
- 3  -2   3
- |   |   |
- 2  -3   2
-   \ |  /
-     0
 
-However, I am not sure how you are going to use that maximumSkew
-variable.  The evil owner of the middle branch may have started
-running a "git am" to commit 4-patch series just when the
-machine's clock jumped back by 3 seconds, at the pace of 1 patch
-a second.  Then he pushes '0' out on "master" branch, and the
-three commits on top of that on "next" branch.
+> If the cvs2svn documentation is not lying, it probably has the
+> smartest/correctest implementation. For small-medium repos, you may be
+> able to run cvs2svn and then import with git-svnimport.
 
-Two days later, two friends build left and right strands of
-pearls based on the "master" branch of the evil owner of the
-middle branch.  Maybe they do that one patch a day.  On the
-fifth day, they both merge the "next" branch.
+I'll try that soon.
 
-The point is that it does not require a very large clock skew to
-trigger this.
+
+    Elrond
+
+[1] git://anongit.freedesktop.org/git/users/keithp/parsecvs
