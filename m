@@ -1,89 +1,84 @@
-From: "Aaron Gray" <angray@beeb.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Why's Git called Git ?
-Date: Wed, 5 Jul 2006 20:58:13 +0100
-Message-ID: <001001c6a06d$6e7b94b0$0200a8c0@AMD2500>
-References: <013001c69f04$ae4e2400$0200a8c0@amd2500> <Pine.LNX.4.64.0607032022050.12404@g5.osdl.org>
+Date: Wed, 05 Jul 2006 21:33:33 +0200
+Organization: At home
+Message-ID: <e8h466$o4$1@sea.gmane.org>
+References: <013001c69f04$ae4e2400$0200a8c0@amd2500> <Pine.LNX.4.64.0607032022050.12404@g5.osdl.org> <001001c6a06d$6e7b94b0$0200a8c0@AMD2500>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 05 20:59:07 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Jul 05 21:34:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyCaS-0000TL-1g
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 20:59:00 +0200
+	id 1FyD8J-0005v7-GA
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 21:33:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964982AbWGES65 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 14:58:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964985AbWGES65
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 14:58:57 -0400
-Received: from lon1-mail-2.visp.demon.net ([193.195.70.5]:60204 "EHLO
-	lon1-mail-2.visp.demon.net") by vger.kernel.org with ESMTP
-	id S964982AbWGES64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 14:58:56 -0400
-Received: from AMD2500 (mwgray.force9.co.uk [212.159.110.144])
-	by lon1-mail-2.visp.demon.net (MOS 3.5.8-GR)
-	with ESMTP id EEF44940 (AUTH angray);
-	Wed, 5 Jul 2006 19:58:49 +0100 (BST)
-To: "Linus Torvalds" <torvalds@osdl.org>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.2869
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2869
+	id S965002AbWGETdx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 15:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965003AbWGETdx
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 15:33:53 -0400
+Received: from main.gmane.org ([80.91.229.2]:31433 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965002AbWGETdw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 15:33:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FyD81-0005sl-6l
+	for git@vger.kernel.org; Wed, 05 Jul 2006 21:33:41 +0200
+Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Jul 2006 21:33:41 +0200
+Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Jul 2006 21:33:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23361>
 
-Anyway good going, I am glad Linux has an open source VCS again now.
+Aaron Gray wrote:
 
-I do not know how BitKeeper are going to fell knowing they have been 
-replaced by a Git :)
+> Anyway good going, I am glad Linux has an open source VCS again now.
+> 
+> I do not know how BitKeeper are going to fell knowing they have been 
+> replaced by a Git :)
+> 
+> I am toying with using a VCS for a set of related projects, either CVS 
+> because its well known, SubVersion for ease of use, or Git as it is new. 
+> Lots to descide upon, any pointers would be appreciated.
 
-I am toying with using a VCS for a set of related projects, either CVS 
-because its well known, SubVersion for ease of use, or Git as it is new. 
-Lots to descide upon, any pointers would be appreciated.
+CVS is showing it's age; mainly the fact that IIRC it began as a series of
+scripts over RCS, file level version control system, extending version
+control to sets of files, somewhat. Branching in CVS is serious PITA.
+Renaming _with_ retaining full and correct history: forget about it.
 
-All the best to the Git team.
+Subversion is "better CVS": still centralized, CVS infernal branching
+replaced by "cheap copy" branching. Well known, replaces CVS thorough OSS
+projects.
 
-Regards,
+Git, Mercurial, Monotone, Bazaar-NG, Darcs are new brand of distributed VCS.
+I really like notion of branching in Git; but be warned about tracking and
+not recording renames, and the need of explicit packing (the latter very
+minor). Powerfull, perhaps too powerfull for newbie user: but that is what
+Cogito is for (although now Git contains fairly large set of high-level
+commands).
 
-Aaron
+  http://git.or.cz/
+  http://git.or.cz/gitwiki
+  http://git.or.cz/gitwiki/Git
+and "Other version control software" at
+  http://git.or.cz/gitwiki/GitLinks
 
------ Original Message ----- 
-From: "Linus Torvalds" <torvalds@osdl.org>
-To: "Aaron Gray" <angray@beeb.net>
-Cc: "Git Mailing List" <git@vger.kernel.org>
-Sent: Tuesday, July 04, 2006 4:28 AM
-Subject: Re: Why's Git called Git ?
-
-
->
->
-> On Tue, 4 Jul 2006, Aaron Gray wrote:
->>
->> Why the name I could not find any answer in the documentation ?
->
-> It's really quite random. It needs to be a two- or three-letter thing just
-> because I end up typing a lot.
->
-> My favourite explanation is "I name all my projects after myself: first
-> 'Linux', now 'git'".
->
-> Which only makes sense if you know british slang.
->
-> The runner up was "Because 'twerp' was too hard to type".
->
-> But really, there's not a lot of real thinking behind it. The made-up
-> acronym was "global information tracker", but that's a pretty bad excuse
-> too.
->
-> It just happened. Don't ask me why. All the explanations are really made
-> up after the fact.
->
-> Linus 
+P.S. If you decide to use Git as VCS for your project, consider adding entry
+about it on http://git.or.cz/gitwiki/GitProjects wiki page.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git (at FreeNode)
