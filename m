@@ -1,113 +1,82 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: [PATCH] Additional merge-base tests (revised)
-Date: Tue, 04 Jul 2006 17:35:20 -0700
-Message-ID: <44AB0948.9070606@gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Additional merge-base tests
+Date: Tue, 04 Jul 2006 17:59:15 -0700
+Message-ID: <7vhd1weujg.fsf@assigned-by-dhcp.cox.net>
+References: <44A9E6AE.10508@gmail.com>
+	<7v3bdhoraa.fsf@assigned-by-dhcp.cox.net> <44AA0DAE.1060308@gmail.com>
+	<7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 05 02:35:39 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jul 05 02:59:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FxvMZ-0002Gq-Al
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 02:35:31 +0200
+	id 1Fxvjc-0001Xj-J4
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 02:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932356AbWGEAfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Jul 2006 20:35:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbWGEAfY
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 20:35:24 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:43198 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932356AbWGEAfX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jul 2006 20:35:23 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so842360wra
-        for <git@vger.kernel.org>; Tue, 04 Jul 2006 17:35:23 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=LIH+EY3i5WqoxGGP1LwxxEQ72Xgk+sbvDKmJb8w90Tuw/MEQB2I5TXi2VgZsddEl+Awf1tJz9mQA8ufjpAjjyD2Lm3swEJ3oiwH4fyHJRD4xg/SqXy0pdElS/IGMqip9kvaqVdeSpJuTLMkUBsABUrzj8mGUmntPsiqHQgjWa48=
-Received: by 10.64.210.8 with SMTP id i8mr3191390qbg;
-        Tue, 04 Jul 2006 17:35:23 -0700 (PDT)
-Received: from ?10.0.0.6? ( [69.160.147.208])
-        by mx.gmail.com with ESMTP id 1sm2851504qbh.2006.07.04.17.35.22;
-        Tue, 04 Jul 2006 17:35:22 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	id S932398AbWGEA7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Jul 2006 20:59:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932400AbWGEA7S
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Jul 2006 20:59:18 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:1962 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932398AbWGEA7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jul 2006 20:59:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060705005916.DOOF27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 4 Jul 2006 20:59:16 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 04 Jul 2006 00:45:46 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23334>
 
-Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
----
-This demonstrates a problem with git-merge-base.
+Junio C Hamano <junkio@cox.net> writes:
 
-This is a slightly revised version of the same patch as before.
+> It may be interesting to run tests on real merges (I believe the
+> kernel repository has a handful merges that have more than one
+> merge bases) to see how effective the current clean-up pass is.
+> It may turn out to be ineffective in practice, in which case we
+> could kill it off.
 
- t/t6010-merge-base.sh |   45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 45 insertions(+)
+So I counted.
 
-diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
-index 1dce123..2b7b51c 100755
---- a/t/t6010-merge-base.sh
-+++ b/t/t6010-merge-base.sh
-@@ -44,6 +44,43 @@ A=$(doit 1 A $B)
- G=$(doit 7 G $B $E)
- H=$(doit 8 H $A $F)
- 
-+# Setup for second test to demonstrate that relying on timestamps in a
-+# distributed SCM to provide a _consistent_ partial ordering of commits
-+# leads to insanity.
-+#
-+#               Relative
-+# Structure     timestamps
-+#
-+#   PL  PR        +4  +4
-+#  /  \/  \      /  \/  \
-+# L2  C2  R2    +3  -1  +3
-+# |   |   |     |   |   |
-+# L1  C1  R1    +2  -2  +2
-+# |   |   |     |   |   |
-+# L0  C0  R0    +1  -3  +1
-+#   \ |  /        \ |  /
-+#     S             0
-+#
-+# The left and right chains of commits can be of any length and complexity as
-+# long as all of the timestamps are greater than that of S.
-+
-+S=$(doit  0 S)
-+
-+C0=$(doit -3 C0 $S)
-+C1=$(doit -2 C1 $C0)
-+C2=$(doit -1 C2 $C1)
-+
-+L0=$(doit  1 L0 $S)
-+L1=$(doit  2 L1 $L0)
-+L2=$(doit  3 L2 $L1)
-+
-+R0=$(doit  1 R0 $S)
-+R1=$(doit  2 R1 $R0)
-+R2=$(doit  3 R2 $R1)
-+
-+PL=$(doit  4 PL $L2 $C2)
-+PR=$(doit  4 PR $C2 $R2)
-+
- test_expect_success 'compute merge-base (single)' \
-     'MB=$(git-merge-base G H) &&
-      expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/B"'
-@@ -56,4 +93,12 @@ test_expect_success 'compute merge-base 
-     'MB=$(git-show-branch --merge-base G H) &&
-      expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/B"'
- 
-+test_expect_success 'compute merge-base (single)' \
-+    'MB=$(git-merge-base PL PR) &&
-+     expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/C2"'
-+
-+test_expect_success 'compute merge-base (all)' \
-+    'MB=$(git-merge-base --all PL PR) &&
-+     expr "$(git-name-rev "$MB")" : "[0-9a-f]* tags/C2"'
-+
- test_done
+There are 23 commits in the kernel history that have more than
+one merge-bases.  The current merge-base code tells us that all
+of them have two merge-bases.
+
+None of them suffers from the horizon effect; the two bases
+are not ancestor/descendant of each other.
+
+A good news is that get_merge_bases() gives the same answer
+without the clean-up pass mark_reachable_commits().
+
+d0e5f39f1ee2e55d140064bb6d74c8bad25d71d0
+361ea93cbff0e42cbc6a0f3c7a8238db9ed15648
+4b2d9cf00962d0a0e697f887f3ecaa155cbde555
+ba9b28d19a3251bb1dfe6a6f8cc89b96fb85f683
+db21e578e551421d76641d72cb3f8296ed3f9e61
+b425c8c5922562c562dc55a636c3c8d758ed6d17
+2e9ff56efbc005ab2b92b68df65940c7459446c6
+75e47b36004d136edff68295420424cba3a5ccd0
+c45ae87ec9d03c9adfc466a6b560cb38b154813a
+09e4f9029da1b53e835555c353a89c36b71233b0
+0b310f36d7d96e27f6941ec0f9b95e15142f1e78
+db9ace7083dbdcc3d02bdd6a1d26132c80b5b726
+80c7af4074cbb4cb6be5d35c443ea6d5e8838a84
+701db69d6647f61e4660c9102d7f2fd5dffc203d
+5e3c2b95dd560baa41b08c8f5f00bbd6fbeebdcb
+c7fb577e2a6cb04732541f2dc402bd46747f7558
+ba9b543d5bec0a7605952e2ba501fb8b0f3b6407
+84ffa747520edd4556b136bdfc9df9eb1673ce12
+da28c12089dfcfb8695b6b555cdb8e03dda2b690
+3190186362466658f01b2e354e639378ce07e1a9
+0c168775709faa74c1b87f1e61046e0c51ade7f3
+0e396ee43e445cb7c215a98da4e76d0ce354d9d7
+467ca22d3371f132ee225a5591a1ed0cd518cb3d
