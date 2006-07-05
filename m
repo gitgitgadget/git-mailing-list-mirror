@@ -1,59 +1,89 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git reset --hard include/linux/config.h
-Date: Wed, 5 Jul 2006 19:29:07 +0200
-Message-ID: <81b0412b0607051029q175928faq113b81de8c11db30@mail.gmail.com>
-References: <20060705165801.GA11822@mars.ravnborg.org>
-	 <81b0412b0607051005s59315296tfb68345959a14c1b@mail.gmail.com>
-	 <20060705171406.GA17834@mars.ravnborg.org>
+From: "Aaron Gray" <angray@beeb.net>
+Subject: Re: Why's Git called Git ?
+Date: Wed, 5 Jul 2006 20:58:13 +0100
+Message-ID: <001001c6a06d$6e7b94b0$0200a8c0@AMD2500>
+References: <013001c69f04$ae4e2400$0200a8c0@amd2500> <Pine.LNX.4.64.0607032022050.12404@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 05 19:29:16 2006
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 05 20:59:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyBBb-0001iW-UI
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 19:29:16 +0200
+	id 1FyCaS-0000TL-1g
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 20:59:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964897AbWGER3K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 13:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964899AbWGER3K
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 13:29:10 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:32460 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S964897AbWGER3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 13:29:09 -0400
-Received: by nf-out-0910.google.com with SMTP id g2so1318233nfe
-        for <git@vger.kernel.org>; Wed, 05 Jul 2006 10:29:08 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A5sHN80xE4iqcXL/qwteDFPDhkyONpQDw8BzRd+MEQ1v1Ahr7WObEdxaCodDHeZBSbJLxQd9iWsUVdMkg6pf+q+NIzBUrqRHwnhHwTh7yo1HrBUVGLLEH/0vUaILXRz8q+NxVJhctuzpd/EpRRldGx4iC8p/K/RSkKfWXjnDWn0=
-Received: by 10.78.177.3 with SMTP id z3mr2408530hue;
-        Wed, 05 Jul 2006 10:29:08 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Wed, 5 Jul 2006 10:29:07 -0700 (PDT)
-To: "Sam Ravnborg" <sam@ravnborg.org>
-In-Reply-To: <20060705171406.GA17834@mars.ravnborg.org>
-Content-Disposition: inline
+	id S964982AbWGES65 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 14:58:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964985AbWGES65
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 14:58:57 -0400
+Received: from lon1-mail-2.visp.demon.net ([193.195.70.5]:60204 "EHLO
+	lon1-mail-2.visp.demon.net") by vger.kernel.org with ESMTP
+	id S964982AbWGES64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 14:58:56 -0400
+Received: from AMD2500 (mwgray.force9.co.uk [212.159.110.144])
+	by lon1-mail-2.visp.demon.net (MOS 3.5.8-GR)
+	with ESMTP id EEF44940 (AUTH angray);
+	Wed, 5 Jul 2006 19:58:49 +0100 (BST)
+To: "Linus Torvalds" <torvalds@osdl.org>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.2869
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2869
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23360>
 
-On 7/5/06, Sam Ravnborg <sam@ravnborg.org> wrote:
-> On Wed, Jul 05, 2006 at 07:05:27PM +0200, Alex Riesen wrote:
-> > On 7/5/06, Sam Ravnborg <sam@ravnborg.org> wrote:
-> > >Also what is the right command to bring back a file to the original
-> > >state after doing some modifications that was not needed anyway?
-> >
-> > git checkout HEAD include/linux/config.h
->
-> Thanks!
->
-> By the way - the modifications to include/linux/config.h was not lost.
-> But git apperantly managed to be fooled to think the file was
-> up-to-date.
+Anyway good going, I am glad Linux has an open source VCS again now.
 
-After that checkout or after reset --hard? Both is quiet unusual, though
+I do not know how BitKeeper are going to fell knowing they have been 
+replaced by a Git :)
+
+I am toying with using a VCS for a set of related projects, either CVS 
+because its well known, SubVersion for ease of use, or Git as it is new. 
+Lots to descide upon, any pointers would be appreciated.
+
+All the best to the Git team.
+
+Regards,
+
+Aaron
+
+----- Original Message ----- 
+From: "Linus Torvalds" <torvalds@osdl.org>
+To: "Aaron Gray" <angray@beeb.net>
+Cc: "Git Mailing List" <git@vger.kernel.org>
+Sent: Tuesday, July 04, 2006 4:28 AM
+Subject: Re: Why's Git called Git ?
+
+
+>
+>
+> On Tue, 4 Jul 2006, Aaron Gray wrote:
+>>
+>> Why the name I could not find any answer in the documentation ?
+>
+> It's really quite random. It needs to be a two- or three-letter thing just
+> because I end up typing a lot.
+>
+> My favourite explanation is "I name all my projects after myself: first
+> 'Linux', now 'git'".
+>
+> Which only makes sense if you know british slang.
+>
+> The runner up was "Because 'twerp' was too hard to type".
+>
+> But really, there's not a lot of real thinking behind it. The made-up
+> acronym was "global information tracker", but that's a pretty bad excuse
+> too.
+>
+> It just happened. Don't ask me why. All the explanations are really made
+> up after the fact.
+>
+> Linus 
