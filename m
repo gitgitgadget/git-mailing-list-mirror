@@ -1,66 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Experimental "git prune"
-Date: Wed, 5 Jul 2006 09:57:57 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607050956240.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0607041539550.12404@g5.osdl.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] Additional merge-base tests
+Date: Wed, 5 Jul 2006 10:39:53 +0200
+Message-ID: <200607051039.53288.Josef.Weidendorfer@gmx.de>
+References: <44A9E6AE.10508@gmail.com> <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7v8xn9gjh5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 05 09:58:13 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 05 10:40:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fy2Go-0004kc-Hk
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 09:58:02 +0200
+	id 1Fy2vQ-0004TF-UI
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 10:40:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932375AbWGEH57 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 03:57:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbWGEH57
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 03:57:59 -0400
-Received: from mail.gmx.net ([213.165.64.21]:57475 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932375AbWGEH57 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 03:57:59 -0400
-Received: (qmail invoked by alias); 05 Jul 2006 07:57:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp021) with SMTP; 05 Jul 2006 09:57:57 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607041539550.12404@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S932356AbWGEIj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 04:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932375AbWGEIj6
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 04:39:58 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:47309 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S932356AbWGEIj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 04:39:57 -0400
+Received: from dhcp-3s-61.lrr.in.tum.de (dhcp-3s-61.lrr.in.tum.de [131.159.35.61])
+	by mail.in.tum.de (Postfix) with ESMTP id 3C80B2757;
+	Wed,  5 Jul 2006 10:39:56 +0200 (MEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v8xn9gjh5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23342>
 
-Hi,
-
-On Tue, 4 Jul 2006, Linus Torvalds wrote:
-
-> static void process_tag(struct tag *tag, struct object_array *p, const char *name)
-> {
-> 	struct object *obj = &tag->object;
-> 	struct name_path me;
-
-AFAICS this variable is set, but not used:
-
+On Tuesday 04 July 2006 23:15, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> 	if (obj->flags & SEEN)
-> 		return;
-> 	obj->flags |= SEEN;
+> > We could introduce a time.maximumSkew variable, and just walk only 
+> > that much further when traversing the commits.
 > 
-> 	me.up = NULL;
-> 	me.elem = "tag:/";
-> 	me.elem_len = 5;
-> 
-> 	if (parse_tag(tag) < 0)
-> 		die("bad tag object %s", sha1_to_hex(obj->sha1));
-> 	add_object(tag->tagged, p, NULL, name);
-> }
+> We could have had "commit generation number" in the commit
+> object header, and use that instead of commit timestamps for
+> these traversal purposes.
 
-As for the rest, I like it.
+Isn't this "commit generation number" information that can be
+regenerated on the fly, i.e. a perfect fit for data to be stored
+in a persistant cache, e.g. in ".git/tmp/virtual-commit-timestamps"?
 
-Ciao,
-Dscho
+Josef
