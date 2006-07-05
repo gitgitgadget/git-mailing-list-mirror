@@ -1,84 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Why's Git called Git ?
-Date: Wed, 05 Jul 2006 21:33:33 +0200
-Organization: At home
-Message-ID: <e8h466$o4$1@sea.gmane.org>
-References: <013001c69f04$ae4e2400$0200a8c0@amd2500> <Pine.LNX.4.64.0607032022050.12404@g5.osdl.org> <001001c6a06d$6e7b94b0$0200a8c0@AMD2500>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Strange date format in git-send-email
+Date: Wed, 05 Jul 2006 14:22:38 -0700
+Message-ID: <7vlkr7bvc1.fsf@assigned-by-dhcp.cox.net>
+References: <200607050817.37366.martijn.kuipers@lx.it.pt>
+	<e8fv2o$khv$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Jul 05 21:34:03 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 05 23:22:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyD8J-0005v7-GA
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 21:33:59 +0200
+	id 1FyEpd-0006du-69
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 23:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965002AbWGETdx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 15:33:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965003AbWGETdx
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 15:33:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:31433 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965002AbWGETdw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 15:33:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FyD81-0005sl-6l
-	for git@vger.kernel.org; Wed, 05 Jul 2006 21:33:41 +0200
-Received: from host-81-190-27-124.torun.mm.pl ([81.190.27.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Jul 2006 21:33:41 +0200
-Received: from jnareb by host-81-190-27-124.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Jul 2006 21:33:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-124.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965024AbWGEVWl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 17:22:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965030AbWGEVWl
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 17:22:41 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5628 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S965024AbWGEVWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 17:22:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060705212239.BBOE8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 5 Jul 2006 17:22:39 -0400
+To: jnareb@gmail.com
+In-Reply-To: <e8fv2o$khv$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
+	05 Jul 2006 11:00:13 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23362>
 
-Aaron Gray wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Anyway good going, I am glad Linux has an open source VCS again now.
-> 
-> I do not know how BitKeeper are going to fell knowing they have been 
-> replaced by a Git :)
-> 
-> I am toying with using a VCS for a set of related projects, either CVS 
-> because its well known, SubVersion for ease of use, or Git as it is new. 
-> Lots to descide upon, any pointers would be appreciated.
+> There were two patches on the list: one hacky adding setlocale 
+> call (not applied), second implementing rfc-822 date in Perl.
+> Should be in current.
 
-CVS is showing it's age; mainly the fact that IIRC it began as a series of
-scripts over RCS, file level version control system, extending version
-control to sets of files, somewhat. Branching in CVS is serious PITA.
-Renaming _with_ retaining full and correct history: forget about it.
+What do you mean by "should be in current"?
 
-Subversion is "better CVS": still centralized, CVS infernal branching
-replaced by "cheap copy" branching. Well known, replaces CVS thorough OSS
-projects.
+I specifically asked you about this issue a few days ago, even
+with a patch to test out for people who are having problems, but
+haven't heard back anything yet.  The issue is still on hold and
+not in "current" as far as I am concerned.
 
-Git, Mercurial, Monotone, Bazaar-NG, Darcs are new brand of distributed VCS.
-I really like notion of branching in Git; but be warned about tracking and
-not recording renames, and the need of explicit packing (the latter very
-minor). Powerfull, perhaps too powerfull for newbie user: but that is what
-Cogito is for (although now Git contains fairly large set of high-level
-commands).
+    To: Jakub Narebski <jnareb@gmail.com>
+    Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+    From: Junio C Hamano <junkio@cox.net>
+    Subject: Re: [PATCH] send-email: Use setlocale in addition to
+        $ENV{LC_ALL} to set locale
+    Date: Sun, 02 Jul 2006 19:49:50 -0700
+    Message-ID: <7vd5cnv1v5.fsf@assigned-by-dhcp.cox.net>
 
-  http://git.or.cz/
-  http://git.or.cz/gitwiki
-  http://git.or.cz/gitwiki/Git
-and "Other version control software" at
-  http://git.or.cz/gitwiki/GitLinks
+    I was reviewing old log and noticed this topic has never been
+    resolved.  Your proposal was to use POSIX::setlocale(), and
+    Eric's counter-proposal was to mimic what 822-date script does,
+    doing it by hand without mucking with locales, and the
+    discussion seemed to have died there.  Does this still need to
+    be addressed?
 
-P.S. If you decide to use Git as VCS for your project, consider adding entry
-about it on http://git.or.cz/gitwiki/GitProjects wiki page.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git (at FreeNode)
+    My gut feeling is that it would probably be less problematic if
+    we do not muck with locales at all (so drop POSIX::strftime as
+    well).
+
+    So maybe something like this (totally untested)?
+    ...
