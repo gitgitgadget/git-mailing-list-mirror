@@ -1,69 +1,54 @@
-From: Martijn Kuipers <martijn.kuipers@lx.it.pt>
-Subject: Strange date format in git-send-email
-Date: Wed, 5 Jul 2006 08:17:37 +0100
-Organization: Instituto Superior Tecnico / Instituto =?utf-8?q?Telecomunica=C3=A7=C3=B5es?=
-Message-ID: <200607050817.37366.martijn.kuipers@lx.it.pt>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: merge-base: update the clean-up postprocessing
+Date: Wed, 5 Jul 2006 09:50:53 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607050946390.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44AB0948.9070606@gmail.com> <7vy7v8dctz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 05 09:18:08 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: A Large Angry SCM <gitzilla@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 05 09:51:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fy1eC-0006be-77
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 09:18:08 +0200
+	id 1Fy2AA-0003VT-Pt
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 09:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932172AbWGEHSA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 03:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932176AbWGEHSA
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 03:18:00 -0400
-Received: from [193.136.221.1] ([193.136.221.1]:6029 "EHLO cascais.lx.it.pt")
-	by vger.kernel.org with ESMTP id S932172AbWGEHSA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 03:18:00 -0400
-Received: from amsterdam.lx.it.pt (amsterdam.lx.it.pt [193.136.222.181])
-	by cascais.lx.it.pt (8.12.5/8.12.5) with ESMTP id k657E96A003502
-	for <git@vger.kernel.org>; Wed, 5 Jul 2006 08:14:10 +0100
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S932349AbWGEHu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 03:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbWGEHu4
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 03:50:56 -0400
+Received: from mail.gmx.de ([213.165.64.21]:50142 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932349AbWGEHuz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 03:50:55 -0400
+Received: (qmail invoked by alias); 05 Jul 2006 07:50:54 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp015) with SMTP; 05 Jul 2006 09:50:54 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy7v8dctz.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23338>
 
-Dear list,
+Hi,
 
-My email is sorted by date and a number of email-patches list the date format 
-as unknown (in kmail, that is).
+On Tue, 4 Jul 2006, Junio C Hamano wrote:
 
-When checking the headers of these mails I see the following pattern:
+> This is "for concepts" only -- it still seems to have bugs
+> somewhere to break other tests, although it passes your new
+> tests.
 
-Date: mer, 05 jui 2006 00:36:08 +0200
-X-Mailer: git-send-email 1.4.1
+Doesn't this introduce a nasty O(n*m) performance (where m is the 
+number of merge bases, and n the number of traversed commits)? I think 
+possibly many commits are traversed multiple times.
 
-Date: wto, 20 cze 2006 17:59:19 +0200
-X-Mailer: git-send-email 1.3.0
+BTW ALAS' argument about grafts not only shot down my maximumSkew, but 
+AFAICT also the generation number thing. Besides, the generation number 
+could be manipulated by a mean-spirited person also.
 
-Date: Tue, Mar 14 12:12:35 2006 -0500
-User-Agent: send_patch 0.1
-
-Date: Tue Feb 7 18:21:02 2006 +0100
-
-
-Some of these are quite old, and it has been sometime since I last noticed it 
-(I actually thought it was fixed). But today I received another patch-email 
-from the list ([PATCH] Beautifulise git-show output), which showed the same 
-problem.
-
-Is this my problem (or kmail), or is there something funny with 
-git-send-email? I just don't git it.
-
-If you need more info, just holler.
-
-Kind regards,
-Martijn
-----------------------------------------------------------------------------------------------
-Actually, did actually notice actually how many times non-native English 
-speaker actually use actually?
+Ciao,
+Dscho
