@@ -1,62 +1,63 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: avoid fetching files outside of the URL we're tracking
-Date: Wed, 05 Jul 2006 05:14:00 -0700
-Message-ID: <115210164094-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: Santi <sbejar@gmail.com>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jul 05 14:14:23 2006
+From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
+Subject: [PATCH] git-cvsexportcommit dies on merge commits
+Date: Wed, 5 Jul 2006 15:25:04 +0200
+Message-ID: <20060705132504.GA3470@xp.machine.xx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jul 05 15:27:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fy6Ge-000859-TG
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 14:14:09 +0200
+	id 1Fy7OT-0005Mz-3o
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 15:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964828AbWGEMOE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 08:14:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbWGEMOE
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 08:14:04 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:24999 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S964828AbWGEMOD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 08:14:03 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 29D427DC021;
-	Wed,  5 Jul 2006 05:14:01 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed,  5 Jul 2006 05:14:00 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.1.ge255
+	id S964854AbWGENZo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 09:25:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964856AbWGENZn
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 09:25:43 -0400
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:34980 "HELO
+	mail.hofmann.stw.uni-erlangen.de") by vger.kernel.org with SMTP
+	id S964854AbWGENZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 09:25:07 -0400
+Received: (qmail 21382 invoked by uid 0); 5 Jul 2006 13:25:04 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 5 Jul 2006 13:25:04 -0000
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23348>
 
-Thanks to Santi <sbejar@gmail.com> for the bug report and explanation:
-> /path/to/repository/project/file
-> /path/to/repository/project-2/file
-<...>
-> you end up with a project with the following files:
->
-> file
-> -2/file
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
 ---
- contrib/git-svn/git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ git-cvsexportcommit.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 08e36be..6d49109 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -2625,7 +2625,7 @@ sub libsvn_connect {
- sub libsvn_get_file {
- 	my ($gui, $f, $rev) = @_;
- 	my $p = $f;
--	return unless ($p =~ s#^\Q$SVN_PATH\E/?##);
-+	return unless ($p =~ s#^\Q$SVN_PATH\E/##);
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index d1051d0..5dcb2f9 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -63,15 +63,15 @@ foreach my $p (@commit) {
+ }
  
- 	my ($hash, $pid, $in, $out);
- 	my $pool = SVN::Pool->new;
+ if ($parent) {
++    my $found;
+     # double check that it's a valid parent
+     foreach my $p (@parents) {
+-	my $found;
+ 	if ($p eq $parent) {
+ 	    $found = 1;
+ 	    last;
+ 	}; # found it
+-	die "Did not find $parent in the parents for this commit!";
+     }
++    die "Did not find $parent in the parents for this commit!" if !$found;
+ } else { # we don't have a parent from the cmdline...
+     if (@parents == 1) { # it's safe to get it from the commit
+ 	$parent = $parents[0];
 -- 
-1.4.1.ge255
+1.4.0
