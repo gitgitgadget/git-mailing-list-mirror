@@ -1,61 +1,47 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Additional merge-base tests
-Date: Wed, 5 Jul 2006 19:04:55 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607051900200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <44A9E6AE.10508@gmail.com> <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net>
- <44AA0DAE.1060308@gmail.com> <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xn9gjh5.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607050021330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <44AAF49F.6090008@gmail.com> <Pine.LNX.4.63.0607050952140.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <44ABE596.40103@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: git reset --hard include/linux/config.h
+Date: Wed, 5 Jul 2006 19:05:27 +0200
+Message-ID: <81b0412b0607051005s59315296tfb68345959a14c1b@mail.gmail.com>
+References: <20060705165801.GA11822@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jul 05 19:05:30 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 05 19:06:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyAo8-0005kZ-7V
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 19:05:00 +0200
+	id 1FyAoe-0005uU-Eb
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 19:05:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964868AbWGERE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 13:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964903AbWGERE5
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 13:04:57 -0400
-Received: from mail.gmx.net ([213.165.64.21]:20905 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S964868AbWGERE4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 13:04:56 -0400
-Received: (qmail invoked by alias); 05 Jul 2006 17:04:55 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 05 Jul 2006 19:04:55 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: A Large Angry SCM <gitzilla@gmail.com>
-In-Reply-To: <44ABE596.40103@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S964903AbWGERF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 13:05:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964908AbWGERF3
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 13:05:29 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:737 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S964903AbWGERF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 13:05:29 -0400
+Received: by ug-out-1314.google.com with SMTP id s2so257637uge
+        for <git@vger.kernel.org>; Wed, 05 Jul 2006 10:05:27 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aTBm7oGQzvHGfvJQr3OypA0sTkg2q+hyWDKw5DWYuWCdkP+htXHt5FiTlymCmwD6mrkp9ep04n7lsbUeAFM0BD+tjPL8aNtw/KgHlSC95f0cZ6fq+jSXNDnKbPLc9zdyJrsQfWrnbRiGPW35wsz8hzVCvx62dcu6W40Z9w0TOi0=
+Received: by 10.78.165.16 with SMTP id n16mr2440292hue;
+        Wed, 05 Jul 2006 10:05:27 -0700 (PDT)
+Received: by 10.78.37.7 with HTTP; Wed, 5 Jul 2006 10:05:27 -0700 (PDT)
+To: "Sam Ravnborg" <sam@ravnborg.org>
+In-Reply-To: <20060705165801.GA11822@mars.ravnborg.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23357>
 
-Hi,
+On 7/5/06, Sam Ravnborg <sam@ravnborg.org> wrote:
+> Also what is the right command to bring back a file to the original
+> state after doing some modifications that was not needed anyway?
 
-On Wed, 5 Jul 2006, A Large Angry SCM wrote:
-
-> If grafts in your repository create a cycle, the misbehavior of merge-base
-> should be among the least of your concerns.
-
-Right. BUT grafts can be very helpful to connect branches which were 
-independently imported into git. And in these cases, the clockSkew really 
-is no clockSkew. But in that case, the generation number would have to be 
-recalculated also.
-
-Anyway, I think that it should be a configurable, which defaults to off, 
-i.e. in the normal case merge-base should behave as it does now. And if we 
-have that configurable, we might as well take the safe but dumb approach 
-to just traverse _everything_.
-
-Ciao,
-Dscho
+git checkout HEAD include/linux/config.h
