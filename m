@@ -1,83 +1,62 @@
-From: llandre <r&d2@dave-tech.it>
-Subject: Re: Can't import Xenomai svn repo
-Date: Wed, 05 Jul 2006 12:04:54 +0200
-Message-ID: <44AB8EC6.10501@dave-tech.it>
-References: <44AA2B50.4060403@dave-tech.it> <20060704101704.G3a844991@leonov.stosberg.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 05 12:03:13 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: avoid fetching files outside of the URL we're tracking
+Date: Wed, 05 Jul 2006 05:14:00 -0700
+Message-ID: <115210164094-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: Santi <sbejar@gmail.com>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 05 14:14:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fy4Dr-0002bU-M7
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 12:03:08 +0200
+	id 1Fy6Ge-000859-TG
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 14:14:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964785AbWGEKDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 06:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964789AbWGEKDD
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 06:03:03 -0400
-Received: from host46-203-static.38-85-b.business.telecomitalia.it ([85.38.203.46]:19466
-	"HELO dave-tech.it") by vger.kernel.org with SMTP id S964785AbWGEKDB
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 06:03:01 -0400
-Received: (qmail 16659 invoked by uid 0); 5 Jul 2006 10:02:56 -0000
-Received: from unknown (HELO ?192.168.0.6?) (192.168.2.253)
-  by 192.168.2.1 with SMTP; 5 Jul 2006 10:02:56 -0000
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: Dennis Stosberg <dennis@stosberg.net>
-In-Reply-To: <20060704101704.G3a844991@leonov.stosberg.net>
+	id S964828AbWGEMOE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 08:14:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbWGEMOE
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 08:14:04 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:24999 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S964828AbWGEMOD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 08:14:03 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 29D427DC021;
+	Wed,  5 Jul 2006 05:14:01 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed,  5 Jul 2006 05:14:00 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.1.ge255
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23347>
 
-Dennis,
+Thanks to Santi <sbejar@gmail.com> for the bug report and explanation:
+> /path/to/repository/project/file
+> /path/to/repository/project-2/file
+<...>
+> you end up with a project with the following files:
+>
+> file
+> -2/file
 
-thanks a lot for your help.
-This command starts fine but ...
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ contrib/git-svn/git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-git-svnimport -C xenomai2.git svn://svn.gna.org/xenomai
-
-... after a while it fails:
-
-Committing initial tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Committing initial tree 77c387d69d2880a9c3f25764b952e821af919755
-Network connection closed unexpectedly: Connection closed unexpectedly 
-at /usr/bin/git-svnimport line 348
-
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index 08e36be..6d49109 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -2625,7 +2625,7 @@ sub libsvn_connect {
+ sub libsvn_get_file {
+ 	my ($gui, $f, $rev) = @_;
+ 	my $p = $f;
+-	return unless ($p =~ s#^\Q$SVN_PATH\E/?##);
++	return unless ($p =~ s#^\Q$SVN_PATH\E/##);
+ 
+ 	my ($hash, $pid, $in, $out);
+ 	my $pool = SVN::Pool->new;
 -- 
-llandre
-
-DAVE Electronics System House - R&D Department
-web:   http://www.dave-tech.it
-email: r&d2@dave-tech.it
-
-
->> I tried to import Xenomai svn repo but the script failed:
->>
->> git-svnimport -v -C xenomai.git http://svn.gna.org/xenomai/trunk
->> RA layer request failed: PROPFIND request failed on '/xenomai/trunk': 
->> PROPFIND of '/xenomai/trunk': 405 Method Not Allowed (http://svn.gna.org) at 
->> /usr/bin/git-svnimport line 135
-> 
-> Looks like the repository is simply not accessible by http.
-> 
->     $ svn co http://svn.gna.org/xenomai/trunk
->     svn: PROPFIND request failed on '/xenomai/trunk'
->     svn: PROPFIND of '/xenomai/trunk': 405 Method Not Allowed (http://svn.gna.org)
-> 
-> git-svnimport imports a complete svn repository including its
-> branches and tags (as long as the svn repo follows the official
-> layout).  So you would run it against the repository's root:
-> 
->     git svnimport svn://svn.gna.org/xenomai/
-> 
-> If you want to import/track the trunk only (and maybe commit to it),
-> git-svn from git's contrib is probably what you want.
-> 
-> Regards,
-> Dennis
-> 
-> 
+1.4.1.ge255
