@@ -1,62 +1,59 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Additional merge-base tests
-Date: Wed, 05 Jul 2006 07:28:25 -0700
-Message-ID: <44ABCC89.2090003@gmail.com>
-References: <44A9E6AE.10508@gmail.com> <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7v8xn9gjh5.fsf@assigned-by-dhcp.cox.net> <200607051039.53288.Josef.Weidendorfer@gmx.de>
-Reply-To: gitzilla@gmail.com
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit: bunch of bugreports/wishes
+Date: Wed, 5 Jul 2006 15:29:15 +0100
+Message-ID: <b0943d9e0607050729v75a5e6deq6baff0350b422122@mail.gmail.com>
+References: <20060622221425.GA7851@nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 05 16:28:41 2006
+Cc: "GIT list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 05 16:30:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fy8Mj-0001AM-2I
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 16:28:34 +0200
+	id 1Fy8Nj-0001Kz-Aq
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 16:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964853AbWGEO2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 10:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbWGEO2a
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 10:28:30 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:49670 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S964853AbWGEO23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 10:28:29 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so931059wra
-        for <git@vger.kernel.org>; Wed, 05 Jul 2006 07:28:28 -0700 (PDT)
+	id S964885AbWGEO3S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 10:29:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964887AbWGEO3R
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 10:29:17 -0400
+Received: from nz-out-0102.google.com ([64.233.162.197]:10513 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S964885AbWGEO3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 10:29:15 -0400
+Received: by nz-out-0102.google.com with SMTP id k1so824864nzf
+        for <git@vger.kernel.org>; Wed, 05 Jul 2006 07:29:15 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=YnFRS89Uu1faVD4ZJJRE8V26dgRBWES3WEd2msjyghSxhUZcXiNX75hcN3PB30kf87DG/ZjGB+yHSm2l7sbVySe1N9TwAE/iUB9yONyY2Tqs6vMzYqwIbWYBdD2JTr+csTtcfnslv73FIACdeDAd16HKcR+VaBcm08DPUYjp0As=
-Received: by 10.65.191.7 with SMTP id t7mr5242972qbp;
-        Wed, 05 Jul 2006 07:28:28 -0700 (PDT)
-Received: from ?10.0.0.6? ( [69.160.147.208])
-        by mx.gmail.com with ESMTP id p4sm2228191qba.2006.07.05.07.28.27;
-        Wed, 05 Jul 2006 07:28:28 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
-X-Accept-Language: en-us, en
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-In-Reply-To: <200607051039.53288.Josef.Weidendorfer@gmx.de>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LggwcsqE1w/3cwvkXbbAZhN3KVC+MciwiLXO54rSq9ziC1ymPCZG5ohBQdNRA2jtFtm1ywaeybKtzAeHgjZYdpbB4S/VnrRseRuZHS+FbJB+Fg792cuCgUdhnOGDAFYrjWPlGWgda2ax+B6uJkwIFoDlvX88BTJ8VWwe8JE9sm0=
+Received: by 10.36.58.12 with SMTP id g12mr6233916nza;
+        Wed, 05 Jul 2006 07:29:15 -0700 (PDT)
+Received: by 10.36.250.28 with HTTP; Wed, 5 Jul 2006 07:29:15 -0700 (PDT)
+To: "Yann Dirson" <ydirson@altern.org>
+In-Reply-To: <20060622221425.GA7851@nowhere.earth>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23350>
 
-Josef Weidendorfer wrote:
-> On Tuesday 04 July 2006 23:15, Junio C Hamano wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->>> We could introduce a time.maximumSkew variable, and just walk only 
->>> that much further when traversing the commits.
->> We could have had "commit generation number" in the commit
->> object header, and use that instead of commit timestamps for
->> these traversal purposes.
-> 
-> Isn't this "commit generation number" information that can be
-> regenerated on the fly, i.e. a perfect fit for data to be stored
-> in a persistant cache, e.g. in ".git/tmp/virtual-commit-timestamps"?
+On 22/06/06, Yann Dirson <ydirson@altern.org> wrote:
+> - "push --undo" is not robust.  On the occasion reproduced below, I
+> had to rollback the push myself by hand-modifying the stgit data,
+> which took me some effort.  I'll have to gather precise info, but the
+> issue occurs on patch reordering, on a genuine conflict, and seems to
+> be involve a change to a non-existent file, when that file would have
+> been added by a non-applied patch originally below the one I attempted
+> to apply.
 
-Yes
+I fixed this bug and I'll push the changes tonight. It was caused by a
+"git-diff-index" call with files but without the "--" argument. When
+the file was actually missing from the repository, git was confused
+and returned an error. The 'status --reset' command was failing in
+this situation as well.
+
+-- 
+Catalin
