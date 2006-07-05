@@ -1,62 +1,51 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add a custom ./configure script
-Date: Wed, 5 Jul 2006 18:46:43 +0200
-Message-ID: <81b0412b0607050946y34bf28d5gca30264375fb7957@mail.gmail.com>
-References: <20060704004012.22639.44317.stgit@machine.or.cz>
-	 <e8drmq$8ec$1@sea.gmane.org> <20060704215747.GQ29115@pasky.or.cz>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: git reset --hard include/linux/config.h
+Date: Wed, 5 Jul 2006 18:58:01 +0200
+Message-ID: <20060705165801.GA11822@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 05 18:47:05 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jul 05 18:59:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyAWY-0002OR-Ep
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 18:46:52 +0200
+	id 1FyAhw-0004gQ-3G
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 18:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964869AbWGEQqq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 12:46:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964870AbWGEQqq
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 12:46:46 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:3251 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S964869AbWGEQqp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 12:46:45 -0400
-Received: by ug-out-1314.google.com with SMTP id s2so249613uge
-        for <git@vger.kernel.org>; Wed, 05 Jul 2006 09:46:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jG8YaFiGo2qJWzRau6FqjbyhYRobgeUKdPjaaTgfpsoA1ZZRmlubdzAqewgdh3at9WmfPKXvni8HZtN5tXb2qUx+I7nzfLEnP73EdIQqruNoe+fKm/lL9ZZlu+tvRiBT0Joenj8jl0grk5a4Psdol3uWIeiC73zrIBzlibfv08s=
-Received: by 10.78.165.16 with SMTP id n16mr2409286hue;
-        Wed, 05 Jul 2006 09:46:44 -0700 (PDT)
-Received: by 10.78.37.7 with HTTP; Wed, 5 Jul 2006 09:46:43 -0700 (PDT)
-To: "Petr Baudis" <pasky@suse.cz>
-In-Reply-To: <20060704215747.GQ29115@pasky.or.cz>
+	id S964896AbWGEQ6c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 12:58:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964893AbWGEQ6c
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 12:58:32 -0400
+Received: from pasmtpa.tele.dk ([80.160.77.114]:59878 "EHLO pasmtp.tele.dk")
+	by vger.kernel.org with ESMTP id S964896AbWGEQ6b (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 12:58:31 -0400
+Received: from mars.ravnborg.org (0x535d98d8.hrnxx9.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtp.tele.dk (Postfix) with ESMTP id 98C86800F26
+	for <git@vger.kernel.org>; Wed,  5 Jul 2006 18:58:30 +0200 (CEST)
+Received: by mars.ravnborg.org (Postfix, from userid 1000)
+	id 9726543C01E; Wed,  5 Jul 2006 18:58:01 +0200 (CEST)
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23355>
 
-On 7/4/06, Petr Baudis <pasky@suse.cz> wrote:
-> >
-> > If you named it for example configure.sh, then autoconf generated version,
-> > and your by hand created version could coexist.
->
-> I'm not opposed to it per se, but I'm just not sure if it makes any
-> sense to support them both in parallel, since then you have parallel
-> infrastructure doing the exactly same thing, or worse yet - performing
-> a subtly different set of tests. The benefit is unclear to me.
+While working on something unrelated I just did a quick hack
+in include/linux/config.h
+When done I wanted to get rid of the changes so I did:
+git reset --hard include/linux/config.h
 
-The benefit is on user side: he'll take what works for him, without waiting
-for you or Jakub to fix it for him.
+And the changes made to include/linux/config.h was indeed gone, with
+all the other changes I had in other files.
 
-> Another thing is that it's named *everywhere* ./configure and if I use a
-> different name now then it will be hard to rename.
+Now git reset is maybe supposed to work on commit level only, but it
+would have been nice if it erroroed out when it saw an argument that
+it did not know about. In this case I assume git reset used
+"include/linux/config.h" as <commitish>.
 
-but it not the same configure as "everywhere". It's your very own script.
+Also what is the right command to bring back a file to the original
+state after doing some modifications that was not needed anyway?
 
-That said, I like your script better than the autoconf thing.
+	Sam
