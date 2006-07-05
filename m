@@ -1,51 +1,61 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: git reset --hard include/linux/config.h
-Date: Wed, 5 Jul 2006 18:58:01 +0200
-Message-ID: <20060705165801.GA11822@mars.ravnborg.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Additional merge-base tests
+Date: Wed, 5 Jul 2006 19:04:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607051900200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44A9E6AE.10508@gmail.com> <7v3bdhoraa.fsf@assigned-by-dhcp.cox.net>
+ <44AA0DAE.1060308@gmail.com> <7vpsgllsnp.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607041019580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xn9gjh5.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607050021330.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <44AAF49F.6090008@gmail.com> <Pine.LNX.4.63.0607050952140.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <44ABE596.40103@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jul 05 18:59:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jul 05 19:05:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyAhw-0004gQ-3G
-	for gcvg-git@gmane.org; Wed, 05 Jul 2006 18:58:36 +0200
+	id 1FyAo8-0005kZ-7V
+	for gcvg-git@gmane.org; Wed, 05 Jul 2006 19:05:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964896AbWGEQ6c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 12:58:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964893AbWGEQ6c
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 12:58:32 -0400
-Received: from pasmtpa.tele.dk ([80.160.77.114]:59878 "EHLO pasmtp.tele.dk")
-	by vger.kernel.org with ESMTP id S964896AbWGEQ6b (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 12:58:31 -0400
-Received: from mars.ravnborg.org (0x535d98d8.hrnxx9.adsl-dhcp.tele.dk [83.93.152.216])
-	by pasmtp.tele.dk (Postfix) with ESMTP id 98C86800F26
-	for <git@vger.kernel.org>; Wed,  5 Jul 2006 18:58:30 +0200 (CEST)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id 9726543C01E; Wed,  5 Jul 2006 18:58:01 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S964868AbWGERE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 13:04:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964903AbWGERE5
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 13:04:57 -0400
+Received: from mail.gmx.net ([213.165.64.21]:20905 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S964868AbWGERE4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jul 2006 13:04:56 -0400
+Received: (qmail invoked by alias); 05 Jul 2006 17:04:55 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 05 Jul 2006 19:04:55 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <44ABE596.40103@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23356>
 
-While working on something unrelated I just did a quick hack
-in include/linux/config.h
-When done I wanted to get rid of the changes so I did:
-git reset --hard include/linux/config.h
+Hi,
 
-And the changes made to include/linux/config.h was indeed gone, with
-all the other changes I had in other files.
+On Wed, 5 Jul 2006, A Large Angry SCM wrote:
 
-Now git reset is maybe supposed to work on commit level only, but it
-would have been nice if it erroroed out when it saw an argument that
-it did not know about. In this case I assume git reset used
-"include/linux/config.h" as <commitish>.
+> If grafts in your repository create a cycle, the misbehavior of merge-base
+> should be among the least of your concerns.
 
-Also what is the right command to bring back a file to the original
-state after doing some modifications that was not needed anyway?
+Right. BUT grafts can be very helpful to connect branches which were 
+independently imported into git. And in these cases, the clockSkew really 
+is no clockSkew. But in that case, the generation number would have to be 
+recalculated also.
 
-	Sam
+Anyway, I think that it should be a configurable, which defaults to off, 
+i.e. in the normal case merge-base should behave as it does now. And if we 
+have that configurable, we might as well take the safe but dumb approach 
+to just traverse _everything_.
+
+Ciao,
+Dscho
