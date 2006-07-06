@@ -1,70 +1,75 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: git on HP-UX
-Date: Thu, 06 Jul 2006 10:53:49 -0400
-Message-ID: <1152197629.7720.10.camel@dv>
-References: <200607060950.34558.michal.rokos@nextsoft.cz>
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: Re: [PATCH 1/3] configure: Add test for Perl
+Date: Thu, 6 Jul 2006 17:34:45 +0200
+Message-ID: <20060706153445.G424b7ea1@leonov.stosberg.net>
+References: <20060706124025.G325584e9@leonov.stosberg.net> <20060706161011.ccc2ea1c.tihirvon@gmail.com> <E1FyUNT-0007Ko-JR@moooo.ath.cx> <20060706172756.a42f1627.tihirvon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 06 16:54:16 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 06 17:35:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyVEz-0002Bl-VH
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 16:54:06 +0200
+	id 1FyVsS-00030y-5f
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 17:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030302AbWGFOyA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Jul 2006 10:54:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030308AbWGFOyA
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 10:54:00 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:53738 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030302AbWGFOx5
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 10:53:57 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FyVEq-0001i1-M9
-	for git@vger.kernel.org; Thu, 06 Jul 2006 10:53:56 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FyVEj-00035Y-Fc; Thu, 06 Jul 2006 10:53:49 -0400
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-In-Reply-To: <200607060950.34558.michal.rokos@nextsoft.cz>
-X-Mailer: Evolution 2.7.3 (2.7.3-7) 
+	id S1030342AbWGFPet (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 11:34:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030341AbWGFPet
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 11:34:49 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:39580 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1030342AbWGFPes (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 11:34:48 -0400
+Received: from leonov.stosberg.net (p213.54.86.66.tisdip.tiscali.de [213.54.86.66])
+	by ncs.stosberg.net (Postfix) with ESMTP id 6B91EAEBA004;
+	Thu,  6 Jul 2006 17:34:39 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id B2207103D63; Thu,  6 Jul 2006 17:34:45 +0200 (CEST)
+To: Timo Hirvonen <tihirvon@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <20060706172756.a42f1627.tihirvon@gmail.com>
+OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23394>
 
-Hello!
+Timo Hirvonen wrote:
 
-On Thu, 2006-07-06 at 09:50 +0200, Michal Rokos wrote:
-> Hello,
+>         if test -x "$1"
+>         then
+>                 echo "$1"
+>                 return 0
+>         fi
+
+When run in the Git source directory, this will find the perl/
+subdir.  If the user gives an absolute path to the perl binary,
+there will be no auto-detection anyway, so I think we don't need it.
+
+> It is not needed but might be useful if PERL is user configurable
+> variable and can contain either full path or basename. For example this
+> code
 > 
-> I needed following changes in order to make git compile on HP-UX:
-> +ifeq ($(uname_S),HP-UX)
-> +	NO_IPV6 = YesPlease
-> +	NO_CURL = YesPlease
+>     test "$PROG" || PROG=prog
+>     PROG=`path_find "$PROG"`
+> 
+> works with these cases
+> 
+>     $ PROG=/usr/bin/program ./configure
+>     $ PROG=program-1.2 ./configure
 
-Is there any fundamental problem with curl and IPv6 on HP-UX?  I don't
-think so.
+I will add that.  For the compiler, the script already checks $CC.
+I wonder whether
 
-Sorry for using your path as a bad example, but the appearance of such
-patches is a perfect argument for a real configure script.  If we
-continue patching Makefile, we'll drown in such conditionals.  And the
-worst thing is, nobody without access to an HP-UX system will know why
-IPv6 isn't working there.  Makefile will become a pile of code that
-cannot be easily verified for correctness.
+  --with-perl=...
+  --with-python=... 
 
-Autoconf based tests can actually test if certain code can be compiled
-and linked.  If HP-UX fixed IPv6, the test would enable it.  If some
-genius manages to compile curl on HP-UX, http support will be enabled on
-that machine with no manual changes in Makefile.
+is more common (more similar to autoconf) than
 
-I hope the Autoconf based configure is on its way to git, but I don't
-see in in the "pu" branch yet.  I'm not very keen about reinventing
-Autoconf and hacking a hand-made configure script.
+  --perl=
+  --python=
 
--- 
 Regards,
-Pavel Roskin
+Dennis
