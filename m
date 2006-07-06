@@ -1,100 +1,75 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [RFC] GIT user survey
-Date: Thu, 06 Jul 2006 01:09:38 -0400
-Message-ID: <1152162578.10415.59.camel@dv>
-References: <4d8e3fd30606240918m6b452314m6514b5e5fc86f147@mail.gmail.com>
-	 <e8e1ea$s5c$1@sea.gmane.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: comparing file contents in is_exact_match?
+Date: Thu, 6 Jul 2006 07:57:29 +0200
+Message-ID: <20060706055729.GA12512@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 06 07:09:50 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UlVJffcvxoiEqYs2"
+X-From: git-owner@vger.kernel.org Thu Jul 06 07:57:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyM7W-0005Bg-6o
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 07:09:46 +0200
+	id 1FyMrp-0003pH-6u
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 07:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030187AbWGFFJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Jul 2006 01:09:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965174AbWGFFJm
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 01:09:42 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:27031 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965169AbWGFFJl
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 01:09:41 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FyM7Q-0007Pt-ET
-	for git@vger.kernel.org; Thu, 06 Jul 2006 01:09:40 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FyM7O-00085x-Cd; Thu, 06 Jul 2006 01:09:38 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <e8e1ea$s5c$1@sea.gmane.org>
-X-Mailer: Evolution 2.7.3 (2.7.3-7) 
+	id S1030190AbWGFF5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 01:57:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030194AbWGFF5b
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 01:57:31 -0400
+Received: from admingilde.org ([213.95.32.146]:47019 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1030190AbWGFF5b (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 01:57:31 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1FyMrh-00087e-9W
+	for git@vger.kernel.org; Thu, 06 Jul 2006 07:57:29 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23372>
-
-On Tue, 2006-07-04 at 17:28 +0200, Jakub Narebski wrote:
-> Paolo Ciarrocchi wrote:
-> 
-> > I was wondering whether it could be a good idea to have a kind of "GIT
-> > users survey" when google pointed my eyes to this page:
-> > http://www.selenic.com/pipermail/mercurial/2006-April/007513.html
-> > 
-> > So I modified the content of the survey and published a DRAFT here:
-> > http://paolo.ciarrocchi.googlepages.com/GITSurvey
-> 
-> Could you please add the final version (and of course results) on
-> Git Wiki (http://git.or.cz/gitwiki), like original one is on Mercurial
-> wiki: http://www.selenic.com/mercurial/wiki/index.cgi/UserSurvey ?
-> 
-> Thanks in advance
-> 
-> P.S. I wonder why my Mozilla 1.7.12 sees GITSurvey as binary/octet-stream
-> instead of text/plain file...
-
-It's not a Mozilla thing.  It's a server configuration.
-
-$ wget http://paolo.ciarrocchi.googlepages.com/GITSurvey
---00:52:45--  http://paolo.ciarrocchi.googlepages.com/GITSurvey
-           => `GITSurvey'
-Resolving paolo.ciarrocchi.googlepages.com... 64.233.179.93,
-64.233.179.91
-Connecting to paolo.ciarrocchi.googlepages.com|64.233.179.93|:80...
-connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 2,078 (2.0K) [application/octet-stream]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23373>
 
 
-Regarding the questions (sorry, I could have missed comments of others):
+--UlVJffcvxoiEqYs2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  What is your preferred language?
+hoi :)
 
-Preferred to type or preferred to speak?  There answer is not always the
-same, at least for me.
+I created a git repository for my photo collection and then renamed
+some photos (about 600).  Now git status and commit get hit by
+the OOM killer.
 
-  How did you hear about GIT?
+The reason for that is that is_exact_match (in diffcore-rename.c) maps
+both the source and destination file into memory and then compares them
+byte for byte.  This is a little bit too much for my little machine.
 
-With my own ears.  "How did you learn about GIT" would be better because
-many respondents probably _read_ about GIT first.
+When I remove the content comparation and only leave the sha1
+comparision, then my renames are correctly found in a second.  But
+unluckily, some other renames in the testcases are not correctly
+handled any more.
 
-s/histoty/history
-s/porcellains/porcelains/
+So is there an easy solution?  Why is the content comparision in
+is_exact_match needed?
 
-What is the "history depth"?  How do I measure it?
+--=20
+Martin Waitz
 
-  Which porcelains do you use?
+--UlVJffcvxoiEqYs2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-Which child did you abuse today?  Let's avoid loaded questions.  Some
-people are just fine with bare git.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-Have you tried to get GIT help from other people?
+iD8DBQFErKZJj/Eaxd/oD7IRArLZAJsFBeHfzEbiNms1QPZyr9/0iEaQlQCfTPHI
+b2OZZ1l299Jc+QSM5N4L7IQ=
+=6sEG
+-----END PGP SIGNATURE-----
 
-  Better: Have you asked other people to help you with GIT? 
-
--- 
-Regards,
-Pavel Roskin
+--UlVJffcvxoiEqYs2--
