@@ -1,63 +1,62 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Does Git run on Windows ?
-Date: Thu, 6 Jul 2006 14:56:04 +1200
-Message-ID: <46a038f90607051956w72c5e662g72feb242795e61c4@mail.gmail.com>
-References: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH 2, proof of concept] autoconf: Use %configure in
+	git.spec, autoconf dependency only in rpm target
+Date: Thu, 06 Jul 2006 00:16:37 -0400
+Message-ID: <1152159397.10415.29.camel@dv>
+References: <200607030156.50455.jnareb@gmail.com>
+	 <200607041609.36329.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 06 04:56:12 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 06 06:16:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyK2F-0004jd-6B
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 04:56:11 +0200
+	id 1FyLIK-00065Z-C9
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 06:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965142AbWGFC4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 22:56:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965140AbWGFC4H
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 22:56:07 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:13347 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S965142AbWGFC4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 22:56:06 -0400
-Received: by nf-out-0910.google.com with SMTP id x4so85986nfb
-        for <git@vger.kernel.org>; Wed, 05 Jul 2006 19:56:04 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Tgs1apu0+GIQTZAHP9eWSBdf24SgprT+xvv+OtNKfzvvAb074Xu3AwKRrmdgiUKtaqhRr+bOfRz9vLLMJK0FpIzApq2Jc0w6WtwEokOm4UercxNYSC8cZv9RVqNA7ZUix53okG06t+EAUQC+B/LoJK0c3SjCOeA1daMefSDV3DE=
-Received: by 10.78.97.7 with SMTP id u7mr20293hub;
-        Wed, 05 Jul 2006 19:56:04 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Wed, 5 Jul 2006 19:56:04 -0700 (PDT)
-To: "Aaron Gray" <angray@beeb.net>
-In-Reply-To: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500>
-Content-Disposition: inline
+	id S965171AbWGFEQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 00:16:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965172AbWGFEQl
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 00:16:41 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:26583 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965171AbWGFEQl
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 00:16:41 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FyLI7-0006O4-Q6
+	for git@vger.kernel.org; Thu, 06 Jul 2006 00:16:39 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FyLI5-0002nh-Kh; Thu, 06 Jul 2006 00:16:37 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200607041609.36329.jnareb@gmail.com>
+X-Mailer: Evolution 2.7.3 (2.7.3-7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23371>
 
-On 7/6/06, Aaron Gray <angray@beeb.net> wrote:
-> This maybe a stupid question but does Git run on Windows ?
+Hi Jakub,
 
-Ask google :-) - try "git cygwin" - or look at the git wiki.
+On Tue, 2006-07-04 at 16:09 +0200, Jakub Narebski wrote:
+> Sidenote 1: current git.spec.in doesn't allow building RPMS from a dirty
+> version: 
+>   error: line 3: Illegal char '-' in version: Version:    1.4.1.g1c7c-dirty
+> Is it intentional?
 
-> Are there better options ?
+I don't know if it's intentional, but it's annoying.  The workaround is
+to use StGIT and run "stg refresh" before "make rpm".
 
-Mercurial is quite similar (though not as fast), and may have an
-easier time on Windows. Not 100% sure about that.
+> +Patch0: 	git-add-autoconf-configure.patch.gz
 
-> This maybe the crunch and reason to use CVS for now :(?)
+I don't think we need patches in git.spec.in.  Let's leave it to the
+actual distributions.  If you have a problem with rpm, please submit the
+autoconf support for now and the rest will be cleaned up eventually.
+Besides, the "next" branch has different and potentially conflicting
+changes to git.spec.in for Git.pm support.
 
-If you are only supporting some users on Windows, you may be able to
-use git-cvsserver for them. Looks like a cvsserver but it is a GIT
-repository ;-)
-
-cheers,
-
-
-
-martin
+-- 
+Regards,
+Pavel Roskin
