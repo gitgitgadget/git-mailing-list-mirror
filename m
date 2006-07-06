@@ -1,88 +1,76 @@
-From: "Aaron Gray" <angray@beeb.net>
-Subject: Why's Git called Git ?
-Date: Thu, 6 Jul 2006 03:18:12 +0100
-Message-ID: <01f201c6a0a2$6faa0f80$0200a8c0@AMD2500>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git reset --hard include/linux/config.h
+Date: Wed, 05 Jul 2006 19:45:59 -0700
+Message-ID: <7vhd1va1so.fsf@assigned-by-dhcp.cox.net>
+References: <20060705165801.GA11822@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jul 06 04:18:48 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 06 04:46:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyJRe-00008o-ER
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 04:18:22 +0200
+	id 1FyJsU-0003ci-4I
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 04:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965134AbWGFCSS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 22:18:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965135AbWGFCSS
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 22:18:18 -0400
-Received: from lon1-mail-2.visp.demon.net ([193.195.70.5]:5917 "EHLO
-	lon1-mail-2.visp.demon.net") by vger.kernel.org with ESMTP
-	id S965134AbWGFCSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 22:18:18 -0400
-Received: from AMD2500 (mwgray.force9.co.uk [212.159.110.144])
-	by lon1-mail-2.visp.demon.net (MOS 3.5.8-GR)
-	with ESMTP id EEG43602 (AUTH angray);
-	Thu, 6 Jul 2006 03:18:15 +0100 (BST)
-To: "Git Mailing List" <git@vger.kernel.org>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.2869
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2869
+	id S965138AbWGFCqD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 22:46:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965139AbWGFCqC
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 22:46:02 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:32652 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965138AbWGFCqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 22:46:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060706024600.ZCKQ985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 5 Jul 2006 22:46:00 -0400
+To: Sam Ravnborg <sam@ravnborg.org>
+In-Reply-To: <20060705165801.GA11822@mars.ravnborg.org> (Sam Ravnborg's
+	message of "Wed, 5 Jul 2006 18:58:01 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23369>
 
->> I am toying with using a VCS for a set of related projects, either CVS
->> because its well known, SubVersion for ease of use, or Git as it is new.
->> Lots to descide upon, any pointers would be appreciated.
->
-> CVS is showing it's age; mainly the fact that IIRC it began as a series of
-> scripts over RCS, file level version control system, extending version
-> control to sets of files, somewhat. Branching in CVS is serious PITA.
-> Renaming _with_ retaining full and correct history: forget about it.
+Sam Ravnborg <sam@ravnborg.org> writes:
 
-Okay, we like branching and forking.
+> Now git reset is maybe supposed to work on commit level only, but it
+> would have been nice if it erroroed out when it saw an argument that
+> it did not know about. In this case I assume git reset used
+> "include/linux/config.h" as <commitish>.
 
-> Subversion is "better CVS": still centralized, CVS infernal branching
-> replaced by "cheap copy" branching. Well known, replaces CVS thorough OSS
-> projects.
+There is an attempt to have that check, but obviously it is
+busted.  Thanks for noticing.
 
-Okay.
+Maybe something like this is needed instead.
 
-> Git, Mercurial, Monotone, Bazaar-NG, Darcs are new brand of distributed 
-> VCS.
-> I really like notion of branching in Git; but be warned about tracking and
-> not recording renames, and the need of explicit packing (the latter very
-> minor). Powerfull, perhaps too powerfull for newbie user: but that is what
-> Cogito is for (although now Git contains fairly large set of high-level
-> commands).
+-- >8 --
+git-reset: complain and exit upon seeing an unknown parameter.
 
-We like to move forward.
+The check to use "rev-parse --verify" was defeated by the use of
+"--default HEAD".  "git reset --hard bogus-committish" just
+defaulted to reset to the HEAD without complaining.
 
->
->  http://git.or.cz/
->  http://git.or.cz/gitwiki
->  http://git.or.cz/gitwiki/Git
-> and "Other version control software" at
->  http://git.or.cz/gitwiki/GitLinks
-
-
-Yes, been there, thanks though.
-
-> P.S. If you decide to use Git as VCS for your project, consider adding 
-> entry
-> about it on http://git.or.cz/gitwiki/GitProjects wiki page.
-
-Looks like I maybe doing a preliminary Windows Git HOWTO on the GitWiki, if 
-no one else has trod this ground :) (Might need some proper help testing 
-though)
-
-Thanks,
-
-Aaron
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/git-reset.sh b/git-reset.sh
+index 46451d0..5c02240 100755
+--- a/git-reset.sh
++++ b/git-reset.sh
+@@ -17,7 +17,11 @@ case "$1" in
+         usage ;;
+ esac
+ 
+-rev=$(git-rev-parse --verify --default HEAD "$@") || exit
++case $# in
++0) rev=HEAD ;;
++1) rev=$(git-rev-parse --verify "$1") || exit ;;
++*) usage ;;
++esac
+ rev=$(git-rev-parse --verify $rev^0) || exit
+ 
+ # We need to remember the set of paths that _could_ be left
