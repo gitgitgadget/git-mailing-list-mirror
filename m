@@ -1,57 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: comparing file contents in is_exact_match?
-Date: Wed, 05 Jul 2006 23:20:13 -0700
-Message-ID: <7vd5cj9rvm.fsf@assigned-by-dhcp.cox.net>
-References: <20060706055729.GA12512@admingilde.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Does Git run on Windows ?
+Date: Thu, 6 Jul 2006 08:34:32 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607060830060.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 06 08:20:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 06 08:35:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyNDs-0006wi-6I
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 08:20:24 +0200
+	id 1FyNSW-0000hW-No
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 08:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030195AbWGFGUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Jul 2006 02:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030207AbWGFGUP
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 02:20:15 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:60100 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1030195AbWGFGUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jul 2006 02:20:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060706062014.JGBH985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 6 Jul 2006 02:20:14 -0400
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20060706055729.GA12512@admingilde.org> (Martin Waitz's message
-	of "Thu, 6 Jul 2006 07:57:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030210AbWGFGee (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 02:34:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030219AbWGFGee
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 02:34:34 -0400
+Received: from mail.gmx.net ([213.165.64.21]:26248 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1030210AbWGFGee (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 02:34:34 -0400
+Received: (qmail invoked by alias); 06 Jul 2006 06:34:32 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp041) with SMTP; 06 Jul 2006 08:34:32 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Aaron Gray <angray@beeb.net>
+In-Reply-To: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23375>
 
-Martin Waitz <tali@admingilde.org> writes:
 
-> The reason for that is that is_exact_match (in diffcore-rename.c) maps
-> both the source and destination file into memory and then compares them
-> byte for byte.  This is a little bit too much for my little machine.
->
-> When I remove the content comparation and only leave the sha1
-> comparision, then my renames are correctly found in a second.  But
-> unluckily, some other renames in the testcases are not correctly
-> handled any more.
->
-> So is there an easy solution?  Why is the content comparision in
-> is_exact_match needed?
 
-Because your working tree can be out of sync with respect to
-what's in the index, in which case we cannot trust the sha1
-while running diff-index (without --cached flag).
+On Thu, 6 Jul 2006, Aaron Gray wrote:
 
-git-update-index --refresh before doing anything might help.
+> This maybe a stupid question but does Git run on Windows ?
+
+You do know that there are several list archives?
+
+> Are there better options ?
+
+Than Windows? Yes.
+
+> Its got lots of C code, and Bash scripts, with a couple of Perl scripts.
+
+And you completely forgot Python.
+
+> So should run on Cygwin okay, maybe even MinGW. Anyone tried either ?
+
+Yes, I have tried.
+
+You might be surprised that Cygwin is supported. But then, you could have 
+seen it in the Makefile.
+
+I also tried to port git to MinGW. This project is stalled a little, 
+because there is really, really, _really_ much to adapt.
+
+MinGW inherits the problem of Windows being utterly non-POSIX, and that 
+has to be worked around.
+
+HOWEVER, if you would like to continue where I left off, I'll send you a 
+repo URL where you can download it.
+
+Ciao,
+Dscho
