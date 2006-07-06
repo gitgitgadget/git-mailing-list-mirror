@@ -1,129 +1,114 @@
-From: Michal Rokos <michal.rokos@nextsoft.cz>
-Subject: git on HP-UX
-Date: Thu, 6 Jul 2006 09:50:34 +0200
-Organization: NextSoft
-Message-ID: <200607060950.34558.michal.rokos@nextsoft.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFH] further upload-pack/fetch-pack tweaks
+Date: Thu, 06 Jul 2006 01:43:18 -0700
+Message-ID: <7vejwz6s49.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Jul 06 09:50:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Jul 06 10:44:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyOdG-0003mP-9u
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 09:50:42 +0200
+	id 1FyPSG-00030y-BG
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 10:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964984AbWGFHui convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Jul 2006 03:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964985AbWGFHui
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 03:50:38 -0400
-Received: from s3.icr.cz ([82.142.72.7]:23235 "EHLO s3.icr.cz")
-	by vger.kernel.org with ESMTP id S964984AbWGFHui convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 03:50:38 -0400
-Received: (from root@localhost)
-	by s3.icr.cz (8.11.4/8.11.4) id k667oZ425112
-	for git@vger.kernel.org; Thu, 6 Jul 2006 09:50:35 +0200
-Received: from michal.rokos.cz (mx1.evangnet.cz [88.83.237.35] (may be forged))
-	by s3.icr.cz (8.11.4/8.11.4) with ESMTP id k667oZS25072
-	for <git@vger.kernel.org>; Thu, 6 Jul 2006 09:50:35 +0200
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-X-scanner: scanned by Inflex 1.0.10 - (http://pldaniels.com/inflex/)
-Content-Disposition: inline
+	id S965109AbWGFInU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 04:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965117AbWGFInU
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 04:43:20 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:9710 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965109AbWGFInU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jul 2006 04:43:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060706084319.OPSG985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 6 Jul 2006 04:43:19 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23381>
 
-Hello,
+I was reviewing this issue and have an updated attempt to solve
+the issue slightly differently.  I think I have something
+working but would like to borrow extra sets of eyeballs.
 
-I needed following changes in order to make git compile on HP-UX:
-# uname -s -r -m
-HP-UX B.11.11 9000/800
+    From: Junio C Hamano <junkio@cox.net>
+    Subject: [PATCH/RFC] upload-pack: stop "ack continue" when we know common commits for wanted refs
+    To: Ralf Baechle <ralf@linux-mips.org>
+    cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+    Date: Fri, 26 May 2006 19:20:54 -0700
+    Message-ID: <7vfyiwi4xl.fsf@assigned-by-dhcp.cox.net>
 
-Packages installed:
-OpenSSL	A.00.09.07-d.002
-perl		B.5.6.1.C
-+ unofficial:
-gcc		4.1.1
-libiconv	1.10
-make	3.80
-zlib		1.2.3
+    When the downloader's repository has more roots than the server
+    side has, the "have" exchange to figure out recent common
+    commits ends up traversing the whole history of branches that
+    only exist on the downloader's side.  When the downloader is
+    asking for newer commits on the branch that exists on both ends,
+    this is totally unnecessary.
 
-Has to be compiled with:
-PERL_PATH=3D/opt/perl/bin/perl gmake prefix=3D/opt/git install
+    This adds logic to the server side to see if the wanted refs can
+    reach the "have" commits received so far, and stop issuing "ack
+    continue" once all of them can be reached from "have" commits.
 
-Please keep me on CC (I'm not subscribed).
+The idea in the new implementation is to notice that the
+downloader sent "have" for an object we do not know about, and
+when we already have some "have" from them and some "want" are
+still not known if they are already reachable from these
+"have"s, we traverse the commit ancestry down to oldest "have"s
+so far (this is just a heuristic) to see if all of "want" have
+some common ancestor with the other side.  When we know all
+"want" can be reachable by some "have" we have seen so far, we
+send "ACK continue" when the downloader sends a "have" that we
+do not have, to cause the downloader to stop traversing that
+futile branch which leads to the root we do not have.  The code
+sits near the tip of "pu".
 
-Signed-off-by: Michal Rokos <michal.rokos@nextsoft.cz>
+I've started from a clone of git.git repository and tried to
+fetch "todo" branch from another clone that does not have
+anything but the "todo" branch.  So the downloader has five
+extra roots (one for git.git itself, one for gitk, one for
+gitweb, and one each for htmldocs and manpages).
 
---- a/Makefile
-+++ b/Makefile
-@@ -328,6 +328,17 @@ ifeq ($(uname_S),IRIX64)
- 	# for now, build 32-bit version
- 	ALL_LDFLAGS +=3D -L/usr/lib32
- endif
-+ifeq ($(uname_S),HP-UX)
-+	NO_IPV6 =3D YesPlease
-+	NO_CURL =3D YesPlease
-+	NO_SETENV =3D YesPlease
-+	NO_STRCASESTR =3D YesPlease
-+	NO_STRLCPY =3D YesPlease
-+	NEEDS_LIBICONV =3D YesPlease
-+	ALL_CFLAGS +=3D -D_REENTRANT -D_XOPEN_SOURCE -D_HPUX_SOURCE -I/opt/op=
-enssl/include -Dhstrerror=3Dstrerror
-+	ALL_LDFLAGS +=3D -L/opt/openssl/lib
-+	INSTALL =3D $(PWD)/compat/compat_install
-+endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 =3D YesPlease
- endif
---- a/compat/compat_install	2006-07-06 09:31:27.000000000 +0200
-+++ b/compat/compat_install	2006-07-06 09:31:18.000000000 +0200
-@@ -0,0 +1,34 @@
-+#!/usr/bin/sh
-+#
-+# Copyright (c) 2006 Michal Rokos
-+#
-+# Dummy 'install' replacement intended to be used
-+# on HP-UX under sh-posix.
-+
-+while getopts 'dm:' opt; do
-+    case $opt in
-+    d) DIR_MODE=3D1;;
-+    m) MODE=3D$OPTARG;;
-+    \?) echo "Unknown argument $OPTARG"; exit 1;;
-+    esac
-+done
-+shift $((OPTIND-1))
-+
-+if [[ -n "$DIR_MODE" ]] && [[ -n "$MODE" ]]; then
-+    mkdir -p -m "$MODE" "$@"
-+elif [[ -n "$DIR_MODE" ]]; then
-+    mkdir -p "$@"
-+else
-+    set -A args "$@"
-+    last=3D$#
-+    dest=3D${args[last-1]}
-+    unset args[last-1]
-+    set "${args[@]}"
-+
-+    cp "$@" "$dest"
-+
-+    [[ -n "$MODE" ]] && chmod "$MODE" "$@"
-+fi
-+
-+exit 0
-+
+        # upstream is just "todo" branch and nothing else
+        git clone -n git.git upstream
+        cd upstream
+        mv .git/refs trash
+        mkdir -p .git/refs/heads .git/refs/tags
+        echo 'ref: refs/heads/master' >.git/HEAD
+        cat trash/heads/todo >.git/refs/heads/master
+        git repack -a -d
+        cd ..
 
---=20
-Michal Rokos
+        # downloader has up-to-date git.git but stale "todo"
+	git clone -n git.git downloader
+        cd downloader
+        git checkout todo
+        git reset --hard HEAD~30
+        git repack -a -d
 
-NextSoft s.r.o.
-Vysko=C4=8Dilova 1/1410
-140 21 Praha 4
-phone:  +420 267 224 311
-fax:    +420 267 224 307
-mobile: +420 736 646 591
-e-mail: michal.rokos@nextsoft.cz
+        # try downloading things from upstream
+        git fetch-pack -k -v ../upstream master 2>/var/tmp/new.out
+	git fetch-pack -k -v --exec=old-git-upload-pack \
+        	../upstream master 2>/var/tmp/old.out
+
+
+It does send smaller number of "have"s than the current code,
+but I noticed that near the end of transfer, after it gets an
+"ACK continue" for a common commit on "todo" branch and an "ACK
+continue" for a not-common commit on "master" branch, it keeps
+sending the commits that are marked on the fetch-pack side as
+COMMON_REF (so the last ref sent is v0.99^0 commit), although
+upload-pack has told the downloader that whatever is reachable
+from "master" branch are commits both sides agreed are common,
+so I suspect it should not go down that path that far to reach
+v0.99^0 commit.
+
+I have a feeling that either get_rev() or mark_common() logic is
+not marking ancestors of commit that are known to be common
+properly.  Does this ring a bell?
