@@ -1,93 +1,70 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [PATCH 1/3] configure: Add test for Perl
-Date: Thu, 6 Jul 2006 17:27:56 +0300
-Message-ID: <20060706172756.a42f1627.tihirvon@gmail.com>
-References: <20060706124025.G325584e9@leonov.stosberg.net>
-	<20060706161011.ccc2ea1c.tihirvon@gmail.com>
-	<E1FyUNT-0007Ko-JR@moooo.ath.cx>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: git on HP-UX
+Date: Thu, 06 Jul 2006 10:53:49 -0400
+Message-ID: <1152197629.7720.10.camel@dv>
+References: <200607060950.34558.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: dennis@stosberg.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 06 16:29:02 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 06 16:54:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyUpn-0004ov-Ob
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 16:28:04 +0200
+	id 1FyVEz-0002Bl-VH
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 16:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030292AbWGFO2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Jul 2006 10:28:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030293AbWGFO2A
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 10:28:00 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:5694 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1030292AbWGFO17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jul 2006 10:27:59 -0400
-Received: by nf-out-0910.google.com with SMTP id y25so218818nfb
-        for <git@vger.kernel.org>; Thu, 06 Jul 2006 07:27:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=XLzZPjAYyuz+lfihq5Pr7XfarhUcV4JLb0MgxYZO1CnsQgyZah4RMikaZ8uJBTp1wPB+a/4QIYHFT/JPZkNI3SOwk2jWeASdYqBr+bXtavKYekQgyyCJywVMf60TA5LzFDhTiH2cAesn6+nSj53tLpiqclpCzM4GUXLCqU8+KXI=
-Received: by 10.49.43.12 with SMTP id v12mr509230nfj;
-        Thu, 06 Jul 2006 07:27:58 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.203.109])
-        by mx.gmail.com with ESMTP id o45sm4655465nfa.2006.07.06.07.27.57;
-        Thu, 06 Jul 2006 07:27:57 -0700 (PDT)
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1FyUNT-0007Ko-JR@moooo.ath.cx>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.8.19; i686-pc-linux-gnu)
+	id S1030302AbWGFOyA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 10:54:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030308AbWGFOyA
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 10:54:00 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:53738 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1030302AbWGFOx5
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 10:53:57 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FyVEq-0001i1-M9
+	for git@vger.kernel.org; Thu, 06 Jul 2006 10:53:56 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FyVEj-00035Y-Fc; Thu, 06 Jul 2006 10:53:49 -0400
+To: Michal Rokos <michal.rokos@nextsoft.cz>
+In-Reply-To: <200607060950.34558.michal.rokos@nextsoft.cz>
+X-Mailer: Evolution 2.7.3 (2.7.3-7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23393>
 
-Matthias Lederhofer <matled@gmx.net> wrote:
+Hello!
 
-> This will not work with spaces in $PATH. I'd do something like this if
-> cut is portable (I have only freebsd and linux to test):
+On Thu, 2006-07-06 at 09:50 +0200, Michal Rokos wrote:
+> Hello,
+> 
+> I needed following changes in order to make git compile on HP-UX:
+> +ifeq ($(uname_S),HP-UX)
+> +	NO_IPV6 = YesPlease
+> +	NO_CURL = YesPlease
 
-This works at least with SunOS /bin/sh, dash, posh and bash.
+Is there any fundamental problem with curl and IPv6 on HP-UX?  I don't
+think so.
 
-path_find()
-{
-        if test -x "$1"
-        then
-                echo "$1"
-                return 0
-        fi
-	_ifs="$IFS"
-	IFS=:
-        for i in $PATH
-        do
-                if test -x "$i/$1"
-                then
-			IFS="$_ifs"
-                        echo "$i/$1"
-                        return 0
-                fi
-        done
-	IFS="$_ifs"
-        return 1
-}
+Sorry for using your path as a bad example, but the appearance of such
+patches is a perfect argument for a real configure script.  If we
+continue patching Makefile, we'll drown in such conditionals.  And the
+worst thing is, nobody without access to an HP-UX system will know why
+IPv6 isn't working there.  Makefile will become a pile of code that
+cannot be easily verified for correctness.
 
-> Is there any reason to check the current directory first? "which"
-> doesn't do it for me and without ./ in the front it does not work
-> (without . is not in $PATH).
+Autoconf based tests can actually test if certain code can be compiled
+and linked.  If HP-UX fixed IPv6, the test would enable it.  If some
+genius manages to compile curl on HP-UX, http support will be enabled on
+that machine with no manual changes in Makefile.
 
-It is not needed but might be useful if PERL is user configurable
-variable and can contain either full path or basename. For example this
-code
-
-    test "$PROG" || PROG=prog
-    PROG=`path_find "$PROG"`
-
-works with these cases
-
-    $ PROG=/usr/bin/program ./configure
-    $ PROG=program-1.2 ./configure
+I hope the Autoconf based configure is on its way to git, but I don't
+see in in the "pu" branch yet.  I'm not very keen about reinventing
+Autoconf and hacking a hand-made configure script.
 
 -- 
-http://onion.dynserv.net/~timo/
+Regards,
+Pavel Roskin
