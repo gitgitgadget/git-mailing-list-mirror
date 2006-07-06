@@ -1,76 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git reset --hard include/linux/config.h
-Date: Wed, 05 Jul 2006 19:45:59 -0700
-Message-ID: <7vhd1va1so.fsf@assigned-by-dhcp.cox.net>
-References: <20060705165801.GA11822@mars.ravnborg.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Does Git run on Windows ?
+Date: Thu, 6 Jul 2006 14:56:04 +1200
+Message-ID: <46a038f90607051956w72c5e662g72feb242795e61c4@mail.gmail.com>
+References: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 06 04:46:09 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 06 04:56:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyJsU-0003ci-4I
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 04:46:06 +0200
+	id 1FyK2F-0004jd-6B
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 04:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965138AbWGFCqD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Jul 2006 22:46:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965139AbWGFCqC
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 22:46:02 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:32652 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S965138AbWGFCqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jul 2006 22:46:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060706024600.ZCKQ985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 5 Jul 2006 22:46:00 -0400
-To: Sam Ravnborg <sam@ravnborg.org>
-In-Reply-To: <20060705165801.GA11822@mars.ravnborg.org> (Sam Ravnborg's
-	message of "Wed, 5 Jul 2006 18:58:01 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965142AbWGFC4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Jul 2006 22:56:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965140AbWGFC4H
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Jul 2006 22:56:07 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:13347 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S965142AbWGFC4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jul 2006 22:56:06 -0400
+Received: by nf-out-0910.google.com with SMTP id x4so85986nfb
+        for <git@vger.kernel.org>; Wed, 05 Jul 2006 19:56:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Tgs1apu0+GIQTZAHP9eWSBdf24SgprT+xvv+OtNKfzvvAb074Xu3AwKRrmdgiUKtaqhRr+bOfRz9vLLMJK0FpIzApq2Jc0w6WtwEokOm4UercxNYSC8cZv9RVqNA7ZUix53okG06t+EAUQC+B/LoJK0c3SjCOeA1daMefSDV3DE=
+Received: by 10.78.97.7 with SMTP id u7mr20293hub;
+        Wed, 05 Jul 2006 19:56:04 -0700 (PDT)
+Received: by 10.78.117.11 with HTTP; Wed, 5 Jul 2006 19:56:04 -0700 (PDT)
+To: "Aaron Gray" <angray@beeb.net>
+In-Reply-To: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23370>
 
-Sam Ravnborg <sam@ravnborg.org> writes:
+On 7/6/06, Aaron Gray <angray@beeb.net> wrote:
+> This maybe a stupid question but does Git run on Windows ?
 
-> Now git reset is maybe supposed to work on commit level only, but it
-> would have been nice if it erroroed out when it saw an argument that
-> it did not know about. In this case I assume git reset used
-> "include/linux/config.h" as <commitish>.
+Ask google :-) - try "git cygwin" - or look at the git wiki.
 
-There is an attempt to have that check, but obviously it is
-busted.  Thanks for noticing.
+> Are there better options ?
 
-Maybe something like this is needed instead.
+Mercurial is quite similar (though not as fast), and may have an
+easier time on Windows. Not 100% sure about that.
 
--- >8 --
-git-reset: complain and exit upon seeing an unknown parameter.
+> This maybe the crunch and reason to use CVS for now :(?)
 
-The check to use "rev-parse --verify" was defeated by the use of
-"--default HEAD".  "git reset --hard bogus-committish" just
-defaulted to reset to the HEAD without complaining.
+If you are only supporting some users on Windows, you may be able to
+use git-cvsserver for them. Looks like a cvsserver but it is a GIT
+repository ;-)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/git-reset.sh b/git-reset.sh
-index 46451d0..5c02240 100755
---- a/git-reset.sh
-+++ b/git-reset.sh
-@@ -17,7 +17,11 @@ case "$1" in
-         usage ;;
- esac
- 
--rev=$(git-rev-parse --verify --default HEAD "$@") || exit
-+case $# in
-+0) rev=HEAD ;;
-+1) rev=$(git-rev-parse --verify "$1") || exit ;;
-+*) usage ;;
-+esac
- rev=$(git-rev-parse --verify $rev^0) || exit
- 
- # We need to remember the set of paths that _could_ be left
+cheers,
+
+
+
+martin
