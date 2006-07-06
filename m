@@ -1,29 +1,29 @@
 From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH 1/3] configure: Add test for Perl
-Date: Thu, 6 Jul 2006 14:40:25 +0200
-Message-ID: <20060706124025.G325584e9@leonov.stosberg.net>
+Subject: [PATCH 2/3] configure: Add test for Python
+Date: Thu, 6 Jul 2006 14:40:38 +0200
+Message-ID: <20060706124038.G20591f4b@leonov.stosberg.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jul 06 14:41:03 2006
+X-From: git-owner@vger.kernel.org Thu Jul 06 14:41:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyT9y-0000Tw-On
-	for gcvg-git@gmane.org; Thu, 06 Jul 2006 14:40:47 +0200
+	id 1FyT9x-0000Tw-Bz
+	for gcvg-git@gmane.org; Thu, 06 Jul 2006 14:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965054AbWGFMkc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Jul 2006 08:40:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965192AbWGFMkc
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 08:40:32 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:47048 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S965190AbWGFMkb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 08:40:31 -0400
+	id S1030233AbWGFMkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Jul 2006 08:40:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965192AbWGFMkl
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Jul 2006 08:40:41 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:51912 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S965190AbWGFMkl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jul 2006 08:40:41 -0400
 Received: from leonov.stosberg.net (p213.54.86.66.tisdip.tiscali.de [213.54.86.66])
-	by ncs.stosberg.net (Postfix) with ESMTP id 6D74CAEBA004
-	for <git@vger.kernel.org>; Thu,  6 Jul 2006 14:40:22 +0200 (CEST)
+	by ncs.stosberg.net (Postfix) with ESMTP id 0BB8FAEBA004
+	for <git@vger.kernel.org>; Thu,  6 Jul 2006 14:40:34 +0200 (CEST)
 Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id 76CDC103BAA; Thu,  6 Jul 2006 14:40:26 +0200 (CEST)
+	id E0E17103BA7; Thu,  6 Jul 2006 14:40:38 +0200 (CEST)
 To: git@vger.kernel.org
 Content-Disposition: inline
 Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Thu, 06 Jul 2006 14:18:52 +0200
@@ -32,69 +32,67 @@ User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23383>
 
-This patch adds two tests to the configuration script. The first
-one tries to find a perl binary in the path.  The second one checks
-whether the found perl is of a sufficient version.
-
-It also adds a --perl=/path parameter to override the autodetection
-of the perl binary.
+The test tries to find the path to a suitable Python binary.
+It also adds a --python=/path parameter to override the autodetection.
 
 Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
 ---
- config-lib.sh |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
+ config-lib.sh |   22 ++++++++++++++++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
 
 diff --git a/config-lib.sh b/config-lib.sh
-index 68fecc5..69999a8 100755
+index 69999a8..50ad6e9 100755
 --- a/config-lib.sh
 +++ b/config-lib.sh
-@@ -262,6 +262,7 @@ Installation directories:
- 
+@@ -263,6 +263,7 @@ Installation directories:
  Miscellaneous options:
    --cc=COMPILER          use this C compiler to build MPlayer [gcc]
-+  --perl=PATH            path to perl binary [autodetect]
+   --perl=PATH            path to perl binary [autodetect]
++  --python=PATH          path to python binary [autodetect]
    --target=PLATFORM      target platform (i386-linux, arm-linux, etc)
    --with-install=PATH    use a custom install program (useful if your OS uses
                           a GNU-incompatible install utility by default and
-@@ -296,6 +297,8 @@ EOF
- 
- 		--cc=*)
+@@ -299,6 +300,8 @@ EOF
  			_cc=`echo $ac_option | cut -d '=' -f 2` ;;
-+		--perl=*)
-+			_perl=`echo $ac_option | cut -d '=' -f 2` ;;
+ 		--perl=*)
+ 			_perl=`echo $ac_option | cut -d '=' -f 2` ;;
++		--python=*)
++			_python=`echo $ac_option | cut -d '=' -f 2` ;;
  		--target=*)
  			_target=`echo $ac_option | cut -d '=' -f 2` ;;
  		--with-install=*)
-@@ -409,8 +412,21 @@ int main(void) { return 0; }
- EOF
- 	{ cc_check && tmp_run; } || die "unusable compiler or produced binary"
- 	echores yes
--}
- 
-+	echocheck "for perl"
-+	if test -z "$_perl" ; then
-+		_perl=`which perl`
-+		test "$_perl" || die "cannot find path to perl"
-+	fi
-+	echores "$_perl"
+@@ -426,6 +429,24 @@ EOF
+ 		die "your perl version is too old"
+ 	fi
+ 	echores "$_perl_version"
 +
-+	echocheck "perl version"
-+	_perl_version=`"$_perl" -e 'require 5.6.0;printf "%vd", $^V'`
-+	if test -z "$_perl_version" ; then
-+		die "your perl version is too old"
-+	fi
-+	echores "$_perl_version"
-+}
++	echocheck "for python"
++	for __py_bin in python python2.4 python2.3; do
++		test "$_python" && continue
++
++		__candidate=`which $__py_bin`
++		test "$__candidate" || continue
++
++		$__candidate - <<EOF || continue
++import sys
++v = sys.version_info
++if v < (2, 3):
++    sys.exit(1)
++EOF
++		_python=$__candidate
++	done
++	test "$_python" || die "cannot find path to python"
++	echores "$_python"
+ }
  
  write_config() {
- 	echo "Creating config.mak.autogen"
-@@ -420,6 +436,7 @@ write_config() {
- # -------- Generated by configure -----------
+@@ -437,6 +458,7 @@ # -------- Generated by configure ------
  
  CC = $_cc
-+PERL_PATH = $_perl
+ PERL_PATH = $_perl
++PYTHON_PATH = $_python
  INSTALL = $_install
  
  EOF
