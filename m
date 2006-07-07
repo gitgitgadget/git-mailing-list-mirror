@@ -1,138 +1,54 @@
 From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH 1/4] configure: Add test for Perl
-Date: Fri, 07 Jul 2006 18:26:38 +0200
-Message-ID: <20060707162637.25746.84757.stgit@leonov.stosberg.net>
-References: <20060707162513.25746.57374.stgit@leonov.stosberg.net>
+Subject: [PATCH 0/4] More tests for hand-written configure (resend)
+Date: Fri, 07 Jul 2006 18:25:13 +0200
+Message-ID: <20060707162513.25746.57374.stgit@leonov.stosberg.net>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Fri Jul 07 18:27:13 2006
+X-From: git-owner@vger.kernel.org Fri Jul 07 18:27:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FytAA-0000bA-HT
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 18:26:43 +0200
+	id 1FytA9-0000bA-Uq
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 18:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbWGGQ0l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 12:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932198AbWGGQ0l
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 12:26:41 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:64182 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S932199AbWGGQ0k (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 12:26:40 -0400
+	id S932196AbWGGQ0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 12:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932198AbWGGQ0j
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 12:26:39 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:63158 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S932196AbWGGQ0i (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 12:26:38 -0400
 Received: from leonov.stosberg.net (p213.54.86.102.tisdip.tiscali.de [213.54.86.102])
-	by ncs.stosberg.net (Postfix) with ESMTP id CBE89AEBA004
-	for <git@vger.kernel.org>; Fri,  7 Jul 2006 18:26:30 +0200 (CEST)
+	by ncs.stosberg.net (Postfix) with ESMTP id CABE4AEBA004
+	for <git@vger.kernel.org>; Fri,  7 Jul 2006 18:26:28 +0200 (CEST)
 Received: from leonov.stosberg.net (localhost [127.0.0.1])
-	by leonov.stosberg.net (Postfix) with ESMTP id 026D91149B7
-	for <git@vger.kernel.org>; Fri,  7 Jul 2006 18:26:38 +0200 (CEST)
+	by leonov.stosberg.net (Postfix) with ESMTP id 9D33D1149B7
+	for <git@vger.kernel.org>; Fri,  7 Jul 2006 18:26:35 +0200 (CEST)
 To: git@vger.kernel.org
-In-Reply-To: <20060707162513.25746.57374.stgit@leonov.stosberg.net>
 User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-From: Dennis Stosberg <dennis@stosberg.net>
+Second version of the additional tests.  Changes relative to
+yesterdays's patches:
 
-This patch adds two tests to the configuration script. The first
-one tries to find a perl binary in the path.  The second one checks
-whether the found perl is of a sufficient version.
+  -  Calls to the "which" command have been replaced by a shell
+     function that Timo Hirvonen has written
+  -  Paths to Perl and Python binaries can be given in an
+     environment variable to prevent auto-detection.
+  -  NO_PYTHON is set, if no suitable python can be found
+  -  Fixes to make it run on Solaris.
 
-The user can override the auto-detection with the --perl parameter
-or with the PERL environment variable.
+Tested on Linux (bash, dash), Solaris 9 (sh) and NetBSD (sh/ash).
 
-The path_find() function was written by Timo Hirvonen as a replacement
-for "which", which cannot be used portably.
+I noticed that the autoconf-based solution has replaced Pasky's
+scripts in the pu branch.  Has a final decision been made?
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
----
+I must admit that I'm less convinced today that a hand-written
+configuration script is better than I was yesterday when I started
+to write the tests.
 
- config-lib.sh |   38 +++++++++++++++++++++++++++++++++++++-
- 1 files changed, 37 insertions(+), 1 deletions(-)
-
-diff --git a/config-lib.sh b/config-lib.sh
-index 68fecc5..34dfc05 100755
---- a/config-lib.sh
-+++ b/config-lib.sh
-@@ -117,6 +117,22 @@ alpha() {
- 	esac
- }
- 
-+# replacement for "which", which cannot be used portably
-+path_find()
-+{
-+        _ifs="$IFS"
-+        IFS=:
-+        for i in $PATH; do
-+                if test -x "$i/$1"; then
-+                        IFS="$_ifs"
-+                        echo "$i/$1"
-+                        return 0
-+                fi
-+        done
-+        IFS="$_ifs"
-+        return 1
-+}
-+
- # not boolean test: implement the posix shell "!" operator for a
- # non-posix /bin/sh.
- #   usage:  not {command}
-@@ -240,6 +256,9 @@ process_params() {
- 	_cc=cc
- 	test "$CC" && _cc="$CC"
- 
-+	_perl=
-+	test "$PERL" && _perl="$PERL"
-+
- 	for ac_option do
- 		case "$ac_option" in
- 		--help|-help|-h)
-@@ -262,6 +281,7 @@ Installation directories:
- 
- Miscellaneous options:
-   --cc=COMPILER          use this C compiler to build MPlayer [gcc]
-+  --perl=PATH            path to perl binary [autodetect]
-   --target=PLATFORM      target platform (i386-linux, arm-linux, etc)
-   --with-install=PATH    use a custom install program (useful if your OS uses
-                          a GNU-incompatible install utility by default and
-@@ -296,6 +316,8 @@ EOF
- 
- 		--cc=*)
- 			_cc=`echo $ac_option | cut -d '=' -f 2` ;;
-+		--perl=*)
-+			_perl=`echo $ac_option | cut -d '=' -f 2` ;;
- 		--target=*)
- 			_target=`echo $ac_option | cut -d '=' -f 2` ;;
- 		--with-install=*)
-@@ -409,8 +431,21 @@ int main(void) { return 0; }
- EOF
- 	{ cc_check && tmp_run; } || die "unusable compiler or produced binary"
- 	echores yes
--}
- 
-+	echocheck "for perl"
-+	if test -z "$_perl" ; then
-+		_perl=`path_find perl`
-+		test "$_perl" || die "cannot find path to perl"
-+	fi
-+	echores "$_perl"
-+
-+	echocheck "perl version"
-+	_perl_version=`"$_perl" -e 'eval{require 5.6.0; printf "%vd", $^V}'`
-+	if test -z "$_perl_version" ; then
-+		die "your perl is too old. Perl 5.6.0 or newer is required."
-+	fi
-+	echores "$_perl_version"
-+}
- 
- write_config() {
- 	echo "Creating config.mak.autogen"
-@@ -420,6 +455,7 @@ write_config() {
- # -------- Generated by configure -----------
- 
- CC = $_cc
-+PERL_PATH = $_perl
- INSTALL = $_install
- 
- EOF
+Regards,
+Dennis
