@@ -1,76 +1,63 @@
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: [BUGFIX][RESEND]git-cvsexportcommit can't handle merge commits correctly
-Date: Fri, 7 Jul 2006 12:55:41 +0200
-Message-ID: <20060707105541.GA17004@xp.machine.xx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Teach --text option to diff
+Date: Fri, 07 Jul 2006 04:06:23 -0700
+Message-ID: <7v64i91xow.fsf@assigned-by-dhcp.cox.net>
+References: <11522684373987-git-send-email-sf@b-i-t.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin@catalyst.net.nz>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jul 07 12:56:07 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 07 13:06:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fyo09-00021p-BJ
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 12:56:01 +0200
+	id 1FyoAI-0003oI-DD
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 13:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932118AbWGGKzo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 06:55:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932124AbWGGKzo
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 06:55:44 -0400
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:44965 "HELO
-	mail.hofmann.stw.uni-erlangen.de") by vger.kernel.org with SMTP
-	id S932118AbWGGKzn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jul 2006 06:55:43 -0400
-Received: (qmail 8869 invoked by uid 0); 7 Jul 2006 10:55:41 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 7 Jul 2006 10:55:41 -0000
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932128AbWGGLG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 07:06:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932131AbWGGLG1
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 07:06:27 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:29618 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932128AbWGGLG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jul 2006 07:06:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060707110626.PBVK6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 7 Jul 2006 07:06:26 -0400
+To: Stephan Feder <sf@b-i-t.de>
+In-Reply-To: <11522684373987-git-send-email-sf@b-i-t.de> (Stephan Feder's
+	message of "Fri, 07 Jul 2006 12:33:57 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23426>
 
-git-cvsexportcommit should check if the parent (supplied on the cmdline) to use
-for a merge commit is one of the real parents of the merge.
+Stephan Feder <sf@b-i-t.de> writes:
 
-But it errors out if the _first_ parent doesn't match and never checks
-the other parents.
+> I have to send patches of binary data to a customer but the builtin diff
+> was no help in this case.
 
-Signed-off-by: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
----
-This is a resend with an improved description, because my first attempt
-didn't generate enough attention :-)
+Given the previous patch, and also your point #2 below, I would
+have expected you to introduce an option to force files to be
+treated as binary even when they are otherwise misidentified as
+text, but this patch is going the other way.
 
- git-cvsexportcommit.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Interesting.
 
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index d1051d0..5dcb2f9 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -63,15 +63,15 @@ foreach my $p (@commit) {
- }
- 
- if ($parent) {
-+    my $found;
-     # double check that it's a valid parent
-     foreach my $p (@parents) {
--	my $found;
- 	if ($p eq $parent) {
- 	    $found = 1;
- 	    last;
- 	}; # found it
--	die "Did not find $parent in the parents for this commit!";
-     }
-+    die "Did not find $parent in the parents for this commit!" if !$found;
- } else { # we don't have a parent from the cmdline...
-     if (@parents == 1) { # it's safe to get it from the commit
- 	$parent = $parents[0];
--- 
-1.4.0
+> 1. The shorthand -a for --text is not implemented. Is there a conflicting
+> shorthand?
+
+I do not think of one offhand, but it's the responsibility for
+the party to propose such an enhancement to do the study ;-)
+
+> 2. For diffstat --text is ignored. It seems pointless because binary
+> patch data is not for human consumption anyway.
+
+> 3. No documentation yet. If the patch is accepted I will add a short
+> description. To Documentation/diff-options.txt?
+
+Most likely that would be the place.
