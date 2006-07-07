@@ -1,60 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Does Git run on Windows ?
-Date: Fri, 07 Jul 2006 21:05:16 +0200
-Organization: At home
-Message-ID: <e8mb8r$t1u$2@sea.gmane.org>
-References: <01c001c6a0a7$a2783f90$0200a8c0@AMD2500> <Pine.LNX.4.63.0607060830060.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: git2rss --- publish changes from git-log via RSS
+Date: Fri, 7 Jul 2006 21:23:13 +0200
+Message-ID: <E1Fyvuz-0007rM-BD@moooo.ath.cx>
+References: <20060704191135.GB10534@rahul.net> <e8elej$4sa$1@sea.gmane.org> <20060706125328.GA19414@rahul.net> <e8m9m2$m37$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jul 07 21:15:27 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 07 21:24:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyvnL-0007Hy-0M
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 21:15:19 +0200
+	id 1FyvvA-0000OR-1V
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 21:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932267AbWGGTPP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 15:15:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbWGGTPP
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 15:15:15 -0400
-Received: from main.gmane.org ([80.91.229.2]:16564 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932267AbWGGTPN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 15:15:13 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Fyvn4-0007Er-Hq
-	for git@vger.kernel.org; Fri, 07 Jul 2006 21:15:02 +0200
-Received: from host-81-190-22-25.torun.mm.pl ([81.190.22.25])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:15:02 +0200
-Received: from jnareb by host-81-190-22-25.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:15:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-22-25.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932277AbWGGTXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 15:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932276AbWGGTXV
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 15:23:21 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:62086 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932277AbWGGTXU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 15:23:20 -0400
+To: Bennett Todd <bet@rahul.net>, Jakub Narebski <jnareb@gmail.com>
+Mail-Followup-To: Bennett Todd <bet@rahul.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <e8m9m2$m37$1@sea.gmane.org>
+User-Agent: mutt-ng/devel-r790 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23460>
 
-Johannes Schindelin wrote:
- 
-> On Thu, 6 Jul 2006, Aaron Gray wrote:
->
->> Its got lots of C code, and Bash scripts, with a couple of Perl scripts.
+Jakub Narebski wrote:
+> Bennett Todd wrote:
 > 
-> And you completely forgot Python.
+> > 2006-07-04T21:09:32 Jakub Narebski:
+> 
+> >> BTW. gitweb includes RSS feed, see e.g.:
+> >>   http://www.kernel.org/git/?p=git/git.git;a=rss
+> >>   http://www.kernel.org/git/?p=git/git.git;a=opml
+> > 
+> > Can it be used for offline generation? I don't run any CGIs on my
+> > webserver, I re-generate bent.xml whenever I push any updates.
+> 
+> Just run it as a script. IIRC there is a way to pass CGI params
+> to a script...
 
-If I remember correctly the only Python dependency was recursive merge
-strategy, currently being reworked in C.
+env REQUEST_METHOD=GET QUERY_STRING='p=git/git.git;a=rss' \
+./gitweb.cgi | (read; read; cat)
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+works fine if gitweb.cgi is setup correctly.
