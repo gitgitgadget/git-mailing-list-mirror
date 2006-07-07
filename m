@@ -1,83 +1,84 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] Add "raw" output option to blobs in "tree" view format
-Date: Fri, 7 Jul 2006 09:41:52 -0700 (PDT)
-Message-ID: <20060707164152.86022.qmail@web31805.mail.mud.yahoo.com>
-References: <7vmzbl3nqj.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: comparing file contents in is_exact_match?
+Date: Fri, 07 Jul 2006 18:33:13 +0200
+Message-ID: <87k66p8jee.fsf@mid.deneb.enyo.de>
+References: <20060706055729.GA12512@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 07 18:41:59 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jul 07 19:36:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FytOu-0003XG-DT
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 18:41:56 +0200
+	id 1FyuFV-0005ax-JM
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 19:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932222AbWGGQly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 12:41:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbWGGQlx
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 12:41:53 -0400
-Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:34950 "HELO
-	web31805.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932222AbWGGQlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jul 2006 12:41:53 -0400
-Received: (qmail 86024 invoked by uid 60001); 7 Jul 2006 16:41:52 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=lUFBk+l4GvOk7KjjPQ9lr/PMw/zpMln7nQoGQwI5YjC4ZLeLx9aFStz3FXFQuCzWJ/gE01B6zAhigarN/MRCMoc9IIcyRb/TQ0HLZrbuot7yGnaEc/v8Wx8uw+YucBm+z5Y1W7U6I9YqWosxb5aHRL8/ruOcFFaQ/v0velOgor8=  ;
-Received: from [68.186.48.129] by web31805.mail.mud.yahoo.com via HTTP; Fri, 07 Jul 2006 09:41:52 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzbl3nqj.fsf@assigned-by-dhcp.cox.net>
+	id S932224AbWGGRgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 13:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWGGRgO
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 13:36:14 -0400
+Received: from mail.enyo.de ([212.9.189.167]:58267 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S932224AbWGGRgN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 13:36:13 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1FyuFQ-0003qF-6u
+	for git@vger.kernel.org; Fri, 07 Jul 2006 19:36:12 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.62)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1FytGT-0003rF-3p
+	for git@vger.kernel.org; Fri, 07 Jul 2006 18:33:13 +0200
+To: git@vger.kernel.org
+In-Reply-To: <20060706055729.GA12512@admingilde.org> (Martin Waitz's message
+	of "Thu, 6 Jul 2006 07:57:29 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23450>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > Add a "raw" output option to blobs in "tree" view format, so that the
-> > user doesn't have to click on "blob", wait for the (binary) file to be
-> > uploaded and shown in "blob" mode, and then click on "plain" to
-> > download the (binary) file.
-> 
-> I appreciate what you are trying to achieve, but at the same
-> time wonder if it would make more sense to simply teach a=blob
-> action to do this automatically, perhaps using /etc/mime.types
-> and/or File::MMagic.
+* Martin Waitz:
 
-That'd be cool for non-"text/*" files, but it would leave the user
-go through the same click "tree->blob->plain" for "text/*" files,
-since they are "cat -n"-able and the default action would be git_blob()
-if such an algorithm is implemented.
+> I created a git repository for my photo collection and then renamed
+> some photos (about 600).  Now git status and commit get hit by
+> the OOM killer.
+>
+> The reason for that is that is_exact_match (in diffcore-rename.c) maps
+> both the source and destination file into memory and then compares them
+> byte for byte.  This is a little bit too much for my little machine.
 
-That is, the user would still have to click through "tree->blob->plain"
-to download a "text/*" file, as opposed to just "tree->raw".
+Uhm, this shouldn't trigger the OOM killer, really.  You already have
+physical backing storage for both files, so this shouldn't count
+towards the OOM limit.  Ah, diff_populate_filespec has the following:
 
-What this patch allows, is that the user be able to simply download the file,
-right from "tree" view, regardless of the type of file. (I.e. the type of
-file as decided by the _user_, not gitweb.cgi.)
+   s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
 
-Having said that, we can still implement it, so that "raw"="blob" for
-non-"text/*" files, but "raw"!="blob" for "text/*" files.  I.e. allow
-the "cat -n" functionality for "text/*" files, as is currently implemented,
-as well as shortcut for downloading ("raw").
+Perhaps the following patch is in order?  On some systems, MAP_PRIVATE
+might guarantee some form of repeatable reads, but I don't think GIT
+needs this to guard against concurrent modification.
 
-> If you know your MUA will mangle whitespace to make your patch
-> inapplicable, please do not add a patch to the message _and_
-> attach the patch to the message.  The mail-acceptance tools know
-> how to flatten MIME attachments, but if you have your log,
-> three-dash and then corrupt patch in the cover-letter part, and
-> then the true patch in the attachment part, the flattened result
-> will have the corrupt patch first to cause the patch application
-> to fail.  So please either (preferably) use a MUA that does not
-> corrupt your patches, or do a log in the message part with patch
-> only as attachment.
+-- >8 --
+diff_populate_filespec: use shared mapping
 
-Will do.
+It seems that on some systems, PROT_READ + MAP_PRIVATE counts towards
+the OOM limit, even though no additional backing store is required.
+Requesting MAP_SHARED mapping should fix this.
 
-    Luben
+Signed-off-by: Florian Weimer <fw@deneb.enyo.de>
+---
+ diff.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 428ff78..2b4367e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1007,7 +1007,7 @@ int diff_populate_filespec(struct diff_f
+                fd = open(s->path, O_RDONLY);
+                if (fd < 0)
+                        goto err_empty;
+-               s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
++               s->data = mmap(NULL, s->size, PROT_READ, MAP_SHARED, fd, 0);
+                close(fd);
+                if (s->data == MAP_FAILED)
+                        goto err_empty;
+--
+1.4.0
