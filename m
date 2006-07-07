@@ -1,84 +1,63 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: comparing file contents in is_exact_match?
-Date: Fri, 07 Jul 2006 18:33:13 +0200
-Message-ID: <87k66p8jee.fsf@mid.deneb.enyo.de>
-References: <20060706055729.GA12512@admingilde.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git2rss --- publish changes from git-log via RSS
+Date: Fri, 07 Jul 2006 20:38:11 +0200
+Organization: At home
+Message-ID: <e8m9m2$m37$1@sea.gmane.org>
+References: <20060704191135.GB10534@rahul.net> <e8elej$4sa$1@sea.gmane.org> <20060706125328.GA19414@rahul.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jul 07 19:36:36 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Jul 07 20:38:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyuFV-0005ax-JM
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 19:36:17 +0200
+	id 1FyvDL-0000Zp-RN
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 20:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbWGGRgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 13:36:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWGGRgO
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 13:36:14 -0400
-Received: from mail.enyo.de ([212.9.189.167]:58267 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S932224AbWGGRgN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 13:36:13 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1FyuFQ-0003qF-6u
-	for git@vger.kernel.org; Fri, 07 Jul 2006 19:36:12 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.62)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1FytGT-0003rF-3p
-	for git@vger.kernel.org; Fri, 07 Jul 2006 18:33:13 +0200
+	id S1751231AbWGGSiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 14:38:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWGGSiE
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 14:38:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:18857 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751224AbWGGSiD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 14:38:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FyvDF-0000Yy-7P
+	for git@vger.kernel.org; Fri, 07 Jul 2006 20:38:01 +0200
+Received: from host-81-190-22-25.torun.mm.pl ([81.190.22.25])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 20:38:01 +0200
+Received: from jnareb by host-81-190-22-25.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 20:38:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-In-Reply-To: <20060706055729.GA12512@admingilde.org> (Martin Waitz's message
-	of "Thu, 6 Jul 2006 07:57:29 +0200")
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-22-25.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23451>
 
-* Martin Waitz:
+Bennett Todd wrote:
 
-> I created a git repository for my photo collection and then renamed
-> some photos (about 600).  Now git status and commit get hit by
-> the OOM killer.
->
-> The reason for that is that is_exact_match (in diffcore-rename.c) maps
-> both the source and destination file into memory and then compares them
-> byte for byte.  This is a little bit too much for my little machine.
+> 2006-07-04T21:09:32 Jakub Narebski:
 
-Uhm, this shouldn't trigger the OOM killer, really.  You already have
-physical backing storage for both files, so this shouldn't count
-towards the OOM limit.  Ah, diff_populate_filespec has the following:
+>> BTW. gitweb includes RSS feed, see e.g.:
+>>   http://www.kernel.org/git/?p=git/git.git;a=rss
+>>   http://www.kernel.org/git/?p=git/git.git;a=opml
+> 
+> Can it be used for offline generation? I don't run any CGIs on my
+> webserver, I re-generate bent.xml whenever I push any updates.
 
-   s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
+Just run it as a script. IIRC there is a way to pass CGI params
+to a script...
 
-Perhaps the following patch is in order?  On some systems, MAP_PRIVATE
-might guarantee some form of repeatable reads, but I don't think GIT
-needs this to guard against concurrent modification.
-
--- >8 --
-diff_populate_filespec: use shared mapping
-
-It seems that on some systems, PROT_READ + MAP_PRIVATE counts towards
-the OOM limit, even though no additional backing store is required.
-Requesting MAP_SHARED mapping should fix this.
-
-Signed-off-by: Florian Weimer <fw@deneb.enyo.de>
----
- diff.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 428ff78..2b4367e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1007,7 +1007,7 @@ int diff_populate_filespec(struct diff_f
-                fd = open(s->path, O_RDONLY);
-                if (fd < 0)
-                        goto err_empty;
--               s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
-+               s->data = mmap(NULL, s->size, PROT_READ, MAP_SHARED, fd, 0);
-                close(fd);
-                if (s->data == MAP_FAILED)
-                        goto err_empty;
---
-1.4.0
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
