@@ -1,49 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] do not use locale specific strftime when preparing 2822 date
-Date: Fri, 07 Jul 2006 21:59:57 +0200
-Organization: At home
-Message-ID: <e8mefb$8ur$2@sea.gmane.org>
-References: <1152298402442-git-send-email-jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix compilation
+Date: Fri, 07 Jul 2006 13:02:35 -0700
+Message-ID: <7vbqs1w5d0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0607070120590.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jul 07 22:00:32 2006
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Jul 07 22:02:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FywUx-0007Au-AE
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 22:00:23 +0200
+	id 1FywXA-0007hE-Mo
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 22:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932296AbWGGUAO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 16:00:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932300AbWGGUAO
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 16:00:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:56250 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932296AbWGGUAM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 16:00:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FywUT-00073w-Ak
-	for git@vger.kernel.org; Fri, 07 Jul 2006 21:59:53 +0200
-Received: from host-81-190-22-25.torun.mm.pl ([81.190.22.25])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:59:53 +0200
-Received: from jnareb by host-81-190-22-25.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:59:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-22-25.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932300AbWGGUCh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 16:02:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932304AbWGGUCh
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 16:02:37 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:31166 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932300AbWGGUCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jul 2006 16:02:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060707200236.ISQR12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 7 Jul 2006 16:02:36 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607070120590.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 7 Jul 2006 01:21:57 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23465>
 
-Disregard this email. It was send by mistake by git-send-spam^Wemail.perl
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
--- 
-Jakub Narebski
+> 	Note also, that this patch relies on the perl scripts not
+> 	caring if an additional command is shifted into the 2nd line.
+
+How about doing something like this instead, then?
+
+diff --git a/Makefile b/Makefile
+index 71657ec..01b9a94 100644
+--- a/Makefile
++++ b/Makefile
+@@ -550,9 +550,13 @@ common-cmds.h: Documentation/git-*.txt
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	rm -f $@ $@+
+ 	INSTLIBDIR=`$(MAKE) -C perl -s --no-print-directory instlibdir` && \
+-	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|1' \
+-	    -e '2i\
+-	        use lib (split(/:/, $$ENV{GITPERLLIB} || '\'"$$INSTLIBDIR"\''));' \
++	sed -e '1{' \
++	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
++	    -e '	h' \
++	    -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));=' \
++	    -e '	H' \
++	    -e '	x' \
++	    -e '}' \
+ 	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    $@.perl >$@+
