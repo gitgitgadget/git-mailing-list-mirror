@@ -1,51 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] do not use locale specific strftime when preparing 2822 date
-Date: Fri, 07 Jul 2006 12:08:22 -0700
-Message-ID: <7vzmflw7vd.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkr7bvc1.fsf@assigned-by-dhcp.cox.net>
-	<1152298675925-git-send-email-jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: qgit idea: marking refs (heads and tags)
+Date: Fri, 07 Jul 2006 21:07:39 +0200
+Organization: At home
+Message-ID: <e8mbd9$t1u$3@sea.gmane.org>
+References: <e8d3i6$ne9$1@sea.gmane.org> <e5bfff550607040503x75b1abdavbbeb80b41a454e7d@mail.gmail.com> <e8dnst$pvh$1@sea.gmane.org> <e5bfff550607061139y3ccbab37xb83e654d24a19964@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 07 21:08:30 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Jul 07 21:11:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fyvgi-00063s-FY
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 21:08:28 +0200
+	id 1Fyvj2-0006XN-Ck
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 21:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbWGGTIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 15:08:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932265AbWGGTIZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 15:08:25 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:13986 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932264AbWGGTIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jul 2006 15:08:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060707190823.FSTJ6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 7 Jul 2006 15:08:23 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <1152298675925-git-send-email-jnareb@gmail.com> (Jakub Narebski's
-	message of "Fri, 7 Jul 2006 20:57:55 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932266AbWGGTKt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 15:10:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbWGGTKt
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 15:10:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:36018 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932266AbWGGTKs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 15:10:48 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1FyviF-0006T5-L4
+	for git@vger.kernel.org; Fri, 07 Jul 2006 21:10:05 +0200
+Received: from host-81-190-22-25.torun.mm.pl ([81.190.22.25])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:10:03 +0200
+Received: from jnareb by host-81-190-22-25.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:10:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-22-25.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23458>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Marco Costalba wrote:
 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> Acked-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> This patch is sent from patched version of git-send-email.perl
-> with git tools 1.3.0. This patch is generated from current master
-> after Junio's patch 
->   Message-ID: <7vd5cnv1v5.fsf@assigned-by-dhcp.cox.net>
-> applied.
+> On 7/4/06, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Good test.  Thanks.
+>>> Something as a typical browser "copy selected link" context menu entry?
+>>
+>> Yes, "copy sha1 of selected link" would be nice.
+>>
+> 
+> Patch pushed to public repo (git.kernel.org/pub/scm/qgit/qgit.git)
+
+Thanks a lot!
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
