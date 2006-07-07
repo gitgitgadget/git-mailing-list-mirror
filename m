@@ -1,104 +1,83 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH 4/4] configure: Fixes for Solaris
-Date: Fri, 07 Jul 2006 18:26:44 +0200
-Message-ID: <20060707162644.25746.78865.stgit@leonov.stosberg.net>
-References: <20060707162513.25746.57374.stgit@leonov.stosberg.net>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Fri Jul 07 18:27:35 2006
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] Add "raw" output option to blobs in "tree" view format
+Date: Fri, 7 Jul 2006 09:41:52 -0700 (PDT)
+Message-ID: <20060707164152.86022.qmail@web31805.mail.mud.yahoo.com>
+References: <7vmzbl3nqj.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 07 18:41:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FytAK-0000c8-RD
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 18:26:53 +0200
+	id 1FytOu-0003XG-DT
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 18:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197AbWGGQ0s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 12:26:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932201AbWGGQ0s
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 12:26:48 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:951 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S932197AbWGGQ0q (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 12:26:46 -0400
-Received: from leonov.stosberg.net (p213.54.86.102.tisdip.tiscali.de [213.54.86.102])
-	by ncs.stosberg.net (Postfix) with ESMTP id 94FE1AEBA004
-	for <git@vger.kernel.org>; Fri,  7 Jul 2006 18:26:37 +0200 (CEST)
-Received: from leonov.stosberg.net (localhost [127.0.0.1])
-	by leonov.stosberg.net (Postfix) with ESMTP id D3EE21149B7
-	for <git@vger.kernel.org>; Fri,  7 Jul 2006 18:26:44 +0200 (CEST)
-To: git@vger.kernel.org
-In-Reply-To: <20060707162513.25746.57374.stgit@leonov.stosberg.net>
-User-Agent: StGIT/0.10
+	id S932222AbWGGQly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 12:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbWGGQlx
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 12:41:53 -0400
+Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:34950 "HELO
+	web31805.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932222AbWGGQlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jul 2006 12:41:53 -0400
+Received: (qmail 86024 invoked by uid 60001); 7 Jul 2006 16:41:52 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=lUFBk+l4GvOk7KjjPQ9lr/PMw/zpMln7nQoGQwI5YjC4ZLeLx9aFStz3FXFQuCzWJ/gE01B6zAhigarN/MRCMoc9IIcyRb/TQ0HLZrbuot7yGnaEc/v8Wx8uw+YucBm+z5Y1W7U6I9YqWosxb5aHRL8/ruOcFFaQ/v0velOgor8=  ;
+Received: from [68.186.48.129] by web31805.mail.mud.yahoo.com via HTTP; Fri, 07 Jul 2006 09:41:52 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzbl3nqj.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23449>
 
-From: Dennis Stosberg <dennis@stosberg.net>
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Luben Tuikov <ltuikov@yahoo.com> writes:
+> 
+> > Add a "raw" output option to blobs in "tree" view format, so that the
+> > user doesn't have to click on "blob", wait for the (binary) file to be
+> > uploaded and shown in "blob" mode, and then click on "plain" to
+> > download the (binary) file.
+> 
+> I appreciate what you are trying to achieve, but at the same
+> time wonder if it would make more sense to simply teach a=blob
+> action to do this automatically, perhaps using /etc/mime.types
+> and/or File::MMagic.
 
-- Solaris' /bin/sh will not find a function if there is a variable 
-  with the same name.
-- 'test -z $var' fails if $var is empty.  Needs to be 'test -z "$var"' 
+That'd be cool for non-"text/*" files, but it would leave the user
+go through the same click "tree->blob->plain" for "text/*" files,
+since they are "cat -n"-able and the default action would be git_blob()
+if such an algorithm is implemented.
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
----
+That is, the user would still have to click through "tree->blob->plain"
+to download a "text/*" file, as opposed to just "tree->raw".
 
- config-lib.sh |   24 ++++++++++++------------
- 1 files changed, 12 insertions(+), 12 deletions(-)
+What this patch allows, is that the user be able to simply download the file,
+right from "tree" view, regardless of the type of file. (I.e. the type of
+file as decided by the _user_, not gitweb.cgi.)
 
-diff --git a/config-lib.sh b/config-lib.sh
-index 0bcd4c3..4dd4d00 100755
---- a/config-lib.sh
-+++ b/config-lib.sh
-@@ -181,7 +181,7 @@ add_library() { # --with
- 	lib_help="$lib_help
- $desc [$hdefault]"
- 	switches="$switches switch_lib \"$name\" \"$switch\" \"\$ac_option\" || "
--	mkvars="$mkvars mkvar \"\$$name\" \"$mkvar\";"
-+	mkvars="$mkvars print_mkvar \"\$$name\" \"$mkvar\";"
- 	eval "$name=$default"
- }
- 
-@@ -196,7 +196,7 @@ add_feature() { # --enable
- 	feature_help="$feature_help
- $desc [$hdefault]"
- 	switches="$switches switch_feature \"$name\" \"$switch\" \"\$ac_option\" || "
--	mkvars="$mkvars mkvar \"\$$name\" \"$mkvar\";"
-+	mkvars="$mkvars print_mkvar \"\$$name\" \"$mkvar\";"
- 	eval "$name=$default"
- }
- 
-@@ -226,7 +226,7 @@ switch_feature() {
- 	return 0
- }
- 
--mkvar() {
-+print_mkvar() {
- 	value="$1"; shift; mkvar="$1"; shift
- 	noval=""; yesval="ConfigureYesPlease"
- 	case $mkvar in
-@@ -533,15 +533,15 @@ PERL_PATH = $_perl
- INSTALL = $_install
- 
- EOF
--		test -z $_prefix || echo "prefix = $_prefix"
--		test -z $_bindir || echo "bindir = $_bindir"
--		test -z $_gitexecdir || echo "gitexecdir = $_gitexecdir"
--		test -z $_mandir || ( echo "mandir = $_mandir" && echo "export mandir" )
--		test -z $_templatedir || echo "template_dir = $_templatedir"
--		test -z $_gitpythondir || echo "GIT_PYTHON_DIR = $_gitpythondir"
--
--		test -z $_python || echo "PYTHON_PATH = $_python"
--		test -z $_no_python || echo "NO_PYTHON = $_no_python"
-+		test -z "$_prefix" || echo "prefix = $_prefix"
-+		test -z "$_bindir" || echo "bindir = $_bindir"
-+		test -z "$_gitexecdir" || echo "gitexecdir = $_gitexecdir"
-+		test -z "$_mandir" || ( echo "mandir = $_mandir" && echo "export mandir" )
-+		test -z "$_templatedir" || echo "template_dir = $_templatedir"
-+		test -z "$_gitpythondir" || echo "GIT_PYTHON_DIR = $_gitpythondir"
-+
-+		test -z "$_python" || echo "PYTHON_PATH = $_python"
-+		test -z "$_no_python" || echo "NO_PYTHON = $_no_python"
- 
- 		echo
- 		eval "$mkvars"
+Having said that, we can still implement it, so that "raw"="blob" for
+non-"text/*" files, but "raw"!="blob" for "text/*" files.  I.e. allow
+the "cat -n" functionality for "text/*" files, as is currently implemented,
+as well as shortcut for downloading ("raw").
+
+> If you know your MUA will mangle whitespace to make your patch
+> inapplicable, please do not add a patch to the message _and_
+> attach the patch to the message.  The mail-acceptance tools know
+> how to flatten MIME attachments, but if you have your log,
+> three-dash and then corrupt patch in the cover-letter part, and
+> then the true patch in the attachment part, the flattened result
+> will have the corrupt patch first to cause the patch application
+> to fail.  So please either (preferably) use a MUA that does not
+> corrupt your patches, or do a log in the message part with patch
+> only as attachment.
+
+Will do.
+
+    Luben
