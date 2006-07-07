@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git2rss --- publish changes from git-log via RSS
-Date: Fri, 07 Jul 2006 20:38:11 +0200
+Subject: Re: Why's Git called Git ?
+Date: Fri, 07 Jul 2006 20:40:07 +0200
 Organization: At home
-Message-ID: <e8m9m2$m37$1@sea.gmane.org>
-References: <20060704191135.GB10534@rahul.net> <e8elej$4sa$1@sea.gmane.org> <20060706125328.GA19414@rahul.net>
+Message-ID: <e8m9pl$m37$2@sea.gmane.org>
+References: <01f201c6a0a2$6faa0f80$0200a8c0@AMD2500>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Jul 07 20:38:22 2006
+X-From: git-owner@vger.kernel.org Fri Jul 07 20:40:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyvDL-0000Zp-RN
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 20:38:08 +0200
+	id 1FyvFT-0000tg-5Q
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 20:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbWGGSiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 14:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWGGSiE
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 14:38:04 -0400
-Received: from main.gmane.org ([80.91.229.2]:18857 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751224AbWGGSiD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 14:38:03 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FyvDF-0000Yy-7P
-	for git@vger.kernel.org; Fri, 07 Jul 2006 20:38:01 +0200
+	id S1751224AbWGGSkP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 14:40:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbWGGSkP
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 14:40:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:59561 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751224AbWGGSkO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 14:40:14 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1FyvFC-0000qH-A7
+	for git@vger.kernel.org; Fri, 07 Jul 2006 20:40:02 +0200
 Received: from host-81-190-22-25.torun.mm.pl ([81.190.22.25])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Jul 2006 20:38:01 +0200
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 20:40:02 +0200
 Received: from jnareb by host-81-190-22-25.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Jul 2006 20:38:01 +0200
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 20:40:02 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,21 +41,20 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23452>
 
-Bennett Todd wrote:
+Aaron Gray wrote:
 
-> 2006-07-04T21:09:32 Jakub Narebski:
-
->> BTW. gitweb includes RSS feed, see e.g.:
->>   http://www.kernel.org/git/?p=git/git.git;a=rss
->>   http://www.kernel.org/git/?p=git/git.git;a=opml
+>> I really like notion of branching in Git; but be warned about tracking and
+>> not recording renames, and the need of explicit packing (the latter very
+>> minor). Powerfull, perhaps too powerfull for newbie user: but that is what
+>> Cogito is for (although now Git contains fairly large set of high-level
+>> commands).
 > 
-> Can it be used for offline generation? I don't run any CGIs on my
-> webserver, I re-generate bent.xml whenever I push any updates.
+> We like to move forward.
 
-Just run it as a script. IIRC there is a way to pass CGI params
-to a script...
+What I like a lot in Git is very easy switching of working area between 
+branches, and to arbitrary commit (point in history).
 
 -- 
 Jakub Narebski
