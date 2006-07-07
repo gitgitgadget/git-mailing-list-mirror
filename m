@@ -1,78 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/4] More tests for hand-written configure (resend)
-Date: Fri, 07 Jul 2006 12:40:46 -0700
-Message-ID: <7vhd1tw6dd.fsf@assigned-by-dhcp.cox.net>
-References: <20060707162513.25746.57374.stgit@leonov.stosberg.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] do not use locale specific strftime when preparing 2822 date
+Date: Fri, 07 Jul 2006 21:53:11 +0200
+Organization: At home
+Message-ID: <e8me2l$8ur$1@sea.gmane.org>
+References: <7vlkr7bvc1.fsf@assigned-by-dhcp.cox.net> <1152298675925-git-send-email-jnareb@gmail.com> <e8mb4l$t1u$1@sea.gmane.org> <7vveq9w736.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 07 21:41:31 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Jul 07 21:53:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FywCS-0003np-6q
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 21:41:16 +0200
+	id 1FywOI-0005pP-GC
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 21:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751230AbWGGTkt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 15:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbWGGTkt
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 15:40:49 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:51685 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751230AbWGGTks (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jul 2006 15:40:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060707194047.GUHZ22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 7 Jul 2006 15:40:47 -0400
-To: Dennis Stosberg <dennis@stosberg.net>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932224AbWGGTx0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 15:53:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932249AbWGGTx0
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 15:53:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:2499 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932224AbWGGTxZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 15:53:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1FywNz-0005nq-Qn
+	for git@vger.kernel.org; Fri, 07 Jul 2006 21:53:11 +0200
+Received: from host-81-190-22-25.torun.mm.pl ([81.190.22.25])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:53:11 +0200
+Received: from jnareb by host-81-190-22-25.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jul 2006 21:53:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-22-25.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23463>
 
-Dennis Stosberg <dennis@stosberg.net> writes:
+Junio C Hamano wrote:
 
-> I noticed that the autoconf-based solution has replaced Pasky's
-> scripts in the pu branch.  Has a final decision been made?
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> It looks like it is _almost_ correct. It should be
+>>   Date: Fri, 07 Jul 2006 20:57:55 +0200
+>> instead of
+>>   Date: Fri,  7 Jul 2006 20:57:55 +0200
+>>
+>> It is "day = ([FWS] 1*2DIGIT) / obs-day" in RFC2822.
+> 
+> I think you are reading ABNF wrong. [...]
+> 
+> See the definition of "hour" and friends a few lines below what
+> you quoted.  It is defined as "2DIGIT / obs-hour" and that is
+> why we say "01:23:45" not "1:23:45"
 
-My preference has been to see both sides battle it out without
-forcing me to decide, but...
+But it is "day = [...] 2DIGIT [...]"! 
 
-> I must admit that I'm less convinced today that a hand-written
-> configuration script is better than I was yesterday when I started
-> to write the tests.
+Besides, that what other mailers do (I checked the post I replied via
+git-send-email to, i.e. your post). Although I don't think that it can
+cause any problems, like using locale date with non US-ASCII characters
+did...
 
-... I started to share the same feeling after Pavel Roskin made
-a good point in "git on HP-UX" thread,
-
-    http://thread.gmane.org/gmane.comp.version-control.git/23380/focus=23393
-
-and then after seeing the messages in response to your patch
-that used `which` from yesterday.
-
-Shell scripts generated by autoconf are almost unreadable, but
-the way how they detect features have been polished in the field
-for portability for a long time, and there is no point for us to
-spend time reinventing the wheel.  The configure.ac files are
-often quite readable even when generated configure scripts are
-not.
-
-So, I would not veto the use of autoconf, as long as configure
-stays as an _optional_ mechanism to manage config.mak.gen that
-is used by the main Makefile.  The users for whom the configure
-script breaks for whatever reason can work it around by simply
-not using it, instead of having to debug either the unreadable
-configure or having to install autoconf and debug configure.ac
-just to build git.
-
-The _optional_ is really the key word here.  So "make clean" to
-clean autoconf intermediate files is good, "make realclean" to
-remove "configure" script generated from "configure.ac" is also
-good, but if "make rpm" by default runs "configure", then that
-is BAD and I would be very unhappy.
-
-I could probably live with "make rpm-using-configure", though.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
