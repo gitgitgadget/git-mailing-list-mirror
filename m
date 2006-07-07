@@ -1,45 +1,52 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: [PATCH] do not use locale specific strftime when preparing 2822 date
-Date: Fri,  7 Jul 2006 20:53:22 +0200
-Message-ID: <1152298402442-git-send-email-jnareb@gmail.com>
+Date: Fri,  7 Jul 2006 20:57:55 +0200
+Message-ID: <1152298675925-git-send-email-jnareb@gmail.com>
+References: <7vlkr7bvc1.fsf@assigned-by-dhcp.cox.net>
 Reply-To: Jakub Narebski <jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 07 20:53:35 2006
+Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jul 07 20:58:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FyvSE-0003HF-8G
-	for gcvg-git@gmane.org; Fri, 07 Jul 2006 20:53:30 +0200
+	id 1FyvWh-00047t-DC
+	for gcvg-git@gmane.org; Fri, 07 Jul 2006 20:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932239AbWGGSx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Jul 2006 14:53:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932240AbWGGSx1
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 14:53:27 -0400
-Received: from mail.fuw.edu.pl ([193.0.80.14]:24807 "EHLO mail.fuw.edu.pl")
-	by vger.kernel.org with ESMTP id S932239AbWGGSx1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 14:53:27 -0400
+	id S932249AbWGGS6E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Jul 2006 14:58:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbWGGS6E
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Jul 2006 14:58:04 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:45223 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S932249AbWGGS6D (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jul 2006 14:58:03 -0400
 Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
-	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k67IqtvK023892
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k67IvRwk024265
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 Jul 2006 20:52:55 +0200
+	Fri, 7 Jul 2006 20:57:28 +0200
 Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
-	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k67IrMBm013889;
-	Fri, 7 Jul 2006 20:53:22 +0200
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k67IvtCV013931;
+	Fri, 7 Jul 2006 20:57:55 +0200
 Received: (from jnareb@localhost)
-	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k67IrMOu013888;
-	Fri, 7 Jul 2006 20:53:22 +0200
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k67Ivt0n013930;
+	Fri, 7 Jul 2006 20:57:55 +0200
 To: git@vger.kernel.org
 X-Mailer: git-send-email 1.3.0
-In-Reply-To: set title 'I_xx(M), lapl'
-References: set title 'I_xx(M), lapl'
+In-Reply-To: <7vlkr7bvc1.fsf@assigned-by-dhcp.cox.net>
 X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23455>
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 ---
+This patch is sent from patched version of git-send-email.perl
+with git tools 1.3.0. This patch is generated from current master
+after Junio's patch 
+  Message-ID: <7vd5cnv1v5.fsf@assigned-by-dhcp.cox.net>
+applied.
 
  git-send-email.perl |   41 ++++++++++++++++++++++++++++++++++++++---
  1 files changed, 38 insertions(+), 3 deletions(-)
