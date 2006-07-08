@@ -1,76 +1,40 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Comment on this series of patches (PATCH 2-9)
-Date: Sat,  8 Jul 2006 23:07:15 +0200
-Message-ID: <11523928383501-git-send-email-jnareb@gmail.com>
-References: <200607030156.50455.jnareb@gmail.com> <1152392835436-git-send-email-jnareb@gmail.com> <11523928361444-git-send-email-jnareb@gmail.com> <1152392836910-git-send-email-jnareb@gmail.com> <1152392837823-git-send-email-jnareb@gmail.com> <11523928373026-git-send-email-jnareb@gmail.com> <11523928373299-git-send-email-jnareb@gmail.com> <11523928372070-git-send-email-jnareb@gmail.com> <11523928383518-git-send-email-jnareb@gmail.com>
-Reply-To: Jakub Narebski <jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 08 23:07:54 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Replace sed with perl when setting up perl scripts.
+Date: Sat, 08 Jul 2006 14:11:12 -0700
+Message-ID: <7vu05rpztb.fsf@assigned-by-dhcp.cox.net>
+References: <20060708193717.GA17905@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 08 23:11:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzK1j-0003ja-L6
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 23:07:48 +0200
+	id 1FzK57-0004Dt-F8
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 23:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030389AbWGHVH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Jul 2006 17:07:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030386AbWGHVH3
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 17:07:29 -0400
-Received: from mail.fuw.edu.pl ([193.0.80.14]:60353 "EHLO mail.fuw.edu.pl")
-	by vger.kernel.org with ESMTP id S1030385AbWGHVH1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 17:07:27 -0400
-Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
-	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k68L6oVY021770
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 8 Jul 2006 23:06:51 +0200
-Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
-	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k68L7IwA015615;
-	Sat, 8 Jul 2006 23:07:18 +0200
-Received: (from jnareb@localhost)
-	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k68L7I43015614;
-	Sat, 8 Jul 2006 23:07:18 +0200
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.3.0
-In-Reply-To: <11523928383518-git-send-email-jnareb@gmail.com>
-X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
+	id S1030385AbWGHVLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 17:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030393AbWGHVLO
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 17:11:14 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:44934 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1030385AbWGHVLN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jul 2006 17:11:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060708211113.HAQO985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Jul 2006 17:11:13 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060708193717.GA17905@spearce.org> (Shawn Pearce's message of
+	"Sat, 8 Jul 2006 15:37:17 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23510>
 
-This concludes easiest part of autodetecting compile configuration
-using autoconf generated configure script. Patches needs revision by
-somebody better versed in autoconf than me.
-
-Autodetection TODO: 
-* check for Python (NO_PYTHON) and it's version (WITH_OWN_SUBPROCESS_PY)
-  or just "own subprocess.py"
-* check for "IPv6 support" and getaddrinfo() (NO_IPV6), latter can be
-  easily done in autoconf
-* check for "proper iconv support" (NO_ICONV), probably custom check.
-* check for USE_PIC, NO_SYMLINK_HEAD and NO_ACCURATE_DIFF, all
-  needing custom tests.
-* use XXX_SHA1 when NO_OPENSSL, with XXX according to the architecture
-  git is compiled for.
-
-Next planned are series of patches allowing to select optional
-build features and packages from configure script... if somebody else
-wouldn't do it (hint, hint).
-
-
-About needing autoconf to build git:
-
-1. Currently using autoconf is totally optional, so one can compile
-git as one used to earlier. This results in non-autoconf conventions
-in configure.ac
-
-2. configure script generated by autoconf can be treated exactly the
-same like html and man documentation generated by asciidoc: use
-separate 'configure' branch to store current version of configure
-script, and add autogeneration of configure script to the same hook
-like generating html and man documentation.
-
--- 
-Jakub Narebski
-ShadeHawk on #git
+Please try the replacement patch I sent to the list earlier in
+response to Johannes's patch to the same problem.
