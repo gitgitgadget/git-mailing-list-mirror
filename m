@@ -1,57 +1,56 @@
 From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Quick merge status updates.
-Date: Sat, 08 Jul 2006 03:36:08 -0400
-Message-ID: <1152344168.26627.10.camel@dv>
-References: <7vodwe5dr8.fsf@assigned-by-dhcp.cox.net>
-	 <1151471040.4940.17.camel@dv> <7v7j3164xd.fsf@assigned-by-dhcp.cox.net>
-	 <1151489103.28036.6.camel@dv>  <20060702204906.GG29115@pasky.or.cz>
+Subject: Re: git on HP-UX
+Date: Sat, 08 Jul 2006 03:38:43 -0400
+Message-ID: <1152344323.26627.13.camel@dv>
+References: <200607060950.34558.michal.rokos@nextsoft.cz>
+	 <1152197629.7720.10.camel@dv>  <7vfyhe465i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 08 09:36:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 08 09:38:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fz7Mo-0004d2-Ce
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 09:36:42 +0200
+	id 1Fz7Ot-0004tn-PR
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 09:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbWGHHgY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Jul 2006 03:36:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbWGHHgY
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 03:36:24 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:169 "EHLO fencepost.gnu.org")
-	by vger.kernel.org with ESMTP id S1750901AbWGHHgX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 03:36:23 -0400
+	id S1751262AbWGHHit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 03:38:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbWGHHit
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 03:38:49 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:7593 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751262AbWGHHis
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 03:38:48 -0400
 Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1Fz7MP-00087e-Cm
-	for git@vger.kernel.org; Sat, 08 Jul 2006 03:36:22 -0400
+	id 1Fz7Op-0000UF-TT
+	for git@vger.kernel.org; Sat, 08 Jul 2006 03:38:48 -0400
 Received: from proski by dv.roinet.com with local (Exim 4.62)
 	(envelope-from <proski@dv.roinet.com>)
-	id 1Fz7MG-0006wE-5W; Sat, 08 Jul 2006 03:36:08 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060702204906.GG29115@pasky.or.cz>
+	id 1Fz7Ol-0006xC-Dl; Sat, 08 Jul 2006 03:38:43 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyhe465i.fsf@assigned-by-dhcp.cox.net>
 X-Mailer: Evolution 2.7.3 (2.7.3-7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23481>
 
-On Sun, 2006-07-02 at 22:49 +0200, Petr Baudis wrote:
-> Dear diary, on Wed, Jun 28, 2006 at 12:05:03PM CEST, I got a letter
-> where Pavel Roskin <proski@gnu.org> said that...
-
-> I feel that it is time for another stupid question of mine - why can't
-> you just use lib?
+On Thu, 2006-07-06 at 17:20 -0700, Junio C Hamano wrote:
+> Pavel Roskin <proski@gnu.org> writes:
+> > I hope the Autoconf based configure is on its way to git, but I don't
+> > see in in the "pu" branch yet.  I'm not very keen about reinventing
+> > Autoconf and hacking a hand-made configure script.
 > 
-> 	use lib ('@@INSTLIBDIR@@');
-> 
-> Looks a lot better than some @INC unshifting, and it should be
-> equivalent.
+> OK, you half-convinced me.  The other half came from a recent
+> series of patches to try using 'which' to detect executables,
+> which is another common mistake handcrafted configure script
+> makes, which autoconf people have solved for us long time ago.
 
-I honestly have no idea.  I think whatever gets you closer to the
-satisfaction of the "three conditions" should be used.
+I really appreciate it.  I hope all the Autoconf patches in the queue
+will land in "pu" shortly, and then I'm going to have a closer look at
+it.
 
 -- 
 Regards,
