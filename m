@@ -1,82 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb.cgi: Use File::MMagic; "a=blob" action knows the blob/file type
-Date: Fri, 07 Jul 2006 23:18:37 -0700
-Message-ID: <7vzmfksjpe.fsf@assigned-by-dhcp.cox.net>
-References: <20060708041021.24704.qmail@web31804.mail.mud.yahoo.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [RFC/PATCH 14] autoconf: Added --with/--without for openssl,
+	curl, expat to ./configure
+Date: Sat, 08 Jul 2006 03:33:19 -0400
+Message-ID: <1152343999.26627.6.camel@dv>
+References: <200606290301.51657.jnareb@gmail.com>
+	 <e848pr$cca$1@sea.gmane.org>
+	 <20060630233004.7xckw444g4g0gcs8@webmail.spamcop.net>
+	 <200607011955.23908.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 08 08:18:56 2006
+X-From: git-owner@vger.kernel.org Sat Jul 08 09:33:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fz69R-0007Ep-PZ
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 08:18:50 +0200
+	id 1Fz7K3-0004CK-FA
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 09:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812AbWGHGSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Jul 2006 02:18:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbWGHGSk
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 02:18:40 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:36604 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751298AbWGHGSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jul 2006 02:18:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060708061838.ZLED27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 8 Jul 2006 02:18:38 -0400
-To: ltuikov@yahoo.com
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750902AbWGHHdf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 03:33:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750901AbWGHHdf
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 03:33:35 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:40680 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750824AbWGHHdf
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 03:33:35 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Fz7Jl-0003U0-UY
+	for git@vger.kernel.org; Sat, 08 Jul 2006 03:33:34 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Fz7JY-0006vs-1k; Sat, 08 Jul 2006 03:33:20 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200607011955.23908.jnareb@gmail.com>
+X-Mailer: Evolution 2.7.3 (2.7.3-7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23479>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Hello, Jakub!
 
-> Use File::MMagic to determine the MIME type of a blob/file.
-> The variable magic_mime_file holds the location of the
-> "magic.mime" file, usually "/usr/share/file/magic.mime".
-> If not defined, the magic numbers internally stored in the
-> File::MMagic module are used.
+On Sat, 2006-07-01 at 19:55 +0200, Jakub Narebski wrote: 
+> >> I suspect that AS_HELP_WITH does some strange quoting, or stripping. Both
+> >> [=PATH] and [[=PATH]] produces =PATH in ./configure --help output.
+> >> When using @<:@=PATH@:>@ I get [=PATH], but the description of option begins
+> >> line below.
 
-I am sorry to ask you this, but would you mind redoing this
-patch without File::MMagic bits?  I think giving "a=blob" an
-ability to automatically switch to git_blob_plain is a good
-addition (as is your earlier patch to give a direct link to
-reach blob_plain from the list), so let's have that part in
-first.  I haven't applied your earlier one but it will appear in
-"next" shortly.
+Sorry, I misunderstood the problem.  I think it's pure cosmetics.
+Please don't let it stop you.
 
-Existing filename based mimetypes_guess should be a lot cheaper
-than exploding a blob and feeding it to File::MMagic.  I was
-hoping File::MMagic to be used when we cannot guess the content
-type that way (i.e. when mimetypes_guess returns undef or
-application/octet-stream).
+> I guess I would just not use AS_HELP_STRING, and format help 
+> message "by hand".
 
-Since the repository owner can correct misidentification by the
-standard /etc/mime.types by supplying a custom per-repository
-$mimetypes_file (modulo that the current implementation of
-mimetype_guess_file does not allow it if the file does not have
-an extension that is specific enough), File::MMagic might be an
-overkill, especially if used in the way this patch does.  To
-allow finer grained differentiation that cannot be done with
-file extensions alone (e.g. some files may have .dat extension
-but one can be VCD mpeg wrapped in RIFF, and another can be a
-Z-machine story file), it might be simpler to allow the
-repository owner to specify full $file_name for such an ambiguous
-file in their custom $mimetypes_file, and try to match it in
-mimetype_guess_file sub.  That way we may not even need to use
-File::MMagic.
+Please don't wast time on such minor things.  It's more important to get
+the functionality implemented.
 
-Are there cases where only $hash is given without $file_name?
-If so we may need to fall back on File::MMagic in such a case
-after all, but get_blob_mimetype sub copies the whole blob to a
-temporary file to work around a problem with version 1.27 you
-state in the comment -- this is way too much (and nobody seems
-to clean up the tempfile).  Looking at magic.mime, I suspect we
-might be able to get away with the first 4k bytes or so at most
-(the largest offset except iso9660 image is "Biff5" appearing at
-2114 to signal an Excel spreadsheet).
+> By the way, if you know autoconf well, perhaps you could tell me how to write
+> tests for the following programs: ar, tar, rpmbuild, how to write test for
+> Python version (or rather for WITH_OWN_SUBPROCESS_PY) and other test autoconf.ac
+> lacks now (NEEDS_SSL_WITH_CRYPTO, NEEDS_LIBICONV, NEEDS_SOCKET, NO_MMAP,
+> NO_IPV6, NO_ICONV, NO_ACCURATE_DIFF unless that was removed or changed name).
+
+Generally, see the Autoconf manual for the specific test first, then for
+more common test.
+
+For ar, use AC_CHECK_TOOL to allow cross-compilation.  For tar and
+rpmbiuld, use 
+AC_CHECK_PROG.  Python will have to run to find the version, I'm afraid,
+which would complicate cross builds.  Fortunately, it's on the way out.
+
+Tests for sockets are described in the Autoconf documentation.  Other
+tests should probably be implemented as test programs unless they can be
+reduced to checking for a specific symbol in a specific library.
+
+-- 
+Regards,
+Pavel Roskin
