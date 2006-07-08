@@ -1,68 +1,146 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] templates/hooks--update: replace diffstat calls with git diff --stat
-Date: Sat, 8 Jul 2006 01:50:02 -0700
-Message-ID: <20060708085002.GA3428@soma>
-References: <11522670452824-git-send-email-normalperson@yhbt.net> <11522670473116-git-send-email-normalperson@yhbt.net> <7v7j2p3eac.fsf@assigned-by-dhcp.cox.net> <20060707110123.GA23400@soma> <7vpsghzmr1.fsf@assigned-by-dhcp.cox.net> <7v64i9zk0j.fsf@assigned-by-dhcp.cox.net> <20060708015844.GA13769@soma> <7vsllcr077.fsf@assigned-by-dhcp.cox.net> <20060708084121.GD29036@hand.yhbt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Close the index file between writing and committing
+Date: Sat, 8 Jul 2006 10:56:28 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607081055520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 08 10:50:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Jul 08 10:56:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fz8Vu-0004AJ-B5
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 10:50:10 +0200
+	id 1Fz8c5-00055K-4D
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 10:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751274AbWGHIuG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Jul 2006 04:50:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbWGHIuG
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 04:50:06 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:16064 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751274AbWGHIuE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 04:50:04 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 59EE37DC021;
-	Sat,  8 Jul 2006 01:50:03 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat,  8 Jul 2006 01:50:02 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060708084121.GD29036@hand.yhbt.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1750902AbWGHI4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 04:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbWGHI4a
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 04:56:30 -0400
+Received: from mail.gmx.de ([213.165.64.21]:14306 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750902AbWGHI4a (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 04:56:30 -0400
+Received: (qmail invoked by alias); 08 Jul 2006 08:56:28 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp013) with SMTP; 08 Jul 2006 10:56:28 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23485>
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- This was part of the previous patch, but useful on its own since
- we have our own internal diffstat
 
- templates/hooks--update |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+	This is just playing it safe.
 
-diff --git a/templates/hooks--update b/templates/hooks--update
-index d7a8f0a..76d5ac2 100644
---- a/templates/hooks--update
-+++ b/templates/hooks--update
-@@ -60,7 +60,7 @@ then
- 			echo "Changes since $prev:"
- 			git rev-list --pretty $prev..$3 | $short
- 			echo ---
--			git diff $prev..$3 | diffstat -p1
-+			git diff --stat $prev..$3
- 			echo ---
- 		fi
- 		;;
-@@ -75,7 +75,7 @@ else
- 	base=$(git-merge-base "$2" "$3")
- 	case "$base" in
- 	"$2")
--		git diff "$3" "^$base" | diffstat -p1
-+		git diff --stat "$3" "^$base"
- 		echo
- 		echo "New commits:"
- 		;;
+	Alternatively, write_cache() could be taught to close the file
+	itself, but maybe there will be a user of write_cache() who wants
+	to write something after the cache data?
+
+ builtin-add.c          |    2 +-
+ builtin-apply.c        |    2 +-
+ builtin-read-tree.c    |    2 +-
+ builtin-rm.c           |    2 +-
+ builtin-update-index.c |    2 +-
+ builtin-write-tree.c   |    3 ++-
+ checkout-index.c       |    2 +-
+ 7 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/builtin-add.c b/builtin-add.c
+index bfbbb1b..2d25698 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -181,7 +181,7 @@ int cmd_add(int argc, const char **argv,
+ 
+ 	if (active_cache_changed) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_lock_file(&lock_file))
++		    close(newfd) || commit_lock_file(&lock_file))
+ 			die("Unable to write new index file");
+ 	}
+ 
+diff --git a/builtin-apply.c b/builtin-apply.c
+index e9ead00..c3af489 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2323,7 +2323,7 @@ int cmd_apply(int argc, const char **arg
+ 
+ 	if (write_index) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_lock_file(&lock_file))
++		    close(newfd) || commit_lock_file(&lock_file))
+ 			die("Unable to write new index file");
+ 	}
+ 
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 9a2099d..23a8d92 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -1038,7 +1038,7 @@ int cmd_read_tree(int argc, const char *
+ 	}
+ 
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+-	    commit_lock_file(&lock_file))
++	    close(newfd) || commit_lock_file(&lock_file))
+ 		die("unable to write new index file");
+ 	return 0;
+ }
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 4d56a1f..875d825 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -147,7 +147,7 @@ int cmd_rm(int argc, const char **argv, 
+ 
+ 	if (active_cache_changed) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_lock_file(&lock_file))
++		    close(newfd) || commit_lock_file(&lock_file))
+ 			die("Unable to write new index file");
+ 	}
+ 
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index ef50243..1a4200d 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -648,7 +648,7 @@ int cmd_update_index(int argc, const cha
+  finish:
+ 	if (active_cache_changed) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+-		    commit_lock_file(lock_file))
++		    close(newfd) || commit_lock_file(lock_file))
+ 			die("Unable to write new index file");
+ 	}
+ 
+diff --git a/builtin-write-tree.c b/builtin-write-tree.c
+index 70e9b6f..449a4d1 100644
+--- a/builtin-write-tree.c
++++ b/builtin-write-tree.c
+@@ -35,7 +35,8 @@ int write_tree(unsigned char *sha1, int 
+ 				      missing_ok, 0) < 0)
+ 			die("git-write-tree: error building trees");
+ 		if (0 <= newfd) {
+-			if (!write_cache(newfd, active_cache, active_nr))
++			if (!write_cache(newfd, active_cache, active_nr)
++					&& !close(newfd))
+ 				commit_lock_file(lock_file);
+ 		}
+ 		/* Not being able to write is fine -- we are only interested
+diff --git a/checkout-index.c b/checkout-index.c
+index ea40bc2..2927955 100644
+--- a/checkout-index.c
++++ b/checkout-index.c
+@@ -311,7 +311,7 @@ int main(int argc, char **argv)
+ 
+ 	if (0 <= newfd &&
+ 	    (write_cache(newfd, active_cache, active_nr) ||
+-	     commit_lock_file(&lock_file)))
++	     close(newfd) || commit_lock_file(&lock_file)))
+ 		die("Unable to write new index file");
+ 	return 0;
+ }
 -- 
-1.4.1.g6a62
+1.4.1.rc2.g5b68a
