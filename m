@@ -1,50 +1,54 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATH] sed -e '/RE/r rfile/' needs space in 'r rfile'
-Date: Sat, 08 Jul 2006 11:25:44 -0700
-Message-ID: <7v7j2oq7h3.fsf@assigned-by-dhcp.cox.net>
-References: <200607081727.10837.michal.rokos@nextsoft.cz>
-	<Pine.LNX.4.63.0607081844580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [Patch] Using 'perl' in *.sh
+Date: Sat, 08 Jul 2006 11:27:37 -0700
+Message-ID: <7v3bdcq7dy.fsf@assigned-by-dhcp.cox.net>
+References: <200607081732.04273.michal.rokos@nextsoft.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 08 20:26:12 2006
+X-From: git-owner@vger.kernel.org Sat Jul 08 20:27:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzHVK-00024g-T1
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 20:26:11 +0200
+	id 1FzHWo-0002BP-7M
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 20:27:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964940AbWGHSZq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Jul 2006 14:25:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964938AbWGHSZq
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 14:25:46 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:33464 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964940AbWGHSZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jul 2006 14:25:45 -0400
+	id S964938AbWGHS1j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 14:27:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbWGHS1j
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 14:27:39 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:60297 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S964938AbWGHS1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jul 2006 14:27:38 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060708182544.IEMG6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 8 Jul 2006 14:25:44 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607081844580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 8 Jul 2006 18:47:24 +0200
-	(CEST)")
+          id <20060708182738.QXXP6303.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 8 Jul 2006 14:27:38 -0400
+To: Michal Rokos <michal.rokos@nextsoft.cz>
+In-Reply-To: <200607081732.04273.michal.rokos@nextsoft.cz> (Michal Rokos's
+	message of "Sat, 8 Jul 2006 17:32:04 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23493>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Michal Rokos <michal.rokos@nextsoft.cz> writes:
 
->> in commit 07002287f3e219a16a948a8a6eca0a41162a491f
->> you cleaned up 'replace ugly and unportable sed invocation' as you said.
->> Please note, that some SEDs (like HP-UX one) mandate a space between 'r' 
->> and 'rfile'.
+> Hi,
 >
-> Ack. Note that this is yet-another-reason to step away from scripts.
+> some GIT's shell script are using bare 'perl' for perl invocation. It's 
+> causing me problems... I compile git with PERL_PATH set and I'd suggest to 
+> use it everywhere.
+>
+> So @@PERL@@ would be replaced with PERL_PATH_SQ instead.
+>
+> What do you think?
 
-Are you talking about doing this part in the Makefile in C ;-)?
+Absolutely.
+
+I think it was just sloppiness that we did not do so already.
+Thanks.
