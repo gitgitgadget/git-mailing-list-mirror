@@ -1,71 +1,62 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: gitweb/test/Marchen always untracked?
-Date: Sat, 8 Jul 2006 14:53:22 -0400
-Message-ID: <20060708185322.GA17708@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATH] sed -e '/RE/r rfile/' needs space in 'r rfile'
+Date: Sat, 8 Jul 2006 20:57:43 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607082055360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200607081727.10837.michal.rokos@nextsoft.cz>
+ <Pine.LNX.4.63.0607081844580.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v7j2oq7h3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Jul 08 20:53:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 08 20:57:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzHvv-0005c3-Dw
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 20:53:39 +0200
+	id 1FzHzx-0006Aq-1c
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 20:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030214AbWGHSxg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 8 Jul 2006 14:53:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964961AbWGHSxg
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 14:53:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:26784 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964960AbWGHSxf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 14:53:35 -0400
-Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1FzHvc-00032e-Ss
-	for git@vger.kernel.org; Sat, 08 Jul 2006 14:53:21 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 48D5920E482; Sat,  8 Jul 2006 14:53:22 -0400 (EDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030216AbWGHS5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 14:57:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030217AbWGHS5q
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 14:57:46 -0400
+Received: from mail.gmx.de ([213.165.64.21]:53154 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1030216AbWGHS5p (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 14:57:45 -0400
+Received: (qmail invoked by alias); 08 Jul 2006 18:57:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp032) with SMTP; 08 Jul 2006 20:57:44 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7j2oq7h3.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23497>
 
-I'm not sure what is going on here but on my Mac OS X system
-the file `gitweb/test/Marchen` is always untracked:
+Hi,
 
-  [spearce@spearce-pb15 git]$ git status
-  # On branch refs/heads/sp/work
-  #
-  # Untracked files:
-  #   (use "git add" to add to commit)
-  #
-  #       gitweb/test/Ma=CC=88rchen
-  nothing to commit
- =20
-  [spearce@spearce-pb15 git]$ git-ls-files | grep chen
-  "gitweb/test/M\303\244rchen"
- =20
-  [spearce@spearce-pb15 git]$ ls -l gitweb/test/Ma\314\210rchen=20
-  -rw-r--r--   1 spearce  spearce  17 Jul  8 14:38 gitweb/test/Ma??rche=
-n
+On Sat, 8 Jul 2006, Junio C Hamano wrote:
 
-At first glance it would appear as though the file is encoded into
-the tree (and thus the index) one way and the OS is reporting it
-another way during a readdir.  Which is leaving me scratching my
-head...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> in commit 07002287f3e219a16a948a8a6eca0a41162a491f
+> >> you cleaned up 'replace ugly and unportable sed invocation' as you said.
+> >> Please note, that some SEDs (like HP-UX one) mandate a space between 'r' 
+> >> and 'rfile'.
+> >
+> > Ack. Note that this is yet-another-reason to step away from scripts.
+> 
+> Are you talking about doing this part in the Makefile in C ;-)?
 
---=20
-Shawn.
+If it is not portable, then yes ;-)
+
+But of course, you know the spirit this was written in: I had no way to 
+test with sed on HP-UX, so I do not know if my change works there. 
+However, I know that if it is C -- except for bugs in HP-UX's C compiler 
+-- then it works on HP-UX as expected.
+
+Ciao,
+Dscho
