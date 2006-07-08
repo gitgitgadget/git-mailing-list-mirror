@@ -1,66 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: gitweb/test/Marchen always untracked?
-Date: Sat, 8 Jul 2006 21:36:07 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607082131450.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060708185322.GA17708@spearce.org>
- <Pine.LNX.4.63.0607082058340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Replace sed with perl when setting up perl scripts.
+Date: Sat, 8 Jul 2006 15:37:17 -0400
+Message-ID: <20060708193717.GA17905@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 08 21:36:14 2006
+X-From: git-owner@vger.kernel.org Sat Jul 08 21:37:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzIb7-0002nx-7i
-	for gcvg-git@gmane.org; Sat, 08 Jul 2006 21:36:13 +0200
+	id 1FzIcP-0002xL-Qw
+	for gcvg-git@gmane.org; Sat, 08 Jul 2006 21:37:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030245AbWGHTgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Jul 2006 15:36:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030269AbWGHTgJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 15:36:09 -0400
-Received: from mail.gmx.de ([213.165.64.21]:30921 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1030245AbWGHTgI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jul 2006 15:36:08 -0400
-Received: (qmail invoked by alias); 08 Jul 2006 19:36:07 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp003) with SMTP; 08 Jul 2006 21:36:07 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <Pine.LNX.4.63.0607082058340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S1030269AbWGHThb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Jul 2006 15:37:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030278AbWGHThb
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Jul 2006 15:37:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:42404 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1030269AbWGHTha (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jul 2006 15:37:30 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1FzIc7-0004fZ-Mm; Sat, 08 Jul 2006 15:37:15 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 36FD020E482; Sat,  8 Jul 2006 15:37:17 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23501>
 
-Hi,
+next appears to be broken on MacOS X:
 
-On Sat, 8 Jul 2006, Johannes Schindelin wrote:
+  INSTLIBDIR=`make -C perl -s --no-print-directory instlibdir` && \
+  sed -e '1s|#!.*perl|#!/usr/bin/perl|1' \
+      -e '2i\
+          use lib (split(/:/, $ENV{GITPERLLIB} || '\'"$INSTLIBDIR"\''));' \
+      -e 's|@@INSTLIBDIR@@|'"$INSTLIBDIR"'|g' \
+      -e 's/@@GIT_VERSION@@/1.4.1.g659a/g' \
+      git-archimport.perl >git-archimport+
+  sed: 1: "2i use lib (split(/:/,  ...": command i expects \ followed by text
+  make: *** [git-archimport] Error 1
 
-> On Sat, 8 Jul 2006, Shawn Pearce wrote:
-> 
-> > I'm not sure what is going on here but on my Mac OS X system
-> > the file `gitweb/test/Marchen` is always untracked:
-> 
-> Will investigate,
+I just spent half an hour messing around with the relevant Makefile
+rule to try and get sed to be happy with this and I can't find the
+magic necessary.  So I ported the sed to perl.  :-)
 
-And so I did. It seems the problem is not reading, but _writing_.
+-->>-
+Replace sed with perl when setting up perl scripts.
 
-> touch $(echo -e 'M\xc3\xa4rchen')
-> ls *en|hexdump -C
-00000000  4d 61 cc 88 72 63 68 65  6e 0a                    |Ma..rchen.|
-0000000a
+The sed magic to insert 'use lib' at the start of all
+GIT Perl scripts wasn't working correctly on Mac OS X.
+Replacing the sed invocations with perl invocations is
+much more portable.
 
-So, instead of writing "4d c3 a4 72 63 68 65 6e" it actually writes "4d 61 
-cc 88 72 63 68 65 6e". It might be possible that this is some 
-"intelligent" encoding mapping, but ...
+The replacement also has no negative impact on the build
+as GIT cannot be compiled without the Git perl module,
+which implies that perl is available and works.
+---
+ Makefile |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-> echo $LC_ALL
-de-DE.utf-8
-
-... so I think Mac OS X is wrong.
-
-Ciao,
-Dscho
+diff --git a/Makefile b/Makefile
+index 8d429a0..e83d298 100644
+--- a/Makefile
++++ b/Makefile
+@@ -557,11 +557,12 @@ common-cmds.h: Documentation/git-*.txt
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	rm -f $@ $@+
+ 	INSTLIBDIR=`$(MAKE) -C perl -s --no-print-directory instlibdir` && \
+-	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|1' \
+-	    -e '2i\
+-	        use lib (split(/:/, $$ENV{GITPERLLIB} || '\'"$$INSTLIBDIR"\''));' \
+-	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+-	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++	$(PERL_PATH) -e '$$_=<>;print q{#!$(PERL_PATH_SQ)},qq{\n};' \
++	    -e 'print q{use lib (split(/:/, $$ENV{GITPERLLIB} || '\'"$$INSTLIBDIR"\''));},qq{\n};' \
++	    -e 'while(<>){' \
++	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g;' \
++	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g;' \
++	    -e 'print;}' \
+ 	    $@.perl >$@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+-- 
+1.4.1.gc48f
