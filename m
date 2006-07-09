@@ -1,70 +1,61 @@
-From: Alp Toker <alp@atoker.com>
-Subject: [PATCH] gitweb: Send XHTML as 'application/xhtml+xml' where possible
-Date: Sun, 09 Jul 2006 10:41:58 +0100
-Message-ID: <11524381182709-git-send-email-alp@atoker.com>
-Reply-To: Alp Toker <alp@atoker.com>
-X-From: git-owner@vger.kernel.org Sun Jul 09 11:42:06 2006
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [Patch] Using 'perl' in *.sh
+Date: Sun, 9 Jul 2006 11:46:30 +0200
+Message-ID: <20060709094630.GB5919@steel.home>
+References: <200607081732.04273.michal.rokos@nextsoft.cz> <7v3bdcq7dy.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Rokos <michal.rokos@nextsoft.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 09 11:46:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzVnf-0002lv-JL
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 11:42:03 +0200
+	id 1FzVsJ-0003GL-J7
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 11:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbWGIJl7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 05:41:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbWGIJl7
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 05:41:59 -0400
-Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:9736 "EHLO
-	ndesk.org") by vger.kernel.org with ESMTP id S1751311AbWGIJl7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 05:41:59 -0400
-Received: by ndesk.org (Postfix, from userid 1000)
-	id 6ED051645C6; Sun,  9 Jul 2006 10:41:58 +0100 (BST)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.1.gbe4c7
+	id S964825AbWGIJqs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 05:46:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbWGIJqs
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 05:46:48 -0400
+Received: from mailout02.sul.t-online.com ([194.25.134.17]:41687 "EHLO
+	mailout02.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1751311AbWGIJqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jul 2006 05:46:47 -0400
+Received: from fwd34.aul.t-online.de 
+	by mailout02.sul.t-online.com with smtp 
+	id 1FzVs9-0006Z7-06; Sun, 09 Jul 2006 11:46:41 +0200
+Received: from tigra.home (r4+CKcZfZeVdzf4zFoC-2oSkXDiVXgyRBN4uT87gsm7qLzdEd4QYks@[84.160.119.250]) by fwd34.sul.t-online.de
+	with esmtp id 1FzVry-1P0bSq0; Sun, 9 Jul 2006 11:46:30 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 36E0E277AF;
+	Sun,  9 Jul 2006 11:46:30 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FzVry-0001bP-3C; Sun, 09 Jul 2006 11:46:30 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v3bdcq7dy.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-ID: r4+CKcZfZeVdzf4zFoC-2oSkXDiVXgyRBN4uT87gsm7qLzdEd4QYks
+X-TOI-MSGID: d53fcfd7-099f-4b90-a1cd-47e567008a76
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23536>
 
-"The 'text/html' media type [RFC2854] is primarily for HTML, not for
-XHTML. In general, this media type is NOT suitable for XHTML."
+Junio C Hamano, Sat, Jul 08, 2006 20:27:37 +0200:
+> >
+> > some GIT's shell script are using bare 'perl' for perl invocation. It's 
+> > causing me problems... I compile git with PERL_PATH set and I'd suggest to 
+> > use it everywhere.
+> >
+> > So @@PERL@@ would be replaced with PERL_PATH_SQ instead.
+> >
+> > What do you think?
+> 
+> Absolutely.
 
-This patch makes gitweb use content negotiation to conservatively send
-pages as Content-Type 'application/xhtml+xml' when the user agent
-explicitly claims to support it.
-
-It falls back to 'text/html' even if the user agent claims to support
-'application/xhtml+xml' by means of a glob in order to work around an
-insidious Internet Explorer bug.
-
-Signed-off-by: Alp Toker <alp@atoker.com>
----
- gitweb/gitweb.cgi |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index 3e2790c..3206435 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -290,7 +290,8 @@ sub git_header_html {
- 			}
- 		}
- 	}
--	print $cgi->header(-type=>'text/html',  -charset => 'utf-8', -status=> $status, -expires => $expires);
-+	my $content_type = ($cgi->http('HTTP_ACCEPT') =~ m/(,|;|\s|^)application\/xhtml\+xml(,|;|\s|$)/ && $cgi->Accept('application/xhtml+xml') ne 0) ? 'application/xhtml+xml' : 'text/html';
-+	print $cgi->header(-type=>$content_type,  -charset => 'utf-8', -status=> $status, -expires => $expires);
- 	print <<EOF;
- <?xml version="1.0" encoding="utf-8"?>
- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-@@ -298,7 +299,7 @@ sub git_header_html {
- <!-- git web interface v$version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
- <!-- git core binaries version $git_version -->
- <head>
--<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-+<meta http-equiv="content-type" content="$content_type; charset=utf-8"/>
- <meta name="robots" content="index, nofollow"/>
- <title>$title</title>
- <link rel="stylesheet" type="text/css" href="$stylesheet"/>
--- 
-1.4.1.gbe4c7
+Now imagine a non-posix system where an upgrade was made. Amongst
+other things perl was moved, i.e. from /opt/perl-5.8.8 to
+/usr/local/{bin,lib}. Suddenly git breaks.
