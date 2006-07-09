@@ -1,46 +1,43 @@
 From: Pavel Roskin <proski@gnu.org>
 Subject: [PATCH] Assorted typo fixes
-Date: Sun, 09 Jul 2006 03:36:03 -0400
-Message-ID: <1152430563.6603.5.camel@dv>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jul 09 09:36:14 2006
+Date: Sun, 09 Jul 2006 03:44:30 -0400
+Message-ID: <20060709074430.7439.30247.stgit@dv.roinet.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sun Jul 09 09:44:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzTpr-0001QG-0c
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 09:36:11 +0200
+	id 1FzTyC-000230-A1
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 09:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161118AbWGIHgH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 03:36:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbWGIHgH
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 03:36:07 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:10436 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932402AbWGIHgF
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 03:36:05 -0400
+	id S1161120AbWGIHod (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 03:44:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161121AbWGIHod
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 03:44:33 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:57834 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161120AbWGIHoc
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 03:44:32 -0400
 Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1FzTpk-0007zs-KY
-	for git@vger.kernel.org; Sun, 09 Jul 2006 03:36:04 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1FzTpj-0001qy-F7
-	for git@vger.kernel.org; Sun, 09 Jul 2006 03:36:03 -0400
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.7.3 (2.7.3-7) 
+	id 1FzTxv-0008Gp-7t
+	for git@vger.kernel.org; Sun, 09 Jul 2006 03:44:31 -0400
+Received: from [127.0.0.1] (helo=dv.roinet.com)
+	by dv.roinet.com with esmtp (Exim 4.62)
+	(envelope-from <proski@gnu.org>)
+	id 1FzTxu-0001w6-G5
+	for git@vger.kernel.org; Sun, 09 Jul 2006 03:44:30 -0400
+To: git@vger.kernel.org
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23530>
 
-Assorted typo fixes
+From: Pavel Roskin <proski@gnu.org>
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
 
 ---
-This is for "next".  "interopability" didn't make it to "master" yet.
-
 
  Documentation/SubmittingPatches                    |    2 +-
  Documentation/cvs-migration.txt                    |    2 +-
@@ -61,13 +58,11 @@ This is for "next".  "interopability" didn't make it to "master" yet.
  Documentation/technical/pack-heuristics.txt        |    8 ++++----
  INSTALL                                            |    4 ++--
  Makefile                                           |    6 +++---
- git-cvsserver.perl                                 |   14
-+++++++-------
+ git-cvsserver.perl                                 |   14 +++++++-------
  server-info.c                                      |    2 +-
  21 files changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/Documentation/SubmittingPatches
-b/Documentation/SubmittingPatches
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
 index 8601949..90722c2 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
@@ -80,24 +75,20 @@ index 8601949..90722c2 100644
  "inline".  WARNING: Be wary of your MUAs word-wrap
  corrupting your patch.  Do not cut-n-paste your patch; you can
  lose tabs that way if you are not careful.
-diff --git a/Documentation/cvs-migration.txt
-b/Documentation/cvs-migration.txt
+diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
 index 1fbca83..d2b0bd3 100644
 --- a/Documentation/cvs-migration.txt
 +++ b/Documentation/cvs-migration.txt
 @@ -93,7 +93,7 @@ machine where the repository is hosted. 
- full shell on the machine, there is a restricted shell which only
-allows
+ full shell on the machine, there is a restricted shell which only allows
  users to do git pushes and pulls; see gitlink:git-shell[1].
  
--Put all the committers should in the same group, and make the
-repository
+-Put all the committers should in the same group, and make the repository
 +Put all the committers in the same group, and make the repository
  writable by that group:
  
  ------------------------------------------------
-diff --git a/Documentation/git-diff-files.txt
-b/Documentation/git-diff-files.txt
+diff --git a/Documentation/git-diff-files.txt b/Documentation/git-diff-files.txt
 index 481b8b3..7248b35 100644
 --- a/Documentation/git-diff-files.txt
 +++ b/Documentation/git-diff-files.txt
@@ -110,23 +101,20 @@ index 481b8b3..7248b35 100644
  
  Output format
  -------------
-diff --git a/Documentation/git-init-db.txt
-b/Documentation/git-init-db.txt
+diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.txt
 index 8a150d8..0a4fc14 100644
 --- a/Documentation/git-init-db.txt
 +++ b/Documentation/git-init-db.txt
 @@ -25,7 +25,7 @@ DESCRIPTION
  -----------
- This command creates an empty git repository - basically a `.git`
-directory
+ This command creates an empty git repository - basically a `.git` directory
  with subdirectories for `objects`, `refs/heads`, `refs/tags`, and
 -templated files.
 +template files.
  An initial `HEAD` file that references the HEAD of the master branch
  is also created.
  
-diff --git a/Documentation/git-mailsplit.txt
-b/Documentation/git-mailsplit.txt
+diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
 index 209e36b..5a17801 100644
 --- a/Documentation/git-mailsplit.txt
 +++ b/Documentation/git-mailsplit.txt
@@ -152,8 +140,7 @@ index 4ce799b..bebf30a 100644
  a merge, so no merge happened at all.  You may want to finish
  whatever you were in the middle of doing, and retry the same
  pull after you are done and ready.
-diff --git a/Documentation/git-p4import.txt
-b/Documentation/git-p4import.txt
+diff --git a/Documentation/git-p4import.txt b/Documentation/git-p4import.txt
 index 0858e5e..ee9e8fa 100644
 --- a/Documentation/git-p4import.txt
 +++ b/Documentation/git-p4import.txt
@@ -175,8 +162,7 @@ index 0858e5e..ee9e8fa 100644
  without worry.
  
  Author information is automatically determined by querying the
-diff --git a/Documentation/git-pack-redundant.txt
-b/Documentation/git-pack-redundant.txt
+diff --git a/Documentation/git-pack-redundant.txt b/Documentation/git-pack-redundant.txt
 index 8fb0659..7d54b17 100644
 --- a/Documentation/git-pack-redundant.txt
 +++ b/Documentation/git-pack-redundant.txt
@@ -202,8 +188,7 @@ index d5b5ca1..56afd64 100644
  	This flag disables the check.  This can cause the
  	remote repository to lose commits; use it with care.
  
-diff --git a/Documentation/git-repo-config.txt
-b/Documentation/git-repo-config.txt
+diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
 index cc72fa9..8a1ab61 100644
 --- a/Documentation/git-repo-config.txt
 +++ b/Documentation/git-repo-config.txt
@@ -213,14 +198,12 @@ index cc72fa9..8a1ab61 100644
  
 -The hypothetic proxy command entries actually have a postfix to discern
 -to what URL they apply. Here is how to change the entry for kernel.org
-+The hypothetical proxy command entries actually have a postfix to
-discern
++The hypothetical proxy command entries actually have a postfix to discern
 +what URL they apply to. Here is how to change the entry for kernel.org
  to "ssh".
  
  ------------
-diff --git a/Documentation/git-rev-list.txt
-b/Documentation/git-rev-list.txt
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
 index 6c370e1..e220842 100644
 --- a/Documentation/git-rev-list.txt
 +++ b/Documentation/git-rev-list.txt
@@ -241,15 +224,12 @@ index d79523f..0914cbb 100644
  
     - *gitk* (shipped with git-core)
  
--   gitk is a simple TK GUI for browsing history of GIT repositories
-easily.
-+   gitk is a simple Tk GUI for browsing history of GIT repositories
-easily.
+-   gitk is a simple TK GUI for browsing history of GIT repositories easily.
++   gitk is a simple Tk GUI for browsing history of GIT repositories easily.
  
  
     - *gitview*  (contrib/)
-diff --git a/Documentation/git-upload-tar.txt
-b/Documentation/git-upload-tar.txt
+diff --git a/Documentation/git-upload-tar.txt b/Documentation/git-upload-tar.txt
 index a1019a0..394af62 100644
 --- a/Documentation/git-upload-tar.txt
 +++ b/Documentation/git-upload-tar.txt
@@ -275,24 +255,20 @@ index 51f20c6..d00cc3e 100644
  people.  Here is an example:
  
  ------------
-diff --git a/Documentation/howto/isolate-bugs-with-bisect.txt
-b/Documentation/howto/isolate-bugs-with-bisect.txt
+diff --git a/Documentation/howto/isolate-bugs-with-bisect.txt b/Documentation/howto/isolate-bugs-with-bisect.txt
 index edbcd4c..926bbdc 100644
 --- a/Documentation/howto/isolate-bugs-with-bisect.txt
 +++ b/Documentation/howto/isolate-bugs-with-bisect.txt
 @@ -28,7 +28,7 @@ Then do
  
- and at this point "git bisect" will churn for a while, and tell you
-what 
- the mid-point between those two commits are, and check that state out
-as 
+ and at this point "git bisect" will churn for a while, and tell you what 
+ the mid-point between those two commits are, and check that state out as 
 -the head of the bew "bisect" branch.
 +the head of the new "bisect" branch.
  
  Compile and reboot.
  
-diff --git a/Documentation/howto/rebase-from-internal-branch.txt
-b/Documentation/howto/rebase-from-internal-branch.txt
+diff --git a/Documentation/howto/rebase-from-internal-branch.txt b/Documentation/howto/rebase-from-internal-branch.txt
 index c2d4a91..fcd64e9 100644
 --- a/Documentation/howto/rebase-from-internal-branch.txt
 +++ b/Documentation/howto/rebase-from-internal-branch.txt
@@ -305,8 +281,7 @@ index c2d4a91..fcd64e9 100644
  maintainer and definitely with different committer and ancestry
  information, they are different objects from #2 and #3 commits.
  
-diff --git a/Documentation/technical/pack-heuristics.txt
-b/Documentation/technical/pack-heuristics.txt
+diff --git a/Documentation/technical/pack-heuristics.txt b/Documentation/technical/pack-heuristics.txt
 index 9aadd5c..103eb5d 100644
 --- a/Documentation/technical/pack-heuristics.txt
 +++ b/Documentation/technical/pack-heuristics.txt
@@ -317,8 +292,7 @@ index 9aadd5c..103eb5d 100644
 -And Bable-like confusion flowed.
 +And Babel-like confusion flowed.
  
-     <njs`> oh, hmm, and I'm not sure what this sliding window means
-either
+     <njs`> oh, hmm, and I'm not sure what this sliding window means either
  
 @@ -257,7 +257,7 @@ proclaim it a non-issue.  Good style too
          (type, basename, size)).
@@ -364,10 +338,8 @@ index 4e8f883..4cf7e67 100644
  	  git, and if you only use git to track other peoples work you'll
  	  never notice the lack of it. 
  
--        - "wish", the TCL/Tk windowing shell is used in gitk to show
-the
-+        - "wish", the Tcl/Tk windowing shell is used in gitk to show
-the
+-        - "wish", the TCL/Tk windowing shell is used in gitk to show the
++        - "wish", the Tcl/Tk windowing shell is used in gitk to show the
            history graphically
  
  	- "ssh" is used to push and pull over the net
@@ -376,31 +348,23 @@ index 8d429a0..fd35dbe 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -28,7 +28,7 @@ #
- # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic
-link.
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
  # Enable it on Windows.  By default, symrefs are still used.
  #
--# Define NO_SVN_TESTS if you want to skip time-consuming SVN
-interopability
-+# Define NO_SVN_TESTS if you want to skip time-consuming SVN
-interoperability
- # tests.  These tests take up a significant amount of the total test
-time
+-# Define NO_SVN_TESTS if you want to skip time-consuming SVN interopability
++# Define NO_SVN_TESTS if you want to skip time-consuming SVN interoperability
+ # tests.  These tests take up a significant amount of the total test time
  # but are not needed unless you plan to talk to SVN repos.
  #
 @@ -67,7 +67,7 @@ #
- # Define NO_ACCURATE_DIFF if your diff program at least sometimes
-misses
+ # Define NO_ACCURATE_DIFF if your diff program at least sometimes misses
  # a missing newline at the end of the file.
  #
--# Define NO_PYTHON if you want to loose all benefits of the recursive
-merge.
-+# Define NO_PYTHON if you want to lose all benefits of the recursive
-merge.
+-# Define NO_PYTHON if you want to loose all benefits of the recursive merge.
++# Define NO_PYTHON if you want to lose all benefits of the recursive merge.
  #
  # Define COLLISION_CHECK below if you believe that SHA1's
- # 1461501637330902918203684832716283019655932542976 hashes do not give
-you
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
 @@ -492,7 +492,7 @@ ifdef NO_ACCURATE_DIFF
  	BASIC_CFLAGS += -DNO_ACCURATE_DIFF
  endif
@@ -442,8 +406,7 @@ index 5ccca4f..c30ef70 100755
      {
          $filename = filecleanup($filename);
 @@ -1190,7 +1190,7 @@ sub req_status
-     # if no files were specified, we need to work out what files we
-should be providing status on ...
+     # if no files were specified, we need to work out what files we should be providing status on ...
      argsfromdir($updater);
  
 -    # foreach file specified on the commandline ...
@@ -452,8 +415,7 @@ should be providing status on ...
      {
          $filename = filecleanup($filename);
 @@ -1291,7 +1291,7 @@ sub req_diff
-     # if no files were specified, we need to work out what files we
-should be providing status on ...
+     # if no files were specified, we need to work out what files we should be providing status on ...
      argsfromdir($updater);
  
 -    # foreach file specified on the commandline ...
@@ -462,8 +424,7 @@ should be providing status on ...
      {
          $filename = filecleanup($filename);
 @@ -1433,7 +1433,7 @@ sub req_log
-     # if no files were specified, we need to work out what files we
-should be providing status on ...
+     # if no files were specified, we need to work out what files we should be providing status on ...
      argsfromdir($updater);
  
 -    # foreach file specified on the commandline ...
@@ -493,7 +454,3 @@ index 0eb5132..fdfe05a 100644
  
  	while (fgets(line, sizeof(line), fp)) {
  		int len = strlen(line);
-
--- 
-Regards,
-Pavel Roskin
