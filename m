@@ -1,80 +1,72 @@
-From: Alp Toker <alp@atoker.com>
-Subject: [PATCH] gitweb: Send XHTML as 'application/xhtml+xml' where possible
-Date: Sun, 09 Jul 2006 15:55:21 +0100
-Message-ID: <11524569211631-git-send-email-alp@atoker.com>
-Reply-To: Alp Toker <alp@atoker.com>
-X-From: git-owner@vger.kernel.org Sun Jul 09 16:55:55 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: RFH: refactor read-tree
+Date: Sun, 9 Jul 2006 08:30:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607090827430.5623@g5.osdl.org>
+References: <Pine.LNX.4.63.0607090015250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0607082011060.5623@g5.osdl.org> <20060709124324.GE5919@steel.home>
+ <Pine.LNX.4.63.0607091630110.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 09 17:30:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzahC-0004rl-OY
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 16:55:43 +0200
+	id 1FzbEy-0000dM-1p
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 17:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932485AbWGIOz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 10:55:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932489AbWGIOz2
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 10:55:28 -0400
-Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:35854 "EHLO
-	ndesk.org") by vger.kernel.org with ESMTP id S932485AbWGIOz1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 10:55:27 -0400
-Received: by ndesk.org (Postfix, from userid 1000)
-	id D245D164CE2; Sun,  9 Jul 2006 15:55:21 +0100 (BST)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.1.gbe4c7
+	id S1161026AbWGIPac (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 11:30:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161033AbWGIPac
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 11:30:32 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:63146 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161026AbWGIPab (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 11:30:31 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k69FURnW010141
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 9 Jul 2006 08:30:27 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k69FUQUH027484;
+	Sun, 9 Jul 2006 08:30:26 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607091630110.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.84__
+X-MIMEDefang-Filter: osdl$Revision: 1.138 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23557>
 
-"The 'text/html' media type [RFC2854] is primarily for HTML, not for
-XHTML. In general, this media type is NOT suitable for XHTML."
 
-This patch makes gitweb use content negotiation to conservatively send
-pages as Content-Type 'application/xhtml+xml' when the user agent
-explicitly claims to support it.
 
-It falls back to 'text/html' even if the user agent appears to
-implicitly support 'application/xhtml+xml' due to a '*/*' glob, working
-around an insidious bug in Internet Explorer where sending the correct
-media type prevents the page from being displayed.
+On Sun, 9 Jul 2006, Johannes Schindelin wrote:
+> 
+> On Sun, 9 Jul 2006, Alex Riesen wrote:
+> 
+> > Linus Torvalds, Sun, Jul 09, 2006 05:15:41 +0200:
+> > > The basic idea is that "branch1" should be your current branch, and it 
+> > > obviously is also expected to match (more or less) the current index. So 
+> > > you can do a merge by
+> > > 
+> > >  - reading in "branch1" into the index:
+> > > 
+> > > 	GIT_INDEX_FILE=.git/tmp-index git-read-tree -m branch1
+> > 
+> > what is "-m" here for?
+> 
+> It means that git-read-tree tries to merge the current index with branch1.
 
-Signed-off-by: Alp Toker <alp@atoker.com>
----
- gitweb/gitweb.cgi |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+Well, the current index always "merges" by just taking the timestamps from 
+it. The actual _content_ doesn't matter for the single-tree case.
 
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index 3e2790c..beb8061 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -290,7 +290,17 @@ sub git_header_html {
- 			}
- 		}
- 	}
--	print $cgi->header(-type=>'text/html',  -charset => 'utf-8', -status=> $status, -expires => $expires);
-+	my $content_type;
-+	# require explicit support from the UA if we are to send the page as
-+	# 'application/xhtml+xml', otherwise send it as plain old 'text/html'.
-+	# we have to do this because MSIE sometimes globs '*/*', pretending to
-+	# support xhtml+xml but choking when it gets what it asked for.
-+	if ($cgi->http('HTTP_ACCEPT') =~ m/(,|;|\s|^)application\/xhtml\+xml(,|;|\s|$)/ && $cgi->Accept('application/xhtml+xml') != 0) {
-+		$content_type = 'application/xhtml+xml';
-+	} else {
-+		$content_type = 'text/html';
-+	}
-+	print $cgi->header(-type=>$content_type,  -charset => 'utf-8', -status=> $status, -expires => $expires);
- 	print <<EOF;
- <?xml version="1.0" encoding="utf-8"?>
- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-@@ -298,7 +308,7 @@ sub git_header_html {
- <!-- git web interface v$version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
- <!-- git core binaries version $git_version -->
- <head>
--<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-+<meta http-equiv="content-type" content="$content_type; charset=utf-8"/>
- <meta name="robots" content="index, nofollow"/>
- <title>$title</title>
- <link rel="stylesheet" type="text/css" href="$stylesheet"/>
--- 
-1.4.1.gbe4c7
+For the two- and three-tree case, "git-read-tree -m" will verify that the 
+parts that got changed still _match_ in the index, but for a single-tree 
+"git-read-tree", there's nothing to match against, just the target, so 
+the only thing it does is that for matching index/target-tree entries it 
+will re-use the index timestamps (and other stat info).
+
+			Linus
