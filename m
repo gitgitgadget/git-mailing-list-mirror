@@ -1,61 +1,60 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [RFC+PATCH 1/1] Move SCM interoperability tools into scm/
-Date: Mon, 10 Jul 2006 09:26:59 +1200
-Message-ID: <46a038f90607091426u5a6ea328h2090a876e51725ce@mail.gmail.com>
-References: <11524258261798-git-send-email-ryan@michonline.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC] just an (stupid) idea when creating a new branch
+Date: Mon, 10 Jul 2006 00:01:16 +0200
+Message-ID: <20060709220116.GT29115@pasky.or.cz>
+References: <20060708155547.73054.qmail@web25814.mail.ukl.yahoo.com> <e8p8pj$jk3$2@sea.gmane.org> <e5bfff550607082354g62e99216gc72b07055762de3a@mail.gmail.com> <Pine.LNX.4.63.0607091632070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 09 23:27:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 00:01:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fzgnx-0003af-Um
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 23:27:06 +0200
+	id 1FzhL9-0001eT-AW
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 00:01:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161163AbWGIV1B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 17:27:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161165AbWGIV1B
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 17:27:01 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:31162 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1161163AbWGIV1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jul 2006 17:27:00 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so3677341ugf
-        for <git@vger.kernel.org>; Sun, 09 Jul 2006 14:26:59 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PHDnz8H+7KxKtJB4m0FbWsC/SHS66qS4RzRZtr1smTTFzFzvj+J5Ol+a/AgXBSa6pITGV1Fz0oUecpxCogr1IlidPqF6peRGZB4RMMqo0Hnkvs+tB8WfsxmjzmpZwIZTA/kDY9z2z9JxHZEDYxlm/ARJwmrOOkWHejVK04mwSeg=
-Received: by 10.78.156.6 with SMTP id d6mr1433389hue;
-        Sun, 09 Jul 2006 14:26:59 -0700 (PDT)
-Received: by 10.78.117.11 with HTTP; Sun, 9 Jul 2006 14:26:59 -0700 (PDT)
-To: "Ryan Anderson" <ryan@michonline.com>
-In-Reply-To: <11524258261798-git-send-email-ryan@michonline.com>
+	id S1161176AbWGIWBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 18:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161177AbWGIWBS
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 18:01:18 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:19626 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161176AbWGIWBR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 18:01:17 -0400
+Received: (qmail 20924 invoked by uid 2001); 10 Jul 2006 00:01:16 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0607091632070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23567>
 
-On 7/9/06, Ryan Anderson <ryan@michonline.com> wrote:
-> This is the first in a series to categorize the source tree a little bit more
-> than it is currently.
+  Hi,
 
-Given that you title it RFC, I guess it hasn't been discussed before.
-I personally don't see much benefit from the move/rename. The tree is
-not so large, the SCM import/export utilities are a single file each
-and their names are quite clear. Having /contrib is more an issue of
-marking utilities there as 'new, experimental, unsupported', and the
-assumption is that when something matures it moves out of /contrib.
+Dear diary, on Sun, Jul 09, 2006 at 04:33:53PM CEST, I got a letter
+where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> On Sun, 9 Jul 2006, Marco Costalba wrote:
+> 
+> > It is possible to add a message (and more) to a tag creating a tag
+> > object. FWIK this is not allowed for the other refs.
+> > 
+> > Why there is this (artifical?) difference between tags and the other
+> > kind of refs?
+> 
+> The tag message is nothing else than a commit message.
 
-So I have to ask... what are the expected benefits of the move?
+  huh?
 
-In any case, use /interop instead. /scm in the tree of an SCM could be
-anything ;-)
+  The tag message is a message in the "freeform" part of the tag object,
+but disregarding the format similiraties, it has really nothing to do
+with a commit message. (Also, commit messages don't tend to be commonly
+PGP signed. ;-)
 
-
-
-martin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
