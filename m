@@ -1,74 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC] just an (stupid) idea when creating a new branch
-Date: Sun, 09 Jul 2006 19:04:32 +0200
-Organization: At home
-Message-ID: <e8rcu5$je5$2@sea.gmane.org>
-References: <20060708155547.73054.qmail@web25814.mail.ukl.yahoo.com> <e8p8pj$jk3$2@sea.gmane.org> <Pine.LNX.4.63.0607090011000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sun, 9 Jul 2006 21:09:28 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607092106530.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060708155547.73054.qmail@web25814.mail.ukl.yahoo.com>
+ <e8p8pj$jk3$2@sea.gmane.org> <Pine.LNX.4.63.0607090011000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <e8rcu5$je5$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jul 09 19:04:54 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 09 21:09:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fzci1-0004KW-OR
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 19:04:42 +0200
+	id 1Fzeer-0003xb-Qm
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 21:09:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964863AbWGIREb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 13:04:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWGIREb
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 13:04:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:2749 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964863AbWGIREa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 13:04:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Fzche-0004H6-N1
-	for git@vger.kernel.org; Sun, 09 Jul 2006 19:04:18 +0200
-Received: from host-81-190-31-220.torun.mm.pl ([81.190.31.220])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 09 Jul 2006 19:04:18 +0200
-Received: from jnareb by host-81-190-31-220.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 09 Jul 2006 19:04:18 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-220.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161059AbWGITJb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 15:09:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161060AbWGITJb
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 15:09:31 -0400
+Received: from mail.gmx.net ([213.165.64.21]:33219 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161059AbWGITJa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 15:09:30 -0400
+Received: (qmail invoked by alias); 09 Jul 2006 19:09:29 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 09 Jul 2006 21:09:29 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <e8rcu5$je5$2@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23561>
 
-Johannes Schindelin wrote:
+Hi,
 
+On Sun, 9 Jul 2006, Jakub Narebski wrote:
 
-> On Sat, 8 Jul 2006, Jakub Narebski wrote:
-> 
->> moreau francis wrote:
->> 
->>> Would it be possible to let the user stick a short explanation
->>> on  what a branch is supposed to implement during its creation.
->> 
->> It would be possible when/if branch and remotes config would migrate
->> to .git/config. Currently too many I think relies on refs/heads being
->> simple sha1 of "top" commit.
-> 
-> But it does not need a change of existing practice at all! Just add the 
-> information provided by --topic as branch."pathname".description to the 
-> config. And make format-patch aware of that.
+> By the way, did this series of patches (adding support for branch and
+> remotes configuretion to config file) made into 'next', 'master' or even
+> 'pu', or after some discussion it stalled?
 
-And make tools remove stale descriptions. I sometimes rename branches "by
-hand", as currently there is I think no tool for this...
+The latter. Some parts are there (the remote configuration made it in 
+AFAIK) but things like the default remote(s) to fetch / push are not.
 
-By the way, did this series of patches (adding support for branch and
-remotes configuretion to config file) made into 'next', 'master' or even
-'pu', or after some discussion it stalled?
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ciao,
+Dscho
