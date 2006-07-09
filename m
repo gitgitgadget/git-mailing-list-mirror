@@ -1,56 +1,71 @@
-From: fork0@t-online.de (Alex Riesen)
+From: Michal Rokos <michal.rokos@nextsoft.cz>
 Subject: Re: [Patch] Using 'perl' in *.sh
-Date: Sun, 9 Jul 2006 14:17:07 +0200
-Message-ID: <20060709121706.GD5919@steel.home>
-References: <200607081732.04273.michal.rokos@nextsoft.cz> <7v3bdcq7dy.fsf@assigned-by-dhcp.cox.net> <20060709094630.GB5919@steel.home> <f36b08ee0607090309l3cc05b19t44781bbe26013a0b@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Date: Sun, 9 Jul 2006 14:41:15 +0200
+Organization: NextSoft
+Message-ID: <200607091441.16161.michal.rokos@nextsoft.cz>
+References: <200607081732.04273.michal.rokos@nextsoft.cz> <20060709095114.GQ22573@lug-owl.de> <7vd5cfnkz4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Michal Rokos <michal.rokos@nextsoft.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 09 14:17:35 2006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 09 14:41:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzYE5-00027f-L3
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 14:17:30 +0200
+	id 1FzYbL-0004f1-RS
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 14:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030469AbWGIMRU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 08:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030471AbWGIMRU
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 08:17:20 -0400
-Received: from mailout07.sul.t-online.com ([194.25.134.83]:14986 "EHLO
-	mailout07.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1030469AbWGIMRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jul 2006 08:17:18 -0400
-Received: from fwd32.aul.t-online.de 
-	by mailout07.sul.t-online.com with smtp 
-	id 1FzYDn-0006QP-06; Sun, 09 Jul 2006 14:17:11 +0200
-Received: from tigra.home (TFx9CmZEQe3Y4Pf1Cqh7jClTtr-wzhmw-BPaMx3dJDr3wnmsriOOE0@[84.160.119.250]) by fwd32.sul.t-online.de
-	with esmtp id 1FzYDl-0ydYf20; Sun, 9 Jul 2006 14:17:09 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id BF537277AF;
-	Sun,  9 Jul 2006 14:17:08 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1FzYDj-00020b-Vu; Sun, 09 Jul 2006 14:17:08 +0200
-To: Yakov Lerner <iler.ml@gmail.com>
+	id S1030473AbWGIMl1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 9 Jul 2006 08:41:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030475AbWGIMl1
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 08:41:27 -0400
+Received: from s3.icr.cz ([82.142.72.7]:23527 "EHLO s3.icr.cz")
+	by vger.kernel.org with ESMTP id S1030473AbWGIMl0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 08:41:26 -0400
+Received: (from root@localhost)
+	by s3.icr.cz (8.11.4/8.11.4) id k69CfHV10109;
+	Sun, 9 Jul 2006 14:41:17 +0200
+Received: from michal.rokos.cz (mx1.evangnet.cz [88.83.237.35] (may be forged))
+	by s3.icr.cz (8.11.4/8.11.4) with ESMTP id k69CfGS10069;
+	Sun, 9 Jul 2006 14:41:16 +0200
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vd5cfnkz4.fsf@assigned-by-dhcp.cox.net>
+X-scanner: scanned by Inflex 1.0.10 - (http://pldaniels.com/inflex/)
 Content-Disposition: inline
-In-Reply-To: <f36b08ee0607090309l3cc05b19t44781bbe26013a0b@mail.gmail.com>
-User-Agent: Mutt/1.5.6i
-X-ID: TFx9CmZEQe3Y4Pf1Cqh7jClTtr-wzhmw-BPaMx3dJDr3wnmsriOOE0
-X-TOI-MSGID: cfc9f616-d350-4f28-af74-2f44325dda4e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23547>
 
-Yakov Lerner, Sun, Jul 09, 2006 12:09:30 +0200:
-> >Now imagine a non-posix system where an upgrade was made. Amongst
-> >other things perl was moved, i.e. from /opt/perl-5.8.8 to
-> >/usr/local/{bin,lib}. Suddenly git breaks.
-> 
-> Building new perl for sources never removed,
-> by itself, older perls on the system. Did it ever for you ?
+Hello,
 
-No. But a strange package management program will remove the old perl.
+On Sunday 09 July 2006 12:14, Junio C Hamano wrote:
+> Michal, is there a reason you do not want to have the version of
+> perl you teach git tools via #! lines with PERL_PATH on your $PATH?
+
+I have no problem with that. I can set $PATH.
+But then I'd suggest to change magic #!
+from #!/usr/bin/perl
+to #!/usr/bin/env perl
+for *.perl
+
+It that what you meant?
+
+M.
+
+PS: Please note that
+#!/usr/bin/env perl -w
+will not work on some platforms (at least on HP-UX)...
+--=20
+Michal Rokos
+
+NextSoft s.r.o.
+Vysko=C4=8Dilova 1/1410
+140 21 Praha 4
+phone:  +420 267 224 311
+fax:    +420 267 224 307
+mobile: +420 736 646 591
+e-mail: michal.rokos@nextsoft.cz
