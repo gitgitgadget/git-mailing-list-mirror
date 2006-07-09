@@ -1,60 +1,81 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git on HP-UX
-Date: Mon, 10 Jul 2006 00:23:38 +0200
-Message-ID: <20060709222338.GV29115@pasky.or.cz>
-References: <200607060950.34558.michal.rokos@nextsoft.cz> <1152197629.7720.10.camel@dv> <7vfyhe465i.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [RFC+PATCH 1/1] Move SCM interoperability tools into scm/
+Date: Sun, 9 Jul 2006 15:23:09 -0700
+Message-ID: <20060709222308.GA4153@h4x0r5.com>
+References: <11524258261798-git-send-email-ryan@michonline.com> <46a038f90607091426u5a6ea328h2090a876e51725ce@mail.gmail.com> <20060709221326.GU29115@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 00:23:45 2006
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 00:24:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fzhgm-0004fw-2s
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 00:23:44 +0200
+	id 1FzhhM-0004nH-6t
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 00:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161191AbWGIWXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 18:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161194AbWGIWXl
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 18:23:41 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56968 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1161191AbWGIWXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 18:23:40 -0400
-Received: (qmail 22033 invoked by uid 2001); 10 Jul 2006 00:23:38 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1161195AbWGIWYR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 18:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161197AbWGIWYR
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 18:24:17 -0400
+Received: from h4x0r5.com ([70.85.31.202]:25616 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1161195AbWGIWYQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 18:24:16 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1FzhgD-0006OJ-BY; Sun, 09 Jul 2006 15:23:09 -0700
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <7vfyhe465i.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <20060709221326.GU29115@pasky.or.cz>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23573>
 
-Dear diary, on Fri, Jul 07, 2006 at 02:20:41AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> > I hope the Autoconf based configure is on its way to git, but I don't
-> > see in in the "pu" branch yet.  I'm not very keen about reinventing
-> > Autoconf and hacking a hand-made configure script.
+On Mon, Jul 10, 2006 at 12:13:26AM +0200, Petr Baudis wrote:
+> Dear diary, on Sun, Jul 09, 2006 at 11:26:59PM CEST, I got a letter
+> where Martin Langhoff <martin.langhoff@gmail.com> said that...
+> > So I have to ask... what are the expected benefits of the move?
 > 
-> OK, you half-convinced me.  The other half came from a recent
-> series of patches to try using 'which' to detect executables,
-> which is another common mistake handcrafted configure script
-> makes, which autoconf people have solved for us long time ago.
+> I've been meaning to do something like this for some time already; my
+> itch have been the builtins. The tree size _is_ getting out of hand and
+> a little more categorization of the sources would certainly help.
 
-Good! In fact, I have been a moderate autoconf fan and originally I have
-meant the hand-crafted ./configure script partially just as a tease and
-a nominal competitor for the autoconf one, so that we would for sure got
-_some_ autoconfiguration mechanism (which is what I care about).
+That's what I was thinking, as well, basically.  I started with the "scm
+interop" tools because they should be the least controversial to move
+around.
 
-I have to admit that I have grown somewhat attached to my script over
-time and I like it a lot more than the autoconf thing personally, but
-then again I had no idea that we actually want to support such systems
-like those with broken which...
+> Although I'd take a different approach:
+> 
+> 	libgit/
+> 	builtin/
+> 	standalone/
+> 	scripts/
+> 
+> > In any case, use /interop instead. /scm in the tree of an SCM could be
+> > anything ;-)
+> 
+> I agree on this point.
+
+Very good point.
+
+So these seem obvious to me:
+	libgit/ (maybe just lib/?)
+	builtin/
+	interop/
+
+I'm less sure of the rest, but I'll poke at doing the above for the
+moment, and worry about the rest later.
+
+Comments on a way to make the Makefile less repetitive would be
+appreciated, though.
+
+
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+
+Ryan Anderson
+  sometimes Pug Majere
