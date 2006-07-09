@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH 3] Copy description of build configuration variables to configure.ac
-Date: Sun, 09 Jul 2006 18:47:43 +0200
+Subject: Re: [RFC] just an (stupid) idea when creating a new branch
+Date: Sun, 09 Jul 2006 19:04:32 +0200
 Organization: At home
-Message-ID: <e8rbuk$je5$1@sea.gmane.org>
-References: <200607030156.50455.jnareb@gmail.com> <1152392835436-git-send-email-jnareb@gmail.com> <11523928361444-git-send-email-jnareb@gmail.com> <7virm7nq7h.fsf@assigned-by-dhcp.cox.net>
+Message-ID: <e8rcu5$je5$2@sea.gmane.org>
+References: <20060708155547.73054.qmail@web25814.mail.ukl.yahoo.com> <e8p8pj$jk3$2@sea.gmane.org> <Pine.LNX.4.63.0607090011000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jul 09 18:47:48 2006
+X-From: git-owner@vger.kernel.org Sun Jul 09 19:04:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzcRZ-0002GT-CH
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 18:47:41 +0200
+	id 1Fzci1-0004KW-OR
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 19:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331AbWGIQri (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 12:47:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWGIQri
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 12:47:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:37803 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751331AbWGIQrh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 12:47:37 -0400
+	id S964863AbWGIREb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 13:04:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWGIREb
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 13:04:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:2749 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964863AbWGIREa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 13:04:30 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1FzcRJ-0002F9-7I
-	for git@vger.kernel.org; Sun, 09 Jul 2006 18:47:26 +0200
+	id 1Fzche-0004H6-N1
+	for git@vger.kernel.org; Sun, 09 Jul 2006 19:04:18 +0200
 Received: from host-81-190-31-220.torun.mm.pl ([81.190.31.220])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 09 Jul 2006 18:47:25 +0200
+        for <git@vger.kernel.org>; Sun, 09 Jul 2006 19:04:18 +0200
 Received: from jnareb by host-81-190-31-220.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 09 Jul 2006 18:47:25 +0200
+        for <git@vger.kernel.org>; Sun, 09 Jul 2006 19:04:18 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,29 +41,32 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23560>
 
-Junio C Hamano wrote:
+Johannes Schindelin wrote:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+
+> On Sat, 8 Jul 2006, Jakub Narebski wrote:
 > 
->> Copy description of build configuration variables from the commentary
->> in the top Makefile (from 'next' branch) to configure.ac, splitting
->> them into "autoconf" sections.
+>> moreau francis wrote:
+>> 
+>>> Would it be possible to let the user stick a short explanation
+>>> on  what a branch is supposed to implement during its creation.
+>> 
+>> It would be possible when/if branch and remotes config would migrate
+>> to .git/config. Currently too many I think relies on refs/heads being
+>> simple sha1 of "top" commit.
 > 
-> I do not see much point in this -- they will become out of sync.
+> But it does not need a change of existing practice at all! Just add the 
+> information provided by --topic as branch."pathname".description to the 
+> config. And make format-patch aware of that.
 
-> [...] I think you are better off making a list of
-> supported and yet to be supported ones in the comment in
-> configure.ac, and when you want to see if the list got stale
-> over time, grep for '^# Define' from the Makefile and match them
-> up.
+And make tools remove stale descriptions. I sometimes rename branches "by
+hand", as currently there is I think no tool for this...
 
-This is kind of such a list. Also let me point out that this was in _first_
-patch of the series, as a kind of TODO list.
-
-Perhaps those which are done, and those which are not implemented should be
-marked differently... 
+By the way, did this series of patches (adding support for branch and
+remotes configuretion to config file) made into 'next', 'master' or even
+'pu', or after some discussion it stalled?
 
 -- 
 Jakub Narebski
