@@ -1,71 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFH: refactor read-tree
-Date: Sun, 9 Jul 2006 16:55:04 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607091650030.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0607090015250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0607082011060.5623@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 09 16:55:34 2006
+From: Alp Toker <alp@atoker.com>
+Subject: [PATCH] gitweb: Send XHTML as 'application/xhtml+xml' where possible
+Date: Sun, 09 Jul 2006 15:55:21 +0100
+Message-ID: <11524569211631-git-send-email-alp@atoker.com>
+Reply-To: Alp Toker <alp@atoker.com>
+X-From: git-owner@vger.kernel.org Sun Jul 09 16:55:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fzagq-0004od-J1
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 16:55:21 +0200
+	id 1FzahC-0004rl-OY
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 16:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932480AbWGIOzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 10:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbWGIOzI
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 10:55:08 -0400
-Received: from mail.gmx.de ([213.165.64.21]:62368 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932480AbWGIOzG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 10:55:06 -0400
-Received: (qmail invoked by alias); 09 Jul 2006 14:55:05 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 09 Jul 2006 16:55:05 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607082011060.5623@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S932485AbWGIOz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 10:55:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932489AbWGIOz2
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 10:55:28 -0400
+Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:35854 "EHLO
+	ndesk.org") by vger.kernel.org with ESMTP id S932485AbWGIOz1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 10:55:27 -0400
+Received: by ndesk.org (Postfix, from userid 1000)
+	id D245D164CE2; Sun,  9 Jul 2006 15:55:21 +0100 (BST)
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.1.gbe4c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23556>
 
-Hi,
+"The 'text/html' media type [RFC2854] is primarily for HTML, not for
+XHTML. In general, this media type is NOT suitable for XHTML."
 
-On Sat, 8 Jul 2006, Linus Torvalds wrote:
+This patch makes gitweb use content negotiation to conservatively send
+pages as Content-Type 'application/xhtml+xml' when the user agent
+explicitly claims to support it.
 
-> On Sun, 9 Jul 2006, Johannes Schindelin wrote:
-> > 
-> > I also played a little with git-merge-tree, because it seems so much 
-> > simpler and easier to refactor. But there is a problem: Either I call it 
-> > the wrong way, or it does not yet work correctly: I tried
-> > 
-> > 	git-merge-tree $(git-merge-base branch1 branch2) branch1 branch2
-> > 
-> > with what is in 'next'. But it only showed the _new_ files, not the 
-> > modified ones.
-> 
-> What git-merge-tree does is to show the _difference_ to "branch1".
+It falls back to 'text/html' even if the user agent appears to
+implicitly support 'application/xhtml+xml' due to a '*/*' glob, working
+around an insidious bug in Internet Explorer where sending the correct
+media type prevents the page from being displayed.
 
-I see my problem: branch1 is not the "upstream" branch, but my own. Tsk. 
-Too easy.
+Signed-off-by: Alp Toker <alp@atoker.com>
+---
+ gitweb/gitweb.cgi |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-Now, if only merge-tree knew about renames. *sigh*.
-
-> And yes, I agree 100% that "git-read-tree" has become an unholy mess. I 
-> looked at it, and I think it's unfixable. I considered re-writing it from 
-> scratch, at least for some specific cases, but I couldn't bring myself to 
-> do it.
-
-Well, I think that at least the unpack_tree() thing should be relatively 
-easy to extract. And the rest _should_ be relatively easy to clean up, 
-provided we introduce a read_tree_options struct, which gets passed around 
-a la "this" in Java/C++.
-
-Ciao,
-Dscho
+diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
+index 3e2790c..beb8061 100755
+--- a/gitweb/gitweb.cgi
++++ b/gitweb/gitweb.cgi
+@@ -290,7 +290,17 @@ sub git_header_html {
+ 			}
+ 		}
+ 	}
+-	print $cgi->header(-type=>'text/html',  -charset => 'utf-8', -status=> $status, -expires => $expires);
++	my $content_type;
++	# require explicit support from the UA if we are to send the page as
++	# 'application/xhtml+xml', otherwise send it as plain old 'text/html'.
++	# we have to do this because MSIE sometimes globs '*/*', pretending to
++	# support xhtml+xml but choking when it gets what it asked for.
++	if ($cgi->http('HTTP_ACCEPT') =~ m/(,|;|\s|^)application\/xhtml\+xml(,|;|\s|$)/ && $cgi->Accept('application/xhtml+xml') != 0) {
++		$content_type = 'application/xhtml+xml';
++	} else {
++		$content_type = 'text/html';
++	}
++	print $cgi->header(-type=>$content_type,  -charset => 'utf-8', -status=> $status, -expires => $expires);
+ 	print <<EOF;
+ <?xml version="1.0" encoding="utf-8"?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+@@ -298,7 +308,7 @@ sub git_header_html {
+ <!-- git web interface v$version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
+ <!-- git core binaries version $git_version -->
+ <head>
+-<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
++<meta http-equiv="content-type" content="$content_type; charset=utf-8"/>
+ <meta name="robots" content="index, nofollow"/>
+ <title>$title</title>
+ <link rel="stylesheet" type="text/css" href="$stylesheet"/>
+-- 
+1.4.1.gbe4c7
