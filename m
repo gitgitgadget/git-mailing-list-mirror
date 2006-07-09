@@ -1,198 +1,499 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [WIP] Status update on merge-recursive in C
-Date: Sun, 09 Jul 2006 00:34:23 -0700
-Message-ID: <7vpsgfnse8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0607081840280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<1152421230.2103.31.camel@dv>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Assorted typo fixes
+Date: Sun, 09 Jul 2006 03:36:03 -0400
+Message-ID: <1152430563.6603.5.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 09 09:34:32 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jul 09 09:36:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzToG-0001In-CS
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 09:34:32 +0200
+	id 1FzTpr-0001QG-0c
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 09:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161117AbWGIHe1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 03:34:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932402AbWGIHe1
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 03:34:27 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:54450 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932375AbWGIHe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jul 2006 03:34:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060709073424.GAXN554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 9 Jul 2006 03:34:24 -0400
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1152421230.2103.31.camel@dv> (Pavel Roskin's message of "Sun, 09
-	Jul 2006 01:00:30 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161118AbWGIHgH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 03:36:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbWGIHgH
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 03:36:07 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:10436 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932402AbWGIHgF
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 03:36:05 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1FzTpk-0007zs-KY
+	for git@vger.kernel.org; Sun, 09 Jul 2006 03:36:04 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1FzTpj-0001qy-F7
+	for git@vger.kernel.org; Sun, 09 Jul 2006 03:36:03 -0400
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.7.3 (2.7.3-7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23529>
 
-Pavel Roskin <proski@gnu.org> writes:
+Assorted typo fixes
 
-> Why do you list "recur" twice in all_strategies in the git-merge.sh?
-> The second "recur" should probably be "recursive".
-> ...
-> Test for Python in the git-rebase.sh is probably wrong.  "recur" doesn't
-> need Python - that's the whole point.  In fact, if I build git with
-> NO_PYTHON, TEST fails in t3401-rebase-partial.sh
-
-I noticed them as well but I understand that is why the patch is
-marked as WIP.  I do not mind these details much at this point
-yet.
-
-I think it may make sense, during the development, to make
-git-merge.sh notice an environment GIT_USE_RECUR_FOR_RECURSIVE
-and have it automatically use git-merge-recur when the user and
-scripts ask for recursive.  A preliminary patch (but it was
-tested) is attached.
-
-> I tries to run sparse of the C files, and it complains about two things
-> - variable declarations in the middle of the code (allowed by c99 but
-> not by ANSI C) and incomplete function declarations (no "void").  It's
-> not C++, let's stick to the C standards.
-
-I run, from time to time, with pedantic set of options (that is,
-
-  -O2 -Werror -ansi -pedantic -std=c99 -D_XOPEN_SOURCE=500 -D_BSD_SOURCE
-
-) just for fun, and noticed these problems as well, but left
-them as they are, because I think Johannaes/Alex team would want
-to update the TODO items first and I felt fixing these up at
-this point would give me unnecessary conflicts to resolve.
-
-> I'm attaching a patch that fixes everything except variable
-> declarations.  There are so many of them that it could be done once the
-> code stabilizes a bit.
-
-Exactly.
-
--- >8 --
-recur vs recursive: help testing without touching too many stuff.
-
-During git-merge-recur development, you could set an environment
-variable GIT_USE_RECUR_FOR_RECURSIVE to use WIP recur in place
-of the recursive strategy.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
 ---
-diff --git a/TEST b/TEST
-index d530983..7286e2a 100755
---- a/TEST
-+++ b/TEST
-@@ -1,10 +1,14 @@
- #!/bin/sh -x
-+
- cd t || exit
--./t3400-rebase.sh              "$@" && \
--./t6020-merge-df.sh            "$@" && \
--./t3401-rebase-partial.sh      "$@" && \
--./t6021-merge-criss-cross.sh   "$@" && \
--./t3402-rebase-merge.sh        "$@" && \
--./t6022-merge-rename.sh        "$@" && \
--./t6010-merge-base.sh          "$@" && \
-+GIT_USE_RECUR_FOR_RECURSIVE=LetsTryIt
-+export GIT_USE_RECUR_FOR_RECURSIVE
-+
-+./t3400-rebase.sh              "$@" &&
-+./t6020-merge-df.sh            "$@" &&
-+./t3401-rebase-partial.sh      "$@" &&
-+./t6021-merge-criss-cross.sh   "$@" &&
-+./t3402-rebase-merge.sh        "$@" &&
-+./t6022-merge-rename.sh        "$@" &&
-+./t6010-merge-base.sh          "$@" &&
- :
-diff --git a/git-merge.sh b/git-merge.sh
-index b26ca14..9b68115 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -9,8 +9,13 @@ USAGE='[-n] [--no-commit] [--squash] [-s
- LF='
- '
+This is for "next".  "interopability" didn't make it to "master" yet.
+
+
+ Documentation/SubmittingPatches                    |    2 +-
+ Documentation/cvs-migration.txt                    |    2 +-
+ Documentation/git-diff-files.txt                   |    2 +-
+ Documentation/git-init-db.txt                      |    2 +-
+ Documentation/git-mailsplit.txt                    |    2 +-
+ Documentation/git-merge.txt                        |    2 +-
+ Documentation/git-p4import.txt                     |    4 ++--
+ Documentation/git-pack-redundant.txt               |    2 +-
+ Documentation/git-push.txt                         |    2 +-
+ Documentation/git-repo-config.txt                  |    4 ++--
+ Documentation/git-rev-list.txt                     |    2 +-
+ Documentation/git-tools.txt                        |    2 +-
+ Documentation/git-upload-tar.txt                   |    2 +-
+ Documentation/git.txt                              |    2 +-
+ Documentation/howto/isolate-bugs-with-bisect.txt   |    2 +-
+ .../howto/rebase-from-internal-branch.txt          |    2 +-
+ Documentation/technical/pack-heuristics.txt        |    8 ++++----
+ INSTALL                                            |    4 ++--
+ Makefile                                           |    6 +++---
+ git-cvsserver.perl                                 |   14
++++++++-------
+ server-info.c                                      |    2 +-
+ 21 files changed, 35 insertions(+), 35 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches
+b/Documentation/SubmittingPatches
+index 8601949..90722c2 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -49,7 +49,7 @@ People on the git mailing list need to b
+ comment on the changes you are submitting.  It is important for
+ a developer to be able to "quote" your changes, using standard
+ e-mail tools, so that they may comment on specific portions of
+-your code.  For this reason, all patches should be submited
++your code.  For this reason, all patches should be submitted
+ "inline".  WARNING: Be wary of your MUAs word-wrap
+ corrupting your patch.  Do not cut-n-paste your patch; you can
+ lose tabs that way if you are not careful.
+diff --git a/Documentation/cvs-migration.txt
+b/Documentation/cvs-migration.txt
+index 1fbca83..d2b0bd3 100644
+--- a/Documentation/cvs-migration.txt
++++ b/Documentation/cvs-migration.txt
+@@ -93,7 +93,7 @@ machine where the repository is hosted. 
+ full shell on the machine, there is a restricted shell which only
+allows
+ users to do git pushes and pulls; see gitlink:git-shell[1].
  
--all_strategies='recur recur octopus resolve stupid ours'
--default_twohead_strategies='recur'
-+all_strategies='recursive recur octopus resolve stupid ours'
-+case "${GIT_USE_RECUR_FOR_RECURSIVE}" in
-+'')
-+	default_twohead_strategies=recursive ;;
-+?*)
-+	default_twohead_strategies=recur ;;
-+esac
- default_octopus_strategies='octopus'
- no_trivial_merge_strategies='ours'
- use_strategies=
-@@ -110,6 +115,10 @@ do
- 			strategy="$2"
- 			shift ;;
- 		esac
-+		case "$strategy,${GIT_USE_RECUR_FOR_RECURSIVE}" in
-+		recursive,?*)
-+			strategy=recur ;;
-+		esac
- 		case " $all_strategies " in
- 		*" $strategy "*)
- 			use_strategies="$use_strategies$strategy " ;;
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 2a4c8c8..8c5da72 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -35,7 +35,13 @@ If you would prefer to skip this patch, 
- To restore the original branch and stop rebasing run \"git rebase --abort\".
- "
- unset newbase
--strategy=recur
-+case "${GIT_USE_RECUR_FOR_RECURSIVE}" in
-+'')
-+	strategy=recursive ;;
-+?*)
-+	strategy=recur ;;
-+esac
-+
- do_merge=
- dotest=$GIT_DIR/.dotest-merge
- prec=4
-@@ -198,6 +204,11 @@ do
- 	shift
- done
+-Put all the committers should in the same group, and make the
+repository
++Put all the committers in the same group, and make the repository
+ writable by that group:
  
-+case "$strategy,${GIT_USE_RECUR_FOR_RECURSIVE}" in
-+recursive,?*)
-+	strategy=recur ;;
-+esac
-+
- # Make sure we do not have .dotest
- if test -z "$do_merge"
- then
-@@ -292,7 +303,7 @@ then
- 	exit $?
- fi
+ ------------------------------------------------
+diff --git a/Documentation/git-diff-files.txt
+b/Documentation/git-diff-files.txt
+index 481b8b3..7248b35 100644
+--- a/Documentation/git-diff-files.txt
++++ b/Documentation/git-diff-files.txt
+@@ -37,7 +37,7 @@ omit diff output for unmerged entries an
+ 	commit with these flags.
  
--if test "@@NO_PYTHON@@" && test "$strategy" = "recur"
-+if test "@@NO_PYTHON@@" && test "$strategy" = "recursive"
- then
- 	die 'The recursive merge strategy currently relies on Python,
- which this installation of git was not configured with.  Please consider
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index b70e177..d34c6cf 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -51,7 +51,7 @@ test_expect_success setup '
- '
+ -q::
+-	Remain silent even on nonexisting files
++	Remain silent even on nonexistent files
  
- test_expect_success 'reference merge' '
--	git merge -s recur "reference merge" HEAD master
-+	git merge -s recursive "reference merge" HEAD master
- '
+ Output format
+ -------------
+diff --git a/Documentation/git-init-db.txt
+b/Documentation/git-init-db.txt
+index 8a150d8..0a4fc14 100644
+--- a/Documentation/git-init-db.txt
++++ b/Documentation/git-init-db.txt
+@@ -25,7 +25,7 @@ DESCRIPTION
+ -----------
+ This command creates an empty git repository - basically a `.git`
+directory
+ with subdirectories for `objects`, `refs/heads`, `refs/tags`, and
+-templated files.
++template files.
+ An initial `HEAD` file that references the HEAD of the master branch
+ is also created.
  
- test_expect_success rebase '
+diff --git a/Documentation/git-mailsplit.txt
+b/Documentation/git-mailsplit.txt
+index 209e36b..5a17801 100644
+--- a/Documentation/git-mailsplit.txt
++++ b/Documentation/git-mailsplit.txt
+@@ -25,7 +25,7 @@ OPTIONS
+ 
+ -b::
+ 	If any file doesn't begin with a From line, assume it is a
+-	single mail message instead of signalling error.
++	single mail message instead of signaling error.
+ 
+ -d<prec>::
+ 	Instead of the default 4 digits with leading zeros,
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 4ce799b..bebf30a 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -83,7 +83,7 @@ your local modifications interfere with 
+ stops before touching anything.
+ 
+ So in the above two "failed merge" case, you do not have to
+-worry about lossage of data --- you simply were not ready to do
++worry about loss of data --- you simply were not ready to do
+ a merge, so no merge happened at all.  You may want to finish
+ whatever you were in the middle of doing, and retry the same
+ pull after you are done and ready.
+diff --git a/Documentation/git-p4import.txt
+b/Documentation/git-p4import.txt
+index 0858e5e..ee9e8fa 100644
+--- a/Documentation/git-p4import.txt
++++ b/Documentation/git-p4import.txt
+@@ -128,7 +128,7 @@ Tags
+ A git tag of the form p4/xx is created for every change imported from
+ the Perforce repository where xx is the Perforce changeset number.
+ Therefore after the import you can use git to access any commit by its
+-Perforce number, eg. git show p4/327.
++Perforce number, e.g. git show p4/327.
+ 
+ The tag associated with the HEAD commit is also how `git-p4import`
+ determines if there are new changes to incrementally import from the
+@@ -143,7 +143,7 @@ may delete the tags.
+ 
+ Notes
+ -----
+-You can interrupt the import (eg. ctrl-c) at any time and restart it
++You can interrupt the import (e.g. ctrl-c) at any time and restart it
+ without worry.
+ 
+ Author information is automatically determined by querying the
+diff --git a/Documentation/git-pack-redundant.txt
+b/Documentation/git-pack-redundant.txt
+index 8fb0659..7d54b17 100644
+--- a/Documentation/git-pack-redundant.txt
++++ b/Documentation/git-pack-redundant.txt
+@@ -29,7 +29,7 @@ OPTIONS
+ 
+ 
+ --all::
+-	Processes all packs. Any filenames on the commandline are ignored.
++	Processes all packs. Any filenames on the command line are ignored.
+ 
+ --alt-odb::
+ 	Don't require objects present in packs from alternate object
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index d5b5ca1..56afd64 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -67,7 +67,7 @@ Some short-cut notations are also suppor
+ 
+ -f, \--force::
+ 	Usually, the command refuses to update a remote ref that is
+-	not a descendent of the local ref used to overwrite it.
++	not a descendant of the local ref used to overwrite it.
+ 	This flag disables the check.  This can cause the
+ 	remote repository to lose commits; use it with care.
+ 
+diff --git a/Documentation/git-repo-config.txt
+b/Documentation/git-repo-config.txt
+index cc72fa9..8a1ab61 100644
+--- a/Documentation/git-repo-config.txt
++++ b/Documentation/git-repo-config.txt
+@@ -120,8 +120,8 @@ you can set the filemode to true with
+ % git repo-config core.filemode true
+ ------------
+ 
+-The hypothetic proxy command entries actually have a postfix to discern
+-to what URL they apply. Here is how to change the entry for kernel.org
++The hypothetical proxy command entries actually have a postfix to
+discern
++what URL they apply to. Here is how to change the entry for kernel.org
+ to "ssh".
+ 
+ ------------
+diff --git a/Documentation/git-rev-list.txt
+b/Documentation/git-rev-list.txt
+index 6c370e1..e220842 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -64,7 +64,7 @@ OPTIONS
+ 
+ --objects-edge::
+ 	Similar to `--objects`, but also print the IDs of
+-	excluded commits refixed with a `-` character.  This is
++	excluded commits prefixed with a `-` character.  This is
+ 	used by `git-pack-objects` to build 'thin' pack, which
+ 	records objects in deltified form based on objects
+ 	contained in these excluded commits to reduce network
+diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
+index d79523f..0914cbb 100644
+--- a/Documentation/git-tools.txt
++++ b/Documentation/git-tools.txt
+@@ -42,7 +42,7 @@ History Viewers
+ 
+    - *gitk* (shipped with git-core)
+ 
+-   gitk is a simple TK GUI for browsing history of GIT repositories
+easily.
++   gitk is a simple Tk GUI for browsing history of GIT repositories
+easily.
+ 
+ 
+    - *gitview*  (contrib/)
+diff --git a/Documentation/git-upload-tar.txt
+b/Documentation/git-upload-tar.txt
+index a1019a0..394af62 100644
+--- a/Documentation/git-upload-tar.txt
++++ b/Documentation/git-upload-tar.txt
+@@ -17,7 +17,7 @@ to the other end over the git protocol.
+ 
+ This command is usually not invoked directly by the end user.
+ The UI for the protocol is on the 'git-tar-tree' side, and the
+-program pair is meant to be used to get a tar achive from a
++program pair is meant to be used to get a tar archive from a
+ remote repository.
+ 
+ 
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 51f20c6..d00cc3e 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -478,7 +478,7 @@ Configuration Mechanism
+ 
+ Starting from 0.99.9 (actually mid 0.99.8.GIT), `.git/config` file
+ is used to hold per-repository configuration options.  It is a
+-simple text file modelled after `.ini` format familiar to some
++simple text file modeled after `.ini` format familiar to some
+ people.  Here is an example:
+ 
+ ------------
+diff --git a/Documentation/howto/isolate-bugs-with-bisect.txt
+b/Documentation/howto/isolate-bugs-with-bisect.txt
+index edbcd4c..926bbdc 100644
+--- a/Documentation/howto/isolate-bugs-with-bisect.txt
++++ b/Documentation/howto/isolate-bugs-with-bisect.txt
+@@ -28,7 +28,7 @@ Then do
+ 
+ and at this point "git bisect" will churn for a while, and tell you
+what 
+ the mid-point between those two commits are, and check that state out
+as 
+-the head of the bew "bisect" branch.
++the head of the new "bisect" branch.
+ 
+ Compile and reboot.
+ 
+diff --git a/Documentation/howto/rebase-from-internal-branch.txt
+b/Documentation/howto/rebase-from-internal-branch.txt
+index c2d4a91..fcd64e9 100644
+--- a/Documentation/howto/rebase-from-internal-branch.txt
++++ b/Documentation/howto/rebase-from-internal-branch.txt
+@@ -124,7 +124,7 @@ up your changes, along with other change
+ 
+ The two commits #2' and #3' in the above picture record the same
+ changes your e-mail submission for #2 and #3 contained, but
+-probably with the new sign-off line added by the upsteam
++probably with the new sign-off line added by the upstream
+ maintainer and definitely with different committer and ancestry
+ information, they are different objects from #2 and #3 commits.
+ 
+diff --git a/Documentation/technical/pack-heuristics.txt
+b/Documentation/technical/pack-heuristics.txt
+index 9aadd5c..103eb5d 100644
+--- a/Documentation/technical/pack-heuristics.txt
++++ b/Documentation/technical/pack-heuristics.txt
+@@ -73,7 +73,7 @@ The traditional insight:
+ 
+     <pasky> yes
+ 
+-And Bable-like confusion flowed.
++And Babel-like confusion flowed.
+ 
+     <njs`> oh, hmm, and I'm not sure what this sliding window means
+either
+ 
+@@ -257,7 +257,7 @@ proclaim it a non-issue.  Good style too
+         (type, basename, size)).
+ 
+         Then we walk through this list, and calculate a delta of
+-        each object against the last n (tunable paramater) objects,
++        each object against the last n (tunable parameter) objects,
+         and pick the smallest of these deltas.
+ 
+ Vastly simplified, but the essence is there!
+@@ -395,7 +395,7 @@ used as setup for a later optimization, 
+         do "object name->location in packfile" translation.
+ 
+     <njs`> I'm assuming the real win for delta-ing large->small is
+-        more homogenous statistics for gzip to run over?
++        more homogeneous statistics for gzip to run over?
+ 
+         (You have to put the bytes in one place or another, but
+         putting them in a larger blob wins on compression)
+@@ -448,7 +448,7 @@ design options, etc.
+ 
+         Bugs happen, but they are "simple" bugs. And bugs that
+         actually get some object store detail wrong are almost always
+-        so obious that they never go anywhere.
++        so obvious that they never go anywhere.
+ 
+     <njs`> Yeah.
+ 
+diff --git a/INSTALL b/INSTALL
+index 4e8f883..4cf7e67 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -57,7 +57,7 @@ Issues of note:
+ 
+ 	- "libcurl" and "curl" executable.  git-http-fetch and
+ 	  git-fetch use them.  If you do not use http
+-	  transfer, you are probabaly OK if you do not have
++	  transfer, you are probably OK if you do not have
+ 	  them.
+ 
+ 	- expat library; git-http-push uses it for remote lock
+@@ -82,7 +82,7 @@ Issues of note:
+ 	  git, and if you only use git to track other peoples work you'll
+ 	  never notice the lack of it. 
+ 
+-        - "wish", the TCL/Tk windowing shell is used in gitk to show
+the
++        - "wish", the Tcl/Tk windowing shell is used in gitk to show
+the
+           history graphically
+ 
+ 	- "ssh" is used to push and pull over the net
+diff --git a/Makefile b/Makefile
+index 8d429a0..fd35dbe 100644
+--- a/Makefile
++++ b/Makefile
+@@ -28,7 +28,7 @@ #
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic
+link.
+ # Enable it on Windows.  By default, symrefs are still used.
+ #
+-# Define NO_SVN_TESTS if you want to skip time-consuming SVN
+interopability
++# Define NO_SVN_TESTS if you want to skip time-consuming SVN
+interoperability
+ # tests.  These tests take up a significant amount of the total test
+time
+ # but are not needed unless you plan to talk to SVN repos.
+ #
+@@ -67,7 +67,7 @@ #
+ # Define NO_ACCURATE_DIFF if your diff program at least sometimes
+misses
+ # a missing newline at the end of the file.
+ #
+-# Define NO_PYTHON if you want to loose all benefits of the recursive
+merge.
++# Define NO_PYTHON if you want to lose all benefits of the recursive
+merge.
+ #
+ # Define COLLISION_CHECK below if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give
+you
+@@ -492,7 +492,7 @@ ifdef NO_ACCURATE_DIFF
+ 	BASIC_CFLAGS += -DNO_ACCURATE_DIFF
+ endif
+ 
+-# Shell quote (do not use $(call) to accomodate ancient setups);
++# Shell quote (do not use $(call) to accommodate ancient setups);
+ 
+ SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
+ 
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 5ccca4f..c30ef70 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -779,7 +779,7 @@ sub req_update
+ 
+     #$log->debug("update state : " . Dumper($state));
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @{$state->{args}} )
+     {
+         $filename = filecleanup($filename);
+@@ -1031,7 +1031,7 @@ sub req_ci
+ 
+     my @committedfiles = ();
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @{$state->{args}} )
+     {
+         my $committedfile = $filename;
+@@ -1145,7 +1145,7 @@ sub req_ci
+ 
+     $updater->update();
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @committedfiles )
+     {
+         $filename = filecleanup($filename);
+@@ -1190,7 +1190,7 @@ sub req_status
+     # if no files were specified, we need to work out what files we
+should be providing status on ...
+     argsfromdir($updater);
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @{$state->{args}} )
+     {
+         $filename = filecleanup($filename);
+@@ -1291,7 +1291,7 @@ sub req_diff
+     # if no files were specified, we need to work out what files we
+should be providing status on ...
+     argsfromdir($updater);
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @{$state->{args}} )
+     {
+         $filename = filecleanup($filename);
+@@ -1433,7 +1433,7 @@ sub req_log
+     # if no files were specified, we need to work out what files we
+should be providing status on ...
+     argsfromdir($updater);
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @{$state->{args}} )
+     {
+         $filename = filecleanup($filename);
+@@ -1519,7 +1519,7 @@ sub req_annotate
+ 
+     chdir $tmpdir;
+ 
+-    # foreach file specified on the commandline ...
++    # foreach file specified on the command line ...
+     foreach my $filename ( @{$state->{args}} )
+     {
+         $filename = filecleanup($filename);
+diff --git a/server-info.c b/server-info.c
+index 0eb5132..fdfe05a 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -94,7 +94,7 @@ static int read_pack_info_file(const cha
+ 
+ 	fp = fopen(infofile, "r");
+ 	if (!fp)
+-		return 1; /* nonexisting is not an error. */
++		return 1; /* nonexistent is not an error. */
+ 
+ 	while (fgets(line, sizeof(line), fp)) {
+ 		int len = strlen(line);
+
+-- 
+Regards,
+Pavel Roskin
