@@ -1,67 +1,58 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: RFH: refactor read-tree
-Date: Mon, 10 Jul 2006 00:17:53 +0200
-Message-ID: <20060709221753.GB6966@steel.home>
-References: <Pine.LNX.4.63.0607090015250.29667@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0607082011060.5623@g5.osdl.org> <20060709124324.GE5919@steel.home> <Pine.LNX.4.63.0607091630110.29667@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0607090827430.5623@g5.osdl.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC+PATCH 1/1] Move SCM interoperability tools into scm/
+Date: Mon, 10 Jul 2006 00:21:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607100018380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11524258261798-git-send-email-ryan@michonline.com>
+ <46a038f90607091426u5a6ea328h2090a876e51725ce@mail.gmail.com>
+ <20060709221326.GU29115@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 00:18:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 00:21:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzhbS-00042d-TA
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 00:18:15 +0200
+	id 1Fzhep-0004TI-Fs
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 00:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161189AbWGIWSM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 18:18:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161191AbWGIWSM
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 18:18:12 -0400
-Received: from mailout08.sul.t-online.com ([194.25.134.20]:60324 "EHLO
-	mailout08.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1161189AbWGIWSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jul 2006 18:18:11 -0400
-Received: from fwd33.aul.t-online.de 
-	by mailout08.sul.t-online.com with smtp 
-	id 1FzhbJ-0003IR-01; Mon, 10 Jul 2006 00:18:05 +0200
-Received: from tigra.home (T5fF+0ZHgeWPFiYMGfaWkpUhHOJXulhhAI+OIMtG+5COO5NCLR21UK@[84.160.121.31]) by fwd33.sul.t-online.de
-	with esmtp id 1Fzhb9-1zCjb60; Mon, 10 Jul 2006 00:17:55 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 77DCC277AF;
-	Mon, 10 Jul 2006 00:17:54 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1Fzhb7-0003sJ-Pt; Mon, 10 Jul 2006 00:17:53 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0607090827430.5623@g5.osdl.org>
-User-Agent: Mutt/1.5.6i
-X-ID: T5fF+0ZHgeWPFiYMGfaWkpUhHOJXulhhAI+OIMtG+5COO5NCLR21UK
-X-TOI-MSGID: 3f00fa25-399c-4249-a024-1e7d35e4c7b6
+	id S1161193AbWGIWVk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 18:21:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161194AbWGIWVk
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 18:21:40 -0400
+Received: from mail.gmx.de ([213.165.64.21]:31167 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161193AbWGIWVk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 18:21:40 -0400
+Received: (qmail invoked by alias); 09 Jul 2006 22:21:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp032) with SMTP; 10 Jul 2006 00:21:38 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060709221326.GU29115@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23571>
 
-Linus Torvalds, Sun, Jul 09, 2006 17:30:26 +0200:
-> > > > The basic idea is that "branch1" should be your current branch, and it 
-> > > > obviously is also expected to match (more or less) the current index. So 
-> > > > you can do a merge by
-> > > > 
-> > > >  - reading in "branch1" into the index:
-> > > > 
-> > > > 	GIT_INDEX_FILE=.git/tmp-index git-read-tree -m branch1
-> > > 
-> > > what is "-m" here for?
-> > 
-> > It means that git-read-tree tries to merge the current index with branch1.
+Hi,
+
+On Mon, 10 Jul 2006, Petr Baudis wrote:
+
+> Dear diary, on Sun, Jul 09, 2006 at 11:26:59PM CEST, I got a letter
+> where Martin Langhoff <martin.langhoff@gmail.com> said that...
+> > So I have to ask... what are the expected benefits of the move?
 > 
-> Well, the current index always "merges" by just taking the timestamps from 
-> it. The actual _content_ doesn't matter for the single-tree case.
+> I've been meaning to do something like this for some time already; my
+> itch have been the builtins. The tree size _is_ getting out of hand and
+> a little more categorization of the sources would certainly help.
 
-But the name suggests it's a temporary index, which would not have
-anything in it and even the .git/tmp-index is not supposed to exist.
-So I'd actually understand this as creating an index from the tree-ish
-branch1, without merging anything. And continue wondering what that -m
-is for...
+Funny. I thought the builtin-* prefix, and the *.sh and *.perl extensions 
+were there for the sake of categorization.
+
+And I disagree on the "out of hand" thing.
+
+Ciao,
+Dscho
