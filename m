@@ -1,71 +1,57 @@
-From: Michal Rokos <michal.rokos@nextsoft.cz>
-Subject: Re: [Patch] Using 'perl' in *.sh
-Date: Sun, 9 Jul 2006 14:41:15 +0200
-Organization: NextSoft
-Message-ID: <200607091441.16161.michal.rokos@nextsoft.cz>
-References: <200607081732.04273.michal.rokos@nextsoft.cz> <20060709095114.GQ22573@lug-owl.de> <7vd5cfnkz4.fsf@assigned-by-dhcp.cox.net>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: RFH: refactor read-tree
+Date: Sun, 9 Jul 2006 14:43:24 +0200
+Message-ID: <20060709124324.GE5919@steel.home>
+References: <Pine.LNX.4.63.0607090015250.29667@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0607082011060.5623@g5.osdl.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 09 14:41:42 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 09 14:43:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzYbL-0004f1-RS
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 14:41:32 +0200
+	id 1FzYdM-0004sh-4L
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 14:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030473AbWGIMl1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 9 Jul 2006 08:41:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030475AbWGIMl1
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 08:41:27 -0400
-Received: from s3.icr.cz ([82.142.72.7]:23527 "EHLO s3.icr.cz")
-	by vger.kernel.org with ESMTP id S1030473AbWGIMl0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 08:41:26 -0400
-Received: (from root@localhost)
-	by s3.icr.cz (8.11.4/8.11.4) id k69CfHV10109;
-	Sun, 9 Jul 2006 14:41:17 +0200
-Received: from michal.rokos.cz (mx1.evangnet.cz [88.83.237.35] (may be forged))
-	by s3.icr.cz (8.11.4/8.11.4) with ESMTP id k69CfGS10069;
-	Sun, 9 Jul 2006 14:41:16 +0200
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vd5cfnkz4.fsf@assigned-by-dhcp.cox.net>
-X-scanner: scanned by Inflex 1.0.10 - (http://pldaniels.com/inflex/)
+	id S1030477AbWGIMnd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 08:43:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030479AbWGIMnd
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 08:43:33 -0400
+Received: from mailout10.sul.t-online.com ([194.25.134.21]:459 "EHLO
+	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1030477AbWGIMnc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jul 2006 08:43:32 -0400
+Received: from fwd34.aul.t-online.de 
+	by mailout10.sul.t-online.com with smtp 
+	id 1FzYdD-0007uP-06; Sun, 09 Jul 2006 14:43:27 +0200
+Received: from tigra.home (r4+CKcZerePrABSpvMWq-HRd0SWQN7GUDPSi19V3+KYLYIjYSn64QX@[84.160.119.250]) by fwd34.sul.t-online.de
+	with esmtp id 1FzYdB-1e65qa0; Sun, 9 Jul 2006 14:43:25 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B7313277AF;
+	Sun,  9 Jul 2006 14:43:24 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1FzYdA-0002Ct-FY; Sun, 09 Jul 2006 14:43:24 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0607082011060.5623@g5.osdl.org>
+User-Agent: Mutt/1.5.6i
+X-ID: r4+CKcZerePrABSpvMWq-HRd0SWQN7GUDPSi19V3+KYLYIjYSn64QX
+X-TOI-MSGID: dd7c5b05-6002-4bb6-a1a1-c587b49acffd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23548>
 
-Hello,
+Linus Torvalds, Sun, Jul 09, 2006 05:15:41 +0200:
+> The basic idea is that "branch1" should be your current branch, and it 
+> obviously is also expected to match (more or less) the current index. So 
+> you can do a merge by
+> 
+>  - reading in "branch1" into the index:
+> 
+> 	GIT_INDEX_FILE=.git/tmp-index git-read-tree -m branch1
 
-On Sunday 09 July 2006 12:14, Junio C Hamano wrote:
-> Michal, is there a reason you do not want to have the version of
-> perl you teach git tools via #! lines with PERL_PATH on your $PATH?
-
-I have no problem with that. I can set $PATH.
-But then I'd suggest to change magic #!
-from #!/usr/bin/perl
-to #!/usr/bin/env perl
-for *.perl
-
-It that what you meant?
-
-M.
-
-PS: Please note that
-#!/usr/bin/env perl -w
-will not work on some platforms (at least on HP-UX)...
---=20
-Michal Rokos
-
-NextSoft s.r.o.
-Vysko=C4=8Dilova 1/1410
-140 21 Praha 4
-phone:  +420 267 224 311
-fax:    +420 267 224 307
-mobile: +420 736 646 591
-e-mail: michal.rokos@nextsoft.cz
+what is "-m" here for?
