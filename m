@@ -1,82 +1,70 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] change ent to tree in git-diff documentation
-Date: Sun, 9 Jul 2006 11:59:39 +0200
-Message-ID: <E1FzW4h-00058M-3u@moooo.ath.cx>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: Re: [Patch] Using 'perl' in *.sh
+Date: Sun, 9 Jul 2006 10:09:30 +0000
+Message-ID: <f36b08ee0607090309l3cc05b19t44781bbe26013a0b@mail.gmail.com>
+References: <200607081732.04273.michal.rokos@nextsoft.cz>
+	 <7v3bdcq7dy.fsf@assigned-by-dhcp.cox.net>
+	 <20060709094630.GB5919@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jul 09 11:59:55 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Michal Rokos" <michal.rokos@nextsoft.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 09 12:09:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzW4p-0004c9-OF
-	for gcvg-git@gmane.org; Sun, 09 Jul 2006 11:59:48 +0200
+	id 1FzWEI-0005WK-Oj
+	for gcvg-git@gmane.org; Sun, 09 Jul 2006 12:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbWGIJ7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 05:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932182AbWGIJ7n
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 05:59:43 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:62936 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S932160AbWGIJ7n (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 05:59:43 -0400
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+	id S964983AbWGIKJc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 06:09:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965000AbWGIKJc
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 06:09:32 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:11130 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S964983AbWGIKJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jul 2006 06:09:31 -0400
+Received: by py-out-1112.google.com with SMTP id 57so628785pya
+        for <git@vger.kernel.org>; Sun, 09 Jul 2006 03:09:31 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=X2SEN5B8ONWNEJWfpxoy1KLqqTxwG2mkE/N/NYY64deWDbGRBtXoM9z5SSi8ikhLjwsvT5qbpPqvUQMoFQFEDz/U5N8TbprbiM+xou9v3KUJ/Bhbekdfdea9c1jamrLk2LIoGMdlHHVduE919C1wyrZKghPU12SRjoTTFktHKiQ=
+Received: by 10.35.90.20 with SMTP id s20mr3993009pyl;
+        Sun, 09 Jul 2006 03:09:31 -0700 (PDT)
+Received: by 10.35.14.14 with HTTP; Sun, 9 Jul 2006 03:09:30 -0700 (PDT)
+To: "Alex Riesen" <raa.lkml@gmail.com>
+In-Reply-To: <20060709094630.GB5919@steel.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23540>
 
----
-I've sent this patch a while ago and did not get any feedback, so here
-it is again.
-This is quite confusing for someone new to git who is not familiar
-with the vocabulary used with git. I don't think a man page is the
-right place for riddles :)
-Additionaly I changed two times 'is' to 'are', I hope this is correct.
+On 7/9/06, Alex Riesen <fork0@t-online.de> wrote:
+> Junio C Hamano, Sat, Jul 08, 2006 20:27:37 +0200:
+> > >
+> > > some GIT's shell script are using bare 'perl' for perl invocation. It's
+> > > causing me problems... I compile git with PERL_PATH set and I'd suggest to
+> > > use it everywhere.
+> > >
+> > > So @@PERL@@ would be replaced with PERL_PATH_SQ instead.
+> > >
+> > > What do you think?
+> >
+> > Absolutely.
+>
+> Now imagine a non-posix system where an upgrade was made. Amongst
+> other things perl was moved, i.e. from /opt/perl-5.8.8 to
+> /usr/local/{bin,lib}. Suddenly git breaks.
 
- Documentation/git-diff.txt |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+Building new perl for sources never removed,
+by itself, older perls on the system. Did it ever for you ?
+How would installing new perl into new location
+break git ? It would only break if you *remove*
+old perl, not if you install new perl into new
+location, no ?
 
-83ace740fdf1e064168f8438a6ad863986cf4832
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 890931c..41d85cf 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -8,24 +8,24 @@ git-diff - Show changes between commits,
- 
- SYNOPSIS
- --------
--'git-diff' [ --diff-options ] <ent>{0,2} [<path>...]
-+'git-diff' [ --diff-options ] <tree-ish>{0,2} [<path>...]
- 
- DESCRIPTION
- -----------
--Show changes between two ents, an ent and the working tree, an
--ent and the index file, or the index file and the working tree.
-+Show changes between two trees, a tree and the working tree, a
-+tree and the index file, or the index file and the working tree.
- The combination of what is compared with what is determined by
--the number of ents given to the command.
-+the number of trees given to the command.
- 
--* When no <ent> is given, the working tree and the index
--  file is compared, using `git-diff-files`.
-+* When no <tree-ish> is given, the working tree and the index
-+  file are compared, using `git-diff-files`.
- 
--* When one <ent> is given, the working tree and the named
--  tree is compared, using `git-diff-index`.  The option
-+* When one <tree-ish> is given, the working tree and the named
-+  tree are compared, using `git-diff-index`.  The option
-   `--cached` can be given to compare the index file and
-   the named tree.
- 
--* When two <ent>s are given, these two trees are compared
-+* When two <tree-ish>s are given, these two trees are compared
-   using `git-diff-tree`.
- 
- OPTIONS
--- 
-1.3.1.g9af0
-
+Yakov
