@@ -1,78 +1,87 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git-log to go forward instead of reverse?
-Date: 10 Jul 2006 12:25:33 -0700
-Message-ID: <86mzbhntxu.fsf@blue.stonehenge.com>
-References: <86bqrxpai1.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0607101151470.5623@g5.osdl.org>
-	<863bd9p9en.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0607101212410.5623@g5.osdl.org>
+Date: Mon, 10 Jul 2006 12:26:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607101221170.5623@g5.osdl.org>
+References: <86bqrxpai1.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0607101151470.5623@g5.osdl.org>
+ <863bd9p9en.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0607101212410.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 21:26:04 2006
+X-From: git-owner@vger.kernel.org Mon Jul 10 21:26:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G01Ny-0007c8-FJ
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:25:39 +0200
+	id 1G01Oo-0007lX-HA
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422794AbWGJTZf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 15:25:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422795AbWGJTZf
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:25:35 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:19276 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1422794AbWGJTZe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jul 2006 15:25:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 275838F36C;
-	Mon, 10 Jul 2006 12:25:34 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 30449-01-9; Mon, 10 Jul 2006 12:25:33 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 874438F36E; Mon, 10 Jul 2006 12:25:33 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-x-mayan-date: Long count = 12.19.13.8.4; tzolkin = 1 Kan; haab = 17 Tzec
+	id S1422795AbWGJT01 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 15:26:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422798AbWGJT01
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:26:27 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:35002 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422797AbWGJT00 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 15:26:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6AJQPnW031395
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 10 Jul 2006 12:26:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6AJQNVF015609;
+	Mon, 10 Jul 2006 12:26:24 -0700
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 In-Reply-To: <Pine.LNX.4.64.0607101212410.5623@g5.osdl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23643>
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
 
->> Wow.  Yes, I think I can live with that for the application.
 
-Linus> It's a big deal for me, I often end up doing things like
+On Mon, 10 Jul 2006, Linus Torvalds wrote:
+> 
+> The difference between getting the first screenful in 0.054 seconds versus 
+> it taking 2.218 seconds is quite noticeable, and one of the things I've 
+> actually spent a fair amount of time on is to make sure that the 
+> incremental output case is the _common_ one for all the normal operations 
+> like "git log -p".
 
-Linus> 	git log -p some-random-file
+Side note: the good news is that even with the reverse generation, if you 
+also generate _diffs_, the diffs will be generated incrementally, so:
 
-Linus> to see what has happened, and getting the most recent changes basically 
-Linus> instantaneously (rather than waiting for the thing to traverse all of the 
-Linus> history) is a big deal.
+	// Full "git log" with diffs
+	[torvalds@g5 linux]$ time git log -p drivers/serial > /dev/null 
 
-Well, this is for a "I'm connected to the net right now: please
-refresh all of my git mirrors" script:
+	real    0m3.409s
+	user    0m3.360s
+	sys     0m0.052s
 
-        ## (code here to cd to the right dir omitted)
-                git-fetch
-                if git-status | grep -v 'nothing to commit'
-                then echo UPDATE SKIPPED
-                else
-                    if git-pull . origin | egrep -v 'up-to-date'
-                    then git-log --pretty=short ORIG_HEAD..HEAD | cat
-                    fi
-                fi
+	// First screenful of reverse git log with diffs
+	[torvalds@g5 linux]$ time git log -p --reverse drivers/serial | head -25 > /dev/null 
+	
+	real    0m2.228s
+	user    0m2.216s
+	sys     0m0.012s
 
-The log is just so I can quickly eyeball the interesting changes.  The "cat"
-is to keep git-log from starting a pager.  (If there's a switch that does
-*that* that I've overlooked, that'd be good too.)
+	// First screenful of regular git log with diffs
+	[torvalds@g5 linux]$ time git log -p drivers/serial | head -25 > /dev/null 
+	
+	real    0m0.038s
+	user    0m0.036s
+	sys     0m0.004s
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+here you can see how the full "git log -p" is obviously more expensive 
+than the full "git log" was (the diff generation adds about a second to 
+the full time), but because the diffs are generated incrementally as they 
+are shown even with "--reverse", the first screenful of the "--reverse" 
+case didn't get any more expensive, because we didn't generate all the 
+diffs up-front, just the ones we needed.
+
+And the first screenfull of the normal case obviously stays really fast, 
+because both history generation _and_ diff generation is all on-the-fly.
+
+			Linus
