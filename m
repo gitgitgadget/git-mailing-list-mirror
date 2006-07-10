@@ -1,59 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: reflog doesn't note that commit was --amend-ed, and doesn't record pulls
-Date: Mon, 10 Jul 2006 23:49:06 +0200
-Organization: At home
-Message-ID: <e8uhvg$5o1$2@sea.gmane.org>
-References: <e8uele$o7t$2@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: can I get only the list of merges?
+Date: Tue, 11 Jul 2006 00:37:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607110035390.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060710192622.70c51a81.diegocg@gmail.com> <E1FzzlS-0003JE-9C@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 10 23:49:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Diego Calleja <diegocg@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 00:37:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G03cm-0000bp-0n
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 23:49:04 +0200
+	id 1G04Nn-0000i1-HH
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 00:37:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965050AbWGJVtA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 17:49:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965062AbWGJVtA
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 17:49:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:56209 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965050AbWGJVs7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 17:48:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G03cU-0000Yn-RA
-	for git@vger.kernel.org; Mon, 10 Jul 2006 23:48:46 +0200
-Received: from host-81-190-19-52.torun.mm.pl ([81.190.19.52])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Jul 2006 23:48:46 +0200
-Received: from jnareb by host-81-190-19-52.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Jul 2006 23:48:46 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-19-52.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965294AbWGJWhg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 18:37:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965295AbWGJWhg
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 18:37:36 -0400
+Received: from mail.gmx.de ([213.165.64.21]:44524 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965294AbWGJWhf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 18:37:35 -0400
+Received: (qmail invoked by alias); 10 Jul 2006 22:37:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 11 Jul 2006 00:37:34 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <E1FzzlS-0003JE-9C@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23662>
 
-Additionally, while reflog records git-reset invocations, it doesn't
-distinguish between an ordinary commit, and commit --amend (which I do
-a lot, most time because of forgotten update-index; yes, I know about commit
--a option ;-). Well, you can extract this information looking at current
-and previous commit sha1, but it would be nice to have it noted somewhat in
-message part of reflog.
+Hi,
 
-Reflog doesn't seem also to record pulls (e.g. master branch): pulls has
-empty reflog message part.
+On Mon, 10 Jul 2006, Matthias Lederhofer wrote:
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> git-rev-list --parents HEAD | \
+> grep -E '^([a-z0-9]{40} ){2}[a-z0-9]{40}' | \
+
+Since the output of git-rev-list is well-defined, you could say
+
+	grep  '.{121}'
+
+instead. (Instead of 121, you could take any number between 83 and 122.)
+
+Ciao,
+Dscho
