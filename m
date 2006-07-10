@@ -1,69 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: can I get only the list of merges?
-Date: Mon, 10 Jul 2006 11:51:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607101145590.5623@g5.osdl.org>
-References: <20060710192622.70c51a81.diegocg@gmail.com> <E1FzzlS-0003JE-9C@moooo.ath.cx>
- <Pine.LNX.4.64.0607101103160.5623@g5.osdl.org>
+From: moreau francis <francis_moreau2000@yahoo.fr>
+Subject: 2 questions on git-send-email usage
+Date: Mon, 10 Jul 2006 19:00:10 +0000 (GMT)
+Message-ID: <20060710190010.94648.qmail@web25808.mail.ukl.yahoo.com>
+Reply-To: moreau francis <francis_moreau2000@yahoo.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Diego Calleja <diegocg@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 20:51:52 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jul 10 21:00:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G00qq-00010D-Dy
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 20:51:26 +0200
+	id 1G00zS-0002bc-91
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422654AbWGJSvV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 14:51:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422665AbWGJSvV
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 14:51:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:30893 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422654AbWGJSvV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 14:51:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6AIpCnW029281
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 10 Jul 2006 11:51:14 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6AIp950014365;
-	Mon, 10 Jul 2006 11:51:10 -0700
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <Pine.LNX.4.64.0607101103160.5623@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422749AbWGJTAN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 15:00:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422761AbWGJTAN
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:00:13 -0400
+Received: from web25808.mail.ukl.yahoo.com ([217.12.10.193]:31362 "HELO
+	web25808.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1422749AbWGJTAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jul 2006 15:00:12 -0400
+Received: (qmail 94650 invoked by uid 60001); 10 Jul 2006 19:00:10 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.fr;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type;
+  b=i0+7o+J5ohGmj2Z5KoZbcuWiV+Isl3p7VtWrat3z8YOUOVygkSS0RaDsTuRHDUkbX5jFEny5nQm4DyUH9NOIldxYlgEuK/mBd6+5StaCQCLWQ2kUM6CvisUQe+apF7W4T33qYq8iLucl9allJ3maqGG3eolc4XVBTA/VcZnQ93U=  ;
+Received: from [82.235.205.153] by web25808.mail.ukl.yahoo.com via HTTP; Mon, 10 Jul 2006 19:00:10 GMT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23637>
 
+Hi
 
+I'm wondering what am I supposed to answer when git-send-email
+is asking me :
 
-On Mon, 10 Jul 2006, Linus Torvalds wrote:
->
-> However, if you want a _sneaky_ way of doing it, and want a graphical 
-> result, and have a recent version of git, you can also just do something 
-> like
-> 
-> 	gitk --full-history -- %%nonexistant-file%%
-> 
-> which will give you each commit that changes that nonexistant file (there 
-> should be none ;), and the full commit history for those (ie all the 
-> merges).
+Message-ID to be used as In-Reply-To for the first email?
 
-Btw, a better way to do the same is probably
+I'm running this command:
 
-	gitk --full-history -- a//b
+$ git-send-email --no-signed-off-by-cc --no-chain-reply-to --to foo@bar.com --compose /tmp/patch/
 
-which is guaranteed to not match any files and doesn't depend on just an 
-_unlikely_ filename. Instead, it depends on the fact that a name with a 
-double slash should not exist in a git archive.
+to write an introductory message, and all patches are sent as replies to
+this introductory email sent.
 
-(There are other possibilities too - instead of "a//a", you can just use 
-the filename ".git", for the same reasons - it definitely won't be tracked 
-by git).
+I also noticed that git-send-email removes the commit message of each
+patches I sent, I don't think this is the normal behaviour though. What 
+am I missing ?
 
-		Linus
+Thanks
+
+Francis
