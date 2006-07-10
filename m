@@ -1,212 +1,70 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb.cgi: Teach "a=blob" action to know the blob/file mime type
-Date: Sun, 9 Jul 2006 20:18:57 -0700 (PDT)
-Message-ID: <20060710031857.59352.qmail@web31812.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1822172250-1152501537=:57770"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Jul 10 05:19:12 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: fix --file/-F option in commit-diff
+Date: Sun,  9 Jul 2006 20:20:48 -0700
+Message-ID: <11525016483767-git-send-email-normalperson@yhbt.net>
+Reply-To: Eric Wong <normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jul 10 05:21:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzmIg-0007xt-S7
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 05:19:11 +0200
+	id 1FzmKQ-0008C7-I3
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 05:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161314AbWGJDS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 23:18:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161316AbWGJDS6
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 23:18:58 -0400
-Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:16745 "HELO
-	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1161314AbWGJDS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jul 2006 23:18:57 -0400
-Received: (qmail 59354 invoked by uid 60001); 10 Jul 2006 03:18:57 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=DjEwqnwr9vZCC2x/5bSoGPggqfX8JDCt7mpbmuHuqwlpnoboNj1omWrHMitxuySrI4YLBtwvUTWglLYe1H9qHJ6326NfjsoKihPD0jpov+y9/DoJBeCTdz6EJ3ej30rfMmMv9csVmwd9v6Y8tezrYxkXdC+xBVkW56nAuwbOkH0=  ;
-Received: from [71.84.27.155] by web31812.mail.mud.yahoo.com via HTTP; Sun, 09 Jul 2006 20:18:57 PDT
-To: git@vger.kernel.org
+	id S1161317AbWGJDUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 23:20:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161318AbWGJDUw
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 23:20:52 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:64203 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1161317AbWGJDUv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 23:20:51 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 2EED57DC021;
+	Sun,  9 Jul 2006 20:20:49 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun,  9 Jul 2006 20:20:49 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.1.gda58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23585>
 
---0-1822172250-1152501537=:57770
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+Also, allow messages from tags to be used as
+commit messages.
 
-Now action "blob" knows the file type: if the file type is
-not "text/*" then action "blob" defaults to "blob_plain",
-i.e. the file is downloaded raw for the browser to interpret.
-If the file type is "text/*", then "blob" defaults to the
-current "cat -n"-like output, from which you can click
-"plain", to get the "blob_plain" output.
-
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- gitweb/gitweb.cgi |  127 ++++++++++++++++++++++++++++-------------------------
- 1 files changed, 67 insertions(+), 60 deletions(-)
+ contrib/git-svn/git-svn.perl |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
---0-1822172250-1152501537=:57770
-Content-Type: application/octet-stream; name="blob.patch"
-Content-Transfer-Encoding: base64
-Content-Description: 2862520298-blob.patch
-Content-Disposition: attachment; filename="blob.patch"
-
-ZGlmZiAtLWdpdCBhL2dpdHdlYi9naXR3ZWIuY2dpIGIvZ2l0d2ViL2dpdHdl
-Yi5jZ2kKaW5kZXggM2UyNzkwYy4uMWU2MWFlNiAxMDA3NTUKLS0tIGEvZ2l0
-d2ViL2dpdHdlYi5jZ2kKKysrIGIvZ2l0d2ViL2dpdHdlYi5jZ2kKQEAgLTE0
-NTUsNjEgKzE0NTUsNiBAQCBzdWIgZ2l0X2dldF9oYXNoX2J5X3BhdGggewog
-CX0KIH0KIAotc3ViIGdpdF9ibG9iIHsKLQlpZiAoIWRlZmluZWQgJGhhc2gg
-JiYgZGVmaW5lZCAkZmlsZV9uYW1lKSB7Ci0JCW15ICRiYXNlID0gJGhhc2hf
-YmFzZSB8fCBnaXRfcmVhZF9oZWFkKCRwcm9qZWN0KTsKLQkJJGhhc2ggPSBn
-aXRfZ2V0X2hhc2hfYnlfcGF0aCgkYmFzZSwgJGZpbGVfbmFtZSwgImJsb2Ii
-KSB8fCBkaWVfZXJyb3IodW5kZWYsICJFcnJvciBsb29rdXAgZmlsZS4iKTsK
-LQl9Ci0JbXkgJGhhdmVfYmxhbWUgPSBnaXRfZ2V0X3Byb2plY3RfY29uZmln
-X2Jvb2wgKCdibGFtZScpOwotCW9wZW4gbXkgJGZkLCAiLXwiLCAiJGdpdGJp
-bi9naXQtY2F0LWZpbGUgYmxvYiAkaGFzaCIgb3IgZGllX2Vycm9yKHVuZGVm
-LCAiT3BlbiBmYWlsZWQuIik7Ci0JZ2l0X2hlYWRlcl9odG1sKCk7Ci0JaWYg
-KGRlZmluZWQgJGhhc2hfYmFzZSAmJiAobXkgJWNvID0gZ2l0X3JlYWRfY29t
-bWl0KCRoYXNoX2Jhc2UpKSkgewotCQlwcmludCAiPGRpdiBjbGFzcz1cInBh
-Z2VfbmF2XCI+XG4iIC4KLQkJICAgICAgJGNnaS0+YSh7LWhyZWYgPT4gIiRt
-eV91cmk/IiAuIGVzY19wYXJhbSgicD0kcHJvamVjdDthPXN1bW1hcnkiKX0s
-ICJzdW1tYXJ5IikgLgotCQkgICAgICAiIHwgIiAuICRjZ2ktPmEoey1ocmVm
-ID0+ICIkbXlfdXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1zaG9y
-dGxvZyIpfSwgInNob3J0bG9nIikgLgotCQkgICAgICAiIHwgIiAuICRjZ2kt
-PmEoey1ocmVmID0+ICIkbXlfdXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2pl
-Y3Q7YT1sb2ciKX0sICJsb2ciKSAuCi0JCSAgICAgICIgfCAiIC4gJGNnaS0+
-YSh7LWhyZWYgPT4gIiRteV91cmk/IiAuIGVzY19wYXJhbSgicD0kcHJvamVj
-dDthPWNvbW1pdDtoPSRoYXNoX2Jhc2UiKX0sICJjb21taXQiKSAuCi0JCSAg
-ICAgICIgfCAiIC4gJGNnaS0+YSh7LWhyZWYgPT4gIiRteV91cmk/IiAuIGVz
-Y19wYXJhbSgicD0kcHJvamVjdDthPWNvbW1pdGRpZmY7aD0kaGFzaF9iYXNl
-Iil9LCAiY29tbWl0ZGlmZiIpIC4KLQkJICAgICAgIiB8ICIgLiAkY2dpLT5h
-KHstaHJlZiA9PiAiJG15X3VyaT8iIC4gZXNjX3BhcmFtKCJwPSRwcm9qZWN0
-O2E9dHJlZTtoPSRjb3sndHJlZSd9O2hiPSRoYXNoX2Jhc2UiKX0sICJ0cmVl
-IikgLiAiPGJyLz5cbiI7Ci0JCWlmIChkZWZpbmVkICRmaWxlX25hbWUpIHsK
-LQkJCWlmICgkaGF2ZV9ibGFtZSkgewotCQkJCXByaW50ICRjZ2ktPmEoey1o
-cmVmID0+ICIkbXlfdXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1i
-bGFtZTtoPSRoYXNoO2hiPSRoYXNoX2Jhc2U7Zj0kZmlsZV9uYW1lIil9LCAi
-YmxhbWUiKSAuICAiIHwgIjsKLQkJCX0KLQkJCXByaW50ICRjZ2ktPmEoey1o
-cmVmID0+ICIkbXlfdXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1i
-bG9iX3BsYWluO2g9JGhhc2g7Zj0kZmlsZV9uYW1lIil9LCAicGxhaW4iKSAu
-Ci0JCQkiIHwgIiAuICRjZ2ktPmEoey1ocmVmID0+ICIkbXlfdXJpPyIgLiBl
-c2NfcGFyYW0oInA9JHByb2plY3Q7YT1ibG9iO2hiPUhFQUQ7Zj0kZmlsZV9u
-YW1lIil9LCAiaGVhZCIpIC4gIjxici8+XG4iOwotCQl9IGVsc2UgewotCQkJ
-cHJpbnQgJGNnaS0+YSh7LWhyZWYgPT4gIiRteV91cmk/IiAuIGVzY19wYXJh
-bSgicD0kcHJvamVjdDthPWJsb2JfcGxhaW47aD0kaGFzaCIpfSwgInBsYWlu
-IikgLiAiPGJyLz5cbiI7Ci0JCX0KLQkJcHJpbnQgIjwvZGl2PlxuIi4KLQkJ
-ICAgICAgICI8ZGl2PiIgLgotCQkgICAgICAkY2dpLT5hKHstaHJlZiA9PiAi
-JG15X3VyaT8iIC4gZXNjX3BhcmFtKCJwPSRwcm9qZWN0O2E9Y29tbWl0O2g9
-JGhhc2hfYmFzZSIpLCAtY2xhc3MgPT4gInRpdGxlIn0sIGVzY19odG1sKCRj
-b3sndGl0bGUnfSkpIC4KLQkJICAgICAgIjwvZGl2PlxuIjsKLQl9IGVsc2Ug
-ewotCQlwcmludCAiPGRpdiBjbGFzcz1cInBhZ2VfbmF2XCI+XG4iIC4KLQkJ
-ICAgICAgIjxici8+PGJyLz48L2Rpdj5cbiIgLgotCQkgICAgICAiPGRpdiBj
-bGFzcz1cInRpdGxlXCI+JGhhc2g8L2Rpdj5cbiI7Ci0JfQotCWlmIChkZWZp
-bmVkICRmaWxlX25hbWUpIHsKLQkJcHJpbnQgIjxkaXYgY2xhc3M9XCJwYWdl
-X3BhdGhcIj48Yj4iIC4gZXNjX2h0bWwoJGZpbGVfbmFtZSkgLiAiPC9iPjwv
-ZGl2PlxuIjsKLQl9Ci0JcHJpbnQgIjxkaXYgY2xhc3M9XCJwYWdlX2JvZHlc
-Ij5cbiI7Ci0JbXkgJG5yOwotCXdoaWxlIChteSAkbGluZSA9IDwkZmQ+KSB7
-Ci0JCWNob21wICRsaW5lOwotCQkkbnIrKzsKLQkJd2hpbGUgKChteSAkcG9z
-ID0gaW5kZXgoJGxpbmUsICJcdCIpKSAhPSAtMSkgewotCQkJaWYgKG15ICRj
-b3VudCA9ICg4IC0gKCRwb3MgJSA4KSkpIHsKLQkJCQlteSAkc3BhY2VzID0g
-JyAnIHggJGNvdW50OwotCQkJCSRsaW5lID1+IHMvXHQvJHNwYWNlcy87Ci0J
-CQl9Ci0JCX0KLQkJcHJpbnRmICI8ZGl2IGNsYXNzPVwicHJlXCI+PGEgaWQ9
-XCJsJWlcIiBocmVmPVwiI2wlaVwiIGNsYXNzPVwibGluZW5yXCI+JTRpPC9h
-PiAlczwvZGl2PlxuIiwgJG5yLCAkbnIsICRuciwgZXNjX2h0bWwoJGxpbmUp
-OwotCX0KLQljbG9zZSAkZmQgb3IgcHJpbnQgIlJlYWRpbmcgYmxvYiBmYWls
-ZWQuXG4iOwotCXByaW50ICI8L2Rpdj4iOwotCWdpdF9mb290ZXJfaHRtbCgp
-OwotfQotCiBzdWIgbWltZXR5cGVfZ3Vlc3NfZmlsZSB7CiAJbXkgJGZpbGVu
-YW1lID0gc2hpZnQ7CiAJbXkgJG1pbWVtYXAgPSBzaGlmdDsKQEAgLTE1NDgs
-MTQgKzE0OTMsMTQgQEAgc3ViIGdpdF9ibG9iX3BsYWluX21pbWV0eXBlIHsK
-IAlteSAkZmQgPSBzaGlmdDsKIAlteSAkZmlsZW5hbWUgPSBzaGlmdDsKIAot
-CSMganVzdCBpbiBjYXNlCi0JcmV0dXJuICRkZWZhdWx0X2Jsb2JfcGxhaW5f
-bWltZXR5cGUgdW5sZXNzICRmZDsKLQogCWlmICgkZmlsZW5hbWUpIHsKIAkJ
-bXkgJG1pbWUgPSBtaW1ldHlwZV9ndWVzcygkZmlsZW5hbWUpOwogCQkkbWlt
-ZSBhbmQgcmV0dXJuICRtaW1lOwogCX0KIAorCSMganVzdCBpbiBjYXNlCisJ
-cmV0dXJuICRkZWZhdWx0X2Jsb2JfcGxhaW5fbWltZXR5cGUgdW5sZXNzICRm
-ZDsKKwogCWlmICgtVCAkZmQpIHsKIAkJcmV0dXJuICd0ZXh0L3BsYWluJyAu
-CiAJCSAgICAgICAoJGRlZmF1bHRfdGV4dF9wbGFpbl9jaGFyc2V0ID8gJzsg
-Y2hhcnNldD0nLiRkZWZhdWx0X3RleHRfcGxhaW5fY2hhcnNldCA6ICcnKTsK
-QEAgLTE1NzMsOCArMTUxOCwxMCBAQCBzdWIgZ2l0X2Jsb2JfcGxhaW5fbWlt
-ZXR5cGUgewogfQogCiBzdWIgZ2l0X2Jsb2JfcGxhaW4gewotCW9wZW4gbXkg
-JGZkLCAiLXwiLCAiJGdpdGJpbi9naXQtY2F0LWZpbGUgYmxvYiAkaGFzaCIg
-b3IgcmV0dXJuOwotCW15ICR0eXBlID0gZ2l0X2Jsb2JfcGxhaW5fbWltZXR5
-cGUoJGZkLCAkZmlsZV9uYW1lKTsKKwlteSAkdHlwZSA9IHNoaWZ0OworCW9w
-ZW4gbXkgJGZkLCAiLXwiLCAiJGdpdGJpbi9naXQtY2F0LWZpbGUgYmxvYiAk
-aGFzaCIgb3IgZGllX2Vycm9yKCJDb3VsZG4ndCBjYXQgJGZpbGVfbmFtZSwg
-JGhhc2giKTsKKworCSR0eXBlIHx8PSBnaXRfYmxvYl9wbGFpbl9taW1ldHlw
-ZSgkZmQsICRmaWxlX25hbWUpOwogCiAJIyBzYXZlIGFzIGZpbGVuYW1lLCBl
-dmVuIHdoZW4gbm8gJGZpbGVfbmFtZSBpcyBnaXZlbgogCW15ICRzYXZlX2Fz
-ID0gIiRoYXNoIjsKQEAgLTE1OTMsNyArMTU0MCw2NiBAQCBzdWIgZ2l0X2Js
-b2JfcGxhaW4gewogCWNsb3NlICRmZDsKIH0KIAorc3ViIGdpdF9ibG9iIHsK
-KwlpZiAoIWRlZmluZWQgJGhhc2ggJiYgZGVmaW5lZCAkZmlsZV9uYW1lKSB7
-CisJCW15ICRiYXNlID0gJGhhc2hfYmFzZSB8fCBnaXRfcmVhZF9oZWFkKCRw
-cm9qZWN0KTsKKwkJJGhhc2ggPSBnaXRfZ2V0X2hhc2hfYnlfcGF0aCgkYmFz
-ZSwgJGZpbGVfbmFtZSwgImJsb2IiKSB8fCBkaWVfZXJyb3IodW5kZWYsICJF
-cnJvciBsb29rdXAgZmlsZS4iKTsKKwl9CisJbXkgJGhhdmVfYmxhbWUgPSBn
-aXRfZ2V0X3Byb2plY3RfY29uZmlnX2Jvb2wgKCdibGFtZScpOworCW9wZW4g
-bXkgJGZkLCAiLXwiLCAiJGdpdGJpbi9naXQtY2F0LWZpbGUgYmxvYiAkaGFz
-aCIgb3IgZGllX2Vycm9yKHVuZGVmLCAiT3BlbiBmYWlsZWQuIik7CisJbXkg
-JG1pbWV0eXBlID0gZ2l0X2Jsb2JfcGxhaW5fbWltZXR5cGUoJGZkLCAkZmls
-ZV9uYW1lKTsKKwlpZiAoJG1pbWV0eXBlICF+IG0vXnRleHRcLy8pIHsKKwkJ
-Y2xvc2UgJGZkOworCQlyZXR1cm4gZ2l0X2Jsb2JfcGxhaW4oJG1pbWV0eXBl
-KTsKKwl9CisJZ2l0X2hlYWRlcl9odG1sKCk7CisJaWYgKGRlZmluZWQgJGhh
-c2hfYmFzZSAmJiAobXkgJWNvID0gZ2l0X3JlYWRfY29tbWl0KCRoYXNoX2Jh
-c2UpKSkgeworCQlwcmludCAiPGRpdiBjbGFzcz1cInBhZ2VfbmF2XCI+XG4i
-IC4KKwkJICAgICAgJGNnaS0+YSh7LWhyZWYgPT4gIiRteV91cmk/IiAuIGVz
-Y19wYXJhbSgicD0kcHJvamVjdDthPXN1bW1hcnkiKX0sICJzdW1tYXJ5Iikg
-LgorCQkgICAgICAiIHwgIiAuICRjZ2ktPmEoey1ocmVmID0+ICIkbXlfdXJp
-PyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1zaG9ydGxvZyIpfSwgInNo
-b3J0bG9nIikgLgorCQkgICAgICAiIHwgIiAuICRjZ2ktPmEoey1ocmVmID0+
-ICIkbXlfdXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1sb2ciKX0s
-ICJsb2ciKSAuCisJCSAgICAgICIgfCAiIC4gJGNnaS0+YSh7LWhyZWYgPT4g
-IiRteV91cmk/IiAuIGVzY19wYXJhbSgicD0kcHJvamVjdDthPWNvbW1pdDto
-PSRoYXNoX2Jhc2UiKX0sICJjb21taXQiKSAuCisJCSAgICAgICIgfCAiIC4g
-JGNnaS0+YSh7LWhyZWYgPT4gIiRteV91cmk/IiAuIGVzY19wYXJhbSgicD0k
-cHJvamVjdDthPWNvbW1pdGRpZmY7aD0kaGFzaF9iYXNlIil9LCAiY29tbWl0
-ZGlmZiIpIC4KKwkJICAgICAgIiB8ICIgLiAkY2dpLT5hKHstaHJlZiA9PiAi
-JG15X3VyaT8iIC4gZXNjX3BhcmFtKCJwPSRwcm9qZWN0O2E9dHJlZTtoPSRj
-b3sndHJlZSd9O2hiPSRoYXNoX2Jhc2UiKX0sICJ0cmVlIikgLiAiPGJyLz5c
-biI7CisJCWlmIChkZWZpbmVkICRmaWxlX25hbWUpIHsKKwkJCWlmICgkaGF2
-ZV9ibGFtZSkgeworCQkJCXByaW50ICRjZ2ktPmEoey1ocmVmID0+ICIkbXlf
-dXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1ibGFtZTtoPSRoYXNo
-O2hiPSRoYXNoX2Jhc2U7Zj0kZmlsZV9uYW1lIil9LCAiYmxhbWUiKSAuICAi
-IHwgIjsKKwkJCX0KKwkJCXByaW50ICRjZ2ktPmEoey1ocmVmID0+ICIkbXlf
-dXJpPyIgLiBlc2NfcGFyYW0oInA9JHByb2plY3Q7YT1ibG9iX3BsYWluO2g9
-JGhhc2g7Zj0kZmlsZV9uYW1lIil9LCAicGxhaW4iKSAuCisJCQkiIHwgIiAu
-ICRjZ2ktPmEoey1ocmVmID0+ICIkbXlfdXJpPyIgLiBlc2NfcGFyYW0oInA9
-JHByb2plY3Q7YT1ibG9iO2hiPUhFQUQ7Zj0kZmlsZV9uYW1lIil9LCAiaGVh
-ZCIpIC4gIjxici8+XG4iOworCQl9IGVsc2UgeworCQkJcHJpbnQgJGNnaS0+
-YSh7LWhyZWYgPT4gIiRteV91cmk/IiAuIGVzY19wYXJhbSgicD0kcHJvamVj
-dDthPWJsb2JfcGxhaW47aD0kaGFzaCIpfSwgInBsYWluIikgLiAiPGJyLz5c
-biI7CisJCX0KKwkJcHJpbnQgIjwvZGl2PlxuIi4KKwkJICAgICAgICI8ZGl2
-PiIgLgorCQkgICAgICAkY2dpLT5hKHstaHJlZiA9PiAiJG15X3VyaT8iIC4g
-ZXNjX3BhcmFtKCJwPSRwcm9qZWN0O2E9Y29tbWl0O2g9JGhhc2hfYmFzZSIp
-LCAtY2xhc3MgPT4gInRpdGxlIn0sIGVzY19odG1sKCRjb3sndGl0bGUnfSkp
-IC4KKwkJICAgICAgIjwvZGl2PlxuIjsKKwl9IGVsc2UgeworCQlwcmludCAi
-PGRpdiBjbGFzcz1cInBhZ2VfbmF2XCI+XG4iIC4KKwkJICAgICAgIjxici8+
-PGJyLz48L2Rpdj5cbiIgLgorCQkgICAgICAiPGRpdiBjbGFzcz1cInRpdGxl
-XCI+JGhhc2g8L2Rpdj5cbiI7CisJfQorCWlmIChkZWZpbmVkICRmaWxlX25h
-bWUpIHsKKwkJcHJpbnQgIjxkaXYgY2xhc3M9XCJwYWdlX3BhdGhcIj48Yj4i
-IC4gZXNjX2h0bWwoJGZpbGVfbmFtZSkgLiAiPC9iPjwvZGl2PlxuIjsKKwl9
-CisJcHJpbnQgIjxkaXYgY2xhc3M9XCJwYWdlX2JvZHlcIj5cbiI7CisJbXkg
-JG5yOworCXdoaWxlIChteSAkbGluZSA9IDwkZmQ+KSB7CisJCWNob21wICRs
-aW5lOworCQkkbnIrKzsKKwkJd2hpbGUgKChteSAkcG9zID0gaW5kZXgoJGxp
-bmUsICJcdCIpKSAhPSAtMSkgeworCQkJaWYgKG15ICRjb3VudCA9ICg4IC0g
-KCRwb3MgJSA4KSkpIHsKKwkJCQlteSAkc3BhY2VzID0gJyAnIHggJGNvdW50
-OworCQkJCSRsaW5lID1+IHMvXHQvJHNwYWNlcy87CisJCQl9CisJCX0KKwkJ
-cHJpbnRmICI8ZGl2IGNsYXNzPVwicHJlXCI+PGEgaWQ9XCJsJWlcIiBocmVm
-PVwiI2wlaVwiIGNsYXNzPVwibGluZW5yXCI+JTRpPC9hPiAlczwvZGl2Plxu
-IiwgJG5yLCAkbnIsICRuciwgZXNjX2h0bWwoJGxpbmUpOworCX0KKwljbG9z
-ZSAkZmQgb3IgcHJpbnQgIlJlYWRpbmcgYmxvYiBmYWlsZWQuXG4iOworCXBy
-aW50ICI8L2Rpdj4iOworCWdpdF9mb290ZXJfaHRtbCgpOworfQorCiBzdWIg
-Z2l0X3RyZWUgewogCWlmICghZGVmaW5lZCAkaGFzaCkgewogCQkkaGFzaCA9
-IGdpdF9yZWFkX2hlYWQoJHByb2plY3QpOwotLSAKMS40LjEuZzM1ZGJkCgo=
-
-
---0-1822172250-1152501537=:57770--
+diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
+index 8bc4188..7cbfb6e 100755
+--- a/contrib/git-svn/git-svn.perl
++++ b/contrib/git-svn/git-svn.perl
+@@ -760,7 +760,7 @@ sub commit_diff {
+ 		exit 1;
+ 	}
+ 	if (defined $_file) {
+-		$_message = file_to_s($_message);
++		$_message = file_to_s($_file);
+ 	} else {
+ 		$_message ||= get_commit_message($tb,
+ 					"$GIT_DIR/.svn-commit.tmp.$$")->{msg};
+@@ -1518,12 +1518,12 @@ sub get_commit_message {
+ 	open my $msg, '>', $commit_msg or croak $!;
+ 
+ 	chomp(my $type = `git-cat-file -t $commit`);
+-	if ($type eq 'commit') {
++	if ($type eq 'commit' || $type eq 'tag') {
+ 		my $pid = open my $msg_fh, '-|';
+ 		defined $pid or croak $!;
+ 
+ 		if ($pid == 0) {
+-			exec(qw(git-cat-file commit), $commit) or croak $!;
++			exec('git-cat-file', $type, $commit) or croak $!;
+ 		}
+ 		my $in_msg = 0;
+ 		while (<$msg_fh>) {
+-- 
+1.4.1.gda58
