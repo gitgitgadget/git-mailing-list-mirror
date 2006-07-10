@@ -1,73 +1,50 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: git-update-ref (reflog) uses bogus author ident information
-Date: Mon, 10 Jul 2006 22:52:32 +0200
-Organization: At home
-Message-ID: <e8uele$o7t$2@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix linking for not-so-clever linkers.
+Date: Mon, 10 Jul 2006 14:25:05 -0700
+Message-ID: <7v64i5b1am.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0607101340080.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 10 22:52:32 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 23:25:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G02jt-000744-L9
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 22:52:22 +0200
+	id 1G03Fg-0004tm-Ia
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 23:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964965AbWGJUwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 16:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965177AbWGJUwP
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 16:52:15 -0400
-Received: from main.gmane.org ([80.91.229.2]:38836 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964965AbWGJUwP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 16:52:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G02je-00071Q-6E
-	for git@vger.kernel.org; Mon, 10 Jul 2006 22:52:06 +0200
-Received: from host-81-190-19-52.torun.mm.pl ([81.190.19.52])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Jul 2006 22:52:06 +0200
-Received: from jnareb by host-81-190-19-52.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Jul 2006 22:52:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-19-52.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965237AbWGJVZJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 17:25:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965239AbWGJVZJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 17:25:09 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:17585 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965237AbWGJVZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jul 2006 17:25:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060710212506.LHVF19317.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 10 Jul 2006 17:25:06 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607101340080.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 10 Jul 2006 13:40:44 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23654>
 
-git-log reports 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-  commit 059111c9381ce1444d17c8fc35606b0aa417ca42
-  Author: Jakub Narebski <jnareb@gmail.com>
-  Date:   Sat Jul 8 18:52:35 2006 +0200
-  
-      configure.ac vertical whitespace usage cleanup
- 
-git-var -l shows:
+> On one of my systems, the linker is not intelligent enough to link with
+> pager.o (in libgit.a) when only the variable pager_in_use is needed. The
+> consequence is that the linker complains about an undefined
+> variable.
 
- GIT_COMMITTER_IDENT=Jakub Narebski <jnareb@gmail.com> 1152564452 +0200
- GIT_AUTHOR_IDENT=Jakub Narebski <jnareb@gmail.com> 1152564452 +0200
+I do not understand this quite yet -- which executable is your
+linker building when it does this?
 
-BUT in git/.git/logs/refs/heads/autoconf I have (broken into lines):
-  fe7b45a419ae62ed96148d98f6aba8710a6f6245
-  059111c9381ce1444d17c8fc35606b0aa417ca42 
-  Jakub Narebski <jnareb@roke.D-201> 1152377555 +0200   
-  commit: configure.ac vertical whitespace usage cleanu
-
-where "roke.D-201" are results of "hostname -f" on my computer, and are
-suitable _only_ for my small private local network.
-
-Bug or a feature?
-
-I use git 1.4.0.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Maybe we need ranlib?
