@@ -1,68 +1,75 @@
-From: "Peter Gervai" <grin@grin.hu>
-Subject: Re: newbie'ish FAQ/question about merging different trees
-Date: Mon, 10 Jul 2006 15:10:13 +0200
-Message-ID: <d55656c10607100610q1f3b63fcjb706f122d1a502de@mail.gmail.com>
-References: <d55656c10607100456o761bb342p3db229b499579dd9@mail.gmail.com>
-	 <81b0412b0607100531k6fc6921do1990850aef259dba@mail.gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] fix git-repack for use with GIT_TRACE
+Date: Mon, 10 Jul 2006 15:12:54 +0200
+Message-ID: <E1FzvZG-0002C1-UN@moooo.ath.cx>
+References: <E1Fzta3-00066Z-8B@moooo.ath.cx> <7vwtalbqeo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 15:10:35 2006
+X-From: git-owner@vger.kernel.org Mon Jul 10 15:13:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzvWp-0001G3-C8
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 15:10:23 +0200
+	id 1FzvZP-0001nd-8C
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 15:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161116AbWGJNKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 09:10:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161134AbWGJNKR
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 09:10:17 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:46703 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1161116AbWGJNKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jul 2006 09:10:15 -0400
-Received: by ug-out-1314.google.com with SMTP id a2so3868707ugf
-        for <git@vger.kernel.org>; Mon, 10 Jul 2006 06:10:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=rOukA15cxFISVhcR2BSPLIm/AepeEXpSoEF/RWK1DcuhA6mvlUrL+0ogJFeyHOhxaWDp3H9I+ESRqev9TMAl/McSVqyfdzsOodZbcNGYwNDk/ap0ihttTwc6rD/3e1GOc2TFJL/jSF6HejTODAKJ+E8kNwqAti/gdbB7OpeS8eo=
-Received: by 10.78.178.5 with SMTP id a5mr1641289huf;
-        Mon, 10 Jul 2006 06:10:13 -0700 (PDT)
-Received: by 10.78.53.1 with HTTP; Mon, 10 Jul 2006 06:10:13 -0700 (PDT)
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0607100531k6fc6921do1990850aef259dba@mail.gmail.com>
+	id S964880AbWGJNNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 09:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964886AbWGJNM7
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 09:12:59 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:40924 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S964880AbWGJNM7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 09:12:59 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
-X-Google-Sender-Auth: 9215d035cfaa704b
+In-Reply-To: <7vwtalbqeo.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23619>
 
-On 7/10/06, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 7/10/06, Peter Gervai <grin@grin.hu> wrote:
-> > There are two trees on kernel.org's git:
-> >
-> > linux/kernel/git/jejb/aic94xx-sas-2.6.git  (it seems to be at 2.6.16-rc5)
-> > linux/kernel/git/torvalds/linux-2.6.git (it probably does have a tag
-> > at v2.6.17.4)
->
-> It doesn't. The stable tags are in stable per-release repo
-> (linux-2.6.17.y.git currently)
+---
+Junio C Hamano <junkio@cox.net> wrote:
+> This particular one is trying to catch an error condition from
+> rev-list.  Shell reports the exit status from the last command
+> in the pipeline, and when rev-list notices a corrupt repository,
+> it wants to tell pack-objects to stop producing incorrect pack,
+> but there is no way other than sending a garbage string (as an
+> error message) to cause pack-object to notice there is garbage
+> coming in.
 
-Well, even that would do.
+Ok, this patch should fix this.  Instead of "echo abort" another more
+meaningful message could be used.  I checked the other scripts which
+redirect stderr and they should be fine.  In the tests I found
+t/t1200-tutorial.sh:38 
+t/t1300-repo-config.sh:276
+t/t5500-fetch-pack.sh:66
+redirecting stderr, which probably fail which GIT_TRACE.
 
-> > Is there a way to merge these to produce 2.6.17.4 (latest released), patched?
->
-> Why, doesn't "git pull aic94xx-sas-2.6.git master" work anymore?
+git-cvsserver.perl:2138 has 2>&1 but uses an regexp to match for the
+content, so the trace message should not make a problem.  Can someone
+using git-cvsserver confirm this?  Perhaps this should be changed to
+2>/dev/null anyway.
 
-s/Why,/The answer /;
-s/ anymore/s for you, right?/;
+---
 
-:)
+ git-repack.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Thanks, it merged. It does not compile, but that's what I get using
-git trees. :)
+diff --git a/git-repack.sh b/git-repack.sh
+index 640ad8d..4dd7dad 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -43,7 +43,7 @@ case ",$all_into_one," in
+ 	;;
+ esac
+ pack_objects="$pack_objects $local $quiet $no_reuse_delta$extra"
+-name=$(git-rev-list --objects --all $rev_list 2>&1 |
++name=$( (git-rev-list --objects --all $rev_list || echo abort) |
+ 	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
+ 	exit 1
+ if [ -z "$name" ]; then
+-- 
+1.4.1.gf157-dirty
