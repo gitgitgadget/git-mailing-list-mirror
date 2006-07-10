@@ -1,70 +1,97 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix --file/-F option in commit-diff
-Date: Sun,  9 Jul 2006 20:20:48 -0700
-Message-ID: <11525016483767-git-send-email-normalperson@yhbt.net>
-Reply-To: Eric Wong <normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 10 05:21:02 2006
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [RFC+PATCH 1/1] Move SCM interoperability tools into scm/
+Date: Sun, 09 Jul 2006 20:24:34 -0700
+Message-ID: <44B1C872.3050807@michonline.com>
+References: <11524258261798-git-send-email-ryan@michonline.com>	<46a038f90607091426u5a6ea328h2090a876e51725ce@mail.gmail.com>	<20060709221326.GU29115@pasky.or.cz>	<20060709222308.GA4153@h4x0r5.com> <7vsllae1ik.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig3C40148FAC6DF8B27C7A4BE4"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 05:25:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzmKQ-0008C7-I3
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 05:20:58 +0200
+	id 1FzmOf-0000Hl-PH
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 05:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161317AbWGJDUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 23:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161318AbWGJDUw
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 23:20:52 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:64203 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1161317AbWGJDUv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 23:20:51 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 2EED57DC021;
-	Sun,  9 Jul 2006 20:20:49 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun,  9 Jul 2006 20:20:49 -0700
+	id S1161318AbWGJDZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 23:25:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161319AbWGJDZT
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 23:25:19 -0400
+Received: from h4x0r5.com ([70.85.31.202]:43275 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1161318AbWGJDZS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 23:25:18 -0400
+Received: from c-71-202-182-135.hsd1.ca.comcast.net ([71.202.182.135] helo=mythryan.michonline.com)
+	by h4x0r5.com with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1FzmOU-0002oe-7j; Sun, 09 Jul 2006 20:25:10 -0700
+Received: from localhost ([127.0.0.1])
+	by mythryan.michonline.com with esmtp (Exim 4.62)
+	(envelope-from <ryan@michonline.com>)
+	id 1FzmNy-0001Pr-PN; Sun, 09 Jul 2006 20:24:38 -0700
+User-Agent: Thunderbird 1.5.0.4 (X11/20060619)
 To: Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.1.gda58
+In-Reply-To: <7vsllae1ik.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@michonline.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23586>
 
-Also, allow messages from tags to be used as
-commit messages.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig3C40148FAC6DF8B27C7A4BE4
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- contrib/git-svn/git-svn.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Junio C Hamano wrote:
+> Ryan Anderson <ryan@michonline.com> writes:
+>
+>  =20
+>> Comments on a way to make the Makefile less repetitive would be
+>> appreciated, though.
+>>    =20
+>
+> One obvious way would be not to have scm/Makefile but have the
+> dependencies in the main Makefile to say (the moral equivalent
+> of):
+>
+> 	git-archimport.perl: scm/git-archimport.perl
+>  =20
+I think that doing that means I still need to duplicate the  actual
+build rules, which is what I was hoping to avoid, as they encode all the
+magic "path replacement" logic in multiple places.
 
-diff --git a/contrib/git-svn/git-svn.perl b/contrib/git-svn/git-svn.perl
-index 8bc4188..7cbfb6e 100755
---- a/contrib/git-svn/git-svn.perl
-+++ b/contrib/git-svn/git-svn.perl
-@@ -760,7 +760,7 @@ sub commit_diff {
- 		exit 1;
- 	}
- 	if (defined $_file) {
--		$_message = file_to_s($_message);
-+		$_message = file_to_s($_file);
- 	} else {
- 		$_message ||= get_commit_message($tb,
- 					"$GIT_DIR/.svn-commit.tmp.$$")->{msg};
-@@ -1518,12 +1518,12 @@ sub get_commit_message {
- 	open my $msg, '>', $commit_msg or croak $!;
- 
- 	chomp(my $type = `git-cat-file -t $commit`);
--	if ($type eq 'commit') {
-+	if ($type eq 'commit' || $type eq 'tag') {
- 		my $pid = open my $msg_fh, '-|';
- 		defined $pid or croak $!;
- 
- 		if ($pid == 0) {
--			exec(qw(git-cat-file commit), $commit) or croak $!;
-+			exec('git-cat-file', $type, $commit) or croak $!;
- 		}
- 		my $in_msg = 0;
- 		while (<$msg_fh>) {
--- 
-1.4.1.gda58
+On the other hand, I can fix *that*, if I break the ability to run in
+the build directory, which is bad in its own way.  (Fixing the tests
+should be a matter of adapting the test library slightly, I think.)
+
+For the time being, I'm going with ugly, but less disruptive, and I'm
+willing/planning on revisiting it when things shake out a bit more.
+
+
+--=20
+
+Ryan Anderson
+  sometimes Pug Majere
+
+
+
+--------------enig3C40148FAC6DF8B27C7A4BE4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFEsch2fhVDhkBuUKURAlBCAKCVJGu0xyyBHl1Z+SkT/AaN+OYtrwCgg0Us
+H8DnDrcH1RjxW8U5PAcw3MY=
+=q8x/
+-----END PGP SIGNATURE-----
+
+--------------enig3C40148FAC6DF8B27C7A4BE4--
