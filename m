@@ -1,93 +1,71 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+From: Pavel Roskin <proski@gnu.org>
 Subject: Re: [PATCH] Remove more gcc extension usage.
-Date: Mon, 10 Jul 2006 08:14:59 +0200
-Message-ID: <20060710061459.GY22573@lug-owl.de>
-References: <20060708183402.GA17644@spearce.org> <7vy7v4orpt.fsf@assigned-by-dhcp.cox.net> <20060708190327.GA17763@spearce.org> <20060709073155.GP22573@lug-owl.de> <20060710052255.GA15173@spearce.org>
+Date: Mon, 10 Jul 2006 02:22:03 -0400
+Message-ID: <1152512523.3504.28.camel@dv>
+References: <20060708183402.GA17644@spearce.org>
+	 <7vy7v4orpt.fsf@assigned-by-dhcp.cox.net>
+	 <20060708190327.GA17763@spearce.org> <20060709073155.GP22573@lug-owl.de>
+	 <20060710052255.GA15173@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0k4Rxg87Lb8yV0u3"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 08:15:16 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 08:22:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fzp30-0006Jq-No
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 08:15:11 +0200
+	id 1Fzp9r-0007Hq-AU
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 08:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341AbWGJGPE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 02:15:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161037AbWGJGPE
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 02:15:04 -0400
-Received: from lug-owl.de ([195.71.106.12]:27296 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S1751341AbWGJGPB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 02:15:01 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id E0E2EF026F; Mon, 10 Jul 2006 08:14:59 +0200 (CEST)
+	id S1161135AbWGJGWM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 02:22:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161338AbWGJGWM
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 02:22:12 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:54174 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161135AbWGJGWL
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jul 2006 02:22:11 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1Fzp9m-0004v3-Do
+	for git@vger.kernel.org; Mon, 10 Jul 2006 02:22:10 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1Fzp9f-0000YE-An; Mon, 10 Jul 2006 02:22:03 -0400
 To: Shawn Pearce <spearce@spearce.org>
-Content-Disposition: inline
 In-Reply-To: <20060710052255.GA15173@spearce.org>
-X-Operating-System: Linux mail 2.6.12.3lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
-User-Agent: Mutt/1.5.9i
+X-Mailer: Evolution 2.7.3 (2.7.3-7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23594>
 
+Hi, Shawn!
 
---0k4Rxg87Lb8yV0u3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 2006-07-10 at 01:22 -0400, Shawn Pearce wrote:
+>   $ cc -V                                                        
+>   cc: Forte Developer 7 C 5.4 2002/03/09
+>   usage: cc [ options] files.  Use 'cc -flags' for details
+> 
+> and from `man cc`:
+> 
+>   -xc99  enables C99 features:
+[skip]
+>           o  Flexible Array Members
 
-On Mon, 2006-07-10 01:22:55 -0400, Shawn Pearce <spearce@spearce.org> wrote:
-> > On Sat, 2006-07-08 15:03:27 -0400, Shawn Pearce <spearce@spearce.org> w=
-rote:
-> > > Monday I'll look to see if there's an option that can be given to
-> > > the Solaris compiler to make it accept these constructs.  Maybe a
-> > > simple CFLAGS change in my config.mak would resolve what this patch
-> > > was trying to do.
->=20
+This must be enabled already because it's used in git (see FLEX_ARRAY).
+
 > So neither of the constructs my patch removes are supported in this
 > (old) compiler, although a newer one might accept them with -xc99.
 > Yes, I tried building a pristine git-1.4.1 with -xc99.  It barfed,
 > as one would expect given the description above.
->=20
-> Since we don't have a newer version of cc available (not sure why)
-> I'm stuck with needing to make the code changes in my patch just
-> to get GIT to compile.
 
-What about installing a compiler that implements more of C99, like
-installing a gcc instance? I guess you're on a Sun system, there
-should be precompiled binaries available.
+This means that the Sun compiler has almost all c99 features used by git
+with just a little exception (initializers).  I think it's fair that we
+fix this incompatibility.  It's very very minor compared to what "gcc
+-std=c89 -pedantic" would have required.
 
-MfG, JBG
-
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
-_ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
-_ _ O
- f=C3=BCr einen Freien Staat voll Freier B=C3=BCrger"  | im Internet! |   i=
-m Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
-);
-
---0k4Rxg87Lb8yV0u3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEsfBjHb1edYOZ4bsRAsz2AJ9Sm+btrU8wVvCp+KTPC5ibEvrJeQCfVJHh
-sSWnWokkvTebLCgeXe6EaC8=
-=oICH
------END PGP SIGNATURE-----
-
---0k4Rxg87Lb8yV0u3--
+-- 
+Regards,
+Pavel Roskin
