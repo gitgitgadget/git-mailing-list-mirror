@@ -1,41 +1,42 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: [PATCH] Avoid C++ comments, use C comments instead
-Date: Mon, 10 Jul 2006 11:46:53 +0200
-Message-ID: <20060710094653.GA52962@dspnet.fr.eu.org>
-References: <20060710065751.22902.43316.stgit@dv.roinet.com> <7vzmfhdhrf.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: problems GIT_TRACE
+Date: Mon, 10 Jul 2006 13:05:35 +0200
+Message-ID: <E1Fzta3-00066Z-8B@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 11:47:07 2006
+X-From: git-owner@vger.kernel.org Mon Jul 10 13:06:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzsLx-0007Rz-Cf
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 11:46:57 +0200
+	id 1FztaS-000483-66
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 13:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbWGJJqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 05:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbWGJJqy
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 05:46:54 -0400
-Received: from dspnet.fr.eu.org ([213.186.44.138]:20491 "EHLO dspnet.fr.eu.org")
-	by vger.kernel.org with ESMTP id S1751386AbWGJJqy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 05:46:54 -0400
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id 3D2C0A3732; Mon, 10 Jul 2006 11:46:53 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id S964786AbWGJLFi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 07:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964863AbWGJLFi
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 07:05:38 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:58324 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S964786AbWGJLFi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 07:05:38 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vzmfhdhrf.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23607>
 
-On Mon, Jul 10, 2006 at 12:46:28AM -0700, Junio C Hamano wrote:
-> It is sad that some people stay behind and we need to
-> cater to them, though.
-
-Do you, really?
-
-  OG.
+I just discovered a problem with GIT_TRACE.  Some scripts redirect
+stderr to stdout and the trace messages go with it.  For example from
+git-repack:
+> name=$(git-rev-list --objects --all $rev_list 2>&1 |
+>         git-pack-objects --non-empty $pack_objects .tmp-pack) ||
+>         exit 1
+Then for example git-pack-objects complains:
+> fatal: expected sha1, got garbage:
+>  trace: built-in: git 'rev-list' '--objects' '--all'
+git-grep '2>&' shows a few other places that do this too, I'll take a
+closer look at this later.  Is there any reason to redirect stderr to
+stdout?  I think this will always fail with such a strange error
+message when something is written to stderr.
