@@ -1,72 +1,140 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: can I get only the list of merges?
-Date: Mon, 10 Jul 2006 11:09:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607101103160.5623@g5.osdl.org>
-References: <20060710192622.70c51a81.diegocg@gmail.com> <E1FzzlS-0003JE-9C@moooo.ath.cx>
+From: Josh Triplett <josht@us.ibm.com>
+Subject: [PATCH 1/3] git-format-patch: Make the second and subsequent mails
+	replies to the first
+Date: Mon, 10 Jul 2006 11:41:18 -0700
+Message-ID: <1152556878.8890.45.camel@josh-work.beaverton.ibm.com>
+References: <20060710162920.GR20191@harddisk-recovery.com>
+Reply-To: git@vger.kernel.org, josht@us.ibm.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Diego Calleja <diegocg@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 20:10:16 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jul 10 20:41:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G00CN-0001n2-3i
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 20:09:35 +0200
+	id 1G00h6-0007Ts-OF
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 20:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422736AbWGJSJ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 14:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965209AbWGJSJ3
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 14:09:29 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:670 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965208AbWGJSJ0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 14:09:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6AI9MnW026028
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 10 Jul 2006 11:09:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6AI9LwR012651;
-	Mon, 10 Jul 2006 11:09:21 -0700
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1FzzlS-0003JE-9C@moooo.ath.cx>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422754AbWGJSlR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 14:41:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422757AbWGJSlR
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 14:41:17 -0400
+Received: from e33.co.us.ibm.com ([32.97.110.151]:8405 "EHLO e33.co.us.ibm.com")
+	by vger.kernel.org with ESMTP id S1422754AbWGJSlQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 14:41:16 -0400
+Received: from westrelay02.boulder.ibm.com (westrelay02.boulder.ibm.com [9.17.195.11])
+	by e33.co.us.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id k6AIfGvo002079
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 10 Jul 2006 14:41:16 -0400
+Received: from d03av04.boulder.ibm.com (d03av04.boulder.ibm.com [9.17.195.170])
+	by westrelay02.boulder.ibm.com (8.13.6/NCO/VER7.0) with ESMTP id k6AIeQpK287656
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 10 Jul 2006 12:40:27 -0600
+Received: from d03av04.boulder.ibm.com (loopback [127.0.0.1])
+	by d03av04.boulder.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id k6AIfFVe028710
+	for <git@vger.kernel.org>; Mon, 10 Jul 2006 12:41:16 -0600
+Received: from dyn9047018143.beaverton.ibm.com (dyn9047018143.beaverton.ibm.com [9.47.18.143])
+	by d03av04.boulder.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id k6AIfFql028681
+	for <git@vger.kernel.org>; Mon, 10 Jul 2006 12:41:15 -0600
+To: git@vger.kernel.org
+In-Reply-To: <20060710162920.GR20191@harddisk-recovery.com>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23632>
 
+Add message_id and ref_message_id fields to struct rev_info, used in show_log
+with CMIT_FMT_EMAIL to set Message-Id and In-Reply-To/References respectively.
+Use these in git-format-patch to make the second and subsequent patch mails
+replies to the first patch mail.
 
+Signed-off-by: Josh Triplett <josh@freedesktop.org>
+---
+Resend of previous patch as part of new patch series.
 
-On Mon, 10 Jul 2006, Matthias Lederhofer wrote:
+ builtin-log.c |   23 +++++++++++++++++++++++
+ log-tree.c    |    5 +++++
+ revision.h    |    2 ++
+ 3 files changed, 30 insertions(+), 0 deletions(-)
 
-> Diego Calleja <diegocg@gmail.com> wrote:
-> > Hi, git-log and git-rev-list and friends have a --no-merges option. However,
-> > I need the contrary functionality: a sort of "--only-merges" way of getting
-> > the log? (that is, without parsing manually the git-log output)
-> 
-> Perhaps something like this?  It finds all commits with more than one
-> parent (I dunno if there are any other commits that have more than one
-> parent)
-> git-rev-list --parents HEAD | \
-> grep -E '^([a-z0-9]{40} ){2}[a-z0-9]{40}' | \
-> cut -d ' ' -f 1
-
-Well, the above is the "proper" way of doing things, and is efficient and 
-gives the right answer. However, if you want a _sneaky_ way of doing it, 
-and want a graphical result, and have a recent version of git, you can 
-also just do something like
-
-	gitk --full-history -- %%nonexistant-file%%
-
-which will give you each commit that changes that nonexistant file (there 
-should be none ;), and the full commit history for those (ie all the 
-merges).
-
-(If you use "git log", you also need to add "--parents" while gitk will do 
-it for you).
-
-			Linus
+diff --git a/builtin-log.c b/builtin-log.c
+index 864c6cd..9d0cae1 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -220,6 +220,17 @@ static void get_patch_ids(struct rev_inf
+ 	o2->flags = flags2;
+ }
+ 
++static void gen_message_id(char *dest, unsigned int length, char *base)
++{
++	const char *committer = git_committer_info(1);
++	const char *email_start = strrchr(committer, '<');
++	const char *email_end = strrchr(committer, '>');
++	if(!email_start || !email_end || email_start > email_end - 1)
++		die("Could not extract email from committer identity.");
++	snprintf(dest, length, "%s.%u.git.%.*s", base, time(NULL),
++		 email_end - email_start - 1, email_start + 1);
++}
++
+ int cmd_format_patch(int argc, const char **argv, char **envp)
+ {
+ 	struct commit *commit;
+@@ -233,6 +244,8 @@ int cmd_format_patch(int argc, const cha
+ 	int ignore_if_in_upstream = 0;
+ 	struct diff_options patch_id_opts;
+ 	char *add_signoff = NULL;
++	char message_id[1024];
++	char ref_message_id[1024];
+ 
+ 	init_revisions(&rev);
+ 	rev.commit_format = CMIT_FMT_EMAIL;
+@@ -359,6 +372,16 @@ int cmd_format_patch(int argc, const cha
+ 		int shown;
+ 		commit = list[nr];
+ 		rev.nr = total - nr + (start_number - 1);
++		/* Make the second and subsequent mails replies to the first */
++		if (nr == (total - 2)) {
++			strncpy(ref_message_id, message_id,
++				sizeof(ref_message_id));
++			ref_message_id[sizeof(ref_message_id)-1] = '\0';
++			rev.ref_message_id = ref_message_id;
++		}
++		gen_message_id(message_id, sizeof(message_id),
++			       sha1_to_hex(commit->object.sha1));
++		rev.message_id = message_id;
+ 		if (!use_stdout)
+ 			reopen_stdout(commit, rev.nr, keep_subject);
+ 		shown = log_tree_commit(&rev, commit);
+diff --git a/log-tree.c b/log-tree.c
+index 9d8d46f..4971988 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -97,6 +97,11 @@ void show_log(struct rev_info *opt, cons
+ 			subject = "Subject: ";
+ 
+ 		printf("From %s Mon Sep 17 00:00:00 2001\n", sha1);
++		if (opt->message_id)
++			printf("Message-Id: <%s>\n", opt->message_id);
++		if (opt->ref_message_id)
++			printf("In-Reply-To: <%s>\nReferences: <%s>\n",
++			       opt->ref_message_id, opt->ref_message_id);
+ 		if (opt->mime_boundary) {
+ 			static char subject_buffer[1024];
+ 			static char buffer[1024];
+diff --git a/revision.h b/revision.h
+index c010a08..e23ec8f 100644
+--- a/revision.h
++++ b/revision.h
+@@ -61,6 +61,8 @@ struct rev_info {
+ 	struct log_info *loginfo;
+ 	int		nr, total;
+ 	const char	*mime_boundary;
++	const char	*message_id;
++	const char	*ref_message_id;
+ 	const char	*add_signoff;
+ 	const char	*extra_headers;
+ 
+-- 
+1.4.1.gf029
