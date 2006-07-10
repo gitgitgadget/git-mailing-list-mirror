@@ -1,62 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Revisiting large binary files issue.
-Date: Mon, 10 Jul 2006 16:28:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: Re: [PATCH] Avoid C++ comments, use C comments instead
+Date: Tue, 11 Jul 2006 01:42:34 +0200
+Message-ID: <20060710234234.GA26528@dspnet.fr.eu.org>
+References: <20060710065751.22902.43316.stgit@dv.roinet.com> <7vzmfhdhrf.fsf@assigned-by-dhcp.cox.net> <20060710094653.GA52962@dspnet.fr.eu.org> <Pine.LNX.4.63.0607101306030.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060710114117.GA62514@dspnet.fr.eu.org> <44B2A709.8020500@serice.net> <20060710202412.GA8189@dspnet.fr.eu.org> <Pine.LNX.4.63.0607110049470.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 01:34:59 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Serice <paul@serice.net>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 01:42:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G05HE-0001eE-25
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 01:34:56 +0200
+	id 1G05Oi-0002kS-81
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 01:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965042AbWGJXex (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 19:34:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965064AbWGJXex
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 19:34:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60320 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965042AbWGJXew (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 19:34:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6ANSSnW015671
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 10 Jul 2006 16:28:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6ANSORi026304;
-	Mon, 10 Jul 2006 16:28:26 -0700
-To: Carl Baldwin <cnb@fc.hp.com>
-In-Reply-To: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965332AbWGJXmg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 19:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965333AbWGJXmg
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 19:42:36 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:21263 "EHLO dspnet.fr.eu.org")
+	by vger.kernel.org with ESMTP id S965332AbWGJXmf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 19:42:35 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id 8FF43A3653; Tue, 11 Jul 2006 01:42:34 +0200 (CEST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0607110049470.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23669>
+
+On Tue, Jul 11, 2006 at 12:55:59AM +0200, Johannes Schindelin wrote:
+> Judging by what you say, one could get the impression you'd have not much 
+> sympathy for people being stuck with non-C99 compilers.
+
+More and more these people are stuck with such a compiler because they
+want to be.
 
 
+> Just look at it: if the OS vendor just does not _care_, and you blame the 
+> vendor for not providing something newer, the vendor does not _care_ about 
+> your complaint either. But the user does.
 
-On Mon, 10 Jul 2006, Carl Baldwin wrote:
-> 
-> When I set the window to 0 I one more issue.  Even though the blobs are
-> already compressed on disk I still seem to pay the penalty of inflating
-> them into memory and then deflating them into the pack.  When the window
-> size is 0 this is just wasted cycles.  With large binary files these
-> wasted cycles slow down the push/fetch operation considerably.  Couldn't
-> the compressed blobs be copied into the pack without first deflating
-> them in this 0 window case?
+Well, I'm not talking about git here, but I'm not really interested in
+making my code harder to maintain just to provide more value for said
+vendor.
 
-The problem is that the individual object disk format isn't actually the 
-same as the pack-file object format for one object. The header is 
-different: a pack-file uses a very dense bit packing, while the individual 
-object format is a bit less dense.
 
-Sad, really, but it means that right now you can only re-use data that was 
-already packed (when the format matches).
+> However, there is a more important point to be made. If you are complying 
+> with an older standard, you get more users. More users = more bug testers.
 
-		Linus
+On such systems, what you tend to find is bugs of the system, or
+simply different, and sometimes somewhat nonsensical, implementations
+of some compromise-happy standards like POSIX.
+
+
+> And there were quite a few occasions where I found bugs by trying to run 
+> on a different platform, which was less forgiving than Linux. These are 
+> bugs you have a harder time to spot on Linux, _because_ Linux is so nice. 
+> But they will surface. And they will be a PITA to find.
+
+And how many bugs or "features" of the platform did you have to code
+around before finding a genuine bug?
+
+
+> Anyway, it is best practice for a reason to program portably. (Well, at 
+> least if you are not living in Redmont.)
+
+If "programming portably" meant catering to the oldest standards, then
+you shouldn't even use prototypes or ansi-style function declarations.
+After all, some people may be stuck with the old sun (or was it hp?)
+compiler that was k&r only.  And limit the filenames to 14 characters.
+Also, you shouldn't require gtk, python, perl, fire or the wheel.
+
+  OG.
