@@ -1,75 +1,56 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] fix git-repack for use with GIT_TRACE
-Date: Mon, 10 Jul 2006 15:12:54 +0200
-Message-ID: <E1FzvZG-0002C1-UN@moooo.ath.cx>
-References: <E1Fzta3-00066Z-8B@moooo.ath.cx> <7vwtalbqeo.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [Patch] Using 'perl' in *.sh
+Date: Mon, 10 Jul 2006 15:16:05 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607101514410.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200607081732.04273.michal.rokos@nextsoft.cz>
+ <200607091441.16161.michal.rokos@nextsoft.cz> <7v4pxqfri7.fsf@assigned-by-dhcp.cox.net>
+ <200607100741.26377.michal.rokos@nextsoft.cz> <86veq5sj22.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 15:13:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michal Rokos <michal.rokos@nextsoft.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 15:16:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FzvZP-0001nd-8C
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 15:13:03 +0200
+	id 1FzvcS-0002K3-CZ
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 15:16:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964880AbWGJNNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 09:13:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964886AbWGJNM7
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 09:12:59 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:40924 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S964880AbWGJNM7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 09:12:59 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vwtalbqeo.fsf@assigned-by-dhcp.cox.net>
+	id S1161138AbWGJNQJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 09:16:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965007AbWGJNQJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 09:16:09 -0400
+Received: from mail.gmx.net ([213.165.64.21]:49891 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S964886AbWGJNQI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 09:16:08 -0400
+Received: (qmail invoked by alias); 10 Jul 2006 13:16:06 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp018) with SMTP; 10 Jul 2006 15:16:06 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86veq5sj22.fsf@blue.stonehenge.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23620>
 
----
-Junio C Hamano <junkio@cox.net> wrote:
-> This particular one is trying to catch an error condition from
-> rev-list.  Shell reports the exit status from the last command
-> in the pipeline, and when rev-list notices a corrupt repository,
-> it wants to tell pack-objects to stop producing incorrect pack,
-> but there is no way other than sending a garbage string (as an
-> error message) to cause pack-object to notice there is garbage
-> coming in.
+Hi,
 
-Ok, this patch should fix this.  Instead of "echo abort" another more
-meaningful message could be used.  I checked the other scripts which
-redirect stderr and they should be fine.  In the tests I found
-t/t1200-tutorial.sh:38 
-t/t1300-repo-config.sh:276
-t/t5500-fetch-pack.sh:66
-redirecting stderr, which probably fail which GIT_TRACE.
+On Mon, 10 Jul 2006, Randal L. Schwartz wrote:
 
-git-cvsserver.perl:2138 has 2>&1 but uses an regexp to match for the
-content, so the trace message should not make a problem.  Can someone
-using git-cvsserver confirm this?  Perhaps this should be changed to
-2>/dev/null anyway.
+> >>>>> "Michal" == Michal Rokos <michal.rokos@nextsoft.cz> writes:
+> 
+> Michal> I don't se the point. If you ask me, I'd say it should be either:
+> Michal> - controlled fully via env: which means 'perl' in scripts and /usr/bin/env in 
+> Michal> *.perl; or
+> 
+> which *pointlessly* doesn't work if *I* have installed a private Perl and a
+> private git on a large shared systems, and *you* on the same system want to
+> use my git installation, but not necessarily have my Perl in your path.
 
----
+... so, git depends on perl. You know what that means...
 
- git-repack.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-repack.sh b/git-repack.sh
-index 640ad8d..4dd7dad 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -43,7 +43,7 @@ case ",$all_into_one," in
- 	;;
- esac
- pack_objects="$pack_objects $local $quiet $no_reuse_delta$extra"
--name=$(git-rev-list --objects --all $rev_list 2>&1 |
-+name=$( (git-rev-list --objects --all $rev_list || echo abort) |
- 	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
- 	exit 1
- if [ -z "$name" ]; then
--- 
-1.4.1.gf157-dirty
+Ciao,
+Dscho
