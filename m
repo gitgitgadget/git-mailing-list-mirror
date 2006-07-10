@@ -1,59 +1,51 @@
-From: Alp Toker <alp@atoker.com>
-Subject: Re: [PATCH] Fix some doubled word typos
-Date: Mon, 10 Jul 2006 01:32:31 +0100
-Message-ID: <44B1A01F.5090408@atoker.com>
-References: <11524377844177-git-send-email-alp@atoker.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC+PATCH 1/1] Move SCM interoperability tools into scm/
+Date: Sun, 09 Jul 2006 17:39:47 -0700
+Message-ID: <7vsllae1ik.fsf@assigned-by-dhcp.cox.net>
+References: <11524258261798-git-send-email-ryan@michonline.com>
+	<46a038f90607091426u5a6ea328h2090a876e51725ce@mail.gmail.com>
+	<20060709221326.GU29115@pasky.or.cz>
+	<20060709222308.GA4153@h4x0r5.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 02:32:46 2006
+X-From: git-owner@vger.kernel.org Mon Jul 10 02:39:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fzjha-0005b1-4u
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 02:32:42 +0200
+	id 1FzjoW-0007KL-T0
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 02:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161282AbWGJAci (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 9 Jul 2006 20:32:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161283AbWGJAci
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 20:32:38 -0400
-Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:62736 "EHLO
-	ndesk.org") by vger.kernel.org with ESMTP id S1161282AbWGJAch (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jul 2006 20:32:37 -0400
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by ndesk.org (Postfix) with ESMTP id AFE298AAF6;
-	Mon, 10 Jul 2006 01:32:31 +0100 (BST)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <11524377844177-git-send-email-alp@atoker.com>
+	id S1161283AbWGJAju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 9 Jul 2006 20:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161284AbWGJAju
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Jul 2006 20:39:50 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61824 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1161283AbWGJAjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jul 2006 20:39:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060710003948.FKOH6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 9 Jul 2006 20:39:48 -0400
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20060709222308.GA4153@h4x0r5.com> (Ryan Anderson's message of
+	"Sun, 9 Jul 2006 15:23:09 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23579>
 
-Alp Toker wrote:
-> Signed-off-by: Alp Toker <alp@atoker.com>
-> ---
->  Documentation/git-svn.txt |    2 +-
->  Documentation/urls.txt    |    2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+Ryan Anderson <ryan@michonline.com> writes:
 
-My patch was made against the 'next' branch, where the file had recently 
-been moved to Documentation/git-svn.txt, but it was applied to the 
-'master' branch where the file still exists at 
-contrib/git-svn/git-svn.txt as it has not yet been moved.
+> Comments on a way to make the Makefile less repetitive would be
+> appreciated, though.
 
-As a result, it seems that only the modification to 
-Documentation/urls.txt in this patch made it into the repository, with 
-the fix to Documentation/git-svn.txt having been silently omitted.
+One obvious way would be not to have scm/Makefile but have the
+dependencies in the main Makefile to say (the moral equivalent
+of):
 
-By the time the commit was merged from 'master' to 'next', it had 
-permanently lost the modification to git-svn.txt, and even though the 
-commit message claims to "Fix some doubled word typos" it only fixes one.
-
-Could this situation have been avoided if the patch had mentioned that 
-it was against the 'next' branch? Should/does git warn the user if a 
-patch modifies files that don't exist? Would rename tracking have helped 
-this patch to apply properly?
+	git-archimport.perl: scm/git-archimport.perl
