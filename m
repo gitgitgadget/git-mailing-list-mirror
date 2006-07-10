@@ -1,59 +1,56 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: git-log to go forward instead of reverse?
-Date: 10 Jul 2006 12:06:08 -0700
-Message-ID: <863bd9p9en.fsf@blue.stonehenge.com>
-References: <86bqrxpai1.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0607101151470.5623@g5.osdl.org>
+From: Paul Serice <paul@serice.net>
+Subject: Re: [PATCH] Avoid C++ comments, use C comments instead
+Date: Mon, 10 Jul 2006 14:14:17 -0500
+Message-ID: <44B2A709.8020500@serice.net>
+References: <20060710065751.22902.43316.stgit@dv.roinet.com> <7vzmfhdhrf.fsf@assigned-by-dhcp.cox.net> <20060710094653.GA52962@dspnet.fr.eu.org> <Pine.LNX.4.63.0607101306030.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060710114117.GA62514@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 10 21:06:33 2006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 21:14:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G015O-0003kj-Gs
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:06:26 +0200
+	id 1G01Cm-00059p-9N
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:14:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422776AbWGJTGL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 15:06:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422778AbWGJTGL
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:06:11 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:17549 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1422776AbWGJTGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jul 2006 15:06:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 675638F347;
-	Mon, 10 Jul 2006 12:06:09 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 10108-01-59; Mon, 10 Jul 2006 12:06:08 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id CDB198F34C; Mon, 10 Jul 2006 12:06:08 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-x-mayan-date: Long count = 12.19.13.8.4; tzolkin = 1 Kan; haab = 17 Tzec
-In-Reply-To: <Pine.LNX.4.64.0607101151470.5623@g5.osdl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1422786AbWGJTOA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 15:14:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422787AbWGJTOA
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:14:00 -0400
+Received: from serice.org ([206.123.107.184]:3600 "EHLO serice.org")
+	by vger.kernel.org with ESMTP id S1422786AbWGJTN7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 15:13:59 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by serice.org (Postfix) with ESMTP id E35B1580F8;
+	Mon, 10 Jul 2006 14:13:58 -0500 (CDT)
+User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060502)
+X-Accept-Language: en-us, en
+To: Olivier Galibert <galibert@pobox.com>
+In-Reply-To: <20060710114117.GA62514@dspnet.fr.eu.org>
+X-Enigmail-Version: 0.92.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23640>
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
+> Given than you can find gcc on pretty much everything that has a
+> filesystem cache decent enough to handle git correctly, is this cost
+> worth it?  _That_ was the question.
 
-Linus> Well, as long as you realize that that automatically means that you
-Linus> have to walk the whole commit list, and you won't be able to get the
-Linus> incremental output that git-log and friends normally are able to give?
+I've seen this argument before.  Unfortunately it seems reasonable
+enough on the surface, and I actually bought into it much to may later
+regret.
 
-Wow.  Yes, I think I can live with that for the application.
+My experience is that gcc often produces buggy code, and if gcc is not
+_the_ compiler for that platform, those bugs do not get fixed.
+Specifically, I have had lots of problems with gcc and IRIX.
 
-Linus> But this patch should do it.
+If you want to write portable code, you have to take into account
+different operating systems _and_ different compilers.  Writing your
+code for just a single compiler is almost as bad as writing your code
+for just a single operating system.
 
-Thanks!
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Paul Serice
