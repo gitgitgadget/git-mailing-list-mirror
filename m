@@ -1,56 +1,132 @@
-From: moreau francis <francis_moreau2000@yahoo.fr>
-Subject: 2 questions on git-send-email usage
-Date: Mon, 10 Jul 2006 19:00:10 +0000 (GMT)
-Message-ID: <20060710190010.94648.qmail@web25808.mail.ukl.yahoo.com>
-Reply-To: moreau francis <francis_moreau2000@yahoo.fr>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-log to go forward instead of reverse?
+Date: Mon, 10 Jul 2006 12:01:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607101151470.5623@g5.osdl.org>
+References: <86bqrxpai1.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jul 10 21:00:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 10 21:02:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G00zS-0002bc-91
-	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:00:19 +0200
+	id 1G011D-0002wK-PX
+	for gcvg-git@gmane.org; Mon, 10 Jul 2006 21:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422749AbWGJTAN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 15:00:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422761AbWGJTAN
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:00:13 -0400
-Received: from web25808.mail.ukl.yahoo.com ([217.12.10.193]:31362 "HELO
-	web25808.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1422749AbWGJTAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jul 2006 15:00:12 -0400
-Received: (qmail 94650 invoked by uid 60001); 10 Jul 2006 19:00:10 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.fr;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type;
-  b=i0+7o+J5ohGmj2Z5KoZbcuWiV+Isl3p7VtWrat3z8YOUOVygkSS0RaDsTuRHDUkbX5jFEny5nQm4DyUH9NOIldxYlgEuK/mBd6+5StaCQCLWQ2kUM6CvisUQe+apF7W4T33qYq8iLucl9allJ3maqGG3eolc4XVBTA/VcZnQ93U=  ;
-Received: from [82.235.205.153] by web25808.mail.ukl.yahoo.com via HTTP; Mon, 10 Jul 2006 19:00:10 GMT
-To: git@vger.kernel.org
+	id S1422761AbWGJTCE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 15:02:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422774AbWGJTCE
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 15:02:04 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:55728 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422761AbWGJTCD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jul 2006 15:02:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6AJ1xnW030051
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 10 Jul 2006 12:02:00 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6AJ1tNn014802;
+	Mon, 10 Jul 2006 12:01:57 -0700
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86bqrxpai1.fsf@blue.stonehenge.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23638>
 
-Hi
 
-I'm wondering what am I supposed to answer when git-send-email
-is asking me :
 
-Message-ID to be used as In-Reply-To for the first email?
+On Mon, 10 Jul 2006, Randal L. Schwartz wrote:
+> 
+> Am I missing an option to have git-log go forward in time rather than
+> backward?  I'd really like "git-log --pretty=short ORIG_HEAD..HEAD" to show me
+> a story I can read. :)
 
-I'm running this command:
+Well, as long as you realize that that automatically means that you have 
+to walk the whole commit list, and you won't be able to get the 
+incremental output that git-log and friends normally are able to give?
 
-$ git-send-email --no-signed-off-by-cc --no-chain-reply-to --to foo@bar.com --compose /tmp/patch/
+But this patch should do it. With it,
 
-to write an introductory message, and all patches are sent as replies to
-this introductory email sent.
+	git log --reverse --pretty=short ORIG_HEAD..
 
-I also noticed that git-send-email removes the commit message of each
-patches I sent, I don't think this is the normal behaviour though. What 
-am I missing ?
+should do what you want.
 
-Thanks
+It is _not_ possible to reverse the "gitk" view with this patch, though, 
+as this does _not_ reverse parenthood information.
 
-Francis
+The "--reverse" flag could possibly be renamed. 
+
+		Linus
+
+---
+diff --git a/revision.c b/revision.c
+index 7df9089..13a3e40 100644
+--- a/revision.c
++++ b/revision.c
+@@ -698,6 +698,10 @@ int setup_revisions(int argc, const char
+ 				revs->topo_order = 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--reverse")) {
++				revs->reverse ^= 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--parents")) {
+ 				revs->parents = 1;
+ 				continue;
+@@ -921,7 +925,7 @@ int setup_revisions(int argc, const char
+ 		add_pending_object(revs, object, def);
+ 	}
+ 
+-	if (revs->topo_order || revs->unpacked)
++	if (revs->topo_order || revs->unpacked || revs->reverse)
+ 		revs->limited = 1;
+ 
+ 	if (revs->prune_data) {
+@@ -941,6 +945,19 @@ int setup_revisions(int argc, const char
+ 	return left;
+ }
+ 
++static struct commit_list *reverse_commit_list(struct commit_list *p)
++{
++	struct commit_list *result = NULL;
++
++	while (p) {
++		struct commit_list *next = p->next;
++		p->next = result;
++		result = p;
++		p = next;
++	}
++	return result;
++}
++
+ void prepare_revision_walk(struct rev_info *revs)
+ {
+ 	int nr = revs->pending.nr;
+@@ -968,6 +985,8 @@ void prepare_revision_walk(struct rev_in
+ 		sort_in_topological_order_fn(&revs->commits, revs->lifo,
+ 					     revs->topo_setter,
+ 					     revs->topo_getter);
++	if (revs->reverse)
++		revs->commits = reverse_commit_list(revs->commits);
+ }
+ 
+ static int rewrite_one(struct rev_info *revs, struct commit **pp)
+diff --git a/revision.h b/revision.h
+index c010a08..ff6ce44 100644
+--- a/revision.h
++++ b/revision.h
+@@ -32,6 +32,7 @@ struct rev_info {
+ 			remove_empty_trees:1,
+ 			simplify_history:1,
+ 			lifo:1,
++			reverse:1,
+ 			topo_order:1,
+ 			tag_objects:1,
+ 			tree_objects:1,
