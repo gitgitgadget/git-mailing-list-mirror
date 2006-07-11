@@ -1,87 +1,84 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC]: Pack-file object format for individual objects (Was:  
- Revisiting large binary files issue.)
-Date: Tue, 11 Jul 2006 15:17:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607111512420.5623@g5.osdl.org>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <44B371FB.2070800@b-i-t.de>
- <Pine.LNX.4.64.0607111053270.5623@g5.osdl.org> <44B41BFD.8010808@stephan-feder.de>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: git-daemon problem
+Date: Wed, 12 Jul 2006 00:24:24 +0200
+Message-ID: <E1G0QeX-0003hG-0I@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 12 00:17:56 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jul 12 00:24:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0QYC-0005cx-KS
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 00:17:52 +0200
+	id 1G0Qee-0006fY-5K
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 00:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932198AbWGKWRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 18:17:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932197AbWGKWRt
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 18:17:49 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40864 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932198AbWGKWRt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 18:17:49 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BMHjnW031544
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Jul 2006 15:17:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BMHi2G011008;
-	Tue, 11 Jul 2006 15:17:45 -0700
-To: sf <sf-gmane@stephan-feder.de>
-In-Reply-To: <44B41BFD.8010808@stephan-feder.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932151AbWGKWY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 18:24:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbWGKWY3
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 18:24:29 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:44202 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932151AbWGKWY2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 18:24:28 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23742>
 
+A few weeks ago upgrading from 1.3.x to 1.4.1 I had a problem with
+git-daemon.  I started git-daemon on a terminal but did not redirect
+stdin/stdout/stderr to /dev/null (actually using daemon(8) on freebsd
+without -f but just disowning the process and closing the terminal
+works fine too, nothing freebsd/daemon(8) specific).  After closing
+the terminal I was not able to use the git-daemon anymore with some
+versions of the git. So now I took some time and tried to find what
+was the reason for that.
 
+It seems to be related to the client version too (git without version
+appendix is the current next (028cfcba78c3e4).
 
-On Tue, 11 Jul 2006, sf wrote:
-> 
-> Just look at the first byte of the object file _without doing any
-> decompression_. It is 0x78 _if and only if_ the object file is in the
-> traditional format.
+583b7ea31b7c16~1 (last good):
+$ git clone git://host:9419/foo
+$ git1.3.2 clone git://host:9419/foo.git
+(cloned successfully, both no output)
 
-0x78 isn't the only valid flag for a zlib stream, as far as I can tell.
+583b7ea31b7c16 (first bad):
+$ git clone git://host:9420/foo
+Generating pack...
+Done counting 6 objects.
+Deltifying 6 objects.
+ 100% (6/6) done
+ Total 6, written 6 (delta 0), reused 0 (delta 0)
+$ git1.3.2 clone git://host:9420/foo.git
+fatal: cannot mmap packfile '/somewhere/foo/.git/objects/pack/tmp-VX82qz': Invalid argument
+error: git-fetch-pack: unable to read from git-index-pack
+error: git-index-pack died with error code 128
+fetch-pack from 'git://host:9420/foo.git' failed.
+[1]    13267 exit 1     git1.3.2 clone git://host:9420/foo.git
+(/somewhere is the cwd on the client)
 
-It may be the only one _in_practice_, of course, but the zlib standard 
-defines the first byte as
+I tried to find which part of the patch caused the problem and came
+out with the patch below.  With this I can clone with git1.3.2 again
+but then git 1.4.x does not show any statistics about packing, its
+just a starting point to look at.  Perhaps someone has an idea why
+this happens.  I've got to sleep now :)
 
- - for low bits: CM (compression method):
+---
+ upload-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-        "This identifies the compression method used in the file. CM = 8
-         denotes the "deflate" compression method with a window size up
-         to 32K.  This is the method used by gzip and PNG (see
-         references [1] and [2] in Chapter 3, below, for the reference
-         documents).  CM = 15 is reserved.  It might be used in a future
-         version of this specification to indicate the presence of an
-         extra field before the compressed data."
-
- - four high bits are CINFO: 
-
-        "For CM = 8, CINFO is the base-2 logarithm of the LZ77 window
-         size, minus eight (CINFO=7 indicates a 32K window size). Values
-         of CINFO above 7 are not allowed in this version of the
-         specification.  CINFO is not defined in this specification for
-         CM not equal to 8."
-
-so 0x78 means "deflate with 32kB window size", but I don't see anything 
-guaranteeing that we might not see something else for an object that 
-cannot be compressed, for example.
-
-Anyway, the good news is that _if_ 0x78 is indeed the only possible value, 
-then it is also an illegal value for an unpacked object in pack-file 
-format (type=7 being OBJ_DELTA) and we wouldn't need any other flag for 
-this.
-
-I just don't know if it's the only possible one..
-
-		Linus
+diff --git a/upload-pack.c b/upload-pack.c
+index 7b86f69..94f0d85 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -249,7 +249,7 @@ static void create_pack_file(void)
+ 				sz = read(pe_pipe[0], progress,
+ 					  sizeof(progress));
+ 				if (0 < sz)
+-					send_client_data(2, progress, sz);
++					write(2, progress, sz);
+ 				else if (sz == 0) {
+ 					close(pe_pipe[0]);
+ 					pe_pipe[0] = -1;
