@@ -1,114 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack
- file format"
-Date: Tue, 11 Jul 2006 20:40:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607112031150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org> <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Install built-ins as symlinks
+Date: Tue, 11 Jul 2006 20:48:38 +0200
+Message-ID: <20060711184838.GC13776@pasky.or.cz>
+References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com> <1152613179634-git-send-email-alp@atoker.com> <11526131791902-git-send-email-alp@atoker.com> <11526131792773-git-send-email-alp@atoker.com> <11526131792377-git-send-email-alp@atoker.com> <Pine.LNX.4.63.0607111614550.29667@wbgn013.biozentrum.uni-wuerzburg.de> <44B3BC94.3000204@atoker.com> <Pine.LNX.4.63.0607111951350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 11 20:40:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Alp Toker <alp@atoker.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 20:49:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0NA0-0001cr-Jl
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 20:40:41 +0200
+	id 1G0NHo-00037Y-Hc
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 20:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751127AbWGKSki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 14:40:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbWGKSkh
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 14:40:37 -0400
-Received: from mail.gmx.net ([213.165.64.21]:15511 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751127AbWGKSkh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 14:40:37 -0400
-Received: (qmail invoked by alias); 11 Jul 2006 18:40:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp036) with SMTP; 11 Jul 2006 20:40:35 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S1751181AbWGKSsl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 14:48:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbWGKSsl
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 14:48:41 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:18381 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751181AbWGKSsk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 14:48:40 -0400
+Received: (qmail 25925 invoked by uid 2001); 11 Jul 2006 20:48:38 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0607111951350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23725>
 
-Hi,
+  Hi,
 
-On Tue, 11 Jul 2006, Linus Torvalds wrote:
+Dear diary, on Tue, Jul 11, 2006 at 08:02:53PM CEST, I got a letter
+where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> The consistency is a non-issue, because the Makefile rules Do The Right 
+> Thing.
 
-> @@ -762,20 +765,65 @@ static int parse_sha1_header(char *hdr, 
->  	/*
->  	 * The length must be followed by a zero byte
->  	 */
-> -	return *hdr ? -1 : 0;
-> +	bytes++;
-> +	if (*hdr)
-> +		bytes = -1;
-> +	return bytes;
+  once in a while, a Git command disappears, it has already happenned
+several times (git-rename, git-octopus, git-apply-patch-script, I'm sure
+I'd find some more if I looked better; looking into future, I'm not sure
+about the further life expectancy of e.g. git-resolve or git-ssh-fetch).
 
-Why not just say
+> I happen to run git without installing it, mainly because I like to fiddle 
+> around with git. Now, if "git" does not compile for some reason, with 
+> symlinks I lose git-diff, git-ls-files, etc.
 
-	return *hdr ? -1 : bytes;
+  If "git" doesn't compile nothing overwrites your previous "git" binary
+and things stay working. If "git" did compile but is broken, the
+Makefile already rehardlinked the other files anyway so you are still
+screwed.
 
-> +}
-> +
-> +static int parse_binary_sha1_header(char *hdr, char *type, unsigned long *sizep)
-> +{
-> +	unsigned char c;
-> +	int bytes = 1;
-> +	unsigned long size;
-> +	unsigned object_type, bits;
-> +	static const char *typename[8] = {
-> +		NULL,	/* OBJ_EXT */
-> +		"commit", "tree", "blob", "tag",
-> +		NULL, NULL, NULL 
-> +	};	
-> +
-> +	c = *hdr++;
-> +	object_type = (c >> 4) & 7;
-> +	if (!typename[object_type])
-> +		return -1;
+> And -- just maybe -- I _did_ mention a single reason to keep hard links: 
+> It works now. So why change it?
 
-You might want to add a comment saying "since the type is lowercase in 
-ascii format, object_type must be 6 or 7, which is an invalid object 
-type." It took me a little to figure that out...
+  The original patch mentioned why hardlinks are bad, so if you argue
+that the raised points are moot, you should give some substance to your
+argument.
 
-> +	strcpy(type, typename[object_type]);
-> +	size = c & 15;
+> > If you don't have the technical background to review a certain patch, please
+> > don't add to the noise.
+> 
+> It is not nice to tell a dumb man how dumb he is. Mommy! I am so sorry 
+> that I lack the technical background. Please apologize for the noise.
 
-Just a nit here: I think 0xf is easier to read with boolean operations.
+  Please help to maintain the very friendly nature of this list we
+have been enjoying so far.
 
-> +	bits = 4;
-> +	while (!(c & 0x80)) {
-> +		if (bits >= 8*sizeof(unsigned long))
-> +			return -1;
-> +		c = *hdr++;
-> +		size += (unsigned long) (c & 0x7f) << bits;
-> +		bytes++;
-> +		bits += 7;
-> +	}
+  Thanks,
 
-Are you not losing the last byte by putting the "while" _before_ instead 
-of _after_ the loop?
-
-> @@ -1192,7 +1240,7 @@ struct packed_git *find_sha1_pack(const 
->  
->  int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
->  {
-> -	int status;
-> +	int status, hdrlen;
->  	unsigned long mapsize, size;
->  	void *map;
->  	z_stream stream;
-> -
-
-This hunk is unnecessary, right?
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
