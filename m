@@ -1,32 +1,32 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Log ref changes made by resolve.
-Date: Tue, 11 Jul 2006 02:25:09 -0400
-Message-ID: <20060711062509.GC11822@spearce.org>
+Subject: Reflog support status
+Date: Tue, 11 Jul 2006 02:34:35 -0400
+Message-ID: <20060711063435.GD11822@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 08:25:31 2006
+X-From: git-owner@vger.kernel.org Tue Jul 11 08:34:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0BgR-0001IG-Cy
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 08:25:24 +0200
+	id 1G0BpU-0002sI-0p
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 08:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965221AbWGKGZU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 02:25:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965224AbWGKGZT
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 02:25:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:22723 "EHLO
+	id S965072AbWGKGel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 02:34:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965111AbWGKGel
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 02:34:41 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:64963 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S965221AbWGKGZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 02:25:18 -0400
+	id S965072AbWGKGek (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 02:34:40 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G0BgI-0007Oo-Bs; Tue, 11 Jul 2006 02:25:14 -0400
+	id 1G0BpN-0007jT-Vs
+	for git@vger.kernel.org; Tue, 11 Jul 2006 02:34:38 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4580E20E43C; Tue, 11 Jul 2006 02:25:09 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id 7A24820E43C; Tue, 11 Jul 2006 02:34:35 -0400 (EDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -40,50 +40,37 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23691>
 
-Since git-resolve is essentially a form of git-merge record any
-ref updates it makes similiar to how git-merge would record them.
+My recent flurry of patches tonight (looks to be 5 total, 6
+counting the user.name/user.email bug fix) should now include
+reasonably useful information messages anytime a ref which has an
+associated reflog gets updated, unless the update was made by one
+of the following:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- I have to ask:  Should git-resolve just be calling git-merge?  It
- does a fraction of what git-merge does yet it also can do the
- basic fast-forward and in-index merge that git-merge does...
+	git-archimport
+	git-cvsimport
+	git-svnimport
+	git-receive-pack
 
- git-resolve.sh |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+Which is pretty reasonable.
 
-diff --git a/git-resolve.sh b/git-resolve.sh
-index 1c7aaef..a7bc680 100755
---- a/git-resolve.sh
-+++ b/git-resolve.sh
-@@ -15,6 +15,7 @@ dropheads() {
- 
- head=$(git-rev-parse --verify "$1"^0) &&
- merge=$(git-rev-parse --verify "$2"^0) &&
-+merge_name="$2" &&
- merge_msg="$3" || usage
- 
- #
-@@ -43,7 +44,8 @@ case "$common" in
- "$head")
- 	echo "Updating from $head to $merge"
- 	git-read-tree -u -m $head $merge || exit 1
--	git-update-ref HEAD "$merge" "$head"
-+	git-update-ref -m "resolve $merge_name: Fast forward" \
-+		HEAD "$merge" "$head"
- 	git-diff-tree -p $head $merge | git-apply --stat
- 	dropheads
- 	exit 0
-@@ -100,6 +102,7 @@ if [ $? -ne 0 ]; then
- fi
- result_commit=$(echo "$merge_msg" | git-commit-tree $result_tree -p $head -p $merge)
- echo "Committed merge $result_commit"
--git-update-ref HEAD "$result_commit" "$head"
-+git-update-ref -m "resolve $merge_name: In-index merge" \
-+	HEAD "$result_commit" "$head"
- git-diff-tree -p $head $result_commit | git-apply --stat
- dropheads
+I'll try to tackle git-receive-pack tomorrow night, but the reason
+I have been putting it off is it would die a horrible death (exit
+anyway) if it attempts to update a logged ref and GIT_COMMITTER_IDENT
+can't be determined.  But if the repository owner has enabled
+reflogging exiting is probably the right thing to do in that case...
+
+I'd also like to parameterize git-am's reflog entries the way I
+did with git-merge, this way git-rebase will report as 'rebase'
+in the log rather than 'am'.  Again, I'll see if I can get that
+done tomorrow night.
+
+Junio: do you happen to still have that reflog program you put
+together?  I'm wondering if maybe we shouldn't include a git-reflog
+to cat the reflog file in a more human friendly format than the
+timestamps contained within the file, not to mention maybe also do
+oneline commit pretty printing.
+
 -- 
-1.4.1.gc48f
+Shawn.
