@@ -1,75 +1,63 @@
-From: Alp Toker <alp@atoker.com>
-Subject: [PATCH] gitweb: Include a site name in page titles
-Date: Tue, 11 Jul 2006 11:19:35 +0100
-Message-ID: <1152613179634-git-send-email-alp@atoker.com>
-References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com>
-X-From: git-owner@vger.kernel.org Tue Jul 11 12:20:20 2006
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Install built-ins as symlinks
+Date: Tue, 11 Jul 2006 13:15:14 +0200
+Message-ID: <44B38842.10609@op5.se>
+References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com> <1152613179634-git-send-email-alp@atoker.com> <11526131791902-git-send-email-alp@atoker.com> <11526131792773-git-send-email-alp@atoker.com> <11526131792377-git-send-email-alp@atoker.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 13:15:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0FLV-0003jo-Tp
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 12:20:02 +0200
+	id 1G0GDD-0007wi-T5
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 13:15:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750944AbWGKKTv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 06:19:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbWGKKTv
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 06:19:51 -0400
-Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:11795 "EHLO
-	ndesk.org") by vger.kernel.org with ESMTP id S1750944AbWGKKTt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 06:19:49 -0400
-Received: by ndesk.org (Postfix, from userid 1000)
-	id 146601645A1; Tue, 11 Jul 2006 11:19:39 +0100 (BST)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.1.g97c7-dirty
-In-Reply-To: <11526131781900-git-send-email-alp@atoker.com>
+	id S1751035AbWGKLPS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 07:15:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbWGKLPS
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 07:15:18 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:12435 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751035AbWGKLPQ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 07:15:16 -0400
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 4814F6BCC0; Tue, 11 Jul 2006 13:15:15 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
+X-Accept-Language: en-us, en
+To: Alp Toker <alp@atoker.com>
+In-Reply-To: <11526131792377-git-send-email-alp@atoker.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23708>
 
-Tip Of The Day:
-    <title>: the most important element of a quality Web page.
+Alp Toker wrote:
+> Doing this now will save headache in the long run, avoiding mismatched
+> versions of installed utilities and dangling copies of removed or
+> renamed git commands that still appear to work. It also makes screwups
+> when packaging git or making system backups less likely.
+> 
+> BusyBox has been doing it this way for years.
+> 
 
-This helps users tell one 'git' bookmark apart from the other in their
-browser and improves the indexing of gitweb sites in Web search engines.
+Git has been doing it for a couple of months, although it uses hardlinks 
+instead of symlinks. Hardlinks are slightly faster and actually consume 
+a little less hard-disk space, although the differences are so small you 
+won't notice it unless you do several thousand invocations.
 
-Signed-off-by: Alp Toker <alp@atoker.com>
----
- gitweb/gitweb.cgi |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+>  
+>  $(BUILT_INS): git$X
+> -	rm -f $@ && ln git$X $@
+> +	ln -sf git$X $@
+>  
 
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index bd9b9de..b12417b 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -46,6 +46,9 @@ if (! -d $git_temp) {
- # target of the home link on top of all pages
- our $home_link = $my_uri;
- 
-+# name of your site or organization to appear in page titles
-+our $site_name = "Untitled";
-+
- # html text to include at home page
- our $home_text = "indextext.html";
- 
-@@ -280,7 +283,7 @@ sub git_header_html {
- 	my $status = shift || "200 OK";
- 	my $expires = shift;
- 
--	my $title = "git";
-+	my $title = "$site_name git";
- 	if (defined $project) {
- 		$title .= " - $project";
- 		if (defined $action) {
-@@ -1770,7 +1773,7 @@ sub git_opml {
- 	print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
- 	      "<opml version=\"1.0\">\n".
- 	      "<head>".
--	      "  <title>Git OPML Export</title>\n".
-+	      "  <title>$site_name Git OPML Export</title>\n".
- 	      "</head>\n".
- 	      "<body>\n".
- 	      "<outline text=\"git RSS feeds\">\n";
+The -f option to ln is not very portable, hence the "rm && ln" construct.
+
 -- 
-1.4.1.g97c7-dirty
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
