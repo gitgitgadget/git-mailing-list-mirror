@@ -1,64 +1,46 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
-Date: 10 Jul 2006 18:42:35 -0700
-Message-ID: <863bd8nchg.fsf@blue.stonehenge.com>
+Date: Mon, 10 Jul 2006 18:57:15 -0700
+Message-ID: <7v4pxo7vk4.fsf@assigned-by-dhcp.cox.net>
 References: <20060710130046.GW29115@pasky.or.cz>
 	<20060711005354.5911.62525.stgit@machine.or.cz>
-	<86bqrwncnq.fsf@blue.stonehenge.com>
-	<867j2knckf.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 11 03:43:06 2006
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 11 03:58:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G07Gq-0000V0-74
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 03:42:44 +0200
+	id 1G07V4-0006Rs-Nf
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 03:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965048AbWGKBmh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 21:42:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965049AbWGKBmh
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 21:42:37 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:23411 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S965048AbWGKBmh
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jul 2006 21:42:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 7A3DA8F33A;
-	Mon, 10 Jul 2006 18:42:36 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 00661-01-63; Mon, 10 Jul 2006 18:42:36 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 0A65E8F343; Mon, 10 Jul 2006 18:42:36 -0700 (PDT)
+	id S965045AbWGKB5R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 21:57:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965049AbWGKB5Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 21:57:16 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:10733 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S965045AbWGKB5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jul 2006 21:57:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060711015715.VZHP18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 10 Jul 2006 21:57:15 -0400
 To: Petr Baudis <pasky@suse.cz>
-x-mayan-date: Long count = 12.19.13.8.4; tzolkin = 1 Kan; haab = 17 Tzec
-In-Reply-To: <867j2knckf.fsf@blue.stonehenge.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+In-Reply-To: <20060711005354.5911.62525.stgit@machine.or.cz> (Petr Baudis's
+	message of "Tue, 11 Jul 2006 02:53:54 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23681>
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
+Petr Baudis <pasky@suse.cz> writes:
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
-Randal> sub blessed {
-Randal> my $item = shift;
-Randal> local $@; # don't kill an outer $@
-Randal> ref $item and eval { $item->can('can') };
-Randal> }
+> We used just the blessed() routine so steal it from Scalar/Util.pm. ;-)
+> (Unfortunately, Scalar::Util is not bundled with older Perl versions.)
 
-Randal> Oops, lose the local $@ line.  Just found out this is a broken
-Randal> thing in current Perls.  The rest is good though.
-
-And thirdly, ignore what I *just* said, and concentrate on what I *previously*
-said, becaused my testing was off.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Eh, but aren't we going to rip out the try{}catch{} stuff to
+avoid extra closures?
