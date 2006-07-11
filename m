@@ -1,37 +1,37 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 3/3] Enable the new binary header format for unpacked objects
-Date: Tue, 11 Jul 2006 10:16:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607111012110.5623@g5.osdl.org>
+Subject: Re: [RFC]: Pack-file object format for individual objects (Was:
+ Revisiting large binary files issue.)
+Date: Tue, 11 Jul 2006 11:00:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607111053270.5623@g5.osdl.org>
 References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org>
+ <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <44B371FB.2070800@b-i-t.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 11 19:23:52 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 20:00:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0Lwp-00054a-1f
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 19:22:59 +0200
+	id 1G0MXJ-0003CI-2o
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 20:00:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbWGKRW4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 13:22:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbWGKRW4
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 13:22:56 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:13747 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751097AbWGKRWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 13:22:55 -0400
+	id S1751157AbWGKSAh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 14:00:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751159AbWGKSAh
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 14:00:37 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:26560 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751157AbWGKSAg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 14:00:36 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BHGOnW012532
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BI0XnW014989
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Jul 2006 10:16:24 -0700
+	Tue, 11 Jul 2006 11:00:33 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BHGNAL029917;
-	Tue, 11 Jul 2006 10:16:23 -0700
-To: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BI0W72031767;
+	Tue, 11 Jul 2006 11:00:32 -0700
+To: sf <sf@b-i-t.de>
+In-Reply-To: <44B371FB.2070800@b-i-t.de>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
 X-MIMEDefang-Filter: osdl$Revision: 1.140 $
@@ -39,204 +39,57 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23720>
 
 
-Enable the new binary header format for unpacked objects
+[ I read my personal mailbox first, so I didn't see this one until after I 
+  had already written my version.. ]
 
-This makes unpacked objects use the same header encoding as the packed
-objects do, which should eventually allow us to be able to re-use the
-object data directly when creating pack-files (rather than having to
-decode and re-encode the data when inserting it in a pack).
+On Tue, 11 Jul 2006, sf wrote:
+> 
+> I just stumbled over the same fact and asked myself why there are still
+> two formats. Wouldn't it make more sense to use the pack-file object
+> format for individual objects as well?
 
-It's enabled by default, but can be disabled with
+Yes, see the git list for a series of patches that try to do this.
 
-	[core]
-		BinaryHeaders = false
+> As it happens individual objects all start with nibble 7 (deflated with
+> default _zlib_ window size of 32K) whereas in the pack-file object
+> format nibble 7 indicates delta entries which never occur as individual
+> files.
 
-in the config file.
+I didn't actually do it that way, but it would be better to make the 
+"parse_ascii_sha1_header()" more strict, and only accept the old names. 
 
-We can read both formats, of course, so you can have a mixed archive.
+Right now my patch-series could in theory accept something that is _not_ 
+an ASCII header (eg it would be a binary header that just happened to have 
+the format "x n\0", where "n" was a valid number).
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+> Step 1. When reading individual objects from disk check the first nibble
+> and decode accordingly (see above).
 
-This should _not_ be applied to the main git sources, at least not
-with the default being "use_binary_headers = 1".
+Check more than that, but yes, this should be tightened up in my 
+series.
 
-But if you change that initial assignment to 0, this should be reasonably 
-good.
+> Step 2. When writing individual objects to disk write them in pack-file
+> object format. Make that optional (config-file parameter, command line
+> option etc.)?
 
-Not extensively tested, of course. It fails t9102-git-svn-deep-rmdir.sh 
-for me for some reason, I didn't really look at it yet, since this whole 
-thing is more for Carl Baldwin to play with right now.
+Done.
 
- Documentation/config.txt |    5 ++++
- cache.h                  |    1 +
- config.c                 |    5 ++++
- environment.c            |    1 +
- sha1_file.c              |   65 ++++++++++++++++++++++++++++++++++++++++------
- 5 files changed, 69 insertions(+), 8 deletions(-)
+> Step 3. Remove code for (old) individual object disk format.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0b434c1..bc95416 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -97,6 +97,11 @@ core.compression::
- 	compression, and 1..9 are various speed/size tradeoffs, 9 being
- 	slowest.
- 
-+core.binaryheaders::
-+	A boolean, that if set to false, disables the use of the
-+	new-style binary objects headers that share the same format with
-+	the headers in a pack file.
-+
- alias.*::
- 	Command aliases for the gitlink:git[1] command wrapper - e.g.
- 	after defining "alias.last = cat-file commit HEAD", the invocation
-diff --git a/cache.h b/cache.h
-index d433d46..756d89f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -176,6 +176,7 @@ extern int commit_lock_file(struct lock_
- extern void rollback_lock_file(struct lock_file *);
- 
- /* Environment bits from configuration mechanism */
-+extern int use_binary_headers;
- extern int trust_executable_bit;
- extern int assume_unchanged;
- extern int prefer_symlink_refs;
-diff --git a/config.c b/config.c
-index 8445f7d..2497447 100644
---- a/config.c
-+++ b/config.c
-@@ -289,6 +289,11 @@ int git_default_config(const char *var, 
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.binaryheaders")) {
-+		use_binary_headers = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "user.name")) {
- 		strlcpy(git_default_name, value, sizeof(git_default_name));
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 43823ff..340214d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -11,6 +11,7 @@ #include "cache.h"
- 
- char git_default_email[MAX_GITNAME];
- char git_default_name[MAX_GITNAME];
-+int use_binary_headers = 1;
- int trust_executable_bit = 1;
- int assume_unchanged = 0;
- int prefer_symlink_refs = 0;
-diff --git a/sha1_file.c b/sha1_file.c
-index ca5f0c0..700f455 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -699,11 +699,14 @@ static int unpack_sha1_header(z_stream *
- 
- static void *unpack_sha1_rest(z_stream *stream, void *buffer, unsigned long size, unsigned int hdrlen)
- {
--	int bytes = hdrlen;
-+	unsigned long bytes = hdrlen, n;
- 	unsigned char *buf = xmalloc(1+size);
- 
--	memcpy(buf, (char *) buffer + bytes, stream->total_out - bytes);
--	bytes = stream->total_out - bytes;
-+	n = stream->total_out - bytes;
-+	if (n > size)
-+		n = size;
-+	memcpy(buf, (char *) buffer + bytes, n);
-+	bytes = n;
- 	if (bytes < size) {
- 		stream->next_out = buf + bytes;
- 		stream->avail_out = size - bytes;
-@@ -1240,7 +1243,7 @@ struct packed_git *find_sha1_pack(const 
- 
- int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
- {
--	int status, hdrlen;
-+	int status;
- 	unsigned long mapsize, size;
- 	void *map;
- 	z_stream stream;
-@@ -1349,24 +1352,70 @@ void *read_object_with_reference(const u
- 	}
- }
- 
-+static int write_binary_header(unsigned char *hdr, enum object_type type, unsigned long len)
-+{
-+	int hdr_len;
-+	unsigned char c;
-+
-+	c = (type << 4) | (len & 15);
-+	len >>= 4;
-+	hdr_len = 1;
-+	while (len) {
-+		*hdr++ = c;
-+		hdr_len++;
-+		c = (len & 0x7f);
-+		len >>= 7;
-+	}
-+	*hdr = c | 0x80;
-+	return hdr_len;
-+}
-+
-+static int generate_binary_header(unsigned char *hdr, const char *type, unsigned long len)
-+{
-+	int obj_type;
-+
-+	if (!strcmp(type, blob_type))
-+		obj_type = OBJ_BLOB;
-+	else if (!strcmp(type, tree_type))
-+		obj_type = OBJ_TREE;
-+	else if (!strcmp(type, commit_type))
-+		obj_type = OBJ_COMMIT;
-+	else if (!strcmp(type, tag_type))
-+		obj_type = OBJ_TAG;
-+	else
-+		die("trying to generate bogus object of type '%s'", type);
-+	return write_binary_header(hdr, obj_type, len);
-+}
-+
- char *write_sha1_file_prepare(void *buf,
- 			      unsigned long len,
- 			      const char *type,
- 			      unsigned char *sha1,
- 			      unsigned char *hdr,
--			      int *hdrlen)
-+			      int *hdrlenp)
- {
- 	SHA_CTX c;
-+	int hdr_len;
- 
--	/* Generate the header */
--	*hdrlen = sprintf((char *)hdr, "%s %lu", type, len)+1;
-+	/*
-+	 * Generate the header.
-+	 *
-+	 * NOTE! Regardless of whether we end up using the ASCII
-+	 * or binary header, we always generate the SHA1 of the
-+	 * file as if we had the ASCII header.
-+	 */
-+	hdr_len = sprintf((char *)hdr, "%s %lu", type, len)+1;
- 
- 	/* Sha1.. */
- 	SHA1_Init(&c);
--	SHA1_Update(&c, hdr, *hdrlen);
-+	SHA1_Update(&c, hdr, hdr_len);
- 	SHA1_Update(&c, buf, len);
- 	SHA1_Final(sha1, &c);
- 
-+	if (use_binary_headers)
-+		hdr_len = generate_binary_header(hdr, type, len);
-+	*hdrlenp = hdr_len;
-+
- 	return sha1_file_name(sha1);
- }
- 
+Well, I'm not sure how necessary that even is. We actually do have to 
+generate the old header regardless, if for no other reason than the fact 
+that we generate the SHA1 names based on it (even if we then write a 
+new-style dense binary header to disk and discard the ASCII header).
+
+Having it there means that you can always just get a new version of git, 
+and never worry about how old the archive you're working with is.
+
+(And then doing a "git repack -a -d" will make any archive also work with 
+an old-style git, since the pack-file format didn't change, and a "git 
+repack" thus ends up always creating something that is readable by 
+anybody, including old clients).
+
+		Linus
