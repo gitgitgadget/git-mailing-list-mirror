@@ -1,32 +1,32 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Why doesn't git-rerere automatically commit a resolution?
-Date: Tue, 11 Jul 2006 02:16:26 -0400
-Message-ID: <20060711061626.GB11822@spearce.org>
+Subject: Log ref changes made by resolve.
+Date: Tue, 11 Jul 2006 02:25:09 -0400
+Message-ID: <20060711062509.GC11822@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jul 11 08:16:51 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 08:25:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0BXu-00088l-SW
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 08:16:35 +0200
+	id 1G0BgR-0001IG-Cy
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 08:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965163AbWGKGQc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 02:16:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965167AbWGKGQc
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 02:16:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58306 "EHLO
+	id S965221AbWGKGZU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 02:25:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965224AbWGKGZT
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 02:25:19 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:22723 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S965163AbWGKGQb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 02:16:31 -0400
+	id S965221AbWGKGZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 02:25:18 -0400
 Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G0BXo-00079E-2Y
-	for git@vger.kernel.org; Tue, 11 Jul 2006 02:16:28 -0400
+	id 1G0BgI-0007Oo-Bs; Tue, 11 Jul 2006 02:25:14 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9B2F220E43C; Tue, 11 Jul 2006 02:16:26 -0400 (EDT)
-To: git@vger.kernel.org
+	id 4580E20E43C; Tue, 11 Jul 2006 02:25:09 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -40,26 +40,50 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23690>
 
-I'm curious... I have a pair of topic branches which don't merge
-together cleanly by recursive (due to conflicting hunks in the
-same line segments).  I enabled git-rerere, ran the merge, fixed
-up the hunks and committed it.  git-rerere built its cache, as
-the next time I pulled the two topic branches together and got
-the same conflicts it correctly regenerated the prior resolution
-(and printed a message saying as much).
+Since git-resolve is essentially a form of git-merge record any
+ref updates it makes similiar to how git-merge would record them.
 
-But it git-rerere left the files unmerged in the index and it
-doesn't generate a commit for the merge, even though there are no
-merge conflicts remaining.  I expected it to update the index (to
-merge the stages) and to generate a commit if possible; especially
-in this case as I was pulling the exact same two commits together
-again with the exact same merge base commit.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ I have to ask:  Should git-resolve just be calling git-merge?  It
+ does a fraction of what git-merge does yet it also can do the
+ basic fast-forward and in-index merge that git-merge does...
 
-So I'm wondering why doesn't it try to finish the merge?  Was there
-a really deep rooted reason behind it or was it simply easier/safer
-to let the user sort out the working directory state every time?
+ git-resolve.sh |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/git-resolve.sh b/git-resolve.sh
+index 1c7aaef..a7bc680 100755
+--- a/git-resolve.sh
++++ b/git-resolve.sh
+@@ -15,6 +15,7 @@ dropheads() {
+ 
+ head=$(git-rev-parse --verify "$1"^0) &&
+ merge=$(git-rev-parse --verify "$2"^0) &&
++merge_name="$2" &&
+ merge_msg="$3" || usage
+ 
+ #
+@@ -43,7 +44,8 @@ case "$common" in
+ "$head")
+ 	echo "Updating from $head to $merge"
+ 	git-read-tree -u -m $head $merge || exit 1
+-	git-update-ref HEAD "$merge" "$head"
++	git-update-ref -m "resolve $merge_name: Fast forward" \
++		HEAD "$merge" "$head"
+ 	git-diff-tree -p $head $merge | git-apply --stat
+ 	dropheads
+ 	exit 0
+@@ -100,6 +102,7 @@ if [ $? -ne 0 ]; then
+ fi
+ result_commit=$(echo "$merge_msg" | git-commit-tree $result_tree -p $head -p $merge)
+ echo "Committed merge $result_commit"
+-git-update-ref HEAD "$result_commit" "$head"
++git-update-ref -m "resolve $merge_name: In-index merge" \
++	HEAD "$result_commit" "$head"
+ git-diff-tree -p $head $result_commit | git-apply --stat
+ dropheads
 -- 
-Shawn.
+1.4.1.gc48f
