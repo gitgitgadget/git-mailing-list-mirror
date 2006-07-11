@@ -1,49 +1,77 @@
-From: Alp Toker <alp@atoker.com>
-Subject: Re: [PATCH] Install built-ins as symlinks
-Date: Tue, 11 Jul 2006 15:58:28 +0100
-Message-ID: <44B3BC94.3000204@atoker.com>
-References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com> <1152613179634-git-send-email-alp@atoker.com> <11526131791902-git-send-email-alp@atoker.com> <11526131792773-git-send-email-alp@atoker.com> <11526131792377-git-send-email-alp@atoker.com> <Pine.LNX.4.63.0607111614550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Revisiting large binary files issue.
+Date: Tue, 11 Jul 2006 10:09:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org>
+References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 16:59:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 11 19:16:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0Jh3-0001n8-1a
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 16:58:33 +0200
+	id 1G0LqQ-00046e-2p
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 19:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbWGKO6a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 10:58:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbWGKO6a
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 10:58:30 -0400
-Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:65294 "EHLO
-	ndesk.org") by vger.kernel.org with ESMTP id S1750949AbWGKO63 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 10:58:29 -0400
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by ndesk.org (Postfix) with ESMTP id 796C91645A1;
-	Tue, 11 Jul 2006 15:58:28 +0100 (BST)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607111614550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751126AbWGKRQS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 13:16:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbWGKRQR
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 13:16:17 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:3249 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751126AbWGKRQQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 13:16:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BH9nnW011846
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 11 Jul 2006 10:09:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BH9mWs029550;
+	Tue, 11 Jul 2006 10:09:49 -0700
+To: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20060711145527.GA32468@hpsvcnb.fc.hp.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23716>
 
-Johannes Schindelin wrote:
->> Doing this now will save headache in the long run, avoiding mismatched
->> versions of installed utilities and dangling copies of removed or
->> renamed git commands that still appear to work. It also makes screwups
->> when packaging git or making system backups less likely.
-> 
-> Could we please fix things, which are broken? Not things which work?
 
-There are maybe a dozen arguments for and against the use of symlinks 
-here, some of which Andreas has helpfully explained in his reply. You, 
-on the other hand, have managed not to mention a single one of them.
 
-If you don't have the technical background to review a certain patch, 
-please don't add to the noise.
+On Tue, 11 Jul 2006, Carl Baldwin wrote:
+>
+> I'd like to get my hands dirty and see for myself where the issue lies.
+> I hope to have some time next week to devote to this.  Is it reasonable
+> to hope for a solution that is at least a lot lighter weight than the
+> current status quo?
+
+Ok, I decided to see how nasty an object database change would be.
+
+It doesn't look too bad. The following three patches implement what looks 
+like a workable model.
+
+NOTE NOTE NOTE! It makes the new "binary headers" the default, and that 
+will mean that unless you have applied the first two patches, any 
+repository that has had objects added with the new git version WILL NOT BE 
+READABLE BY AN OLDER GIT VERSION!
+
+So I think that the first two patches can be added to the main git branch 
+pretty much immediately (after people have tested this all a _bit_ more, 
+of course), because the first two patches just add the capability to 
+_read_ a mixed-format repository.
+
+The third patch is the one that actually starts _writing_ new-format repo. 
+It should be applied with extreme care, although it can basically be 
+de-fanged by setting the default initial value of the "use_binary_headers" 
+to 0, which will make it not write the binary headers by default.
+
+I have _not_ verified that the actual object format is identical to the 
+pack-file one, but it should be. It's simple enough.
+
+The three patches will be sent as replies to this email.
+
+		Linus
