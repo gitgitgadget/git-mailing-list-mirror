@@ -1,39 +1,38 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack
-   file format"
-Date: Tue, 11 Jul 2006 15:09:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607111449190.5623@g5.osdl.org>
+Subject: Re: [RFC]: Pack-file object format for individual objects (Was:  
+ Revisiting large binary files issue.)
+Date: Tue, 11 Jul 2006 15:17:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607111512420.5623@g5.osdl.org>
 References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org> <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
- <44B4172B.3070503@stephan-feder.de>
+ <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <44B371FB.2070800@b-i-t.de>
+ <Pine.LNX.4.64.0607111053270.5623@g5.osdl.org> <44B41BFD.8010808@stephan-feder.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 12 00:09:34 2006
+X-From: git-owner@vger.kernel.org Wed Jul 12 00:17:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0QPw-0004Mg-Hq
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 00:09:20 +0200
+	id 1G0QYC-0005cx-KS
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 00:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189AbWGKWJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 18:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932187AbWGKWJP
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 18:09:15 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18846 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932190AbWGKWJN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 18:09:13 -0400
+	id S932198AbWGKWRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 18:17:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932197AbWGKWRt
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 18:17:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:40864 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932198AbWGKWRt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 18:17:49 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BM9AnW031078
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BMHjnW031544
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Jul 2006 15:09:10 -0700
+	Tue, 11 Jul 2006 15:17:46 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BM97rT010696;
-	Tue, 11 Jul 2006 15:09:08 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BMHi2G011008;
+	Tue, 11 Jul 2006 15:17:45 -0700
 To: sf <sf-gmane@stephan-feder.de>
-In-Reply-To: <44B4172B.3070503@stephan-feder.de>
+In-Reply-To: <44B41BFD.8010808@stephan-feder.de>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
 X-MIMEDefang-Filter: osdl$Revision: 1.140 $
@@ -41,46 +40,48 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23741>
 
 
 
 On Tue, 11 Jul 2006, sf wrote:
 > 
-> And in the traditional format type and length are compressed whereas in
-> the pack-file format they are not.
+> Just look at the first byte of the object file _without doing any
+> decompression_. It is 0x78 _if and only if_ the object file is in the
+> traditional format.
 
-Ahh. Yes.
+0x78 isn't the only valid flag for a zlib stream, as far as I can tell.
 
-> > This should probably be applied to the main tree asap if we think
-> > this is at all a worthwhile exercise. But somebody should verify that I 
-> > got the format right first!
-> 
-> Sorry but see above.
+It may be the only one _in_practice_, of course, but the zlib standard 
+defines the first byte as
 
-Good catch, thanks indeed.
+ - for low bits: CM (compression method):
 
-Doing that for unpacked objects would in fact make a lot of things much 
-simpler, so it would be good to do. The _bad_ part is that this also makes 
-it a lot harder to see the difference between a "binary header" and a 
-"compressed ASCII header". The two are not "obviously different" any more.
+        "This identifies the compression method used in the file. CM = 8
+         denotes the "deflate" compression method with a window size up
+         to 32K.  This is the method used by gzip and PNG (see
+         references [1] and [2] in Chapter 3, below, for the reference
+         documents).  CM = 15 is reserved.  It might be used in a future
+         version of this specification to indicate the presence of an
+         extra field before the compressed data."
 
-The common byte sequence for a compressed stream is
+ - four high bits are CINFO: 
 
-	78 9c ...
+        "For CM = 8, CINFO is the base-2 logarithm of the LZ77 window
+         size, minus eight (CINFO=7 indicates a 32K window size). Values
+         of CINFO above 7 are not allowed in this version of the
+         specification.  CINFO is not defined in this specification for
+         CM not equal to 8."
 
-where the first byte is the CMF byte (compression info and method).
+so 0x78 means "deflate with 32kB window size", but I don't see anything 
+guaranteeing that we might not see something else for an object that 
+cannot be compressed, for example.
 
-But it's not the only possible such sequence according to the zlib format.
+Anyway, the good news is that _if_ 0x78 is indeed the only possible value, 
+then it is also an illegal value for an unpacked object in pack-file 
+format (type=7 being OBJ_DELTA) and we wouldn't need any other flag for 
+this.
 
-(The 16-bit hex number in MSB format, ie 0x789c above, is defined to have 
-a built-in checksum, so that it must be a multiple of 31 according to the 
-standard: 0x789c = 996 * 31).
-
-So if we have a uncompressed header, we'd need to add a separate 2-byte 
-fingerprint to it _before_ the real header that isn't divisible by 31, and 
-use that as the thing to test.
-
-Ho humm. I'll see what I can come up with.
+I just don't know if it's the only possible one..
 
 		Linus
