@@ -1,60 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Use the git binary in the search path by default
-Date: Tue, 11 Jul 2006 12:56:24 -0700
-Message-ID: <7vzmff3ogn.fsf@assigned-by-dhcp.cox.net>
-References: <11526131782190-git-send-email-alp@atoker.com>
-	<11526131781900-git-send-email-alp@atoker.com>
-	<1152613179634-git-send-email-alp@atoker.com>
-	<11526131791902-git-send-email-alp@atoker.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 21:57:05 2006
+From: Alp Toker <alp@atoker.com>
+Subject: [PATCH] gitweb: Include a site name in page titles
+Date: Tue, 11 Jul 2006 21:10:26 +0100
+Message-ID: <11526486261142-git-send-email-alp@atoker.com>
+Cc: junkio@cox.net, martin.langhoff@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jul 11 22:10:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0OLP-0007AI-BG
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 21:56:31 +0200
+	id 1G0OZ6-0000pN-NL
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 22:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932122AbWGKT42 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 15:56:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932119AbWGKT41
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 15:56:27 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:18424 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932121AbWGKT40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 15:56:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060711195625.MZFV12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 11 Jul 2006 15:56:25 -0400
-To: Alp Toker <alp@atoker.com>
-In-Reply-To: <11526131791902-git-send-email-alp@atoker.com> (Alp Toker's
-	message of "Tue, 11 Jul 2006 11:19:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751216AbWGKUKi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 16:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbWGKUKi
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 16:10:38 -0400
+Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:64772 "EHLO
+	ndesk.org") by vger.kernel.org with ESMTP id S1751216AbWGKUKh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 16:10:37 -0400
+Received: by ndesk.org (Postfix, from userid 1000)
+	id 90DA016F09E; Tue, 11 Jul 2006 21:10:26 +0100 (BST)
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.1.g97c7-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23733>
 
-Alp Toker <alp@atoker.com> writes:
+Tip Of The Day:
+    <title>: the most important element of a quality Web page.
 
-> Introduce a sensible default for the location of the git binary used by
-> gitweb. This means one less option to configure when deploying gitweb if
-> git is in the search path.
+This helps users tell one 'git' bookmark apart from the other in their
+browser and improves the indexing of gitweb sites in Web search engines.
 
-While I think the part of the change to make things go through
-the single "git" wrapper is a good idea, the comment to "our
-$GIT" that says "absolute path is optional" makes this change
-more like "assume PATH your webserver process uses is sensible",
-not "introduce a sensible default".
+Defaults to the HTTP SERVER_NAME.
 
-So I would prefer to do that part like this:
+Signed-off-by: Alp Toker <alp@atoker.com>
+---
+ gitweb/gitweb.cgi |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
--# location of the git-core binaries
--our $gitbin = "/usr/bin";
-+# core git wrapper -- if your webserver runs with a sensible PATH
-+# you can just say "git" without using absolute pathname here.
-+our $GIT = "/usr/bin/git";
+diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
+index 2e87de4..be0a01d 100755
+--- a/gitweb/gitweb.cgi
++++ b/gitweb/gitweb.cgi
+@@ -46,6 +46,10 @@ if (! -d $git_temp) {
+ # target of the home link on top of all pages
+ our $home_link = $my_uri;
+ 
++# name of your site or organization to appear in page titles
++# replace this with something more descriptive for clearer bookmarks
++our $site_name = $ENV{'SERVER_NAME'} || "Untitled";
++
+ # html text to include at home page
+ our $home_text = "indextext.html";
+ 
+@@ -280,7 +284,7 @@ sub git_header_html {
+ 	my $status = shift || "200 OK";
+ 	my $expires = shift;
+ 
+-	my $title = "git";
++	my $title = "$site_name git";
+ 	if (defined $project) {
+ 		$title .= " - $project";
+ 		if (defined $action) {
+@@ -1760,7 +1764,7 @@ sub git_opml {
+ 	print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
+ 	      "<opml version=\"1.0\">\n".
+ 	      "<head>".
+-	      "  <title>Git OPML Export</title>\n".
++	      "  <title>$site_name Git OPML Export</title>\n".
+ 	      "</head>\n".
+ 	      "<body>\n".
+ 	      "<outline text=\"git RSS feeds\">\n";
+-- 
+1.4.1.g97c7-dirty
