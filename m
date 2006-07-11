@@ -1,71 +1,130 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Items not covered by repository-layout.txt
-Date: Mon, 10 Jul 2006 17:23:21 -0700
-Message-ID: <7vlkr16lc6.fsf@assigned-by-dhcp.cox.net>
-References: <e8ue98$o7t$1@sea.gmane.org>
-	<7v1wstb12x.fsf@assigned-by-dhcp.cox.net> <e8uhjg$5o1$1@sea.gmane.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git-update-ref (reflog) uses bogus author ident information
+Date: Mon, 10 Jul 2006 20:27:54 -0400
+Message-ID: <20060711002754.GB10700@spearce.org>
+References: <e8uele$o7t$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 02:23:32 2006
+X-From: git-owner@vger.kernel.org Tue Jul 11 02:28:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0629-00006h-Fm
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 02:23:25 +0200
+	id 1G066h-0000oc-4a
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 02:28:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932314AbWGKAXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 10 Jul 2006 20:23:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbWGKAXW
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 20:23:22 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:10148 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751333AbWGKAXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jul 2006 20:23:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060711002321.ELCC22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 10 Jul 2006 20:23:21 -0400
-To: jnareb@gmail.com
-In-Reply-To: <e8uhjg$5o1$1@sea.gmane.org> (Jakub Narebski's message of "Mon,
-	10 Jul 2006 23:42:42 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751346AbWGKA2E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 10 Jul 2006 20:28:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbWGKA2D
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Jul 2006 20:28:03 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:28832 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751346AbWGKA2C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jul 2006 20:28:02 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G066P-0006HD-Az; Mon, 10 Jul 2006 20:27:49 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 426AE20E43C; Mon, 10 Jul 2006 20:27:55 -0400 (EDT)
+To: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <e8uele$o7t$2@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23674>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> git-log reports 
+> 
+>   commit 059111c9381ce1444d17c8fc35606b0aa417ca42
+>   Author: Jakub Narebski <jnareb@gmail.com>
+>   Date:   Sat Jul 8 18:52:35 2006 +0200
+>   
+>       configure.ac vertical whitespace usage cleanup
+>  
+> git-var -l shows:
+> 
+>  GIT_COMMITTER_IDENT=Jakub Narebski <jnareb@gmail.com> 1152564452 +0200
+>  GIT_AUTHOR_IDENT=Jakub Narebski <jnareb@gmail.com> 1152564452 +0200
+> 
+> BUT in git/.git/logs/refs/heads/autoconf I have (broken into lines):
+>   fe7b45a419ae62ed96148d98f6aba8710a6f6245
+>   059111c9381ce1444d17c8fc35606b0aa417ca42 
+>   Jakub Narebski <jnareb@roke.D-201> 1152377555 +0200   
+>   commit: configure.ac vertical whitespace usage cleanu
+> 
+> where "roke.D-201" are results of "hostname -f" on my computer, and are
+> suitable _only_ for my small private local network.
+> 
+> Bug or a feature?
 
-> Could you then tell me what is the format of FETCH_HEAD and what other *_HEADs 
-> can be seen in $GIT_DIR (MERGE_HEAD?)?
+This is definately a bug.  The reflog uses the same ident code
+that commit-tree uses, with the idea that GIT_COMMITTER_IDENT would
+drive the entry in the reflog, as you expected it to.
 
-Which essentially is that you are telling me to do that, but I
-am a bit busy this week.
+Looking in refs.c at log_ref_write its invoking setup_ident()
+then git_committer_info(1).  git_committer_info should be using
+the environment variables (GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL,
+GIT_COMMITTER_DATE) with defaults back to the gecos values.  Based
+on that it would seem that the user data in .git/config is being
+ignored...  Hm.
 
-If you can use the source to figure them out, that would be
-great; otherwise this can wait or others can chime in.
+So you must be expecting .git/config to be supplying your data but
+its getting overrwritten by setup_ident() in log_ref_write.
 
-For FETCH_HEAD fmt-merge-msg and git-pull would be helpful.
-The general format is, one entry per line:
+Here's the bug fix.  Sorry about that one.  That bug has been in
+there since the reflog code was first put into GIT.  :-)
 
-	object name <TAB> merge-marker <TAB> notes
+-->--
+Allow user.name and user.email to drive reflog entry.
 
-where merge-marker is either empty (for commits to be merged by
-git-pull that called git-fetch) or not-for-merge, and notes is a
-human readable comment that describes where that object came
-from.  Note that this is read both by humans _AND_ machine;
-fmt-merge-msg relies on how it is stated.
+Apparently calling setup_ident() after git_config causes the
+user.name and user.email values read from the config file to be
+replaced with the data obtained from the host.  This means that
+users who have setup their email address in user.email will instead
+be writing reflog entries with their hostname.
 
-Others "git grep -e _HEAD -- '*.sh'" perhaps.
+Moving setup_ident() to before git_config in update-ref resolves
+this ordering problem.
+---
+ builtin-update-ref.c |    1 +
+ refs.c               |    1 -
+ 2 files changed, 1 insertions(+), 1 deletions(-)
 
-	ORIG_HEAD - used to keep the value of HEAD before we do
-                    anything we might regret
-
-	MERGE_HEAD - one or more commit object names that are
-                    being merged into the current branch during
-                    a merge.
-
-	MERGE_MSG - generated message for an automerge.
+diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+index 00333c7..83094ab 100644
+--- a/builtin-update-ref.c
++++ b/builtin-update-ref.c
+@@ -12,6 +12,7 @@ int cmd_update_ref(int argc, const char 
+ 	unsigned char sha1[20], oldsha1[20];
+ 	int i;
+ 
++	setup_ident();
+ 	setup_git_directory();
+ 	git_config(git_default_config);
+ 
+diff --git a/refs.c b/refs.c
+index 2d9c1dc..56db394 100644
+--- a/refs.c
++++ b/refs.c
+@@ -379,7 +379,6 @@ static int log_ref_write(struct ref_lock
+ 			lock->log_file, strerror(errno));
+ 	}
+ 
+-	setup_ident();
+ 	committer = git_committer_info(1);
+ 	if (msg) {
+ 		maxlen = strlen(committer) + strlen(msg) + 2*40 + 5;
+-- 
+1.4.1.gc48f
