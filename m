@@ -1,76 +1,91 @@
-From: sf <sf@b-i-t.de>
-Subject: [RFC]: Pack-file object format for individual objects (Was: Revisiting
- large binary files issue.)
-Date: Tue, 11 Jul 2006 11:40:11 +0200
-Message-ID: <44B371FB.2070800@b-i-t.de>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org>
+From: Franck Bui-Huu <vagabon.xyz@gmail.com>
+Subject: Re: Re : 2 questions on git-send-email usage
+Date: Tue, 11 Jul 2006 12:08:19 +0200
+Message-ID: <44B37893.5090501@innova-card.com>
+References: <20060711084635.81393.qmail@web25809.mail.ukl.yahoo.com>
+Reply-To: Franck <vagabon.xyz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jul 11 11:41:03 2006
+Cc: jnareb@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 11 12:03:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0Ejd-0003z4-CZ
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 11:40:54 +0200
+	id 1G0F5g-0008L4-8l
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 12:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821AbWGKJkt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 05:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750856AbWGKJkt
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 05:40:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:7296 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750821AbWGKJks (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 05:40:48 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G0EjO-0003w0-Ks
-	for git@vger.kernel.org; Tue, 11 Jul 2006 11:40:38 +0200
-Received: from ip-213157015184.dialin.heagmedianet.de ([213.157.15.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Jul 2006 11:40:38 +0200
-Received: from sf by ip-213157015184.dialin.heagmedianet.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Jul 2006 11:40:38 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ip-213157015184.dialin.heagmedianet.de
-User-Agent: Thunderbird 1.5.0.4 (X11/20060606)
-In-Reply-To: <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org>
+	id S1750912AbWGKKDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 06:03:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbWGKKDf
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 06:03:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:32556 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750907AbWGKKDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 06:03:34 -0400
+Received: by ug-out-1314.google.com with SMTP id a2so4244308ugf
+        for <git@vger.kernel.org>; Tue, 11 Jul 2006 03:03:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=HXZu9gvwGiGfDw4mEdEoClUqLMbO7rf5xWHWJTQD3hD0WR6+aJA/1/JusFKlX0R/CqO3gznJALfg2jtuQroE8T48DQ80vJOewZ5g8eJp32+akNPMEf6Ir3NdFqCMKX6/isqS7NeCXUV4x4yqCdHSFWlo7zk6wr7WFDu+dDEFWt4=
+Received: by 10.66.220.17 with SMTP id s17mr834011ugg;
+        Tue, 11 Jul 2006 03:03:33 -0700 (PDT)
+Received: from ?192.168.0.24? ( [194.3.162.233])
+        by mx.gmail.com with ESMTP id h1sm4071978ugf.2006.07.11.03.03.28;
+        Tue, 11 Jul 2006 03:03:32 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: moreau francis <francis_moreau2000@yahoo.fr>,
+	Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20060711084635.81393.qmail@web25809.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23701>
 
-Linus Torvalds wrote:
-...
-> The problem is that the individual object disk format isn't actually the 
-> same as the pack-file object format for one object. The header is 
-> different: a pack-file uses a very dense bit packing, while the individual 
-> object format is a bit less dense.
+moreau francis wrote:
+> 2 RETs is missing. One after the Subject line and the other before the 
+> Signed-off-by line. If I add the first missing RET, all works fine.  I guess
+> it's missing because of git-cherry-pick command. But I don't understand
+> why the last RET is missing
+> 
+> Can anybody tell me why ?
+> 
 
-I just stumbled over the same fact and asked myself why there are still
-two formats. Wouldn't it make more sense to use the pack-file object
-format for individual objects as well?
+Maybe that patch does what you want.
 
-As it happens individual objects all start with nibble 7 (deflated with
-default _zlib_ window size of 32K) whereas in the pack-file object
-format nibble 7 indicates delta entries which never occur as individual
-files.
+-- >8 --
 
-Roadmap for using pack-file format as individual object disk format:
+Subject: [PATCH] Add a newline before appending "Signed-off-by:"
 
-Step 1. When reading individual objects from disk check the first nibble
-and decode accordingly (see above).
+It looks nicer.
 
-Step 2. When writing individual objects to disk write them in pack-file
-object format. Make that optional (config-file parameter, command line
-option etc.)?
+Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
+---
+ log-tree.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Step 3. Remove code for (old) individual object disk format.
-
-Please comment.
-
-Regards
-	Stephan
+diff --git a/log-tree.c b/log-tree.c
+index ebb49f2..2551a3f 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -19,7 +19,7 @@ static int append_signoff(char *buf, int
+ 	char *cp = buf;
+ 
+ 	/* Do we have enough space to add it? */
+-	if (buf_sz - at <= strlen(signed_off_by) + signoff_len + 2)
++	if (buf_sz - at <= strlen(signed_off_by) + signoff_len + 3)
+ 		return at;
+ 
+ 	/* First see if we already have the sign-off by the signer */
+@@ -34,6 +34,7 @@ static int append_signoff(char *buf, int
+ 			return at; /* we already have him */
+ 	}
+ 
++	buf[at++] = '\n';
+ 	strcpy(buf + at, signed_off_by);
+ 	at += strlen(signed_off_by);
+ 	strcpy(buf + at, signoff);
+-- 
+1.4.1.g35c6-dirty
