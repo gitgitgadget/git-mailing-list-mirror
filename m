@@ -1,72 +1,72 @@
-From: moreau francis <francis_moreau2000@yahoo.fr>
-Subject: Re: 2 questions on git-send-email usage
-Date: Tue, 11 Jul 2006 06:09:17 +0000 (GMT)
-Message-ID: <20060711060917.34698.qmail@web25813.mail.ukl.yahoo.com>
-Reply-To: moreau francis <francis_moreau2000@yahoo.fr>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Log ref changes made by quiltimport.
+Date: Tue, 11 Jul 2006 02:10:19 -0400
+Message-ID: <20060711061019.GA11822@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 08:09:25 2006
+X-From: git-owner@vger.kernel.org Tue Jul 11 08:10:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0BQx-0006y9-DH
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 08:09:23 +0200
+	id 1G0BRz-000776-B4
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 08:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030189AbWGKGJT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 02:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030231AbWGKGJT
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 02:09:19 -0400
-Received: from web25813.mail.ukl.yahoo.com ([217.146.176.246]:50284 "HELO
-	web25813.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1030189AbWGKGJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 02:09:19 -0400
-Received: (qmail 34700 invoked by uid 60001); 11 Jul 2006 06:09:17 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.fr;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type;
-  b=vKH7FHuMYNWe3nnE+R6842UYV2Tiir7p0pmbEAXnIRgWhroYmWXMUt7XS8iMbXsGy1zXJxHa73RnyqbQUeVzGqudvnTa/iGSuqIwEKF1XOoMqlVqzO/byefr4CtosW98BFlRIWjbqMYtPPXJQERK0/WrsWA5xI6ye11hUnx9sBI=  ;
-Received: from [82.235.205.153] by web25813.mail.ukl.yahoo.com via HTTP; Tue, 11 Jul 2006 06:09:17 GMT
-To: jnareb@gmail.com
+	id S964820AbWGKGKY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 02:10:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965032AbWGKGKY
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 02:10:24 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:34242 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964820AbWGKGKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 02:10:23 -0400
+Received: from cpe-72-226-60-173.nycap.res.rr.com ([72.226.60.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G0BRs-0006va-Oi; Tue, 11 Jul 2006 02:10:21 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 61D2A20E43C; Tue, 11 Jul 2006 02:10:19 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23688>
 
-(please let me CCed when replying)
- 
- 2006/7/10, Jakub Narebski <jnareb@gmail.com>:
- > moreau francis wrote:
- > 
- > > I'm wondering what am I supposed to answer when git-send-email
- > > is asking me :
- > >
- > > Message-ID to be used as In-Reply-To for the first email?
- > >
- > > I'm running this command:
- > >
- > > $ git-send-email --no-signed-off-by-cc --no-chain-reply-to --to \
- > >   foo@bar.com --compose /tmp/patch/
- > >
- > > to write an introductory message, and all patches are sent as replies to
- > > this introductory email sent.
- > 
- > Empty string (i.e. RET) should do if you don't want to attach your series of
- > patches somewhere in existing thread.
- 
- ok I'll try
- 
- --in-reply-to ""
- 
- > 
- > > I also noticed that git-send-email removes the commit message of each
- > > patches I sent, I don't think this is the normal behaviour though. What
- > > am I missing ?
- > 
- > Are patches formatted using git-format-patch?
- > 
- 
- yes
- 
- Francis
+When importing a quilt patch to a branch which has a reflog record
+the update to HEAD with a log message indicating the change was
+made by quiltimport and what patch caused the change.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Aside from git-resolve and git-clone this is the last shell script
+ which didn't include a log message when invoking update-ref.  So
+ here it is.  :-)
+
+ git-quiltimport.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+index 86b51ab..9f16e18 100755
+--- a/git-quiltimport.sh
++++ b/git-quiltimport.sh
+@@ -112,7 +112,7 @@ for patch_name in $(cat "$QUILT_PATCHES/
+ 		git-apply --index -C1 "$tmp_patch" &&
+ 		tree=$(git-write-tree) &&
+ 		commit=$((echo "$SUBJECT"; echo; cat "$tmp_msg") | git-commit-tree $tree -p $commit) &&
+-		git-update-ref HEAD $commit || exit 4
++		git-update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
+ 	fi
+ done
+ rm -rf $tmp_dir || exit 5
+-- 
+1.4.1.gc48f
