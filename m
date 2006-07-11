@@ -1,55 +1,49 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Re : 2 questions on git-send-email usage
-Date: Tue, 11 Jul 2006 12:22:47 -0700
-Message-ID: <7vd5cc3q0o.fsf@assigned-by-dhcp.cox.net>
-References: <20060711084635.81393.qmail@web25809.mail.ukl.yahoo.com>
-	<44B37893.5090501@innova-card.com>
+Subject: Re: [PATCH] gitweb: Include a site name in page titles
+Date: Tue, 11 Jul 2006 12:48:00 -0700
+Message-ID: <7v64i353f3.fsf@assigned-by-dhcp.cox.net>
+References: <11526131782190-git-send-email-alp@atoker.com>
+	<11526131781900-git-send-email-alp@atoker.com>
+	<1152613179634-git-send-email-alp@atoker.com>
+	<46a038f90607110448p40fd8984ke3e15639cf5ecf46@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 21:23:03 2006
+Cc: git@vger.kernel.org, "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 11 21:48:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0Noq-0000kP-FJ
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 21:22:53 +0200
+	id 1G0ODH-0005Ta-Nj
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 21:48:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191AbWGKTWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 15:22:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbWGKTWt
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 15:22:49 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:31184 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751191AbWGKTWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 15:22:49 -0400
+	id S932102AbWGKTsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 15:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbWGKTsE
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 15:48:04 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:27301 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932102AbWGKTsC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 15:48:02 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060711192248.JMLI12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 11 Jul 2006 15:22:48 -0400
-To: Franck <vagabon.xyz@gmail.com>
-In-Reply-To: <44B37893.5090501@innova-card.com> (Franck Bui-Huu's message of
-	"Tue, 11 Jul 2006 12:08:19 +0200")
+          id <20060711194801.JWMS11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 11 Jul 2006 15:48:01 -0400
+To: "Alp Toker" <alp@atoker.com>
+In-Reply-To: <46a038f90607110448p40fd8984ke3e15639cf5ecf46@mail.gmail.com>
+	(Martin Langhoff's message of "Tue, 11 Jul 2006 23:48:58 +1200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23730>
 
-Franck Bui-Huu <vagabon.xyz@gmail.com> writes:
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> Maybe that patch does what you want.
+>> +# name of your site or organization to appear in page titles
+>> +our $site_name = "Untitled";
 >
-> -- >8 --
->
-> Subject: [PATCH] Add a newline before appending "Signed-off-by:"
->
-> It looks nicer.
->
-> Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
+> I generally agree, but as a default, $ENV{SERVER_NAME} should be better.
 
-Haven't checked the code around the patch yet, but does it work
-when the original commit log message ends with a blank line and
-existing signed-off-by lines by other people?  You do not want
-an extra blank lines there.
+Sounds like a good suggestion.
