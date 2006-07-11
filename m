@@ -1,75 +1,72 @@
-From: Matthias Kestenholz <lists@spinlock.ch>
-Subject: Re: Why doesn't git-rerere automatically commit a resolution?
-Date: Tue, 11 Jul 2006 09:05:18 +0200
-Message-ID: <20060711070518.GB4201@spinlock.ch>
-References: <20060711061626.GB11822@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: merge-base: update the clean-up postprocessing
+Date: Tue, 11 Jul 2006 01:13:57 -0700
+Message-ID: <7vpsgc4kze.fsf@assigned-by-dhcp.cox.net>
+References: <44AB0948.9070606@gmail.com>
+	<7vy7v8dctz.fsf@assigned-by-dhcp.cox.net>
+	<7vejx0cwwj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 09:05:30 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: A Large Angry SCM <gitzilla@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 11 10:14:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0CJE-00087Y-CO
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 09:05:29 +0200
+	id 1G0DNb-0002pE-61
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 10:14:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030219AbWGKHFZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 03:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030212AbWGKHFZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 03:05:25 -0400
-Received: from mail22.bluewin.ch ([195.186.19.66]:51154 "EHLO
-	mail22.bluewin.ch") by vger.kernel.org with ESMTP id S1030219AbWGKHFX
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 03:05:23 -0400
-Received: from spinlock.ch (85.1.71.27) by mail22.bluewin.ch (Bluewin 7.3.110.2)
-        id 449255C7005408A9; Tue, 11 Jul 2006 07:05:11 +0000
-Received: (nullmailer pid 5990 invoked by uid 1000);
-	Tue, 11 Jul 2006 07:05:18 -0000
-To: Shawn Pearce <spearce@spearce.org>
-Content-Disposition: inline
-In-Reply-To: <20060711061626.GB11822@spearce.org>
-X-Editor: Vim http://www.vim.org/
-X-Operating-System: GNU/Linux 2.6.18-rc1 (i686)
-X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1750735AbWGKIN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 04:13:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbWGKIN7
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 04:13:59 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:6802 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750735AbWGKIN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 04:13:58 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060711081358.USTF985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 11 Jul 2006 04:13:58 -0400
+To: git@vger.kernel.org
+In-Reply-To: <7vejx0cwwj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 05 Jul 2006 00:51:08 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23694>
 
-* Shawn Pearce (spearce@spearce.org) wrote:
-> I'm curious... I have a pair of topic branches which don't merge
-> together cleanly by recursive (due to conflicting hunks in the
-> same line segments).  I enabled git-rerere, ran the merge, fixed
-> up the hunks and committed it.  git-rerere built its cache, as
-> the next time I pulled the two topic branches together and got
-> the same conflicts it correctly regenerated the prior resolution
-> (and printed a message saying as much).
-> 
-> But it git-rerere left the files unmerged in the index and it
-> doesn't generate a commit for the merge, even though there are no
-> merge conflicts remaining.  I expected it to update the index (to
-> merge the stages) and to generate a commit if possible; especially
-> in this case as I was pulling the exact same two commits together
-> again with the exact same merge base commit.
-> 
-> So I'm wondering why doesn't it try to finish the merge?  Was there
-> a really deep rooted reason behind it or was it simply easier/safer
-> to let the user sort out the working directory state every time?
-> 
+Junio C Hamano <junkio@cox.net> writes:
 
-I am maintaining different websites from one git repository. The
-code is almost the same between all versions, but the HTML templates
-are not. Sometimes, modified templates in feature branches produce
-mismerges which I want to fix up in different ways for different
-websites. There, git-rerere doesn't help me at all. It does help 
-very much with the code and configuration files though.
+> A fixed up version of this patch, along with your updated test,
+> is at the tip of "pu".
+>
+> It does affect the processing time for cases where there are
+> more than one merge bases negatively.  To compute all merge-base
+> for the 23 merges in the kernel reporitory, the old code with
+> the "contaminate the well a bit more" clean-up phase takes 2.5
+> seconds, while the new code takes 3.9 seconds.
+>
+> Processing all 2215 merges in the kernel repository (the other
+> 2192 merges have one merge-base between the parents) takes 160
+> seconds either way.  In other words, multi merge-base merges are
+> relatively rare and a bit more time spent to clean-up with the
+> new code is lost in the noise.
+>
+> The numbers are taken from /usr/bin/time on an Athron 64X2 3800.
 
-To conclude, I have rerere enabled, but it does not always do the
-right thing, so I am happy that I get a chance to inspect the files
-before committing (I could also amend the commit later, but I still
-think it's better that the user still needs to acknowledge the
-result of the automatic merge.)
+I did a similar test on git.git repository.  Numbers are
+interesting.
 
-	Matthias
+ * I have 941 two-head merges.  89 of them are multi-base
+   merges.  This is unproportionally higher compared to the
+   kernel repository.
+
+ * Both the version in "master" (i.e. the one with the horizon
+   effect) and this version with updated clean-up code produces
+   identical set of merge bases for all 941 two-head merges.
+
+ * The difference in processing time for 941 two-head merges
+   with both versions is lost within margin of error.
