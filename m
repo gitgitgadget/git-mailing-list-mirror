@@ -1,63 +1,53 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Install built-ins as symlinks
-Date: Tue, 11 Jul 2006 13:15:14 +0200
-Message-ID: <44B38842.10609@op5.se>
-References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com> <1152613179634-git-send-email-alp@atoker.com> <11526131791902-git-send-email-alp@atoker.com> <11526131792773-git-send-email-alp@atoker.com> <11526131792377-git-send-email-alp@atoker.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] gitweb: Include a site name in page titles
+Date: Tue, 11 Jul 2006 23:48:58 +1200
+Message-ID: <46a038f90607110448p40fd8984ke3e15639cf5ecf46@mail.gmail.com>
+References: <11526131782190-git-send-email-alp@atoker.com>
+	 <11526131781900-git-send-email-alp@atoker.com>
+	 <1152613179634-git-send-email-alp@atoker.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 13:15:37 2006
+X-From: git-owner@vger.kernel.org Tue Jul 11 13:49:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0GDD-0007wi-T5
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 13:15:32 +0200
+	id 1G0Gjh-0005Ug-Cw
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 13:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbWGKLPS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 07:15:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbWGKLPS
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 07:15:18 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:12435 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751035AbWGKLPQ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jul 2006 07:15:16 -0400
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 4814F6BCC0; Tue, 11 Jul 2006 13:15:15 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
-X-Accept-Language: en-us, en
-To: Alp Toker <alp@atoker.com>
-In-Reply-To: <11526131792377-git-send-email-alp@atoker.com>
+	id S1751222AbWGKLtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 07:49:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbWGKLtB
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 07:49:01 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:27657 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751222AbWGKLtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 07:49:00 -0400
+Received: by nf-out-0910.google.com with SMTP id n15so200395nfc
+        for <git@vger.kernel.org>; Tue, 11 Jul 2006 04:48:58 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BQI9bShLYFdzQcbAvdKqbTjv4phTSbqo/nUk56jGiuD2x4X//DlG/OdoUsAa1+n2vEvtKYjuope8wOS1dCFwLalV1rWeAu6lBWGcqmHWtTyZDrGfXwe6zKMRwxX1+fC6AaC0o50AuXDFjuMjELiHQah6su8UzZkIpa+LtMnD8sE=
+Received: by 10.78.157.8 with SMTP id f8mr2115361hue;
+        Tue, 11 Jul 2006 04:48:58 -0700 (PDT)
+Received: by 10.78.117.11 with HTTP; Tue, 11 Jul 2006 04:48:58 -0700 (PDT)
+To: "Alp Toker" <alp@atoker.com>
+In-Reply-To: <1152613179634-git-send-email-alp@atoker.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23709>
 
-Alp Toker wrote:
-> Doing this now will save headache in the long run, avoiding mismatched
-> versions of installed utilities and dangling copies of removed or
-> renamed git commands that still appear to work. It also makes screwups
-> when packaging git or making system backups less likely.
-> 
-> BusyBox has been doing it this way for years.
-> 
+> +# name of your site or organization to appear in page titles
+> +our $site_name = "Untitled";
 
-Git has been doing it for a couple of months, although it uses hardlinks 
-instead of symlinks. Hardlinks are slightly faster and actually consume 
-a little less hard-disk space, although the differences are so small you 
-won't notice it unless you do several thousand invocations.
+I generally agree, but as a default, $ENV{SERVER_NAME} should be better.
 
->  
->  $(BUILT_INS): git$X
-> -	rm -f $@ && ln git$X $@
-> +	ln -sf git$X $@
->  
+cheers,
 
-The -f option to ln is not very portable, hence the "rm && ln" construct.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+martin
