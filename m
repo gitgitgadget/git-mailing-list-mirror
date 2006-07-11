@@ -1,83 +1,49 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: Revisiting large binary files issue.
-Date: Tue, 11 Jul 2006 08:55:27 -0600
-Organization: Hewlett Packard
-Message-ID: <20060711145527.GA32468@hpsvcnb.fc.hp.com>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com> <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org>
+From: Alp Toker <alp@atoker.com>
+Subject: Re: [PATCH] Install built-ins as symlinks
+Date: Tue, 11 Jul 2006 15:58:28 +0100
+Message-ID: <44B3BC94.3000204@atoker.com>
+References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com> <1152613179634-git-send-email-alp@atoker.com> <11526131791902-git-send-email-alp@atoker.com> <11526131792773-git-send-email-alp@atoker.com> <11526131792377-git-send-email-alp@atoker.com> <Pine.LNX.4.63.0607111614550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 16:56:01 2006
+X-From: git-owner@vger.kernel.org Tue Jul 11 16:59:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0Je8-00013x-L2
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 16:55:33 +0200
+	id 1G0Jh3-0001n8-1a
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 16:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750948AbWGKOz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 10:55:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750949AbWGKOz3
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 10:55:29 -0400
-Received: from atlrel7.hp.com ([156.153.255.213]:39866 "EHLO atlrel7.hp.com")
-	by vger.kernel.org with ESMTP id S1750948AbWGKOz2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 10:55:28 -0400
-Received: from smtp1.fc.hp.com (smtp.fc.hp.com [15.15.136.127])
-	by atlrel7.hp.com (Postfix) with ESMTP id 9B88B35709;
-	Tue, 11 Jul 2006 10:55:27 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp1.fc.hp.com (Postfix) with ESMTP id 5B09A3C8C3;
-	Tue, 11 Jul 2006 14:55:27 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 38C5D2EBF6; Tue, 11 Jul 2006 08:55:27 -0600 (MDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1750951AbWGKO6a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 10:58:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbWGKO6a
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 10:58:30 -0400
+Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:65294 "EHLO
+	ndesk.org") by vger.kernel.org with ESMTP id S1750949AbWGKO63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 10:58:29 -0400
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+	by ndesk.org (Postfix) with ESMTP id 796C91645A1;
+	Tue, 11 Jul 2006 15:58:28 +0100 (BST)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607111614550.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23715>
 
-I'd like to get my hands dirty and see for myself where the issue lies.
-I hope to have some time next week to devote to this.  Is it reasonable
-to hope for a solution that is at least a lot lighter weight than the
-current status quo?
+Johannes Schindelin wrote:
+>> Doing this now will save headache in the long run, avoiding mismatched
+>> versions of installed utilities and dangling copies of removed or
+>> renamed git commands that still appear to work. It also makes screwups
+>> when packaging git or making system backups less likely.
+> 
+> Could we please fix things, which are broken? Not things which work?
 
-Carl
+There are maybe a dozen arguments for and against the use of symlinks 
+here, some of which Andreas has helpfully explained in his reply. You, 
+on the other hand, have managed not to mention a single one of them.
 
-On Mon, Jul 10, 2006 at 04:28:24PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Mon, 10 Jul 2006, Carl Baldwin wrote:
-> > 
-> > When I set the window to 0 I one more issue.  Even though the blobs are
-> > already compressed on disk I still seem to pay the penalty of inflating
-> > them into memory and then deflating them into the pack.  When the window
-> > size is 0 this is just wasted cycles.  With large binary files these
-> > wasted cycles slow down the push/fetch operation considerably.  Couldn't
-> > the compressed blobs be copied into the pack without first deflating
-> > them in this 0 window case?
-> 
-> The problem is that the individual object disk format isn't actually the 
-> same as the pack-file object format for one object. The header is 
-> different: a pack-file uses a very dense bit packing, while the individual 
-> object format is a bit less dense.
-> 
-> Sad, really, but it means that right now you can only re-use data that was 
-> already packed (when the format matches).
-> 
-> 		Linus
-> 
-
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        RADCAD (R&D CAD)
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you don't have the technical background to review a certain patch, 
+please don't add to the noise.
