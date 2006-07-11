@@ -1,124 +1,101 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] tests: Set EDITOR=: and VISUAL=: globally
-Date: Tue, 11 Jul 2006 12:01:54 -0700
-Message-ID: <20060711190154.GA28468@soma>
-References: <11526072802855-git-send-email-normalperson@yhbt.net> <7vlkr04i4p.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack
+ file format"
+Date: Tue, 11 Jul 2006 11:58:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607111153170.5623@g5.osdl.org>
+References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org> <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
+ <Pine.LNX.4.63.0607112031150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 21:02:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 11 21:06:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0NUd-0005rw-Pq
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 21:02:04 +0200
+	id 1G0NY8-0006QZ-Eh
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 21:05:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095AbWGKTB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 15:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbWGKTB4
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 15:01:56 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:55004 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751095AbWGKTB4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 15:01:56 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 78D117DC021;
-	Tue, 11 Jul 2006 12:01:54 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 11 Jul 2006 12:01:54 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vlkr04i4p.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1751183AbWGKTFd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 15:05:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbWGKTFd
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 15:05:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:14804 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751183AbWGKTFd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 15:05:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6BIwPnW018274
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 11 Jul 2006 11:58:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6BIwOFP001539;
+	Tue, 11 Jul 2006 11:58:25 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607112031150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23727>
 
-This way we don't have to remember to set it for each test; and
-if we forget, we won't cause interactive editors to be spawned
-for non-interactive tests.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Junio C Hamano <junkio@cox.net> wrote:
- > Eric Wong <normalperson@yhbt.net> writes:
- > 
- > > I have VISUAL set in my environment, and it caused git-commit to
- > > spawn my editor during the test.
- > 
- > I think it would be better to remove "EDITOR=: VISUAL=:"
- > settings from annotate-tests.sh, t1400-update-ref.sh and
- > t4013-diff-various.sh, and move that to test-lib.sh; there is no
- > point overriding them differently in each of these automated
- > tests.
 
- I've been under the impression this has already been set, but it turns
- it that was only the case in my config.mak on a different machine :)
- 
- t/annotate-tests.sh     |    2 +-
- t/t1400-update-ref.sh   |    1 -
- t/t4013-diff-various.sh |    2 +-
- t/test-lib.sh           |    3 +++
- 4 files changed, 5 insertions(+), 3 deletions(-)
+On Tue, 11 Jul 2006, Johannes Schindelin wrote:
+> 
+> Why not just say
+> 
+> 	return *hdr ? -1 : bytes;
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 1148b02..b6a2edd 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -94,7 +94,7 @@ test_expect_success \
- test_expect_success \
-     'merge-setup part 4' \
-     'echo "evil merge." >>file &&
--     EDITOR=: VISUAL=: git commit -a --amend'
-+     git commit -a --amend'
- 
- test_expect_success \
-     'Two lines blamed on A, one on B, two on B1, one on B2, one on A U Thor' \
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 6a3515d..04fab26 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -190,7 +190,6 @@ test_expect_success \
- 	 GIT_COMMITTER_DATE="2005-05-26 23:41" git-commit -F M -a &&
- 	 h_OTHER=$(git-rev-parse --verify HEAD) &&
- 	 echo FIXED >F &&
--	 EDITOR=true \
- 	 GIT_AUTHOR_DATE="2005-05-26 23:44" \
- 	 GIT_COMMITTER_DATE="2005-05-26 23:44" git-commit --amend &&
- 	 h_FIXED=$(git-rev-parse --verify HEAD) &&
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 06837d1..36658fb 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -70,7 +70,7 @@ test_expect_success setup '
- 	for i in 1 2; do echo $i; done >>dir/sub &&
- 	git update-index file0 dir/sub &&
- 
--	EDITOR=: VISUAL=: git commit --amend &&
-+	git commit --amend &&
- 	git show-branch
- '
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 05f6e79..b0d7990 100755
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -9,6 +9,8 @@ LC_ALL=C
- PAGER=cat
- TZ=UTC
- export LANG LC_ALL PAGER TZ
-+EDITOR=:
-+VISUAL=:
- unset AUTHOR_DATE
- unset AUTHOR_EMAIL
- unset AUTHOR_NAME
-@@ -30,6 +32,7 @@ unset SHA1_FILE_DIRECTORIES
- unset SHA1_FILE_DIRECTORY
- export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
- export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
-+export EDITOR VISUAL
- 
- # Each test should start with something like this, after copyright notices:
- #
--- 
-1.4.1.g710d
+Hey, whatever works. I rewrote more, and edited some of my changes down 
+again..
+
+> You might want to add a comment saying "since the type is lowercase in 
+> ascii format, object_type must be 6 or 7, which is an invalid object 
+> type." It took me a little to figure that out...
+
+It's not even correct in my version - I check the ASCII header _first_, so 
+by the time it looks at the binary one, it already knows it's not ascii.
+
+The problematic case is actually the other way around: my 
+"parse_ascii_sha1_header()" isn't strict enough.
+
+Or, more likely, the parse_sha1_header() function should just be changed 
+to check the binary format first (and then add your comment about why that 
+is safe).
+
+> > +	bits = 4;
+> > +	while (!(c & 0x80)) {
+> > +		if (bits >= 8*sizeof(unsigned long))
+> > +			return -1;
+> > +		c = *hdr++;
+> > +		size += (unsigned long) (c & 0x7f) << bits;
+> > +		bytes++;
+> > +		bits += 7;
+> > +	}
+> 
+> Are you not losing the last byte by putting the "while" _before_ instead 
+> of _after_ the loop?
+
+No. The very first byte can have the 0x80 end marker, when the size was 
+between 0..15.
+
+> >  int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
+> >  {
+> > -	int status;
+> > +	int status, hdrlen;
+> >  	unsigned long mapsize, size;
+> >  	void *map;
+> >  	z_stream stream;
+> 
+> This hunk is unnecessary, right?
+
+Yeah, never mind. That function didn't actually need the hdrlen, it only 
+cared about the SHA1.
+
+		Linus
