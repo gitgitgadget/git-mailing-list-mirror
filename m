@@ -1,57 +1,114 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Install built-ins as symlinks
-Date: Tue, 11 Jul 2006 20:36:42 +0200
-Message-ID: <20060711183642.GB13776@pasky.or.cz>
-References: <11526131782190-git-send-email-alp@atoker.com> <11526131781900-git-send-email-alp@atoker.com> <1152613179634-git-send-email-alp@atoker.com> <11526131791902-git-send-email-alp@atoker.com> <11526131792773-git-send-email-alp@atoker.com> <11526131792377-git-send-email-alp@atoker.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack
+ file format"
+Date: Tue, 11 Jul 2006 20:40:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607112031150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org> <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 11 20:37:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 11 20:40:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0N6Y-00011w-3Y
-	for gcvg-git@gmane.org; Tue, 11 Jul 2006 20:37:06 +0200
+	id 1G0NA0-0001cr-Jl
+	for gcvg-git@gmane.org; Tue, 11 Jul 2006 20:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932076AbWGKSgp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 14:36:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbWGKSgp
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 14:36:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:16088 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932076AbWGKSgo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 14:36:44 -0400
-Received: (qmail 23732 invoked by uid 2001); 11 Jul 2006 20:36:42 +0200
-To: Alp Toker <alp@atoker.com>
-Content-Disposition: inline
-In-Reply-To: <11526131792377-git-send-email-alp@atoker.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751127AbWGKSki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 14:40:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbWGKSkh
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 14:40:37 -0400
+Received: from mail.gmx.net ([213.165.64.21]:15511 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751127AbWGKSkh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 14:40:37 -0400
+Received: (qmail invoked by alias); 11 Jul 2006 18:40:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp036) with SMTP; 11 Jul 2006 20:40:35 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23724>
 
-Dear diary, on Tue, Jul 11, 2006 at 12:19:38PM CEST, I got a letter
-where Alp Toker <alp@atoker.com> said that...
-> diff --git a/Makefile b/Makefile
-> index 5b7bac8..cb5a5cc 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -538,7 +538,7 @@ git$X: git.c common-cmds.h $(BUILTIN_OBJ
->  builtin-help.o: common-cmds.h
+Hi,
+
+On Tue, 11 Jul 2006, Linus Torvalds wrote:
+
+> @@ -762,20 +765,65 @@ static int parse_sha1_header(char *hdr, 
+>  	/*
+>  	 * The length must be followed by a zero byte
+>  	 */
+> -	return *hdr ? -1 : 0;
+> +	bytes++;
+> +	if (*hdr)
+> +		bytes = -1;
+> +	return bytes;
+
+Why not just say
+
+	return *hdr ? -1 : bytes;
+
+> +}
+> +
+> +static int parse_binary_sha1_header(char *hdr, char *type, unsigned long *sizep)
+> +{
+> +	unsigned char c;
+> +	int bytes = 1;
+> +	unsigned long size;
+> +	unsigned object_type, bits;
+> +	static const char *typename[8] = {
+> +		NULL,	/* OBJ_EXT */
+> +		"commit", "tree", "blob", "tag",
+> +		NULL, NULL, NULL 
+> +	};	
+> +
+> +	c = *hdr++;
+> +	object_type = (c >> 4) & 7;
+> +	if (!typename[object_type])
+> +		return -1;
+
+You might want to add a comment saying "since the type is lowercase in 
+ascii format, object_type must be 6 or 7, which is an invalid object 
+type." It took me a little to figure that out...
+
+> +	strcpy(type, typename[object_type]);
+> +	size = c & 15;
+
+Just a nit here: I think 0xf is easier to read with boolean operations.
+
+> +	bits = 4;
+> +	while (!(c & 0x80)) {
+> +		if (bits >= 8*sizeof(unsigned long))
+> +			return -1;
+> +		c = *hdr++;
+> +		size += (unsigned long) (c & 0x7f) << bits;
+> +		bytes++;
+> +		bits += 7;
+> +	}
+
+Are you not losing the last byte by putting the "while" _before_ instead 
+of _after_ the loop?
+
+> @@ -1192,7 +1240,7 @@ struct packed_git *find_sha1_pack(const 
 >  
->  $(BUILT_INS): git$X
-> -	rm -f $@ && ln git$X $@
-> +	ln -sf git$X $@
->  
->  common-cmds.h: Documentation/git-*.txt
->  	./generate-cmdlist.sh > $@+
+>  int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
+>  {
+> -	int status;
+> +	int status, hdrlen;
+>  	unsigned long mapsize, size;
+>  	void *map;
+>  	z_stream stream;
+> -
 
-Doesn't the git$X dependency become pointless at this point?
+This hunk is unnecessary, right?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+Ciao,
+Dscho
