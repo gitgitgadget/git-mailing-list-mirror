@@ -1,89 +1,82 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb.css: Courer fonts for commits and tree-diff
-Date: Tue, 11 Jul 2006 23:02:35 -0700
-Message-ID: <7vac7f1htw.fsf@assigned-by-dhcp.cox.net>
-References: <20060712034323.48414.qmail@web31806.mail.mud.yahoo.com>
+Subject: Re: [PATCH] gitweb.cgi: Teach tree->raw to not require the hash of the blob
+Date: Tue, 11 Jul 2006 23:16:40 -0700
+Message-ID: <7v64i31h6f.fsf@assigned-by-dhcp.cox.net>
+References: <20060712034345.14009.qmail@web31802.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 12 08:03:19 2006
+X-From: git-owner@vger.kernel.org Wed Jul 12 08:17:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0XoY-0002GW-I3
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 08:03:14 +0200
+	id 1G0Y2F-0004OV-Pe
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 08:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354AbWGLGCj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Jul 2006 02:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbWGLGCj
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 02:02:39 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:43401 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751354AbWGLGCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jul 2006 02:02:38 -0400
+	id S1751162AbWGLGRS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Jul 2006 02:17:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWGLGRS
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 02:17:18 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:53390 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751162AbWGLGRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jul 2006 02:17:18 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060712060237.FXKE8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 12 Jul 2006 02:02:37 -0400
+          id <20060712061649.TIRL12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 12 Jul 2006 02:16:49 -0400
 To: ltuikov@yahoo.com
-In-Reply-To: <20060712034323.48414.qmail@web31806.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Tue, 11 Jul 2006 20:43:23 -0700 (PDT)")
+In-Reply-To: <20060712034345.14009.qmail@web31802.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Tue, 11 Jul 2006 20:43:45 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23765>
 
 Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> Courer fonts for the commit header, commit message,
-> and tree-diff.
+> Teach tree->raw to not require the hash of the blob, but to
+> figure it out from the file name.  This allows to externally
+> link to files into the repository, such that the hash is not
+> required.  I.e. the file obtained would be as of the HEAD
+> commit.
+>
+> In contrast tree->blob for binary files passes the hash, as
+> does tree->blob->plain for "text/*" files.
 >
 > Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+> ---
+>  gitweb/gitweb.cgi |   20 ++++++++++++++++----
+>  1 files changed, 16 insertions(+), 4 deletions(-)
 
-I really do not want to be in the position to judge a patch like
-this, whose evaluation is solely based on "prettiness" factor.
+This has exactly the same line number problem.
 
-But if I really have to, I would say this makes things uglier
-and less readable.  Maybe asking for monospace is less yucky but
-naming Courier explicitly?
+@@ -1678,8 +1690,7 @@ sub git_tree {
+ 			      $cgi->a({-href => "$my_uri?" . esc...
+ #			      " | " . $cgi->a({-href => "$my_uri...
+ 			      " | " . $cgi->a({-href => "$my_uri...
+-			      " | " . $cgi->a({-href => "$my_uri...
++			      " | " . $cgi->a({-href => "$my_uri...
+ 			      "</td>\n";
+ 		} elsif ($t_type eq "tree") {
+ 			print "<td class=\"list\">" .
 
-BTW what tool do you use to generate and send your patches?  I
-remember another patch from you recently did not apply and it
-turned out the problem was that the last hunk had line numbers
-wrong.  This patch has exactly the same problem and I am
-wondering why.
+You are removing one line and adding one line, so the number of
+old and new lines better match.
 
-I count 10 lines of original and 15 lines of new material in
-this hunk but the hunk header claims to have 11 lines of
-original text.
+Hand-applied, tried, got confused and dropped.
 
----
- gitweb/gitweb.css |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 98410f5..b51282b 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
- ... 
-@@ -142,11 +144,15 @@ table {
- 	padding: 8px 4px;
- }
- 
--table.project_list, table.diff_tree {
-+table.project_list {
- 	border-spacing: 0;
- }
- 
-+table.diff_tree {
-+	border-spacing: 0;
-+	font-family: courier;
-+}
-+
- table.blame {
- 	border-collapse: collapse;
- }
--- 
-1.4.1.g9ca3
+I think _allowing_ to accept filename not hash is a sane change,
+and would be useful if you want to allow linking to always the
+HEAD version from external sites, but I do not think listing the
+raw link in the tree view without the hash is a good idea.  It
+makes things quite confusing that "blob" link in its
+neighbourhood gives the blob from that specific version, but
+"raw" gives the version from HEAD, even when you are browsing
+something other than HEAD.
+
+BTW, can somebody volunteer to be a gitweb/ "subsystem
+maintainer"?
