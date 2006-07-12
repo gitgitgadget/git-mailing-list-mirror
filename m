@@ -1,67 +1,68 @@
-From: Paul Jakma <paul@clubi.ie>
-Subject: Re: [PATCH] Remove more gcc extension usage.
-Date: Wed, 12 Jul 2006 14:46:01 +0100 (IST)
-Message-ID: <Pine.4s.4.64.0607121445510.20605@sheen.jakma.org>
-References: <20060708183402.GA17644@spearce.org> <7vy7v4orpt.fsf@assigned-by-dhcp.cox.net>
- <20060708190327.GA17763@spearce.org> <20060709073155.GP22573@lug-owl.de>
- <20060710052255.GA15173@spearce.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack
+ file format"
+Date: Wed, 12 Jul 2006 08:13:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607120810320.5623@g5.osdl.org>
+References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
+ <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org> <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
+ <44B4172B.3070503@stephan-feder.de> <Pine.LNX.4.64.0607111449190.5623@g5.osdl.org>
+ <7vejwr3ftl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0607111656250.5623@g5.osdl.org>
+ <slrneb96rd.dma.Peter.B.Baumann@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 12 15:46:59 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 12 17:14:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0f3B-0002yh-VM
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 15:46:50 +0200
+	id 1G0gPU-0004sE-3o
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 17:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366AbWGLNqj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Jul 2006 09:46:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbWGLNqj
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 09:46:39 -0400
-Received: from hibernia.jakma.org ([212.17.55.49]:60058 "EHLO
-	hibernia.jakma.org") by vger.kernel.org with ESMTP id S1751366AbWGLNqi
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jul 2006 09:46:38 -0400
-Received: from sheen.jakma.org (IDENT:U2FsdGVkX1/natPq1WoxYSoEWPAI017EM2HqoXZ22UY@sheen.jakma.org [212.17.55.53])
-	(authenticated bits=0)
-	by hibernia.jakma.org (8.13.6/8.13.6) with ESMTP id k6CDk1N2032448
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 12 Jul 2006 14:46:16 +0100
-X-X-Sender: paul@sheen.jakma.org
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060710052255.GA15173@spearce.org>
-Mail-Copies-To: paul@jakma.org
-Mail-Followup-To: paul@jakma.org
-X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
-X-Virus-Scanned: ClamAV 0.88.2/1592/Tue Jul 11 21:40:37 2006 on hibernia.jakma.org
-X-Virus-Status: Clean
+	id S1751398AbWGLPNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Jul 2006 11:13:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbWGLPNb
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 11:13:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:59866 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751395AbWGLPNa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Jul 2006 11:13:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6CFDNnW019083
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Jul 2006 08:13:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6CFDMJn010849;
+	Wed, 12 Jul 2006 08:13:22 -0700
+To: Peter Baumann <waste.manager@gmx.de>
+In-Reply-To: <slrneb96rd.dma.Peter.B.Baumann@xp.machine.xx>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23782>
 
-On Mon, 10 Jul 2006, Shawn Pearce wrote:
 
-> So Monday turned out to be today.  The compiler version:
->
->  $ cc -V
->  cc: Forte Developer 7 C 5.4 2002/03/09
->  usage: cc [ options] files.  Use 'cc -flags' for details
 
-> and from `man cc`:
->
->  -xc99  enables C99 features:
+On Wed, 12 Jul 2006, Peter Baumann wrote:
+> 
+> This doesn't match the logic used in unpack_object_header, which is used
+> in the packs:
 
-Only a subset of C99.
+Yeah, good point. I reversed the meaning of the high bit by mistake. In 
+pack-files, the high bit is a "there is more to come" bit, and in my new 
+code it was a "this is the last byte" bit.
 
-You need SOS10 for full C99 support, Sun have made SOS freely 
-downloadable since version 10.
+It doesn't matter for the ultimate reason for this (being able to re-use 
+the actual _bulk_ of the data), but having it be different would be stupid 
+and confusing, and means that we can't later try to use the same routines 
+for packing/unpacking the objects.
 
-regards,
--- 
-Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
-Fortune:
-It is easier to change the specification to fit the program than vice versa.
+Junio - do you want me to send an updated patch, or do you want to reverse 
+bit#7 yourself?
+
+		Linus
