@@ -1,68 +1,88 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Error writing loose object on Cygwin
-Date: Tue, 11 Jul 2006 21:36:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607112132540.5623@g5.osdl.org>
-References: <20060712035746.GA7863@spearce.org> <7vr70r1ms5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-daemon problem
+Date: Tue, 11 Jul 2006 21:42:33 -0700
+Message-ID: <7vlkqz1lja.fsf@assigned-by-dhcp.cox.net>
+References: <E1G0QeX-0003hG-0I@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 12 06:36:27 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 12 06:42:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0WST-0007Z9-En
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 06:36:21 +0200
+	id 1G0WYY-0008Jj-Ko
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 06:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932412AbWGLEgP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Jul 2006 00:36:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbWGLEgP
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 00:36:15 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:36499 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932412AbWGLEgO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Jul 2006 00:36:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6C4a4nW018569
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Jul 2006 21:36:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6C4a4KD024145;
-	Tue, 11 Jul 2006 21:36:04 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr70r1ms5.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932417AbWGLEmg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Jul 2006 00:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbWGLEmf
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 00:42:35 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:31471 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932417AbWGLEmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jul 2006 00:42:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060712044234.EBLF22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 12 Jul 2006 00:42:34 -0400
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <E1G0QeX-0003hG-0I@moooo.ath.cx> (Matthias Lederhofer's message
+	of "Wed, 12 Jul 2006 00:24:24 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23762>
 
+Matthias Lederhofer <matled@gmx.net> writes:
 
+> A few weeks ago upgrading from 1.3.x to 1.4.1 I had a problem with
+> git-daemon.  I started git-daemon on a terminal but did not redirect
+> stdin/stdout/stderr to /dev/null (actually using daemon(8) on freebsd
+> without -f but just disowning the process and closing the terminal
+> works fine too, nothing freebsd/daemon(8) specific).  After closing
+> the terminal I was not able to use the git-daemon anymore with some
+> versions of the git. So now I took some time and tried to find what
+> was the reason for that.
 
-On Tue, 11 Jul 2006, Junio C Hamano wrote:
+HMMMMMMMMM.
 
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> > Has anyone else seen this type of behavior before?  Any suggestions
-> > on debugging this issue?
-> 
-> I would suggest raising this (politely) to Cygwin people.
+I did this silly experiment.  Close, instead of connecting them
+to /dev/null, the low 3 file descriptors:
 
-Well, since it apparently works with W2000, and breaks with XP, I suspect 
-it's actually Windows that just returns the wrong error code.
+$ git-daemon 0<&- 1>&- 2>&- --export-all /pub/git &
+$ lsof -p $! | sed -n -e '/ FD /p' -e '/[0-9]u/p'
+COMMAND     PID  USER   FD   TYPE  DEVICE    SIZE    NODE NAME
+git-daemo 13921 junio    0u  IPv6 1973673             TCP *:9419 (LISTEN)
+git-daemo 13921 junio    1u  IPv4 1973674             TCP *:9419 (LISTEN)
 
-It's entirely possible that we should just make that whole
+It gets worse.  This is what happens when you close only fd #2.
 
-	if (ret == ENOENT)
+$ git-daemon 2>&- --export-all /pub/git &
+$ lsof -p $! | sed -n -e '/ FD /p' -e '/[0-9]u/p'
+COMMAND     PID  USER   FD   TYPE  DEVICE    SIZE    NODE NAME
+git-daemo 13961 junio    0u   CHR   136,7               9 /dev/pts/7
+git-daemo 13961 junio    1u   CHR   136,7               9 /dev/pts/7
+git-daemo 13961 junio    2u  IPv6 1975187             TCP *:9419 (LISTEN)
+git-daemo 13961 junio    3u  IPv4 1975188             TCP *:9419 (LISTEN)
 
-go away. Yes, it's the right error code if a subdirectory is missing, and 
-yes, POSIX requires it, and yes, WXP is probably just a horrible piece of 
-sh*t, but on the other hand, I don't think git really has any serious 
-reason to even care. 
+Now, after we do accept(), we spawn a subprocess in handle(),
+and in the child process dup2() the fd connected to the peer to
+fd 0 and 1 of the child process -- and we do not do anything to
+fd 2 of the child process.
 
-So we might as well say that if the link() fails for _any_ reason, we'll 
-try to see if doing the mkdir() and re-trying the link helps.
+If you do not close any of the low 3 file descriptors, fd 2 of
+the child process is connected to whatever error stream of
+daemon is, so you would not see this problem, but this certainly
+is bad.
 
-		Linus
+Maybe we should check if fd 2 is sane at daemon startup, and
+otherwise open /dev/null for writing and dup2 it to fd 2?
+
+Currently, under --inetd mode we have freopen of stderr, but
+that does not help this issue.  It would make die() and error()
+in daemon itself behave sanely but when you start the daemon
+with the low file descriptors closed, fileno(stderr) may be
+different from 2.
