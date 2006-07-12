@@ -1,97 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack
- file format"
-Date: Tue, 11 Jul 2006 20:42:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607112040050.5623@g5.osdl.org>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607101623230.5623@g5.osdl.org> <20060711145527.GA32468@hpsvcnb.fc.hp.com>
- <Pine.LNX.4.64.0607111004360.5623@g5.osdl.org> <Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
- <44B4172B.3070503@stephan-feder.de> <Pine.LNX.4.64.0607111449190.5623@g5.osdl.org>
- <7vejwr3ftl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0607111656250.5623@g5.osdl.org>
- <7vveq31wgo.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb.css: Courer fonts for commits and tree-diff
+Date: Tue, 11 Jul 2006 20:43:23 -0700 (PDT)
+Message-ID: <20060712034323.48414.qmail@web31806.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: sf <sf-gmane@stephan-feder.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 12 05:43:10 2006
+Content-Type: multipart/mixed; boundary="0-1028027107-1152675803=:47431"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Jul 12 05:43:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0Vcw-0001PU-1o
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 05:43:06 +0200
+	id 1G0VdH-0001SQ-F3
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 05:43:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbWGLDnB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 11 Jul 2006 23:43:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932380AbWGLDnB
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 23:43:01 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4744 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932379AbWGLDnA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jul 2006 23:43:00 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6C3gonW016057
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 11 Jul 2006 20:42:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6C3gnDr022551;
-	Tue, 11 Jul 2006 20:42:50 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vveq31wgo.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932380AbWGLDnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 11 Jul 2006 23:43:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932371AbWGLDnZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Jul 2006 23:43:25 -0400
+Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:15775 "HELO
+	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932380AbWGLDnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jul 2006 23:43:24 -0400
+Received: (qmail 48416 invoked by uid 60001); 12 Jul 2006 03:43:23 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=f58Cm1mdvskTVrtwyZRunD5KwslpXPfQCMuGc8NO/6/soho8cHLi49BFfguBV2fOl52ZqE+SZIGg6j+j+fbBhZXFeny6h7M4hQXdn2cm8PwUK/pOSp1j8jjlMDNltAVSbUdtB9BtaAYrOqcYAT4ITgSB8wSqR82HAdXOSl4meA0=  ;
+Received: from [68.186.50.195] by web31806.mail.mud.yahoo.com via HTTP; Tue, 11 Jul 2006 20:43:23 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23755>
 
+--0-1028027107-1152675803=:47431
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
+Courer fonts for the commit header, commit message,
+and tree-diff.
 
-On Tue, 11 Jul 2006, Junio C Hamano wrote:
-> >  	unsigned char *buf = xmalloc(1+size);
-> > +	unsigned long n;
-> >  
-> > -	memcpy(buf, (char *) buffer + bytes, stream->total_out - bytes);
-> > -	bytes = stream->total_out - bytes;
-> > +	n = stream->total_out - bytes;
-> > +	if (n > size)
-> > +		n = size;
-> > +	memcpy(buf, (char *) buffer + bytes, n);
-> > +	bytes = n;
-> >  	if (bytes < size) {
-> >  		stream->next_out = buf + bytes;
-> >  		stream->avail_out = size - bytes;
-> 
-> This one looks like an independent fix for a well spotted bug.
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.css |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+--0-1028027107-1152675803=:47431
+Content-Type: application/octet-stream; name="p0.patch"
+Content-Transfer-Encoding: base64
+Content-Description: pat619875137
+Content-Disposition: attachment; filename="p0.patch"
 
-Yeah, well, the "bug" only happens if you screw something up (which I 
-triggered both times I tried to rewrite this ;)
+ZGlmZiAtLWdpdCBhL2dpdHdlYi9naXR3ZWIuY3NzIGIvZ2l0d2ViL2dpdHdl
+Yi5jc3MKaW5kZXggOTg0MTBmNS4uYjUxMjgyYiAxMDA2NDQKLS0tIGEvZ2l0
+d2ViL2dpdHdlYi5jc3MKKysrIGIvZ2l0d2ViL2dpdHdlYi5jc3MKQEAgLTYw
+LDYgKzYwLDcgQEAgZGl2LnBhZ2VfZm9vdGVyX3RleHQgewogCiBkaXYucGFn
+ZV9ib2R5IHsKIAlwYWRkaW5nOiA4cHg7CisJZm9udC1mYW1pbHk6IGNvdXJp
+ZXI7CiB9CiAKIGRpdi50aXRsZSwgYS50aXRsZSB7CkBAIC03OSw2ICs4MCw3
+IEBAIGRpdi50aXRsZV90ZXh0IHsKIAlwYWRkaW5nOiA2cHggMHB4OwogCWJv
+cmRlcjogc29saWQgI2Q5ZDhkMTsKIAlib3JkZXItd2lkdGg6IDBweCAwcHgg
+MXB4OworCWZvbnQtZmFtaWx5OiBjb3VyaWVyOwogfQogCiBkaXYubG9nX2Jv
+ZHkgewpAQCAtMTQyLDExICsxNDQsMTUgQEAgdGFibGUgewogCXBhZGRpbmc6
+IDhweCA0cHg7CiB9CiAKLXRhYmxlLnByb2plY3RfbGlzdCwgdGFibGUuZGlm
+Zl90cmVlIHsKK3RhYmxlLnByb2plY3RfbGlzdCB7CiAJYm9yZGVyLXNwYWNp
+bmc6IDA7CiB9CiAKK3RhYmxlLmRpZmZfdHJlZSB7CisJYm9yZGVyLXNwYWNp
+bmc6IDA7CisJZm9udC1mYW1pbHk6IGNvdXJpZXI7Cit9CisKIHRhYmxlLmJs
+YW1lIHsKIAlib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOwogfQotLSAKMS40
+LjEuZzljYTMKCg==
 
-Or possibly it the object is corrupt.
-
-But yes, it's independent.
-
-> > -	size = deflateBound(&stream, len+hdrlen);
-> > +	size = 8 + deflateBound(&stream, len+hdrlen);
-> >  	compressed = xmalloc(size);
-> >  
-> >  	/* Compress it */
-> 
-> I am wondring what this eight is.  You would pack 7 7-bit length
-> plus 4-bit totalling 49+4 = 53-bit length (plus 4-bit type).  Is
-> it an unwritten decision that the format would not deal with
-> objects larger than 2^53 (which is probably fine but looks
-> magic)?
-
-8 was just "obviously enough".
-
-The "hdrlen" part should already give us _way_ more padding than we need 
-(the old-fashioned header will deflate to something bigger than the new 
-header, so deflateBound() even _without_ the extra space should be 
-plenty).
-
-But I decided to add a few bytes just because it won't hurt.
-
-		Linus
+--0-1028027107-1152675803=:47431--
