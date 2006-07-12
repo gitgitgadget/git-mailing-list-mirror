@@ -1,61 +1,98 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Note on "git grep"
-Date: Wed, 12 Jul 2006 14:33:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607121428300.5623@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Jul 12 23:33:46 2006
+From: Alp Toker <alp@atoker.com>
+Subject: [PATCH] Documentation: Fix ssh:// URLs in generated documentation
+Date: Wed, 12 Jul 2006 22:55:21 +0100
+Message-ID: <11527413212127-git-send-email-alp@atoker.com>
+X-From: git-owner@vger.kernel.org Wed Jul 12 23:55:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0mKp-0003Ft-LF
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 23:33:32 +0200
+	id 1G0mg2-0007YA-9u
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 23:55:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbWGLVd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Jul 2006 17:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbWGLVd2
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 17:33:28 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57062 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751432AbWGLVd1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Jul 2006 17:33:27 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6CLXNnW015062
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 12 Jul 2006 14:33:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6CLXMPK028095;
-	Wed, 12 Jul 2006 14:33:22 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751442AbWGLVzX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Jul 2006 17:55:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbWGLVzX
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 17:55:23 -0400
+Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:34056 "EHLO
+	ndesk.org") by vger.kernel.org with ESMTP id S1751442AbWGLVzW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Jul 2006 17:55:22 -0400
+Received: by ndesk.org (Postfix, from userid 1000)
+	id 68EC8A7259; Wed, 12 Jul 2006 22:55:21 +0100 (BST)
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.1.g2fca1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23799>
 
+Commit c3f17061be95de3498449a548e93883aebff23d6 was causing warnings
+during doc generation due to bad asciidoc markup.
 
-Heh. Since I've been bisecting a laptop of mine that keeps having ACPI 
-problems, I notived something fun about "git grep".
+This resulted in "ssh://[user@]host.xz/path/to/repo.git/" being rendered
+as "host.xz/path/to/repo.git/" in the man pages and html output.
 
-Using the external "grep" is about 10 times faster for the hot-cache case, 
-but for cold-cache, forcing the internal one is actually a _lot_ faster 
-because a fully packed kernel archive just gets wonderfully better IO 
-patterns than the "real filesystem" image.
+This patch converts sections listing URL formats to verbatim.
 
-So doing "git grep some-random-string HEAD" takes about 16 seconds 
-cold-cache, and 11 seconds hot-cache.
+It also changes a minor capitalization inconsistency which ended up
+appearing in several man pages by inclusion.
 
-In contrast, doing "git grep some-random-string" takes over a minute 
-cold-cache, and about 2 seconds hot-cache. It's kind of sad that we can't 
-dynamically notice which case we have, since the hot-cache case is _so_ 
-much better for the external grep, but then cold-cache sucks for it..
+Signed-off-by: Alp Toker <alp@atoker.com>
+---
+ Documentation/urls.txt |   34 ++++++++++++++--------------------
+ 1 files changed, 14 insertions(+), 20 deletions(-)
 
-I just thought I'd point this out to people, since I found it interesting 
-how the built-in grep functionality actually outperforms the "real" one 
-under some circumstances.
-
-		Linus
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 9abec80..2b5a7f8 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -4,33 +4,27 @@ GIT URLS[[URLS]]
+ One of the following notations can be used
+ to name the remote repository:
+ 
+-===============================================================
+-- rsync://host.xz/path/to/repo.git/
+-- http://host.xz/path/to/repo.git/
+-- https://host.xz/path/to/repo.git/
+-- git://host.xz/path/to/repo.git/
+-- git://host.xz/~user/path/to/repo.git/
+-- ssh://[user@]host.xz/path/to/repo.git/
+-- ssh://[user@]host.xz/~user/path/to/repo.git/
+-- ssh://[user@]host.xz/~/path/to/repo.git
+-===============================================================
+-
+-SSH Is the default transport protocol and also supports an
++	rsync://host.xz/path/to/repo.git/
++	http://host.xz/path/to/repo.git/
++	https://host.xz/path/to/repo.git/
++	git://host.xz/path/to/repo.git/
++	git://host.xz/~user/path/to/repo.git/
++	ssh://[user@]host.xz/path/to/repo.git/
++	ssh://[user@]host.xz/~user/path/to/repo.git/
++	ssh://[user@]host.xz/~/path/to/repo.git
++
++SSH is the default transport protocol and also supports an
+ scp-like syntax.  Both syntaxes support username expansion,
+ as does the native git protocol. The following three are
+ identical to the last three above, respectively:
+ 
+-===============================================================
+-- host.xz:/path/to/repo.git/
+-- host.xz:~user/path/to/repo.git/
+-- host.xz:path/to/repo.git
+-===============================================================
++	host.xz:/path/to/repo.git/
++	host.xz:~user/path/to/repo.git/
++	host.xz:path/to/repo.git
+ 
+ To sync with a local directory, use:
+ 
+-===============================================================
+-- /path/to/repo.git/
+-===============================================================
++	/path/to/repo.git/
+ 
+ REMOTES
+ -------
+-- 
+1.4.1.g2fca1
