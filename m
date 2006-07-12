@@ -1,54 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] sha1_file: add the ability to parse objects in "pack file format"
-Date: Wed, 12 Jul 2006 08:27:20 -0700
-Message-ID: <7vlkqyzvvr.fsf@assigned-by-dhcp.cox.net>
-References: <20060710230132.GA11132@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.64.0607101623230.5623@g5.osdl.org>
-	<20060711145527.GA32468@hpsvcnb.fc.hp.com>
-	<Pine.LNX.4.64.0607111004360.5623@g5.osdl.org>
-	<Pine.LNX.4.64.0607111010320.5623@g5.osdl.org>
-	<44B4172B.3070503@stephan-feder.de>
-	<Pine.LNX.4.64.0607111449190.5623@g5.osdl.org>
-	<7vejwr3ftl.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0607111656250.5623@g5.osdl.org>
-	<slrneb96rd.dma.Peter.B.Baumann@xp.machine.xx>
-	<Pine.LNX.4.64.0607120810320.5623@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Re : 2 questions on git-send-email usage
+Date: Wed, 12 Jul 2006 08:43:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607120834200.5623@g5.osdl.org>
+References: <20060711084635.81393.qmail@web25809.mail.ukl.yahoo.com>
+ <44B37893.5090501@innova-card.com> <7vd5cc3q0o.fsf@assigned-by-dhcp.cox.net>
+ <44B4A6CA.3020206@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 12 17:28:29 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 12 17:44:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0gcb-0007kV-Ch
-	for gcvg-git@gmane.org; Wed, 12 Jul 2006 17:27:29 +0200
+	id 1G0grs-00031D-BO
+	for gcvg-git@gmane.org; Wed, 12 Jul 2006 17:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbWGLP10 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 12 Jul 2006 11:27:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbWGLP10
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 11:27:26 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:15603 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751411AbWGLP1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jul 2006 11:27:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060712152724.SIDJ6303.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 12 Jul 2006 11:27:24 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607120810320.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 12 Jul 2006 08:13:22 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751405AbWGLPnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 12 Jul 2006 11:43:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbWGLPnJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Jul 2006 11:43:09 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:42725 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751405AbWGLPnI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Jul 2006 11:43:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6CFh3nW020386
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Jul 2006 08:43:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6CFh261011832;
+	Wed, 12 Jul 2006 08:43:02 -0700
+To: Franck Bui-Huu <vagabon.xyz@gmail.com>
+In-Reply-To: <44B4A6CA.3020206@innova-card.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23785>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> Junio - do you want me to send an updated patch, or do you want to reverse 
-> bit#7 yourself?
 
-Pushed out in "pu" already, thanks.
+On Wed, 12 Jul 2006, Franck Bui-Huu wrote:
+> 
+> [PATCH] Add a newline before appending "Signed-off-by:"
+> 
+> It looks nicer.
+
+Yes. However, I think the sign-off detection is a bit broken (quite 
+independently of your patch).
+
+A number of people end up capitalizing the sign-off differently, so you 
+have lines like "Signed-Off-By: Xy Zzy <xyzzy@example.org>".
+
+Also, at least for the kernel, we often have alternative formats, like
+
+	Acked-by: Elliot Xavier Ample <example@dummy.org>
+
+and for that case, adding the extra newline is actually bad.
+
+So I would suggest a totally different approach: instead of using 
+"strstr(comments, signed_off_by)", it would probably be much better to 
+just look for the last non-empty line, and see if it matches the format
+
+	"^[nonspace]*: .*@.*$"
+
+(yeah, that's not a valid regexp, but you get the idea).
+
+On a slightly related note, I absolutely _hate_ how cherry-picking adds 
+"(cherry-picked from commit <sha1>)" at the end. It's wrong for so many 
+reasons, one of them being that it then breaks things like this, but the 
+main one being that <sha1> will quite often actually end up not even 
+_existing_ in the resulting archive (you cherry-picked from your private 
+branch, and even if you keep your branch, you don't necessarily push it 
+out).
+
+Junio, can we make the default _not_ to do it, please?
+
+			Linus
