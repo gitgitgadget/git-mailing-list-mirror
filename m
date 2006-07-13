@@ -1,54 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Re : 2 questions on git-send-email usage
-Date: Wed, 12 Jul 2006 21:34:15 -0700
-Message-ID: <7vac7exgvs.fsf@assigned-by-dhcp.cox.net>
-References: <20060711084635.81393.qmail@web25809.mail.ukl.yahoo.com>
-	<44B37893.5090501@innova-card.com>
-	<7vd5cc3q0o.fsf@assigned-by-dhcp.cox.net>
-	<44B4A6CA.3020206@innova-card.com>
-	<Pine.LNX.4.64.0607120834200.5623@g5.osdl.org>
-	<7v1wsqzt8f.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0607120931150.5623@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: git-fmt-merge-message problem..
+Date: Wed, 12 Jul 2006 21:38:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607122133250.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 06:34:45 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 13 06:38:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0suS-0003qv-47
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 06:34:45 +0200
+	id 1G0sxy-000482-VG
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 06:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbWGMEeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 00:34:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932254AbWGMEeT
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 00:34:19 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:39554 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932225AbWGMEeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 00:34:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060713043417.WPCW8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Jul 2006 00:34:17 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607120931150.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 12 Jul 2006 09:37:42 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932254AbWGMEiO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 00:38:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbWGMEiO
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 00:38:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:46055 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932254AbWGMEiN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 00:38:13 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6D4c6nW006649
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Jul 2006 21:38:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6D4c5u1010457;
+	Wed, 12 Jul 2006 21:38:06 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23808>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> So being somewhat forgiving might help, but I think another thing that 
-> migth help is a flag to "git-am" to _not_ apply a patch that lacks a 
-> previous sign-off.
+Not a huge one, but it's ugly.
 
-How about having this in $GIT_DIR/hooks/applypatch-msg?
+When I did a "git pull repo", the merge messages _used_ to look like this:
 
-	#!/bin/sh
-	grep '^Signed-off-by: ' "$1" >/dev/null
+    Merge master.kernel.org:/pub/scm/linux/kernel/git/davem/net-2.6
+    
+    * master.kernel.org:/pub/scm/linux/kernel/git/davem/net-2.6:
+      [NEIGH]: Fix IP-over-ATM and ARP interaction.
+      [TG3]: ethtool always report port is TP.
+
+or (if I specified a branch):
+
+    Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/ro
+    
+    * 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/roland/infini
+      IB/mthca: FMR ioremap fix
+      IPoIB: Free child interfaces properly
+      IB/mthca: Fix race in reference counting
+      IB/srp: Fix tracking of pending requests during error handling
+      IB: Fix display of 4-bit port counters in sysfs
+
+but now they look like this:
+
+    Merge commit master.kernel.org:/pub/scm/linux/kernel/git/davem/net-2.6 of HEAD
+    
+    * HEAD:
+      [NET]: fix __sk_stream_mem_reclaim
+      [Bluetooth] Fix deadlock in the L2CAP layer
+      [Bluetooth] Let BT_HIDP depend on INPUT
+      [Bluetooth] Avoid NULL pointer dereference with tty->driver
+      [Bluetooth] Remaining transitions to use kzalloc()
+      [WAN]: converting generic HDLC to use netif_dormant*()
+      [IPV4]: Fix error handling for fib_insert_node call
+      [NETROM] lockdep: fix false positive
+      ....
+
+which makes no sense AT ALL. It's doesn't even parse. "Merge commit <repo> 
+of <branch>"? Whaa? That's just insane.
+
+Also, the " * HEAD" is just ugly. It was better before.
+
+Dscho? Can you please make git fmt-merge-message print out something 
+sensible again? It doesn't have to match the old behaviour 100%, but the 
+current one is just ugly and senseless.
+
+			Linus
