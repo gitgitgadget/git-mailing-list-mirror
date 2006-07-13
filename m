@@ -1,54 +1,65 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] documentation about exclude/ignore files
-Date: Wed, 12 Jul 2006 21:40:57 -0700
-Message-ID: <7vy7uyw206.fsf@assigned-by-dhcp.cox.net>
-References: <E1G0knL-0007PL-86@moooo.ath.cx>
+Subject: Re: [PATCH] Documentation: Fix ssh:// URLs in generated documentation
+Date: Wed, 12 Jul 2006 21:58:50 -0700
+Message-ID: <7vpsgaw16d.fsf@assigned-by-dhcp.cox.net>
+References: <11527413212127-git-send-email-alp@atoker.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 06:41:19 2006
+X-From: git-owner@vger.kernel.org Thu Jul 13 06:58:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0t0l-0004Mo-AM
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 06:41:17 +0200
+	id 1G0tHt-0005ty-1L
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 06:58:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932497AbWGMElA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 00:41:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932499AbWGMElA
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 00:41:00 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37511 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932497AbWGMEk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 00:40:59 -0400
+	id S932505AbWGME6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 00:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbWGME6x
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 00:58:53 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:33971 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932505AbWGME6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jul 2006 00:58:52 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060713044058.WUZH8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Jul 2006 00:40:58 -0400
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1G0knL-0007PL-86@moooo.ath.cx> (Matthias Lederhofer's message
-	of "Wed, 12 Jul 2006 21:54:51 +0200")
+          id <20060713045851.MRUC12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 13 Jul 2006 00:58:51 -0400
+To: Alp Toker <alp@atoker.com>
+In-Reply-To: <11527413212127-git-send-email-alp@atoker.com> (Alp Toker's
+	message of "Wed, 12 Jul 2006 22:55:21 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23812>
 
-Matthias Lederhofer <matled@gmx.net> writes:
+Alp Toker <alp@atoker.com> writes:
 
-> ---
-> Use .git/info/exclude in the example in git-ls-files.txt as .gitignore
-> is used there and update the list of commands looking at
-> .git/info/exclude in repository-layout.txt.
+> Commit c3f17061be95de3498449a548e93883aebff23d6 was causing warnings
+> during doc generation due to bad asciidoc markup.
 >
-> ---
->  Documentation/git-ls-files.txt      |    4 ++--
->  Documentation/repository-layout.txt |    8 +++++---
->  2 files changed, 7 insertions(+), 5 deletions(-)
+> This resulted in "ssh://[user@]host.xz/path/to/repo.git/" being rendered
+> as "host.xz/path/to/repo.git/" in the man pages and html output.
 
-Why do you start the message with three dashes that says "the
-below will _not_ go to the commit log message"?
+I wonder if this is with less formatting impact then.
 
-The changes look good.  Please sign your patches.
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 9abec80..93378d2 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -10,9 +10,9 @@ to name the remote repository:
+ - https://host.xz/path/to/repo.git/
+ - git://host.xz/path/to/repo.git/
+ - git://host.xz/~user/path/to/repo.git/
+-- ssh://[user@]host.xz/path/to/repo.git/
+-- ssh://[user@]host.xz/~user/path/to/repo.git/
+-- ssh://[user@]host.xz/~/path/to/repo.git
++- ssh://+++[user@+++]host.xz/path/to/repo.git/
++- ssh://+++[user@+++]host.xz/~user/path/to/repo.git/
++- ssh://+++[user@+++]host.xz/~/path/to/repo.git
+ ===============================================================
+ 
+ SSH Is the default transport protocol and also supports an
