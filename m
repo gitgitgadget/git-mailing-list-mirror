@@ -1,67 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: remove perl from git-commit.sh
-Date: Wed, 12 Jul 2006 21:38:56 -0700
-Message-ID: <7v3bd6xgnz.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0607120415g243f2160tf42c40e52b8bc9ac@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Re : 2 questions on git-send-email usage
+Date: Wed, 12 Jul 2006 21:40:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607122139090.5623@g5.osdl.org>
+References: <20060711084635.81393.qmail@web25809.mail.ukl.yahoo.com>
+ <44B37893.5090501@innova-card.com> <7vd5cc3q0o.fsf@assigned-by-dhcp.cox.net>
+ <44B4A6CA.3020206@innova-card.com> <Pine.LNX.4.64.0607120834200.5623@g5.osdl.org>
+ <7v1wsqzt8f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0607120931150.5623@g5.osdl.org>
+ <7vac7exgvs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 06:39:07 2006
+X-From: git-owner@vger.kernel.org Thu Jul 13 06:41:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0syf-0004AX-HF
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 06:39:06 +0200
+	id 1G0t0k-0004Mo-Kd
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 06:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbWGMEjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 00:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932494AbWGMEjA
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 00:39:00 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:34468 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932493AbWGMEjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 00:39:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060713043859.LZEQ12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Jul 2006 00:38:59 -0400
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0607120415g243f2160tf42c40e52b8bc9ac@mail.gmail.com>
-	(Alex Riesen's message of "Wed, 12 Jul 2006 13:15:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932498AbWGMEkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 00:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932497AbWGMEkv
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 00:40:51 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:25320 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932498AbWGMEkv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 00:40:51 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6D4eknW006798
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Jul 2006 21:40:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6D4ek8O010527;
+	Wed, 12 Jul 2006 21:40:46 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vac7exgvs.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23810>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-> It is really annoying when the essentials do not work.
-> I think we could improve at  least them, by minimizing
-> their dependencies to external tools.
->
-> ---
->
-> git-commit.sh has only ohne place where perl is used
-> and it can actually quite trivially be done in sh.
-> git-ls-files without "-z" produces quoted output, even if
-> is different from that produced by perl code it could be
-> enough. Otherwise I'd better suggest to add another
-> quoting style (replacing only \t, \n and backslash) than
-> having to constantly patch git-commit.sh for binmode
-> or perl path (Windows has no stable tool set, and perl
-> for instance often resides "somewhere").
 
-(1) Sign-off?
+On Wed, 12 Jul 2006, Junio C Hamano wrote:
+> 
+> How about having this in $GIT_DIR/hooks/applypatch-msg?
+> 
+> 	#!/bin/sh
+> 	grep '^Signed-off-by: ' "$1" >/dev/null
 
-(2) I think the cover letter comment talks more apporpirate
-    things than your proposed commit message.  The commit log is
-    not a place to vent your frustration.  It's where you
-    justify why that change was needed for people who will want
-    to figure out why your patch broke their workflow later.
+Not good, because then I have no way to select a different behaviour with 
+a flag. If I decide it was ok to apply (say, it's just a silly typo fix), 
+I would want to say so.
 
-I do not think anybody parses git-status output to figure out
-the list of paths that are touched/untracked/etc., so I am not
-opposed to this change itself.
+		Linus
