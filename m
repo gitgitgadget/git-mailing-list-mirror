@@ -1,53 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] format-patch: Generate a newline between the subject header and the message body.
-Date: Thu, 13 Jul 2006 14:31:01 -0700
-Message-ID: <7vbqrtur8q.fsf@assigned-by-dhcp.cox.net>
-References: <44B6369D.6070602@codeweavers.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: when is "git diff" output suitable for patch?
+Date: Thu, 13 Jul 2006 17:31:16 -0400
+Message-ID: <20060713213116.GK19366@fieldses.org>
+References: <20060713212127.GA30770@fieldses.org> <7vhd1lurei.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 23:31:36 2006
+X-From: git-owner@vger.kernel.org Thu Jul 13 23:31:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G18m5-0007Sw-LD
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 23:31:10 +0200
+	id 1G18mH-0007UK-TZ
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 23:31:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030409AbWGMVbF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 17:31:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030410AbWGMVbF
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 17:31:05 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:63645 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1030409AbWGMVbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 17:31:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060713213103.FGPT22974.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 13 Jul 2006 17:31:03 -0400
-To: Robert Shearman <rob@codeweavers.com>
-In-Reply-To: <44B6369D.6070602@codeweavers.com> (Robert Shearman's message of
-	"Thu, 13 Jul 2006 13:03:41 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030406AbWGMVbS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 17:31:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030408AbWGMVbS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 17:31:18 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:38379 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1030406AbWGMVbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jul 2006 17:31:17 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1G18mC-0008P3-GH; Thu, 13 Jul 2006 17:31:16 -0400
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhd1lurei.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23854>
 
-Robert Shearman <rob@codeweavers.com> writes:
+On Thu, Jul 13, 2006 at 02:27:33PM -0700, Junio C Hamano wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
+> 
+> > I assume the -C and -M, -c, and -cc options all result in diff output
+> > that can't be correctly applied by "patch" any more?  (Would a patch to
+> > the git-diff-files documentation warning about this be helpful?)
+> 
+> May not be bad to have, except that I do not know if
+> "git-diff-files" documentation is the right place to talk about
+> it.
 
-> This patch inserts a newline in two places - once in the loop to
-> separate the subject part of the commit message from the body part of
-> the commit message and another after the loop to counteract the eating
-> of whitespace at the end of the message.
+OK.
 
-Thanks.
+> > Someone I'm working with is having trouble applying patches that they
+> > created with a simple "git diff".  The patches in question have some
+> > "copy from/copy to" headers.  Should that every happen with just a plain
+> > "git diff"?  Is this a bug in their version of git?  (They're on 1.2.4).
+> 
+> As far as I recall "git diff" never defaulted to -M.
 
- * Please sign your patch.
+Hm.  Is this related?:
 
- * This breaks a handful t4013 tests, but all in a good way (in
-   other words, the expected output files were wrong).
+commit 42efbf6d8a5b4902c55a2f6e96034625c056ba1f
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Sat Mar 11 17:44:10 2006 -0800
 
-I'll fix up the t/t4013/diff.* files myself.
+    git-diff: -p disables rename detection.
+
+--b.
