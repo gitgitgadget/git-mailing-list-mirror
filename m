@@ -1,59 +1,47 @@
-From: Alp Toker <alp@atoker.com>
-Subject: Re: [PATCH] Documentation: Fix ssh:// URLs in generated documentation
-Date: Thu, 13 Jul 2006 06:48:58 +0100
-Message-ID: <44B5DECA.8040401@atoker.com>
-References: <11527413212127-git-send-email-alp@atoker.com> <7vpsgaw16d.fsf@assigned-by-dhcp.cox.net>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: Error writing loose object on Cygwin
+Date: Thu, 13 Jul 2006 01:51:27 -0400
+Message-ID: <20060713055127.GA15960@trixie.casa.cgf.cx>
+References: <20060712035746.GA7863@spearce.org> <7vr70r1ms5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 07:49:18 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jul 13 07:51:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0u4T-0002ZX-8X
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 07:49:10 +0200
+	id 1G0u6l-0002qw-J9
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 07:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbWGMFtF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 01:49:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbWGMFtF
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 01:49:05 -0400
-Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:780 "EHLO
-	ndesk.org") by vger.kernel.org with ESMTP id S1751442AbWGMFtE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 01:49:04 -0400
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by ndesk.org (Postfix) with ESMTP id 87F33172B92;
-	Thu, 13 Jul 2006 06:48:58 +0100 (BST)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsgaw16d.fsf@assigned-by-dhcp.cox.net>
+	id S1751458AbWGMFv2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 01:51:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbWGMFv2
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 01:51:28 -0400
+Received: from pool-71-248-179-44.bstnma.fios.verizon.net ([71.248.179.44]:24740
+	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S1751458AbWGMFv2
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jul 2006 01:51:28 -0400
+Received: by cgf.cx (Postfix, from userid 201)
+	id AF3B713C020; Thu, 13 Jul 2006 01:51:27 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vr70r1ms5.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23819>
 
-Junio C Hamano wrote:
-> I wonder if this is with less formatting impact then.
-> 
-> diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-> index 9abec80..93378d2 100644
-> --- a/Documentation/urls.txt
-> +++ b/Documentation/urls.txt
-> @@ -10,9 +10,9 @@ to name the remote repository:
->  - https://host.xz/path/to/repo.git/
->  - git://host.xz/path/to/repo.git/
->  - git://host.xz/~user/path/to/repo.git/
-> -- ssh://[user@]host.xz/path/to/repo.git/
-> -- ssh://[user@]host.xz/~user/path/to/repo.git/
-> -- ssh://[user@]host.xz/~/path/to/repo.git
-> +- ssh://+++[user@+++]host.xz/path/to/repo.git/
-> +- ssh://+++[user@+++]host.xz/~user/path/to/repo.git/
-> +- ssh://+++[user@+++]host.xz/~/path/to/repo.git
->  ===============================================================
->  
->  SSH Is the default transport protocol and also supports an
+On Tue, Jul 11, 2006 at 09:15:38PM -0700, Junio C Hamano wrote:
+>Shawn Pearce <spearce@spearce.org> writes:
+>
+>> Has anyone else seen this type of behavior before?  Any suggestions
+>> on debugging this issue?
+>
+>I would suggest raising this (politely) to Cygwin people.
 
-Your call. I almost went that way but decided the more invasive patch 
-left the source a bit more readable as it didn't need escaping. As long 
-as the output gets fixed, nobody will be losing sleep over this one.
+I lost the thread here but wasn't this referring to a samba mount?  If so,
+it would be samba that's returning the wrong "errno".
+
+cgf
