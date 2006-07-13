@@ -1,47 +1,76 @@
-From: "Ricks" <Ricksbull@columnist.com>
-Subject: Forget about it and take pleasure every night!
-Date: Thu, 13 Jul 2006 08:11:03 -0500
-Message-ID: <41337353616639.802B292AED@XJVJDP>
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: [PATCH 2/5] daemon: if one of the standard fds is missing open
+ it to /dev/null
+Date: Thu, 13 Jul 2006 15:27:25 +0200
+Message-ID: <20060713152725.7a5081df.froese@gmx.de>
+References: <E1G0zj7-0001c1-8q@moooo.ath.cx>
+	<E1G0znB-0002IO-61@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jul 13 15:11:21 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 13 15:27:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G10xH-0003AJ-JU
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 15:10:12 +0200
+	id 1G11EC-0006JR-Oa
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 15:27:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030203AbWGMNKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 09:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030212AbWGMNKG
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 09:10:06 -0400
-Received: from zeus2.kernel.org ([204.152.191.36]:57026 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1030203AbWGMNKA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 09:10:00 -0400
-Received: from LMAY042A (c-71-201-5-202.hsd1.il.comcast.net [71.201.5.202])
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6DD9lSq021607;
-	Thu, 13 Jul 2006 13:09:59 GMT
-To: <godard@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: XcDSlTCmTpcxJyxVL6U7KGYn5cJR9IOwjhG5
-X-Virus-Scanned: ClamAV 0.88.2/1596/Thu Jul 13 05:13:25 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+	id S1751244AbWGMN1a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 09:27:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWGMN1a
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 09:27:30 -0400
+Received: from mail.gmx.net ([213.165.64.21]:26774 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751244AbWGMN1a (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 09:27:30 -0400
+Received: (qmail invoked by alias); 13 Jul 2006 13:27:28 -0000
+Received: from p50902F5F.dip0.t-ipconnect.de (EHLO dialup) [80.144.47.95]
+  by mail.gmx.net (mp029) with SMTP; 13 Jul 2006 15:27:28 +0200
+X-Authenticated: #271361
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <E1G0znB-0002IO-61@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.7 points;
- * -2.0 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1841]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: ferrold.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: ferrold.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: ferrold.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23834>
 
-Happy day! Cope with this forever and watch other men in helpless distress. Eliminating each cause, Extra-Time gives you unmatched act duration. You tried condoms, pauses, alcohol, but nothing worked. Eager to find a way to stop this premature thing forever? See our offer: http://ferrold.com/dll/get/ Give her the beautiful romantic evening full of love that she has been waiting for.
+Matthias Lederhofer wrote:
+>
+> +/* if any standard file descriptor is missing open it to /dev/null */
+> +static void sanitize_stdfds(void)
+> +{
+> +	int devnull = -1, i;
+> +	struct stat buf;
+> +	for (i = 0; i < 3; ++i) {
+> +		if (fstat(i, &buf) != -1)
+> +			continue;
+> +		if (devnull == -1 &&
+> +			(devnull = open("/dev/null", O_RDWR, 0)) == -1)
+> +			die("open /dev/null failed: %s", strerror(errno));
+> +		if (dup2(devnull, i) != i)
+> +			die("dup2 failed: %s", strerror(errno));
+> +	}
+> +	if (devnull != -1)
+> +		close(devnull);
+> +}
+
+This looks broken.  The open will return i as this is
+the lowest free fd.  I don't know what POSIX says
+about dup2(i,i) but anyway, you close it at the end
+which completely defeats the intent of the function.
+
+How's this?
+
+	devnull = open("/dev/null", O_RDWR, 0);
+	if (devnull == 0)
+		devnull = dup(devnull);
+	if (devnull == 1)
+		devnull = dup(devnull);
+	if (devnull == -1)
+		die("open/dup /dev/null failed: %s", strerror(errno));
+	if (devnull > 2)
+		close(devnull);
+
+Ciao, ET.
