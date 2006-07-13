@@ -1,104 +1,61 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH 5.1/5] daemon: new option --detach to run git-daemon in background
-Date: Thu, 13 Jul 2006 18:47:13 +0200
-Message-ID: <E1G14LJ-0007q1-Fa@moooo.ath.cx>
-References: <E1G0zj7-0001c1-8q@moooo.ath.cx> <E1G0znB-0002If-8A@moooo.ath.cx> <20060713153703.05f862ee.froese@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] format-patch: Generate a newline between the subject header and the message body.
+Date: Thu, 13 Jul 2006 21:38:48 +0200
+Organization: At home
+Message-ID: <e967en$bi6$1@sea.gmane.org>
+References: <44B6369D.6070602@codeweavers.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 18:47:38 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Jul 13 21:39:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G14LP-0003YK-RV
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 18:47:20 +0200
+	id 1G171P-0003aK-SY
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 21:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030238AbWGMQrQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 12:47:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030241AbWGMQrQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 12:47:16 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:46798 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1030238AbWGMQrP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 12:47:15 -0400
-To: Edgar Toernig <froese@gmx.de>
-Mail-Followup-To: Edgar Toernig <froese@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060713153703.05f862ee.froese@gmx.de>
+	id S1030329AbWGMTir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 15:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030330AbWGMTir
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 15:38:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:5522 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030329AbWGMTiq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 15:38:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G1717-0003Vz-9K
+	for git@vger.kernel.org; Thu, 13 Jul 2006 21:38:33 +0200
+Received: from host-81-190-20-193.torun.mm.pl ([81.190.20.193])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Jul 2006 21:38:33 +0200
+Received: from jnareb by host-81-190-20-193.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Jul 2006 21:38:33 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-193.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23844>
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-Edgar Toernig <froese@gmx.de> wrote:
-> Hmm... leaks devnull.  Why not simply close(0/1/2) and
-> let sanitize_stdfds take care of the rest?
----
- daemon.c |   29 ++++++++++++++++++++++++++++-
- 1 files changed, 28 insertions(+), 1 deletions(-)
+Robert Shearman wrote:
 
-diff --git a/daemon.c b/daemon.c
-index cdc4266..e4ec676 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -674,6 +674,24 @@ static void sanitize_stdfds(void)
- 		close(fd);
- }
- 
-+static void daemonize(void)
-+{
-+	switch (fork()) {
-+		case 0:
-+			break;
-+		case -1:
-+			die("fork failed: %s", strerror(errno));
-+		default:
-+			exit(0);
-+	}
-+	if (setsid() == -1)
-+		die("setsid failed: %s", strerror(errno));
-+	close(0);
-+	close(1);
-+	close(2);
-+	sanitize_stdfds();
-+}
-+
- static void store_pid(const char *path)
- {
- 	FILE *f = fopen(path, "w");
-@@ -699,6 +717,7 @@ int main(int argc, char **argv)
- 	int port = DEFAULT_GIT_PORT;
- 	int inetd_mode = 0;
- 	const char *pid_file = NULL;
-+	int detach = 0;
- 	int i;
- 
- 	/* Without this we cannot rely on waitpid() to tell
-@@ -767,6 +786,11 @@ int main(int argc, char **argv)
- 			pid_file = arg + 11;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--detach")) {
-+			detach = 1;
-+			log_syslog = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--")) {
- 			ok_paths = &argv[i+1];
- 			break;
-@@ -799,7 +823,10 @@ int main(int argc, char **argv)
- 		return execute(peer);
- 	}
- 
--	sanitize_stdfds();
-+	if (detach)
-+		daemonize();
-+	else
-+		sanitize_stdfds();
- 
- 	if (pid_file)
- 		store_pid(pid_file);
+> 
+> format-patch previously didn't generate a newline after a subject. This 
+> caused the diffstat to not be displayed in messages without a blank line 
+> and the first blank line to be eaten in messages with a blank line.
+
+Does this _enforce_ separating commit message into subject+empty
+line+description? What about commit messages without this structire (e.g.
+legacy commit messages from import from other SCM, e.g. GNU ChangeLog
+style)?
+
 -- 
-1.4.1.g8b4b
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
