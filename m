@@ -1,36 +1,43 @@
-From: linux@horizon.com
-Subject: As long as you're hacking on git-daemon...
-Date: 13 Jul 2006 16:12:48 -0400
-Message-ID: <20060713201248.25353.qmail@science.horizon.com>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 22:13:06 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0] A few improvements to Emacs interface to Git
+Date: Thu, 13 Jul 2006 22:15:46 +0200
+Message-ID: <11528217463561-git-send-email-jnareb@gmail.com>
+Reply-To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 13 22:16:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G17YO-0001UK-N4
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 22:12:57 +0200
+	id 1G17bd-00025N-Ly
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 22:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030344AbWGMUMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 16:12:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030348AbWGMUMy
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 16:12:54 -0400
-Received: from science.horizon.com ([192.35.100.1]:2605 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1030344AbWGMUMx
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 16:12:53 -0400
-Received: (qmail 25354 invoked by uid 1000); 13 Jul 2006 16:12:48 -0400
-To: matled@gmx.net
+	id S1030353AbWGMUPx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 16:15:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030351AbWGMUPx
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 16:15:53 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:31395 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S1030353AbWGMUPw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 16:15:52 -0400
+Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k6DKFEut021982
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 13 Jul 2006 22:15:15 +0200
+Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k6DKFkUp022305
+	for <git@vger.kernel.org>; Thu, 13 Jul 2006 22:15:47 +0200
+Received: (from jnareb@localhost)
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k6DKFkvA022304
+	for git@vger.kernel.org; Thu, 13 Jul 2006 22:15:46 +0200
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.3.0
+X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23847>
 
-Is it possible to make it capable of running from /etc/inetd.conf?
-That's nicer for little-used personal servers, and also nicer if you
-want to use tcp wrappers or one of the inetd replacements that
-offers sophisticated load control.  (Refuse connections if
-load average is too high, different nice level for internal vs.
-external clients, etc. etc.)
+This series of patches introduces a few minor improvements to
+Emacs interface to Git.
 
-Thanks.
+-- 
+Jakub Narebski
