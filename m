@@ -1,61 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] format-patch: Generate a newline between the subject header and the message body.
-Date: Thu, 13 Jul 2006 21:38:48 +0200
-Organization: At home
-Message-ID: <e967en$bi6$1@sea.gmane.org>
-References: <44B6369D.6070602@codeweavers.com>
+From: Robert Shearman <rob@codeweavers.com>
+Subject: Re: [PATCH] format-patch: Generate a newline between the subject
+ header and the message body.
+Date: Thu, 13 Jul 2006 21:03:26 +0100
+Organization: CodeWeavers
+Message-ID: <44B6A70E.7060301@codeweavers.com>
+References: <44B6369D.6070602@codeweavers.com> <e967en$bi6$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jul 13 21:39:04 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jul 13 22:05:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G171P-0003aK-SY
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 21:38:52 +0200
+	id 1G17Py-0008LB-PJ
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 22:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030329AbWGMTir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 15:38:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030330AbWGMTir
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 15:38:47 -0400
-Received: from main.gmane.org ([80.91.229.2]:5522 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030329AbWGMTiq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 15:38:46 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G1717-0003Vz-9K
-	for git@vger.kernel.org; Thu, 13 Jul 2006 21:38:33 +0200
-Received: from host-81-190-20-193.torun.mm.pl ([81.190.20.193])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Jul 2006 21:38:33 +0200
-Received: from jnareb by host-81-190-20-193.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Jul 2006 21:38:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1030345AbWGMUEA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 16:04:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030346AbWGMUEA
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 16:04:00 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:8628 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S1030344AbWGMUD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jul 2006 16:03:59 -0400
+Received: from host86-141-83-116.range86-141.btcentralplus.com ([86.141.83.116] helo=[172.16.0.10])
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1G17Pi-0007Ym-20
+	for git@vger.kernel.org; Thu, 13 Jul 2006 15:03:58 -0500
+User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060502)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-193.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <e967en$bi6$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23845>
 
-Robert Shearman wrote:
+Jakub Narebski wrote:
 
-> 
-> format-patch previously didn't generate a newline after a subject. This 
-> caused the diffstat to not be displayed in messages without a blank line 
-> and the first blank line to be eaten in messages with a blank line.
+>Robert Shearman wrote:
+>  
+>
+>>format-patch previously didn't generate a newline after a subject. This 
+>>caused the diffstat to not be displayed in messages without a blank line 
+>>and the first blank line to be eaten in messages with a blank line.
+>>    
+>>
+>
+>Does this _enforce_ separating commit message into subject+empty
+>line+description? What about commit messages without this structire (e.g.
+>legacy commit messages from import from other SCM, e.g. GNU ChangeLog
+>style)?
+>
 
-Does this _enforce_ separating commit message into subject+empty
-line+description? What about commit messages without this structire (e.g.
-legacy commit messages from import from other SCM, e.g. GNU ChangeLog
-style)?
+It only affects commits exported into email style. It has nothing to do
+with the structure of GIT commit messages or those of any other SCM.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Rob Shearman
