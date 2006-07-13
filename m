@@ -1,48 +1,48 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] gitweb.css: Courer fonts for commits and tree-diff
-Date: Thu, 13 Jul 2006 09:57:39 +0200
-Message-ID: <E1G0w4p-0007c9-O3@moooo.ath.cx>
-References: <7vac7f1htw.fsf@assigned-by-dhcp.cox.net> <20060712174610.71046.qmail@web31810.mail.mud.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-fmt-merge-message problem..
+Date: Thu, 13 Jul 2006 10:03:26 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607130958250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0607122133250.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 13 09:58:19 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 13 10:03:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G0w4w-0001LS-Fi
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 09:57:46 +0200
+	id 1G0wAW-0002Eu-NC
+	for gcvg-git@gmane.org; Thu, 13 Jul 2006 10:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964842AbWGMH5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 03:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964848AbWGMH5n
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 03:57:43 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:12240 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S964842AbWGMH5n (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 03:57:43 -0400
-To: Luben Tuikov <ltuikov@yahoo.com>
-Mail-Followup-To: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060712174610.71046.qmail@web31810.mail.mud.yahoo.com>
+	id S964850AbWGMID3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 04:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbWGMID3
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 04:03:29 -0400
+Received: from mail.gmx.net ([213.165.64.21]:18596 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S964850AbWGMID2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 04:03:28 -0400
+Received: (qmail invoked by alias); 13 Jul 2006 08:03:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp034) with SMTP; 13 Jul 2006 10:03:27 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607122133250.5623@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23823>
 
-Luben Tuikov <ltuikov@yahoo.com> wrote:
-> --- Junio C Hamano <junkio@cox.net> wrote:
-> > But if I really have to, I would say this makes things uglier
-> > and less readable.  Maybe asking for monospace is less yucky but
-> > naming Courier explicitly?
-> 
-> Sometimes people would put ASCII art in their commit messages,
-> things like a simple table, compiler output, log output, etc,
-> and I wanted to _preserve_ the intent of such output.  This is why
-> I changed it to Courier. (sorry for the misspelling of Courier)
-monospace should do this too, see[1].  I think it should be added as
-fallback[2] at least but I see no reason not to use font-family:
-monospace.
+Hi,
 
-[1] http://www.w3.org/TR/REC-CSS2/fonts.html#monospace-def
-[2] http://www.w3.org/TR/REC-CSS2/fonts.html#generic-font-families
+On Wed, 12 Jul 2006, Linus Torvalds wrote:
+
+> Dscho? Can you please make git fmt-merge-message print out something 
+> sensible again?
+
+Sorry for the breakage. I saw Junio already patched and pushed.
+
+Ciao,
+Dscho
