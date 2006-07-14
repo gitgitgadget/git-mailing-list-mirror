@@ -1,72 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Avoid using the git wrapper in git-rebase.sh.
-Date: Fri, 14 Jul 2006 09:26:34 -0700
-Message-ID: <7vpsg8qhj9.fsf@assigned-by-dhcp.cox.net>
-References: <20060714044655.GA1982@spearce.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] argv created by handle_alias should be NULL terminated
+Date: Fri, 14 Jul 2006 18:37:06 +0200
+Message-ID: <E1G1Qf4-0007Ji-MH@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 18:26:59 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Jul 14 18:37:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1QUx-0002Tk-3N
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 18:26:39 +0200
+	id 1G1QfC-0004YD-Ld
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 18:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161217AbWGNQ0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 12:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161220AbWGNQ0g
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 12:26:36 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:41140 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1161217AbWGNQ0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jul 2006 12:26:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060714162635.JXCN6303.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Jul 2006 12:26:35 -0400
-To: Shawn Pearce <spearce@spearce.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161252AbWGNQhK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 14 Jul 2006 12:37:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161259AbWGNQhK
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 12:37:10 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:5528 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1161252AbWGNQhJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 12:37:09 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23898>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+Example:
+% git repo-config alias.test am
+% git test
+error: cannot open mbox J=DC=B7J=DC=B7J=DC=B7J=DC=B7 J=DC=B7 J=DC=B7(J=DC=
+=B7(J=DC [..]
+---
+ git.c |   11 +++++------
+ 1 files changed, 5 insertions(+), 6 deletions(-)
 
-> Ideally 'shipped' commands (e.g. git-rebase) should avoid calling
-> the git wrapper when executing other commands to prevent the user
-> from shadowing those commands with aliases and causing the shipped
-> command behavior to differ unexpectedly.
-
-In order to avoid confusion, we made aliases not to shadow real
-commands, so this is not an argument to support this patch.
-
-On distros that package git with gitexecdir set to somewhere not
-on normal user $PATH, users are expected to use "git" wrapper to
-invoke any commands (including git-rebase, so the user would say
-"git rebase"), and "git" wrapper sets up the PATH to contain the
-gitexecdir while it runs the subcommands, so spelling them
-either way, be it "git am" or "git-am", is just fine.
-
->
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
->  git-rebase.sh |   12 ++++++------
->  1 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 1b9e986..6d06665 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -131,7 +131,7 @@ do
->  			finish_rb_merge
->  			exit
->  		fi
-> -		git am --resolved --3way --resolvemsg="$RESOLVEMSG"
-> +		git-am --resolved --3way --resolvemsg="$RESOLVEMSG"
->  		exit
->  		;;
->  	--skip)
+diff --git a/git.c b/git.c
+index 102735a..ee5a0e8 100644
+--- a/git.c
++++ b/git.c
+@@ -133,13 +133,12 @@ static int handle_alias(int *argcp, cons
+ 				fflush(stderr);
+ 			}
+=20
++			new_argv =3D realloc(new_argv, sizeof(char*) *
++					   (count + *argcp + 1));
+ 			/* insert after command name */
+-			if (*argcp > 1) {
+-				new_argv =3D realloc(new_argv, sizeof(char*) *
+-						   (count + *argcp));
+-				memcpy(new_argv + count, *argv + 1,
+-				       sizeof(char*) * *argcp);
+-			}
++			memcpy(new_argv + count, *argv + 1,
++			       sizeof(char*) * *argcp);
++			new_argv[count+*argcp] =3D NULL;
+=20
+ 			*argv =3D new_argv;
+ 			*argcp +=3D count - 1;
+--=20
+1.4.1.g8b4b
