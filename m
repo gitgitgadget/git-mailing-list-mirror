@@ -1,81 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: David Woodhouse <dwmw2@infradead.org>
 Subject: Re: Kernel headers git tree
-Date: Thu, 13 Jul 2006 18:08:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607131806140.5623@g5.osdl.org>
-References: <1152835150.31372.23.camel@shinybook.infradead.org> 
- <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net> <1152838562.31372.58.camel@shinybook.infradead.org>
+Date: Fri, 14 Jul 2006 02:27:35 +0100
+Message-ID: <1152840456.31372.75.camel@shinybook.infradead.org>
+References: <1152835150.31372.23.camel@shinybook.infradead.org>
+	 <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 03:08:56 2006
+X-From: git-owner@vger.kernel.org Fri Jul 14 03:27:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1CAq-0000x8-4L
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 03:08:56 +0200
+	id 1G1CSY-0003hu-NX
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 03:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161159AbWGNBIw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 21:08:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161160AbWGNBIw
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 21:08:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:64919 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161159AbWGNBIw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 21:08:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6E18jnW011402
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 13 Jul 2006 18:08:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6E18iib022278;
-	Thu, 13 Jul 2006 18:08:45 -0700
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1152838562.31372.58.camel@shinybook.infradead.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161166AbWGNB1M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 21:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161167AbWGNB1L
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 21:27:11 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:17841 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S1161166AbWGNB1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jul 2006 21:27:10 -0400
+Received: from shinybook.infradead.org ([81.187.2.165])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1G1CSQ-0002NC-6M; Fri, 14 Jul 2006 02:27:06 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
+X-Mailer: Evolution 2.6.2 (2.6.2-1.fc5.6.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23866>
 
-
-
-On Fri, 14 Jul 2006, David Woodhouse wrote:
->
-> Btw, git-rev-list is _very_ slow at this. Even when the output is
-> actually HEAD, it takes my 2.3GHz G5 a _long_ time to give a result:
+On Thu, 2006-07-13 at 18:05 -0700, Linus Torvalds wrote:
 > 
-> pmac /pmac/git/linux-2.6 $ git-rev-parse HEAD
-> ab6cf0d0cb96417ef65cc2c2120c0e879edf7a4a
-> pmac /pmac/git/linux-2.6 $ time git-rev-list --max-count=1 --topo-order HEAD -- include
-> ab6cf0d0cb96417ef65cc2c2120c0e879edf7a4a
+> On Thu, 13 Jul 2006, Junio C Hamano wrote:
+> > 
+> > I am not sure what function incparent() is trying to do with
+> > this:
+> > 
+> > 	git rev-list --max-count=1 --topo-order $1 -- .
 > 
-> real    0m18.840s
+> Yeah, that looks strange.
 > 
-> Is there a better way to do that step?
+> The "--topo-order" in particular looks pointless, and just slows things 
+> down.
+> 
+> The default ordering from git-rev-list (and all other revision listing 
+> things, ie "git log" etc) _does_ guarantee that we never show a child 
+> before _one_ of its parents has been shown (although "parent" in this case 
+> may be the command line).
 
-Umm.. On my poor little 1.6GHz laptop:
+Does it? I thought at one point it sorted on some random criterion like
+alphabetically by author, or some other cosmetic information which isn't
+really part of the git structure -- like the timestamp or something?
+We still don't enforce monotonicity, do we? The timestamps are still
+just fluff?
 
-	[torvalds@evo linux]$ time git-rev-list --max-count=1 HEAD -- include
-	ab6cf0d0cb96417ef65cc2c2120c0e879edf7a4a
+> But that thing is doubly strange, because it uses "." as a path specifier. 
+> If this is done in the top-most directory, that should mean "all changes", 
+> which in turn means that the whole thing should be equivalent to
+> 
+> 	git rev-parse "$1^0"
+> 
+> since all commits should make _some_ change, and thus the first revision 
+> in the list should always be the top commit - the one you passed in as an 
+> argument.
 
-	real    0m0.014s
-	user    0m0.004s
-	sys     0m0.012s
+In this case, I really do have commits in the intermediate tree which
+don't actually change anything, and I want to filter them out -- I
+couldn't see a simple way to do it all in one pass.
 
-that's 0.014 sec. Not exactly slow.
-
-Now, the --topo-order you have there does slow it down a lot:
-
-	[torvalds@evo linux]$ time git-rev-list --max-count=1 --topo-order HEAD -- include
-	ab6cf0d0cb96417ef65cc2c2120c0e879edf7a4a
-
-	real    0m24.016s
-	user    0m23.973s
-	sys     0m0.016s
-
-so now it takes 24 seconds, and gives the same result.
-
-		Linus
+-- 
+dwmw2
