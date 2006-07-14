@@ -1,59 +1,75 @@
-From: "Olive" <Oliveannual@legislator.com>
-Subject: Most quality products for anyone who wants to become a champion in bed
-Date: Fri, 14 Jul 2006 10:19:43 +0800
-Message-ID: <42631935366633.F227D96119@6NWOER>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Kernel headers git tree
+Date: Thu, 13 Jul 2006 19:37:11 -0700
+Message-ID: <7vwtagsyi0.fsf@assigned-by-dhcp.cox.net>
+References: <1152835150.31372.23.camel@shinybook.infradead.org>
+	<7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>
+	<1152838562.31372.58.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jul 14 04:21:20 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 14 04:37:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1DIk-0003vL-Fo
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 04:21:10 +0200
+	id 1G1DYQ-0006Ey-8H
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 04:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161182AbWGNCVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 22:21:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161179AbWGNCVG
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 22:21:06 -0400
-Received: from zeus2.kernel.org ([204.152.191.36]:40391 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1161184AbWGNCVF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 22:21:05 -0400
-Received: from ubui766n.o1deji.adelphia.net ([58.62.45.87])
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6E2KSo4022577;
-	Fri, 14 Jul 2006 02:21:04 GMT
-To: <godard@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: uCXnxG51R1qWABvdIjPeqnEwvV2UzcQo04Lf
-X-Virus-Scanned: ClamAV 0.88.3/1598/Thu Jul 13 11:38:16 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+	id S1161179AbWGNChT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 22:37:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161192AbWGNChT
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 22:37:19 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:1214 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1161179AbWGNChR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jul 2006 22:37:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060714023717.HVRU8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 13 Jul 2006 22:37:17 -0400
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1152838562.31372.58.camel@shinybook.infradead.org> (David
+	Woodhouse's message of "Fri, 14 Jul 2006 01:56:01 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.1 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4860]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: icicledid.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: icicledid.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: icicledid.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: icicledid.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: icicledid.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23868>
 
-Good Day!
-Impress your girl with prolonged hardness, plentiful explosions and increased duration
-Masculine performance has never been so easy to increase with these products
+David Woodhouse <dwmw2@infradead.org> writes:
 
- http://www.icicledid.com
+> On Thu, 2006-07-13 at 17:39 -0700, Junio C Hamano wrote:
+>> With modern enough git, you can rewrite
+>>         KBUILDSHA=`git ls-tree $TREE -- Kbuild | cut -f3 -d\  | cut -f1`
+>> with
+>>         KBUILDSHA1=`git rev-parse $TREE:Kbuild`
+>
+>
+> Aha. Thanks.
+>
+>> I am not sure what function incparent() is trying to do with
+>> this:
+>> 
+>>         git rev-list --max-count=1 --topo-order $1 -- . 
+>
+> Find the latest ancestor commit which actually changed any files. The
+> first script has a similar line, except that it finds the latest
+> ancestor which changed anything in include/
+>
+> Consider a kernel tree with commits A-->B-->C-->D, of which only A and C
+> change anything in include/ and in fact only C actually changes the
+> _exported_ headers after the unifdef and sed bits. 
+>
+> The first script (extract-khdrs-git.sh) creates a 'stage1' branch which
+> only contains commits A'-->C', with the _exported_ header tree for each.
+>
+> The second script (extract-khdrs-stage2.sh) then creates the master
+> branch with the same tree objects, but omitting the commits which don't
+> change anything. So it contains only commit C''
 
-
-To keep thee from the evil woman, from the flattery of the tongue of a strange woman. Little Strokes Fell Great Oaks There is always some madness in love But there is also always some reason in madness 
- The West Wind Always Brings Wet Weather, The East Wind Wet and Cold Together, the South Wind Surely Brings Us Rain, the North Wind Blows It Back Again All good things come to those who wait.
+I guess what I was getting at was if you can avoid creating
+commits that do not change anything from previous in stage1
+branch, you do not have to do this, but I haven't studied stage1
+script deeply enough.
