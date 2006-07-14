@@ -1,81 +1,59 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Kernel headers git tree
-Date: Fri, 14 Jul 2006 02:27:35 +0100
-Message-ID: <1152840456.31372.75.camel@shinybook.infradead.org>
-References: <1152835150.31372.23.camel@shinybook.infradead.org>
-	 <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
+From: "Olive" <Oliveannual@legislator.com>
+Subject: Most quality products for anyone who wants to become a champion in bed
+Date: Fri, 14 Jul 2006 10:19:43 +0800
+Message-ID: <42631935366633.F227D96119@6NWOER>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 03:27:15 2006
+X-From: git-owner@vger.kernel.org Fri Jul 14 04:21:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1CSY-0003hu-NX
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 03:27:15 +0200
+	id 1G1DIk-0003vL-Fo
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 04:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161166AbWGNB1M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 21:27:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161167AbWGNB1L
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 21:27:11 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:17841 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S1161166AbWGNB1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 21:27:10 -0400
-Received: from shinybook.infradead.org ([81.187.2.165])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1G1CSQ-0002NC-6M; Fri, 14 Jul 2006 02:27:06 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
-X-Mailer: Evolution 2.6.2 (2.6.2-1.fc5.6.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1161182AbWGNCVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 13 Jul 2006 22:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161179AbWGNCVG
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 22:21:06 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:40391 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1161184AbWGNCVF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 22:21:05 -0400
+Received: from ubui766n.o1deji.adelphia.net ([58.62.45.87])
+	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6E2KSo4022577;
+	Fri, 14 Jul 2006 02:21:04 GMT
+To: <godard@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: uCXnxG51R1qWABvdIjPeqnEwvV2UzcQo04Lf
+X-Virus-Scanned: ClamAV 0.88.3/1598/Thu Jul 13 11:38:16 2006 on zeus2.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23866>
+X-Spam-Report: 14.1 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4860]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: icicledid.com]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: icicledid.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: icicledid.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: icicledid.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: icicledid.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23867>
 
-On Thu, 2006-07-13 at 18:05 -0700, Linus Torvalds wrote:
-> 
-> On Thu, 13 Jul 2006, Junio C Hamano wrote:
-> > 
-> > I am not sure what function incparent() is trying to do with
-> > this:
-> > 
-> > 	git rev-list --max-count=1 --topo-order $1 -- .
-> 
-> Yeah, that looks strange.
-> 
-> The "--topo-order" in particular looks pointless, and just slows things 
-> down.
-> 
-> The default ordering from git-rev-list (and all other revision listing 
-> things, ie "git log" etc) _does_ guarantee that we never show a child 
-> before _one_ of its parents has been shown (although "parent" in this case 
-> may be the command line).
+Good Day!
+Impress your girl with prolonged hardness, plentiful explosions and increased duration
+Masculine performance has never been so easy to increase with these products
 
-Does it? I thought at one point it sorted on some random criterion like
-alphabetically by author, or some other cosmetic information which isn't
-really part of the git structure -- like the timestamp or something?
-We still don't enforce monotonicity, do we? The timestamps are still
-just fluff?
+ http://www.icicledid.com
 
-> But that thing is doubly strange, because it uses "." as a path specifier. 
-> If this is done in the top-most directory, that should mean "all changes", 
-> which in turn means that the whole thing should be equivalent to
-> 
-> 	git rev-parse "$1^0"
-> 
-> since all commits should make _some_ change, and thus the first revision 
-> in the list should always be the top commit - the one you passed in as an 
-> argument.
 
-In this case, I really do have commits in the intermediate tree which
-don't actually change anything, and I want to filter them out -- I
-couldn't see a simple way to do it all in one pass.
-
--- 
-dwmw2
+To keep thee from the evil woman, from the flattery of the tongue of a strange woman. Little Strokes Fell Great Oaks There is always some madness in love But there is also always some reason in madness 
+ The West Wind Always Brings Wet Weather, The East Wind Wet and Cold Together, the South Wind Surely Brings Us Rain, the North Wind Blows It Back Again All good things come to those who wait.
