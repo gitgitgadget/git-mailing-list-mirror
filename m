@@ -1,107 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb.cgi: Teach tree->raw to not require the hash of the blob
-Date: Thu, 13 Jul 2006 22:49:06 -0700
-Message-ID: <7vhd1kspm5.fsf@assigned-by-dhcp.cox.net>
-References: <20060712175220.73131.qmail@web31813.mail.mud.yahoo.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Kernel headers git tree
+Date: Thu, 13 Jul 2006 22:52:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607132251310.5623@g5.osdl.org>
+References: <1152835150.31372.23.camel@shinybook.infradead.org> 
+ <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
+ <1152840456.31372.75.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 07:49:58 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 14 07:52:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1GYh-0000Pg-UI
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 07:49:52 +0200
+	id 1G1GbV-0000pw-I5
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 07:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161264AbWGNFtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 01:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161220AbWGNFtJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 01:49:09 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10371 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1161265AbWGNFtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jul 2006 01:49:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060714054907.LXBT6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Jul 2006 01:49:07 -0400
-To: ltuikov@yahoo.com
-In-Reply-To: <20060712175220.73131.qmail@web31813.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Wed, 12 Jul 2006 10:52:20 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161048AbWGNFwn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Jul 2006 01:52:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161205AbWGNFwm
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 01:52:42 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:65238 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161048AbWGNFwm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 01:52:42 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6E5qZnW025756
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 13 Jul 2006 22:52:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6E5qYIE031221;
+	Thu, 13 Jul 2006 22:52:35 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1152840456.31372.75.camel@shinybook.infradead.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
+X-MIMEDefang-Filter: osdl$Revision: 1.140 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23877>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
 
->> I think _allowing_ to accept filename not hash is a sane change,
->> and would be useful if you want to allow linking to always the
->> HEAD version from external sites,
->
-> Indeed, it is useful.
->
->> but I do not think listing the
->> raw link in the tree view without the hash is a good idea.  It
->> makes things quite confusing that "blob" link in its
->> neighbourhood gives the blob from that specific version, but
->> "raw" gives the version from HEAD, even when you are browsing
->> something other than HEAD.
->
-> I just thought it to be an easy place to put the "raw"-no-hash
-> link.
->
-> BTW, Junio, it would be a shame to lose this capability.  How
-> would you like to proceed with this?  Where would you like to
-> see this kind of link go?
 
-My preference?
+On Fri, 14 Jul 2006, David Woodhouse wrote:
+> 
+> > But that thing is doubly strange, because it uses "." as a path specifier. 
+> > If this is done in the top-most directory, that should mean "all changes", 
+> > which in turn means that the whole thing should be equivalent to
+> > 
+> > 	git rev-parse "$1^0"
+> > 
+> > since all commits should make _some_ change, and thus the first revision 
+> > in the list should always be the top commit - the one you passed in as an 
+> > argument.
+> 
+> In this case, I really do have commits in the intermediate tree which
+> don't actually change anything, and I want to filter them out -- I
+> couldn't see a simple way to do it all in one pass.
 
-Allowing to link the HEAD version from an _external_ source is
-useful (i.e. you can put a link in gitwiki to point at a file
-and say "the latest is always available at this URL").
+Btw, I'm actually surprised that my path simplification didn't filter out 
+the "." and make it mean exactly the same as not giving a path at all. I 
+thought I had done that earlier, but if you say "-- ." matters, then it 
+obviously does..
 
-We already support these:
-
-        a=blob&f=README
-        a=blob&f=README&hb=HEAD
-        a=blob&f=README&hb=HEAD~20
-
-but not these:
-
-        a=blob_plain&f=README
-        a=blob_plain&f=t/test4012.png
-
-The last example that does not generate text is less of a
-problem, thanks to your previous patch, because "sub git_blob"
-supports the "filename with or without hash base" syntax and
-sends the correct hash to git_blob_plain to fall back, but that
-does not help for text files.  This patch corrects that, which
-is nice.
-
-However, I do not think the change to "sub git_tree" makes much
-sense.  The links within gitweb-generated pages are about
-browsing the history.  As I already said, having <blob> link
-that is history specific and <raw> link which is not (iow always
-goes to HEAD) next to each other is confusing, and you are
-making it less easy to get a raw output from a specific version
-because you removed that feature from the link and replaced it
-with something less useful.
-
-If somebody wants to see what the latest version of a blob looks
-like while browsing the history with gitweb, I think it is a
-more natural workflow to go to <history> link and find the
-latest version.  So maybe you might want to add <raw> link in
-the output of the history action?
-
-        Side note: right now, <history> link does not show any
-        history newer than the commit that has the link itself;
-        maybe there is a room for improvement there but we need
-        to be careful not to trash the webserver caching.
-
-Obviously you could go back to the repository top page and start
-digging the latest tree from the top, but that is a bit more
-cumbersome.
+		Linus
