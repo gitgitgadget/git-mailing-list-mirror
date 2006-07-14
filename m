@@ -1,91 +1,48 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] urls.txt: Use substitution to escape square brackets
-Date: Fri, 14 Jul 2006 23:50:39 +0200
-Message-ID: <20060714215039.GA21994@diku.dk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] urls.txt: Use substitution to escape square brackets
+Date: Fri, 14 Jul 2006 15:07:19 -0700
+Message-ID: <7vfyh3on6w.fsf@assigned-by-dhcp.cox.net>
 References: <11528726881431-git-send-email-alp@atoker.com>
+	<20060714215039.GA21994@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Jul 14 23:50:50 2006
+Cc: Alp Toker <alp@atoker.com>, git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Jul 15 00:07:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1VYb-0001rk-TW
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 23:50:46 +0200
+	id 1G1Vol-0004CI-Dh
+	for gcvg-git@gmane.org; Sat, 15 Jul 2006 00:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161312AbWGNVun (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 17:50:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161314AbWGNVun
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 17:50:43 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:56208 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1161312AbWGNVum (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 17:50:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 70CE1770051;
-	Fri, 14 Jul 2006 23:50:41 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08396-14; Fri, 14 Jul 2006 23:50:39 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 9ACC9770054;
-	Fri, 14 Jul 2006 23:50:39 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 0764A6DFEC5; Fri, 14 Jul 2006 23:50:12 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 79111629B4; Fri, 14 Jul 2006 23:50:39 +0200 (CEST)
-To: Alp Toker <alp@atoker.com>
-Content-Disposition: inline
-In-Reply-To: <11528726881431-git-send-email-alp@atoker.com>
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1161313AbWGNWHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Jul 2006 18:07:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161314AbWGNWHV
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 18:07:21 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12196 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1161313AbWGNWHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jul 2006 18:07:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060714220720.BIVX985.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 14 Jul 2006 18:07:20 -0400
+To: Jonas Fonseca <fonseca@diku.dk>
+In-Reply-To: <20060714215039.GA21994@diku.dk> (Jonas Fonseca's message of
+	"Fri, 14 Jul 2006 23:50:39 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23913>
 
-This changes "[user@]" to use {startsb} and {endsb} to insert [ and ],
-similar to how {caret} is used in git-rev-parse.txt.
+Jonas Fonseca <fonseca@diku.dk> writes:
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> This changes "[user@]" to use {startsb} and {endsb} to insert [ and ],
+> similar to how {caret} is used in git-rev-parse.txt.
+>
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
----
-
-Alternate "fix".
-
----
-
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 7ce7151..41754d5 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -9,6 +9,8 @@ # the command.
- 
- [attributes]
- caret=^
-+startsb=&#91; # [
-+endsb=&#93;   # ]
- 
- ifdef::backend-docbook[]
- [gitlink-inlinemacro]
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index 93378d2..2950ac9 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -10,9 +10,9 @@ to name the remote repository:
- - https://host.xz/path/to/repo.git/
- - git://host.xz/path/to/repo.git/
- - git://host.xz/~user/path/to/repo.git/
--- ssh://+++[user@+++]host.xz/path/to/repo.git/
--- ssh://+++[user@+++]host.xz/~user/path/to/repo.git/
--- ssh://+++[user@+++]host.xz/~/path/to/repo.git
-+- ssh://{startsb}user@{endsb}host.xz/path/to/repo.git/
-+- ssh://{startsb}user@{endsb}host.xz/~user/path/to/repo.git/
-+- ssh://{startsb}user@{endsb}host.xz/~/path/to/repo.git
- ===============================================================
- 
- SSH Is the default transport protocol and also supports an
-
--- 
-Jonas Fonseca
+Looks nicer.  Alp?  Does this work with your version of
+asciidoc?
