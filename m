@@ -1,55 +1,57 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Kernel headers git tree
-Date: Fri, 14 Jul 2006 00:59:09 +0100
-Message-ID: <1152835150.31372.23.camel@shinybook.infradead.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Kernel headers git tree
+Date: Thu, 13 Jul 2006 17:39:55 -0700
+Message-ID: <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>
+References: <1152835150.31372.23.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 01:58:46 2006
+X-From: git-owner@vger.kernel.org Fri Jul 14 02:40:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1B4v-00014p-K9
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 01:58:46 +0200
+	id 1G1Biy-0002JN-Lk
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 02:40:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161063AbWGMX6m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 13 Jul 2006 19:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161062AbWGMX6l
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 19:58:41 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:62649 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S1161053AbWGMX6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jul 2006 19:58:40 -0400
-Received: from shinybook.infradead.org ([81.187.2.165])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1G1B4p-0007uE-JB; Fri, 14 Jul 2006 00:58:40 +0100
-To: linux-kernel@vger.kernel.org
-X-Mailer: Evolution 2.6.2 (2.6.2-1.fc5.6.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1751430AbWGNAj5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 13 Jul 2006 20:39:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbWGNAj5
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 20:39:57 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:44191 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751430AbWGNAj5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 20:39:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060714003956.VYV12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 13 Jul 2006 20:39:56 -0400
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1152835150.31372.23.camel@shinybook.infradead.org> (David
+	Woodhouse's message of "Fri, 14 Jul 2006 00:59:09 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23862>
 
-At http://git.kernel.org/git/?p=3Dlinux/kernel/git/dwmw2/kernel-headers=
-=2Egit
-there's a git tree which contains the sanitised exported headers for al=
-l
-architectures -- basically the result of 'make headers_install'.
+David Woodhouse <dwmw2@infradead.org> writes:
 
-It tracks Linus' kernel tree, by means of some evil scripts.=C2=B9
+> =B9 http://david.woodhou.se/extract-khdrs-git.sh and
+>   http://david.woodhou.se/extract-khdrs-stage2.sh for the stout of st=
+omach
 
-Only commits in Linus' tree which actually affect the exported result
-should have an equivalent commit in the above tree, which means that an=
-y
-changes which affect userspace should be clearly visible for review.
+With modern enough git, you can rewrite
 
---=20
-dwmw2
+	KBUILDSHA=3D`git ls-tree $TREE -- Kbuild | cut -f3 -d\  | cut -f1`
 
-=C2=B9 http://david.woodhou.se/extract-khdrs-git.sh and
-  http://david.woodhou.se/extract-khdrs-stage2.sh for the stout of stom=
-ach
+with
+
+	KBUILDSHA1=3D`git rev-parse $TREE:Kbuild`
+
+I am not sure what function incparent() is trying to do with
+this:
+
+	git rev-list --max-count=3D1 --topo-order $1 -- .
