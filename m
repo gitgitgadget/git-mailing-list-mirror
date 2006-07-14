@@ -1,55 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Kernel headers git tree
-Date: Fri, 14 Jul 2006 14:21:51 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0607141402520.9789@iabervon.org>
-References: <1152835150.31372.23.camel@shinybook.infradead.org> 
- <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
-  <1152840456.31372.75.camel@shinybook.infradead.org> 
- <Pine.LNX.4.64.0607132157370.5623@g5.osdl.org>  <1152872626.3191.56.camel@pmac.infradead.org>
-  <Pine.LNX.4.64.0607140843570.5623@g5.osdl.org>  <Pine.LNX.4.64.0607141256170.9789@iabervon.org>
- <1152899889.3191.71.camel@pmac.infradead.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/3] git-format-patch: Make the second and subsequent mails replies to the first
+Date: Fri, 14 Jul 2006 11:23:38 -0700
+Message-ID: <7v4pxkoxjp.fsf@assigned-by-dhcp.cox.net>
+References: <20060710162920.GR20191@harddisk-recovery.com>
+	<1152556878.8890.45.camel@josh-work.beaverton.ibm.com>
+	<7vwtal9lu1.fsf@assigned-by-dhcp.cox.net>
+	<1152897407.5177.8.camel@josh-work.beaverton.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 20:21:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 14 20:23:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1SHq-0005Ct-2Q
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 20:21:14 +0200
+	id 1G1SKE-0005l3-VV
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 20:23:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422690AbWGNSVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 14:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422696AbWGNSVK
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 14:21:10 -0400
-Received: from iabervon.org ([66.92.72.58]:14853 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1422690AbWGNSVJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 14:21:09 -0400
-Received: (qmail 14075 invoked by uid 1000); 14 Jul 2006 14:21:51 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Jul 2006 14:21:51 -0400
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1152899889.3191.71.camel@pmac.infradead.org>
+	id S1422701AbWGNSXk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Jul 2006 14:23:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422702AbWGNSXk
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 14:23:40 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:62595 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1422701AbWGNSXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jul 2006 14:23:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060714182338.GSIS554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 14 Jul 2006 14:23:38 -0400
+To: Josh Triplett <josht@us.ibm.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23907>
 
-On Fri, 14 Jul 2006, David Woodhouse wrote:
+Josh Triplett <josht@us.ibm.com> writes:
 
-> And no, I don't do any further simplification of the graph of commits
-> other than what 'git-rev-list' does for me. I need to fully go over
-> Linus' last mail and understand it, but I think the conclusion is that
-> the above scripts are fine, and I can happily drop --topo-order from
-> them.
+>> While I understand what you said about imap-send, I really would
+>> feel better if this was optional.  Do not change the default
+>> output format, please.
+>
+> So rather than the --no-thread option provided in the second patch of
+> this series, you'd prefer a --thread option to enable setting the
+> In-Reply-To/References headers?
 
-I think the mechanism you're using is fine, but it's also generally 
-useful, and it would be nice to have the generic part split out from the 
-particular application. Also, those scripts really are as evil as 
-advertized, and using more of the git programs would make that a lot 
-saner.
+Eh, that's not what I meant.
 
-	-Daniel
-*This .sig left intentionally blank*
+I do not mind the code you added to log-tree.c and revision.h,
+and honestly I do not care which of threading or non-threading
+mode is the default, although I think your explanation that it
+parallels what send-email does makes a lot of sense.
+
+But I do mind that the code added by the first patch to
+cmd_format_patch runs by default, and worse yet, there is no
+option turn it off.  Setting message_id and ref_message_id in
+rev_info struct should be something the end user should ask for
+explicitly by invoking the command with an option, perhaps
+--with-message-id, which you probably would also want to turn on
+when any of --no-thread, --thread or --initial-reply-to options
+are given.
+-
