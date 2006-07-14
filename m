@@ -1,116 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] urls.txt: Use substitution to escape square brackets
-Date: Fri, 14 Jul 2006 16:42:35 -0700
-Message-ID: <7v3bd3ois4.fsf@assigned-by-dhcp.cox.net>
-References: <11528726881431-git-send-email-alp@atoker.com>
-	<20060714215039.GA21994@diku.dk>
+From: Alp Toker <alp@atoker.com>
+Subject: Re: [PATCH] urls.txt: Use substitution to escape square brackets
+Date: Sat, 15 Jul 2006 00:57:04 +0100
+Message-ID: <44B82F50.7050106@atoker.com>
+References: <11528726881431-git-send-email-alp@atoker.com>	<20060714215039.GA21994@diku.dk>	<7vfyh3on6w.fsf@assigned-by-dhcp.cox.net> <44B82243.20604@atoker.com> <7v8xmvok49.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alp Toker <alp@atoker.com>
-X-From: git-owner@vger.kernel.org Sat Jul 15 01:42:53 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Jul 15 01:57:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1XJ6-0000CB-Jx
-	for gcvg-git@gmane.org; Sat, 15 Jul 2006 01:42:52 +0200
+	id 1G1XWx-0001hs-St
+	for gcvg-git@gmane.org; Sat, 15 Jul 2006 01:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945906AbWGNXmh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 19:42:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945918AbWGNXmh
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 19:42:37 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63427 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1945906AbWGNXmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jul 2006 19:42:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060714234236.WNUH2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 14 Jul 2006 19:42:36 -0400
-To: Jonas Fonseca <fonseca@diku.dk>
-In-Reply-To: <20060714215039.GA21994@diku.dk> (Jonas Fonseca's message of
-	"Fri, 14 Jul 2006 23:50:39 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1945924AbWGNX5I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 14 Jul 2006 19:57:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945925AbWGNX5H
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 19:57:07 -0400
+Received: from host-84-9-44-142.bulldogdsl.com ([84.9.44.142]:28422 "EHLO
+	ndesk.org") by vger.kernel.org with ESMTP id S1945924AbWGNX5G (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 19:57:06 -0400
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+	by ndesk.org (Postfix) with ESMTP id F0AE4176BFA;
+	Sat, 15 Jul 2006 00:57:04 +0100 (BST)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <7v8xmvok49.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23918>
 
-Alp is right -- the comments in [attributes] section after the
-definition do appear in the output, even with asciidoc 7.1.2, so
-here is a replacement proposal from me.
+Junio C Hamano wrote:
+> Alp Toker <alp@atoker.com> writes:
+>=20
+>> Junio C Hamano wrote:
+>>> Looks nicer.  Alp?  Does this work with your version of
+>>> asciidoc?
+>> I'm using asciidoc 7.0.2, which came with Ubuntu Dapper.
+>>
+>> The man page output now looks like this:
+>>
+>>        =B7  ssh://[ # [user@] # ]host.xz/path/to/repo.git/
+>>        =B7  ssh://[ # [user@] # ]host.xz/~user/path/to/repo.git/
+>>        =B7  ssh://[ # [user@] # ]host.xz/~/path/to/repo.git
+>=20
+> I got a bit inventive and removed the comments after #, which
+> were in Jonas's version, when I tried it out.  Maybe doing the
+> same might help you, since I suspect the above '#' are coming
+> from the comment part.
 
-The one by Alp is an easy work-around, but I do not want to
-worry about potential, unintended, breakages that might be
-caused by changing delimited blocks to literal paragraphs (and
-it changes the resulting rendering from the original).
+No. Removing the comments doesn't help -- the output remains broken.
 
--- >8 --
-From: Jonas Fonseca <fonseca@diku.dk>
+>> Out of the three patches,
+>>
+>>   (at) "ssh://[user@]host.xz/path/to/repo.git/"
+>>   (jc) "ssh://+++[user@+++]host.xz/path/to/repo.git/"
+>>   (jf) "ssh://{startsb}user@{endsb}host.xz/path/to/repo.git/"
+>>
+>> I'd say (at) is still most readable, not requiring +++ markup (jc) o=
+r
+>> hacks to asciidoc.conf (jf).
+>=20
+> I do not think defining [attribute] is a hack; it is a
+> documented feature.
 
-This changes "[user@]" to use {startsb} and {endsb} to insert [ and ],
-similar to how {caret} is used in git-rev-parse.txt.
+"You write an AsciiDoc document the same way you would write a normal=20
+text document, there are no markup tags or weird format notations."
 
-[jc: Removed a well-intentioned comment that broke the final
- formatting from the original patch.  While we are at it,
- updated the paragraph that claims to be equivalent to the
- section that was updated earlier without making matching
- changes.]
+asciidoc solves this problem by design and without markup, with the=20
+prescribed syntax being to indent and quote the text verbatim, just as=20
+it was meant to be read.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- Documentation/asciidoc.conf |    2 ++
- Documentation/urls.txt      |   17 +++++++++--------
- 2 files changed, 11 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 7ce7151..8196d78 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -9,6 +9,8 @@ # the command.
- 
- [attributes]
- caret=^
-+startsb=&#91;
-+endsb=&#93;
- 
- ifdef::backend-docbook[]
- [gitlink-inlinemacro]
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index 9d2ad46..26ecba5 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -10,20 +10,21 @@ to name the remote repository:
- - https://host.xz/path/to/repo.git/
- - git://host.xz/path/to/repo.git/
- - git://host.xz/~user/path/to/repo.git/
--- ssh://+++[user@+++]host.xz/path/to/repo.git/
--- ssh://+++[user@+++]host.xz/~user/path/to/repo.git/
--- ssh://+++[user@+++]host.xz/~/path/to/repo.git
-+- ssh://{startsb}user@{endsb}host.xz/path/to/repo.git/
-+- ssh://{startsb}user@{endsb}host.xz/~user/path/to/repo.git/
-+- ssh://{startsb}user@{endsb}host.xz/~/path/to/repo.git
- ===============================================================
- 
--SSH Is the default transport protocol and also supports an
--scp-like syntax.  Both syntaxes support username expansion,
-+SSH is the default transport protocol.  You can optionally specify
-+which user to log-in as, and an alternate, scp-like syntax is also
-+supported.  Both syntaxes support username expansion,
- as does the native git protocol. The following three are
- identical to the last three above, respectively:
- 
- ===============================================================
--- host.xz:/path/to/repo.git/
--- host.xz:~user/path/to/repo.git/
--- host.xz:path/to/repo.git
-+- {startsb}user@{endsb}host.xz:/path/to/repo.git/
-+- {startsb}user@{endsb}host.xz:~user/path/to/repo.git/
-+- {startsb}user@{endsb}host.xz:path/to/repo.git
- ===============================================================
- 
- To sync with a local directory, use:
--- 
-1.4.1.g28ec
+Why try to fit a square peg in a round hole by defining attributes? It'=
+s=20
+a good indicator that there's a hack going down when three competent=20
+programmers can't escape a square bracket after three attempts spanning=
+=20
+  two days ;-)
