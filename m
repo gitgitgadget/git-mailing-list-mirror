@@ -1,77 +1,99 @@
-From: David Woodhouse <dwmw2@infradead.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Kernel headers git tree
-Date: Fri, 14 Jul 2006 18:58:09 +0100
-Message-ID: <1152899889.3191.71.camel@pmac.infradead.org>
+Date: Fri, 14 Jul 2006 11:01:54 -0700
+Message-ID: <7v64i0qd4d.fsf@assigned-by-dhcp.cox.net>
 References: <1152835150.31372.23.camel@shinybook.infradead.org>
-	 <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
-	 <1152840456.31372.75.camel@shinybook.infradead.org>
-	 <Pine.LNX.4.64.0607132157370.5623@g5.osdl.org>
-	 <1152872626.3191.56.camel@pmac.infradead.org>
-	 <Pine.LNX.4.64.0607140843570.5623@g5.osdl.org>
-	 <Pine.LNX.4.64.0607141256170.9789@iabervon.org>
+	<7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
+	<1152840456.31372.75.camel@shinybook.infradead.org>
+	<Pine.LNX.4.64.0607132251310.5623@g5.osdl.org>
+	<1152869915.3191.12.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 19:59:34 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 14 20:02:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1RwI-00018r-Aq
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 19:58:58 +0200
+	id 1G1RzO-0001fz-9z
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 20:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422669AbWGNR6d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 13:58:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422694AbWGNR6d
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 13:58:33 -0400
-Received: from canuck.infradead.org ([205.233.218.70]:25734 "EHLO
-	canuck.infradead.org") by vger.kernel.org with ESMTP
-	id S1422669AbWGNR6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jul 2006 13:58:32 -0400
-Received: from pmac.infradead.org ([81.187.2.168])
-	by canuck.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1G1Rvl-0003BZ-Cx; Fri, 14 Jul 2006 13:58:26 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0607141256170.9789@iabervon.org>
-X-Mailer: Evolution 2.6.2 (2.6.2-1.fc5.6.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1422693AbWGNSB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Jul 2006 14:01:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422694AbWGNSB6
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 14:01:58 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:52879 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1422693AbWGNSB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jul 2006 14:01:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060714180156.OSXD6303.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 14 Jul 2006 14:01:56 -0400
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1152869915.3191.12.camel@pmac.infradead.org> (David Woodhouse's
+	message of "Fri, 14 Jul 2006 10:38:35 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23902>
 
-On Fri, 2006-07-14 at 13:51 -0400, Daniel Barkalow wrote:
-> I think that a program to generate a slave git tree based in some 
-> user-modifiable way on a parent repository would be useful and 
-> implementable. I'd thought a bunch about it a while ago, for extracting 
-> separable parts of projects (e.g., make a kbuild project that's pulled out 
-> of the kernel tree, but is still a regular git project to anyone who 
-> doesn't know this). My conclusion was that you need a cache of mappings, 
-> because otherwise you can't identify that you already have a transformed 
-> version of a commit, because you don't know its transformed parents, 
-> unless you've gone all the way back to the root (which doesn't have 
-> parents).
+David Woodhouse <dwmw2@infradead.org> writes:
 
-Absolutely. You don't want to go all the way back to the root every time
--- it's an incremental process, and you have to cache the mappings from
-objects in the 'master' tree to objects in the 'slave' tree.
+> Yet what I actually want in the final result is "those commits which
+> change the result of the _exported_ headers". It's slightly less
+> realistic to want rev-list to find that for me directly from the
+> original kernel tree without having done the export step in stage1 --
+> what I need to do is create the exported header tree for each commit
+> which _might_ change it, then filter out the commits which don't
+> _actually_ change it.
+>
+> The extra commits in the stage1 branch are cheap enough -- by definition
+> they don't lead to any extra tree or blob objects. I think the two-stage
+> export is probably the best approach, unless I'm missing something.
 
-My existing scripts already do that part -- I didn't think it was worth
-commenting on.
+Since you are not building an exact parallel history with the
+same topology (you are trying to cull the commits in the new
+tree that do not change the resulting header files), I do not
+see much point in the parent conversion loop in the first script
+to compute CONVERTEDPARENTS.
 
-http://david.woodhou.se/extract-jffs2-git.sh
-http://david.woodhou.se/extract-khdrs-git.sh
-http://david.woodhou.se/extract-khdrs-stage2.sh
+How about making it simpler?
 
-And no, I don't do any further simplification of the graph of commits
-other than what 'git-rev-list' does for me. I need to fully go over
-Linus' last mail and understand it, but I think the conclusion is that
-the above scripts are fine, and I can happily drop --topo-order from
-them.
+	* Keep the current HEAD of the "headers" branch at in
+          refs/heads/kernel-headers
 
--- 
-dwmw2
+	* Whenever you see $UPSTREAM_GITDIR/refs/heads/master
+          changes, you do your converttree to come up with the
+          new header tree
+
+	* See if the resulting tree changed by doing something
+          like this:
+
+                TREE=`converttree $INCDIR $KBUILDASMSHA`
+                case "`git diff-tree --name-only kernel-headers $TREE`" in
+                '')
+                        # No changes in the result
+                        exit
+                esac
+
+	  Stop processing here if there is no change.
+
+	* Make a new commit, with its parent set to the current
+          value of refs/heads/kernel-headers, perhaps with the
+          same message as $UPSTREAM_GITDIR/refs/heads/master
+          has as you do already.
+
+	* Advance refs/heads/kernel-headers only when you
+          actually make a new commit.
+
+I would further suggest to record the value of the upstream
+commit object name, $UPSTREAM_GITDIR/refs/heads/master,
+somewhere in the commit message, by using "git describe".  This
+will help people who use your converted headers to know which
+released version of the Linus kernel the headers correspond to,
+and also help you notice when the upstream is updated during the
+next run.
