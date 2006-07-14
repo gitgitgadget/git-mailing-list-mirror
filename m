@@ -1,63 +1,54 @@
-From: Mariusz Kozlowski <m.kozlowski@tuxland.pl>
-Subject: git 1.2.4 and linux-2.6 tree problem
-Date: Fri, 14 Jul 2006 16:20:05 +0200
-Organization: tuxland
-Message-ID: <200607141620.05350.m.kozlowski@tuxland.pl>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jul 14 16:20:13 2006
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: [PATCH] Fix "git-fetch --tags" exit status when nothing has been changed
+Date: Fri, 14 Jul 2006 19:06:57 +0400
+Message-ID: <11528896171250-git-send-email-vsu@altlinux.ru>
+Cc: git@vger.kernel.org, Sergey Vlasov <vsu@altlinux.ru>
+X-From: git-owner@vger.kernel.org Fri Jul 14 17:08:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1OWZ-0007Ve-Ss
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 16:20:12 +0200
+	id 1G1PG1-0001vi-8t
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 17:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161108AbWGNOUI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 10:20:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161110AbWGNOUH
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 10:20:07 -0400
-Received: from xdsl-664.zgora.dialog.net.pl ([81.168.226.152]:17168 "EHLO
-	tuxland.pl") by vger.kernel.org with ESMTP id S1161108AbWGNOUG
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jul 2006 10:20:06 -0400
-Received: from [192.168.1.3] (xdsl-664.zgora.dialog.net.pl [81.168.226.152])
-	by tuxland.pl (Postfix) with ESMTP id 078666EF7A
-	for <git@vger.kernel.org>; Fri, 14 Jul 2006 16:20:04 +0200 (CEST)
-Received: from [192.168.1.3] ([192.168.1.3])
-	by tuxland.pl (AISK)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-Content-Disposition: inline
-X-Virus-Scanned: AISK at tuxland.pl
+	id S1030455AbWGNPG7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Jul 2006 11:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030456AbWGNPG7
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 11:06:59 -0400
+Received: from mivlgu.ru ([81.18.140.87]:22175 "EHLO mail.mivlgu.ru")
+	by vger.kernel.org with ESMTP id S1030455AbWGNPG7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 11:06:59 -0400
+Received: from localhost.localdomain (center4.mivlgu.local [192.168.1.4])
+	by mail.mivlgu.ru (Postfix) with ESMTP
+	id 86A108062; Fri, 14 Jul 2006 19:06:57 +0400 (MSD)
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.1.ga319
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23890>
 
-Hello,
+After commit 55b7835e1b81a6debc7648149d2b8a4c5c64ddba git-fetch --tags
+exits with status 1 when no tags have been changed, which breaks calling
+git-fetch from scripts.
 
-	I get repeatable errors when I follow steps from "Kernel Hackers' Guide to 
-git" (http://linux.yyz.us/git-howto.html). The thing is when I try to pull 
-Linus tree with:
+Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+---
+ git-fetch.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git  
-linux-2.6
-
-After downloading approx. 60MB I get these errors:
-
-fatal: packfile '/home/me/linux/linux-2.6/.git/objects/pack/tmp-lfnDg8' SHA1 
-mismatch
-error: git-clone-pack: unable to read from git-index-pack
-error: git-index-pack died with error code 128
-clone-pack from 
-'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git' 
-failed.
-
-The git version is 1.2.4 (marked as stable in gentoo). Any ideas?
-
-Regards,
-
-	Mariusz
+diff --git a/git-fetch.sh b/git-fetch.sh
+index ff17699..ee99280 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -153,7 +153,7 @@ fast_forward_local () {
+ 	then
+ 		if now_=$(cat "$GIT_DIR/$1") && test "$now_" = "$2"
+ 		then
+-			[ "$verbose" ] && echo >&2 "* $1: same as $3"
++			[ "$verbose" ] && echo >&2 "* $1: same as $3" ||:
+ 		else
+ 			echo >&2 "* $1: updating with $3"
+ 			git-update-ref -m "$rloga: updating tag" "$1" "$2"
+-- 
+1.4.1.ga319
