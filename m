@@ -1,128 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Kernel headers git tree
-Date: Thu, 13 Jul 2006 22:16:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607132157370.5623@g5.osdl.org>
-References: <1152835150.31372.23.camel@shinybook.infradead.org> 
- <7v4pxlt3xg.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0607131800520.5623@g5.osdl.org>
- <1152840456.31372.75.camel@shinybook.infradead.org>
+From: Christopher Faylor <me@cgf.cx>
+Subject: Re: Error writing loose object on Cygwin
+Date: Fri, 14 Jul 2006 01:24:10 -0400
+Message-ID: <20060714052410.GA19680@trixie.casa.cgf.cx>
+References: <20060712035746.GA7863@spearce.org> <7vr70r1ms5.fsf@assigned-by-dhcp.cox.net> <20060713055127.GA15960@trixie.casa.cgf.cx> <20060714033435.GA1508@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 14 07:17:19 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jul 14 07:24:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1G3B-00046M-Q5
-	for gcvg-git@gmane.org; Fri, 14 Jul 2006 07:17:18 +0200
+	id 1G1GA3-0005A1-Js
+	for gcvg-git@gmane.org; Fri, 14 Jul 2006 07:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964790AbWGNFRF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 01:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964794AbWGNFRE
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 01:17:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:52943 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964790AbWGNFRD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jul 2006 01:17:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6E5GsnW023978
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 13 Jul 2006 22:16:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6E5GrRr030087;
-	Thu, 13 Jul 2006 22:16:53 -0700
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1152840456.31372.75.camel@shinybook.infradead.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.85__
-X-MIMEDefang-Filter: osdl$Revision: 1.140 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964794AbWGNFYN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 14 Jul 2006 01:24:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964795AbWGNFYM
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 01:24:12 -0400
+Received: from pool-71-248-179-44.bstnma.fios.verizon.net ([71.248.179.44]:41353
+	"EHLO cgf.cx") by vger.kernel.org with ESMTP id S964794AbWGNFYM
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jul 2006 01:24:12 -0400
+Received: by cgf.cx (Postfix, from userid 201)
+	id B14CD13C021; Fri, 14 Jul 2006 01:24:10 -0400 (EDT)
+To: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060714033435.GA1508@spearce.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23873>
 
+On Thu, Jul 13, 2006 at 11:34:35PM -0400, Shawn Pearce wrote:
+>Christopher Faylor <me@cgf.cx> wrote:
+>> On Tue, Jul 11, 2006 at 09:15:38PM -0700, Junio C Hamano wrote:
+>> >Shawn Pearce <spearce@spearce.org> writes:
+>> >
+>> >> Has anyone else seen this type of behavior before?  Any suggestions
+>> >> on debugging this issue?
+>> >
+>> >I would suggest raising this (politely) to Cygwin people.
+>> 
+>> I lost the thread here but wasn't this referring to a samba mount?  If so,
+>> it would be samba that's returning the wrong "errno".
+>
+>I thought about that but Windows 2000 talking to the same samba
+>server issues back the correct errno.  Running the exact same Cygwin
+>and GIT binaries (we've at least standardized on that).  So it
+>seems weird that a samba server is issuing the correct error code
+>to a Windows 2000 client but the wrong one to a Windows XP client.
+>(In both cases the clients are accessing directories on the same
+>filesystem on the UNIX server.)
 
+It's entirely possible that samba is behaving differently with different
+versions of windows.  OTOH, I believe that EACCES is the catch-all for
+windows errors when translating into errnos so possibly it is an
+uncaught error translation.
 
-On Fri, 14 Jul 2006, David Woodhouse wrote:
-> > 
-> > The default ordering from git-rev-list (and all other revision listing 
-> > things, ie "git log" etc) _does_ guarantee that we never show a child 
-> > before _one_ of its parents has been shown (although "parent" in this case 
-> > may be the command line).
-> 
-> Does it? I thought at one point it sorted on some random criterion like
-> alphabetically by author, or some other cosmetic information which isn't
-> really part of the git structure -- like the timestamp or something?
-> We still don't enforce monotonicity, do we? The timestamps are still
-> just fluff?
+If you have the inclination and time, if you could run the session
+under strace:  "strace -o strace.out git ...",d snip twenty or
+thirty lines on each side of the place where the the errno translation
+is happening, and send it to the cygwin list at cygwin at cygwin 
+maybe something will be obvious.
 
-The timestamps are, and always have been, just a heuristic.
+Note that cygwin's strace is not anything like any other strace and
+is quite a bit more wordy so, this file will be pretty large.  That's
+why I ask for some careful editing before sending it to the mailing
+list.  The errno number for EACCES on cygwin is 13.
 
-The output order of git-rev-list is actually entirely well-defined, but 
-it's the _cheap_ ordering, not the strict and full topological one.
-
-The cheap ordering means that we don't ever look at the whole history, but 
-it's still a real "DAG reachability ordering" in the sense that when we 
-output a commit, we have _always_ output _one_ full path of commits to 
-reach that commit from one of the starting point.
-
-But since you can traverse the DAG in any number of ways, the heuristic is 
-that when there are multiple choices, we pick the one with the most recent 
-commit date.
-
-So to give an example, let's say we have
-
-	HEAD  ->     A
-		    / \
-		   B   C
-		  / \   \
-		 D   E   F
-		  \ /   / \
-		   G   H  I
-		  .......
-
-the difference between --topo-order and the default ordering for
-
-	git rev-list HEAD
-
-is most visible for commit 'G'.
-
-For --topo-order, we guarantee that before we show 'G', we _will_ have 
-shown both 'D' and 'E'. In other words, --topo-ordering guarantees that it 
-shows _all_ children before it shows the parent.
-
-That's a _very_ very expensive thing to guarantee, because you can't 
-actually tell that you've seen all children on 'G' before you've basically 
-traversed most of the tree. In the above example, you CANNOT tell whether 
-'F' is a child of 'G', for exmaple. Think about it. You don't know - maybe 
-the missing piece is 'I' -> 'Z' -> 'G', but without having parsed all the 
-commits, you'll never know.
-
-[ Actually, strictly speaking, you can guarantee it earlier than before 
-  you parsed them _all_: you can guarantee it once _every_single_commit_ 
-  whose parents you haven't followed yet is a direct ancestor of 'G' - at 
-  that point, and not before, do you know that 'G' can have no more 
-  children. That's actually very expensive to compute, so we don't do it - 
-  we will walk the whole history, and only _then_ do we use one of the 
-  algorithms to generate a topological sort from the full DAG.
-
-  If somebody knows of an _incremental_ algorithm that doesn't need the 
-  full DAG and can do a topo-ordering, that would be wonderful. But it's 
-  basically very very very expensive. ]
-
-So by default, we don't do that at all. By default, we will print out 'G' 
-whenever we have printed out _any_ path leading to 'G', and 'G' is the 
-commit with the most recent commit date.
-
-So we might print things out as A, B, D, G, E ... - notice how we printed 
-out 'E' _after_ we did 'G', but we did have the A->B->D->G path, so G was 
-reachable from the top along the path we printed.
-
-> In this case, I really do have commits in the intermediate tree which
-> don't actually change anything, and I want to filter them out -- I
-> couldn't see a simple way to do it all in one pass.
-
-Ok, in that case, the "." is correct, but the --topo-order should be 
-unnecessary because you only care about the first entry.
-
-			Linus
+cgf
