@@ -1,71 +1,54 @@
-From: "Elliott Gagnon" <ElliottGagnon@0451.com>
-Subject: :), Pan-slavonism
-Date: Sat, 15 Jul 2006 14:06:10 -0420
-Message-ID: <97242817.20060715140610@0451.com>
-Reply-To: "Elliott Gagnon" <ElliottGagnon@0451.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 15 16:06:19 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: don't check for migrations/upgrades on commit-diff
+Date: Sat, 15 Jul 2006 07:10:56 -0700
+Message-ID: <11529726563833-git-send-email-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jul 15 16:11:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1kmd-0005rd-Sv
-	for gcvg-git@gmane.org; Sat, 15 Jul 2006 16:06:16 +0200
+	id 1G1krI-0006Tj-NK
+	for gcvg-git@gmane.org; Sat, 15 Jul 2006 16:11:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946047AbWGOOGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Jul 2006 10:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946049AbWGOOGM
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 10:06:12 -0400
-Received: from [202.28.119.29] ([202.28.119.29]:37658 "EHLO mx0.123-reg.co.uk")
-	by vger.kernel.org with ESMTP id S1946047AbWGOOGL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Jul 2006 10:06:11 -0400
-X-Mailer: The Bat! (v3.01 RC8) Educational
-X-Priority: 3 (Normal)
-To: git-commits-head-owner@vger.kernel.org
+	id S1946049AbWGOOLA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Jul 2006 10:11:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946052AbWGOOLA
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 10:11:00 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:40084 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1946049AbWGOOK7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Jul 2006 10:10:59 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 6CE157DC022;
+	Sat, 15 Jul 2006 07:10:56 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 15 Jul 2006 07:10:56 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.1.gb805
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 17.8 points;
- *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?202.28.119.29>]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: snowkdj.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: snowkdj.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: snowkdj.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: snowkdj.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23935>
 
-Even if you have no erectin problems SOFT CIAGLIS 
-would help you to make BETTER SE6X MORE OFTEN!
-and to bring  unimagnable plesure to her.
+Unlike other git-svn commands, commit-diff is intended to
+operate without needing any additional metadata inside .git
 
-Just disolve half a pil under your tongue 
-and get ready for action in 15 minutes. 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-The tests showed that the majority of men 
-after taking this medic ation were able to have 
-PERFECT ER3ECTION during 36 hours!
-
-VISIT US, AND GET OUR SPECIAL 70% DISCPOUNT OFER!
-
-http://1XUV88ehdhvqwlejr881dq81v88q.snowkdj.com/
-
-==========
-the fishing boats were specks in the flat blue water, Breakfast Flock  was
-     "Well, I don't either. That's true. But now for the First  time we know
-science fiction called swords-and-sorcery. And among  its highest virtues is
-five hours to a stalker? A snap. How about twelve? Or how about two days? If
-     When they could see again, Chiang was gone.
-     He didn't answer. The water was making a lot of noise.
-
-     He spoke of very simple things - that it is right for a guil to  fly,
-windows weren't broken.  Only they  were so dirty that they looked blind. At
+diff --git a/git-svn.perl b/git-svn.perl
+index 4530ffe..89ad840 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -147,7 +147,7 @@ init_vars();
+ load_authors() if $_authors;
+ load_all_refs() if $_branch_all_refs;
+ svn_compat_check() unless $_use_lib;
+-migration_check() unless $cmd =~ /^(?:init|rebuild|multi-init)$/;
++migration_check() unless $cmd =~ /^(?:init|rebuild|multi-init|commit-diff)$/;
+ $cmd{$cmd}->[0]->(@ARGV);
+ exit 0;
+ 
+-- 
+1.4.1.gb805
