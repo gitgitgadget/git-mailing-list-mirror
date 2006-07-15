@@ -1,145 +1,112 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [ANNOUNCE qgit-1.4]
-Date: Sat, 15 Jul 2006 09:31:12 +0200
-Message-ID: <e5bfff550607150031g5cca3d02h61aa6e6565aad132@mail.gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Make asciidoc related rules depend on asciidoc.conf
+Date: Sat, 15 Jul 2006 09:44:25 +0200
+Message-ID: <20060715074425.GA2661@diku.dk>
+References: <11528726881431-git-send-email-alp@atoker.com> <20060714215039.GA21994@diku.dk> <7v3bd3ois4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 15 09:31:19 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alp Toker <alp@atoker.com>
+X-From: git-owner@vger.kernel.org Sat Jul 15 09:44:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1ecQ-0001xW-Ak
-	for gcvg-git@gmane.org; Sat, 15 Jul 2006 09:31:18 +0200
+	id 1G1epE-00030c-2W
+	for gcvg-git@gmane.org; Sat, 15 Jul 2006 09:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946002AbWGOHbO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Jul 2006 03:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946004AbWGOHbO
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 03:31:14 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:64679 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1946003AbWGOHbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jul 2006 03:31:13 -0400
-Received: by py-out-1112.google.com with SMTP id x31so1268108pye
-        for <git@vger.kernel.org>; Sat, 15 Jul 2006 00:31:12 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=RRGvoh0zXOYhBgxlHJyFxyccKaNmLTsR/0UJHuWz3ESrs2WolZsFq1VHKFQ83Cnq5wkWaqO7YD8LaOg+g4oJAJaaVAv6wCSUSm0s86Hf6a0ZeiIBB1soj4Y1hPfQRXLMmcRD7gcMC5h4T+AEYAvGMLUK0ztrnbwBtKz6Qp+M8mM=
-Received: by 10.35.63.2 with SMTP id q2mr617851pyk;
-        Sat, 15 Jul 2006 00:31:12 -0700 (PDT)
-Received: by 10.35.52.17 with HTTP; Sat, 15 Jul 2006 00:31:12 -0700 (PDT)
-To: "GIT list" <git@vger.kernel.org>, linux-kernel@vger.kernel.org
+	id S1946010AbWGOHo3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Jul 2006 03:44:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946009AbWGOHo3
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 03:44:29 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:20688 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1946010AbWGOHo2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Jul 2006 03:44:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 3D23F770013;
+	Sat, 15 Jul 2006 09:44:27 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 10691-04; Sat, 15 Jul 2006 09:44:26 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id A2E94770014;
+	Sat, 15 Jul 2006 09:44:25 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 9017F6DFEC9; Sat, 15 Jul 2006 09:43:57 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 8C8DD629BE; Sat, 15 Jul 2006 09:44:25 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7v3bd3ois4.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23926>
 
-This is qgit-1.4
+Any rule running asciidoc, whether using -f asciidoc.conf or not,
+will read asciidoc.conf. Make such rules depend on asciidoc.conf.
 
-With qgit you will be able to browse revision histories, view patch content
-and changed files, graphically following different development branches.
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
 
+Junio C Hamano <junkio@cox.net> wrote Fri, Jul 14, 2006:
+> Alp is right -- the comments in [attributes] section after the
+> definition do appear in the output, even with asciidoc 7.1.2, so
+> here is a replacement proposal from me.
 
-FEATURES
+Am using the same setup as Alp (AsciiDoc 7.0.2 on Ubuntu Dapper), so I
+was a bit curious that I could not see that. So I guess I compiled the
+docs first and later decided to add the comments which then didn't cause
+a recompilation.
 
- - View revisions, diffs, files history, files annotation, archive tree.
+I don't know if there should be a dependency on asciidoc.conf in every
+rule calling asciidoc. Could be annoying if you are only making a minor
+change.
 
- - Commit changes visually cherry picking modified files.
+---
 
- - Apply or format patch series from selected commits, drag and
-   drop commits between two instances of qgit.
-
- - Associate commands sequences, scripts and anything else executable
-   to a custom action. Actions can be run from menu and corresponding
-   output is grabbed by a terminal window.
-
-  - qgit implements a GUI for the most common StGIT commands like push/pop
-   and apply/format patches. You can also create new patches or refresh
-   current top one using the same semantics of git commit, i.e. cherry
-   picking single modified files.
-
-
-NEW IN THIS RELEASE
-
-To let user to quickly invoke native git commands from the menu bar a
-'custom action' build dialog has been added.
-
-It is possible to associate commands sequences, scripts and anything
-else executable to a custom action, give it a name and then call from
-menu when needed. The corresponding output is grabbed by a terminal
-window.
-
-An action can also ask for command line arguments before to run so
-to allow for maximum flexibility.
-
-Just to name a few, I have created some stuff like 'git pull', make,
-'make install', git pull with input argument and so on, and I've found
-them quite useful.
-
-There is also some work on near tag information and better tag markers,
-see changelog for details.
-
-
-Please note that you will need git 1.4.0 or newer.
-
-
-DOWNLOAD
-
-Tarball is
-http://prdownloads.sourceforge.net/qgit/qgit-1.4.tar.bz2?download
-
-Git archive is
-git://git.kernel.org/pub/scm/qgit/qgit.git
-
-See http://digilander.libero.it/mcostalba/ for detailed download information.
-
-
-INSTALLATION
-
-git 1.4.0 is required.
-
-To install from tarball:
-
-./configure
-make
-make install-strip
-
-To install from git archive:
-
-autoreconf -i
-./configure
-make
-make install-strip
-
-Or check the shipped README for detailed information.
-
-
-CHANGELOG from 1.3
-
-- added custom action support
-
-- use markers for refs instead of background color in short log line
-
-- added "Copy link sha1" context menu entry in revision description
-
-- CTRL+right click on a revision to toggle 'diff to selected sha' mode
-
-- added support for applying patches to working directory only
-
-- better diagnostic when a command fails to start
-
-- show branches that revision belongs to
-
-- show near tags information in revision description
-
-- show children list in revision description
-
-- added a tool button to highlight filter matches instead of filtering
-
-For a complete changelog see shipped ChangeLog file or git repository
-revision's history
-
-	Marco
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index cc83610..ce6c6cf 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -76,18 +76,18 @@ README: ../README
+ clean:
+ 	rm -f *.xml *.html *.1 *.7 howto-index.txt howto/*.html doc.dep README
+ 
+-%.html : %.txt
++%.html : %.txt asciidoc.conf
+ 	asciidoc -b xhtml11 -d manpage -f asciidoc.conf $<
+ 
+ %.1 %.7 : %.xml
+ 	xmlto -m callouts.xsl man $<
+ 
+-%.xml : %.txt
++%.xml : %.txt asciidoc.conf
+ 	asciidoc -b docbook -d manpage -f asciidoc.conf $<
+ 
+ git.html: git.txt README
+ 
+-glossary.html : glossary.txt sort_glossary.pl
++glossary.html : glossary.txt sort_glossary.pl asciidoc.conf
+ 	cat $< | \
+ 	perl sort_glossary.pl | \
+ 	asciidoc -b xhtml11 - > glossary.html
+@@ -97,12 +97,12 @@ howto-index.txt: howto-index.sh $(wildca
+ 	sh ./howto-index.sh $(wildcard howto/*.txt) >$@+
+ 	mv $@+ $@
+ 
+-$(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
++$(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt asciidoc.conf
+ 	asciidoc -b xhtml11 $*.txt
+ 
+ WEBDOC_DEST = /pub/software/scm/git/docs
+ 
+-$(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
++$(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt asciidoc.conf
+ 	rm -f $@+ $@
+ 	sed -e '1,/^$$/d' $? | asciidoc -b xhtml11 - >$@+
+ 	mv $@+ $@
+-- 
+Jonas Fonseca
