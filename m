@@ -1,49 +1,59 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: My interview for "FLOSS weekly"
-Date: 15 Jul 2006 01:16:19 -0700
-Message-ID: <86lkqvs2p8.fsf@blue.stonehenge.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE qgit-1.4]
+Date: Sat, 15 Jul 2006 11:20:13 +0200
+Organization: At home
+Message-ID: <e9abuk$frj$1@sea.gmane.org>
+References: <e5bfff550607150031g5cca3d02h61aa6e6565aad132@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Jul 15 10:16:36 2006
+Content-Transfer-Encoding: 7Bit
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 15 11:19:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1fKC-0005kU-Md
-	for gcvg-git@gmane.org; Sat, 15 Jul 2006 10:16:33 +0200
+	id 1G1gJH-0004Dm-8m
+	for gcvg-git@gmane.org; Sat, 15 Jul 2006 11:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946008AbWGOIQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Jul 2006 04:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946011AbWGOIQV
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 04:16:21 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:46259 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1946008AbWGOIQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jul 2006 04:16:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id B449D8F54F
-	for <git@vger.kernel.org>; Sat, 15 Jul 2006 01:16:20 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 15128-02-17 for <git@vger.kernel.org>;
- Sat, 15 Jul 2006 01:16:20 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 0C8CC8F59E; Sat, 15 Jul 2006 01:16:20 -0700 (PDT)
+	id S1422762AbWGOJT3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Jul 2006 05:19:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422814AbWGOJT3
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 05:19:29 -0400
+Received: from main.gmane.org ([80.91.229.2]:4744 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1422762AbWGOJT2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Jul 2006 05:19:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G1gJ1-0004C6-Mm
+	for git@vger.kernel.org; Sat, 15 Jul 2006 11:19:23 +0200
+Received: from host-81-190-20-193.torun.mm.pl ([81.190.20.193])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Jul 2006 11:19:23 +0200
+Received: from jnareb by host-81-190-20-193.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Jul 2006 11:19:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.13.8.9; tzolkin = 6 Muluc; haab = 2 Xul
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-193.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23930>
 
+Marco Costalba wrote:
 
-Git was mentioned right at the end of http://www.twit.tv/floss9
+> - use markers for refs instead of background color in short log line
 
-Linus was mentioned at least a few times in the middle. :)
+Thanks a lot. That was what I was lacking in qgit. I have not yet downloaded
+qgit-1.4,... but perhaps having both background color for branch tips and
+markers for both branches (heads) and tags would be best of both options.
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
