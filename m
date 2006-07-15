@@ -1,140 +1,131 @@
-From: Josh Triplett <josht@us.ibm.com>
-Subject: [PATCH] Add option to enable threading headers
-Date: Fri, 14 Jul 2006 17:49:04 -0700
-Message-ID: <1152924544.3148.2.camel@josh-work.beaverton.ibm.com>
-References: <5b476cb7f1440875f348842a2ef581ab882e7d0d.1152924479.git.josh@freedesktop.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 15 02:49:44 2006
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH 1/2] Quote all calls to GIT_CONF_APPEND_LINE
+Date: Sat, 15 Jul 2006 01:29:19 -0400
+Message-ID: <20060715052919.19165.19665.stgit@dv.roinet.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sat Jul 15 07:29:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1YLW-0003PJ-SS
-	for gcvg-git@gmane.org; Sat, 15 Jul 2006 02:49:27 +0200
+	id 1G1ciY-0003sr-0s
+	for gcvg-git@gmane.org; Sat, 15 Jul 2006 07:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945958AbWGOAtK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 14 Jul 2006 20:49:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945960AbWGOAtK
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Jul 2006 20:49:10 -0400
-Received: from e36.co.us.ibm.com ([32.97.110.154]:44734 "EHLO
-	e36.co.us.ibm.com") by vger.kernel.org with ESMTP id S1945958AbWGOAtF
+	id S932445AbWGOF3Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Jul 2006 01:29:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932457AbWGOF3Z
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 01:29:25 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:2513 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932445AbWGOF3Y
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jul 2006 20:49:05 -0400
-Received: from westrelay02.boulder.ibm.com (westrelay02.boulder.ibm.com [9.17.195.11])
-	by e36.co.us.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id k6F0n4Ux008621
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 14 Jul 2006 20:49:05 -0400
-Received: from d03av04.boulder.ibm.com (d03av04.boulder.ibm.com [9.17.195.170])
-	by westrelay02.boulder.ibm.com (8.13.6/NCO/VER7.0) with ESMTP id k6F0n4NY268360
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 14 Jul 2006 18:49:04 -0600
-Received: from d03av04.boulder.ibm.com (loopback [127.0.0.1])
-	by d03av04.boulder.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id k6F0n4E1011196
-	for <git@vger.kernel.org>; Fri, 14 Jul 2006 18:49:04 -0600
-Received: from IBM-882E9B45D97.beaverton.ibm.com (IBM-882E9B45D97.beaverton.ibm.com [9.47.18.143] (may be forged))
-	by d03av04.boulder.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id k6F0n4r5011167
-	for <git@vger.kernel.org>; Fri, 14 Jul 2006 18:49:04 -0600
+	Sat, 15 Jul 2006 01:29:24 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1G1ciQ-0007OO-Up
+	for git@vger.kernel.org; Sat, 15 Jul 2006 01:29:23 -0400
+Received: from [127.0.0.1] (helo=dv.roinet.com)
+	by dv.roinet.com with esmtp (Exim 4.62)
+	(envelope-from <proski@gnu.org>)
+	id 1G1ciN-0004zE-Su
+	for git@vger.kernel.org; Sat, 15 Jul 2006 01:29:19 -0400
 To: git@vger.kernel.org
-In-Reply-To: <5b476cb7f1440875f348842a2ef581ab882e7d0d.1152924479.git.josh@freedesktop.org>
-X-Mailer: Evolution 2.6.2 
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23923>
 
-Add a --thread option to enable generation of In-Reply-To and References
-headers, used to make the second and subsequent mails appear as replies to the
-first.
+From: Pavel Roskin <proski@gnu.org>
 
-Signed-off-by: Josh Triplett <josh@freedesktop.org>
+Not quoting macro arguments that contain other macros is a big no-no in
+Autoconf.  It can break at any time.
+
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 ---
- Documentation/git-format-patch.txt |   10 +++++++++-
- builtin-log.c                      |   21 +++++++++++++--------
- 2 files changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 4ca0014..305bd79 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -9,7 +9,7 @@ git-format-patch - Prepare patches for e
- SYNOPSIS
- --------
- [verse]
--'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--attach]
-+'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--attach] [--thread]
- 	           [-s | --signoff] [--diff-options] [--start-number <n>]
- 		   <since>[..<until>]
+ configure.ac |   24 ++++++++++++------------
+ 1 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2932d0e..c1f7751 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -39,30 +39,30 @@ # Define NO_OPENSSL environment variable
+ # Define NEEDS_SSL_WITH_CRYPTO if you need -lcrypto with -lssl (Darwin).
+ AC_CHECK_LIB([ssl], [SHA1_Init],[],
+ [AC_CHECK_LIB([crypto], [SHA1_INIT],
+- GIT_CONF_APPEND_LINE(NEEDS_SSL_WITH_CRYPTO=YesPlease),
+- GIT_CONF_APPEND_LINE(NO_OPENSSL=YesPlease))])
++ [GIT_CONF_APPEND_LINE(NEEDS_SSL_WITH_CRYPTO=YesPlease)],
++ [GIT_CONF_APPEND_LINE(NO_OPENSSL=YesPlease)])])
+ #
+ # Define NO_CURL if you do not have curl installed.  git-http-pull and
+ # git-http-push are not built, and you cannot use http:// and https://
+ # transports.
+ AC_CHECK_LIB([curl], [curl_global_init],[],
+-GIT_CONF_APPEND_LINE(NO_CURL=YesPlease))
++[GIT_CONF_APPEND_LINE(NO_CURL=YesPlease)])
+ #
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports.
+ AC_CHECK_LIB([expat], [XML_ParserCreate],[],
+-GIT_CONF_APPEND_LINE(NO_EXPAT=YesPlease))
++[GIT_CONF_APPEND_LINE(NO_EXPAT=YesPlease)])
+ #
+ # Define NEEDS_LIBICONV if linking with libc is not enough (Darwin).
+ AC_CHECK_LIB([c], [iconv],[],
+ [AC_CHECK_LIB([iconv],[iconv],
+- GIT_CONF_APPEND_LINE(NEEDS_LIBICONV=YesPlease),[])])
++ [GIT_CONF_APPEND_LINE(NEEDS_LIBICONV=YesPlease)],[])])
+ #
+ # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
+ # Patrick Mauritz).
+ AC_CHECK_LIB([c], [socket],[],
+ [AC_CHECK_LIB([socket],[socket],
+- GIT_CONF_APPEND_LINE(NEEDS_SOCKET=YesPlease),[])])
++ [GIT_CONF_APPEND_LINE(NEEDS_SOCKET=YesPlease)],[])])
  
-@@ -35,6 +35,10 @@ they are created in the current working 
- If -n is specified, instead of "[PATCH] Subject", the first line
- is formatted as "[PATCH n/m] Subject".
  
-+If given --thread, git-format-patch will generate In-Reply-To and
-+References headers to make the second and subsequent patch mails appear
-+as replies to the first mail; this also generates a Message-Id header to
-+reference.
+ ## Checks for header files.
+@@ -73,19 +73,19 @@ AC_MSG_NOTICE([CHECKS for typedefs, stru
+ #
+ # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
+ AC_CHECK_MEMBER(struct dirent.d_ino,[],
+-GIT_CONF_APPEND_LINE(NO_D_INO_IN_DIRENT=YesPlease),
++[GIT_CONF_APPEND_LINE(NO_D_INO_IN_DIRENT=YesPlease)],
+ [#include <dirent.h>])
+ #
+ # Define NO_D_TYPE_IN_DIRENT if your platform defines DT_UNKNOWN but lacks
+ # d_type in struct dirent (latest Cygwin -- will be fixed soonish).
+ AC_CHECK_MEMBER(struct dirent.d_type,[],
+-GIT_CONF_APPEND_LINE(NO_D_TYPE_IN_DIRENT=YesPlease),
++[GIT_CONF_APPEND_LINE(NO_D_TYPE_IN_DIRENT=YesPlease)],
+ [#include <dirent.h>])
+ #
+ # Define NO_SOCKADDR_STORAGE if your platform does not have struct
+ # sockaddr_storage.
+ AC_CHECK_TYPE(struct sockaddr_storage,[],
+-GIT_CONF_APPEND_LINE(NO_SOCKADDR_STORAGE=YesPlease),
++[GIT_CONF_APPEND_LINE(NO_SOCKADDR_STORAGE=YesPlease)],
+ [#include <netinet/in.h>])
  
- OPTIONS
- -------
-@@ -63,6 +67,10 @@ OPTIONS
- --attach::
- 	Create attachments instead of inlining patches.
  
-+--thread::
-+	Add In-Reply-To and References headers to make the second and
-+	subsequent mails appear as replies to the first.  Also generates
-+	the Message-Id header to reference.
- 
- CONFIGURATION
- -------------
-diff --git a/builtin-log.c b/builtin-log.c
-index 9d0cae1..4572295 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -242,6 +242,7 @@ int cmd_format_patch(int argc, const cha
- 	int start_number = -1;
- 	int keep_subject = 0;
- 	int ignore_if_in_upstream = 0;
-+	int thread = 0;
- 	struct diff_options patch_id_opts;
- 	char *add_signoff = NULL;
- 	char message_id[1024];
-@@ -311,6 +312,8 @@ int cmd_format_patch(int argc, const cha
- 			rev.mime_boundary = argv[i] + 9;
- 		else if (!strcmp(argv[i], "--ignore-if-in-upstream"))
- 			ignore_if_in_upstream = 1;
-+		else if (!strcmp(argv[i], "--thread"))
-+			thread = 1;
- 		else
- 			argv[j++] = argv[i];
- 	}
-@@ -373,15 +376,17 @@ int cmd_format_patch(int argc, const cha
- 		commit = list[nr];
- 		rev.nr = total - nr + (start_number - 1);
- 		/* Make the second and subsequent mails replies to the first */
--		if (nr == (total - 2)) {
--			strncpy(ref_message_id, message_id,
--				sizeof(ref_message_id));
--			ref_message_id[sizeof(ref_message_id)-1] = '\0';
--			rev.ref_message_id = ref_message_id;
-+		if (thread) {
-+			if (nr == (total - 2)) {
-+				strncpy(ref_message_id, message_id,
-+					sizeof(ref_message_id));
-+				ref_message_id[sizeof(ref_message_id)-1]='\0';
-+				rev.ref_message_id = ref_message_id;
-+			}
-+			gen_message_id(message_id, sizeof(message_id),
-+				       sha1_to_hex(commit->object.sha1));
-+			rev.message_id = message_id;
- 		}
--		gen_message_id(message_id, sizeof(message_id),
--			       sha1_to_hex(commit->object.sha1));
--		rev.message_id = message_id;
- 		if (!use_stdout)
- 			reopen_stdout(commit, rev.nr, keep_subject);
- 		shown = log_tree_commit(&rev, commit);
--- 
-1.4.1.gd2cb0
+@@ -95,15 +95,15 @@ AC_MSG_NOTICE([CHECKS for library functi
+ #
+ # Define NO_STRCASESTR if you don't have strcasestr.
+ AC_CHECK_FUNC(strcasestr,[],
+-GIT_CONF_APPEND_LINE(NO_STRCASESTR=YesPlease))
++[GIT_CONF_APPEND_LINE(NO_STRCASESTR=YesPlease)])
+ #
+ # Define NO_STRLCPY if you don't have strlcpy.
+ AC_CHECK_FUNC(strlcpy,[],
+-GIT_CONF_APPEND_LINE(NO_STRLCPY=YesPlease))
++[GIT_CONF_APPEND_LINE(NO_STRLCPY=YesPlease)])
+ #
+ # Define NO_SETENV if you don't have setenv in the C library.
+ AC_CHECK_FUNC(setenv,[],
+-GIT_CONF_APPEND_LINE(NO_SETENV=YesPlease))
++[GIT_CONF_APPEND_LINE(NO_SETENV=YesPlease)])
+ #
+ # Define NO_MMAP if you want to avoid mmap.
+ #
