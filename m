@@ -1,50 +1,73 @@
-From: linux@horizon.com
-Subject: Re: [PATCH] array index mixup
-Date: 16 Jul 2006 14:12:28 -0400
-Message-ID: <20060716181228.25231.qmail@science.horizon.com>
-X-From: git-owner@vger.kernel.org Sun Jul 16 20:12:51 2006
+From: fork0@t-online.de (Alex Riesen)
+Subject: [PATCH 2/2] use git quote in git-bisect
+Date: Mon, 17 Jul 2006 00:28:15 +0200
+Message-ID: <20060716222815.GB10135@steel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jul 17 00:29:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Received: from [209.132.176.167] (helo=vger.kernel.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2B6j-0005uY-5b
-	for gcvg-git@gmane.org; Sun, 16 Jul 2006 20:12:45 +0200
+	id 1G2F6o-0004Ls-Gp
+	for gcvg-git@gmane.org; Mon, 17 Jul 2006 00:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751119AbWGPSMd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Jul 2006 14:12:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbWGPSMd
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 14:12:33 -0400
-Received: from science.horizon.com ([192.35.100.1]:60974 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1751119AbWGPSMd
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jul 2006 14:12:33 -0400
-Received: (qmail 25232 invoked by uid 1000); 16 Jul 2006 14:12:28 -0400
-To: git@vger.kernel.org, junkio@cox.net
+	id S1751327AbWGPW2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Jul 2006 18:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbWGPW2W
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 18:28:22 -0400
+Received: from mailout11.sul.t-online.com ([194.25.134.85]:16092 "EHLO
+	mailout11.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1751327AbWGPW2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jul 2006 18:28:22 -0400
+Received: from fwd31.aul.t-online.de 
+	by mailout11.sul.t-online.com with smtp 
+	id 1G2F62-0004kv-02; Mon, 17 Jul 2006 00:28:18 +0200
+Received: from tigra.home (rA6ukoZr8eWyi+62q+lURCSfs+EBAgCs2ltJwjQHkV15KxIGVES66Z@[84.160.88.78]) by fwd31.sul.t-online.de
+	with esmtp id 1G2F5z-08JrkW0; Mon, 17 Jul 2006 00:28:15 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 334EA277AF;
+	Mon, 17 Jul 2006 00:28:15 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1G2F5z-0002eZ-6i; Mon, 17 Jul 2006 00:28:15 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-ID: rA6ukoZr8eWyi+62q+lURCSfs+EBAgCs2ltJwjQHkV15KxIGVES66Z
+X-TOI-MSGID: 2e7b3484-3ad1-4e4d-98b4-dbf9e259c2a6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23955>
 
-> *1* If somebody wants to do this, one thing to watch out for is
-> matching up of broken pairs.  If a pair originally broken by
-> diffcore-break (because they were dissimilar enough according to
-> the option given to -B flag) are merged into one by
-> diffcore-rename (because they were similar enough according to
-> the option given to -M flag), we should _not_ say the resulting
-> pair is renamed.  In general, the threashold for breaking should
-> be lower than diffcore-rename to merge them for a sane use, so
-> this might be a non-issue in practice, though.
+The echo after git quote is just to match the behaviour of the
+previous script exactly (yes, it is needed - it's bisect log output).
 
-Er... no.  You want to be fairly aggressive when doing both things.
-That is, you want to break aggressively so you can look for a better
-match elsewhere, but once you've found the best match, you don't want to
-be shy about accepting it.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ git-bisect.sh |    9 ++-------
+ 1 files changed, 2 insertions(+), 7 deletions(-)
 
-Pulling numbers out of thin air, say break if 1/3 of a file has
-changed (66% common), and merge if you have 33% common.  Or maybe
-even less.  The point of break then merge is to give you a chance
-to find the 90% common file that has a new name.
-
-I always understood that the reason for having two thresholds
-is exactly so they can have this relationship, not the opposite
-one as you suggest.
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 06a8d26..8407960 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -13,13 +13,8 @@ git bisect log			show bisect log.'
+ . git-sh-setup
+ 
+ sq() {
+-	@@PERL@@ -e '
+-		for (@ARGV) {
+-			s/'\''/'\'\\\\\'\''/g;
+-			print " '\''$_'\''";
+-		}
+-		print "\n";
+-	' "$@"
++        git quote -- "$@"
++        echo
+ }
+ 
+ bisect_autostart() {
+-- 
+1.4.1.gb944
