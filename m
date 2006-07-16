@@ -1,205 +1,55 @@
 From: fork0@t-online.de (Alex Riesen)
-Subject: [PATCH 1/2] add git-quote: shell and C quoting tool
-Date: Mon, 17 Jul 2006 00:27:57 +0200
-Message-ID: <20060716222757.GA10135@steel.home>
+Subject: Re: comparing file contents in is_exact_match?
+Date: Mon, 17 Jul 2006 00:36:07 +0200
+Message-ID: <20060716223607.GA6023@steel.home>
+References: <20060706055729.GA12512@admingilde.org> <87k66p8jee.fsf@mid.deneb.enyo.de> <Pine.LNX.4.63.0607080450100.29667@wbgn013.biozentrum.uni-wuerzburg.de> <87fyh1ncm0.fsf@mid.deneb.enyo.de> <f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jul 17 00:29:15 2006
+Cc: Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 17 00:36:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Received: from [209.132.176.167] (helo=vger.kernel.org)
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2F6n-0004Ls-Bi
-	for gcvg-git@gmane.org; Mon, 17 Jul 2006 00:29:06 +0200
+	id 1G2FDu-0005aF-2A
+	for gcvg-git@gmane.org; Mon, 17 Jul 2006 00:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbWGPW2G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Jul 2006 18:28:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbWGPW2G
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 18:28:06 -0400
-Received: from mailout06.sul.t-online.com ([194.25.134.19]:10210 "EHLO
-	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751316AbWGPW2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jul 2006 18:28:05 -0400
-Received: from fwd28.aul.t-online.de 
-	by mailout06.sul.t-online.com with smtp 
-	id 1G2F5k-000414-00; Mon, 17 Jul 2006 00:28:00 +0200
-Received: from tigra.home (TWfe72ZfgewNtJxwhN2JSl3DWR9GtevGv0LCLuhiP8EuVqWSLM+Ec7@[84.160.88.78]) by fwd28.sul.t-online.de
-	with esmtp id 1G2F5j-0qMROq0; Mon, 17 Jul 2006 00:27:59 +0200
+	id S1750752AbWGPWgS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Jul 2006 18:36:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbWGPWgS
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 18:36:18 -0400
+Received: from mailout10.sul.t-online.com ([194.25.134.21]:65471 "EHLO
+	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1750752AbWGPWgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jul 2006 18:36:17 -0400
+Received: from fwd33.aul.t-online.de 
+	by mailout10.sul.t-online.com with smtp 
+	id 1G2FDi-0002hh-02; Mon, 17 Jul 2006 00:36:14 +0200
+Received: from tigra.home (r1pyDsZC8eH5rxC0Pa4yWNHm7Be26-Fc-LN-xzewMHvLibcWuoGpkE@[84.160.88.78]) by fwd33.sul.t-online.de
+	with esmtp id 1G2FDc-1vhUxc0; Mon, 17 Jul 2006 00:36:08 +0200
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id E385C277AF;
-	Mon, 17 Jul 2006 00:27:58 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id 9D2D4277AF;
+	Mon, 17 Jul 2006 00:36:07 +0200 (CEST)
 Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1G2F5h-0002eN-UI; Mon, 17 Jul 2006 00:27:58 +0200
-To: git@vger.kernel.org
+	id 1G2FDb-0002f9-HV; Mon, 17 Jul 2006 00:36:07 +0200
+To: Yakov Lerner <iler.ml@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
 User-Agent: Mutt/1.5.6i
-X-ID: TWfe72ZfgewNtJxwhN2JSl3DWR9GtevGv0LCLuhiP8EuVqWSLM+Ec7
-X-TOI-MSGID: 9811c751-00a9-485b-9e8b-b211c0b22dea
+X-ID: r1pyDsZC8eH5rxC0Pa4yWNHm7Be26-Fc-LN-xzewMHvLibcWuoGpkE
+X-TOI-MSGID: 67630f6b-e68f-4a8f-9bba-af251605cf8a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23957>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Yakov Lerner, Sun, Jul 16, 2006 17:03:49 +0200:
+> Cygwin has mmap. But cygwin's mmap() not good enough for git.
+> What happens is that git does rename() when target file has active mmap().
+> In cygwin, this makes rename() to fail. This is what makes cygwin's
+> mmap unusable for git. (BTW for read-only git access, mmap() will work
+> on cygwin, for what I saw. But attempts to modify index will break).
 
-As git-stripspace, it may ne useful for something. As an example, the
-next patch converts git-bisect.sh to use of this tool.
-
-In case anyone asks why isn't it a standalone tool nor is it put into
-git-stripspace: I don't know. Maybe it should be.
-
- Makefile        |    3 +-
- builtin-quote.c |  102 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- builtin.h       |    2 +
- git.c           |    1 +
- 4 files changed, 107 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 01fb9cf..9fcbf3b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -234,7 +234,8 @@ BUILTIN_OBJS = \
- 	builtin-apply.o builtin-show-branch.o builtin-diff-files.o \
- 	builtin-diff-index.o builtin-diff-stages.o builtin-diff-tree.o \
- 	builtin-cat-file.o builtin-mailsplit.o builtin-stripspace.o \
--	builtin-update-ref.o builtin-fmt-merge-msg.o builtin-prune.o
-+	builtin-update-ref.o builtin-fmt-merge-msg.o builtin-prune.o \
-+	builtin-quote.o
- 
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
- LIBS = $(GITLIBS) -lz
-diff --git a/builtin-quote.c b/builtin-quote.c
-new file mode 100644
-index 0000000..cbd822d
---- /dev/null
-+++ b/builtin-quote.c
-@@ -0,0 +1,102 @@
-+/*
-+ * "git quote" builtin command
-+ *
-+ * DOES NOT QUOTE \0 (truncates lines at it)
-+ */
-+#include "cache.h"
-+#include "builtin.h"
-+#include "quote.h"
-+
-+enum {SHELL_QUOTE, C_QUOTE};
-+static int style = SHELL_QUOTE,
-+	   use_stdin = 0;
-+static const char *separator = NULL; /* default is space */
-+static unsigned sep_len = 0;
-+
-+static const char builtin_quote_usage[] =
-+"git-quote [--c] [--sep=<c-quoted> | -z] ( [--stdin] | [--] ... )";
-+
-+static void print_quoted(const char *text)
-+{
-+	switch (style)
-+	{
-+	case SHELL_QUOTE:
-+		sq_quote_print(stdout, text);
-+		break;
-+	case C_QUOTE:
-+		quote_c_style(text, NULL, stdout, 0);
-+		break;
-+	}
-+	fwrite(separator, 1, sep_len, stdout);
-+}
-+
-+int cmd_quote(int argc, const char **argv, char **envp)
-+{
-+	int i;
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+
-+		if (arg[0] != '-')
-+			break;
-+		if (!strcmp(arg, "--")) {
-+			i++;
-+			break;
-+		}
-+		if (!strcmp(arg, "--stdin")) {
-+			use_stdin = 1;
-+			if ( !separator ) {
-+				separator = "\n";
-+				sep_len = 1;
-+			}
-+			break;
-+		}
-+		if (!strcmp(arg, "--c")) {
-+			style = C_QUOTE;
-+			continue;
-+		}
-+		if (!strcmp(arg, "-z")) {
-+			separator = "";
-+			sep_len = 1;
-+			continue;
-+		}
-+		if (!strncmp(arg, "--sep=", 6)) {
-+			const char *end;
-+			char *tmp;
-+			arg += 6;
-+			if ('"' == *arg)
-+				tmp = strdup(arg);
-+			else {
-+				size_t l = strlen(arg);
-+				tmp = malloc(l + 3);
-+				sprintf(tmp, "\"%s\"", arg);
-+			}
-+			separator = unquote_c_style(tmp, &end);
-+			sep_len = strlen(separator);
-+			/* this will leak if multiple --sep= given */
-+			continue;
-+		}
-+		die(builtin_quote_usage);
-+	}
-+	if (!separator) {
-+		sep_len = 1;
-+		separator = "\x20";
-+	}
-+	if (use_stdin) {
-+		size_t size = BUFSIZ;
-+		char *buf = xmalloc(size);
-+		int ch, pos = 0;
-+		while (EOF != (ch = fgetc(stdin))) {
-+			if (pos == size)
-+				buf = xrealloc(buf, size <<= 1);
-+			buf[pos++] = ch;
-+			if ('\n' == ch) {
-+				buf[--pos] = '\0';
-+				pos = 0;
-+				print_quoted(buf);
-+			}
-+		}
-+	} else
-+		for (; argv[i]; ++i)
-+			print_quoted(argv[i]);
-+	return 0;
-+}
-diff --git a/builtin.h b/builtin.h
-index 5339d86..9bd522e 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -64,4 +64,6 @@ extern int mailinfo(FILE *in, FILE *out,
- 
- extern int cmd_stripspace(int argc, const char **argv, char **envp);
- extern void stripspace(FILE *in, FILE *out);
-+
-+extern int cmd_quote(int argc, const char **argv, char **envp);
- #endif
-diff --git a/git.c b/git.c
-index ee5a0e8..f94d25a 100644
---- a/git.c
-+++ b/git.c
-@@ -202,6 +202,7 @@ static void handle_internal_command(int 
- 		{ "update-ref", cmd_update_ref },
- 		{ "fmt-merge-msg", cmd_fmt_merge_msg },
- 		{ "prune", cmd_prune },
-+		{ "quote", cmd_quote },
- 	};
- 	int i;
- 
--- 
-1.4.1.gb944
+It is not Cygwin really. It's windows. You can't rename or delete an
+open or mmapped file in that thing.
