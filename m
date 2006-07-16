@@ -1,92 +1,138 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git merge performance problem..
-Date: Sat, 15 Jul 2006 21:43:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607152136010.2438@evo.osdl.org>
+Date: Sat, 15 Jul 2006 23:57:28 -0700
+Message-ID: <7vsll2jauf.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0607151445270.5623@g5.osdl.org>
- <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net> <7vlkqukwhb.fsf@assigned-by-dhcp.cox.net>
+	<7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
+	<7vlkqukwhb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0607152136010.2438@evo.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 16 06:42:43 2006
+X-From: git-owner@vger.kernel.org Sun Jul 16 08:57:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1ySo-0004y3-RO
-	for gcvg-git@gmane.org; Sun, 16 Jul 2006 06:42:43 +0200
+	id 1G20ZK-0006no-W1
+	for gcvg-git@gmane.org; Sun, 16 Jul 2006 08:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964834AbWGPEmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Jul 2006 00:42:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964890AbWGPEmY
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 00:42:24 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41431 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964834AbWGPEmY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Jul 2006 00:42:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6G4gKnW007523
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 15 Jul 2006 21:42:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6G4gJPk018628;
-	Sat, 15 Jul 2006 21:42:20 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vlkqukwhb.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.641 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.141 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751494AbWGPG5a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Jul 2006 02:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbWGPG5a
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 02:57:30 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57229 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751494AbWGPG5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jul 2006 02:57:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060716065729.UURB11027.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 16 Jul 2006 02:57:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607152136010.2438@evo.osdl.org> (Linus Torvalds's
+	message of "Sat, 15 Jul 2006 21:43:49 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23946>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Sat, 15 Jul 2006, Junio C Hamano wrote:
+>> Junio C Hamano <junkio@cox.net> writes:
+>> >
+>> > The code is to cull redundant parents primarily in octopus and
+>> > is not strictly necessary.
+>> 
+>> Wrong.  The commit log says it was to remove redundant parents;
+>> I think this as a reaction after seeing a few incorrectly made
+>> merge commits in the kernel archive.
+>
+> Arguing with yourself? ;)
 
-On Sat, 15 Jul 2006, Junio C Hamano wrote:
-> Junio C Hamano <junkio@cox.net> writes:
-> >
-> > The code is to cull redundant parents primarily in octopus and
-> > is not strictly necessary.
-> 
-> Wrong.  The commit log says it was to remove redundant parents;
-> I think this as a reaction after seeing a few incorrectly made
-> merge commits in the kernel archive.
+Yes, I was kind of tired ;-)
 
-Arguing with yourself? ;)
+> And your patch will obviously fix it (by not calling git-show-branch at 
+> all), but I'm still left wondering why git-show-branch took that long in 
+> the first place. Half a minute when traversing the whole commit history 
+> only takes three seconds (as per my previous email)?
+>
+> Now, as long as nothing I use actually ends up using git-show-branch, I 
+> won't care, but maybe a sign that something else can be improved?
 
-But that should already have been handled by the fact that we did the 
-merge-base improvements. So I don't really see why we'd need the extremely 
-heavy git-show-branch.
+I instrumented builtin-show-branch.c::join_revs() and
+commit.c::merge-bases(), and run another problematic case
+between commits 1d3737 and 7f2857.  They traverse exactly the
+same commits in the same order.  After all in two head case they
+are essentially the same algorithm, modulo that the heuristics
+with horizon effect has not been removed from join_revs() yet.
 
-I think the problems we had with rmk generating patches that had two 
-parents but really were _meant_ to be regular patches were due to an 
-independent problem, namely that we'd commit with a stale MERGE_HEAD from 
-a previous (failed) merge that was never done.
+Similarly, "merge-base --all" vs "show-branch --merge-base"
+between these commits has the same issue.  Although they
+traverse exactly the same set of commits, the former takes 10x
+longer for some reason.
 
-I think. It's a long time ago.
+And (drumroll please), thanks to gprof, the guilty party turns
+out to be insert_by_date() in mark_seen().
 
-> Disregard this request please.  I see a few commits that this
-> step takes a long time to process in the kernel archive.  The
-> last merge before you left to Ottawa was one of them.
-> 
-> b5032a5 48ce8b0
+I think this will fix both problems.
 
-Yup.
+-- >8 --
+show-branch: fix performance problem.
 
-And your patch will obviously fix it (by not calling git-show-branch at 
-all), but I'm still left wondering why git-show-branch took that long in 
-the first place. Half a minute when traversing the whole commit history 
-only takes three seconds (as per my previous email)?
+The core function used in show-branch, join_revs(), was supposed
+to be exactly the same algorithm as merge_bases(), except that
+it was a version enhanced for use with more than two heads.
+However, it needed to mark and keep a list of all the commits it
+has seen, because it needed them for its semi-graphical output.
+The function to implement this list, mark_seen(), stupidly used
+insert_by_date(), when it did not need to keep the list sorted
+during its processing.  This made "show-branch --merge-base"
+more than 20x slower compared to "merge-base --all" in some
+cases (e.g. between b5032a5 and 48ce8b0 in the Linux 2.6 kernel
+archive).  The performance of "show-branch --independent"
+suffered from the same reason.
 
-Now, as long as nothing I use actually ends up using git-show-branch, I 
-won't care, but maybe a sign that something else can be improved?
+This patch sorts the resulting list after the list traversal
+just once to fix these problems.
 
-Traditionally, what has made things _that_ slow has almost always been 
-logic that traverses all sides of a merge, without having the logic to 
-ignore already-seen commits (so each merge basically doubles the number of 
-commits we will traverse, and the problem size goes from O(n+m) to O(m^2) 
-where 'n' is number of commits, and 'm' is number of merges.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-Or is git-show-branch doing something else really expensive?
-
-		Linus
+---
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 260cb22..3d240ca 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -172,7 +172,7 @@ static void name_commits(struct commit_l
+ static int mark_seen(struct commit *commit, struct commit_list **seen_p)
+ {
+ 	if (!commit->object.flags) {
+-		insert_by_date(commit, seen_p);
++		commit_list_insert(commit, seen_p);
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -218,9 +218,8 @@ static void join_revs(struct commit_list
+ 	 * Postprocess to complete well-poisoning.
+ 	 *
+ 	 * At this point we have all the commits we have seen in
+-	 * seen_p list (which happens to be sorted chronologically but
+-	 * it does not really matter).  Mark anything that can be
+-	 * reached from uninteresting commits not interesting.
++	 * seen_p list.  Mark anything that can be reached from
++	 * uninteresting commits not interesting.
+ 	 */
+ 	for (;;) {
+ 		int changed = 0;
+@@ -701,6 +700,8 @@ int cmd_show_branch(int ac, const char *
+ 	if (0 <= extra)
+ 		join_revs(&list, &seen, num_rev, extra);
+ 
++	sort_by_date(&seen);
++
+ 	if (merge_base)
+ 		return show_merge_base(seen, num_rev);
+ 
