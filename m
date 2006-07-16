@@ -1,59 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git merge performance problem..
-Date: Sat, 15 Jul 2006 20:18:45 -0700
-Message-ID: <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0607151445270.5623@g5.osdl.org>
+From: "Erica" <Ericabernet@dublin.com>
+Subject: Enjoy the newest Onlline Casino. Go and Play  It
+Date: Sat, 15 Jul 2006 23:19:12 -0400
+Message-ID: <30933298092733.D302C880E2@WJ034HV>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 16 05:19:04 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jul 16 05:19:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1x9m-0002rD-9i
-	for gcvg-git@gmane.org; Sun, 16 Jul 2006 05:18:58 +0200
+	id 1G1xAF-0002u7-7Q
+	for gcvg-git@gmane.org; Sun, 16 Jul 2006 05:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbWGPDSr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 15 Jul 2006 23:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbWGPDSr
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 23:18:47 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:41967 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964820AbWGPDSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jul 2006 23:18:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060716031846.EIKD12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 15 Jul 2006 23:18:46 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607151445270.5623@g5.osdl.org> (Linus Torvalds's
-	message of "Sat, 15 Jul 2006 14:48:45 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964842AbWGPDTV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 15 Jul 2006 23:19:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964846AbWGPDTV
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Jul 2006 23:19:21 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:27284 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S964828AbWGPDTV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Jul 2006 23:19:21 -0400
+Received: from AMANDA.duo6iv5w.org (c-69-180-105-168.hsd1.fl.comcast.net [69.180.105.168])
+	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6G3J7B5023330;
+	Sun, 16 Jul 2006 03:19:20 GMT
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: uqwhbIbNAfylDMVDamWtVZpXHUuEsE1b0NcY
+X-Virus-Scanned: ClamAV 0.88.3/1600/Sat Jul 15 15:03:46 2006 on zeus2.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23941>
+X-Spam-Report: 14.1 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4999]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: wegast.com]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: wegast.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: wegast.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: wegast.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: wegast.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23942>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi 
 
-> Junio, I think there is something wrong with git-merge. It sometimes takes 
-> up to ten seconds, and it's stuck at the
->
-> 	git-show-branch --independent "$head" "$@"
->
-> call.
->
-> I don't know quite what that thing is even meant to do (we do already know 
-> the parents, why do we do something special here?) but even apart from 
-> that, the whole thing must be doing something seriously wrong, since it 
-> takes so long. Does it check the whole commit history?
 
-The code is to cull redundant parents primarily in octopus and
-is not strictly necessary.  Can I have the $head and $@ (the
-other merge parents, but in your case you never do an octopus so
-that would be the other branch head) to see what is going on
-please?  It should not descend down the history all the way but
-with the recent changes to the object marking/unmarking code it
-is possible we might have broken something.
+  Online Casino wwith 85+ games. Play It Now!  http://wegast.com/d1/ace/ 
+
+
+ Wisdom crieth without; she uttereth her voice in the streets. Empty sacks will never stand upright
