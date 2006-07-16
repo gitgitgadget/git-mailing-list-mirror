@@ -1,91 +1,92 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git merge performance problem..
-Date: Sat, 15 Jul 2006 21:26:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607152119510.2438@evo.osdl.org>
+Date: Sat, 15 Jul 2006 21:43:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607152136010.2438@evo.osdl.org>
 References: <Pine.LNX.4.64.0607151445270.5623@g5.osdl.org>
- <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
+ <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net> <7vlkqukwhb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 16 06:25:35 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 16 06:42:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1yCE-00035H-5V
-	for gcvg-git@gmane.org; Sun, 16 Jul 2006 06:25:34 +0200
+	id 1G1ySo-0004y3-RO
+	for gcvg-git@gmane.org; Sun, 16 Jul 2006 06:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161067AbWGPEZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Jul 2006 00:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030329AbWGPEZV
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 00:25:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18645 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030320AbWGPEZU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Jul 2006 00:25:20 -0400
+	id S964834AbWGPEmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Jul 2006 00:42:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964890AbWGPEmY
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 00:42:24 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41431 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964834AbWGPEmY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Jul 2006 00:42:24 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6G4PEnW006802
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6G4gKnW007523
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 15 Jul 2006 21:25:15 -0700
+	Sat, 15 Jul 2006 21:42:20 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6G4PD9a018267;
-	Sat, 15 Jul 2006 21:25:14 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6G4gJPk018628;
+	Sat, 15 Jul 2006 21:42:20 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.651 required=5 tests=AWL
+In-Reply-To: <7vlkqukwhb.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.641 required=5 tests=AWL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
 X-MIMEDefang-Filter: osdl$Revision: 1.141 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23945>
 
 
 
 On Sat, 15 Jul 2006, Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+> >
+> > The code is to cull redundant parents primarily in octopus and
+> > is not strictly necessary.
 > 
-> The code is to cull redundant parents primarily in octopus and
-> is not strictly necessary.  Can I have the $head and $@ (the
-> other merge parents, but in your case you never do an octopus so
-> that would be the other branch head) to see what is going on
-> please?
+> Wrong.  The commit log says it was to remove redundant parents;
+> I think this as a reaction after seeing a few incorrectly made
+> merge commits in the kernel archive.
 
-I think it was commit b20e481 that I reacted to this time, merging b5032a5 
-and 48ce8b0.
+Arguing with yourself? ;)
 
-Ie, lookie here:
+But that should already have been handled by the fact that we did the 
+merge-base improvements. So I don't really see why we'd need the extremely 
+heavy git-show-branch.
 
-	[torvalds@evo linux]$ time git merge-base --all b5032a5 48ce8b0
-	672c6108a51bf559d19595d9f8193dfd81f0f752
-	
-	real    0m1.426s
-	user    0m1.404s
-	sys     0m0.016s
+I think the problems we had with rmk generating patches that had two 
+parents but really were _meant_ to be regular patches were due to an 
+independent problem, namely that we'd commit with a stale MERGE_HEAD from 
+a previous (failed) merge that was never done.
 
-so it can find a merge-base in 1.4 seconds, which should certainly 
-guarantee that they are independent. Then:
+I think. It's a long time ago.
 
-	[torvalds@evo linux]$ time git-show-branch --independent b5032a5 48ce8b0
-	b5032a50aea76b6230db74b1d171a7f56b204bb7
-	48ce8b056c88920c8ac187781048f5dae33c81b9
-	
-	real    0m30.657s
-	user    0m30.414s
-	sys     0m0.076s
+> Disregard this request please.  I see a few commits that this
+> step takes a long time to process in the kernel archive.  The
+> last merge before you left to Ottawa was one of them.
+> 
+> b5032a5 48ce8b0
 
-Whee. Half a minute. Ok, so this is on my laptop (I'm oat the airport 
-right now), so it was probably twice as fast on my desktop, but that is 
-still not acceptable.
+Yup.
 
-I really don't know what it's doing, because
+And your patch will obviously fix it (by not calling git-show-branch at 
+all), but I'm still left wondering why git-show-branch took that long in 
+the first place. Half a minute when traversing the whole commit history 
+only takes three seconds (as per my previous email)?
 
-	[torvalds@evo linux]$ time git-rev-list b5032a5 48ce8b0 > /dev/null 
-	
-	real    0m3.248s
-	user    0m2.588s
-	sys     0m0.036s
+Now, as long as nothing I use actually ends up using git-show-branch, I 
+won't care, but maybe a sign that something else can be improved?
 
-so it's really doing something very expensive - more so than just parsing 
-the commits.
+Traditionally, what has made things _that_ slow has almost always been 
+logic that traverses all sides of a merge, without having the logic to 
+ignore already-seen commits (so each merge basically doubles the number of 
+commits we will traverse, and the problem size goes from O(n+m) to O(m^2) 
+where 'n' is number of commits, and 'm' is number of merges.
+
+Or is git-show-branch doing something else really expensive?
 
 		Linus
