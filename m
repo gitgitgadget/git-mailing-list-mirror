@@ -1,95 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git merge performance problem..
-Date: Sat, 15 Jul 2006 21:24:48 -0700
-Message-ID: <7vlkqukwhb.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 15 Jul 2006 21:26:41 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607152119510.2438@evo.osdl.org>
 References: <Pine.LNX.4.64.0607151445270.5623@g5.osdl.org>
-	<7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
+ <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jul 16 06:25:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 16 06:25:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G1yBr-00032b-67
-	for gcvg-git@gmane.org; Sun, 16 Jul 2006 06:25:12 +0200
+	id 1G1yCE-00035H-5V
+	for gcvg-git@gmane.org; Sun, 16 Jul 2006 06:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbWGPEYu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Jul 2006 00:24:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964891AbWGPEYu
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 00:24:50 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:60066 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964884AbWGPEYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jul 2006 00:24:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060716042449.LQZS6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 16 Jul 2006 00:24:49 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 15 Jul 2006 20:18:45 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161067AbWGPEZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Jul 2006 00:25:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030329AbWGPEZV
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 00:25:21 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:18645 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030320AbWGPEZU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Jul 2006 00:25:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6G4PEnW006802
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 15 Jul 2006 21:25:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6G4PD9a018267;
+	Sat, 15 Jul 2006 21:25:14 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7j2eme3u.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.651 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23944>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> Junio, I think there is something wrong with git-merge. It sometimes takes 
->> up to ten seconds, and it's stuck at the
->>
->> 	git-show-branch --independent "$head" "$@"
->>
->> call.
->>
->> I don't know quite what that thing is even meant to do (we do already know 
->> the parents, why do we do something special here?) but even apart from 
->> that, the whole thing must be doing something seriously wrong, since it 
->> takes so long. Does it check the whole commit history?
->
+
+On Sat, 15 Jul 2006, Junio C Hamano wrote:
+> 
 > The code is to cull redundant parents primarily in octopus and
-> is not strictly necessary.
-
-Wrong.  The commit log says it was to remove redundant parents;
-I think this as a reaction after seeing a few incorrectly made
-merge commits in the kernel archive.
-
-> ..., but in your case you never do an octopus so
+> is not strictly necessary.  Can I have the $head and $@ (the
+> other merge parents, but in your case you never do an octopus so
 > that would be the other branch head) to see what is going on
 > please?
 
-Disregard this request please.  I see a few commits that this
-step takes a long time to process in the kernel archive.  The
-last merge before you left to Ottawa was one of them.
+I think it was commit b20e481 that I reacted to this time, merging b5032a5 
+and 48ce8b0.
 
-b5032a5 48ce8b0
+Ie, lookie here:
 
-I do not think we need to do the --independent check there
-especially for two-head cases because we have already done
-fast-forward and up-to-date tests when we get there, so let's
-revert that part from commit 6ea2334.
+	[torvalds@evo linux]$ time git merge-base --all b5032a5 48ce8b0
+	672c6108a51bf559d19595d9f8193dfd81f0f752
+	
+	real    0m1.426s
+	user    0m1.404s
+	sys     0m0.016s
 
--- >8 --
+so it can find a merge-base in 1.4 seconds, which should certainly 
+guarantee that they are independent. Then:
 
-diff --git a/git-merge.sh b/git-merge.sh
-index 24e3b50..ee41077 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -314,7 +314,11 @@ # If we have a resulting tree, that mean
- # auto resolved the merge cleanly.
- if test '' != "$result_tree"
- then
--    parents=$(git-show-branch --independent "$head" "$@" | sed -e 's/^/-p /')
-+    parents="-p $head"
-+    for remote
-+    do
-+	parents="$parents -p $remote"
-+    done
-     result_commit=$(echo "$merge_msg" | git-commit-tree $result_tree $parents) || exit
-     finish "$result_commit" "Merge $result_commit, made by $wt_strategy."
-     dropsave
+	[torvalds@evo linux]$ time git-show-branch --independent b5032a5 48ce8b0
+	b5032a50aea76b6230db74b1d171a7f56b204bb7
+	48ce8b056c88920c8ac187781048f5dae33c81b9
+	
+	real    0m30.657s
+	user    0m30.414s
+	sys     0m0.076s
+
+Whee. Half a minute. Ok, so this is on my laptop (I'm oat the airport 
+right now), so it was probably twice as fast on my desktop, but that is 
+still not acceptable.
+
+I really don't know what it's doing, because
+
+	[torvalds@evo linux]$ time git-rev-list b5032a5 48ce8b0 > /dev/null 
+	
+	real    0m3.248s
+	user    0m2.588s
+	sys     0m0.036s
+
+so it's really doing something very expensive - more so than just parsing 
+the commits.
+
+		Linus
