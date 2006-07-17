@@ -1,55 +1,69 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: comparing file contents in is_exact_match?
-Date: Mon, 17 Jul 2006 00:36:07 +0200
-Message-ID: <20060716223607.GA6023@steel.home>
-References: <20060706055729.GA12512@admingilde.org> <87k66p8jee.fsf@mid.deneb.enyo.de> <Pine.LNX.4.63.0607080450100.29667@wbgn013.biozentrum.uni-wuerzburg.de> <87fyh1ncm0.fsf@mid.deneb.enyo.de> <f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Post, Mark K" <mark.post@eds.com>
+Subject: git-repack not removing files from $GIT_DIR/objects/[00-ff]
+Date: Sun, 16 Jul 2006 20:44:52 -0400
+Message-ID: <5A14AF34CFF8AD44A44891F7C9FF410507E43005@usahm236.amer.corp.eds.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 17 00:36:26 2006
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+X-From: git-owner@vger.kernel.org Mon Jul 17 02:45:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2FDu-0005aF-2A
-	for gcvg-git@gmane.org; Mon, 17 Jul 2006 00:36:26 +0200
+	id 1G2HEZ-0001rn-Cs
+	for gcvg-git@gmane.org; Mon, 17 Jul 2006 02:45:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750752AbWGPWgS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 16 Jul 2006 18:36:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbWGPWgS
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 18:36:18 -0400
-Received: from mailout10.sul.t-online.com ([194.25.134.21]:65471 "EHLO
-	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1750752AbWGPWgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jul 2006 18:36:17 -0400
-Received: from fwd33.aul.t-online.de 
-	by mailout10.sul.t-online.com with smtp 
-	id 1G2FDi-0002hh-02; Mon, 17 Jul 2006 00:36:14 +0200
-Received: from tigra.home (r1pyDsZC8eH5rxC0Pa4yWNHm7Be26-Fc-LN-xzewMHvLibcWuoGpkE@[84.160.88.78]) by fwd33.sul.t-online.de
-	with esmtp id 1G2FDc-1vhUxc0; Mon, 17 Jul 2006 00:36:08 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 9D2D4277AF;
-	Mon, 17 Jul 2006 00:36:07 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1G2FDb-0002f9-HV; Mon, 17 Jul 2006 00:36:07 +0200
-To: Yakov Lerner <iler.ml@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
-User-Agent: Mutt/1.5.6i
-X-ID: r1pyDsZC8eH5rxC0Pa4yWNHm7Be26-Fc-LN-xzewMHvLibcWuoGpkE
-X-TOI-MSGID: 67630f6b-e68f-4a8f-9bba-af251605cf8a
+	id S1751300AbWGQApF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 16 Jul 2006 20:45:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbWGQApF
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Jul 2006 20:45:05 -0400
+Received: from ahmler3.mail.eds.com ([192.85.154.74]:2753 "EHLO
+	ahmler3.mail.eds.com") by vger.kernel.org with ESMTP
+	id S1751300AbWGQApD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Jul 2006 20:45:03 -0400
+Received: from ahmlir4.mail.eds.com (ahmlir4-2.mail.eds.com [192.85.154.134])
+	by ahmler3.mail.eds.com (8.13.7/8.12.10) with ESMTP id k6H0j2gZ003040;
+	Sun, 16 Jul 2006 20:45:02 -0400
+Received: from ahmlir4.mail.eds.com (localhost [127.0.0.1])
+	by ahmlir4.mail.eds.com (8.13.7/8.12.10) with ESMTP id k6H0itGY010107;
+	Sun, 16 Jul 2006 20:44:55 -0400
+Received: from usahm011.amer.corp.eds.com ([130.175.214.152])
+	by ahmlir4.mail.eds.com (8.13.7/8.12.10) with ESMTP id k6H0it1w010097;
+	Sun, 16 Jul 2006 20:44:55 -0400
+Received: from usahm236.amer.corp.eds.com ([130.175.214.169]) by usahm011.amer.corp.eds.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 16 Jul 2006 20:44:54 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git-repack not removing files from $GIT_DIR/objects/[00-ff]
+thread-index: AcapOjdECosubpNeTgWs1J8FQtm0BQ==
+To: <git@vger.kernel.org>
+X-OriginalArrivalTime: 17 Jul 2006 00:44:54.0482 (UTC) FILETIME=[38535320:01C6A93A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23958>
 
-Yakov Lerner, Sun, Jul 16, 2006 17:03:49 +0200:
-> Cygwin has mmap. But cygwin's mmap() not good enough for git.
-> What happens is that git does rename() when target file has active mmap().
-> In cygwin, this makes rename() to fail. This is what makes cygwin's
-> mmap unusable for git. (BTW for read-only git access, mmap() will work
-> on cygwin, for what I saw. But attempts to modify index will break).
+I'm having a problem that just started occurring with git-repack not
+removing the files from $GIT_DIR/objects/*, and therefore not removing
+the directories, since they're not empty.  The command I'm using (as the
+git user) is this:
+GIT_DIR=/home/git/pub/scm/linux-2.6.git git-repack -a -d -l
 
-It is not Cygwin really. It's windows. You can't rename or delete an
-open or mmapped file in that thing.
+This used to work, but then suddenly stopped working.  I ran an strace
+-f -F with this same command, and I don't see any attempt being made to
+unlink the files in $GIT_DIR/objects/*/, but I do see the rmdir commands
+failing because the directories are not empty.  All of the files in
+those directories are owned by git:git.
+
+I tried upgrading to git 1.4.1, but the same thing happens.  The gzipped
+strace output is almost 5MB in size, certainly not appropriate to attach
+here.  I can make it available from the system's web server if anyone
+wants to look at it.
+
+Please let me know if there's any other information needed.
+
+
+Mark Post
