@@ -1,158 +1,49 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFH/RFC] typechange tests for git apply (currently failing)
-Date: Sun, 16 Jul 2006 23:21:39 -0700
-Message-ID: <7vwtaciwek.fsf@assigned-by-dhcp.cox.net>
-References: <1153046320538-git-send-email-normalperson@yhbt.net>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: comparing file contents in is_exact_match?
+Date: Mon, 17 Jul 2006 07:25:17 +0200
+Message-ID: <87d5c4ajlu.fsf@mid.deneb.enyo.de>
+References: <20060706055729.GA12512@admingilde.org>
+	<87k66p8jee.fsf@mid.deneb.enyo.de>
+	<Pine.LNX.4.63.0607080450100.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<87fyh1ncm0.fsf@mid.deneb.enyo.de>
+	<f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
+	<20060716223607.GA6023@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 17 08:23:20 2006
+X-From: git-owner@vger.kernel.org Mon Jul 17 08:26:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2MVj-0001bY-DS
-	for gcvg-git@gmane.org; Mon, 17 Jul 2006 08:23:19 +0200
+	id 1G2MZ5-000240-FV
+	for gcvg-git@gmane.org; Mon, 17 Jul 2006 08:26:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932232AbWGQGVm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Jul 2006 02:21:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbWGQGVm
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 02:21:42 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:35526 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751156AbWGQGVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jul 2006 02:21:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060717062140.WYPM12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 17 Jul 2006 02:21:40 -0400
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <1153046320538-git-send-email-normalperson@yhbt.net> (Eric Wong's
-	message of "Sun, 16 Jul 2006 03:38:40 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751223AbWGQG0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Jul 2006 02:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbWGQG0j
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 02:26:39 -0400
+Received: from mail.enyo.de ([212.9.189.167]:21923 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S1751223AbWGQG0j (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Jul 2006 02:26:39 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1G2MYv-0004Ni-ES
+	for git@vger.kernel.org; Mon, 17 Jul 2006 08:26:37 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.62)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1G2LbZ-0000aK-Gn
+	for git@vger.kernel.org; Mon, 17 Jul 2006 07:25:17 +0200
+To: git@vger.kernel.org
+In-Reply-To: <20060716223607.GA6023@steel.home> (Alex Riesen's message of
+	"Mon, 17 Jul 2006 00:36:07 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23966>
 
-Eric Wong <normalperson@yhbt.net> writes:
+* Alex Riesen:
 
-> I've found that git apply is incapable of handling patches
-> involving object type changes to the same path.
+> It is not Cygwin really. It's windows. You can't rename or delete an
+> open or mmapped file in that thing.
 
-It's more of directory vs file conflicts -- and we do not track
-directories.  Some are pure bugs and relatively simple to fix
-(and important), some others I am not sure if they are worth
-dealing with.
-
-> +test_expect_success 'file renamed from foo to foo/baz' '
-> +	git checkout -f initial &&
-> +	git diff-tree -M -p HEAD foo-baz-renamed-from-foo > patch &&
-> +	git apply --index < patch
-> +	'
-
-If you look at where it fails closely you would notice this
-first fails during git-checkout (without failing, I should
-add).  Try adding "git diff" immediately after "git checkout".
-
-A fix for read-tree is in this message to fix this, but this has
-only been very lightly tested, so please check it thoroughly.
-
-After that is cleared, this and the next one uncover a few bugs
-in "git apply".
-
-> +test_expect_success 'file renamed from foo/baz to foo' '
-> +	git checkout -f foo-baz-renamed-from-foo &&
-> +	git diff-tree -M -p HEAD initial > patch &&
-> +	git apply --index < patch
-> +	'
-> +test_debug 'cat patch'
-
-one-way merge used in "git checkout -f" does not remove existing
-directory when checking out a file.  "git reset --hard" used to
-be more careful but recent rewrite made them more or less
-equivalent, and now has the same problem.  This patch to read-tree
-should fix it.
-
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 6df5d7c..122b6f1 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -507,7 +507,7 @@ static int merged_entry(struct cache_ent
- 	}
- 
- 	merge->ce_flags &= ~htons(CE_STAGEMASK);
--	add_cache_entry(merge, ADD_CACHE_OK_TO_ADD);
-+	add_cache_entry(merge, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
- 	return 1;
- }
- 
-@@ -518,7 +518,7 @@ static int deleted_entry(struct cache_en
- 	else
- 		verify_absent(ce->name, "removed");
- 	ce->ce_mode = 0;
--	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD);
-+	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
- 	invalidate_ce_path(ce);
- 	return 1;
- }
-
-
-Then apply, when applying to create a file where a directory
-lies, or vice versa, was not careful and did not remove
-conflicting one.  This patch makes the first few tests to work,
-but it is not enough.
-
-Currently, builtin-apply.c::write_out_one_result() says "remove
-the old, write the new" for each "struct patch" (which
-corresponds to "diff --git" line in your patch file).  I think
-the loop write_out_results() should be modified to first remove
-what we are going to remove in all patches, and then create what
-we are going to create.
-
-What causes the fourth test to fail is that you have foo/baz in
-the working tree and the index, and the patch creates file foo
-and removes file foo/baz.  The current loop to deal with one
-patch at a time means we try to create file "foo" first, which
-would not work without removing directory "foo" first.
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index c903146..9727442 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1732,9 +1732,14 @@ static int check_patch(struct patch *pat
- 		if (check_index && cache_name_pos(new_name, strlen(new_name)) >= 0)
- 			return error("%s: already exists in index", new_name);
- 		if (!cached) {
--			if (!lstat(new_name, &st))
--				return error("%s: already exists in working directory", new_name);
--			if (errno != ENOENT)
-+			struct stat nst;
-+			if (!lstat(new_name, &nst)) {
-+				if (S_ISDIR(nst.st_mode))
-+					; /* ok */
-+				else
-+					return error("%s: already exists in working directory", new_name);
-+			}
-+			else if ((errno != ENOENT) && (errno != ENOTDIR))
- 				return error("%s: %s", new_name, strerror(errno));
- 		}
- 		if (!patch->new_mode) {
-@@ -2011,6 +2016,16 @@ static void create_one_file(char *path, 
- 	}
- 
- 	if (errno == EEXIST) {
-+		/* We may be trying to create a file where a directory
-+		 * used to be.
-+		 */
-+		struct stat st;
-+		errno = 0;
-+		if (!lstat(path, &st) && S_ISDIR(st.st_mode) && !rmdir(path))
-+			errno = EEXIST;
-+	}
-+
-+	if (errno == EEXIST) {
- 		unsigned int nr = getpid();
- 
- 		for (;;) {
+And GIT's workaround is to read the whole file into memory and close
+it after that?  Uh-oh.
