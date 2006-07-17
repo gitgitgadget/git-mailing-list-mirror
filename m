@@ -1,49 +1,106 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: comparing file contents in is_exact_match?
-Date: Mon, 17 Jul 2006 07:25:17 +0200
-Message-ID: <87d5c4ajlu.fsf@mid.deneb.enyo.de>
-References: <20060706055729.GA12512@admingilde.org>
-	<87k66p8jee.fsf@mid.deneb.enyo.de>
-	<Pine.LNX.4.63.0607080450100.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<87fyh1ncm0.fsf@mid.deneb.enyo.de>
-	<f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
-	<20060716223607.GA6023@steel.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Mon, 17 Jul 2006 01:29:43 -0700
+Message-ID: <7vhd1ghbwo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jul 17 08:26:49 2006
+X-From: git-owner@vger.kernel.org Mon Jul 17 10:30:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2MZ5-000240-FV
-	for gcvg-git@gmane.org; Mon, 17 Jul 2006 08:26:48 +0200
+	id 1G2OUi-0001y3-JV
+	for gcvg-git@gmane.org; Mon, 17 Jul 2006 10:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223AbWGQG0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Jul 2006 02:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbWGQG0j
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 02:26:39 -0400
-Received: from mail.enyo.de ([212.9.189.167]:21923 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S1751223AbWGQG0j (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Jul 2006 02:26:39 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1G2MYv-0004Ni-ES
-	for git@vger.kernel.org; Mon, 17 Jul 2006 08:26:37 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.62)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1G2LbZ-0000aK-Gn
-	for git@vger.kernel.org; Mon, 17 Jul 2006 07:25:17 +0200
+	id S1750732AbWGQI3p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Jul 2006 04:29:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbWGQI3o
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 04:29:44 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58016 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750732AbWGQI3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jul 2006 04:29:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060717082943.ZHPE8537.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 17 Jul 2006 04:29:43 -0400
 To: git@vger.kernel.org
-In-Reply-To: <20060716223607.GA6023@steel.home> (Alex Riesen's message of
-	"Mon, 17 Jul 2006 00:36:07 +0200")
+X-maint-at: 8fced61cbc32f0c4b81a3dcecfeb40b7d96339ce
+X-master-at: b9718d41c7e9c171e432bafac97a33be36f0e2bf
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23967>
 
-* Alex Riesen:
+Quite a bit of stuff has been merged, and I have tagged the tip
+of the master as v1.4.2-rc1, before heading for Ottawa.
 
-> It is not Cygwin really. It's windows. You can't rename or delete an
-> open or mmapped file in that thing.
+Notable changes in the "master" branch includes:
 
-And GIT's workaround is to read the whole file into memory and close
-it after that?  Uh-oh.
+  - Merge-base has been improved thanks to a test script by
+    ALASCM.
+
+  - A handful gitweb enhancements and fixes by Alp Toker and
+    Luben Tuikov.
+
+  - git-svn is now out of "contrib/" status.
+
+  - Many documentation updates.
+
+  - Fixed a performance bug in git-show-branch, which affected
+    git-merge.
+
+  - Fixed a nonsense output from git-fmt-merge-msg when pulling
+    HEAD from a remote repository, spotted by Linus.
+
+  - "git-log --merge" helps the archeology during a conflicted
+    merge, per request by Linus.
+
+  - git-grep boolean expression to allow --and, --or, and --not
+    is now in "master".
+
+  - A few updates to git-daemon by Matthias Lederhofer.
+
+  - A handful portability fixes by Pavel Roskin and Shawn Pearce.
+
+  - Ref-log updates by Shawn Pearce.
+
+
+* The 'next' branch, in addition, has these.
+
+  - "checkout -f" and "reset --hard" fixes, when the new tree
+    should have file "foo" and the old tree and/or working tree
+    has directory there.  Earlier we failed to instantiate file
+    "foo", and did not report an error.  Testing is appreciated.
+
+  - git-apply fixes that was started by a test script by Eric
+    Wong.  Testing is appreciated on this stuff.
+
+  - Perly git by Pasky with help from others.
+
+  - Optional autoconf by Jakub Narebski.
+
+  - A WIP of merge-recursive by Johannes and Alex Riesen.
+
+  - A usability enhancement of format-patch for imap-send users by
+    Josh Triplett
+
+  - A new loose object format support by Linus.
+
+  - An update to diff to make --name-only, --name-status,
+    --check and -s mutually exclusive by Timo Hirvonen.
+
+* The 'pu' branch has an experimental "read-tree --rename" to
+  teach renames to git-merge-resolve, but currently it fails a
+  few of its own tests.
+
+
+I noticed that "git diff" from subdirectories does not seem to
+pick up the configuration from $GIT_DIR/config properly.  I
+suspect that fixing this breakage properly would help us later,
+as more and more commands learn to use the configuration
+mechanism to store user preferences, and the same fix would be
+applicable to them.  If somebody can fix this while we are away
+this week, that would be wonderful ;-).
