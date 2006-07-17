@@ -1,71 +1,77 @@
-From: "Yakov Lerner" <iler.ml@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: comparing file contents in is_exact_match?
-Date: Mon, 17 Jul 2006 23:32:42 +0300
-Message-ID: <f36b08ee0607171332k1da1ef77j352b31c78039d06c@mail.gmail.com>
-References: <20060706055729.GA12512@admingilde.org>
-	 <87k66p8jee.fsf@mid.deneb.enyo.de>
-	 <Pine.LNX.4.63.0607080450100.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <87fyh1ncm0.fsf@mid.deneb.enyo.de>
-	 <f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
-	 <20060716223607.GA6023@steel.home> <87d5c4ajlu.fsf@mid.deneb.enyo.de>
-	 <Pine.LNX.4.63.0607171439270.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <17595.48003.145000.414361@lapjr.intranet.kiel.bmiag.de>
+Date: Mon, 17 Jul 2006 14:31:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607171431010.2478@evo.osdl.org>
+References: <20060706055729.GA12512@admingilde.org> <87k66p8jee.fsf@mid.deneb.enyo.de>
+ <Pine.LNX.4.63.0607080450100.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <87fyh1ncm0.fsf@mid.deneb.enyo.de> <f36b08ee0607160803s27dac6a6k476e3dd7742346fc@mail.gmail.com>
+ <20060716223607.GA6023@steel.home> <87d5c4ajlu.fsf@mid.deneb.enyo.de>
+ <Pine.LNX.4.63.0607171439270.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0607170840280.15611@evo.osdl.org>
+ <Pine.LNX.4.63.0607171804030.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <1F90D448-5347-4CEB-80DE-3CC86C1CC16F@adacore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 17 22:33:36 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Florian Weimer <fw@deneb.enyo.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 17 23:31:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2Zlw-000848-9Z
-	for gcvg-git@gmane.org; Mon, 17 Jul 2006 22:32:56 +0200
+	id 1G2ag7-0001A7-FS
+	for gcvg-git@gmane.org; Mon, 17 Jul 2006 23:31:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916AbWGQUcp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Jul 2006 16:32:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751183AbWGQUcp
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 16:32:45 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:43107 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1750916AbWGQUcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jul 2006 16:32:45 -0400
-Received: by py-out-1112.google.com with SMTP id t32so1509658pyc
-        for <git@vger.kernel.org>; Mon, 17 Jul 2006 13:32:42 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QK/rROzJ4oQbt9d7ejtsfgMA4sX8kM8HLpDNncF1Fco+aYrZvtqaNOSZK3EpRhNogeGuMJwzl+FTsEJVSvluThudM/qYtuYVBvSZG/WmaqeZBUzxCeMqLyvp++SYYcmndSRyVO++d+lQ8XKQiWTswVB70/+Y2IVsdbjjfDgs8vk=
-Received: by 10.35.121.9 with SMTP id y9mr4519302pym;
-        Mon, 17 Jul 2006 13:32:42 -0700 (PDT)
-Received: by 10.35.14.14 with HTTP; Mon, 17 Jul 2006 13:32:42 -0700 (PDT)
-In-Reply-To: <17595.48003.145000.414361@lapjr.intranet.kiel.bmiag.de>
-Content-Disposition: inline
-To: unlisted-recipients:; (no To-header on input)
+	id S1751201AbWGQVay (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Jul 2006 17:30:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWGQVay
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 17:30:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:10648 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751201AbWGQVay (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Jul 2006 17:30:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6HLUZnW005683
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 17 Jul 2006 14:30:35 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6HLUEiH026302;
+	Mon, 17 Jul 2006 14:30:15 -0700
+To: Geert Bosch <bosch@adacore.com>
+In-Reply-To: <1F90D448-5347-4CEB-80DE-3CC86C1CC16F@adacore.com>
+X-Spam-Status: No, hits=-0.693 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23985>
 
-On 7/17/06, Juergen Ruehle <j.ruehle@bmiag.de> wrote:
-> Johannes Schindelin writes:
->  > > > It is not Cygwin really. It's windows. You can't rename or delete an
->  > > > open or mmapped file in that thing.
->  > >
->  > > And GIT's workaround is to read the whole file into memory and close
->  > > it after that?  Uh-oh.
->  >
->  > If you have a better idea (which does not make git source code ugly), go
->  > ahead, write a patch.
->
-> On several boxes I've tested the mmap code passes the tests on NTFS.
 
-On me, it failed me on git-apply with more than 1 patches on
-the commandline.
+On Mon, 17 Jul 2006, Geert Bosch wrote:
+> 
+> Or we can avoid doing an mmap of the entire pack file, and instead
+> try to be somewhat smart on limiting the size of the mmap's.
+> This might be sufficient to help Windows and also solve the
+> issue of finding contiguous address space for large packs on
+> 32-bit systems.
 
-git-apply with 1 patch on the commandline passed, with two, failed.
+Well, the thing is, you really _do_ want to mmap as much as possible of 
+the pack-file as possible, if mmap() works.
 
-git-apply with two patches on commandline is the simplest
-testcase that exposes this problem, AFAIK.
+So even with large pack-files, you do want to mmap a huge chunk at a time, 
+even if it turns out that you only need a very small part of it.
 
-Yakov
+For example, the commit data is at the very beginning of the pack-file, so 
+if you only look at the history, you only look at a very small part of the 
+pack-file, but you should not have to know how much you'll need ahead of 
+time, so you'd still want the pack-file operations to act in a way that is 
+efficient for the general case (which is to mmap as much as possible).
+
+So yes, we'll need to have some chunking layer at some point (when people 
+have gigabyte pack-files) but I think that's a totally separate issue from 
+the fact that we _do_ actually want mmap() (the _real_ kind of mmap) for 
+pack-files.
+
+			Linus
