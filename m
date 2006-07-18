@@ -1,162 +1,69 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsexportcommit - add -a (add author line) flag, cleanup warnings
-Date: Tue, 18 Jul 2006 14:22:49 +1200
-Message-ID: <11531893692075-git-send-email-martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Tue Jul 18 04:12:50 2006
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: No trailing newline and bogus conflicts
+Date: Tue, 18 Jul 2006 14:39:48 +1200
+Message-ID: <46a038f90607171939l21d986efgca1cadf0817c0229@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 18 04:40:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G2f3u-0004Sm-70
-	for gcvg-git@gmane.org; Tue, 18 Jul 2006 04:11:50 +0200
+	id 1G2fVB-0000Gr-Th
+	for gcvg-git@gmane.org; Tue, 18 Jul 2006 04:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861AbWGRCLr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 17 Jul 2006 22:11:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbWGRCLr
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 22:11:47 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:4812 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1750860AbWGRCLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jul 2006 22:11:46 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1G2f3m-0004jq-V0; Tue, 18 Jul 2006 14:11:43 +1200
-Received: from martin by mltest with local (Exim 3.36 #1 (Debian))
-	id 1G2fEX-0000rx-00; Tue, 18 Jul 2006 14:22:49 +1200
-To: git@vger.kernel.org, junkio@cox.net
-X-Mailer: git-send-email 1.4.1.ga3e6
+	id S1751097AbWGRCju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 17 Jul 2006 22:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbWGRCju
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Jul 2006 22:39:50 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:59563 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751097AbWGRCjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jul 2006 22:39:49 -0400
+Received: by ug-out-1314.google.com with SMTP id o2so1072319uge
+        for <git@vger.kernel.org>; Mon, 17 Jul 2006 19:39:48 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=GdRS9eNc6BCYvPsF2Gyy/VaUToB6Lk4rzVy/jG7U/DsQxYl7rs43qwBeZ4ZMH8ClTm2G7lMsZg1f0xX6GV5lY6Ujk82XmelwH8+TVl+cSI04E/Db+UXfIw/QQ0InTy5EY7AhFZtQ7tn/DvO1OObYWwQMojJqNNNrdwuyxFAEhTM=
+Received: by 10.78.193.5 with SMTP id q5mr1230776huf;
+        Mon, 17 Jul 2006 19:39:48 -0700 (PDT)
+Received: by 10.78.120.18 with HTTP; Mon, 17 Jul 2006 19:39:48 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23990>
 
-This patch adds support for -a which will add an "Author: " line, and possibly
-a "Committer: " line to the bottom of the commit message for CVS.
+Hi!
 
-The commit message parser is now a little bit better, and some warnings
-have been cleaned up.
----
- Documentation/git-cvsexportcommit.txt |    6 +++-
- git-cvsexportcommit.perl              |   50 +++++++++++++++++++++++++--------
- 2 files changed, 43 insertions(+), 13 deletions(-)
+I am seem to be having problems merging and cherry-picking patches on
+files that have no trailing newlines. Not having a trailing newline is
+bad style, but some (arguably braindead) languages and text file
+formats actually expect it. (Alas, to be burdened with PHP syntax.)
 
-diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
-index 27ac72d..b689c1b 100644
---- a/Documentation/git-cvsexportcommit.txt
-+++ b/Documentation/git-cvsexportcommit.txt
-@@ -8,7 +8,7 @@ git-cvsexportcommit - Export a commit to
- 
- SYNOPSIS
- --------
--'git-cvsexportcommit' [-h] [-v] [-c] [-p] [-f] [-m msgprefix] [PARENTCOMMIT] COMMITID
-+'git-cvsexportcommit' [-h] [-v] [-c] [-p] [-a] [-f] [-m msgprefix] [PARENTCOMMIT] COMMITID
- 
- 
- DESCRIPTION
-@@ -39,6 +39,10 @@ OPTIONS
- 	Be pedantic (paranoid) when applying patches. Invokes patch with 
- 	--fuzz=0
- 
-+-a::
-+	Add authorship information. Adds Author line, and Committer (if
-+	different from Author) to the message. 
-+
- -f::
- 	Force the merge even if the files are not up to date.
- 
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index 5d13a54..99b3dc3 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -16,9 +16,9 @@ unless ($ENV{GIT_DIR} && -r $ENV{GIT_DIR
-     die "GIT_DIR is not defined or is unreadable";
- }
- 
--our ($opt_h, $opt_p, $opt_v, $opt_c, $opt_f, $opt_m );
-+our ($opt_h, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m );
- 
--getopts('hpvcfm:');
-+getopts('hpvcfam:');
- 
- $opt_h && usage();
- 
-@@ -29,7 +29,6 @@ our ($tmpdir, $tmpdirname) = tempdir('gi
- 				     TMPDIR => 1,
- 				     CLEANUP => 1);
- 
--print Dumper(@ARGV);
- # resolve target commit
- my $commit;
- $commit = pop @ARGV;
-@@ -53,12 +52,32 @@ if (@ARGV) {
- # find parents from the commit itself
- my @commit  = safe_pipe_capture('git-cat-file', 'commit', $commit);
- my @parents;
--foreach my $p (@commit) {
--    if ($p =~ m/^$/) { # end of commit headers, we're done
--	last;
-+my $committer;
-+my $author;
-+my $stage = 'headers'; # headers, msg
-+my $title;
-+my $msg = '';
-+
-+foreach my $line (@commit) {
-+    chomp $line;
-+    if ($stage eq 'headers' && $line eq '') {
-+	$stage = 'msg';
-+	next;
-     }
--    if ($p =~ m/^parent (\w{40})$/) { # found a parent
--	push @parents, $1;
-+
-+    if ($stage eq 'headers') {
-+	if ($line =~ m/^parent (\w{40})$/) { # found a parent
-+	    push @parents, $1;
-+	} elsif ($line =~ m/^author (.+) \d+ \+\d+$/) {
-+	    $author = $1;
-+	} elsif ($line =~ m/^committer (.+) \d+ \+\d+$/) {
-+	    $committer = $1;
-+	}
-+    } else {
-+	$msg .= $line . "\n";
-+	unless ($title) {
-+	    $title = $line;
-+	}
-     }
- }
- 
-@@ -84,12 +103,18 @@ if ($parent) {
- 
- # grab the commit message
- open(MSG, ">.msg") or die "Cannot open .msg for writing";
--print MSG $opt_m;
-+if ($opt_m) {
-+    print MSG $opt_m;
-+}
-+print MSG $msg;
-+if ($opt_a) {
-+    print MSG "\n\nAuthor: $author\n";
-+    if ($author ne $committer) {
-+	print MSG "Committer: $committer\n";
-+    }
-+}
- close MSG;
- 
--`git-cat-file commit $commit | sed -e '1,/^\$/d' >> .msg`;
--$? && die "Error extracting the commit message";
--
- my (@afiles, @dfiles, @mfiles, @dirs);
- my @files = safe_pipe_capture('git-diff-tree', '-r', $parent, $commit);
- #print @files;
-@@ -233,6 +258,7 @@ foreach my $f (@dfiles) {
- }
- 
- print "Commit to CVS\n";
-+print "Patch: $title\n";
- my $commitfiles = join(' ', @afiles, @mfiles, @dfiles);
- my $cmd = "cvs commit -F .msg $commitfiles";
- 
--- 
-1.4.1.ga3e6
+I may be doing something wrong, but I've had two merges in a row where
+git seemed to think that there was conflict or different at the bottom
+of the file, where there wasn't.
+
+For example if you clone
+http://git.catalyst.net.nz/git/moodle.git#mdl-artena-tairawhiti
+(~180MB) and you look around these two merges:
+
+  bae5c70f0dc97d1c5a59ec2c9278d06f7427db71
+  bcfc1924516baa48d6e07eb125a1cb4f39d76dfa
+
+you will see that I cherry-picking patches to auth/db/lib.php --
+however I forgot one patch and tried to fix things up in a branch and
+merge it in. The last line, though identical, was always reported as
+"different" between the 2 files when I was resolving bcfc19.
+
+And later, when working on bae5c, I suspect I shouldn't have seen a
+conflict, as both sides had changed exactly the same.
+
+Any ideas other than dropping PHP?
+
+
+martin
