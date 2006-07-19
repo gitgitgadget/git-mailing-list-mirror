@@ -1,67 +1,87 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Tracking CVS
-Date: Wed, 19 Jul 2006 14:38:09 +0200
-Message-ID: <20060719123808.GH13776@pasky.or.cz>
-References: <9e4733910606220541y15d66fa6t33ab0c80ae05f764@mail.gmail.com> <20060622135831.GB21864@pasky.or.cz> <9e4733910606220717of2ba299ta8a38c7d63fd5635@mail.gmail.com>
+From: Panagiotis Issaris <takis.issaris@uhasselt.be>
+Subject: Problems using cg to clone Dave Millers repository
+Date: Wed, 19 Jul 2006 17:35:31 +0200
+Message-ID: <44BE5143.70005@uhasselt.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 19 14:38:48 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: davem@davemloft.net
+X-From: git-owner@vger.kernel.org Wed Jul 19 17:36:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3BJl-0004fn-Gm
-	for gcvg-git@gmane.org; Wed, 19 Jul 2006 14:38:23 +0200
+	id 1G3E5a-0000JZ-DS
+	for gcvg-git@gmane.org; Wed, 19 Jul 2006 17:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbWGSMiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Jul 2006 08:38:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964805AbWGSMiN
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Jul 2006 08:38:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51399 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S964800AbWGSMiM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Jul 2006 08:38:12 -0400
-Received: (qmail 19659 invoked by uid 2001); 19 Jul 2006 14:38:09 +0200
-To: Jon Smirl <jonsmirl@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <9e4733910606220717of2ba299ta8a38c7d63fd5635@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1030188AbWGSPfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Jul 2006 11:35:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030190AbWGSPfv
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Jul 2006 11:35:51 -0400
+Received: from alpha.uhasselt.be ([193.190.2.30]:25761 "EHLO alpha.uhasselt.be")
+	by vger.kernel.org with ESMTP id S1030188AbWGSPfu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Jul 2006 11:35:50 -0400
+Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
+	by alpha.uhasselt.be (Postfix) with ESMTP id 33CB11AB18E;
+	Wed, 19 Jul 2006 17:35:49 +0200 (CEST)
+X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
+Received: from [172.18.16.239] (edm-006.edm.uhasselt.be [193.190.10.6])
+	by alpha.uhasselt.be (Postfix) with ESMTP id 6BEAC1AB16E;
+	Wed, 19 Jul 2006 17:35:48 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24003>
 
-Dear diary, on Thu, Jun 22, 2006 at 04:17:15PM CEST, I got a letter
-where Jon Smirl <jonsmirl@gmail.com> said that...
-> On 6/22/06, Petr Baudis <pasky@suse.cz> wrote:
-> >Dear diary, on Thu, Jun 22, 2006 at 02:41:16PM CEST, I got a letter
-> >where Jon Smirl <jonsmirl@gmail.com> said that...
-> >> I'm tracking cvs using this sequence.
-> >>
-> >> cvs update
-> >> cg rm -a
-> >> cg commit
-> >> cg add -r .
-> >> cg commit
-> >>
-> >> Is there a way to avoid the two commits? If you do the add with out
-> >> the intervening commit it just adds the files back.
-> 
-> How about a cg-sync? Tracking cvs (or other SCM) with git is probably
-> a common activitiy while you try to convince the other CVS users to
-> switch. It is probably worth a little write up in the readme on the
-> best way to do it.
+Hi,
 
-I have added and pushed out support for cg-add -a, now it should be
-merely a matter of
+I'm having trouble cloning Dave Millers kernel repository:
 
-	cg-rm -a && cg-add -a
+takis@issaris:/tmp/a$ cg-clone 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git
+defaulting to local storage area
+Fetching pack (head and objects)...
+fatal: unable to connect a socket (Connection refused)
+cg-fetch: fetching pack failed
 
-and I have documented that.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+takis@issaris:/tmp/a$ cg-clone 
+http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git
+defaulting to local storage area
+Fetching head...
+Fetching objects...
+Getting alternates list for 
+http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/
+Also look at http://kernel.or
+error: Couldn't resolve host 'kernel.orobjects' (curl_result = 6, 
+http_code = 0, sha1 = ae1237750a9178b81d61308f9228f4f92a7402b2)
+Getting pack list for 
+http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/
+Getting pack list for http://kernel.or
+error: Couldn't resolve host 'kernel.or'
+error: Unable to find 27fd37621255799602d74e94d670ff7a1658d40a under 
+http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/
+Cannot obtain needed blob 27fd37621255799602d74e94d670ff7a1658d40a
+while processing commit 322045cc61d1dae9ff9e9ba2d7d4768fe1b3385d.
+Waiting for 
+http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/objects/d3/a269671c4c20a942bda04579d8d0e6ebf82c73
+progress: 8 objects, 6468 bytes
+cg-fetch: objects fetch failed
+
+
+takis@issaris:/tmp/a$ git clone 
+http://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git
+Cannot get remote repository information.
+Perhaps git-update-server-info needs to be run there?
+
+takis@issaris:/tmp/a$ git clone 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git
+fatal: unable to connect a socket (Connection refused)
+fetch-pack from 
+'git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git' failed.
+
+
+With friendly regards,
+Takis
