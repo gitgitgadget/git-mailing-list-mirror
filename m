@@ -1,88 +1,56 @@
-From: Panagiotis Issaris <takis@issaris.org>
-Subject: Re: Problems using cg to clone Dave Millers repository
-Date: Wed, 19 Jul 2006 17:55:58 +0200
-Message-ID: <44BE560E.10606@issaris.org>
-References: <44BE5143.70005@uhasselt.be>
+From: "Gabriela" <GabrielaFarris@lobbyist.com>
+Subject: Never-seen But without any  =?ISO-8859-1?Q?=20results=85?= Delight in
+Date: Wed, 19 Jul 2006 20:50:25 +0200
+Message-ID: <13019303859757.80CD001B91@OOVST>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, davem@davemloft.net
-X-From: git-owner@vger.kernel.org Wed Jul 19 17:56:34 2006
+X-From: git-owner@vger.kernel.org Wed Jul 19 20:51:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3EPM-00052i-6d
-	for gcvg-git@gmane.org; Wed, 19 Jul 2006 17:56:20 +0200
+	id 1G3H8h-000115-NM
+	for gcvg-git@gmane.org; Wed, 19 Jul 2006 20:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030194AbWGSP4R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Jul 2006 11:56:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030196AbWGSP4R
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Jul 2006 11:56:17 -0400
-Received: from alpha.uhasselt.be ([193.190.2.30]:1954 "EHLO alpha.uhasselt.be")
-	by vger.kernel.org with ESMTP id S1030194AbWGSP4Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Jul 2006 11:56:16 -0400
-Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
-	by alpha.uhasselt.be (Postfix) with ESMTP id EDD571AB183;
-	Wed, 19 Jul 2006 17:56:15 +0200 (CEST)
-X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
-Received: from [172.18.16.239] (edm-006.edm.uhasselt.be [193.190.10.6])
-	by alpha.uhasselt.be (Postfix) with ESMTP id 418041AB16E;
-	Wed, 19 Jul 2006 17:56:15 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-To: Panagiotis Issaris <takis.issaris@uhasselt.be>
-In-Reply-To: <44BE5143.70005@uhasselt.be>
+	id S1030224AbWGSSvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 19 Jul 2006 14:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030227AbWGSSvR
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Jul 2006 14:51:17 -0400
+Received: from pD9E58990.dip0.t-ipconnect.de ([217.229.137.144]:27631 "EHLO
+	VK38") by vger.kernel.org with ESMTP id S1030224AbWGSSvQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Jul 2006 14:51:16 -0400
+To: <godard@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: ZJy7F32J778nXFnqB6efdGGOOSZ1q6OWZQBP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24004>
+X-Spam-Report: 15.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: hanchbi.com]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: hanchbi.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: hanchbi.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: hanchbi.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: hanchbi.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: hanchbi.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24006>
 
-Hi,
+Hello!
 
-Just wanted to add, that cloning Torvalds' tree works:
+Have more success with women and impress them with your power and stamina in bed 
+You are just a couple of clicks away from our great prices and handy shipment
 
-takis@issaris:/tmp/a$ cg-clone 
-http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-defaulting to local storage area
-Fetching head...
-Fetching objects...
-Getting alternates list for 
-http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-Getting pack list for 
-http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-Getting index for pack 1d309de746f2b624d754622834d93b394bf43488
-progress: 0 objects, 1660856 bytes, now fetching 1d309de746f2... 
-(1660856 bytes)
+ Most trusted brands of the world, join the thousands of happy customers
+ Come on in: http://www.hanchbi.com 
 
-
-Panagiotis Issaris wrote:
-> [...]
->
-> takis@issaris:/tmp/a$ cg-clone 
-> http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git
-> defaulting to local storage area
-> Fetching head...
-> Fetching objects...
-> Getting alternates list for 
-> http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/
-> Also look at http://kernel.or
-> error: Couldn't resolve host 'kernel.orobjects' (curl_result = 6, 
-> http_code = 0, sha1 = ae1237750a9178b81d61308f9228f4f92a7402b2)
-> Getting pack list for 
-> http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/
-> Getting pack list for http://kernel.or
-> error: Couldn't resolve host 'kernel.or'
-> error: Unable to find 27fd37621255799602d74e94d670ff7a1658d40a under 
-> http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/
-> Cannot obtain needed blob 27fd37621255799602d74e94d670ff7a1658d40a
-> while processing commit 322045cc61d1dae9ff9e9ba2d7d4768fe1b3385d.
-> Waiting for 
-> http://kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.git/objects/d3/a269671c4c20a942bda04579d8d0e6ebf82c73 
->
-> progress: 8 objects, 6468 bytes
-> cg-fetch: objects fetch failed
-> [...]
-
-
-With friendly regards,
-Takis
+ The quality is realt high and the prices are the cheapest on the market!
