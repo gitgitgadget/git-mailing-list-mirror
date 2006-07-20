@@ -1,111 +1,48 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix fetching new directories copies when using SVN:: libs
-Date: Thu, 20 Jul 2006 01:43:01 -0700
-Message-ID: <20060720084301.GA29440@localdomain>
-References: <b6327a230607191902n47b81993x8caea2df3955d8c0@mail.gmail.com> <20060720034841.GA28298@localdomain>
+From: "Pool" <Poolappraise@repairman.com>
+Subject: I have done it and I am the best lover for my girl now!
+Date: Thu, 20 Jul 2006 11:29:44 +0200
+Message-ID: <32795733311367.648227AABA@YE8V>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ben Williamson <benw@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 20 10:43:23 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jul 20 11:31:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3U7s-0006zg-D7
-	for gcvg-git@gmane.org; Thu, 20 Jul 2006 10:43:20 +0200
+	id 1G3Urx-0006Ur-SB
+	for gcvg-git@gmane.org; Thu, 20 Jul 2006 11:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964908AbWGTInF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Jul 2006 04:43:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964909AbWGTInF
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 04:43:05 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:29886 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S964908AbWGTInE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Jul 2006 04:43:04 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 4577D7DC022;
-	Thu, 20 Jul 2006 01:43:02 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 20 Jul 2006 01:43:01 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060720034841.GA28298@localdomain>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S932576AbWGTJam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Jul 2006 05:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932577AbWGTJam
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 05:30:42 -0400
+Received: from 84.94.184.54.cable.012.net.il ([84.94.184.54]:35080 "EHLO
+	aijej1ji.kd39cxtq.rr.com") by vger.kernel.org with ESMTP
+	id S932576AbWGTJam (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jul 2006 05:30:42 -0400
+To: <gord@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: 5zmA5nFOaGW5akaglPNz09OigAc96PV1NqwV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24022>
+X-Spam-Report: 15.6 points;
+ *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: centifelt.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: centifelt.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: centifelt.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: centifelt.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: centifelt.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24023>
 
-Log output from SVN doesn't list all the new files that were
-added if a new directory was copied from an existing place in
-the repository.  This means we'll have to do some extra work and
-traverse new directories ourselves.
-
-This has been updated from the original patch to defer traversed
-adds until all removals have been done.  Please disregard the
-original.
-
-Thanks to Ben Williamson for the excellent bug report and
-testing.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   23 ++++++++++++++++-------
- 1 files changed, 16 insertions(+), 7 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 89ad840..6453771 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2709,6 +2709,12 @@ sub libsvn_fetch {
- 			} else {
- 				die "Unrecognized action: $m, ($f r$rev)\n";
- 			}
-+		} elsif ($t == $SVN::Node::dir && $m =~ /^[AR]$/) {
-+			my @traversed = ();
-+			libsvn_traverse($gui, '', $f, $rev, \@traversed);
-+			foreach (@traversed) {
-+				push @amr, [ $m, $_ ]
-+			}
- 		}
- 		$pool->clear;
- 	}
-@@ -2778,7 +2784,7 @@ sub libsvn_parse_revision {
- }
- 
- sub libsvn_traverse {
--	my ($gui, $pfx, $path, $rev) = @_;
-+	my ($gui, $pfx, $path, $rev, $files) = @_;
- 	my $cwd = "$pfx/$path";
- 	my $pool = SVN::Pool->new;
- 	$cwd =~ s#^/+##g;
-@@ -2786,10 +2792,15 @@ sub libsvn_traverse {
- 	foreach my $d (keys %$dirent) {
- 		my $t = $dirent->{$d}->kind;
- 		if ($t == $SVN::Node::dir) {
--			libsvn_traverse($gui, $cwd, $d, $rev);
-+			libsvn_traverse($gui, $cwd, $d, $rev, $files);
- 		} elsif ($t == $SVN::Node::file) {
--			print "\tA\t$cwd/$d\n" unless $_q;
--			libsvn_get_file($gui, "$cwd/$d", $rev);
-+			my $file = "$cwd/$d";
-+			if (defined $files) {
-+				push @$files, $file;
-+			} else {
-+				print "\tA\t$file\n" unless $_q;
-+				libsvn_get_file($gui, $file, $rev);
-+			}
- 		}
- 	}
- 	$pool->clear;
-@@ -2913,9 +2924,7 @@ sub libsvn_new_tree {
- 	}
- 	my ($paths, $rev, $author, $date, $msg) = @_;
- 	open my $gui, '| git-update-index -z --index-info' or croak $!;
--	my $pool = SVN::Pool->new;
--	libsvn_traverse($gui, '', $SVN_PATH, $rev, $pool);
--	$pool->clear;
-+	libsvn_traverse($gui, '', $SVN_PATH, $rev);
- 	close $gui or croak $?;
- 	return libsvn_log_entry($rev, $author, $date, $msg);
- }
--- 
-1.4.1.g9d8f
+Hi! A high percentage of males suffer from this, and you shouldn't be one of them. Not just stopping it, but curing - Extra-Time conquers all reasons for the premature finish. Ever thought your relationship is about to break up because you finish within a few minutes from penetration? Enter here:  http://centifelt.com/dll/get Keep her satisfied tonight and any night in the future. She'll love it!
