@@ -1,56 +1,73 @@
-From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
-Subject: git-rerere during git-rebase
-Date: Thu, 20 Jul 2006 17:14:25 +0300 (EEST)
-Message-ID: <Pine.LNX.4.58.0607201702010.3746@kivilampi-30.cs.helsinki.fi>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] git-am: Don't accept an mbox on stdin of we already have a .dotest directory
+Date: Thu, 20 Jul 2006 16:33:54 +0200
+Message-ID: <20060720143353.GK13776@pasky.or.cz>
+References: <44BE95D0.9090708@etek.chalmers.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jul 20 16:15:19 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 20 16:34:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3ZIN-00053P-S3
-	for gcvg-git@gmane.org; Thu, 20 Jul 2006 16:14:32 +0200
+	id 1G3ZbF-0002mS-MK
+	for gcvg-git@gmane.org; Thu, 20 Jul 2006 16:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030325AbWGTOO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Jul 2006 10:14:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030326AbWGTOO2
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 10:14:28 -0400
-Received: from courier.cs.helsinki.fi ([128.214.9.1]:54763 "EHLO
-	mail.cs.helsinki.fi") by vger.kernel.org with ESMTP
-	id S1030325AbWGTOO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jul 2006 10:14:27 -0400
-Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi [128.214.9.42])
-  (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by mail.cs.helsinki.fi with esmtp; Thu, 20 Jul 2006 17:14:26 +0300
-  id 00087DB0.44BF8FC2.00001B31
-Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795)
-	id A02D4EAFF1; Thu, 20 Jul 2006 17:14:25 +0300 (EEST)
-Received: from localhost (localhost [127.0.0.1])
-	by kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id 93B93EAFE5
-	for <git@vger.kernel.org>; Thu, 20 Jul 2006 17:14:25 +0300 (EEST)
-X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
-To: git@vger.kernel.org
+	id S932584AbWGTOd5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 20 Jul 2006 10:33:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932582AbWGTOd5
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 10:33:57 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:11424 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932584AbWGTOd5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Jul 2006 10:33:57 -0400
+Received: (qmail 4686 invoked by uid 2001); 20 Jul 2006 16:33:54 +0200
+To: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
+Content-Disposition: inline
+In-Reply-To: <44BE95D0.9090708@etek.chalmers.se>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24031>
 
-Hi,
+Dear diary, on Wed, Jul 19, 2006 at 10:28:00PM CEST, I got a letter
+where Lukas Sandstr=F6m <lukass@etek.chalmers.se> said that...
+> Signed-off-by: Lukas Sandstr=F6m <lukass@etek.chalmers.se>
+> ---
 
-I discovered that "git-am --resolved --3way" (in 1.3.1) and "git-rebase 
---continue" (in 1.4.2.rc1.ge7a0) do not correctly capture hand resolved 
-files into .git/rr-cache. In worst case I got (with 1.3.1), afaict, the 
-postimage was incorrect including also all patches successfully applied 
-after the git-am --resolved --3way up to until the point where next 
-conflict occurred. To circumvent this, I can use git-rerere directly but I 
-remember that its manpage states that one should never have to do so. I'm 
-I missing something or is this a problem in git-rebase (or possibly in 
-git-am)?
+Please don't be afraid of putting stuff to commit message. It can only
+improve things. :-)
 
+> # git format-patch -k -3 master..conflict | git am -k -3
+> =3D> git-am fails with a conflict message
+> # git reset --hard
+>=20
+> # git format-patch -k -3 master..ok | git am -k -3
+> =3D> git am fails with the same conflict message as above,
+> =3D> since it's trying to apply the old .dotest directory
+>=20
+> With the patch it complains about an old .dotest
+> directory instead.
 
--- 
- i.
+I think this rather means that git reset --hard should clear the .dotes=
+t
+directory, or something (perhaps just warn)...
 
-ps. I'm not subscribed, so please cc me.
+> -	test ",$#," =3D ",0," ||
+> +	if test ",$#," !=3D ",0," || ! tty -s
+
+=2E..but this looks like a horrible idea. Does this mean that git-am ca=
+n't
+be now ran without a terminal? (E.g. in a cron/at job, inside a procmai=
+l
+rule etc.) That's bad.
+
+--=20
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
