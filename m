@@ -1,59 +1,72 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: initializing remote clone but files already there
-Date: Thu, 20 Jul 2006 23:32:45 +0200
-Message-ID: <20060720213245.GM13776@pasky.or.cz>
-References: <f36b08ee0607201241t6160b1eqb4f0b255b02499a7@mail.gmail.com>
+From: "Marcelino Sheldon" <MarcelinoSheldon@1000augen.com>
+Subject: Your cash, organ building
+Date: Thu, 20 Jul 2006 23:14:25 +0000 (UTC)
+Message-ID: <538140977.20060720231424@1000augen.com>
+Reply-To: "Marcelino Sheldon" <MarcelinoSheldon@1000augen.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 20 23:33:03 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jul 21 01:14:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3g8Z-0008Ln-R9
-	for gcvg-git@gmane.org; Thu, 20 Jul 2006 23:32:52 +0200
+	id 1G3hil-0000TV-80
+	for gcvg-git@gmane.org; Fri, 21 Jul 2006 01:14:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030381AbWGTVcs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Jul 2006 17:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030383AbWGTVcs
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 17:32:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53709 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030381AbWGTVcr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Jul 2006 17:32:47 -0400
-Received: (qmail 22587 invoked by uid 2001); 20 Jul 2006 23:32:45 +0200
-To: Yakov Lerner <iler.ml@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <f36b08ee0607201241t6160b1eqb4f0b255b02499a7@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1030403AbWGTXOQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Jul 2006 19:14:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030405AbWGTXOQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 19:14:16 -0400
+Received: from 220-143-214-213.dynamic.hinet.net ([220.143.214.213]:48644 "EHLO
+	\244E\244\351\245\372") by vger.kernel.org with ESMTP
+	id S1030403AbWGTXOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jul 2006 19:14:15 -0400
+Date: Thu, 20 Jul 2006 23:14:24 -0480
+X-Mailer: The Bat! (v3.0.0.15) Educational
+X-Priority: 3 (Normal)
+To: git-commits-head-owner@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24038>
+X-Spam-Report: 16.0 points;
+ *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: coactivejj.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: coactivejj.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: coactivejj.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: coactivejj.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: coactivejj.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24039>
 
-Dear diary, on Thu, Jul 20, 2006 at 09:41:48PM CEST, I got a letter
-where Yakov Lerner <iler.ml@gmail.com> said that...
-> There are two machines with slow ssh access. The
-> both have copy of same filetree that was synchronized
-> previously vi rsync. How do I put both trees under git control
-> as if they were clone on one other *but* (1) without creating
-> branches and (2) without copying files over (files are already
-> there) ?
+Even if you have no erectin problems SOFT CIA2LIS 
+would help you to make BETTER SE6X MORE OFTEN!
+and to bring  unimagnable plesure to her.
 
-Put one tree under the git control and examine the initial commit in
-detail (cg-log -v or git show --pretty=fuller or whatever). Now you want
-to perform the initial commit in the other tree with exactly the same
-metadata; log message should be easy, to carry over all the times and
-stuff, you need to set GIT_AUTHOR_{NAME,EMAIL,DATE} and
-GIT_COMMITTER_<dtto> based on the other initial commit details. That
-should result in a same commit id. Then you need to just set up remote
-branch origin just like you would set up any other remote branch.
+Just disolve half a pil under your tongue 
+and get ready for action in 15 minutes. 
 
-Good luck,
+The tests showed that the majority of men 
+after taking this medic ation were able to have 
+PERFECT ER4ECTION during 36 hours!
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+VISIT US, AND GET OUR SPECIAL 70% DISCAOUNT OFER!
+
+http://885W662t4buc1uquzp66zto6hb6o6.coactivejj.com/
+
+==========
+straight down, wings full out and stable from the moment he  passed  fifty
+fifteenth floor sympathetic faces watched us off. All we lacked  were waving
+affords a new perspective on the nature  of ours and ourselves; it even  has
+two  copper disks the size of a saucer, -about a quarter  inch thick, with a
+he had blurred through ninety miles per hour. Jonathan  had  set  a  world
+of my business. Now nothing concerned me any more.
+
+inverted spin, and recovered at last, panting, a hundred  feet  below  his
+     And he stood there with his  last empty  on the scales, looking like he
