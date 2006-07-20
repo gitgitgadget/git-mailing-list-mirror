@@ -1,121 +1,71 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Re: git-svn: Missing files
-Date: Wed, 19 Jul 2006 20:48:41 -0700
-Message-ID: <20060720034841.GA28298@localdomain>
+From: "Ben Williamson" <benw@pobox.com>
+Subject: Re: git-svn: Missing files
+Date: Thu, 20 Jul 2006 14:31:54 +1000
+Message-ID: <b6327a230607192131x2623af69jf1f47d5e43e52023@mail.gmail.com>
 References: <b6327a230607191902n47b81993x8caea2df3955d8c0@mail.gmail.com>
+	 <b6327a230607191909tf48c4f8nc551b732523cca3e@mail.gmail.com>
+	 <20060720024815.GC31763@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jul 20 05:48:54 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 20 06:32:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3PWr-0008Vw-6m
-	for gcvg-git@gmane.org; Thu, 20 Jul 2006 05:48:49 +0200
+	id 1G3QD0-0004CN-5E
+	for gcvg-git@gmane.org; Thu, 20 Jul 2006 06:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030224AbWGTDso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 19 Jul 2006 23:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932566AbWGTDso
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Jul 2006 23:48:44 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:50876 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S932565AbWGTDsn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Jul 2006 23:48:43 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C86F17DC022;
-	Wed, 19 Jul 2006 20:48:41 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 19 Jul 2006 20:48:41 -0700
-To: Ben Williamson <benw@pobox.com>
+	id S1030224AbWGTEb4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Jul 2006 00:31:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932567AbWGTEb4
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 00:31:56 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:32009 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932566AbWGTEbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jul 2006 00:31:55 -0400
+Received: by nf-out-0910.google.com with SMTP id n29so486102nfc
+        for <git@vger.kernel.org>; Wed, 19 Jul 2006 21:31:54 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=M8Qz1MutmwJTWPW3yBCRNKXbAM+swcfp3ZGqfMDg3jVCCFz1mhIzd1qiYVpLrc3iANALjFIwTxoQlI06K/Qq0vd5Qn7iIsQIZKPJqDuNPfQ10t4/OVlFCJ8KjMviZ916SzvJU+YTb1QO5upCc4s79eVOKGSQzUpuF8ZgxV9k+YU=
+Received: by 10.78.158.11 with SMTP id g11mr88963hue;
+        Wed, 19 Jul 2006 21:31:54 -0700 (PDT)
+Received: by 10.78.126.12 with HTTP; Wed, 19 Jul 2006 21:31:54 -0700 (PDT)
+To: "Eric Wong" <normalperson@yhbt.net>
+In-Reply-To: <20060720024815.GC31763@localdomain>
 Content-Disposition: inline
-In-Reply-To: <b6327a230607191902n47b81993x8caea2df3955d8c0@mail.gmail.com>
-User-Agent: Mutt/1.5.11+cvs20060403
+X-Google-Sender-Auth: 443b0fd072285ea2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24018>
 
-Ben, can you please try this patch against the git-svn.perl file in
-master?  You can also find the full patched file here:
+Wow, I just got back from lunch to three replies and a patch! I'll try
+to keep up here...
 
-	http://git-svn.bogomips.org/git-svn.perl
+On 7/20/06, Eric Wong <normalperson@yhbt.net> wrote:
+> May I ask if you have the Perl SVN:: library bindings installed?  If so
+> 1.1.1-broken (and all versions afterwards) will automatically. use them
+> (if the SVN library version is >= 1.1).
 
-From: Eric Wong <normalperson@yhbt.net>
-Date: Wed, 19 Jul 2006 20:42:35 -0700
-Subject: [PATCH] git-svn: fix fetching new directories copies when using SVN:: libs
+Yes I have Perl SVN:: installed, because I started off trying
+git-svnimport. (Most of my attempts there resulted in lots of commits
+of the same empty tree, until someone else on this list mentioned that
+"trunk/projectname" should be removed from the url. Then it started
+working, but it seems to be a large repo and was taking forever, so I
+tried git-svn.) I didn't realise git-svn didn't need the Perl stuff.
 
-Log output from SVN doesn't list all the new files that were
-added if a new directory was copied from an existing place in
-the repository.  This means we'll have to do some extra work and
-traverse new directories ourselves.
+$ rpm -qa | grep subversion
+subversion-1.2.1-0.1.1.fc3.rf
+subversion-perl-1.2.1-0.1.1.fc3.rf
 
-Thanks to Ben Williamson for the excellent bug report.
+> Nevertheless, I'm running an import right now (with the SVN:: libraries enabled)
+> and will make another run with them disabled (which is kind of slow).
+> I'll keep you posted...
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   18 +++++++++++-------
- 1 files changed, 11 insertions(+), 7 deletions(-)
+Me too, with your latest script - will let you know. Thanks!
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 89ad840..577a284 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2692,6 +2692,7 @@ sub libsvn_fetch {
- 	my ($last_commit, $paths, $rev, $author, $date, $msg) = @_;
- 	open my $gui, '| git-update-index -z --index-info' or croak $!;
- 	my @amr;
-+	my %fetched = ();
- 	foreach my $f (keys %$paths) {
- 		my $m = $paths->{$f}->action();
- 		$f =~ s#^/+##;
-@@ -2709,10 +2710,13 @@ sub libsvn_fetch {
- 			} else {
- 				die "Unrecognized action: $m, ($f r$rev)\n";
- 			}
-+		} elsif ($t == $SVN::Node::dir && $m =~ /^[AR]$/) {
-+			libsvn_traverse($gui, '', $f, $rev, \%fetched);
- 		}
- 		$pool->clear;
- 	}
- 	foreach (@amr) {
-+		next if $fetched{$_->[1]};
- 		print "\t$_->[0]\t$_->[1]\n" unless $_q;
- 		libsvn_get_file($gui, $_->[1], $rev)
- 	}
-@@ -2778,7 +2782,7 @@ sub libsvn_parse_revision {
- }
- 
- sub libsvn_traverse {
--	my ($gui, $pfx, $path, $rev) = @_;
-+	my ($gui, $pfx, $path, $rev, $files) = @_;
- 	my $cwd = "$pfx/$path";
- 	my $pool = SVN::Pool->new;
- 	$cwd =~ s#^/+##g;
-@@ -2786,10 +2790,12 @@ sub libsvn_traverse {
- 	foreach my $d (keys %$dirent) {
- 		my $t = $dirent->{$d}->kind;
- 		if ($t == $SVN::Node::dir) {
--			libsvn_traverse($gui, $cwd, $d, $rev);
-+			libsvn_traverse($gui, $cwd, $d, $rev, $files);
- 		} elsif ($t == $SVN::Node::file) {
--			print "\tA\t$cwd/$d\n" unless $_q;
--			libsvn_get_file($gui, "$cwd/$d", $rev);
-+			my $file = "$cwd/$d";
-+			print "\tA\t$file\n" unless $_q;
-+			libsvn_get_file($gui, $file, $rev);
-+			$files->{$file} = 1 if defined $files;
- 		}
- 	}
- 	$pool->clear;
-@@ -2913,9 +2919,7 @@ sub libsvn_new_tree {
- 	}
- 	my ($paths, $rev, $author, $date, $msg) = @_;
- 	open my $gui, '| git-update-index -z --index-info' or croak $!;
--	my $pool = SVN::Pool->new;
--	libsvn_traverse($gui, '', $SVN_PATH, $rev, $pool);
--	$pool->clear;
-+	libsvn_traverse($gui, '', $SVN_PATH, $rev);
- 	close $gui or croak $?;
- 	return libsvn_log_entry($rev, $author, $date, $msg);
- }
--- 
-1.4.1.g9d8f
+- Ben.
