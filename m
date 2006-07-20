@@ -1,53 +1,56 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: remote diff
-Date: Thu, 20 Jul 2006 14:06:33 +0200
-Message-ID: <44BF71C9.4080206@op5.se>
-References: <f36b08ee0607200454k7aa98454rd2a8a566b0ea4582@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
+Subject: git-rerere during git-rebase
+Date: Thu, 20 Jul 2006 17:14:25 +0300 (EEST)
+Message-ID: <Pine.LNX.4.58.0607201702010.3746@kivilampi-30.cs.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 20 14:06:55 2006
+X-From: git-owner@vger.kernel.org Thu Jul 20 16:15:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3XIo-0000YV-H6
-	for gcvg-git@gmane.org; Thu, 20 Jul 2006 14:06:50 +0200
+	id 1G3ZIN-00053P-S3
+	for gcvg-git@gmane.org; Thu, 20 Jul 2006 16:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030280AbWGTMGg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 20 Jul 2006 08:06:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030282AbWGTMGg
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 08:06:36 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:58076 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030280AbWGTMGf
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jul 2006 08:06:35 -0400
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 159A16BCC6; Thu, 20 Jul 2006 14:06:34 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.8-1.1.fc4 (X11/20060501)
-X-Accept-Language: en-us, en
-To: Yakov Lerner <iler.ml@gmail.com>
-In-Reply-To: <f36b08ee0607200454k7aa98454rd2a8a566b0ea4582@mail.gmail.com>
+	id S1030325AbWGTOO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 20 Jul 2006 10:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030326AbWGTOO2
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Jul 2006 10:14:28 -0400
+Received: from courier.cs.helsinki.fi ([128.214.9.1]:54763 "EHLO
+	mail.cs.helsinki.fi") by vger.kernel.org with ESMTP
+	id S1030325AbWGTOO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jul 2006 10:14:27 -0400
+Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi [128.214.9.42])
+  (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by mail.cs.helsinki.fi with esmtp; Thu, 20 Jul 2006 17:14:26 +0300
+  id 00087DB0.44BF8FC2.00001B31
+Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795)
+	id A02D4EAFF1; Thu, 20 Jul 2006 17:14:25 +0300 (EEST)
+Received: from localhost (localhost [127.0.0.1])
+	by kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id 93B93EAFE5
+	for <git@vger.kernel.org>; Thu, 20 Jul 2006 17:14:25 +0300 (EEST)
+X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24030>
 
-Yakov Lerner wrote:
-> I have local repo, and remote repo ssh://x/y/.git.
-> 
-> I tried to diff local repo against remote, with naive
-> 'git-diff ssh://x/y/.git.' But this did not work. How do I
-> diff with remote repo ?
-> 
+Hi,
 
-Pull it to a new branch and diff the two branches. This should be a 
-pretty cheap operation unless either of the two repos has seen a lot of 
-development since you forked the code.
+I discovered that "git-am --resolved --3way" (in 1.3.1) and "git-rebase 
+--continue" (in 1.4.2.rc1.ge7a0) do not correctly capture hand resolved 
+files into .git/rr-cache. In worst case I got (with 1.3.1), afaict, the 
+postimage was incorrect including also all patches successfully applied 
+after the git-am --resolved --3way up to until the point where next 
+conflict occurred. To circumvent this, I can use git-rerere directly but I 
+remember that its manpage states that one should never have to do so. I'm 
+I missing something or is this a problem in git-rebase (or possibly in 
+git-am)?
+
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+ i.
+
+ps. I'm not subscribed, so please cc me.
