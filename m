@@ -1,220 +1,69 @@
-From: mcguire@lzu.edu.cn
-Subject: [RTLWS8-CFP] Eighth Real-Time Linux Workshop 2nd CFP
-Date: Sat, 22 Jul 2006 05:34:28 +0800
-Message-ID: <200607212134.k6LLYSQY012519@opentech.lzu.edu.cn>
-X-From: git-owner@vger.kernel.org Fri Jul 21 23:57:15 2006
+From: "Lacey Nicholas" <LaceyNicholas@10000lakesarchaeology.com>
+Subject: Order status, olive tubercle
+Date: Fri, 21 Jul 2006 22:19:09 +0300
+Message-ID: <662161c80604um0b9zvf08894a88quy7braf9kfui9kg@mail.10000lakesarchaeology.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Jul 22 00:19:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G42ze-0001pz-69
-	for gcvg-git@gmane.org; Fri, 21 Jul 2006 23:57:10 +0200
+	id 1G43Ku-0005ji-Hp
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 00:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbWGUV4u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Jul 2006 17:56:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbWGUV4u
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 17:56:50 -0400
-Received: from [202.38.127.182] ([202.38.127.182]:32458 "EHLO
-	opentech.lzu.edu.cn") by vger.kernel.org with ESMTP
-	id S1751209AbWGUV4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jul 2006 17:56:49 -0400
-Received: from opentech.lzu.edu.cn (opentech.lzu.edu.cn [202.38.127.182])
-	by opentech.lzu.edu.cn (8.13.1/8.13.1) with ESMTP id k6LLYSQY012519;
-	Sat, 22 Jul 2006 05:34:28 +0800
-To: nag@nag.ru, alina12004@mail.ru, mail@prime-tass.ru,
-	mail@prime-tass.ru, market@prime-tass.ru, market@prime-tass.ru,
-	sales01@prime-tass.ru, sales01@prime-tass.ru, git@vger.kernel.org,
-	david@dgreaves.com, git@vger.kernel.org, rsync-bugs@samba.org,
-	vas-agu@mail.ru, vas-agu@mail.ru, igor@tophit.ru, lena@tophit.ru,
-	web@tophit.ru, anna@tophit.ru, vlad@tophit.ru, web@tophit.ru,
-	dashulya@mail.ru, dashulya@mail.ru, newavrora@hotmail.com,
-	newavrora@hotmail.com, webmaster@finmarket.ru,
-	webmaster@finmarket.ru, newavrora@hotmail.com, senat50@rambler.ru,
-	newavrora@hotmail.com, senat50@rambler.ru, anneke94@mail.ru,
-	anneke94@mail.ru, babenkot@mail.ru
+	id S1751239AbWGUWTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Jul 2006 18:19:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWGUWTE
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 18:19:04 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:17833 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1751236AbWGUWTD convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jul 2006 18:19:03 -0400
+Received: from client-201.230.106.223.speedy.net.pe (client-201.230.106.223.speedy.net.pe [201.230.106.223] (may be forged))
+	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6LMInMV015346;
+	Fri, 21 Jul 2006 22:19:02 GMT
+To: git-commits-head-owner@vger.kernel.org
+Content-Disposition: inline
+X-Spam: Not detected
+X-Virus-Scanned: ClamAV 0.88.3/1614/Fri Jul 21 20:27:38 2006 on zeus2.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24059>
+X-Spam-Report: 11.9 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: madwortmj.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: madwortmj.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: madwortmj.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: madwortmj.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24060>
 
+Genuine Swiss made RoleVx repilcas are as close to the real thing 
+as a repilca watch can be. Sometimes even the professional jewelers 
+are unable to tell the difference from the real RoleBx watch.
 
-We apologize for multiple receipts.
+Why spend thousands of dollars on the real deal when 
+a repilca watch looks so much alike that only an expert could tell the difference...
+And you only pay a fractoin of the price.
 
+VISIT US, AND GET OUR SPECIL 370% DISSCOUNT OFER!
 
+http://1W43PPGiy5b5joq666t1iiyni0y5ii0.madwortmj.com/
 
---------------------------------------------------------------------------------
+=====
+meant! He stood on the sand and fell to wondering if there was a gull back
+gentle way. I just got up, brushed myself off, and looked around. There were
+bright as theirs. True, the same young Jonathan Seagull was there that had
+is we've brought back."
+     "Yes. Once in a while I read the Reports. "
+over at me, jaws clenched,  teeth  bared. motioned for him to be still. God,
 
-
-
-                      Eighth Real-Time Linux Workshop
-
-                            October 12-15, 2006
-                         Lanzhou University - SISE
-                          Tianshui South Road 222
-                           Lanzhou, Gansu 730000
-                                 P.R.China
-
-
-  General
-
-   Following  the  meetings  of  developers  and  users at the previous 7
-   successful  real-time Linux workshops held in Vienna, Orlando, Milano,
-   Boston,  and  Valencia, Singapore, Lille, the Real-Time Linux Workshop
-   for  2006  will  come back to Asia again, to be held at the School for
-   Information  Science  and  Engineering, Lanzhou University, in Lanzhou
-   China.
-
-   Embedded  and  real-time Linux is rapidly gaining traction in the Asia
-   Pacific  region.  Embedded  systems  in  both  automation/control  and
-   entertainment moving to 32/64bit systems, opening the door for the use
-   of  full  featured  OS  like  GNU/Linux  on  COTS  based systems. With
-   real-time  capabilities being a common demand for embedded systems the
-   soft  and  hard  real-time  variants are an important extension to the
-   versatile GNU/Linux GPOS.
-
-   Authors  are  invited  to  submit  original  work dealing with general
-   topics  related  to  real-time  Linux  research,  experiments and case
-   studies,  as  well  as issues of integration of real-time and embedded
-   Linux.  A  special focus will be on industrial case studies. Topics of
-   interest include, but are not limited to:
-
-     * Modifications and variants of the GNU/Linux operating system
-       extending its real-time capabilities,
-     * Contributions to real-time Linux variants, drivers and extensions,
-     * User-mode real-time concepts, implementation and experience,
-     * Real-time Linux applications, in academia, research and industry,
-     * Work in progress reports, covering recent developments,
-     * Educational material on real-time Linux,
-     * Tools for embedding Linux or real-time Linux and embedded
-       real-time Linux applications,
-     * RTOS core concepts, RT-safe synchronization mechanisms,
-     * RT-safe interaction of RT and non RT components,
-     * IPC mechanisms in RTOS,
-     * Analysis and Benchmarking methods and results of 
-       real-time GNU/Linux variants,
-     * Debugging techniques and tools, both for code and temporal
-       debugging of core RTOS components, drivers and real-time
-       applications,
-     * Real-time related extensions to development environments.
-  
-  Further information:
- 
-  EN: http://www.realtimelinuxfoundation.org/events/rtlws-2006/ws.html 
-  CN: http://dslab.lzu.edu.cn/rtlws8/index.html
-
-  Awarded papers
-
-  The  Programme Committee  will award a best paper in the category Real-
-  Time Systems Theory.  This best paper will be invited  for  publication 
-  to the Real-Time Systems Journal, RTSJ. 
-  
-  The  Programme Committee will award a best paper in the category Real-
-  Time Systems Application. This best paper will be invited for publication 
-  to the Dr Dobbs Journal. Moreover, the publication of the other papers in
-  a special issue of Dr Dobbs Journal is in discussion. 
-
-  Abstract submission
-
-  In  order register an abstract, please go to:
-  http://www.realtimelinuxfoundation.org/rtlf/register-abstract.html
-
-  Venue
-
-  Lanzhou University Information Building, School of Information Science
-  and Engineering, Laznhou University, http://www.lzu.edu.cn/.
-
-  Registration
-
-  In  order  to  participate  to  the  workshop,  please register on the
-  registration page at:
-  http://www.realtimelinuxfoundation.org/rtlf/register-participant.html
-
-  Accommodation
-
-  Please refer to the Lanzhou hotel page for accomodation at
-  http://dslab.lzu.edu.cn/rtlws8/hotels/hotels.htm
-
-  Travel information
-
-  For travel information and directions how to get to Lanzhou from an 
-  international airport in China please refer to:
-  http://www.realtimelinuxfoundation.org/events/rtlws-2006/
-
-  Important dates
-
-  August    28:  Abstract submission
-  September 15:  Notification of acceptance
-  September 29:  Final paper
-
-  Pannel Participants:
-
-     o Roberto Bucher - Scuola Universitaria Professionale della Svizzera
-       Italiana, Switzerland, RTAI/ADEOS/RTAI-Lab.
-
-     o Alfons Crespo Lorente - University of Valenica, Spain,Departament
-       d'Informtica de Sistemes i Computadors, XtratuM.
-
-     o Herman Haertig - Technical University Dresden, Germany,Institute for
-       System Architecture, L4/Fiasco/L4Linux.
-
-     o Nicholas Mc Guire - Lanzhou University, P.R. China, Distributed and
-       Embedded Systems Lab, RTLinux/GPL.
-
-     o Douglas Niehaus - University of Kansas, USA, Information and
-       Telecommunication Technology Center, RT-preempt.
-
-  Organization committee:
-
-     * Prof. Li LIAN (Co-Chair), (SISE, Lanzhou University, CHINA)
-     * Xiaoping ZHANG, LZU, CHINA
-     * Jiming WANG, PKU, CHINA
-     * Zhibing LI, ECNU, China
-     * Prof.  Nicholas  MCGUIRE  (Co-Chair),  Real  Time Linux Foundation
-       (RTLF)
-     * Dr. Peter WURMSDOBLER, Real Time Linux Foundation (RTLF)
-     * Dr.  Qingguo  ZHOU, (Distributed and Embedded Systems Lab, Lanzhou
-       University, CHINA)
-
-  Program committee:
-
-    * Prof. Li Xing (Co-Chair), (Tsinghua University, CHINA)
-     * Dr.  Zhang  Yunquan,  (Institute  of  Software, Chinese Academy of
-       Science, CHINA)
-     * Dr. Chen Yu, (Tsinghua University, CHINA)
-     * Dr. Chen Maoke, (Tsinghua University, CHINA)
-     * Dr. Yu Guanghui, (Dalian University of Techonolgy, CHINA)
-     * Prof.   Dr.   Paolo   Mantegazza,   (Dipartimento   di  Ingegneria
-       Aerospaziale, ITALY)
-     * Prof.  Dr.  Bernhard  Zagar,  (Johannes  Kepler  Universitt Linz,
-       AUSTRIA)
-     * Prof.   Dr.   Hermann  Hrtig,  (Technische  Universitt  Dresden,
-       Fakultt Informatik, GERMANY)
-     * Prof.  Tei-Wei  Kuo,  (National  Taiwan  University, Department of
-       Computer Science and Information Engineering,TAIWAN)
-     * Anthony Skjellum, (Mississippi State University, USA)
-     * Ing. Pavel Pisa, (Czech Technical University, CZECH REPUBLIC)
-     * Prof. Alfons Crespo, (Universidad Politcnica de Valencia, SPAIN)
-     * Dr. Qingguo Zhou, (Lanzhou University, CHINA)
-     * PhD. Jaesoon Choi, (National Cancer Center, KOREA)
-     * Prof. Douglas Niehaus, (Kansas University, USA)
-     * Dr. Michael Hohmuth, (Technische Universitt Dresden, GERMANY)
-     * Prof.  Thambipillai Srikanthan, (Nanyang Technological University,
-       SINGAPORE)
-     * Zhengting He, (University of Texas, USA)
-     * Martin Terbuc, (Universitz of Maribor, SLOVENIA)
-     * Yoshinori Sato, (the H8/300 project, JAPAN)
-     * Yuqing Lan, (China Standard SoftwareCo.,LTD, CHINA)
-     * Dr. Peter Wurmsdobler, (Real Time Linux Foundation, USA)
-     * Prof. Nicholas Mc Guire (Co-Chair), (Lanzhou University, CHINA)
-
-  Workshop organizers:
-
-     * School  for  Information  Science and Engineering (SISE) , Lanzhou
-       University , CHINA
-     * IBM China, Xi'an Branch , China
-     * Haag Embedded Systems, Austira
-
-
-Peter Wurmsdobler <peter@wurmsdobler.org>
-Nicholas Mc Guire <mcguire@lzu.edu.cn>
-Zhou Qingguo <zhouqg@lzu.edu.cn>
+they couldn't understand, but then he had some good ones that they could.
+Borscht to put a drop or two of the  stiff stuff  into my system. I was just
