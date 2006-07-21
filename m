@@ -1,48 +1,51 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] Display "gitweb/test/file with spaces" in gitk
-Date: Fri, 21 Jul 2006 23:01:56 +1000
-Message-ID: <17600.53316.193618.755468@cargo.ozlabs.ibm.com>
-References: <20060720101223.116320@gmx.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Git BOF notes
+Date: Fri, 21 Jul 2006 09:18:24 -0400
+Message-ID: <20060721131824.GC32585@fieldses.org>
+References: <20060719230155.GJ13776@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jul 21 15:03:43 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 21 15:19:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3ufF-00051r-T8
-	for gcvg-git@gmane.org; Fri, 21 Jul 2006 15:03:34 +0200
+	id 1G3uuB-0008IE-Nl
+	for gcvg-git@gmane.org; Fri, 21 Jul 2006 15:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750707AbWGUNDb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Jul 2006 09:03:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750709AbWGUNDb
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 09:03:31 -0400
-Received: from ozlabs.tip.net.au ([203.10.76.45]:3763 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1750707AbWGUNDa (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Jul 2006 09:03:30 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id AADB767BA8; Fri, 21 Jul 2006 23:03:29 +1000 (EST)
-To: "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
-In-Reply-To: <20060720101223.116320@gmx.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1750710AbWGUNS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Jul 2006 09:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbWGUNS1
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 09:18:27 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:19080 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1750710AbWGUNS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jul 2006 09:18:26 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.62)
+	(envelope-from <bfields@fieldses.org>)
+	id 1G3utc-0000Ue-Ox; Fri, 21 Jul 2006 09:18:24 -0400
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+In-Reply-To: <20060719230155.GJ13776@pasky.or.cz>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24049>
 
-Thomas Kolejka writes:
+On Thu, Jul 20, 2006 at 01:01:55AM +0200, Petr Baudis wrote:
+>   (i) We should somehow separate the lowlevel Git commands from the
+> highlevel ones meant for user consumption. There's too many of them
+> and it is confusing for the users. Similarity with BitKeeper was pointed
+> out (and I refrained from mentioning GNU Arch).
 
-> with this patch files with spaces in their names are displayed
-> in the treeview of gitk.
-> 
-> I use git to make a "backup"/"dump" of a DOS-FS .. and there are 
-> those filenames ;-).
+The man page already attempts to make this distinction in its command
+list, though arguably the order is wrong (it lists the low-level
+commands first) and you could argue about some of the choices (git
+init-db may be "low level", but it's something everyone probably wants
+to see).
 
-Hmmm, certainly my code is incorrect.  However with your code, tabs in
-the filename will get changed to spaces.  Treating the line read from
-git-ls-tree or git-diff-tree was a shortcut hack that isn't really
-optimal.  I'll think about the best way to fix it.
+"git help" already has an abbreviated list.  What else could we do?
 
-Paul.
+--b.
