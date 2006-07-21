@@ -1,69 +1,82 @@
-From: "Lacey Nicholas" <LaceyNicholas@10000lakesarchaeology.com>
-Subject: Order status, olive tubercle
-Date: Fri, 21 Jul 2006 22:19:09 +0300
-Message-ID: <662161c80604um0b9zvf08894a88quy7braf9kfui9kg@mail.10000lakesarchaeology.com>
+From: "Buford Munson" <BufordMunson@1-online-casino-portal.com>
+Subject: Better Life, well-served
+Date: Fri, 21 Jul 2006 23:12:26 +0300
+Message-ID: <10817942.20060721231226@1-online-casino-portal.com>
+Reply-To: "Buford Munson" <BufordMunson@1-online-casino-portal.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Jul 22 00:19:11 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jul 22 01:12:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G43Ku-0005ji-Hp
-	for gcvg-git@gmane.org; Sat, 22 Jul 2006 00:19:08 +0200
+	id 1G44Ac-00058k-0n
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 01:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751239AbWGUWTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Jul 2006 18:19:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWGUWTE
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 18:19:04 -0400
-Received: from zeus2.kernel.org ([204.152.191.36]:17833 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1751236AbWGUWTD convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jul 2006 18:19:03 -0400
-Received: from client-201.230.106.223.speedy.net.pe (client-201.230.106.223.speedy.net.pe [201.230.106.223] (may be forged))
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6LMInMV015346;
-	Fri, 21 Jul 2006 22:19:02 GMT
+	id S1750706AbWGUXMa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Jul 2006 19:12:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbWGUXMa
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 19:12:30 -0400
+Received: from cpe-67-10-230-182.houston.res.rr.com ([67.10.230.182]:23826
+	"EHLO joyce.houston.rr.com") by vger.kernel.org with ESMTP
+	id S1750706AbWGUXMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jul 2006 19:12:30 -0400
+X-Mailer: The Bat! (v3.0.1 RC7) Educational
+X-Priority: 3 (Normal)
 To: git-commits-head-owner@vger.kernel.org
-Content-Disposition: inline
-X-Spam: Not detected
-X-Virus-Scanned: ClamAV 0.88.3/1614/Fri Jul 21 20:27:38 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.9 points;
+X-Spam-Report: 18.6 points;
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
+ *      [score: 0.5340]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?67.10.230.182>]
  *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: madwortmj.com]
+ *      [URIs: foorests.net]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: foorests.net]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: madwortmj.com]
+ *      [URIs: foorests.net]
  *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: madwortmj.com]
+ *      [URIs: foorests.net]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: foorests.net]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: madwortmj.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24060>
+ *      [URIs: foorests.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24061>
 
-Genuine Swiss made RoleVx repilcas are as close to the real thing 
-as a repilca watch can be. Sometimes even the professional jewelers 
-are unable to tell the difference from the real RoleBx watch.
+Your cre dit doesn't matter to us! If you OWN real est ate
+and want IMMEDIATEW cash to spend ANY way you like, or simply wish 
+to LOWER your monthly paym ents by a third or more, here are the dea ls
+we have TODAY (hurry, these ofers will expre TONIGHT):
 
-Why spend thousands of dollars on the real deal when 
-a repilca watch looks so much alike that only an expert could tell the difference...
-And you only pay a fractoin of the price.
+$488,000.00 at a 3.67,% fixed-rateP
+$372,000.00 at a 3.90,% variable-rate3
+$492,000.00 at a 3.21,% interest-onlyX
+$248,000.00 at a 3.36,% fixed-rateI
+$198,000.00 at a 3.55,% variable-rate6
 
-VISIT US, AND GET OUR SPECIL 370% DISSCOUNT OFER!
+Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
 
-http://1W43PPGiy5b5joq666t1iiyni0y5ii0.madwortmj.com/
+Don't worry about approval, your cre dit will not disqualify you! 
 
-=====
-meant! He stood on the sand and fell to wondering if there was a gull back
-gentle way. I just got up, brushed myself off, and looked around. There were
-bright as theirs. True, the same young Jonathan Seagull was there that had
-is we've brought back."
-     "Yes. Once in a while I read the Reports. "
-over at me, jaws clenched,  teeth  bared. motioned for him to be still. God,
+http://1GZBDT2.foorests.net
 
-they couldn't understand, but then he had some good ones that they could.
-Borscht to put a drop or two of the  stiff stuff  into my system. I was just
+
+
+him  face down into the  deepest puddle  and fell down next to him, reliving
+fool. How could you have trusted me? You've known me for so long, you should
+
+against  Noonan's  and  said:  "We're  off, we're off."  Then Noonan nodded,
+     He gulped  the rest of  the  coffee, pulled out  a cigarette, and as he
+sores--yellow with black dots--and I said "Let me have it." And that was it.
+
+pretty boy.  And  now that  handsome face was a dark gray  mask of  baked-on
+the  rounded  bristly peaks  of the hills. Here and there between  the hills
+meaning. It  had no meaning before,  either, but before it was  a person  at
+asking  about  the cottage--what  kind was it,  where was it,  what  did  it
+
+out  would ooh and  aah  for five minutes  and then go  back  to  their  own
+but one  doesn't necessarily rule out  the  other. Only  I don't get to feel
