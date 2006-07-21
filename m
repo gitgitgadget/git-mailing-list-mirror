@@ -1,54 +1,54 @@
-From: "Peter Eriksen" <s022018@student.dtu.dk>
-Subject: Re: Unanticipated test error
-Date: Fri, 21 Jul 2006 10:19:54 +0200
-Message-ID: <20060721081954.GA29645@bohr.gbar.dtu.dk>
-References: <20060720194013.GC24793@bohr.gbar.dtu.dk> <81b0412b0607210022o562ac326wd149c73cc529f239@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git clone / SHA1 mismatch
+Date: Fri, 21 Jul 2006 10:37:13 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607211036160.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <007e01c6ac81$d523a700$76401f0a@almare2.tre>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jul 21 10:20:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 21 10:37:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G3qEz-0002Ne-2E
-	for gcvg-git@gmane.org; Fri, 21 Jul 2006 10:20:09 +0200
+	id 1G3qVh-00056c-LL
+	for gcvg-git@gmane.org; Fri, 21 Jul 2006 10:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161013AbWGUIT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 21 Jul 2006 04:19:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161014AbWGUIT4
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 04:19:56 -0400
-Received: from bohr.gbar.dtu.dk ([192.38.95.24]:1480 "HELO bohr.gbar.dtu.dk")
-	by vger.kernel.org with SMTP id S1161013AbWGUIT4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Jul 2006 04:19:56 -0400
-Received: (qmail 1378 invoked by uid 5842); 21 Jul 2006 10:19:54 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <81b0412b0607210022o562ac326wd149c73cc529f239@mail.gmail.com>
-User-Agent: Mutt/1.5.7i
+	id S964827AbWGUIhR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Jul 2006 04:37:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030423AbWGUIhR
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 04:37:17 -0400
+Received: from mail.gmx.net ([213.165.64.21]:43218 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S964827AbWGUIhP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Jul 2006 04:37:15 -0400
+Received: (qmail invoked by alias); 21 Jul 2006 08:37:14 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 21 Jul 2006 10:37:14 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Mika Muukkonen <mika.muukkonen@plenware.fi>
+In-Reply-To: <007e01c6ac81$d523a700$76401f0a@almare2.tre>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24046>
 
-On Fri, Jul 21, 2006 at 09:22:44AM +0200, Alex Riesen wrote:
-...
-> Well, there are differences. Correct translation from memcpy
-> to strlcpy (aside the fact with \0 inside the string) would be
-> something like:
+Hi,
+
+On Fri, 21 Jul 2006, Mika Muukkonen wrote:
+
+> when attempting to clone repositories (Linus's kernel, stable 2.6.16, OMAP kernel) I seem to come across the following more or less constantly:
 > 
->  strlcpy(to, from, len + 1);
-> 
-> assuming your example with memcpy. strlcpy expects size of
-> storage, and will never write more bytes that it was allowed to.
-> That'll cut off last character of the source string, unless it is
-> \0-terminated before the size of storage.
+> mmu@spud1:/var/git$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git linux-2.6.16
+> Generating pack...
+> Done counting 195441 objects.
+> Deltifying 195441 objects.
+>  100% (195441/195441) done
+> fatal: unexpected EOF)      
 
-I see it now.  What I did was wrong.  Appending " + 1" to every
-one of my calls makes the patch survive "make test".  However,
-since strlcpy() calls strlen(from), it would have to be checked,
-that 'from' is always NUL terminated.  The benefits of this patch
-seem to shrink.
+This sounds like you had a timeout before the complete pack was 
+transmitted (the Deltifying takes place on the other side).
 
-Thank you for your comment!
-
-Peter
+Hth,
+Dscho
