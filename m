@@ -1,56 +1,60 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [OT] OLS slides
-Date: Sat, 22 Jul 2006 19:40:59 +1200
-Message-ID: <46a038f90607220040x5fcc3ec9x4b50650d476868b3@mail.gmail.com>
-References: <7vvepqi6x6.fsf@assigned-by-dhcp.cox.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 1/4] git.el: Run git-rerere on commits if the rr-cache directory exists.
+Date: Sat, 22 Jul 2006 15:39:02 +0200
+Message-ID: <877j25hi89.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 22 09:41:14 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Jul 22 15:39:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4C6k-0003EA-FD
-	for gcvg-git@gmane.org; Sat, 22 Jul 2006 09:41:06 +0200
+	id 1G4HhI-0004ps-Es
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 15:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbWGVHlB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Jul 2006 03:41:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbWGVHlB
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 03:41:01 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:22520 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751337AbWGVHlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jul 2006 03:41:00 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so1574118ugc
-        for <git@vger.kernel.org>; Sat, 22 Jul 2006 00:40:59 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rttzDjbwsyKXny8S1PUOyPzVuGZ04D10rIqaTwc8jSVLXHDyHcN0P171+aBvUFRsXasycbWQ+r6a1kRzoTekhU4tQ88nz8ZLukNUhyx8U1uBUL9boSiYOiypZ9C1dZu0BvIMfkLk2MornVqaNlc69KFBjaul8E3Xp8JQsHKcaj0=
-Received: by 10.78.170.17 with SMTP id s17mr723044hue;
-        Sat, 22 Jul 2006 00:40:59 -0700 (PDT)
-Received: by 10.78.120.18 with HTTP; Sat, 22 Jul 2006 00:40:59 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vvepqi6x6.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751349AbWGVNjI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Jul 2006 09:39:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbWGVNjI
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 09:39:08 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:23749 "EHLO
+	mail.codeweavers.com") by vger.kernel.org with ESMTP
+	id S1751349AbWGVNjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jul 2006 09:39:07 -0400
+Received: from adsl-84-227-106-91.adslplus.ch ([84.227.106.91] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1G4HhC-0003CL-1b
+	for git@vger.kernel.org; Sat, 22 Jul 2006 08:39:06 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id B88234F904; Sat, 22 Jul 2006 15:39:02 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24068>
 
-On 7/22/06, Junio C Hamano <junkio@cox.net> wrote:
-> My slides (with full transcripts) are available at
->
->    http://members.cox.net/junkio/200607-ols.pdf
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Great slides! Specially 35 to 40 are excellent visualisations of what
-happens when you clone, work and later merge.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 34c9950..7371d4b 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -584,6 +584,8 @@ (defun git-do-commit ()
+                             (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
+                             (with-current-buffer buffer (erase-buffer))
+                             (git-set-files-state files 'uptodate)
++                            (when (file-directory-p ".git/rr-cache")
++                              (git-run-command nil nil "rerere"))
+                             (git-refresh-files)
+                             (git-refresh-ewoc-hf git-status)
+                             (message "Committed %s." commit))
+-- 
+1.4.2.rc1.ge7a0
 
-Can you offer the source of the slides? I think I'll be at CONSOL'06
-(Mexican FLOSS conference) in August talking about GIT and Cogito, and
-wouldn't mind stealing (in the GNU sense) some bits of yours ;-)
-
-
-m
+-- 
+Alexandre Julliard
+julliard@winehq.org
