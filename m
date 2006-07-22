@@ -1,68 +1,57 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
+From: "=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
+	<pclouds@gmail.com>
 Subject: Re: Git BOF notes
-Date: Sat, 22 Jul 2006 23:03:38 +0300
-Message-ID: <20060722230338.4ebcf7f8.tihirvon@gmail.com>
+Date: Sun, 23 Jul 2006 03:12:07 +0700
+Message-ID: <fcaeb9bf0607221312k2088658bqa45e622b7fe244e4@mail.gmail.com>
 References: <20060719230155.GJ13776@pasky.or.cz>
-	<20060721131824.GC32585@fieldses.org>
-	<20060721144249.GO13776@pasky.or.cz>
-	<Pine.LNX.4.63.0607220212140.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20060722032200.GP13776@pasky.or.cz>
-	<Pine.LNX.4.63.0607220547570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20060722191652.GR13776@pasky.or.cz>
+	 <20060721132111.GD32585@fieldses.org>
+	 <20060721143115.GN13776@pasky.or.cz>
+	 <81b0412b0607210802q4d48b277yc4c45d4acbd890a6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 22 22:03:20 2006
+Cc: "Petr Baudis" <pasky@suse.cz>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 22 22:12:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4Ngt-0006Kk-7k
-	for gcvg-git@gmane.org; Sat, 22 Jul 2006 22:03:11 +0200
+	id 1G4Npl-0008RJ-EZ
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 22:12:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751016AbWGVUDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Jul 2006 16:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbWGVUDE
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 16:03:04 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:6084 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751016AbWGVUDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jul 2006 16:03:03 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1150344nfa
-        for <git@vger.kernel.org>; Sat, 22 Jul 2006 13:03:01 -0700 (PDT)
+	id S1751017AbWGVUMK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Jul 2006 16:12:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbWGVUMJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 16:12:09 -0400
+Received: from wx-out-0102.google.com ([66.249.82.202]:63876 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751017AbWGVUMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jul 2006 16:12:08 -0400
+Received: by wx-out-0102.google.com with SMTP id s13so604394wxc
+        for <git@vger.kernel.org>; Sat, 22 Jul 2006 13:12:08 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=Z9ECvQvCrrwuLKXLTAi2kpHhDONNJaJB8r98E2mdElrLKBSx7+83NC8+2s/iDUNHigY2H44WxgNC26sdps8RwYU38hA82zaAg5I34wsZeah2GOvvkIgntQUk+sHRzNGUDjCqtYcv1I1/U4+JWyimW9VVPyTqqTxB4QoY2r+h5hA=
-Received: by 10.49.55.13 with SMTP id h13mr1827416nfk;
-        Sat, 22 Jul 2006 13:02:59 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.203.107])
-        by mx.gmail.com with ESMTP id z73sm716339nfb.2006.07.22.13.02.59;
-        Sat, 22 Jul 2006 13:02:59 -0700 (PDT)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060722191652.GR13776@pasky.or.cz>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.10.0; i686-pc-linux-gnu)
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y7+DzDWiV7gC6+kvC3K3s/eknYQgCTNxjHjFMDraZZpZSJS/Epp49drVCWAz0LkASPBHcpjgpM6euJBthJC+ZcG5Uhsd9GcnR8ErOhnYWlG5p9Q6wRYJGOdd7w8w0PZbinBU1xvbWH1o3X7UTXPM2LOonh4+mWL1D4G5Cr56tng=
+Received: by 10.70.115.16 with SMTP id n16mr2934342wxc;
+        Sat, 22 Jul 2006 13:12:08 -0700 (PDT)
+Received: by 10.70.45.19 with HTTP; Sat, 22 Jul 2006 13:12:07 -0700 (PDT)
+To: "Alex Riesen" <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0607210802q4d48b277yc4c45d4acbd890a6@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24079>
 
-Petr Baudis <pasky@suse.cz> wrote:
-
-> > Usually I start small projects as a single .c or .java file. Only after a 
-> > while, I think it is worth it to init a git database. So, I _always_ have 
-> > generated files lying around. And I would hate it if they were checked in 
-> > automatically. (Yeah, I could remove them, _then_ remove them from the 
-> > index, and then git-commit --amend. Ugly.)
-> 
-> Can't you just do make clean before git init? Or you can prepare
-> .gitignore before you check stuff in, so that the autogenerated files
-> don't pollute your git status output. ;-)
-
-I like git init-db as it is now.  I don't want it to automatically add
-files.  GIT does what you ask it to do, not what it _thinks_ you want to
-do.
-
--- 
-http://onion.dynserv.net/~timo/
+On 7/21/06, Alex Riesen <raa.lkml@gmail.com> wrote:
+> On 7/21/06, Petr Baudis <pasky@suse.cz> wrote:
+> > I don't know if there's a point in being so paranoid - it already makes
+> > things more painful than necessary. In the tracking branch, you just
+> > want to have what the other side has anyway, and if the other side
+> > decided to jump around, why would you care otherwise?
+>
+> But for the ones who do care, it is much harder to notice. Even if it is
+> a warning (it gets lost in crontab logs).
+Then create some lost+found branches for them?
