@@ -1,57 +1,122 @@
-From: "=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
-	<pclouds@gmail.com>
-Subject: Re: Git BOF notes
-Date: Sun, 23 Jul 2006 03:12:07 +0700
-Message-ID: <fcaeb9bf0607221312k2088658bqa45e622b7fe244e4@mail.gmail.com>
-References: <20060719230155.GJ13776@pasky.or.cz>
-	 <20060721132111.GD32585@fieldses.org>
-	 <20060721143115.GN13776@pasky.or.cz>
-	 <81b0412b0607210802q4d48b277yc4c45d4acbd890a6@mail.gmail.com>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: Random Git Issues/Wishlist
+Date: Sat, 22 Jul 2006 23:00:47 +0200
+Message-ID: <4d8e3fd30607221400j1839883es6c948464cdf22439@mail.gmail.com>
+References: <20060722195502.GS13776@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 22 22:12:27 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 22 23:01:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4Npl-0008RJ-EZ
-	for gcvg-git@gmane.org; Sat, 22 Jul 2006 22:12:21 +0200
+	id 1G4Oan-00021N-8v
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 23:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbWGVUMK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Jul 2006 16:12:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbWGVUMJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 16:12:09 -0400
-Received: from wx-out-0102.google.com ([66.249.82.202]:63876 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751017AbWGVUMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jul 2006 16:12:08 -0400
-Received: by wx-out-0102.google.com with SMTP id s13so604394wxc
-        for <git@vger.kernel.org>; Sat, 22 Jul 2006 13:12:08 -0700 (PDT)
+	id S1751058AbWGVVAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Jul 2006 17:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbWGVVAu
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 17:00:50 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:22289 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751058AbWGVVAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jul 2006 17:00:49 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so1734765ugc
+        for <git@vger.kernel.org>; Sat, 22 Jul 2006 14:00:48 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y7+DzDWiV7gC6+kvC3K3s/eknYQgCTNxjHjFMDraZZpZSJS/Epp49drVCWAz0LkASPBHcpjgpM6euJBthJC+ZcG5Uhsd9GcnR8ErOhnYWlG5p9Q6wRYJGOdd7w8w0PZbinBU1xvbWH1o3X7UTXPM2LOonh4+mWL1D4G5Cr56tng=
-Received: by 10.70.115.16 with SMTP id n16mr2934342wxc;
-        Sat, 22 Jul 2006 13:12:08 -0700 (PDT)
-Received: by 10.70.45.19 with HTTP; Sat, 22 Jul 2006 13:12:07 -0700 (PDT)
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0607210802q4d48b277yc4c45d4acbd890a6@mail.gmail.com>
+        b=BzopK3DoxOMD996gekIk4TYsttsvwIj8S0Ko6wW1d4f+IqhTCj9f/ahLjKL4U6E9rKQ2jsnUS5SGG3T/BAxpgRXcvkU0JcJoSdbNUUIqRfAe874rmfXK8yXnm6fM8L7KqOAo5GVp91J3BN6FYyRmzWXBbvSr/IpA4klsBVrYbDM=
+Received: by 10.78.160.2 with SMTP id i2mr919259hue;
+        Sat, 22 Jul 2006 14:00:47 -0700 (PDT)
+Received: by 10.78.121.12 with HTTP; Sat, 22 Jul 2006 14:00:47 -0700 (PDT)
+To: "Petr Baudis" <pasky@suse.cz>,
+	"Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <20060722195502.GS13776@pasky.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24080>
 
-On 7/21/06, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 7/21/06, Petr Baudis <pasky@suse.cz> wrote:
-> > I don't know if there's a point in being so paranoid - it already makes
-> > things more painful than necessary. In the tracking branch, you just
-> > want to have what the other side has anyway, and if the other side
-> > decided to jump around, why would you care otherwise?
->
-> But for the ones who do care, it is much harder to notice. Even if it is
-> a warning (it gets lost in crontab logs).
-Then create some lost+found branches for them?
+On 7/22/06, Petr Baudis <pasky@suse.cz> wrote:
+[...]
+>   (ix) What about the user survey? It sorta stalled, as far as I can
+> see.
+
+Here it is the latest version:
+
+About you
+
+    1. What country are you in?
+    2. What is your preferred language?
+
+Getting started with GIT
+
+    1. How did you hear about GIT?
+    2. Did you find GIT easy to learn?
+    3. What helped you most in learning to use it?
+    4. When did you start using git?
+
+How you use GIT
+
+    1. Do you use GIT for work, unpaid projects, or both?
+    2. How do you obtain GIT?  Source tarball, binary package, or
+       pull the main repository?
+    3. What hardware platforms do you use GIT on?
+    4. What OS (please include the version) do you use GIT on?
+    5. How many people do you collaborate with using GIT?
+    6. How big are the repositories that you work on? (e.g. how many
+       files, how much disk space, how deep is the history)
+    7. How many different projects do you manage using GIT?
+    8. Which porcelains do you use?
+    9. Is the git.git repository including codes produced by you?
+
+What you think of GIT
+
+    1. Overall, how happy are you with GIT?
+    2. How does GIT compare to other SCM tools you have used?
+    3. What do you like about using GIT?
+    4. What would you most like to see improved about GIT?
+       (features, bugs, plugins, documentation, ...)
+    5. If you want to see GIT more widely used, what do you
+       think we could do to make this happen?
+
+Documentation
+
+    1. Do you use the GIT wiki?   If yes, do you find it useful?
+    2. Do you find GIT's online help useful?
+    3. What is your favourite user documentation for any software
+       projects or products you have used?
+    4. What could be improved on the GIT homepage?
+
+Getting help, staying in touch
+
+    1. Have you tried to get GIT help from other people?
+          * If yes, did you get these problems resolved quickly and to
+            your liking?
+    2. Do you subscribe to the mailing list?
+          * If yes, do you find it useful, and traffic levels OK?
+    3. Do you use the IRC channel (#git on irc.freenode.net)?
+
+
+Open forum
+
+    1. What other comments or suggestions do you have that are not
+       covered by the questions above?
+
+Sorry for not  following closely this topic but unfortunately I had
+personal problems.
+Martin, can you upload the survey to  survey.net.nz as we privately discussed?
+
+If not, I'll sending out it in the next following days.
+
+Thanks.
+
+regards,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com
+http://picasaweb.google.com/paolo.ciarrocchi
