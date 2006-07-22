@@ -1,92 +1,121 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Git BOF notes
-Date: Sat, 22 Jul 2006 21:16:52 +0200
-Message-ID: <20060722191652.GR13776@pasky.or.cz>
-References: <20060719230155.GJ13776@pasky.or.cz> <20060721131824.GC32585@fieldses.org> <20060721144249.GO13776@pasky.or.cz> <Pine.LNX.4.63.0607220212140.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060722032200.GP13776@pasky.or.cz> <Pine.LNX.4.63.0607220547570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Random Git Issues/Wishlist
+Date: Sat, 22 Jul 2006 21:55:02 +0200
+Message-ID: <20060722195502.GS13776@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 22 21:17:01 2006
+X-From: git-owner@vger.kernel.org Sat Jul 22 21:55:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4MyD-0007id-4C
-	for gcvg-git@gmane.org; Sat, 22 Jul 2006 21:17:01 +0200
+	id 1G4NZC-0004yU-SJ
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 21:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbWGVTQy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 22 Jul 2006 15:16:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbWGVTQy
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 15:16:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58266 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750784AbWGVTQy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Jul 2006 15:16:54 -0400
-Received: (qmail 2524 invoked by uid 2001); 22 Jul 2006 21:16:52 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1751041AbWGVTzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Jul 2006 15:55:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbWGVTzF
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 15:55:05 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49826 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751042AbWGVTzE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Jul 2006 15:55:04 -0400
+Received: (qmail 4884 invoked by uid 2001); 22 Jul 2006 21:55:02 +0200
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607220547570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24077>
 
   Hi,
 
-Dear diary, on Sat, Jul 22, 2006 at 05:55:59AM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> On Sat, 22 Jul 2006, Petr Baudis wrote:
-> > Dear diary, on Sat, Jul 22, 2006 at 02:17:48AM CEST, I got a letter
-> > where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> > > Think "changed templates".
-> > 
-> >   it may be that I'm just tired, but I don't see what you mean, sorry.
-> 
-> If you change a template (like add a hook or something), you can call 
-> git-init-db in an existing repository to update that hook.
+  this is a random list of issues that come up in my mind when I was
+thinking about things we could discuss at the Git BOF at OLS in case
+enought Git developers gathered - which of course didn't happen but
+perhaps it might be useful to mention them as well. Feel free to follow
+up with *your* stuff (and comments or patches, of course).
 
-  ah well, I guess that's obscure enough to tell the user to directly
-run git-init-db. ;-)
+  (i) libgit - right now it has just evolved from bundling random Git
+internal calls and has no defined API whatsoever; luckily, nothing
+external hopefully uses it yet. If we wait much longer, people will
+probably start to and we might start getting into a trouble there.
+Another thing is what to do with the builtins, shall we bundle most of
+the code in libgit? If not, many libgit users will probably end up just
+reimplementing large chunks of their functionality. I've actually
+thought about also interfacing libbuiltin.so when doing Git.pm but I
+didn't yet for the sake of simplicity.
 
-> > > And also think "setup a remote repository", especially "setup a remote
-> > > HTTP repository".
-> > 
-> >   Of course. Currently you need to tinker with environment variables,
-> > then with hooks, possibly with permissions and stuff to make the
-> > repository shared... Think cg-admin-setuprepo. ;-)
-> 
-> git-init-db --shared
+  (ii) Documentation - it's currently very bad. Incomplete, out of sync,
+missing tons of parameters and other things, and so on. We should be
+more responsible when adding features to always document them right
+away.
 
-And the environment variable and the chgrp and g+s. That's my point.
+  (iii) Lazy clone, shallow clone, whatever you call it. This has
+several possible degrees of implementation:
 
-> > > And also think "start a new repository with only a _part_ of the current 
-> > > files". There are plenty reasons -- in addition to separation of concepts 
-> > > -- not to commit straight after initializing a repository.
-> > 
-> >   So what _do_ you do if you don't commit straight?
-> 
-> Sometimes, I do "git-push just@initted.repository.com master". From 
-> somewhere else, of course.
+	(a) Just being able to get the latest revision (this really
+	    shouldn't be that hard to do)
+	(b) Arbitrarily cut off the revisions at some point; this means
+	    that you will get _some_ repository but with incomplete
+	    history and we should handle that sensibly, like...
+	(c) ...having kind of "remote alternates", which means that if
+	    we hit an object we don't have we will look it remotely as
+	    well; this means moving the remote access functions much
+	    more inside the really core Git; we want to be smart and
+	    e.g. bundle tree requests with all the msisingblob requests
+	    and so on; we don't want to fetch *everything* when the
+	    user just does git log, though
+	(d) As an extension of (a), having some side of server-client
+	    stuff which would also know how to do rev-lists and such
+	    remotely; I'm not sure if the demand here is big enough
+	    to justify that
 
-I guess that's more common for the bare repositories.
+  (iv) Packing - I really feel bad about requiring users to manually
+repack periodically, and also that's hurting the dumb server users
+unless you take special provisions and so on
 
-> And sometimes, I do "cp -R /some/where/CVS ./; git-cvsimport".
+  (v) Subprojects support; in a sort of long-term limbo because I guess
+everyone is too lazy to finally implement something and the users aren't
+loud enough ;-) (or they just moved on to another VCS)
 
-git-cvsimport will create the repository for you, won't it?
+  (vi) Renames - should we follow them in logs? Will we? When? How
+exactly in the interesting cases?
 
-> >   Of course sometimes you don't want to add everything, and that should
-> > still be possible to do (cg-init has a switch for that).
-> 
-> Usually I start small projects as a single .c or .java file. Only after a 
-> while, I think it is worth it to init a git database. So, I _always_ have 
-> generated files lying around. And I would hate it if they were checked in 
-> automatically. (Yeah, I could remove them, _then_ remove them from the 
-> index, and then git-commit --amend. Ugly.)
+  (vii) Private tags. refs/private or refs/tags/.hidden? Will we even?
+When?
 
-Can't you just do make clean before git init? Or you can prepare
-.gitignore before you check stuff in, so that the autogenerated files
-don't pollute your git status output. ;-)
+  (viii) Patches versioning in StGit - many people I've told about StGit
+complained that it doesn't version patches (and possibly moved to mq?).
+We should have some scheme for doing meta-history (especially
+interesting when/if we aim to make altering history easy).
+
+  (ix) What about the user survey? It sorta stalled, as far as I can
+see.
+
+  (x) Metainformation over the Git protocol - kernel.org wants this
+badly because rsyncing the repositories leads to *endless* problems;
+there are some more complicated rsync schemes possible but hpa would be
+happiest with making it possible to just use git to sync the
+repositories out; this might be in part dependent on (iv) since the
+repository maintainers basically lose control over the packing
+
+  (xi) Annotate or blame? Most people seem to be in favour of blome,
+but having both is confusing; by now one of them should've already won.
+
+  (xii) Special merging - I now maintian the SuSE glibc package in git
+and I'd like to use something more sensible than diff3 merger for
+merging the changelogs from various branches; it's trivially solvable
+conflicts all the time
+
+  (xiii) General user interface issues, like confusing error messages,
+incomplete usage help, needlessly complicated (see our git init
+discussion in the other thread) or inconsistent usage (git rebase,
+anyone?) in general and other stuff aside of (ii).
+
+  That's probably all you'll hear from me for now, I guess. It's your
+turn now.
 
 -- 
 				Petr "Pasky" Baudis
