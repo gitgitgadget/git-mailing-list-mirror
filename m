@@ -1,100 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pack-objects: check pack.window for default window size
-Date: Sun, 23 Jul 2006 01:50:30 -0400
-Message-ID: <20060723055030.GA25790@coredump.intra.peff.net>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: Git BOF notes
+Date: Sun, 23 Jul 2006 09:38:18 +0200
+Message-ID: <20060723073818.GA5822@steel.home>
+References: <20060719230155.GJ13776@pasky.or.cz> <20060721132111.GD32585@fieldses.org> <20060721143115.GN13776@pasky.or.cz> <81b0412b0607210802q4d48b277yc4c45d4acbd890a6@mail.gmail.com> <fcaeb9bf0607221312k2088658bqa45e622b7fe244e4@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 23 07:50:36 2006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Petr Baudis <pasky@suse.cz>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 23 09:39:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4WrL-0007Hp-4J
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 07:50:35 +0200
+	id 1G4YYK-0005ia-G9
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 09:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750800AbWGWFuc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 01:50:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbWGWFuc
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 01:50:32 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2266 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750800AbWGWFub (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 01:50:31 -0400
-Received: (qmail 12061 invoked from network); 23 Jul 2006 01:50:06 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Jul 2006 01:50:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Jul 2006 01:50:30 -0400
-To: Junio C Hamano <junkio@cox.net>
+	id S1750768AbWGWHih convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 23 Jul 2006 03:38:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbWGWHih
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 03:38:37 -0400
+Received: from mailout05.sul.t-online.com ([194.25.134.82]:52371 "EHLO
+	mailout05.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1750768AbWGWHih (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jul 2006 03:38:37 -0400
+Received: from fwd26.aul.t-online.de 
+	by mailout05.sul.t-online.com with smtp 
+	id 1G4YXf-0006MK-07; Sun, 23 Jul 2006 09:38:23 +0200
+Received: from tigra.home (SrQkT4ZAoe9Gyo4knpHNdy6i81GtxBiSRvTjNRlFPThl68kh-iBfc4@[84.160.104.23]) by fwd26.sul.t-online.de
+	with esmtp id 1G4YXb-0t1QkC0; Sun, 23 Jul 2006 09:38:19 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id CB7F4277AF;
+	Sun, 23 Jul 2006 09:38:18 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1G4YXa-0001X5-Nu; Sun, 23 Jul 2006 09:38:18 +0200
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <fcaeb9bf0607221312k2088658bqa45e622b7fe244e4@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
+X-ID: SrQkT4ZAoe9Gyo4knpHNdy6i81GtxBiSRvTjNRlFPThl68kh-iBfc4
+X-TOI-MSGID: a3a932f9-32f1-4488-aa0b-701741edeb62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24087>
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-For some repositories, deltas simply don't make sense. One can disable
-them for git-repack by adding --window, but git-push insists on making
-the deltas which can be very CPU-intensive for little benefit.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy, Sat, Jul 22, 2006 22:12:07 +=
+0200:
+> >> I don't know if there's a point in being so paranoid - it already =
+makes
+> >> things more painful than necessary. In the tracking branch, you ju=
+st
+> >> want to have what the other side has anyway, and if the other side
+> >> decided to jump around, why would you care otherwise?
+> >
+> >But for the ones who do care, it is much harder to notice. Even if i=
+t is
+> >a warning (it gets lost in crontab logs).
+>
+> Then create some lost+found branches for them?
 
- Documentation/config.txt |    4 ++++
- pack-objects.c           |   13 ++++++++++++-
- 2 files changed, 16 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0b434c1..bc43da8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -193,6 +193,10 @@ merge.summary::
- 	Whether to include summaries of merged commits in newly created
- 	merge commit messages. False by default.
- 
-+pack.window::
-+	The size of the window used by gitlink:git-pack-objects[1] when no
-+	window size is given on the command line. Defaults to 10.
-+
- pull.octopus::
- 	The default merge strategy to use when pulling multiple branches
- 	at once.
-diff --git a/pack-objects.c b/pack-objects.c
-index 04a48b9..861c7f0 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -63,6 +63,7 @@ static const char *base_name;
- static unsigned char pack_file_sha1[20];
- static int progress = 1;
- static volatile sig_atomic_t progress_update = 0;
-+static int window = 10;
- 
- /*
-  * The object names in objects array are hashed with this hashtable,
-@@ -1216,16 +1217,26 @@ static void setup_progress_signal(void)
- 	setitimer(ITIMER_REAL, &v, NULL);
- }
- 
-+static int git_pack_config(const char *k, const char *v)
-+{
-+	if(!strcmp(k, "pack.window")) {
-+		window = git_config_int(k, v);
-+		return 0;
-+	}
-+	return git_default_config(k, v);
-+}
-+
- int main(int argc, char **argv)
- {
- 	SHA_CTX ctx;
- 	char line[40 + 1 + PATH_MAX + 2];
--	int window = 10, depth = 10, pack_to_stdout = 0;
-+	int depth = 10, pack_to_stdout = 0;
- 	struct object_entry **list;
- 	int num_preferred_base = 0;
- 	int i;
- 
- 	setup_git_directory();
-+	git_config(git_pack_config);
- 
- 	progress = isatty(2);
- 	for (i = 1; i < argc; i++) {
--- 
-1.4.2.rc1.ge7a0-dirty
+if you copy files from ext3 to vfat, do you expect them to be found in
+lost+found? Usually not, I believe. It should either fail or copy.
