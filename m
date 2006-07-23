@@ -1,61 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GIT user survey
-Date: Sun, 23 Jul 2006 15:18:57 +0200
-Organization: At home
-Message-ID: <e9vsv9$iuo$1@sea.gmane.org>
-References: <4d8e3fd30607230123m459aa1cle2ab8c1c1dd0fcd2@mail.gmail.com> <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com>
+From: "Mario Cooke" <MarioCooke@0815net.com>
+Subject: Better Life, wood hen
+Date: Sun, 23 Jul 2006 14:30:36 +0000 (UTC)
+Message-ID: <6975236445.20060723143017@0815net.com>
+Reply-To: "Mario Cooke" <MarioCooke@0815net.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jul 23 15:19:10 2006
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jul 23 16:30:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4drN-0004hK-2C
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 15:19:05 +0200
+	id 1G4eyR-0007F7-Vu
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 16:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbWGWNSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 09:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbWGWNSz
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 09:18:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:62141 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750712AbWGWNSz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 09:18:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G4dr4-0004fs-TF
-	for git@vger.kernel.org; Sun, 23 Jul 2006 15:18:46 +0200
-Received: from host-81-190-27-170.torun.mm.pl ([81.190.27.170])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 23 Jul 2006 15:18:46 +0200
-Received: from jnareb by host-81-190-27-170.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 23 Jul 2006 15:18:46 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-170.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751213AbWGWOaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Jul 2006 10:30:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWGWOaV
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 10:30:21 -0400
+Received: from proevil.dubki.ru ([195.225.129.194]:58375 "EHLO mxs.mail.ru")
+	by vger.kernel.org with ESMTP id S1751213AbWGWOaU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 10:30:20 -0400
+Date: Sun, 23 Jul 2006 14:30:17 -0180
+X-Mailer: The Bat! (v2.00.6) Personal
+X-Priority: 3 (Normal)
+To: git-commits-head-owner@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24096>
+X-Spam-Report: 17.6 points;
+ *  2.0 BAYES_80 BODY: Bayesian spam probability is 80 to 95%
+ *      [score: 0.8421]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: foorests.net]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: foorests.net]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: foorests.net]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: foorests.net]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: foorests.net]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: foorests.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24097>
 
-Paolo Ciarrocchi wrote:
+Your cre dit doesn't matter to us! If you OWN real est ate
+and want IMMEDIATEM cash to spend ANY way you like, or simply wish 
+to LOWER your monthly paym ents by a third or more, here are the dea ls
+we have TODAY (hurry, these ofers will expre TONIGHT):
 
-> If you know people using GIT please forward this message to them,
-> currently is has been sent to the following projects:
-> - u-boot
-> - wine
-> - cairo
-> - xmms2
-> - xcb
+$488,000.00 at a 3.67,% fixed-rateL
+$372,000.00 at a 3.90,% variable-rateJ
+$492,000.00 at a 3.21,% interest-onlyZ
+$248,000.00 at a 3.36,% fixed-rateQ
+$198,000.00 at a 3.55,% variable-rateP
 
-Check out http://git.or.cz/gitwiki/GitProjects
+Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Don't worry about approval, your cre dit will not disqualify you! 
+
+http://3XJ5TG.foorests.net
+
+
+
+back to back for warmth in a tortured half-sleep on top of the hill, waiting
+and muttering under his breath, until  he shouted so that  the  house shook:
+
+his elders and now he lies there in  order to  show  smart people the  right
+He  suddenly  felt  that there was something ahead  of  them--not far,  some
+     "I  never thought...."  Arthur  was saying with  meek disbelief in  his
+
+Lord  God himself, and  then two  stalkers  were killed  within  a few days,
+     "Are you kidding? Did  you know what happened with that jelly? Have you
+on, hunched over, dragging his feet, trying to pick off the baked slime from
+remember Kirill, that sainted man, his swift, sure movements, his laugh, his
+
+unbuttoning his  jacket with limp  fingers, and Redrick leaned  his backpack
+Redrick squinted up at the sun;  it was  still low. And suddenly he realized
