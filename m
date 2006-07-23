@@ -1,65 +1,70 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: Git BOF notes
-Date: Sun, 23 Jul 2006 09:38:18 +0200
-Message-ID: <20060723073818.GA5822@steel.home>
-References: <20060719230155.GJ13776@pasky.or.cz> <20060721132111.GD32585@fieldses.org> <20060721143115.GN13776@pasky.or.cz> <81b0412b0607210802q4d48b277yc4c45d4acbd890a6@mail.gmail.com> <fcaeb9bf0607221312k2088658bqa45e622b7fe244e4@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: Random Git Issues/Wishlist
+Date: Sun, 23 Jul 2006 10:18:21 +0200
+Message-ID: <4d8e3fd30607230118y29a1f99rc6693d751d1b1f38@mail.gmail.com>
+References: <20060722195502.GS13776@pasky.or.cz>
+	 <4d8e3fd30607221400j1839883es6c948464cdf22439@mail.gmail.com>
+	 <46a038f90607221712gadae5b3tde2de4653fcc9e69@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 23 09:39:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 23 10:18:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4YYK-0005ia-G9
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 09:39:05 +0200
+	id 1G4ZAr-0002F4-B0
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 10:18:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750768AbWGWHih convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 23 Jul 2006 03:38:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbWGWHih
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 03:38:37 -0400
-Received: from mailout05.sul.t-online.com ([194.25.134.82]:52371 "EHLO
-	mailout05.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1750768AbWGWHih (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jul 2006 03:38:37 -0400
-Received: from fwd26.aul.t-online.de 
-	by mailout05.sul.t-online.com with smtp 
-	id 1G4YXf-0006MK-07; Sun, 23 Jul 2006 09:38:23 +0200
-Received: from tigra.home (SrQkT4ZAoe9Gyo4knpHNdy6i81GtxBiSRvTjNRlFPThl68kh-iBfc4@[84.160.104.23]) by fwd26.sul.t-online.de
-	with esmtp id 1G4YXb-0t1QkC0; Sun, 23 Jul 2006 09:38:19 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id CB7F4277AF;
-	Sun, 23 Jul 2006 09:38:18 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1G4YXa-0001X5-Nu; Sun, 23 Jul 2006 09:38:18 +0200
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+	id S1751145AbWGWISX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Jul 2006 04:18:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbWGWISX
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 04:18:23 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:28830 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750755AbWGWISW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jul 2006 04:18:22 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so1825485ugc
+        for <git@vger.kernel.org>; Sun, 23 Jul 2006 01:18:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=euoB7QxFnALKaJSyhQbLDbigc2ZmODUFrp56jne83ng6vZU4m3Q7W1EmOuW+Gr+iPHrFp5Kkahu3KbvpSKOsrzqGQlupPLTBktlfn6K0hc0Vo+HHYk65KKJU3ZzrFioSp7GDhC9OWljKjfoIsCe/kfwqGJmoPWawZosYTZi4/ps=
+Received: by 10.78.140.17 with SMTP id n17mr1038209hud;
+        Sun, 23 Jul 2006 01:18:21 -0700 (PDT)
+Received: by 10.78.121.12 with HTTP; Sun, 23 Jul 2006 01:18:21 -0700 (PDT)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90607221712gadae5b3tde2de4653fcc9e69@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0607221312k2088658bqa45e622b7fe244e4@mail.gmail.com>
-User-Agent: Mutt/1.5.6i
-X-ID: SrQkT4ZAoe9Gyo4knpHNdy6i81GtxBiSRvTjNRlFPThl68kh-iBfc4
-X-TOI-MSGID: a3a932f9-32f1-4488-aa0b-701741edeb62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24088>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy, Sat, Jul 22, 2006 22:12:07 +=
-0200:
-> >> I don't know if there's a point in being so paranoid - it already =
-makes
-> >> things more painful than necessary. In the tracking branch, you ju=
-st
-> >> want to have what the other side has anyway, and if the other side
-> >> decided to jump around, why would you care otherwise?
-> >
-> >But for the ones who do care, it is much harder to notice. Even if i=
-t is
-> >a warning (it gets lost in crontab logs).
+On 7/23/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> > Martin, can you upload the survey to  survey.net.nz as we privately discussed?
 >
-> Then create some lost+found branches for them?
+> Done. this is what it looks like:
+>
+> http://www.survey.net.nz/survey.php?b5659bb2a599d0649871f56b59819c50
+>
+> I'll send you the login details to modify it. I've changed a few
+> things ever so slightly so it made sense when boiled down to an array
+> of radio buttons and text boxes. Survey.net doesn't quite support
+> "section titles" so I added the section title to the first question of
+> the set, hoping for a "conversational" approach to introducing the
+> section to the user.
+>
+> The best way to edit it is by downloading the text file, editing in
+> $EDITOR and posting it back. the format is trivial, and explained here
+> http://survey.net.nz/index.php?page=faq under "Upload Survey".
 
-if you copy files from ext3 to vfat, do you expect them to be found in
-lost+found? Usually not, I believe. It should either fail or copy.
+Thanks a lot Martin! I will send out an announce in a few minutes.
+
+regards,
+
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com
+http://picasaweb.google.com/paolo.ciarrocchi
