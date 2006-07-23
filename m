@@ -1,53 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Colorize 'commit' lines in log ui
-Date: Sun, 23 Jul 2006 18:01:33 -0400
-Message-ID: <20060723220133.GA26390@coredump.intra.peff.net>
-References: <20060723092417.GA7547@coredump.intra.peff.net> <20060723112422.GB27825@lug-owl.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git BOF notes
+Date: Mon, 24 Jul 2006 00:53:11 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607240049500.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060719230155.GJ13776@pasky.or.cz> <20060721131824.GC32585@fieldses.org>
+ <20060721144249.GO13776@pasky.or.cz> <Pine.LNX.4.63.0607220212140.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060722032200.GP13776@pasky.or.cz> <Pine.LNX.4.63.0607220547570.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060722191652.GR13776@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jul 24 00:01:53 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 24 00:53:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4m17-0001Q1-30
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 00:01:41 +0200
+	id 1G4mpF-0005oy-I5
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 00:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750719AbWGWWBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 18:01:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWGWWBf
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 18:01:35 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:59350 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750719AbWGWWBf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 18:01:35 -0400
-Received: (qmail 18648 invoked from network); 23 Jul 2006 18:01:09 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Jul 2006 18:01:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Jul 2006 18:01:33 -0400
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Content-Disposition: inline
-In-Reply-To: <20060723112422.GB27825@lug-owl.de>
+	id S1751372AbWGWWxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Jul 2006 18:53:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbWGWWxN
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 18:53:13 -0400
+Received: from mail.gmx.de ([213.165.64.21]:12711 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751372AbWGWWxN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 18:53:13 -0400
+Received: (qmail invoked by alias); 23 Jul 2006 22:53:11 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 24 Jul 2006 00:53:11 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060722191652.GR13776@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24111>
 
-On Sun, Jul 23, 2006 at 01:24:22PM +0200, Jan-Benedict Glaw wrote:
+Hi,
 
-> If people only were used to *always* place a comma behind the last
-> array element, the diff would be shorter by one line each time...
+On Sat, 22 Jul 2006, Petr Baudis wrote:
 
-I agree that it's much more convenient; I left it off because it wasn't
-there before and I thought there were some standardization issues.
+> Dear diary, on Sat, Jul 22, 2006 at 05:55:59AM CEST, I got a letter
+> where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> > On Sat, 22 Jul 2006, Petr Baudis wrote:
+> > > Dear diary, on Sat, Jul 22, 2006 at 02:17:48AM CEST, I got a letter
+> > > where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> > > > And also think "setup a remote repository", especially "setup a remote
+> > > > HTTP repository".
+> > > 
+> > >   Of course. Currently you need to tinker with environment variables,
+> > > then with hooks, possibly with permissions and stuff to make the
+> > > repository shared... Think cg-admin-setuprepo. ;-)
+> > 
+> > git-init-db --shared
+> 
+> And the environment variable and the chgrp and g+s. That's my point.
 
-As it turns out, the situation is quite ridiculous. C89 allowed trailing
-commas in initialization lists but not in enums. Most compilers (gcc,
-sun) accepted it anyway, but some (aix xlc) did not.
+I do not have the itch. But of course, it would be trivial to do that as 
+command line options.
 
-Do we care? I think probably not, since the color_diff enum already had
-a trailing comma. It seems like the primary non-gcc compiler that has
-been mentioned is sun cc. I don't know what other compilers are being
-used to compile git.
+> > And sometimes, I do "cp -R /some/where/CVS ./; git-cvsimport".
+> 
+> git-cvsimport will create the repository for you, won't it?
 
--Peff
+It could, if I'd let it ;-)
+
+> > >   Of course sometimes you don't want to add everything, and that should
+> > > still be possible to do (cg-init has a switch for that).
+> > 
+> > Usually I start small projects as a single .c or .java file. Only after a 
+> > while, I think it is worth it to init a git database. So, I _always_ have 
+> > generated files lying around. And I would hate it if they were checked in 
+> > automatically. (Yeah, I could remove them, _then_ remove them from the 
+> > index, and then git-commit --amend. Ugly.)
+> 
+> Can't you just do make clean before git init? Or you can prepare 
+> .gitignore before you check stuff in, so that the autogenerated files 
+> don't pollute your git status output. ;-)
+
+Yes, I can. I also can type in several sheets of hex data. But I don't 
+want to. Like Timo, I am very happy to tell the computer what to do, not 
+to let it take guesses.
+
+Ciao,
+Dscho
