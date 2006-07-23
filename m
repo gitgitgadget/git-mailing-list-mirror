@@ -1,67 +1,45 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH] support cover letter before commit log, using "+++"
-Date: Sun, 23 Jul 2006 23:45:25 +0200
-Message-ID: <20060723214524.GC20068@admingilde.org>
+From: "Echols" <Echolsantacid@consultant.com>
+Subject: Hey, buddy, you must be very disappointed of it!
+Date: Sun, 23 Jul 2006 18:50:41 -0200
+Message-ID: <79697392545325.F005BCB7D0@2O5I>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jul 23 23:45:50 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jul 23 23:51:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4llX-0003dB-3h
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 23:45:35 +0200
+	id 1G4lqw-0005qK-6L
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 23:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbWGWVp2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 17:45:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbWGWVp2
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 17:45:28 -0400
-Received: from admingilde.org ([213.95.32.146]:11407 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1751321AbWGWVp1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 17:45:27 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1G4llN-0006L4-3q
-	for git@vger.kernel.org; Sun, 23 Jul 2006 23:45:25 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1751345AbWGWVvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Jul 2006 17:51:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWGWVvH
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 17:51:07 -0400
+Received: from [201.47.16.199] ([201.47.16.199]:45832 "EHLO
+	oheoie.kq2mgorh.verizon.net") by vger.kernel.org with ESMTP
+	id S1751345AbWGWVvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jul 2006 17:51:06 -0400
+To: <glenn@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: 53pq9twdX9oT6W3HMVwnifwZ2ZNUr6VNfMAG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24108>
+X-Spam-Report: 9.7 points;
+ * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
+ *      [score: 0.0471]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?201.47.16.199>]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: florexx.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: florexx.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: florexx.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24109>
 
-We already have a "---" separator to end the commit log.
-But writing the cover letter after this separator looks strange.
-Now it is possible to put the cover letter and comments both before
-or after the commit log, as the author sees fit.
-
-Just put the commit log between lines starting with "+++" and "---".
-
-Signed-off-by: Martin Waitz <tali@admingilde.org>
----
- builtin-mailinfo.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index ac53f76..a1cfc81 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -690,6 +690,13 @@ static int handle_commit_msg(int *seen)
- 			return 1;
- 		}
- 
-+		/* check for separator between cover-letter and commit log */
-+		if (!memcmp("+++", line, 3)) {
-+			rewind(cmitmsg);
-+			ftruncate(fileno(cmitmsg), 0);
-+			continue;
-+		}
-+
- 		/* Unwrap transfer encoding and optionally
- 		 * normalize the log message to UTF-8.
- 		 */
--- 
-1.4.1.gd3582
-
--- 
-Martin Waitz
+Hello bro, Leave complaining to others. You deserve to get rid of this. The great thing about Extra-Time is that it works, making you last longer from the very first time. It starts great but you feel like finishing within very first minutes? This is a common thing. Enter here:  http://florexx.com/gall/get/ Confidence and affection of your partner are the greatest things you get.
