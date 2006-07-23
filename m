@@ -1,80 +1,74 @@
-From: "Mario Cooke" <MarioCooke@0815net.com>
-Subject: Better Life, wood hen
-Date: Sun, 23 Jul 2006 14:30:36 +0000 (UTC)
-Message-ID: <6975236445.20060723143017@0815net.com>
-Reply-To: "Mario Cooke" <MarioCooke@0815net.com>
+From: "Carla Herrington" <CarlaHerrington@0451.com>
+Subject: Your money, orange-striped
+Date: Sun, 23 Jul 2006 16:06:33 -0120
+Message-ID: <11719598.20060723160633@0451.com>
+Reply-To: "Carla Herrington" <CarlaHerrington@0451.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jul 23 16:30:34 2006
+X-From: git-owner@vger.kernel.org Sun Jul 23 18:07:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4eyR-0007F7-Vu
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 16:30:28 +0200
+	id 1G4gU0-0002oW-S8
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 18:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbWGWOaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 10:30:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWGWOaV
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 10:30:21 -0400
-Received: from proevil.dubki.ru ([195.225.129.194]:58375 "EHLO mxs.mail.ru")
-	by vger.kernel.org with ESMTP id S1751213AbWGWOaU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 10:30:20 -0400
-Date: Sun, 23 Jul 2006 14:30:17 -0180
-X-Mailer: The Bat! (v2.00.6) Personal
+	id S1751251AbWGWQHE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Jul 2006 12:07:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWGWQHE
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 12:07:04 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:4771 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1751226AbWGWQHB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 12:07:01 -0400
+Received: from home-xxj7bsx2b5 (89.0.71.14.dynamic.barak-online.net [89.0.71.14])
+	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6NG6G4u021907;
+	Sun, 23 Jul 2006 16:06:33 GMT
+X-Mailer: The Bat! (v3.0) Home
 X-Priority: 3 (Normal)
 To: git-commits-head-owner@vger.kernel.org
+X-Virus-Scanned: ClamAV 0.88.3/1614/Fri Jul 21 20:27:38 2006 on zeus2.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 17.6 points;
- *  2.0 BAYES_80 BODY: Bayesian spam probability is 80 to 95%
- *      [score: 0.8421]
+X-Spam-Report: 15.8 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
  *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: foorests.net]
+ *      [URIs: unrhymedad.com]
  *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: foorests.net]
+ *      [URIs: unrhymedad.com]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: foorests.net]
+ *      [URIs: unrhymedad.com]
  *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: foorests.net]
+ *      [URIs: unrhymedad.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: foorests.net]
+ *      [URIs: unrhymedad.com]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: foorests.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24097>
+ *      [URIs: unrhymedad.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24098>
 
-Your cre dit doesn't matter to us! If you OWN real est ate
-and want IMMEDIATEM cash to spend ANY way you like, or simply wish 
-to LOWER your monthly paym ents by a third or more, here are the dea ls
-we have TODAY (hurry, these ofers will expre TONIGHT):
+Genuine Swiss made RoleKx repilcas are as close to the real thing 
+as a repilca watch can be. Sometimes even the professional jewelers 
+are unable to tell the difference from the real Role2x watch.
 
-$488,000.00 at a 3.67,% fixed-rateL
-$372,000.00 at a 3.90,% variable-rateJ
-$492,000.00 at a 3.21,% interest-onlyZ
-$248,000.00 at a 3.36,% fixed-rateQ
-$198,000.00 at a 3.55,% variable-rateP
+Why spend thousands of dollars on the real deal when 
+a repilca watch looks so much alike that only an expert could tell the difference...
+And you only pay a fractoin of the price.
 
-Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
+VISIT US, AND GET OUR SPECIL 370% DISLCOUNT OFER!
 
-Don't worry about approval, your cre dit will not disqualify you! 
+http://23IJQJF1hou6k7r777ckjjz6j1zo1jj.unrhymedad.com/
 
-http://3XJ5TG.foorests.net
+==========
+     "See here Jonathan " said his father not unkindly. "Winter isn't  far
+the window, too.  The glass in our  windows is thick and leaded.  And beyond
+something over two hundred miles per hour, into a cliff of solid granite.
+crossed over the hillock  and moved  on and on toward us, right next  to the
+     Jonathan stayed and worked with the new birds coming in, who were all
+     I stepped inside  and went straight for the canisters.  I crouched over
 
-
-
-back to back for warmth in a tortured half-sleep on top of the hill, waiting
-and muttering under his breath, until  he shouted so that  the  house shook:
-
-his elders and now he lies there in  order to  show  smart people the  right
-He  suddenly  felt  that there was something ahead  of  them--not far,  some
-     "I  never thought...."  Arthur  was saying with  meek disbelief in  his
-
-Lord  God himself, and  then two  stalkers  were killed  within  a few days,
-     "Are you kidding? Did  you know what happened with that jelly? Have you
-on, hunched over, dragging his feet, trying to pick off the baked slime from
-remember Kirill, that sainted man, his swift, sure movements, his laugh, his
-
-unbuttoning his  jacket with limp  fingers, and Redrick leaned  his backpack
-Redrick squinted up at the sun;  it was  still low. And suddenly he realized
+globe and you  start firing bullets into it.  The bullet  holes would lie on
+that the  rescue squad had climbed into  their helicopter, the firemen  were
