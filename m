@@ -1,51 +1,65 @@
-From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: Defaulting fetch to origin when set in the repo-config
-Date: Sun, 23 Jul 2006 00:54:40 +0200
-Message-ID: <87mzb1s11r.fsf@gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Random Git Issues/Wishlist
+Date: Sun, 23 Jul 2006 12:12:06 +1200
+Message-ID: <46a038f90607221712gadae5b3tde2de4653fcc9e69@mail.gmail.com>
+References: <20060722195502.GS13776@pasky.or.cz>
+	 <4d8e3fd30607221400j1839883es6c948464cdf22439@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Jul 23 00:55:03 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 23 02:12:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4QN9-000895-Kq
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 00:55:00 +0200
+	id 1G4RZs-00022i-Cm
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 02:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbWGVWyf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 22 Jul 2006 18:54:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbWGVWyf
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 18:54:35 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:4052 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S1751072AbWGVWyf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Jul 2006 18:54:35 -0400
-Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k6MLt3d00901
-	for <git@vger.kernel.org>; Sat, 22 Jul 2006 23:55:04 +0200
-To: git <git@vger.kernel.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
+	id S1750747AbWGWAMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Jul 2006 20:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbWGWAMI
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 20:12:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:61150 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750747AbWGWAMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jul 2006 20:12:07 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so1763171ugc
+        for <git@vger.kernel.org>; Sat, 22 Jul 2006 17:12:06 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s29gidqnaPMAFlNUim29W9b6RAPo/BuPP6ZAVen3D9GKIJ26k5GNtdjx46q3QZwID2sX8n0qwbX+WdOxa1U86BQhWY1HiWts33Vn8s5dppPHX+NmdYHd+1yUcDYjiUNFzZn6Ke0iMsxO2t5pae/QEv8n54WdzwERYYBZ5GUsEJ8=
+Received: by 10.78.164.13 with SMTP id m13mr951132hue;
+        Sat, 22 Jul 2006 17:12:06 -0700 (PDT)
+Received: by 10.78.120.18 with HTTP; Sat, 22 Jul 2006 17:12:06 -0700 (PDT)
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+In-Reply-To: <4d8e3fd30607221400j1839883es6c948464cdf22439@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24082>
+
+> Martin, can you upload the survey to  survey.net.nz as we privately discussed?
+
+Done. this is what it looks like:
+
+http://www.survey.net.nz/survey.php?b5659bb2a599d0649871f56b59819c50
+
+I'll send you the login details to modify it. I've changed a few
+things ever so slightly so it made sense when boiled down to an array
+of radio buttons and text boxes. Survey.net doesn't quite support
+"section titles" so I added the section title to the first question of
+the set, hoping for a "conversational" approach to introducing the
+section to the user.
+
+The best way to edit it is by downloading the text file, editing in
+$EDITOR and posting it back. the format is trivial, and explained here
+http://survey.net.nz/index.php?page=faq under "Upload Survey".
+
+cheers,
 
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
 
----
-
-diff --git a/git-fetch.sh b/git-fetch.sh
-index a393a50..c2eebee 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -70,7 +70,8 @@ case "$#" in
- 0)
- 	test -f "$GIT_DIR/branches/origin" ||
- 		test -f "$GIT_DIR/remotes/origin" ||
--			die "Where do you want to fetch from today?"
-+			git-repo-config --get remote.origin.url >/dev/null ||
-+				die "Where do you want to fetch from today?"
- 	set origin ;;
- esac
-=20
+martin
