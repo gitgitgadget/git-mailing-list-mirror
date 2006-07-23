@@ -1,97 +1,67 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb.cgi: git_blame2: slight optimization reading the blame lines
-Date: Sun, 23 Jul 2006 14:17:48 -0700 (PDT)
-Message-ID: <20060723211748.77065.qmail@web31814.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] support cover letter before commit log, using "+++"
+Date: Sun, 23 Jul 2006 23:45:25 +0200
+Message-ID: <20060723214524.GC20068@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-440081174-1153689468=:76202"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sun Jul 23 23:18:18 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Jul 23 23:45:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4lKo-00011i-3P
-	for gcvg-git@gmane.org; Sun, 23 Jul 2006 23:17:58 +0200
+	id 1G4llX-0003dB-3h
+	for gcvg-git@gmane.org; Sun, 23 Jul 2006 23:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750714AbWGWVRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 17:17:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbWGWVRt
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 17:17:49 -0400
-Received: from web31814.mail.mud.yahoo.com ([68.142.206.167]:21344 "HELO
-	web31814.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1750714AbWGWVRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jul 2006 17:17:48 -0400
-Received: (qmail 77067 invoked by uid 60001); 23 Jul 2006 21:17:48 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=fWqX7fnd2A0ISUWYmWlFb25NrQuJTFFx8jRRrkXMqD+BmJ9vJkxPZsEbJoyTv9oXS7cHnAljKkrGjQ5jQbpHbsrB7dyOoGAgJ1wGJ5LMni6j6MaIDtv4DR1/8SvebAZFMYjgX+8teFWfDOV3rjM7AyJcHb3bdxN1Hk3EZzvUxig=  ;
-Received: from [71.80.232.189] by web31814.mail.mud.yahoo.com via HTTP; Sun, 23 Jul 2006 14:17:48 PDT
+	id S1751321AbWGWVp2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 23 Jul 2006 17:45:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbWGWVp2
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 17:45:28 -0400
+Received: from admingilde.org ([213.95.32.146]:11407 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1751321AbWGWVp1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Jul 2006 17:45:27 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1G4llN-0006L4-3q
+	for git@vger.kernel.org; Sun, 23 Jul 2006 23:45:25 +0200
 To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24108>
 
---0-440081174-1153689468=:76202
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+We already have a "---" separator to end the commit log.
+But writing the cover letter after this separator looks strange.
+Now it is possible to put the cover letter and comments both before
+or after the commit log, as the author sees fit.
 
-Eliminate git_read_blame_line() -- move that code inline and
-optimize it.
+Just put the commit log between lines starting with "+++" and "---".
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+Signed-off-by: Martin Waitz <tali@admingilde.org>
 ---
- gitweb/gitweb.cgi |   19 +++++--------------
- 1 files changed, 5 insertions(+), 14 deletions(-)
---0-440081174-1153689468=:76202
-Content-Type: text/inline; name="p1.patch"
-Content-Description: 2795696785-p1.patch
-Content-Disposition: name="p1.patch"; filename="p1.patch"
+ builtin-mailinfo.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index 16340f2..7fbfc0d 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -1252,15 +1252,6 @@ sub git_tag {
- 	git_footer_html();
- }
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index ac53f76..a1cfc81 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -690,6 +690,13 @@ static int handle_commit_msg(int *seen)
+ 			return 1;
+ 		}
  
--sub git_read_blame_line {
--	my %bl;
--	$_ = shift;
--
--	($bl{'hash'}, $bl{'lineno'}, $bl{'data'}) = /^([0-9a-fA-F]{40}).*?(\d+)\)\s{1}(\s*.*)/;
--
--	return %bl;
--}
--
- sub git_blame2 {
- 	my $fd;
- 	my $ftype;
-@@ -1302,13 +1293,12 @@ sub git_blame2 {
- 	print "<div class=\"page_body\">\n";
- 	print "<table class=\"blame\">\n";
- 	print "<tr><th>Commit</th><th>Line</th><th>Data</th></tr>\n";
--	while (my $line = <$fd>) {
--		my %blame_line = git_read_blame_line($line);
--		my $full_rev = $blame_line{'hash'};
-+	while (<$fd>) {
-+		/^([0-9a-fA-F]{40}).*?(\d+)\)\s{1}(\s*.*)/;
-+		my $full_rev = $1;
- 		my $rev = substr($full_rev, 0, 8);
--		my $lineno = $blame_line{'lineno'};
--		my $data = $blame_line{'data'};
-+		my $lineno = $2;
-+		my $data = $3;
- 
- 		if (!defined $last_rev) {
- 			$last_rev = $full_rev;
++		/* check for separator between cover-letter and commit log */
++		if (!memcmp("+++", line, 3)) {
++			rewind(cmitmsg);
++			ftruncate(fileno(cmitmsg), 0);
++			continue;
++		}
++
+ 		/* Unwrap transfer encoding and optionally
+ 		 * normalize the log message to UTF-8.
+ 		 */
 -- 
-1.4.2.rc1.g9b54
+1.4.1.gd3582
 
-
---0-440081174-1153689468=:76202--
+-- 
+Martin Waitz
