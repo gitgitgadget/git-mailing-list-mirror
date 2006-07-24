@@ -1,66 +1,63 @@
-From: Wolfgang Denk <wd@denx.de>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
 Subject: Re: GIT user survey
-Date: Mon, 24 Jul 2006 21:47:16 +0200
-Message-ID: <20060724194716.1B4EB352640@atlas.denx.de>
+Date: Mon, 24 Jul 2006 21:50:19 +0200
+Message-ID: <4d8e3fd30607241250k3b1a7768yb27653750ae921b3@mail.gmail.com>
 References: <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com>
+	 <20060724194716.1B4EB352640@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 24 21:47:43 2006
+X-From: git-owner@vger.kernel.org Mon Jul 24 21:50:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G56Op-00048a-F3
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 21:47:31 +0200
+	id 1G56Rb-0004aH-Ti
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 21:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361AbWGXTrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 15:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbWGXTrS
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 15:47:18 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:7065 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S1751361AbWGXTrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 15:47:17 -0400
-Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id BE98E73718;
-	Mon, 24 Jul 2006 21:47:16 +0200 (CEST)
-X-Auth-Info: cCDu3I8mtgBxbrrM4QC2fZu8t4Ecj8UHecgJDvD6zjc=
-X-Auth-Info: cCDu3I8mtgBxbrrM4QC2fZu8t4Ecj8UHecgJDvD6zjc=
-Received: from mail.denx.de (p549668E5.dip.t-dialin.net [84.150.104.229])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id A9972920A9;
-	Mon, 24 Jul 2006 21:47:16 +0200 (CEST)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id 12CF56D00A8;
-	Mon, 24 Jul 2006 21:47:17 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 1B4EB352640;
-	Mon, 24 Jul 2006 21:47:16 +0200 (MEST)
-To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-In-reply-to: Your message of "Sun, 23 Jul 2006 10:45:35 +0200."
-             <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com> 
+	id S1751341AbWGXTuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 15:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbWGXTuV
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 15:50:21 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:50620 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751341AbWGXTuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 15:50:20 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so2374047ugc
+        for <git@vger.kernel.org>; Mon, 24 Jul 2006 12:50:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NzC3pUVhxjP5NFtqxdC5KCVexIJvO0KTAoil104lx+H/s8rVZ0vWD02P4V9aqHXlzksjrdksH7A9DpB3HWt99HO85kDh/sjIMqZFvd9xkQIgQQ66DsOkwD+DopA11HoDtY4FdgGJVF1NG7p5VmqanKJDx/XU7eLsgVQ7VGeizJA=
+Received: by 10.78.195.9 with SMTP id s9mr1929562huf;
+        Mon, 24 Jul 2006 12:50:19 -0700 (PDT)
+Received: by 10.78.121.12 with HTTP; Mon, 24 Jul 2006 12:50:19 -0700 (PDT)
+To: "Wolfgang Denk" <wd@denx.de>
+In-Reply-To: <20060724194716.1B4EB352640@atlas.denx.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24149>
 
-In message <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com> you wrote:
+On 7/24/06, Wolfgang Denk <wd@denx.de> wrote:
+> In message <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com> you wrote:
+> >
+> > If you know people using GIT please forward this message to them,
+> > currently is has been sent to the following projects:
+> > - u-boot
 >
-> If you know people using GIT please forward this message to them,
-> currently is has been sent to the following projects:
-> - u-boot
+>
+> Has it? When? I haven't seen anything.
+>
 
+I don't follow the project but I know that NOW it's using GIT, see the
+homepage http://u-boot.sourceforge.net/
 
-Has it? When? I haven't seen anything.
-
-Best regards,
-
-Wolfgang Denk
+regards,
 
 -- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-The thing is, as you progress in the Craft,  you'll  learn  there  is
-another rule... When you break rules, break 'em good and hard.
-                                    - Terry Pratchett, _Wyrd Sisters_
+Paolo
+http://paolo.ciarrocchi.googlepages.com
+http://picasaweb.google.com/paolo.ciarrocchi
