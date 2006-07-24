@@ -1,83 +1,66 @@
-From: "Cathryn Purvis" <CathrynPurvis@mail.ru>
-Subject: Better Future, yard trader
-Date: Mon, 24 Jul 2006 18:49:42 +0000 (UTC)
-Message-ID: <662161c806044joagun3el907vielq97i5onf25y3307cr@mxs.mail.ru>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Re: GIT user survey
+Date: Mon, 24 Jul 2006 21:47:16 +0200
+Message-ID: <20060724194716.1B4EB352640@atlas.denx.de>
+References: <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Jul 24 20:49:38 2006
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 24 21:47:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G55Ub-0002gJ-BC
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 20:49:26 +0200
+	id 1G56Op-00048a-F3
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 21:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbWGXStW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 14:49:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbWGXStW
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 14:49:22 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:24538 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S932251AbWGXStV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 14:49:21 -0400
-Received: from 207-119-217-152.dyn.centurytel.net (207-119-217-152.dyn.centurytel.net [207.119.217.152])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k6OImn6x003164;
-	Mon, 24 Jul 2006 18:49:14 GMT
-Date: Mon, 24 Jul 2006 18:49:29 +0480
-To: git-commits-head-owner@vger.kernel.org
-Content-Disposition: inline
-X-Spam: Not detected
-X-Virus-Scanned: ClamAV 0.88.3/1614/Fri Jul 21 20:27:38 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+	id S1751361AbWGXTrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 15:47:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbWGXTrS
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 15:47:18 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:7065 "EHLO
+	mail-out.m-online.net") by vger.kernel.org with ESMTP
+	id S1751361AbWGXTrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 15:47:17 -0400
+Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id BE98E73718;
+	Mon, 24 Jul 2006 21:47:16 +0200 (CEST)
+X-Auth-Info: cCDu3I8mtgBxbrrM4QC2fZu8t4Ecj8UHecgJDvD6zjc=
+X-Auth-Info: cCDu3I8mtgBxbrrM4QC2fZu8t4Ecj8UHecgJDvD6zjc=
+Received: from mail.denx.de (p549668E5.dip.t-dialin.net [84.150.104.229])
+	by smtp-auth.mnet-online.de (Postfix) with ESMTP id A9972920A9;
+	Mon, 24 Jul 2006 21:47:16 +0200 (CEST)
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by mail.denx.de (Postfix) with ESMTP id 12CF56D00A8;
+	Mon, 24 Jul 2006 21:47:17 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 1B4EB352640;
+	Mon, 24 Jul 2006 21:47:16 +0200 (MEST)
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+In-reply-to: Your message of "Sun, 23 Jul 2006 10:45:35 +0200."
+             <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.6 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5415]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: fortessed.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: fortessed.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: fortessed.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: fortessed.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: fortessed.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24148>
 
-Your cre dit doesn't matter to us! If you OWN real est ate
-and want IMMEDIATEG cash to spend ANY way you like, or simply wish 
-to LOWER your monthly paym ents by a third or more, here are the dea ls
-we have TODAY (hurry, these ofers will expre TONIGHT):
-
-$488,000.00 at a 3.67,% fixed-rateX
-$372,000.00 at a 3.90,% variable-rate6
-$492,000.00 at a 3.21,% interest-onlyE
-$248,000.00 at a 3.36,% fixed-rate4
-$198,000.00 at a 3.55,% variable-rate0
-
-Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
-
-Don't worry about approval, your cre dit will not disqualify you! 
-
-http://WE8KUEJD.fortessed.com
+In message <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com> you wrote:
+>
+> If you know people using GIT please forward this message to them,
+> currently is has been sent to the following projects:
+> - u-boot
 
 
+Has it? When? I haven't seen anything.
 
-wrong--that it would disappoint him, evoke doubts, throw him  from the cloud
-harder  with his elbow and his knees. just get  there,  just a  little more,
+Best regards,
 
-other on the rusty rails.  Redrick unbuttoned  a flap and took out a package
-Redrick walked  behind him, and as soon  as he stepped out of the shade, the
-car, and lay down, his elbow on the backpack.
+Wolfgang Denk
 
-could hear another  peal of  thunder. I'll shake your souls  out of you  for
-on  its axles, and he remembered that  they could  rest  in the shade of the
-the  rounded  bristly peaks  of the hills. Here and there between  the hills
-     "Forward! Forward!" he shouted, unable to hear himself.
-
-     "Well, I guessed! I don't remember exactly what gave me the clue. Well,
-it's getting light!"
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+The thing is, as you progress in the Craft,  you'll  learn  there  is
+another rule... When you break rules, break 'em good and hard.
+                                    - Terry Pratchett, _Wyrd Sisters_
