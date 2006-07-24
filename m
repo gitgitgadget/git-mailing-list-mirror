@@ -1,63 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] support cover letter before commit log, using "+++"
-Date: Mon, 24 Jul 2006 11:53:56 +0200
-Organization: At home
-Message-ID: <ea25am$1qa$1@sea.gmane.org>
-References: <20060723214524.GC20068@admingilde.org> <7v1wsbfq75.fsf@assigned-by-dhcp.cox.net> <20060724070438.GD20068@admingilde.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Can't clone Linus tree
+Date: Mon, 24 Jul 2006 11:55:58 +0200
+Message-ID: <44C4992E.3070706@lsrfire.ath.cx>
+References: <20060724080752.GA8716@irc.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 24 11:54:09 2006
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon Jul 24 11:56:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4x8S-0001DS-Uf
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 11:54:01 +0200
+	id 1G4xAe-0001nh-Gg
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 11:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751110AbWGXJxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 05:53:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbWGXJxo
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 05:53:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:26559 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751110AbWGXJxn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jul 2006 05:53:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G4x83-00017I-LZ
-	for git@vger.kernel.org; Mon, 24 Jul 2006 11:53:35 +0200
-Received: from host-81-190-27-170.torun.mm.pl ([81.190.27.170])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 24 Jul 2006 11:53:35 +0200
-Received: from jnareb by host-81-190-27-170.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 24 Jul 2006 11:53:35 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-27-170.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751111AbWGXJ4L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 24 Jul 2006 05:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbWGXJ4L
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 05:56:11 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:6857
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751111AbWGXJ4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 05:56:09 -0400
+Received: from [10.0.1.3] (p508E7BBB.dip.t-dialin.net [80.142.123.187])
+	by neapel230.server4you.de (Postfix) with ESMTP id 257B11801A;
+	Mon, 24 Jul 2006 11:56:08 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
+To: Tomasz Torcz <zdzichu@irc.pl>
+In-Reply-To: <20060724080752.GA8716@irc.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24136>
 
-Martin Waitz wrote:
+Tomasz Torcz schrieb:
+>  Hi,
+>=20
+>  yesterdat I wanted to bisect my kernel problem, but failed at first =
+step:
+> cloning Linus' tree. Today I tried it on other system and also failed=
+=2E
+>=20
+>  This is git-1.4.0 on Slackware, i586:
+>=20
+> %  git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/l=
+inux-2.6.git linux-git
+> fatal: packfile '/home/zdzichu/linux-git/.git/objects/pack/tmp-1jI4AH=
+' SHA1 mismatch
+> error: git-fetch-pack: unable to read from git-index-pack
+> error: git-index-pack died with error code 128
+> fetch-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torval=
+ds/linux-2.6.git' failed.
+>=20
+>  And this is 1.4.0-1.fc5 on FC5, x86_64:
+> % git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/li=
+nux-2.6.git linux-git
+> fatal: packfile '/home/tomek/linux-git/.git/objects/pack/tmp-BxIcIC' =
+SHA1 mismatch
+> error: git-fetch-pack: unable to read from git-index-pack
+> error: git-index-pack died with error code 128
+> fetch-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torval=
+ds/linux-2.6.git' failed.
+>=20
+>  Errors occur constantly since yesterday. They of course appear after
+> downloading several megabytes of data, which is unpleasant on my 128k=
+bps
+> connection.
 
-> I haven't seen the "+++" before here. People have used their own
-> "cut here" markers somethimes but I don't think their is an
-> established convention already.
+Same here with both the master and next branch of git.  rsync as
+suggested by Johannes Weiner works.  You can change the protocol
+back to git in .git/remotes/origin after cloning; pulling small
+changes seems to work fine.
 
-Most common I think is the variation of "scissors" separator, i.e.
+strace tells me that safe_read at pkt-line.c:111 gets only 305 of
+the expected 996 bytes and then dies.  I have no idea how that
+might happen. :-/
 
--- >8 --
+Pulling the git repository works using the git protocol, btw.
 
-> The "+++" just felt good in combination with the "---" end marker.
-
-True.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ren=E9
