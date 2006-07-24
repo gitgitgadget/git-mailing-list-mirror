@@ -1,55 +1,156 @@
-From: "=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
-	<pclouds@gmail.com>
-Subject: Re: Git BOF notes
-Date: Mon, 24 Jul 2006 19:08:09 +0700
-Message-ID: <fcaeb9bf0607240508p197dccc5u8fdb7c92445323b5@mail.gmail.com>
-References: <20060719230155.GJ13776@pasky.or.cz> <tnxmzaz5q3v.fsf@arm.com>
-	 <20060724114753.GT13776@pasky.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Allow an alias to start with "-p"
+Date: Mon, 24 Jul 2006 14:10:45 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607241408170.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0607190125150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xmjh5sv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Catalin Marinas" <catalin.marinas@arm.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 24 14:08:21 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 24 14:10:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4zEN-0002iW-LQ
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 14:08:16 +0200
+	id 1G4zGs-00038j-QY
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 14:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132AbWGXMIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 08:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932129AbWGXMIL
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 08:08:11 -0400
-Received: from wx-out-0102.google.com ([66.249.82.197]:23278 "EHLO
-	wx-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S932127AbWGXMIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 08:08:10 -0400
-Received: by wx-out-0102.google.com with SMTP id s13so760367wxc
-        for <git@vger.kernel.org>; Mon, 24 Jul 2006 05:08:09 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DfZpQke6HbWNS4P99t/NV3Z0gfATQF+IR4vuZaorAT3jb4TS5XTHdAbxpoqnMrqDN6xn0NOz3GudK5WEKmyQHHNEaWq08qNs+DEaU0lqTw6zK/OWs3ljNUOjrl8iXaSMeLpV58aksFdnf0mO/ScGZ4eHa+qM/oqTx1Mwr6Rezog=
-Received: by 10.70.115.16 with SMTP id n16mr4823190wxc;
-        Mon, 24 Jul 2006 05:08:09 -0700 (PDT)
-Received: by 10.70.45.19 with HTTP; Mon, 24 Jul 2006 05:08:09 -0700 (PDT)
-To: "Petr Baudis" <pasky@suse.cz>
-In-Reply-To: <20060724114753.GT13776@pasky.or.cz>
-Content-Disposition: inline
+	id S932126AbWGXMKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 08:10:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932127AbWGXMKr
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 08:10:47 -0400
+Received: from mail.gmx.net ([213.165.64.21]:2974 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932126AbWGXMKr (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Jul 2006 08:10:47 -0400
+Received: (qmail invoked by alias); 24 Jul 2006 12:10:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp037) with SMTP; 24 Jul 2006 14:10:46 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xmjh5sv.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24141>
 
-On 7/24/06, Petr Baudis <pasky@suse.cz> wrote:
-> Actually, with recent (well, at least half a year ago the situation was
-> like that) quality of Sf.net's CVS hosting that might in fact give Git
-> some share of negative reputation if they provided a service of similar
-> quality. I think some people from Savannah were actually interested in
-> Git hosting, though.
-I don't think so. Quotes from [1]:
-What about support for git / cogito?
-No. Savannah can not support every versioning system. That's merely ludicrous.
+    
+Now, something like
 
-[1] http://savannah.gnu.org/forum/forum.php?printer=1&forum_id=3944
+	[alias]
+		pd = -p diff
+
+works as expected.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+On Sun, 23 Jul 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Now, something like
+> >
+> > 	[alias]
+> > 		pd = -p diff
+> >
+> > works as expected.
+> 
+> I like what it wants to do but I am afraid this leads to an
+> unmaintainable code (a micronit that already shows what I mean
+> is that you can say "git --paginate diff", but you cannot say
+> "pd = --paginate diff" in the configuration file).
+> 
+> Is there a cleaner way to do it without duplicating the argument
+> loop of git.c::main()?
+
+This patch uses a better approach: instead of duplicating the option
+parsing of the git wrapper, it refactors the code into the new function
+handle_options().
+
+In related news, this function would be the perfect candidate to set 
+GIT_DIR without environment variables...
+
+ git.c |   37 +++++++++++++++++++++++++++++++------
+ 1 files changed, 31 insertions(+), 6 deletions(-)
+
+diff --git a/git.c b/git.c
+index ee5a0e8..8d7c644 100644
+--- a/git.c
++++ b/git.c
+@@ -35,6 +35,27 @@ static void prepend_to_path(const char *
+ 	setenv("PATH", path, 1);
+ }
+ 
++static int handle_options(const char*** argv, int* argc)
++{
++	int handled = 0;
++
++	while (*argc > 0) {
++		const char *cmd = (*argv)[0];
++		if (cmd[0] != '-')
++			break;
++
++		if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
++			setup_pager();
++		} else
++			die ("Unknown option: %s", cmd);
++
++		(*argv)++;
++		(*argc)--;
++		handled++;
++	}
++	return handled;
++}
++
+ static const char *alias_command;
+ static char *alias_string = NULL;
+ 
+@@ -106,7 +127,7 @@ static int handle_alias(int *argcp, cons
+ 
+ 	subdir = setup_git_directory_gently(&nongit);
+ 	if (!nongit) {
+-		int count;
++		int count, option_count;
+ 		const char** new_argv;
+ 
+ 		alias_command = (*argv)[0];
+@@ -114,6 +135,10 @@ static int handle_alias(int *argcp, cons
+ 		if (alias_string) {
+ 
+ 			count = split_cmdline(alias_string, &new_argv);
++			option_count = handle_options(&new_argv, &count);
++			memmove(new_argv - option_count, new_argv,
++					count * sizeof(char *));
++			new_argv -= option_count;
+ 
+ 			if (count < 1)
+ 				die("empty alias for %s", alias_command);
+@@ -264,6 +289,7 @@ int main(int argc, const char **argv, ch
+ 	if (!strncmp(cmd, "git-", 4)) {
+ 		cmd += 4;
+ 		argv[0] = cmd;
++		handle_alias(&argc, &argv);
+ 		handle_internal_command(argc, argv, envp);
+ 		die("cannot handle %s internally", cmd);
+ 	}
+@@ -273,13 +299,12 @@ int main(int argc, const char **argv, ch
+ 
+ 	/* Look for flags.. */
+ 	while (argc > 1) {
+-		cmd = *++argv;
++		argv++;
+ 		argc--;
+ 
+-		if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+-			setup_pager();
+-			continue;
+-		}
++		handle_options(&argv, &argc);
++			
++		cmd = *argv;
+ 
+ 		if (strncmp(cmd, "--", 2))
+ 			break;
