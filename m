@@ -1,60 +1,59 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Can't clone Linus tree
-Date: Mon, 24 Jul 2006 12:36:03 +0200
-Message-ID: <44C4A293.8090207@lsrfire.ath.cx>
-References: <20060724080752.GA8716@irc.pl> <44C4992E.3070706@lsrfire.ath.cx>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Git BOF notes
+Date: Mon, 24 Jul 2006 13:47:53 +0200
+Message-ID: <20060724114753.GT13776@pasky.or.cz>
+References: <20060719230155.GJ13776@pasky.or.cz> <tnxmzaz5q3v.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon Jul 24 12:36:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 24 13:48:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4xnJ-0001ol-83
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 12:36:13 +0200
+	id 1G4yup-0007W4-4e
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 13:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932110AbWGXKgI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 24 Jul 2006 06:36:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932111AbWGXKgI
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 06:36:08 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:18564
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S932110AbWGXKgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 06:36:07 -0400
-Received: from [10.0.1.3] (p508E7BBB.dip.t-dialin.net [80.142.123.187])
-	by neapel230.server4you.de (Postfix) with ESMTP id DF9692F016;
-	Mon, 24 Jul 2006 12:36:05 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.4 (Windows/20060516)
-To: Tomasz Torcz <zdzichu@irc.pl>
-In-Reply-To: <44C4992E.3070706@lsrfire.ath.cx>
-X-Enigmail-Version: 0.94.0.0
+	id S932121AbWGXLr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 07:47:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbWGXLr4
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 07:47:56 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43704 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932121AbWGXLr4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Jul 2006 07:47:56 -0400
+Received: (qmail 10056 invoked by uid 2001); 24 Jul 2006 13:47:53 +0200
+To: Catalin Marinas <catalin.marinas@arm.com>
+Content-Disposition: inline
+In-Reply-To: <tnxmzaz5q3v.fsf@arm.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24139>
 
-> Tomasz Torcz schrieb:
->> %  git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/=
-linux-2.6.git linux-git
->> fatal: packfile '/home/zdzichu/linux-git/.git/objects/pack/tmp-1jI4A=
-H' SHA1 mismatch
->> error: git-fetch-pack: unable to read from git-index-pack
->> error: git-index-pack died with error code 128
->> fetch-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torva=
-lds/linux-2.6.git' failed.
+Dear diary, on Mon, Jul 24, 2006 at 11:06:28AM CEST, I got a letter
+where Catalin Marinas <catalin.marinas@arm.com> said that...
+> Petr Baudis <pasky@suse.cz> wrote:
+> >   a short summary of the Git BOF on OLS which finished just a short
+> > while ago. We got to hear how Len Brown is doing things and where Git
+> > gets in the way for him as well as interesting questions and comments
+> > from several other people. The main highlights as I feel them (mixed
+> > randomly with my personal blabbering) are that:
+> 
+> What I forgot to mention at the OLS - it would be useful for a more
+> wide-spread adoption of GIT to convince some of the source code
+> hosting sites (like sourceforge.net) to provide GIT support. For StGIT
+> I currently use an HTTP server but that's not the most efficient way.
 
-Ah, I just saw this is a known problem and there's a patch by
-Matthias Lederhofer, which Junio just accepted, I think (the
-mail with subject "[PATCH] upload-pack: fix timeout in
-create_pack_file)" on the git mailing list.
+Actually, with recent (well, at least half a year ago the situation was
+like that) quality of Sf.net's CVS hosting that might in fact give Git
+some share of negative reputation if they provided a service of similar
+quality. I think some people from Savannah were actually interested in
+Git hosting, though.
 
-The problem is apparently that the server expects you (wrongly)
-to finish your download session within ten minutes.  Until the
-server is fixed you can use rsync:// for the initial clone and
-git:// for smaller updates.
-
-Ren=E9
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
