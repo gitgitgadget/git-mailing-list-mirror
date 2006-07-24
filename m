@@ -1,81 +1,122 @@
-From: "Erick Daniels" <ErickDaniels@007design.com>
-Subject: Better Future, wet nurse
-Date: Mon, 24 Jul 2006 03:35:09 +0000 (UTC)
-Message-ID: <763560775.20060724033442@007design.com>
-Reply-To: "Erick Daniels" <ErickDaniels@007design.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Makefile checks for DarwinPorts / Fink
+Date: Mon, 24 Jul 2006 00:28:28 -0400
+Message-ID: <20060724042828.GB9066@spearce.org>
+References: <f3d7535d0607210758m4410cddfw16329ce473404fd8@mail.gmail.com> <7vhd19itu2.fsf@assigned-by-dhcp.cox.net> <20060722161914.GA10754@spearce.org> <20060723054531.GA12559@spearce.org> <e9vrsf$foc$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 24 05:35:04 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 24 06:29:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4rDc-0001vV-QB
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 05:34:57 +0200
+	id 1G4s3r-0002cT-3j
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 06:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbWGXDeh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 23 Jul 2006 23:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWGXDeh
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Jul 2006 23:34:37 -0400
-Received: from c-24-20-17-169.hsd1.mn.comcast.net ([24.20.17.169]:4100 "EHLO
-	mxs.mail.ru") by vger.kernel.org with ESMTP id S1751379AbWGXDeg
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jul 2006 23:34:36 -0400
-Date: Mon, 24 Jul 2006 03:34:42 +0480
-X-Mailer: The Bat! (v3.5) Home
-X-Priority: 3 (Normal)
-To: git@vger.kernel.org
+	id S1751394AbWGXE2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 00:28:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbWGXE2c
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 00:28:32 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:5863 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751394AbWGXE2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 00:28:32 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G4s3S-00017D-9V; Mon, 24 Jul 2006 00:28:30 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8047F20FB77; Mon, 24 Jul 2006 00:28:28 -0400 (EDT)
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <e9vrsf$foc$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 15.6 points;
- *  1.0 BAYES_60 BODY: Bayesian spam probability is 60 to 80%
- *      [score: 0.6474]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?24.20.17.169>]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: fortessed.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: fortessed.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: fortessed.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: fortessed.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: fortessed.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24113>
 
-Your cre dit doesn't matter to us! If you OWN real est ate
-and want IMMEDIATEZ cash to spend ANY way you like, or simply wish 
-to LOWER your monthly paym ents by a third or more, here are the dea ls
-we have TODAY (hurry, these ofers will expre TONIGHT):
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Could you _please_ document this option in commentary part in main
+> Makefile?
 
-$488,000.00 at a 3.67,% fixed-rate0
-$372,000.00 at a 3.90,% variable-rateG
-$492,000.00 at a 3.21,% interest-onlyZ
-$248,000.00 at a 3.36,% fixed-rateZ
-$198,000.00 at a 3.55,% variable-rateS
+OK.
 
-Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
+I left them out originally as it seemed like other platform specific
+items weren't in the main commentary part, but since these are
+new defines I guess it makes perfect sense that they should be
+documented before they get included into the main Makefile.  :-)
 
-Don't worry about approval, your cre dit will not disqualify you! 
+Hopefully this is the final version of this patch...
 
-http://2I2BXYKB.fortessed.com
+-->8--
+Disable linking with Fink or DarwinPorts.
 
+It may be desirable for the compiler to disable linking against Fink
+or DarwinPorts, especially if both are installed on the system and
+the user wants GIT to be linked specifically to only one of them.
 
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Makefile |   30 ++++++++++++++++++++++--------
+ 1 files changed, 22 insertions(+), 8 deletions(-)
 
-sip, shut his  eyes, and handed the  flask  to Arthur. That's it, he thought
-because of him. Now that my head is clear, I know why. It was right to  save
-
-workers showed up here for  the moulage. There were two lab assistants, both
-gummed his mouth, making it  hard to breathe. Gulping for  air, Redrick tore
-engineer he had drowned in vitriol that day.
-
-hill except the intense sunlight, but on the right slope, in the shade, pale
-     "Phoo-oo-ey." He shook his head, scattering dirty drops of water.
-swamp  to  the right of  the embankment  reeked of  decay. The  fog made  it
-of the )i. The name was sort of familiar, but who Whip was exactly, and what
-
-but  confidence in a miracle --filled him to the brim,  and he was amazed at
-you lift the bag  with rocks and guide it over the ground, it was all  clear
+diff --git a/Makefile b/Makefile
+index a1666e2..5432636 100644
+--- a/Makefile
++++ b/Makefile
+@@ -32,6 +32,18 @@ # Define NO_SVN_TESTS if you want to ski
+ # tests.  These tests take up a significant amount of the total test time
+ # but are not needed unless you plan to talk to SVN repos.
+ #
++# Define NO_FINK if you are building on Darwin/Mac OS X, have Fink
++# installed in /sw, but don't want GIT to link against any libraries
++# installed there.  If defined you may specify your own (or Fink's)
++# include directories and library directories by defining CFLAGS
++# and LDFLAGS appropriately.
++#
++# Define NO_DARWIN_PORTS if you are building on Darwin/Mac OS X,
++# have DarwinPorts installed in /opt/local, but don't want GIT to
++# link against any libraries installed there.  If defined you may
++# specify your own (or DarwinPort's) include directories and
++# library directories by defining CFLAGS and LDFLAGS appropriately.
++#
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
+ #
+@@ -267,15 +279,17 @@ ifeq ($(uname_S),Darwin)
+ 	NEEDS_SSL_WITH_CRYPTO = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_STRLCPY = YesPlease
+-	## fink
+-	ifeq ($(shell test -d /sw/lib && echo y),y)
+-		BASIC_CFLAGS += -I/sw/include
+-		BASIC_LDFLAGS += -L/sw/lib
++	ifndef NO_FINK
++		ifeq ($(shell test -d /sw/lib && echo y),y)
++			BASIC_CFLAGS += -I/sw/include
++			BASIC_LDFLAGS += -L/sw/lib
++		endif
+ 	endif
+-	## darwinports
+-	ifeq ($(shell test -d /opt/local/lib && echo y),y)
+-		BASIC_CFLAGS += -I/opt/local/include
+-		BASIC_LDFLAGS += -L/opt/local/lib
++	ifndef NO_DARWIN_PORTS
++		ifeq ($(shell test -d /opt/local/lib && echo y),y)
++			BASIC_CFLAGS += -I/opt/local/include
++			BASIC_LDFLAGS += -L/opt/local/lib
++		endif
+ 	endif
+ endif
+ ifeq ($(uname_S),SunOS)
+-- 
+1.4.2.rc1.ge711
