@@ -1,65 +1,83 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: GIT user survey
-Date: Mon, 24 Jul 2006 15:21:16 +0200
-Message-ID: <4d8e3fd30607240621x2ad866d7g30c1bad87401881b@mail.gmail.com>
-References: <4d8e3fd30607230123m459aa1cle2ab8c1c1dd0fcd2@mail.gmail.com>
-	 <4d8e3fd30607230145i2480c20fxb06127c8b0187c98@mail.gmail.com>
-	 <e9vsv9$iuo$1@sea.gmane.org>
+From: "Cathryn Purvis" <CathrynPurvis@mail.ru>
+Subject: Better Future, yard trader
+Date: Mon, 24 Jul 2006 18:49:42 +0000 (UTC)
+Message-ID: <662161c806044joagun3el907vielq97i5onf25y3307cr@mxs.mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 24 15:21:40 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Jul 24 20:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G50N8-0008HK-Rz
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 15:21:23 +0200
+	id 1G55Ub-0002gJ-BC
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 20:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155AbWGXNVS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 09:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932168AbWGXNVS
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 09:21:18 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:13738 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S932162AbWGXNVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 09:21:17 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so2197328ugc
-        for <git@vger.kernel.org>; Mon, 24 Jul 2006 06:21:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tq0Eurs3qj9XlnYopxjKuO2kof0+ghM43YU5qYA+I0dRs6eghjognE4brQ0+6xHEPnLUx2YtMMFDDeEs58m+yrWY2T3zMmmJZtKrHnoq3OQAIssT8X+B4Ps7wDA2hPzIiDgQSQYRTPr4ARw5C5p22t5Na65hK4QBktyFhrevi2I=
-Received: by 10.78.193.5 with SMTP id q5mr1520497huf;
-        Mon, 24 Jul 2006 06:21:16 -0700 (PDT)
-Received: by 10.78.121.12 with HTTP; Mon, 24 Jul 2006 06:21:16 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <e9vsv9$iuo$1@sea.gmane.org>
+	id S932251AbWGXStW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 14:49:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbWGXStW
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 14:49:22 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:24538 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S932251AbWGXStV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 14:49:21 -0400
+Received: from 207-119-217-152.dyn.centurytel.net (207-119-217-152.dyn.centurytel.net [207.119.217.152])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k6OImn6x003164;
+	Mon, 24 Jul 2006 18:49:14 GMT
+Date: Mon, 24 Jul 2006 18:49:29 +0480
+To: git-commits-head-owner@vger.kernel.org
 Content-Disposition: inline
+X-Spam: Not detected
+X-Virus-Scanned: ClamAV 0.88.3/1614/Fri Jul 21 20:27:38 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24146>
+X-Spam-Report: 11.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5415]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: fortessed.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: fortessed.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: fortessed.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: fortessed.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: fortessed.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24147>
 
-On 7/23/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Paolo Ciarrocchi wrote:
->
-> > If you know people using GIT please forward this message to them,
-> > currently is has been sent to the following projects:
-> > - u-boot
-> > - wine
-> > - cairo
-> > - xmms2
-> > - xcb
->
-> Check out http://git.or.cz/gitwiki/GitProjects
+Your cre dit doesn't matter to us! If you OWN real est ate
+and want IMMEDIATEG cash to spend ANY way you like, or simply wish 
+to LOWER your monthly paym ents by a third or more, here are the dea ls
+we have TODAY (hurry, these ofers will expre TONIGHT):
 
-Thanks. I sent out a few emails to other projects.
+$488,000.00 at a 3.67,% fixed-rateX
+$372,000.00 at a 3.90,% variable-rate6
+$492,000.00 at a 3.21,% interest-onlyE
+$248,000.00 at a 3.36,% fixed-rate4
+$198,000.00 at a 3.55,% variable-rate0
 
-regards,
+Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
 
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com
-http://picasaweb.google.com/paolo.ciarrocchi
+Don't worry about approval, your cre dit will not disqualify you! 
+
+http://WE8KUEJD.fortessed.com
+
+
+
+wrong--that it would disappoint him, evoke doubts, throw him  from the cloud
+harder  with his elbow and his knees. just get  there,  just a  little more,
+
+other on the rusty rails.  Redrick unbuttoned  a flap and took out a package
+Redrick walked  behind him, and as soon  as he stepped out of the shade, the
+car, and lay down, his elbow on the backpack.
+
+could hear another  peal of  thunder. I'll shake your souls  out of you  for
+on  its axles, and he remembered that  they could  rest  in the shade of the
+the  rounded  bristly peaks  of the hills. Here and there between  the hills
+     "Forward! Forward!" he shouted, unable to hear himself.
+
+     "Well, I guessed! I don't remember exactly what gave me the clue. Well,
+it's getting light!"
