@@ -1,74 +1,71 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] upload-pack: fix timeout in create_pack_file
-Date: Mon, 24 Jul 2006 09:10:12 +0200
-Message-ID: <E1G4uZw-0006vZ-VO@moooo.ath.cx>
-References: <E1G2t9n-0005PW-72@moooo.ath.cx> <7vd5bvh67p.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH] Per branch properties for pull
+Date: Mon, 24 Jul 2006 00:31:04 -0700
+Message-ID: <7vmzaze9xj.fsf@assigned-by-dhcp.cox.net>
+References: <87hd1b9fjq.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 24 09:10:28 2006
+X-From: git-owner@vger.kernel.org Mon Jul 24 09:31:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G4ua6-0003T2-4r
-	for gcvg-git@gmane.org; Mon, 24 Jul 2006 09:10:22 +0200
+	id 1G4uuF-0007T8-6t
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 09:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbWGXHKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 03:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbWGXHKS
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 03:10:18 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:6531 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751429AbWGXHKQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jul 2006 03:10:16 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vd5bvh67p.fsf@assigned-by-dhcp.cox.net>
+	id S1751436AbWGXHbH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 24 Jul 2006 03:31:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbWGXHbH
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 03:31:07 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:23445 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751436AbWGXHbG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Jul 2006 03:31:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060724073105.WJHD2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 24 Jul 2006 03:31:05 -0400
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+In-Reply-To: <87hd1b9fjq.fsf@gmail.com> (Santi =?iso-8859-1?Q?B=E9jar's?=
+ message of "Fri, 21
+	Jul 2006 16:51:53 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24131>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> > This does not help for low timeouts with slow clients.  If a client is
-> > slow enough so the server is blocked for more time than specified by
-> > timeout the connection will be closed too (e.g. 15kb/s with a timeout
-> > of 30 (git adds 10 extra) is not enough).
-> 
-> Where do we add 10 extra?
-Oops, never mind, I misread the source.
+Santi B=E9jar <sbejar@gmail.com> writes:
 
-> > We should either add a
-> > warning to the man page or try to fix this.  I don't know if this can
-> > be fixed not using non-blocking sockets.
-> 
-> I think the intent of "timeout" was to protect us from funny
-> clients by avoiding talking with the ones that take too much
-> time doing something that should not take too long.  When we are
-> in create_pack_file(), we are already committed to the heaviest
-> operation anyway, so one possibility might be to stop doing
-> timeout at that point.  I am not sure if that is acceptable,
-> though -- it opens up the daemon to even easier DoS than it
-> currently is.
-> 
-> My gut feeling is that your patch would be fine as is (have you
-> tried and confirmed that it helps cases other than slow
-> clients?)
-What else?  The problem solved by this patch is the missing
-reset_timeout while downloading pack files and this affects all
-clients that are too slow (cannot download the packfile within
---timeout seconds).  I tried a server with --timeout=600 and a client
-that cannot download the whole pack file in 10 minutes.  Without the
-patch the server closes the connection, with this patch it works.
-Additionally I tried it with a client reading so slow that the server
-was blocked for more than --timeout seconds, then the server closes
-the connection too (this is more or less the DoS case).
+> It extracts all the information for pull from the config file.
+>
+> If you have a config file as:
+>
+> [branch "master"]
+>         remote=3Dorigin
+>         merge=3Dnext          #the remote name
+>         octopus=3Doctopus
+>         twohead=3Drecursive
+>
+> When doing a "git pull" without extra parameters in the master branch
+> it will fetch the origin remote repository and will merge the next
+> branch (the remote name).
+>
+> And you can also put the equivalent of the pull.{octopus,twohead}
+> options for each branch.
+>
+> This only changes the behavour when these keys exist and when
+> git-pull is used without extra parameters.
+>
+> Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
 
-> > Perhaps support for resume would be quite useful too but I've no idea
-> > how hard this is to implement.
-> 
-> That would be _very_ hard.
-I don't know how much demand there is for resuming but there is always rsync
-(at least on kernel.org and other repositories that need it can install it too)
-to get the new objects with support for resuming.
+I am in general in agreement with this line of thought and had
+an impression that many on the list wanted to have per-branch
+configuration.  I am a bit too tired now so I'd just let you
+know I am interested but would not apply it tonight.
+
+Opinions?  Comments?  Anything missing or objectionable on
+Santi's patch from the list?
