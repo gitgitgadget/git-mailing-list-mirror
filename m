@@ -1,63 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Allow an alias to start with "-p"
-Date: Tue, 25 Jul 2006 08:27:41 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607250822200.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0607190125150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xmjh5sv.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607241408170.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7virlmfrl4.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: [PATCH] Substitute xmalloc()+memset(0) with xcalloc().
+Date: Tue, 25 Jul 2006 09:30:18 +0200
+Message-ID: <20060725073018.GA14150@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 25 08:27:48 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Jul 25 09:30:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5GOR-00013Y-Et
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 08:27:47 +0200
+	id 1G5HN6-0001F7-92
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 09:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455AbWGYG1n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 02:27:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbWGYG1n
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 02:27:43 -0400
-Received: from mail.gmx.de ([213.165.64.21]:59035 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751455AbWGYG1m (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 02:27:42 -0400
-Received: (qmail invoked by alias); 25 Jul 2006 06:27:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp043) with SMTP; 25 Jul 2006 08:27:41 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virlmfrl4.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751021AbWGYHaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 03:30:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbWGYHaV
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 03:30:21 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:50931 "HELO bohr.gbar.dtu.dk")
+	by vger.kernel.org with SMTP id S1751021AbWGYHaU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 03:30:20 -0400
+Received: (qmail 14376 invoked by uid 5842); 25 Jul 2006 09:30:18 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24161>
 
-Hi,
+Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
+---
+ builtin-add.c  |    3 +--
+ builtin-rm.c   |    3 +--
+ combine-diff.c |    3 +--
+ 3 files changed, 3 insertions(+), 6 deletions(-)
 
-On Mon, 24 Jul 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Now, something like
-> >
-> > 	[alias]
-> > 		pd = -p diff
-> >
-> > works as expected.
-> >
-> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 
-> This seems to break t5400 among other things (git-clone
-> complains that it is not invoked in a git repository).
-
-See Peff's mail for a fix (hopefully: I do not see why git-clone should 
-be affected, as it is a script, not a hard link to the git wrapper). The 
-funny thing: t5400 does not break here.
-
-Ciao,
-Dscho
+diff --git a/builtin-add.c b/builtin-add.c
+index 2d25698..3a73a17 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -21,8 +21,7 @@ static void prune_directory(struct dir_s
+ 
+ 	for (specs = 0; pathspec[specs];  specs++)
+ 		/* nothing */;
+-	seen = xmalloc(specs);
+-	memset(seen, 0, specs);
++	seen = xcalloc(specs, 1);
+ 
+ 	src = dst = dir->entries;
+ 	i = dir->nr;
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 5deb811..bb810ba 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -90,8 +90,7 @@ int cmd_rm(int argc, const char **argv, 
+ 	seen = NULL;
+ 	for (i = 0; pathspec[i] ; i++)
+ 		/* nothing */;
+-	seen = xmalloc(i);
+-	memset(seen, 0, i);
++	seen = xcalloc(i, 1);
+ 
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+diff --git a/combine-diff.c b/combine-diff.c
+index 1bc1484..919112b 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -639,8 +639,7 @@ static int show_patch_diff(struct combin
+ 			/* deleted file */
+ 			result_size = 0;
+ 			elem->mode = 0;
+-			result = xmalloc(1);
+-			result[0] = 0;
++			result = xcalloc(1, 1);
+ 		}
+ 		if (0 <= fd)
+ 			close(fd);
+-- 
+1.4.2.rc1.ge7a0
