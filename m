@@ -1,79 +1,48 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC/PATCH] git wrapper: add --git-path=<path> and --bare options
-Date: Tue, 25 Jul 2006 10:43:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607251042120.29649@g5.osdl.org>
+Date: Tue, 25 Jul 2006 19:52:22 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607251952000.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0607251926190.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0607251042120.29649@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Jul 25 19:44:08 2006
+X-From: git-owner@vger.kernel.org Tue Jul 25 19:52:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5Qwx-0005gQ-Nk
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 19:44:08 +0200
+	id 1G5R51-0007W9-Va
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 19:52:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805AbWGYRoE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 13:44:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbWGYRoD
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 13:44:03 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:55171 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750805AbWGYRoC (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 13:44:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6PHhsnW007559
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 25 Jul 2006 10:43:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6PHhrGO003104;
-	Tue, 25 Jul 2006 10:43:54 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607251926190.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-1.032 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.141 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750825AbWGYRwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 13:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbWGYRwY
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 13:52:24 -0400
+Received: from mail.gmx.de ([213.165.64.21]:3298 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750825AbWGYRwY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 13:52:24 -0400
+Received: (qmail invoked by alias); 25 Jul 2006 17:52:22 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp027) with SMTP; 25 Jul 2006 19:52:22 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607251042120.29649@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24181>
 
+Hi,
 
+On Tue, 25 Jul 2006, Linus Torvalds wrote:
 
-On Tue, 25 Jul 2006, Johannes Schindelin wrote:
->  
->  SYNOPSIS
->  --------
-> -'git' [--version] [--exec-path[=GIT_EXEC_PATH]] [--help] COMMAND [ARGS]
-> +'git' [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate]
-> +	[--bare] [--git-dir=GIT_DIR] [--help] COMMAND [ARGS]
+> Since "--git-dir" makes more sense than "--git-path", I'd suggest just 
+> fixing the OPTIONS section ;)
 
-Here you have "--git-dir"
+Will do. Thanks.
 
-> @@ -41,6 +42,15 @@ OPTIONS
->  	environment variable. If no path is given 'git' will print
->  	the current setting and then exit.
->  
-> +-p|--paginate::
-> +	Pipe all output into 'less' (or if set, $PAGER).
-> +
-> +--git-path=<path>::
-> +	Set the path to the repository. This can also be controlled by
-> +	setting the GIT_DIR environment variable.
-
-But here you have "--git-path".
-
-> +		} else if (!strcmp(cmd, "--git-dir") && *argc > 1) {
-> +			setenv("GIT_DIR", (*argv)[1], 1);
-> +			(*argv)++;
-> +			(*argc)--;
-> +		} else if (!strncmp(cmd, "--git-dir=", 10)) {
-> +			setenv("GIT_DIR", cmd + 10, 1);
-
-And here you have "--git-dir" again.
-
-Since "--git-dir" makes more sense than "--git-path", I'd suggest just 
-fixing the OPTIONS section ;)
-
-		Linus
+Ciao,
+Dscho
