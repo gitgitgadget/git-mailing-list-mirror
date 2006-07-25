@@ -1,50 +1,51 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: [PATCH] Trivial path optimization test
-Date: Tue, 25 Jul 2006 01:23:39 +0200
-Message-ID: <20060724232339.GC14792@steel.home>
-References: <Pine.LNX.4.64.0607140828250.5623@g5.osdl.org> <20060717223432.GA25522@steel.home> <7v4px7h5df.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Allow an alias to start with "-p"
+Date: Mon, 24 Jul 2006 17:36:39 -0700
+Message-ID: <7virlmfrl4.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0607190125150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v8xmjh5sv.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0607241408170.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue Jul 25 01:24:18 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 25 02:36:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G59mR-0007K1-CB
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 01:24:08 +0200
+	id 1G5Aui-0003XC-50
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 02:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932327AbWGXXYB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 19:24:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932329AbWGXXYA
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 19:24:00 -0400
-Received: from mailout10.sul.t-online.com ([194.25.134.21]:20698 "EHLO
-	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S932327AbWGXXX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 19:23:59 -0400
-Received: from fwd31.aul.t-online.de 
-	by mailout10.sul.t-online.com with smtp 
-	id 1G59mB-0005EC-00; Tue, 25 Jul 2006 01:23:51 +0200
-Received: from tigra.home (TFwDsaZ6YeRMTY5iV3bEkYU2jPEoxMfo1eT3IKom8LG2XJT8NTnSc9@[84.160.82.84]) by fwd31.sul.t-online.de
-	with esmtp id 1G59m0-04RX0K0; Tue, 25 Jul 2006 01:23:40 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id D55A9277AF;
-	Tue, 25 Jul 2006 01:23:39 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1G59lz-0002iR-RP; Tue, 25 Jul 2006 01:23:39 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v4px7h5df.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-ID: TFwDsaZ6YeRMTY5iV3bEkYU2jPEoxMfo1eT3IKom8LG2XJT8NTnSc9
-X-TOI-MSGID: 2b3c7dee-ccff-44eb-98dc-caefbe549c62
+	id S932359AbWGYAgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 20:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932364AbWGYAgl
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 20:36:41 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:22771 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932359AbWGYAgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 20:36:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060725003640.HIBH12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 24 Jul 2006 20:36:40 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24156>
 
-Junio C Hamano, Mon, Jul 24, 2006 08:41:16 +0200:
-> Clean up the commit log pretty please.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-No problem.
+> Now, something like
+>
+> 	[alias]
+> 		pd = -p diff
+>
+> works as expected.
+>
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+This seems to break t5400 among other things (git-clone
+complains that it is not invoked in a git repository).
