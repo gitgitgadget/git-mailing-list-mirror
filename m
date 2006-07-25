@@ -1,99 +1,77 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Handling very large numbers of symbolic references?
-Date: Tue, 25 Jul 2006 20:29:46 +0100
-Message-ID: <87psfteb4l.fsf@hades.wkstn.nix>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: git-1.4.1.1-1 git-clone-pack: unable to read from git-index-pack
+Date: Tue, 25 Jul 2006 13:23:59 -0700
+Message-ID: <20060725202358.GI23286@h4x0r5.com>
+References: <Pine.LNX.4.63.0607251247040.29667@wbgn013.biozentrum.uni-wuerzburg.de> <1153829608.2258.32.camel@Homer.simpson.net> <1153829908.2258.34.camel@Homer.simpson.net> <Pine.LNX.4.63.0607251655360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jul 25 21:30:18 2006
+Cc: Mike Galbraith <efault@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 25 22:24:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5SbJ-0002Ro-MW
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 21:29:54 +0200
+	id 1G5TRt-000581-Gy
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 22:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964838AbWGYT3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 15:29:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964841AbWGYT3t
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 15:29:49 -0400
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:41999 "EHLO
-	mail.esperi.org.uk") by vger.kernel.org with ESMTP id S964838AbWGYT3t
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jul 2006 15:29:49 -0400
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
-	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id k6PJTk2U028559
-	for <git@vger.kernel.org>; Tue, 25 Jul 2006 20:29:47 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id k6PJTkqd029464;
-	Tue, 25 Jul 2006 20:29:46 +0100
-To: git@vger.kernel.org
-X-Emacs: the road to Hell is paved with extensibility.
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4.19 (linux)
+	id S1751513AbWGYUYK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 16:24:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbWGYUYK
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 16:24:10 -0400
+Received: from h4x0r5.com ([70.85.31.202]:50960 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1751513AbWGYUYJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 16:24:09 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1G5TRg-0002rY-25; Tue, 25 Jul 2006 13:24:00 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0607251655360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24184>
 
-I'm about to start writing my first git porcelain (to try to convert my
-workplace from the world's oldest and cruftiest version control system
-to something not based on the bastard offspring of SCCS and VMS's CMS,
-with less power than either) and have run into a problem that I'm not
-sure how to solve.
+On Tue, Jul 25, 2006 at 04:57:39PM +0200, Johannes Schindelin wrote:
+> On Tue, 25 Jul 2006, Mike Galbraith wrote:
+> 
+> > On Tue, 2006-07-25 at 14:13 +0200, Mike Galbraith wrote:
+> > > Greetings,
+> > > 
+> > > Having finally acquired DSL (only 400kbps, but at least I'm in the
+> > > twentieth century [not typo]), I decided to finally give git a try.  I
+> > > installed git-1.4.1.1-1, and armed myself with Jeff's how-to.  I didn't
+> > > get far before git saved me the trouble of truly testing my resolve :)
+> > > 
+> > > 	-Mike
+> > > 
+> > > git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
+> > 
+> > Oops, missed a line.
+> > 
+> > fatal: packfile '/usr/local/src/tmp/linux-2.6/.git/objects/pack/tmp-nE9k3G' SHA1 mismatch
+> > 
+> > > error: git-clone-pack: unable to read from git-index-pack
+> > > error: git-index-pack died with error code 128
+> > > clone-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git' failed
+> 
+> Was this after about 10 minutes? I had the impression that this was fixed 
+> with the 1.4.1.1 version _on the server side_. See
+> 
+> http://www.kernel.org/git/gitweb.cgi?p=git/git.git;a=commit;h=a0764cb838c2f1885fb58ca794c21523fb05c825
+> 
+> for details. So, please be patient until kernel.org's server is updated.
 
-The biggest problem with git for totally naive users is that they get
-scared by the sha1 IDs used as version numbers (assuming the index is
-porcelained away: but that would confuse them, not scare them). They're
-not pronounceable, not memorable, and so on. So the porcelain I'm
-whipping up conceals them in large part by using instead bug IDs, as the
-workflow of the place I'm doing this for is driven entirely by Bugzilla
-bug numbers.
+Or do your initial clone as:
 
-I'm taking a leaf from the `git for the ignorant' document and arranging
-that every fix that fixes some Bugzilla bug is on a branch named after
-that bug, e.g. #2243, #10155, whatever. (I'm going to have to go further
-than that and track dependency relationships between bugs, i.e. `if you
-merge bug #1404's branch, you must merge #1306's and #1505's as well'. I
-could do that by adding a new bug-dependency object, respected by a
-wrapper around git-merge, but I'm not sure how kosher it is to add new
-types of objects only used by porcelain. Hell, I'm not even sure if it's
-possible yet.)
+git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
+cd linux-2.6 && sed -i -e 's/rsync/git/g' .git/remotes/origin
 
-However, this causes a potential problem. There are tens of thousands of
-these bugs, and the .git/refs/heads directory gets *enormous* and thus
-the system gets terribly terribly slow (crappy old Solaris filesystem
-syndrome).
-
-It seems to me there are two ways to fix this:
-
- - restructure .git/refs/* in a similar way to .git/objects, i.e. as a
-   one- or two-level tree.
-
- - the vast majority of these bugs are closed. They still need to be got
-   at now and again for branch merges, but they could be got out of
-   .refs/heads at delete_branch time, and pushed into a tree consisting
-   entirely of deleted branches, which would in turn be pointed at from
-   some new place under .refs; perhaps .refs/heads/heavy (by analogy to
-   non-lightweight tags). The problem here is that whenever we delete
-   a tag, we'll leak that tree (at least we will if it's in a pack), and
-   that leakage really could add up in the end.
-
-   (Deleting branches corresponding to closed bugs is good for other
-   reasons: e.g., it cleans up gitweb output. But certain tools *will*
-   need to get at those closed bug branches: I'm inclined to say that
-   all of them will sooner or later, because the users aren't going to
-   tolerate being told that they can't do anything to a closed
-   bug. Except for adding code to it: we can reasonably declare the
-   addition of commits to those branches over. Of course once we have
-   the sha1 id, it's all academic, really.)
-
-I'm not sure which way is preferable. Suggestions? Is the entire idea
-lunatic?
-
-
-And, in case this hasn't been said enough: thank you for git, it's the
-nicest version control system I've used in years, and the way it's
-structured encourages everyone to play :)
-
+(The preferred thing is for the method you used to work, but the above
+will avoid the bug for the moment.)
 -- 
-`We're sysadmins. We deal with the inconceivable so often I can clearly 
- see the need to define levels of inconceivability.' --- Rik Steenwinkel
+
+Ryan Anderson
+  sometimes Pug Majere
