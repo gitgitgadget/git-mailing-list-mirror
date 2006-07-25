@@ -1,66 +1,51 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: Handling very large numbers of symbolic references?
-Date: Tue, 25 Jul 2006 22:52:48 +0100
-Message-ID: <87u055bbdb.fsf@hades.wkstn.nix>
-References: <87psfteb4l.fsf@hades.wkstn.nix> <44C68D52.6030107@lsrfire.ath.cx>
+From: "Fischer" <chugclutter@email.com>
+Subject: This means you can still eat all the burgers, pizza you want without and gains in weight, infact you will lose weight.
+Date: Tue, 25 Jul 2006 17:57:57 -0400
+Message-ID: <56519598561925.AD02BED75C@ZHB02>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 25 23:52:59 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 25 23:58:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5Upj-0007Jt-PO
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 23:52:56 +0200
+	id 1G5Uuj-00088h-5B
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 23:58:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964877AbWGYVww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 17:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964878AbWGYVww
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 17:52:52 -0400
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:35342 "EHLO
-	mail.esperi.org.uk") by vger.kernel.org with ESMTP id S964877AbWGYVwv
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jul 2006 17:52:51 -0400
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
-	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id k6PLqmU8008315;
-	Tue, 25 Jul 2006 22:52:48 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id k6PLqmii021488;
-	Tue, 25 Jul 2006 22:52:48 +0100
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-Emacs: don't try this at home, kids!
-In-Reply-To: <44C68D52.6030107@lsrfire.ath.cx> (Rene Scharfe's message of "Tue, 25 Jul 2006 23:29:54 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4.19 (linux)
+	id S964886AbWGYV6A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 17:58:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964885AbWGYV57
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 17:57:59 -0400
+Received: from cpe-69-204-205-148.stny.res.rr.com ([69.204.205.148]:9739 "EHLO
+	eei1tw.hucu.ameritech.net") by vger.kernel.org with ESMTP
+	id S964879AbWGYV57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jul 2006 17:57:59 -0400
+To: <glenda@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: wyNobxtFS0vcYH0DVmndZ5tdwp4xudEEL61S
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24189>
+X-Spam-Report: 9.0 points;
+ *  0.3 SUBJECT_DIET Subject talks about losing pounds
+ *  1.6 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: ufonulun.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: ufonulun.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: ufonulun.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24190>
 
-On Tue, 25 Jul 2006, Rene Scharfe said:
-> Nix schrieb:
->> However, this causes a potential problem. There are tens of thousands of
->> these bugs, and the .git/refs/heads directory gets *enormous* and thus
->> the system gets terribly terribly slow (crappy old Solaris filesystem
->> syndrome).
->> 
->> It seems to me there are two ways to fix this:
->> 
->>  - restructure .git/refs/* in a similar way to .git/objects, i.e. as a
->>    one- or two-level tree.
-> 
-> Branch names are allowed to contain slashes, thus your porcelain is free
-> to implement such a tree.  Add a slash after every two bug ID digits and
-> your directories will never contain more than 100 objects.
+Good day dear Sir, 
 
-Oh, lovely! I was *sure* I'd need to make git core changes for this, but
-no, the precognitive powers of the git hackers had anticipated my needs
-before I knew what they were!
+ Fatblaster is a thermogenic weight loss formula designed to naturally assist the body in burning more calories by efficiently using stored body fat for energy. The ingredients in Fatblaster assist in the thermogenic processes allowing you to naturally and safely burn fat and loose unwanted weight. Fatblaster remains a top seller among competitive brands, making it the #1 choice for those seeking safe and effective weight loss solution. Find what you need: http://ufonulun.com/gall/fb/ 
 
-(Now the only downside is gitweb's treatment of such heads: but looking
-at the code, making it skip suitably formatted heads when displaying the
-heads list is an utterly trivial one-liner.)
+ Any port in a storm Take your time and time will take you 
 
--- 
-`We're sysadmins. We deal with the inconceivable so often I can clearly 
- see the need to define levels of inconceivability.' --- Rik Steenwinkel
+ It nah good to shove yuh foot in every stocking. Distance lends enchantment to the view Knowing is not enough; We must Apply Willing is not enough; We must Do
