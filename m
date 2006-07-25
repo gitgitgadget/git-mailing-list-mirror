@@ -1,65 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: [PATCH] cvsserver: suppress warnings
-Date: Tue, 25 Jul 2006 13:11:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607251308380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Tue, 25 Jul 2006 23:50:03 +1200
+Message-ID: <46a038f90607250450l643f97e4sbece300fa5b2d509@mail.gmail.com>
 References: <Pine.LNX.4.63.0607251247040.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <44C5FB3E.9020301@catalyst.net.nz>
+	 <44C5FB3E.9020301@catalyst.net.nz>
+	 <Pine.LNX.4.63.0607251308380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Jul 25 13:11:52 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>,
+	git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Jul 25 13:50:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5KpC-0000Ee-4O
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 13:11:42 +0200
+	id 1G5LQP-0007ry-Od
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 13:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932310AbWGYLLj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 07:11:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932312AbWGYLLj
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 07:11:39 -0400
-Received: from mail.gmx.de ([213.165.64.21]:20406 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932310AbWGYLLi (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 07:11:38 -0400
-Received: (qmail invoked by alias); 25 Jul 2006 11:11:37 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp024) with SMTP; 25 Jul 2006 13:11:37 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-In-Reply-To: <44C5FB3E.9020301@catalyst.net.nz>
-X-Y-GMX-Trusted: 0
+	id S932333AbWGYLuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 07:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932334AbWGYLuF
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 07:50:05 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:39772 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932333AbWGYLuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jul 2006 07:50:04 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so2638055ugc
+        for <git@vger.kernel.org>; Tue, 25 Jul 2006 04:50:03 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=I9hptFNryx8TlUyin9yjbrIxSvdd570dsFenmDJJ858tDKOthVuud9jg1qv/TozgXBSalQwzoxWq6oKyHMujY7MUftjhXGs5rwdLe+snk1Ckxyy/eFIdx1854C5mBXtJgKjAXEqPsvplNmCzaIpTPdtQS4AgkF9H7kAHSfYmqUM=
+Received: by 10.78.151.3 with SMTP id y3mr2240405hud;
+        Tue, 25 Jul 2006 04:50:03 -0700 (PDT)
+Received: by 10.78.120.18 with HTTP; Tue, 25 Jul 2006 04:50:03 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607251308380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24168>
 
-Hi,
+On 7/25/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-On Tue, 25 Jul 2006, Martin Langhoff (CatalystIT) wrote:
+> > Ack to that too. Perhaps an END block would help?
+>
+> Since my BASIC days on a VC-20 (no, not the airplane), I hardly used an
+> END statement ;-) Well, maybe in that Pascal course, but not in Perl,
+> anyway. So, I do not understand...
 
-> Johannes Schindelin wrote:
-> 
-> > 	I still get this warning:
-> > 
-> > 		closing dbh with active statement handles
-> 
-> Ack to that too. Perhaps an END block would help?
+Oh, it's a code block you can declare that gets called when the
+program is exiting. More info at
+http://search.cpan.org/dist/perl/pod/perlmod.pod#BEGIN%2C_CHECK%2C_INIT_and_END____
 
-Since my BASIC days on a VC-20 (no, not the airplane), I hardly used an 
-END statement ;-) Well, maybe in that Pascal course, but not in Perl, 
-anyway. So, I do not understand...
+No relation to BASIC's END ;-)
 
-> A quick check of man DBI tells me that $dbh->CachedKids will be a 
-> hashref where the values are refs to the cached statement handles.
-> 
-> IMHO it's a DBI bug -- statement handles only referenced by $dbh->CachedKids
-> should cleanup silently. prepare_cached() is a convenience method so that you
-> _don't_ have to keep track of the handles manually. Forcing a manual cleanup
-> throws a good part of the convenience out.
 
-I agree fully.
-
-Ciao,
-Dscho
+martin
