@@ -1,70 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.1.1
-Date: Mon, 24 Jul 2006 20:53:29 -0700
-Message-ID: <7vejwae3wm.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Allow an alias to start with "-p"
+Date: Tue, 25 Jul 2006 01:03:12 -0400
+Message-ID: <20060725050312.GA5618@coredump.intra.peff.net>
+References: <Pine.LNX.4.63.0607190125150.29667@wbgn013.biozentrum.uni-wuerzburg.de> <7v8xmjh5sv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0607241408170.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 25 05:53:37 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 25 07:03:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5DzC-000847-W9
-	for gcvg-git@gmane.org; Tue, 25 Jul 2006 05:53:35 +0200
+	id 1G5F4g-0006xw-N6
+	for gcvg-git@gmane.org; Tue, 25 Jul 2006 07:03:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932159AbWGYDxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 24 Jul 2006 23:53:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbWGYDxb
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 23:53:31 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:40398 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932159AbWGYDxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jul 2006 23:53:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060725035330.IQAD2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 24 Jul 2006 23:53:30 -0400
-To: git@vger.kernel.org
+	id S932456AbWGYFDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 01:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932460AbWGYFDQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 01:03:16 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:54440 "HELO
+	peff.net") by vger.kernel.org with SMTP id S932456AbWGYFDP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 01:03:15 -0400
+Received: (qmail 20583 invoked from network); 25 Jul 2006 01:02:48 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 25 Jul 2006 01:02:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Jul 2006 01:03:12 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0607241408170.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24158>
 
-The latest maintenance release GIT 1.4.1.1 is available at the
-usual places:
+On Mon, Jul 24, 2006 at 02:10:45PM +0200, Johannes Schindelin wrote:
 
-  http://www.kernel.org/pub/software/scm/git/
+> @@ -264,6 +289,7 @@ int main(int argc, const char **argv, ch
+>  	if (!strncmp(cmd, "git-", 4)) {
+>  		cmd += 4;
+>  		argv[0] = cmd;
+> +		handle_alias(&argc, &argv);
+>  		handle_internal_command(argc, argv, envp);
+>  		die("cannot handle %s internally", cmd);
+>  	}
 
-  git-1.4.1.1.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.1.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.1.1.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.1.1-1.$arch.rpm	(RPM)
+I believe this change is the source of the breakage in tests.
+GIT_DIR=foo git-init-db no longer works because handle_alias
+unconditionally calls setup_git_directory_gently(), which thinks that if
+GIT_DIR is set, it must exist.
 
-The primary purpose of this release is to fix the breakage
-people reported while cloning large quantity of data via git
-protocol, and the server side incorrectly timing out.  I am very
-sorry for the breakage.
+This can be fixed by giving precedence to the internal command over
+alias checking.  This makes sense, anyway, since later in the function,
+we give precedence to internal commands in the "git init-db" form.
 
-A big thanks goes to Matthias Lederhofer who fixed the breakage
-for us.  The fix was cherry-picked from the "master" branch.
+Patch is below (wow, that +++ is kind of ugly!).
 
-The "master" branch has the same fix already and we will have an
-1.4.2-rc2 sometime this week, hopefully soon.
+-Peff
 
-----------------------------------------------------------------
++++
+git: choose internal commands over aliases for git-*
 
-Changes since v1.4.1 are as follows:
+This is especially important because some commands (like init-db) don't
+require a working GIT_DIR, and alias expansion tries to look at it. It
+also matches the behavior of "git cmd".
 
-Junio C Hamano:
-      Makefile: tighten git-http-{fetch,push} dependencies
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Linus Torvalds:
-      revision.c: fix "dense" under --remove-empty
-
-Matthias Lederhofer:
-      upload-pack: fix timeout in create_pack_file
-
-Robin Rosenberg:
-      Empty author may be presented by svn as an empty string or a null value.
+diff --git a/git.c b/git.c
+index 8d7c644..68ce826 100644
+--- a/git.c
++++ b/git.c
+@@ -289,8 +289,8 @@ int main(int argc, const char **argv, ch
+ 	if (!strncmp(cmd, "git-", 4)) {
+ 		cmd += 4;
+ 		argv[0] = cmd;
+-		handle_alias(&argc, &argv);
+ 		handle_internal_command(argc, argv, envp);
++		handle_alias(&argc, &argv);
+ 		die("cannot handle %s internally", cmd);
+ 	}
+ 
+-- 
+1.4.2.rc1.gc470-dirty
